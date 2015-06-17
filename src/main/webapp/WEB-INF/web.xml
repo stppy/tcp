@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>SPR BackEnd</display-name>
+	<!-- Filter to handle logout requests sent directly by the CAS server -->
+	<filter>
+		<filter-name>CAS Single Sign Out Filter</filter-name>
+		<filter-class>org.jasig.cas.client.session.SingleSignOutFilter</filter-class>
+		<init-param>
+			<param-name>casServerUrlPrefix</param-name>
+			<param-value>https://login.stp.gov.py:8443/cas</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>CAS Single Sign Out Filter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<listener>
+		<listener-class>org.jasig.cas.client.session.SingleSignOutHttpSessionListener
+		</listener-class>
+	</listener>
+	<!-- charset filter -->
+	<filter>
+    <filter-name>Character Encoding Filter</filter-name>
+    <filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>Character Encoding Filter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+	
+	
+	<!-- paginas protegidas -->
+	<filter>
+		<filter-name>CAS Authentication Filter</filter-name>
+		<filter-class>org.jasig.cas.client.authentication.AuthenticationFilter</filter-class>
+		<init-param>
+			<param-name>casServerLoginUrl</param-name>
+			<param-value>https://login.stp.gov.py:8443/cas/login
+			</param-value>
+		</init-param>
+		<init-param>
+			<param-name>service</param-name>
+			<param-value>http://spr.stp.gov.py/</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>CAS Authentication Filter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+ 
+ 	<!-- validacion de ticket -->
+ 	<filter>
+		<filter-name>CAS Validation Filter</filter-name>
+		<filter-class>org.jasig.cas.client.validation.Cas30ProxyReceivingTicketValidationFilter</filter-class>
+		<init-param>
+			<param-name>casServerUrlPrefix</param-name>
+			<param-value>https://login.stp.gov.py:8443/cas</param-value>
+		</init-param>
+		<init-param>
+			<param-name>service</param-name>
+			<param-value>http://spr.stp.gov.py/</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>CAS Validation Filter</filter-name>
+		<url-pattern>*</url-pattern>
+	</filter-mapping>
+	
+	<!--  filtro de cas en todos los request -->
+	<filter>
+		<filter-name>CAS HttpServletRequest Wrapper Filter</filter-name>
+		<filter-class>org.jasig.cas.client.util.HttpServletRequestWrapperFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>CAS HttpServletRequest Wrapper Filter</filter-name>
+		<url-pattern>*</url-pattern>
+	</filter-mapping>
+
+     <welcome-file-list>
+    	<welcome-file>index.jsp</welcome-file>
+  	</welcome-file-list>
+  <servlet>
+    <description>ajaxHelper</description>
+    <display-name>ajaxHelper</display-name>
+    <servlet-name>ajaxHelper</servlet-name>
+    <servlet-class>py.gov.stp.mh.tools.ajaxHelper</servlet-class>
+  </servlet>
+  <servlet>
+    <description>ajaxSelects</description>
+    <display-name>ajaxSelects</display-name>
+    <servlet-name>ajaxSelects</servlet-name>
+    <servlet-class>py.gov.stp.mh.tools.ajaxSelects</servlet-class>
+  </servlet>
+  <servlet>
+    <description>ajaxUpdate</description>
+    <display-name>ajaxUpdate</display-name>
+    <servlet-name>ajaxUpdate</servlet-name>
+    <servlet-class>py.gov.stp.mh.tools.ajaxUpdate</servlet-class>
+  </servlet>
+  <servlet>
+    <description>ajaxInserts</description>
+    <display-name>ajaxInserts</display-name>
+    <servlet-name>ajaxInserts</servlet-name>
+    <servlet-class>py.gov.stp.mh.tools.ajaxInserts</servlet-class>
+  </servlet>
+  <servlet>
+    <description>ajaxDelete</description>
+    <display-name>ajaxDelete</display-name>
+    <servlet-name>ajaxDelete</servlet-name>
+    <servlet-class>py.gov.stp.mh.tools.ajaxDelete</servlet-class>
+  </servlet>
+   <servlet>
+    <description>ajaxExport</description>
+    <display-name>ajaxExport</display-name>
+    <servlet-name>ajaxExport</servlet-name>
+    <servlet-class>py.gov.stp.mh.tools.ajaxExport</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ajaxHelper</servlet-name>
+    <url-pattern>/ajaxHelper</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ajaxSelects</servlet-name>
+    <url-pattern>/ajaxSelects</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ajaxUpdate</servlet-name>
+    <url-pattern>/ajaxUpdate</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ajaxInserts</servlet-name>
+    <url-pattern>/ajaxInserts</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ajaxDelete</servlet-name>
+    <url-pattern>/ajaxDelete</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ajaxExport</servlet-name>
+    <url-pattern>/ajaxExport</url-pattern>
+  </servlet-mapping>
+</web-app>
