@@ -6,6 +6,7 @@
   <packaging>war</packaging>
   <version>0.0.1-SNAPSHOT</version>
   <name>Tablero 2015</name>
+
   <url>http://maven.apache.org</url>
   <repositories>
 		<repository>
