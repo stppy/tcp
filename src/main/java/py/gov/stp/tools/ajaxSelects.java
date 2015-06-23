@@ -38,6 +38,7 @@ public class ajaxSelects extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
   
     	
+    	String action = request.getParameter("action");
     	String accion = request.getParameter("accion");
     	
     	Integer nivel = null;
@@ -63,6 +64,11 @@ public class ajaxSelects extends HttpServlet {
     	Integer funcional = null;
     	Integer catalogoDestinatario = null;
     	
+    	Integer institucion_id=null;
+    	Integer accion_id=null;
+    	Integer linea_accion_id=null;
+    	
+    	String institucion=null;
     	String usuario=null;
     	String condition = "";
     	String mision = "";
@@ -90,7 +96,7 @@ public class ajaxSelects extends HttpServlet {
     	if (request.getParameter("producto")!=null) producto = Integer.parseInt(request.getParameter("producto"));
     	if (request.getParameter("unidadJerarquica")!=null) producto = Integer.parseInt(request.getParameter("unidadJerarquica"));
     	if (request.getParameter("pais")!=null) pais = Integer.parseInt(request.getParameter("pais")); else pais=1;
-    	if (request.getParameter("anio")!=null) anio = Integer.parseInt(request.getParameter("anio")); else anio=2015;
+    	if (request.getParameter("anio")!=null) anio = Integer.parseInt(request.getParameter("anio")); else anio=0;
     	if (request.getParameter("mes")!=null) mes = Integer.parseInt(request.getParameter("mes")); else mes=0;
     	if (request.getParameter("departamento")!=null) departamento = Integer.parseInt(request.getParameter("departamento")); else departamento=99;
     	if (request.getParameter("objetivo")!=null) objetivo = Integer.parseInt(request.getParameter("objetivo")); else objetivo=0;
@@ -102,6 +108,12 @@ public class ajaxSelects extends HttpServlet {
     	//if (request.getParameter("snipAutorizado")!=null) snip = Integer.parseInt(request.getParameter("snipAutorizado")); else snipAutorizado=0;
       	if (request.getParameter("funcional")!=null) funcional = Integer.parseInt(request.getParameter("funcional")); else funcional=0;
       	if (request.getParameter("nombre")!=null) nombre = request.getParameter("nombre"); else nombre="";
+      	if (request.getParameter("institucion")!=null) institucion = request.getParameter("institucion"); else institucion="";
+      	if (request.getParameter("accion")!=null) accion = request.getParameter("accion"); else accion="";
+      	
+      	if (request.getParameter("institucion_id")!=null) institucion_id=Integer.parseInt(request.getParameter("institucion_id")); else institucion_id=0;
+      	if (request.getParameter("accion_id")!=null) accion_id=Integer.parseInt(request.getParameter("accion_id")); else accion_id=0;
+      	if (request.getParameter("linea_accion_id")!=null) linea_accion_id=Integer.parseInt(request.getParameter("linea_accion_id")); else linea_accion_id=0;
     	
         PrintWriter out = response.getWriter();
         response.setContentType("text/html");
@@ -121,10 +133,44 @@ public class ajaxSelects extends HttpServlet {
         JsonObject myObj = new JsonObject();
  
         
-        if (accion!=null && accion!=""){
-        	if (accion.equals("getFactHitos")){
+        if (action!=null && action!=""){
+        	
+        	if (action.equals("getEntidades")){
         		List objetos=null;
-        		//if (estrategia!=null) condition = " and estrategia_id ="+estrategia;
+        		condition = " where true ";
+        		if (institucion!="") condition += " and institucion ='"+institucion+"'";
+        		if (institucion_id!=0) condition += " and institucion_id ='"+institucion_id+"'";
+				try {objetos = SqlSelects.selectEntidad(condition);}
+				catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos);
+        		out.println(json.toString());
+        	}
+        	
+        	if (action.equals("getLineasAccion")){
+        		List objetos=null;
+        		condition = " where true ";
+        		if (institucion!="") condition += " and institucion ='"+institucion+"'";
+        		if (institucion_id!=0) condition += " and institucion_id ='"+institucion_id+"'";
+        		if (linea_accion_id!=0) condition += " and linea_accion_id ='"+linea_accion_id+"'";
+        		if (anio!=0) condition += " and date_part ='"+anio+"'";
+        		
+				try {objetos = SqlSelects.seletLineaAccion(condition);}
+				catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos);
+        		out.println(json.toString());
+        	}
+        	
+        	
+        	if (action.equals("getFactHitos")){
+        		List objetos=null;
+        		condition = " where true ";
+        		if (institucion!="") condition += " and institucion ='"+institucion+"'";
+        		if (institucion_id!=0) condition += " and institucion_id ='"+institucion_id+"'";
+        		if (linea_accion_id!=0) condition += " and linea_accion_id ='"+linea_accion_id+"'";
+        		if (accion!="") condition += " and accion ='"+accion+"'";
+        		if (accion_id!=0) condition += " and accion_id ='"+accion_id+"'";
+        		
+        		
 				try {objetos = SqlSelects.selectFactHitos(condition);}
 				catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos);

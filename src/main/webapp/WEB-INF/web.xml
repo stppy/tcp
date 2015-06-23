@@ -88,26 +88,26 @@
     <description>ajaxSelects</description>
     <display-name>ajaxSelects</display-name>
     <servlet-name>ajaxSelects</servlet-name>
-    <servlet-class>py.gov.stp.tablero2015.ajaxSelects</servlet-class>
+    <servlet-class>py.gov.stp.tools.ajaxSelects</servlet-class>
 
   </servlet>
   <servlet>
     <description>ajaxUpdate</description>
     <display-name>ajaxUpdate</display-name>
     <servlet-name>ajaxUpdate</servlet-name>
-    <servlet-class>py.gov.stp.tablero2015.ajaxUpdate</servlet-class>
+    <servlet-class>py.gov.stp.tools.ajaxUpdate</servlet-class>
   </servlet>
   <servlet>
     <description>ajaxInserts</description>
     <display-name>ajaxInserts</display-name>
     <servlet-name>ajaxInserts</servlet-name>
-    <servlet-class>py.gov.stp.tablero2015.ajaxInserts</servlet-class>
+    <servlet-class>py.gov.stp.tools.ajaxInserts</servlet-class>
   </servlet>
   <servlet>
     <description>ajaxDelete</description>
     <display-name>ajaxDelete</display-name>
     <servlet-name>ajaxDelete</servlet-name>
-    <servlet-class>py.gov.stp.tablero2015.ajaxDelete</servlet-class>
+    <servlet-class>py.gov.stp.tools.ajaxDelete</servlet-class>
   </servlet>
    
   <servlet-mapping>

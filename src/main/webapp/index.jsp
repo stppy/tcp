@@ -11,9 +11,16 @@
   <head>
   <!--  ISO-8859-1 -->
   <%@ include file="/frames/head.jsp" %>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  
+  		<script src="https://cdnjs.cloudflare.com/ajax/libs/floatthead/1.2.10/jquery.floatThead.min.js"></script>
+        
 <!--   <script src="frames/entidad.js" type="text/javascript"></script> -->
 </head>
-<body class="skin-blue sidebar-mini">
+<body class="skin-blue sidebar-mini sidebar-collapse">
 <% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%>
 <% Map attributes = user.getAttributes(); 
 if (user != null) { %>
@@ -22,7 +29,7 @@ if (user != null) { %>
 	$(document).ready(function(){
 		var entidadCas = "";
 		entidadCas ="<%=attributes.get("entidad") %>";
-		var usuarios = $.ajax({
+	/*	var usuarios = $.ajax({
 			url:'http://spr.stp.gov.py/ajaxSelects?accion=getUsuarios&usuario=<%=user.getName()%>',
 		  	type:'get',
 		  	dataType:'json',
@@ -32,9 +39,7 @@ if (user != null) { %>
 		usuarios = usuarios.usuarios;
 		$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
 		$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
-		/*$("#nombreUsuario").append("entidad: "+usuarios[0].entidad);;
-		$("#nombreUsuario").append("entidad_id: "+usuarios[0].entidad_id);
-		$("#nombreUsuario").append("nivel_id: "+usuarios[0].nivel_id);*/
+
 		var i=parseInt(0);
 		var datosNiveles = $.ajax({
 	        url:'http://spr.stp.gov.py/ajaxSelects?accion=getNiveles&nivel='+usuarios[0].nivel_id,
@@ -58,9 +63,131 @@ if (user != null) { %>
 	    	 if (datosEntidad[i].nivel==usuarios[0].nivel_id && datosEntidad[i].entidad==usuarios[0].entidad_id)
 	    		 break;
 	     }
-
+*/
 	     
 	});
+	
+	
+	$(document).ready(function(){
+		
+		function numeroConComa(x) {
+		    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		}
+		
+		var entidadesjson = $.ajax({
+	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getEntidades',
+	      	type:'get',
+	      	dataType:'json',
+	      	crossDomain:true,
+	      	async:false       
+	    }).responseText;
+		var entidades=JSON.parse(entidadesjson);
+		
+		var eljson = $.ajax({
+	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getLineasAccion',
+	      	type:'get',
+	      	dataType:'json',
+	      	crossDomain:true,
+	      	async:false       
+	    }).responseText;
+		var el=JSON.parse(eljson);
+		var lineasDeAccion= [];
+		
+		var sumporAClass="";
+		var porAejeClass="";
+		var porHejeClass="";
+		
+		for (var i = 0; i< entidades.length;i++){
+			$("#cuerpoTabla").append('<tr><td colspan="11" ><strong>'+entidades[i].institucion+'</strong></td></tr>');
+			for(var j=0;j<el.length;j++){
+				if (el[j].institucion_id==entidades[i].institucion_id){
+					if (lineasDeAccion.indexOf(el[j].linea_accion_id)<0){
+						lineasDeAccion.push(el[j].linea_accion_id);
+						if(el[j].anho<="2014"){
+							var anho1=el[j];
+							var anho2;
+							for(var k=0;k<el.length;k++){
+								if (anho1.institucion_id==el[k].institucion_id && anho1.linea_accion_id==el[k].linea_accion_id && el[k].anho =="2015"){
+									anho2=el[k];
+								}
+							}
+							if (typeof anho1.cantidad_ejecutada_hoy==="undefined") {var anho1= new Object(); anho1.cantidad_ejecutada_hoy=""};
+							if (typeof anho2.cantidad_ejecutada_hoy==="undefined") {var anho2= new Object(); anho2.cantidad_ejecutada_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
+							if (anho2.suma_programada_anho>0){
+								var porcentajeAnho = (anho2.suma_programada_hoy*100)/anho2.suma_programada_anho;
+								porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
+								var porcentajeAnhoEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_anho;
+								porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
+								var porcentajeHoyEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_hoy;
+								porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
+								/*if (porcentajeAnho<=70) sumporAClass = "text-danger";
+								if (porcentajeAnho>70) sumporAClass = "text-warning";
+								if (porcentajeAnho>90) sumporAClass = "text-success";
+								
+								if (porcentajeAnhoEje<=70) porAejeClass = "text-danger";
+								if (porcentajeAnhoEje>70) porAejeClass = "text-warning";
+								if (porcentajeAnhoEje>90) porAejeClass = "text-success";
+								*/
+								if (porcentajeHoyEje<=70) porHejeClass = "text-danger";
+								if (porcentajeHoyEje>70) porHejeClass = "text-warning";
+								if (porcentajeHoyEje>90) porHejeClass = "text-success";
+								
+								if ( porcentajeHoyEje ==="NaN") porcentajeHoyEje="";
+							}else{
+								var porcentajeAnho = "";
+								var porcentajeAnhoEje = "";
+								var porcentajeHoyEje ="";
+							}
+							$("#cuerpoTabla").append('<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+anho1.linea_accion+'</td><td>'+anho1.accion_unidad_medida+'</td><td>Gs.'+numeroConComa((anho1.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td><td></td><td>'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td>'+numeroConComa(anho2.suma_programada_hoy)+'</td><td>'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td><td class="text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
+							anho2="";
+							anho1="";
+						}
+						if(el[j].anho>="2015"){
+							var anho2=el[j];
+							var anho1;
+							for(var k=0;k<el.length;k++){
+								if (anho1.institucion_id==el[k].institucion_id && anho1.linea_accion_id==el[k].linea_accion_id && el[k].date_part =="2014"){
+									anho1=el[k];
+								}
+							}
+							if (typeof anho1.cantidad_ejecutada_hoy==="undefined") {var anho1= new Object(); anho1.cantidad_ejecutada_hoy="";};
+							if (typeof anho2.cantidad_ejecutada_hoy==="undefined") {var anho2= new Object(); anho2.cantidad_ejecutada_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
+							if (anho2.suma_programada_anho>0){
+								var porcentajeAnho = (anho2.suma_programada_hoy*100)/anho2.suma_programada_anho;
+								porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
+								var porcentajeAnhoEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_anho;
+								porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
+								var porcentajeHoyEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_hoy;
+								porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
+								/*if (porcentajeAnho<=70) sumporAClass = "text-danger";
+								if (porcentajeAnho>70) sumporAClass = "text-warning";
+								if (porcentajeAnho>90) sumporAClass = "text-success";
+								
+								if (porcentajeAnhoEje<=70) porAejeClass = "text-danger";
+								if (porcentajeAnhoEje>70) porAejeClass = "text-warning";
+								if (porcentajeAnhoEje>90) porAejeClass = "text-success";
+								*/
+								if (porcentajeHoyEje<=70) porHejeClass = "text-danger";
+								if (porcentajeHoyEje>70) porHejeClass = "text-warning";
+								if (porcentajeHoyEje>90) porHejeClass = "text-success";
+								
+								if (  porcentajeHoyEje ==="NaN") porcentajeHoyEje="";
+							}else{
+								var porcentajeAnho = "";
+								var porcentajeAnhoEje = "";
+								var porcentajeHoyEje ="";
+							}
+							$("#cuerpoTabla").append('<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+anho2.linea_accion+'</td><td>'+anho2.accion_unidad_medida+'</td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td><td></td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td>'+numeroConComa(anho2.suma_programada_hoy)+'</td><td>'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td><td class=" text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
+							anho2="";
+							anho1="";
+						}
+					}
+				}
+			}
+		}
+	});
+
+	
 	     </script>
   <!-- piwik -->
   <script type="text/javascript">
@@ -116,266 +243,58 @@ textarea { text-transform: uppercase; }
 	         <div class="col-md-12">
 	          <div class="box" height="1000px">
 	            <div class="box-header with-border" height="1000px">
-	              <h3 class="box-title" id="tituloTipoPrograma">
-	                Requerimientos 	
-	              </h3>
+	              <h2 class="box-title text-center" id="tituloTipoPrograma">
+	                Tablero de Control Presidencial - STP 	
+	              </h2>
 	              <div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
 	              </div>
 	            </div>
-	            <div class="box-body" >
-	            <table class="table table-striped table-bordered table-hover">
-	            	<tr>
-	            		<td>
-	  						Conectividad
-	  					</td> 
-	  					<td>
-	  						Red Metropolitana
-	  					</td>
-	  				</tr>
-	  				<tr>
-	            		<td>
-	  						Usuarios
-	  					</td>
-	  					<td>
-	  						Nota enviada por la máxima autoridad de la institución, asignado usuario titular y usuario suplente del sistema. Debe remitirse correo electrónico, nombre y apellido, entidad y cargo
-	  					</td>
-	  				</tr>
-	  			</table> 
-	            </div>
-			   </div>
-			</div>
-          </div><!-- /.row -->
-	         <div class="row">
-	         <div class="col-md-12">
-	          <div class="box" height="1000px">
-	            <div class="box-header with-border" height="1000px">
-	              <h3 class="box-title" id="tituloTipoPrograma">
-	                Base Legal
-	              </h3>
-	              <div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-	              </div>
-	            </div>
-	            <div class="box-body" >
+	            <div class="box-body table-responsive" style="scroll-x:hidden;scroll-y:auto;">
 	            
-	          <table class="table table-striped table-bordered table-hover">
-	            	<tr>
-	            		<td>
-	  						<a href="http://www.presidencia.gov.py/archivos/documentos/DECRETO3361_o5xy3ffc.pdf">Decreto 3361 de la Presidencia de la República del Paraguay</a>
-	  					</td>
-	  					
-	  					<td>
-	  						POR EL CUAL SE ESTABLECEN LOS LINEAMIENTOS GENERALES PARA LOS PROCESOS DE PROGRAMACIÓN, FORMULACIÓN Y PRESENTACIÓN DE LOS ANTEPROYECTOS DE PRESUPUESTOS INSTITUCIONALES COMO MARCO DE REFERENCIA PARA LA ELABORACIÓN DEL PROYECTO DE PRESUPUESTO GENERAL DE LA NACIÓN CORRESPONDIENTE AL EJERCICIO FISCAL 2016 Y PARA LA PROGRAMACIÓN DEL PRESUPUESTO PLURIANUAL 2016-2018.
-	  					</td>
-	  				</tr>
-			
-	  			</table>
-	  			
-	            </div>
-			   </div>
-			</div>
-     
-     <!--             <div class="row">-->
-	         <div class="col-md-12">
-	          <div class="box" height="1000px">
-	            <div class="box-header with-border" height="1000px">
-	              <h3 class="box-title" id="tituloTipoPrograma">
-	                Condiciones de Uso
-	              </h3> 
-	              <div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-	              </div>
-	            </div>
-	            <div class="box-body" >
 	            
-	          <table class="table table-striped table-bordered table-hover">
-	            	<tr>
-	            		
-	  					
-	  					<td>
-	  						
-	  						
-	  						Condiciones de Uso del Sistema de Planificación por Resultados:</br>
-							<p align="justify"> 
-							<OL>
-							<LI>La cuenta de usuario es asignada para su uso exclusivo en los sistemas de información administrados por la DGTIC . Cualquier otro método de acceso (utilitarios SQL, ODBC, etc.) está prohibido, salvo que sea explicitamente autorizado.
-							<LI>Queda prohibida la copia o divulgación por cualquier medio de la información accedida durante la utilización del usuario asignado, salvo que exista una autorización explícita de la DGTIC.
-							<LI>Todo permiso que no esté explícitamente asignado al usuario, está prohibido.
-							<LI>El usuario debe notificar a la DGTIC inexactitudes en la información contenida en los sistemas, así como violaciones a la seguridad que sean detectadas mediante la cuenta de correo soporte@stp.gov.py
-							<LI>La DGTIC se reserva el derecho de revocar cualquier acceso sin previo aviso, en caso de que se detecte que la seguridad de la cuenta ha sido vulnerada.
-							<LI>El Usuario está obligado a solicitar la baja de su cuenta de usuario, cuando ya no vaya a utilizar en sus funciones.
-							<LI>La cuenta de usuario es personal, y la contraseña no debe ser compartida con otra/s persona/s.
-							<LI>Las operaciones realizadas en la base de datos con la cuenta de usuario solicitada son de exclusiva responsabilidad del usuario.
-							El solo ingreso a los sistemas administrados por la DGTIC, implica la aceptación de los presentes condiciones de Uso.
-							</OL>
-							</p>
-	  					</td>
-	  				</tr>
-			
-	  			</table>
-	  			
-	            </div>
-			   </div>
-			<!--</div>-->
-        
-          
-          </div><!-- /.row -->
-          
-           <div class="row">
-	         <div class="col-md-12">
-	          <div class="box" height="1000px">
-	            <div class="box-header with-border" height="1000px">
-	              <h3 class="box-title" id="tituloTipoPrograma">
-	                Datos de Contacto
-	              </h3>
-	              <div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-	              </div>
-	            </div>
-	            <div class="box-body" >
-	            <table class="table table-striped table-bordered table-hover">
-	            	<tr>
-	            		<td>Nombre</td>
-	  					<td>Sebastian Codas</td>
-	  				</tr>
-	  				<tr>
-	            		<td>Correo Electrónico</td>
-	  					<td>scs@stp.gov.py</td>
-	  				</tr>
-	  				<tr>
-	            		<td>Telef. Laboral</td>
-	  					<td>+595 21 450422 #114</td>
-	  				</tr>
-	  				<tr>
-	            		<td>Telef. Movil</td>
-	  					<td>+595 982 511383 </td>
-	  				</tr>
-	  			</table> 
-	            </div>
-			   </div>
-			</div>
-          </div><!-- /.row -->
-          <div class="row">
-	         <div class="col-md-12">
-	          <div class="box" height="1000px">
-	            <div class="box-header with-border" height="1000px">
-	              <h3 class="box-title" id="tituloTipoPrograma">
-	                Procesos
-	              </h3>
-	              <div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-	              </div>
-	            </div>
-	            <div class="box-body" >
-	             <ul  class="col-md-12">
-	             
-	             
-	             	<div class="row">
-				         <div class="col-md-12">
-				          <div class="box box-info" height="1000px">
-				            <div class="box-header with-border" height="1000px">
-				              <h3 class="box-title" id="tituloTipoPrograma">
-				                Memoria Institucional
-				              </h3>
-				              <div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-				              </div>
-				            </div>
-				            <div class="box-body" >
-				             <ul  class="col-md-12">
-								<td><img alt="Imagen"  width="960"  height="540" src="/dist/img/doc/1.png" /></td> 
-				  			  </ul>	
-				            </div>
-						   </div>
-						</div>
-			          </div><!-- /.row -->
-	  				<div class="row">
-				         <div class="col-md-12">
-				          <div class="box box-info" height="1000px">
-				            <div class="box-header with-border" height="1000px">
-				              <h3 class="box-title" id="tituloTipoPrograma">
-				                Estructura Programática
-				              </h3>
-				              <div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-				              </div>
-				            </div>
-				            <div class="box-body" >
-				             <ul  class="col-md-12">
-				            
-								<tr><td><img alt="Imagen"  width="960"  height="540" src="/dist/img/doc/4.png" /></td>  </tr>
-								<tr><td><img alt="Imagen"  width="960"  height="540" src="/dist/img/doc/5.png" /></td> </tr>
-								<tr><td><img alt="Imagen"  width="960"  height="540" src="/dist/img/doc/6.png" /></td> </tr>
-								<tr><td><img alt="Imagen"  width="960"  height="540" src="/dist/img/doc/7.png" /></td> </tr>
-								<tr><td><img alt="Imagen"  width="960"  height="540" src="/dist/img/doc/29.png" /></td></tr>
-				  			  </ul>	
-				            </div>
-						   </div>
-						</div>
-			          </div><!-- /.row -->
-			          
-			          <div class="row">
-				         <div class="col-md-12">
-				          <div class="box box-info" height="1000px">
-				            <div class="box-header with-border" height="1000px">
-				              <h3 class="box-title" id="tituloTipoPrograma">
-				               Vinculación con el Plan Nacional de Desarrollo Paraguay 2030
-				              </h3>
-				              <div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-				              </div>
-				            </div>
-				            <div class="box-body" >
-				             <ul  class="col-md-12">
-								<tr><td><img alt="Imagen"  width="960"  height="540" src="/dist/img/doc/12.png" /></td></tr>
-								
-				  			  </ul>	
-				            </div>
-						   </div>
-						</div>
-			          </div><!-- /.row -->
-			          
-			          <div class="row">
-				         <div class="col-md-12">
-				          <div class="box box-info" height="1000px">
-				            <div class="box-header with-border" height="1000px">
-				              <h3 class="box-title" id="tituloTipoPrograma">
-				               Planificación de Resultados
-				              </h3>
-				              <div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-				              </div>
-				            </div>
-				            <div class="box-body" >
-				             <ul  class="col-md-12">
-								<tr><td><img alt="Imagen"  width="960"  height="540" src="/dist/img/doc/44.png" /></td></tr>
-				  			  </ul>	
-				            </div>
-						   </div>
-						</div>
-			          </div><!-- /.row -->
-			          
-					  <div class="row">
-				         <div class="col-md-12">
-				          <div class="box box-info" height="1000px">
-				            <div class="box-header with-border" height="1000px">
-				              <h3 class="box-title" id="tituloTipoPrograma">
-				              	Programación de Productos
-				              </h3>
-				              <div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-				              </div>
-				            </div>
-				            <div class="box-body" >
-				             <ul  class="col-md-12">
-								<tr><td><img alt="Imagen"  width="960"  height="540" src="/dist/img/doc/30.png" /></td></tr>
-								<tr><td><img alt="Imagen"  width="960"  height="540" src="/dist/img/doc/imagen.png" /></td></tr> 
-				  			  </ul>	
-				            </div>
-						   </div>
-						</div>
-			          </div><!-- /.row -->
-			          
-			          
-			          
-			          
-	  			  </ul>	
+	              <table id="lineasPorEntidad" class="table table-striped ">
+              <thead>
+                <tr style="background-color: white;">
+                  <th colspan="5">
+                  	Lineas De Acción por Entidad
+                  </th>
+                  <th colspan="3" class="text-center">Programación</th>
+                  <th colspan="3" class="text-center">Ejecución</th>
+                </tr>
+                <tr style="background-color: white;">
+                  <th>Linea de Acción</th>
+                  <th>U. M.</th>
+                  <th>Costo (MM)</th>
+                  <th>Base 2014</th>
+                  <th><!-- Meta 2015 --></th>
+                  <th>Cant del Año</th>
+                  <th>% del Año</th>
+                  <th>Cant. Hoy</th>
+                  <th>Cant. Hoy</th>
+                  <th>% del Año</th>
+                  <th>Desempeño</th>
+                  
+                </tr>
+              </thead>
+              <tbody id = "cuerpoTabla">
+               
+              </tbody>
+            </table>
+
 	            </div>
 			   </div>
 			</div>
           </div><!-- /.row -->
 
+
+<script>
+var $tabla=$("#lineasPorEntidad");
+$tabla.floatThead({
+	scrollContainer: function($tabla){
+		return $tabla.closest('wrapper');
+	}
+})
+</script>
           
           
                
@@ -426,6 +345,7 @@ textarea { text-transform: uppercase; }
     <script src="dist/js/pages/dashboard2.js" type="text/javascript"></script>-->
 
     <!-- AdminLTE for demo purposes -->
+
     <script src="dist/js/demo.js" type="text/javascript"></script>
         <%  } else { %>
 				<p>Favor Iniciar Sesion</p>

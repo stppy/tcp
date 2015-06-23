@@ -21,14 +21,14 @@
           <ul class="sidebar-menu">
             <li class="header">PROGRAMACIÓN</li>
             <li class="treeview">
-              <a href="/entidad.jsp" id="listarEntidades">
+              <a href="#" id="listarEntidades">
                 <i class="fa fa-dashboard"></i> <span>Entidad</span> <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu" id="listaEntidades" atyle="display: none;">
               </ul>
             </li>
             <li class="treeview">
-             <a href="./programacion.jsp" id="listarProgramacion">
+             <a href=".#" id="listarProgramacion">
                 <i class="fa fa-files-o"></i>
                 <span>Estructura Programática</span>
                 <span class="label label-primary pull-right">4</span>
@@ -48,7 +48,7 @@
             </li> -->
             
             <li class="treeview">
-              <a href="/producto.jsp" id="listarProductos">
+              <a href="#" id="listarProductos">
                 <i class="fa fa-edit"></i> <span>Programación de Productos</span>
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
@@ -57,7 +57,7 @@
             </li>
             
             <li class="header">LABELS</li>
-            <li><a href="/documentacion.jsp"><i class="fa fa-circle-o text-red"></i> <span>Documentación</span></a></li>
+            <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Documentación</span></a></li>
             <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Diccionario de Datos</span></a></li>
             <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Preguntas Frecuentes</span></a></li>
           </ul>

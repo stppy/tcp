@@ -21,7 +21,9 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import objetos.Entidad;
 import objetos.FactHitos;
+import objetos.LineaAccion;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -70,8 +72,8 @@ public class SqlSelects {
  				objeto.setInstitucion(rs.getString("institucion"));
  				objeto.setAccion_id(rs.getInt("accion_id"));
  				objeto.setAccion(rs.getString("accion"));
- 				objeto.setCantidad(rs.getDouble("cantidad"));
- 				objeto.setAccion_unidad_edida(rs.getString("accion_unidad_edida"));
+ 				objeto.setCantidad(rs.getDouble("accion_cantidad"));
+ 				objeto.setAccion_unidad_edida(rs.getString("accion_unidad_medida"));
  				objeto.setAccion_costo(rs.getDouble("accion_costo"));
  				objeto.setAccion_departamento_id(rs.getInt("accion_departamento_id"));
  				objeto.setAccion_departamento(rs.getString("accion_departamento"));
@@ -109,6 +111,69 @@ public class SqlSelects {
  		}
  		return objetos;
    }
+	
+	public static List<Entidad> selectEntidad(String condition) throws SQLException{
+   	 Connection conect=ConnectionConfiguration.conectar();
+		 String query = " select * from fact_entidades "+condition;
+		 
+		 Statement statement = null;
+		 ResultSet rs=null;
+		 List<Entidad> objetos = new ArrayList<Entidad>();
+
+		try {
+			statement = conect.createStatement();
+			rs=statement.executeQuery(query);
+			while(rs.next()){
+				Entidad objeto = new Entidad();
+				objeto.setInstitucion_id(rs.getInt("institucion_id"));
+				objeto.setInstitucion(rs.getString("institucion"));
+
+				objetos.add(objeto);
+			}
+		}
+		catch (SQLException e) {e.printStackTrace();}
+		finally{
+			if (statement != null) {statement.close();}
+			if (conect != null) {conect.close();}
+		}
+		return objetos; 
+  }
+	public static List<LineaAccion> seletLineaAccion(String condition) throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+			 String query = " select * from fact_entidad_linea "+condition;
+			 
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 List<LineaAccion> objetos = new ArrayList<LineaAccion>();
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					LineaAccion objeto = new LineaAccion();
+					objeto.setInstitucion_id(rs.getInt("institucion_id"));
+					objeto.setInstitucion(rs.getString("institucion"));
+					objeto.setLinea_accion_id(rs.getInt("linea_accion_id"));
+					objeto.setLinea_accion(rs.getString("linea_accion"));
+					objeto.setAccion_unidad_medida(rs.getString("accion_unidad_medida"));
+					objeto.setCantidad_ejecutada_hoy(rs.getDouble("sum"));
+					objeto.setAnho(rs.getInt("date_part"));
+					objeto.setSuma_programada_anho(rs.getDouble("sumprog"));
+					objeto.setSuma_programada_hoy(rs.getDouble("sumproghoy"));
+					objeto.setCosto_ejecutado(rs.getDouble("costo_ejecutado"));
+					objeto.setCosto_programado_anho(rs.getDouble("costo_programado_anho"));
+					objeto.setCosto_programado_hoy(rs.getDouble("costo_programado_hoy"));
+
+					objetos.add(objeto);
+				}
+			}
+			catch (SQLException e) {e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos; 
+	  }
 	
 
 //    public static List<ProyectoSNIP> selectProyectoSnip(String condition) throws SQLException{

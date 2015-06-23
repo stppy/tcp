@@ -4,9 +4,9 @@
         <!-- Logo -->
         <a href="index.jsp" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>s</b>pr</span>
+          <span class="logo-mini"><b>t</b>cp</span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>spr</b>STP</span>
+          <span class="logo-lg"><b>tcp</b>STP</span>
         </a>
 
         <!-- Header Navbar: style can be found in header.less -->

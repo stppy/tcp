@@ -28,13 +28,13 @@ public class ConnectionConfiguration {
 		 Connection con = null;
 	        Statement st = null;
 	        ResultSet rs = null;
-	        try {Class.forName("com.postgres.jdbc.Driver");}
+	        try {Class.forName("org.postgresql.Driver");}
 	        catch (ClassNotFoundException e) {e.printStackTrace();}
 	        String url = "";
 	        String user = "bpm";
 	        String password = "cybiraconsulting";
 
-	        try {con = DriverManager.getConnection("jdbc:postgres://192.168.3.11/stp_crm2?useUnicode=true&characterEncoding=UTF-8", "bpm", "cybiraconsulting");}
+	        try {con = DriverManager.getConnection("jdbc:postgresql://192.168.3.11/stp_crm2?useUnicode=true&characterEncoding=UTF-8&user=bpm&password=cybiraconsulting");}
 	        catch (SQLException ex) {
 	            Logger lgr = Logger.getLogger(SqlHelper.class.getName());
 	            lgr.log(Level.SEVERE, ex.getMessage(), ex);
