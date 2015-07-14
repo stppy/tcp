@@ -48,6 +48,39 @@ public class SqlSelects {
 	        return con;
 	}*/
 	
+	public static List<Usuario> selectUsuario(String condition) throws SQLException{
+ 	 Connection conect=ConnectionConfiguration.conectarSpr();
+		 String query = " select * from usuario "+condition;
+		 
+		 Statement statement = null;
+		 ResultSet rs=null;
+		 List<Usuario> objetos = new ArrayList<Usuario>();
+
+		try {
+			statement = conect.createStatement();
+			rs=statement.executeQuery(query);
+			while(rs.next()){
+				Usuario objeto = new Usuario();
+
+				objeto.setId(rs.getInt("id"));
+				objeto.setCorreo(rs.getString("correo"));
+				objeto.setNombre(rs.getString("nombre"));
+				objeto.setEntidad(rs.getString("entidad"));
+				objeto.setEntidad_id(rs.getInt("entidad_id"));
+				objeto.setNivel_id(rs.getInt("nivel_id"));
+				
+				
+				objetos.add(objeto);
+			}
+		}
+		catch (SQLException e) {e.printStackTrace();}
+		finally{
+			if (statement != null) {statement.close();}
+			if (conect != null) {conect.close();}
+		}
+		return objetos;
+}
+	
 	public static List<FactHitos> selectFactHitos(String condition) throws SQLException{
     	 Connection conect=ConnectionConfiguration.conectar();
  		 String query = " select * from fact_hitos "+condition;
@@ -163,7 +196,7 @@ public class SqlSelects {
 					objeto.setCosto_ejecutado(rs.getDouble("costo_ejecutado"));
 					objeto.setCosto_programado_anho(rs.getDouble("costo_programado_anho"));
 					objeto.setCosto_programado_hoy(rs.getDouble("costo_programado_hoy"));
-
+					objeto.setLinea_accion_meta(rs.getDouble("linea_accion_meta"));
 					objetos.add(objeto);
 				}
 			}

@@ -94,13 +94,22 @@ if (user != null) { %>
 		
 		
 		var el2json = $.ajax({
-	    	url:'http://www.programacionsnpp.com/ws/spt-lineas.php?uname=STP&upasswd=STPws2015!',
+	    	url:'http://www.programacionsnpp.com/ws/stp-lineas.php?uname=STP&upasswd=STPws2015!',
 	      	type:'get',
 	      	dataType:'json',
 	      	crossDomain:true,
 	      	async:false       
 	    }).responseText;
 		var el2=JSON.parse(el2json);
+		
+		var acc2json = $.ajax({
+	    	url:'http://www.programacionsnpp.com/ws/stp.php?uname=STP&upasswd=STPws2015!',
+	      	type:'get',
+	      	dataType:'json',
+	      	crossDomain:true,
+	      	async:false       
+	    }).responseText;
+		var acc2=JSON.parse(acc2json);
 		
 		var lineasDeAccion= [];
 		
@@ -188,7 +197,7 @@ if (user != null) { %>
 								var porcentajeAnhoEje = "";
 								var porcentajeHoyEje ="";
 							}
-							$("#cuerpoTabla").append('<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+anho2.linea_accion+'</td><td>'+anho2.accion_unidad_medida+'</td><td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td<td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td>><td></td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td>'+numeroConComa(anho2.suma_programada_hoy)+'</td><td>'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td><td class=" text-center '+porHejeClass+'"><strong>'+porcentajeHoyEje+'</strong></td></tr>');
+							$("#cuerpoTabla").append('<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+anho2.linea_accion+'</td><td>'+anho2.accion_unidad_medida+'</td><td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td<td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td></td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td>'+numeroConComa(anho2.suma_programada_hoy)+'</td><td>'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td><td class=" text-center '+porHejeClass+'"><strong>'+porcentajeHoyEje+'</strong></td></tr>');
 							anho2="";
 							anho1="";
 						}
@@ -224,6 +233,10 @@ if (user != null) { %>
 
 <style>
 textarea { text-transform: uppercase; }
+.cell-bordered2  {
+  border: 1px solid #dddddd;
+  border-right-width:0px;
+}
 </style>
     <div class="wrapper">
 
@@ -269,8 +282,8 @@ textarea { text-transform: uppercase; }
                   <th colspan="5">
                   	Lineas De Acción por Entidad
                   </th>
-                  <th colspan="3" class="text-center" style="border-right:1px">Programación</th>
-                  <th colspan="3" class="text-center" style="border-right:1px">Ejecución</th>
+                  <th colspan="3" class="text-center cell-bordered2">Programación</th>
+                  <th colspan="3" class="text-center cell-bordered2">Ejecución</th>
                 </tr>
                 <tr style="background-color: white;">
                   <th>Linea de Acción</th>
@@ -278,10 +291,10 @@ textarea { text-transform: uppercase; }
                   <th>Base 2014</th>
                   <th>Costo (MM)</th>
                   <th><!-- Meta 2015 --></th>
-                  <th style="border-right:1px">Cant del Año</th>
+                  <th class="cell-bordered2">Cant del Año</th>
                   <th>% del Año</th>
                   <th>Cant. Hoy</th>
-                  <th style="border-right:1px">Cant. Hoy</th>
+                  <th class="cell-bordered2">Cant. Hoy</th>
                   <th>% del Año</th>
                   <th>Desempeño</th>
                   

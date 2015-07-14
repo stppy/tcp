@@ -20,7 +20,7 @@
             <ul class="nav navbar-nav">
 
               <li class="dropdown user user-menu">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <a id="user-menu" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                  <img src="dist/img/2/user.png" class="user-image" alt="User Image"/>
                  
                   <span id="PerfilUsuario" class="hidden-xs"></span>

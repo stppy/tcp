@@ -13,6 +13,7 @@ import java.sql.SQLException;
 
 
 
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.servlet.ServletException;
@@ -23,6 +24,8 @@ import javax.sql.DataSource;
  
 
 import javax.xml.datatype.DatatypeConfigurationException;
+
+import py.gov.stp.tools.SqlSelects;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -175,6 +178,16 @@ public class ajaxSelects extends HttpServlet {
 				catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos);
         		out.println(json.toString());
+        	}
+        	if (action.equals("getUsuarios")){
+        		List objetos=null;
+        		if (usuario!=null) condition = " where correo ='"+usuario+"'";
+				try {objetos = SqlSelects.selectUsuario(condition);}
+				catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		myObj.addProperty("success", true);
+        		myObj.add("usuarios", json);
+        		out.println(myObj.toString());
         	}
        }
        out.close();

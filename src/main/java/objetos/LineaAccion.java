@@ -13,6 +13,7 @@ public class LineaAccion {
 	protected double costo_ejecutado;
 	protected double costo_programado_anho;
 	protected double costo_programado_hoy;
+	protected double linea_accion_meta;
 	public int getInstitucion_id() {
 		return institucion_id;
 	}
@@ -84,6 +85,12 @@ public class LineaAccion {
 	}
 	public void setCosto_programado_hoy(double costo_programado_hoy) {
 		this.costo_programado_hoy = costo_programado_hoy;
+	}
+	public double getLinea_accion_meta() {
+		return linea_accion_meta;
+	}
+	public void setLinea_accion_meta(double linea_accion_meta) {
+		this.linea_accion_meta = linea_accion_meta;
 	}
 	
 	
