@@ -212,15 +212,14 @@ if (user != null) { %>
 					}
 				}
 			}
-		}
-		
+		}		
 		$("body").on("click", ".btn-success",function(event){
 			
-			var editarProgramaModal="";	
-			editarProgramaModal='<h1>Probando el sistema</h1>';
+			var agregarCuerpoModal="";	
+			agregarCuerpoModal='<h1>Probando el sistema</h1>';
 			
 			$('#myModal').find(".modal-body").html("");
-			$('#myModal').find(".modal-body").html(editarProgramaModal);
+			$('#myModal').find(".modal-body").html(agregarCuerpoModal);
     		
 	
 		});
