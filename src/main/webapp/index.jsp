@@ -19,6 +19,9 @@
   		<script src="https://cdnjs.cloudflare.com/ajax/libs/floatthead/1.2.10/jquery.floatThead.min.js"></script>
         
 <!--   <script src="frames/entidad.js" type="text/javascript"></script> -->
+
+
+<link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
 </head>
 <body class="skin-blue sidebar-mini sidebar-collapse">
 <% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%>
@@ -38,8 +41,8 @@ if (user != null) { %>
 		        '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
 		        '<h4 class="modal-title" id="myModalLabel">Aqui va el titulo</h4>'+
 		      '</div>'+
-		      '<div class="modal-body" id="lista-pnd">'+
-		      '</div>'+
+		      '<div class="modal-body" id="cambiarId">'+
+		      '</div>'+ 
 		      '<div class="modal-footer">'+
 		        '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'+
 		        '<button type="button" class="btn btn-primary">Save changes</button>'+
@@ -47,7 +50,7 @@ if (user != null) { %>
 		    '</div>'+
 		  '</div>'+  
 		'</div>';
-		$('#cuerpoTabla').append(tableroModal);
+		$('#cuerpoTabla').append(tableroModal); 
 		
 	
 		var entidadCas = "";
@@ -140,7 +143,7 @@ if (user != null) { %>
 								}
 								
 								//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
-								$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal">M</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+anho2.linea_accion+'</td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+anho2.accion_unidad_medida+'</td><td>'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td>'+numeroConComa(anho2.suma_programada_hoy)+'</td><td class="cell-bordered2">'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class="text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
+								$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td><button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-map-marker"></span></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+anho2.linea_accion+'</td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+anho2.accion_unidad_medida+'</td><td>'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td>'+numeroConComa(anho2.suma_programada_hoy)+'</td><td class="cell-bordered2">'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class="text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
 								
 								
 								//<td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td> penultimo
@@ -204,7 +207,7 @@ if (user != null) { %>
 								porHejeClassRow="";
 							}
 							//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
-							$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal">M</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+anho2.linea_accion+'</td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+anho2.accion_unidad_medida+'</td><td>'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td>'+numeroConComa(anho2.suma_programada_hoy)+'</td><td class="cell-bordered2">'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class=" text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
+							$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td><button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-map-marker"></span></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+anho2.linea_accion+'</td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+anho2.accion_unidad_medida+'</td><td>'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td>'+numeroConComa(anho2.suma_programada_hoy)+'</td><td class="cell-bordered2">'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class=" text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
 							//<td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td> penultima
 							anho2="";
 							anho1="";
@@ -213,17 +216,20 @@ if (user != null) { %>
 				}
 			}
 		}		
-		$("body").on("click", ".btn-success",function(event){
+		$("body").on("click", ".btn-default",function(event){
 			
 			var agregarCuerpoModal="";	
-			agregarCuerpoModal='<h1>Probando el sistema</h1>';
+			agregarCuerpoModal='<h1>Probando el sistema</h1>'+
+		      				   '<iframe width="100%" height="520" frameborder="0" src="http://geo.stp.gov.py/user/stp/viz/e12b848e-263c-11e5-a5fd-b6fa9714a3b6/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>';
 			
 			$('#myModal').find(".modal-body").html("");
 			$('#myModal').find(".modal-body").html(agregarCuerpoModal);
     		
-	
+			
 		});
-	    event.stopPropagation();
+		event.stopPropagation();
+		
+
 		});
 
 	
@@ -248,6 +254,7 @@ if (user != null) { %>
 </script>
 
 <!-- /piwik -->
+		
 
 
 <style>
@@ -394,5 +401,12 @@ $tabla.floatThead({
         <%  } else { %>
 				<p>Favor Iniciar Sesion</p>
 			<%  } %>
+	
+	
+	
+	    <!-- include cartodb.js library -->
+    <script src="../dist/cartodb.uncompressed.js"></script>
+
+
   </body>
 </html>
