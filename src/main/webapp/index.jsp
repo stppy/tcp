@@ -30,6 +30,100 @@ if (user != null) { %>
 	$(document).ready(function(){
 		
 		
+		var tableroModal="";
+		tableroModal='<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'+
+		  '<div class="modal-dialog">'+
+		    '<div class="modal-content">'+
+		      '<div class="modal-header">'+
+		        '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+		        '<h4 class="modal-title" id="myModalLabel">Estrategias PND 2030</h4>'+
+		      '</div>'+
+		      '<div class="modal-body" id="lista-pnd">'+
+		      '</div>'+
+		      '<div class="modal-footer">'+
+		        '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'+
+		        '<button type="button" class="btn btn-primary">Save changes</button>'+
+		      '</div>'+
+		    '</div>'+
+		  '</div>'+  
+		'</div>';
+		$('.content-wrapper').append(tableroModal);
+		
+		$("body").on("click", ".btn-default",function(event){
+			var tipoPrograma = $(this).attr("tipoPrograma");
+			var queBotonPresiono = $(this).attr("data-target");
+			var codigoPrograma = $(this).attr("codigoPrograma");			
+			var editarProgramaModal="";
+			if(queBotonPresiono == "#myModal")
+			{// Editar programa
+			
+				
+				var programas = $.ajax({
+		        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getProgramas&nivel='+nivel+'&entidad='+entidad+'&tipoPresupuesto='+tipoPrograma+'&programa='+codigoPrograma,
+		          	type:'get',
+		          	dataType:'json',
+		          	async:false       
+		        }).responseText;
+
+				programas = JSON.parse(programas);
+				programas = programas.programas;
+				
+			editarProgramaModal='<ul  class="col-md-12">'+
+			'<form class="form-horizontal" id="form-programa-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+codigoPrograma+'">'+
+				
+			  ' <input type="hidden" class="form-control" value="2015" name="anio" disable="" />'+
+              ' <input type="hidden" class="form-control" value="'+nivel+'" name="nivel" disable="" />'+
+              ' <input type="hidden" class="form-control" value="'+entidad+'" name="entidad" disable="" />'+
+              ' <input type="hidden" class="form-control" value="'+tipoPrograma+'" name="tipoPrograma" />'+
+              ' <input type="hidden" class="form-control" name="resultado" value="'+programas[0].resultado+'">'+
+               
+				'<div class="form-group">'+
+                  '<label>Nombre</label>'+
+                  '<input type="text" class="form-control" value="'+programas[0].nombrePrograma+'" name="nombrePrograma" >'+
+               ' </div>'+
+
+                '<div class="form-group">'+
+                  '<label>Abreviación</label>'+
+                  '<input type="text" class="form-control" name="abrevPrograma" value="'+programas[0].abrevPrograma+'">'+
+                '</div>'+
+                
+                ' <div class="form-group">'+
+                 ' <label>Objetivo</label>'+
+                 ' <textarea class="form-control" rows="5" name="objetivo" >'+programas[0].objetivo+'</textarea>'+
+               ' </div>'+
+               
+                  '<div class="form-group">'+
+                 ' <label>Diagnostico</label>'+
+                 ' <textarea class="form-control" rows="5" name="diagnostico" >'+programas[0].diagnostico+'</textarea>'+
+                '</div>'+
+             
+                 ' <div class="form-group">'+
+                 ' <label>Base Legal</label>'+
+                 ' <textarea class="form-control" rows="3" name="baseLegal" >'+programas[0].baseLegal+'</textarea>'+
+               ' </div>'+
+                       
+               ' <div class="form-group">'+
+                 ' <label>Departamento</label>'+
+                 ' <select name="codigoDepartamento" id="departamento-programa-'+programas[0].codigoPrograma+'" >'+optionDepartamentos+'</select>'+
+                 ' </div>'+
+                     	
+                '<div class="box-footer">'+
+                	'<button type="submit" style="margin-right:50px" class="btn btn-primary" id="guardar-programa-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+codigoPrograma+'">Guardar</button>'+
+              ' </div>'+
+
+			'</form>'+
+		'</ul>';
+			
+			$('#myModal').find(".modal-body").html("");
+			$('#myModal').find(".modal-body").html(editarProgramaModal);
+    		
+		}	
+			
+		
+		
+		
+		
+		
 		var entidadCas = "";
 		entidadCas ="<%=attributes.get("entidad") %>";
 		var usuarios = $.ajax({
@@ -120,7 +214,7 @@ if (user != null) { %>
 								}
 								
 								//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
-								$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+anho2.linea_accion+'</td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+anho2.accion_unidad_medida+'</td><td>'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td>'+numeroConComa(anho2.suma_programada_hoy)+'</td><td class="cell-bordered2">'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class="text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
+								$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td><button type="button" class="btn btn-success btn-xs">M</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+anho2.linea_accion+'</td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+anho2.accion_unidad_medida+'</td><td>'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td>'+numeroConComa(anho2.suma_programada_hoy)+'</td><td class="cell-bordered2">'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class="text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
 								
 								
 								//<td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td> penultimo
@@ -184,7 +278,7 @@ if (user != null) { %>
 								porHejeClassRow="";
 							}
 							//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
-							$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+anho2.linea_accion+'</td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+anho2.accion_unidad_medida+'</td><td>'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td>'+numeroConComa(anho2.suma_programada_hoy)+'</td><td class="cell-bordered2">'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class=" text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
+							$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td><button type="button" class="btn btn-success btn-xs">M</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+anho2.linea_accion+'</td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+anho2.accion_unidad_medida+'</td><td>'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td>'+numeroConComa(anho2.suma_programada_hoy)+'</td><td class="cell-bordered2">'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class=" text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
 							//<td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td> penultima
 							anho2="";
 							anho1="";
