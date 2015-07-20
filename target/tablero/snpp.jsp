@@ -74,7 +74,7 @@ if (user != null) { %>
 		    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		}
 		
-		var entidadesjson = $.ajax({
+	/* 	var entidadesjson = $.ajax({
 	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getEntidades',
 	      	type:'get',
 	      	dataType:'json',
@@ -82,7 +82,7 @@ if (user != null) { %>
 	      	async:false       
 	    }).responseText;
 		var entidades=JSON.parse(entidadesjson);
-		
+	 */	
 		var eljson = $.ajax({
 	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getLineasAccion',
 	      	type:'get',
@@ -112,99 +112,70 @@ if (user != null) { %>
 		var acc2=JSON.parse(acc2json);
 		
 		var lineasDeAccion= [];
+		lineasDeAccion[1]= new Object();
+		lineasDeAccion[2]= new Object();
+		lineasDeAccion[3]= new Object();
+		
+		lineasDeAccion[1].linea_accion="CAPACITACION EN SECTOR AGROPECUARIO";
+		lineasDeAccion[2].linea_accion="CAPACITACION EN SECTOR INDUSTRIAL";
+		lineasDeAccion[3].linea_accion="CAPACITACION EN SECTOR COMERCIAL Y SERVICIOS";
+		
+		var today = new Date();
+		var dd = today.getDate();
+		var mm = today.getMonth()+1; //January is 0!
+		var yyyy = today.getFullYear();
+
+		if(dd<10) {
+		    dd='0'+dd
+		} 
+
+		if(mm<10) {
+		    mm='0'+mm
+		} 
+
+		today = yyyy+'-'+mm+'-'+dd;
+		
 		
 		var sumporAClass="";
 		var porAejeClass="";
 		var porHejeClass="";
 		
-		for (var i = 0; i< entidades.length;i++){
-			$("#cuerpoTabla").append('<tr><td colspan="11" ><strong>'+entidades[i].institucion+'</strong></td></tr>');
-			for(var j=0;j<el.length;j++){
-				if (el[j].institucion_id==entidades[i].institucion_id){
-					if (lineasDeAccion.indexOf(el[j].linea_accion_id)<0){
-						lineasDeAccion.push(el[j].linea_accion_id);
-						if(el[j].anho<="2014"){
-							var anho1=el[j];
-							var anho2;
-							for(var k=0;k<el.length;k++){
-								if (anho1.institucion_id==el[k].institucion_id && anho1.linea_accion_id==el[k].linea_accion_id && el[k].anho =="2015"){
-									anho2=el[k];
-								}
-							}
-							if (typeof anho1.cantidad_ejecutada_hoy==="undefined") {var anho1= new Object(); anho1.cantidad_ejecutada_hoy=""};
-							if (typeof anho2.cantidad_ejecutada_hoy==="undefined") {var anho2= new Object(); anho2.cantidad_ejecutada_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
-							if (anho2.suma_programada_anho>0){
-								var porcentajeAnho = (anho2.suma_programada_hoy*100)/anho2.suma_programada_anho;
-								porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
-								var porcentajeAnhoEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_anho;
-								porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
-								var porcentajeHoyEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_hoy;
-								porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
-								/*if (porcentajeAnho<=70) sumporAClass = "text-danger";
-								if (porcentajeAnho>70) sumporAClass = "text-warning";
-								if (porcentajeAnho>90) sumporAClass = "text-success";
-								
-								if (porcentajeAnhoEje<=70) porAejeClass = "text-danger";
-								if (porcentajeAnhoEje>70) porAejeClass = "text-warning";
-								if (porcentajeAnhoEje>90) porAejeClass = "text-success";
-								*/
-								if (porcentajeHoyEje<=70) porHejeClass = "text-danger";
-								if (porcentajeHoyEje>70) porHejeClass = "text-warning";
-								if (porcentajeHoyEje>90) porHejeClass = "text-success";
-								
-								if ( porcentajeHoyEje ==="NaN") porcentajeHoyEje="";
-							}else{
-								var porcentajeAnho = "";
-								var porcentajeAnhoEje = "";
-								var porcentajeHoyEje ="";
-							}
-							$("#cuerpoTabla").append('<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+anho1.linea_accion+'</td><td>'+anho1.accion_unidad_medida+'</td><td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td><td>Gs.'+numeroConComa((anho1.costo_programado_anho/1000000).toFixed(0))+'</td><td></td><td>'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td>'+numeroConComa(anho2.suma_programada_hoy)+'</td><td>'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td><td class="text-center '+porHejeClass+'"><strong>'+porcentajeHoyEje+'</strong></td></tr>');
-							anho2="";
-							anho1="";
-						}
-						if(el[j].anho>="2015"){
-							var anho2=el[j];
-							var anho1;
-							for(var k=0;k<el.length;k++){
-								if (anho1.institucion_id==el[k].institucion_id && anho1.linea_accion_id==el[k].linea_accion_id && el[k].date_part =="2014"){
-									anho1=el[k];
-								}
-							}
-							if (typeof anho1.cantidad_ejecutada_hoy==="undefined") {var anho1= new Object(); anho1.cantidad_ejecutada_hoy="";};
-							if (typeof anho2.cantidad_ejecutada_hoy==="undefined") {var anho2= new Object(); anho2.cantidad_ejecutada_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
-							if (anho2.suma_programada_anho>0){
-								var porcentajeAnho = (anho2.suma_programada_hoy*100)/anho2.suma_programada_anho;
-								porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
-								var porcentajeAnhoEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_anho;
-								porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
-								var porcentajeHoyEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_hoy;
-								porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
-								/*if (porcentajeAnho<=70) sumporAClass = "text-danger";
-								if (porcentajeAnho>70) sumporAClass = "text-warning";
-								if (porcentajeAnho>90) sumporAClass = "text-success";
-								
-								if (porcentajeAnhoEje<=70) porAejeClass = "text-danger";
-								if (porcentajeAnhoEje>70) porAejeClass = "text-warning";
-								if (porcentajeAnhoEje>90) porAejeClass = "text-success";
-								*/
-								if (porcentajeHoyEje<=70) porHejeClass = "text-danger";
-								if (porcentajeHoyEje>70) porHejeClass = "text-warning";
-								if (porcentajeHoyEje>90) porHejeClass = "text-success";
-								
-								if (  porcentajeHoyEje ==="NaN") porcentajeHoyEje="";
-							}else{
-								var porcentajeAnho = "";
-								var porcentajeAnhoEje = "";
-								var porcentajeHoyEje ="";
-							}
-							$("#cuerpoTabla").append('<tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+anho2.linea_accion+'</td><td>'+anho2.accion_unidad_medida+'</td><td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td<td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td></td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td>'+numeroConComa(anho2.suma_programada_hoy)+'</td><td>'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td><td class=" text-center '+porHejeClass+'"><strong>'+porcentajeHoyEje+'</strong></td></tr>');
-							anho2="";
-							anho1="";
-						}
-					}
-				}
-			}
+		$("#cuerpoTabla").append('<tr><td colspan="12" ><strong>SNPP</strong></td></tr>');
+		for (var i = 0; i< acc2.length;i++){
+		//	if (acc2[i].accion_fecha_fin>="2015-01-01" && acc2[i].accion_fecha_fin<="2015-12-31"){
+				if(acc2[i].accion_costo>0) lineasDeAccion[acc2[i].sector].costo_programado_anho+=parseFloat(acc2[i].accion_costo);
+				if(acc2[i].cantidad>0) lineasDeAccion[acc2[i].sector].suma_programada_anho+=parseFloat(acc2[i].cantidad);
+				if(acc2[i].cantidad>0) lineasDeAccion[acc2[i].sector].linea_accion_meta+=parseFloat(acc2[i].cantidad);
+			//	if (acc2.accion_fecha_fin<=today){
+					if(acc2[i].cantidad>0) lineasDeAccion[acc2[i].sector].cantidad_ejectudada_hoy+=parseFloat(acc2[i].cantidad);
+					if(acc2[i].cantidad>0) lineasDeAccion[acc2[i].sector].suma_programada_hoy+=parseFloat(acc2[i].cantidad);
+				//}
+			//}
 		}
+		lineasDeAccion[1].accion_unidad_medida="Personas Capacitadas";
+		lineasDeAccion[2].accion_unidad_medida="Personas Capacitadas";
+		lineasDeAccion[3].accion_unidad_medida="Personas Capacitadas";
+		
+		for(j=1;j<=lineasDeAccion.length;j++){
+			
+			var porcentajeAnho = (lineasDeAccion[j].suma_programada_hoy*100)/lineasDeAccion[j].suma_programada_anho;
+			porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
+			var porcentajeAnhoEje = (lineasDeAccion[j].cantidad_ejecutada_hoy*100)/lineasDeAccion[j].suma_programada_anho;
+			porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
+			var porcentajeHoyEje = (lineasDeAccion[j].cantidad_ejecutada_hoy*100)/lineasDeAccion[j].suma_programada_hoy;
+			porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
+			
+			porHejeClassRow="";
+			if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";porHejeClassRow="danger";}
+			if (porcentajeHoyEje>70){ porHejeClass = "text-warning";porHejeClassRow="warning";}
+			if (porcentajeHoyEje>90){ porHejeClass = "text-success";porHejeClassRow="success";}
+			
+			$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+lineasDeAccion[j].linea_accion+'</td><td>Gs.'+numeroConComa((lineasDeAccion[j].costo_programado_anho/1000000).toFixed(0))+'</td><td>'+lineasDeAccion[j].accion_unidad_medida+'</td><td>'+numeroConComa(lineasDeAccion[j].cantidad_ejecutada_hoy)+'</td><td>'+numeroConComa(lineasDeAccion[j].linea_accion_meta)+'</td><td></td><td class="cell-bordered2">'+numeroConComa(lineasDeAccion[j].suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td>'+numeroConComa(lineasDeAccion[j].suma_programada_hoy)+'</td><td class="cell-bordered2">'+numeroConComa(lineasDeAccion[j].cantidad_ejecutada_hoy)+'</td><td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td><td class="text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
+			lineasDeAccion[j]="";
+			
+		}
+		
+		
 	});
 
 	
