@@ -90,7 +90,8 @@ if (user != null) { %>
 							if (typeof anho1.cantidad_ejecutada_hoy==="undefined") {var anho1= new Object(); anho1.cantidad_ejecutada_hoy=""};
 							if (typeof anho2.cantidad_ejecutada_hoy==="undefined") {var anho2= new Object(); anho2.cantidad_ejecutada_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
 							if (anho2.suma_programada_anho>0){
-								var porcentajeAnho = (anho2.suma_programada_hoy*100)/anho2.suma_programada_anho;
+							//	var porcentajeAnho = (anho2.suma_programada_hoy*100)/anho2.suma_programada_anho;
+								var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
 								porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
 								var porcentajeAnhoEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_anho;
 								porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
@@ -105,10 +106,24 @@ if (user != null) { %>
 								if (porcentajeAnhoEje>90) porAejeClass = "text-success";
 								*/
 								porHejeClassRow="";
+								/*
 								if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";porHejeClassRow="danger";}
 								if (porcentajeHoyEje>70){ porHejeClass = "text-warning";porHejeClassRow="warning";}
 								if (porcentajeHoyEje>90){ porHejeClass = "text-success";porHejeClassRow="success";}
+								*/
+								if (porcentajeAnho<=70){ porHejeClassRow="danger";porHejeClass="";}
+								if (porcentajeAnho>70){ porHejeClassRow="warning";porHejeClass="";}
+								if (porcentajeAnho>90){ porHejeClassRow="success";
+									if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";}
+									if (porcentajeHoyEje>70){ porHejeClass = "text-warning";}
+									if (porcentajeHoyEje>90){ porHejeClass = "text-success";}
+								}
 								
+								//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
+								$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+anho2.linea_accion+'</td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+anho2.accion_unidad_medida+'</td><td>'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td>'+numeroConComa(anho2.suma_programada_hoy)+'</td><td class="cell-bordered2">'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class="text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
+								
+								
+								//<td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td> penultimo
 								if ( porcentajeHoyEje ==="NaN"){ porcentajeHoyEje="";porHejeClassRow="";}
 							}else{
 								var porcentajeAnho = "";
@@ -116,7 +131,7 @@ if (user != null) { %>
 								var porcentajeHoyEje ="";
 								porHejeClassRow="";
 							}
-							$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+anho1.linea_accion+'</td><td>Gs.'+numeroConComa((anho1.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+anho1.accion_unidad_medida+'</td><td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td><td>'+numeroConComa(anho1.linea_accion_meta)+'</td><td></td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td>'+numeroConComa(anho2.suma_programada_hoy)+'</td><td class="cell-bordered2">'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td><td class="text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
+							
 							anho2="";
 							anho1="";
 						}
@@ -131,7 +146,8 @@ if (user != null) { %>
 							if (typeof anho1.cantidad_ejecutada_hoy==="undefined") {var anho1= new Object(); anho1.cantidad_ejecutada_hoy="";};
 							if (typeof anho2.cantidad_ejecutada_hoy==="undefined") {var anho2= new Object(); anho2.cantidad_ejecutada_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
 							if (anho2.suma_programada_anho>0){
-								var porcentajeAnho = (anho2.suma_programada_hoy*100)/anho2.suma_programada_anho;
+								//var porcentajeAnho = (anho2.suma_programada_hoy*100)/anho2.suma_programada_anho;
+								var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
 								porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
 								var porcentajeAnhoEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_anho;
 								porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
@@ -146,9 +162,19 @@ if (user != null) { %>
 								if (porcentajeAnhoEje>90) porAejeClass = "text-success";
 								*/
 								porHejeClassRow="";
+								/*
 								if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";porHejeClassRow="danger";}
 								if (porcentajeHoyEje>70){ porHejeClass = "text-warning";porHejeClassRow="warning";}
 								if (porcentajeHoyEje>90){ porHejeClass = "text-success";porHejeClassRow="success";}
+								*/
+								if (porcentajeAnho<=70){ porHejeClassRow="danger";porHejeClass="";}
+								if (porcentajeAnho>70){ porHejeClassRow="warning";porHejeClass="";}
+								if (porcentajeAnho>90){ porHejeClassRow="success";
+									if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";}
+									if (porcentajeHoyEje>70){ porHejeClass = "text-warning";}
+									if (porcentajeHoyEje>90){ porHejeClass = "text-success";}
+								}
+								
 								
 								if (  porcentajeHoyEje ==="NaN"){ porcentajeHoyEje="";porHejeClassRow="";}
 							}else{
@@ -157,7 +183,9 @@ if (user != null) { %>
 								var porcentajeHoyEje ="";
 								porHejeClassRow="";
 							}
-							$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+anho2.linea_accion+'</td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+anho2.accion_unidad_medida+'</td><td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td><td>'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td>'+numeroConComa(anho2.suma_programada_hoy)+'</td><td class="cell-bordered2">'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td><td class=" text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
+							//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
+							$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+anho2.linea_accion+'</td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+anho2.accion_unidad_medida+'</td><td>'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td>'+numeroConComa(anho2.suma_programada_hoy)+'</td><td class="cell-bordered2">'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class=" text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
+							//<td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td> penultima
 							anho2="";
 							anho1="";
 						}
@@ -239,24 +267,24 @@ textarea { text-transform: uppercase; }
 	              <table id="lineasPorEntidad" class="table table-striped ">
               <thead>
                 <tr style="background-color: white;">
-                  <th colspan="6">
+                  <th colspan="5">
                   	Lineas De Acción por Entidad
                   </th>
                   <th colspan="3" class="text-center cell-bordered2">Programación a la fecha</th>
-                  <th colspan="3" class="text-center cell-bordered2">Ejecución a la fecha</th>
+                  <th colspan="2" class="text-center cell-bordered2">Ejecución a la fecha</th>
                 </tr>
                 <tr style="background-color: white;">
                   <th></th>
                   <th>Costo (MM)</th>
                   <th>Unidad Medida</th>
-                  <th>Base 2014</th>
+                  <!-- <th>Base 2014</th>  -->
                   <th>Meta 2015</th>
                   <th><!-- Meta 2015 --></th>
                   <th class="cell-bordered2">Cant del Año</th>
                   <th>%</th>
                   <th>Cant</th>
                   <th class="cell-bordered2">Cant.</th>
-                  <th>% </th>
+                 <!-- <th>% </th> --> 
                   <th>Desempeño</th>
                   
                 </tr>
