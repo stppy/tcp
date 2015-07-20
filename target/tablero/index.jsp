@@ -30,6 +30,41 @@ if (user != null) { %>
 	$(document).ready(function(){
 		
 		
+		var tableroModal="";
+		tableroModal='<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'+
+		  '<div class="modal-dialog">'+
+		    '<div class="modal-content">'+
+		      '<div class="modal-header">'+
+		        '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+		        '<h4 class="modal-title" id="myModalLabel">Aqui va el titulo</h4>'+
+		      '</div>'+
+		      '<div class="modal-body" id="lista-pnd">'+
+		      '</div>'+
+		      '<div class="modal-footer">'+
+		        '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'+
+		        '<button type="button" class="btn btn-primary">Save changes</button>'+
+		      '</div>'+
+		    '</div>'+
+		  '</div>'+  
+		'</div>';
+		$('#cuerpoTabla').append(tableroModal);
+		
+		$("body").on("click", ".btn-success",function(event){
+			
+			var editarProgramaModal="";	
+			editarProgramaModal='<h1>Probando el sistema</h1>';
+			
+			$('#myModal').find(".modal-body").html("");
+			$('#myModal').find(".modal-body").html(editarProgramaModal);
+    		
+	
+		});
+	    event.stopPropagation();
+		
+		
+		
+		
+		
 		var entidadCas = "";
 		entidadCas ="<%=attributes.get("entidad") %>";
 		var usuarios = $.ajax({
@@ -120,7 +155,7 @@ if (user != null) { %>
 								}
 								
 								//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
-								$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td><button type="button" class="btn btn-success btn-xs">M</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+anho2.linea_accion+'</td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+anho2.accion_unidad_medida+'</td><td>'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td>'+numeroConComa(anho2.suma_programada_hoy)+'</td><td class="cell-bordered2">'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class="text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
+								$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal">M</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+anho2.linea_accion+'</td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+anho2.accion_unidad_medida+'</td><td>'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td>'+numeroConComa(anho2.suma_programada_hoy)+'</td><td class="cell-bordered2">'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class="text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
 								
 								
 								//<td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td> penultimo
@@ -184,7 +219,7 @@ if (user != null) { %>
 								porHejeClassRow="";
 							}
 							//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
-							$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td><button type="button" class="btn btn-success btn-xs">M</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+anho2.linea_accion+'</td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+anho2.accion_unidad_medida+'</td><td>'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td>'+numeroConComa(anho2.suma_programada_hoy)+'</td><td class="cell-bordered2">'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class=" text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
+							$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal">M</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+anho2.linea_accion+'</td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+anho2.accion_unidad_medida+'</td><td>'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td>'+numeroConComa(anho2.suma_programada_hoy)+'</td><td class="cell-bordered2">'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class=" text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
 							//<td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td> penultima
 							anho2="";
 							anho1="";
@@ -193,7 +228,7 @@ if (user != null) { %>
 				}
 			}
 		}
-	});
+		});
 
 	
 	     </script>
