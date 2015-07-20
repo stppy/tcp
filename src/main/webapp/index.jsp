@@ -49,22 +49,7 @@ if (user != null) { %>
 		'</div>';
 		$('#cuerpoTabla').append(tableroModal);
 		
-		$("body").on("click", ".btn-success",function(event){
-			
-			var editarProgramaModal="";	
-			editarProgramaModal='<h1>Probando el sistema</h1>';
-			
-			$('#myModal').find(".modal-body").html("");
-			$('#myModal').find(".modal-body").html(editarProgramaModal);
-    		
 	
-		});
-	    event.stopPropagation();
-		
-		
-		
-		
-		
 		var entidadCas = "";
 		entidadCas ="<%=attributes.get("entidad") %>";
 		var usuarios = $.ajax({
@@ -227,7 +212,18 @@ if (user != null) { %>
 					}
 				}
 			}
-		}
+		}		
+		$("body").on("click", ".btn-success",function(event){
+			
+			var agregarCuerpoModal="";	
+			agregarCuerpoModal='<h1>Probando el sistema</h1>';
+			
+			$('#myModal').find(".modal-body").html("");
+			$('#myModal').find(".modal-body").html(agregarCuerpoModal);
+    		
+	
+		});
+	    event.stopPropagation();
 		});
 
 	
