@@ -15,7 +15,7 @@
 					 	<td> <input type="text" class="form-control" placeholder=""  value="" name="nombre" id="nivel2"></td>
 					 </tr>		
 					 
-					 	<tr colspan="2"> 
+					 	<tr> 
 					 		<td colspan="2"><table style="width:100%">
 					 			<tr>
 					 				<td></td>
@@ -71,7 +71,7 @@
 					 	<td> <input type="text" class="form-control" placeholder=""  value="" name="nombre" id="nivel2"></td>
 					 </tr>		
 					 
-					 	<tr colspan="2"> 
+					 	<tr> 
 					 		<td colspan="2"><table style="width:100%">
 					 			<tr>
 					 				<td></td>
@@ -123,7 +123,7 @@
 					 	<td>Nombre:</td> <td> <input type="text" class="form-control" placeholder=""  value="" name="nombre" id="nivel2"></td>
 					 </tr>		
 					 
-					 	<tr colspan="2"> 
+					 	<tr> 
 					 		<td colspan="2"><table style="width:100%">
 					 			<tr>
 					 				<td></td>
