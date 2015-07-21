@@ -11,16 +11,33 @@
   <head>
   <!--  ISO-8859-1 -->
   <%@ include file="/frames/head.jsp" %>
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+ <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
   
-  		<script src="https://cdnjs.cloudflare.com/ajax/libs/floatthead/1.2.10/jquery.floatThead.min.js"></script>
+   	<script src="https://cdnjs.cloudflare.com/ajax/libs/floatthead/1.2.10/jquery.floatThead.min.js"></script> -->	
         
 <!--   <script src="frames/entidad.js" type="text/javascript"></script> -->
+
 </head>
 <body class="skin-blue sidebar-mini sidebar-collapse">
+
+       <div class="modal fade" id="myModal" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">
+
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel1">Geo Tablero</h4>
+		      </div>
+		      <div class="modal-body" id="editar-subprograma">
+		     		<iframe width='100%' height='520' frameborder='0' src='http://geo.stp.gov.py/user/stp/viz/8f7c6480-2f1c-11e5-aaea-b6fa9714a3b6/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen>
+		     		</iframe>
+		      </div>
+		    </div> 
+
+		</div>
+
 <% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%>
 <% Map attributes = user.getAttributes(); 
 if (user != null) { %>
@@ -30,25 +47,8 @@ if (user != null) { %>
 	$(document).ready(function(){
 		
 		
-		var tableroModal="";
-		tableroModal='<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'+
-		  '<div class="modal-dialog">'+
-		    '<div class="modal-content">'+
-		      '<div class="modal-header">'+
-		        '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
-		        '<h4 class="modal-title" id="myModalLabel">Aqui va el titulo</h4>'+
-		      '</div>'+
-		      '<div class="modal-body" id="lista-pnd">'+
-		      '</div>'+
-		      '<div class="modal-footer">'+
-		        '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'+
-		        '<button type="button" class="btn btn-primary">Save changes</button>'+
-		      '</div>'+
-		    '</div>'+
-		  '</div>'+  
-		'</div>';
-		$('#cuerpoTabla').append(tableroModal);
 		
+
 	
 		var entidadCas = "";
 		entidadCas ="<%=attributes.get("entidad") %>";
@@ -140,7 +140,9 @@ if (user != null) { %>
 								}
 								
 								//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
-								$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal">M</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+anho2.linea_accion+'</td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+anho2.accion_unidad_medida+'</td><td>'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td>'+numeroConComa(anho2.suma_programada_hoy)+'</td><td class="cell-bordered2">'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class="text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
+								$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+anho2.linea_accion+'</td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+anho2.accion_unidad_medida+'</td><td>'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td>'+numeroConComa(anho2.suma_programada_hoy)+'</td><td class="cell-bordered2">'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class="text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
+								//<button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-map-marker"></span></button>
+								
 								
 								
 								//<td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td> penultimo
@@ -204,7 +206,8 @@ if (user != null) { %>
 								porHejeClassRow="";
 							}
 							//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
-							$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td><button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal">M</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+anho2.linea_accion+'</td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+anho2.accion_unidad_medida+'</td><td>'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td>'+numeroConComa(anho2.suma_programada_hoy)+'</td><td class="cell-bordered2">'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class=" text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
+							$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+anho2.linea_accion+'</td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+anho2.accion_unidad_medida+'</td><td>'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td>'+numeroConComa(anho2.suma_programada_hoy)+'</td><td class="cell-bordered2">'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class=" text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
+							//<button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-map-marker"></span></button>
 							//<td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td> penultima
 							anho2="";
 							anho1="";
@@ -213,19 +216,10 @@ if (user != null) { %>
 				}
 			}
 		}		
-		$("body").on("click", ".btn-success",function(event){
-			
-			var agregarCuerpoModal="";	
-			agregarCuerpoModal='<h1>Probando el sistema</h1>';
-			
-			$('#myModal').find(".modal-body").html("");
-			$('#myModal').find(".modal-body").html(agregarCuerpoModal);
-    		
+		
+	});
 	
-		});
-	    event.stopPropagation();
-		});
-
+	//event.stopPropagation();
 	
 	     </script>
   <!-- piwik -->
@@ -248,6 +242,7 @@ if (user != null) { %>
 </script>
 
 <!-- /piwik -->
+		
 
 
 <style>
@@ -257,6 +252,9 @@ textarea { text-transform: uppercase; }
   border-right-width:0px;
 }
 </style>
+	
+	
+	
     <div class="wrapper">
 
       <header class="main-header">
@@ -269,6 +267,13 @@ textarea { text-transform: uppercase; }
 
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
+      
+      
+      
+	
+		
+
+      
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
@@ -320,7 +325,7 @@ textarea { text-transform: uppercase; }
                   
                 </tr>
               </thead>
-              <tbody id = "cuerpoTabla">
+              <tbody id="cuerpoTabla">
                
               </tbody>
             </table>
@@ -333,11 +338,11 @@ textarea { text-transform: uppercase; }
 
 <script>
 var $tabla=$("#lineasPorEntidad");
-$tabla.floatThead({
+/* $tabla.floatThead({
 	scrollContainer: function($tabla){
 		return $tabla.closest('wrapper');
 	}
-})
+})*/
 </script>
           
           
@@ -394,5 +399,7 @@ $tabla.floatThead({
         <%  } else { %>
 				<p>Favor Iniciar Sesion</p>
 			<%  } %>
+
+    
   </body>
 </html>
