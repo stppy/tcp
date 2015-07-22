@@ -130,10 +130,10 @@ if (user != null) { %>
 								if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";porHejeClassRow="danger";}
 								if (porcentajeHoyEje>70){ porHejeClass = "text-warning";porHejeClassRow="warning";}
 								if (porcentajeHoyEje>90){ porHejeClass = "text-success";porHejeClassRow="success";}
-								*/
-								if (porcentajeAnho<=70){ porHejeClassRow="danger";porHejeClass="";}
-								if (porcentajeAnho>70){ porHejeClassRow="warning";porHejeClass="";}
-								if (porcentajeAnho>90){ porHejeClassRow="success";
+								
+								if (porcentajeAnho<=70){ porHejeClassRow="danger";porHejeClass="";} */
+								if (porcentajeAnho<90){ porHejeClassRow="danger";porHejeClass="";}
+								if (porcentajeAnho>=90){ porHejeClassRow="success";
 									if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";}
 									if (porcentajeHoyEje>70){ porHejeClass = "text-warning";}
 									if (porcentajeHoyEje>90){ porHejeClass = "text-success";}
@@ -188,10 +188,10 @@ if (user != null) { %>
 								if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";porHejeClassRow="danger";}
 								if (porcentajeHoyEje>70){ porHejeClass = "text-warning";porHejeClassRow="warning";}
 								if (porcentajeHoyEje>90){ porHejeClass = "text-success";porHejeClassRow="success";}
-								*/
-								if (porcentajeAnho<=70){ porHejeClassRow="danger";porHejeClass="";}
-								if (porcentajeAnho>70){ porHejeClassRow="warning";porHejeClass="";}
-								if (porcentajeAnho>90){ porHejeClassRow="success";
+
+								if (porcentajeAnho<=70){ porHejeClassRow="danger";porHejeClass="";} */
+								if (porcentajeAnho<90){ porHejeClassRow="danger";porHejeClass="";}
+								if (porcentajeAnho>=90){ porHejeClassRow="success";
 									if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";}
 									if (porcentajeHoyEje>70){ porHejeClass = "text-warning";}
 									if (porcentajeHoyEje>90){ porHejeClass = "text-success";}
@@ -251,6 +251,11 @@ textarea { text-transform: uppercase; }
   border: 1px solid #dddddd;
   border-right-width:0px;
 }
+tbody {
+    height: 100%;
+    overflow-y: auto;
+}
+
 </style>
 	
 	
