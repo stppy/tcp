@@ -7,7 +7,7 @@
 <%@ page import="java.util.*" %>
 
 <!DOCTYPE html>
-<html>
+<html> 
   <head>
   <!--  ISO-8859-1 -->
   <%@ include file="/frames/head.jsp" %>
