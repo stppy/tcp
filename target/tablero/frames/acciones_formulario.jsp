@@ -10,6 +10,7 @@
 					 	<td>URL:</td> 
 					 	<td> <input type="text" class="form-control" placeholder=""  value="" name="url" id="nivel2"></td>
 					 </tr>
+					 
 					 <tr>
 					 	<td>Nombre:</td>
 					 	<td> <input type="text" class="form-control" placeholder=""  value="" name="nombre" id="nivel2"></td>

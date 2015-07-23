@@ -216,19 +216,8 @@ if (user != null) { %>
 				}
 			}
 		}		
-<<<<<<< HEAD
-		$("body").on("click", ".btn-success",function(event){
-			
-			var agregarCuerpoModal="";	
-			agregarCuerpoModal='<h1>Probando el sistema</h1>';
-			
-			$('#myModal').find(".modal-body").html("");
-			$('#myModal').find(".modal-body").html(agregarCuerpoModal);
-    		
-=======
 		
 	});
->>>>>>> e5410c5c806ec75d9a85c80a0da0861d7a50b019
 	
 	//event.stopPropagation();
 	
