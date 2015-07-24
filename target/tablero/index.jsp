@@ -38,6 +38,19 @@
 		 </div>
 		</div>
 
+       <div class="modal fade" id="myModal1" tabindex="-1"  aria-labelledby="largeModal" aria-hidden="true" >
+		<div class="modal-dialog">
+		    <div class="modal-content" style="width:1000px; max-width:1200px;">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel1"></h4>
+		      </div>
+		      <div class="modal-body">
+		     	
+		      </div>
+		    </div> 
+		 </div>
+		</div>
 <% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%>
 <% Map attributes = user.getAttributes(); 
 if (user != null) { %>
@@ -46,10 +59,44 @@ if (user != null) { %>
 	
 	$(document).ready(function(){
 		
-		
-		
+		$("body").on("click", ".registro",function(event){
+			var codigoRegistro = $(this).attr("codigoRegistro");
+		    var idParsed = codigoRegistro.split("-");                                                            
+			var institucion_id=idParsed[1];
+			var linea_accion_id=idParsed[2];
+			var tituloModal="";
+			var cuerpoModal="";
+			
+			var registros = $.ajax({
+		    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getFactHitos&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id,
+		      	type:'get',
+		      	dataType:'json',
+		      	crossDomain:true,
+		      	async:false       
+		    }).responseText;
+			var elRegistro=JSON.parse(registros);
+			
+						
+			cuerpoModal='<table class="table table-striped ">'+
+							'<tr><td colspan="11"><center>ACCIONES A REALIZAR</center></td></tr>'+
+							'<tr><td colspan="11">Asistencia Técnica Agropecuaria, Asistencia Técnica Agropecuaria(2015)Asistencia Técnica Agropecuaria para mejora de la producción productiva y de subsistencia a pequeños productores agropecuarios</td></tr>'+
+							'<tr><td>Acción</td><td>% Previsto</td><td>% Real</td><td>Cantidad</td><td>U. Medida</td><td>Costo</td><td>Departamento</td><td>Distrito</td><td>Fecha de Inicio</td><td>Estado</td><td>Fecha de Terminación</td></tr>';
+						for(var m=0; m<elRegistro.length;m++)
+						{
+							tituloModal='<h3><center>'+elRegistro[m].linea_accion+'</center></h3>';
+							cuerpoModal+='<tr><td>'+elRegistro[m].linea_estrategica+'</td><td>'+elRegistro[m].hito_porcentaje_programado+'</td><td>'+elRegistro[m].hito_porcentaje_ejecutado+'</td><td>'+elRegistro[m].hito_cantidad_programado+'</td><td>'+elRegistro[m].accion_unidad_edida+'</td><td>'+elRegistro[m].accion_costo+'</td><td>'+elRegistro[m].accion_departamento+'</td><td>'+elRegistro[m].accion_distrito+'</td><td>'+elRegistro[m].accion_fecha_inicio+'</td><td>'+elRegistro[m].accion_status_fin+'</td><td>'+elRegistro[m].accion_fecha_entrega+'</td></tr>';
+						}
+						cuerpoModal+='</table>';
+			
+			$('#myModal1').find(".modal-body").html("");
+			$('#myModal1').find(".modal-title").html(tituloModal);
+			$('#myModal1').find(".modal-body").html(cuerpoModal);
 
-	
+    	
+    	
+	});
+		
+		
 		var entidadCas = "";
 		entidadCas ="<%=attributes.get("entidad") %>";
 		var usuarios = $.ajax({
@@ -140,7 +187,7 @@ if (user != null) { %>
 								}
 								
 								//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
-								$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td><button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal" idRegistro='+j+'-'+el[j].institucion_id+'-'+el[j].linea_accion_id+' ><span class="glyphicon glyphicon-map-marker"></span></button></td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+anho2.linea_accion+'</td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+anho2.accion_unidad_medida+'</td><td>'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td>'+numeroConComa(anho2.suma_programada_hoy)+'</td><td class="cell-bordered2">'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class="text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
+								$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td><button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal" idRegistro='+j+'-'+el[j].institucion_id+'-'+el[j].linea_accion_id+' ><span class="glyphicon glyphicon-map-marker"></span></button></td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal1" class="registro" codigoRegistro='+j+'-'+el[j].institucion_id+'-'+el[j].linea_accion_id+'> '+anho2.linea_accion+'</a></td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</a></td><td>'+anho2.accion_unidad_medida+'</td><td>'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td>'+numeroConComa(anho2.suma_programada_hoy)+'</td><td class="cell-bordered2">'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class="text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
 																
 								
 								
@@ -205,7 +252,7 @@ if (user != null) { %>
 								porHejeClassRow="";
 							}
 							//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
-							$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td><button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal" idRegistro='+j+'-'+el[j].institucion_id+'-'+el[j].linea_accion_id+'><span class="glyphicon glyphicon-map-marker"></span></button></td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+anho2.linea_accion+'</td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+anho2.accion_unidad_medida+'</td><td>'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td>'+numeroConComa(anho2.suma_programada_hoy)+'</td><td class="cell-bordered2">'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class=" text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
+							$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td><button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal" idRegistro='+j+'-'+el[j].institucion_id+'-'+el[j].linea_accion_id+'><span class="glyphicon glyphicon-map-marker"></span></button></td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal1" class="registro" codigoRegistro='+j+'-'+el[j].institucion_id+'-'+el[j].linea_accion_id+'>'+anho2.linea_accion+'</a></td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+anho2.accion_unidad_medida+'</td><td>'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td>'+numeroConComa(anho2.suma_programada_hoy)+'</td><td class="cell-bordered2">'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class=" text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
 							
 							//<td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td> penultima
 							anho2="";
