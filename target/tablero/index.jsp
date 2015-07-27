@@ -77,16 +77,17 @@ if (user != null) { %>
 			var elRegistro=JSON.parse(registros);
 			
 						
-			cuerpoModal='<table class="table table-striped ">'+
-							'<tr><td colspan="10"><center>ACCIONES A REALIZAR</center></td></tr>'+
-							'<tr><td colspan="10">Asistencia Técnica Agropecuaria, Asistencia Técnica Agropecuaria(2015)Asistencia Técnica Agropecuaria para mejora de la producción productiva y de subsistencia a pequeños productores agropecuarios</td></tr>'+
-							'<tr><td>Acción</td><td>Departamento</td><td>Distrito</td><td>U. Medida</td><td>Cantidad. Prev</td><td>Costo Total</td><td>Fecha Terminación</td><td>Estado</td><td>% Previsto</td><td>% Ejecutado</td></tr>';
+			cuerpoModal='<table class="table table-hover">'+
+							'<tr class="active"><td>Acción</td><td>Departamento</td><td>Distrito</td><td>U. Medida</td><td>Cantidad. Prev</td><td>Costo Total</td><td>Fecha Terminación</td><td>Estado</td><td>% Previsto</td><td>% Ejecutado</td></tr>';
+						var totalCantidadProgramada=0;
 						for(var m=0; m<elRegistro.length;m++)
 						{
 							tituloModal='<h3><center>'+elRegistro[m].linea_accion+'</center></h3>';
 							cuerpoModal+='<tr><td>'+elRegistro[m].linea_estrategica+'</td><td>'+elRegistro[m].accion_departamento+'</td><td>'+elRegistro[m].accion_distrito+'</td><td>'+elRegistro[m].accion_unidad_edida+'</td><td>'+elRegistro[m].hito_cantidad_programado+'</td><td>'+elRegistro[m].accion_costo+'</td><td>'+elRegistro[m].accion_fecha_entrega+'</td><td>'+elRegistro[m].accion_status_fin+'</td><td>'+elRegistro[m].hito_porcentaje_programado+'</td><td>'+elRegistro[m].hito_porcentaje_ejecutado+'</td></tr>';
+							totalCantidadProgramada=totalCantidadProgramada+elRegistro[m].hito_cantidad_programado;
 						}
-						cuerpoModal+='</table>';
+						cuerpoModal+='<tr class="success"><td colspan="10">Total Cantidad Programada: '+totalCantidadProgramada+'</td></tr>'+
+									 '</table>';
 			
 			$('#myModal1').find(".modal-body").html("");
 			$('#myModal1').find(".modal-title").html(tituloModal);
