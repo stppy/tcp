@@ -38,8 +38,8 @@
 		 </div>
 		</div>
 
-       <div class="modal fade" id="myModal1" tabindex="-1"  aria-labelledby="largeModal" aria-hidden="true" >
-		<div class="modal-dialog modal-lg">
+       <div class="modal fade" id="myModal1" tabindex="-1"  aria-labelledby="largeModal" aria-hidden="true">
+		<div class="modal-dialog modal-lg" style="width:1000px;">
 		    <div class="modal-content" >
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -47,6 +47,8 @@
 		      </div>
 		      <div class="modal-body">
 		     	
+		      </div>
+		      <div class="modal-footer">
 		      </div>
 		    </div> 
 		 </div>
@@ -64,11 +66,13 @@ if (user != null) { %>
 		    var idParsed = codigoRegistro.split("-");                                                            
 			var institucion_id=idParsed[1];
 			var linea_accion_id=idParsed[2];
+			var unidad_medida= idParsed[3];
 			var tituloModal="";
 			var cuerpoModal="";
+			var footerModal="";
 			
 			var registros = $.ajax({
-		    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getFactHitos&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id,
+		    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id,
 		      	type:'get',
 		      	dataType:'json',
 		      	crossDomain:true,
@@ -80,18 +84,23 @@ if (user != null) { %>
 			cuerpoModal='<table class="table table-hover">'+
 							'<tr class="active"><td>Acción</td><td>Departamento</td><td>Distrito</td><td>U. Medida</td><td>Cantidad. Prev</td><td>Costo Total</td><td>Fecha Terminación</td><td>Estado</td><td>% Previsto</td><td>% Ejecutado</td></tr>';
 						var totalCantidadProgramada=0;
+						tituloModal='<h3><center>'+elRegistro[0].linea_accion+'</center></h3>';
 						for(var m=0; m<elRegistro.length;m++)
 						{
-							tituloModal='<h3><center>'+elRegistro[m].linea_accion+'</center></h3>';
-							cuerpoModal+='<tr><td>'+elRegistro[m].linea_estrategica+'</td><td>'+elRegistro[m].accion_departamento+'</td><td>'+elRegistro[m].accion_distrito+'</td><td>'+elRegistro[m].accion_unidad_edida+'</td><td>'+elRegistro[m].hito_cantidad_programado+'</td><td>'+elRegistro[m].accion_costo+'</td><td>'+elRegistro[m].accion_fecha_entrega+'</td><td>'+elRegistro[m].accion_status_fin+'</td><td>'+elRegistro[m].hito_porcentaje_programado+'</td><td>'+elRegistro[m].hito_porcentaje_ejecutado+'</td></tr>';
-							totalCantidadProgramada=totalCantidadProgramada+elRegistro[m].hito_cantidad_programado;
+								cuerpoModal+='<tr><td>'+elRegistro[m].linea_estrategica+'</td><td>'+elRegistro[m].accion_departamento+'</td><td>'+elRegistro[m].accion_distrito+'</td><td>'+elRegistro[m].accion_unidad_edida+'</td><td>'+elRegistro[m].hito_cantidad_programado+'</td><td>'+elRegistro[m].accion_costo+'</td><td>'+elRegistro[m].accion_fecha_entrega+'</td><td>'+elRegistro[m].accion_status_fin+'</td><td>'+elRegistro[m].hito_porcentaje_programado+'</td><td>'+elRegistro[m].hito_porcentaje_ejecutado+'</td></tr>';
+								totalCantidadProgramada+=elRegistro[m].hito_cantidad_programado;
+								
 						}
-						cuerpoModal+='<tr class="success"><td colspan="10">Total Cantidad Programada: '+totalCantidadProgramada+'</td></tr>'+
-									 '</table>';
+						totalCantidadProgramada=parseFloat(totalCantidadProgramada).toFixed(2);
+						footerModal='<table class="table table-hover">'+
+									'<tr class="active"><td>Total Cantidad Programada:</td><td>'+totalCantidadProgramada+'</td></tr>'+
+									'</table>';
+						cuerpoModal+='</table>';
 			
 			$('#myModal1').find(".modal-body").html("");
 			$('#myModal1').find(".modal-title").html(tituloModal);
 			$('#myModal1').find(".modal-body").html(cuerpoModal);
+			$('#myModal1').find(".modal-footer").html(footerModal);
 
     	
     	
@@ -188,7 +197,7 @@ if (user != null) { %>
 								}
 								
 								//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
-								$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal1" class="registro" codigoRegistro='+j+'-'+el[j].institucion_id+'-'+el[j].linea_accion_id+'> '+anho2.linea_accion+'</a></td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</a></td><td>'+anho2.accion_unidad_medida+'</td><td>'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td>'+numeroConComa(anho2.suma_programada_hoy)+'</td><td class="cell-bordered2">'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class="text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
+								$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal1" class="registro" codigoRegistro='+j+'-'+el[j].institucion_id+'-'+el[j].linea_accion_id+'-'+el[j].accion_unidad_medida+'> '+anho2.linea_accion+'</a></td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</a></td><td>'+anho2.accion_unidad_medida+'</td><td>'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td>'+numeroConComa(anho2.suma_programada_hoy)+'</td><td class="cell-bordered2">'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class="text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
 								//<td><button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal" idRegistro='+j+'-'+el[j].institucion_id+'-'+el[j].linea_accion_id+' ><span class="glyphicon glyphicon-map-marker"></span></button></td>							
 								
 								
@@ -253,7 +262,7 @@ if (user != null) { %>
 								porHejeClassRow="";
 							}
 							//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
-							$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal1" class="registro" codigoRegistro='+j+'-'+el[j].institucion_id+'-'+el[j].linea_accion_id+'>'+anho2.linea_accion+'</a></td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+anho2.accion_unidad_medida+'</td><td>'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td>'+numeroConComa(anho2.suma_programada_hoy)+'</td><td class="cell-bordered2">'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class=" text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
+							$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal1" class="registro" codigoRegistro='+j+'-'+el[j].institucion_id+'-'+el[j].linea_accion_id+'-'+el[j].accion_unidad_medida+'>'+anho2.linea_accion+'</a></td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+anho2.accion_unidad_medida+'</td><td>'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td>'+numeroConComa(anho2.suma_programada_hoy)+'</td><td class="cell-bordered2">'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class=" text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
 							//<td><button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal" idRegistro='+j+'-'+el[j].institucion_id+'-'+el[j].linea_accion_id+'><span class="glyphicon glyphicon-map-marker"></span></button></td>
 							//<td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td> penultima
 							anho2="";
