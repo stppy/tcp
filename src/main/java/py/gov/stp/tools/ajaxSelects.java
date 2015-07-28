@@ -207,12 +207,13 @@ public class ajaxSelects extends HttpServlet {
         	
         	if (action.equals("getLineaAccionAcumuladoMes")){
         		List objetos=null;
-        		try {objetos = SqlSelects.selectLineaAccionAcumuladoMes();}
+        		condition = "where true ";
+        		if (institucion_id!=0) condition += " and institucion_id ='"+institucion_id+"'";
+        		if (linea_accion_id!=0) condition += " and linea_accion_id ='"+linea_accion_id+"'";
+        		try {objetos = SqlSelects.selectLineaAccionAcumuladoMes(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
-        		myObj.addProperty("success", true);
-        		myObj.add("asd", json);
-        		out.println(myObj.toString());
+        		out.println(json.toString());
         		}
        }
        out.close();
