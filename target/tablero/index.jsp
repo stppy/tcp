@@ -20,13 +20,14 @@
    	<script src="https://cdnjs.cloudflare.com/ajax/libs/floatthead/1.2.10/jquery.floatThead.min.js"></script> -->	
         
 <!--   <script src="frames/entidad.js" type="text/javascript"></script> -->
+<script src="dist/canvasjs/canvasjs.min.js" type="text/javascript"></script>
 
 </head>
 <body class="skin-blue sidebar-mini sidebar-collapse">
 
        <div class="modal fade" id="myModal" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
-		    <div class="modal-content" style="width:1000px;">
+		    <div class="modal-content" style="width:1100px;">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		        <h4 class="modal-title" id="myModalLabel1"></h4>
@@ -35,10 +36,10 @@
 		     		
 		     	<div class="nav-tabs-custom">
                 <ul class="nav nav-tabs pull-right">
-                  <li class="active"><a href="#tab_1-1" data-toggle="tab">Listas</a></li>
-                  <!--<li><a href="#tab_2-2" data-toggle="tab">Mapa</a></li>  -->
-                  <!--<li><a href="#tab_3-2" data-toggle="tab">Linea de Acción</a></li>  -->
-      
+                  <li class="active"><a href="#tab_1-1" data-toggle="tab"><i class="glyphicon glyphicon-list-alt"></i></a></li>
+                  <li><a href="#tab_2-2" data-toggle="tab"><i class="glyphicon glyphicon-map-marker"></i></a></li>
+                  <li><a href="#tab_3-2" data-toggle="tab"><i class="glyphicon glyphicon-stats"></i></a></li>
+                    
                 </ul>
                 <div class="tab-content">
                   <div class="tab-pane active" id="tab_1-1">
@@ -49,7 +50,9 @@
 		     		</iframe>
                   </div><!-- /.tab-pane -->
                   <div class="tab-pane" id="tab_3-2">
-         			......
+                  
+                                   
+         		
                   </div><!-- /.tab-pane -->
                 </div><!-- /.tab-content -->
               </div>
@@ -90,9 +93,9 @@ if (user != null) { %>
 			
 						
 			cuerpoModal='<table class="table table-hover">'+
-							'<tr class="active"><td>Acción</td><td>Departamento</td><td>Distrito</td><td>U. Medida</td><td>Cantidad. Prev</td><td>Costo Total</td><td>Fecha Terminación</td><td>Estado</td><td>% Previsto</td><td>% Ejecutado</td></tr>';
+							'<tr class="active"><td>Acción</td><td>Departamento</td><td>Distrito</td><td>U. Medida</td><td>Cantidad. Programado</td><td>Costo Total</td><td>Fecha Terminación</td><td>Estado</td><td>% Programado</td><td>% Ejecutado</td></tr>';
 						var totalCantidadProgramada=0;
-						tituloModal='<h3><center>'+elRegistro[0].linea_accion+'</center></h3>';
+						tituloModal='<h3><center>'+elRegistro[0].institucion+'&nbsp;&nbsp;-&nbsp;&nbsp;'+elRegistro[0].linea_accion+'</center></h3>';
 						for(var m=0; m<elRegistro.length;m++)
 						{
 								cuerpoModal+='<tr><td>'+elRegistro[m].accion+'</td><td>'+elRegistro[m].accion_departamento+'</td><td>'+elRegistro[m].accion_distrito+'</td><td>'+elRegistro[m].accion_unidad_edida+'</td><td>'+elRegistro[m].hito_cantidad_programado+'</td><td>'+elRegistro[m].accion_costo+'</td><td>'+elRegistro[m].hito_fecha_entrega+'</td><td>'+elRegistro[m].accion_status_fin+'</td><td>'+elRegistro[m].hito_porcentaje_programado+'</td><td>'+elRegistro[m].hito_porcentaje_ejecutado+'</td></tr>';
@@ -109,6 +112,66 @@ if (user != null) { %>
 			$('#myModal').find("#tab_1-1").html("");
 			$('#myModal').find("#tab_1-1").html(cuerpoModal);
 			$('#myModal').find(".modal-footer").html(footerModal);
+			
+			var lineaAccionAcumuladoMes = $.ajax({
+		    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?accion=getLineaAccionAcumuladoMes',
+		      	type:'get',
+		      	dataType:'json',
+		      	async:false       
+		    }).responseText;
+			lineaAccionAcumuladoMes = JSON.parse(lineaAccionAcumuladoMes);
+			lineaAccionAcumuladoMes = lineaAccionAcumuladoMes.asd;
+			
+			//grafico de total cantidad programada y total cantidad ejecutada
+			$('#myModal').find("#tab_3-2").append('<div id="chartContainer" style="height: 300px; width: 100%;">');
+			dibujarLineaAccionAcumuladoMes(lineaAccionAcumuladoMes);
+			
+			function dibujarLineaAccionAcumuladoMes(lineaAccionAcumuladoMes){
+				var dataPoints=[];
+				var dia;
+				var mes;
+				var anho;
+				
+				for(var i = 0;i<lineaAccionAcumuladoMes.length; i++){
+		 			dataPoints.push({ x: new Date( lineaAccionAcumuladoMes[i].mes), y: lineaAccionAcumuladoMes[i].cantidad_programada});
+		 			//dataPoints.push({ x: new Date( lineaAccionAcumuladoMes[i].mes), y: lineaAccionAcumuladoMes[i].cantidad_ejecutada});
+
+				}
+					       
+					
+					var chart = new CanvasJS.Chart("chartContainer",
+					{
+						title: {
+							text: "Linea de Accion Programado Mes" 
+						},
+			                        animationEnabled: true,
+						axisX:{      
+							valueFormatString: "YYYY" ,
+							interval: 1,
+							intervalType: "year",
+							labelAngle: -50,
+							labelFontColor: "rgb(0,75,141)",
+						},
+						axisY: {
+							title: "",
+							interlacedColor: "#F0FFFF",
+							tickColor: "azure",
+							titleFontColor: "rgb(0,75,141)"
+						},
+						data: [
+						{        
+							indexLabelFontColor: "darkSlateGray",
+							name: 'views',
+							type: "area",
+							color: "rgba(0,75,141,0.7)",
+							markerSize:8,
+							dataPoints:dataPoints
+						}
+					  ]
+					});
+					
+			chart.render();
+			}
 
     	
     	
@@ -372,23 +435,21 @@ tbody {
 	              <table id="lineasPorEntidad" class="table table-striped ">
               <thead>
                 <tr style="background-color: white;">
-                  <th colspan="5">
+                  <th>
                   	Lineas De Acción por Entidad
                   </th>
-                  <th colspan="3" class="text-center cell-bordered2">Programación a la fecha</th>
-                  <th colspan="2" class="text-center cell-bordered2">Ejecución a la fecha</th>
+                  <th></th><th></th><th class="cell-bordered2" rowspan="2">Meta 2015</th><th rowspan="2"></th><th rowspan="2">Programación 2015</th><th rowspan="2">%  Programado</th>
+                  <th colspan="3" class="text-center cell-bordered2">A la fecha</th>
                 </tr>
                 <tr style="background-color: white;">
                   <th></th>
                   <th>Costo (MM)</th>
                   <th>Unidad Medida</th>
-                  <!-- <th>Base 2014</th>  -->
-                  <th>Meta 2015</th>
-                  <th><!-- Meta 2015 --></th>
-                  <th class="cell-bordered2">Cant del Año</th>
-                  <th>%</th>
-                  <th>Cant</th>
-                  <th class="cell-bordered2">Cant.</th>
+                                
+         
+                               
+                  <th class="cell-bordered2">Programación</th>
+                  <th >Ejecución</th>
                  <!-- <th>% </th> --> 
                   <th>Desempeño</th>
                   
