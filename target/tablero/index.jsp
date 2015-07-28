@@ -35,25 +35,27 @@
 		     		
 		     	<div class="nav-tabs-custom">
                 <ul class="nav nav-tabs pull-right">
-                  <li><a href="#tab_1-1" data-toggle="tab">Mapa</a></li>
-                  <li class="active"><a href="#tab_2-2" data-toggle="tab">Listas</a></li>
-                  <li><a href="#tab_3-2" data-toggle="tab">Linea de Acción</a></li>
+                  <li class="active"><a href="#tab_1-1" data-toggle="tab">Listas</a></li>
+                  <!--<li><a href="#tab_2-2" data-toggle="tab">Mapa</a></li>  -->
+                  <!--<li><a href="#tab_3-2" data-toggle="tab">Linea de Acción</a></li>  -->
       
                 </ul>
                 <div class="tab-content">
                   <div class="tab-pane active" id="tab_1-1">
-   				  	<iframe width='100%' height='520' frameborder='0' src='http://geo.stp.gov.py/user/stp/viz/8f7c6480-2f1c-11e5-aaea-b6fa9714a3b6/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen>
-		     		</iframe>
+
                   </div><!-- /.tab-pane -->
                   <div class="tab-pane" id="tab_2-2">
-               		
+               		<iframe width='100%' height='520' frameborder='0' src='http://geo.stp.gov.py/user/stp/viz/8f7c6480-2f1c-11e5-aaea-b6fa9714a3b6/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen>
+		     		</iframe>
                   </div><!-- /.tab-pane -->
                   <div class="tab-pane" id="tab_3-2">
-         			BANANA BANANA BANANA
+         			......
                   </div><!-- /.tab-pane -->
                 </div><!-- /.tab-content -->
               </div>
 		      </div>
+			  <div class="modal-footer">
+			  </div>
 		    </div> 
 		 </div>
 		</div>
@@ -104,8 +106,8 @@ if (user != null) { %>
 						cuerpoModal+='</table>';
 			
 			$('#myModal').find(".modal-title").html(tituloModal);
-			$('#myModal').find("#tab_2-2").html("");
-			$('#myModal').find("#tab_2-2").html(cuerpoModal);
+			$('#myModal').find("#tab_1-1").html("");
+			$('#myModal').find("#tab_1-1").html(cuerpoModal);
 			$('#myModal').find(".modal-footer").html(footerModal);
 
     	
