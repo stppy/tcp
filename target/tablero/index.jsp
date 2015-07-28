@@ -20,40 +20,50 @@
    	<script src="https://cdnjs.cloudflare.com/ajax/libs/floatthead/1.2.10/jquery.floatThead.min.js"></script> -->	
         
 <!--   <script src="frames/entidad.js" type="text/javascript"></script> -->
+<script src="dist/canvasjs/canvasjs.min.js" type="text/javascript"></script>
 
 </head>
 <body class="skin-blue sidebar-mini sidebar-collapse">
 
        <div class="modal fade" id="myModal" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title" id="myModalLabel1">Geo Tablero</h4>
-		      </div>
-		      <div class="modal-body" id="editar-subprograma">
-		     		<iframe width='100%' height='520' frameborder='0' src='http://geo.stp.gov.py/user/stp/viz/8f7c6480-2f1c-11e5-aaea-b6fa9714a3b6/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen>
-		     		</iframe>
-		      </div>
-		    </div> 
-		 </div>
-		</div>
-
-       <div class="modal fade" id="myModal1" tabindex="-1"  aria-labelledby="largeModal" aria-hidden="true">
-		<div class="modal-dialog modal-lg" style="width:1000px;">
-		    <div class="modal-content" >
+		<div class="modal-dialog modal-lg">
+		    <div class="modal-content" style="width:1100px;">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		        <h4 class="modal-title" id="myModalLabel1"></h4>
 		      </div>
-		      <div class="modal-body">
-		     	
+		      <div class="modal-body" id="editar-subprograma">
+		     		
+		     	<div class="nav-tabs-custom">
+                <ul class="nav nav-tabs pull-right">
+                  <li class="active"><a href="#tab_1-1" data-toggle="tab"><i class="glyphicon glyphicon-list-alt"></i></a></li>
+                  <li><a href="#tab_2-2" data-toggle="tab"><i class="glyphicon glyphicon-map-marker"></i></a></li>
+                  <li><a href="#tab_3-2" data-toggle="tab"><i class="glyphicon glyphicon-stats"></i></a></li>
+                    
+                </ul>
+                <div class="tab-content">
+                  <div class="tab-pane active" id="tab_1-1">
+
+                  </div><!-- /.tab-pane -->
+                  <div class="tab-pane" id="tab_2-2">
+               		<iframe width='100%' height='520' frameborder='0' src='http://geo.stp.gov.py/user/stp/viz/8f7c6480-2f1c-11e5-aaea-b6fa9714a3b6/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen>
+		     		</iframe>
+                  </div><!-- /.tab-pane -->
+                  <div class="tab-pane" id="tab_3-2">
+                  
+                                   
+         		
+                  </div><!-- /.tab-pane -->
+                </div><!-- /.tab-content -->
+              </div>
 		      </div>
-		      <div class="modal-footer">
-		      </div>
+			  <div class="modal-footer">
+			  </div>
 		    </div> 
 		 </div>
 		</div>
+
+		
 <% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%>
 <% Map attributes = user.getAttributes(); 
 if (user != null) { %>
@@ -83,12 +93,12 @@ if (user != null) { %>
 			
 						
 			cuerpoModal='<table class="table table-hover">'+
-							'<tr class="active"><td>Acción</td><td>Departamento</td><td>Distrito</td><td>U. Medida</td><td>Cantidad. Prev</td><td>Costo Total</td><td>Fecha Terminación</td><td>Estado</td><td>% Previsto</td><td>% Ejecutado</td></tr>';
+							'<tr class="active"><td>Acción</td><td>Departamento</td><td>Distrito</td><td>U. Medida</td><td>Cantidad. Programado</td><td>Costo Total</td><td>Fecha Terminación</td><td>Estado</td><td>% Programado</td><td>% Ejecutado</td></tr>';
 						var totalCantidadProgramada=0;
-						tituloModal='<h3><center>'+elRegistro[0].linea_accion+'</center></h3>';
+						tituloModal='<h3><center>'+elRegistro[0].institucion+'&nbsp;&nbsp;-&nbsp;&nbsp;'+elRegistro[0].linea_accion+'</center></h3>';
 						for(var m=0; m<elRegistro.length;m++)
 						{
-								cuerpoModal+='<tr><td>'+elRegistro[m].accion+'</td><td>'+elRegistro[m].accion_departamento+'</td><td>'+elRegistro[m].accion_distrito+'</td><td>'+elRegistro[m].accion_unidad_edida+'</td><td>'+elRegistro[m].hito_cantidad_programado+'</td><td>'+elRegistro[m].accion_costo+'</td><td>'+elRegistro[m].accion_fecha_entrega+'</td><td>'+elRegistro[m].accion_status_fin+'</td><td>'+elRegistro[m].hito_porcentaje_programado+'</td><td>'+elRegistro[m].hito_porcentaje_ejecutado+'</td></tr>';
+								cuerpoModal+='<tr><td>'+elRegistro[m].accion+'</td><td>'+elRegistro[m].accion_departamento+'</td><td>'+elRegistro[m].accion_distrito+'</td><td>'+elRegistro[m].accion_unidad_edida+'</td><td>'+elRegistro[m].hito_cantidad_programado+'</td><td>'+elRegistro[m].accion_costo+'</td><td>'+elRegistro[m].hito_fecha_entrega+'</td><td>'+elRegistro[m].accion_status_fin+'</td><td>'+elRegistro[m].hito_porcentaje_programado+'</td><td>'+elRegistro[m].hito_porcentaje_ejecutado+'</td></tr>';
 								totalCantidadProgramada+=elRegistro[m].hito_cantidad_programado;
 								
 						}
@@ -98,10 +108,70 @@ if (user != null) { %>
 									'</table>';
 						cuerpoModal+='</table>';
 			
-			$('#myModal1').find(".modal-body").html("");
-			$('#myModal1').find(".modal-title").html(tituloModal);
-			$('#myModal1').find(".modal-body").html(cuerpoModal);
-			$('#myModal1').find(".modal-footer").html(footerModal);
+			$('#myModal').find(".modal-title").html(tituloModal);
+			$('#myModal').find("#tab_1-1").html("");
+			$('#myModal').find("#tab_1-1").html(cuerpoModal);
+			$('#myModal').find(".modal-footer").html(footerModal);
+			
+			var lineaAccionAcumuladoMes = $.ajax({
+		    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?accion=getLineaAccionAcumuladoMes',
+		      	type:'get',
+		      	dataType:'json',
+		      	async:false       
+		    }).responseText;
+			lineaAccionAcumuladoMes = JSON.parse(lineaAccionAcumuladoMes);
+			lineaAccionAcumuladoMes = lineaAccionAcumuladoMes.asd;
+			
+			//grafico de total cantidad programada y total cantidad ejecutada
+			$('#myModal').find("#tab_3-2").append('<div id="chartContainer" style="height: 300px; width: 100%;">');
+			dibujarLineaAccionAcumuladoMes(lineaAccionAcumuladoMes);
+			
+			function dibujarLineaAccionAcumuladoMes(lineaAccionAcumuladoMes){
+				var dataPoints=[];
+				var dia;
+				var mes;
+				var anho;
+				
+				for(var i = 0;i<lineaAccionAcumuladoMes.length; i++){
+		 			dataPoints.push({ x: new Date( lineaAccionAcumuladoMes[i].mes), y: lineaAccionAcumuladoMes[i].cantidad_programada});
+		 			//dataPoints.push({ x: new Date( lineaAccionAcumuladoMes[i].mes), y: lineaAccionAcumuladoMes[i].cantidad_ejecutada});
+
+				}
+					       
+					
+					var chart = new CanvasJS.Chart("chartContainer",
+					{
+						title: {
+							text: "Linea de Accion Programado Mes" 
+						},
+			                        animationEnabled: true,
+						axisX:{      
+							valueFormatString: "YYYY" ,
+							interval: 1,
+							intervalType: "year",
+							labelAngle: -50,
+							labelFontColor: "rgb(0,75,141)",
+						},
+						axisY: {
+							title: "",
+							interlacedColor: "#F0FFFF",
+							tickColor: "azure",
+							titleFontColor: "rgb(0,75,141)"
+						},
+						data: [
+						{        
+							indexLabelFontColor: "darkSlateGray",
+							name: 'views',
+							type: "area",
+							color: "rgba(0,75,141,0.7)",
+							markerSize:8,
+							dataPoints:dataPoints
+						}
+					  ]
+					});
+					
+			chart.render();
+			}
 
     	
     	
@@ -198,8 +268,8 @@ if (user != null) { %>
 								}
 								
 								//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
-								$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal1" class="registro" codigoRegistro='+j+'-'+el[j].institucion_id+'-'+el[j].linea_accion_id+'-'+el[j].accion_unidad_medida+'> '+anho2.linea_accion+'</a></td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</a></td><td>'+anho2.accion_unidad_medida+'</td><td>'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td>'+numeroConComa(anho2.suma_programada_hoy)+'</td><td class="cell-bordered2">'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class="text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
-								//<td><button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal" idRegistro='+j+'-'+el[j].institucion_id+'-'+el[j].linea_accion_id+' ><span class="glyphicon glyphicon-map-marker"></span></button></td>							
+								$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+el[j].institucion_id+'-'+el[j].linea_accion_id+'-'+el[j].accion_unidad_medida+'> '+anho2.linea_accion+'</a></td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</a></td><td>'+anho2.accion_unidad_medida+'</td><td>'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td>'+numeroConComa(anho2.suma_programada_hoy)+'</td><td class="cell-bordered2">'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class="text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
+															
 								
 								
 								//<td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td> penultimo
@@ -263,8 +333,8 @@ if (user != null) { %>
 								porHejeClassRow="";
 							}
 							//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
-							$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal1" class="registro" codigoRegistro='+j+'-'+el[j].institucion_id+'-'+el[j].linea_accion_id+'-'+el[j].accion_unidad_medida+'>'+anho2.linea_accion+'</a></td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+anho2.accion_unidad_medida+'</td><td>'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td>'+numeroConComa(anho2.suma_programada_hoy)+'</td><td class="cell-bordered2">'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class=" text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
-							//<td><button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal" idRegistro='+j+'-'+el[j].institucion_id+'-'+el[j].linea_accion_id+'><span class="glyphicon glyphicon-map-marker"></span></button></td>
+							$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+el[j].institucion_id+'-'+el[j].linea_accion_id+'-'+el[j].accion_unidad_medida+'>'+anho2.linea_accion+'</a></td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+anho2.accion_unidad_medida+'</td><td>'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td>'+numeroConComa(anho2.suma_programada_hoy)+'</td><td class="cell-bordered2">'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class=" text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
+							
 							//<td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td> penultima
 							anho2="";
 							anho1="";
@@ -365,23 +435,21 @@ tbody {
 	              <table id="lineasPorEntidad" class="table table-striped ">
               <thead>
                 <tr style="background-color: white;">
-                  <th colspan="5">
+                  <th>
                   	Lineas De Acción por Entidad
                   </th>
-                  <th colspan="3" class="text-center cell-bordered2">Programación a la fecha</th>
-                  <th colspan="2" class="text-center cell-bordered2">Ejecución a la fecha</th>
+                  <th></th><th></th><th class="cell-bordered2" rowspan="2">Meta 2015</th><th rowspan="2"></th><th rowspan="2">Programación 2015</th><th rowspan="2">%  Programado</th>
+                  <th colspan="3" class="text-center cell-bordered2">A la fecha</th>
                 </tr>
                 <tr style="background-color: white;">
                   <th></th>
                   <th>Costo (MM)</th>
                   <th>Unidad Medida</th>
-                  <!-- <th>Base 2014</th>  -->
-                  <th>Meta 2015</th>
-                  <th><!-- Meta 2015 --></th>
-                  <th class="cell-bordered2">Cant del Año</th>
-                  <th>%</th>
-                  <th>Cant</th>
-                  <th class="cell-bordered2">Cant.</th>
+                                
+         
+                               
+                  <th class="cell-bordered2">Programación</th>
+                  <th >Ejecución</th>
                  <!-- <th>% </th> --> 
                   <th>Desempeño</th>
                   

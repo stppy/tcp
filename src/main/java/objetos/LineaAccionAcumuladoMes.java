@@ -10,6 +10,12 @@ public class LineaAccionAcumuladoMes {
 	protected double cantidad_programada;
 	protected double cantidad_ejecutda;
 	
+<<<<<<< HEAD
+=======
+	
+	
+	
+>>>>>>> 287812bd1e5e0fcc91ef17f0454dd9ae1f64f85a
 	public int getLinea_accion_id() {
 		return linea_accion_id;
 	}
