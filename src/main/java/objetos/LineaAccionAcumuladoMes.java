@@ -2,6 +2,14 @@ package objetos;
 
 public class LineaAccionAcumuladoMes {
 	protected int linea_accion_id;
+	protected String linea_accion;
+	protected int institucion_id;
+	protected String institucion;
+	protected String accion_unidad_medida;
+	protected String mes;
+	protected double cantidad_programada;
+	protected double cantidad_ejecutda;
+	
 	public int getLinea_accion_id() {
 		return linea_accion_id;
 	}
@@ -50,13 +58,4 @@ public class LineaAccionAcumuladoMes {
 	public void setCantidad_ejecutda(double cantidad_ejecutda) {
 		this.cantidad_ejecutda = cantidad_ejecutda;
 	}
-	protected String linea_accion;
-	protected int institucion_id;
-	protected String institucion;
-	protected String accion_unidad_medida;
-	protected String mes;
-	protected double cantidad_programada;
-	protected double cantidad_ejecutda;
-	
-	
 }
