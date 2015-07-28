@@ -37,7 +37,7 @@
 		     	<div class="nav-tabs-custom">
                 <ul class="nav nav-tabs pull-right">
                   <li class="active"><a href="#tab_1-1" data-toggle="tab"><i class="glyphicon glyphicon-list-alt"></i></a></li>
-                  <li><a href="#tab_2-2" data-toggle="tab"><i class="glyphicon glyphicon-map-marker"></i></a></li>
+                  <!--<li><a href="#tab_2-2" data-toggle="tab"><i class="glyphicon glyphicon-map-marker"></i></a></li>-->
                   <li><a href="#tab_3-2" data-toggle="tab"><i class="glyphicon glyphicon-stats"></i></a></li>
                     
                 </ul>
@@ -114,27 +114,36 @@ if (user != null) { %>
 			$('#myModal').find(".modal-footer").html(footerModal);
 			
 			var lineaAccionAcumuladoMes = $.ajax({
-		    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?accion=getLineaAccionAcumuladoMes',
+		    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getLineaAccionAcumuladoMes&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id,
 		      	type:'get',
 		      	dataType:'json',
 		      	async:false       
 		    }).responseText;
 			lineaAccionAcumuladoMes = JSON.parse(lineaAccionAcumuladoMes);
-			lineaAccionAcumuladoMes = lineaAccionAcumuladoMes.asd;
+			
 			
 			//grafico de total cantidad programada y total cantidad ejecutada
-			$('#myModal').find("#tab_3-2").append('<div id="chartContainer" style="height: 300px; width: 100%;">');
+			$('#myModal').find("#tab_3-2").append('<div id="chartContainer" style="height: 300px; width: 100%; margin:10px 100px 10px 100px"></div>');
 			dibujarLineaAccionAcumuladoMes(lineaAccionAcumuladoMes);
 			
 			function dibujarLineaAccionAcumuladoMes(lineaAccionAcumuladoMes){
 				var dataPoints=[];
-				var dia;
+// 				var dia;
 				var mes;
 				var anho;
 				
+				function compare(a,b) {
+					  if (a.mes < b.mes)
+					    return -1;
+					  if (a.mes > b.mes)
+					    return 1;
+					  return 0;
+					}
+
+				lineaAccionAcumuladoMes=lineaAccionAcumuladoMes.sort(compare);
+				
 				for(var i = 0;i<lineaAccionAcumuladoMes.length; i++){
 		 			dataPoints.push({ x: new Date( lineaAccionAcumuladoMes[i].mes), y: lineaAccionAcumuladoMes[i].cantidad_programada});
-		 			//dataPoints.push({ x: new Date( lineaAccionAcumuladoMes[i].mes), y: lineaAccionAcumuladoMes[i].cantidad_ejecutada});
 
 				}
 					       
@@ -142,13 +151,14 @@ if (user != null) { %>
 					var chart = new CanvasJS.Chart("chartContainer",
 					{
 						title: {
-							text: "Linea de Accion Programado Mes" 
+							text: "Programacion del año" 
 						},
 			                        animationEnabled: true,
+			                        width: 800,
 						axisX:{      
-							valueFormatString: "YYYY" ,
+							valueFormatString: "YYYY-MM" ,
 							interval: 1,
-							intervalType: "year",
+							intervalType: "month",
 							labelAngle: -50,
 							labelFontColor: "rgb(0,75,141)",
 						},

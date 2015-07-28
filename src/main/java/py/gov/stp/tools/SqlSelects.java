@@ -273,35 +273,35 @@ public class SqlSelects {
 	  }
 	
 	
-	public static List<LineaAccionAcumuladoMes> selectLineaAccionAcumuladoMes() throws SQLException{
+	public static List<LineaAccionAcumuladoMes> selectLineaAccionAcumuladoMes(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select * from linea_accion_acumulado_mes ";
+		String query = " select * from linea_accion_acumulado_mes "+condition;
 
 		Statement statement = null;
 		ResultSet rs=null;
 		List<LineaAccionAcumuladoMes> objetos = new ArrayList<LineaAccionAcumuladoMes>();
 
 		try {
-		statement = conect.createStatement();
-		rs=statement.executeQuery(query);
-		while(rs.next()){
-		LineaAccionAcumuladoMes objeto = new LineaAccionAcumuladoMes();
-
-		objeto.setLinea_accion_id(rs.getInt("linea_accion_id"));
-		objeto.setLinea_accion(rs.getString("linea_accion"));
-		objeto.setInstitucion_id(rs.getInt("institucion_id"));
-		objeto.setInstitucion(rs.getString("institucion"));
-		objeto.setAccion_unidad_medida(rs.getString("accion_unidad_medida"));
-		objeto.setMes(rs.getString("mes"));
-		objeto.setCantidad_programada(rs.getDouble("cantidad_programada"));
-		objeto.setCantidad_ejecutda(rs.getDouble("cantidad_ejecutada"));
-		objetos.add(objeto);
-		}
+			statement = conect.createStatement();
+			rs=statement.executeQuery(query);
+			while(rs.next()){
+				LineaAccionAcumuladoMes objeto = new LineaAccionAcumuladoMes();
+		
+				objeto.setLinea_accion_id(rs.getInt("linea_accion_id"));
+				objeto.setLinea_accion(rs.getString("linea_accion"));
+				objeto.setInstitucion_id(rs.getInt("institucion_id"));
+				objeto.setInstitucion(rs.getString("institucion"));
+				objeto.setAccion_unidad_medida(rs.getString("accion_unidad_medida"));
+				objeto.setMes(rs.getString("mes"));
+				objeto.setCantidad_programada(rs.getDouble("cantidad_programada"));
+				objeto.setCantidad_ejecutda(rs.getDouble("cantidad_ejecutada"));
+				objetos.add(objeto);
+			}
 		}
 		catch (SQLException e) {e.printStackTrace();}
 		finally{
-		if (statement != null) {statement.close();}
-		if (conect != null) {conect.close();}
+			if (statement != null) {statement.close();}
+			if (conect != null) {conect.close();}
 		}
 		return objetos; 
 		}
