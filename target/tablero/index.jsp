@@ -158,7 +158,7 @@ if (user != null) { %>
 				var chart = new CanvasJS.Chart("chartContainer",
 						{
 							title: {
-								text: "Programación del año" 
+								text: "Evolución" 
 							},
 				                        animationEnabled: true,
 				                        width: 800,
@@ -183,17 +183,17 @@ if (user != null) { %>
 								type: "line",
 								//color: "rgba(0,75,141,0.7)",
 								markerSize:8,
-								legendText:"Programada",
+								legendText:"Programación",
 								dataPoints:dataPoints
 							},
 							{        
 								indexLabelFontColor: "darkSlateGray",
 								showInLegend: true, 
 								name: 'ejecutadas',
-								type: "line",
+								type: "area",
 								//color: "rgba(0,75,141,0.8)",
 								markerSize:8,
-								legendText:"Ejecutada",
+								legendText:"Ejecución",
 								dataPoints:ejecutada
 							}
 						  ]
