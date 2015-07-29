@@ -235,6 +235,7 @@ public class SqlSelects {
 		}
 		return objetos; 
   }
+	
 	public static List<LineaAccion> seletLineaAccion(String condition) throws SQLException{
 	   	 Connection conect=ConnectionConfiguration.conectar();
 			 String query = " select * from fact_entidad_linea "+condition;
