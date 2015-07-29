@@ -178,18 +178,22 @@ if (user != null) { %>
 							data: [
 							{        
 								indexLabelFontColor: "darkSlateGray",
+								showInLegend: true, 
 								name: 'programada',
 								type: "line",
 								//color: "rgba(0,75,141,0.7)",
 								markerSize:8,
+								legendText:"Programada",
 								dataPoints:dataPoints
 							},
 							{        
 								indexLabelFontColor: "darkSlateGray",
+								showInLegend: true, 
 								name: 'ejecutadas',
 								type: "line",
 								//color: "rgba(0,75,141,0.8)",
 								markerSize:8,
+								legendText:"Ejecutada",
 								dataPoints:ejecutada
 							}
 						  ]
