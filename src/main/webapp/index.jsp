@@ -26,8 +26,8 @@
 <body class="skin-blue sidebar-mini sidebar-collapse">
 
        <div class="modal fade" id="myModal" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg">
-		    <div class="modal-content" style="width:1100px;">
+		<div class="modal-dialog modal-lg" style="width:90%;">
+		    <div class="modal-content" >
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		        <h4 class="modal-title" id="myModalLabel1"></h4>
@@ -92,7 +92,8 @@ if (user != null) { %>
 			var elRegistro=JSON.parse(registros);
 			
 						
-			cuerpoModal='<table class="table table-hover">'+
+			cuerpoModal='<div class="table-responsive">'+
+						'<table class="table table-hover">'+
 							'<tr class="active"><td>Acción</td><td>Departamento</td><td>Distrito</td><td>U. Medida</td><td>Cantidad. Programado</td><td>Costo Total</td><td>Fecha Terminación</td><td>Estado</td><td>% Programado</td><td>% Ejecutado</td></tr>';
 						var totalCantidadProgramada=0;
 						tituloModal='<h3><center>'+elRegistro[0].institucion+'&nbsp;&nbsp;-&nbsp;&nbsp;'+elRegistro[0].linea_accion+'</center></h3>';
@@ -103,15 +104,19 @@ if (user != null) { %>
 								
 						}
 						totalCantidadProgramada=parseFloat(totalCantidadProgramada).toFixed(2);
-						footerModal='<table class="table table-hover">'+
+						/*footerModal='<table class="table table-hover">'+
 									'<tr class="active"><td>Total Cantidad Programada:</td><td>'+totalCantidadProgramada+'</td></tr>'+
-									'</table>';
-						cuerpoModal+='</table>';
+									'</table>';*/
+						cuerpoModal+='<tr class="active"><td colspan="2">Total Cantidad Programada: </td><td colspan="8">'+totalCantidadProgramada+'</td></tr>'+
+									 '</table>'+
+									 '</div>';
 			
 			$('#myModal').find(".modal-title").html(tituloModal);
 			$('#myModal').find("#tab_1-1").html("");
+			$('#myModal').find("#tab_2-2").html("");
+			$('#myModal').find("#tab_3-2").html("");
 			$('#myModal').find("#tab_1-1").html(cuerpoModal);
-			$('#myModal').find(".modal-footer").html(footerModal);
+			//$('#myModal').find(".modal-footer").html(footerModal);
 			
 			var lineaAccionAcumuladoMes = $.ajax({
 		    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getLineaAccionAcumuladoMes&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id,
@@ -123,7 +128,7 @@ if (user != null) { %>
 			
 			
 			//grafico de total cantidad programada y total cantidad ejecutada
-			$('#myModal').find("#tab_3-2").append('<div id="chartContainer" style="height: 300px; width: 100%; margin:10px 100px 10px 100px"></div>');
+			$('#myModal').find("#tab_3-2").append('<div id="chartContainer" style="height:400px; margin:10px 100px 10px 100px;"></div>');
 			dibujarLineaAccionAcumuladoMes(lineaAccionAcumuladoMes);
 			
 			function dibujarLineaAccionAcumuladoMes(lineaAccionAcumuladoMes){
@@ -132,7 +137,7 @@ if (user != null) { %>
 				var mes;
 				var anho;
 				
-				function compare(a,b) {
+				function compare(a,b) {             
 					  if (a.mes < b.mes)
 					    return -1;
 					  if (a.mes > b.mes)
@@ -151,7 +156,7 @@ if (user != null) { %>
 					var chart = new CanvasJS.Chart("chartContainer",
 					{
 						title: {
-							text: "Programacion del año" 
+							text: "Programación del año" 
 						},
 			                        animationEnabled: true,
 			                        width: 800,
@@ -171,6 +176,14 @@ if (user != null) { %>
 						data: [
 						{        
 							indexLabelFontColor: "darkSlateGray",
+							name: 'views',
+							type: "area",
+							color: "rgba(0,75,141,0.7)",
+							markerSize:8,
+							dataPoints:dataPoints
+						},
+						{        
+							indexLabelFontColor: "red",
 							name: 'views',
 							type: "area",
 							color: "rgba(0,75,141,0.7)",
