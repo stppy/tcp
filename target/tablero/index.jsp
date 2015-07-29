@@ -26,13 +26,9 @@
 <body class="skin-blue sidebar-mini sidebar-collapse">
 
        <div class="modal fade" id="myModal" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">
-<<<<<<< HEAD
-		<div class="modal-dialog modal-lg">
-		    <div class="modal-content" style="width:900px;">
-=======
+
 		<div class="modal-dialog modal-lg" style="width:90%;">
 		    <div class="modal-content" >
->>>>>>> 2ee02e9553f2bcbb357e56d4c29fd57dca9800a6
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		        <h4 class="modal-title" id="myModalLabel1"></h4>
@@ -134,7 +130,7 @@ if (user != null) { %>
 			
 			//grafico de total cantidad programada y total cantidad ejecutada
 
-			$('#myModal').find("#tab_3-2").append('<div id="chartContainer" style="height:400px; margin:10px 100px 10px 100px;"></div>');
+			$('#myModal').find("#tab_3-2").append('<div id="chartContainer" style="height:400px;"></div>');
 			dibujarLineaAccionAcumuladoMes(lineaAccionAcumuladoMes);
 			
 			function dibujarLineaAccionAcumuladoMes(lineaAccionAcumuladoMes){
