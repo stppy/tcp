@@ -133,6 +133,7 @@ if (user != null) { %>
 			
 			function dibujarLineaAccionAcumuladoMes(lineaAccionAcumuladoMes){
 				var dataPoints=[];
+				var ejecutada=[];
 // 				var dia;
 				var mes;
 				var anho;
@@ -149,52 +150,53 @@ if (user != null) { %>
 				
 				for(var i = 0;i<lineaAccionAcumuladoMes.length; i++){
 		 			dataPoints.push({ x: new Date( lineaAccionAcumuladoMes[i].mes), y: lineaAccionAcumuladoMes[i].cantidad_programada});
+		 			ejecutada.push({ x: new Date( lineaAccionAcumuladoMes[i].mes), y: lineaAccionAcumuladoMes[i].cantidad_ejecutda});
 
 				}
 					       
 					
-					var chart = new CanvasJS.Chart("chartContainer",
-					{
-						title: {
-							text: "Programación del año" 
-						},
-			                        animationEnabled: true,
-			                        width: 800,
-						axisX:{      
-							valueFormatString: "YYYY-MM" ,
-							interval: 1,
-							intervalType: "month",
-							labelAngle: -50,
-							labelFontColor: "rgb(0,75,141)",
-						},
-						axisY: {
-							title: "",
-							interlacedColor: "#F0FFFF",
-							tickColor: "azure",
-							titleFontColor: "rgb(0,75,141)"
-						},
-						data: [
-						{        
-							indexLabelFontColor: "darkSlateGray",
-							name: 'views',
-							type: "area",
-							color: "rgba(0,75,141,0.7)",
-							markerSize:8,
-							dataPoints:dataPoints
-						},
-						{        
-							indexLabelFontColor: "red",
-							name: 'views',
-							type: "area",
-							color: "rgba(0,75,141,0.7)",
-							markerSize:8,
-							dataPoints:dataPoints
-						}
-					  ]
-					});
-					
-			chart.render();
-			}
+				var chart = new CanvasJS.Chart("chartContainer",
+						{
+							title: {
+								text: "Programación del año" 
+							},
+				                        animationEnabled: true,
+				                        width: 800,
+							axisX:{      
+								valueFormatString: "YYYY-MM" ,
+								interval: 1,
+								intervalType: "month",
+								labelAngle: -50,
+								labelFontColor: "rgb(0,75,141)",
+							},
+							axisY: {
+								title: "",
+								interlacedColor: "#F0FFFF",
+								tickColor: "azure",
+								titleFontColor: "rgb(0,75,141)"
+							},
+							data: [
+							{        
+								indexLabelFontColor: "darkSlateGray",
+								name: 'programada',
+								type: "line",
+								//color: "rgba(0,75,141,0.7)",
+								markerSize:8,
+								dataPoints:dataPoints
+							},
+							{        
+								indexLabelFontColor: "darkSlateGray",
+								name: 'ejecutadas',
+								type: "line",
+								//color: "rgba(0,75,141,0.8)",
+								markerSize:8,
+								dataPoints:ejecutada
+							}
+						  ]
+						});
+						
+				chart.render();
+						  }
 
     	
     	

@@ -133,6 +133,7 @@ if (user != null) { %>
 			
 			function dibujarLineaAccionAcumuladoMes(lineaAccionAcumuladoMes){
 				var dataPoints=[];
+				var ejecutada=[];
 // 				var dia;
 				var mes;
 				var anho;
@@ -149,97 +150,53 @@ if (user != null) { %>
 				
 				for(var i = 0;i<lineaAccionAcumuladoMes.length; i++){
 		 			dataPoints.push({ x: new Date( lineaAccionAcumuladoMes[i].mes), y: lineaAccionAcumuladoMes[i].cantidad_programada});
-		 			ejecutada.push({ x: new Date( lineaAccionAcumuladoMes[i].mes), y: lineaAccionAcumuladoMes[i].cantidad_ejecutada});
+		 			ejecutada.push({ x: new Date( lineaAccionAcumuladoMes[i].mes), y: lineaAccionAcumuladoMes[i].cantidad_ejecutda});
 
 				}
 					       
 					
-					var chart = new CanvasJS.Chart("chartContainer",
-					{
-						title: {
-							text: "Programación del año" 
-						},
-			                        animationEnabled: true,
-			                        width: 800,
-						axisX:{      
-							valueFormatString: "YYYY-MM" ,
-							interval: 1,
-							intervalType: "month",
-							labelAngle: -50,
-							labelFontColor: "rgb(0,75,141)",
-						},
-						axisY: {
-							title: "",
-							interlacedColor: "#F0FFFF",
-							tickColor: "azure",
-							titleFontColor: "rgb(0,75,141)"
-						},
-						data: [
-						       {        
-						           type: "line",
-						           dataPoints: [
-						           { x: 10, y: 21 },
-						           { x: 20, y: 25},
-						           { x: 30, y: 20 },
-						           { x: 40, y: 25 },
-						           { x: 50, y: 27 },
-						           { x: 60, y: 28 },
-						           { x: 70, y: 28 },
-						           { x: 80, y: 24 },
-						           { x: 90, y: 26}
-						         
-						           ]
-						         },
-						           {        
-						           type: "line",
-						           dataPoints: [
-						           { x: 10, y: 31 },
-						           { x: 20, y: 35},
-						           { x: 30, y: 30 },
-						           { x: 40, y: 35 },
-						           { x: 50, y: 35 },
-						           { x: 60, y: 38 },
-						           { x: 70, y: 38 },
-						           { x: 80, y: 34 },
-						           { x: 90, y: 44}
-						         
-						           ]
-						         },
-						           {        
-						           type: "line",
-						           dataPoints: [
-						           { x: 10, y: 45 },
-						           { x: 20, y: 50},
-						           { x: 30, y: 40 },
-						           { x: 40, y: 45 },
-						           { x: 50, y: 45 },
-						           { x: 60, y: 48 },
-						           { x: 70, y: 43 },
-						           { x: 80, y: 41 },
-						           { x: 90, y: 28}
-						         
-						           ]
-						         },
-						           {        
-						           type: "line",
-						           dataPoints: [
-						           { x: 10, y: 71 },
-						           { x: 20, y: 55},
-						           { x: 30, y: 50 },
-						           { x: 40, y: 65 },
-						           { x: 50, y: 95 },
-						           { x: 60, y: 68 },
-						           { x: 70, y: 28 },
-						           { x: 80, y: 34 },
-						           { x: 90, y: 14}
-						         
-						           ]
-						         }
-					  	]
-					});
-					
-			chart.render();
-			}
+				var chart = new CanvasJS.Chart("chartContainer",
+						{
+							title: {
+								text: "Programación del año" 
+							},
+				                        animationEnabled: true,
+				                        width: 800,
+							axisX:{      
+								valueFormatString: "YYYY-MM" ,
+								interval: 1,
+								intervalType: "month",
+								labelAngle: -50,
+								labelFontColor: "rgb(0,75,141)",
+							},
+							axisY: {
+								title: "",
+								interlacedColor: "#F0FFFF",
+								tickColor: "azure",
+								titleFontColor: "rgb(0,75,141)"
+							},
+							data: [
+							{        
+								indexLabelFontColor: "darkSlateGray",
+								name: 'programada',
+								type: "line",
+								//color: "rgba(0,75,141,0.7)",
+								markerSize:8,
+								dataPoints:dataPoints
+							},
+							{        
+								indexLabelFontColor: "darkSlateGray",
+								name: 'ejecutadas',
+								type: "line",
+								//color: "rgba(0,75,141,0.8)",
+								markerSize:8,
+								dataPoints:ejecutada
+							}
+						  ]
+						});
+						
+				chart.render();
+						  }
 
     	
     	
