@@ -16,11 +16,157 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-  
-   	<script src="https://cdnjs.cloudflare.com/ajax/libs/floatthead/1.2.10/jquery.floatThead.min.js"></script> -->	
+
+   		<script src="https://cdnjs.cloudflare.com/ajax/libs/floatthead/1.2.10/jquery.floatThead.min.js"></script> -->	
         
 <!--   <script src="frames/entidad.js" type="text/javascript"></script> -->
-<script src="dist/canvasjs/canvasjs.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="dist/canvasjs/canvasjs.min.js" ></script>
+
+
+
+	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="bootstrap/css/bootstrapslider.css" rel="stylesheet">
+<style type="text/css">
+    	/* Space out content a bit */
+		body {
+		  padding-top: 20px;
+		  padding-bottom: 20px;
+		}
+
+		h1 small {
+			font-size: 51%;
+		}
+
+		/* Everything but the jumbotron gets side spacing for mobile first views */
+		.header,
+		.marketing,
+		.footer {
+		  padding-left: 15px;
+		  padding-right: 15px;
+		}
+
+		/* Custom page header */
+		.header {
+		  border-bottom: 1px solid #e5e5e5;
+		}
+		/* Make the masthead heading the same height as the navigation */
+		.header h3 {
+		  margin-top: 0;
+		  margin-bottom: 0;
+		  line-height: 40px;
+		  padding-bottom: 19px;
+		}
+
+		/* Custom page footer */
+		.footer {
+		  padding-top: 19px;
+		  color: #777;
+		  border-top: 1px solid #e5e5e5;
+		}
+
+		/* Customize container */
+		.container {
+			min-width: 640px;
+		}
+		@media (min-width: 768px) {
+		  .container {
+		    max-width: 1000px;
+		  }
+		}
+		.container-narrow > hr {
+		  margin: 30px 0;
+		}
+
+		/* Main marketing message and sign up button */
+		.title {
+		  text-align: center;
+		  border-bottom: 1px solid #e5e5e5;
+		}
+
+		/* Responsive: Portrait tablets and up */
+		@media screen and (min-width: 768px) {
+		  /* Remove the padding we set earlier */
+		  .header,
+		  .footer {
+		    padding-left: 0;
+		    padding-right: 0;
+		  }
+		  /* Space out the masthead */
+		  .header {
+		    margin-bottom: 30px;
+		  }
+		  /* Remove the bottom border on the jumbotron for visual effect */
+		  .title {
+		    border-bottom: 0;
+		  }
+		}
+
+		.well {
+			background-color: #E0E0E0;
+		}
+
+		.slider-example {
+			padding: 10px 0;
+			margin: 35px 0;
+		}
+
+		#destroyEx5Slider, #ex6CurrentSliderValLabel, #ex7-enabled {
+			margin-left: 45px;
+		}
+
+		#ex6SliderVal {
+			color: green;
+		}
+		
+		#slider12a .slider-track-high, #slider12c .slider-track-high {
+			background: green;
+		}
+
+		#slider12b .slider-track-low, #slider12c .slider-track-low {
+			background: red;
+		}
+
+		#slider12c .slider-selection {
+			background: yellow;
+		}
+    </style>
+    <style type="text/css">
+		/* Example 1 custom styles */
+		#ex1Slider .slider-selection {
+   			background: #BABABA;
+  		}
+
+    	/* Example 3 custom styles */
+		#RGB {
+    		height: 20px;
+    		background: rgb(128, 128, 128);
+  		}
+		#RC .slider-selection {
+		    background: #FF8282;
+		}
+		#RC .slider-handle {
+			background: red;
+		}
+		#GC .slider-selection {
+			background: #428041;
+		}
+		#GC .slider-handle {
+			background: green;
+		}
+		#BC .slider-selection {
+			background: #8283FF;
+		}
+		#BC .slider-handle {
+			border-bottom-color: blue;
+		}
+		#R, #G, #B {
+			width: 300px;
+		}
+    </style>
+    
+    
+
+
 
 </head>
 <body class="skin-blue sidebar-mini sidebar-collapse">
@@ -43,22 +189,19 @@
                     
                 </ul>
                 <div class="tab-content">
-                  <div class="tab-pane active" id="tab_1-1">
-
-                  </div><!-- /.tab-pane -->
+                  <div class="tab-pane active" id="tab_1-1"></div><!-- /.tab-pane -->
                   <div class="tab-pane" id="tab_2-2">
                		<iframe width='100%' height='520' frameborder='0' src='http://geo.stp.gov.py/user/stp/viz/8f7c6480-2f1c-11e5-aaea-b6fa9714a3b6/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen>
 		     		</iframe>
                   </div><!-- /.tab-pane -->
                   <div class="tab-pane" id="tab_3-2">
-                  
-                                   
-         		
+                  	
                   </div><!-- /.tab-pane -->
                 </div><!-- /.tab-content -->
               </div>
 		      </div>
-			  <div class="modal-footer">
+			  <div class="modal-footer"> 
+				<input id="ex2" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]"/>
 			  </div>
 		    </div> 
 		 </div>
@@ -104,7 +247,6 @@ if (user != null) { %>
 						{
 								cuerpoModal+='<tr><td>'+elRegistro[m].accion+'</td><td>'+elRegistro[m].accion_departamento+'</td><td>'+elRegistro[m].accion_distrito+'</td><td>'+elRegistro[m].accion_unidad_edida+'</td><td>'+elRegistro[m].hito_cantidad_programado+'</td><td>'+elRegistro[m].accion_costo+'</td><td>'+elRegistro[m].hito_fecha_entrega+'</td><td>'+elRegistro[m].hito_porcentaje_programado+'</td><td>'+elRegistro[m].hito_porcentaje_ejecutado+'</td></tr>';
 								totalCantidadProgramada+=elRegistro[m].hito_cantidad_programado;
-								
 						}
 						totalCantidadProgramada=parseFloat(totalCantidadProgramada).toFixed(2);
 
@@ -125,15 +267,28 @@ if (user != null) { %>
 		      	dataType:'json',
 		      	async:false       
 		    }).responseText;
+			
+			
 			lineaAccionAcumuladoMes = JSON.parse(lineaAccionAcumuladoMes);
 			
+			var vectorMin=0;
+			var vectorMax=lineaAccionAcumuladoMes.length;
 			
 			//grafico de total cantidad programada y total cantidad ejecutada
 
 			$('#myModal').find("#tab_3-2").append('<div id="chartContainer" style="height:400px;"></div>');
-			dibujarLineaAccionAcumuladoMes(lineaAccionAcumuladoMes);
 			
-			function dibujarLineaAccionAcumuladoMes(lineaAccionAcumuladoMes){
+			function compare(a,b) {             
+				  if (a.mes < b.mes)
+				    return -1;
+				  if (a.mes > b.mes)
+				    return 1;
+				  return 0;
+				}
+			
+			lineaAccionAcumuladoMes=lineaAccionAcumuladoMes.sort(compare);
+			
+			function dibujarLineaAccionAcumuladoMes(lineaAccionAcumuladoMes, vectorMin, vectorMax){
 				var dataPoints=[];
 
 				var ejecutada=[];
@@ -141,21 +296,14 @@ if (user != null) { %>
 				var mes;
 				var anho;
 				
-				function compare(a,b) {             
-					  if (a.mes < b.mes)
-					    return -1;
-					  if (a.mes > b.mes)
-					    return 1;
-					  return 0;
+				for(var i = 0;i<lineaAccionAcumuladoMes.length; i++)
+				{
+			
+					if(lineaAccionAcumuladoMes[i].mes >= lineaAccionAcumuladoMes[vectorMin].mes && lineaAccionAcumuladoMes[i].mes <= lineaAccionAcumuladoMes[vectorMax-1].mes)
+					{
+		 				dataPoints.push({ x: new Date( lineaAccionAcumuladoMes[i].mes), y: lineaAccionAcumuladoMes[i].cantidad_programada});
+		 				ejecutada.push({ x: new Date( lineaAccionAcumuladoMes[i].mes), y: lineaAccionAcumuladoMes[i].cantidad_ejecutda});
 					}
-
-				lineaAccionAcumuladoMes=lineaAccionAcumuladoMes.sort(compare);
-				
-				for(var i = 0;i<lineaAccionAcumuladoMes.length; i++){
-		 			dataPoints.push({ x: new Date( lineaAccionAcumuladoMes[i].mes), y: lineaAccionAcumuladoMes[i].cantidad_programada});
-
-		 			ejecutada.push({ x: new Date( lineaAccionAcumuladoMes[i].mes), y: lineaAccionAcumuladoMes[i].cantidad_ejecutda});
-
 				}
 
 				var chart = new CanvasJS.Chart("chartContainer",
@@ -203,7 +351,8 @@ if (user != null) { %>
 						});
 						
 				chart.render();
-						  }
+			 }
+			dibujarLineaAccionAcumuladoMes(lineaAccionAcumuladoMes, vectorMin, vectorMax);
 	});
 		
 		
@@ -466,7 +615,7 @@ tbody {
               <thead>
                 <tr style="background-color: white;">
                   <th>
-                  	Lineas De Acción por Entidad
+                  	Líneas de Acción por Entidad
                   </th>
                   <th></th><th></th><th class="cell-bordered2" rowspan="2">Meta 2015</th><th rowspan="2"></th><th rowspan="2">Programación 2015</th><th rowspan="2">%  Programado</th>
                   <th colspan="3" class="text-center cell-bordered2">A la fecha</th>
@@ -549,7 +698,8 @@ var $tabla=$("#lineasPorEntidad");
     <script src="plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
     <!-- ChartJS 1.0.1 -->
     <script src="plugins/chartjs/Chart.min.js" type="text/javascript"></script>
-
+    
+    
     <!-- AdminLTE dashboard demo (This is only for demo purposes) 
     <script src="dist/js/pages/dashboard2.js" type="text/javascript"></script>-->
 
@@ -560,6 +710,29 @@ var $tabla=$("#lineasPorEntidad");
 				<p>Favor Iniciar Sesion</p>
 			<%  } %>
 
+    
+    <script type="text/javascript">
+// With JQuery
+   $("#ex2").slider({});
+
+   // Without JQuery
+   var slider = new Slider('#ex2', {});
+   
+   </script>
+
+
+<script type="text/javascript" src="bootstrap/js/jquery.min.js"></script>
+<script type="text/javascript" src="bootstrap/js/bootstrap-slider.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+  	/* Example 2 */
+     $("#ex2").slider({});
+
+});
+</script>
+    
+    
+    
     
   </body>
 </html>

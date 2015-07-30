@@ -181,7 +181,7 @@ public class ajaxSelects extends HttpServlet {
         	}
         	if (action.equals("getFactHitos2015")){
         		List objetos=null;
-        		condition = " where hito_fecha_entrega > '2014-12-31' ";
+        		condition = " where hito_fecha_entrega > '2014-12-31' and hito_fecha_entrega < '2016-01-01'";
         		if (institucion!="") condition += " and institucion ='"+institucion+"'";
         		if (institucion_id!=0) condition += " and institucion_id ='"+institucion_id+"'";
         		if (linea_accion_id!=0) condition += " and linea_accion_id ='"+linea_accion_id+"'";
