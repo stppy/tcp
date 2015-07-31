@@ -16,11 +16,54 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-  
-   	<script src="https://cdnjs.cloudflare.com/ajax/libs/floatthead/1.2.10/jquery.floatThead.min.js"></script> -->	
+
+   		<script src="https://cdnjs.cloudflare.com/ajax/libs/floatthead/1.2.10/jquery.floatThead.min.js"></script> -->	
         
 <!--   <script src="frames/entidad.js" type="text/javascript"></script> -->
-<script src="dist/canvasjs/canvasjs.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="dist/canvasjs/canvasjs.min.js" ></script>
+
+
+
+	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="bootstrap/css/bootstrapslider.css" rel="stylesheet">
+
+    <style type="text/css">
+		/* Example 1 custom styles */
+		#ex1Slider .slider-selection {
+   			background: #BABABA;
+  		}
+
+    	/* Example 3 custom styles */
+		#RGB {
+    		height: 20px;
+    		background: rgb(128, 128, 128);
+  		}
+		#RC .slider-selection {
+		    background: #FF8282;
+		}
+		#RC .slider-handle {
+			background: red;
+		}
+		#GC .slider-selection {
+			background: #428041;
+		}
+		#GC .slider-handle {
+			background: green;
+		}
+		#BC .slider-selection {
+			background: #8283FF;
+		}
+		#BC .slider-handle {
+			border-bottom-color: blue;
+		}
+		#R, #G, #B {
+			width: 300px;
+		}
+    </style>
+    
+    
+
+
 
 </head>
 <body class="skin-blue sidebar-mini sidebar-collapse">
@@ -43,22 +86,19 @@
                     
                 </ul>
                 <div class="tab-content">
-                  <div class="tab-pane active" id="tab_1-1">
-
-                  </div><!-- /.tab-pane -->
+                  <div class="tab-pane active" id="tab_1-1"></div><!-- /.tab-pane -->
                   <div class="tab-pane" id="tab_2-2">
                		<iframe width='100%' height='520' frameborder='0' src='http://geo.stp.gov.py/user/stp/viz/8f7c6480-2f1c-11e5-aaea-b6fa9714a3b6/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen>
 		     		</iframe>
                   </div><!-- /.tab-pane -->
                   <div class="tab-pane" id="tab_3-2">
-                  
-                                   
-         		
+                  	
                   </div><!-- /.tab-pane -->
                 </div><!-- /.tab-content -->
               </div>
 		      </div>
-			  <div class="modal-footer">
+			  <div class="modal-footer"> 
+				<input id="rango-fecha" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="1" data-slider-value="[250,450]"/>
 			  </div>
 		    </div> 
 		 </div>
@@ -72,6 +112,91 @@ if (user != null) { %>
 <script>
 	
 	$(document).ready(function(){
+		var lineaAccionAcumuladoMes;
+		
+		var vectorMin=0;
+		var vectorMax=0;
+		
+		function dibujarLineaAccionAcumuladoMes(lineaAccionAcumuladoMes, vectorMin, vectorMax){
+			var dataPoints=[];
+			var ejecutada=[];
+			
+			var mes;
+			var anho;
+			var cantidadTotalProgramada=parseFloat(0);
+			var cantidadTotalEjecutada=parseFloat(0);
+			
+			$("#rango-fecha").attr("data-slider-min",vectorMin);
+			$("#rango-fecha").attr("data-slider-max",vectorMax);
+			$("#rango-fecha").attr("data-slider-value","["+vectorMin+","+vectorMax+"]");
+			$("#rango-fecha").slider({});
+			for(var i = 0;i<lineaAccionAcumuladoMes.length; i++)
+			{
+				cantidadTotalProgramada+=lineaAccionAcumuladoMes[i].cantidad_programada;
+				cantidadTotalEjecutada+=lineaAccionAcumuladoMes[i].cantidad_ejecutda;
+		
+				if(lineaAccionAcumuladoMes[i].mes >= lineaAccionAcumuladoMes[vectorMin].mes && lineaAccionAcumuladoMes[i].mes <= lineaAccionAcumuladoMes[vectorMax-1].mes)
+				{
+	 				dataPoints.push({ x: new Date( lineaAccionAcumuladoMes[i].mes), y: cantidadTotalProgramada});
+	 				if (lineaAccionAcumuladoMes[i].cantidad_ejecutda!=0)  ejecutada.push({ x: new Date( lineaAccionAcumuladoMes[i].mes), y: cantidadTotalEjecutada});
+				}
+
+			}
+
+			var chart = new CanvasJS.Chart("chartContainer",
+					{
+						title: {
+							text: "Evolución Acumulada" 
+						},
+			                        animationEnabled: true,
+			                        width: 800,
+						axisX:{      
+							valueFormatString: "YYYY-MM" ,
+							interval: 1,
+							intervalType: "month",
+							labelAngle: -50,
+							labelFontColor: "rgb(0,75,141)",
+						},
+						axisY: {
+							title: "",
+							interlacedColor: "#F0FFFF",
+							tickColor: "azure",
+							titleFontColor: "rgb(0,75,141)"
+						},
+						data: [
+						{        
+							indexLabelFontColor: "darkSlateGray",
+							showInLegend: true, 
+							name: 'programada',
+							type: "line",
+							//color: "rgba(0,75,141,0.7)",
+							markerSize:8,
+							legendText:"Programación",
+							dataPoints:dataPoints
+						},
+						{        
+							indexLabelFontColor: "darkSlateGray",
+							showInLegend: true, 
+							name: 'ejecutadas',
+							type: "area",
+							//color: "rgba(0,75,141,0.8)",
+							markerSize:8,
+							legendText:"Ejecución",
+							dataPoints:ejecutada
+						}
+					  ]
+					});
+					
+			chart.render();
+		 }
+
+		$("body").on("change", "#rango-fecha",function(event){
+			var rangoDeFecha= $("#rango-fecha").val();
+			var splitDeRango=rangoDeFecha.split(",");
+			vectorMin=splitDeRango[0];
+			vectorMax=splitDeRango[1];
+			dibujarLineaAccionAcumuladoMes(lineaAccionAcumuladoMes, vectorMin, vectorMax);
+		});
 		
 		$("body").on("click", ".registro",function(event){
 			var codigoRegistro = $(this).attr("codigoRegistro");
@@ -104,7 +229,6 @@ if (user != null) { %>
 						{
 								cuerpoModal+='<tr><td>'+elRegistro[m].accion+'</td><td>'+elRegistro[m].accion_departamento+'</td><td>'+elRegistro[m].accion_distrito+'</td><td>'+elRegistro[m].accion_unidad_edida+'</td><td>'+elRegistro[m].hito_cantidad_programado+'</td><td>'+elRegistro[m].accion_costo+'</td><td>'+elRegistro[m].hito_fecha_entrega+'</td><td>'+elRegistro[m].hito_porcentaje_programado+'</td><td>'+elRegistro[m].hito_porcentaje_ejecutado+'</td></tr>';
 								totalCantidadProgramada+=elRegistro[m].hito_cantidad_programado;
-								
 						}
 						totalCantidadProgramada=parseFloat(totalCantidadProgramada).toFixed(2);
 
@@ -119,94 +243,35 @@ if (user != null) { %>
 			$('#myModal').find("#tab_1-1").html(cuerpoModal);
 			//$('#myModal').find(".modal-footer").html(footerModal);
 			
-			var lineaAccionAcumuladoMes = $.ajax({
+			lineaAccionAcumuladoMes = $.ajax({
 		    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getLineaAccionAcumuladoMes&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id,
 		      	type:'get',
 		      	dataType:'json',
 		      	async:false       
 		    }).responseText;
+			
+			
 			lineaAccionAcumuladoMes = JSON.parse(lineaAccionAcumuladoMes);
 			
+			 vectorMin=0;
+			 vectorMax=lineaAccionAcumuladoMes.length-1;
 			
 			//grafico de total cantidad programada y total cantidad ejecutada
-
-			$('#myModal').find("#tab_3-2").append('<div id="chartContainer" style="height:400px;"></div>');
-			dibujarLineaAccionAcumuladoMes(lineaAccionAcumuladoMes);
 			
-			function dibujarLineaAccionAcumuladoMes(lineaAccionAcumuladoMes){
-				var dataPoints=[];
-
-				var ejecutada=[];
-// 				var dia;
-				var mes;
-				var anho;
-				var cantidadTotalProgramada=parseFloat(0);
-				var cantidadTotalEjecutada=parseFloat(0);
-				
-				function compare(a,b) {             
-					  if (a.mes < b.mes)
-					    return -1;
-					  if (a.mes > b.mes)
-					    return 1;
-					  return 0;
-					}
-
-				lineaAccionAcumuladoMes=lineaAccionAcumuladoMes.sort(compare);
-				
-				for(var i = 0;i<lineaAccionAcumuladoMes.length; i++){
-					cantidadTotalProgramada+=lineaAccionAcumuladoMes[i].cantidad_programada;
-					cantidadTotalEjecutada+=lineaAccionAcumuladoMes[i].cantidad_ejecutda;
-		 			dataPoints.push({ x: new Date( lineaAccionAcumuladoMes[i].mes), y:cantidadTotalProgramada });
-		 			if (lineaAccionAcumuladoMes[i].cantidad_ejecutda!=0) ejecutada.push({ x: new Date( lineaAccionAcumuladoMes[i].mes), y:cantidadTotalEjecutada});
-
+			$('#myModal').find("#tab_3-2").append('<div id="chartContainer" style="height:400px;"></div>');
+			
+			function compare(a,b) {             
+				  if (a.mes < b.mes)
+				    return -1;
+				  if (a.mes > b.mes)
+				    return 1;
+				  return 0;
 				}
-
-				var chart = new CanvasJS.Chart("chartContainer",
-						{
-							title: {
-								text: "Evolución Acumulada" 
-							},
-				                        animationEnabled: true,
-				                        width: 800,
-							axisX:{      
-								valueFormatString: "YYYY-MM" ,
-								interval: 1,
-								intervalType: "month",
-								labelAngle: -50,
-								labelFontColor: "rgb(0,75,141)",
-							},
-							axisY: {
-								title: "",
-								interlacedColor: "#F0FFFF",
-								tickColor: "azure",
-								titleFontColor: "rgb(0,75,141)"
-							},
-							data: [
-							{        
-								indexLabelFontColor: "darkSlateGray",
-								showInLegend: true, 
-								name: 'programada',
-								type: "line",
-								//color: "rgba(0,75,141,0.7)",
-								markerSize:8,
-								legendText:"Programación",
-								dataPoints:dataPoints
-							},
-							{        
-								indexLabelFontColor: "darkSlateGray",
-								showInLegend: true, 
-								name: 'ejecutadas',
-								type: "area",
-								//color: "rgba(0,75,141,0.8)",
-								markerSize:8,
-								legendText:"Ejecución",
-								dataPoints:ejecutada
-							}
-						  ]
-						});
-						
-				chart.render();
-						  }
+			
+			lineaAccionAcumuladoMes=lineaAccionAcumuladoMes.sort(compare);
+			
+			
+			dibujarLineaAccionAcumuladoMes(lineaAccionAcumuladoMes, vectorMin, vectorMax);
 	});
 		
 		
@@ -469,7 +534,7 @@ tbody {
               <thead>
                 <tr style="background-color: white;">
                   <th>
-                  	Lineas De Acción por Entidad
+                  	Líneas de Acción por Entidad
                   </th>
                   <th></th><th></th><th class="cell-bordered2" rowspan="2">Meta 2015</th><th rowspan="2"></th><th rowspan="2">Programación 2015</th><th rowspan="2">%  Programado</th>
                   <th colspan="3" class="text-center cell-bordered2">A la fecha</th>
@@ -552,7 +617,8 @@ var $tabla=$("#lineasPorEntidad");
     <script src="plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
     <!-- ChartJS 1.0.1 -->
     <script src="plugins/chartjs/Chart.min.js" type="text/javascript"></script>
-
+    
+    
     <!-- AdminLTE dashboard demo (This is only for demo purposes) 
     <script src="dist/js/pages/dashboard2.js" type="text/javascript"></script>-->
 
@@ -578,6 +644,11 @@ var $tabla=$("#lineasPorEntidad");
 </script>
 <noscript><p><img src="//infra.stp.gov.py/monitoreoweb/piwik.php?idsite=9" style="border:0;" alt="" /></p></noscript>
 <!-- End Piwik Code -->
+
+<script type="text/javascript" src="bootstrap/js/jquery.min.js"></script>
+<script type="text/javascript" src="bootstrap/js/bootstrap-slider.js"></script>
+
+    
     
   </body>
 </html>
