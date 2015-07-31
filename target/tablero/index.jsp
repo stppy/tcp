@@ -131,8 +131,8 @@ if (user != null) { %>
 			$("#rango-fecha").attr("data-slider-min",vectorMin);
 			$("#rango-fecha").attr("data-slider-max",vectorMax);
 			$("#rango-fecha").attr("data-slider-value","["+vectorMin+","+vectorMax+"]");
-			$("#fechaInicio").html("&nbsp;&nbsp;&nbsp;"+lineaAccionAcumuladoMes[vectorMin].mes+" ");
-			$("#fechaFin").html("&nbsp;&nbsp;&nbsp;"+lineaAccionAcumuladoMes[vectorMax].mes);
+			$("#fechaInicio").html(lineaAccionAcumuladoMes[vectorMin].mes+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+			$("#fechaFin").html("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+lineaAccionAcumuladoMes[vectorMax].mes);
 			$("#rango-fecha").slider({});
 			for(var i = 0;i<lineaAccionAcumuladoMes.length; i++)
 			{
@@ -246,7 +246,7 @@ if (user != null) { %>
 			$('#myModal').find("#tab_1-1").html("");
 			$('#myModal').find("#tab_2-2").html("");
 			$('#myModal').find("#tab_3-2").html("");
-			$("#tab_3-2").append('<input id="rango-fecha" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="1" data-slider-value="[250,450]"/>&nbsp;&nbsp;<label id="fechaInicio"></label><label id="fechaFin"></label>');
+			$("#tab_3-2").append('<label id="fechaInicio"></label><input id="rango-fecha" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="1" data-slider-value="[250,450]"/><label id="fechaFin"></label>');
 			$('#myModal').find("#tab_1-1").html(cuerpoModal);
 			//$('#myModal').find(".modal-footer").html(footerModal);
 			
