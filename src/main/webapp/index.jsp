@@ -96,7 +96,7 @@ if (user != null) { %>
 
 			cuerpoModal='<div class="table-responsive">'+
 						'<table class="table table-hover">'+
-							'<tr class="active"><td>Acción</td><td>Departamento</td><td>Distrito</td><td>U. Medida</td><td>Cantidad. Programado</td><td>Costo Total</td><td>Fecha Terminación</td><td>Estado</td><td>% Programado</td><td>% Ejecutado</td></tr>';
+							'<tr class="active"><td>Acción</td><td>Departamento</td><td>Distrito</td><td>U. Medida</td><td>Cantidad. Programado</td><td>Costo Total</td><td>Fecha Terminación</td><td>% Programado</td><td>% Ejecutado</td></tr>';
 
 						var totalCantidadProgramada=0;
 						tituloModal='<h3><center>'+elRegistro[0].institucion+'&nbsp;&nbsp;-&nbsp;&nbsp;'+elRegistro[0].linea_accion+'</center></h3>';
@@ -140,6 +140,8 @@ if (user != null) { %>
 // 				var dia;
 				var mes;
 				var anho;
+				var cantidadTotalProgramada=parseFloat(0);
+				var cantidadTotalEjecutada=parseFloat(0);
 				
 				function compare(a,b) {             
 					  if (a.mes < b.mes)
@@ -152,16 +154,17 @@ if (user != null) { %>
 				lineaAccionAcumuladoMes=lineaAccionAcumuladoMes.sort(compare);
 				
 				for(var i = 0;i<lineaAccionAcumuladoMes.length; i++){
-		 			dataPoints.push({ x: new Date( lineaAccionAcumuladoMes[i].mes), y: lineaAccionAcumuladoMes[i].cantidad_programada});
-
-		 			ejecutada.push({ x: new Date( lineaAccionAcumuladoMes[i].mes), y: lineaAccionAcumuladoMes[i].cantidad_ejecutda});
+					cantidadTotalProgramada+=lineaAccionAcumuladoMes[i].cantidad_programada;
+					cantidadTotalEjecutada+=lineaAccionAcumuladoMes[i].cantidad_ejecutda;
+		 			dataPoints.push({ x: new Date( lineaAccionAcumuladoMes[i].mes), y:cantidadTotalProgramada });
+		 			if (lineaAccionAcumuladoMes[i].cantidad_ejecutda!=0) ejecutada.push({ x: new Date( lineaAccionAcumuladoMes[i].mes), y:cantidadTotalEjecutada});
 
 				}
 
 				var chart = new CanvasJS.Chart("chartContainer",
 						{
 							title: {
-								text: "Evolución" 
+								text: "Evolución Acumulada" 
 							},
 				                        animationEnabled: true,
 				                        width: 800,
@@ -557,9 +560,24 @@ var $tabla=$("#lineasPorEntidad");
 
     <script src="dist/js/demo.js" type="text/javascript"></script>
         <%  } else { %>
-				<p>Favor Iniciar Sesion</p>
+				est<p>Favor Iniciar Sesion</p>
 			<%  } %>
 
+<!-- Piwik -->
+<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//infra.stp.gov.py/monitoreoweb/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', 9]);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<noscript><p><img src="//infra.stp.gov.py/monitoreoweb/piwik.php?idsite=9" style="border:0;" alt="" /></p></noscript>
+<!-- End Piwik Code -->
     
   </body>
 </html>
