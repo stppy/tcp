@@ -98,7 +98,7 @@
               </div>
 		      </div>
 			  <div class="modal-footer"> 
-				<input id="rango-fecha" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="1" data-slider-value="[250,450]"/>
+				
 			  </div>
 		    </div> 
 		 </div>
@@ -118,6 +118,7 @@ if (user != null) { %>
 		var vectorMax=0;
 		
 		function dibujarLineaAccionAcumuladoMes(lineaAccionAcumuladoMes, vectorMin, vectorMax){
+			
 			var dataPoints=[];
 			var ejecutada=[];
 			
@@ -195,7 +196,9 @@ if (user != null) { %>
 			var splitDeRango=rangoDeFecha.split(",");
 			vectorMin=splitDeRango[0];
 			vectorMax=splitDeRango[1];
+			
 			dibujarLineaAccionAcumuladoMes(lineaAccionAcumuladoMes, vectorMin, vectorMax);
+			
 		});
 		
 		$("body").on("click", ".registro",function(event){
@@ -240,6 +243,7 @@ if (user != null) { %>
 			$('#myModal').find("#tab_1-1").html("");
 			$('#myModal').find("#tab_2-2").html("");
 			$('#myModal').find("#tab_3-2").html("");
+			$("#tab_3-2").append('<input id="rango-fecha" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="1" data-slider-value="[250,450]"/>');
 			$('#myModal').find("#tab_1-1").html(cuerpoModal);
 			//$('#myModal').find(".modal-footer").html(footerModal);
 			
