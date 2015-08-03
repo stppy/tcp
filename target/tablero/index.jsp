@@ -136,7 +136,7 @@ if (user != null) { %>
 				cantidadTotalProgramada+=lineaAccionAcumuladoMes[i].cantidad_programada;
 				cantidadTotalEjecutada+=lineaAccionAcumuladoMes[i].cantidad_ejecutda;
 		
-				if(lineaAccionAcumuladoMes[i].mes >= lineaAccionAcumuladoMes[vectorMin].mes && lineaAccionAcumuladoMes[i].mes <= lineaAccionAcumuladoMes[vectorMax-1].mes)
+				if(lineaAccionAcumuladoMes[i].mes >= lineaAccionAcumuladoMes[vectorMin].mes && lineaAccionAcumuladoMes[i].mes <= lineaAccionAcumuladoMes[vectorMax].mes)
 				{
 	 				dataPoints.push({ x: new Date( lineaAccionAcumuladoMes[i].mes), y: cantidadTotalProgramada});
 	 				if (lineaAccionAcumuladoMes[i].cantidad_ejecutda!=0)  ejecutada.push({ x: new Date( lineaAccionAcumuladoMes[i].mes), y: cantidadTotalEjecutada});
@@ -336,15 +336,15 @@ if (user != null) { %>
 									anho2=el[k];
 								}
 							}
-							if (typeof anho1.cantidad_ejecutada_hoy==="undefined") {var anho1= new Object(); anho1.cantidad_ejecutada_hoy=""};
-							if (typeof anho2.cantidad_ejecutada_hoy==="undefined") {var anho2= new Object(); anho2.cantidad_ejecutada_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
+							if (typeof anho1.hito_cantidad_ejecutado_hoy==="undefined") {var anho1= new Object(); anho1.hito_cantidad_ejecutado_hoy=""};
+							if (typeof anho2.hito_cantidad_ejecutado_hoy==="undefined") {var anho2= new Object(); anho2.hito_cantidad_ejecutado_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
 							if (anho2.suma_programada_anho>0){
 							//	var porcentajeAnho = (anho2.suma_programada_hoy*100)/anho2.suma_programada_anho;
 								var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
 								porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
-								var porcentajeAnhoEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_anho;
+								var porcentajeAnhoEje = (anho2.hito_cantidad_ejecutado_hoy*100)/anho2.suma_programada_anho;
 								porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
-								var porcentajeHoyEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_hoy;
+								var porcentajeHoyEje = (anho2.hito_cantidad_ejecutado_hoy*100)/anho2.suma_programada_hoy;
 								porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
 								/*if (porcentajeAnho<=70) sumporAClass = "text-danger";
 								if (porcentajeAnho>70) sumporAClass = "text-warning";
@@ -369,7 +369,7 @@ if (user != null) { %>
 								}
 								
 								//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
-								$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+el[j].institucion_id+'-'+el[j].linea_accion_id+'-'+el[j].accion_unidad_medida+'> '+anho2.linea_accion+'</a></td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</a></td><td>'+anho2.accion_unidad_medida+'</td><td class="cell-bordered2">'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_hoy)+'</td><td >'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class="text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
+								$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+el[j].institucion_id+'-'+el[j].linea_accion_id+'-'+el[j].accion_unidad_medida+'> '+anho2.linea_accion+'</a></td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</a></td><td>'+anho2.accion_unidad_medida+'</td><td class="cell-bordered2">'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_hoy)+'</td><td >'+numeroConComa(anho2.hito_cantidad_ejecutado_hoy)+'</td><td class="text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
 															
 								
 								
@@ -393,15 +393,15 @@ if (user != null) { %>
 									anho1=el[k];
 								}
 							}
-							if (typeof anho1.cantidad_ejecutada_hoy==="undefined") {var anho1= new Object(); anho1.cantidad_ejecutada_hoy="";};
-							if (typeof anho2.cantidad_ejecutada_hoy==="undefined") {var anho2= new Object(); anho2.cantidad_ejecutada_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
+							if (typeof anho1.hito_cantidad_ejecutado_hoy==="undefined") {var anho1= new Object(); anho1.hito_cantidad_ejecutado_hoy="";};
+							if (typeof anho2.hito_cantidad_ejecutado_hoy==="undefined") {var anho2= new Object(); anho2.hito_cantidad_ejecutado_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
 							if (anho2.suma_programada_anho>0){
 								//var porcentajeAnho = (anho2.suma_programada_hoy*100)/anho2.suma_programada_anho;
 								var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
 								porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
-								var porcentajeAnhoEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_anho;
+								var porcentajeAnhoEje = (anho2.hito_cantidad_ejecutado_hoy*100)/anho2.suma_programada_anho;
 								porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
-								var porcentajeHoyEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_hoy;
+								var porcentajeHoyEje = (anho2.hito_cantidad_ejecutado_hoy*100)/anho2.suma_programada_hoy;
 								porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
 								/*if (porcentajeAnho<=70) sumporAClass = "text-danger";
 								if (porcentajeAnho>70) sumporAClass = "text-warning";
@@ -434,7 +434,7 @@ if (user != null) { %>
 								porHejeClassRow="";
 							}
 							//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
-							$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+el[j].institucion_id+'-'+el[j].linea_accion_id+'-'+el[j].accion_unidad_medida+'>'+anho2.linea_accion+'</a></td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+anho2.accion_unidad_medida+'</td><td class="cell-bordered2">'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_hoy)+'</td><td>'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class=" text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
+							$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+el[j].institucion_id+'-'+el[j].linea_accion_id+'-'+el[j].accion_unidad_medida+'>'+anho2.linea_accion+'</a></td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+anho2.accion_unidad_medida+'</td><td class="cell-bordered2">'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_hoy)+'</td><td>'+numeroConComa(anho2.hito_cantidad_ejecutado_hoy)+'</td><td class=" text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
 							
 							//<td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td> penultima
 							anho2="";

@@ -254,7 +254,7 @@ public class SqlSelects {
 					objeto.setLinea_accion_id(rs.getInt("linea_accion_id"));
 					objeto.setLinea_accion(rs.getString("linea_accion"));
 					objeto.setAccion_unidad_medida(rs.getString("accion_unidad_medida"));
-					objeto.setCantidad_ejecutada_hoy(rs.getDouble("sum"));
+					objeto.setCantidad_ejecutada(rs.getDouble("sum"));
 					objeto.setAnho(rs.getInt("date_part"));
 					objeto.setSuma_programada_anho(rs.getDouble("sumprog"));
 					objeto.setSuma_programada_hoy(rs.getDouble("sumproghoy"));
@@ -262,6 +262,7 @@ public class SqlSelects {
 					objeto.setCosto_programado_anho(rs.getDouble("costo_programado_anho"));
 					objeto.setCosto_programado_hoy(rs.getDouble("costo_programado_hoy"));
 					objeto.setLinea_accion_meta(rs.getDouble("linea_accion_meta"));
+					objeto.setHito_cantidad_ejecutado_hoy(rs.getDouble("hito_cantidad_ejecutado_hoy"));
 					objetos.add(objeto);
 				}
 			}
