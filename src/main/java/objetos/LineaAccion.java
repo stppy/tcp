@@ -6,7 +6,7 @@ public class LineaAccion {
 	protected int linea_accion_id;
 	protected String linea_accion;
 	protected String accion_unidad_medida;
-	protected double cantidad_ejecutada_hoy;
+	protected double cantidad_ejecutada;
 	protected int anho;
 	protected double suma_programada_anho;
 	protected double suma_programada_hoy;
@@ -14,7 +14,8 @@ public class LineaAccion {
 	protected double costo_programado_anho;
 	protected double costo_programado_hoy;
 	protected double linea_accion_meta;
-	
+	protected double hito_cantidad_ejecutado_hoy;
+
 	public int getInstitucion_id() {
 		return institucion_id;
 	}
@@ -45,11 +46,11 @@ public class LineaAccion {
 	public void setAccion_unidad_medida(String accion_unidad_medida) {
 		this.accion_unidad_medida = accion_unidad_medida;
 	}
-	public double getCantidad_ejecutada_hoy() {
-		return cantidad_ejecutada_hoy;
+	public double getCantidad_ejecutada() {
+		return cantidad_ejecutada;
 	}
-	public void setCantidad_ejecutada_hoy(double cantidad_ejecutada_hoy) {
-		this.cantidad_ejecutada_hoy = cantidad_ejecutada_hoy;
+	public void setCantidad_ejecutada(double cantidad_ejecutada) {
+		this.cantidad_ejecutada = cantidad_ejecutada;
 	}
 	public int getAnho() {
 		return anho;
@@ -92,6 +93,12 @@ public class LineaAccion {
 	}
 	public void setLinea_accion_meta(double linea_accion_meta) {
 		this.linea_accion_meta = linea_accion_meta;
+	}
+	public double getHito_cantidad_ejecutado_hoy() {
+		return hito_cantidad_ejecutado_hoy;
+	}
+	public void setHito_cantidad_ejecutado_hoy(double hito_cantidad_ejecutado_hoy) {
+		this.hito_cantidad_ejecutado_hoy = hito_cantidad_ejecutado_hoy;
 	}
 	
 	
