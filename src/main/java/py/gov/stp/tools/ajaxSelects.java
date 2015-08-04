@@ -179,6 +179,23 @@ public class ajaxSelects extends HttpServlet {
         		JsonElement json = new Gson().toJsonTree(objetos);
         		out.println(json.toString());
         	}
+        	
+        	if (action.equals("getFactHitosSnpp")){
+        		List objetos=null;
+        		condition = " where true ";
+        		if (institucion!="") condition += " and institucion ='"+institucion+"'";
+        		if (institucion_id!=0) condition += " and institucion_id ='"+institucion_id+"'";
+        		if (linea_accion_id!=0) condition += " and linea_accion_id ='"+linea_accion_id+"'";
+        		if (accion!="") condition += " and accion ='"+accion+"'";
+        		if (accion_id!=0) condition += " and accion_id ='"+accion_id+"'";
+        		
+        		
+				try {objetos = SqlSelects.selectFactHitosSnpp(condition);}
+				catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos);
+        		out.println(json.toString());
+        	}
+        	
         	if (action.equals("getFactHitos2015")){
         		List objetos=null;
         		condition = " where hito_fecha_entrega > '2014-12-31' and hito_fecha_entrega < '2016-01-01'";

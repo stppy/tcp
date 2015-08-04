@@ -116,8 +116,10 @@ if (user != null) { %>
 		
 		var vectorMin=0;
 		var vectorMax=0;
+		var vectorMinEjecucion=0;
+		var vectorMaxEjecucion=0;
 		
-		function dibujarLineaAccionAcumuladoMes(lineaAccionAcumuladoMes, vectorMin, vectorMax){
+		function dibujarLineaAccionAcumuladoMes(lineaAccionAcumuladoMes, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion){
 			
 			var dataPoints=[];
 			var ejecutada=[];
@@ -130,17 +132,34 @@ if (user != null) { %>
 			$("#rango-fecha").attr("data-slider-min",vectorMin);
 			$("#rango-fecha").attr("data-slider-max",vectorMax);
 			$("#rango-fecha").attr("data-slider-value","["+vectorMin+","+vectorMax+"]");
+			
+			$("#rango-fecha-ejecucion").attr("data-slider-min",vectorMinEjecucion);
+			$("#rango-fecha-ejecucion").attr("data-slider-max",vectorMaxEjecucion);
+			$("#rango-fecha-ejecucion").attr("data-slider-value","["+vectorMinEjecucion+","+vectorMaxEjecucion+"]");
+			
 			$("#fechaInicio").html(lineaAccionAcumuladoMes[vectorMin].mes+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+			$("#fechaInicioEjecucion").html(lineaAccionAcumuladoMes[vectorMinEjecucion].mes+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
 			$("#fechaFin").html("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+lineaAccionAcumuladoMes[vectorMax].mes);
+			$("#fechaFinEjecucion").html("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+lineaAccionAcumuladoMes[vectorMaxEjecucion].mes);
 			$("#rango-fecha").slider({});
+			$("#rango-fecha-ejecucion").slider({});
 			for(var i = 0;i<lineaAccionAcumuladoMes.length; i++)
 			{
 				cantidadTotalProgramada+=lineaAccionAcumuladoMes[i].cantidad_programada;
-				cantidadTotalEjecutada+=lineaAccionAcumuladoMes[i].cantidad_ejecutda;
 		
 				if(lineaAccionAcumuladoMes[i].mes >= lineaAccionAcumuladoMes[vectorMin].mes && lineaAccionAcumuladoMes[i].mes <= lineaAccionAcumuladoMes[vectorMax].mes)
 				{
 	 				dataPoints.push({ x: new Date( lineaAccionAcumuladoMes[i].mes), y: cantidadTotalProgramada});
+				}
+
+			}
+			
+			for(var i = 0;i<lineaAccionAcumuladoMes.length; i++)
+			{
+				cantidadTotalEjecutada+=lineaAccionAcumuladoMes[i].cantidad_ejecutda;
+		
+				if(lineaAccionAcumuladoMes[i].mes >= lineaAccionAcumuladoMes[vectorMinEjecucion].mes && lineaAccionAcumuladoMes[i].mes <= lineaAccionAcumuladoMes[vectorMaxEjecucion].mes)
+				{
 	 				if (lineaAccionAcumuladoMes[i].cantidad_ejecutda!=0)  ejecutada.push({ x: new Date( lineaAccionAcumuladoMes[i].mes), y: cantidadTotalEjecutada});
 				}
 
@@ -148,8 +167,11 @@ if (user != null) { %>
 
 			var chart = new CanvasJS.Chart("chartContainer",
 					{
+						zoomEnabled: true,
+						exportEnabled: true,
+						exportFileName: lineaAccionAcumuladoMes[0].institucion+" - "+lineaAccionAcumuladoMes[0].linea_accion+" ("+lineaAccionAcumuladoMes[0].accion_unidad_medida+")",
 						title: {
-							text: "Evolución Acumulada" 
+							text: "Evolución Acumulada" +" ("+lineaAccionAcumuladoMes[0].accion_unidad_medida+")" 
 						},
 			                        animationEnabled: true,
 			                        width: 800,
@@ -199,7 +221,27 @@ if (user != null) { %>
 			vectorMin=splitDeRango[0];
 			vectorMax=splitDeRango[1];
 			
-			dibujarLineaAccionAcumuladoMes(lineaAccionAcumuladoMes, vectorMin, vectorMax);
+			var rangoDeFechaEjecucion= $("#rango-fecha-ejecucion").val();
+			var splitDeRangoEjecucion=rangoDeFechaEjecucion.split(",");
+			vectorMinEjecucion=splitDeRangoEjecucion[0];
+			vectorMaxEjecucion=splitDeRangoEjecucion[1];
+			
+			dibujarLineaAccionAcumuladoMes(lineaAccionAcumuladoMes, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion);
+			
+		});
+		
+		$("body").on("change", "#rango-fecha-ejecucion",function(event){
+			var rangoDeFecha= $("#rango-fecha").val();
+			var splitDeRango=rangoDeFecha.split(",");
+			vectorMin=splitDeRango[0];
+			vectorMax=splitDeRango[1];
+			
+			var rangoDeFechaEjecucion= $("#rango-fecha-ejecucion").val();
+			var splitDeRangoEjecucion=rangoDeFechaEjecucion.split(",");
+			vectorMinEjecucion=splitDeRangoEjecucion[0];
+			vectorMaxEjecucion=splitDeRangoEjecucion[1];
+			
+			dibujarLineaAccionAcumuladoMes(lineaAccionAcumuladoMes, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion);
 			
 		});
 		
@@ -245,7 +287,8 @@ if (user != null) { %>
 			$('#myModal').find("#tab_1-1").html("");
 			$('#myModal').find("#tab_2-2").html("");
 			$('#myModal').find("#tab_3-2").html("");
-			$("#tab_3-2").append('<label id="fechaInicio"></label><input id="rango-fecha" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="1" data-slider-value="[250,450]"/><label id="fechaFin"></label>');
+			$("#tab_3-2").append('Programación: <label id="fechaInicio"></label><input id="rango-fecha" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="1" data-slider-value="[250,450]"/><label id="fechaFin"></label>');
+			$("#tab_3-2").append('<br><br>Ejecución: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label id="fechaInicioEjecucion"></label><input id="rango-fecha-ejecucion" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="1" data-slider-value="[250,450]"/><label id="fechaFinEjecucion"></label>');
 			$('#myModal').find("#tab_1-1").html(cuerpoModal);
 			//$('#myModal').find(".modal-footer").html(footerModal);
 			
@@ -261,6 +304,8 @@ if (user != null) { %>
 			
 			 vectorMin=0;
 			 vectorMax=lineaAccionAcumuladoMes.length-1;
+			 vectorMinEjecucion=0;
+			 vectorMaxEjecucion=lineaAccionAcumuladoMes.length-1;
 			
 			//grafico de total cantidad programada y total cantidad ejecutada
 			
@@ -277,7 +322,7 @@ if (user != null) { %>
 			lineaAccionAcumuladoMes=lineaAccionAcumuladoMes.sort(compare);
 			
 			
-			dibujarLineaAccionAcumuladoMes(lineaAccionAcumuladoMes, vectorMin, vectorMax);
+			dibujarLineaAccionAcumuladoMes(lineaAccionAcumuladoMes, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion);
 	});
 		
 		
