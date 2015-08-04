@@ -210,8 +210,8 @@ public class SqlSelects {
   }
 	
 	public static List<FactHitos> selectFactHitosSnpp(String condition) throws SQLException{
-	   	 Connection conect=ConnectionConfiguration.conectar();
-			 String query = " select * from fact_hitos "+condition;
+	   	 Connection conect=ConnectionConfiguration.conectarSnpp();
+			 String query = " select * from snpp "+condition;
 			 
 			 Statement statement = null;
 			 ResultSet rs=null;
