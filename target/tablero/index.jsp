@@ -133,10 +133,7 @@ if (user != null) { %>
 			$("#rango-fecha").attr("data-slider-min",vectorMin);
 			$("#rango-fecha").attr("data-slider-max",vectorMax);
 			$("#rango-fecha").attr("data-slider-value","["+vectorMin+","+vectorMax+"]");
-<<<<<<< HEAD
-			$("#fechaInicio").html(lineaAccionAcumuladoMes[vectorMin].mes+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-			$("#fechaFin").html("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+lineaAccionAcumuladoMes[vectorMax].mes);
-=======
+
 			
 			$("#rango-fecha-ejecucion").attr("data-slider-min",vectorMinEjecucion);
 			$("#rango-fecha-ejecucion").attr("data-slider-max",vectorMaxEjecucion);
@@ -146,7 +143,7 @@ if (user != null) { %>
 			$("#fechaInicioEjecucion").html(lineaAccionAcumuladoMes[vectorMinEjecucion].mes+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
 			$("#fechaFin").html("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+lineaAccionAcumuladoMes[vectorMax].mes);
 			$("#fechaFinEjecucion").html("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+lineaAccionAcumuladoMes[vectorMaxEjecucion].mes);
->>>>>>> 75db44bfa74f50fe963e271517e6408cc10558fd
+
 			$("#rango-fecha").slider({});
 			$("#rango-fecha-ejecucion").slider({});
 			for(var i = 0;i<lineaAccionAcumuladoMes.length; i++)
@@ -177,7 +174,7 @@ if (user != null) { %>
 						exportEnabled: true,
 						exportFileName: lineaAccionAcumuladoMes[0].institucion+" - "+lineaAccionAcumuladoMes[0].linea_accion+" ("+lineaAccionAcumuladoMes[0].accion_unidad_medida+")",
 						title: {
-							text: "Evolución Acumulada" +" ("+lineaAccionAcumuladoMes[0].accion_unidad_medida+")" 
+							text: "Evolución Mensual" +" ("+lineaAccionAcumuladoMes[0].accion_unidad_medida+")" 
 						},
 			                        animationEnabled: true,
 			                        width: 800,
@@ -200,7 +197,7 @@ if (user != null) { %>
 							showInLegend: true, 
 							name: 'programada',
 							type: "line",
-							color: "#238E68",
+							//color: "#238E68",
 							markerSize:8,
 							legendText:"Programación",
 							dataPoints:dataPoints
@@ -210,7 +207,7 @@ if (user != null) { %>
 							showInLegend: true, 
 							name: 'ejecutadas',
 							type: "area",
-							color: "#996633",
+							//color: "#996633",
 							markerSize:8,
 							legendText:"Ejecución",
 							dataPoints:ejecutada
@@ -293,12 +290,10 @@ if (user != null) { %>
 			$('#myModal').find("#tab_1-1").html("");
 			$('#myModal').find("#tab_2-2").html("");
 			$('#myModal').find("#tab_3-2").html("");
-<<<<<<< HEAD
-			$("#tab_3-2").append('<label id="fechaInicio"></label><input id="rango-fecha" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="1" data-slider-value="[250,450]"/><label id="fechaFin"></label>');
-=======
+
 			$("#tab_3-2").append('Programación: <label id="fechaInicio"></label><input id="rango-fecha" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="1" data-slider-value="[250,450]"/><label id="fechaFin"></label>');
 			$("#tab_3-2").append('<br><br>Ejecución: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label id="fechaInicioEjecucion"></label><input id="rango-fecha-ejecucion" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="1" data-slider-value="[250,450]"/><label id="fechaFinEjecucion"></label>');
->>>>>>> 75db44bfa74f50fe963e271517e6408cc10558fd
+
 			$('#myModal').find("#tab_1-1").html(cuerpoModal);
 			//$('#myModal').find(".modal-footer").html(footerModal);
 			
@@ -314,13 +309,10 @@ if (user != null) { %>
 			
 			 vectorMin=0;
 			 vectorMax=lineaAccionAcumuladoMes.length-1;
-<<<<<<< HEAD
-			 
-=======
+
 			 vectorMinEjecucion=0;
 			 vectorMaxEjecucion=lineaAccionAcumuladoMes.length-1;
-			
->>>>>>> 75db44bfa74f50fe963e271517e6408cc10558fd
+
 			//grafico de total cantidad programada y total cantidad ejecutada
 			
 			$('#myModal').find("#tab_3-2").append('<div id="chartContainer" style="height:400px;"></div>');
@@ -335,12 +327,9 @@ if (user != null) { %>
 			
 			lineaAccionAcumuladoMes=lineaAccionAcumuladoMes.sort(compare);
 			
-<<<<<<< HEAD
-			dibujarLineaAccionAcumuladoMes(lineaAccionAcumuladoMes, vectorMin, vectorMax);
-=======
-			
+
 			dibujarLineaAccionAcumuladoMes(lineaAccionAcumuladoMes, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion);
->>>>>>> 75db44bfa74f50fe963e271517e6408cc10558fd
+
 	});
 		
 		

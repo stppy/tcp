@@ -159,7 +159,7 @@ if (user != null) { %>
 							interval: 1,
 							intervalType: "month",
 							labelAngle: -50,
-							labelFontColor: "rgb(255,217,101,0.7)",
+							labelFontColor: "rgb(0,75,141)",
 						},
 						axisY: {
 							title: "",
@@ -173,7 +173,7 @@ if (user != null) { %>
 							showInLegend: true, 
 							name: 'programada',
 							type: "line",
-							color: "rgba(0,75,141,0.7)",
+							//color: "rgba(0,75,141,0.7)",
 							markerSize:8,
 							legendText:"Programación",
 							dataPoints:dataPoints
@@ -183,7 +183,7 @@ if (user != null) { %>
 							showInLegend: true, 
 							name: 'ejecutadas',
 							type: "area",
-							color: "rgba(0,75,141,0.8)",
+							//color: "rgba(0,75,141,0.8)",
 							markerSize:8,
 							legendText:"Ejecución",
 							dataPoints:ejecutada

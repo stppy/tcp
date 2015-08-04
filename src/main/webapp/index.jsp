@@ -174,7 +174,7 @@ if (user != null) { %>
 						exportEnabled: true,
 						exportFileName: lineaAccionAcumuladoMes[0].institucion+" - "+lineaAccionAcumuladoMes[0].linea_accion+" ("+lineaAccionAcumuladoMes[0].accion_unidad_medida+")",
 						title: {
-							text: "Evolución Acumulada" +" ("+lineaAccionAcumuladoMes[0].accion_unidad_medida+")" 
+							text: "Evolución Mensual" +" ("+lineaAccionAcumuladoMes[0].accion_unidad_medida+")" 
 						},
 			                        animationEnabled: true,
 			                        width: 800,
@@ -197,7 +197,7 @@ if (user != null) { %>
 							showInLegend: true, 
 							name: 'programada',
 							type: "line",
-							color: "#238E68",
+							//color: "#238E68",
 							markerSize:8,
 							legendText:"Programación",
 							dataPoints:dataPoints
@@ -207,7 +207,7 @@ if (user != null) { %>
 							showInLegend: true, 
 							name: 'ejecutadas',
 							type: "area",
-							color: "#996633",
+							//color: "#996633",
 							markerSize:8,
 							legendText:"Ejecución",
 							dataPoints:ejecutada
