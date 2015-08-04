@@ -14,6 +14,7 @@ public class LineaAccion {
 	protected double costo_programado_anho;
 	protected double costo_programado_hoy;
 	protected double linea_accion_meta;
+	
 	public int getInstitucion_id() {
 		return institucion_id;
 	}

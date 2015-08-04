@@ -163,7 +163,7 @@ if (user != null) { %>
 						},
 						axisY: {
 							title: "",
-							interlacedColor: "#F0FFFF",
+							interlacedColor: "#FAFAFA",
 							tickColor: "azure",
 							titleFontColor: "rgb(0,75,141)"
 						},
@@ -173,7 +173,7 @@ if (user != null) { %>
 							showInLegend: true, 
 							name: 'programada',
 							type: "line",
-							//color: "rgba(0,75,141,0.7)",
+							color: "#238E68",
 							markerSize:8,
 							legendText:"Programación",
 							dataPoints:dataPoints
@@ -183,7 +183,7 @@ if (user != null) { %>
 							showInLegend: true, 
 							name: 'ejecutadas',
 							type: "area",
-							//color: "rgba(0,75,141,0.8)",
+							color: "#996633",
 							markerSize:8,
 							legendText:"Ejecución",
 							dataPoints:ejecutada

@@ -162,7 +162,13 @@ public class ajaxSelects extends HttpServlet {
         		JsonElement json = new Gson().toJsonTree(objetos);
         		out.println(json.toString());
         	}
-        	
+        	if (action.equals("getLineasAccionDepartamento")){
+        		List objetos=null;
+        		try {objetos = SqlSelects.selectLineaAccionDepartamento();}
+				catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos);
+        		out.println(json.toString());
+        	}
         	
         	if (action.equals("getFactHitos")){
         		List objetos=null;
@@ -187,6 +193,7 @@ public class ajaxSelects extends HttpServlet {
         		if (linea_accion_id!=0) condition += " and linea_accion_id ='"+linea_accion_id+"'";
         		if (accion!="") condition += " and accion ='"+accion+"'";
         		if (accion_id!=0) condition += " and accion_id ='"+accion_id+"'";
+        		if (departamento!=99) condition += " and accion_departamento_id ='"+departamento+"'";
         		
         		
 				try {objetos = SqlSelects.selectFactHitos2015(condition);}
@@ -211,6 +218,13 @@ public class ajaxSelects extends HttpServlet {
         		if (institucion_id!=0) condition += " and institucion_id ='"+institucion_id+"'";
         		if (linea_accion_id!=0) condition += " and linea_accion_id ='"+linea_accion_id+"'";
         		try {objetos = SqlSelects.selectLineaAccionAcumuladoMes(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());
+        		}
+        	if (action.equals("getDepartamento")){
+        		List objetos=null;
+           		try {objetos = SqlSelects.selectDepartamento();}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());

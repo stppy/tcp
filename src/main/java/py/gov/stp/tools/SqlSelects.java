@@ -25,6 +25,7 @@ import objetos.Entidad;
 import objetos.FactHitos;
 import objetos.LineaAccion;
 import objetos.LineaAccionAcumuladoMes;
+import objetos.LineaAccionDepartamento;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -272,6 +273,48 @@ public class SqlSelects {
 			}
 			return objetos; 
 	  }
+
+	public static List<LineaAccionDepartamento> selectLineaAccionDepartamento() throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+			 String query = " select * from fact_entidad_linea_dpto ";
+			 
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 List<LineaAccionDepartamento> objetos = new ArrayList<LineaAccionDepartamento>();
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					LineaAccionDepartamento objeto = new LineaAccionDepartamento();
+					objeto.setInstitucion(rs.getString("institucion"));
+					objeto.setInstitucion_id(rs.getInt("institucion_id"));
+					objeto.setLinea_accion(rs.getString("linea_accion"));
+					objeto.setLinea_accion_id(rs.getInt("linea_accion_id"));
+					objeto.setAccion_unidad_medida(rs.getString("accion_unidad_medida"));
+					objeto.setCantidad_ejecutada_hoy(rs.getDouble("sum"));
+					objeto.setAnho(rs.getInt("date_part"));
+					objeto.setSuma_programada_anho(rs.getDouble("sumprog"));
+					objeto.setSuma_programada_hoy(rs.getDouble("sumproghoy"));
+					objeto.setCosto_ejecutado(rs.getDouble("costo_ejecutado"));
+					objeto.setCosto_programado_anho(rs.getDouble("costo_programado_anho"));
+					objeto.setCosto_programado_hoy(rs.getDouble("costo_programado_hoy"));
+					objeto.setLinea_accion_meta(rs.getDouble("linea_accion_meta"));
+					objeto.setHito_cantidad_ejecutado_hoy(rs.getDouble("hito_cantidad_ejecutado_hoy"));
+					objeto.setOrden(rs.getString("orden"));
+					objeto.setOrden_linea_accion(rs.getInt("orden_linea_accion"));
+					objeto.setAccion_departamento_id(rs.getInt("accion_departamento_id"));
+
+					objetos.add(objeto);
+				}
+			}
+			catch (SQLException e) {e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos; 
+	  }
 	
 	
 	public static List<LineaAccionAcumuladoMes> selectLineaAccionAcumuladoMes(String condition) throws SQLException{
@@ -307,6 +350,33 @@ public class SqlSelects {
 		return objetos; 
 		}
 
+	public static List<Departamento> selectDepartamento() throws SQLException{
+		Connection conect=ConnectionConfiguration.conectar();
+		String query = " select * from departamento ORDER BY id ASC";
+
+		Statement statement = null;
+		ResultSet rs=null;
+		List<Departamento> objetos = new ArrayList<Departamento>();
+
+		try {
+			statement = conect.createStatement();
+			rs=statement.executeQuery(query);
+			while(rs.next()){
+				Departamento objeto = new Departamento();
+		
+				objeto.setIdDepartamento(rs.getInt("id"));
+				objeto.setNombreDepartamento(rs.getString("nombre"));
+
+				objetos.add(objeto);
+			}
+		}
+		catch (SQLException e) {e.printStackTrace();}
+		finally{
+			if (statement != null) {statement.close();}
+			if (conect != null) {conect.close();}
+		}
+		return objetos; 
+		}
 
 //    public static List<ProyectoSNIP> selectProyectoSnip(String condition) throws SQLException{
 //     	 Connection conect=ConnectionConfiguration.conectar();

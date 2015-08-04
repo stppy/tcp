@@ -190,6 +190,7 @@
 }
 .slider-handle.round {
   border-radius: 50%;
+  background-color: red;
 }
 .slider-handle.triangle {
   background: transparent none;
