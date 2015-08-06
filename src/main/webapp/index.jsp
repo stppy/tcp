@@ -258,13 +258,24 @@ if (user != null) { %>
 			var cuerpoModal="";
 			var footerModal="<br><br><br>";
 			
-			var registros = $.ajax({
-		    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id,
-		      	type:'get',
-		      	dataType:'json',
-		      	crossDomain:true,
-		      	async:false       
-		    }).responseText;
+			if (institucion_id==47720){
+				var registros = $.ajax({
+			    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getFactHitosSnpp&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id,
+			      	type:'get',
+			      	dataType:'json',
+			      	crossDomain:true,
+			      	async:false       
+			    }).responseText;
+			}else{
+				var registros = $.ajax({
+			    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id,
+			      	type:'get',
+			      	dataType:'json',
+			      	crossDomain:true,
+			      	async:false       
+			    }).responseText;
+				
+			}
 			var elRegistro=JSON.parse(registros);
 			
 						
@@ -369,6 +380,17 @@ if (user != null) { %>
 	      	async:false       
 	    }).responseText;
 		var el=JSON.parse(eljson);
+		
+		
+		var elSnppjson = $.ajax({
+	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getLineasAccionSnpp',
+	      	type:'get',
+	      	dataType:'json',
+	      	crossDomain:true,
+	      	async:false       
+	    }).responseText;
+		var elSnpp=JSON.parse(elSnppjson);
+		
 		var lineasDeAccion= [];
 		
 		var sumporAClass="";
@@ -377,124 +399,253 @@ if (user != null) { %>
 		var porHejeClassRow="";
 		
 		for (var i = 0; i< entidades.length;i++){
-			$("#cuerpoTabla").append('<tr><td colspan="12" ><strong>'+entidades[i].institucion+'</strong></td></tr>');
-			for(var j=0;j<el.length;j++){
-				if (el[j].institucion_id==entidades[i].institucion_id){
-					if (lineasDeAccion.indexOf(el[j].linea_accion_id)<0){
-						lineasDeAccion.push(el[j].linea_accion_id);
-						if(el[j].anho<="2014"){
-							var anho1=el[j];
-							var anho2;
-							for(var k=0;k<el.length;k++){
-								if (anho1.institucion_id==el[k].institucion_id && anho1.linea_accion_id==el[k].linea_accion_id && el[k].anho =="2015"){
-									anho2=el[k];
+			if (entidades[i].institucion_id!=47720){
+				$("#cuerpoTabla").append('<tr><td colspan="12" ><strong>'+entidades[i].institucion+'</strong></td></tr>');
+				for(var j=0;j<el.length;j++){
+					if (el[j].institucion_id==entidades[i].institucion_id){
+						if (lineasDeAccion.indexOf(el[j].linea_accion_id)<0){
+							lineasDeAccion.push(el[j].linea_accion_id);
+							if(el[j].anho<="2014"){
+								var anho1=el[j];
+								var anho2;
+								for(var k=0;k<el.length;k++){
+									if (anho1.institucion_id==el[k].institucion_id && anho1.linea_accion_id==el[k].linea_accion_id && el[k].anho =="2015"){
+										anho2=el[k];
+									}
 								}
+								if (typeof anho1.hito_cantidad_ejecutado_hoy==="undefined") {var anho1= new Object(); anho1.hito_cantidad_ejecutado_hoy=""};
+								if (typeof anho2.hito_cantidad_ejecutado_hoy==="undefined") {var anho2= new Object(); anho2.hito_cantidad_ejecutado_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
+								if (anho2.suma_programada_anho>0){
+								//	var porcentajeAnho = (anho2.suma_programada_hoy*100)/anho2.suma_programada_anho;
+									var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
+									porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
+									var porcentajeAnhoEje = (anho2.hito_cantidad_ejecutado_hoy*100)/anho2.suma_programada_anho;
+									porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
+									var porcentajeHoyEje = (anho2.hito_cantidad_ejecutado_hoy*100)/anho2.suma_programada_hoy;
+									porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
+									/*if (porcentajeAnho<=70) sumporAClass = "text-danger";
+									if (porcentajeAnho>70) sumporAClass = "text-warning";
+									if (porcentajeAnho>90) sumporAClass = "text-success";
+									
+									if (porcentajeAnhoEje<=70) porAejeClass = "text-danger";
+									if (porcentajeAnhoEje>70) porAejeClass = "text-warning";
+									if (porcentajeAnhoEje>90) porAejeClass = "text-success";
+									*/
+									porHejeClassRow="";
+									/*
+									if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";porHejeClassRow="danger";}
+									if (porcentajeHoyEje>70){ porHejeClass = "text-warning";porHejeClassRow="warning";}
+									if (porcentajeHoyEje>90){ porHejeClass = "text-success";porHejeClassRow="success";}
+									
+									if (porcentajeAnho<=70){ porHejeClassRow="danger";porHejeClass="";} */
+									if (porcentajeAnho<90){ porHejeClassRow="danger";porHejeClass="";}
+									if (porcentajeAnho>=90){ porHejeClassRow="success";
+										if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";}
+										if (porcentajeHoyEje>70){ porHejeClass = "text-warning";}
+										if (porcentajeHoyEje>90){ porHejeClass = "text-success";}
+									}
+									
+									//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
+									$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+el[j].institucion_id+'-'+el[j].linea_accion_id+'-'+el[j].accion_unidad_medida+'> '+anho2.linea_accion+'</a></td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</a></td><td>'+anho2.accion_unidad_medida+'</td><td class="cell-bordered2">'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_hoy)+'</td><td >'+numeroConComa(anho2.hito_cantidad_ejecutado_hoy)+'</td><td class="text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
+																
+									
+									
+									//<td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td> penultimo
+									if ( porcentajeHoyEje ==="NaN"){ porcentajeHoyEje="";porHejeClassRow="";}
+								}else{
+									var porcentajeAnho = "";
+									var porcentajeAnhoEje = "";
+									var porcentajeHoyEje ="";
+									porHejeClassRow="";
+								}
+								
+								anho2="";
+								anho1="";
 							}
-							if (typeof anho1.hito_cantidad_ejecutado_hoy==="undefined") {var anho1= new Object(); anho1.hito_cantidad_ejecutado_hoy=""};
-							if (typeof anho2.hito_cantidad_ejecutado_hoy==="undefined") {var anho2= new Object(); anho2.hito_cantidad_ejecutado_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
-							if (anho2.suma_programada_anho>0){
-							//	var porcentajeAnho = (anho2.suma_programada_hoy*100)/anho2.suma_programada_anho;
-								var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
-								porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
-								var porcentajeAnhoEje = (anho2.hito_cantidad_ejecutado_hoy*100)/anho2.suma_programada_anho;
-								porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
-								var porcentajeHoyEje = (anho2.hito_cantidad_ejecutado_hoy*100)/anho2.suma_programada_hoy;
-								porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
-								/*if (porcentajeAnho<=70) sumporAClass = "text-danger";
-								if (porcentajeAnho>70) sumporAClass = "text-warning";
-								if (porcentajeAnho>90) sumporAClass = "text-success";
-								
-								if (porcentajeAnhoEje<=70) porAejeClass = "text-danger";
-								if (porcentajeAnhoEje>70) porAejeClass = "text-warning";
-								if (porcentajeAnhoEje>90) porAejeClass = "text-success";
-								*/
-								porHejeClassRow="";
-								/*
-								if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";porHejeClassRow="danger";}
-								if (porcentajeHoyEje>70){ porHejeClass = "text-warning";porHejeClassRow="warning";}
-								if (porcentajeHoyEje>90){ porHejeClass = "text-success";porHejeClassRow="success";}
-								
-								if (porcentajeAnho<=70){ porHejeClassRow="danger";porHejeClass="";} */
-								if (porcentajeAnho<90){ porHejeClassRow="danger";porHejeClass="";}
-								if (porcentajeAnho>=90){ porHejeClassRow="success";
-									if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";}
-									if (porcentajeHoyEje>70){ porHejeClass = "text-warning";}
-									if (porcentajeHoyEje>90){ porHejeClass = "text-success";}
+							if(el[j].anho>="2015"){
+								var anho2=el[j];
+								var anho1;
+								for(var k=0;k<el.length;k++){
+									if (anho1.institucion_id==el[k].institucion_id && anho1.linea_accion_id==el[k].linea_accion_id && el[k].date_part =="2014"){
+										anho1=el[k];
+									}
 								}
-								
+								if (typeof anho1.hito_cantidad_ejecutado_hoy==="undefined") {var anho1= new Object(); anho1.hito_cantidad_ejecutado_hoy="";};
+								if (typeof anho2.hito_cantidad_ejecutado_hoy==="undefined") {var anho2= new Object(); anho2.hito_cantidad_ejecutado_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
+								if (anho2.suma_programada_anho>0){
+									//var porcentajeAnho = (anho2.suma_programada_hoy*100)/anho2.suma_programada_anho;
+									var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
+									porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
+									var porcentajeAnhoEje = (anho2.hito_cantidad_ejecutado_hoy*100)/anho2.suma_programada_anho;
+									porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
+									var porcentajeHoyEje = (anho2.hito_cantidad_ejecutado_hoy*100)/anho2.suma_programada_hoy;
+									porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
+									/*if (porcentajeAnho<=70) sumporAClass = "text-danger";
+									if (porcentajeAnho>70) sumporAClass = "text-warning";
+									if (porcentajeAnho>90) sumporAClass = "text-success";
+									
+									if (porcentajeAnhoEje<=70) porAejeClass = "text-danger";
+									if (porcentajeAnhoEje>70) porAejeClass = "text-warning";
+									if (porcentajeAnhoEje>90) porAejeClass = "text-success";
+									*/
+									porHejeClassRow="";
+									/*
+									if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";porHejeClassRow="danger";}
+									if (porcentajeHoyEje>70){ porHejeClass = "text-warning";porHejeClassRow="warning";}
+									if (porcentajeHoyEje>90){ porHejeClass = "text-success";porHejeClassRow="success";}
+	
+									if (porcentajeAnho<=70){ porHejeClassRow="danger";porHejeClass="";} */
+									if (porcentajeAnho<90){ porHejeClassRow="danger";porHejeClass="";}
+									if (porcentajeAnho>=90){ porHejeClassRow="success";
+										if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";}
+										if (porcentajeHoyEje>70){ porHejeClass = "text-warning";}
+										if (porcentajeHoyEje>90){ porHejeClass = "text-success";}
+									}
+									
+									
+									if (  porcentajeHoyEje ==="NaN"){ porcentajeHoyEje="";porHejeClassRow="";}
+								}else{
+									var porcentajeAnho = "";
+									var porcentajeAnhoEje = "";
+									var porcentajeHoyEje ="";
+									porHejeClassRow="";
+								}
 								//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
-								$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+el[j].institucion_id+'-'+el[j].linea_accion_id+'-'+el[j].accion_unidad_medida+'> '+anho2.linea_accion+'</a></td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</a></td><td>'+anho2.accion_unidad_medida+'</td><td class="cell-bordered2">'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_hoy)+'</td><td >'+numeroConComa(anho2.hito_cantidad_ejecutado_hoy)+'</td><td class="text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
-															
+								$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+el[j].institucion_id+'-'+el[j].linea_accion_id+'-'+el[j].accion_unidad_medida+'>'+anho2.linea_accion+'</a></td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+anho2.accion_unidad_medida+'</td><td class="cell-bordered2">'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_hoy)+'</td><td>'+numeroConComa(anho2.hito_cantidad_ejecutado_hoy)+'</td><td class=" text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
 								
-								
-								//<td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td> penultimo
-								if ( porcentajeHoyEje ==="NaN"){ porcentajeHoyEje="";porHejeClassRow="";}
-							}else{
-								var porcentajeAnho = "";
-								var porcentajeAnhoEje = "";
-								var porcentajeHoyEje ="";
-								porHejeClassRow="";
+								//<td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td> penultima
+								anho2="";
+								anho1="";
 							}
-							
-							anho2="";
-							anho1="";
-						}
-						if(el[j].anho>="2015"){
-							var anho2=el[j];
-							var anho1;
-							for(var k=0;k<el.length;k++){
-								if (anho1.institucion_id==el[k].institucion_id && anho1.linea_accion_id==el[k].linea_accion_id && el[k].date_part =="2014"){
-									anho1=el[k];
-								}
-							}
-							if (typeof anho1.hito_cantidad_ejecutado_hoy==="undefined") {var anho1= new Object(); anho1.hito_cantidad_ejecutado_hoy="";};
-							if (typeof anho2.hito_cantidad_ejecutado_hoy==="undefined") {var anho2= new Object(); anho2.hito_cantidad_ejecutado_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
-							if (anho2.suma_programada_anho>0){
-								//var porcentajeAnho = (anho2.suma_programada_hoy*100)/anho2.suma_programada_anho;
-								var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
-								porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
-								var porcentajeAnhoEje = (anho2.hito_cantidad_ejecutado_hoy*100)/anho2.suma_programada_anho;
-								porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
-								var porcentajeHoyEje = (anho2.hito_cantidad_ejecutado_hoy*100)/anho2.suma_programada_hoy;
-								porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
-								/*if (porcentajeAnho<=70) sumporAClass = "text-danger";
-								if (porcentajeAnho>70) sumporAClass = "text-warning";
-								if (porcentajeAnho>90) sumporAClass = "text-success";
-								
-								if (porcentajeAnhoEje<=70) porAejeClass = "text-danger";
-								if (porcentajeAnhoEje>70) porAejeClass = "text-warning";
-								if (porcentajeAnhoEje>90) porAejeClass = "text-success";
-								*/
-								porHejeClassRow="";
-								/*
-								if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";porHejeClassRow="danger";}
-								if (porcentajeHoyEje>70){ porHejeClass = "text-warning";porHejeClassRow="warning";}
-								if (porcentajeHoyEje>90){ porHejeClass = "text-success";porHejeClassRow="success";}
-
-								if (porcentajeAnho<=70){ porHejeClassRow="danger";porHejeClass="";} */
-								if (porcentajeAnho<90){ porHejeClassRow="danger";porHejeClass="";}
-								if (porcentajeAnho>=90){ porHejeClassRow="success";
-									if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";}
-									if (porcentajeHoyEje>70){ porHejeClass = "text-warning";}
-									if (porcentajeHoyEje>90){ porHejeClass = "text-success";}
-								}
-								
-								
-								if (  porcentajeHoyEje ==="NaN"){ porcentajeHoyEje="";porHejeClassRow="";}
-							}else{
-								var porcentajeAnho = "";
-								var porcentajeAnhoEje = "";
-								var porcentajeHoyEje ="";
-								porHejeClassRow="";
-							}
-							//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
-							$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+el[j].institucion_id+'-'+el[j].linea_accion_id+'-'+el[j].accion_unidad_medida+'>'+anho2.linea_accion+'</a></td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+anho2.accion_unidad_medida+'</td><td class="cell-bordered2">'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_hoy)+'</td><td>'+numeroConComa(anho2.hito_cantidad_ejecutado_hoy)+'</td><td class=" text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
-							
-							//<td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td> penultima
-							anho2="";
-							anho1="";
 						}
 					}
+				}
+			}else{
+				anho2="";
+				anho1="";
+				if (entidades[i].institucion_id==47720){
+					var lineasDeAccion= [];
+					$("#cuerpoTabla").append('<tr><td colspan="12" ><strong>'+entidades[i].institucion+'</strong></td></tr>');
+					for(var j=0;j<elSnpp.length;j++){
+						if (elSnpp[j].institucion_id==entidades[i].institucion_id){
+							if (lineasDeAccion.indexOf(elSnpp[j].linea_accion_id)<0){
+								lineasDeAccion.push(elSnpp[j].linea_accion_id);
+								if(elSnpp[j].anho<="2014"){
+									var anho1=elSnpp[j];
+									var anho2;
+									for(var k=0;k<el.length;k++){
+										if (anho1.institucion_id==elSnpp[k].institucion_id && anho1.linea_accion_id==elSnpp[k].linea_accion_id && elSnpp[k].anho =="2015"){
+											anho2=elSnpp[k];
+										}
+									}
+									if (typeof anho1.hito_cantidad_ejecutado_hoy==="undefined") {var anho1= new Object(); anho1.hito_cantidad_ejecutado_hoy=""};
+									if (typeof anho2.hito_cantidad_ejecutado_hoy==="undefined") {var anho2= new Object(); anho2.hito_cantidad_ejecutado_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
+									if (anho2.suma_programada_anho>0){
+									//	var porcentajeAnho = (anho2.suma_programada_hoy*100)/anho2.suma_programada_anho;
+										var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
+										porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
+										var porcentajeAnhoEje = (anho2.hito_cantidad_ejecutado_hoy*100)/anho2.suma_programada_anho;
+										porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
+										var porcentajeHoyEje = (anho2.hito_cantidad_ejecutado_hoy*100)/anho2.suma_programada_hoy;
+										porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
+										/*if (porcentajeAnho<=70) sumporAClass = "text-danger";
+										if (porcentajeAnho>70) sumporAClass = "text-warning";
+										if (porcentajeAnho>90) sumporAClass = "text-success";
+										
+										if (porcentajeAnhoEje<=70) porAejeClass = "text-danger";
+										if (porcentajeAnhoEje>70) porAejeClass = "text-warning";
+										if (porcentajeAnhoEje>90) porAejeClass = "text-success";
+										*/
+										porHejeClassRow="";
+										/*
+										if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";porHejeClassRow="danger";}
+										if (porcentajeHoyEje>70){ porHejeClass = "text-warning";porHejeClassRow="warning";}
+										if (porcentajeHoyEje>90){ porHejeClass = "text-success";porHejeClassRow="success";}
+										
+										if (porcentajeAnho<=70){ porHejeClassRow="danger";porHejeClass="";} */
+										if (porcentajeAnho<90){ porHejeClassRow="danger";porHejeClass="";}
+										if (porcentajeAnho>=90){ porHejeClassRow="success";
+											if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";}
+											if (porcentajeHoyEje>70){ porHejeClass = "text-warning";}
+											if (porcentajeHoyEje>90){ porHejeClass = "text-success";}
+										}
+										
+										//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
+										$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+elSnpp[j].institucion_id+'-'+elSnpp[j].linea_accion_id+'-'+elSnpp[j].accion_unidad_medida+'> '+anho2.linea_accion+'</a></td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</a></td><td>'+anho2.accion_unidad_medida+'</td><td class="cell-bordered2">'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_hoy)+'</td><td >'+numeroConComa(anho2.hito_cantidad_ejecutado_hoy)+'</td><td class="text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
+																	
+										
+										
+										//<td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td> penultimo
+										if ( porcentajeHoyEje ==="NaN"){ porcentajeHoyEje="";porHejeClassRow="";}
+									}else{
+										var porcentajeAnho = "";
+										var porcentajeAnhoEje = "";
+										var porcentajeHoyEje ="";
+										porHejeClassRow="";
+									}
+									
+									anho2="";
+									anho1="";
+								}
+								if(elSnpp[j].anho>="2015"){
+									var anho2=elSnpp[j];
+									var anho1="";
+									for(var k=0;k<elSnpp.length;k++){
+										if (anho1.institucion_id==elSnpp[k].institucion_id && anho1.linea_accion_id==elSnpp[k].linea_accion_id && elSnpp[k].date_part =="2014"){
+											anho1=elSnpp[k];
+										}
+									}
+									if (typeof anho1.hito_cantidad_ejecutado_hoy==="undefined") {var anho1= new Object(); anho1.hito_cantidad_ejecutado_hoy="";};
+									if (typeof anho2.hito_cantidad_ejecutado_hoy==="undefined") {var anho2= new Object(); anho2.hito_cantidad_ejecutado_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
+									if (anho2.suma_programada_anho>0){
+										//var porcentajeAnho = (anho2.suma_programada_hoy*100)/anho2.suma_programada_anho;
+										var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
+										porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
+										var porcentajeAnhoEje = (anho2.hito_cantidad_ejecutado_hoy*100)/anho2.suma_programada_anho;
+										porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
+										var porcentajeHoyEje = (anho2.hito_cantidad_ejecutado_hoy*100)/anho2.suma_programada_hoy;
+										porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
+										/*if (porcentajeAnho<=70) sumporAClass = "text-danger";
+										if (porcentajeAnho>70) sumporAClass = "text-warning";
+										if (porcentajeAnho>90) sumporAClass = "text-success";
+										
+										if (porcentajeAnhoEje<=70) porAejeClass = "text-danger";
+										if (porcentajeAnhoEje>70) porAejeClass = "text-warning";
+										if (porcentajeAnhoEje>90) porAejeClass = "text-success";
+										*/
+										porHejeClassRow="";
+										/*
+										if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";porHejeClassRow="danger";}
+										if (porcentajeHoyEje>70){ porHejeClass = "text-warning";porHejeClassRow="warning";}
+										if (porcentajeHoyEje>90){ porHejeClass = "text-success";porHejeClassRow="success";}
+		
+										if (porcentajeAnho<=70){ porHejeClassRow="danger";porHejeClass="";} */
+										if (porcentajeAnho<90){ porHejeClassRow="danger";porHejeClass="";}
+										if (porcentajeAnho>=90){ porHejeClassRow="success";
+											if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";}
+											if (porcentajeHoyEje>70){ porHejeClass = "text-warning";}
+											if (porcentajeHoyEje>90){ porHejeClass = "text-success";}
+										}
+										
+										
+										if (  porcentajeHoyEje ==="NaN"){ porcentajeHoyEje="";porHejeClassRow="";}
+									}else{
+										var porcentajeAnho = "";
+										var porcentajeAnhoEje = "";
+										var porcentajeHoyEje ="";
+										porHejeClassRow="";
+									}
+									//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
+									$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+elSnpp[j].institucion_id+'-'+elSnpp[j].linea_accion_id+'-'+elSnpp[j].accion_unidad_medida+'>'+anho2.linea_accion+'</a></td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+anho2.accion_unidad_medida+'</td><td class="cell-bordered2">'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_hoy)+'</td><td>'+numeroConComa(anho2.hito_cantidad_ejecutado_hoy)+'</td><td class=" text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
+									
+									//<td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td> penultima
+									anho2="";
+									anho1="";
+								}
+							}
+						}
+					}
+					
 				}
 			}
 		}		

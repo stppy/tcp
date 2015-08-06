@@ -162,6 +162,21 @@ public class ajaxSelects extends HttpServlet {
         		JsonElement json = new Gson().toJsonTree(objetos);
         		out.println(json.toString());
         	}
+        	
+        	if (action.equals("getLineasAccionSnpp")){
+        		List objetos=null;
+        		condition = " where true ";
+        		if (institucion!="") condition += " and institucion ='"+institucion+"'";
+        		if (institucion_id!=0) condition += " and institucion_id ='"+institucion_id+"'";
+        		if (linea_accion_id!=0) condition += " and linea_accion_id ='"+linea_accion_id+"'";
+        		if (anio!=0) condition += " and date_part ='"+anio+"'";
+        		
+				try {objetos = SqlSelects.seletLineaAccionSnpp(condition);}
+				catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos);
+        		out.println(json.toString());
+        	}
+        	
         	if (action.equals("getLineasAccionDepartamento")){
         		List objetos=null;
         		try {objetos = SqlSelects.selectLineaAccionDepartamento();}
