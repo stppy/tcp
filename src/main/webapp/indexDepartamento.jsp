@@ -112,12 +112,14 @@ if (user != null) { %>
 <script>
 	
 	$(document).ready(function(){
-		var lineaAccionAcumuladoMes;
+		var lineaAccionAcumuladoMesDepto;
 		
 		var vectorMin=0;
 		var vectorMax=0;
+		var vectorMinEjecucion=0;
+		var vectorMaxEjecucion=0;
 		
-		function dibujarLineaAccionAcumuladoMes(lineaAccionAcumuladoMes, vectorMin, vectorMax){
+		function dibujarLineaAccionAcumuladoMesDepto(lineaAccionAcumuladoMesDepto, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion){
 			
 			var dataPoints=[];
 			var ejecutada=[];
@@ -131,29 +133,52 @@ if (user != null) { %>
 			$("#rango-fecha").attr("data-slider-min",vectorMin);
 			$("#rango-fecha").attr("data-slider-max",vectorMax);
 			$("#rango-fecha").attr("data-slider-value","["+vectorMin+","+vectorMax+"]");
-			$("#fechaInicio").html(lineaAccionAcumuladoMes[vectorMin].mes+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-			$("#fechaFin").html("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+lineaAccionAcumuladoMes[vectorMax].mes);
+			
+			$("#rango-fecha-ejecucion").attr("data-slider-min",vectorMinEjecucion);
+			$("#rango-fecha-ejecucion").attr("data-slider-max",vectorMaxEjecucion);
+			$("#rango-fecha-ejecucion").attr("data-slider-value","["+vectorMinEjecucion+","+vectorMaxEjecucion+"]");
+			
+			
+			$("#fechaInicio").html(lineaAccionAcumuladoMesDepto[vectorMin].mes+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+			$("#fechaInicioEjecucion").html(lineaAccionAcumuladoMesDepto[vectorMinEjecucion].mes+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+			$("#fechaFin").html("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+lineaAccionAcumuladoMesDepto[vectorMax].mes);
+			$("#fechaFinEjecucion").html("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+lineaAccionAcumuladoMesDepto[vectorMaxEjecucion].mes);
+			
 			$("#rango-fecha").slider({});
-			for(var i = 0;i<lineaAccionAcumuladoMes.length; i++)
+			$("#rango-fecha-ejecucion").slider({});
+			for(var i = 0;i<lineaAccionAcumuladoMesDepto.length; i++)
 			{
-				cantidadTotalProgramada+=lineaAccionAcumuladoMes[i].cantidad_programada;
-				cantidadTotalEjecutada+=lineaAccionAcumuladoMes[i].cantidad_ejecutda;
+				cantidadTotalProgramada+=lineaAccionAcumuladoMesDepto[i].cantidad_programada;
 		
-				if(lineaAccionAcumuladoMes[i].mes >= lineaAccionAcumuladoMes[vectorMin].mes && lineaAccionAcumuladoMes[i].mes <= lineaAccionAcumuladoMes[vectorMax-1].mes)
+				if(lineaAccionAcumuladoMesDepto[i].mes >= lineaAccionAcumuladoMesDepto[vectorMin].mes && lineaAccionAcumuladoMesDepto[i].mes <= lineaAccionAcumuladoMesDepto[vectorMax].mes)
 				{
-	 				dataPoints.push({ x: new Date( lineaAccionAcumuladoMes[i].mes), y: cantidadTotalProgramada});
-	 				if (lineaAccionAcumuladoMes[i].cantidad_ejecutda!=0)  ejecutada.push({ x: new Date( lineaAccionAcumuladoMes[i].mes), y: cantidadTotalEjecutada});
+	 				dataPoints.push({ x: new Date( lineaAccionAcumuladoMesDepto[i].mes), y: cantidadTotalProgramada});
+				}
+
+			}
+			
+			for(var i = 0;i<lineaAccionAcumuladoMesDepto.length; i++)
+			{
+				cantidadTotalEjecutada+=lineaAccionAcumuladoMesDepto[i].cantidad_ejecutda;
+		
+				if(lineaAccionAcumuladoMesDepto[i].mes >= lineaAccionAcumuladoMesDepto[vectorMinEjecucion].mes && lineaAccionAcumuladoMesDepto[i].mes <= lineaAccionAcumuladoMesDepto[vectorMaxEjecucion].mes)
+				{
+	 				if (lineaAccionAcumuladoMesDepto[i].cantidad_ejecutda!=0)  ejecutada.push({ x: new Date( lineaAccionAcumuladoMesDepto[i].mes), y: cantidadTotalEjecutada});
 				}
 
 			}
 
+
 			var chart = new CanvasJS.Chart("chartContainer",
 					{
-						title: {
-							text: "Evolución Acumulada" 
-						},
-			                        animationEnabled: true,
-			                        width: 800,
+							zoomEnabled: true,
+							exportEnabled: true,
+							exportFileName: lineaAccionAcumuladoMesDepto[0].institucion+" - "+lineaAccionAcumuladoMesDepto[0].linea_accion+" ("+lineaAccionAcumuladoMesDepto[0].accion_unidad_medida+")",
+							title: {
+								text: "Evolución Mensual" +" ("+lineaAccionAcumuladoMesDepto[0].accion_unidad_medida+")" 
+							},
+	                        	animationEnabled: true,
+	                        	width: 800,
 						axisX:{      
 							valueFormatString: "YYYY-MM" ,
 							interval: 1,
@@ -200,7 +225,27 @@ if (user != null) { %>
 			vectorMin=splitDeRango[0];
 			vectorMax=splitDeRango[1];
 			
-			dibujarLineaAccionAcumuladoMes(lineaAccionAcumuladoMes, vectorMin, vectorMax);
+			var rangoDeFechaEjecucion= $("#rango-fecha-ejecucion").val();
+			var splitDeRangoEjecucion=rangoDeFechaEjecucion.split(",");
+			vectorMinEjecucion=splitDeRangoEjecucion[0];
+			vectorMaxEjecucion=splitDeRangoEjecucion[1];
+			
+			dibujarLineaAccionAcumuladoMesDepto(lineaAccionAcumuladoMesDepto, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion);
+			
+		});
+		
+		$("body").on("change", "#rango-fecha-ejecucion",function(event){
+			var rangoDeFecha= $("#rango-fecha").val();
+			var splitDeRango=rangoDeFecha.split(",");
+			vectorMin=splitDeRango[0];
+			vectorMax=splitDeRango[1];
+			
+			var rangoDeFechaEjecucion= $("#rango-fecha-ejecucion").val();
+			var splitDeRangoEjecucion=rangoDeFechaEjecucion.split(",");
+			vectorMinEjecucion=splitDeRangoEjecucion[0];
+			vectorMaxEjecucion=splitDeRangoEjecucion[1];
+			
+			dibujarLineaAccionAcumuladoMesDepto(lineaAccionAcumuladoMesDepto, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion);
 			
 		});
 		
@@ -226,9 +271,19 @@ if (user != null) { %>
 			
 						
 
-			cuerpoModal='<div class="table-responsive">'+
-						'<table class="table table-hover">'+
-							'<tr class="active"><td>Acción</td><td>Departamento</td><td>Distrito</td><td>U. Medida</td><td>Cantidad. Programado</td><td>Costo Total</td><td>Fecha Terminación</td><td>% Programado</td><td>% Ejecutado</td></tr>';
+			cuerpoModal='<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">'+
+						'<div class="row">'+
+							'<div class="col-sm-6">'+
+								'<div class="dataTables_length" id="example1_length"><label>Show <select name="example1_length" aria-controls="example1" class="form-control input-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div>'+
+							'</div>'+
+							'<div class="col-sm-6">'+
+								'<div id="example1_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control input-sm" placeholder="" aria-controls="example1"></label></div>'+
+							'</div>'+
+							'<div class="row">'+
+								'<div class="col-sm-12">'+
+									'<div class="table-responsive">'+
+										'<table class="table table-hover" >'+
+											'<tr class="active"><td>Acción</td><td>Departamento</td><td>Distrito</td><td>U. Medida</td><td>Cantidad. Programado</td><td>Costo Total</td><td>Fecha Terminación</td><td>% Programado</td><td>% Ejecutado</td></tr>';
 
 						var totalCantidadProgramada=0;
 						tituloModal='<h3><center>'+elRegistro[0].institucion+'&nbsp;&nbsp;-&nbsp;&nbsp;'+elRegistro[0].linea_accion+'</center></h3>';
@@ -241,29 +296,34 @@ if (user != null) { %>
 
 						cuerpoModal+='<tr class="active"><td colspan="2">Total Cantidad Programada: </td><td colspan="8">'+totalCantidadProgramada+'</td></tr>'+
 									 '</table>'+
-									 '</div>';
+									 '</div></div></div></div></div>';
 			
 			$('#myModal').find(".modal-title").html(tituloModal);
 			$('#myModal').find("#tab_1-1").html("");
 			$('#myModal').find("#tab_2-2").html("");
 			$('#myModal').find("#tab_3-2").html("");
-			$("#tab_3-2").append('<label id="fechaInicio"></label><input id="rango-fecha" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="1" data-slider-value="[250,450]"/><label id="fechaFin"></label>');
+
+			$("#tab_3-2").append('Programación: <label id="fechaInicio"></label><input id="rango-fecha" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="1" data-slider-value="[250,450]"/><label id="fechaFin"></label>');
+			$("#tab_3-2").append('<br><br>Ejecución: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label id="fechaInicioEjecucion"></label><input id="rango-fecha-ejecucion" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="1" data-slider-value="[250,450]"/><label id="fechaFinEjecucion"></label>');
+
 			$('#myModal').find("#tab_1-1").html(cuerpoModal);
 			//$('#myModal').find(".modal-footer").html(footerModal);
 			
-			lineaAccionAcumuladoMes = $.ajax({
-		    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getLineaAccionAcumuladoMes&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id,
+			lineaAccionAcumuladoMesDepto = $.ajax({
+		    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getLineaAccionAcumuladoMesDepto&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id+'&departamento='+idDepartamento,
 		      	type:'get',
 		      	dataType:'json',
 		      	async:false       
 		    }).responseText;
 			
 			
-			lineaAccionAcumuladoMes = JSON.parse(lineaAccionAcumuladoMes);
+			lineaAccionAcumuladoMesDepto = JSON.parse(lineaAccionAcumuladoMesDepto);
 			
 			 vectorMin=0;
-			 vectorMax=lineaAccionAcumuladoMes.length-1;
+			 vectorMax=lineaAccionAcumuladoMesDepto.length-1;
 			 
+			 vectorMinEjecucion=0;
+			 vectorMaxEjecucion=lineaAccionAcumuladoMesDepto.length-1;
 			//grafico de total cantidad programada y total cantidad ejecutada
 			
 			$('#myModal').find("#tab_3-2").append('<div id="chartContainer" style="height:400px;"></div>');
@@ -276,9 +336,9 @@ if (user != null) { %>
 				  return 0;
 				}
 			
-			lineaAccionAcumuladoMes=lineaAccionAcumuladoMes.sort(compare);
+			lineaAccionAcumuladoMesDepto=lineaAccionAcumuladoMesDepto.sort(compare);
 			
-			dibujarLineaAccionAcumuladoMes(lineaAccionAcumuladoMes, vectorMin, vectorMax);
+			dibujarLineaAccionAcumuladoMesDepto(lineaAccionAcumuladoMesDepto, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion);
 	});
 		
 		
@@ -701,6 +761,16 @@ var $tabla=$("#lineasPorEntidad");
 
 <!-- Piwik -->
 <script type="text/javascript">
+
+$('#example1').dataTable({
+    "bPaginate": false,
+    "bLengthChange": false,
+    "bFilter": true,
+    "bSort": true,
+    "bInfo": true,
+    "bAutoWidth": false
+  });
+
   var _paq = _paq || [];
   _paq.push(['trackPageView']);
   _paq.push(['enableLinkTracking']);
