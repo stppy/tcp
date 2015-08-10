@@ -273,6 +273,7 @@ public class ajaxSelects extends HttpServlet {
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
         		}
+        	
        }
        out.close();
         
