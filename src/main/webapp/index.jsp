@@ -8,7 +8,7 @@
 
 
 <!DOCTYPE html>
-<html>
+<html lang="spanish">
   <head>
   <!--  ISO-8859-1 -->
   <%@ include file="/frames/head.jsp" %>
@@ -26,7 +26,7 @@
 
 	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="bootstrap/css/bootstrapslider.css" rel="stylesheet">
-
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
 		/* Example 1 custom styles */
 		#ex1Slider .slider-selection {
@@ -216,6 +216,9 @@ if (user != null) { %>
 					});
 					
 			chart.render();
+			
+			
+			
 		 }
 
 		$("body").on("change", "#rango-fecha",function(event){
@@ -281,8 +284,11 @@ if (user != null) { %>
 						
 
 			cuerpoModal='<div class="table-responsive">'+
-						'<table class="table table-hover">'+
-							'<tr class="active"><td>Acción</td><td>Departamento</td><td>Distrito</td><td>U. Medida</td><td>Cantidad. Programado</td><td>Costo Total</td><td>Fecha Terminación</td><td>% Programado</td><td>% Ejecutado</td></tr>';
+						'<table id="hitos" class="table table-hover">'+
+							'<thead>'+
+								'<tr class="active"><th>Acción</th><th>Departamento</th><th>Distrito</th><th>U. Medida</th><th>Cantidad. Programado</th><th>Costo Total</th><th>Fecha Terminación</th><th>% Programado</th><th>% Ejecutado</th></tr>'+
+							'</thead>'+
+							'<tbody>';
 
 						var totalCantidadProgramada=0;
 						tituloModal='<h3><center>'+elRegistro[0].institucion+'&nbsp;&nbsp;-&nbsp;&nbsp;'+elRegistro[0].linea_accion+'</center></h3>';
@@ -293,7 +299,7 @@ if (user != null) { %>
 						}
 						totalCantidadProgramada=parseFloat(totalCantidadProgramada).toFixed(2);
 
-						cuerpoModal+='<tr class="active"><td colspan="2">Total Cantidad Programada: </td><td colspan="8">'+totalCantidadProgramada+'</td></tr>'+
+						cuerpoModal+='</tbody><tfoot><tr class="active"><td colspan="2">Total Cantidad Programada: </td><td colspan="8">'+totalCantidadProgramada+'</td></tr></tfoot>'+
 									 '</table>'+
 									 '</div>';
 			
@@ -340,6 +346,42 @@ if (user != null) { %>
 			
 
 			dibujarLineaAccionAcumuladoMes(lineaAccionAcumuladoMes, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion);
+			
+			 $(function () {
+			       
+			        $('#hitos').dataTable({
+			          "bPaginate": false,
+			          "bLengthChange": false,
+			          "bFilter": true,
+			          "bSort": true,
+			          "bInfo": true,
+			          "bAutoWidth": false,
+			          "language":{
+			        	    "sProcessing":     "Procesando...",
+			        	    "sLengthMenu":     "Mostrar _MENU_ registros",
+			        	    "sZeroRecords":    "No se encontraron resultados",
+			        	    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+			        	    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+			        	    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+			        	    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+			        	    "sInfoPostFix":    "",
+			        	    "sSearch":         "Buscar:",
+			        	    "sUrl":            "",
+			        	    "sInfoThousands":  ",",
+			        	    "sLoadingRecords": "Cargando...",
+			        	    "oPaginate": {
+			        	        "sFirst":    "Primero",
+			        	        "sLast":     "Último",
+			        	        "sNext":     "Siguiente",
+			        	        "sPrevious": "Anterior"
+			        	    },
+			        	    "oAria": {
+			        	        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+			        	        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+			        	    }
+			        	}
+			        });
+			      });
 
 	});
 		
@@ -805,10 +847,13 @@ var $tabla=$("#lineasPorEntidad");
 
     </div><!-- ./wrapper -->
 
-    <!-- jQuery 2.1.3 -->
-    <script src="plugins/jQuery/jQuery-2.1.3.min.js"></script>
+    <!-- jQuery 2.1.3 
+    <script src="plugins/jQuery/jQuery-2.1.3.min.js"></script> -->
     <!-- Bootstrap 3.3.2 JS -->
     <script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <!-- DATA TABES SCRIPT -->
+    <script src="plugins/datatables/jquery.dataTables.js" type="text/javascript"></script>
+    <script src="plugins/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
     <!-- FastClick -->
     <script src='plugins/fastclick/fastclick.min.js'></script>
     <!-- AdminLTE App -->
@@ -853,8 +898,6 @@ var $tabla=$("#lineasPorEntidad");
 </script>
 <noscript><p><img src="//infra.stp.gov.py/monitoreoweb/piwik.php?idsite=9" style="border:0;" alt="" /></p></noscript>
 <!-- End Piwik Code -->
-
-<script type="text/javascript" src="bootstrap/js/jquery.min.js"></script>
 <script type="text/javascript" src="bootstrap/js/bootstrap-slider.js"></script>
 
     
