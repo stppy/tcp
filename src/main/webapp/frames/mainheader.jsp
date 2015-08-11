@@ -53,7 +53,7 @@
                       <a href="#" class="btn btn-default btn-flat">Perfil</a>
                     </div>
                     <div class="pull-right">
-                      <a href="https://login.stp.gov.py:8443/cas/logout" class="btn btn-default btn-flat">Salir</a>
+                      <a href="https://login.stp.gov.py/cas/logout" class="btn btn-default btn-flat">Salir</a>
                     </div>
                   </li>
                 </ul>
