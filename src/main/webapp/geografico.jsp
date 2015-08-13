@@ -62,7 +62,9 @@
     </style>
     
     
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+	<link rel="stylesheet" href="plugins/mapa/leaflet.css" />
 
 
 </head>
@@ -818,6 +820,35 @@ tbody {
                   <h3 class="box-title">Desempeño Geográfico</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
+                  	<div id="map" style="width: 800x; height: 600px"></div>
+
+					<script src="plugins/mapa/deptos2012.geojson" type="text/javascript"></script>
+					<script src="plugins/mapa/leaflet.js"></script>
+				
+					<script>
+						var miestilo = {
+							    weight: 1,
+				                opacity: 1,
+				                color: 'orange',
+				                dashArray: '3',
+				                fillOpacity: 0.3,
+				                fillColor: '#666666'
+							}
+						
+						
+						var map = L.map('map').setView([-24.5, -57], 6);
+				
+						L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+							maxZoom: 18,
+						}).addTo(map);
+				
+						
+				
+						var depto = new L.geoJson(depto,{style:miestilo});
+						depto.addTo(map);
+				
+					</script>
+                  
                   
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
