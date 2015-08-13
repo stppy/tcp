@@ -28,4 +28,17 @@
 			 $("#"+id).attr("class", "fa fa-minus");
 			 event.stopPropagation();
 		});
+		$("body").on("click", "#vistaInsitucional",function(event){
+			window.location.replace("./");
+			event.stopPropagation();
+		});
+		$("body").on("click", "#vistaDepartamental",function(event){
+			window.location.replace("./indexDepartamento.jsp");
+			event.stopPropagation();
+		});
+		$("body").on("click", "#vistaInsitucional",function(event){
+			window.location.replace("./geografico.jsp");
+			event.stopPropagation();
+		});
+		
   });

@@ -22,7 +22,9 @@
 <!--   <script src="frames/entidad.js" type="text/javascript"></script> -->
 <script type="text/javascript" src="dist/canvasjs/canvasjs.min.js" ></script>
 
-
+<script>
+var datosGeo=[];
+</script>
 
 	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="bootstrap/css/bootstrapslider.css" rel="stylesheet">
@@ -400,6 +402,9 @@ if (user != null) { %>
 	    }).responseText;
 		var elPais=JSON.parse(elPaisjson);
 		
+	
+
+		
 		var totalLineaPais=[];
 		var y=0;
 		for (var z=0; z<elPais.length;z++){
@@ -424,9 +429,17 @@ if (user != null) { %>
 		var porHejeClass="";
 		var porHejeClassRow="";
 		
+		
 		for (var i = 0; i< 18;i++){
 			$("#cuerpoTabla").append('<tr><td colspan="12" ><strong>'+departamento[i].nombreDepartamento+'</strong></td></tr>');
 			var lineasDeAccion= [];
+			var iteracionDepto=0;
+			var porcentajeAnhoAcumuladoDepto=0;
+			var porcentajeHoyEjeAcumuladoDepto=0;
+			
+			var porcentajeAnhoAcumuladoDeptoTotal=0;
+			var porcentajeHoyEjeAcumuladoDeptoTotal=0;
+			
 			for(var j=0;j<lineaAccionDepartamento.length;j++){
 				
 				if (lineaAccionDepartamento[j].accion_departamento_id==departamento[i].idDepartamento){
@@ -454,14 +467,16 @@ if (user != null) { %>
 											anho2.linea_accion_meta = parseFloat((anho2.suma_programada_anho / totalLineaPais[l].suma_programada_anho_pais)*anho2.linea_accion_meta).toFixed(2);
 										}
 								}
-						
+								iteracionDepto++;
 							//	var porcentajeAnho = (anho2.suma_programada_hoy*100)/anho2.suma_programada_anho;
 								var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
 								porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
+								porcentajeAnhoAcumuladoDepto+=parseFloat(porcentajeAnho);
 								var porcentajeAnhoEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_anho;
 								porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
 								var porcentajeHoyEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_hoy;
 								porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
+								porcentajeHoyEjeAcumuladoDepto+=parseFloat(porcentajeHoyEje);
 								/*if (porcentajeAnho<=70) sumporAClass = "text-danger";
 								if (porcentajeAnho>70) sumporAClass = "text-warning";
 								if (porcentajeAnho>90) sumporAClass = "text-success";
@@ -523,14 +538,16 @@ if (user != null) { %>
 										}
 								}
 								
-								
+								iteracionDepto++;
 								//var porcentajeAnho = (anho2.suma_programada_hoy*100)/anho2.suma_programada_anho;
 								var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
 								porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
+								porcentajeAnhoAcumuladoDepto+=parseFloat(porcentajeAnho);
 								var porcentajeAnhoEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_anho;
 								porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
 								var porcentajeHoyEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_hoy;
 								porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
+								porcentajeHoyEjeAcumuladoDepto+=parseFloat(porcentajeHoyEje);
 								/*if (porcentajeAnho<=70) sumporAClass = "text-danger";
 								if (porcentajeAnho>70) sumporAClass = "text-warning";
 								if (porcentajeAnho>90) sumporAClass = "text-success";
@@ -570,11 +587,21 @@ if (user != null) { %>
 						}
 					}
 				}
+				
 			}
-		}	
+			porcentajeAnhoAcumuladoDeptoTotal = porcentajeAnhoAcumuladoDepto / iteracionDepto;
+			porcentajeHoyEjeAcumuladoDeptoTotal = porcentajeHoyEjeAcumuladoDepto / iteracionDepto;
+			
+
+					datosGeo[departamento[i].idDepartamento]=new Object();
+					datosGeo[departamento[i].idDepartamento].program = porcentajeAnhoAcumuladoDeptoTotal;
+					datosGeo[departamento[i].idDepartamento].desemp = porcentajeHoyEjeAcumuladoDeptoTotal;
+
+			
+	}
 		
 		
-	
+		
 		
 		
 		for (var i = 0; i< entidades.length;i++){
@@ -598,46 +625,15 @@ if (user != null) { %>
 								if (typeof anho1.hito_cantidad_ejecutado_hoy==="undefined") {var anho1= new Object(); anho1.hito_cantidad_ejecutado_hoy=""};
 								if (typeof anho2.hito_cantidad_ejecutado_hoy==="undefined") {var anho2= new Object(); anho2.hito_cantidad_ejecutado_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
 								if (anho2.suma_programada_anho>0){
-								//	var porcentajeAnho = (anho2.suma_programada_hoy*100)/anho2.suma_programada_anho;
 									iteracion++;
 									var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
 									porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
 									porcentajeAnhoAcumulado+=parseFloat(porcentajeAnho);
 									
-									var porcentajeAnhoEje = (anho2.hito_cantidad_ejecutado_hoy*100)/anho2.suma_programada_anho;
-									porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
 									var porcentajeHoyEje = (anho2.hito_cantidad_ejecutado_hoy*100)/anho2.suma_programada_hoy;
 									porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
 									porcentajeHoyEjeAcumulado += parseFloat(porcentajeHoyEje);
-									/*if (porcentajeAnho<=70) sumporAClass = "text-danger";
-									if (porcentajeAnho>70) sumporAClass = "text-warning";
-									if (porcentajeAnho>90) sumporAClass = "text-success";
-									
-									if (porcentajeAnhoEje<=70) porAejeClass = "text-danger";
-									if (porcentajeAnhoEje>70) porAejeClass = "text-warning";
-									if (porcentajeAnhoEje>90) porAejeClass = "text-success";
-									*/
-									porHejeClassRow="";
-									/*
-									if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";porHejeClassRow="danger";}
-									if (porcentajeHoyEje>70){ porHejeClass = "text-warning";porHejeClassRow="warning";}
-									if (porcentajeHoyEje>90){ porHejeClass = "text-success";porHejeClassRow="success";}
-									
-									if (porcentajeAnho<=70){ porHejeClassRow="danger";porHejeClass="";} */
-									if (porcentajeAnho<90){ porHejeClassRow="danger";porHejeClass="";}
-									if (porcentajeAnho>=90){ porHejeClassRow="success";
-										if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";}
-										if (porcentajeHoyEje>70){ porHejeClass = "text-warning";}
-										if (porcentajeHoyEje>90){ porHejeClass = "text-success";}
-									}
-									
-									//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
-									//$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+elPais[j].institucion_id+'-'+elPais[j].linea_accion_id+'-'+elPais[j].accion_unidad_medida+'> '+anho2.linea_accion+'</a></td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</a></td><td>'+anho2.accion_unidad_medida+'</td><td class="cell-bordered2">'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_hoy)+'</td><td >'+numeroConComa(anho2.hito_cantidad_ejecutado_hoy)+'</td><td class="text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
-																
-									
-									
-									//<td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td> penultimo
-									if ( porcentajeHoyEje ==="NaN"){ porcentajeHoyEje="";porHejeClassRow="";}
+
 								}else{
 									var porcentajeAnho = "";
 									var porcentajeAnhoEje = "";
@@ -660,56 +656,21 @@ if (user != null) { %>
 								if (typeof anho2.hito_cantidad_ejecutado_hoy==="undefined") {var anho2= new Object(); anho2.hito_cantidad_ejecutado_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
 								if (anho2.suma_programada_anho>0){
 									iteracion++;
-									//var porcentajeAnho = (anho2.suma_programada_hoy*100)/anho2.suma_programada_anho;
 									var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
 									porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
 									porcentajeAnhoAcumulado+=parseFloat(porcentajeAnho);
-									
-									var porcentajeAnhoEje = (anho2.hito_cantidad_ejecutado_hoy*100)/anho2.suma_programada_anho;
-									porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
 									var porcentajeHoyEje = (anho2.hito_cantidad_ejecutado_hoy*100)/anho2.suma_programada_hoy;
 									porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
 									porcentajeHoyEjeAcumulado += parseFloat(porcentajeHoyEje);
-									/*if (porcentajeAnho<=70) sumporAClass = "text-danger";
-									if (porcentajeAnho>70) sumporAClass = "text-warning";
-									if (porcentajeAnho>90) sumporAClass = "text-success";
-									
-									if (porcentajeAnhoEje<=70) porAejeClass = "text-danger";
-									if (porcentajeAnhoEje>70) porAejeClass = "text-warning";
-									if (porcentajeAnhoEje>90) porAejeClass = "text-success";
-									*/
-									porHejeClassRow="";
-									/*
-									if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";porHejeClassRow="danger";}
-									if (porcentajeHoyEje>70){ porHejeClass = "text-warning";porHejeClassRow="warning";}
-									if (porcentajeHoyEje>90){ porHejeClass = "text-success";porHejeClassRow="success";}
-	
-									if (porcentajeAnho<=70){ porHejeClassRow="danger";porHejeClass="";} */
-									if (porcentajeAnho<90){ porHejeClassRow="danger";porHejeClass="";}
-									if (porcentajeAnho>=90){ porHejeClassRow="success";
-										if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";}
-										if (porcentajeHoyEje>70){ porHejeClass = "text-warning";}
-										if (porcentajeHoyEje>90){ porHejeClass = "text-success";}
-									}
-									
-									
-									if (  porcentajeHoyEje ==="NaN"){ porcentajeHoyEje="";porHejeClassRow="";}
-								}else{
-									var porcentajeAnho = "";
-									var porcentajeAnhoEje = "";
-									var porcentajeHoyEje ="";
-									porHejeClassRow="";
-								}
-								//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
-								//$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+elPais[j].institucion_id+'-'+elPais[j].linea_accion_id+'-'+elPais[j].accion_unidad_medida+'>'+anho2.linea_accion+'</a></td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+anho2.accion_unidad_medida+'</td><td class="cell-bordered2">'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_hoy)+'</td><td>'+numeroConComa(anho2.hito_cantidad_ejecutado_hoy)+'</td><td class=" text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
 								
-								//<td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td> penultima
+								}
+							}
+
 								anho2="";
 								anho1="";
 							}
 						}
 					}
-				}
 				var porcentajeAnhoAcumuladoTotal = porcentajeAnhoAcumulado / iteracion;
 				var porcentajeHoyEjeAcumuladoTotal = porcentajeHoyEjeAcumulado / iteracion;
 				if (porcentajeAnhoAcumuladoTotal >= 90)
@@ -735,11 +696,6 @@ if (user != null) { %>
 				
 				
 			}
-
-		
-		
-		
-		
 		
 	});
 	
@@ -826,27 +782,46 @@ tbody {
 					<script src="plugins/mapa/leaflet.js"></script>
 				
 					<script>
-						var miestilo = {
-							    weight: 1,
-				                opacity: 1,
-				                color: 'orange',
-				                dashArray: '3',
-				                fillOpacity: 0.3,
-				                fillColor: '#666666'
-							}
-						
-						
-						var map = L.map('map').setView([-24.5, -57], 6);
-				
-						L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-							maxZoom: 18,
-						}).addTo(map);
-				
-						
-				
-						var depto = new L.geoJson(depto,{style:miestilo});
-						depto.addTo(map);
-				
+
+					var miestilo = {
+						    weight: 1,
+			                opacity: 1,
+			                color: 'orange',
+			                dashArray: '3',
+			                fillOpacity: 0.3,
+			                fillColor: '#666666'
+						}
+					
+					function getColor(d) {
+					    return d >= 12  ? '#008d4c' :
+					           d >= 6  ? '#db8b0b' :
+					                      '#d33724';
+					}
+					// fillColor: getColor(datosGeo[parseInt(feature.properties.dpto)].program),
+					function style(feature) {
+						return {
+							 fillColor: getColor(feature.properties.dpto),
+					        weight: 2,
+					        opacity: 1,
+					        color: 'white',
+					        dashArray: '3',
+					        fillOpacity: 0.7
+					    };						    
+					}
+					
+					
+					var map = L.map('map').setView([-24.5, -57], 6);
+
+					L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+						maxZoom: 18,
+					}).addTo(map);
+
+					
+
+					//var depto = new L.geoJson(depto,{style:miestilo});
+					var depto = new L.geoJson(depto,{style:style});
+					depto.addTo(map);
+					
 					</script>
                   
                   
