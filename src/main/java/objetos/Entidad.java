@@ -15,5 +15,5 @@ public class Entidad {
 	public void setInstitucion(String institucion) {
 		this.institucion = institucion;
 	}
-	
+
 }

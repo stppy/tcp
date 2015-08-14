@@ -465,10 +465,10 @@ if (user != null) { %>
 									porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
 									var porcentajeHoyEje = (anho2.hito_cantidad_ejecutado_hoy*100)/anho2.suma_programada_hoy;
 									porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
-									/*if (porcentajeAnho<=70) sumporAClass = "text-danger";
-									if (porcentajeAnho>70) sumporAClass = "text-warning";
-									if (porcentajeAnho>90) sumporAClass = "text-success";
 									
+									if (porcentajeAnho<90)  {sumporAClass ="bg-red-active color-palette";}
+									if (porcentajeAnho>=90) sumporAClass = "bg-green-active color-palette";
+									/*
 									if (porcentajeAnhoEje<=70) porAejeClass = "text-danger";
 									if (porcentajeAnhoEje>70) porAejeClass = "text-warning";
 									if (porcentajeAnhoEje>90) porAejeClass = "text-success";
@@ -480,11 +480,11 @@ if (user != null) { %>
 									if (porcentajeHoyEje>90){ porHejeClass = "text-success";porHejeClassRow="success";}
 									
 									if (porcentajeAnho<=70){ porHejeClassRow="danger";porHejeClass="";} */
-									if (porcentajeAnho<90){ porHejeClassRow="danger";porHejeClass="";}
-									if (porcentajeAnho>=90){ porHejeClassRow="success";
-										if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";}
-										if (porcentajeHoyEje>70){ porHejeClass = "text-warning";}
-										if (porcentajeHoyEje>90){ porHejeClass = "text-success";}
+									if (porcentajeAnho<90){ porHejeClassRow="";porHejeClass = "bg-red-active color-palette";}
+									if (porcentajeAnho>=90){ porHejeClassRow="";
+										if (porcentajeHoyEje<=70){ porHejeClass = "bg-red-active color-palette";}
+										if (porcentajeHoyEje>70){ porHejeClass = "bg-yellow-active color-palette";}
+										if (porcentajeHoyEje>90){ porHejeClass = "bg-green-active color-palette";}
 									}
 									
 									//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
@@ -522,10 +522,9 @@ if (user != null) { %>
 									porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
 									var porcentajeHoyEje = (anho2.hito_cantidad_ejecutado_hoy*100)/anho2.suma_programada_hoy;
 									porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
-									/*if (porcentajeAnho<=70) sumporAClass = "text-danger";
-									if (porcentajeAnho>70) sumporAClass = "text-warning";
-									if (porcentajeAnho>90) sumporAClass = "text-success";
-									
+									if (porcentajeAnho<90)  { sumporAClass ="bg-red-active color-palette";}
+									if (porcentajeAnho>=90) sumporAClass = "bg-green-active color-palette";
+									/*
 									if (porcentajeAnhoEje<=70) porAejeClass = "text-danger";
 									if (porcentajeAnhoEje>70) porAejeClass = "text-warning";
 									if (porcentajeAnhoEje>90) porAejeClass = "text-success";
@@ -537,11 +536,11 @@ if (user != null) { %>
 									if (porcentajeHoyEje>90){ porHejeClass = "text-success";porHejeClassRow="success";}
 	
 									if (porcentajeAnho<=70){ porHejeClassRow="danger";porHejeClass="";} */
-									if (porcentajeAnho<90){ porHejeClassRow="danger";porHejeClass="";}
-									if (porcentajeAnho>=90){ porHejeClassRow="success";
-										if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";}
-										if (porcentajeHoyEje>70){ porHejeClass = "text-warning";}
-										if (porcentajeHoyEje>90){ porHejeClass = "text-success";}
+									if (porcentajeAnho<90){ porHejeClassRow="";porHejeClass = "bg-red-active color-palette";}
+									if (porcentajeAnho>=90){ porHejeClassRow="";
+										if (porcentajeHoyEje<=70){ porHejeClass = "bg-red-active color-palette";}
+										if (porcentajeHoyEje>70){ porHejeClass = "bg-yellow-active color-palette";}
+										if (porcentajeHoyEje>90){ porHejeClass = "bg-green-active color-palette";}
 									}
 									
 									
@@ -590,10 +589,9 @@ if (user != null) { %>
 										porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
 										var porcentajeHoyEje = (anho2.hito_cantidad_ejecutado_hoy*100)/anho2.suma_programada_hoy;
 										porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
-										/*if (porcentajeAnho<=70) sumporAClass = "text-danger";
-										if (porcentajeAnho>70) sumporAClass = "text-warning";
-										if (porcentajeAnho>90) sumporAClass = "text-success";
-										
+										if (porcentajeAnho<90)  { sumporAClass ="bg-red-active color-palette";}
+										if (porcentajeAnho>=90) sumporAClass = "bg-green-active color-palette";
+										/*
 										if (porcentajeAnhoEje<=70) porAejeClass = "text-danger";
 										if (porcentajeAnhoEje>70) porAejeClass = "text-warning";
 										if (porcentajeAnhoEje>90) porAejeClass = "text-success";
@@ -605,11 +603,11 @@ if (user != null) { %>
 										if (porcentajeHoyEje>90){ porHejeClass = "text-success";porHejeClassRow="success";}
 										
 										if (porcentajeAnho<=70){ porHejeClassRow="danger";porHejeClass="";} */
-										if (porcentajeAnho<90){ porHejeClassRow="danger";porHejeClass="";}
-										if (porcentajeAnho>=90){ porHejeClassRow="success";
-											if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";}
-											if (porcentajeHoyEje>70){ porHejeClass = "text-warning";}
-											if (porcentajeHoyEje>90){ porHejeClass = "text-success";}
+										if (porcentajeAnho<90){ porHejeClassRow="";porHejeClass = "bg-red-active color-palette";}
+										if (porcentajeAnho>=90){ porHejeClassRow="";
+											if (porcentajeHoyEje<=70){ porHejeClass = "bg-red-active color-palette";}
+											if (porcentajeHoyEje>70){ porHejeClass = "bg-yellow-active color-palette";}
+											if (porcentajeHoyEje>90){ porHejeClass = "bg-green-active color-palette";}
 										}
 										
 										//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
@@ -647,10 +645,9 @@ if (user != null) { %>
 										porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
 										var porcentajeHoyEje = (anho2.hito_cantidad_ejecutado_hoy*100)/anho2.suma_programada_hoy;
 										porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
-										/*if (porcentajeAnho<=70) sumporAClass = "text-danger";
-										if (porcentajeAnho>70) sumporAClass = "text-warning";
-										if (porcentajeAnho>90) sumporAClass = "text-success";
-										
+										if (porcentajeAnho<90)  {sumporAClass ="bg-red-active color-palette";}
+										if (porcentajeAnho>=90) sumporAClass = "bg-green-active color-palette";
+										/*
 										if (porcentajeAnhoEje<=70) porAejeClass = "text-danger";
 										if (porcentajeAnhoEje>70) porAejeClass = "text-warning";
 										if (porcentajeAnhoEje>90) porAejeClass = "text-success";
@@ -662,11 +659,11 @@ if (user != null) { %>
 										if (porcentajeHoyEje>90){ porHejeClass = "text-success";porHejeClassRow="success";}
 		
 										if (porcentajeAnho<=70){ porHejeClassRow="danger";porHejeClass="";} */
-										if (porcentajeAnho<90){ porHejeClassRow="danger";porHejeClass="";}
-										if (porcentajeAnho>=90){ porHejeClassRow="success";
-											if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";}
-											if (porcentajeHoyEje>70){ porHejeClass = "text-warning";}
-											if (porcentajeHoyEje>90){ porHejeClass = "text-success";}
+										if (porcentajeAnho<90){ porHejeClassRow="";porHejeClass = "bg-red-active color-palette";}
+										if (porcentajeAnho>=90){ porHejeClassRow="";
+											if (porcentajeHoyEje<=70){ porHejeClass = "bg-red-active color-palette";}
+											if (porcentajeHoyEje>70){ porHejeClass = "bg-yellow-active color-palette";}
+											if (porcentajeHoyEje>90){ porHejeClass = "bg-green-active color-palette";}
 										}
 										
 										
