@@ -868,7 +868,8 @@ var $tabla=$("#lineasPorEntidad");
     <script src="plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
     <!-- ChartJS 1.0.1 -->
     <script src="plugins/chartjs/Chart.min.js" type="text/javascript"></script>
-    
+     <!-- AdminLTE App -->
+    <script src="dist/js/app.min.js" type="text/javascript"></script>
     
     <!-- AdminLTE dashboard demo (This is only for demo purposes) 
     <script src="dist/js/pages/dashboard2.js" type="text/javascript"></script>-->

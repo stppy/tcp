@@ -22,7 +22,9 @@
 <!--   <script src="frames/entidad.js" type="text/javascript"></script> -->
 <script type="text/javascript" src="dist/canvasjs/canvasjs.min.js" ></script>
 
-
+<script>
+var datosGeo=[];
+</script>
 
 	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="bootstrap/css/bootstrapslider.css" rel="stylesheet">
@@ -62,8 +64,10 @@
     </style>
     
     
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
+	<link rel="stylesheet" href="plugins/mapa/leaflet.css" />
+<script src='dist/leaflet-image.js'></script>
 
 </head>
 <body class="skin-blue sidebar-mini sidebar-collapse">
@@ -398,6 +402,9 @@ if (user != null) { %>
 	    }).responseText;
 		var elPais=JSON.parse(elPaisjson);
 		
+	
+
+		
 		var totalLineaPais=[];
 		var y=0;
 		for (var z=0; z<elPais.length;z++){
@@ -422,9 +429,17 @@ if (user != null) { %>
 		var porHejeClass="";
 		var porHejeClassRow="";
 		
+		
 		for (var i = 0; i< 18;i++){
 			$("#cuerpoTabla").append('<tr><td colspan="12" ><strong>'+departamento[i].nombreDepartamento+'</strong></td></tr>');
 			var lineasDeAccion= [];
+			var iteracionDepto=0;
+			var porcentajeAnhoAcumuladoDepto=0;
+			var porcentajeHoyEjeAcumuladoDepto=0;
+			
+			var porcentajeAnhoAcumuladoDeptoTotal=0;
+			var porcentajeHoyEjeAcumuladoDeptoTotal=0;
+			
 			for(var j=0;j<lineaAccionDepartamento.length;j++){
 				
 				if (lineaAccionDepartamento[j].accion_departamento_id==departamento[i].idDepartamento){
@@ -452,14 +467,16 @@ if (user != null) { %>
 											anho2.linea_accion_meta = parseFloat((anho2.suma_programada_anho / totalLineaPais[l].suma_programada_anho_pais)*anho2.linea_accion_meta).toFixed(2);
 										}
 								}
-						
+								iteracionDepto++;
 							//	var porcentajeAnho = (anho2.suma_programada_hoy*100)/anho2.suma_programada_anho;
 								var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
 								porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
+								porcentajeAnhoAcumuladoDepto+=parseFloat(porcentajeAnho);
 								var porcentajeAnhoEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_anho;
 								porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
 								var porcentajeHoyEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_hoy;
 								porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
+								porcentajeHoyEjeAcumuladoDepto+=parseFloat(porcentajeHoyEje);
 								/*if (porcentajeAnho<=70) sumporAClass = "text-danger";
 								if (porcentajeAnho>70) sumporAClass = "text-warning";
 								if (porcentajeAnho>90) sumporAClass = "text-success";
@@ -521,14 +538,16 @@ if (user != null) { %>
 										}
 								}
 								
-								
+								iteracionDepto++;
 								//var porcentajeAnho = (anho2.suma_programada_hoy*100)/anho2.suma_programada_anho;
 								var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
 								porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
+								porcentajeAnhoAcumuladoDepto+=parseFloat(porcentajeAnho);
 								var porcentajeAnhoEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_anho;
 								porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
 								var porcentajeHoyEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_hoy;
 								porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
+								porcentajeHoyEjeAcumuladoDepto+=parseFloat(porcentajeHoyEje);
 								/*if (porcentajeAnho<=70) sumporAClass = "text-danger";
 								if (porcentajeAnho>70) sumporAClass = "text-warning";
 								if (porcentajeAnho>90) sumporAClass = "text-success";
@@ -568,8 +587,115 @@ if (user != null) { %>
 						}
 					}
 				}
+				
 			}
-		}		
+			porcentajeAnhoAcumuladoDeptoTotal = porcentajeAnhoAcumuladoDepto / iteracionDepto;
+			porcentajeHoyEjeAcumuladoDeptoTotal = porcentajeHoyEjeAcumuladoDepto / iteracionDepto;
+			
+
+					datosGeo[departamento[i].idDepartamento]=new Object();
+					datosGeo[departamento[i].idDepartamento].program = porcentajeAnhoAcumuladoDeptoTotal;
+					datosGeo[departamento[i].idDepartamento].desemp = porcentajeHoyEjeAcumuladoDeptoTotal;
+
+			
+	}
+		
+		
+		
+		
+		
+		for (var i = 0; i< entidades.length;i++){
+				var iteracion=0;
+				var porcentajeAnhoAcumulado=0;
+				var porcentajeHoyEjeAcumulado=0;
+				var lineasDeAccion= [];
+				
+				for(var j=0;j<elPais.length;j++){
+					if (elPais[j].institucion_id==entidades[i].institucion_id){
+						if (lineasDeAccion.indexOf(elPais[j].linea_accion_id)<0){
+							lineasDeAccion.push(elPais[j].linea_accion_id);
+							if(elPais[j].anho<="2014"){
+								var anho1=elPais[j];
+								var anho2;
+								for(var k=0;k<elPais.length;k++){
+									if (anho1.institucion_id==elPais[k].institucion_id && anho1.linea_accion_id==elPais[k].linea_accion_id && elPais[k].anho =="2015"){
+										anho2=elPais[k];
+									}
+								}
+								if (typeof anho1.hito_cantidad_ejecutado_hoy==="undefined") {var anho1= new Object(); anho1.hito_cantidad_ejecutado_hoy=""};
+								if (typeof anho2.hito_cantidad_ejecutado_hoy==="undefined") {var anho2= new Object(); anho2.hito_cantidad_ejecutado_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
+								if (anho2.suma_programada_anho>0){
+									iteracion++;
+									var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
+									porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
+									porcentajeAnhoAcumulado+=parseFloat(porcentajeAnho);
+									
+									var porcentajeHoyEje = (anho2.hito_cantidad_ejecutado_hoy*100)/anho2.suma_programada_hoy;
+									porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
+									porcentajeHoyEjeAcumulado += parseFloat(porcentajeHoyEje);
+
+								}else{
+									var porcentajeAnho = "";
+									var porcentajeAnhoEje = "";
+									var porcentajeHoyEje ="";
+									porHejeClassRow="";
+								}
+								
+								anho2="";
+								anho1="";
+							}
+							if(elPais[j].anho>="2015"){
+								var anho2=elPais[j];
+								var anho1;
+								for(var k=0;k<elPais.length;k++){
+									if (anho1.institucion_id==elPais[k].institucion_id && anho1.linea_accion_id==elPais[k].linea_accion_id && elPais[k].anho =="2014"){
+										anho1=elPais[k];
+									}
+								}
+								if (typeof anho1.hito_cantidad_ejecutado_hoy==="undefined") {var anho1= new Object(); anho1.hito_cantidad_ejecutado_hoy="";};
+								if (typeof anho2.hito_cantidad_ejecutado_hoy==="undefined") {var anho2= new Object(); anho2.hito_cantidad_ejecutado_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
+								if (anho2.suma_programada_anho>0){
+									iteracion++;
+									var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
+									porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
+									porcentajeAnhoAcumulado+=parseFloat(porcentajeAnho);
+									var porcentajeHoyEje = (anho2.hito_cantidad_ejecutado_hoy*100)/anho2.suma_programada_hoy;
+									porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
+									porcentajeHoyEjeAcumulado += parseFloat(porcentajeHoyEje);
+								
+								}
+							}
+
+								anho2="";
+								anho1="";
+							}
+						}
+					}
+				var porcentajeAnhoAcumuladoTotal = porcentajeAnhoAcumulado / iteracion;
+				var porcentajeHoyEjeAcumuladoTotal = porcentajeHoyEjeAcumulado / iteracion;
+				if (porcentajeAnhoAcumuladoTotal >= 90)
+				{
+					if (porcentajeHoyEjeAcumuladoTotal >= 90)
+					{
+						$("#tablaInstituciones").append('<tr><td>'+entidades[i].institucion+'</td><td><div class="progress progress-xs"> <div class="progress-bar bg-green-active color-palette" style="width: '+porcentajeAnhoAcumuladoTotal+'%"></div></div></td><td><span class="badge bg-green-active color-palette">'+porcentajeHoyEjeAcumuladoTotal+'%</span></td></tr>');
+
+					}else{
+						if (porcentajeHoyEjeAcumuladoTotal >= 70)
+						{
+							$("#tablaInstituciones").append('<tr><td>'+entidades[i].institucion+'</td><td><div class="progress progress-xs"> <div class="progress-bar bg-yellow-active color-palette" style="width: '+porcentajeAnhoAcumuladoTotal+'%"></div></div></td><td><span class="badge bg-yellow">'+porcentajeHoyEjeAcumuladoTotal+'%</span></td></tr>');
+						}else{
+							$("#tablaInstituciones").append('<tr><td>'+entidades[i].institucion+'</td><td><div class="progress progress-xs"> <div class="progress-bar bg-red-active color-palette" style="width: '+porcentajeAnhoAcumuladoTotal+'%"></div></div></td><td><span class="badge bg-red">'+porcentajeHoyEjeAcumuladoTotal+'%</span></td></tr>');
+
+						}
+					}
+				}else{
+					$("#tablaInstituciones").append('<tr><td>'+entidades[i].institucion+'</td><td><div class="progress progress-xs"> <div class="progress-bar bg-red-active color-palette" style="width: '+porcentajeAnhoAcumuladoTotal+'%"></div></div></td><td><span class="badge bg-red">'+porcentajeHoyEjeAcumuladoTotal+'%</span></td></tr>');
+				}
+				porcentajeAnhoAcumuladoTotal=0;
+				porcentajeHoyEjeAcumuladoTotal=0;
+				
+				
+			}
 		
 	});
 	
@@ -650,6 +776,54 @@ tbody {
                   <h3 class="box-title">Desempeño Geográfico</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
+                  	<div id="map" style="width: 800x; height: 600px"></div>
+
+					<script src="plugins/mapa/deptos2012.geojson" type="text/javascript"></script>
+					<script src="plugins/mapa/leaflet.js"></script>
+				
+					<script>
+
+					var miestilo = {
+						    weight: 1,
+			                opacity: 1,
+			                color: 'orange',
+			                dashArray: '3',
+			                fillOpacity: 0.3,
+			                fillColor: '#666666'
+						}
+					
+					function getColor(d) {
+					    return d >= 12  ? '#008d4c' :
+					           d >= 6  ? '#db8b0b' :
+					                      '#d33724';
+					}
+					// fillColor: getColor(datosGeo[parseInt(feature.properties.dpto)].program),
+					function style(feature) {
+						return {
+							 fillColor: getColor(feature.properties.dpto),
+					        weight: 2,
+					        opacity: 1,
+					        color: 'white',
+					        dashArray: '3',
+					        fillOpacity: 0.7
+					    };						    
+					}
+					
+					
+					var map = L.map('map').setView([-24.5, -57], 6);
+
+					/* L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+						maxZoom: 18,
+					}).addTo(map);
+*/
+					
+
+					//var depto = new L.geoJson(depto,{style:miestilo});
+					var depto = new L.geoJson(depto,{style:style});
+					depto.addTo(map);
+					
+					</script>
+                  
                   
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
@@ -663,52 +837,15 @@ tbody {
                 </div><!-- /.box-header -->
                 <div class="box-body no-padding">
                   <table class="table table-condensed">
-                    <tbody><tr>
-                      <th style="width: 10px">#</th>
+                    <thead>
+                    <tr>
                       <th>Institución</th>
                       <th>Progreso</th>
                       <th style="width: 40px">Desempeño</th>
                     </tr>
-                    <tr>
-                      <td>1.</td>
-                      <td>MAG</td>
-                      <td>
-                        <div class="progress progress-xs">
-                          <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
-                        </div>
-                      </td>
-                      <td><span class="badge bg-red">55%</span></td>
-                    </tr>
-                    <tr>
-                      <td>2.</td>
-                      <td>MEC</td>
-                      <td>
-                        <div class="progress progress-xs">
-                          <div class="progress-bar progress-bar-yellow bg-yellow" style="width: 70%"></div>
-                        </div>
-                      </td>
-                      <td><span class="badge bg-yellow">70%</span></td>
-                    </tr>
-                    <tr>
-                      <td>3.</td>
-                      <td>MSPYBS</td>
-                      <td>
-                        <div class="progress progress-xs ">
-                          <div class="progress-bar progress-bar-yellow bg-yellow" style="width: 80%"></div>
-                        </div>
-                      </td>
-                      <td><span class="badge bg-yellow">80%</span></td>
-                    </tr>
-                    <tr>
-                      <td>4.</td>
-                      <td>MOPC</td>
-                      <td>
-                        <div class="progress progress-xs">
-                          <div class="progress-bar progress-bar-success" style="width: 90%"></div>
-                        </div>
-                      </td>
-                      <td><span class="badge bg-green">90%</span></td>
-                    </tr>
+                    </thead>
+              		<tbody id="tablaInstituciones">
+
                   </tbody></table>
 
                 </div><!-- /.box-body -->
@@ -832,14 +969,6 @@ var $tabla=$("#lineasPorEntidad");
 <!-- Piwik -->
 <script type="text/javascript">
 
-$('#example1').dataTable({
-    "bPaginate": false,
-    "bLengthChange": false,
-    "bFilter": true,
-    "bSort": true,
-    "bInfo": true,
-    "bAutoWidth": false
-  });
 
   var _paq = _paq || [];
   _paq.push(['trackPageView']);
