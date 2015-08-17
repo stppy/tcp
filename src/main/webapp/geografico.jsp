@@ -604,8 +604,7 @@ if (user != null) { %>
 
 		
 		
-		function renderEntidades(){
-			
+		function renderEntidades(deptoId){			
 			for (var i = 0; i< entidades.length;i++){
 				var iteracion=0;
 				var porcentajeAnhoAcumulado=0;
@@ -799,52 +798,56 @@ tbody {
 					<script src="plugins/mapa/leaflet.js"></script>
 				
 					<script>
-
-					var miestilo = {
-						    weight: 1,
-			                opacity: 1,
-			                color: 'orange',
-			                dashArray: '3',
-			                fillOpacity: 0.3,
-			                fillColor: '#666666'
+						var miestilo = {
+							    weight: 1,
+				                opacity: 1,
+				                color: 'orange',
+				                dashArray: '3',
+				                fillOpacity: 0.3,
+				                fillColor: '#666666'
+							}
+						
+						function getColor(d) {
+						    return d >= 12  ? '#008d4c' :
+						           d >= 6  ? '#db8b0b' :
+						                      '#d33724';
 						}
-					
-					function getColor(d) {
-					    return d >= 12  ? '#008d4c' :
-					           d >= 6  ? '#db8b0b' :
-					                      '#d33724';
-					}
-					// fillColor: getColor(datosGeo[parseInt(feature.properties.dpto)].program),
-					function style(feature) {
-						return {
-							 fillColor: getColor(feature.properties.dpto),
-					        weight: 2,
-					        opacity: 1,
-					        color: 'white',
-					        dashArray: '3',
-					        fillOpacity: 0.7
-					    };						    
-					}
-					
-					
-					var map = L.map('map').setView([-24.5, -57], 6);
+						// fillColor: getColor(datosGeo[parseInt(feature.properties.dpto)].program),
+						function style(feature) {
+							return {
+								 fillColor: getColor(feature.properties.dpto),
+						        weight: 2,
+						        opacity: 1,
+						        color: 'white',
+						        dashArray: '3',
+						        fillOpacity: 0.7
+						    };						    
+						}
+						
+						
+						var map = L.map('map').setView([-24.5, -57], 6);
+	
+						/* L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+							maxZoom: 18,
+						}).addTo(map);
 
-					/* L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-						maxZoom: 18,
-					}).addTo(map);
-*/
-
-					function onEachFeature(feature, layer) {
-						layer.on({
-							click: renderEntidades(feature.properties.dpto)
-						});
-					}					
-
-					//var depto = new L.geoJson(depto,{style:miestilo});
-					var depto = new L.geoJson(depto,{style:style,
-													onEachFeature: onEachFeature});
-					depto.addTo(map);
+	
+						function onEachFeature(feature, layer) {
+							layer.on({
+								click: alert(feature.properties.dpto)
+							});
+						}					
+	*/
+						//var depto = new L.geoJson(depto,{style:miestilo});onEachFeature: onEachFeature
+						var depto = new L.geoJson(depto,{style:style});
+						depto.addTo(map);
+	
 					
+					
+				
+					
+						
+				
 					</script>
                   
                   
@@ -1004,9 +1007,9 @@ var $tabla=$("#lineasPorEntidad");
   })();
 </script>
 <noscript><p><img src="//infra.stp.gov.py/monitoreoweb/piwik.php?idsite=9" style="border:0;" alt="" /></p></noscript>
-<!-- End Piwik Code -->
+<!-- End Piwik Code 
 
-<script type="text/javascript" src="bootstrap/js/jquery.min.js"></script>
+<script type="text/javascript" src="bootstrap/js/jquery.min.js"></script>--> 
 <script type="text/javascript" src="bootstrap/js/bootstrap-slider.js"></script>
 
     
