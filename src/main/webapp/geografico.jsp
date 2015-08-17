@@ -807,46 +807,48 @@ tbody {
 								}
 							var porcentajeAnhoAcumuladoTotal = porcentajeAnhoAcumulado / iteracion;
 							var porcentajeHoyEjeAcumuladoTotal = porcentajeHoyEjeAcumulado / iteracion;
+							var color="";
 							if (!isNaN(porcentajeAnhoAcumuladoTotal) && !isNaN(porcentajeHoyEjeAcumuladoTotal)){
-								if (porcentajeAnhoAcumuladoTotal >= 90)
-								{
-									if (porcentajeHoyEjeAcumuladoTotal >= 90 && porcentajeHoyEjeAcumuladoTotal <= 100)
-									{
-										$("#tablaInstituciones").append('<tr><td>'+entidades[i].institucion+'</td><td><div class="progress progress-xs"> <div class="progress-bar bg-green-active color-palette" style="width: '+porcentajeAnhoAcumuladoTotal+'%"><p class="text-left">'+porcentajeHoyEjeAcumuladoTotal.toFixed(2)+'%</p></div></div></td></tr>');
-	
+								if (porcentajeAnhoAcumuladoTotal >= 100) { porcentajeAnhoAcumuladoTotal = 100; }
+								if (porcentajeHoyEjeAcumuladoTotal>=100) { porcentajeHoyEjeAcumuladoTotal = 100; }
+							
+								if (porcentajeAnhoAcumuladoTotal >= 90){
+									if (porcentajeHoyEjeAcumuladoTotal>=90){
+										color="green";
 									}else{
-										if (porcentajeHoyEjeAcumuladoTotal > 100)
-										{
-											$("#tablaInstituciones").append('<tr><td>'+entidades[i].institucion+'</td><td><div class="progress progress-xs"> <div class="progress-bar bg-green-active color-palette" style="width: 100%"><p class="text-left">100%</p></div></div></td></tr>');
+										if (porcentajeHoyEjeAcumuladoTotal>=70){
+											color="yellow";
 										}else{
-											if (porcentajeHoyEjeAcumuladoTotal >= 70 && porcentajeHoyEjeAcumuladoTotal < 90)
-											{
-												$("#tablaInstituciones").append('<tr><td>'+entidades[i].institucion+'</td><td><div class="progress progress-xs"> <div class="progress-bar bg-yellow-active color-palette" style="width: '+porcentajeAnhoAcumuladoTotal+'%"><p class="text-left">'+porcentajeHoyEjeAcumuladoTotal.toFixed(2)+'%</p></div></div></td></tr>');
-											}else{
-												$("#tablaInstituciones").append('<tr><td>'+entidades[i].institucion+'</td><td><div class="progress progress-xs"> <div class="progress-bar bg-red-active color-palette" style="width: '+porcentajeAnhoAcumuladoTotal+'%"><p class="text-left">'+porcentajeHoyEjeAcumuladoTotal.toFixed(2)+'%</p></div></div></td></tr>');
-	
-											}
+											color="red";
 										}
 									}
-								}else{
-									if (porcentajeHoyEjeAcumuladoTotal > 100)
-									{
-										$("#tablaInstituciones").append('<tr><td>'+entidades[i].institucion+'</td><td><div class="progress progress-xs"> <div class="progress-bar bg-red-active color-palette" style="width: 100%"><p class="text-left">100%</p></div></div></td></tr>');
-									}else{
-										$("#tablaInstituciones").append('<tr><td>'+entidades[i].institucion+'</td><td><div class="progress progress-xs"> <div class="progress-bar bg-red-active color-palette" style="width: '+porcentajeAnhoAcumuladoTotal+'%"><p class="text-left">'+porcentajeHoyEjeAcumuladoTotal.toFixed(2)+'%</p></div></div></td></tr>');
-									}
-								}  
+								}else {
+									color="red";
+								}
+								var idDepartamentoLink="";
+								if (typeof e != 'undefined'){idDepartamentoLink=e.target.feature.properties.dpto;}
+								
+								$("#tablaInstituciones").append('<tr><td><a tipo="filtroPorEntidad" institucion_id='+entidades[i].institucion_id+' depto_id='+idDepartamentoLink+' >'+entidades[i].institucion+'</a></td><td><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+porcentajeAnhoAcumuladoTotal+'%"><p class="text-left">'+porcentajeHoyEjeAcumuladoTotal.toFixed(2)+'%</p></div></div></td></tr>');
 								porcentajeAnhoAcumuladoTotal=0;
 								porcentajeHoyEjeAcumuladoTotal=0;
+								color="";
 							}
 							
 						}
 					}
 					
 					
+					$("body").on("click", "#tablaInstituciones",function(event){
+						  
+						  var institucion_id=$(this).attr("institucion_id");
+						  var depto_id=$(this).attr("depto_id");
+						  
+						  
+						  
+						  
+					});
 					
-						
-						
+
 						function getColor(d) {
 						    return d >= 12  ? '#008d4c' :
 						           d >= 6  ? '#db8b0b' :
