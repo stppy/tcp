@@ -843,6 +843,7 @@ tbody {
 						}
 						
 						function resetStyle(e) {
+							//map.redraw();
 						    var layer = e.layer;
 
 						    layer.setStyle({
