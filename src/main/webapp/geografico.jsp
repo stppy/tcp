@@ -536,6 +536,7 @@ tbody {
 							for(var j=0;j<lineaAccionDepartamento.length;j++){
 								
 								if (lineaAccionDepartamento[j].accion_departamento_id==departamento[i].idDepartamento){
+									
 									if (lineasDeAccion.indexOf(lineaAccionDepartamento[j].linea_accion_id)<0){
 										lineasDeAccion.push(lineaAccionDepartamento[j].linea_accion_id);
 										if(lineaAccionDepartamento[j].anho<="2014"){
@@ -703,6 +704,10 @@ tbody {
 								//alert(e.target.feature.properties.dpto+" - "+e.target.feature.properties.dpto_desc)};
 								resetStyle(e);
 								highlightFeature(e);
+								var array=lineaAccionDepartamento;
+						}else{
+							var array=elPais;
+							
 						}
 						for (var i = 0; i< entidades.length;i++){
 							var iteracion=0;
@@ -710,29 +715,47 @@ tbody {
 							var porcentajeHoyEjeAcumulado=0;
 							var lineasDeAccion= [];
 							
-							for(var j=0;j<elPais.length;j++){
-								if (elPais[j].institucion_id==entidades[i].institucion_id){
-									if (lineasDeAccion.indexOf(elPais[j].linea_accion_id)<0){
-										lineasDeAccion.push(elPais[j].linea_accion_id);
-										if(elPais[j].anho<="2014"){
-											var anho1=elPais[j];
+							for(var j=0;j<array.length;j++){
+								if (array[j].institucion_id==entidades[i].institucion_id){
+									if (lineasDeAccion.indexOf(array[j].linea_accion_id)<0){
+										if (typeof e != 'undefined'){
+											if (array[j].accion_departamento_id==e.target.feature.properties.dpto){
+												lineasDeAccion.push(array[j].linea_accion_id);
+											}
+										}else{
+											lineasDeAccion.push(array[j].linea_accion_id);
+										}
+										if(array[j].anho<="2014"){
+											var anho1=array[j];
 											var anho2;
-											for(var k=0;k<elPais.length;k++){
-												if (anho1.institucion_id==elPais[k].institucion_id && anho1.linea_accion_id==elPais[k].linea_accion_id && elPais[k].anho =="2015"){
-													anho2=elPais[k];
+											for(var k=0;k<array.length;k++){
+												if (anho1.institucion_id==array[k].institucion_id && anho1.linea_accion_id==array[k].linea_accion_id && array[k].anho =="2015"){
+													anho2=array[k];
 												}
 											}
 											if (typeof anho1.hito_cantidad_ejecutado_hoy==="undefined") {var anho1= new Object(); anho1.hito_cantidad_ejecutado_hoy=""};
 											if (typeof anho2.hito_cantidad_ejecutado_hoy==="undefined") {var anho2= new Object(); anho2.hito_cantidad_ejecutado_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
 											if (anho2.suma_programada_anho>0){
-												iteracion++;
+												
 												var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
 												porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
-												porcentajeAnhoAcumulado+=parseFloat(porcentajeAnho);
-												
+
 												var porcentajeHoyEje = (anho2.hito_cantidad_ejecutado_hoy*100)/anho2.suma_programada_hoy;
 												porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
-												porcentajeHoyEjeAcumulado += parseFloat(porcentajeHoyEje);
+												
+												if (typeof e != 'undefined'){
+													
+													if (array[j].accion_departamento_id==e.target.feature.properties.dpto){
+														iteracion++;
+														porcentajeHoyEjeAcumulado += parseFloat(porcentajeHoyEje);
+														porcentajeAnhoAcumulado+=parseFloat(porcentajeAnho);
+													}
+												}else{
+													iteracion++;
+													porcentajeHoyEjeAcumulado += parseFloat(porcentajeHoyEje);
+													porcentajeAnhoAcumulado+=parseFloat(porcentajeAnho);
+												}
+												
 
 											}else{
 												var porcentajeAnho = "";
@@ -744,24 +767,35 @@ tbody {
 											anho2="";
 											anho1="";
 										}
-										if(elPais[j].anho>="2015"){
-											var anho2=elPais[j];
+										if(array[j].anho>="2015"){
+											var anho2=array[j];
 											var anho1;
-											for(var k=0;k<elPais.length;k++){
-												if (anho1.institucion_id==elPais[k].institucion_id && anho1.linea_accion_id==elPais[k].linea_accion_id && elPais[k].anho =="2014"){
-													anho1=elPais[k];
+											for(var k=0;k<array.length;k++){
+												if (anho1.institucion_id==array[k].institucion_id && anho1.linea_accion_id==array[k].linea_accion_id && array[k].anho =="2014"){
+													anho1=array[k];
 												}
 											}
 											if (typeof anho1.hito_cantidad_ejecutado_hoy==="undefined") {var anho1= new Object(); anho1.hito_cantidad_ejecutado_hoy="";};
 											if (typeof anho2.hito_cantidad_ejecutado_hoy==="undefined") {var anho2= new Object(); anho2.hito_cantidad_ejecutado_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
 											if (anho2.suma_programada_anho>0){
-												iteracion++;
+												
 												var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
 												porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
-												porcentajeAnhoAcumulado+=parseFloat(porcentajeAnho);
+
 												var porcentajeHoyEje = (anho2.hito_cantidad_ejecutado_hoy*100)/anho2.suma_programada_hoy;
 												porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
-												porcentajeHoyEjeAcumulado += parseFloat(porcentajeHoyEje);
+												
+												if (typeof e != 'undefined'){
+													if (array[j].accion_departamento_id==e.target.feature.properties.dpto){
+														iteracion++;
+														porcentajeHoyEjeAcumulado += parseFloat(porcentajeHoyEje);
+														porcentajeAnhoAcumulado+=parseFloat(porcentajeAnho);
+													}
+												}else{
+													iteracion++;
+													porcentajeHoyEjeAcumulado += parseFloat(porcentajeHoyEje);
+													porcentajeAnhoAcumulado+=parseFloat(porcentajeAnho);
+												}
 											
 											}
 										}
@@ -773,37 +807,38 @@ tbody {
 								}
 							var porcentajeAnhoAcumuladoTotal = porcentajeAnhoAcumulado / iteracion;
 							var porcentajeHoyEjeAcumuladoTotal = porcentajeHoyEjeAcumulado / iteracion;
-							if (porcentajeAnhoAcumuladoTotal >= 90)
-							{
-								if (porcentajeHoyEjeAcumuladoTotal >= 90 && porcentajeHoyEjeAcumuladoTotal <= 100)
+							if (!isNaN(porcentajeAnhoAcumuladoTotal) && !isNaN(porcentajeHoyEjeAcumuladoTotal)){
+								if (porcentajeAnhoAcumuladoTotal >= 90)
 								{
-									$("#tablaInstituciones").append('<tr><td>'+entidades[i].institucion+'</td><td><div class="progress progress-xs"> <div class="progress-bar bg-green-active color-palette" style="width: '+porcentajeAnhoAcumuladoTotal+'%"><p class="text-left">'+porcentajeHoyEjeAcumuladoTotal.toFixed(2)+'%</p></div></div></td></tr>');
-
+									if (porcentajeHoyEjeAcumuladoTotal >= 90 && porcentajeHoyEjeAcumuladoTotal <= 100)
+									{
+										$("#tablaInstituciones").append('<tr><td>'+entidades[i].institucion+'</td><td><div class="progress progress-xs"> <div class="progress-bar bg-green-active color-palette" style="width: '+porcentajeAnhoAcumuladoTotal+'%"><p class="text-left">'+porcentajeHoyEjeAcumuladoTotal.toFixed(2)+'%</p></div></div></td></tr>');
+	
+									}else{
+										if (porcentajeHoyEjeAcumuladoTotal > 100)
+										{
+											$("#tablaInstituciones").append('<tr><td>'+entidades[i].institucion+'</td><td><div class="progress progress-xs"> <div class="progress-bar bg-green-active color-palette" style="width: 100%"><p class="text-left">100%</p></div></div></td></tr>');
+										}else{
+											if (porcentajeHoyEjeAcumuladoTotal >= 70 && porcentajeHoyEjeAcumuladoTotal < 90)
+											{
+												$("#tablaInstituciones").append('<tr><td>'+entidades[i].institucion+'</td><td><div class="progress progress-xs"> <div class="progress-bar bg-yellow-active color-palette" style="width: '+porcentajeAnhoAcumuladoTotal+'%"><p class="text-left">'+porcentajeHoyEjeAcumuladoTotal.toFixed(2)+'%</p></div></div></td></tr>');
+											}else{
+												$("#tablaInstituciones").append('<tr><td>'+entidades[i].institucion+'</td><td><div class="progress progress-xs"> <div class="progress-bar bg-red-active color-palette" style="width: '+porcentajeAnhoAcumuladoTotal+'%"><p class="text-left">'+porcentajeHoyEjeAcumuladoTotal.toFixed(2)+'%</p></div></div></td></tr>');
+	
+											}
+										}
+									}
 								}else{
 									if (porcentajeHoyEjeAcumuladoTotal > 100)
 									{
-										$("#tablaInstituciones").append('<tr><td>'+entidades[i].institucion+'</td><td><div class="progress progress-xs"> <div class="progress-bar bg-green-active color-palette" style="width: 100%"><p class="text-left">100%</p></div></div></td></tr>');
+										$("#tablaInstituciones").append('<tr><td>'+entidades[i].institucion+'</td><td><div class="progress progress-xs"> <div class="progress-bar bg-red-active color-palette" style="width: 100%"><p class="text-left">100%</p></div></div></td></tr>');
 									}else{
-										if (porcentajeHoyEjeAcumuladoTotal >= 70 && porcentajeHoyEjeAcumuladoTotal < 90)
-										{
-											$("#tablaInstituciones").append('<tr><td>'+entidades[i].institucion+'</td><td><div class="progress progress-xs"> <div class="progress-bar bg-yellow-active color-palette" style="width: '+porcentajeAnhoAcumuladoTotal+'%"><p class="text-left">'+porcentajeHoyEjeAcumuladoTotal.toFixed(2)+'%</p></div></div></td></tr>');
-										}else{
-											$("#tablaInstituciones").append('<tr><td>'+entidades[i].institucion+'</td><td><div class="progress progress-xs"> <div class="progress-bar bg-red-active color-palette" style="width: '+porcentajeAnhoAcumuladoTotal+'%"><p class="text-left">'+porcentajeHoyEjeAcumuladoTotal.toFixed(2)+'%</p></div></div></td></tr>');
-
-										}
+										$("#tablaInstituciones").append('<tr><td>'+entidades[i].institucion+'</td><td><div class="progress progress-xs"> <div class="progress-bar bg-red-active color-palette" style="width: '+porcentajeAnhoAcumuladoTotal+'%"><p class="text-left">'+porcentajeHoyEjeAcumuladoTotal.toFixed(2)+'%</p></div></div></td></tr>');
 									}
-								}
-							}else{
-								if (porcentajeHoyEjeAcumuladoTotal > 100)
-								{
-									$("#tablaInstituciones").append('<tr><td>'+entidades[i].institucion+'</td><td><div class="progress progress-xs"> <div class="progress-bar bg-red-active color-palette" style="width: 100%"><p class="text-left">100%</p></div></div></td></tr>');
-								}else{
-									$("#tablaInstituciones").append('<tr><td>'+entidades[i].institucion+'</td><td><div class="progress progress-xs"> <div class="progress-bar bg-red-active color-palette" style="width: '+porcentajeAnhoAcumuladoTotal+'%"><p class="text-left">'+porcentajeHoyEjeAcumuladoTotal.toFixed(2)+'%</p></div></div></td></tr>');
-								}
-							}  
-							porcentajeAnhoAcumuladoTotal=0;
-							porcentajeHoyEjeAcumuladoTotal=0;
-							
+								}  
+								porcentajeAnhoAcumuladoTotal=0;
+								porcentajeHoyEjeAcumuladoTotal=0;
+							}
 							
 						}
 					}
