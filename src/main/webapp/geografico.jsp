@@ -833,10 +833,16 @@ tbody {
 						maxZoom: 18,
 					}).addTo(map);
 */
-					
+
+					function onEachFeature(feature, layer) {
+						layer.on({
+							click: renderEntidades(feature.properties.dpto)
+						});
+					}					
 
 					//var depto = new L.geoJson(depto,{style:miestilo});
-					var depto = new L.geoJson(depto,{style:style});
+					var depto = new L.geoJson(depto,{style:style,
+													onEachFeature: onEachFeature});
 					depto.addTo(map);
 					
 					</script>
