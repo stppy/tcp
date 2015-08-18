@@ -350,7 +350,7 @@ if (user != null) { %>
 		
 		
 		renderEntidades();
-		renderLineaAccion(0, 1359);
+		//renderLineaAccion(0, 1359);
 		//renderLineaAccion();
 		
 	});
@@ -710,6 +710,7 @@ tbody {
 					
 					function renderLineaAccion(depto_id, institucion_id)
 					{
+						$("#cuerpoTabla").html("");
 						var lineasDeAccion= [];
 						for (var i = 0; i< 18;i++){
 						  if(departamento[i].idDepartamento==depto_id){
@@ -883,28 +884,155 @@ tbody {
 				      }		
 					 }
 					}
+				
 					
-					
-				/*	$("body").on("click", "#tablaInstituciones",function(event){
-						  
-						  var institucion_id=$(this).attr("institucion_id");
-						  var depto_id=$(this).attr("depto_id");
-						  
-						  
-						  
-						  
-					});*/ 
-					
+					var lineasDeAccion= [];
+					for (var i = 0; i< 18;i++){
+					 
+						
+						var lineasDeAccion= [];
+						var iteracionDepto=0;
+						var porcentajeAnhoAcumuladoDepto=0;
+						var porcentajeHoyEjeAcumuladoDepto=0;
+						
+						var porcentajeAnhoAcumuladoDeptoTotal=0;
+						var porcentajeHoyEjeAcumuladoDeptoTotal=0;
+						
+						for(var j=0;j<lineaAccionDepartamento.length;j++){
+							
+							if (lineaAccionDepartamento[j].accion_departamento_id==departamento[i].idDepartamento){
+								
+								if (lineasDeAccion.indexOf(lineaAccionDepartamento[j].linea_accion_id)<0){
+									lineasDeAccion.push(lineaAccionDepartamento[j].linea_accion_id);
+									if(lineaAccionDepartamento[j].anho<="2014"){
+										var anho1=lineaAccionDepartamento[j];
+										
+										var anho2;
+										for(var k=0;k<lineaAccionDepartamento.length;k++){
+											if (anho1.institucion_id==lineaAccionDepartamento[k].institucion_id && anho1.linea_accion_id==lineaAccionDepartamento[k].linea_accion_id && lineaAccionDepartamento[k].anho =="2015" && lineaAccionDepartamento[k].accion_departamento_id ==anho1.accion_departamento_id){
+												anho2=lineaAccionDepartamento[k];
+											}
+										}
+										if (typeof anho1.cantidad_ejecutada_hoy==="undefined") {var anho1= new Object(); anho1.cantidad_ejecutada_hoy=""};
+										if (typeof anho2.cantidad_ejecutada_hoy==="undefined") {var anho2= new Object(); anho2.cantidad_ejecutada_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
+										if (anho2.suma_programada_anho>0){
+																					for(var l=0; l<totalLineaPais.length;l++)
+											{
+													if(totalLineaPais[l].institucion_id == anho2.institucion_id && totalLineaPais[l].linea_accion_id == anho2.linea_accion_id && totalLineaPais[l].anho == anho2.anho)
+													{
+														anho2.linea_accion_meta = parseFloat((anho2.suma_programada_anho / totalLineaPais[l].suma_programada_anho_pais)*anho2.linea_accion_meta).toFixed(2);
+													}
+											}
+											iteracionDepto++;
 
+											var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
+											porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
+											porcentajeAnhoAcumuladoDepto+=parseFloat(porcentajeAnho);
+											var porcentajeAnhoEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_anho;
+											porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
+											var porcentajeHoyEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_hoy;
+											porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
+											porcentajeHoyEjeAcumuladoDepto+=parseFloat(porcentajeHoyEje);
+
+											porHejeClassRow="";
+
+											if (porcentajeAnho<90){ porHejeClassRow="danger";porHejeClass="";}
+											if (porcentajeAnho>=90){ porHejeClassRow="success";
+												if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";}
+												if (porcentajeHoyEje>70){ porHejeClass = "text-warning";}
+												if (porcentajeHoyEje>90){ porHejeClass = "text-success";}
+											}
+
+										 
+
+											if ( porcentajeHoyEje ==="NaN"){ porcentajeHoyEje="";porHejeClassRow="";}
+										}else{
+											var porcentajeAnho = "";
+											var porcentajeAnhoEje = "";
+											var porcentajeHoyEje ="";
+											porHejeClassRow="";
+										}
+										
+										anho2="";
+										anho1="";
+									}
+									if(lineaAccionDepartamento[j].anho>="2015"){
+										var anho2=lineaAccionDepartamento[j];
+			 							var anho1="";
+										for(var k=0;k<lineaAccionDepartamento.length;k++){
+											if (anho1.institucion_id==lineaAccionDepartamento[k].institucion_id && anho1.linea_accion_id==lineaAccionDepartamento[k].linea_accion_id && lineaAccionDepartamento[k].date_part =="2014"){
+												anho1=lineaAccionDepartamento[k];
+											}
+										}
+										if (typeof anho1.cantidad_ejecutada_hoy==="undefined") {var anho1= new Object(); anho1.cantidad_ejecutada_hoy="";};
+										if (typeof anho2.cantidad_ejecutada_hoy==="undefined") {var anho2= new Object(); anho2.cantidad_ejecutada_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
+										if (anho2.suma_programada_anho>0){
+											for(var l=0; l<totalLineaPais.length;l++)
+											{
+													if(totalLineaPais[l].institucion_id == anho2.institucion_id  && totalLineaPais[l].linea_accion_id == anho2.linea_accion_id && totalLineaPais[l].anho == anho2.anho)
+													{
+														anho2.linea_accion_meta = parseFloat((anho2.suma_programada_anho / totalLineaPais[l].suma_programada_anho_pais)*anho2.linea_accion_meta).toFixed(2);
+													}
+											}
+											
+											iteracionDepto++;
+
+											var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
+											porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
+											porcentajeAnhoAcumuladoDepto+=parseFloat(porcentajeAnho);
+											var porcentajeAnhoEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_anho;
+											porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
+											var porcentajeHoyEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_hoy;
+											porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
+											porcentajeHoyEjeAcumuladoDepto+=parseFloat(porcentajeHoyEje);
+
+											porHejeClassRow="";
+
+											if (porcentajeAnho<90){ porHejeClassRow="danger";porHejeClass="";}
+											if (porcentajeAnho>=90){ porHejeClassRow="success";
+												if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";}
+												if (porcentajeHoyEje>70){ porHejeClass = "text-warning";}
+												if (porcentajeHoyEje>90){ porHejeClass = "text-success";}
+											}
+
+											if (  porcentajeHoyEje ==="NaN"){ porcentajeHoyEje="";porHejeClassRow="";}
+										}else{
+											var porcentajeAnho = "";
+											var porcentajeAnhoEje = "";
+											var porcentajeHoyEje ="";
+											porHejeClassRow="";
+										}
+										
+										anho2="";
+										anho1="";
+									}
+								}
+							}
+							
+						}
+						porcentajeAnhoAcumuladoDeptoTotal = porcentajeAnhoAcumuladoDepto / iteracionDepto;
+						porcentajeHoyEjeAcumuladoDeptoTotal = porcentajeHoyEjeAcumuladoDepto / iteracionDepto;
+						
+
+								datosGeo[departamento[i].idDepartamento]=new Object();
+								datosGeo[departamento[i].idDepartamento].program = porcentajeAnhoAcumuladoDeptoTotal;
+								datosGeo[departamento[i].idDepartamento].desemp = porcentajeHoyEjeAcumuladoDeptoTotal;
+
+			      }		
+				 
+					
+					
+					
+					
 						function getColor(d) {
 						    return d >= 12  ? '#008d4c' :
 						           d >= 6  ? '#db8b0b' :
 						                      '#d33724';
 						}
-						// fillColor: getColor(datosGeo[parseInt(feature.properties.dpto)].program),
+						// fillColor: getColor(), feature.properties.dpto
 						function style(feature) {
 							return {
-								 fillColor: getColor(feature.properties.dpto),
+								 fillColor: getColor(datosGeo[parseInt(feature.properties.dpto)].desemp),
 						        weight: 2,
 						        opacity: 0.6,
 						        color: 'white',
@@ -930,11 +1058,7 @@ tbody {
 						var map = L.map('map').setView([-24.5, -57], 6);
 						var depto = new L.geoJson(deptoGeojson,{style:style,onEachFeature: onEachFeature});
 						depto.addTo(map);
-						/* L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-							maxZoom: 18,
-						}).addTo(map);
 
-	*/
 						function renderEntidad(e){
 							depto.eachLayer(function(l){depto.resetStyle(l);});
 							highlightFeature(e);
@@ -953,20 +1077,17 @@ tbody {
 	
 					
 					$("body").on("click", "#tablaInstituciones",function(event){
-						alert("test");
-						var institucion_id=$("a [tipo='filtroPorEntidad']").attr("institucion_id").val();
-						var depto_id=$("a [tipo='filtroPorEntidad']").attr("depto_id").val();
 						
+						
+						var institucion_id=event.target.attributes.institucion_id.value;
+						var depto_id=event.target.attributes.depto_id.value;
 						
 						renderLineaAccion(depto_id, institucion_id);
 						event.stopPropagation();
 						
 						
 					});
-				
-					
-						
-				
+
 					</script>
                   
                   
