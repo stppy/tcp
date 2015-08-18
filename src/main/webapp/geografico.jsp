@@ -92,8 +92,8 @@ var datosGeo=[];
                 <div class="tab-content">
                   <div class="tab-pane active" id="tab_1-1"></div><!-- /.tab-pane -->
                   <div class="tab-pane" id="tab_2-2">
-               		<iframe width='100%' height='520' frameborder='0' src='http://geo.stp.gov.py/user/stp/viz/8f7c6480-2f1c-11e5-aaea-b6fa9714a3b6/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen>
-		     		</iframe>
+               		<!--  <iframe width='100%' height='520' frameborder='0' src='http://geo.stp.gov.py/user/stp/viz/8f7c6480-2f1c-11e5-aaea-b6fa9714a3b6/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen>
+		     		</iframe>  -->
                   </div><!-- /.tab-pane -->
                   <div class="tab-pane" id="tab_3-2">
                   	
@@ -350,7 +350,8 @@ if (user != null) { %>
 		
 		
 		renderEntidades();
-		renderLineaAccion();
+		renderLineaAccion(0, 1359);
+		//renderLineaAccion();
 		
 	});
 	
@@ -521,9 +522,197 @@ tbody {
 					var porHejeClass="";
 					var porHejeClassRow="";
 					
-					function renderLineaAccion()
+					
+
+					
+					
+					function renderEntidades(e){
+						
+						$("#tablaInstituciones").html("");
+						if (typeof e != 'undefined'){
+								var array=lineaAccionDepartamento;
+						}else{
+							var array=elPais;
+							
+						}
+						for (var i = 0; i< entidades.length;i++){
+							var iteracion=0;
+							var porcentajeAnhoAcumulado=0;
+							var porcentajeHoyEjeAcumulado=0;
+							var lineasDeAccion= [];
+							var iteracionDepto=0;
+							var porcentajeAnhoAcumuladoDepto=0;
+							var porcentajeHoyEjeAcumuladoDepto=0;
+							
+							for(var j=0;j<array.length;j++){
+								if (array[j].institucion_id==entidades[i].institucion_id){
+									if (lineasDeAccion.indexOf(array[j].linea_accion_id)<0){
+										if (typeof e != 'undefined'){
+											if (array[j].accion_departamento_id==e.target.feature.properties.dpto){
+												lineasDeAccion.push(array[j].linea_accion_id);
+											}
+										}else{
+											lineasDeAccion.push(array[j].linea_accion_id);
+										}
+										if(array[j].anho<="2014"){
+											var anho1=array[j];
+											var anho2;
+											for(var k=0;k<array.length;k++){
+												if (anho1.institucion_id==array[k].institucion_id && anho1.linea_accion_id==array[k].linea_accion_id && array[k].anho =="2015"){
+													anho2=array[k];
+												}
+											}
+											if (typeof anho1.hito_cantidad_ejecutado_hoy==="undefined") {var anho1= new Object(); anho1.hito_cantidad_ejecutado_hoy=""};
+											if (typeof anho2.hito_cantidad_ejecutado_hoy==="undefined") {var anho2= new Object(); anho2.hito_cantidad_ejecutado_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
+											if (anho2.suma_programada_anho>0){
+												
+												
+												
+												if (typeof e != 'undefined'){
+													
+													if (array[j].accion_departamento_id==e.target.feature.properties.dpto){
+														/*iteracion++;
+														var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
+														porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
+
+														var porcentajeHoyEje = (anho2.hito_cantidad_ejecutado_hoy*100)/anho2.suma_programada_hoy;
+														porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
+														porcentajeHoyEjeAcumulado += parseFloat(porcentajeHoyEje);
+														porcentajeAnhoAcumulado+=parseFloat(porcentajeAnho);*/
+														
+														iteracionDepto++;
+														//	var porcentajeAnho = (anho2.suma_programada_hoy*100)/anho2.suma_programada_anho;
+															var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
+															porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
+															porcentajeAnhoAcumuladoDepto+=parseFloat(porcentajeAnho);
+															var porcentajeAnhoEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_anho;
+															porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
+															var porcentajeHoyEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_hoy;
+															porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
+															porcentajeHoyEjeAcumuladoDepto+=parseFloat(porcentajeHoyEje);
+													}
+												}else{
+													iteracion++;
+													var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
+													porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
+
+													var porcentajeHoyEje = (anho2.hito_cantidad_ejecutado_hoy*100)/anho2.suma_programada_hoy;
+													porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
+													porcentajeHoyEjeAcumulado += parseFloat(porcentajeHoyEje);
+													porcentajeAnhoAcumulado+=parseFloat(porcentajeAnho);
+												}
+												
+
+											}else{
+												var porcentajeAnho = "";
+												var porcentajeAnhoEje = "";
+												var porcentajeHoyEje ="";
+												porHejeClassRow="";
+											}
+											
+											anho2="";
+											anho1="";
+										}
+										if(array[j].anho>="2015"){
+											var anho2=array[j];
+											var anho1;
+											for(var k=0;k<array.length;k++){
+												if (anho1.institucion_id==array[k].institucion_id && anho1.linea_accion_id==array[k].linea_accion_id && array[k].anho =="2014"){
+													anho1=array[k];
+												}
+											}
+											if (typeof anho1.hito_cantidad_ejecutado_hoy==="undefined") {var anho1= new Object(); anho1.hito_cantidad_ejecutado_hoy="";};
+											if (typeof anho2.hito_cantidad_ejecutado_hoy==="undefined") {var anho2= new Object(); anho2.hito_cantidad_ejecutado_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
+											if (anho2.suma_programada_anho>0){
+												
+												
+												
+												if (typeof e != 'undefined'){
+													if (array[j].accion_departamento_id==e.target.feature.properties.dpto){
+														/*iteracion++;
+														var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
+														porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
+
+														var porcentajeHoyEje = (anho2.hito_cantidad_ejecutado_hoy*100)/anho2.suma_programada_hoy;
+														porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
+														porcentajeHoyEjeAcumulado += parseFloat(porcentajeHoyEje);
+														porcentajeAnhoAcumulado+=parseFloat(porcentajeAnho);
+														*/
+														iteracionDepto++;
+														//var porcentajeAnho = (anho2.suma_programada_hoy*100)/anho2.suma_programada_anho;
+														var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
+														porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
+														porcentajeAnhoAcumuladoDepto+=parseFloat(porcentajeAnho);
+														var porcentajeAnhoEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_anho;
+														porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
+														var porcentajeHoyEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_hoy;
+														porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
+														porcentajeHoyEjeAcumuladoDepto+=parseFloat(porcentajeHoyEje);
+														
+													}
+												}else{
+													iteracion++;
+													var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
+													porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
+
+													var porcentajeHoyEje = (anho2.hito_cantidad_ejecutado_hoy*100)/anho2.suma_programada_hoy;
+													porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
+													porcentajeHoyEjeAcumulado += parseFloat(porcentajeHoyEje);
+													porcentajeAnhoAcumulado+=parseFloat(porcentajeAnho);
+												}
+											
+											}
+										}
+
+											anho2="";
+											anho1="";
+										}
+									}
+								}
+							var porcentajeAnhoAcumuladoTotal = porcentajeAnhoAcumulado / iteracion;
+							var porcentajeHoyEjeAcumuladoTotal = porcentajeHoyEjeAcumulado / iteracion;
+							porcentajeAnhoAcumuladoDeptoTotal = porcentajeAnhoAcumuladoDepto / iteracionDepto;
+							porcentajeHoyEjeAcumuladoDeptoTotal = porcentajeHoyEjeAcumuladoDepto / iteracionDepto;
+							
+							var color="";
+							if (!isNaN(porcentajeAnhoAcumuladoDeptoTotal) && !isNaN(porcentajeHoyEjeAcumuladoDeptoTotal)){
+								porcentajeAnhoAcumuladoTotal=porcentajeAnhoAcumuladoDeptoTotal;
+								porcentajeHoyEjeAcumuladoTotal=porcentajeHoyEjeAcumuladoDeptoTotal;
+							}
+							if (!isNaN(porcentajeAnhoAcumuladoTotal) && !isNaN(porcentajeHoyEjeAcumuladoTotal)){
+								if (porcentajeAnhoAcumuladoTotal >= 100) { porcentajeAnhoAcumuladoTotal = 100; }
+								if (porcentajeHoyEjeAcumuladoTotal>=100) { porcentajeHoyEjeAcumuladoTotal = 100; }
+							
+								if (porcentajeAnhoAcumuladoTotal >= 90){
+									if (porcentajeHoyEjeAcumuladoTotal>=90){
+										color="green";
+									}else{
+										if (porcentajeHoyEjeAcumuladoTotal>=70){
+											color="yellow";
+										}else{
+											color="red";
+										}
+									}
+								}else {
+									color="red";
+								}
+								var idDepartamentoLink="";
+								if (typeof e != 'undefined'){idDepartamentoLink=e.target.feature.properties.dpto;}
+								
+								$("#tablaInstituciones").append('<tr><td><a tipo="filtroPorEntidad" institucion_id='+entidades[i].institucion_id+' depto_id='+idDepartamentoLink+' >'+entidades[i].institucion+'</a></td><td><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+porcentajeAnhoAcumuladoTotal+'%"><p class="text-left">'+porcentajeHoyEjeAcumuladoTotal.toFixed(2)+'%</p></div></div></td></tr>');
+								porcentajeAnhoAcumuladoTotal=0;
+								porcentajeHoyEjeAcumuladoTotal=0;
+								color="";
+							}
+							
+						}
+					}
+					
+					function renderLineaAccion(depto_id, institucion_id)
 					{
+						var lineasDeAccion= [];
 						for (var i = 0; i< 18;i++){
+						  if(departamento[i].idDepartamento==depto_id){
 							$("#cuerpoTabla").append('<tr><td colspan="12" ><strong>'+departamento[i].nombreDepartamento+'</strong></td></tr>');
 							var lineasDeAccion= [];
 							var iteracionDepto=0;
@@ -544,7 +733,7 @@ tbody {
 											
 											var anho2;
 											for(var k=0;k<lineaAccionDepartamento.length;k++){
-												if (anho1.institucion_id==lineaAccionDepartamento[k].institucion_id && anho1.linea_accion_id==lineaAccionDepartamento[k].linea_accion_id && lineaAccionDepartamento[k].anho =="2015" && lineaAccionDepartamento[k].accion_departamento_id ==anho1.accion_departamento_id){
+												if (anho1.institucion_id==lineaAccionDepartamento[k].institucion_id && institucion_id== anho1.institucion_id && anho1.linea_accion_id==lineaAccionDepartamento[k].linea_accion_id && lineaAccionDepartamento[k].anho =="2015" && lineaAccionDepartamento[k].accion_departamento_id ==anho1.accion_departamento_id){
 													anho2=lineaAccionDepartamento[k];
 												}
 											}
@@ -556,7 +745,7 @@ tbody {
 												//     anho2.linea_accion_meta = anho2.suma_programada_anho  * 100 / totalLineaPais[y].suma_programada_anho_pais
 												for(var l=0; l<totalLineaPais.length;l++)
 												{
-														if(totalLineaPais[l].institucion_id == anho2.institucion_id && totalLineaPais[l].linea_accion_id == anho2.linea_accion_id && totalLineaPais[l].anho == anho2.anho)
+														if(totalLineaPais[l].institucion_id == anho2.institucion_id && institucion_id== anho2.institucion_id && totalLineaPais[l].linea_accion_id == anho2.linea_accion_id && totalLineaPais[l].anho == anho2.anho)
 														{
 															anho2.linea_accion_meta = parseFloat((anho2.suma_programada_anho / totalLineaPais[l].suma_programada_anho_pais)*anho2.linea_accion_meta).toFixed(2);
 														}
@@ -594,7 +783,7 @@ tbody {
 												}
 												
 												//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
-												$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+lineaAccionDepartamento[j].institucion_id+'-'+lineaAccionDepartamento[j].linea_accion_id+'-'+lineaAccionDepartamento[j].accion_unidad_medida+'-'+lineaAccionDepartamento[j].accion_departamento_id+'> '+lineaAccionDepartamento[j].institucion+'- '+anho2.linea_accion+'</a></td></td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</a></td><td>'+anho2.accion_unidad_medida+'</td><td class="cell-bordered2">'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_hoy)+'</td><td >'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class="text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
+											 if(lineaAccionDepartamento[j].institucion_id==institucion_id) $("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+lineaAccionDepartamento[j].institucion_id+'-'+lineaAccionDepartamento[j].linea_accion_id+'-'+lineaAccionDepartamento[j].accion_unidad_medida+'-'+lineaAccionDepartamento[j].accion_departamento_id+'> '+lineaAccionDepartamento[j].institucion+'- '+anho2.linea_accion+'</a></td></td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</a></td><td>'+anho2.accion_unidad_medida+'</td><td class="cell-bordered2">'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_hoy)+'</td><td >'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class="text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
 																			
 												
 												
@@ -614,7 +803,7 @@ tbody {
 											var anho2=lineaAccionDepartamento[j];
 				 							var anho1="";
 											for(var k=0;k<lineaAccionDepartamento.length;k++){
-												if (anho1.institucion_id==lineaAccionDepartamento[k].institucion_id && anho1.linea_accion_id==lineaAccionDepartamento[k].linea_accion_id && lineaAccionDepartamento[k].date_part =="2014"){
+												if (anho1.institucion_id==lineaAccionDepartamento[k].institucion_id && institucion_id== anho1.institucion_id && anho1.linea_accion_id==lineaAccionDepartamento[k].linea_accion_id && lineaAccionDepartamento[k].date_part =="2014"){
 													anho1=lineaAccionDepartamento[k];
 												}
 											}
@@ -626,7 +815,7 @@ tbody {
 												//     anho2.linea_accion_meta = anho2.suma_programada_anho  * 100 / totalLineaPais[y].suma_programada_anho_pais
 												for(var l=0; l<totalLineaPais.length;l++)
 												{
-														if(totalLineaPais[l].institucion_id == anho2.institucion_id && totalLineaPais[l].linea_accion_id == anho2.linea_accion_id && totalLineaPais[l].anho == anho2.anho)
+														if(totalLineaPais[l].institucion_id == anho2.institucion_id && institucion_id== anho2.institucion_id && totalLineaPais[l].linea_accion_id == anho2.linea_accion_id && totalLineaPais[l].anho == anho2.anho)
 														{
 															anho2.linea_accion_meta = parseFloat((anho2.suma_programada_anho / totalLineaPais[l].suma_programada_anho_pais)*anho2.linea_accion_meta).toFixed(2);
 														}
@@ -673,7 +862,7 @@ tbody {
 												porHejeClassRow="";
 											}
 											//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
-											$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+lineaAccionDepartamento[j].institucion_id+'-'+lineaAccionDepartamento[j].linea_accion_id+'-'+lineaAccionDepartamento[j].accion_unidad_medida+'-'+lineaAccionDepartamento[j].accion_departamento_id+'> '+lineaAccionDepartamento[j].institucion+'- '+anho2.linea_accion+'</a></td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+anho2.accion_unidad_medida+'</td><td class="cell-bordered2">'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_hoy)+'</td><td>'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class=" text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
+											if(lineaAccionDepartamento[j].institucion_id==institucion_id)  $("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+lineaAccionDepartamento[j].institucion_id+'-'+lineaAccionDepartamento[j].linea_accion_id+'-'+lineaAccionDepartamento[j].accion_unidad_medida+'-'+lineaAccionDepartamento[j].accion_departamento_id+'> '+lineaAccionDepartamento[j].institucion+'- '+anho2.linea_accion+'</a></td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+anho2.accion_unidad_medida+'</td><td class="cell-bordered2">'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_hoy)+'</td><td>'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class=" text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
 											
 											//<td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td> penultima
 											anho2="";
@@ -691,151 +880,12 @@ tbody {
 									datosGeo[departamento[i].idDepartamento].program = porcentajeAnhoAcumuladoDeptoTotal;
 									datosGeo[departamento[i].idDepartamento].desemp = porcentajeHoyEjeAcumuladoDeptoTotal;
 
-							
-					}
-					}
-
-					
-					
-					function renderEntidades(e){
-						
-						$("#tablaInstituciones").html("");
-						if (typeof e != 'undefined'){
-								var array=lineaAccionDepartamento;
-						}else{
-							var array=elPais;
-							
-						}
-						for (var i = 0; i< entidades.length;i++){
-							var iteracion=0;
-							var porcentajeAnhoAcumulado=0;
-							var porcentajeHoyEjeAcumulado=0;
-							var lineasDeAccion= [];
-							
-							for(var j=0;j<array.length;j++){
-								if (array[j].institucion_id==entidades[i].institucion_id){
-									if (lineasDeAccion.indexOf(array[j].linea_accion_id)<0){
-										if (typeof e != 'undefined'){
-											if (array[j].accion_departamento_id==e.target.feature.properties.dpto){
-												lineasDeAccion.push(array[j].linea_accion_id);
-											}
-										}else{
-											lineasDeAccion.push(array[j].linea_accion_id);
-										}
-										if(array[j].anho<="2014"){
-											var anho1=array[j];
-											var anho2;
-											for(var k=0;k<array.length;k++){
-												if (anho1.institucion_id==array[k].institucion_id && anho1.linea_accion_id==array[k].linea_accion_id && array[k].anho =="2015"){
-													anho2=array[k];
-												}
-											}
-											if (typeof anho1.hito_cantidad_ejecutado_hoy==="undefined") {var anho1= new Object(); anho1.hito_cantidad_ejecutado_hoy=""};
-											if (typeof anho2.hito_cantidad_ejecutado_hoy==="undefined") {var anho2= new Object(); anho2.hito_cantidad_ejecutado_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
-											if (anho2.suma_programada_anho>0){
-												
-												var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
-												porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
-
-												var porcentajeHoyEje = (anho2.hito_cantidad_ejecutado_hoy*100)/anho2.suma_programada_hoy;
-												porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
-												
-												if (typeof e != 'undefined'){
-													
-													if (array[j].accion_departamento_id==e.target.feature.properties.dpto){
-														iteracion++;
-														porcentajeHoyEjeAcumulado += parseFloat(porcentajeHoyEje);
-														porcentajeAnhoAcumulado+=parseFloat(porcentajeAnho);
-													}
-												}else{
-													iteracion++;
-													porcentajeHoyEjeAcumulado += parseFloat(porcentajeHoyEje);
-													porcentajeAnhoAcumulado+=parseFloat(porcentajeAnho);
-												}
-												
-
-											}else{
-												var porcentajeAnho = "";
-												var porcentajeAnhoEje = "";
-												var porcentajeHoyEje ="";
-												porHejeClassRow="";
-											}
-											
-											anho2="";
-											anho1="";
-										}
-										if(array[j].anho>="2015"){
-											var anho2=array[j];
-											var anho1;
-											for(var k=0;k<array.length;k++){
-												if (anho1.institucion_id==array[k].institucion_id && anho1.linea_accion_id==array[k].linea_accion_id && array[k].anho =="2014"){
-													anho1=array[k];
-												}
-											}
-											if (typeof anho1.hito_cantidad_ejecutado_hoy==="undefined") {var anho1= new Object(); anho1.hito_cantidad_ejecutado_hoy="";};
-											if (typeof anho2.hito_cantidad_ejecutado_hoy==="undefined") {var anho2= new Object(); anho2.hito_cantidad_ejecutado_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
-											if (anho2.suma_programada_anho>0){
-												
-												var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
-												porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
-
-												var porcentajeHoyEje = (anho2.hito_cantidad_ejecutado_hoy*100)/anho2.suma_programada_hoy;
-												porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
-												
-												if (typeof e != 'undefined'){
-													if (array[j].accion_departamento_id==e.target.feature.properties.dpto){
-														iteracion++;
-														porcentajeHoyEjeAcumulado += parseFloat(porcentajeHoyEje);
-														porcentajeAnhoAcumulado+=parseFloat(porcentajeAnho);
-													}
-												}else{
-													iteracion++;
-													porcentajeHoyEjeAcumulado += parseFloat(porcentajeHoyEje);
-													porcentajeAnhoAcumulado+=parseFloat(porcentajeAnho);
-												}
-											
-											}
-										}
-
-											anho2="";
-											anho1="";
-										}
-									}
-								}
-							var porcentajeAnhoAcumuladoTotal = porcentajeAnhoAcumulado / iteracion;
-							var porcentajeHoyEjeAcumuladoTotal = porcentajeHoyEjeAcumulado / iteracion;
-							var color="";
-							if (!isNaN(porcentajeAnhoAcumuladoTotal) && !isNaN(porcentajeHoyEjeAcumuladoTotal)){
-								if (porcentajeAnhoAcumuladoTotal >= 100) { porcentajeAnhoAcumuladoTotal = 100; }
-								if (porcentajeHoyEjeAcumuladoTotal>=100) { porcentajeHoyEjeAcumuladoTotal = 100; }
-							
-								if (porcentajeAnhoAcumuladoTotal >= 90){
-									if (porcentajeHoyEjeAcumuladoTotal>=90){
-										color="green";
-									}else{
-										if (porcentajeHoyEjeAcumuladoTotal>=70){
-											color="yellow";
-										}else{
-											color="red";
-										}
-									}
-								}else {
-									color="red";
-								}
-								var idDepartamentoLink="";
-								if (typeof e != 'undefined'){idDepartamentoLink=e.target.feature.properties.dpto;}
-								
-								$("#tablaInstituciones").append('<tr><td><a tipo="filtroPorEntidad" institucion_id='+entidades[i].institucion_id+' depto_id='+idDepartamentoLink+' >'+entidades[i].institucion+'</a></td><td><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+porcentajeAnhoAcumuladoTotal+'%"><p class="text-left">'+porcentajeHoyEjeAcumuladoTotal.toFixed(2)+'%</p></div></div></td></tr>');
-								porcentajeAnhoAcumuladoTotal=0;
-								porcentajeHoyEjeAcumuladoTotal=0;
-								color="";
-							}
-							
-						}
+				      }		
+					 }
 					}
 					
 					
-					$("body").on("click", "#tablaInstituciones",function(event){
+				/*	$("body").on("click", "#tablaInstituciones",function(event){
 						  
 						  var institucion_id=$(this).attr("institucion_id");
 						  var depto_id=$(this).attr("depto_id");
@@ -843,7 +893,7 @@ tbody {
 						  
 						  
 						  
-					});
+					});*/ 
 					
 
 						function getColor(d) {
@@ -902,7 +952,17 @@ tbody {
 						
 	
 					
-					
+					$("body").on("click", "#tablaInstituciones",function(event){
+						alert("test");
+						var institucion_id=$("a [tipo='filtroPorEntidad']").attr("institucion_id").val();
+						var depto_id=$("a [tipo='filtroPorEntidad']").attr("depto_id").val();
+						
+						
+						renderLineaAccion(depto_id, institucion_id);
+						event.stopPropagation();
+						
+						
+					});
 				
 					
 						
@@ -925,7 +985,7 @@ tbody {
                     <thead>
                     <tr>
                       <th>Institución</th>
-                      <th>Progreso</th>
+                      <th>Desempeño</th>
                     </tr>
                     </thead>
               		<tbody id="tablaInstituciones">
