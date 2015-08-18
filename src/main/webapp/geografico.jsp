@@ -710,18 +710,19 @@ tbody {
 					
 					function renderLineaAccion(depto_id, institucion_id)
 					{
+						var iteracionDepto=0;
+						var porcentajeAnhoAcumuladoDepto=0;
+						var porcentajeHoyEjeAcumuladoDepto=0;
+						datosGeo=[];
+						var porcentajeAnhoAcumuladoDeptoTotal=0;
+						var porcentajeHoyEjeAcumuladoDeptoTotal=0;
 						$("#cuerpoTabla").html("");
 						var lineasDeAccion= [];
 						for (var i = 0; i< 18;i++){
 						  if(departamento[i].idDepartamento==depto_id){
 							$("#cuerpoTabla").append('<tr><td colspan="12" ><strong>'+departamento[i].nombreDepartamento+'</strong></td></tr>');
 							var lineasDeAccion= [];
-							var iteracionDepto=0;
-							var porcentajeAnhoAcumuladoDepto=0;
-							var porcentajeHoyEjeAcumuladoDepto=0;
 							
-							var porcentajeAnhoAcumuladoDeptoTotal=0;
-							var porcentajeHoyEjeAcumuladoDeptoTotal=0;
 							
 							for(var j=0;j<lineaAccionDepartamento.length;j++){
 								
@@ -753,12 +754,12 @@ tbody {
 												}
 												iteracionDepto++;
 											//	var porcentajeAnho = (anho2.suma_programada_hoy*100)/anho2.suma_programada_anho;
-												var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
+												var porcentajeAnho = parseFloat((anho2.suma_programada_anho*100)/anho2.linea_accion_meta).toFixed(2);
 												porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
 												porcentajeAnhoAcumuladoDepto+=parseFloat(porcentajeAnho);
-												var porcentajeAnhoEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_anho;
+												var porcentajeAnhoEje = parseFloat((anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_anho).toFixed(2);
 												porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
-												var porcentajeHoyEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_hoy;
+												var porcentajeHoyEje = parseFloat((anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_hoy).toFixed(2);
 												porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
 												porcentajeHoyEjeAcumuladoDepto+=parseFloat(porcentajeHoyEje);
 												/*if (porcentajeAnho<=70) sumporAClass = "text-danger";
@@ -824,12 +825,12 @@ tbody {
 												
 												iteracionDepto++;
 												//var porcentajeAnho = (anho2.suma_programada_hoy*100)/anho2.suma_programada_anho;
-												var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
+												var porcentajeAnho = parseFloat((anho2.suma_programada_anho*100)/anho2.linea_accion_meta).toFixed(2);
 												porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
 												porcentajeAnhoAcumuladoDepto+=parseFloat(porcentajeAnho);
-												var porcentajeAnhoEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_anho;
+												var porcentajeAnhoEje = parseFloat((anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_anho).toFixed(2);
 												porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
-												var porcentajeHoyEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_hoy;
+												var porcentajeHoyEje = parseFloat((anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_hoy).toFixed(2);
 												porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
 												porcentajeHoyEjeAcumuladoDepto+=parseFloat(porcentajeHoyEje);
 												/*if (porcentajeAnho<=70) sumporAClass = "text-danger";
@@ -878,7 +879,7 @@ tbody {
 							
 
 									datosGeo[departamento[i].idDepartamento]=new Object();
-									datosGeo[departamento[i].idDepartamento].program = porcentajeAnhoAcumuladoDeptoTotal;
+									datosGeo[departamento[i].idDepartamento].program= porcentajeAnhoAcumuladoDeptoTotal;
 									datosGeo[departamento[i].idDepartamento].desemp = porcentajeHoyEjeAcumuladoDeptoTotal;
 
 				      }		
@@ -887,6 +888,7 @@ tbody {
 				
 					
 					var lineasDeAccion= [];
+				
 					for (var i = 0; i< 18;i++){
 					 
 						
@@ -925,12 +927,12 @@ tbody {
 											}
 											iteracionDepto++;
 
-											var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
+											var porcentajeAnho = parseFloat((anho2.suma_programada_anho*100)/anho2.linea_accion_meta).toFixed(2);
 											porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
 											porcentajeAnhoAcumuladoDepto+=parseFloat(porcentajeAnho);
-											var porcentajeAnhoEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_anho;
+											var porcentajeAnhoEje = parseFloat((anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_anho).toFixed(2);
 											porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
-											var porcentajeHoyEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_hoy;
+											var porcentajeHoyEje = parseFloat((anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_hoy).toFixed(2);
 											porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
 											porcentajeHoyEjeAcumuladoDepto+=parseFloat(porcentajeHoyEje);
 
@@ -977,12 +979,12 @@ tbody {
 											
 											iteracionDepto++;
 
-											var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
+											var porcentajeAnho = parseFloat((anho2.suma_programada_anho*100)/anho2.linea_accion_meta).toFixed(2);
 											porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
 											porcentajeAnhoAcumuladoDepto+=parseFloat(porcentajeAnho);
-											var porcentajeAnhoEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_anho;
+											var porcentajeAnhoEje = parseFloat((anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_anho).toFixed(2);
 											porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
-											var porcentajeHoyEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_hoy;
+											var porcentajeHoyEje = parseFloat((anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_hoy).toFixed(2);
 											porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
 											porcentajeHoyEjeAcumuladoDepto+=parseFloat(porcentajeHoyEje);
 
