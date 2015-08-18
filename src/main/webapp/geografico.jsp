@@ -701,9 +701,6 @@ tbody {
 						
 						$("#tablaInstituciones").html("");
 						if (typeof e != 'undefined'){
-								//alert(e.target.feature.properties.dpto+" - "+e.target.feature.properties.dpto_desc)};
-								resetStyle(e);
-								highlightFeature(e);
 								var array=lineaAccionDepartamento;
 						}else{
 							var array=elPais;
@@ -859,7 +856,7 @@ tbody {
 							return {
 								 fillColor: getColor(feature.properties.dpto),
 						        weight: 2,
-						        opacity: 1,
+						        opacity: 0.6,
 						        color: 'white',
 						        dashArray: '3',
 						        fillOpacity: 0.6
@@ -878,38 +875,31 @@ tbody {
 						        layer.bringToFront();
 						    }
 						}
-						
-						function resetStyle(e) {
-							//map.redraw();
-						    var layer = e.layer;
 
-						    layer.setStyle({
-						        weight: 2,
-						        fillOpacity: 0.6
-						    });
-
-						    if (!L.Browser.ie && !L.Browser.opera) {
-						        layer.bringToFront();
-						    }
-						}
-						
 						
 						var map = L.map('map').setView([-24.5, -57], 6);
-	
+						var depto = new L.geoJson(deptoGeojson,{style:style,onEachFeature: onEachFeature});
+						depto.addTo(map);
 						/* L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 							maxZoom: 18,
 						}).addTo(map);
 
 	*/
+						function renderEntidad(e){
+							depto.eachLayer(function(l){depto.resetStyle(l);});
+							highlightFeature(e);
+							renderEntidades(e);
+							map.fitBounds(e.target.getBounds());
+							
+						}
 						function onEachFeature(feature, layer) {
 						layer.on({
-								click: renderEntidades
+								click: renderEntidad
 							});
 						}					
 	
 						//var depto = new L.geoJson(depto,{style:miestilo})
-						var depto = new L.geoJson(depto,{style:style,onEachFeature: onEachFeature});
-						depto.addTo(map);
+						
 	
 					
 					
