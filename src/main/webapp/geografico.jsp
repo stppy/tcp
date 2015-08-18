@@ -1025,8 +1025,8 @@ tbody {
 					
 					
 						function getColor(d) {
-						    return d >= 12  ? '#008d4c' :
-						           d >= 6  ? '#db8b0b' :
+						    return d >= 90  ? '#008d4c' :
+						           d >= 70  ? '#db8b0b' :
 						                      '#d33724';
 						}
 						// fillColor: getColor(), feature.properties.dpto
