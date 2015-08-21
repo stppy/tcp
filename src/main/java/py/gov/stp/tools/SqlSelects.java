@@ -408,6 +408,7 @@ public class SqlSelects {
 					objeto.setOrden(rs.getString("orden"));
 					objeto.setOrden_linea_accion(rs.getInt("orden_linea_accion"));
 					objeto.setAccion_departamento_id(rs.getInt("accion_departamento_id"));
+					objeto.setAccion_unidad_medida_id(rs.getInt("accion_unidad_medida_id"));
 
 					objetos.add(objeto);
 				}

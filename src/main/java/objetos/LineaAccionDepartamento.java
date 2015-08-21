@@ -21,6 +21,7 @@ public class LineaAccionDepartamento {
 	protected String orden;
 	protected int orden_linea_accion;
 	protected int accion_departamento_id;
+	protected int accion_unidad_medida_id;
 	
 	
 	public int getInstitucion_id() {
@@ -124,6 +125,12 @@ public class LineaAccionDepartamento {
 	}
 	public void setAccion_departamento_id(int accion_departamento_id) {
 		this.accion_departamento_id = accion_departamento_id;
+	}
+	public int getAccion_unidad_medida_id() {
+		return accion_unidad_medida_id;
+	}
+	public void setAccion_unidad_medida_id(int accion_unidad_medida_id) {
+		this.accion_unidad_medida_id = accion_unidad_medida_id;
 	}
 	
 	
