@@ -544,6 +544,8 @@ tbody {
 						$("#tablaInstituciones").html("");
 						if (typeof e != 'undefined'){
 							array=lineaAccionDepartamento;
+							$("#tabla-derecho").html("");
+							$("#tabla-derecho").append('Instituciones en '+e.target.feature.properties.dpto_desc);
 						}else{
 							array=elPais;
 							
@@ -1295,7 +1297,7 @@ tbody {
                 <div class="box-header with-border">
                   <i class="fa fa-building-o"></i>
 
-                  <h3 class="box-title">Instituciones</h3>
+                  <h3 class="box-title" id="tabla-derecho">Instituciones</h3>
 
                 </div><!-- /.box-header -->
                 <div class="box-body no-padding">
