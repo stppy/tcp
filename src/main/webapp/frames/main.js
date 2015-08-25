@@ -29,18 +29,18 @@
 			 event.stopPropagation();
 		});
 		$("body").on("click", "#vistaInsitucional",function(event){
-			window.location.replace("./");
+			window.location.replace("/tablero/");
 			event.stopPropagation();
 		});
 		$("body").on("click", "#vistaDepartamental",function(event){
-			window.location.replace("./indexDepartamento2.jsp");
+			window.location.replace("./indexDepartamento.jsp");
 			event.stopPropagation();
 		});
 		$("body").on("click", "#vistaGeografica",function(event){
 			window.location.replace("./geografico2.jsp");
 			event.stopPropagation();
 		});
-		$("body").on("click", "#vistaGeografica",function(event){
+		$("body").on("click", "#vistaCiudadana",function(event){
 			window.location.replace("./indexDepartamento4.jsp");
 			event.stopPropagation();
 		});

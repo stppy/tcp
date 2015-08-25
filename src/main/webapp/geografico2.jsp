@@ -1108,7 +1108,10 @@ tbody {
 						
 						var institucion_id=event.target.attributes.institucion_id.value;
 						var depto_id=event.target.attributes.depto_id.value;
-						
+						if (depto_id==""){
+							alert("Favor seleccionar previamente Departamento en el mapa");
+							event.stopPropagation();
+						}
 						renderLineaAccion(depto_id, institucion_id);
 						event.stopPropagation();
 						
