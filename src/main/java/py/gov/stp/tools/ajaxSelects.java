@@ -84,6 +84,7 @@ public class ajaxSelects extends HttpServlet {
     	String sigla = "";
     	String abrev = "";
     	String descripcion = "";
+    	String db = "";
 
     	
     	
@@ -226,12 +227,14 @@ public class ajaxSelects extends HttpServlet {
         		if (accion!="") condition += " and accion ='"+accion+"'";
         		if (accion_id!=0) condition += " and accion_id ='"+accion_id+"'";
         		if (departamento!=99) condition += " and accion_departamento_id ='"+departamento+"'";
-        		
-        		
-				try {objetos = SqlSelects.selectFactHitos2015(condition);}
-				catch (SQLException e) {e.printStackTrace();}
-        		JsonElement json = new Gson().toJsonTree(objetos);
-        		out.println(json.toString());
+        		if (db=="20150731") {try {objetos = SqlSelects.selectFactHitos2015Base(condition);}catch (SQLException e) {e.printStackTrace();}}
+        		else{
+	        		
+					try {objetos = SqlSelects.selectFactHitos2015(condition);}
+					catch (SQLException e) {e.printStackTrace();}
+	        		JsonElement json = new Gson().toJsonTree(objetos);
+	        		out.println(json.toString());
+        		}
         	}
         	if (action.equals("getUsuarios")){
         		List objetos=null;
