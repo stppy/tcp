@@ -261,7 +261,7 @@ if (user != null) { %>
 			var footerModal="<br><br><br>";
 			
 			var registros = $.ajax({
-		    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id+'&departamento='+idDepartamento,
+		    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?db=base&action=getFactHitos2015&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id+'&departamento='+idDepartamento,
 		      	type:'get',
 		      	dataType:'json',
 		      	crossDomain:true,
@@ -310,7 +310,7 @@ if (user != null) { %>
 			//$('#myModal').find(".modal-footer").html(footerModal);
 			
 			lineaAccionAcumuladoMesDepto = $.ajax({
-		    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getLineaAccionAcumuladoMesDepto&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id+'&departamento='+idDepartamento,
+		    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?db=base&action=getLineaAccionAcumuladoMesDepto&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id+'&departamento='+idDepartamento,
 		      	type:'get',
 		      	dataType:'json',
 		      	async:false       
@@ -372,7 +372,7 @@ if (user != null) { %>
 		
 		
 		var lineaAccionDepartamento = $.ajax({
-	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getLineasAccionDepartamento',
+	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?db=base&action=getLineasAccionDepartamento',
 	      	type:'get',
 	      	dataType:'json',
 	      	crossDomain:true,
@@ -390,7 +390,7 @@ if (user != null) { %>
 		departamento=JSON.parse(departamento);
 		
 		var elPaisjson = $.ajax({
-	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getLineasAccion',
+	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects&action=getLineasAccion',
 	      	type:'get',
 	      	dataType:'json',
 	      	crossDomain:true,
@@ -423,7 +423,7 @@ if (user != null) { %>
 		var porHejeClassRow="";
 		
 		for (var i = 0; i< 18;i++){
-			$("#cuerpoTabla").append('<tr><td colspan="7" ><strong><a href="http://tablero2015.stp.gov.py/descargas/201507/departamento/'+i+'.pdf" target="_blank">'+departamento[i].nombreDepartamento+'</a></strong><small style="padding-left:10px"><a href="http://tablero2015.stp.gov.py/descargas/201507/distrito/'+i+'.pdf" target="_blank">Detalle Por Distrito</a> <small></td></tr>');
+			$("#cuerpoTabla").append('<tr><td colspan="7" ><strong>'+departamento[i].nombreDepartamento+'</strong><small style="padding-left:10px"><a href="http://tablero2015.stp.gov.py/descargas/'+i+'.pdf" target="_blank">Detalle Por Distrito</a> / <a href="http://tablero2015.stp.gov.py/descargas/'+i+'.pdf" target="_blank">Detalle Por Departamento</a><small></td></tr>');
 			var lineasDeAccion= [];
 			for(var j=0;j<lineaAccionDepartamento.length;j++){
 				
@@ -484,7 +484,7 @@ if (user != null) { %>
 								
 								//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
 								
-								$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+anho2.institucion+'- '+anho2.linea_accion+'</td><td>'+anho2.accion_unidad_medida+'</td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td  class="cell-bordered2">'+numeroConComa(anho2.suma_programada_hoy)+'</td><td>'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class="text-center">'+porcentajeHoyEje+'</td><td>'+numeroConComa((anho2.costo_ejecutado/1000000).toFixed(0))+'</td></tr>');
+								$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+anho2.institucion_id+'-'+anho2.linea_accion_id+'-'+anho2.accion_unidad_medida_id+'-'+lineaAccionDepartamento[j].accion_departamento_id+'> '+anho2.institucion+'- '+anho2.linea_accion+'</a></td><td>'+anho2.accion_unidad_medida+'</td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td  class="cell-bordered2">'+numeroConComa(anho2.suma_programada_hoy)+'</td><td>'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class="text-center">'+porcentajeHoyEje+'</td><td>'+numeroConComa((anho2.costo_ejecutado/1000000).toFixed(0))+'</td></tr>');
 															
 								
 								
@@ -562,7 +562,7 @@ if (user != null) { %>
 							}
 							//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
 							
-							$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+anho2.institucion+'- '+anho2.linea_accion+'</td><td>'+anho2.accion_unidad_medida+'</td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td  class="cell-bordered2">'+numeroConComa(anho2.suma_programada_hoy)+'</td><td>'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class=" text-center">'+porcentajeHoyEje+'</td><td>'+numeroConComa((anho2.costo_ejecutado/1000000).toFixed(0))+'</td></tr>');
+							$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+anho2.institucion_id+'-'+anho2.linea_accion_id+'-'+anho2.accion_unidad_medida_id+'-'+anho2.accion_departamento_id+'> '+anho2.institucion+'- '+anho2.linea_accion+'</a></td><td>'+anho2.accion_unidad_medida+'</td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td  class="cell-bordered2">'+numeroConComa(anho2.suma_programada_hoy)+'</td><td>'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class=" text-center">'+porcentajeHoyEje+'</td><td>'+numeroConComa((anho2.costo_ejecutado/1000000).toFixed(0))+'</td></tr>');
 							
 							//<td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td> penultima
 							anho2="";
@@ -1011,7 +1011,7 @@ tbody {
 	          <div class="box" height="1000px">
 	            <div class="box-header with-border" height="1000px">
 	              <h2 class="box-title text-center" id="tituloTipoPrograma">
-	                Instituciones con Programación menor a 90%
+	                Instituciones con Porgramación menor a 90%
 	              </h2>
 	              <div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
 	              </div>
@@ -1053,7 +1053,7 @@ tbody {
                 <tr style="background-color: white;">
                   <th>
 
-                  	Líneas de Acción - <small><a href="http://tablero2015.stp.gov.py/descargas/201507/InformeTableroJulio2015-Nacional.pdf" target="_blank">Desempeño a Nivel Nacional</a></small>
+                  	Líneas de Acción por Institución
                   </th>
                   
                   <th></th>
@@ -1065,7 +1065,7 @@ tbody {
                   
                   <th></th>
                   <th>Unidad de Medida</th>
-                  <th >Planificación Anual 2015</th>
+                  <th >Planificación 2015</th>
                   <th class="cell-bordered2">Planificación</th>
                   <th >Ejecución</th>
                   <th>Desempeño (%)</th>
