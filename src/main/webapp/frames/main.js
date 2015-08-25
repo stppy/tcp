@@ -33,11 +33,15 @@
 			event.stopPropagation();
 		});
 		$("body").on("click", "#vistaDepartamental",function(event){
-			window.location.replace("./indexDepartamento.jsp");
+			window.location.replace("./indexDepartamento2.jsp");
 			event.stopPropagation();
 		});
-		$("body").on("click", "#vistaInsitucional",function(event){
-			window.location.replace("./geografico.jsp");
+		$("body").on("click", "#vistaGeografica",function(event){
+			window.location.replace("./geografico2.jsp");
+			event.stopPropagation();
+		});
+		$("body").on("click", "#vistaGeografica",function(event){
+			window.location.replace("./indexDepartamento4.jsp");
 			event.stopPropagation();
 		});
 		

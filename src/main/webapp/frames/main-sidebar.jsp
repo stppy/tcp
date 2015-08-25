@@ -25,20 +25,25 @@
              <a href=".#" id="vistaInstitucional">
                 <i class="fa fa-files-o"></i><span>Insititucional</span>
               </a>
-              <ul class="treeview-menu" id="listaProgramacion"></ul>
+              
             </li>
              <li class="treeview">
              <a href=".#" id="vistaDepartamental">
                 <i class="fa fa-files-o"></i><span>Departamental</span>
               </a>
-              <ul class="treeview-menu" id="listaProgramacion"></ul>
+              
             </li>
             
             <li class="treeview">
               <a href="#" id="vistaGeografica">
                 <i class="fa fa-edit"></i> <span>Geografico</span>
               </a>
-              <ul class="treeview-menu"></ul>
+            </li>
+            <li class="treeview">
+              <a href="#" id="vistaCiudadana">
+                <i class="fa fa-edit"></i> <span>Ciudadano</span>
+              </a>
+              
             </li>
             
             <li class="header">LABELS</li>
