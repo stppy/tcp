@@ -37,7 +37,7 @@
 			event.stopPropagation();
 		});
 		$("body").on("click", "#vistaGeografica",function(event){
-			window.location.replace("./geografico.jsp");
+			window.location.replace("./geografico2.jsp");
 			event.stopPropagation();
 		});
 		$("body").on("click", "#vistaGeografica",function(event){

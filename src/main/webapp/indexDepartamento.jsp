@@ -667,23 +667,24 @@ tbody {
               <thead>
                 <tr style="background-color: white;">
                   <th>
-                  	Líneas de Acción por Entidad
+
+                  	Líneas de Acción por Institución
                   </th>
-                  <th></th><th></th><th class="cell-bordered2" rowspan="2">Meta 2015</th><th rowspan="2"></th><th rowspan="2">Programación 2015</th><th rowspan="2">%  Programado</th>
-                  <th colspan="3" class="text-center cell-bordered2">A la fecha</th>
+                  
+                  <th></th>
+                  <th></th>
+                  <th colspan="4" class="text-center cell-bordered2">A la fecha</th>
+                 
                 </tr>
                 <tr style="background-color: white;">
-                  <th></th>
-                  <th>Costo (MM)</th>
-                  <th>Unidad Medida</th>
-                                
-         
-                               
-                  <th class="cell-bordered2">Programación</th>
-                  <th >Ejecución</th>
-                 <!-- <th>% </th> --> 
-                  <th>Desempeño</th>
                   
+                  <th></th>
+                  <th>Unidad de Medida</th>
+                  <th >Planificación 2015</th>
+                  <th class="cell-bordered2">Planificación</th>
+                  <th >Ejecución</th>
+                  <th>Desempeño (%)</th>
+                  <th > Inversión Estimada (Millones de G.)</th>
                 </tr>
               </thead>
               <tbody id="cuerpoTabla">

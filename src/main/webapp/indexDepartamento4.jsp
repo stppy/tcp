@@ -229,7 +229,7 @@ tbody {
               </thead>
               <tbody id="cuerpoTabla">
 
-				<tr><td colspan="7"><strong>CONCEPCION</strong><small style="padding-left:10px"><a href="http://tablero2015.stp.gov.py/descargas/1.pdf" target="_blank">Detalle Por Distrito</a> / <a href="http://tablero2015.stp.gov.py/descargas/1.pdf" target="_blank">Detalle Por Departamento</a><small></small></small></td></tr>
+				<tr><td colspan="7"><strong>CONCEPCION</strong><small style="padding-left:10px"><a href="http://tablero2015.stp.gov.py/descargas/201507/1.pdf" target="_blank">Detalle Por Distrito</a></small></td></tr>
 				<tr class="none"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoregistro="1-1359-88-2-1"> MAG- Asistencia Técnica Agropecuaria</a></td><td>Familias</td><td>10419</td><td class="cell-bordered2">2145</td><td>3402</td><td class="text-center">158,6</td><td>4521</td></tr>
 				<tr class="none"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoregistro="50-1359-36-2-1"> MAG- Inversión en insumos y tecnología agropecuaria </a></td><td>Familias</td><td>2921</td><td class="cell-bordered2">466</td><td>462</td><td class="text-center">99,1</td><td>202</td></tr>
 				<tr class="none"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoregistro="88-1359-144-2-1"> MAG- Mejoramiento de Suelo</a></td><td>Familias</td><td>1300</td><td class="cell-bordered2">800</td><td>664</td><td class=" text-center">83,0</td><td>3030</td></tr>
