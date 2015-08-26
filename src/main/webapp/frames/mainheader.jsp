@@ -29,10 +29,9 @@
                   <!-- User image -->
                   <li class="user-header">
                      <img src="dist/img/2/user.png" class="img-circle" alt="User Image"/>
-                    
-                    <p>
-                      Rafael Palau - DGTIC
-                      <small>Secretaría Técnica de Planificación para el Desarrollo Económico y Social</small>
+                   <p> 
+                    <span id="PerfilNombre" class="hidden-xs"></span>
+                      <small><span id="PerfilEntidad" class="hidden-xs"></span></small>
                     </p>
                   </li>
                   <!-- Menu Body 
@@ -50,8 +49,10 @@
                   <!-- Menu Footer-->
                   <li class="user-footer">
                     <div class="pull-left">
-                      <a href="#" class="btn btn-default btn-flat">Perfil</a>
+                      <!--  Modal para cambio de contraseña -->                      
+                      	<button id="launchPass" type="button" class="btn btn-default btn-flat btnPass" data-toggle="modal" data-target="#pass_modal">Cambiar Clave</button>                  	                     	
                     </div>
+                    
                     <div class="pull-right">
                       <a href="https://login.stp.gov.py/cas/logout" class="btn btn-default btn-flat">Salir</a>
                     </div>

@@ -12,7 +12,7 @@ public class Usuario {
 	protected int entidad_id=0;
 	protected int nivel_id=0;
 	protected int rol_id=0;
-	protected String urlimagen="";
+	protected String urlimagen="";	
 	
 	
 	

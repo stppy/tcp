@@ -43,6 +43,5 @@
 		$("body").on("click", "#vistaGeografica",function(event){
 			window.location.replace("./indexDepartamento4.jsp");
 			event.stopPropagation();
-		});
-		
+		});      		
   });

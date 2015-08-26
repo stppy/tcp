@@ -245,7 +245,19 @@ public class ajaxSelects extends HttpServlet {
         		myObj.addProperty("success", true);
         		myObj.add("usuarios", json);
         		out.println(myObj.toString());
+        	}       	
+        	
+        	if (action.equals("getPass")){
+        		List objetos=null;
+        		if (usuario!=null) condition = " where correo ='"+usuario+"'";
+				try {objetos = SqlSelects.selectUsuario(condition);}
+				catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		myObj.addProperty("success", true);
+        		myObj.add("usuarios", json);
+        		out.println(myObj.toString());
         	}
+        	
         	
         	if (action.equals("getLineaAccionAcumuladoMes")){
         		List objetos=null;
