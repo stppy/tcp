@@ -43,6 +43,5 @@
 		$("body").on("click", "#vistaCiudadana",function(event){
 			window.location.replace("./indexDepartamento4.jsp");
 			event.stopPropagation();
-		});
-		
+		});      		
   });

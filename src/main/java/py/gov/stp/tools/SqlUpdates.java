@@ -1253,4 +1253,24 @@ public class SqlUpdates {
 //			} catch (SQLException e) {e.printStackTrace();}
 //			
 //	   }
+	
+	/*
+	public static void updateUsuario(String passviejo, String passnuevo, String passnuevo1){
+	 Connection conect=ConnectionConfiguration.conectar();
+	 Statement statement = null;
+	 String 				query = "update entidad set ";	 
+	 if (passviejo!="") 		query+=" abrev =\""+abrev+"\", ";
+	 if (passnuevo!="") 		query+=" sigla =\""+sigla+"\", ";
+	 if (passnuevo1!="") 	query+=" base_legal =\""+baseLegal+"\", ";	 
+	 query = query.substring(0, query.length()-2);
+	 query+=" where id = "+id+" and nivel_id = "+nivel;
+
+	try {
+		statement=conect.createStatement();
+		statement.execute(query);
+	    conect.close();
+	} catch (SQLException e) {e.printStackTrace();}
+	
+}	
+*/	
 }

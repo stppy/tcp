@@ -170,8 +170,25 @@ public class ajaxUpdate extends HttpServlet {
      
 
         */
+                        
+        /*
+        	if (accion.equals("actPass")){
+        		List Usuario=null;
+        		Usuario usuarioObj = new Usuario();
+        		if (passviejo!="" && passnuevo!="" && passnuevo1!=""){}        		
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                usuarioObj=gsonInsert.fromJson(json, Usuario.class);
+				SqlUpdates.updateUsuario(usuarioObj);
+        	}
+        	
         
-
+        */
+        
+        
+        
  
       /*  
         if (accion!=null && accion!=""){
@@ -187,6 +204,8 @@ public class ajaxUpdate extends HttpServlet {
         	}
         	
         }*/
+        
+        
      
     }
 }

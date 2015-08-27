@@ -84,6 +84,34 @@ public class SqlSelects {
 		
 }
 	
+	
+	public static List<Usuario> selectPass(String condition) throws SQLException{
+	 	 Connection conect=ConnectionConfiguration.conectarSpr();
+			 String query = " select passwd from usuario "+condition;
+			 
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 List<Usuario> objetos = new ArrayList<Usuario>();
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					Usuario objeto = new Usuario();
+							
+					objeto.setPasswd(rs.getString("passwd"));		
+					objetos.add(objeto);
+				}
+			}
+			catch (SQLException e) {e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos;
+			
+	}
+	
 	public static List<FactHitos> selectFactHitos2015(String condition) throws SQLException{
     	 Connection conect=ConnectionConfiguration.conectar();
  		 String query = " select * from fact_hitos "+condition +" order by accion_departamento_id ASC, accion_distrito_id ASC, accion ASC, hito_fecha_entrega ASC ";
