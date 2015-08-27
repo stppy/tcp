@@ -562,8 +562,8 @@ tbody {
 													anho2=array[k];
 												}
 											}
-											if (typeof anho1.hito_cantidad_ejecutado_hoy==="undefined") {var anho1= new Object(); anho1.hito_cantidad_ejecutado_hoy=""};
-											if (typeof anho2.hito_cantidad_ejecutado_hoy==="undefined") {var anho2= new Object(); anho2.hito_cantidad_ejecutado_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
+											if (typeof anho1==="undefined") {var anho1= new Object(); anho1.hito_cantidad_ejecutado_hoy=""};
+											if (typeof anho2==="undefined") {var anho2= new Object(); anho2.hito_cantidad_ejecutado_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
 											if (anho2.suma_programada_anho>0){
 												
 												
@@ -617,12 +617,12 @@ tbody {
 											var anho2=array[j];
 											var anho1;
 											for(var k=0;k<array.length;k++){
-												if (anho1.institucion_id==array[k].institucion_id && anho1.linea_accion_id==array[k].linea_accion_id && array[k].anho =="2014"){
+												if (anho2.institucion_id==array[k].institucion_id && anho2.linea_accion_id==array[k].linea_accion_id && array[k].anho =="2014"){
 													anho1=array[k];
 												}
 											}
-											if (typeof anho1.hito_cantidad_ejecutado_hoy==="undefined") {var anho1= new Object(); anho1.hito_cantidad_ejecutado_hoy="";};
-											if (typeof anho2.hito_cantidad_ejecutado_hoy==="undefined") {var anho2= new Object(); anho2.hito_cantidad_ejecutado_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
+											if (typeof anho1==="undefined") {var anho1= new Object(); anho1.hito_cantidad_ejecutado_hoy="";};
+											if (typeof anho2==="undefined") {var anho2= new Object(); anho2.hito_cantidad_ejecutado_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
 											if (anho2.suma_programada_anho>0){
 												
 												
@@ -739,8 +739,8 @@ tbody {
 													anho2=lineaAccionDepartamento[k];
 												}
 											}
-											if (typeof anho1.cantidad_ejecutada_hoy==="undefined") {var anho1= new Object(); anho1.cantidad_ejecutada_hoy=""};
-											if (typeof anho2.cantidad_ejecutada_hoy==="undefined") {var anho2= new Object(); anho2.cantidad_ejecutada_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
+											if (typeof anho1==="undefined") {var anho1= new Object(); anho1.cantidad_ejecutada_hoy=""};
+											if (typeof anho2==="undefined") {var anho2= new Object(); anho2.cantidad_ejecutada_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
 											if (anho2.suma_programada_anho>0){
 												
 												//for para recorrer totalLineaPais con if para seleccionar la insittucion, la linea y anho considerando lo cargado en anho2, luego 
@@ -805,12 +805,12 @@ tbody {
 											var anho2=lineaAccionDepartamento[j];
 				 							var anho1="";
 											for(var k=0;k<lineaAccionDepartamento.length;k++){
-												if (anho1.institucion_id==lineaAccionDepartamento[k].institucion_id && institucion_id== anho1.institucion_id && anho1.linea_accion_id==lineaAccionDepartamento[k].linea_accion_id && lineaAccionDepartamento[k].date_part =="2014"){
+												if (anho2.institucion_id==lineaAccionDepartamento[k].institucion_id && institucion_id== anho2.institucion_id && anho2.linea_accion_id==lineaAccionDepartamento[k].linea_accion_id && lineaAccionDepartamento[k].date_part =="2014"){
 													anho1=lineaAccionDepartamento[k];
 												}
 											}
-											if (typeof anho1.cantidad_ejecutada_hoy==="undefined") {var anho1= new Object(); anho1.cantidad_ejecutada_hoy="";};
-											if (typeof anho2.cantidad_ejecutada_hoy==="undefined") {var anho2= new Object(); anho2.cantidad_ejecutada_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
+											if (typeof anho1==="undefined") {var anho1= new Object(); anho1.cantidad_ejecutada_hoy="";};
+											if (typeof anho2==="undefined") {var anho2= new Object(); anho2.cantidad_ejecutada_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
 											if (anho2.suma_programada_anho>0){// tenia suma_programada_anho --------------------------------------------------
 												
 												
@@ -915,8 +915,8 @@ tbody {
 												anho2=lineaAccionDepartamento[k];
 											}
 										}
-										if (typeof anho1.cantidad_ejecutada_hoy==="undefined") {var anho1= new Object(); anho1.cantidad_ejecutada_hoy=""};
-										if (typeof anho2.cantidad_ejecutada_hoy==="undefined") {var anho2= new Object(); anho2.cantidad_ejecutada_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
+										if (typeof anho1==="undefined") {var anho1= new Object(); anho1.cantidad_ejecutada_hoy=""};
+										if (typeof anho2==="undefined") {var anho2= new Object(); anho2.cantidad_ejecutada_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
 										if (anho2.suma_programada_anho>0){
 																					for(var l=0; l<totalLineaPais.length;l++)
 											{
@@ -962,12 +962,12 @@ tbody {
 										var anho2=lineaAccionDepartamento[j];
 			 							var anho1="";
 										for(var k=0;k<lineaAccionDepartamento.length;k++){
-											if (anho1.institucion_id==lineaAccionDepartamento[k].institucion_id && anho1.linea_accion_id==lineaAccionDepartamento[k].linea_accion_id && lineaAccionDepartamento[k].date_part =="2014"){
+											if (anho2.institucion_id==lineaAccionDepartamento[k].institucion_id && anho2.linea_accion_id==lineaAccionDepartamento[k].linea_accion_id && lineaAccionDepartamento[k].date_part =="2014"){
 												anho1=lineaAccionDepartamento[k];
 											}
 										}
-										if (typeof anho1.cantidad_ejecutada_hoy==="undefined") {var anho1= new Object(); anho1.cantidad_ejecutada_hoy="";};
-										if (typeof anho2.cantidad_ejecutada_hoy==="undefined") {var anho2= new Object(); anho2.cantidad_ejecutada_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
+										if (typeof anho1==="undefined") {var anho1= new Object(); anho1.cantidad_ejecutada_hoy="";};
+										if (typeof anho2==="undefined") {var anho2= new Object(); anho2.cantidad_ejecutada_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
 										if (anho2.suma_programada_anho>0){
 											for(var l=0; l<totalLineaPais.length;l++)
 											{
