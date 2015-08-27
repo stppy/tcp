@@ -357,7 +357,9 @@ public class SqlSelects {
 				objetos.add(objeto);
 			}
 		}
-		catch (SQLException e) {e.printStackTrace();}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
 		finally{
 			if (statement != null) {statement.close();}
 			if (conect != null) {conect.close();}

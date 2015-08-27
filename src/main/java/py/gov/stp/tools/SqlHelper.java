@@ -25,7 +25,7 @@ public class SqlHelper {
 	        String user = "root";
 	        String password = "t3R3R3.ol";
 
-	        try {con = DriverManager.getConnection("jdbc:postgres://192.168.3.11/stp_crm2", "bpm", "cybiraconsulting");}
+	        try {con = DriverManager.getConnection("jdbc:postgres://pg02.stp.gov.py/stp_crm2", "bpm", "cybiraconsulting2");}
 	        catch (SQLException ex) {
 	            Logger lgr = Logger.getLogger(SqlHelper.class.getName());
 	            lgr.log(Level.SEVERE, ex.getMessage(), ex);

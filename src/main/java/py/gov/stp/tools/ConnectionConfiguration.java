@@ -13,7 +13,7 @@ import py.gov.stp.tools.SqlHelper;
 public class ConnectionConfiguration {
     public static final String URL = "jdbc:postgres://mysql01.stp.goy.py:3306/spr?useUnicode=true&characterEncoding=UTF-8";
     public static final String USERNAME = "bpm";
-    public static final String PASSWORD = "cybiraconsulting";
+    public static final String PASSWORD = "cybiraconsulting2";
  
     public static Connection getConnection() {
         Connection connection = null;
@@ -34,9 +34,9 @@ public class ConnectionConfiguration {
 	        catch (ClassNotFoundException e) {e.printStackTrace();}
 	        String url = "";
 	        String user = "bpm";
-	        String password = "cybiraconsulting";
+	        String password = "cybiraconsulting2";
 
-	        try {con = DriverManager.getConnection("jdbc:postgresql://192.168.3.11/stp_crm2?useUnicode=true&characterEncoding=UTF-8&user=bpm&password=cybiraconsulting");}
+	        try {con = DriverManager.getConnection("jdbc:postgresql://pg02.stp.gov.py/stp_crm2?useUnicode=true&characterEncoding=UTF-8&user=bpm&password=cybiraconsulting2");}
 	        catch (SQLException ex) {
 	            Logger lgr = Logger.getLogger(SqlHelper.class.getName());
 	            lgr.log(Level.SEVERE, ex.getMessage(), ex);
@@ -51,9 +51,9 @@ public class ConnectionConfiguration {
 	        catch (ClassNotFoundException e) {e.printStackTrace();}
 	        String url = "";
 	        String user = "bpm";
-	        String password = "cybiraconsulting";
+	        String password = "cybiraconsulting2";
 
-	        try {con = DriverManager.getConnection("jdbc:postgresql://192.168.3.11/base?useUnicode=true&characterEncoding=UTF-8&user=bpm&password=cybiraconsulting");}
+	        try {con = DriverManager.getConnection("jdbc:postgresql://pg02.stp.gov.py/base?useUnicode=true&characterEncoding=UTF-8&user=bpm&password=cybiraconsulting2");}
 	        catch (SQLException ex) {
 	            Logger lgr = Logger.getLogger(SqlHelper.class.getName());
 	            lgr.log(Level.SEVERE, ex.getMessage(), ex);

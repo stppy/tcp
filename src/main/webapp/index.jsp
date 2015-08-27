@@ -454,8 +454,8 @@ if (user != null) { %>
 										anho2=el[k];
 									}
 								}
-								if (typeof anho1.hito_cantidad_ejecutado_hoy==="undefined") {var anho1= new Object(); anho1.hito_cantidad_ejecutado_hoy=""};
-								if (typeof anho2.hito_cantidad_ejecutado_hoy==="undefined") {var anho2= new Object(); anho2.hito_cantidad_ejecutado_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
+								if (typeof anho1==="undefined") {var anho1= new Object(); anho1.hito_cantidad_ejecutado_hoy=""};
+								if (typeof anho2==="undefined") {var anho2= new Object(); anho2.hito_cantidad_ejecutado_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
 								if (anho2.suma_programada_anho>0){
 								//	var porcentajeAnho = (anho2.suma_programada_hoy*100)/anho2.suma_programada_anho;
 									var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
@@ -507,12 +507,12 @@ if (user != null) { %>
 								var anho2=el[j];
 								var anho1;
 								for(var k=0;k<el.length;k++){
-									if (anho1.institucion_id==el[k].institucion_id && anho1.linea_accion_id==el[k].linea_accion_id && el[k].date_part =="2014"){
+									if (anho2.institucion_id==el[k].institucion_id && anho2.linea_accion_id==el[k].linea_accion_id && el[k].date_part =="2014"){
 										anho1=el[k];
 									}
 								}
-								if (typeof anho1.hito_cantidad_ejecutado_hoy==="undefined") {var anho1= new Object(); anho1.hito_cantidad_ejecutado_hoy="";};
-								if (typeof anho2.hito_cantidad_ejecutado_hoy==="undefined") {var anho2= new Object(); anho2.hito_cantidad_ejecutado_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
+								if (typeof anho1==="undefined") {var anho1= new Object(); anho1.hito_cantidad_ejecutado_hoy="";};
+								if (typeof anho2==="undefined") {var anho2= new Object(); anho2.hito_cantidad_ejecutado_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
 								if (anho2.suma_programada_anho>0){
 									//var porcentajeAnho = (anho2.suma_programada_hoy*100)/anho2.suma_programada_anho;
 									var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
