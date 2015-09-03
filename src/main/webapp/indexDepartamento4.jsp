@@ -209,7 +209,7 @@ tbody {
                   <th>
 
                   Líneas de Acción - <small><a href="http://tablero2015.stp.gov.py/descargas/201507/InformeTableroJulio2015-Nacional.pdf" target="_blank">Desempeño a Nivel Nacional</a></small>
-                  </th>http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=315390
+                  </th>
                   
                   <th></th>
                   <th></th>

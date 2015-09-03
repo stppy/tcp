@@ -15,6 +15,7 @@ public class LineaAccion {
 	protected double costo_programado_hoy;
 	protected double linea_accion_meta;
 	protected double hito_cantidad_ejecutado_hoy;
+	protected int periodo;
 
 	public int getInstitucion_id() {
 		return institucion_id;
@@ -99,6 +100,12 @@ public class LineaAccion {
 	}
 	public void setHito_cantidad_ejecutado_hoy(double hito_cantidad_ejecutado_hoy) {
 		this.hito_cantidad_ejecutado_hoy = hito_cantidad_ejecutado_hoy;
+	}
+	public int getPeriodo() {
+		return periodo;
+	}
+	public void setPeriodo(int periodo) {
+		this.periodo = periodo;
 	}
 	
 	

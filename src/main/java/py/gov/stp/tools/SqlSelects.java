@@ -23,6 +23,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 import objetos.Entidad;
 import objetos.FactHitos;
+import objetos.Generica;
 import objetos.LineaAccion;
 import objetos.LineaAccionAcumuladoMes;
 import objetos.LineaAccionDepartamento;
@@ -422,10 +423,38 @@ public class SqlSelects {
 					objeto.setCosto_programado_hoy(rs.getDouble("costo_programado_hoy"));
 					objeto.setLinea_accion_meta(rs.getDouble("linea_accion_meta"));
 					objeto.setHito_cantidad_ejecutado_hoy(rs.getDouble("hito_cantidad_ejecutado_hoy"));
+					objeto.setPeriodo(rs.getInt("periodo"));
 					objetos.add(objeto);
 				}
 			}
 			catch (SQLException e) {e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos; 
+	  }
+	
+	public static List<Generica> selectGenerico(String condition, String tabla) throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+			 String query = " select * from "+tabla+" "+condition;
+			 
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 List<Generica> objetos = new ArrayList<Generica>();
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					Generica objeto = new Generica();
+					objeto.setClave(rs.getInt(0));
+					objeto.setValor(rs.getDouble(1));
+					objetos.add(objeto);
+				}
+			}
+			catch (SQLException e) {
+				e.printStackTrace();}
 			finally{
 				if (statement != null) {statement.close();}
 				if (conect != null) {conect.close();}
