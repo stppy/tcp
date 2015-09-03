@@ -350,6 +350,7 @@ if (user != null) { %>
 				  return 0;
 				}
 			
+			
 			lineaAccionAcumuladoMesDepto=lineaAccionAcumuladoMesDepto.sort(compare);
 			
 			dibujarLineaAccionAcumuladoMesDepto(lineaAccionAcumuladoMesDepto, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion);
@@ -554,6 +555,14 @@ tbody {
 				    }).responseText;
 					var elPais=JSON.parse(elPaisjson);
 					
+					var desPaisDeptojson = $.ajax({
+				    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getDesempPaisPorDepto',
+				      	type:'get',
+				      	dataType:'json',
+				      	crossDomain:true,
+				      	async:false       
+				    }).responseText;
+					var desPaisDepto=JSON.parse(desPaisDeptojson);
 				
 
 					
@@ -950,154 +959,7 @@ tbody {
 					}
 				
 					
-					var lineasDeAccion= [];
-				
-					for (var i = 0; i< 18;i++){
-					 
-						var lineasDeAccion= [];
-						var iteracionDepto=0;
-						var porcentajeAnhoAcumuladoDepto=0;
-						var porcentajeHoyEjeAcumuladoDepto=0;
-						
-						var porcentajeAnhoAcumuladoDeptoTotal=0;
-						var porcentajeHoyEjeAcumuladoDeptoTotal=0;
-						
-						for(var j=0;j<lineaAccionDepartamento.length;j++){
-							
-							if (lineaAccionDepartamento[j].accion_departamento_id==departamento[i].idDepartamento){
-								
-								if (lineasDeAccion.indexOf(lineaAccionDepartamento[j].linea_accion_id)<0){
-									lineasDeAccion.push(lineaAccionDepartamento[j].linea_accion_id);
-									if(lineaAccionDepartamento[j].anho<="2014"){
-										var anho1=lineaAccionDepartamento[j];
-										
-										var anho2;
-										for(var k=0;k<lineaAccionDepartamento.length;k++){
-											if (anho1.institucion_id==lineaAccionDepartamento[k].institucion_id && anho1.linea_accion_id==lineaAccionDepartamento[k].linea_accion_id && lineaAccionDepartamento[k].anho =="2015" && lineaAccionDepartamento[k].accion_departamento_id ==anho1.accion_departamento_id){
-												anho2=lineaAccionDepartamento[k];
-											}
-										}
-										if (typeof anho1==="undefined") {var anho1= new Object(); anho1.cantidad_ejecutada_hoy=""};
-										if (typeof anho2==="undefined") {var anho2= new Object(); anho2.cantidad_ejecutada_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
-										if (anho2.suma_programada_anho>0){
-											for(var l=0; l<totalLineaPais.length;l++)
-
-											{
-													if(totalLineaPais[l].institucion_id == anho2.institucion_id && totalLineaPais[l].linea_accion_id == anho2.linea_accion_id && totalLineaPais[l].anho == anho2.anho)
-													{
-														anho2.linea_accion_meta = parseFloat((anho2.suma_programada_anho / totalLineaPais[l].suma_programada_anho_pais)*anho2.linea_accion_meta).toFixed(2);
-													}
-											}
-											
-
-											var porcentajeAnho = parseFloat((anho2.suma_programada_anho*100)/anho2.linea_accion_meta).toFixed(2);
-											porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
-											porcentajeAnhoAcumuladoDepto+=parseFloat(porcentajeAnho);
-											var porcentajeAnhoEje = parseFloat((anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_anho).toFixed(2);
-											porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
-											var porcentajeHoyEje = parseFloat((anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_hoy).toFixed(2);
-											porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
-											
-
-											if ( porcentajeHoyEje ==="NaN"){ porcentajeHoyEje="";porHejeClassRow="";}
-											else {iteracionDepto++;porcentajeHoyEjeAcumuladoDepto+=parseFloat(porcentajeHoyEje);}
-											porHejeClassRow="";
-
-/*
-
-											if (porcentajeAnho<90){ porHejeClassRow="danger";porHejeClass="";}
-											if (porcentajeAnho>=90){ porHejeClassRow="success";
-												if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";}
-												if (porcentajeHoyEje>70){ porHejeClass = "text-warning";}
-												if (porcentajeHoyEje>90){ porHejeClass = "text-success";}
-											}
-
-*/
-
-
-											
-										}else{
-											var porcentajeAnho = "";
-											var porcentajeAnhoEje = "";
-											var porcentajeHoyEje ="";
-											porHejeClassRow="";
-										}
-										
-										anho2="";
-										anho1="";
-									}
-									if(lineaAccionDepartamento[j].anho>="2015"){
-										var anho2=lineaAccionDepartamento[j];
-			 							var anho1="";
-										for(var k=0;k<lineaAccionDepartamento.length;k++){
-											if (anho2.institucion_id==lineaAccionDepartamento[k].institucion_id && anho2.linea_accion_id==lineaAccionDepartamento[k].linea_accion_id && lineaAccionDepartamento[k].date_part =="2014"){
-												anho1=lineaAccionDepartamento[k];
-											}
-										}
-										if (typeof anho1==="undefined") {var anho1= new Object(); anho1.cantidad_ejecutada_hoy="";};
-										if (typeof anho2==="undefined") {var anho2= new Object(); anho2.cantidad_ejecutada_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
-										if (anho2.suma_programada_anho>0){
-											for(var l=0; l<totalLineaPais.length;l++)
-											{
-													if(totalLineaPais[l].institucion_id == anho2.institucion_id  && totalLineaPais[l].linea_accion_id == anho2.linea_accion_id && totalLineaPais[l].anho == anho2.anho)
-													{
-														anho2.linea_accion_meta = parseFloat((anho2.suma_programada_anho / totalLineaPais[l].suma_programada_anho_pais)*anho2.linea_accion_meta).toFixed(2);
-													}
-											}
-											
-											
-
-											var porcentajeAnho = parseFloat((anho2.suma_programada_anho*100)/anho2.linea_accion_meta).toFixed(2);
-											porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
-											porcentajeAnhoAcumuladoDepto+=parseFloat(porcentajeAnho);
-											var porcentajeAnhoEje = parseFloat((anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_anho).toFixed(2);
-											porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
-											var porcentajeHoyEje = parseFloat((anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_hoy).toFixed(2);
-											porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
-											
-											if (  porcentajeHoyEje ==="NaN"){ porcentajeHoyEje="";porHejeClassRow="";}
-											else{iteracionDepto++;porcentajeHoyEjeAcumuladoDepto+=parseFloat(porcentajeHoyEje);}
-											
-
-											porHejeClassRow="";
-
-
-											/*if (porcentajeAnho<90){ porHejeClassRow="danger";porHejeClass="";}
-
-											if (porcentajeAnho>=90){ porHejeClassRow="success";
-												if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";}
-												if (porcentajeHoyEje>70){ porHejeClass = "text-warning";}
-												if (porcentajeHoyEje>90){ porHejeClass = "text-success";}
-
-											}*/
-
-
-											
-										}else{
-											var porcentajeAnho = "";
-											var porcentajeAnhoEje = "";
-											var porcentajeHoyEje ="";
-											porHejeClassRow="";
-										}
-										
-										anho2="";
-										anho1="";
-									}
-								}
-							}
-							
-						}
-						porcentajeAnhoAcumuladoDeptoTotal = porcentajeAnhoAcumuladoDepto / iteracionDepto;
-						porcentajeHoyEjeAcumuladoDeptoTotal = porcentajeHoyEjeAcumuladoDepto / iteracionDepto;
-						
-
-								datosGeo[departamento[i].idDepartamento]=new Object();
-								datosGeo[departamento[i].idDepartamento].program = porcentajeAnhoAcumuladoDeptoTotal;
-								datosGeo[departamento[i].idDepartamento].desemp = porcentajeHoyEjeAcumuladoDeptoTotal;
-
-			      }		
-				 
-					
+					// borradoJsDeGeo2
 					
 					
 					
@@ -1106,10 +968,20 @@ tbody {
 						           d >= 70  ? '#db8b0b' :
 						                      '#d33724';
 						}
+						
+						function compareGenerico(a,b) {             
+							  if (a.clave < b.clave)
+							    return -1;
+							  if (a.clave > b.clave)
+							    return 1;
+							  return 0;
+							}
+						
+						desPaisDepto=desPaisDepto.sort(compareGenerico);
 						// fillColor: getColor(), feature.properties.dpto
 						function style(feature) {
 							return {
-								 fillColor: getColor(datosGeo[parseInt(feature.properties.dpto)].program),
+								 fillColor: getColor(parseFloat(desPaisDepto[parseInt(feature.properties.dpto)].valor).toFixed(0)),
 						        weight: 2,
 						        opacity: 0.6,
 						        color: 'white',

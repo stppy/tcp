@@ -448,8 +448,8 @@ public class SqlSelects {
 				rs=statement.executeQuery(query);
 				while(rs.next()){
 					Generica objeto = new Generica();
-					objeto.setClave(rs.getInt(0));
-					objeto.setValor(rs.getDouble(1));
+					objeto.setClave(rs.getInt(1));
+					objeto.setValor(rs.getDouble(2));
 					objetos.add(objeto);
 				}
 			}

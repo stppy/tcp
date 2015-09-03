@@ -288,6 +288,13 @@ public class ajaxSelects extends HttpServlet {
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
         		}
+        	if (action.equals("getDesempPaisPorDepto")){
+        		List objetos=null;
+           		try {objetos = SqlSelects.selectGenerico("", "fact_desemp_depto");}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());
+        		}
         	
        }
        out.close();
