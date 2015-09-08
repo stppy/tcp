@@ -104,7 +104,7 @@
 		 </div>
 		</div>
 
-		
+
 <% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%>
 <% Map attributes = user.getAttributes(); 
 if (user != null) { %>

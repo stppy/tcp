@@ -50,7 +50,7 @@
                   <li class="user-footer">
                     <div class="pull-left">
                       <!--  Modal para cambio de contraseña -->                      
-                      	<!-- <button id="launchPass" type="button" class="btn btn-default btn-flat btnPass" data-toggle="modal" data-target="#pass_modal">Cambiar Clave</button>  -->                  	                     	
+                      	 <button id="launchPass" type="button" class="btn btn-default btn-flat btnPass" data-toggle="modal" data-target="#pass_modal">Cambiar Clave</button>
                     </div>
                     
                     <div class="pull-right">

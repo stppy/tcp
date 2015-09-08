@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import javax.xml.datatype.DatatypeConfigurationException;
 
+import py.gov.stp.tools.SqlSelects;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -170,7 +172,8 @@ public class ajaxUpdate extends HttpServlet {
      
 
         */
-                        
+               
+        
         /*
         	if (accion.equals("actPass")){
         		List Usuario=null;
@@ -205,6 +208,21 @@ public class ajaxUpdate extends HttpServlet {
         	
         }*/
         
+        
+        
+        if (accion!=null && accion!=""){
+        	if (accion.equals("actPass")){
+        		List entidades=null;
+        		Credenciales entidadObj = new Credenciales();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                entidadObj=gsonInsert.fromJson(json, Credenciales.class);
+				SqlUpdates.updateCredenciales(entidadObj);
+        	}
+        	
+        }        
         
      
     }

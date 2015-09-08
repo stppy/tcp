@@ -11,6 +11,8 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import py.gov.stp.tools.*;
+
 
 public class SqlUpdates {
 //	
@@ -1255,22 +1257,48 @@ public class SqlUpdates {
 //	   }
 	
 	/*
-	public static void updateUsuario(String passviejo, String passnuevo, String passnuevo1){
-	 Connection conect=ConnectionConfiguration.conectar();
-	 Statement statement = null;
-	 String 				query = "update entidad set ";	 
-	 if (passviejo!="") 		query+=" abrev =\""+abrev+"\", ";
-	 if (passnuevo!="") 		query+=" sigla =\""+sigla+"\", ";
-	 if (passnuevo1!="") 	query+=" base_legal =\""+baseLegal+"\", ";	 
-	 query = query.substring(0, query.length()-2);
-	 query+=" where id = "+id+" and nivel_id = "+nivel;
-
-	try {
-		statement=conect.createStatement();
-		statement.execute(query);
-	    conect.close();
-	} catch (SQLException e) {e.printStackTrace();}
+	 */
 	
-}	
-*/	
+	
+	
+	public static void updateCredenciales(Credenciales objeto){
+  	 Connection conect=ConnectionConfiguration.conectarSpr();
+   	 Statement statement2 = null;
+		 String 							query2 = "select * from usuario where correo=\""+objeto.getCorreoUsuario()+"\" AND passwd=\""+objeto.getContrasenaVieja()+"\""; 
+
+	
+	    ResultSet rs=null;
+	   Credenciales obj = new Credenciales();
+		try {
+			statement2 = conect.createStatement();
+			rs=statement2.executeQuery(query2);
+			while(rs.next()){
+				obj.setContrasenaVieja(rs.getString("passwd"));
+				obj.setCorreoUsuario(rs.getString("correo"));
+			}
+		} catch (SQLException e) {e.printStackTrace();}
+  	   	 
+		
+		 
+  	 Statement statement = null;
+  	 	
+	  	if(objeto.getCorreoUsuario().equals(obj.getCorreoUsuario()))
+		{
+	  		if(objeto.getContrasenaVieja().equals(obj.getContrasenaVieja()))
+	  		{
+				 String										query = "update usuario set ";
+				 if(objeto.getContrasenaNueva()!=null)		query+= "passwd=\""+objeto.getContrasenaNueva()+"\"";
+				 query+=" where correo =\""+objeto.getCorreoUsuario()+"\"";
+			 
+				 try {
+					statement=conect.createStatement();
+					statement.execute(query);
+				    conect.close();
+				} catch (SQLException e) {e.printStackTrace();}
+	  		 }
+		}	
+	
+	}
+	
+	
 }

@@ -103,7 +103,57 @@
 		    </div> 
 		 </div>
 		</div>
-
+		
+			<!-- MODAL PASSWORD -->
+	<div id="pass_modal" class="modal fade" role="dialog">
+	  <div class="pass_mod">
+	
+	    <!-- Modal content-->
+	    <div class="modal-content">	
+    	  <div class="modal-header">
+	        <h4 class="modal-title" id="tituloModalUsuario"></h4>
+	      </div>					      
+	      <div class="modal-body">
+	         <div class="control-group">						            
+	            <div class="controls">
+	                <input id="pass-viejo" name="current_password" class="feedback-input" placeholder="Clave Actual" type="password" required pattern="\w+">
+	            </div>
+	        </div>
+	        <div class="control-group">						            
+	            <div class="controls">
+	                <input id="pass-nuevo" name="new_password" class="feedback-input"
+	                 title="Password must contain at least 6 characters, including UPPER/lowercase and numbers."
+	                 placeholder="Clave Nueva" type="password"
+	                 required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" onchange="
+	  					this.setCustomValidity(this.validity.patternMismatch ? this.title : '');
+	  					if(this.checkValidity()) confirm_password.pattern = this.value;
+						">
+	            </div>
+	        </div>
+	        <div class="control-group">						            
+	            <div class="controls">
+	                <input id="pass-nuevo1" name="confirm_password" class="feedback-input" 
+	                title="Please enter the same Password as above." placeholder="Confirmar Clave"
+	                type="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" onchange="
+	 					this.setCustomValidity(this.validity.patternMismatch ? this.title : '');
+					" >
+	            </div>
+	        </div> 
+	      </div>						      
+	      <div class="modal-footer">
+	        <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+	        <button type="submit" class="btn btn-primary" id="password_modal_save">Guardar </button>						      
+	      </div>
+	    </div>
+	
+	  </div>
+	</div>
+		
+		
+		
+		
+		
+		
 		
 <% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%>
 <% Map attributes = user.getAttributes(); 
@@ -112,6 +162,67 @@ if (user != null) { %>
 <script>
 	
 	$(document).ready(function(){
+		
+		$("body").on("click", "#password_modal_save",function(event){		
+			var todojunto = new Object();
+			var accion = "actPass";
+			var contrasenaVieja= $.md5($("#pass-viejo").val());
+			var contrasenaNueva= $.md5($("#pass-nuevo").val());
+			var contrasenaNueva1=$.md5($("#pass-nuevo1").val());		
+			var correoUsuario="rpalau@stp.gov.py";
+				
+			
+			if(todojunto.contrasenaNueva == todojunto.contrasenaNueva1 && todojunto.contrasenaNueva!="d41d8cd98f00b204e9800998ecf8427e" && todojunto.contrasenaNueva1!="d41d8cd98f00b204e9800998ecf8427e")
+			{
+				
+				
+				var obtenerUsuario = $.ajax({
+					url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
+				  	type:'get',
+				  	dataType:'json',
+				  	async:false       
+				}).responseText;
+				obtenerUsuario = JSON.parse(obtenerUsuario);
+				obtenerUsuario = obtenerUsuario.usuarios;
+				
+				todojunto.contrasenaVieja=contrasenaVieja;
+				todojunto.contrasenaNueva=contrasenaNueva;
+				todojunto.contrasenaNueva1=contrasenaNueva1;
+				todojunto.correoUsuario=obtenerUsuario[0].correo;
+				
+				 $.ajax({
+				        url: "http://tablero2015.stp.gov.py/tablero/ajaxUpdate?accion="+accion,
+				        type: 'POST',
+				        dataType: 'json',
+				        data: JSON.stringify(todojunto),
+				        contentType: 'application/json',
+				        mimeType: 'application/json',
+				        success: function (data)
+				        {
+							$("#tituloModalUsuario").append('Cambio Exitoso');
+				        },
+				        error: function(data,status,er)
+				        {
+				        	$("#tituloModalUsuario").append('Error: Usuario o Contraseña no coinciden');}
+				 });
+
+			}
+
+
+			
+		});
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		var lineaAccionAcumuladoMes;
 		
 		var vectorMin=0;
