@@ -1282,10 +1282,9 @@ public class SqlUpdates {
 		 
   	 Statement statement = null;
   	 	
-	  	if(objeto.getCorreoUsuario().equals(obj.getCorreoUsuario()))
+	  	if( (objeto.getCorreoUsuario().equals(obj.getCorreoUsuario())) &&  (objeto.getContrasenaVieja().equals(obj.getContrasenaVieja())) )
 		{
-	  		if(objeto.getContrasenaVieja().equals(obj.getContrasenaVieja()))
-	  		{
+
 				 String										query = "update usuario set ";
 				 if(objeto.getContrasenaNueva()!=null)		query+= "passwd=\""+objeto.getContrasenaNueva()+"\"";
 				 query+=" where correo =\""+objeto.getCorreoUsuario()+"\"";
@@ -1295,7 +1294,7 @@ public class SqlUpdates {
 					statement.execute(query);
 				    conect.close();
 				} catch (SQLException e) {e.printStackTrace();}
-	  		 }
+	  		 
 		}	
 	
 	}

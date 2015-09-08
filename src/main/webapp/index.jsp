@@ -116,12 +116,12 @@
 	      <div class="modal-body">
 	         <div class="control-group">						            
 	            <div class="controls">
-	                <input id="pass-viejo" name="current_password" class="feedback-input" placeholder="Clave Actual" type="password" required pattern="\w+">
+	                <input id="pass-viejo-form" name="current_password" class="feedback-input" placeholder="Clave Actual" type="password" required pattern="\w+">
 	            </div>
 	        </div>
 	        <div class="control-group">						            
 	            <div class="controls">
-	                <input id="pass-nuevo" name="new_password" class="feedback-input"
+	                <input id="pass-nuevo-form" name="new_password" class="feedback-input"
 	                 title="Password must contain at least 6 characters, including UPPER/lowercase and numbers."
 	                 placeholder="Clave Nueva" type="password"
 	                 required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" onchange="
@@ -132,7 +132,7 @@
 	        </div>
 	        <div class="control-group">						            
 	            <div class="controls">
-	                <input id="pass-nuevo1" name="confirm_password" class="feedback-input" 
+	                <input id="pass-nuevo1-form" name="confirm_password" class="feedback-input" 
 	                title="Please enter the same Password as above." placeholder="Confirmar Clave"
 	                type="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" onchange="
 	 					this.setCustomValidity(this.validity.patternMismatch ? this.title : '');
@@ -166,11 +166,10 @@ if (user != null) { %>
 		$("body").on("click", "#password_modal_save",function(event){		
 			var todojunto = new Object();
 			var accion = "actPass";
-			var contrasenaVieja= $.md5($("#pass-viejo").val());
-			var contrasenaNueva= $.md5($("#pass-nuevo").val());
-			var contrasenaNueva1=$.md5($("#pass-nuevo1").val());		
-			var correoUsuario="rpalau@stp.gov.py";
-				
+			var contrasenaVieja= $.md5($("#pass-viejo-form").val());
+			var contrasenaNueva= $.md5($("#pass-nuevo-form").val());
+			var contrasenaNueva1=$.md5($("#pass-nuevo1-form").val());		
+							
 			
 			if(todojunto.contrasenaNueva == todojunto.contrasenaNueva1 && todojunto.contrasenaNueva!="d41d8cd98f00b204e9800998ecf8427e" && todojunto.contrasenaNueva1!="d41d8cd98f00b204e9800998ecf8427e")
 			{
@@ -199,11 +198,13 @@ if (user != null) { %>
 				        mimeType: 'application/json',
 				        success: function (data)
 				        {
-							$("#tituloModalUsuario").append('Cambio Exitoso');
+							$("#tituloModalUsuario").append('<p class="text-danger">Cambio Exitoso</p>');
 				        },
 				        error: function(data,status,er)
 				        {
-				        	$("#tituloModalUsuario").append('Error: Usuario o Contraseña no coinciden');}
+				        	$("#tituloModalUsuario").html('');
+				        	$("#tituloModalUsuario").append('<p class="text-danger">Error: Usuario o Contraseña no coinciden</p>');
+				        }
 				 });
 
 			}
@@ -213,7 +214,14 @@ if (user != null) { %>
 		});
 		
 		
+		$("body").on("click", "#pass-viejo-form",function(event){		
 		
+			$("#tituloModalUsuario").html('');
+			$("#pass-viejo-form").val("");
+			$("#pass-nuevo-form").val("");
+			$("#pass-nuevo1-form").val("");		
+			
+		});
 		
 		
 		
