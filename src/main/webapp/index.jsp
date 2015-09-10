@@ -81,19 +81,19 @@
 		     		
 		     	<div class="nav-tabs-custom">
                 <ul class="nav nav-tabs pull-right">
-                  <li class="active"><a href="#tab_1-1" data-toggle="tab"><i class="glyphicon glyphicon-list-alt"></i></a></li>
-                  <li><a href="#tab_2-2" data-toggle="tab"><i class="glyphicon glyphicon-list-alt"></i></a></li>
-                  <li><a href="#tab_3-2" data-toggle="tab"><i class="glyphicon glyphicon-stats"></i></a></li>
-                    
-              3.3.2  </ul>
+                  <li class="active"><a href="#tab_1-1" data-toggle="tab"  title="Acciones"><i class="glyphicon glyphicon-list"></i></a></li>
+                  <li><a href="#tab_2-2" data-toggle="tab" title="Hitos"><i class="glyphicon glyphicon-list-alt"></i></a></li>
+                  <li><a href="#tab_3-2" data-toggle="tab" title="Evolución"><i class="glyphicon glyphicon-stats"></i></a></li>
+                  <li><a href="#tab_4-2" data-toggle="tab" title="Beneficiarios"><i class="glyphicon glyphicon-user"></i></a></li>
+                  <li><a href="#tab_5-2" data-toggle="tab" title="Ubicaciones"><i class="glyphicon glyphicon glyphicon-map-marker"></i></a></li>
+              		Detalle de Linea de Accion      
+               </ul>
                 <div class="tab-content">
                   <div class="tab-pane active" id="tab_1-1"></div><!-- /.tab-pane -->
-                  <div class="tab-pane" id="tab_2-2">
-
-                  </div><!-- /.tab-pane -->
-                  <div class="tab-pane" id="tab_3-2">
-                  	dfsd
-                  </div><!-- /.tab-pane -->
+                  <div class="tab-pane" id="tab_2-2"></div><!-- /.tab-pane -->
+                  <div class="tab-pane" id="tab_3-2"></div><!-- /.tab-pane -->
+                   <div class="tab-pane" id="tab_4-2"></div><!-- /.tab-pane -->
+                   <div class="tab-pane" id="tab_5-2"></div><!-- /.tab-pane -->
                 </div><!-- /.tab-content -->
               </div>
 		      </div>
@@ -162,7 +162,7 @@ if (user != null) { %>
 <script>
 	
 	$(document).ready(function(){
-		
+		$('[data-toggle="tap"]').tooltip();
 		$("body").on("click", "#password_modal_save",function(event){		
 			var todojunto = new Object();
 			var accion = "actPass";
@@ -411,7 +411,18 @@ if (user != null) { %>
 			var elRegistro=JSON.parse(registros);
 			var registroHitos=JSON.parse(registrosHitos);
 						
-
+			tituloModal='<h3><center>'+elRegistro[0].institucion+'&nbsp;&nbsp;-&nbsp;&nbsp;'+elRegistro[0].linea_accion+'</center></h3>';
+			$('#myModal').find(".modal-title").html(tituloModal);
+			$('#myModal').find("#tab_1-1").html("");
+			$('#myModal').find("#tab_2-2").html("");
+			$('#myModal').find("#tab_3-2").html("");
+			$('#myModal').find("#tab_4-2").html("");
+			$('#myModal').find("#tab_5-2").html("");
+			
+			$("#tab_3-2").append('Programación: <label id="fechaInicio"></label><input id="rango-fecha" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="1" data-slider-value="[250,450]"/><label id="fechaFin"></label>');
+			$("#tab_3-2").append('<br><br>Ejecución: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label id="fechaInicioEjecucion"></label><input id="rango-fecha-ejecucion" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="1" data-slider-value="[250,450]"/><label id="fechaFinEjecucion"></label>');
+			
+			
 			cuerpoModal='<div class="table-responsive">'+
 						'<table id="hitos" class="table table-hover">'+
 							'<thead>'+
@@ -420,7 +431,7 @@ if (user != null) { %>
 							'<tbody>';
 
 						var totalCantidadProgramada=0;
-						tituloModal='<h3><center>'+elRegistro[0].institucion+'&nbsp;&nbsp;-&nbsp;&nbsp;'+elRegistro[0].linea_accion+'</center></h3>';
+						
 						for(var m=0; m<elRegistro.length;m++)
 						{
 								cuerpoModal+='<tr><td>'+elRegistro[m].accion+'</td><td>'+elRegistro[m].accion_departamento+'</td><td>'+elRegistro[m].accion_distrito+'</td><td>'+elRegistro[m].accion_unidad_edida+'</td><td>'+elRegistro[m].hito_cantidad_programado+'</td><td>'+elRegistro[m].accion_costo+'</td><td>'+elRegistro[m].hito_fecha_entrega+'</td><td>'+elRegistro[m].hito_porcentaje_programado+'</td><td>'+elRegistro[m].hito_porcentaje_ejecutado+'</td></tr>';
@@ -432,13 +443,9 @@ if (user != null) { %>
 									 '</table>'+
 									 '</div>';
 			
-			$('#myModal').find(".modal-title").html(tituloModal);
-			$('#myModal').find("#tab_1-1").html("");
-			$('#myModal').find("#tab_2-2").html("");
-			$('#myModal').find("#tab_3-2").html("");
+			
 
-			$("#tab_3-2").append('Programación: <label id="fechaInicio"></label><input id="rango-fecha" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="1" data-slider-value="[250,450]"/><label id="fechaFin"></label>');
-			$("#tab_3-2").append('<br><br>Ejecución: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label id="fechaInicioEjecucion"></label><input id="rango-fecha-ejecucion" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="1" data-slider-value="[250,450]"/><label id="fechaFinEjecucion"></label>');
+			
 
 			$('#myModal').find("#tab_1-1").html(cuerpoModal);
 			//$('#myModal').find(".modal-footer").html(footerModal);
@@ -468,9 +475,7 @@ if (user != null) { %>
 			
 			$('#myModal').find(".modal-title").html(tituloModal2);
 			$('#myModal').find("#tab_2-2").html("");
-
 			$('#myModal').find("#tab_2-2").html(cuerpoModal2);
-			 
 			
 			
 			
@@ -516,6 +521,12 @@ if (user != null) { %>
 			
 
 			dibujarLineaAccionAcumuladoMes(lineaAccionAcumuladoMes, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion);
+			
+			
+			$('#myModal').find("#tab_4-2").html("");
+			$('#myModal').find("#tab_4-2").html("Datos no disponibles");
+			$('#myModal').find("#tab_5-2").html("");
+			$('#myModal').find("#tab_5-2").html("Datos no disponibles");
 			
 			 $(function () {
 			       
