@@ -437,7 +437,7 @@ if (user != null) { %>
 			
 			
 			cuerpoModal='<div class="table-responsive">'+
-						'<table id="hitos" class="table table-hover">'+
+						'<table class="table table-hover hitos">'+
 							'<thead>'+
 								'<tr class="active"><th>Acción</th><th>Departamento</th><th>Distrito</th><th>U. Medida</th><th>Cantidad. Programado</th><th>Costo Total</th><th>Fecha Terminación</th><th>% Programado</th><th>% Ejecutado</th></tr>'+
 							'</thead>'+
@@ -467,7 +467,7 @@ if (user != null) { %>
 			
 			
 						cuerpoModal2='<div class="table-responsive">'+
-						'<table id="hitos" class="table table-hover">'+
+						'<table class="table table-hover hitos">'+
 							'<thead>'+
 								'<tr class="active"><th>Hitos</th><th>Departamento</th><th>Distrito</th><th>U. Medida</th><th>Cantidad. Programado</th><th>Costo Total</th><th>Fecha Terminación</th><th>% Programado</th><th>% Ejecutado</th></tr>'+
 							'</thead>'+
@@ -543,7 +543,7 @@ if (user != null) { %>
 			
 			 $(function () {
 			       
-			        $('#hitos').dataTable({
+			        $('.hitos').dataTable({
 			          "bPaginate": false,
 			          "bLengthChange": false,
 			          "bFilter": true,
