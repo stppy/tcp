@@ -39,6 +39,7 @@ public class FactHitos {
 	protected String hito_comentario_aprob;
 	protected char hito_status;
 	protected int hito_total_doc;
+	
 	public int getLinea_estrategica_id() {
 		return linea_estrategica_id;
 	}
@@ -249,5 +250,9 @@ public class FactHitos {
 	public void setHito_total_doc(int hito_total_doc) {
 		this.hito_total_doc = hito_total_doc;
 	}
+	
+
+	
+	
 
 }

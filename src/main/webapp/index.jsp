@@ -82,17 +82,17 @@
 		     	<div class="nav-tabs-custom">
                 <ul class="nav nav-tabs pull-right">
                   <li class="active"><a href="#tab_1-1" data-toggle="tab"><i class="glyphicon glyphicon-list-alt"></i></a></li>
-                  <!--<li><a href="#tab_2-2" data-toggle="tab"><i class="glyphicon glyphicon-map-marker"></i></a></li>-->
+                  <li><a href="#tab_2-2" data-toggle="tab"><i class="glyphicon glyphicon-list-alt"></i></a></li>
                   <li><a href="#tab_3-2" data-toggle="tab"><i class="glyphicon glyphicon-stats"></i></a></li>
                     
               3.3.2  </ul>
                 <div class="tab-content">
                   <div class="tab-pane active" id="tab_1-1"></div><!-- /.tab-pane -->
                   <div class="tab-pane" id="tab_2-2">
-               		<!--  <iframe width='100%' height='520' frameborder='0' src='http://geo.stp.gov.py/user/stp/viz/8f7c6480-2f1c-11e5-aaea-b6fa9714a3b6/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>  -->
+
                   </div><!-- /.tab-pane -->
                   <div class="tab-pane" id="tab_3-2">
-                  	
+                  	dfsd
                   </div><!-- /.tab-pane -->
                 </div><!-- /.tab-content -->
               </div>
@@ -378,6 +378,8 @@ if (user != null) { %>
 			var unidad_medida= idParsed[3];
 			var tituloModal="";
 			var cuerpoModal="";
+			var tituloModal2="";
+			var cuerpoModal2="";
 			var footerModal="<br><br><br>";
 			
 			if (institucion_id==47720){
@@ -390,6 +392,14 @@ if (user != null) { %>
 			    }).responseText;
 			}else{
 				var registros = $.ajax({
+			    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015Accion&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id,
+			      	type:'get',
+			      	dataType:'json',
+			      	crossDomain:true,
+			      	async:false       
+			    }).responseText;
+				
+				var registrosHitos = $.ajax({
 			    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id,
 			      	type:'get',
 			      	dataType:'json',
@@ -399,7 +409,7 @@ if (user != null) { %>
 				
 			}
 			var elRegistro=JSON.parse(registros);
-			
+			var registroHitos=JSON.parse(registrosHitos);
 						
 
 			cuerpoModal='<div class="table-responsive">'+
@@ -432,6 +442,47 @@ if (user != null) { %>
 
 			$('#myModal').find("#tab_1-1").html(cuerpoModal);
 			//$('#myModal').find(".modal-footer").html(footerModal);
+			
+			
+			
+			
+						cuerpoModal2='<div class="table-responsive">'+
+						'<table id="hitos" class="table table-hover">'+
+							'<thead>'+
+								'<tr class="active"><th>Hitos</th><th>Departamento</th><th>Distrito</th><th>U. Medida</th><th>Cantidad. Programado</th><th>Costo Total</th><th>Fecha Terminación</th><th>% Programado</th><th>% Ejecutado</th></tr>'+
+							'</thead>'+
+							'<tbody>';
+
+						var totalCantidadProgramada2=0;
+						tituloModal2='<h3><center>'+registroHitos[0].institucion+'&nbsp;&nbsp;-&nbsp;&nbsp;'+registroHitos[0].linea_accion+'</center></h3>';
+						for(var h=0; h<registroHitos.length;h++)
+						{
+								cuerpoModal2+='<tr><td>'+registroHitos[h].accion+'</td><td>'+registroHitos[h].accion_departamento+'</td><td>'+registroHitos[h].accion_distrito+'</td><td>'+registroHitos[h].accion_unidad_edida+'</td><td>'+registroHitos[h].hito_cantidad_programado+'</td><td>'+registroHitos[h].accion_costo+'</td><td>'+registroHitos[h].hito_fecha_entrega+'</td><td>'+registroHitos[h].hito_porcentaje_programado+'</td><td>'+registroHitos[h].hito_porcentaje_ejecutado+'</td></tr>';
+								totalCantidadProgramada2+=registroHitos[h].hito_cantidad_programado;
+						}
+						totalCantidadProgramada2=parseFloat(totalCantidadProgramada2).toFixed(2);
+
+						cuerpoModal2+='</tbody><tfoot><tr class="active"><td colspan="2">Total Cantidad Programada: </td><td colspan="8">'+totalCantidadProgramada2+'</td></tr></tfoot>'+
+									 '</table>'+
+									 '</div>';
+			
+			$('#myModal').find(".modal-title").html(tituloModal2);
+			$('#myModal').find("#tab_2-2").html("");
+
+			$('#myModal').find("#tab_2-2").html(cuerpoModal2);
+			 
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			
 			lineaAccionAcumuladoMes = $.ajax({
 		    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getLineaAccionAcumuladoMes&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id,
