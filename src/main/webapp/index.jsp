@@ -170,6 +170,9 @@ if (user != null) { %>
 			var contrasenaNueva= $.md5($("#pass-nuevo-form").val());
 			var contrasenaNueva1=$.md5($("#pass-nuevo1-form").val());		
 							
+			todojunto.contrasenaVieja=contrasenaVieja;
+			todojunto.contrasenaNueva=contrasenaNueva;
+			todojunto.contrasenaNueva1=contrasenaNueva1;
 			
 			if(todojunto.contrasenaNueva == todojunto.contrasenaNueva1 && todojunto.contrasenaNueva!="d41d8cd98f00b204e9800998ecf8427e" && todojunto.contrasenaNueva1!="d41d8cd98f00b204e9800998ecf8427e")
 			{
@@ -183,27 +186,37 @@ if (user != null) { %>
 				}).responseText;
 				obtenerUsuario = JSON.parse(obtenerUsuario);
 				obtenerUsuario = obtenerUsuario.usuarios;
-				
-				todojunto.contrasenaVieja=contrasenaVieja;
-				todojunto.contrasenaNueva=contrasenaNueva;
-				todojunto.contrasenaNueva1=contrasenaNueva1;
+							
 				todojunto.correoUsuario=obtenerUsuario[0].correo;
-				
-				 $.ajax({
+				 
+				$.ajax({
 				        url: "http://tablero2015.stp.gov.py/tablero/ajaxUpdate?accion="+accion,
 				        type: 'POST',
 				        dataType: 'json',
 				        data: JSON.stringify(todojunto),
 				        contentType: 'application/json',
 				        mimeType: 'application/json',
+				        
 				        success: function (data)
 				        {
-							$("#tituloModalUsuario").append('<p class="text-danger">Cambio Exitoso</p>');
+				        	if (data.success == true)
+				        	{
+				        		$("#tituloModalUsuario").html('');
+								$("#tituloModalUsuario").append('<p class="text-success">CAMBIO EXITOSO</p>');
+					    		$("#pass-viejo-form").val("");
+								$("#pass-nuevo-form").val("");
+								$("#pass-nuevo1-form").val("");	
+				        	}else{
+				        		if (data.success == false){
+				        			$("#tituloModalUsuario").html('');
+						        	$("#tituloModalUsuario").append('<p class="text-danger">Error: CONTRASEÑA ANTERIOR INVÁLIDA</p>');
+				        		}
+				        	}
 				        },
 				        error: function(data,status,er)
 				        {
 				        	$("#tituloModalUsuario").html('');
-				        	$("#tituloModalUsuario").append('<p class="text-danger">Error: Usuario o Contraseña no coinciden</p>');
+				        	$("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intente de nuevo</p>');
 				        }
 				 });
 

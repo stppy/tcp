@@ -1261,7 +1261,7 @@ public class SqlUpdates {
 	
 	
 	
-	public static void updateCredenciales(Credenciales objeto){
+	public static boolean updateCredenciales(Credenciales objeto){
   	 Connection conect=ConnectionConfiguration.conectarSpr();
    	 Statement statement2 = null;
 		 String 							query2 = "select * from usuario where correo=\""+objeto.getCorreoUsuario()+"\" AND passwd=\""+objeto.getContrasenaVieja()+"\""; 
@@ -1294,7 +1294,10 @@ public class SqlUpdates {
 					statement.execute(query);
 				    conect.close();
 				} catch (SQLException e) {e.printStackTrace();}
+				 return true;
 	  		 
+		}else{
+			return false;
 		}	
 	
 	}

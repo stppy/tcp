@@ -219,7 +219,9 @@ public class ajaxUpdate extends HttpServlet {
                 if(br != null){ json = br.readLine();}
                 Gson gsonInsert = new Gson();
                 entidadObj=gsonInsert.fromJson(json, Credenciales.class);
-				SqlUpdates.updateCredenciales(entidadObj);
+                boolean status = SqlUpdates.updateCredenciales(entidadObj);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
         	}
         	
         }        
