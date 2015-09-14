@@ -10,24 +10,21 @@
 <!DOCTYPE html>
 <html lang="spanish">
   <head>
-  <!--  ISO-8859-1 -->
-  <%@ include file="/frames/head.jsp" %>
- <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  	<!--  ISO-8859-1 -->
+  	<%@ include file="/frames/head.jsp" %>
+ 	<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
-   		<script src="https://cdnjs.cloudflare.com/ajax/libs/floatthead/1.2.10/jquery.floatThead.min.js"></script> -->	
+   	<script src="https://cdnjs.cloudflare.com/ajax/libs/floatthead/1.2.10/jquery.floatThead.min.js"></script> -->	
         
-<!--   <script src="frames/entidad.js" type="text/javascript"></script> -->
-<script type="text/javascript" src="dist/canvasjs/canvasjs.min.js" ></script>
-
-
+	<!--<script src="frames/entidad.js" type="text/javascript"></script> -->
+	<script type="text/javascript" src="dist/canvasjs/canvasjs.min.js" ></script>
 
 	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="bootstrap/css/bootstrapslider.css" rel="stylesheet">
 	<link href="dist/css/estilo_principal.css" rel="stylesheet">
-<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
 		/* Example 1 custom styles */
 		#ex1Slider .slider-selection {
@@ -104,56 +101,6 @@
 		 </div>
 		</div>
 		
-			<!-- MODAL PASSWORD -->
-	<div id="pass_modal" class="modal fade" role="dialog">
-	  <div class="pass_mod">
-	
-	    <!-- Modal content-->
-	    <div class="modal-content">	
-    	  <div class="modal-header">
-	        <h4 class="modal-title" id="tituloModalUsuario"></h4>
-	      </div>					      
-	      <div class="modal-body">
-	         <div class="control-group">						            
-	            <div class="controls">
-	                <input id="pass-viejo-form" name="current_password" class="feedback-input" placeholder="Clave Actual" type="password" required pattern="\w+">
-	            </div>
-	        </div>
-	        <div class="control-group">						            
-	            <div class="controls">
-	                <input id="pass-nuevo-form" name="new_password" class="feedback-input"
-	                 title="Password must contain at least 6 characters, including UPPER/lowercase and numbers."
-	                 placeholder="Clave Nueva" type="password"
-	                 required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" onchange="
-	  					this.setCustomValidity(this.validity.patternMismatch ? this.title : '');
-	  					if(this.checkValidity()) confirm_password.pattern = this.value;
-						">
-	            </div>
-	        </div>
-	        <div class="control-group">						            
-	            <div class="controls">
-	                <input id="pass-nuevo1-form" name="confirm_password" class="feedback-input" 
-	                title="Please enter the same Password as above." placeholder="Confirmar Clave"
-	                type="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" onchange="
-	 					this.setCustomValidity(this.validity.patternMismatch ? this.title : '');
-					" >
-	            </div>
-	        </div> 
-	      </div>						      
-	      <div class="modal-footer">
-	        <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cerrar</button>
-	        <button type="submit" class="btn btn-primary" id="password_modal_save">Guardar </button>						      
-	      </div>
-	    </div>
-	
-	  </div>
-	</div>
-		
-		
-		
-		
-		
-		
 		
 <% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%>
 <% Map attributes = user.getAttributes(); 
@@ -163,87 +110,7 @@ if (user != null) { %>
 	
 	$(document).ready(function(){
 		$('[data-toggle="tap"]').tooltip();
-		$("body").on("click", "#password_modal_save",function(event){		
-			var todojunto = new Object();
-			var accion = "actPass";
-			var contrasenaVieja= $.md5($("#pass-viejo-form").val());
-			var contrasenaNueva= $.md5($("#pass-nuevo-form").val());
-			var contrasenaNueva1=$.md5($("#pass-nuevo1-form").val());		
-							
-			todojunto.contrasenaVieja=contrasenaVieja;
-			todojunto.contrasenaNueva=contrasenaNueva;
-			todojunto.contrasenaNueva1=contrasenaNueva1;
 			
-			if(todojunto.contrasenaNueva == todojunto.contrasenaNueva1 && todojunto.contrasenaNueva!="d41d8cd98f00b204e9800998ecf8427e" && todojunto.contrasenaNueva1!="d41d8cd98f00b204e9800998ecf8427e")
-			{
-				
-				
-				var obtenerUsuario = $.ajax({
-					url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
-				  	type:'get',
-				  	dataType:'json',
-				  	async:false       
-				}).responseText;
-				obtenerUsuario = JSON.parse(obtenerUsuario);
-				obtenerUsuario = obtenerUsuario.usuarios;
-							
-				todojunto.correoUsuario=obtenerUsuario[0].correo;
-				 
-				$.ajax({
-				        url: "http://tablero2015.stp.gov.py/tablero/ajaxUpdate?accion="+accion,
-				        type: 'POST',
-				        dataType: 'json',
-				        data: JSON.stringify(todojunto),
-				        contentType: 'application/json',
-				        mimeType: 'application/json',
-				        
-				        success: function (data)
-				        {
-				        	if (data.success == true)
-				        	{
-				        		$("#tituloModalUsuario").html('');
-								$("#tituloModalUsuario").append('<p class="text-success">CAMBIO EXITOSO</p>');
-					    		$("#pass-viejo-form").val("");
-								$("#pass-nuevo-form").val("");
-								$("#pass-nuevo1-form").val("");	
-				        	}else{
-				        		if (data.success == false){
-				        			$("#tituloModalUsuario").html('');
-						        	$("#tituloModalUsuario").append('<p class="text-danger">Error: CONTRASEÑA ANTERIOR INVÁLIDA</p>');
-				        		}
-				        	}
-				        },
-				        error: function(data,status,er)
-				        {
-				        	$("#tituloModalUsuario").html('');
-				        	$("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intente de nuevo</p>');
-				        }
-				 });
-
-			}
-
-
-			
-		});
-		
-		
-		$("body").on("click", "#pass-viejo-form",function(event){		
-		
-			$("#tituloModalUsuario").html('');
-			$("#pass-viejo-form").val("");
-			$("#pass-nuevo-form").val("");
-			$("#pass-nuevo1-form").val("");		
-			
-		});
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		var lineaAccionAcumuladoMes;
 		
 		var vectorMin=0;
@@ -455,16 +322,11 @@ if (user != null) { %>
 						cuerpoModal+='</tbody><tfoot><tr class="active"><td colspan="2">Total Cantidad Programada: </td><td colspan="8">'+totalCantidadProgramada+'</td></tr></tfoot>'+
 									 '</table>'+
 									 '</div>';
-			
-			
 
-			
 
 			$('#myModal').find("#tab_1-1").html(cuerpoModal);
 			//$('#myModal').find(".modal-footer").html(footerModal);
-			
-			
-			
+						
 			
 						cuerpoModal2='<div class="table-responsive">'+
 						'<table class="table table-hover hitos">'+
@@ -490,15 +352,7 @@ if (user != null) { %>
 			$('#myModal').find("#tab_2-2").html("");
 			$('#myModal').find("#tab_2-2").html(cuerpoModal2);
 			
-			
-			
-			
-			
-			
-			
-			
-			
-			
+
 			
 			
 			
@@ -700,7 +554,7 @@ if (user != null) { %>
 									porHejeClassRow="";
 								}
 								
-								anho2="";
+								anho2=""; 
 								anho1="";
 							}
 							if(el[j].anho>="2015"){
@@ -1042,11 +896,6 @@ var $tabla=$("#lineasPorEntidad");
       <div class='control-sidebar-bg'></div>
 
     </div><!-- ./wrapper -->
-    
-
-	
-
-
 
     <!-- jQuery 2.1.3 
     <script src="plugins/jQuery/jQuery-2.1.3.min.js"></script> -->
@@ -1080,15 +929,10 @@ var $tabla=$("#lineasPorEntidad");
     <script src="dist/js/pages/dashboard2.js" type="text/javascript"></script>-->
 
     <!-- Librerias para la rutina de cambio de contraseña -->
-    
-    <script src="dist/js/jquerymd5.js" type="text/javascript"></script>    
-	
-	  <%@ include file="/frames/pass.jsp" %>
-
-
-
+    <script src="dist/js/jquerymd5.js" type="text/javascript"></script>    	
+    <%@ include file="/frames/pass.jsp" %>
+  
     <!-- AdminLTE for demo purposes -->
-
     <script src="dist/js/demo.js" type="text/javascript"></script>
         <%  } else { %>
 				est<p>Favor Iniciar Sesion</p>

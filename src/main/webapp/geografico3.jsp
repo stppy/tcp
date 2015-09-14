@@ -28,6 +28,7 @@ var datosGeo=[];
 
 	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="bootstrap/css/bootstrapslider.css" rel="stylesheet">
+	<link href="dist/css/estilo_principal.css" rel="stylesheet">
 
     <style type="text/css">
 		/* Example 1 custom styles */
@@ -1250,9 +1251,12 @@ var $tabla=$("#lineasPorEntidad");
     
     <!-- AdminLTE dashboard demo (This is only for demo purposes) 
     <script src="dist/js/pages/dashboard2.js" type="text/javascript"></script>-->
-
+    
+    <!-- Librerias para la rutina de cambio de contraseña -->
+    <script src="dist/js/jquerymd5.js" type="text/javascript"></script>    	
+    <%@ include file="/frames/pass.jsp" %>
+    
     <!-- AdminLTE for demo purposes -->
-
     <script src="dist/js/demo.js" type="text/javascript"></script>
         <%  } else { %>
 				est<p>Favor Iniciar Sesion</p>
