@@ -743,7 +743,7 @@ tbody {
                 <tr style="background-color: white;">
                   <th>
 
-                  	Líneas de Acción por Institución
+                  	Líneas de Acción por Departamento
                   </th>
                   
                   <th></th>
