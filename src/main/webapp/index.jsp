@@ -24,7 +24,7 @@
 
 	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="bootstrap/css/bootstrapslider.css" rel="stylesheet">
-	<link href="dist/css/estilo_principal.css" rel="stylesheet">
+
     <style type="text/css">
 		/* Example 1 custom styles */
 		#ex1Slider .slider-selection {

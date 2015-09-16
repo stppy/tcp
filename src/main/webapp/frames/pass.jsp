@@ -1,44 +1,30 @@
 	<!-- MODAL PASSWORD -->
 	<div id="pass_modal" class="modal fade" role="dialog">
-	  <div class="pass_mod">
+		<div class="modal-dialog modal-sm">
 	
-	    <!-- Modal content-->
-	    <div class="modal-content">	
-    	  <div class="modal-header">
-	        <h4 class="modal-title" id="tituloModalUsuario"></h4>
-	      </div>					      
-	      <div class="modal-body">
-	         <div class="control-group">						            
-	            <div class="controls">
-	                <input id="pass-viejo-form" name="current_password" class="feedback-input" placeholder="Clave Actual" type="password" required pattern="\w+">
-	            </div>
-	        </div>
-	        <div class="control-group">						            
-	            <div class="controls">
-	                <input id="pass-nuevo-form" name="new_password" class="feedback-input"
-	                 title="Password must contain at least 6 characters, including UPPER/lowercase and numbers."
-	                 placeholder="Clave Nueva" type="password"
-	                 required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" onchange="
-	  					this.setCustomValidity(this.validity.patternMismatch ? this.title : '');
-	  					if(this.checkValidity()) confirm_password.pattern = this.value;
-						">
-	            </div>
-	        </div>
-	        <div class="control-group">						            
-	            <div class="controls">
-	                <input id="pass-nuevo1-form" name="confirm_password" class="feedback-input" 
-	                title="Please enter the same Password as above." placeholder="Confirmar Clave"
-	                type="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" onchange="
-	 					this.setCustomValidity(this.validity.patternMismatch ? this.title : '');
-					" >
-	            </div>
-	        </div> 
-	      </div>						      
-	      <div class="modal-footer">
-	        <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cerrar</button>
-	        <button type="submit" class="btn btn-primary" id="password_modal_save">Guardar </button>						      
-	      </div>
-	    </div>
+		    <!-- Modal content-->
+			<div class="modal-content">	
+	    		<div class="modal-header">
+		        	<h4 class="modal-title" id="tituloModalUsuario">Cambiar Contraseña</h4>
+		      	</div>					      
+				<div class="modal-body">
+		      		<form role="form">
+			      		<div class="form-group">
+			            	<input id="pass-viejo-form" name="current_password" class="form-control" placeholder="Clave Actual" title="Completa este campo" type="password" pattern="\w+" required>
+						</div>
+				        <div class="form-group">						            
+				        	<input id="pass-nuevo-form" name="new_password" class="form-control" placeholder="Clave Nueva" type="password" title="Completa este campo" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}">
+				        </div>
+				        <div class="form-group">						            
+				        	<input id="pass-nuevo1-form" name="confirm_password" class="form-control" placeholder="Confirmar Clave Nueva" type="password" title="Completa este campo" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"> 
+				        </div> 						      
+				      	<div class="modal-footer">
+				        	<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+				        	<button type="submit" class="btn btn-primary" id="password_modal_save">Guardar </button>						      
+						</div>
+					</form>
+				</div>
+		    </div>
 	
 	  </div>
 	</div>
