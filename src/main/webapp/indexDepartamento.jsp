@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page import="org.jasig.cas.client.authentication.AttributePrincipalImpl"%>
 <%@ page import="org.jasig.cas.client.authentication.AttributePrincipal"%>
@@ -23,8 +22,7 @@
 
 	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="bootstrap/css/bootstrapslider.css" rel="stylesheet">
-	<link href="dist/css/estilo_principal.css" rel="stylesheet">
-	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<link href="dist/css/estilo_principal.css" rel="stylesheet"> 
 
     <style type="text/css">
 		/* Example 1 custom styles */
