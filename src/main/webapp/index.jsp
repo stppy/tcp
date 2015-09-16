@@ -24,7 +24,6 @@
 
 	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="bootstrap/css/bootstrapslider.css" rel="stylesheet">
-	
     <style type="text/css">
 		/* Example 1 custom styles */
 		#ex1Slider .slider-selection {
@@ -264,6 +263,13 @@ if (user != null) { %>
 			
 			if (institucion_id==47720){
 				var registros = $.ajax({
+			    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getFactHitosSnpp&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id,
+			      	type:'get',
+			      	dataType:'json',
+			      	crossDomain:true,
+			      	async:false       
+			    }).responseText;
+				var registrosHitos = $.ajax({
 			    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getFactHitosSnpp&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id,
 			      	type:'get',
 			      	dataType:'json',
@@ -614,7 +620,7 @@ if (user != null) { %>
 						}
 					}
 				}
-			}else{
+			}else{ //snpp
 				anho2="";
 				anho1="";
 				if (entidades[i].institucion_id==47720){
