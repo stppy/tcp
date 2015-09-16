@@ -5,7 +5,7 @@
 	    <!-- Modal content-->
 	    <div class="modal-content">	
     	  <div class="modal-header">
-	        <h4 class="modal-title" id="tituloModalUsuario"></h4>
+	        <h4 class="modal-title" id="tituloModalUsuario"> Cambiar contraseña</h4>
 	      </div>					      
 	      <div class="modal-body">
 	         <div class="control-group">						            
@@ -16,7 +16,7 @@
 	        <div class="control-group">						            
 	            <div class="controls">
 	                <input id="pass-nuevo-form" name="new_password" class="feedback-input"
-	                 title="Password must contain at least 6 characters, including UPPER/lowercase and numbers."
+	                 title="La contraseña debe incluir al menos 6 caracteres, además e minusculas y mayusculas"
 	                 placeholder="Clave Nueva" type="password"
 	                 required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" onchange="
 	  					this.setCustomValidity(this.validity.patternMismatch ? this.title : '');
