@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page import="org.jasig.cas.client.authentication.AttributePrincipalImpl"%>
 <%@ page import="org.jasig.cas.client.authentication.AttributePrincipal"%>
@@ -389,6 +388,8 @@ if (user != null) { %>
 				    return 1;
 				  return 0;
 				}
+			
+			
 			
 			lineaAccionAcumuladoMes=lineaAccionAcumuladoMes.sort(compare);
 			
