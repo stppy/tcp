@@ -10,17 +10,17 @@
 <!DOCTYPE html>
 <html>
   <head>
-  <!--  ISO-8859-1 -->
-  <%@ include file="/frames/head.jsp" %>
- <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  	<!--  ISO-8859-1 -->
+  	<%@ include file="/frames/head.jsp" %>
+ 	<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
-   		<script src="https://cdnjs.cloudflare.com/ajax/libs/floatthead/1.2.10/jquery.floatThead.min.js"></script> -->	
+   	<script src="https://cdnjs.cloudflare.com/ajax/libs/floatthead/1.2.10/jquery.floatThead.min.js"></script> -->	
         
-<!--   <script src="frames/entidad.js" type="text/javascript"></script> -->
-<script type="text/javascript" src="dist/canvasjs/canvasjs.min.js" ></script>
+	<!--<script src="frames/entidad.js" type="text/javascript"></script> -->
+	<script type="text/javascript" src="dist/canvasjs/canvasjs.min.js" ></script>
 
 <script>
 var datosGeo=[];
@@ -28,7 +28,7 @@ var datosGeo=[];
 
 	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="bootstrap/css/bootstrapslider.css" rel="stylesheet">
-
+	
     <style type="text/css">
 		/* Example 1 custom styles */
 		#ex1Slider .slider-selection {
@@ -1350,9 +1350,12 @@ var $tabla=$("#lineasPorEntidad");
     
     <!-- AdminLTE dashboard demo (This is only for demo purposes) 
     <script src="dist/js/pages/dashboard2.js" type="text/javascript"></script>-->
-
+    
+    <!-- Librerias para la rutina de cambio de contraseña -->
+    <script src="dist/js/jquerymd5.js" type="text/javascript"></script>    	
+    <%@ include file="/frames/pass.jsp" %>
+    
     <!-- AdminLTE for demo purposes -->
-
     <script src="dist/js/demo.js" type="text/javascript"></script>
         <%  } else { %>
 				est<p>Favor Iniciar Sesion</p>

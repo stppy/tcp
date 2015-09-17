@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page import="org.jasig.cas.client.authentication.AttributePrincipalImpl"%>
 <%@ page import="org.jasig.cas.client.authentication.AttributePrincipal"%>
@@ -11,18 +10,15 @@
 <html>
   <head>
   <!--  ISO-8859-1 -->
-  <%@ include file="/frames/head.jsp" %>
- <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+ 	 <%@ include file="/frames/head.jsp" %>
+ 	<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
-   		<script src="https://cdnjs.cloudflare.com/ajax/libs/floatthead/1.2.10/jquery.floatThead.min.js"></script> -->	
-        
-<!--   <script src="frames/entidad.js" type="text/javascript"></script> -->
-<script type="text/javascript" src="dist/canvasjs/canvasjs.min.js" ></script>
-
-
+   	<script src="https://cdnjs.cloudflare.com/ajax/libs/floatthead/1.2.10/jquery.floatThead.min.js"></script> -->	  
+	<!-- <script src="frames/entidad.js" type="text/javascript"></script> -->
+	<script type="text/javascript" src="dist/canvasjs/canvasjs.min.js" ></script>
 
 	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="bootstrap/css/bootstrapslider.css" rel="stylesheet">
@@ -257,8 +253,10 @@ if (user != null) { %>
 			var idDepartamento= idParsed[4];
 			var tituloModal="";
 			var cuerpoModal="";
+			var cuerpoModal2="";
 			var footerModal="<br><br><br>";
 			
+			//Registro tiene los hitos de la accion
 			var registros = $.ajax({
 		    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id+'&departamento='+idDepartamento,
 		      	type:'get',
@@ -281,7 +279,7 @@ if (user != null) { %>
 							'<div class="row">'+
 								'<div class="col-sm-12">'+
 									'<div class="table-responsive">'+
-										'<table class="table table-hover" >'+
+										'<table class="table table-hover hitos" >'+
 											'<tr class="active"><td>Acción</td><td>Departamento</td><td>Distrito</td><td>U. Medida</td><td>Cantidad. Programado</td><td>Costo Total</td><td>Fecha Terminación</td><td>% Programado</td><td>% Ejecutado</td></tr>';
 
 						var totalCantidadProgramada=0;
@@ -305,8 +303,48 @@ if (user != null) { %>
 			$("#tab_3-2").append('Programación: <label id="fechaInicio"></label><input id="rango-fecha" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="1" data-slider-value="[250,450]"/><label id="fechaFin"></label>');
 			$("#tab_3-2").append('<br><br>Ejecución: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label id="fechaInicioEjecucion"></label><input id="rango-fecha-ejecucion" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="1" data-slider-value="[250,450]"/><label id="fechaFinEjecucion"></label>');
 
-			$('#myModal').find("#tab_1-1").html(cuerpoModal);
+			$('#myModal').find("#tab_2-2").html(cuerpoModal);
 			//$('#myModal').find(".modal-footer").html(footerModal);
+			
+			//Obtenemos los hitos de las acciones
+			var registrosAccion = $.ajax({
+		    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015Accion&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id+'&departamento='+idDepartamento,
+		      	type:'get',
+		      	dataType:'json',
+		      	crossDomain:true,
+		      	async:false       
+		    }).responseText;
+			registrosAccion=JSON.parse(registrosAccion);			
+			
+			cuerpoModal2='<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">'+
+						 	'<div class="row">'+
+								'<div class="col-sm-6">'+
+									'<div class="dataTables_length" id="example1_length"><label>Show <select name="example1_length" aria-controls="example1" class="form-control input-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div>'+
+								'</div>'+
+								'<div class="col-sm-6">'+
+									'<div id="example1_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control input-sm" placeholder="" aria-controls="example1"></label></div>'+
+								'</div>'+
+							'<div class="row">'+
+								'<div class="col-sm-12">'+
+									'<div class="table-responsive">'+
+										'<table class="table table-hover hitos" >'+
+											'<tr class="active"><td>Acción</td><td>Departamento</td><td>Distrito</td><td>U. Medida</td><td>Cantidad. Programado</td><td>Costo Total</td><td>Fecha Terminación</td><td>% Programado</td><td>% Ejecutado</td></tr>';
+
+			var totalCantidadProgramada2=0;
+			for(var l=0; l<registrosAccion.length;l++)
+			{
+					cuerpoModal2+='<tr><td>'+registrosAccion[l].accion+'</td><td>'+registrosAccion[l].accion_departamento+'</td><td>'+registrosAccion[l].accion_distrito+'</td><td>'+registrosAccion[l].accion_unidad_edida+'</td><td>'+registrosAccion[l].hito_cantidad_programado+'</td><td>'+registrosAccion[l].accion_costo+'</td><td>'+registrosAccion[l].hito_fecha_entrega+'</td><td>'+registrosAccion[l].hito_porcentaje_programado+'</td><td>'+registrosAccion[l].hito_porcentaje_ejecutado+'</td></tr>';
+					totalCantidadProgramada2+=registrosAccion[l].hito_cantidad_programado;
+			}
+			totalCantidadProgramada2=parseFloat(totalCantidadProgramada2).toFixed(2);
+
+			cuerpoModal2+='<tr class="active"><td colspan="2">Total Cantidad Programada: </td><td colspan="8">'+totalCantidadProgramada2+'</td></tr>'+
+						 '</table>'+
+						 '</div></div></div></div></div>';			
+			
+			$('#myModal').find("#tab_1-1").html(cuerpoModal2);
+			
+			
 			
 			lineaAccionAcumuladoMesDepto = $.ajax({
 		    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getLineaAccionAcumuladoMesDepto&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id+'&departamento='+idDepartamento,
@@ -331,6 +369,7 @@ if (user != null) { %>
 			$('#myModal').find("#tab_4-2").html("Datos no disponibles");
 			$('#myModal').find("#tab_5-2").html("");
 			$('#myModal').find("#tab_5-2").html("Datos no disponibles");
+			
 			function compare(a,b) {             
 				  if (a.mes < b.mes)
 				    return -1;
@@ -342,6 +381,42 @@ if (user != null) { %>
 			lineaAccionAcumuladoMesDepto=lineaAccionAcumuladoMesDepto.sort(compare);
 			
 			dibujarLineaAccionAcumuladoMesDepto(lineaAccionAcumuladoMesDepto, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion);
+			
+			 $(function () {
+			       
+			        $('.hitos').dataTable({
+			          "bPaginate": false,
+			          "bLengthChange": false,
+			          "bFilter": true,
+			          "bSort": true,
+			          "bInfo": true,
+			          "bAutoWidth": false,
+			          "language":{
+			        	    "sProcessing":     "Procesando...",
+			        	    "sLengthMenu":     "Mostrar _MENU_ registros",
+			        	    "sZeroRecords":    "No se encontraron resultados",
+			        	    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+			        	    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+			        	    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+			        	    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+			        	    "sInfoPostFix":    "",
+			        	    "sSearch":         "Buscar:",
+			        	    "sUrl":            "",
+			        	    "sInfoThousands":  ",",
+			        	    "sLoadingRecords": "Cargando...",
+			        	    "oPaginate": {
+			        	        "sFirst":    "Primero",
+			        	        "sLast":     "Último",
+			        	        "sNext":     "Siguiente",
+			        	        "sPrevious": "Anterior"
+			        	    },
+			        	    "oAria": {
+			        	        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+			        	        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+			        	    }
+			        	}
+			        });
+			      });			
 	});
 		
 		
@@ -634,12 +709,6 @@ tbody {
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
       
-      
-      
-	
-		
-
-      
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
@@ -671,7 +740,7 @@ tbody {
                 <tr style="background-color: white;">
                   <th>
 
-                  	Líneas de Acción por Institución
+                  	Líneas de Acción por Departamento
                   </th>
                   
                   <th></th>
@@ -733,10 +802,13 @@ var $tabla=$("#lineasPorEntidad");
 
     </div><!-- ./wrapper -->
 
-    <!-- jQuery 2.1.3 -->
-    <script src="plugins/jQuery/jQuery-2.1.3.min.js"></script>
+    <!-- jQuery 2.1.3 
+    <script src="plugins/jQuery/jQuery-2.1.3.min.js"></script> -->
     <!-- Bootstrap 3.3.2 JS -->
     <script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <!-- DATA TABES SCRIPT -->
+    <script src="plugins/datatables/jquery.dataTables.js" type="text/javascript"></script>
+    <script src="plugins/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
     <!-- FastClick -->
     <script src='plugins/fastclick/fastclick.min.js'></script>
     <!-- AdminLTE App -->
@@ -754,13 +826,18 @@ var $tabla=$("#lineasPorEntidad");
     <script src="plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
     <!-- ChartJS 1.0.1 -->
     <script src="plugins/chartjs/Chart.min.js" type="text/javascript"></script>
+     <!-- AdminLTE App -->
+    <script src="dist/js/app.min.js" type="text/javascript"></script>   
     
     
     <!-- AdminLTE dashboard demo (This is only for demo purposes) 
     <script src="dist/js/pages/dashboard2.js" type="text/javascript"></script>-->
 
+    <!-- Librerias para la rutina de cambio de contraseña -->
+    <script src="dist/js/jquerymd5.js" type="text/javascript"></script>    	
+    <%@ include file="/frames/pass.jsp" %>
+  
     <!-- AdminLTE for demo purposes -->
-
     <script src="dist/js/demo.js" type="text/javascript"></script>
         <%  } else { %>
 				est<p>Favor Iniciar Sesion</p>
@@ -768,15 +845,6 @@ var $tabla=$("#lineasPorEntidad");
 
 <!-- Piwik -->
 <script type="text/javascript">
-
-$('#example1').dataTable({
-    "bPaginate": false,
-    "bLengthChange": false,
-    "bFilter": true,
-    "bSort": true,
-    "bInfo": true,
-    "bAutoWidth": false
-  });
 
   var _paq = _paq || [];
   _paq.push(['trackPageView']);
@@ -791,11 +859,8 @@ $('#example1').dataTable({
 </script>
 <noscript><p><img src="//infra.stp.gov.py/monitoreoweb/piwik.php?idsite=9" style="border:0;" alt="" /></p></noscript>
 <!-- End Piwik Code -->
-
-<script type="text/javascript" src="bootstrap/js/jquery.min.js"></script>
 <script type="text/javascript" src="bootstrap/js/bootstrap-slider.js"></script>
-
-    
+ 
     
   </body>
 </html>

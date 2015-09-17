@@ -34,9 +34,9 @@ public class ConnectionConfiguration {
 	        catch (ClassNotFoundException e) {e.printStackTrace();}
 	        String url = "";
 	        String user = "bpm";
-	        String password = "cybiraconsulting2";
+	        String password = "cybiraconsulting";
 
-	        try {con = DriverManager.getConnection("jdbc:postgresql://pg02.stp.gov.py/stp_crm2?useUnicode=true&characterEncoding=UTF-8&user=bpm&password=cybiraconsulting2");}
+	        try {con = DriverManager.getConnection("jdbc:postgresql://pg02test.stp.gov.py/stp_crm2?useUnicode=true&characterEncoding=UTF-8&user=bpm&password=cybiraconsulting");}
 	        catch (SQLException ex) {
 	            Logger lgr = Logger.getLogger(SqlHelper.class.getName());
 	            lgr.log(Level.SEVERE, ex.getMessage(), ex);
