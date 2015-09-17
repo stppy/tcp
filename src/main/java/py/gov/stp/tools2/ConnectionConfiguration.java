@@ -8,12 +8,19 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+<<<<<<< HEAD
 import py.gov.stp.tools.SqlHelper;
 
 public class ConnectionConfiguration {
     public static final String URL = "jdbc:mysql01://pg01.stp.goy.py:3306/spr?useUnicode=true&characterEncoding=UTF-8";
     public static final String USERNAME = "root";
     public static final String PASSWORD = "cybiraconsulting";
+=======
+public class ConnectionConfiguration {
+    public static final String URL = "jdbc:postgres://mysql01.stp.goy.py:3306/spr?useUnicode=true&characterEncoding=UTF-8";
+    public static final String USERNAME = "bpm";
+    public static final String PASSWORD = "cybiraconsulting2";
+>>>>>>> 22f7f2500b5e74445483fd7feaff463adcc95484
  
     public static Connection getConnection() {
         Connection connection = null;
@@ -33,6 +40,7 @@ public class ConnectionConfiguration {
 	        try {Class.forName("org.postgresql.Driver");}
 	        catch (ClassNotFoundException e) {e.printStackTrace();}
 	        String url = "";
+<<<<<<< HEAD
 	        String user = "bpm";
 	        String password = "cybiraconsulting";
 
@@ -71,10 +79,17 @@ public class ConnectionConfiguration {
 	        String password = "t3R3R3.ol";
 
 	        try {con = DriverManager.getConnection("jdbc:mysql://mysql01.stp.gov.py/spr?useUnicode=true&characterEncoding=UTF-8", "root", "t3R3R3.ol");}
+=======
+	        String user = "postgres";
+	        String password = "t3R3R3.ol";
+
+	        try {con = DriverManager.getConnection("jdbc:postgresql://pg01.stp.gov.py/tablero2015v3?useUnicode=true&characterEncoding=UTF-8&user=postgres&password=t3R3R3.ol");}
+>>>>>>> 22f7f2500b5e74445483fd7feaff463adcc95484
 	        catch (SQLException ex) {
 	            Logger lgr = Logger.getLogger(SqlHelper.class.getName());
 	            lgr.log(Level.SEVERE, ex.getMessage(), ex);
 	        } 
+<<<<<<< HEAD
 	        return con;
 	}
     public static Connection conectarSnpp(){
@@ -94,5 +109,10 @@ public class ConnectionConfiguration {
 	        } 
 	        return con;
 	}
+=======
+	        return con; 
+	}
+
+>>>>>>> 22f7f2500b5e74445483fd7feaff463adcc95484
  
 }

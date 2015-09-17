@@ -139,6 +139,7 @@ public class ajaxSelects extends HttpServlet {
         
         if (action!=null && action!=""){
         	
+<<<<<<< HEAD
         	if (action.equals("getEntidades")){
         		List objetos=null;
         		condition = " where true ";
@@ -421,8 +422,37 @@ public class ajaxSelects extends HttpServlet {
         	
         	
        }         	
+=======
+        	if (action.equals("getTipoAccion")){
+        		List objetos=null; 
+           		try {objetos = SqlSelects.selectTipoAccion();}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());
+        		} 
+        	if (action.equals("getUnidadMedida")){
+        		List objetos=null; 
+           		try {objetos = SqlSelects.selectUnidadMedida();}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());
+        		}            	
+        	if (action.equals("getLineaEstrategica")){
+        		List objetos=null; 
+           		try {objetos = SqlSelects.selectLineaEstrategica();}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());
+        		}      
+       	
+        	
+       }
+>>>>>>> 22f7f2500b5e74445483fd7feaff463adcc95484
        out.close();
         
     }
 }
+<<<<<<< HEAD
 }
+=======
+>>>>>>> 22f7f2500b5e74445483fd7feaff463adcc95484

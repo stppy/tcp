@@ -3,9 +3,6 @@ package py.gov.stp.tools;
 
 
 import java.sql.Connection;
-
-import py.gov.stp.tools.ConnectionConfiguration;
-
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

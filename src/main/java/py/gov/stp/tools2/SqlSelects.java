@@ -1,4 +1,5 @@
 package py.gov.stp.tools2;
+<<<<<<< HEAD
 import py.gov.stp.objetosV2.*;
 
 
@@ -7,6 +8,11 @@ import java.sql.Connection;
 
 import py.gov.stp.tools.ConnectionConfiguration;
 
+=======
+
+
+import java.sql.Connection;
+>>>>>>> 22f7f2500b5e74445483fd7feaff463adcc95484
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,9 +31,14 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import objetos.Entidad;
 import objetos.FactHitos;
 import objetos.Generica;
+<<<<<<< HEAD
 import objetos.LineaAccion;
 import objetos.LineaAccionAcumuladoMes;
 import objetos.LineaAccionDepartamento;
+=======
+
+import py.gov.stp.objetosV2.*;
+>>>>>>> 22f7f2500b5e74445483fd7feaff463adcc95484
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -52,6 +63,7 @@ public class SqlSelects {
 	        return con;
 	}*/
 	
+<<<<<<< HEAD
 	public static List<Usuario> selectUsuario(String condition) throws SQLException{
  	 Connection conect=ConnectionConfiguration.conectarSpr();
 		 String query = " select * from usuario "+condition;
@@ -613,11 +625,21 @@ public class SqlSelects {
 		Statement statement = null;
 		ResultSet rs=null;
 		List<LineaAccionAcumuladoMes> objetos = new ArrayList<LineaAccionAcumuladoMes>();
+=======
+	public static List<TipoAccion> selectTipoAccion() throws SQLException{
+		Connection conect=ConnectionConfiguration.conectar();
+		String query = " select * from tipo_accion";
+
+		Statement statement = null;
+		ResultSet rs=null;
+		List<TipoAccion> objetos = new ArrayList<TipoAccion>();
+>>>>>>> 22f7f2500b5e74445483fd7feaff463adcc95484
 
 		try {
 			statement = conect.createStatement();
 			rs=statement.executeQuery(query);
 			while(rs.next()){
+<<<<<<< HEAD
 				LineaAccionAcumuladoMes objeto = new LineaAccionAcumuladoMes();
 		
 				objeto.setLinea_accion_id(rs.getInt("linea_accion_id"));
@@ -628,6 +650,14 @@ public class SqlSelects {
 				objeto.setMes(rs.getString("mes"));
 				objeto.setCantidad_programada(rs.getDouble("cantidad_programada"));
 				objeto.setCantidad_ejecutda(rs.getDouble("cantidad_ejecutada"));
+=======
+				TipoAccion objeto = new TipoAccion();
+		
+				objeto.setNombre(rs.getString("nombre"));
+				objeto.setDescripcion(rs.getString("descripcion"));
+				objeto.setBorrado(rs.getBoolean("borrado"));
+
+>>>>>>> 22f7f2500b5e74445483fd7feaff463adcc95484
 				objetos.add(objeto);
 			}
 		}
@@ -637,6 +667,7 @@ public class SqlSelects {
 			if (conect != null) {conect.close();}
 		}
 		return objetos; 
+<<<<<<< HEAD
 		}
 	
 	public static List<LineaAccionAcumuladoMes> selectLineaAccionAcumuladoMesDepto(String condition) throws SQLException{
@@ -646,11 +677,23 @@ public class SqlSelects {
 		Statement statement = null;
 		ResultSet rs=null;
 		List<LineaAccionAcumuladoMes> objetos = new ArrayList<LineaAccionAcumuladoMes>();
+=======
+		}	
+	
+	public static List<UnidadMedida> selectUnidadMedida() throws SQLException{
+		Connection conect=ConnectionConfiguration.conectar();
+		String query = " select * from unidad_medida";
+
+		Statement statement = null;
+		ResultSet rs=null;
+		List<UnidadMedida> objetos = new ArrayList<UnidadMedida>();
+>>>>>>> 22f7f2500b5e74445483fd7feaff463adcc95484
 
 		try {
 			statement = conect.createStatement();
 			rs=statement.executeQuery(query);
 			while(rs.next()){
+<<<<<<< HEAD
 				LineaAccionAcumuladoMes objeto = new LineaAccionAcumuladoMes();
 		
 				objeto.setLinea_accion_id(rs.getInt("linea_accion_id"));
@@ -661,6 +704,15 @@ public class SqlSelects {
 				objeto.setMes(rs.getString("mes"));
 				objeto.setCantidad_programada(rs.getDouble("cantidad_programada"));
 				objeto.setCantidad_ejecutda(rs.getDouble("cantidad_ejecutada"));
+=======
+				UnidadMedida objeto = new UnidadMedida();
+		
+				objeto.setNombre(rs.getString("nombre"));
+				objeto.setDescripcion(rs.getString("descripcion"));
+				objeto.setSigla(rs.getString("sigla"));
+				objeto.setBorrado(rs.getBoolean("borrado"));
+
+>>>>>>> 22f7f2500b5e74445483fd7feaff463adcc95484
 				objetos.add(objeto);
 			}
 		}
@@ -670,6 +722,7 @@ public class SqlSelects {
 			if (conect != null) {conect.close();}
 		}
 		return objetos; 
+<<<<<<< HEAD
 		}
 
 	public static List<Departamento> selectDepartamento() throws SQLException{
@@ -679,15 +732,34 @@ public class SqlSelects {
 		Statement statement = null;
 		ResultSet rs=null;
 		List<Departamento> objetos = new ArrayList<Departamento>();
+=======
+		}	
+	public static List<LineaEstrategica> selectLineaEstrategica() throws SQLException{
+		Connection conect=ConnectionConfiguration.conectar();
+		String query = " select * from linea_estrategica";
+
+		Statement statement = null;
+		ResultSet rs=null;
+		List<LineaEstrategica> objetos = new ArrayList<LineaEstrategica>();
+>>>>>>> 22f7f2500b5e74445483fd7feaff463adcc95484
 
 		try {
 			statement = conect.createStatement();
 			rs=statement.executeQuery(query);
 			while(rs.next()){
+<<<<<<< HEAD
 				Departamento objeto = new Departamento();
 		
 				objeto.setIdDepartamento(rs.getInt("id"));
 				objeto.setNombreDepartamento(rs.getString("nombre"));
+=======
+				LineaEstrategica objeto = new LineaEstrategica();
+		
+				objeto.setNombre(rs.getString("nombre"));
+				objeto.setDescripcion(rs.getString("descripcion"));
+				objeto.setOrden(rs.getInt("orden"));
+				objeto.setBorrado(rs.getBoolean("borrado"));
+>>>>>>> 22f7f2500b5e74445483fd7feaff463adcc95484
 
 				objetos.add(objeto);
 			}
@@ -698,6 +770,7 @@ public class SqlSelects {
 			if (conect != null) {conect.close();}
 		}
 		return objetos; 
+<<<<<<< HEAD
 		}
 	
 	
@@ -2552,5 +2625,10 @@ public class SqlSelects {
 // 		    conect.close();
 // 		} catch (SQLException e) {e.printStackTrace();}
 //    }
+=======
+		}	
+	
+
+>>>>>>> 22f7f2500b5e74445483fd7feaff463adcc95484
 
 }
