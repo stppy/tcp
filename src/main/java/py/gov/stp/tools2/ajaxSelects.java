@@ -138,191 +138,14 @@ public class ajaxSelects extends HttpServlet {
  
         
         if (action!=null && action!=""){
-        	
-<<<<<<< HEAD
-        	if (action.equals("getEntidades")){
-        		List objetos=null;
-        		condition = " where true ";
-        		if (institucion!="") condition += " and institucion ='"+institucion+"'";
-        		if (institucion_id!=0) condition += " and institucion_id ='"+institucion_id+"'";
-				try {objetos = SqlSelects.selectEntidad(condition);}
-				catch (SQLException e) {e.printStackTrace();}
-        		JsonElement json = new Gson().toJsonTree(objetos);
-        		out.println(json.toString());
-        	}
-        	
-        	if (action.equals("getLineasAccion")){
-        		List objetos=null;
-        		condition = " where true ";
-        		if (institucion!="") condition += " and institucion ='"+institucion+"'";
-        		if (institucion_id!=0) condition += " and institucion_id ='"+institucion_id+"'";
-        		if (linea_accion_id!=0) condition += " and linea_accion_id ='"+linea_accion_id+"'";
-        		if (anio!=0) condition += " and date_part ='"+anio+"'";
-        		
-				try {objetos = SqlSelects.seletLineaAccion(condition);}
-				catch (SQLException e) {e.printStackTrace();}
-        		JsonElement json = new Gson().toJsonTree(objetos);
-        		out.println(json.toString());
-        	}
-        	
-        	if (action.equals("getLineasAccionSnpp")){
-        		List objetos=null;
-        		condition = " where true ";
-        		if (institucion!="") condition += " and institucion ='"+institucion+"'";
-        		if (institucion_id!=0) condition += " and institucion_id ='"+institucion_id+"'";
-        		if (linea_accion_id!=0) condition += " and linea_accion_id ='"+linea_accion_id+"'";
-        		if (anio!=0) condition += " and date_part ='"+anio+"'";
-        		
-				try {objetos = SqlSelects.seletLineaAccionSnpp(condition);}
-				catch (SQLException e) {e.printStackTrace();}
-        		JsonElement json = new Gson().toJsonTree(objetos);
-        		out.println(json.toString());
-        	}
-        	
-        	if (action.equals("getLineasAccionDepartamento")){
-        		List objetos=null;
-        		try {objetos = SqlSelects.selectLineaAccionDepartamento();}
-				catch (SQLException e) {e.printStackTrace();}
-        		JsonElement json = new Gson().toJsonTree(objetos);
-        		out.println(json.toString());
-        	}
-        	
-        	if (action.equals("getFactHitos")){
-        		List objetos=null;
-        		condition = " where true ";
-        		if (institucion!="") condition += " and institucion ='"+institucion+"'";
-        		if (institucion_id!=0) condition += " and institucion_id ='"+institucion_id+"'";
-        		if (linea_accion_id!=0) condition += " and linea_accion_id ='"+linea_accion_id+"'";
-        		if (accion!="") condition += " and accion ='"+accion+"'";
-        		if (accion_id!=0) condition += " and accion_id ='"+accion_id+"'";
-        		
-        		
-				try {objetos = SqlSelects.selectFactHitos(condition);}
-				catch (SQLException e) {e.printStackTrace();}
-        		JsonElement json = new Gson().toJsonTree(objetos);
-        		out.println(json.toString());
-        	}
-        	
-        	if (action.equals("getFactHitosSnpp")){
-        		List objetos=null;
-        		condition = " where true ";
-        		if (institucion!="") condition += " and institucion ='"+institucion+"'";
-        		if (institucion_id!=0) condition += " and institucion_id ='"+institucion_id+"'";
-        		if (linea_accion_id!=0) condition += " and linea_accion_id ='"+linea_accion_id+"'";
-        		if (accion!="") condition += " and accion ='"+accion+"'";
-        		if (accion_id!=0) condition += " and accion_id ='"+accion_id+"'";
-        		
-        		
-				try {objetos = SqlSelects.selectFactHitosSnpp(condition);}
-				catch (SQLException e) {e.printStackTrace();}
-        		JsonElement json = new Gson().toJsonTree(objetos);
-        		out.println(json.toString());
-        	}
-        	
-        	if (action.equals("getFactHitos2015")){
-        		List objetos=null;
-        		condition = " where hito_fecha_entrega > '2014-12-31' and hito_fecha_entrega < '2016-01-01'";
-        		if (institucion!="") condition += " and institucion ='"+institucion+"'";
-        		if (institucion_id!=0) condition += " and institucion_id ='"+institucion_id+"'";
-        		if (linea_accion_id!=0) condition += " and linea_accion_id ='"+linea_accion_id+"'";
-        		if (accion!="") condition += " and accion ='"+accion+"'";
-        		if (accion_id!=0) condition += " and accion_id ='"+accion_id+"'";
-        		if (departamento!=99) condition += " and accion_departamento_id ='"+departamento+"'";
-        		if (db=="20150731") {try {objetos = SqlSelects.selectFactHitos2015Base(condition);}catch (SQLException e) {e.printStackTrace();}}
-        		else{
-	        		
-					try {objetos = SqlSelects.selectFactHitos2015(condition);}
-					catch (SQLException e) {e.printStackTrace();}
-	        		JsonElement json = new Gson().toJsonTree(objetos);
-	        		out.println(json.toString());
-        		}
-        	}
-        	if (action.equals("getFactHitos2015Accion")){
-        		List objetos=null;
-        		condition = " where hito_fecha_entrega > '2014-12-31' and hito_fecha_entrega < '2016-01-01'";
-        		if (institucion!="") condition += " and institucion ='"+institucion+"'";
-        		if (institucion_id!=0) condition += " and institucion_id ='"+institucion_id+"'";
-        		if (linea_accion_id!=0) condition += " and linea_accion_id ='"+linea_accion_id+"'";
-        		if (accion!="") condition += " and accion ='"+accion+"'";
-        		if (accion_id!=0) condition += " and accion_id ='"+accion_id+"'";
-        		if (departamento!=99) condition += " and accion_departamento_id ='"+departamento+"'";
-        		if (db=="20150731") {try {objetos = SqlSelects.selectFactHitos2015Accion(condition);}catch (SQLException e) {e.printStackTrace();}}
-        		else{
-	        		
-					try {objetos = SqlSelects.selectFactHitos2015Accion(condition);}
-					catch (SQLException e) {e.printStackTrace();}
-	        		JsonElement json = new Gson().toJsonTree(objetos);
-	        		out.println(json.toString());
-        		}
-        	}
-        	if (action.equals("getUsuarios")){
-        		List objetos=null;
-        		if (usuario!=null) condition = " where correo ='"+usuario+"'";
-				try {objetos = SqlSelects.selectUsuario(condition);}
-				catch (SQLException e) {e.printStackTrace();}
-        		JsonElement json = new Gson().toJsonTree(objetos );
-        		myObj.addProperty("success", true);
-        		myObj.add("usuarios", json);
-        		out.println(myObj.toString());
-        	}       	
-        	
-        	if (action.equals("getPass")){
-        		List objetos=null;
-        		if (usuario!=null) condition = " where correo ='"+usuario+"'";
-				try {objetos = SqlSelects.selectUsuario(condition);}
-				catch (SQLException e) {e.printStackTrace();}
-        		JsonElement json = new Gson().toJsonTree(objetos );
-        		myObj.addProperty("success", true);
-        		myObj.add("usuarios", json);
-        		out.println(myObj.toString());
-        	}
-        	
-        	
-        	if (action.equals("getLineaAccionAcumuladoMes")){
-        		List objetos=null;
-        		condition = "where true ";
-        		if (institucion_id!=0) condition += " and institucion_id ='"+institucion_id+"'";
-        		if (linea_accion_id!=0) condition += " and linea_accion_id ='"+linea_accion_id+"'";
-        		if (departamento!=99) condition += " and accion_departamento_id ='"+departamento+"'"; 
-        		try {objetos = SqlSelects.selectLineaAccionAcumuladoMes(condition);}
-        		catch (SQLException e) {e.printStackTrace();}
-        		JsonElement json = new Gson().toJsonTree(objetos );
-        		out.println(json.toString());
-        		}
-        	if (action.equals("getLineaAccionAcumuladoMesDepto")){
-        		List objetos=null;
-        		condition = "where true ";
-        		if (institucion_id!=0) condition += " and institucion_id ='"+institucion_id+"'";
-        		if (linea_accion_id!=0) condition += " and linea_accion_id ='"+linea_accion_id+"'";
-        		if (departamento!=99) condition += " and accion_departamento_id ='"+departamento+"'"; 
-        		try {objetos = SqlSelects.selectLineaAccionAcumuladoMesDepto(condition);}
-        		catch (SQLException e) {e.printStackTrace();}
-        		JsonElement json = new Gson().toJsonTree(objetos );
-        		out.println(json.toString());
-        		}
-        	if (action.equals("getDepartamento")){
-        		List objetos=null;
-           		try {objetos = SqlSelects.selectDepartamento();}
-        		catch (SQLException e) {e.printStackTrace();}
-        		JsonElement json = new Gson().toJsonTree(objetos );
-        		out.println(json.toString());
-        		}
-        	if (action.equals("getDesempPaisPorDepto")){
-        		List objetos=null;
-           		try {objetos = SqlSelects.selectGenerico("", "fact_desemp_depto");}
-        		catch (SQLException e) {e.printStackTrace();}
-        		JsonElement json = new Gson().toJsonTree(objetos );
-        		out.println(json.toString());
-        		}
+      
         	if (action.equals("getWs")){
         		List objetos=null;
            		try {objetos = SqlSelects.selectWs();}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());        	
-        	
-        	
-       }
+        	}
         	if (action.equals("getEvidencia")){
         		List objetos=null;
            		try {objetos = SqlSelects.selectEvidencia();}
@@ -422,7 +245,7 @@ public class ajaxSelects extends HttpServlet {
         	
         	
        }         	
-=======
+
         	if (action.equals("getTipoAccion")){
         		List objetos=null; 
            		try {objetos = SqlSelects.selectTipoAccion();}
@@ -447,12 +270,10 @@ public class ajaxSelects extends HttpServlet {
        	
         	
        }
->>>>>>> 22f7f2500b5e74445483fd7feaff463adcc95484
+
        out.close();
         
     }
 }
-<<<<<<< HEAD
-}
-=======
->>>>>>> 22f7f2500b5e74445483fd7feaff463adcc95484
+
+
