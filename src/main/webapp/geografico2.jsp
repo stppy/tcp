@@ -61,6 +61,12 @@ var datosGeo=[];
 		#R, #G, #B {
 			width: 300px;
 		}
+		.leaflet-popup-close-button {
+        display: none;
+    }
+    .leaflet-popup-content-wrapper {
+        pointer-events: none;
+    }
     </style>
     
     
@@ -116,6 +122,8 @@ if (user != null) { %>
 <script>
 	
 	$(document).ready(function(){
+		 
+		
 		var lineaAccionAcumuladoMesDepto;
 		
 		var vectorMin=0;
@@ -1007,7 +1015,7 @@ tbody {
 						var map = L.map('map').setView([-24.5, -57], 6);
 						var depto = new L.geoJson(deptoGeojson,{style:style,onEachFeature: onEachFeature});
 						depto.addTo(map);
-
+						var popup = new L.Popup({ autoPan: false })
 						function renderEntidad(e){
 							depto.eachLayer(function(l){depto.resetStyle(l);});
 							highlightFeature(e);
@@ -1017,12 +1025,26 @@ tbody {
 						}
 						function onEachFeature(feature, layer) {
 						layer.on({
-								click: renderEntidad
+								click: renderEntidad,
+								mousemove: mousemove,
+					            mouseout: mouseout
 							});
 						}					
-	
+						var closeTooltip;
 						//var depto = new L.geoJson(depto,{style:miestilo})
-						
+						function mousemove(e) {					        
+					        var layer = e.target;
+					        popup.setLatLng(e.latlng);
+					        popup.setContent('<h2>' + layer.feature.properties.dpto_desc + '</h2>');
+							if (!popup._map) popup.openOn(map);
+					        window.clearTimeout(closeTooltip);
+					    }
+					
+					    function mouseout(e) {
+					        closeTooltip = window.setTimeout(function() {
+					            map.closePopup();
+					        }, 100);
+					    }
 	
 					
 					$("body").on("click", "#tablaInstituciones",function(event){
