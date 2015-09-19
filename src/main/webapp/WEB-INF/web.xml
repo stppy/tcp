@@ -92,6 +92,13 @@
 
   </servlet>
   <servlet>
+    <description>ajaxSelects2</description>
+    <display-name>ajaxSelects2</display-name>
+    <servlet-name>ajaxSelects2</servlet-name>
+    <servlet-class>py.gov.stp.tools2.ajaxSelects</servlet-class>
+
+  </servlet>
+  <servlet>
     <description>ajaxUpdate</description>
     <display-name>ajaxUpdate</display-name>
     <servlet-name>ajaxUpdate</servlet-name>
@@ -113,6 +120,10 @@
   <servlet-mapping>
     <servlet-name>ajaxSelects</servlet-name>
     <url-pattern>/ajaxSelects</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ajaxSelects2</servlet-name>
+    <url-pattern>/ajaxSelects2</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>ajaxUpdate</servlet-name>

@@ -1,8 +1,18 @@
-package py.gov.stp.tools;
+package py.gov.stp.tools2;
+<<<<<<< HEAD
+import py.gov.stp.objetosV2.*;
 
 
 
 import java.sql.Connection;
+
+import py.gov.stp.tools.ConnectionConfiguration;
+
+=======
+
+
+import java.sql.Connection;
+>>>>>>> 22f7f2500b5e74445483fd7feaff463adcc95484
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,9 +31,14 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import objetos.Entidad;
 import objetos.FactHitos;
 import objetos.Generica;
+<<<<<<< HEAD
 import objetos.LineaAccion;
 import objetos.LineaAccionAcumuladoMes;
 import objetos.LineaAccionDepartamento;
+=======
+
+import py.gov.stp.objetosV2.*;
+>>>>>>> 22f7f2500b5e74445483fd7feaff463adcc95484
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -48,6 +63,7 @@ public class SqlSelects {
 	        return con;
 	}*/
 	
+<<<<<<< HEAD
 	public static List<Usuario> selectUsuario(String condition) throws SQLException{
  	 Connection conect=ConnectionConfiguration.conectarSpr();
 		 String query = " select * from usuario "+condition;
@@ -609,11 +625,21 @@ public class SqlSelects {
 		Statement statement = null;
 		ResultSet rs=null;
 		List<LineaAccionAcumuladoMes> objetos = new ArrayList<LineaAccionAcumuladoMes>();
+=======
+	public static List<TipoAccion> selectTipoAccion() throws SQLException{
+		Connection conect=ConnectionConfiguration.conectar();
+		String query = " select * from tipo_accion";
+
+		Statement statement = null;
+		ResultSet rs=null;
+		List<TipoAccion> objetos = new ArrayList<TipoAccion>();
+>>>>>>> 22f7f2500b5e74445483fd7feaff463adcc95484
 
 		try {
 			statement = conect.createStatement();
 			rs=statement.executeQuery(query);
 			while(rs.next()){
+<<<<<<< HEAD
 				LineaAccionAcumuladoMes objeto = new LineaAccionAcumuladoMes();
 		
 				objeto.setLinea_accion_id(rs.getInt("linea_accion_id"));
@@ -624,6 +650,14 @@ public class SqlSelects {
 				objeto.setMes(rs.getString("mes"));
 				objeto.setCantidad_programada(rs.getDouble("cantidad_programada"));
 				objeto.setCantidad_ejecutda(rs.getDouble("cantidad_ejecutada"));
+=======
+				TipoAccion objeto = new TipoAccion();
+		
+				objeto.setNombre(rs.getString("nombre"));
+				objeto.setDescripcion(rs.getString("descripcion"));
+				objeto.setBorrado(rs.getBoolean("borrado"));
+
+>>>>>>> 22f7f2500b5e74445483fd7feaff463adcc95484
 				objetos.add(objeto);
 			}
 		}
@@ -633,6 +667,7 @@ public class SqlSelects {
 			if (conect != null) {conect.close();}
 		}
 		return objetos; 
+<<<<<<< HEAD
 		}
 	
 	public static List<LineaAccionAcumuladoMes> selectLineaAccionAcumuladoMesDepto(String condition) throws SQLException{
@@ -642,11 +677,23 @@ public class SqlSelects {
 		Statement statement = null;
 		ResultSet rs=null;
 		List<LineaAccionAcumuladoMes> objetos = new ArrayList<LineaAccionAcumuladoMes>();
+=======
+		}	
+	
+	public static List<UnidadMedida> selectUnidadMedida() throws SQLException{
+		Connection conect=ConnectionConfiguration.conectar();
+		String query = " select * from unidad_medida";
+
+		Statement statement = null;
+		ResultSet rs=null;
+		List<UnidadMedida> objetos = new ArrayList<UnidadMedida>();
+>>>>>>> 22f7f2500b5e74445483fd7feaff463adcc95484
 
 		try {
 			statement = conect.createStatement();
 			rs=statement.executeQuery(query);
 			while(rs.next()){
+<<<<<<< HEAD
 				LineaAccionAcumuladoMes objeto = new LineaAccionAcumuladoMes();
 		
 				objeto.setLinea_accion_id(rs.getInt("linea_accion_id"));
@@ -657,6 +704,15 @@ public class SqlSelects {
 				objeto.setMes(rs.getString("mes"));
 				objeto.setCantidad_programada(rs.getDouble("cantidad_programada"));
 				objeto.setCantidad_ejecutda(rs.getDouble("cantidad_ejecutada"));
+=======
+				UnidadMedida objeto = new UnidadMedida();
+		
+				objeto.setNombre(rs.getString("nombre"));
+				objeto.setDescripcion(rs.getString("descripcion"));
+				objeto.setSigla(rs.getString("sigla"));
+				objeto.setBorrado(rs.getBoolean("borrado"));
+
+>>>>>>> 22f7f2500b5e74445483fd7feaff463adcc95484
 				objetos.add(objeto);
 			}
 		}
@@ -666,6 +722,7 @@ public class SqlSelects {
 			if (conect != null) {conect.close();}
 		}
 		return objetos; 
+<<<<<<< HEAD
 		}
 
 	public static List<Departamento> selectDepartamento() throws SQLException{
@@ -675,15 +732,34 @@ public class SqlSelects {
 		Statement statement = null;
 		ResultSet rs=null;
 		List<Departamento> objetos = new ArrayList<Departamento>();
+=======
+		}	
+	public static List<LineaEstrategica> selectLineaEstrategica() throws SQLException{
+		Connection conect=ConnectionConfiguration.conectar();
+		String query = " select * from linea_estrategica";
+
+		Statement statement = null;
+		ResultSet rs=null;
+		List<LineaEstrategica> objetos = new ArrayList<LineaEstrategica>();
+>>>>>>> 22f7f2500b5e74445483fd7feaff463adcc95484
 
 		try {
 			statement = conect.createStatement();
 			rs=statement.executeQuery(query);
 			while(rs.next()){
+<<<<<<< HEAD
 				Departamento objeto = new Departamento();
 		
 				objeto.setIdDepartamento(rs.getInt("id"));
 				objeto.setNombreDepartamento(rs.getString("nombre"));
+=======
+				LineaEstrategica objeto = new LineaEstrategica();
+		
+				objeto.setNombre(rs.getString("nombre"));
+				objeto.setDescripcion(rs.getString("descripcion"));
+				objeto.setOrden(rs.getInt("orden"));
+				objeto.setBorrado(rs.getBoolean("borrado"));
+>>>>>>> 22f7f2500b5e74445483fd7feaff463adcc95484
 
 				objetos.add(objeto);
 			}
@@ -694,7 +770,394 @@ public class SqlSelects {
 			if (conect != null) {conect.close();}
 		}
 		return objetos; 
+<<<<<<< HEAD
 		}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public static List<Ws> selectWs() throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+			 String query = " select * from ws";
+			 
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 List<Ws> objetos = new ArrayList<Ws>();
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					Ws objeto = new Ws();
+					objeto.setId(rs.getInt("id"));
+					objeto.setNombre(rs.getString("nombre"));
+					objeto.setDescripcion(rs.getString("descripcion"));
+					objeto.setUrl(rs.getString("url"));
+					objeto.setMetodo(rs.getString("metodo"));
+					objeto.setUsuario(rs.getString("usuario"));
+					objeto.setPass(rs.getString("pass"));
+					objeto.setIdClave(rs.getString("id_clave"));
+					objeto.setIdValor(rs.getString("id_valor"));
+					objeto.setWsTipoId(rs.getInt("ws_tipo_id"));
+					objeto.setBorrado(rs.getBoolean("borrado"));
+
+					objetos.add(objeto);
+				}
+			}
+			catch (SQLException e) {e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos; 
+	  }	
+	
+	
+	public static List<Evidencia> selectEvidencia() throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+			 String query = " select * from evidencia";
+			 
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 List<Evidencia> objetos = new ArrayList<Evidencia>();
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					Evidencia objeto = new Evidencia();
+					objeto.setId(rs.getInt("id"));
+					objeto.setNombre(rs.getString("nombre"));
+					objeto.setDescripcion(rs.getString("descripcion"));
+					objeto.setWsId(rs.getInt("ws_id"));
+					objeto.setBorrado(rs.getBoolean("borrado"));
+					
+					objetos.add(objeto);
+				}
+			}
+			catch (SQLException e) {e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos; 
+	  }	
+	public static List<WsTipo> selectWsTipo() throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+			 String query = " select * from ws_tipo";
+			 
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 List<WsTipo> objetos = new ArrayList<WsTipo>();
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					WsTipo objeto = new WsTipo();
+					objeto.setId(rs.getInt("id"));
+					objeto.setNombre(rs.getString("nombre"));
+					objeto.setDescripcion(rs.getString("descripcion"));
+					objeto.setBorrado(rs.getBoolean("borrado"));
+
+					objetos.add(objeto);
+				}
+			}
+			catch (SQLException e) {e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos; 
+	  }
+	public static List<AccionHasEtiqueta> selectAccionHasEtiqueta() throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+			 String query = " select * from accion_has_etiqueta";
+			 
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 List<AccionHasEtiqueta> objetos = new ArrayList<AccionHasEtiqueta>();
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					AccionHasEtiqueta objeto = new AccionHasEtiqueta();
+					objeto.setAccionId(rs.getInt("acion_id"));
+					objeto.setEtiquetaId(rs.getInt("etiqueta_id"));
+					objeto.setProporcion(rs.getInt("proporcion"));
+					objeto.setBorrado(rs.getBoolean("borrado"));
+
+					objetos.add(objeto);
+				}
+			}
+			catch (SQLException e) {e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos; 
+	  }
+	public static List<Etiqueta> selectEtiqueta() throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+			 String query = " select * from etiqueta";
+			 
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 List<Etiqueta> objetos = new ArrayList<Etiqueta>();
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					Etiqueta objeto = new Etiqueta();
+					objeto.setId(rs.getInt("id"));
+					objeto.setNombre(rs.getString("nombre"));
+					objeto.setDescripcion(rs.getString("descripcion"));
+					objeto.setBorrado(rs.getBoolean("borrado"));
+
+					objetos.add(objeto);
+				}
+			}
+			catch (SQLException e) {e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos; 
+	  }
+	public static List<HitoHasBeneficiario> selectHitoHasBeneficiario() throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+			 String query = " select * from hito_has_beneficiario";
+			 
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 List<HitoHasBeneficiario> objetos = new ArrayList<HitoHasBeneficiario>();
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					HitoHasBeneficiario objeto = new HitoHasBeneficiario();
+					objeto.setHitoId(rs.getInt("hito_id"));
+					objeto.setHitoAccionId(rs.getInt("hito_accion_id"));
+					objeto.setBeneficiarioId(rs.getInt("beneficiario_id"));
+					objeto.setBorrado(rs.getBoolean("borrado"));
+
+					objetos.add(objeto);
+				}
+			}
+			catch (SQLException e) {e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos; 
+	  }
+	public static List<BeneficiarioTipo> selectBeneficiarioTipo() throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+			 String query = " select * from beneficiario_tipo";
+			 
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 List<BeneficiarioTipo> objetos = new ArrayList<BeneficiarioTipo>();
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					BeneficiarioTipo objeto = new BeneficiarioTipo();
+					objeto.setId(rs.getInt("id"));
+					objeto.setNombre(rs.getString("nombre"));
+					objeto.setDescripcion(rs.getString("descripcion"));
+					objeto.setBorrado(rs.getBoolean("borrado"));
+
+					objetos.add(objeto);
+				}
+			}
+			catch (SQLException e) {e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos; 
+	  }		
+	public static List<Beneficiario> selectBeneficiario() throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+			 String query = " select * from beneficiario";
+			 
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 List<Beneficiario> objetos = new ArrayList<Beneficiario>();
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					Beneficiario objeto = new Beneficiario();
+					objeto.setId(rs.getInt("id"));
+					objeto.setNombre(rs.getString("nombre"));
+					objeto.setDescripcion(rs.getString("descripcion"));
+					objeto.setBeneficiarioTipoId(rs.getInt("beneficiario_tipo_id"));
+					objeto.setBorrado(rs.getBoolean("borrado"));
+					
+					objetos.add(objeto);
+				}
+			}
+			catch (SQLException e) {e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos; 
+	  }
+	public static List<BeneficiarioDetalle> selectBeneficiarioDetalle() throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+			 String query = " select * from beneficiario_detalle";
+			 
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 List<BeneficiarioDetalle> objetos = new ArrayList<BeneficiarioDetalle>();
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					BeneficiarioDetalle objeto = new BeneficiarioDetalle();
+					objeto.setId(rs.getInt("id"));
+					objeto.setValor(rs.getString("valor"));
+					objeto.setBeneficiarioDetalleClaves(rs.getInt("beneficiario_detalle_claves"));
+					objeto.setBeneficiarioId(rs.getInt("beneficiario_id"));
+					
+					objetos.add(objeto);
+				}
+			}
+			catch (SQLException e) {e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos; 
+	  }	
+	public static List<BeneficiarioDetalleClave> selectBeneficiarioDetalleClave() throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+			 String query = " select * from beneficiario_detalle_clave";
+			 
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 List<BeneficiarioDetalleClave> objetos = new ArrayList<BeneficiarioDetalleClave>();
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					BeneficiarioDetalleClave objeto = new BeneficiarioDetalleClave();
+					objeto.setId(rs.getInt("id"));
+					objeto.setClave(rs.getString("clave"));
+					
+					objetos.add(objeto);
+				}
+			}
+			catch (SQLException e) {e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos; 
+	  }
+	public static List<GeoPoligono> selectGeoPoligono() throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+			 String query = " select * from geo_poligono";
+			 
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 List<GeoPoligono> objetos = new ArrayList<GeoPoligono>();
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					GeoPoligono objeto = new GeoPoligono();
+					objeto.setId(rs.getInt("id"));
+					objeto.setNombre(rs.getString("nombre"));
+					objeto.setDescripcion(rs.getString("descripcion"));
+					objeto.setGeo(rs.getString("geo"));
+					objeto.setGeoPoligonoId(rs.getInt("geo_poligono_id"));
+					objeto.setGeoPoligonoTipoId(rs.getInt("geo_poligono_tipo_id"));
+					objeto.setBorrado(rs.getBoolean("borrado"));
+					
+					objetos.add(objeto);
+				}
+			}
+			catch (SQLException e) {e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos; 
+	  }
+	public static List<GeoPoligonoTipo> selectGeoPoligonoTipo() throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+			 String query = " select * from geo_poligono_tipo";
+			 
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 List<GeoPoligonoTipo> objetos = new ArrayList<GeoPoligonoTipo>();
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					GeoPoligonoTipo objeto = new GeoPoligonoTipo();
+					objeto.setId(rs.getInt("id"));
+					objeto.setNombre(rs.getString("nombre"));
+					objeto.setDescripcion(rs.getString("descripcion"));
+					objeto.setBorrado(rs.getBoolean("borrado"));
+					
+					objetos.add(objeto);
+				}
+			}
+			catch (SQLException e) {e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos; 
+	  }
+	public static List<AccionHasGeoPoligono> selectAccionHasGeoPoligono() throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+			 String query = " select * from accion_has_geo_poligono";
+			 
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 List<AccionHasGeoPoligono> objetos = new ArrayList<AccionHasGeoPoligono>();
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					AccionHasGeoPoligono objeto = new AccionHasGeoPoligono();
+					objeto.setAccionId(rs.getInt("accion_id"));
+					objeto.setGeoPoligonoId(rs.getInt("geo_poligono_id"));
+					objeto.setGeoPoligonoGeoPoligono(rs.getInt("geo_poligono_geo_poligono_id"));
+					objeto.setProporcion(rs.getInt("proporcion"));
+					objeto.setBorrado(rs.getBoolean("borrado"));
+
+					objetos.add(objeto);
+				}
+			}
+			catch (SQLException e) {e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos; 
+	  }	
 
 //    public static List<ProyectoSNIP> selectProyectoSnip(String condition) throws SQLException{
 //     	 Connection conect=ConnectionConfiguration.conectar();
@@ -2162,5 +2625,10 @@ public class SqlSelects {
 // 		    conect.close();
 // 		} catch (SQLException e) {e.printStackTrace();}
 //    }
+=======
+		}	
+	
+
+>>>>>>> 22f7f2500b5e74445483fd7feaff463adcc95484
 
 }
