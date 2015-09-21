@@ -84,9 +84,11 @@ var datosGeo=[];
 		     		
 		     	<div class="nav-tabs-custom">
                 <ul class="nav nav-tabs pull-right">
-                  <li class="active"><a href="#tab_1-1" data-toggle="tab"><i class="glyphicon glyphicon-list-alt"></i></a></li>
+              	  <li class="active"><a href="#tab_1-1" data-toggle="tab"  title="Acciones"><i class="glyphicon glyphicon-list"></i></a></li>
                   <!--<li><a href="#tab_2-2" data-toggle="tab"><i class="glyphicon glyphicon-map-marker"></i></a></li>-->
-                  <li><a href="#tab_3-2" data-toggle="tab"><i class="glyphicon glyphicon-stats"></i></a></li>
+                  <li><a href="#tab_3-2" data-toggle="tab" title="Evolución"><i class="glyphicon glyphicon-stats"></i></a></li>
+                  <li><a href="#tab_4-2" data-toggle="tab" title="Beneficiarios"><i class="glyphicon glyphicon-user"></i></a></li>
+                  <li><a href="#tab_5-2" data-toggle="tab" title="Ubicaciones"><i class="glyphicon glyphicon glyphicon-map-marker"></i></a></li>  
                     
                 </ul>
                 <div class="tab-content">
@@ -95,9 +97,9 @@ var datosGeo=[];
                		<!--  <iframe width='100%' height='520' frameborder='0' src='http://geo.stp.gov.py/user/stp/viz/8f7c6480-2f1c-11e5-aaea-b6fa9714a3b6/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen>
 		     		</iframe>  -->
                   </div><!-- /.tab-pane -->
-                  <div class="tab-pane" id="tab_3-2">
-                  	
-                  </div><!-- /.tab-pane -->
+                  <div class="tab-pane" id="tab_3-2"></div><!-- /.tab-pane -->
+                   <div class="tab-pane" id="tab_4-2"><p>Datos no disponibles</p></div><!-- /.tab-pane -->
+                   <div class="tab-pane" id="tab_5-2"><p>Datos no disponibles</p></div><!-- /.tab-pane -->                     
                 </div><!-- /.tab-content -->
               </div>
 		      </div>

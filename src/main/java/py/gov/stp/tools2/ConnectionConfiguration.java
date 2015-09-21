@@ -8,9 +8,10 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import py.gov.stp.tools.SqlHelper;
+import py.gov.stp.tools2.*;
 
 public class ConnectionConfiguration {
+	
     public static final String URL = "jdbc:mysql01://pg01.stp.goy.py:3306/spr?useUnicode=true&characterEncoding=UTF-8";
     public static final String USERNAME = "root";
     public static final String PASSWORD = "cybiraconsulting";
@@ -27,7 +28,7 @@ public class ConnectionConfiguration {
         return connection;
     }
     public static Connection conectar(){
-		 Connection con = null;
+		 Connection con = null; 
 	        Statement st = null;
 	        ResultSet rs = null;
 	        try {Class.forName("org.postgresql.Driver");}
@@ -44,4 +45,4 @@ public class ConnectionConfiguration {
 	        return con;
 	}
 
-	}
+}

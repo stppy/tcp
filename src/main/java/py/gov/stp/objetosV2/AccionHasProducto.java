@@ -1,6 +1,6 @@
 package py.gov.stp.objetosV2;
 
-public class AccionHAsProducto {
+public class AccionHasProducto {
 	protected int proporcion;
 	protected int accionId;
 	protected int sprProductoId;

@@ -113,7 +113,7 @@
   <servlet>
     <description>ajaxDelete</description>
     <display-name>ajaxDelete</display-name>
-    <servlet-name>ajaxDelete</servlet-name>
+    <servlet-name>ajaxDelete</servlet-name> 
     <servlet-class>py.gov.stp.tools.ajaxDelete</servlet-class>
   </servlet>
    

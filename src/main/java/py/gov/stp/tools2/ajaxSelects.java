@@ -267,6 +267,70 @@ public class ajaxSelects extends HttpServlet {
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
         		}      
+        	if (action.equals("getLineaAccion")){
+        		List objetos=null; 
+           		try {objetos = SqlSelects.selectLineaAccion();}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());
+        	}  
+        	if (action.equals("getInsLineaAccion")){
+        		List objetos=null; 
+           		try {objetos = SqlSelects.selectInsLineaAccion();}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());
+        	}    
+        	if (action.equals("getInstitucion")){
+        		List objetos=null; 
+           		try {objetos = SqlSelects.selectInstitucion();}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());
+        	}  
+        	if (action.equals("getPeriodo")){
+        		List objetos=null; 
+           		try {objetos = SqlSelects.selectPeriodo();}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());
+        	}  
+        	if (action.equals("getHitoTipo")){
+        		List objetos=null; 
+           		try {objetos = SqlSelects.selectHitoTipo();}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());
+        	}   
+        	if (action.equals("getHito")){
+        		List objetos=null; 
+           		try {objetos = SqlSelects.selectHito();}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());
+        	} 
+        	if (action.equals("getAccion")){
+        		List objetos=null; 
+           		try {objetos = SqlSelects.selectAccion();}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());
+        	}          
+        	if (action.equals("getAccionHasProducto")){
+        		List objetos=null; 
+           		try {objetos = SqlSelects.selectAccionHasProducto();}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());
+        	}         
+        	if (action.equals("getSprProducto")){
+        		List objetos=null; 
+           		try {objetos = SqlSelects.selectSprProducto();}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());
+        	}
+        	
        	
         	
        }
