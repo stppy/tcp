@@ -37,7 +37,7 @@
 	</div>
 </div>
 	<script>
-	$("body").on("click", "#accionHasGeoPoligono",function(event){		
+	$("body").on("click", "#guardarAccionHasGeoPoligono",function(event){		
 			var todojunto = new Object();
 			var accion = "insAccionHasGeoPoligono";
 			var geoPoligonoId= $("#geoPoligonoIdAccionHasGeoPoligono").val();

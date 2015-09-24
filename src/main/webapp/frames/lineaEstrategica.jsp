@@ -22,7 +22,7 @@
 				  <div class="form-group">
 				    <label for="ordenLineaEstrategica" class="col-lg-2 control-label">Orden</label>
 				    <div class="col-lg-10">
-				      <input type="text" class="form-control" id="ordenLineaEstrategica" placeholder="Descripción">
+				      <input type="text" class="form-control" id="ordenLineaEstrategica" placeholder="Orden">
 				    </div>
 				  </div>				  
 				  <div class="form-group">

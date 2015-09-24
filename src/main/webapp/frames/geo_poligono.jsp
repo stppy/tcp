@@ -43,7 +43,7 @@
 	</div>
 </div>
 	<script>
-	$("body").on("click", "#guardarTipoAccion",function(event){		
+	$("body").on("click", "#guardarGeoPoligono",function(event){		
 			var todojunto = new Object();
 			var accion = "insGeoPoligono";
 			var nombre= $("#nombreGeoPoligono").val();
