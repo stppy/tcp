@@ -111,6 +111,12 @@
     <servlet-class>py.gov.stp.tools.ajaxInserts</servlet-class>
   </servlet>
   <servlet>
+    <description>ajaxInserts2</description>
+    <display-name>ajaxInserts2</display-name>
+    <servlet-name>ajaxInserts2</servlet-name>
+    <servlet-class>py.gov.stp.tools2.ajaxInserts</servlet-class>
+  </servlet>  
+  <servlet>
     <description>ajaxDelete</description>
     <display-name>ajaxDelete</display-name>
     <servlet-name>ajaxDelete</servlet-name> 
@@ -133,6 +139,10 @@
     <servlet-name>ajaxInserts</servlet-name>
     <url-pattern>/ajaxInserts</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ajaxInserts2</servlet-name>
+    <url-pattern>/ajaxInserts2</url-pattern>
+  </servlet-mapping>  
   <servlet-mapping>
     <servlet-name>ajaxDelete</servlet-name>
     <url-pattern>/ajaxDelete</url-pattern>
