@@ -172,7 +172,7 @@ if (user != null) { %>
                 </tr>
               </thead>
               <tbody id="cuerpoTabla">
-              	<tr><td><a href="#" data-toggle="modal" data-target="#tipoAccion">Acción</a></td></tr>
+              	<tr><td><a >Acción</a></td></tr>
               	<tr><td><a>Acción Has Etiqueta</a></td></tr>  
               	<tr><td><a>Acción Has Geo Poligono</a></td></tr>   
               	<tr><td><a>Acción Has Producto</a></td></tr>
@@ -193,7 +193,7 @@ if (user != null) { %>
               	<tr><td><a>Linea Estrategica</a></td></tr>
               	<tr><td><a>Periodo</a></td></tr>
               	<tr><td><a>Spr Producto</a></td></tr>
-              	<tr><td><a>Tipo Acción</a></td></tr>
+              	<tr><td><a href="#" data-toggle="modal" data-target="#tipoAccion">Tipo Acción</a></td></tr>
               	<tr><td><a>Unidad Medida</a></td></tr>
               	<tr><td><a>Ws</a></td></tr>
               	<tr><td><a>Ws Tipo</a></td></tr>              	    	        	    	    	        	

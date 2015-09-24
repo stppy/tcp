@@ -52,7 +52,7 @@
 				  <div class="form-group">
 				    <label for="unidadMedidaIdLineaAccion" class="col-lg-2 control-label">Unidad_medida_id</label>
 				    <div class="col-lg-10">
-				      <input type="text" class="form-control" id="unidadMedidaIdLineaAccion" placeholder="Unidad medida id">
+				      <input type="number" class="form-control" id="unidadMedidaIdLineaAccion" placeholder="Unidad medida id">
 				    </div>
 				  </div>					  			  				  		  			  				  
 				  <div class="form-group">

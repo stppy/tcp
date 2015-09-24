@@ -295,17 +295,6 @@ public class ajaxInserts  extends HttpServlet {
     	}
        }
         if (accion!=null && accion!=""){
-    	if (accion.equals("insTipoAccion")){
-    		TipoAccion productoObj = new TipoAccion();
-    		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
-            String json = "";
-            if(br != null){ json = br.readLine();}
-            Gson gsonInsert = new Gson();
-            productoObj=gsonInsert.fromJson(json, TipoAccion.class);
-			SqlInserts.insertTipoAccion(productoObj);
-    	}
-       }
-        if (accion!=null && accion!=""){
     	if (accion.equals("insUnidadMedida")){
     		UnidadMedida productoObj = new UnidadMedida();
     		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));

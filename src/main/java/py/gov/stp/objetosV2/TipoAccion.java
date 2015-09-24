@@ -4,7 +4,7 @@ public class TipoAccion {
 
 	protected String nombre;
 	protected String descripcion;
-	protected boolean borrado;
+	protected boolean borrado=false;
 	
 	public String getNombre() {
 		return nombre;
@@ -24,6 +24,7 @@ public class TipoAccion {
 	public void setBorrado(boolean borrado) {
 		this.borrado = borrado;
 	}
+
 	
 
 	
