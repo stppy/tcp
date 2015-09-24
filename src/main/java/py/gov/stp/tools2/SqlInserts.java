@@ -24,15 +24,15 @@ public class SqlInserts {
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into tipo_accion (id,nombre,descripcion,borrado)"
-	+ " values (?, ?, ?, ?)";
+		String query = " insert into tipo_accion (nombre,descripcion)"
+	+ " values (?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
 		//insert.setInt (1, tipoAccion.getId());
-		insert.setString (2, tipoAccion.getNombre());
-		insert.setString (3, tipoAccion.getDescripcion());
-		insert.setBoolean (4, tipoAccion.isBorrado());
+		insert.setString (1, tipoAccion.getNombre());
+		insert.setString (2, tipoAccion.getDescripcion());
+		//insert.setBoolean (4, tipoAccion.isBorrado());
 							
 		insert.execute();
 		   
@@ -86,21 +86,21 @@ public class SqlInserts {
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into linea_accion (id,nombre,descripcion,orden,peso,acumulador,tipo_accion_id,estrategia_id,unidad_medida_id,borrado)"
-	+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String query = " insert into linea_accion (nombre,descripcion,orden,peso,acumular,tipo_accion_id,estrategia_id,unidad_medida_id)"
+	+ " values (?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
 		//insert.setInt (1, lineaAccion.getId());
-		insert.setString (2, lineaAccion.getNombre());
-		insert.setString (3, lineaAccion.getDescripcion());
-		insert.setInt (4, lineaAccion.getOrden());
-		insert.setString (5, lineaAccion.getPeso());
-		insert.setBoolean (6, lineaAccion.isAcumulador());
-		insert.setInt (7, lineaAccion.getTipoAccionId());
-		insert.setInt (8, lineaAccion.getEstrategiaId());
-		insert.setInt (9, lineaAccion.getUnidadMedidaId());
-		insert.setBoolean (10, lineaAccion.isBorrado());		
+		insert.setString (1, lineaAccion.getNombre());
+		insert.setString (2, lineaAccion.getDescripcion());
+		insert.setInt (3, lineaAccion.getOrden());
+		insert.setString (4, lineaAccion.getPeso());
+		insert.setBoolean (5, lineaAccion.isAcumulador());
+		insert.setInt (6, lineaAccion.getTipoAccionId());
+		insert.setInt (7, lineaAccion.getEstrategiaId());
+		insert.setInt (8, lineaAccion.getUnidadMedidaId());
+		//insert.setBoolean (9, lineaAccion.isBorrado());		
 		
 		insert.execute();
 		   
