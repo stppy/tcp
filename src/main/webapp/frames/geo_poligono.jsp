@@ -47,7 +47,7 @@
 			var todojunto = new Object();
 			var accion = "insGeoPoligono";
 			var nombre= $("#nombreGeoPoligono").val();
-			var descripcion= $("#descripcionGeoPoligono").val();	
+			var descripcion= $("#descripcionGeoPoligono").val();
 			var geo=$("#geoGeoPoligono").val();
 			var geoPoligonoTipoId=$("#geoPoligonoTipoIdGeoPoligono").val();
 							

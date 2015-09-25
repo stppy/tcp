@@ -38,22 +38,22 @@
 </div>
 	<script>
 	$("body").on("click", "#guardarBeneficiarioDetalle",function(event){		
-			var todojunto = new Object();
+			var objeto = new Object();
 			var accion = "insBeneficiarioDetalle";
 			var valor= $("#valorBeneficiarioDetalle").val();
 			var beneficiarioDetalleClavesId= $("#beneficiarioDetalleClavesIdBeneficiarioDetalle").val();	
 			var beneficiarioId=$("#beneficiarioIdBeneficiarioDetalle").val();
 							
-			todojunto.valor=valor;
-			todojunto.beneficiarioDetalleClavesId=beneficiarioDetalleClavesId;
-			todojunto.beneficiarioId=beneficiarioId;
+			objeto.valor=valor;
+			objeto.beneficiarioDetalleClavesId=beneficiarioDetalleClavesId;
+			objeto.beneficiarioId=beneficiarioId;
 			
 				 
 			$.ajax({
 			        url: "http://tablero2015.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
 			        type: 'POST',
 			        dataType: 'json',
-			        data: JSON.stringify(todojunto),
+			        data: JSON.stringify(objeto),
 			        contentType: 'application/json',
 			        mimeType: 'application/json',
 			        

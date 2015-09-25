@@ -3,7 +3,7 @@ package py.gov.stp.objetosV2;
 public class BeneficiarioDetalle {
 	protected int id;
 	protected String valor;
-	protected int beneficiarioDetalleClaves;
+	protected int beneficiarioDetalleClavesId;
 	protected int beneficiarioId;
 	
 	public int getId() {
@@ -18,11 +18,11 @@ public class BeneficiarioDetalle {
 	public void setValor(String valor) {
 		this.valor = valor;
 	}
-	public int getBeneficiarioDetalleClaves() {
-		return beneficiarioDetalleClaves;
+	public int getBeneficiarioDetalleClavesId() {
+		return beneficiarioDetalleClavesId;
 	}
-	public void setBeneficiarioDetalleClaves(int beneficiarioDetalleClaves) {
-		this.beneficiarioDetalleClaves = beneficiarioDetalleClaves;
+	public void setBeneficiarioDetalleClavesId(int beneficiarioDetalleClaves) {
+		this.beneficiarioDetalleClavesId = beneficiarioDetalleClaves;
 	}
 	public int getBeneficiarioId() {
 		return beneficiarioId;

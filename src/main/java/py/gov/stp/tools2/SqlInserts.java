@@ -65,16 +65,16 @@ public class SqlInserts {
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into linea_estrategica (id,nombre,descripcion,orden,borrado)"
-	+ " values (?, ?, ?, ?, ?)";
+		String query = " insert into linea_estrategica (nombre,descripcion,orden,borrado)"
+	+ " values (?, ?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
 		//insert.setInt (1, lineaEstrategica.getId());
-		insert.setString (2, lineaEstrategica.getNombre());
-		insert.setString (3, lineaEstrategica.getDescripcion());
-		insert.setInt (4, lineaEstrategica.getOrden());
-		insert.setBoolean (5, lineaEstrategica.isBorrado());
+		insert.setString (1, lineaEstrategica.getNombre());
+		insert.setString (2, lineaEstrategica.getDescripcion());
+		insert.setInt (3, lineaEstrategica.getOrden());
+		insert.setBoolean (4, lineaEstrategica.isBorrado());
 		
 		insert.execute();
 		   
@@ -479,7 +479,7 @@ public class SqlInserts {
 		
 		//insert.setInt (1, beneficiarioDetalle.getId());
 		insert.setString (1, beneficiarioDetalle.getValor());
-		insert.setInt (2, beneficiarioDetalle.getBeneficiarioDetalleClaves());
+		insert.setInt (2, beneficiarioDetalle.getBeneficiarioDetalleClavesId());
 		insert.setInt (3, beneficiarioDetalle.getBeneficiarioId());
 							
 		insert.execute();

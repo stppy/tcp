@@ -38,23 +38,23 @@
 </div>
 	<script>
 	$("body").on("click", "#guardarLineaEstrategica",function(event){		
-			var todojunto = new Object();
+			var objeto = new Object();
 			var accion = "insLineaEstrategica";
 			var nombre= $("#nombreLineaEstrategica").val();
 			var descripcion= $("#descripcionLineaEstrategica").val();	
 			var orden= $("#ordenLineaEstrategica").val();		
 
 							
-			todojunto.nombre=nombre;
-			todojunto.descripcion=descripcion;
-			todojunto.orden=orden;
+			objeto.nombre=nombre;
+			objeto.descripcion=descripcion;
+			objeto.orden=orden;
 			
 				 
 			$.ajax({
 			        url: "http://tablero2015.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
 			        type: 'POST',
 			        dataType: 'json',
-			        data: JSON.stringify(todojunto),
+			        data: JSON.stringify(objeto),
 			        contentType: 'application/json',
 			        mimeType: 'application/json',
 			        

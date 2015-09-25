@@ -4,7 +4,7 @@ public class LineaEstrategica {
 	protected String nombre;
 	protected String descripcion;
 	protected int orden;
-	protected boolean borrado;
+	protected boolean borrado=false;
 	
 	public String getNombre() {
 		return nombre;
