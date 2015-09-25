@@ -1,4 +1,4 @@
-<div class="modal fade" id="GeoPoligonoTipo" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="geoPoligonoTipo" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
 <div class="modal-dialog modal-lg">
 <div class="modal-content" >
 <div class="modal-header">
@@ -8,37 +8,38 @@
 <div class="modal-body">
 <form class="form-horizontal" role="form">
 <div class="form-group">
-<label for="GeoPoligonoTiponombre" class="col-lg-2 control-label">Nombre</label>
+<label for="nombreGeoPoligonoTipo" class="col-lg-2 control-label">Nombre</label>
 <div class="col-lg-10">
-<input type="text" class="form-control" id="GeoPoligonoTiponoombre" placeholder="Nombre">
+<input type="text" class="form-control" id="nombreGeoPoligonoTipo" placeholder="Nombre">
 </div>
 </div>
 <div class="form-group">
-<label for="GeoPoligonoTipodescripcion" class="col-lg-2 control-label">Descripcion</label>
+<label for="descripcionGeoPoligonoTipo" class="col-lg-2 control-label">Descripcion</label>
 <div class="col-lg-10">
-<input type="text" class="form-control" id="GeoPoligonoTipodescripcion" placeholder="Descripcion">
+<input type="text" class="form-control" id="descripcionGeoPoligonoTipo" placeholder="Descripcion">
 </div>
 </div>
 <div class="form-group">
 <div class="col-lg-offset-2 col-lg-10">
-<button type="submit" class="btn btn-primary" id="guardarAccionHasProducto">Guardar</button>
+<button type="submit" class="btn btn-primary" id="guardarGeoPoligonoTipo">Guardar</button>
 </div>
 </div>
 </form> 
 </div>
 <div class="modal-footer"></div>
-</div> 
+</div>  
 </div>
 </div>
 
 <script>
-$("body").on("click", "#guardarAccionHasProducto",function(event){ 
+$("body").on("click", "#guardarGeoPoligonoTipo",function(event){ 
 var todojunto = new Object();
-var accion = "insAccionHasProducto";
-var nombre= $("#proporcionAccionHasProducto").val();
- 
+var accion = "insGeoPoligonoTipo";
+var nombre= $("#nombreGeoPoligonoTipo").val();
+var descripcion= $("#descripcionGeoPoligonoTipo").val();
 
 todojunto.nombre=nombre;
+todojunto.descripcion=descripcion;
 
 
 

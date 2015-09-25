@@ -173,17 +173,17 @@ if (user != null) { %>
               </thead>
               <tbody id="cuerpoTabla">
               	<tr><td><a href="#" data-toggle="modal" data-target="#tipoAccion">Acción</a></td></tr>
-              	<tr><td><a>Acción Has Etiqueta</a></td></tr>  
+              	<tr><td><a >Acción Has Etiqueta</a></td></tr>  
               	<tr><td><a>Acción Has Geo Poligono</a></td></tr>   
-              	<tr><td><a>Acción Has Producto</a></td></tr>
-              	<tr><td><a>Beneficiario</a></td></tr>      
+              	<tr><td><a href="#" data-toggle="modal" data-target="#AccionHasProducto">AccionHasProducto</a></td></tr>
+              	<tr><td><a href="#" data-toggle="modal" data-target="#Beneficiario">Beneficiario</a></td></tr>      
               	<tr><td><a>Beneficiario Detalle</a></td></tr>          
               	<tr><td><a>Beneficiario Detalle Clave</a></td></tr>              	    	        	
               	<tr><td><a>Beneficiario Tipo</a></td></tr> 
               	<tr><td><a>Etiqueta</a></td></tr>
-              	<tr><td><a>Evidencia</a></td></tr>
+              	<tr><td><a href="#" data-toggle="modal" data-target="#Evidencia">Evidencia</a></td></tr>
               	<tr><td><a>Geo Poligono</a></td></tr>
-              	<tr><td><a>Geo Poligono Tipo</a></td></tr>
+              	<tr><td><a href="#" data-toggle="modal" data-target="#geoPoligonoTipo">GeoPoligonoTipo</a></td></tr>
               	<tr><td><a>Hito</a></td></tr>
               	<tr><td><a>Hito Has Beneficiario</a></td></tr>
               	<tr><td><a>Hito Tipo</a></td></tr>
@@ -191,7 +191,7 @@ if (user != null) { %>
               	<tr><td><a>Institución</a></td></tr>
               	<tr><td><a href="#" data-toggle="modal" data-target="#lineaAccion">Linea Acción</a></td></tr>
               	<tr><td><a>Linea Estrategica</a></td></tr>
-              	<tr><td><a>Periodo</a></td></tr>
+              	<tr><td><a href="#" data-toggle="modal" data-target="#Periodo">Periodo</a></td></tr>
               	<tr><td><a>Spr Producto</a></td></tr>
               	<tr><td><a>Tipo Acción</a></td></tr>
               	<tr><td><a>Unidad Medida</a></td></tr>
@@ -262,6 +262,12 @@ if (user != null) { %>
     <%@ include file="/frames/pass.jsp" %>
     <%@ include file="/frames/TipoAccion.jsp" %>
     <%@ include file="/frames/lineaAccion.jsp" %>
+    <%@ include file="/frames/beneficiario.jsp" %>
+    <%@ include file="/frames/accion_has_producto.jsp" %>
+    <%@ include file="/frames/evidencia.jsp" %>
+    <%@ include file="/frames/periodo.jsp" %>
+    <%@ include file="/frames/GeoPoligonoTipo.jsp" %>
+     
   
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js" type="text/javascript"></script>

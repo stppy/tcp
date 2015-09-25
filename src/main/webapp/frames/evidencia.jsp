@@ -1,4 +1,4 @@
-<div class="modal fade" id="evidencia" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="Evidencia" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
 <div class="modal-dialog modal-lg">
 <div class="modal-content" >
 <div class="modal-header">
@@ -8,15 +8,21 @@
 <div class="modal-body">
 <form class="form-horizontal" role="form">
 <div class="form-group">
-<label for="nombreevidencia" class="col-lg-2 control-label">Nombre</label>
+<label for="nombreEvidencia" class="col-lg-2 control-label">Nombre</label>
 <div class="col-lg-10">
-<input type="text" class="form-control" id="nombreevidencia" placeholder="Nombre">
+<input type="text" class="form-control" id="nombreEvidencia" placeholder="Nombre">
 </div>
 </div>
 <div class="form-group">
-<label for="descripcionevidencia" class="col-lg-2 control-label">Descripción</label>
+<label for="descripcionEvidencia" class="col-lg-2 control-label">Descripción</label>
 <div class="col-lg-10">
-<input type="text" class="form-control" id="descripcionevidencia" placeholder="Descripción">
+<input type="text" class="form-control" id="descripcionEvidencia" placeholder="Descripción">
+</div>
+</div>
+<div class="form-group">
+<label for="wsIdEvidencia" class="col-lg-2 control-label">Ws Id<label>
+<div class="col-lg-10">
+<input type="text" class="form-control" id="wsIdEvidencia" placeholder="WsId">
 </div>
 </div>
 <div class="form-group">
@@ -34,12 +40,13 @@
 $("body").on("click", "#guardarevidencia",function(event){ 
 var todojunto = new Object();
 var accion = "insEvidencia";
-var nombre= $("#nombreevidencia").val();
-var descripcion= $("#descripcionevidencia").val(); 
+var nombre= $("#nombreEvidencia").val();
+var descripcion= $("#descripcionEvidencia").val(); 
+var wsId= $("#wsIdEvidencia").val(); 
 
 todojunto.nombre=nombre;
 todojunto.descripcion=descripcion;
-
+todojunto.wsId=wsId;
 
 $.ajax({
 url: "http://tablero2015.stp.gov.py/tablero/ajaxInserts2?accion="+accion,

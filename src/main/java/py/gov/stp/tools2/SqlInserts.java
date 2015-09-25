@@ -169,12 +169,10 @@ public class SqlInserts {
 		//insert.setInt (1, insLineaAccion.getId());
 		insert.setString (1, periodo.getNombre());
 		insert.setString (2, periodo.getDescripcion());
-		insert.setDate (3, periodo.getFechaInicio());
-		insert.setDate (4, periodo.getFechaFin());
+		insert.setString (3, periodo.getFechaInicio()); 
+		insert.setString (4, periodo.getFechaFin());
 		insert.setBoolean (5, periodo.isBorrado());	
 
-		
-		
 		insert.execute();
 		   
 		conn.close();
@@ -554,15 +552,15 @@ public class SqlInserts {
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into geo_poligono_tipo (nombre,descripcion,borrado)"
-	+ " values (?, ?, ?)";
+		String query = " insert into geo_poligono_tipo (nombre,descripcion)"
+	+ " values (?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
 		//insert.setInt (1, geoPoligonoTipo.getId());
 		insert.setString (1, geoPoligonoTipo.getNombre());
 		insert.setString (2, geoPoligonoTipo.getDescripcion());
-		insert.setBoolean (3, geoPoligonoTipo.isBorrado());	
+		//insert.setBoolean (3, geoPoligonoTipo.isBorrado());	
 		
 		insert.execute();
 		   
