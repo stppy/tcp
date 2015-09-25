@@ -525,6 +525,51 @@ tbody {
         <section class="content" id="programacion">
 	          <!-- Info row de buscador de productos -->
 	          
+	          
+	          <div class="row">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <span class="info-box-icon bg-aqua"><i class="fa fa-dashboard"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Desempeño General<br></span>
+                  <span class="info-box-number">90<small>%</small></span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+            </div><!-- /.col -->
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <span class="info-box-icon bg-red"><i class="fa fa-cogs"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Programación <br> Relativa</span>
+                  <span class="info-box-number">79%</span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+            </div><!-- /.col -->
+
+            <!-- fix for small devices only -->
+            <div class="clearfix visible-sm-block"></div>
+
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <span class="info-box-icon bg-green"><i class="fa fa-map-marker"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Evidencias<br></span>
+                  <span class="info-box-number">0%</span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+            </div><!-- /.col -->
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <span class="info-box-icon bg-yellow"><i class="fa fa-users"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Beneficiarios <br> Registrados</span>
+                  <span class="info-box-number">0%</span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+            </div><!-- /.col -->
+          </div>
+	          
+	          
 	          <div class="row">
             <div class="col-md-6">
               <div class="box box-default">
