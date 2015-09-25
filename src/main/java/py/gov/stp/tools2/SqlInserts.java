@@ -50,10 +50,10 @@ public class SqlInserts {
 		PreparedStatement insert = conn.prepareStatement(query);
 		
 		//insert.setInt (1, unidadMedida.getId());
-		insert.setString (2, unidadMedida.getNombre());
-		insert.setString (3, unidadMedida.getDescripcion());
-		insert.setString (4, unidadMedida.getSigla());
-		insert.setBoolean (5, unidadMedida.isBorrado());
+		insert.setString (1, unidadMedida.getNombre());
+		insert.setString (2, unidadMedida.getDescripcion());
+		insert.setString (3, unidadMedida.getSigla());
+		insert.setBoolean (4, unidadMedida.isBorrado());
 		
 		insert.execute();
 		   
@@ -193,7 +193,7 @@ public class SqlInserts {
 		//insert.setInt (1, insLineaAccion.getId());
 		insert.setString (1, hitoTipo.getNombre());
 		insert.setString (2, hitoTipo.getDescripcion());
-		//insert.setBoolean (3, hitoTipo.isBorrado());
+		insert.setBoolean (3, hitoTipo.isBorrado());
 		
 		insert.execute();
 		   

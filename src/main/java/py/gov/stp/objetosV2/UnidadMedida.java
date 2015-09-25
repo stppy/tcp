@@ -4,7 +4,7 @@ public class UnidadMedida {
 	protected String nombre;
 	protected String descripcion;
 	protected String sigla;
-	protected boolean borrado;
+	protected boolean borrado=false;
 	
 	public String getNombre() {
 		return nombre;
