@@ -14,7 +14,7 @@
 </div>
 </div>
 <div class="form-group">
-<label for="descripcionEtiquetaTipo" class="col-lg-2 control-label">Descripción</label>
+<label for="descripcionEtiqueta" class="col-lg-2 control-label">Descripción</label>
 <div class="col-lg-10">
 <input type="text" class="form-control" id="descripcionEtiqueta" placeholder="Descripción">
 </div>
@@ -32,20 +32,20 @@
 </div>
 <script>
 $("body").on("click", "#guardarEtiqueta",function(event){
-var todojunto = new Object();
+var objeto = new Object();
 var accion = "insEtiqueta";
 var nombre= $("#nombreEtiqueta").val();
 var descripcion= $("#descripcionEtiqueta").val();
 
-todojunto.nombre=nombre;
-todojunto.descripcion=descripcion;
+objeto.nombre=nombre;
+objeto.descripcion=descripcion;
 
 
 $.ajax({
 url: "http://tablero2015.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
 type: 'POST',
 dataType: 'json',
-data: JSON.stringify(todojunto),
+data: JSON.stringify(objeto),
 contentType: 'application/json',
 mimeType: 'application/json',
 

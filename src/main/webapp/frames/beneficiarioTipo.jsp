@@ -1,21 +1,27 @@
-<div class="modal fade" id="beneficiarioDetalleClave" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="beneficiarioTipo" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
 <div class="modal-dialog modal-lg">
 <div class="modal-content" >
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-<h4 class="modal-title">Registrar Beneficiario Clave</h4>
+<h4 class="modal-title">Registrar Beneficiario Tipo</h4>
 </div>
 <div class="modal-body" >
 <form class="form-horizontal" role="form">
 <div class="form-group">
-<label for="claveBeneficiarioDetaalleClave" class="col-lg-2 control-label">Clave</label>
+<label for="nombreBeneficiarioTipo" class="col-lg-2 control-label">Nombre</label>
 <div class="col-lg-10">
-<input type="text" class="form-control" id="claveBeneficiarioDetaalleClave" placeholder="Clave">
+<input type="text" class="form-control" id="nombreBeneficiarioTipo" placeholder="Nombre">
+</div>
+</div>
+<div class="form-group">
+<label for="descripcionBeneficiarioTipo" class="col-lg-2 control-label">Descripción</label>
+<div class="col-lg-10">
+<input type="text" class="form-control" id="descripcionBeneficiarioTipo" placeholder="Descripción">
 </div>
 </div>
 <div class="form-group">
 <div class="col-lg-offset-2 col-lg-10">
-<button type="submit" class="btn btn-primary" id="guardarBeneficiarioDetaalleClave">Guardar</button>
+<button type="submit" class="btn btn-primary" id="guardarBeneficiarioTipo">Guardar</button>
 </div>
 </div>
 </form>
@@ -25,18 +31,21 @@
 </div>
 </div>
 <script>
-$("body").on("click", "#guardarBeneficiarioDetalleClave",function(event){
-var todojunto = new Object();
-var accion = "insBeneficiarioDetalleClave";
-var nombre= $("#claveBeneficiarioDetalleClave").val();
+$("body").on("click", "#guardarBeneficiarioTipo",function(event){
+var objeto = new Object();
+var accion = "insBeneficiarioTipo";
+var nombre= $("#nombreBeneficiarioTipo").val();
+var descripcion= $("#descripcionBeneficiarioTipo").val();
 
-todojunto.clave=clave;
+objeto.nombre=nombre;
+objeto.descripcion=descripcion;
+
 
 $.ajax({
 url: "http://tablero2015.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
 type: 'POST',
 dataType: 'json',
-data: JSON.stringify(todojunto),
+data: JSON.stringify(objeto),
 contentType: 'application/json',
 mimeType: 'application/json',
 

@@ -8,7 +8,7 @@
 <div class="modal-body" >
 <form class="form-horizontal" role="form">
 <div class="form-group">
-<label for="nombrews_tipo" class="col-lg-2 control-label">Nombre</label>
+<label for="nombreWsTipo" class="col-lg-2 control-label">Nombre</label>
 <div class="col-lg-10">
 <input type="text" class="form-control" id="nombreWsTipo" placeholder="Nombre">
 </div>
@@ -32,20 +32,20 @@
 </div>
 <script>
 $("body").on("click", "#guardarWsTipo",function(event){
-var todojunto = new Object();
+var objeto = new Object();
 var accion = "insWsTipo";
 var nombre= $("#nombreWsTipo").val();
 var descripcion= $("#descripcionWsTipo").val();
 
-todojunto.nombre=nombre;
-todojunto.descripcion=descripcion;
+objeto.nombre=nombre;
+objeto.descripcion=descripcion;
 
 
 $.ajax({
 url: "http://tablero2015.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
 type: 'POST',
 dataType: 'json',
-data: JSON.stringify(todojunto),
+data: JSON.stringify(objeto),
 contentType: 'application/json',
 mimeType: 'application/json',
 

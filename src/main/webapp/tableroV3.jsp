@@ -166,37 +166,38 @@ if (user != null) { %>
 	            
 	            
 	             <table id="lineasPorEntidad" class="table table-striped ">
-             	 <thead>
+             	 <thead> 
                 <tr style="background-color: white;">
-                  <th>Links</th>
+                  <th>Links</th> 
                 </tr>
               </thead>
               <tbody id="cuerpoTabla">
-              	<tr><td><a >Acción</a></td></tr>
+              	<tr><td><a href="#" data-toggle="modal" data-target="#accion">Acción</a></td></tr>
               	<tr><td><a>Acción Has Etiqueta</a></td></tr>  
               	<tr><td><a>Acción Has Geo Poligono</a></td></tr>   
               	<tr><td><a>Acción Has Producto</a></td></tr>
               	<tr><td><a>Beneficiario</a></td></tr>      
               	<tr><td><a>Beneficiario Detalle</a></td></tr>          
-              	<tr><td><a>Beneficiario Detalle Clave</a></td></tr>              	    	        	
-              	<tr><td><a>Beneficiario Tipo</a></td></tr> 
-              	<tr><td><a>Etiqueta</a></td></tr>
+              	<tr><td><a href="#" data-toggle="modal" data-target="#beneficiarioDetalleClave">Beneficiario Detalle Clave</a></td></tr>              	    	        	
+              	<tr><td><a href="#" data-toggle="modal" data-target="#beneficiarioTipo">Beneficiario Tipo</a></td></tr> 
+              	<tr><td><a href="#" data-toggle="modal" data-target="#etiqueta">Etiqueta</a></td></tr>
               	<tr><td><a>Evidencia</a></td></tr>
               	<tr><td><a>Geo Poligono</a></td></tr>
               	<tr><td><a>Geo Poligono Tipo</a></td></tr>
-              	<tr><td><a>Hito</a></td></tr>
+              	<tr><td><a href="#" data-toggle="modal" data-target="#hito">Hito</a></td></tr>
               	<tr><td><a>Hito Has Beneficiario</a></td></tr>
               	<tr><td><a href="#" data-toggle="modal" data-target="#hitoTipo">Hito Tipo</a></td></tr>
               	<tr><td><a>Ins Linea Accion</a></td></tr> 
-              	<tr><td><a>Institución</a></td></tr>
+              	<tr><td><a href="#" data-toggle="modal" data-target="#institucion">Institución</a></td></tr>
               	<tr><td><a href="#" data-toggle="modal" data-target="#lineaAccion">Linea Acción</a></td></tr>
               	<tr><td><a>Linea Estrategica</a></td></tr>
               	<tr><td><a>Periodo</a></td></tr>
-              	<tr><td><a>Spr Producto</a></td></tr>
+              	<tr><td><a href="#" data-toggle="modal" data-target="#sprProducto">Spr Producto</a></td></tr>
               	<tr><td><a href="#" data-toggle="modal" data-target="#tipoAccion">Tipo Acción</a></td></tr>
               	<tr><td><a href="#" data-toggle="modal" data-target="#unidadMedida">Unidad Medida</a></td></tr>
-              	<tr><td><a>Ws</a></td></tr>
               	<tr><td><a href="#" data-toggle="modal" data-target="#wsTipo">Ws Tipo</a></td></tr>              	    	        	    	    	        	
+              	<tr><td><a href="#" data-toggle="modal" data-target="#ws">Ws</a></td></tr>
+         	    	        	    	    	        	
                
               </tbody>
             </table>
@@ -261,11 +262,20 @@ if (user != null) { %>
     <script src="dist/js/jquerymd5.js" type="text/javascript"></script>    	
     <%@ include file="/frames/pass.jsp" %>
     <%@ include file="/frames/TipoAccion.jsp" %>
+    <%@ include file="/frames/hito.jsp" %>    
     <%@ include file="/frames/lineaAccion.jsp" %>
-    <%@ include file="/frames/hito_tipo.jsp" %>
-    <%@ include file="/frames/unidad_medida.jsp" %>
-    <%@ include file="/frames/ws_tipo.jsp" %>           
-    
+    <%@ include file="/frames/hitoTipo.jsp" %> 
+    <%@ include file="/frames/unidadMedida.jsp" %>
+    <%@ include file="/frames/wsTipo.jsp" %>           
+    <%@ include file="/frames/ws.jsp" %>
+    <%@ include file="/frames/institucion.jsp" %>
+    <%@ include file="/frames/sprProducto.jsp" %>   
+    <%@ include file="/frames/accion.jsp" %> 
+    <%@ include file="/frames/beneficiarioTipo.jsp" %> 
+    <%@ include file="/frames/beneficiarioDetalleClave.jsp" %>  
+    <%@ include file="/frames/etiqueta.jsp" %>  
+            
+
   
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js" type="text/javascript"></script>

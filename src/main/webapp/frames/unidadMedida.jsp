@@ -38,21 +38,21 @@
 </div>
 <script>
 $("body").on("click", "#guardarUnidadMedida",function(event){
-var todojunto = new Object();
+var objeto = new Object();
 var accion = "insUnidadMedida";
 var nombre= $("#nombreUnidadMedida").val();
 var descripcion= $("#descripcionUnidadMedida").val();
-var sigla= $("#siglanUnidadMedida").val();
+var sigla= $("#siglaUnidadMedida").val();
 
-todojunto.nombre=nombre;
-todojunto.descripcion=descripcion;
-todojunto.sigla=sigla;
+objeto.nombre=nombre;
+objeto.descripcion=descripcion;
+objeto.sigla=sigla;
 
 $.ajax({
 url: "http://tablero2015.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
 type: 'POST',
 dataType: 'json',
-data: JSON.stringify(todojunto),
+data: JSON.stringify(objeto),
 contentType: 'application/json',
 mimeType: 'application/json',
 

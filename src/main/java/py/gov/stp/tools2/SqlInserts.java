@@ -20,7 +20,7 @@ import py.gov.stp.objetosV2.*;
 public class SqlInserts {
 	
 
-	public static void insertTipoAccion(TipoAccion tipoAccion){
+	public static void insertTipoAccion(TipoAccion tipoAccion){ 
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
@@ -44,8 +44,8 @@ public class SqlInserts {
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into unidad_medida (id,nombre,descripcion,sigla,borrado)"
-	+ " values (?, ?, ?, ?, ?)";
+		String query = " insert into unidad_medida (nombre,descripcion,sigla,borrado)"
+	+ " values (?, ?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
@@ -330,7 +330,7 @@ public class SqlInserts {
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into ws (nombre,descripcion,borrado)"
+		String query = " insert into ws_tipo (nombre,descripcion,borrado)"
 	+ " values (?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
@@ -391,7 +391,7 @@ public class SqlInserts {
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into accion_has_etiqueta (nombre,descripcion,borrado)"
+		String query = " insert into etiqueta (nombre,descripcion,borrado)"
 	+ " values (?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
