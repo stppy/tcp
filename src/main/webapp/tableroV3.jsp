@@ -172,7 +172,7 @@ if (user != null) { %>
                 </tr>
               </thead>
               <tbody id="cuerpoTabla">
-              	<tr><td><a >Acción</a></td></tr>
+              	<tr><td><a href="#" data-toggle="modal" data-target="#accion">Acción</a></td></tr>
               	<tr><td><a>Acción Has Etiqueta</a></td></tr>  
               	<tr><td><a>Acción Has Geo Poligono</a></td></tr>   
               	<tr><td><a>Acción Has Producto</a></td></tr>
@@ -184,18 +184,18 @@ if (user != null) { %>
               	<tr><td><a>Evidencia</a></td></tr>
               	<tr><td><a>Geo Poligono</a></td></tr>
               	<tr><td><a>Geo Poligono Tipo</a></td></tr>
-              	<tr><td><a>Hito</a></td></tr>
+              	<tr><td><a href="#" data-toggle="modal" data-target="#hito">Hito</a></td></tr>
               	<tr><td><a>Hito Has Beneficiario</a></td></tr>
               	<tr><td><a>Hito Tipo</a></td></tr>
               	<tr><td><a>Ins Linea Accion</a></td></tr>
-              	<tr><td><a>Institución</a></td></tr>
+              	<tr><td><a href="#" data-toggle="modal" data-target="#institucion">Institución</a></td></tr>
               	<tr><td><a href="#" data-toggle="modal" data-target="#lineaAccion">Linea Acción</a></td></tr>
               	<tr><td><a>Linea Estrategica</a></td></tr>
               	<tr><td><a>Periodo</a></td></tr>
-              	<tr><td><a>Spr Producto</a></td></tr>
+              	<tr><td><a href="#" data-toggle="modal" data-target="#sprProducto">Spr Producto</a></td></tr>
               	<tr><td><a href="#" data-toggle="modal" data-target="#tipoAccion">Tipo Acción</a></td></tr>
               	<tr><td><a>Unidad Medida</a></td></tr>
-              	<tr><td><a>Ws</a></td></tr>
+              	<tr><td><a href="#" data-toggle="modal" data-target="#ws">Ws</a></td></tr>
               	<tr><td><a>Ws Tipo</a></td></tr>              	    	        	    	    	        	
                
               </tbody>
@@ -261,7 +261,12 @@ if (user != null) { %>
     <script src="dist/js/jquerymd5.js" type="text/javascript"></script>    	
     <%@ include file="/frames/pass.jsp" %>
     <%@ include file="/frames/TipoAccion.jsp" %>
+    <%@ include file="/frames/hito.jsp" %>    
     <%@ include file="/frames/lineaAccion.jsp" %>
+    <%@ include file="/frames/ws.jsp" %>
+    <%@ include file="/frames/institucion.jsp" %>
+    <%@ include file="/frames/sprProducto.jsp" %>   
+    <%@ include file="/frames/accion.jsp" %>     
   
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js" type="text/javascript"></script>

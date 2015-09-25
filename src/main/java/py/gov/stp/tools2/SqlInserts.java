@@ -20,7 +20,7 @@ import py.gov.stp.objetosV2.*;
 public class SqlInserts {
 	
 
-	public static void insertTipoAccion(TipoAccion tipoAccion){
+	public static void insertTipoAccion(TipoAccion tipoAccion){ 
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
