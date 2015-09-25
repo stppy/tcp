@@ -3,7 +3,7 @@ package py.gov.stp.objetosV2;
 public class HitoTipo {
 	protected String nombre;
 	protected String descripcion;
-	protected boolean borrado;
+	protected boolean borrado=false;
 	
 	public String getNombre() {
 		return nombre;

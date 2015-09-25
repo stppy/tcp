@@ -185,15 +185,15 @@ public class SqlInserts {
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into hito_tipo (nombre,descripcion,borrado)"
-	+ " values (?, ?, ?)";
+		String query = " insert into hito_tipo (nombre,descripcion)"
+	+ " values (?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
 		//insert.setInt (1, insLineaAccion.getId());
 		insert.setString (1, hitoTipo.getNombre());
 		insert.setString (2, hitoTipo.getDescripcion());
-		insert.setBoolean (3, hitoTipo.isBorrado());
+		//insert.setBoolean (3, hitoTipo.isBorrado());
 		
 		insert.execute();
 		   
