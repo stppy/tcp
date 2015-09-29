@@ -5,7 +5,7 @@ public class WsTipo {
 	protected int id;
 	protected String nombre;
 	protected String descripcion;
-	protected boolean borrado;
+	protected boolean borrado=false;
 	
 	public int getId() {
 		return id;

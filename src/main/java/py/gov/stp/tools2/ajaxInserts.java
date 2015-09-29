@@ -303,7 +303,7 @@ public class ajaxInserts  extends HttpServlet {
             Gson gsonInsert = new Gson();
             objeto=gsonInsert.fromJson(json, TipoAccion.class);
 			SqlInserts.insertTipoAccion(objeto);
-    	}
+    	} 
        }
         if (accion!=null && accion!=""){
     	if (accion.equals("insUnidadMedida")){

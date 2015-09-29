@@ -52,7 +52,7 @@
 				  <div class="form-group">
 				    <label for="unidadMedidaIdLineaAccion" class="col-lg-2 control-label">Unidad_medida_id</label>
 				    <div class="col-lg-10">
-				      <input type="text" class="form-control" id="unidadMedidaIdLineaAccion" placeholder="Unidad medida id">
+				      <input type="number" class="form-control" id="unidadMedidaIdLineaAccion" placeholder="Unidad medida id">
 				    </div>
 				  </div>					  			  				  		  			  				  
 				  <div class="form-group">
@@ -68,7 +68,7 @@
 </div>
 	<script>
 	$("body").on("click", "#guardarLineaAccion",function(event){		
-			var todojunto = new Object();
+			var objeto = new Object();
 			var accion = "insLineaAccion";
 			var nombre= $("#nombreLineaAccion").val();
 			var descripcion= $("#descripcionLineaAccion").val();	
@@ -78,20 +78,20 @@
 			var estrategia_id= $("#estrategiaIdLineaAccion").val();	
 			var unidad_medida_id= $("#unidadMedidaIdLineaAccion").val();				
 	
-			todojunto.nombre=nombre;
-			todojunto.descripcion=descripcion;
-			todojunto.orden=orden;
-			todojunto.peso=peso;
-			todojunto.tipo_accion_id=tipo_accion_id;
-			todojunto.estrategia_id=estrategia_id;
-			todojunto.unidad_medida_id=unidad_medida_id;
+			objeto.nombre=nombre;
+			objeto.descripcion=descripcion;
+			objeto.orden=orden;
+			objeto.peso=peso;
+			objeto.tipo_accion_id=tipo_accion_id;
+			objeto.estrategia_id=estrategia_id;
+			objeto.unidad_medida_id=unidad_medida_id;
 
 				 
 			$.ajax({
 			        url: "http://tablero2015.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
 			        type: 'POST',
 			        dataType: 'json',
-			        data: JSON.stringify(todojunto),
+			        data: JSON.stringify(objeto),
 			        contentType: 'application/json',
 			        mimeType: 'application/json',
 			        
