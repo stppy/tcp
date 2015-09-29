@@ -86,8 +86,8 @@ public class SqlInserts {
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into linea_accion (nombre,descripcion,orden,peso,acumular,tipo_accion_id,estrategia_id,unidad_medida_id)"
-	+ " values (?, ?, ?, ?, ?, ?, ?, ?)";
+		String query = " insert into linea_accion (nombre,descripcion,orden,peso,acumular,tipo_accion_id,estrategia_id,unidad_medida_id,borrado)"
+	+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
@@ -96,11 +96,11 @@ public class SqlInserts {
 		insert.setString (2, lineaAccion.getDescripcion());
 		insert.setInt (3, lineaAccion.getOrden());
 		insert.setString (4, lineaAccion.getPeso());
-		insert.setBoolean (5, lineaAccion.isAcumulador());
+		insert.setBoolean(5, lineaAccion.isAcumular());
 		insert.setInt (6, lineaAccion.getTipoAccionId());
 		insert.setInt (7, lineaAccion.getEstrategiaId());
 		insert.setInt (8, lineaAccion.getUnidadMedidaId());
-		//insert.setBoolean (9, lineaAccion.isBorrado());		
+		insert.setBoolean (9, lineaAccion.isBorrado());		
 		
 		insert.execute();
 		   
@@ -185,8 +185,8 @@ public class SqlInserts {
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into hito_tipo (nombre,descripcion)"
-	+ " values (?, ?)";
+		String query = " insert into hito_tipo (nombre,descripcion,borrado)"
+	+ " values (?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
@@ -276,8 +276,8 @@ public class SqlInserts {
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into spr-producto (nivel_id,entidad_id,tipo_id,programa_id,subprograma_id,proyecto_id,funcional_id,unidad_responsable_id,producto_id)"
-	+ " values (?, ?, ?)";
+		String query = " insert into spr_producto (nivel_id,entidad_id,tipo_id,progama_id,subprograma_id,proyecto_id,funcional_id,unidad_responsable_id,producto_id)"
+	+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		

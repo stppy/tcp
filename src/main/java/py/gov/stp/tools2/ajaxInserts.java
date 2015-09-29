@@ -219,13 +219,13 @@ public class ajaxInserts  extends HttpServlet {
        }
         if (accion!=null && accion!=""){
     	if (accion.equals("insHitoTipo")){
-    		HitoTipo productoObj = new HitoTipo();
+    		HitoTipo objeto = new HitoTipo();
     		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
             String json = "";
             if(br != null){ json = br.readLine();}
             Gson gsonInsert = new Gson();
-            productoObj=gsonInsert.fromJson(json, HitoTipo.class);
-			SqlInserts.insertHitoTipo(productoObj);
+            objeto=gsonInsert.fromJson(json, HitoTipo.class);
+			SqlInserts.insertHitoTipo(objeto);
     	}
        }
         if (accion!=null && accion!=""){

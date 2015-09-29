@@ -10,55 +10,55 @@
 				  <div class="form-group">
 				    <label for="nivelIdSprProducto" class="col-lg-2 control-label">Nivel Id</label>
 				    <div class="col-lg-10">
-				      <input type="text" class="form-control" id="nivelIdSprProducto" placeholder="NIvel Id">
+				      <input type="number" class="form-control" id="nivelIdSprProducto" placeholder="NIvel Id">
 				    </div>
 				  </div>
 				  <div class="form-group">
 				    <label for="entidadIdSprProducto" class="col-lg-2 control-label">Entidad Id</label>
 				    <div class="col-lg-10">
-				      <input type="text" class="form-control" id="entidadIdSprProducto" placeholder="Entidad Id">
+				      <input type="number" class="form-control" id="entidadIdSprProducto" placeholder="Entidad Id">
 				    </div>
 				  </div>
 				  <div class="form-group">
 				    <label for="tipoIdSprProducto" class="col-lg-2 control-label">Tipo Id</label>
 				    <div class="col-lg-10">
-				      <input type="url" class="form-control" id="tipoIdSprProducto" placeholder="Tipo Id">
+				      <input type="number" class="form-control" id="tipoIdSprProducto" placeholder="Tipo Id">
 				    </div>
 				  </div>	
 				  <div class="form-group">
 				    <label for="programaIdSprProducto" class="col-lg-2 control-label">Programa Id</label>
 				    <div class="col-lg-10">
-				      <input type="date" class="form-control" id="programaIdSprProducto" placeholder="Programa Id">
+				      <input type="number" class="form-control" id="programaIdSprProducto" placeholder="Programa Id">
 				    </div>
 				  </div>	
 				  <div class="form-group">
 				    <label for="subprogramaIdSprProducto" class="col-lg-2 control-label">Subprograma Id</label>
 				    <div class="col-lg-10">
-				      <input type="text" class="form-control" id="subprogramaIdSprProducto" placeholder="Subprograma Id">
+				      <input type="number" class="form-control" id="subprogramaIdSprProducto" placeholder="Subprograma Id">
 				    </div>
 				  </div>	
 				  <div class="form-group">
 				    <label for="proyectoIdSprProducto" class="col-lg-2 control-label">Proyecto Id</label>
 				    <div class="col-lg-10">
-				      <input type="text" class="form-control" id="proyectoIdSprProducto" placeholder="Proyecto Id">
+				      <input type="number" class="form-control" id="proyectoIdSprProducto" placeholder="Proyecto Id">
 				    </div>
 				  </div>
 				  <div class="form-group">
 				    <label for="funcionalIdSprProducto" class="col-lg-2 control-label">Funcional Id</label>
 				    <div class="col-lg-10">
-				      <input type="text" class="form-control" id="funcionalIdSprProducto" placeholder="Funcional Id">
+				      <input type="number" class="form-control" id="funcionalIdSprProducto" placeholder="Funcional Id">
 				    </div>
 				  </div>	
 				  <div class="form-group">
 				    <label for="unidadResponsableIdSprProducto" class="col-lg-2 control-label">Unidad Responsable Id</label>
 				    <div class="col-lg-10">
-				      <input type="text" class="form-control" id="unidadResponsableIdSprProducto" placeholder="Unidad Responsable Id">
+				      <input type="number" class="form-control" id="unidadResponsableIdSprProducto" placeholder="Unidad Responsable Id">
 				    </div>
 				  </div>	
 				  <div class="form-group">
 				    <label for="productoIdSprProducto" class="col-lg-2 control-label">Producto Id</label>
 				    <div class="col-lg-10">
-				      <input type="text" class="form-control" id="productoIdSprProducto" placeholder="Producto Id">
+				      <input type="number" class="form-control" id="productoIdSprProducto" placeholder="Producto Id">
 				    </div>
 				  </div>					  				  				  				  			  			  			  
 				  <div class="form-group">
