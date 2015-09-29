@@ -28,7 +28,7 @@
 				  <div class="form-group">
 				    <label for="siglaInstitucion" class="col-lg-2 control-label">Sigla</label>
 				    <div class="col-lg-10">
-				      <input type="date" class="form-control" id="siglaInstitucion" placeholder="Sigla">
+				      <input type="text" class="form-control" id="siglaInstitucion" placeholder="Sigla">
 				    </div>
 				  </div>	
 				  <div class="form-group">

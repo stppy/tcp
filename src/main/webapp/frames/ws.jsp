@@ -14,9 +14,9 @@
 				    </div>
 				  </div>
 				  <div class="form-group">
-				    <label for="descripcionWs" class="col-lg-2 control-label">DescripciÃ³n</label>
+				    <label for="descripcionWs" class="col-lg-2 control-label">Descripción</label>
 				    <div class="col-lg-10">
-				      <input type="text" class="form-control" id="descripcionWs" placeholder="DescripciÃ³n">
+				      <input type="text" class="form-control" id="descripcionWs" placeholder="Descripción">
 				    </div>
 				  </div>
 				  <div class="form-group">
@@ -76,8 +76,8 @@
 	$("body").on("click", "#guardarWs",function(event){		
 			var objeto = new Object();
 			var accion = "insWs";
-			var nombre= $("#nombreHito").val();
-			var descripcion= $("#descripcionTipoAccion").val();		
+			var nombre= $("#nombreWs").val();
+			var descripcion= $("#descripcionWs").val();		
 			var url= $("#urlWs").val();	
 			var metodo= $("#metodoWs").val();		
 			var usuario= $("#usuarioWs").val();		
