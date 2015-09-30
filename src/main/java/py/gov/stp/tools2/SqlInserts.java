@@ -20,19 +20,19 @@ import py.gov.stp.objetosV2.*;
 public class SqlInserts {
 	
 
-	public static void insertTipoAccion(TipoAccion tipoAccion){
+	public static void insertTipoAccion(TipoAccion tipoAccion){ 
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into tipo_accion (nombre,descripcion)"
-	+ " values (?, ?)";
+		String query = " insert into tipo_accion (nombre,descripcion,borrado)"
+	+ " values (?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
 		//insert.setInt (1, tipoAccion.getId());
 		insert.setString (1, tipoAccion.getNombre());
 		insert.setString (2, tipoAccion.getDescripcion());
-		//insert.setBoolean (4, tipoAccion.isBorrado());
+		insert.setBoolean (3, tipoAccion.isBorrado());
 							
 		insert.execute();
 		   
@@ -44,16 +44,16 @@ public class SqlInserts {
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into unidad_medida (id,nombre,descripcion,sigla,borrado)"
-	+ " values (?, ?, ?, ?, ?)";
+		String query = " insert into unidad_medida (nombre,descripcion,sigla,borrado)"
+	+ " values (?, ?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
 		//insert.setInt (1, unidadMedida.getId());
-		insert.setString (2, unidadMedida.getNombre());
-		insert.setString (3, unidadMedida.getDescripcion());
-		insert.setString (4, unidadMedida.getSigla());
-		insert.setBoolean (5, unidadMedida.isBorrado());
+		insert.setString (1, unidadMedida.getNombre());
+		insert.setString (2, unidadMedida.getDescripcion());
+		insert.setString (3, unidadMedida.getSigla());
+		insert.setBoolean (4, unidadMedida.isBorrado());
 		
 		insert.execute();
 		   
@@ -86,8 +86,8 @@ public class SqlInserts {
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into linea_accion (nombre,descripcion,orden,peso,acumular,tipo_accion_id,estrategia_id,unidad_medida_id)"
-	+ " values (?, ?, ?, ?, ?, ?, ?, ?)";
+		String query = " insert into linea_accion (nombre,descripcion,orden,peso,acumular,tipo_accion_id,estrategia_id,unidad_medida_id,borrado)"
+	+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
@@ -96,11 +96,11 @@ public class SqlInserts {
 		insert.setString (2, lineaAccion.getDescripcion());
 		insert.setInt (3, lineaAccion.getOrden());
 		insert.setString (4, lineaAccion.getPeso());
-		insert.setBoolean (5, lineaAccion.isAcumulador());
+		insert.setBoolean(5, lineaAccion.isAcumular());
 		insert.setInt (6, lineaAccion.getTipoAccionId());
 		insert.setInt (7, lineaAccion.getEstrategiaId());
 		insert.setInt (8, lineaAccion.getUnidadMedidaId());
-		//insert.setBoolean (9, lineaAccion.isBorrado());		
+		insert.setBoolean (9, lineaAccion.isBorrado());		
 		
 		insert.execute();
 		   
@@ -169,12 +169,10 @@ public class SqlInserts {
 		//insert.setInt (1, insLineaAccion.getId());
 		insert.setString (1, periodo.getNombre());
 		insert.setString (2, periodo.getDescripcion());
-		insert.setDate (3, periodo.getFechaInicio());
+		insert.setDate(3, periodo.getFechaInicio());
 		insert.setDate (4, periodo.getFechaFin());
 		insert.setBoolean (5, periodo.isBorrado());	
 
-		
-		
 		insert.execute();
 		   
 		conn.close();
@@ -276,8 +274,8 @@ public class SqlInserts {
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into spr-producto (nivel_id,entidad_id,tipo_id,programa_id,subprograma_id,proyecto_id,funcional_id,unidad_responsable_id,producto_id)"
-	+ " values (?, ?, ?)";
+		String query = " insert into spr_producto (nivel_id,entidad_id,tipo_id,progama_id,subprograma_id,proyecto_id,funcional_id,unidad_responsable_id,producto_id)"
+	+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
@@ -330,7 +328,7 @@ public class SqlInserts {
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into ws (nombre,descripcion,borrado)"
+		String query = " insert into ws_tipo (nombre,descripcion,borrado)"
 	+ " values (?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
@@ -391,7 +389,7 @@ public class SqlInserts {
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into accion_has_etiqueta (nombre,descripcion,borrado)"
+		String query = " insert into etiqueta (nombre,descripcion,borrado)"
 	+ " values (?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);

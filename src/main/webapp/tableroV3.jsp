@@ -166,39 +166,38 @@ if (user != null) { %>
 	            
 	            
 	             <table id="lineasPorEntidad" class="table table-striped ">
-             	 <thead>
+             	 <thead> 
                 <tr style="background-color: white;">
-                  <th>Links</th>
+                  <th>Links</th> 
                 </tr>
               </thead>
               <tbody id="cuerpoTabla">
-              	<tr><td><a href="#" data-toggle="modal" data-target="#tipoAccion">Acción</a></td></tr>
               	<tr><td><a href="#" data-toggle="modal" data-target="#accionHasEtiqueta">Acción Has Etiqueta</a></td></tr>  
+              	<tr><td><a href="#" data-toggle="modal" data-target="#accion">Acción</a></td></tr>
               	<tr><td><a href="#" data-toggle="modal" data-target="#accionHasGeoPoligono">Acción Has Geo Poligono</a></td></tr>   
-              	<tr><td><a>Acción Has Producto</a></td></tr>
-              	<tr><td><a>Beneficiario</a></td></tr>      
+              	<tr><td><a href="#" data-toggle="modal" data-target="#AccionHasProducto">AccionHasProducto</a></td></tr>
+              	<tr><td><a href="#" data-toggle="modal" data-target="#Beneficiario">Beneficiario</a></td></tr>      
               	<tr><td><a href="#" data-toggle="modal" data-target="#beneficiarioDetalle">Beneficiario Detalle</a></td></tr>          
-              	<tr><td><a>Beneficiario Detalle Clave</a></td></tr>              	    	        	
-              	<tr><td><a>Beneficiario Tipo</a></td></tr> 
-              	<tr><td><a>Etiqueta</a></td></tr>
-              	<tr><td><a>Evidencia</a></td></tr>
+              	<tr><td><a href="#" data-toggle="modal" data-target="#Evidencia">Evidencia</a></td></tr>
+              	<tr><td><a href="#" data-toggle="modal" data-target="#geoPoligonoTipo">GeoPoligonoTipo</a></td></tr>
+              	<tr><td><a href="#" data-toggle="modal" data-target="#beneficiarioDetalleClave">Beneficiario Detalle Clave</a></td></tr>              	    	        	
+              	<tr><td><a href="#" data-toggle="modal" data-target="#beneficiarioTipo">Beneficiario Tipo</a></td></tr> 
+              	<tr><td><a href="#" data-toggle="modal" data-target="#etiqueta">Etiqueta</a></td></tr>
               	<tr><td><a href="#" data-toggle="modal" data-target="#geoPoligono">Geo Poligono</a></td></tr>
-              	<tr><td><a>Geo Poligono Tipo</a></td></tr>
-              	<tr><td><a>Hito</a></td></tr>
+              	<tr><td><a href="#" data-toggle="modal" data-target="#hito">Hito</a></td></tr>
               	<tr><td><a href="#" data-toggle="modal" data-target="#hitoHasBeneficiario">Hito Has Beneficiario</a></td></tr>
-              	<tr><td><a>Hito Tipo</a></td></tr>
-              	<tr><td><a href="#" data-toggle="modal" data-target="#insLineaAccion">Ins Linea Accion</a></td></tr>
-              	<tr><td><a>Institución</a></td></tr>
+              	<tr><td><a href="#" data-toggle="modal" data-target="#hitoTipo">Hito Tipo</a></td></tr>
+              	<tr><td><a href="#" data-toggle="modal" data-target="#insLineaAccion">Ins Linea Accion</a></td></tr>              	
+              	<tr><td><a href="#" data-toggle="modal" data-target="#institucion">Institución</a></td></tr>
               	<tr><td><a href="#" data-toggle="modal" data-target="#lineaAccion">Linea Acción</a></td></tr>
               	<tr><td><a href="#" data-toggle="modal" data-target="#lineaEstrategica">Linea Estrategica</a></td></tr>
-              	<tr><td><a>Periodo</a></td></tr>
-              	<tr><td><a>Spr Producto</a></td></tr>
-              	<tr><td><a>Tipo Acción</a></td></tr>
-              	<tr><td><a>Unidad Medida</a></td></tr>
-              	<tr><td><a>Ws</a></td></tr>
-              	<tr><td><a>Ws Tipo</a></td></tr>              	    	        	    	    	        	
-               
-              </tbody>
+              	<tr><td><a href="#" data-toggle="modal" data-target="#Periodo">Periodo</a></td></tr>    
+              	<tr><td><a href="#" data-toggle="modal" data-target="#sprProducto">Spr Producto</a></td></tr>
+              	<tr><td><a href="#" data-toggle="modal" data-target="#tipoAccion">Tipo Acción</a></td></tr>
+              	<tr><td><a href="#" data-toggle="modal" data-target="#unidadMedida">Unidad Medida</a></td></tr>
+              	<tr><td><a href="#" data-toggle="modal" data-target="#wsTipo">Ws Tipo</a></td></tr>              	    	        	    	    	        	
+              	<tr><td><a href="#" data-toggle="modal" data-target="#ws">Ws</a></td></tr>               
+              </tbody> 
             </table>
 
 	            </div>
@@ -260,22 +259,32 @@ if (user != null) { %>
     <!-- Librerias para la rutina de cambio de contraseña -->
     <script src="dist/js/jquerymd5.js" type="text/javascript"></script>    	
     <%@ include file="/frames/pass.jsp" %>
-    <%@ include file="/frames/TipoAccion.jsp" %>
+    <%@ include file="/frames/accion.jsp" %> 
+    <%@ include file="/frames/accion_has_etiqueta.jsp" %>
+    <%@ include file="/frames/accion_has_geo_poligono.jsp" %>
+    <%@ include file="/frames/accion_has_producto.jsp" %>
+    <%@ include file="/frames/beneficiario.jsp" %>
+    <%@ include file="/frames/beneficiarioDetalle.jsp" %>
+    <%@ include file="/frames/beneficiarioDetalleClave.jsp" %> 
+    <%@ include file="/frames/beneficiarioTipo.jsp" %> 
+    <%@ include file="/frames/etiqueta.jsp" %>  
+    <%@ include file="/frames/evidencia.jsp" %>
+    <%@ include file="/frames/geo_poligono.jsp" %>
+    <%@ include file="/frames/GeoPoligonoTipo.jsp" %>
+    <%@ include file="/frames/hito.jsp" %>
+    <%@ include file="/frames/hito_has_beneficiario.jsp" %>
+    <%@ include file="/frames/hitoTipo.jsp" %>
+    <%@ include file="/frames/insLineaAccion.jsp" %>
+    <%@ include file="/frames/institucion.jsp" %>
     <%@ include file="/frames/lineaAccion.jsp" %>
     <%@ include file="/frames/lineaEstrategica.jsp" %>
-    <%@ include file="/frames/insLineaAccion.jsp" %>  
-    <%@ include file="/frames/accion_has_etiqueta.jsp" %>
-    <%@ include file="/frames/hito_has_beneficiario.jsp" %>
-    <%@ include file="/frames/beneficiarioDetalle.jsp" %>
-    <%@ include file="/frames/beneficiarioDetalle.jsp" %>         
-    <%@ include file="/frames/geo_poligono.jsp" %>
-    <%@ include file="/frames/accion_has_geo_poligono.jsp" %>
+    <%@ include file="/frames/periodo.jsp" %>
+    <%@ include file="/frames/sprProducto.jsp" %>
+    <%@ include file="/frames/TipoAccion.jsp" %>
+    <%@ include file="/frames/unidadMedida.jsp" %>
+    <%@ include file="/frames/ws.jsp" %>
+    <%@ include file="/frames/wsTipo.jsp" %>           
     
-             
-             
-             
-      
-  
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js" type="text/javascript"></script>
         <%  } else { %>

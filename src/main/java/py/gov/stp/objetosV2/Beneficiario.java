@@ -5,7 +5,7 @@ public class Beneficiario {
 	protected String nombre;
 	protected String descripcion;
 	protected int beneficiarioTipoId;
-	protected boolean borrado;
+	protected boolean borrado=false;
 	
 	public int getId() {
 		return id;

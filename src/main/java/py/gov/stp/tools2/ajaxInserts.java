@@ -186,13 +186,13 @@ public class ajaxInserts  extends HttpServlet {
        }
         if (accion!=null && accion!=""){
     	if (accion.equals("insGeoPoligonoTipo")){
-    		GeoPoligonoTipo productoObj = new GeoPoligonoTipo();
+    		GeoPoligonoTipo objeto = new GeoPoligonoTipo();
     		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
             String json = "";
             if(br != null){ json = br.readLine();}
             Gson gsonInsert = new Gson();
-            productoObj=gsonInsert.fromJson(json, GeoPoligonoTipo.class);
-			SqlInserts.insertGeoPoligonoTipo(productoObj);
+            objeto=gsonInsert.fromJson(json, GeoPoligonoTipo.class);
+			SqlInserts.insertGeoPoligonoTipo(objeto);
     	}
        }
         if (accion!=null && accion!=""){
@@ -219,13 +219,13 @@ public class ajaxInserts  extends HttpServlet {
        }
         if (accion!=null && accion!=""){
     	if (accion.equals("insHitoTipo")){
-    		HitoTipo productoObj = new HitoTipo();
+    		HitoTipo objeto = new HitoTipo();
     		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
             String json = "";
             if(br != null){ json = br.readLine();}
             Gson gsonInsert = new Gson();
-            productoObj=gsonInsert.fromJson(json, HitoTipo.class);
-			SqlInserts.insertHitoTipo(productoObj);
+            objeto=gsonInsert.fromJson(json, HitoTipo.class);
+			SqlInserts.insertHitoTipo(objeto);
     	}
        }
         if (accion!=null && accion!=""){
@@ -274,13 +274,13 @@ public class ajaxInserts  extends HttpServlet {
        }         
         if (accion!=null && accion!=""){
     	if (accion.equals("insPeriodo")){
-    		Periodo productoObj = new Periodo();
+    		Periodo Objeto = new Periodo();
     		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
             String json = "";
             if(br != null){ json = br.readLine();}
             Gson gsonInsert = new Gson();
-            productoObj=gsonInsert.fromJson(json, Periodo.class);
-			SqlInserts.insertPeriodo(productoObj);
+            Objeto=gsonInsert.fromJson(json, Periodo.class);
+			SqlInserts.insertPeriodo(Objeto);
     	}
        }
         if (accion!=null && accion!=""){
@@ -296,14 +296,14 @@ public class ajaxInserts  extends HttpServlet {
        }
         if (accion!=null && accion!=""){
     	if (accion.equals("insTipoAccion")){
-    		TipoAccion productoObj = new TipoAccion();
+    		TipoAccion objeto = new TipoAccion();
     		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
             String json = "";
             if(br != null){ json = br.readLine();}
             Gson gsonInsert = new Gson();
-            productoObj=gsonInsert.fromJson(json, TipoAccion.class);
-			SqlInserts.insertTipoAccion(productoObj);
-    	}
+            objeto=gsonInsert.fromJson(json, TipoAccion.class);
+			SqlInserts.insertTipoAccion(objeto);
+    	} 
        }
         if (accion!=null && accion!=""){
     	if (accion.equals("insUnidadMedida")){

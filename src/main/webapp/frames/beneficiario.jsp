@@ -1,4 +1,4 @@
-<div class="modal fade" id="beneficiario" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="Beneficiario" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
 <div class="modal-dialog modal-lg">
 <div class="modal-content" >
 <div class="modal-header">
@@ -8,20 +8,26 @@
 <div class="modal-body" >
 <form class="form-horizontal" role="form">
 <div class="form-group">
-<label for="nombrebeneficiario" class="col-lg-2 control-label">Nombre</label>
+<label for="nombreBeneficiario" class="col-lg-2 control-label">Nombre</label>
 <div class="col-lg-10">
-<input type="text" class="form-control" id="nombreTipoAccion" placeholder="Nombre">
+<input type="text" class="form-control" id="nombreBeneficiario" placeholder="Nombre">
 </div>
 </div>
 <div class="form-group">
-<label for="descripcionbeneficiario" class="col-lg-2 control-label">Descripción</label>
+<label for="descripcionBeneficiario" class="col-lg-2 control-label">Descripción</label>
 <div class="col-lg-10">
-<input type="text" class="form-control" id="descripcionTipoAccion" placeholder="Descripción">
+<input type="text" class="form-control" id="descripcionBeneficiario" placeholder="Descripción">
+</div>
+</div>
+<div class="form-group">
+<label for="beneficiarioTipoIdBeneficiario" class="col-lg-2 control-label">Beneficiario Tipo Id</label>
+<div class="col-lg-10">
+<input type="text" class="form-control" id="beneficiarioTipoIdBeneficiario" placeholder="beneficiarioTipoId">
 </div>
 </div>
 <div class="form-group">
 <div class="col-lg-offset-2 col-lg-10">
-<button type="submit" class="btn btn-primary" id="guardarTipoAccion">Guardar</button>
+<button type="submit" class="btn btn-primary" id="guardarBeneficiario">Guardar</button>
 </div>
 </div>
 </form> 
@@ -31,17 +37,20 @@
 </div>
 </div>
 <script>
-$("body").on("click", "#guardarbeneficiario",function(event){ 
+$("body").on("click", "#guardarBeneficiario",function(event){ 
 var todojunto = new Object();
 var accion = "insBeneficiario";
-var nombre= $("#nombrebeneficiario").val();
-var descripcion= $("#descripcionbeneficiario").val(); 
+var nombre= $("#nombreBeneficiario").val();
+var descripcion= $("#descripcionBeneficiario").val(); 
+var beneficiarioTipoId= $("#beneficiarioTipoIdBeneficiario").val(); 
 
 todojunto.nombre=nombre;
 todojunto.descripcion=descripcion;
+todojunto.beneficiarioTipoId=beneficiarioTipoId;
 
 
-$.aja{
+
+$.ajax({
 url: "http://tablero2015.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
 type: 'POST',
 dataType: 'json',

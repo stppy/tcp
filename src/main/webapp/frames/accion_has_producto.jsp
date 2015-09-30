@@ -14,6 +14,18 @@
 </div>
 </div>
 <div class="form-group">
+<label for="accionIdAccionHasProducto" class="col-lg-2 control-label">accionId</label>
+<div class="col-lg-10">
+<input type="text" class="form-control" id="accionIdAccionHasProducto" placeholder="accionId">
+</div>
+</div>
+<div class="form-group">
+<label for="sprProductoIdAccionHasProducto" class="col-lg-2 control-label">sprProductoId</label>
+<div class="col-lg-10">
+<input type="text" class="form-control" id="sprProductoIdAccionHasProducto" placeholder="sprProductoId">
+</div>
+</div>
+<div class="form-group">
 <div class="col-lg-offset-2 col-lg-10">
 <button type="submit" class="btn btn-primary" id="guardarAccionHasProducto">Guardar</button>
 </div>
@@ -29,12 +41,13 @@
 $("body").on("click", "#guardarAccionHasProducto",function(event){ 
 var todojunto = new Object();
 var accion = "insAccionHasProducto";
-var nombre= $("#proporcionAccionHasProducto").val();
- 
+var proporcion= $("#proporcionAccionHasProducto").val();
+var accionIdAccionHasProducto= $("#accionIdAccionHasProducto").val();
+var sprProductoIdAccionHasProducto= $("#sprProductoIdAccionHasProducto").val();
 
-todojunto.nombre=nombre;
-
-
+todojunto.proporcion=proporcion;
+todojunto.accionIdAccionHasProducto=accionIdAccionHasProducto;
+todojunto.sprProductoIdAccionHasProducto=sprProductoIdAccionHasProducto;
 
 $.ajax({
 url: "http://tablero2015.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
