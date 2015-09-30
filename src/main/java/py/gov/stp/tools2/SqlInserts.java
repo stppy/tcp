@@ -67,8 +67,8 @@ public class SqlInserts {
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into linea_estrategica (id,nombre,descripcion,orden,borrado)"
-	+ " values (?, ?, ?, ?, ?)";
+		String query = " insert into linea_estrategica (nombre,descripcion,orden,borrado)"
+	+ " values (?, ?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
@@ -372,15 +372,15 @@ public class SqlInserts {
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into accion_has_etiqueta (proporcion,borrado)"
-	+ " values (?, ?)";
+		String query = " insert into accion_has_etiqueta (accion_id, etiqueta_id, proporcion,borrado)"
+	+ " values (?, ?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
-		//insert.setInt (1, accionHasEtiqueta.getAccionId());
-		//insert.setInt (2, accionHasEtiqueta.getEtiquetaId());
-		insert.setInt (1, accionHasEtiqueta.getProporcion());
-		insert.setBoolean (2, accionHasEtiqueta.isBorrado());
+		insert.setInt (1, accionHasEtiqueta.getAccionId());
+		insert.setInt (2, accionHasEtiqueta.getEtiquetaId());
+		insert.setInt (3, accionHasEtiqueta.getProporcion());
+		insert.setBoolean (4, accionHasEtiqueta.isBorrado());
 							
 		insert.execute();
 		   
@@ -412,15 +412,15 @@ public class SqlInserts {
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into accion_has_etiqueta (borrado)"
-	+ " values (?)";
+		String query = " insert into hito_has_beneficiario (hito_id,hito_accion_id,beneficiario_id,borrado)"
+	+ " values (?, ?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
-		//insert.setInt (1, hitoHasBeneficiario.getHitoId());
-		//insert.setInt (2, hitoHasBeneficiario.getHitoAccionId());
-		//insert.setInt (3, hitoHasBeneficiario.getBeneficiarioId());
-		insert.setBoolean (1, hitoHasBeneficiario.isBorrado());
+		insert.setInt (1, hitoHasBeneficiario.getHitoId());
+		insert.setInt (2, hitoHasBeneficiario.getHitoAccionId());
+		insert.setInt (3, hitoHasBeneficiario.getBeneficiarioId());
+		insert.setBoolean (4, hitoHasBeneficiario.isBorrado());
 							
 		insert.execute();
 		   
@@ -473,14 +473,14 @@ public class SqlInserts {
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into beneficiario_detalle (valor,beneficiario_detalle_claves_id,beneficiario_id)"
+		String query = " insert into beneficiario_detalle (valor,beneficiario_detalle_claves_id,beneficiario_id)" 
 	+ " values (?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
 		//insert.setInt (1, beneficiarioDetalle.getId());
 		insert.setString (1, beneficiarioDetalle.getValor());
-		insert.setInt (2, beneficiarioDetalle.getBeneficiarioDetalleClaves());
+		insert.setInt (2, beneficiarioDetalle.getBeneficiarioDetalleClavesId());
 		insert.setInt (3, beneficiarioDetalle.getBeneficiarioId());
 							
 		insert.execute();
@@ -511,7 +511,7 @@ public class SqlInserts {
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into beneficiario_detalle_clave (nombre,descripcion,geo,geo_poligono_id,geo_poligono_tipo_id,borrado)"
+		String query = " insert into geo_poligono (nombre,descripcion,geo,geo_poligono_id,geo_poligono_tipo_id,borrado)"
 	+ " values (?, ?, ?, ?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
@@ -534,16 +534,16 @@ public class SqlInserts {
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into accion_has_geo_poligono (proporcion,borrado)"
-	+ " values (?, ?)";
+		String query = " insert into accion_has_geo_poligono (accion_id,geo_poligono_id,geo_poligono_geo_poligono_id,proporcion,borrado)"
+	+ " values (?, ?, ?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
-		//insert.setInt (1, accionHAsGeoPoligono.getAccionId());
-		//insert.setInt (2, accionHAsGeoPoligono.getGeoPoligonoId());
-		//insert.setInt (3, accionHAsGeoPoligono.getGeoPoligonoGeoPoligonoId());
-		insert.setInt (1, accionHAsGeoPoligono.getProporcion());
-		insert.setBoolean (2, accionHAsGeoPoligono.isBorrado());	
+		insert.setInt (1, accionHAsGeoPoligono.getAccionId());
+		insert.setInt (2, accionHAsGeoPoligono.getGeoPoligonoId());
+		insert.setInt (3, accionHAsGeoPoligono.getGeoPoligonoGeoPoligonoId());
+		insert.setInt (4, accionHAsGeoPoligono.getProporcion());
+		insert.setBoolean (5, accionHAsGeoPoligono.isBorrado());	
 		
 		insert.execute();
 		   
@@ -555,15 +555,15 @@ public class SqlInserts {
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into geo_poligono_tipo (nombre,descripcion)"
-	+ " values (?, ?)";
+		String query = " insert into geo_poligono_tipo (nombre,descripcion,borrado)"
+	+ " values (?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
 		//insert.setInt (1, geoPoligonoTipo.getId());
 		insert.setString (1, geoPoligonoTipo.getNombre());
 		insert.setString (2, geoPoligonoTipo.getDescripcion());
-		//insert.setBoolean (3, geoPoligonoTipo.isBorrado());	
+		insert.setBoolean (3, geoPoligonoTipo.isBorrado());	
 		
 		insert.execute();
 		   

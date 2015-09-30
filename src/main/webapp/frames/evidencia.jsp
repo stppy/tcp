@@ -20,7 +20,7 @@
 </div>
 </div>
 <div class="form-group">
-<label for="wsIdEvidencia" class="col-lg-2 control-label">Ws Id<label>
+<label for="wsIdEvidencia" class="col-lg-2 control-label">Ws Id</label>
 <div class="col-lg-10">
 <input type="text" class="form-control" id="wsIdEvidencia" placeholder="WsId">
 </div>

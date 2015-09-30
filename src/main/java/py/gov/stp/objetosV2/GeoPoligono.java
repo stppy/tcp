@@ -7,7 +7,7 @@ public class GeoPoligono {
 	protected String geo;
 	protected int geoPoligonoId;
 	protected int geoPoligonoTipoId;
-	protected boolean borrado;
+	protected boolean borrado = false;
 	
 	public int getId() {
 		return id;
