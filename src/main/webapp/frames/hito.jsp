@@ -77,7 +77,7 @@
 			var objeto = new Object();
 			var accion = "insHito";
 			var nombre= $("#nombreHito").val();
-			var descripcion= $("#descripcionTipoAccion").val();		
+			var descripcion= $("#descripcionHito").val();		
 			var cantidad= $("#cantidadHito").val();	
 			var fechaEntrega= $("#fechaEntregaHito").val();		
 			var hitoTipoId= $("#hitoTipoIdHito").val();		

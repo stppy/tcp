@@ -8,10 +8,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import py.gov.stp.objetosV2.*;
@@ -203,8 +205,8 @@ public class SqlInserts {
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into hito (nombre,descripcion,cantidad,fecha_entrega,hito_tipo_id,evidencia_id,unidad_medida_id,peso,borrado)"
-	+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String query = " insert into hito (nombre,descripcion,cantidad,fecha_entrega,hito_tipo_id,accion_id,evidencia_id,unidad_medida_id,peso,borrado)"
+	+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
@@ -214,10 +216,11 @@ public class SqlInserts {
 		insert.setDouble (3, hito.getCantidad());
 		insert.setDate (4, hito.getFechaEntrega());
 		insert.setInt (5, hito.getHitoTipoId());
-		insert.setInt (6, hito.getEvidenciaId());
-		insert.setInt (7, hito.getUnidadMedidaId());
-		insert.setInt (8, hito.getPeso());
-		insert.setBoolean (9, hito.isBorrado());		
+		insert.setInt(6, hito.getAccionId());
+		insert.setInt (7, hito.getEvidenciaId());
+		insert.setInt (8, hito.getUnidadMedidaId());
+		insert.setInt (9, hito.getPeso());
+		insert.setBoolean (10, hito.isBorrado());		
 		
 		insert.execute();
 		   

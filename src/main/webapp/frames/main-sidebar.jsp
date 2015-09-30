@@ -23,7 +23,7 @@
             
             <li class="treeview">
              <a href=".#" id="vistaInstitucional">
-                <i class="fa fa-files-o"></i><span>Insititucional</span>
+                <i class="fa fa-files-o"></i><span>Institucional</span>
               </a>
               
             </li>

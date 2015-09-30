@@ -17,12 +17,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
- 
 import javax.xml.datatype.DatatypeConfigurationException;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
 import py.gov.stp.objetosV2.*;
 
 public class ajaxInserts  extends HttpServlet {
@@ -65,13 +66,14 @@ public class ajaxInserts  extends HttpServlet {
        }
         if (accion!=null && accion!=""){
     	if (accion.equals("insAccion")){
-    		Accion productoObj = new Accion();
+    		Accion objeto = new Accion();
     		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
             String json = "";
             if(br != null){ json = br.readLine();}
-            Gson gsonInsert = new Gson();
-            productoObj=gsonInsert.fromJson(json, Accion.class);
-			SqlInserts.insertAccion(productoObj);
+            //Gson gsonInsert = new Gson();
+            Gson gsonInsert = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();            
+            objeto=gsonInsert.fromJson(json, Accion.class);
+			SqlInserts.insertAccion(objeto);
     	}
        }
         if (accion!=null && accion!=""){
@@ -201,7 +203,8 @@ public class ajaxInserts  extends HttpServlet {
     		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
             String json = "";
             if(br != null){ json = br.readLine();}
-            Gson gsonInsert = new Gson();
+            //Gson gsonInsert = new Gson();
+            Gson gsonInsert = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();            
             productoObj=gsonInsert.fromJson(json, Hito.class);
 			SqlInserts.insertHito(productoObj);
     	}
@@ -278,7 +281,8 @@ public class ajaxInserts  extends HttpServlet {
     		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
             String json = "";
             if(br != null){ json = br.readLine();}
-            Gson gsonInsert = new Gson();
+            //Gson gsonInsert = new Gson();
+            Gson gsonInsert = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
             Objeto=gsonInsert.fromJson(json, Periodo.class);
 			SqlInserts.insertPeriodo(Objeto);
     	}

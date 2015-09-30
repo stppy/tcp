@@ -22,13 +22,13 @@
 <div class="form-group">
 <label for="fechaInicioPeriodo" class="col-lg-2 control-label">Fecha Inicio</label>
 <div class="col-lg-10">
-<input type="text" class="form-control" id="fechaInicioPeriodo" placeholder="fecha_inicio">
+<input type="date" class="form-control" id="fechaInicioPeriodo" placeholder="fecha_inicio">
 </div>
 </div>
 <div class="form-group">
 <label for="fechaFinPeriodo" class="col-lg-2 control-label">Fecha Fin</label>
 <div class="col-lg-10">
-<input type="text" class="form-control" id="fechaFinPeriodo" placeholder="fecha_fin">
+<input type="date" class="form-control" id="fechaFinPeriodo" placeholder="fecha_fin">
 </div>
 </div>
 <div class="form-group">

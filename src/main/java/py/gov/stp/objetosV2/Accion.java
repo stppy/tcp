@@ -9,7 +9,7 @@ public class Accion {
 	protected int peso;
 	protected Date fechaInicio;
 	protected Date fechaFin;
-	protected boolean borrado;
+	protected boolean borrado=false;
 	
 	public int getInsLineaAccionId() {
 		return insLineaAccionId;
