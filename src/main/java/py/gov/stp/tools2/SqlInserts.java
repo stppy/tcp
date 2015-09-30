@@ -552,15 +552,15 @@ public class SqlInserts {
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into geo_poligono_tipo (nombre,descripcion)"
-	+ " values (?, ?)";
+		String query = " insert into geo_poligono_tipo (nombre,descripcion,borrado)"
+	+ " values (?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
 		//insert.setInt (1, geoPoligonoTipo.getId());
 		insert.setString (1, geoPoligonoTipo.getNombre());
 		insert.setString (2, geoPoligonoTipo.getDescripcion());
-		//insert.setBoolean (3, geoPoligonoTipo.isBorrado());	
+		insert.setBoolean (3, geoPoligonoTipo.isBorrado());	
 		
 		insert.execute();
 		   
