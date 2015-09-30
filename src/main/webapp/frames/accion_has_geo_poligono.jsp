@@ -8,6 +8,12 @@
 		    <div class="modal-body" >
 				<form class="form-horizontal" role="form">
 				  <div class="form-group">
+				    <label for="accionIdAccionHasGeoPoligono" class="col-lg-2 control-label">Accion Id</label>
+				    <div class="col-lg-10">
+				      <input type="text" class="form-control" id="accionIdAccionHasGeoPoligono" placeholder="Accion Id">
+				    </div>
+				  </div>				
+				  <div class="form-group">
 				    <label for="geoPoligonoIdAccionHasGeoPoligono" class="col-lg-2 control-label">Geo Poligono Id</label>
 				    <div class="col-lg-10">
 				      <input type="text" class="form-control" id="geoPoligonoIdAccionHasGeoPoligono" placeholder="Geo Polígono Id">
@@ -38,22 +44,24 @@
 </div>
 	<script>
 	$("body").on("click", "#guardarAccionHasGeoPoligono",function(event){		
-			var todojunto = new Object();
+			var objeto = new Object();
 			var accion = "insAccionHasGeoPoligono";
+			var accionId = $("#accionIdAccionHasGeoPoligono").val();
 			var geoPoligonoId= $("#geoPoligonoIdAccionHasGeoPoligono").val();
 			var geoPoligonoGeoPoligonoId= $("#geoPoligonoGeoPoligonoIdAccionHasGeoPoligono").val();
 			var proporcion = $("#proporcionAccionHasGeoPoligono").val();
 							
-			todojunto.geoPoligonoId=geoPoligonoId;
-			todojunto.geoPoligonoGeoPoligonoId=geoPoligonoGeoPoligonoId;
-			todojunto.proporcion=proporcion;
+			objeto.accionId=accionId;
+			objeto.geoPoligonoId=geoPoligonoId;
+			objeto.geoPoligonoGeoPoligonoId=geoPoligonoGeoPoligonoId;
+			objeto.proporcion=proporcion;
 			
 				 
 			$.ajax({
 			        url: "http://tablero2015.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
 			        type: 'POST',
 			        dataType: 'json',
-			        data: JSON.stringify(todojunto),
+			        data: JSON.stringify(objeto),
 			        contentType: 'application/json',
 			        mimeType: 'application/json',
 			        

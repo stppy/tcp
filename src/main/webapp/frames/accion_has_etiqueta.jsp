@@ -8,6 +8,18 @@
 		    <div class="modal-body" id="accionHasEtiqueta" >
 				<form class="form-horizontal" role="form">
 				  <div class="form-group">
+				    <label for="accionIdAccionHasEtiqueta" class="col-lg-2 control-label">Accion Id</label>
+				    <div class="col-lg-10">
+				      <input type="text" class="form-control" id="accionIdAccionHasEtiqueta" placeholder="Accion Id">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="etiquetaIdAccionHasEtiqueta" class="col-lg-2 control-label">Etiqueta Id</label>
+				    <div class="col-lg-10">
+				      <input type="text" class="form-control" id="etiquetaIdAccionHasEtiqueta" placeholder="Etiqueta Id">
+				    </div>
+				  </div>				  				
+				  <div class="form-group">
 				    <label for="proporcionAccionHasEtiqueta" class="col-lg-2 control-label">Proporcion</label>
 				    <div class="col-lg-10">
 				      <input type="text" class="form-control" id="proporcionAccionHasEtiqueta" placeholder="Proporcion">
@@ -26,18 +38,22 @@
 </div>
 	<script>
 	$("body").on("click", "#guardarAccionHasEtiqueta",function(event){		
-			var todojunto = new Object();
+			var objeto = new Object();
 			var accion = "insAccionHasEtiqueta";
+			var accionId = $("#accionIdAccionHasEtiqueta").val();	
+			var etiquetaId = $("#etiquetaIdAccionHasEtiqueta").val();	
 			var proporcion= $("#proporcionAccionHasEtiqueta").val();	
 							
-			todojunto.proporcion=proporcion;
+			objeto.accionId=accionId;
+			objeto.etiquetaId=etiquetaId;
+			objeto.proporcion=proporcion;
 			
 				 
 			$.ajax({
 			        url: "http://tablero2015.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
 			        type: 'POST',
 			        dataType: 'json',
-			        data: JSON.stringify(todojunto),
+			        data: JSON.stringify(objeto),
 			        contentType: 'application/json',
 			        mimeType: 'application/json',
 			        

@@ -8,6 +8,12 @@
 		    <div class="modal-body">
 				<form class="form-horizontal" role="form">
 				  <div class="form-group">
+				    <label for="hitoIdHitoHasBeneficiario" class="col-lg-2 control-label">Hito Id</label>
+				    <div class="col-lg-10">
+				      <input type="text" class="form-control" id="hitoIdHitoHasBeneficiario" placeholder="Hito Acción Id">
+				    </div>
+				  </div>				
+				  <div class="form-group">
 				    <label for="hitoAccionIdHitoHasBeneficiario" class="col-lg-2 control-label">Hito Accion Id</label>
 				    <div class="col-lg-10">
 				      <input type="text" class="form-control" id="hitoAccionIdHitoHasBeneficiario" placeholder="Hito Acción Id">
@@ -32,20 +38,23 @@
 </div>
 	<script>
 	$("body").on("click", "#guardarHitoHasBeneficiario",function(event){		
-			var todojunto = new Object();
+			var objeto = new Object();
 			var accion = "insHitoHasBeneficiario";
+			var hitoId = $("#hitoIdHitoHasBeneficiario").val();
 			var hitoAccionId= $("#hitoAccionIdHitoHasBeneficiario").val();
 			var beneficiarioId= $("#beneficiarioIdHitoHasBeneficiario").val();		
 							
-			todojunto.hitoAccionId=hitoAccionId;
-			todojunto.beneficiarioId=beneficiarioId;
+			
+			objeto.hitoId=hitoId;
+			objeto.hitoAccionId=hitoAccionId;
+			objeto.beneficiarioId=beneficiarioId;
 			
 				 
 			$.ajax({
 			        url: "http://tablero2015.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
 			        type: 'POST',
 			        dataType: 'json',
-			        data: JSON.stringify(todojunto),
+			        data: JSON.stringify(objeto),
 			        contentType: 'application/json',
 			        mimeType: 'application/json',
 			        

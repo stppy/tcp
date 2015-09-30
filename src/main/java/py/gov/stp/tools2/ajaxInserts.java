@@ -241,13 +241,13 @@ public class ajaxInserts  extends HttpServlet {
        }
         if (accion!=null && accion!=""){
     	if (accion.equals("insInstitucion")){
-    		Institucion productoObj = new Institucion();
+    		InsLineaAccion productoObj = new InsLineaAccion();
     		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
             String json = "";
             if(br != null){ json = br.readLine();}
             Gson gsonInsert = new Gson();
-            productoObj=gsonInsert.fromJson(json, Institucion.class);
-			SqlInserts.insertInstitucion(productoObj);
+            productoObj=gsonInsert.fromJson(json, InsLineaAccion.class);
+			SqlInserts.insertInsLineaAccion(productoObj);
     	}
        }
         if (accion!=null && accion!=""){

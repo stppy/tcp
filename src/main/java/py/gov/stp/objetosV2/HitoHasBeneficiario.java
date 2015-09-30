@@ -4,7 +4,7 @@ public class HitoHasBeneficiario {
 	protected int hitoId;
 	protected int hitoAccionId;
 	protected int beneficiarioId;
-	protected boolean borrado;
+	protected boolean borrado = false;
 	
 	public int getHitoId() {
 		return hitoId;

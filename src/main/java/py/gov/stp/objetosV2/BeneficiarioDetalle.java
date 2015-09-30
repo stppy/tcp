@@ -21,8 +21,8 @@ public class BeneficiarioDetalle {
 	public int getBeneficiarioDetalleClavesId() {
 		return beneficiarioDetalleClavesId;
 	}
-	public void setBeneficiarioDetalleClavesId(int beneficiarioDetalleClaves) {
-		this.beneficiarioDetalleClavesId = beneficiarioDetalleClaves;
+	public void setBeneficiarioDetalleClavesId(int beneficiarioDetalleClavesId) {
+		this.beneficiarioDetalleClavesId = beneficiarioDetalleClavesId;
 	}
 	public int getBeneficiarioId() {
 		return beneficiarioId;

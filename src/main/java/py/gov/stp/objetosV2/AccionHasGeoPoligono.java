@@ -3,9 +3,9 @@ package py.gov.stp.objetosV2;
 public class AccionHasGeoPoligono {
 	protected int accionId;
 	protected int geoPoligonoId;
-	protected int geoPoligonoGeoPoligono;
+	protected int geoPoligonoGeoPoligonoId;
 	protected int proporcion;
-	protected boolean borrado;
+	protected boolean borrado = false;
 	
 	public int getAccionId() {
 		return accionId;
@@ -19,11 +19,11 @@ public class AccionHasGeoPoligono {
 	public void setGeoPoligonoId(int geoPoligonoId) {
 		this.geoPoligonoId = geoPoligonoId;
 	}
-	public int getGeoPoligonoGeoPoligono() {
-		return geoPoligonoGeoPoligono;
+	public int getGeoPoligonoGeoPoligonoId() {
+		return geoPoligonoGeoPoligonoId;
 	}
-	public void setGeoPoligonoGeoPoligono(int geoPoligonoGeoPoligono) {
-		this.geoPoligonoGeoPoligono = geoPoligonoGeoPoligono;
+	public void setGeoPoligonoGeoPoligonoId(int geoPoligonoGeoPoligonoId) {
+		this.geoPoligonoGeoPoligonoId = geoPoligonoGeoPoligonoId;
 	}
 	public int getProporcion() {
 		return proporcion;

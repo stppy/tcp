@@ -26,6 +26,12 @@
 				    </div>
 				  </div>
 				  <div class="form-group">
+				    <label for="geoPoligonoIdGeoPoligono" class="col-lg-2 control-label">Geo Polígono Id</label>
+				    <div class="col-lg-10">
+				      <input type="text" class="form-control" id="geoPoligonoIdGeoPoligono" placeholder="Geo Poligono Tipo Id">
+				    </div>
+				  </div>				  
+				  <div class="form-group">
 				    <label for="geoPoligonoTipoIdGeoPoligono" class="col-lg-2 control-label">Geo Polígono Tipo Id</label>
 				    <div class="col-lg-10">
 				      <input type="text" class="form-control" id="geoPoligonoTipoIdGeoPoligono" placeholder="Geo Poligono Tipo Id">
@@ -44,24 +50,26 @@
 </div>
 	<script>
 	$("body").on("click", "#guardarGeoPoligono",function(event){		
-			var todojunto = new Object();
+			var objeto = new Object();
 			var accion = "insGeoPoligono";
 			var nombre= $("#nombreGeoPoligono").val();
 			var descripcion= $("#descripcionGeoPoligono").val();
 			var geo=$("#geoGeoPoligono").val();
+			var geoPoligonoId = $("#geoPoligonoIdGeoPoligono").val();
 			var geoPoligonoTipoId=$("#geoPoligonoTipoIdGeoPoligono").val();
 							
-			todojunto.nombre=nombre;
-			todojunto.descripcion=descripcion;
-			todojunto.geo=geo;
-			todojunto.geoPoligonoTipoId=geoPoligonoTipoId;
+			objeto.nombre=nombre;
+			objeto.descripcion=descripcion;
+			objeto.geo=geo;
+			objeto.geoPoligonoId=geoPoligonoId;
+			objeto.geoPoligonoTipoId=geoPoligonoTipoId;
 			
 				 
 			$.ajax({
 			        url: "http://tablero2015.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
 			        type: 'POST',
 			        dataType: 'json',
-			        data: JSON.stringify(todojunto),
+			        data: JSON.stringify(objeto),
 			        contentType: 'application/json',
 			        mimeType: 'application/json',
 			        

@@ -20,9 +20,9 @@
 				    </div>
 				  </div>
 				  <div class="form-group">
-				    <label for="periodoInsLineaAccion" class="col-lg-2 control-label">Periodo</label>
+				    <label for="periodoIdInsLineaAccion" class="col-lg-2 control-label">Periodo</label>
 				    <div class="col-lg-10">
-				      <input type="text" class="form-control" id="periodoInsLineaAccion" placeholder="Periodo Id">
+				      <input type="text" class="form-control" id="periodoIdInsLineaAccion" placeholder="Periodo Id">
 				    </div>
 				  </div>
 				  <div class="form-group">
@@ -44,24 +44,24 @@
 </div>
 	<script>
 	$("body").on("click", "#guardarInsLineaAccion",function(event){		
-			var todojunto = new Object();
-			var accion = "insTipoAccion";
+			var objeto = new Object();
+			var accion = "insInsLineaAccion";
 			var lineaAccionId= $("#lineaAccionIdInsLineaAccion").val();
 			var institucionId= $("#institucionIdInsLineaAccion").val();
-			var periodoId= $("#periodoInsLineaAccion").val();
+			var periodoId= $("#periodoIdInsLineaAccion").val();
 			var meta= $("#metaInsLineaAccion").val();			
 							
-			todojunto.lineaAccionId=lineaAccionId;
-			todojunto.lineaAccionId=lineaAccionId;
-			todojunto.periodoId=periodoId;
-			todojunto.meta=meta;
+			objeto.lineaAccionId=lineaAccionId;
+			objeto.institucionId=institucionId;
+			objeto.periodoId=periodoId;
+			objeto.meta=meta;
 			
 				 
 			$.ajax({
 			        url: "http://tablero2015.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
 			        type: 'POST',
 			        dataType: 'json',
-			        data: JSON.stringify(todojunto),
+			        data: JSON.stringify(objeto),
 			        contentType: 'application/json',
 			        mimeType: 'application/json',
 			        
