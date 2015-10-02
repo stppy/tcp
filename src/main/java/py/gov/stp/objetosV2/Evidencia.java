@@ -5,7 +5,7 @@ public class Evidencia {
 	protected String nombre;
 	protected String descripcion;
 	protected int wsId;
-	protected boolean borrado;
+	protected boolean borrado=false;
 	
 	public int getId() {
 		return id;

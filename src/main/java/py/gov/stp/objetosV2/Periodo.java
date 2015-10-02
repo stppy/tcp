@@ -6,7 +6,7 @@ public class Periodo {
 	protected String descripcion;
 	protected Date fechaInicio;
 	protected Date fechaFin;
-	protected boolean borrado;
+	protected boolean borrado=false;
 	
 	public String getNombre() {
 		return nombre;

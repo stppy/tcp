@@ -5,11 +5,11 @@ public class LineaAccion {
 	protected String descripcion;
 	protected int orden;
 	protected String peso;
-	protected boolean acumulador;
+	protected boolean acumular;
 	protected int tipoAccionId;
 	protected int estrategiaId;
-	protected int UnidadMedidaId;
-	protected boolean borrado;
+	protected int unidadMedidaId;
+	protected boolean borrado=false;
 	
 	public String getNombre() {
 		return nombre;
@@ -35,11 +35,11 @@ public class LineaAccion {
 	public void setPeso(String peso) {
 		this.peso = peso;
 	}
-	public boolean isAcumulador() {
-		return acumulador;
+	public boolean isAcumular() {
+		return acumular;
 	}
-	public void setAcumulador(boolean acumulador) {
-		this.acumulador = acumulador;
+	public void setAcumular(boolean acumular) {
+		this.acumular = acumular;
 	}
 	public int getTipoAccionId() {
 		return tipoAccionId;
@@ -54,10 +54,10 @@ public class LineaAccion {
 		this.estrategiaId = estrategiaId;
 	}
 	public int getUnidadMedidaId() {
-		return UnidadMedidaId;
+		return unidadMedidaId;
 	}
 	public void setUnidadMedidaId(int unidadMedidaId) {
-		UnidadMedidaId = unidadMedidaId;
+		this.unidadMedidaId = unidadMedidaId;
 	}
 	public boolean isBorrado() {
 		return borrado;
@@ -65,6 +65,10 @@ public class LineaAccion {
 	public void setBorrado(boolean borrado) {
 		this.borrado = borrado;
 	}
+	
+
+	
+
 	
 	
 	

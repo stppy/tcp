@@ -11,7 +11,7 @@ public class Hito {
 	protected int evidenciaId;
 	protected int unidadMedidaId;
 	protected int peso;
-	protected boolean borrado;
+	protected boolean borrado=false;
 	
 	public String getNombre() {
 		return nombre;

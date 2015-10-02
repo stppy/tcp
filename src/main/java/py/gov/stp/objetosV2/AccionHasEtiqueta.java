@@ -4,7 +4,7 @@ public class AccionHasEtiqueta {
 	protected int accionId;
 	protected int etiquetaId;
 	protected int proporcion;
-	protected boolean borrado;
+	protected boolean borrado = false;
 	
 	public int getAccionId() {
 		return accionId;

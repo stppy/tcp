@@ -5,7 +5,7 @@ public class InsLineaAccion {
 	protected int institucionId;
 	protected int periodoId;
 	protected double meta;
-	protected boolean borrado;
+	protected boolean borrado=false;
 	
 	public int getLineaAccionId() {
 		return lineaAccionId;

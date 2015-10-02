@@ -1,4 +1,4 @@
-<div class="modal fade" id="periodo" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="Periodo" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
 <div class="modal-dialog modal-lg">
 <div class="modal-content" >
 <div class="modal-header">
@@ -8,32 +8,32 @@
 <div class="modal-body">
 <form class="form-horizontal" role="form">
 <div class="form-group">
-<label for="nombreperiodo" class="col-lg-2 control-label">Nombre</label>
+<label for="nombrePeriodo" class="col-lg-2 control-label">Nombre</label>
 <div class="col-lg-10">
-<input type="text" class="form-control" id="nombreperiodo" placeholder="Nombre">
+<input type="text" class="form-control" id="nombrePeriodo" placeholder="Nombre">
 </div>
 </div>
 <div class="form-group">
-<label for="descripcionperiodo" class="col-lg-2 control-label">Descripción</label>
+<label for="descripcionPeriodo" class="col-lg-2 control-label">Descripción</label>
 <div class="col-lg-10">
-<input type="text" class="form-control" id="descripcionperiodo" placeholder="Descripción">
+<input type="text" class="form-control" id="descripcionPeriodo" placeholder="Descripción">
 </div>
 </div>
 <div class="form-group">
-<label for="fecha_inicioperiodo" class="col-lg-2 control-label">Fecha Inicio</label>
+<label for="fechaInicioPeriodo" class="col-lg-2 control-label">Fecha Inicio</label>
 <div class="col-lg-10">
-<input type="date" class="form-control" id="fecha_inicioperiodo" placeholder="fecha_inicio">
+<input type="date" class="form-control" id="fechaInicioPeriodo" placeholder="fecha_inicio">
 </div>
 </div>
 <div class="form-group">
-<label for="fecha_finperiodo" class="col-lg-2 control-label">Fecha Fin</label>
+<label for="fechaFinPeriodo" class="col-lg-2 control-label">Fecha Fin</label>
 <div class="col-lg-10">
-<input type="date" class="form-control" id="fecha_finperiodo" placeholder="fecha_inicio">
+<input type="date" class="form-control" id="fechaFinPeriodo" placeholder="fecha_fin">
 </div>
 </div>
 <div class="form-group">
 <div class="col-lg-offset-2 col-lg-10">
-<button type="submit" class="btn btn-primary" id="guardarperiodo">Guardar</button>
+<button type="submit" class="btn btn-primary" id="guardarPeriodo">Guardar</button>
 </div>
 </div>
 </form> 
@@ -43,25 +43,25 @@
 </div>
 </div>
 <script>
-$("body").on("click", "#guardarperiodo",function(event){ 
-var todojunto = new Object();
+$("body").on("click", "#guardarPeriodo",function(event){ 
+var objeto = new Object();
 var accion = "insPeriodo";
-var nombre= $("#nombreperiodo").val();
-var descripcion= $("#descripcionperiodo").val(); 
-var fecha_inicio= $("#fecha_inicioperiodo").val();
-var fecha_fin= $("#fecha_finperiodo").val(); 
+var nombre= $("#nombrePeriodo").val();
+var descripcion= $("#descripcionPeriodo").val(); 
+var fechaInicio= $("#fechaInicioPeriodo").val();
+var fechaFin= $("#fechaFinPeriodo").val(); 
 
-todojunto.nombre=nombre;
-todojunto.descripcion=descripcion;
-todojunto.fecha_inicio=fecha_inicio;
-todojunto.fecha_fin=fecha_fin;
+objeto.nombre=nombre;
+objeto.descripcion=descripcion;
+objeto.fechaInicio=fechaInicio;
+objeto.fechaFin=fechaFin;
 
 
 $.ajax({
 url: "http://tablero2015.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
 type: 'POST',
 dataType: 'json',
-data: JSON.stringify(todojunto),
+data: JSON.stringify(objeto),
 contentType: 'application/json',
 mimeType: 'application/json',
 

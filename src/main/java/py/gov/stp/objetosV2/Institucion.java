@@ -9,7 +9,7 @@ public class Institucion {
 	protected int unidadJerarquicaId;
 	protected int unidadResponsableId;
 	protected int orden;
-	protected boolean borrado;
+	protected boolean borrado=false;
 	
 	public String getNombre() {
 		return nombre;
