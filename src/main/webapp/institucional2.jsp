@@ -30,9 +30,52 @@ var datosGeo=[];
 	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="bootstrap/css/bootstrapslider.css" rel="stylesheet">
 	
-    <style type="text/css">
     
-    #test .arc2 {
+    
+    
+        <style>
+
+
+.background {
+    fill: #FFFFFF;
+    fill-opacity: 0.01;
+}
+
+.component {
+    fill: #e1e1e1;
+}
+
+.component .label {
+    font-family: Myriad, "Helvetic Neue", Helvetica, Arial;
+    text-anchor: middle;
+    fill: #0000FF;
+}
+
+.arc {
+    stroke-weight:0.1;
+    fill: #4e8fff;
+}
+
+
+.arc2 {
+    stroke-weight:0.1;
+    fill: #3660b0;
+}
+
+
+.label {
+    font-family:  Myriad, "Helvetic Neue", Helvetica, Arial;
+    text-anchor: middle;
+}
+
+.radial-svg {
+    display: block;
+    margin: 0 auto;
+    width:180;
+    height:180;
+}
+
+        #test .arc2 {
             stroke-weight:0.1;
             fill: #3660b0;
         }
@@ -44,10 +87,19 @@ var datosGeo=[];
         }
 
         #div1, #div2, #div3, #div4 {
-            width: 33%;
-            height: 200px;
+            width: 20%;
+            height: 100px;
             box-sizing: border-box;
             float: left;
+            text-align:center;
+        }
+         #div1 .arc {
+            stroke-weight: 0.1;
+            fill: #1d871b;
+        }
+         #div1 .arc2 {
+            stroke-weight: 0.1;
+            fill: #f0a417;
         }
 
         #div2 .arc {
@@ -57,12 +109,17 @@ var datosGeo=[];
 
         #div2 .arc2 {
             stroke-weight: 0.1;
-            fill: #1d871b;
+            fill: #b00d08;
         }
 
         #div3 .arc {
             stroke-weight: 0.1;
-            fill: #1d871b;
+            fill: #f0a417;
+            
+        }
+        #div4 .arc {
+            stroke-weight: 0.1;
+            fill: #b00d08;
         }
 
 
@@ -82,40 +139,18 @@ var datosGeo=[];
 
         }
         
-        
-    
-    
-		/* Example 1 custom styles */
-		#ex1Slider .slider-selection {
-   			background: #BABABA;
-  		}
+.bullet { font: 10px sans-serif; }
+.bullet .marker { stroke: #000; stroke-width: 2px; }
+.bullet .tick line { stroke: #666; stroke-width: .5px; }
+.bullet .range.s0 { fill: #eee; }
+.bullet .range.s1 { fill: #ddd; }
+.bullet .range.s2 { fill: #ccc; }
+.bullet .measure.s0 { fill: lightsteelblue; }
+.bullet .measure.s1 { fill: steelblue; }
+.bullet .title { font-size: 14px; font-weight: bold; width:20%; }
+.bullet .subtitle { fill: #999; width:20%;}
+.ellips { overflow:hidden; text-overflow-multiline:ellipsis; }
 
-    	/* Example 3 custom styles */
-		#RGB {
-    		height: 20px;
-    		background: rgb(128, 128, 128);
-  		}
-		#RC .slider-selection {
-		    background: #FF8282;
-		}
-		#RC .slider-handle {
-			background: red;
-		}
-		#GC .slider-selection {
-			background: #428041;
-		}
-		#GC .slider-handle {
-			background: green;
-		}
-		#BC .slider-selection {
-			background: #8283FF;
-		}
-		#BC .slider-handle {
-			border-bottom-color: blue;
-		}
-		#R, #G, #B {
-			width: 300px;
-		}
     </style>
     
     
@@ -123,6 +158,10 @@ var datosGeo=[];
 
 	<link rel="stylesheet" href="plugins/mapa/leaflet.css" />
 <script src='dist/leaflet-image.js'></script>
+
+<meta HTTP-EQUIV="X-UA-COMPATIBLE" CONTENT="IE=EmulateIE9" >
+    <script type="text/javascript" src="scripts/d3.min.js"></script>
+    <script type="text/javascript" src="scripts/radialProgress.js"></script>
 
 </head>
 <body class="skin-blue sidebar-mini sidebar-collapse">
@@ -504,7 +543,7 @@ tbody {
 		  <%@ include file="/frames/mainheader.jsp" %>
       </header>
       <!-- Left side column. contains the logo and sidebar -->
-      <aside class="main-sidebar">
+      <aside class="main-sidebar" style="width:60px">
   			 <%@ include file="/frames/main-sidebar.jsp" %>
       </aside>
 
@@ -529,18 +568,20 @@ tbody {
 	          <div class="row">
             <div class="col-md-3 col-sm-6 col-xs-12">
               <div class="info-box">
-                <span class="info-box-icon bg-aqua"><i class="fa fa-dashboard"></i></span>
+                <span class="info-box-icon bg-green"><i class="fa fa-dashboard"></i></span>
                 <div class="info-box-content">
-                  <span class="info-box-text">Desempeño General<br></span>
+                  <span class="info-box-text">Desempeño General</span>
+                  <small>Ejecución/Programación</small>
                   <span class="info-box-number">90<small>%</small></span>
                 </div><!-- /.info-box-content -->
               </div><!-- /.info-box -->
             </div><!-- /.col -->
             <div class="col-md-3 col-sm-6 col-xs-12">
               <div class="info-box">
-                <span class="info-box-icon bg-red"><i class="fa fa-cogs"></i></span>
+                <span class="info-box-icon bg-yellow"><i class="fa fa-cogs"></i></span>
                 <div class="info-box-content">
-                  <span class="info-box-text">Programación <br> Relativa</span>
+                  <span class="info-box-text">Planificado</span>
+                  <small>Programación/Meta</small>
                   <span class="info-box-number">79%</span>
                 </div><!-- /.info-box-content -->
               </div><!-- /.info-box -->
@@ -551,18 +592,20 @@ tbody {
 
             <div class="col-md-3 col-sm-6 col-xs-12">
               <div class="info-box">
-                <span class="info-box-icon bg-green"><i class="fa fa-map-marker"></i></span>
+                <span class="info-box-icon bg-red"><i class="fa fa-map-marker"></i></span>
                 <div class="info-box-content">
                   <span class="info-box-text">Evidencias<br></span>
+                  <small>en acciones</small>
                   <span class="info-box-number">0%</span>
                 </div><!-- /.info-box-content -->
               </div><!-- /.info-box -->
             </div><!-- /.col -->
             <div class="col-md-3 col-sm-6 col-xs-12">
               <div class="info-box">
-                <span class="info-box-icon bg-yellow"><i class="fa fa-users"></i></span>
+                <span class="info-box-icon bg-red"><i class="fa fa-users"></i></span>
                 <div class="info-box-content">
-                  <span class="info-box-text">Beneficiarios <br> Registrados</span>
+                  <span class="info-box-text">Beneficiarios</span>
+                  <small>en acciones</small>
                   <span class="info-box-number">0%</span>
                 </div><!-- /.info-box-content -->
               </div><!-- /.info-box -->
@@ -570,6 +613,74 @@ tbody {
           </div>
 	          
 	          
+		   <div class="row">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="box box-default">
+                <div class="box-header with-border">
+                   <h3 class="box-title" id="tabla-derecho">Asistencia Tecnica Agropecuaria</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body no-padding">
+	                <!--  <iframe frameborder='0' id="frontimg" src="d3.html" width="200" height="200" border="0" scrolling="no" allowTransparency="true"></iframe>-->
+	                <div id='outer' style="width: 90%; height:100%; margin: 3% 0 3% 0;">
+	    				<div id="main" style="width:90%; height:100%; margin:  0px 30% 0px 30% ">
+	    					<div id="div1"></div>
+   						</div>
+					</div>
+    	  		</div>
+			 </div>
+		  </div>
+      
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="box box-default">
+                <div class="box-header with-border">
+                  <h3 class="box-title" id="tabla-derecho">Cadenas de Valor-Sector Privado</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body no-padding">
+	                <!--  <iframe frameborder='0' id="frontimg" src="d3.html" width="200" height="200" border="0" scrolling="no" allowTransparency="true"></iframe>-->
+	                <div id='outer' style="width: 90%; height:100%; margin: 3% 0 3% 0;">
+	    				<div id="main" style="width:90%; height:100%; margin:  0px 30% 0px 30% ">
+	    					<div id="div2"></div>
+   						</div>
+					</div>
+    	  		</div>
+			 </div>
+		  </div>
+        
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="box box-default">
+                <div class="box-header with-border">
+                  <h3 class="box-title" id="tabla-derecho">Inversión en insumos y tecnología</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body no-padding">
+	                <!--  <iframe frameborder='0' id="frontimg" src="d3.html" width="200" height="200" border="0" scrolling="no" allowTransparency="true"></iframe>-->
+	                <div id='outer' style="width: 90%; height:100%; margin: 3% 0 3% 0;">
+	    				<div id="main" style="width:90%; height:100%; margin:  0px 30% 0px 30% ">
+	    					<div id="div3"></div>
+   						</div>
+					</div>
+    	  		</div>
+			 </div>
+		  </div>
+        
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="box box-default">
+                <div class="box-header with-border">
+                   <h3 class="box-title" id="tabla-derecho">Mejoramiento de Suelo</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body no-padding">
+	                <!--  <iframe frameborder='0' id="frontimg" src="d3.html" width="200" height="200" border="0" scrolling="no" allowTransparency="true"></iframe>-->
+	                <div id='outer' style="width: 90%; height:100%; margin: 3% 0 3% 0;">
+	    				<div id="main" style="width:90%; height:100%; margin:  0px 30% 0px 30% ">
+	    					<div id="div4"></div>
+   						</div>
+					</div>
+    	  		</div>
+			 </div>
+		  </div>
+        </div>
+
+        
+        
 	          <div class="row">
             <div class="col-md-6">
               <div class="box box-default">
@@ -582,9 +693,8 @@ tbody {
 
 					<script src="plugins/mapa/deptos2012.geojson" type="text/javascript"></script>
 					<script src="plugins/mapa/leaflet.js"></script>
-				
-					<script>
 					
+					<script>
 					var entidadCas = "";
 					entidadCas ="<%=attributes.get("entidad") %>";
 					var usuarios = $.ajax({
@@ -1288,8 +1398,8 @@ tbody {
 							//renderTodasLasLineas();
 							
 						});
+							</script>	
 
-					</script>
                   
                   
                 </div><!-- /.box-body -->
@@ -1299,32 +1409,70 @@ tbody {
             <div class="col-md-6">
               <div class="box box-default">
                 <div class="box-header with-border">
-                  <i class="fa fa-building-o"></i>
-
-                  <h3 class="box-title" id="tabla-derecho">Instituciones</h3>
-
+                  <i class="fa  fa-money"></i>
+                  <h3 class="box-title">Ejecución Presupuestaria</h3>
                 </div><!-- /.box-header -->
-                <div class="box-body no-padding">
+                <div class="box-body">
+                <bulletChartInstitucion><bulletChartInstitucion/>
+                <script src="scripts/bullets.js"></script>
+<script>
+
+var margin = {top: 5, right: 40, bottom: 20, left: 250},
+    width = 100 - margin.left - margin.right,
+    height = 50 - margin.top - margin.bottom;
+    
+
+
+
+var chart = d3.bullet();
+
+d3.json("http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getLineasAccion&institucion_id=1359", function(error, data) {
+  if (error) throw error;
+
+  var svg = d3.select("bulletChartInstitucion").selectAll("svg")
+      .data(data)
+    .enter().append("svg")
+      .attr("class", "bullet")
+      .attr("width", "100%")
+      .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+      .call(chart);
+
+  var title = svg.append("g")
+      .style("text-anchor", "end")
+      .attr("transform", "translate(-6," + height / 2 + ")");
+
+  title.append("text")
+      .attr("class", "title ellips")
+      .text(function(d) { 
+    	  if (d.linea_accion.length>36){
+    		  return d.linea_accion.substr(0,35)+"...";  
+    	  }else{return d.linea_accion;}
+    	   
+    	  });
+      
+
+  title.append("text")
+      .attr("class", "subtitle ellips")
+      .attr("dy", "1em")
+      .text(function(d) { 
+    	  if (d.accion_unidad_medida.length>36){
+    		  return d.accion_unidad_medida.substr(0,35)+"...";  
+    	  }else{return d.accion_unidad_medida;}
+    	   
+    	  });
+
+ 
+});
+
+
+</script>
                 
-                <iframe frameborder='0' id="frontimg" src="d3.html" width="200" height="200" border="0" scrolling="no" allowTransparency="true"></iframe>
-    </div>
-</div>
-                  <table class="table table-condensed">
-                    <thead>
-                    <tr>
-                      <th class="col-md-3">Institución</th>
-                      <th class="col-md-9">Desempeño</th>
-                    </tr>
-                    </thead>
-              		<tbody id="tablaInstituciones">
-
-                  </tbody></table>
-
-                </div><!-- /.box-body -->
+                 </div><!-- /.box-body -->
               </div><!-- /.box -->
             </div><!-- /.col -->
-          </div>
-	          
+		  </div> <!-- /.row -->
 	          
 	          <div class="row">
 	         <div class="col-md-12">
@@ -1464,7 +1612,77 @@ var $tabla=$("#lineasPorEntidad");
 
 <script type="text/javascript" src="bootstrap/js/jquery.min.js"></script>--> 
 <script type="text/javascript" src="bootstrap/js/bootstrap-slider.js"></script>
+<script language="JavaScript">
 
+
+    var div1=d3.select(document.getElementById('div1'));
+    var div2=d3.select(document.getElementById('div2'));
+    var div3=d3.select(document.getElementById('div3'));
+    var div4=d3.select(document.getElementById('div4'));
+
+
+    start();
+
+   
+
+    function onClick3() {
+        deselect();
+        div1.attr("class","selectedRadial");
+        div2.attr("class","selectedRadial");
+        div3.attr("class","selectedRadial");
+        div4.attr("class","selectedRadial");
+    }
+
+    function labelFunction(val,min,max) {
+
+    }
+
+    function deselect() {
+
+        div1.attr("class","radial");
+        div2.attr("class","radial");
+        div3.attr("class","radial");
+        div4.attr("class","radial");
+    }
+
+    function start() {
+
+     
+    	var rp1 = radialProgress(document.getElementById('div1'))
+        
+        .diameter(100)
+        .minValue(0)
+        .maxValue(100)
+        .value(134)
+        .render();
+    	var rp2 = radialProgress(document.getElementById('div2'))
+        
+        .diameter(100)
+        .minValue(0)
+        .maxValue(100)
+        .value(97)
+        .render();
+    	var rp3 = radialProgress(document.getElementById('div3'))
+        
+        .diameter(100)
+        .minValue(0)
+        .maxValue(100)
+        .value(87)
+        .render();
+    	var rp4 = radialProgress(document.getElementById('div4'))
+        
+        .diameter(100)
+        .minValue(0)
+        .maxValue(100)
+        .value(63)
+        .render();
+    }
+
+
+
+
+
+</script>
     
   </body>
 </html>

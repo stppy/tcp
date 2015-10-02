@@ -45,7 +45,10 @@ function radialProgress(parent) {
 
     var _arc = d3.svg.arc()
         .startAngle(0 * (Math.PI/180)); //just radians
-
+   
+    /* var _arc = d3.svg.arc()
+    .startAngle(0.52);
+    */
     var _arc2 = d3.svg.arc()
         .startAngle(0 * (Math.PI/180))
         .endAngle(0); //just radians
