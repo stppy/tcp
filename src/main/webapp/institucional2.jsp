@@ -711,7 +711,7 @@ tbody {
 					var i=parseInt(0);
 					
 					function numeroConComa(x) {
-					    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+						return x.toString().replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 					}
 					
 					var entidades = $.ajax({
