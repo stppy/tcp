@@ -22,6 +22,7 @@
 	<!--<script src="frames/entidad.js" type="text/javascript"></script> -->
 	<script type="text/javascript" src="dist/canvasjs/canvasjs.min.js" ></script>
 
+
 <script>
 var datosGeo=[];
 </script>
@@ -29,38 +30,127 @@ var datosGeo=[];
 	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="bootstrap/css/bootstrapslider.css" rel="stylesheet">
 	
-    <style type="text/css">
-		/* Example 1 custom styles */
-		#ex1Slider .slider-selection {
-   			background: #BABABA;
-  		}
+    
+    
+    
+        <style>
 
-    	/* Example 3 custom styles */
-		#RGB {
-    		height: 20px;
-    		background: rgb(128, 128, 128);
-  		}
-		#RC .slider-selection {
-		    background: #FF8282;
-		}
-		#RC .slider-handle {
-			background: red;
-		}
-		#GC .slider-selection {
-			background: #428041;
-		}
-		#GC .slider-handle {
-			background: green;
-		}
-		#BC .slider-selection {
-			background: #8283FF;
-		}
-		#BC .slider-handle {
-			border-bottom-color: blue;
-		}
-		#R, #G, #B {
-			width: 300px;
-		}
+
+.background {
+    fill: #FFFFFF;
+    fill-opacity: 0.01;
+}
+
+.component {
+    fill: #e1e1e1;
+}
+
+.component .label {
+    font-family: Myriad, "Helvetic Neue", Helvetica, Arial;
+    text-anchor: middle;
+    fill: #0000FF;
+}
+
+.arc {
+    stroke-weight:0.1;
+    fill: #4e8fff;
+}
+
+
+.arc2 {
+    stroke-weight:0.1;
+    fill: #3660b0;
+}
+
+
+.label {
+    font-family:  Myriad, "Helvetic Neue", Helvetica, Arial;
+    text-anchor: middle;
+}
+
+.radial-svg {
+    display: block;
+    margin: 0 auto;
+    width:180;
+    height:180;
+}
+
+        #test .arc2 {
+            stroke-weight:0.1;
+            fill: #3660b0;
+        }
+
+        #outer {
+            background:#FFFFFF;
+            border-radius: 5px;
+            color: #000;
+        }
+
+        #div1, #div2, #div3, #div4 {
+            width: 20%;
+            height: 100px;
+            box-sizing: border-box;
+            float: left;
+            text-align:center;
+        }
+         #div1 .arc {
+            stroke-weight: 0.1;
+            fill: #1d871b;
+        }
+         #div1 .arc2 {
+            stroke-weight: 0.1;
+            fill: #f0a417;
+        }
+
+        #div2 .arc {
+            stroke-weight: 0.1;
+            fill: #1d871b;
+        }
+
+        #div2 .arc2 {
+            stroke-weight: 0.1;
+            fill: #b00d08;
+        }
+
+        #div3 .arc {
+            stroke-weight: 0.1;
+            fill: #f0a417;
+            
+        }
+        #div4 .arc {
+            stroke-weight: 0.1;
+            fill: #b00d08;
+        }
+
+
+        .selectedRadial {
+            border-radius: 3px;
+            background: #f4f4f4;
+            color: #000;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+            -moz-box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+            border: 1px solid rgba(200,200,200,0.85);
+        }
+
+        .radial {
+            border-radius: 3px;
+            background: #FFFFFF;
+            color: #000;
+
+        }
+        
+.bullet { font: 10px sans-serif; }
+.bullet .marker { stroke: #000; stroke-width: 2px; }
+.bullet .tick line { stroke: #666; stroke-width: .5px; }
+.bullet .range.s0 { fill: #eee; }
+.bullet .range.s1 { fill: #ddd; }
+.bullet .range.s2 { fill: #ccc; }
+.bullet .measure.s0 { fill: lightsteelblue; }
+.bullet .measure.s1 { fill: steelblue; }
+.bullet .title { font-size: 14px; font-weight: bold; width:20%; }
+.bullet .subtitle { fill: #999; width:20%;}
+.ellips { overflow:hidden; text-overflow-multiline:ellipsis; }
+
     </style>
     
     
@@ -68,6 +158,10 @@ var datosGeo=[];
 
 	<link rel="stylesheet" href="plugins/mapa/leaflet.css" />
 <script src='dist/leaflet-image.js'></script>
+
+<meta HTTP-EQUIV="X-UA-COMPATIBLE" CONTENT="IE=EmulateIE9" >
+    <script type="text/javascript" src="scripts/d3.min.js"></script>
+    <script type="text/javascript" src="scripts/radialProgress.js"></script>
 
 </head>
 <body class="skin-blue sidebar-mini sidebar-collapse">
@@ -84,11 +178,9 @@ var datosGeo=[];
 		     		
 		     	<div class="nav-tabs-custom">
                 <ul class="nav nav-tabs pull-right">
-              	  <li class="active"><a href="#tab_1-1" data-toggle="tab"  title="Acciones"><i class="glyphicon glyphicon-list"></i></a></li>
+                  <li class="active"><a href="#tab_1-1" data-toggle="tab"><i class="glyphicon glyphicon-list-alt"></i></a></li>
                   <!--<li><a href="#tab_2-2" data-toggle="tab"><i class="glyphicon glyphicon-map-marker"></i></a></li>-->
-                  <li><a href="#tab_3-2" data-toggle="tab" title="Evolución"><i class="glyphicon glyphicon-stats"></i></a></li>
-                  <li><a href="#tab_4-2" data-toggle="tab" title="Beneficiarios"><i class="glyphicon glyphicon-user"></i></a></li>
-                  <li><a href="#tab_5-2" data-toggle="tab" title="Ubicaciones"><i class="glyphicon glyphicon glyphicon-map-marker"></i></a></li>                    
+                  <li><a href="#tab_3-2" data-toggle="tab"><i class="glyphicon glyphicon-stats"></i></a></li>
                     
                 </ul>
                 <div class="tab-content">
@@ -97,9 +189,9 @@ var datosGeo=[];
                		<!--  <iframe width='100%' height='520' frameborder='0' src='http://geo.stp.gov.py/user/stp/viz/8f7c6480-2f1c-11e5-aaea-b6fa9714a3b6/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen>
 		     		</iframe>  -->
                   </div><!-- /.tab-pane -->
-                  <div class="tab-pane" id="tab_3-2"></div><!-- /.tab-pane -->
-                   <div class="tab-pane" id="tab_4-2"><p>Datos no disponibles</p></div><!-- /.tab-pane -->
-                   <div class="tab-pane" id="tab_5-2"><p>Datos no disponibles</p></div><!-- /.tab-pane -->                            
+                  <div class="tab-pane" id="tab_3-2">
+                  	
+                  </div><!-- /.tab-pane -->
                 </div><!-- /.tab-content -->
               </div>
 		      </div>
@@ -260,8 +352,8 @@ if (user != null) { %>
 		    var idParsed = codigoRegistro.split("-");                                                            
 			var institucion_id=idParsed[1];
 			var linea_accion_id=idParsed[2];
-			//var unidad_medida= idParsed[3];
-			var idDepartamento= idParsed[3];
+			var unidad_medida= idParsed[3];
+			var idDepartamento= idParsed[4];
 			var tituloModal="";
 			var cuerpoModal="";
 			var footerModal="<br><br><br>";
@@ -314,17 +406,15 @@ if (user != null) { %>
 									 '</table>'+
 									 '</div></div></div></div></div>';
 			
-			$('#myModal').find(".modal-title").html("");			
-			$('#myModal').find("#tab_1-1").html(""); 
-			$('#myModal').find("#tab_2-2").html("");
-			$('#myModal').find("#tab_3-2").html("");			
-			
 			$('#myModal').find(".modal-title").html(tituloModal);
-			$('#myModal').find("#tab_1-1").html(cuerpoModal);
+			$('#myModal').find("#tab_1-1").html("");
+			$('#myModal').find("#tab_2-2").html("");
+			$('#myModal').find("#tab_3-2").html("");
+
 			$("#tab_3-2").append('Programación: <label id="fechaInicio"></label><input id="rango-fecha" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="1" data-slider-value="[250,450]"/><label id="fechaFin"></label>');
 			$("#tab_3-2").append('<br><br>Ejecución: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label id="fechaInicioEjecucion"></label><input id="rango-fecha-ejecucion" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="1" data-slider-value="[250,450]"/><label id="fechaFinEjecucion"></label>');
 
-	
+			$('#myModal').find("#tab_1-1").html(cuerpoModal);
 			//$('#myModal').find(".modal-footer").html(footerModal);
 			
 			lineaAccionAcumuladoMesDepto = $.ajax({
@@ -402,24 +492,10 @@ if (user != null) { %>
 		
 		renderEntidades();
 
-		/*for (var indexI=0; indexI<19;indexI++){
-			renderLineaAccion(indexI, 22691);
-			renderLineaAccion(indexI, 22691);
-			renderLineaAccion(indexI, 22691);
-			renderLineaAccion(indexI, 22691);
-			renderLineaAccion(indexI, 22691);
-			renderLineaAccion(indexI, 22691);
-			renderLineaAccion(indexI, 22691);
-			renderLineaAccion(indexI, 22691);
-		}*/
-
-		//renderLineaAccion(0, 1359);
-		//renderLineaAccion();
-		
-		
+	
 	});
 	
-	//event.stopPropagation();
+
 	
 	     </script>
   <!-- piwik -->
@@ -467,7 +543,7 @@ tbody {
 		  <%@ include file="/frames/mainheader.jsp" %>
       </header>
       <!-- Left side column. contains the logo and sidebar -->
-      <aside class="main-sidebar">
+      <aside class="main-sidebar" style="width:60px">
   			 <%@ include file="/frames/main-sidebar.jsp" %>
       </aside>
 
@@ -488,6 +564,123 @@ tbody {
         <section class="content" id="programacion">
 	          <!-- Info row de buscador de productos -->
 	          
+	          
+	          <div class="row">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <span class="info-box-icon bg-green"><i class="fa fa-dashboard"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Desempeño General</span>
+                  <small>Ejecución/Programación</small>
+                  <span class="info-box-number">90<small>%</small></span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+            </div><!-- /.col -->
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <span class="info-box-icon bg-yellow"><i class="fa fa-cogs"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Planificado</span>
+                  <small>Programación/Meta</small>
+                  <span class="info-box-number">79%</span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+            </div><!-- /.col -->
+
+            <!-- fix for small devices only -->
+            <div class="clearfix visible-sm-block"></div>
+
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <span class="info-box-icon bg-red"><i class="fa fa-map-marker"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Evidencias<br></span>
+                  <small>en acciones</small>
+                  <span class="info-box-number">0%</span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+            </div><!-- /.col -->
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="info-box">
+                <span class="info-box-icon bg-red"><i class="fa fa-users"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Beneficiarios</span>
+                  <small>en acciones</small>
+                  <span class="info-box-number">0%</span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+            </div><!-- /.col -->
+          </div>
+	          
+	          
+		   <div class="row">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="box box-default">
+                <div class="box-header with-border">
+                   <h3 class="box-title" id="tabla-derecho">Asistencia Tecnica Agropecuaria</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body no-padding">
+	                <!--  <iframe frameborder='0' id="frontimg" src="d3.html" width="200" height="200" border="0" scrolling="no" allowTransparency="true"></iframe>-->
+	                <div id='outer' style="width: 90%; height:100%; margin: 3% 0 3% 0;">
+	    				<div id="main" style="width:90%; height:100%; margin:  0px 30% 0px 30% ">
+	    					<div id="div1"></div>
+   						</div>
+					</div>
+    	  		</div>
+			 </div>
+		  </div>
+      
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="box box-default">
+                <div class="box-header with-border">
+                  <h3 class="box-title" id="tabla-derecho">Cadenas de Valor-Sector Privado</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body no-padding">
+	                <!--  <iframe frameborder='0' id="frontimg" src="d3.html" width="200" height="200" border="0" scrolling="no" allowTransparency="true"></iframe>-->
+	                <div id='outer' style="width: 90%; height:100%; margin: 3% 0 3% 0;">
+	    				<div id="main" style="width:90%; height:100%; margin:  0px 30% 0px 30% ">
+	    					<div id="div2"></div>
+   						</div>
+					</div>
+    	  		</div>
+			 </div>
+		  </div>
+        
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="box box-default">
+                <div class="box-header with-border">
+                  <h3 class="box-title" id="tabla-derecho">Inversión en insumos y tecnología</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body no-padding">
+	                <!--  <iframe frameborder='0' id="frontimg" src="d3.html" width="200" height="200" border="0" scrolling="no" allowTransparency="true"></iframe>-->
+	                <div id='outer' style="width: 90%; height:100%; margin: 3% 0 3% 0;">
+	    				<div id="main" style="width:90%; height:100%; margin:  0px 30% 0px 30% ">
+	    					<div id="div3"></div>
+   						</div>
+					</div>
+    	  		</div>
+			 </div>
+		  </div>
+        
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="box box-default">
+                <div class="box-header with-border">
+                   <h3 class="box-title" id="tabla-derecho">Mejoramiento de Suelo</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body no-padding">
+	                <!--  <iframe frameborder='0' id="frontimg" src="d3.html" width="200" height="200" border="0" scrolling="no" allowTransparency="true"></iframe>-->
+	                <div id='outer' style="width: 90%; height:100%; margin: 3% 0 3% 0;">
+	    				<div id="main" style="width:90%; height:100%; margin:  0px 30% 0px 30% ">
+	    					<div id="div4"></div>
+   						</div>
+					</div>
+    	  		</div>
+			 </div>
+		  </div>
+        </div>
+
+        
+        
 	          <div class="row">
             <div class="col-md-6">
               <div class="box box-default">
@@ -500,9 +693,8 @@ tbody {
 
 					<script src="plugins/mapa/deptos2012.geojson" type="text/javascript"></script>
 					<script src="plugins/mapa/leaflet.js"></script>
-				
-					<script>
 					
+					<script>
 					var entidadCas = "";
 					entidadCas ="<%=attributes.get("entidad") %>";
 					var usuarios = $.ajax({
@@ -594,10 +786,6 @@ tbody {
 					var porHejeClass="";
 					var porHejeClassRow="";
 					
-					
-
-					
-					
 					function renderEntidades(e){
 						var array=[];
 						$("#tablaInstituciones").html("");
@@ -609,7 +797,11 @@ tbody {
 							array=elPais;
 							
 						}
-						for (var i = 0; i< entidades.length;i++){
+						
+						//entidades=new array();
+						//entidades[0].institucion_id=parseInt("1359");
+						//for (var i = 0; i< entidades.length;i++){
+							var institucionSeleccionada=1359;
 							var iteracion=0;
 							var porcentajeAnhoAcumulado=0;
 							var porcentajeHoyEjeAcumulado=0;
@@ -622,7 +814,9 @@ tbody {
 
 							
 							for(var j=0;j<array.length;j++){
-								if (array[j].institucion_id==entidades[i].institucion_id){
+								//if (array[j].institucion_id==entidades[i].institucion_id){
+								if (array[j].institucion_id==institucionSeleccionada){
+								
 									if (lineasDeAccion.indexOf(array[j].linea_accion_id)<0){
 										if (typeof e != 'undefined'){
 											if (array[j].accion_departamento_id==e.target.feature.properties.dpto && array[j].anho=="2015"){
@@ -714,22 +908,13 @@ tbody {
 											}
 										}
 										
-										
-										
-										
-										
-										
-										
-										
-										
-										
-
 											anho2="";
 											anho1="";
 											anho3="";
 										}
 									}
 								}
+							
 							var porcentajeAnhoAcumuladoTotal = porcentajeAnhoAcumulado / iteracion;
 							var porcentajeHoyEjeAcumuladoTotal = porcentajeHoyEjeAcumulado / iteracion;
 							porcentajeAnhoAcumuladoDeptoTotal = porcentajeAnhoAcumuladoDepto / iteracionDepto;
@@ -770,7 +955,7 @@ tbody {
 								color="";
 							}
 							
-						}
+						//}
 					}
 					
 					function renderLineaAccion(depto_id, institucion_id)
@@ -853,7 +1038,7 @@ tbody {
 												}*/
 												
 												//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
-											 if(lineaAccionDepartamento[j].institucion_id==institucion_id && porcentajeHoyEje>0 ) $("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+lineaAccionDepartamento[j].institucion_id+'-'+lineaAccionDepartamento[j].linea_accion_id+'-'+lineaAccionDepartamento[j].accion_departamento_id+'> '+lineaAccionDepartamento[j].institucion+'- '+anho2.linea_accion+'</a></td><td>'+anho2.accion_unidad_medida+'</td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_hoy)+'</td><td >'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td >'+porcentajeHoyEje+'</td><td>'+numeroConComa((anho2.costo_ejecutado/1000000).toFixed(0))+'</td></tr>');
+											 if(lineaAccionDepartamento[j].institucion_id==institucion_id && porcentajeHoyEje>0 ) $("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+lineaAccionDepartamento[j].institucion_id+'-'+lineaAccionDepartamento[j].linea_accion_id+'-'+lineaAccionDepartamento[j].accion_unidad_medida+'-'+lineaAccionDepartamento[j].accion_departamento_id+'> '+lineaAccionDepartamento[j].institucion+'- '+anho2.linea_accion+'</a></td><td>'+anho2.accion_unidad_medida+'</td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_hoy)+'</td><td >'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td >'+porcentajeHoyEje+'</td><td>'+numeroConComa((anho2.costo_ejecutado/1000000).toFixed(0))+'</td></tr>');
 
 																			
 												
@@ -940,7 +1125,7 @@ tbody {
 											}
 											//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
 
-											if(lineaAccionDepartamento[j].institucion_id==institucion_id && porcentajeHoyEje>0  )  $("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+lineaAccionDepartamento[j].institucion_id+'-'+lineaAccionDepartamento[j].linea_accion_id+'-'+lineaAccionDepartamento[j].accion_departamento_id+'> '+lineaAccionDepartamento[j].institucion+'- '+anho2.linea_accion+'</a></td><td>'+anho2.accion_unidad_medida+'</td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_hoy)+'</td><td>'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td >'+porcentajeHoyEje+'</td><td>'+numeroConComa((anho2.costo_ejecutado/1000000).toFixed(0))+'</td></tr>');
+											if(lineaAccionDepartamento[j].institucion_id==institucion_id && porcentajeHoyEje>0  )  $("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+lineaAccionDepartamento[j].institucion_id+'-'+lineaAccionDepartamento[j].linea_accion_id+'-'+lineaAccionDepartamento[j].accion_unidad_medida+'-'+lineaAccionDepartamento[j].accion_departamento_id+'> '+lineaAccionDepartamento[j].institucion+'- '+anho2.linea_accion+'</a></td><td>'+anho2.accion_unidad_medida+'</td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_hoy)+'</td><td>'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td >'+porcentajeHoyEje+'</td><td>'+numeroConComa((anho2.costo_ejecutado/1000000).toFixed(0))+'</td></tr>');
 											
 											//<td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td> penultima
 											anho2="";
@@ -1117,7 +1302,7 @@ tbody {
 														}
 														
 														//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
-														$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+lineaAccionDepartamento[j].institucion_id+'-'+lineaAccionDepartamento[j].linea_accion_id+'-'+lineaAccionDepartamento[j].accion_departamento_id+'> '+lineaAccionDepartamento[j].institucion+'- '+anho2.linea_accion+'</a></td></td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</a></td><td>'+anho2.accion_unidad_medida+'</td><td class="cell-bordered2">'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_hoy)+'</td><td >'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class="text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
+														$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+lineaAccionDepartamento[j].institucion_id+'-'+lineaAccionDepartamento[j].linea_accion_id+'-'+lineaAccionDepartamento[j].accion_unidad_medida+'-'+lineaAccionDepartamento[j].accion_departamento_id+'> '+lineaAccionDepartamento[j].institucion+'- '+anho2.linea_accion+'</a></td></td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</a></td><td>'+anho2.accion_unidad_medida+'</td><td class="cell-bordered2">'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_hoy)+'</td><td >'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class="text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
 																					
 														
 														
@@ -1194,7 +1379,7 @@ tbody {
 														porHejeClassRow="";
 													}
 													//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
-													$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+lineaAccionDepartamento[j].institucion_id+'-'+lineaAccionDepartamento[j].linea_accion_id+'-'+lineaAccionDepartamento[j].accion_departamento_id+'> '+lineaAccionDepartamento[j].institucion+'- '+anho2.linea_accion+'</a></td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+anho2.accion_unidad_medida+'</td><td class="cell-bordered2">'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_hoy)+'</td><td>'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class=" text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
+													$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+lineaAccionDepartamento[j].institucion_id+'-'+lineaAccionDepartamento[j].linea_accion_id+'-'+lineaAccionDepartamento[j].accion_unidad_medida+'-'+lineaAccionDepartamento[j].accion_departamento_id+'> '+lineaAccionDepartamento[j].institucion+'- '+anho2.linea_accion+'</a></td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+anho2.accion_unidad_medida+'</td><td class="cell-bordered2">'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_hoy)+'</td><td>'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class=" text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
 													
 													//<td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td> penultima
 													anho2="";
@@ -1213,8 +1398,8 @@ tbody {
 							//renderTodasLasLineas();
 							
 						});
+							</script>	
 
-					</script>
                   
                   
                 </div><!-- /.box-body -->
@@ -1224,28 +1409,70 @@ tbody {
             <div class="col-md-6">
               <div class="box box-default">
                 <div class="box-header with-border">
-                  <i class="fa fa-building-o"></i>
-
-                  <h3 class="box-title" id="tabla-derecho">Instituciones</h3>
-
+                  <i class="fa  fa-money"></i>
+                  <h3 class="box-title">Ejecución Presupuestaria</h3>
                 </div><!-- /.box-header -->
-                <div class="box-body no-padding">
-                  <table class="table table-condensed">
-                    <thead>
-                    <tr>
-                      <th class="col-md-3">Institución</th>
-                      <th class="col-md-9">Desempeño</th>
-                    </tr>
-                    </thead>
-              		<tbody id="tablaInstituciones">
+                <div class="box-body">
+                <bulletChartInstitucion><bulletChartInstitucion/>
+                <script src="scripts/bullets.js"></script>
+<script>
 
-                  </tbody></table>
+var margin = {top: 5, right: 40, bottom: 20, left: 250},
+    width = 100 - margin.left - margin.right,
+    height = 50 - margin.top - margin.bottom;
+    
 
-                </div><!-- /.box-body -->
+
+
+var chart = d3.bullet();
+
+d3.json("http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getLineasAccion&institucion_id=1359", function(error, data) {
+  if (error) throw error;
+
+  var svg = d3.select("bulletChartInstitucion").selectAll("svg")
+      .data(data)
+    .enter().append("svg")
+      .attr("class", "bullet")
+      .attr("width", "100%")
+      .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+      .call(chart);
+
+  var title = svg.append("g")
+      .style("text-anchor", "end")
+      .attr("transform", "translate(-6," + height / 2 + ")");
+
+  title.append("text")
+      .attr("class", "title ellips")
+      .text(function(d) { 
+    	  if (d.linea_accion.length>36){
+    		  return d.linea_accion.substr(0,35)+"...";  
+    	  }else{return d.linea_accion;}
+    	   
+    	  });
+      
+
+  title.append("text")
+      .attr("class", "subtitle ellips")
+      .attr("dy", "1em")
+      .text(function(d) { 
+    	  if (d.accion_unidad_medida.length>36){
+    		  return d.accion_unidad_medida.substr(0,35)+"...";  
+    	  }else{return d.accion_unidad_medida;}
+    	   
+    	  });
+
+ 
+});
+
+
+</script>
+                
+                 </div><!-- /.box-body -->
               </div><!-- /.box -->
             </div><!-- /.col -->
-          </div>
-	          
+		  </div> <!-- /.row -->
 	          
 	          <div class="row">
 	         <div class="col-md-12">
@@ -1385,8 +1612,77 @@ var $tabla=$("#lineasPorEntidad");
 
 <script type="text/javascript" src="bootstrap/js/jquery.min.js"></script>--> 
 <script type="text/javascript" src="bootstrap/js/bootstrap-slider.js"></script>
+<script language="JavaScript">
 
-    
+
+    var div1=d3.select(document.getElementById('div1'));
+    var div2=d3.select(document.getElementById('div2'));
+    var div3=d3.select(document.getElementById('div3'));
+    var div4=d3.select(document.getElementById('div4'));
+
+
+    start();
+
+   
+
+    function onClick3() {
+        deselect();
+        div1.attr("class","selectedRadial");
+        div2.attr("class","selectedRadial");
+        div3.attr("class","selectedRadial");
+        div4.attr("class","selectedRadial");
+    }
+
+    function labelFunction(val,min,max) {
+
+    }
+
+    function deselect() {
+
+        div1.attr("class","radial");
+        div2.attr("class","radial");
+        div3.attr("class","radial");
+        div4.attr("class","radial");
+    }
+
+    function start() {
+
+     
+    	var rp1 = radialProgress(document.getElementById('div1'))
+        
+        .diameter(100)
+        .minValue(0)
+        .maxValue(100)
+        .value(134)
+        .render();
+    	var rp2 = radialProgress(document.getElementById('div2'))
+        
+        .diameter(100)
+        .minValue(0)
+        .maxValue(100)
+        .value(97)
+        .render();
+    	var rp3 = radialProgress(document.getElementById('div3'))
+        
+        .diameter(100)
+        .minValue(0)
+        .maxValue(100)
+        .value(87)
+        .render();
+    	var rp4 = radialProgress(document.getElementById('div4'))
+        
+        .diameter(100)
+        .minValue(0)
+        .maxValue(100)
+        .value(63)
+        .render();
+    }
+
+
+
+
+
+</script>
     
   </body>
 </html>
