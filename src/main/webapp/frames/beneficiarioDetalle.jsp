@@ -10,6 +10,7 @@
 				  <div class="form-group">
 				    <label for="valorBeneficiarioDetalle" class="col-lg-2 control-label">Valor</label>
 				    <div class="col-lg-10">
+				      <input type="hidden" class="form-control" id="idBeneficiarioDetalle">
 				      <input type="text" class="form-control" id="valorBeneficiarioDetalle" placeholder="Valor">
 				    </div>
 				  </div>
@@ -39,7 +40,7 @@
 	<script>
 	$("body").on("click", "#guardarBeneficiarioDetalle",function(event){		
 			var objeto = new Object();
-			var accion = "insBeneficiarioDetalle";
+			var accion = "actBeneficiarioDetalle";
 			var valor= $("#valorBeneficiarioDetalle").val();
 			var beneficiarioDetalleClavesId= $("#beneficiarioDetalleClavesIdBeneficiarioDetalle").val();	
 			var beneficiarioId=$("#beneficiarioIdBeneficiarioDetalle").val();

@@ -257,7 +257,7 @@ public class SqlInserts {
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into accion_has_producto (proporcion,accion_id,spr-producto_id)"
+		String query = " insert into accion_has_producto (proporcion,accion_id,spr_producto_id)"
 	+ " values (?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);

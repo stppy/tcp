@@ -120,8 +120,104 @@ if (user != null) { %>
 		$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
 		$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
 
+		var accion = $.ajax({
+			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getAccion',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;		
+		accion=JSON.parse(accion);
 		
-	
+		var tablaAccion="";
+		tablaAccion = '<table class="table table-striped ">'+
+					  '<tr><td colspan="11">Tabla Acción</td></tr>'+
+					  '<tr><td>Id</td><td>insLineaAccionId</td><td>Nombre</td><td>Descripción</td><td>Costo</td><td>Peso</td><td>FechaInicio</td><td>FechaFin</td><td>Borrado</td><td>Insertar</td><td>Editar</td></tr>';
+		for(var m=0; m<accion.length;m++)
+		{
+			tablaAccion+='<tr><td>'+accion[m].id+'</td><td>'+accion[m].insLineaAccionId+'</td><td>'+accion[m].nombre+'</td><td>'+accion[m].descripcion+'</td><td>'+accion[m].costo+'</td><td>'+accion[m].peso+'</td><td>'+accion[m].fechaInicio+'</td><td>'+accion[m].fechaFin+'</td><td>'+accion[m].borrado+'</td><td><a href="#" data-toggle="modal" data-target="#accion"><span class="glyphicon glyphicon-plus"></span></a></td><td><span class="glyphicon glyphicon-pencil registrosAccion" codigoRegistroAccion='+m+'></span></td></tr>';
+		}
+		tablaAccion +=  '</table>';
+		
+		var accionHasGeoPoligono = $.ajax({
+			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getAccionHasGeoPoligono',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;		
+		accionHasGeoPoligono=JSON.parse(accionHasGeoPoligono);
+		
+		var tablaAccionHasGeoPoligono="";
+		tablaAccionHasGeoPoligono = '<table class="table table-striped ">'+
+					  '<tr><td colspan="5">Tabla Acción Has Geo Poligono</td></tr>'+
+					  '<tr><td>accionId</td><td>geoPoligonoId</td><td>geoPoligonoGeoPoligonoId</td><td>proporcion</td><td>borrado</td></tr>';
+		for(var q=0; q<accionHasGeoPoligono.length;q++)
+		{
+			tablaAccionHasGeoPoligono+='<tr class="registrosAccionHasGeoPoligono" codigoRegistroAccionHasGeoPoligono='+q+'-'+accionHasGeoPoligono[q].accionId+'-'+accionHasGeoPoligono[q].geoPoligonoId+'-'+accionHasGeoPoligono[q].geoPoligonoGeoPoligonoId+'-'+accionHasGeoPoligono[q].proporcion+'-'+accionHasGeoPoligono[q].borrado+'><td>'+accionHasGeoPoligono[q].accionId+'</td><td>'+accionHasGeoPoligono[q].geoPoligonoId+'</td><td>'+accionHasGeoPoligono[q].geoPoligonoGeoPoligonoId+'</td><td>'+accionHasGeoPoligono[q].proporcion+'</td><td>'+accionHasGeoPoligono[q].borrado+'</td></tr>';
+		}
+		tablaAccionHasGeoPoligono +='</table>';		
+		
+		var beneficiario = $.ajax({
+			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiario',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;		
+		beneficiario=JSON.parse(beneficiario);
+		
+		var tablaBeneficiario="";
+		tablaBeneficiario = '<table class="table table-striped ">'+
+					  '<tr><td colspan="5">Tabla Beneficiario</td></tr>'+
+					  '<tr><td>Id</td><td>Nombre</td><td>Descripción</td><td>beneficiarioTipoId</td><td>borrado</td></tr>';
+		for(var w=0; w<beneficiario.length;w++)
+		{
+			tablaBeneficiario+='<tr class="registrosBeneficiario" codigoRegistroBeneficiario='+w+'-'+beneficiario[w].id+'-'+beneficiario[w].nombre+'-'+beneficiario[w].descripcion+'-'+beneficiario[w].beneficiarioTipoId+'-'+beneficiario[w].borrado+'><td>'+beneficiario[w].id+'</td><td>'+beneficiario[w].nombre+'</td><td>'+beneficiario[w].descripcion+'</td><td>'+beneficiario[w].beneficiarioTipoId+'</td><td>'+beneficiario[w].borrado+'</td></tr>';
+		}
+		tablaBeneficiario +='</table>';			
+		
+		var beneficiarioDetalle = $.ajax({
+			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioDetalle',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;		
+		beneficiarioDetalle=JSON.parse(beneficiarioDetalle);
+		
+		var tablaBeneficiarioDetalle="";
+		tablaBeneficiarioDetalle = '<table class="table table-striped ">'+
+					  '<tr><td colspan="5">Tabla Beneficiario Detalle</td></tr>'+
+					  '<tr><td>Id</td><td>Valor</td><td>beneficiarioDetalleClavesId</td><td>beneficiarioId</td></tr>';
+		for(var e=0; e<beneficiarioDetalle.length;e++)
+		{
+			tablaBeneficiarioDetalle+='<tr class="registrosBeneficiarioDetalle" codigoRegistroBeneficiarioDetalle='+e+'-'+beneficiarioDetalle[e].id+'-'+beneficiarioDetalle[e].valor+'-'+beneficiarioDetalle[e].beneficiarioDetalleClavesId+'-'+beneficiarioDetalle[e].beneficiarioId+'><td>'+beneficiarioDetalle[e].id+'</td><td>'+beneficiarioDetalle[e].valor+'</td><td>'+beneficiarioDetalle[e].beneficiarioDetalleClavesId+'</td><td>'+beneficiarioDetalle[e].beneficiarioId+'</td></tr>';
+		}
+		tablaBeneficiarioDetalle +='</table>';			
+		
+		
+		$('.box-body').html(tablaAccion);
+		//$('.box-body').find("#tablaAccionHasGeoPoligono").html(tablaAccionHasGeoPoligono);
+		//$('.box-body').find("#tablaBeneficiario").html(tablaBeneficiario);
+		//$('.box-body').find("#tablaBeneficiarioDetalle").html(tablaBeneficiarioDetalle);		
+
+		
+		$("body").on("click", ".registrosAccion",function(event){
+			var codigoRegistro = parseInt($(this).attr("codigoRegistroAccion"));
+			
+			$("#borradoLabelAccion").remove();
+			$("#borradoBotonAccion").remove();
+			$("#guardarAccion").remove();
+			$('#accion').modal('show');
+			$("#accion").find(".form-horizontal").append('<div class="form-group" id="borradoLabelAccion"><label for="borradoAccion" class="col-lg-2 control-label">Borrado</label><div class="col-lg-10"><input type="text" class="form-control" id="borradoAccion" placeholder="borrado"></div></div>');
+			$("#accion").find(".form-horizontal").append('<div class="form-group" id="borradoBotonAccion"><div class="col-lg-offset-2 col-lg-10"><button type="submit" class="btn btn-success" id="actualizarAccion">Actualizar</button></div></div>');
+			$("#idAccion").val(accion[codigoRegistro].id);
+			$("#insLineaAccionIdAccion").val(accion[codigoRegistro].insLineaAccionId);
+			$("#nombreAccion").val(accion[codigoRegistro].nombre);
+			$("#descripcionAccion").val(accion[codigoRegistro].descripcion);
+			$("#costoAccion").val(accion[codigoRegistro].costo);
+			$("#pesoAccion").val(accion[codigoRegistro].peso);
+			$("#fechaInicioAccion").val(accion[codigoRegistro].fechaInicio);
+			$("#fechaFinAccion").val(accion[codigoRegistro].fechaFin);
+			$("#borradoAccion").val(accion[codigoRegistro].borrado);
+		});
 		
 	});
 </script>
@@ -164,41 +260,6 @@ if (user != null) { %>
 	            </div>
 	            <div class="box-body table-responsive" style="scroll-x:hidden;scroll-y:auto;">
 	            
-	            
-	             <table id="lineasPorEntidad" class="table table-striped ">
-             	 <thead> 
-                <tr style="background-color: white;">
-                  <th>Links</th> 
-                </tr>
-              </thead>
-              <tbody id="cuerpoTabla">
-              	<tr><td><a href="contenedorAccionHasEtiqueta.jsp">Acción Has Etiqueta</a></td></tr>  
-              	<tr><td><a href="contenedorAccion.jsp">Acción</a></td></tr>
-              	<tr><td><a href="contenedorAccionHasGeoPoligono.jsp">Acción Has Geo Poligono</a></td></tr>   
-              	<tr><td><a href="#" data-toggle="modal" data-target="#AccionHasProducto">AccionHasProducto</a></td></tr>
-              	<tr><td><a href="contenedorBeneficiario.jsp">Beneficiario</a></td></tr>      
-              	<tr><td><a href="contenedorBeneficiarioDetalle.jsp">Beneficiario Detalle</a></td></tr>          
-              	<tr><td><a href="#" data-toggle="modal" data-target="#Evidencia">Evidencia</a></td></tr>
-              	<tr><td><a href="#" data-toggle="modal" data-target="#geoPoligonoTipo">GeoPoligonoTipo</a></td></tr>
-              	<tr><td><a href="#" data-toggle="modal" data-target="#beneficiarioDetalleClave">Beneficiario Detalle Clave</a></td></tr>              	    	        	
-              	<tr><td><a href="#" data-toggle="modal" data-target="#beneficiarioTipo">Beneficiario Tipo</a></td></tr> 
-              	<tr><td><a href="#" data-toggle="modal" data-target="#etiqueta">Etiqueta</a></td></tr>
-              	<tr><td><a href="#" data-toggle="modal" data-target="#geoPoligono">Geo Poligono</a></td></tr>
-              	<tr><td><a href="#" data-toggle="modal" data-target="#hito">Hito</a></td></tr>
-              	<tr><td><a href="#" data-toggle="modal" data-target="#hitoHasBeneficiario">Hito Has Beneficiario</a></td></tr>
-              	<tr><td><a href="#" data-toggle="modal" data-target="#hitoTipo">Hito Tipo</a></td></tr>
-              	<tr><td><a href="#" data-toggle="modal" data-target="#insLineaAccion">Ins Linea Accion</a></td></tr>              	
-              	<tr><td><a href="#" data-toggle="modal" data-target="#institucion">Institución</a></td></tr>
-              	<tr><td><a href="#" data-toggle="modal" data-target="#lineaAccion">Linea Acción</a></td></tr>
-              	<tr><td><a href="#" data-toggle="modal" data-target="#lineaEstrategica">Linea Estrategica</a></td></tr>
-              	<tr><td><a href="#" data-toggle="modal" data-target="#Periodo">Periodo</a></td></tr>    
-              	<tr><td><a href="#" data-toggle="modal" data-target="#sprProducto">Spr Producto</a></td></tr>
-              	<tr><td><a href="#" data-toggle="modal" data-target="#tipoAccion">Tipo Acción</a></td></tr>
-              	<tr><td><a href="#" data-toggle="modal" data-target="#unidadMedida">Unidad Medida</a></td></tr>
-              	<tr><td><a href="#" data-toggle="modal" data-target="#wsTipo">Ws Tipo</a></td></tr>              	    	        	    	    	        	
-              	<tr><td><a href="#" data-toggle="modal" data-target="#ws">Ws</a></td></tr>               
-              </tbody> 
-            </table>
 
 	            </div>
 			   </div>
@@ -289,7 +350,7 @@ if (user != null) { %>
     <script src="dist/js/demo.js" type="text/javascript"></script>
         <%  } else { %>
 				est<p>Favor Iniciar Sesion</p>
-			<%  } %> 
+			<% } %> 
 
 <!-- Piwik -->
 <script type="text/javascript">

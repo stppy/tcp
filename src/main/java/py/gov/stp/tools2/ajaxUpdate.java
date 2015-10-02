@@ -23,6 +23,7 @@ import py.gov.stp.tools2.*;
 import py.gov.stp.objetosV2.*;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -326,7 +327,8 @@ public class ajaxUpdate extends HttpServlet {
         		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
                 String json = "";
                 if(br != null){ json = br.readLine();}
-                Gson gsonInsert = new Gson();
+                //Gson gsonInsert = new Gson();
+                Gson gsonInsert = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
                 objeto=gsonInsert.fromJson(json, Accion.class);
                 boolean status = SqlUpdates.updateAccion(objeto);
         		myObj.addProperty("success", status);

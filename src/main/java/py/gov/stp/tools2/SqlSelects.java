@@ -131,7 +131,7 @@ public class SqlSelects {
 				objeto.setDescripcion(rs.getString("descripcion"));
 				objeto.setOrden(rs.getInt("orden"));
 				objeto.setPeso(rs.getString("peso"));
-				objeto.setAcumulador(rs.getBoolean("acumular"));
+				objeto.setAcumular(rs.getBoolean("acumular"));
 				objeto.setTipoAccionId(rs.getInt("tipo_accion_id"));
 				objeto.setEstrategiaId(rs.getInt("estrategia_id"));
 				objeto.setUnidadMedidaId(rs.getInt("unidad_medida_id"));
@@ -323,7 +323,8 @@ public class SqlSelects {
 			rs=statement.executeQuery(query);
 			while(rs.next()){
 				Accion objeto = new Accion();
-		
+				
+				objeto.setId(rs.getInt("id"));
 				objeto.setInsLineaAccionId(rs.getInt("ins_linea_accion_id")); 
 				objeto.setNombre(rs.getString("nombre"));
 				objeto.setDescripcion(rs.getString("descripcion"));
@@ -360,7 +361,7 @@ public class SqlSelects {
 		
 				objeto.setProporcion(rs.getInt("proporcion"));
 				objeto.setAccionId(rs.getInt("accion_id"));
-				objeto.setSprProductoId(rs.getInt("spr-producto-id"));
+				objeto.setSprProductoId(rs.getInt("spr_producto_id"));
 
 				objetos.add(objeto);
 			}
@@ -516,7 +517,7 @@ public class SqlSelects {
 				rs=statement.executeQuery(query);
 				while(rs.next()){
 					AccionHasEtiqueta objeto = new AccionHasEtiqueta();
-					objeto.setAccionId(rs.getInt("acion_id"));
+					objeto.setAccionId(rs.getInt("accion_id"));
 					objeto.setEtiquetaId(rs.getInt("etiqueta_id"));
 					objeto.setProporcion(rs.getInt("proporcion"));
 					objeto.setBorrado(rs.getBoolean("borrado"));
@@ -659,7 +660,7 @@ public class SqlSelects {
 					BeneficiarioDetalle objeto = new BeneficiarioDetalle();
 					objeto.setId(rs.getInt("id"));
 					objeto.setValor(rs.getString("valor"));
-					objeto.setBeneficiarioDetalleClaves(rs.getInt("beneficiario_detalle_claves"));
+					objeto.setBeneficiarioDetalleClavesId(rs.getInt("beneficiario_detalle_claves_id"));
 					objeto.setBeneficiarioId(rs.getInt("beneficiario_id"));
 					
 					objetos.add(objeto);
@@ -773,7 +774,7 @@ public class SqlSelects {
 					AccionHasGeoPoligono objeto = new AccionHasGeoPoligono();
 					objeto.setAccionId(rs.getInt("accion_id"));
 					objeto.setGeoPoligonoId(rs.getInt("geo_poligono_id"));
-					objeto.setGeoPoligonoGeoPoligono(rs.getInt("geo_poligono_geo_poligono_id"));
+					objeto.setGeoPoligonoGeoPoligonoId(rs.getInt("geo_poligono_geo_poligono_id"));
 					objeto.setProporcion(rs.getInt("proporcion"));
 					objeto.setBorrado(rs.getBoolean("borrado"));
 

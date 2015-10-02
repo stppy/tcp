@@ -1570,16 +1570,17 @@ public class SqlUpdates {
 	  	 Connection conect=ConnectionConfiguration.conectar();
 	   	
 	  	 Statement statement = null;
-
 					 String										query = "update accion set ";
-					 if(objeto.getInsLineaAccionId()!=0)		query+= "ins_linea_accion=\""+objeto.getInsLineaAccionId()+"\"";	
-					 if(objeto.getNombre()!=null)				query+= "nombre=\""+objeto.getNombre()+"\"";	
-					 if(objeto.getDescripcion()!=null)			query+= "descripcion=\""+objeto.getDescripcion()+"\"";
-					 if(objeto.getCosto()!=0)					query+= "costo=\""+objeto.getCosto()+"\"";	
-					 if(objeto.getPeso()!=0)					query+= "peso=\""+objeto.getPeso()+"\"";
-					 if(objeto.getFechaInicio()!=null)			query+= "fecha_inicio=\""+objeto.getFechaInicio()+"\"";
-					 if(objeto.getFechaFin()!=null)				query+= "fecha_fin=\""+objeto.getFechaFin()+"\"";
-					 //if(objeto.isBorrado()!=false)			query+= "borrado=\""+objeto.isBorrado()+"\"";	
+					 if(objeto.getInsLineaAccionId()!=0)		query+= "ins_linea_accion_id="+objeto.getInsLineaAccionId()+"";	
+					 if(objeto.getNombre()!=null)				query+= ", nombre='"+objeto.getNombre()+"'";	
+					 if(objeto.getDescripcion()!=null)			query+= ", descripcion='"+objeto.getDescripcion()+"'";
+					 if(objeto.getCosto()!=0)					query+= ", costo="+objeto.getCosto()+"";	
+					 if(objeto.getPeso()!=0)					query+= ", peso="+objeto.getPeso()+"";
+					 if(objeto.getFechaInicio()!=null)			query+= ", fecha_inicio='"+objeto.getFechaInicio()+"'";
+					 if(objeto.getFechaFin()!=null)				query+= ", fecha_fin='"+objeto.getFechaFin()+"'";
+					 //if(objeto.isBorrado()!=false)				query+= ", borrado='"+objeto.isBorrado()+"' ";	
+					 
+					 query+=" where id ="+objeto.getId();
 
 					 try {
 						statement=conect.createStatement();
@@ -1813,10 +1814,12 @@ public class SqlUpdates {
 	  	 Statement statement = null;
 
 					 String										query = "update beneficiario set ";
-					 if(objeto.getNombre()!=null)				query+= "nombre=\""+objeto.getNombre()+"\"";
-					 if(objeto.getDescripcion()!=null)			query+= "descripcion=\""+objeto.getDescripcion()+"\"";
-					 if(objeto.getBeneficiarioTipoId()!=0)		query+= "beneficiario_tipo_id=\""+objeto.getBeneficiarioTipoId()+"\"";
-					 //if(objeto.isBorrado()!=false)			query+= "borrado=\""+objeto.isBorrado()+"\"";	
+					 if(objeto.getNombre()!=null)				query+= "nombre='"+objeto.getNombre()+"'";
+					 if(objeto.getDescripcion()!=null)			query+= ", descripcion='"+objeto.getDescripcion()+"'";
+					 if(objeto.getBeneficiarioTipoId()!=0)		query+= ", beneficiario_tipo_id="+objeto.getBeneficiarioTipoId()+"";
+					 //if(objeto.isBorrado()!=false)			query+= "borrado=\""+objeto.isBorrado()+"\"";
+					 
+					 query+=" where id ="+objeto.getId();
 					 		 
 					 try {
 						statement=conect.createStatement();
@@ -1852,10 +1855,11 @@ public class SqlUpdates {
 	  	 Statement statement = null;
 
 					 String											query = "update beneficiario_detalle set ";
-					 if(objeto.getValor()!=null)					query+= "valor=\""+objeto.getValor()+"\"";
-					 if(objeto.getBeneficiarioDetalleClaves()!=0)	query+= "beneficiario_detalle_claves_id=\""+objeto.getBeneficiarioDetalleClaves()+"\"";
-					 if(objeto.getBeneficiarioId()!=0)				query+= "beneficiario_id=\""+objeto.getBeneficiarioId()+"\"";
+					 if(objeto.getValor()!=null)					query+= "valor="+objeto.getValor()+"";
+					 if(objeto.getBeneficiarioDetalleClavesId()!=0)	query+= ", beneficiario_detalle_claves_id="+objeto.getBeneficiarioDetalleClavesId()+"";
+					 if(objeto.getBeneficiarioId()!=0)				query+= ", beneficiario_id="+objeto.getBeneficiarioId()+"";
 					 		 
+					 query+=" where id ="+objeto.getId();
 					 try {
 						statement=conect.createStatement();
 						statement.execute(query);
@@ -1912,7 +1916,7 @@ public class SqlUpdates {
 					 String											query = "update accion_has_geo_poligono set ";
 					 if(objeto.getAccionId()!=0)					query+= "accion_id=\""+objeto.getAccionId()+"\"";
 					 if(objeto.getGeoPoligonoId()!=0)				query+= "geo_poligono_id=\""+objeto.getGeoPoligonoId()+"\"";
-					 if(objeto.getGeoPoligonoGeoPoligono()!=0)		query+= "geo_poligono_geo_poligono_id=\""+objeto.getGeoPoligonoGeoPoligono()+"\"";
+					 if(objeto.getGeoPoligonoGeoPoligonoId()!=0)	query+= "geo_poligono_geo_poligono_id=\""+objeto.getGeoPoligonoGeoPoligonoId()+"\"";
 					 if(objeto.getProporcion()!=0)					query+= "proporcion=\""+objeto.getProporcion()+"\"";
 					 //if(objeto.isBorrado()!=false)				query+= "borrado=\""+objeto.isBorrado()+"\"";	
 					 		 

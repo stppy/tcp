@@ -39,21 +39,21 @@
 
 <script>
 $("body").on("click", "#guardarAccionHasProducto",function(event){ 
-var todojunto = new Object();
+var objeto = new Object();
 var accion = "insAccionHasProducto";
 var proporcion= $("#proporcionAccionHasProducto").val();
-var accionIdAccionHasProducto= $("#accionIdAccionHasProducto").val();
-var sprProductoIdAccionHasProducto= $("#sprProductoIdAccionHasProducto").val();
+var accionId= $("#accionIdAccionHasProducto").val();
+var sprProductoId= $("#sprProductoIdAccionHasProducto").val();
 
-todojunto.proporcion=proporcion;
-todojunto.accionIdAccionHasProducto=accionIdAccionHasProducto;
-todojunto.sprProductoIdAccionHasProducto=sprProductoIdAccionHasProducto;
+objeto.proporcion=proporcion;
+objeto.accionId=accionId;
+objeto.sprProductoId=sprProductoId;
 
 $.ajax({
 url: "http://tablero2015.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
 type: 'POST',
 dataType: 'json',
-data: JSON.stringify(todojunto),
+data: JSON.stringify(objeto),
 contentType: 'application/json',
 mimeType: 'application/json',
 

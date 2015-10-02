@@ -64,42 +64,6 @@
 </head>
 <body class="skin-blue sidebar-mini sidebar-collapse">
 
-       <div class="modal fade" id="myModal" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">
-
-		<div class="modal-dialog modal-lg" style="width:90%;">
-		    <div class="modal-content" >
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title" id="myModalLabel1"></h4>
-		      </div>
-		      <div class="modal-body" id="editar-subprograma" >
-		     		
-		     	<div class="nav-tabs-custom">
-                <ul class="nav nav-tabs pull-right">
-              <li class="active"><a href="#tab_1-1" data-toggle="tab"  title="Acciones"><i class="glyphicon glyphicon-list"></i></a></li>
-                  <li><a href="#tab_2-2" data-toggle="tab" title="Hitos"><i class="glyphicon glyphicon-list-alt"></i></a></li>
-                  <li><a href="#tab_3-2" data-toggle="tab" title="Evolución"><i class="glyphicon glyphicon-stats"></i></a></li>
-                  <li><a href="#tab_4-2" data-toggle="tab" title="Beneficiarios"><i class="glyphicon glyphicon-user"></i></a></li>
-                  <li><a href="#tab_5-2" data-toggle="tab" title="Ubicaciones"><i class="glyphicon glyphicon glyphicon-map-marker"></i></a></li>
-              		Detalle de Linea de Accion      
-                </ul>
-                <div class="tab-content">
-                  <div class="tab-pane active" id="tab_1-1"></div><!-- /.tab-pane -->
-                  <div class="tab-pane" id="tab_2-2"></div><!-- /.tab-pane -->
-                  <div class="tab-pane" id="tab_3-2"></div><!-- /.tab-pane -->
-                   <div class="tab-pane" id="tab_4-2"></div><!-- /.tab-pane -->
-                   <div class="tab-pane" id="tab_5-2"></div><!-- /.tab-pane -->
-                </div><!-- /.tab-content -->
-              </div>
-		      </div>
-			  <div class="modal-footer"> 
-				
-			  </div>
-		    </div> 
-		 </div>
-		</div>
-
-
 <% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%>
 <% Map attributes = user.getAttributes(); 
 if (user != null) { %>
@@ -119,9 +83,56 @@ if (user != null) { %>
 		usuarios = usuarios.usuarios;
 		$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
 		$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
+		
+		var accionHasEtiqueta = $.ajax({
+			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getAccionHasEtiqueta',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;		
+		accionHasEtiqueta=JSON.parse(accionHasEtiqueta);
+		
+		var tablaAccionHasEtiqueta="";
+		tablaAccionHasEtiqueta = '<table class="table table-striped ">'+
+					  '<tr><td colspan="6">Tabla Accion Has Etiqueta</td></tr>'+
+					  '<tr><td>accionId</td><td>etiquetaId</td><td>proporcion</td><td>borrado</td><td>Insertar</td><td>Editar</td></tr>';
+		for(var w=0; w<accionHasEtiqueta.length;w++)
+		{
+			tablaAccionHasEtiqueta+='<tr><td>'+accionHasEtiqueta[w].accionId+'</td><td>'+accionHasEtiqueta[w].etiquetaId+'</td><td>'+accionHasEtiqueta[w].proporcion+'</td><td>'+accionHasEtiqueta[w].borrado+'</td><td><a href="#" data-toggle="modal" data-target="#accionHasEtiqueta"><span class="glyphicon glyphicon-plus"></span></a></td><td><span class="glyphicon glyphicon-pencil registrosAccionHasEtiqueta" codigoRegistroBeneficiario='+w+'-'+accionHasEtiqueta[w].accionId+'-'+accionHasEtiqueta[w].etiquetaId+'-'+accionHasEtiqueta[w].proporcion+'-'+accionHasEtiqueta[w].borrado+'></span></td></tr>';
+		}
+		tablaAccionHasEtiqueta +='</table>';				
+		
+		$('.box-body').html(tablaAccionHasEtiqueta);
 
 		
-	
+		$("body").on("click", ".registrosAccion",function(event){
+			var codigoRegistro = $(this).attr("codigoRegistroAccion");
+		    var idParsed = codigoRegistro.split("-"); 
+		    var posicionVector=idParsed[0];
+			var insLineaAccionId=idParsed[1];
+			var nombre=idParsed[2];
+			var descripcion=idParsed[3];
+			var costo=idParsed[4];
+			var peso=idParsed[5];
+			var borrado=idParsed[6];
+			var fechaInicio=idParsed[7];
+			var fechaFin=idParsed[8];
+				
+			$("#borradoLabelAccion").remove();
+			$("#borradoBotonAccion").remove();
+			$("#guardarAccion").remove();
+			$('#accion').modal('show');
+			$("#accion").find(".form-horizontal").append('<div class="form-group" id="borradoLabelAccion"><label for="borradoAccion" class="col-lg-2 control-label">Borrado</label><div class="col-lg-10"><input type="text" class="form-control" id="borradoAccion" placeholder="borrado"></div></div>');
+			$("#accion").find(".form-horizontal").append('<div class="form-group" id="borradoBotonAccion"><div class="col-lg-offset-2 col-lg-10"><button type="submit" class="btn btn-success" id="actualizarAccion">Actualizar</button></div></div>');
+			$("#insLineaAccionIdAccion").val(insLineaAccionId);
+			$("#nombreAccion").val(nombre);
+			$("#descripcionAccion").val(descripcion);
+			$("#costoAccion").val(costo);
+			$("#pesoAccion").val(peso);
+			$("#fechaInicioAccion").val(fechaInicio);
+			$("#fechaFinAccion").val(fechaFin);
+			$("#borradoAccion").val(borrado);
+		});
 		
 	});
 </script>
@@ -157,48 +168,13 @@ if (user != null) { %>
 	          <div class="box" height="1000px">
 	            <div class="box-header with-border" height="1000px">
 	              <h2 class="box-title text-center" id="tituloTipoPrograma">
-	                Links para la carga de Formulario	
+	                ABM DE REGISTROS	
 	              </h2>
 	              <div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
 	              </div>
 	            </div>
 	            <div class="box-body table-responsive" style="scroll-x:hidden;scroll-y:auto;">
 	            
-	            
-	             <table id="lineasPorEntidad" class="table table-striped ">
-             	 <thead> 
-                <tr style="background-color: white;">
-                  <th>Links</th> 
-                </tr>
-              </thead>
-              <tbody id="cuerpoTabla">
-              	<tr><td><a href="contenedorAccionHasEtiqueta.jsp">Acción Has Etiqueta</a></td></tr>  
-              	<tr><td><a href="contenedorAccion.jsp">Acción</a></td></tr>
-              	<tr><td><a href="contenedorAccionHasGeoPoligono.jsp">Acción Has Geo Poligono</a></td></tr>   
-              	<tr><td><a href="#" data-toggle="modal" data-target="#AccionHasProducto">AccionHasProducto</a></td></tr>
-              	<tr><td><a href="contenedorBeneficiario.jsp">Beneficiario</a></td></tr>      
-              	<tr><td><a href="contenedorBeneficiarioDetalle.jsp">Beneficiario Detalle</a></td></tr>          
-              	<tr><td><a href="#" data-toggle="modal" data-target="#Evidencia">Evidencia</a></td></tr>
-              	<tr><td><a href="#" data-toggle="modal" data-target="#geoPoligonoTipo">GeoPoligonoTipo</a></td></tr>
-              	<tr><td><a href="#" data-toggle="modal" data-target="#beneficiarioDetalleClave">Beneficiario Detalle Clave</a></td></tr>              	    	        	
-              	<tr><td><a href="#" data-toggle="modal" data-target="#beneficiarioTipo">Beneficiario Tipo</a></td></tr> 
-              	<tr><td><a href="#" data-toggle="modal" data-target="#etiqueta">Etiqueta</a></td></tr>
-              	<tr><td><a href="#" data-toggle="modal" data-target="#geoPoligono">Geo Poligono</a></td></tr>
-              	<tr><td><a href="#" data-toggle="modal" data-target="#hito">Hito</a></td></tr>
-              	<tr><td><a href="#" data-toggle="modal" data-target="#hitoHasBeneficiario">Hito Has Beneficiario</a></td></tr>
-              	<tr><td><a href="#" data-toggle="modal" data-target="#hitoTipo">Hito Tipo</a></td></tr>
-              	<tr><td><a href="#" data-toggle="modal" data-target="#insLineaAccion">Ins Linea Accion</a></td></tr>              	
-              	<tr><td><a href="#" data-toggle="modal" data-target="#institucion">Institución</a></td></tr>
-              	<tr><td><a href="#" data-toggle="modal" data-target="#lineaAccion">Linea Acción</a></td></tr>
-              	<tr><td><a href="#" data-toggle="modal" data-target="#lineaEstrategica">Linea Estrategica</a></td></tr>
-              	<tr><td><a href="#" data-toggle="modal" data-target="#Periodo">Periodo</a></td></tr>    
-              	<tr><td><a href="#" data-toggle="modal" data-target="#sprProducto">Spr Producto</a></td></tr>
-              	<tr><td><a href="#" data-toggle="modal" data-target="#tipoAccion">Tipo Acción</a></td></tr>
-              	<tr><td><a href="#" data-toggle="modal" data-target="#unidadMedida">Unidad Medida</a></td></tr>
-              	<tr><td><a href="#" data-toggle="modal" data-target="#wsTipo">Ws Tipo</a></td></tr>              	    	        	    	    	        	
-              	<tr><td><a href="#" data-toggle="modal" data-target="#ws">Ws</a></td></tr>               
-              </tbody> 
-            </table>
 
 	            </div>
 			   </div>
@@ -259,37 +235,12 @@ if (user != null) { %>
     <!-- Librerias para la rutina de cambio de contraseña -->
     <script src="dist/js/jquerymd5.js" type="text/javascript"></script>    	
     <%@ include file="/frames/pass.jsp" %>
-    <%@ include file="/frames/accion.jsp" %> 
     <%@ include file="/frames/accion_has_etiqueta.jsp" %>
-    <%@ include file="/frames/accion_has_geo_poligono.jsp" %>
-    <%@ include file="/frames/accion_has_producto.jsp" %>
-    <%@ include file="/frames/beneficiario.jsp" %>
-    <%@ include file="/frames/beneficiarioDetalle.jsp" %>
-    <%@ include file="/frames/beneficiarioDetalleClave.jsp" %> 
-    <%@ include file="/frames/beneficiarioTipo.jsp" %> 
-    <%@ include file="/frames/etiqueta.jsp" %>  
-    <%@ include file="/frames/evidencia.jsp" %>
-    <%@ include file="/frames/geo_poligono.jsp" %>
-    <%@ include file="/frames/GeoPoligonoTipo.jsp" %>
-    <%@ include file="/frames/hito.jsp" %>
-    <%@ include file="/frames/hito_has_beneficiario.jsp" %>
-    <%@ include file="/frames/hitoTipo.jsp" %>
-    <%@ include file="/frames/insLineaAccion.jsp" %>
-    <%@ include file="/frames/institucion.jsp" %>
-    <%@ include file="/frames/lineaAccion.jsp" %>
-    <%@ include file="/frames/lineaEstrategica.jsp" %>
-    <%@ include file="/frames/periodo.jsp" %>
-    <%@ include file="/frames/sprProducto.jsp" %>
-    <%@ include file="/frames/TipoAccion.jsp" %>
-    <%@ include file="/frames/unidadMedida.jsp" %>
-    <%@ include file="/frames/ws.jsp" %>
-    <%@ include file="/frames/wsTipo.jsp" %>           
-    
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js" type="text/javascript"></script>
         <%  } else { %>
 				est<p>Favor Iniciar Sesion</p>
-			<%  } %> 
+			<% } %> 
 
 <!-- Piwik -->
 <script type="text/javascript">

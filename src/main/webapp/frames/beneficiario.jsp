@@ -1,4 +1,4 @@
-<div class="modal fade" id="Beneficiario" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="beneficiario" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
 <div class="modal-dialog modal-lg">
 <div class="modal-content" >
 <div class="modal-header">
@@ -10,6 +10,7 @@
 <div class="form-group">
 <label for="nombreBeneficiario" class="col-lg-2 control-label">Nombre</label>
 <div class="col-lg-10">
+<input type="hidden" class="form-control" id="idBeneficiario">
 <input type="text" class="form-control" id="nombreBeneficiario" placeholder="Nombre">
 </div>
 </div>
@@ -81,7 +82,53 @@ $("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intent
 }
 });
 
-
-
 });
+
+$("body").on("click", "#actualizarBeneficiario",function(event){		
+	var objeto = new Object();
+	var accion = "actBeneficiario";
+	var id = $("#idBeneficiario").val();
+	var nombre= $("#nombreBeneficiario").val();
+	var descripcion= $("#descripcionBeneficiario").val();	
+	var beneficiario_tipo_id= $("#beneficiarioTipoIdBeneficiario").val();			
+	var borrado= $("#borradoBeneficiario").val();
+		
+	objeto.id = id;
+	objeto.nombre = nombre;
+	objeto.descripcion = descripcion;	
+	objeto.beneficiario_tipo_id = beneficiario_tipo_id;				
+	objeto.borrado = borrado;
+
+	$.ajax({
+	        url: "http://tablero2015.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
+	        type: 'POST',
+	        dataType: 'json',
+	        data: JSON.stringify(objeto),
+	        contentType: 'application/json',
+	        mimeType: 'application/json',
+	        
+	        success: function (data)
+	        {
+	        	if (data.success == true)
+	        	{
+	        		$("#tituloModalUsuario").html('');
+					$("#tituloModalUsuario").append('<p class="text-success">GUARDADO</p>');
+		    		$("#pass-viejo-form").val("");
+					$("#pass-nuevo-form").val("");
+					$("#pass-nuevo1-form").val("");	
+	        	}else{
+	        		if (data.success == false){
+	        			$("#tituloModalUsuario").html('');
+			        	$("#tituloModalUsuario").append('<p class="text-danger">Error no se ha guardado</p>');
+	        		}
+	        	}
+	        },
+	        error: function(data,status,er)
+	        {
+	        	$("#tituloModalUsuario").html('');
+	        	$("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intente de nuevo</p>');
+	        }
+	 });		
+});	
+
 </script>

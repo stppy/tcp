@@ -2,6 +2,7 @@ package py.gov.stp.objetosV2;
 import java.sql.Date;
 
 public class Accion {
+	protected int id;
 	protected int insLineaAccionId;
 	protected String nombre;
 	protected String descripcion;
@@ -11,6 +12,12 @@ public class Accion {
 	protected Date fechaFin;
 	protected boolean borrado=false;
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public int getInsLineaAccionId() {
 		return insLineaAccionId;
 	}
@@ -59,6 +66,8 @@ public class Accion {
 	public void setBorrado(boolean borrado) {
 		this.borrado = borrado;
 	}
+	
+
 	
 
 }

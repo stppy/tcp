@@ -6,10 +6,11 @@
 		        <h4 class="modal-title">Registrar Acción</h4>
 			</div>
 		    <div class="modal-body" >
-				<form class="form-horizontal" role="form">
+				<form class="form-horizontal" role="form">				
 				  <div class="form-group">
-				    <label for="insLineaAccionIdAccion" class="col-lg-2 control-label">Ins Linea Acción Id</label>
+				    <label for="insLineaAccionIdAccion" class="col-lg-2 control-label" id="insLineaAccionIdAccionLabel">Ins Linea Acción Id</label>
 				    <div class="col-lg-10">
+				     <input type="hidden" class="form-control" id="idAccion">
 				      <input type="text" class="form-control" id="insLineaAccionIdAccion" placeholder="Ins Linea Acción Id">
 				    </div>
 				  </div>
@@ -48,7 +49,7 @@
 				    <div class="col-lg-10">
 				      <input type="date" class="form-control" id="fechaFinAccion" placeholder="Fecha Fin">
 				    </div>
-				  </div>					  				  				  			  			  
+				  </div>						  			  				  				  			  			  
 				  <div class="form-group">
 				    <div class="col-lg-offset-2 col-lg-10">
 				      <button type="submit" class="btn btn-primary" id="guardarAccion">Guardar</button>
@@ -79,8 +80,7 @@
 			objeto.peso=peso;			
 			objeto.fechaInicio=fechaInicio;			
 			objeto.fechaFin=fechaFin;			
-
-				 
+ 
 			$.ajax({
 			        url: "http://tablero2015.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
 			        type: 'POST',
@@ -110,9 +110,61 @@
 			        	$("#tituloModalUsuario").html('');
 			        	$("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intente de nuevo</p>');
 			        }
-			 });
-
-
-			
+			 });		
 		});
+	
+	$("body").on("click", "#actualizarAccion",function(event){		
+		var objeto = new Object();
+		var accion = "actAccion";
+		var id = $("#idAccion").val();
+		var insLineaAccionId= $("#insLineaAccionIdAccion").val();
+		var nombre= $("#nombreAccion").val();
+		var descripcion= $("#descripcionAccion").val();	
+		var costo= $("#costoAccion").val();		
+		var peso= $("#pesoAccion").val();	
+		var fechaInicio= $("#fechaInicioAccion").val();	
+		var fechaFin= $("#fechaFinAccion").val();		
+		var borrado= $("#borradoAccion").val();
+			
+		objeto.id = id;
+		objeto.insLineaAccionId = insLineaAccionId;
+		objeto.nombre = nombre;
+		objeto.descripcion = descripcion;	
+		objeto.costo = costo;			
+		objeto.peso = peso;			
+		objeto.fechaInicio = fechaInicio;		
+		objeto.fechaFin = fechaFin;		
+		objeto.borrado = borrado;
+
+		$.ajax({
+		        url: "http://tablero2015.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
+		        type: 'POST',
+		        dataType: 'json',
+		        data: JSON.stringify(objeto),
+		        contentType: 'application/json',
+		        mimeType: 'application/json',
+		        
+		        success: function (data)
+		        {
+		        	if (data.success == true)
+		        	{
+		        		$("#tituloModalUsuario").html('');
+						$("#tituloModalUsuario").append('<p class="text-success">GUARDADO</p>');
+			    		$("#pass-viejo-form").val("");
+						$("#pass-nuevo-form").val("");
+						$("#pass-nuevo1-form").val("");	
+		        	}else{
+		        		if (data.success == false){
+		        			$("#tituloModalUsuario").html('');
+				        	$("#tituloModalUsuario").append('<p class="text-danger">Error no se ha guardado</p>');
+		        		}
+		        	}
+		        },
+		        error: function(data,status,er)
+		        {
+		        	$("#tituloModalUsuario").html('');
+		        	$("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intente de nuevo</p>');
+		        }
+		 });		
+	});	
 	</script>	
