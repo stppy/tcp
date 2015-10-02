@@ -83,4 +83,53 @@ $("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intent
 
 
 });
+
+
+$("body").on("click", "#actualizarEvidencia",function(event){		
+	var objeto = new Object();
+	var accion = "actEvidencia";
+	var id = $("#idEvidencia").val();
+	var nombre= $("#nombreEvidencia").val();	
+	var descripcion= $("#descripcionEvidencia").val();		
+	var wsId= $("#wsIdEvidencia").val();	
+	var borrado= $("#borradoEvidencia").val();
+		
+	objeto.id =id;
+	objeto.nombre =nombre;
+	objeto.descripcion =descripcion;	
+	objeto.wsId=wsId;
+	objeto.borrado =borrado;
+	
+
+	$.ajax({
+	        url: "http://tablero2015.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
+	        type: 'POST',
+	        dataType: 'json',
+	        data: JSON.stringify(objeto),
+	        contentType: 'application/json',
+	        mimeType: 'application/json',
+	        
+	        success: function (data)
+	        {
+	        	if (data.success == true)
+	        	{
+	        		$("#tituloModalUsuario").html('');
+					$("#tituloModalUsuario").append('<p class="text-success">GUARDADO</p>');
+		    		$("#pass-viejo-form").val("");
+					$("#pass-nuevo-form").val("");
+					$("#pass-nuevo1-form").val("");	
+	        	}else{
+	        		if (data.success == false){
+	        			$("#tituloModalUsuario").html('');
+			        	$("#tituloModalUsuario").append('<p class="text-danger">Error no se ha guardado</p>');
+	        		}
+	        	}
+	        },
+	        error: function(data,status,er)
+	        {
+	        	$("#tituloModalUsuario").html('');
+	        	$("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intente de nuevo</p>');
+	        }
+	 });		
+});	
 </script>

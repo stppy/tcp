@@ -1692,10 +1692,13 @@ public class SqlUpdates {
 	  	 Statement statement = null;
 
 					 String										query = "update evidencia set ";
-					 if(objeto.getNombre()!=null)				query+= "nombre=\""+objeto.getNombre()+"\"";
-					 if(objeto.getDescripcion()!=null)			query+= "descripcion=\""+objeto.getDescripcion()+"\"";
-					 if(objeto.getWsId()!=0)					query+= "ws_id=\""+objeto.getWsId()+"\"";
+					 if(objeto.getNombre()!=null)			    query+= "nombre='"+objeto.getNombre()+"'";
+					 if(objeto.getDescripcion()!=null)			query+= ", descripcion='"+objeto.getDescripcion()+"'";
+					 if(objeto.getWsId()!=0)					query+= ", ws_id="+objeto.getWsId()+"";
 					 //if(objeto.isBorrado()!=false)			query+= "borrado=\""+objeto.isBorrado()+"\"";	
+					 
+					 query+=" where id ="+objeto.getId();
+					 
 					 		 
 					 try {
 						statement=conect.createStatement();
