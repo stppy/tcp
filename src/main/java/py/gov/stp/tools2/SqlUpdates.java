@@ -1794,10 +1794,12 @@ public class SqlUpdates {
 	  	 Statement statement = null;
 
 					 String										query = "update accion_has_etiqueta set ";
-					 if(objeto.getAccionId()!=0)				query+= "accion_id=\""+objeto.getAccionId()+"\"";
-					 if(objeto.getEtiquetaId()!=0)				query+= "etiqueta_id=\""+objeto.getEtiquetaId()+"\"";
-					 if(objeto.getProporcion()!=0)				query+= "proporcion=\""+objeto.getProporcion()+"\"";
+					 if(objeto.getAccionId()!=0)				query+= "accion_id="+objeto.getAccionId()+"";
+					 if(objeto.getEtiquetaId()!=0)				query+= ", etiqueta_id="+objeto.getEtiquetaId()+"";
+					 if(objeto.getProporcion()!=0)				query+= ", proporcion="+objeto.getProporcion()+"";
 					 //if(objeto.isBorrado()!=false)			query+= "borrado=\""+objeto.isBorrado()+"\"";	
+					 
+					 query+=" where accion_id ="+objeto.getAccionId()+" AND etiqueta_id="+objeto.getEtiquetaId();
 					 		 
 					 try {
 						statement=conect.createStatement();
@@ -1855,11 +1857,12 @@ public class SqlUpdates {
 	  	 Statement statement = null;
 
 					 String											query = "update beneficiario_detalle set ";
-					 if(objeto.getValor()!=null)					query+= "valor="+objeto.getValor()+"";
+					 if(objeto.getValor()!=null)					query+= "valor='"+objeto.getValor()+"'";
 					 if(objeto.getBeneficiarioDetalleClavesId()!=0)	query+= ", beneficiario_detalle_claves_id="+objeto.getBeneficiarioDetalleClavesId()+"";
 					 if(objeto.getBeneficiarioId()!=0)				query+= ", beneficiario_id="+objeto.getBeneficiarioId()+"";
 					 		 
 					 query+=" where id ="+objeto.getId();
+	
 					 try {
 						statement=conect.createStatement();
 						statement.execute(query);
@@ -1868,6 +1871,7 @@ public class SqlUpdates {
 					} catch (SQLException e) {e.printStackTrace(); return false;}
 
 		}	
+	
 	
 	public static boolean updateBeneficiarioDetalleClave(BeneficiarioDetalleClave objeto){
 	  	 Connection conect=ConnectionConfiguration.conectar();

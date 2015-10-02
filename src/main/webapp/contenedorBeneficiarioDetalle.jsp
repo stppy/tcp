@@ -66,59 +66,59 @@ if (user != null) { %>
 
 <script>
 	
-	$(document).ready(function(){
-		var entidadCas = "";
-		entidadCas ="<%=attributes.get("entidad") %>";
-		var usuarios = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
-		  	type:'get',
-		  	dataType:'json',
-		  	async:false       
-		}).responseText;
-		usuarios = JSON.parse(usuarios);
-		usuarios = usuarios.usuarios;
-		$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
-		$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
-		
-		var beneficiarioDetalle = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioDetalle',
-		  	type:'get',
-		  	dataType:'json',
-		  	async:false       
-		}).responseText;		
-		beneficiarioDetalle=JSON.parse(beneficiarioDetalle);
-		
-		var tablaBeneficiarioDetalle="";
-		tablaBeneficiarioDetalle = '<table class="table table-striped ">'+
-					  '<tr><td colspan="6">Tabla Beneficiario Detalle</td></tr>'+
-					  '<tr><td>Id</td><td>Valor</td><td>beneficiarioDetalleClavesId</td><td>beneficiarioId</td><td>Insertar</td><td>Editar</td></tr>';
-		for(var e=0; e<beneficiarioDetalle.length;e++)
-		{
-			tablaBeneficiarioDetalle+='<tr><td>'+beneficiarioDetalle[e].id+'</td><td>'+beneficiarioDetalle[e].valor+'</td><td>'+beneficiarioDetalle[e].beneficiarioDetalleClavesId+'</td><td>'+beneficiarioDetalle[e].beneficiarioId+'</td><td><a href="#" data-toggle="modal" data-target="#beneficiarioDetalle"><span class="glyphicon glyphicon-plus"></span></a></td><td><span class="glyphicon glyphicon-pencil registrosBeneficiarioDetalle" codigoRegistroBeneficiarioDetalle='+e+'></span></td></tr>';
-		}
-		tablaBeneficiarioDetalle +='</table>';			
-		
-		$('.box-body').html(tablaBeneficiarioDetalle);		
+$(document).ready(function(){
+	var entidadCas = "";
+	entidadCas ="<%=attributes.get("entidad") %>";
+	var usuarios = $.ajax({
+		url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	usuarios = JSON.parse(usuarios);
+	usuarios = usuarios.usuarios;
+	$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
+	$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
+	
+	var beneficiarioDetalle = $.ajax({
+		url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioDetalle',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;		
+	beneficiarioDetalle=JSON.parse(beneficiarioDetalle);
+	
+	var tablaBeneficiarioDetalle="";
+	tablaBeneficiarioDetalle = '<table class="table table-striped ">'+
+				  '<tr><td colspan="6">Tabla Beneficiario Detalle</td></tr>'+
+				  '<tr><td>Id</td><td>Valor</td><td>beneficiarioDetalleClavesId</td><td>beneficiarioId</td><td>Insertar</td><td>Editar</td></tr>';
+	for(var e=0; e<beneficiarioDetalle.length;e++)
+	{
+		tablaBeneficiarioDetalle+='<tr><td>'+beneficiarioDetalle[e].id+'</td><td>'+beneficiarioDetalle[e].valor+'</td><td>'+beneficiarioDetalle[e].beneficiarioDetalleClavesId+'</td><td>'+beneficiarioDetalle[e].beneficiarioId+'</td><td><a href="#" data-toggle="modal" data-target="#beneficiarioDetalle"><span class="glyphicon glyphicon-plus"></span></a></td><td><span class="glyphicon glyphicon-pencil registrosBeneficiarioDetalle" codigoRegistroBeneficiarioDetalle='+e+'></span></td></tr>';
+	}
+	tablaBeneficiarioDetalle +='</table>';			
+	
+	$('.box-body').html(tablaBeneficiarioDetalle);		
 
-		
-		$("body").on("click", ".registrosBeneficiarioDetalle",function(event){
-			var codigoRegistro = $(this).attr("codigoRegistroBeneficiarioDetalle");
+	
+	$("body").on("click", ".registrosBeneficiarioDetalle",function(event){
+		var codigoRegistro = $(this).attr("codigoRegistroBeneficiarioDetalle");
 
-				
-			$("#borradoLabelBeneficiarioDetalle").remove();
-			$("#borradoBeneficiarioDetalle").remove();
-			$("#guardarBeneficiario").remove();
-			$('#beneficiarioDetalle').modal('show');
-			//$("#accion").find(".form-horizontal").append('<div class="form-group" id="borradoLabelBeneficiarioDetalle"><label for="borradoAccion" class="col-lg-2 control-label">Borrado</label><div class="col-lg-10"><input type="text" class="form-control" id="borradoBeneficiarioDetalle" placeholder="borrado"></div></div>');
-			$("#accion").find(".form-horizontal").append('<div class="form-group" id="borradoBotonBeneficiarioDetalle"><div class="col-lg-offset-2 col-lg-10"><button type="submit" class="btn btn-success" id="actualizarBeneficiarioDetalle">Actualizar</button></div></div>');
-			$("#idBeneficiarioDetalle").val(beneficiarioDetalle[codigoRegistro].id);
-			$("#valorBeneficiarioDetalle").val(beneficiarioDetalle[codigoRegistro].valor);
-			$("#beneficiarioDetalleClavesIdBeneficiarioDetalle").val(beneficiarioDetalle[codigoRegistro].beneficiarioDetalleClavesId);
-			$("#beneficiarioIdBeneficiarioDetalle").val(beneficiarioDetalle[codigoRegistro].beneficiarioId);
+			
+		$("#borradoLabelBeneficiarioDetalle").remove();
+		$("#borradoBotonBeneficiarioDetalle").remove();
+		$("#guardarBeneficiarioDetalle").remove();
+		$('#beneficiarioDetalle').modal('show');
+		//$("#beneficiarioDetalle").find(".form-horizontal").append('<div class="form-group" id="borradoLabelBeneficiarioDetalle"><label for="borradoAccion" class="col-lg-2 control-label">Borrado</label><div class="col-lg-10"><input type="text" class="form-control" id="borradoBeneficiarioDetalle" placeholder="borrado"></div></div>');
+		$("#beneficiarioDetalle").find(".form-horizontal").append('<div class="form-group" id="borradoBotonBeneficiarioDetalle"><div class="col-lg-offset-2 col-lg-10"><button type="submit" class="btn btn-success" id="actualizarBeneficiarioDetalle">Actualizar</button></div></div>');
+		$("#idBeneficiarioDetalle").val(beneficiarioDetalle[codigoRegistro].id);
+		$("#valorBeneficiarioDetalle").val(beneficiarioDetalle[codigoRegistro].valor);
+		$("#beneficiarioDetalleClavesIdBeneficiarioDetalle").val(beneficiarioDetalle[codigoRegistro].beneficiarioDetalleClavesId);
+		$("#beneficiarioIdBeneficiarioDetalle").val(beneficiarioDetalle[codigoRegistro].beneficiarioId);
 
-		});
-		
 	});
+	
+});
 </script>
 	
     <div class="wrapper">

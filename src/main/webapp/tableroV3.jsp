@@ -175,10 +175,10 @@ if (user != null) { %>
               	<tr><td><a href="contenedorAccionHasEtiqueta.jsp">Acción Has Etiqueta</a></td></tr>  
               	<tr><td><a href="contenedorAccion.jsp">Acción</a></td></tr>
               	<tr><td><a href="contenedorAccionHasGeoPoligono.jsp">Acción Has Geo Poligono</a></td></tr>   
-              	<tr><td><a href="#" data-toggle="modal" data-target="#AccionHasProducto">AccionHasProducto</a></td></tr>
+              	<tr><td><a href="contenedorAccionHasProducto.jsp">AccionHasProducto</a></td></tr>
               	<tr><td><a href="contenedorBeneficiario.jsp">Beneficiario</a></td></tr>      
               	<tr><td><a href="contenedorBeneficiarioDetalle.jsp">Beneficiario Detalle</a></td></tr>          
-              	<tr><td><a href="#" data-toggle="modal" data-target="#Evidencia">Evidencia</a></td></tr>
+              	<tr><td><a href="contenedorEvidencia.jsp">Evidencia</a></td></tr>
               	<tr><td><a href="#" data-toggle="modal" data-target="#geoPoligonoTipo">GeoPoligonoTipo</a></td></tr>
               	<tr><td><a href="#" data-toggle="modal" data-target="#beneficiarioDetalleClave">Beneficiario Detalle Clave</a></td></tr>              	    	        	
               	<tr><td><a href="#" data-toggle="modal" data-target="#beneficiarioTipo">Beneficiario Tipo</a></td></tr> 

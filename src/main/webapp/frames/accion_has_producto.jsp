@@ -1,4 +1,4 @@
-<div class="modal fade" id="AccionHasProducto" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="accionHasProducto" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
 <div class="modal-dialog modal-lg">
 <div class="modal-content" >
 <div class="modal-header">

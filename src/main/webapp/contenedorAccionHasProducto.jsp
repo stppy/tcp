@@ -69,7 +69,6 @@
 if (user != null) { %>
 
 <script>
-	
 	$(document).ready(function(){
 		var entidadCas = "";
 		entidadCas ="<%=attributes.get("entidad") %>";
@@ -84,41 +83,40 @@ if (user != null) { %>
 		$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
 		$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
 		
-		var accionHasGeoPoligono = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getAccionHasGeoPoligono',
+		var accionHasEtiqueta = $.ajax({
+			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getAccionHasEtiqueta',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
 		}).responseText;		
-		accionHasGeoPoligono=JSON.parse(accionHasGeoPoligono);
+		accionHasEtiqueta=JSON.parse(accionHasEtiqueta);
 		
-		var tablaAccionHasGeoPoligono="";
-		tablaAccionHasGeoPoligono = '<table class="table table-striped ">'+
-					  '<tr><td colspan="7">Tabla Acción Has Geo Poligono</td></tr>'+
-					  '<tr><td>accionId</td><td>geoPoligonoId</td><td>geoPoligonoGeoPoligonoId</td><td>proporcion</td><td>borrado</td><td>Insertar</td><td>Editar</td></tr>';
-		for(var q=0; q<accionHasGeoPoligono.length;q++)
+		var tablaAccionHasEtiqueta="";
+		tablaAccionHasEtiqueta = '<table class="table table-striped ">'+
+					  '<tr><td colspan="6">Tabla Accion Has Etiqueta</td></tr>'+
+					  '<tr><td>accionId</td><td>etiquetaId</td><td>proporcion</td><td>borrado</td><td>Insertar</td><td>Editar</td></tr>';
+		for(var w=0; w<accionHasEtiqueta.length;w++)
 		{
-			tablaAccionHasGeoPoligono+='<tr><td>'+accionHasGeoPoligono[q].accionId+'</td><td>'+accionHasGeoPoligono[q].geoPoligonoId+'</td><td>'+accionHasGeoPoligono[q].geoPoligonoGeoPoligonoId+'</td><td>'+accionHasGeoPoligono[q].proporcion+'</td><td>'+accionHasGeoPoligono[q].borrado+'</td><td><a href="#" data-toggle="modal" data-target="#accionHasGeoPoligono"><span class="glyphicon glyphicon-plus"></span></a></td><td><span class="glyphicon glyphicon-pencil registrosAccionHasGeoPoligono" codigoRegistroAccionHasGeoPoligono='+q+'></span></td></tr>';
+			tablaAccionHasEtiqueta+='<tr><td>'+accionHasEtiqueta[w].accionId+'</td><td>'+accionHasEtiqueta[w].etiquetaId+'</td><td>'+accionHasEtiqueta[w].proporcion+'</td><td>'+accionHasEtiqueta[w].borrado+'</td><td><a href="#" data-toggle="modal" data-target="#accionHasEtiqueta"><span class="glyphicon glyphicon-plus"></span></a></td><td><span class="glyphicon glyphicon-pencil registrosAccionHasEtiqueta" codigoRegistroAccionHasEtiqueta='+w+'></span></td></tr>';
 		}
-		tablaAccionHasGeoPoligono +='</table>';		
+		tablaAccionHasEtiqueta +='</table>';				
 		
-		$('.box-body').html(tablaAccionHasGeoPoligono);
+		$('.box-body').html(tablaAccionHasEtiqueta);
 
 		
-		$("body").on("click", ".registrosAccionHasGeoPoligono",function(event){
-			var codigoRegistro = $(this).attr("codigoRegistroAccionHasGeoPoligono");
-				
-			//$("#borradoLabelAccion").remove();
-			$("#borradoBotonAccionHasGeoPoligono").remove();
-			$("#guardarAccionHasGeoPoligono").remove();
-			$('#accionHasGeoPoligono').modal('show');
-			//$("#AccionHasGeoPoligono").find(".form-horizontal").append('<div class="form-group" id="borradoLabelAccionHasGeoPoligono"><label for="borradoAccionHasGeoPoligono" class="col-lg-2 control-label">Borrado</label><div class="col-lg-10"><input type="text" class="form-control" id="borradoAccionHasGeoPoligono" placeholder="borrado"></div></div>');
-			$("#accionHasGeoPoligono").find(".form-horizontal").append('<div class="form-group" id="borradoBotonAccionHasGeoPoligono"><div class="col-lg-offset-2 col-lg-10"><button type="submit" class="btn btn-success" id="actualizarAccionHasGeoPoligono">Actualizar</button></div></div>');
-			$("#accionIdAccionHasGeoPoligono").val(accionHasGeoPoligono[codigoRegistro].accionId);
-			$("#geoPoligonoIdAccionHasGeoPoligono").val(accionHasGeoPoligono[codigoRegistro].geoPoligonoId);
-			$("#geoPoligonoGeoPoligonoIdAccionHasGeoPoligono").val(accionHasGeoPoligono[codigoRegistro].geoPoligonoGeoPoligonoId);
-			$("#proporcionAccionHasGeoPoligono").val(accionHasGeoPoligono[codigoRegistro].proporcion);
-			$("#borradoAccionHasGeoPoligono").val(accionHasGeoPoligono[codigoRegistro].borrado);
+		$("body").on("click", ".registrosAccionHasEtiqueta",function(event){
+			var codigoRegistro = $(this).attr("codigoRegistroAccionHasEtiqueta");
+	
+			$("#borradoLabelAccionHasEtiqueta").remove();
+			$("#borradoBotonAccionHasEtiqueta").remove();
+			$("#guardarAccionHasEtiqueta").remove();
+			$('#accionHasEtiqueta').modal('show');
+			//$("#accionHasEtiqueta").find(".form-horizontal").append('<div class="form-group" id="borradoLabelAccionHasEtiqueta"><label for="borradoAccionHasEtiqueta" class="col-lg-2 control-label">Borrado</label><div class="col-lg-10"><input type="text" class="form-control" id="borradoAccionHasEtiqueta" placeholder="borrado"></div></div>');
+			$("#accionHasEtiqueta").find(".form-horizontal").append('<div class="form-group" id="borradoBotonAccionHasEtiqueta"><div class="col-lg-offset-2 col-lg-10"><button type="submit" class="btn btn-success" id="actualizarAccionHasEtiqueta">Actualizar</button></div></div>');
+			$("#accionIdAccionHasEtiqueta").val(accionHasEtiqueta[codigoRegistro].accionId);
+			$("#etiquetaIdAccionHasEtiqueta").val(accionHasEtiqueta[codigoRegistro].etiquetaId);
+			$("#proporcionAccionHasEtiqueta").val(accionHasEtiqueta[codigoRegistro].proporcion);
+			$("#borradoAccionHasEtiqueta").val(accionHasEtiqueta[codigoRegistro].borrado);
 		});
 		
 	});
@@ -155,7 +153,7 @@ if (user != null) { %>
 	          <div class="box" height="1000px">
 	            <div class="box-header with-border" height="1000px">
 	              <h2 class="box-title text-center" id="tituloTipoPrograma">
-	                Editar Registros
+	                Editar Registros	
 	              </h2>
 	              <div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
 	              </div>
@@ -222,7 +220,7 @@ if (user != null) { %>
     <!-- Librerias para la rutina de cambio de contraseña -->
     <script src="dist/js/jquerymd5.js" type="text/javascript"></script>    	
     <%@ include file="/frames/pass.jsp" %>
-    <%@ include file="/frames/accion_has_geo_poligono.jsp" %>          
+    <%@ include file="/frames/accion_has_producto.jsp" %>
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js" type="text/javascript"></script>
         <%  } else { %>

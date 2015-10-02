@@ -1,4 +1,4 @@
-<div class="modal fade" id="Evidencia" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="evidencia" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
 <div class="modal-dialog modal-lg">
 <div class="modal-content" >
 <div class="modal-header">
@@ -10,6 +10,7 @@
 <div class="form-group">
 <label for="nombreEvidencia" class="col-lg-2 control-label">Nombre</label>
 <div class="col-lg-10">
+<input type="hidden" class="form-control" id="idEvidencia">
 <input type="text" class="form-control" id="nombreEvidencia" placeholder="Nombre">
 </div>
 </div>
@@ -27,7 +28,7 @@
 </div>
 <div class="form-group">
 <div class="col-lg-offset-2 col-lg-10">
-<button type="submit" class="btn btn-primary" id="guardarevidencia">Guardar</button>
+<button type="submit" class="btn btn-primary" id="guardarEvidencia">Guardar</button>
 </div>
 </div>
 </form> 
@@ -37,22 +38,22 @@
 </div>
 </div>
 <script>
-$("body").on("click", "#guardarevidencia",function(event){ 
-var todojunto = new Object();
+$("body").on("click", "#guardarEvidencia",function(event){ 
+var objeto = new Object();
 var accion = "insEvidencia";
 var nombre= $("#nombreEvidencia").val();
 var descripcion= $("#descripcionEvidencia").val(); 
 var wsId= $("#wsIdEvidencia").val(); 
 
-todojunto.nombre=nombre;
-todojunto.descripcion=descripcion;
-todojunto.wsId=wsId;
+objeto.nombre=nombre;
+objeto.descripcion=descripcion;
+objeto.wsId=wsId;
 
 $.ajax({
 url: "http://tablero2015.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
 type: 'POST',
 dataType: 'json',
-data: JSON.stringify(todojunto),
+data: JSON.stringify(objeto),
 contentType: 'application/json',
 mimeType: 'application/json',
 

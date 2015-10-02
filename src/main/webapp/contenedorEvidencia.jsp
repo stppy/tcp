@@ -84,41 +84,41 @@ if (user != null) { %>
 		$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
 		$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
 		
-		var accionHasGeoPoligono = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getAccionHasGeoPoligono',
+		var evidencia = $.ajax({
+			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getEvidencia',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
 		}).responseText;		
-		accionHasGeoPoligono=JSON.parse(accionHasGeoPoligono);
+		evidencia=JSON.parse(evidencia);
 		
-		var tablaAccionHasGeoPoligono="";
-		tablaAccionHasGeoPoligono = '<table class="table table-striped ">'+
-					  '<tr><td colspan="7">Tabla Acción Has Geo Poligono</td></tr>'+
-					  '<tr><td>accionId</td><td>geoPoligonoId</td><td>geoPoligonoGeoPoligonoId</td><td>proporcion</td><td>borrado</td><td>Insertar</td><td>Editar</td></tr>';
-		for(var q=0; q<accionHasGeoPoligono.length;q++)
+		var tablaEvidencia="";
+		tablaEvidencia = '<table class="table table-striped ">'+
+					  '<tr><td colspan="7">Tabla Evidencia</td></tr>'+
+					  '<tr><td>Id</td><td>Nombre</td><td>Descripción</td><td>wsId</td><td>borrado</td></tr>';
+		for(var w=0; w<evidencia.length;w++)
 		{
-			tablaAccionHasGeoPoligono+='<tr><td>'+accionHasGeoPoligono[q].accionId+'</td><td>'+accionHasGeoPoligono[q].geoPoligonoId+'</td><td>'+accionHasGeoPoligono[q].geoPoligonoGeoPoligonoId+'</td><td>'+accionHasGeoPoligono[q].proporcion+'</td><td>'+accionHasGeoPoligono[q].borrado+'</td><td><a href="#" data-toggle="modal" data-target="#accionHasGeoPoligono"><span class="glyphicon glyphicon-plus"></span></a></td><td><span class="glyphicon glyphicon-pencil registrosAccionHasGeoPoligono" codigoRegistroAccionHasGeoPoligono='+q+'></span></td></tr>';
+			tablaEvidencia+='<tr><td>'+evidencia[w].id+'</td><td>'+evidencia[w].nombre+'</td><td>'+evidencia[w].descripcion+'</td><td>'+evidencia[w].wsId+'</td><td>'+evidencia[w].borrado+'</td><td><a href="#" data-toggle="modal" data-target="#evidencia"><span class="glyphicon glyphicon-plus"></span></a></td><td><span class="glyphicon glyphicon-pencil registrosEvidencia" codigoRegistroEvidencia='+w+'></span></td></tr>';
 		}
-		tablaAccionHasGeoPoligono +='</table>';		
+		tablaEvidencia +='</table>';				
 		
-		$('.box-body').html(tablaAccionHasGeoPoligono);
+		$('.box-body').html(tablaEvidencia);
 
-		
-		$("body").on("click", ".registrosAccionHasGeoPoligono",function(event){
-			var codigoRegistro = $(this).attr("codigoRegistroAccionHasGeoPoligono");
+		 
+		$("body").on("click", ".registrosEvidencia",function(event){
+			var codigoRegistro = $(this).attr("codigoRegistroEvidencia");
 				
-			//$("#borradoLabelAccion").remove();
-			$("#borradoBotonAccionHasGeoPoligono").remove();
-			$("#guardarAccionHasGeoPoligono").remove();
-			$('#accionHasGeoPoligono').modal('show');
-			//$("#AccionHasGeoPoligono").find(".form-horizontal").append('<div class="form-group" id="borradoLabelAccionHasGeoPoligono"><label for="borradoAccionHasGeoPoligono" class="col-lg-2 control-label">Borrado</label><div class="col-lg-10"><input type="text" class="form-control" id="borradoAccionHasGeoPoligono" placeholder="borrado"></div></div>');
-			$("#accionHasGeoPoligono").find(".form-horizontal").append('<div class="form-group" id="borradoBotonAccionHasGeoPoligono"><div class="col-lg-offset-2 col-lg-10"><button type="submit" class="btn btn-success" id="actualizarAccionHasGeoPoligono">Actualizar</button></div></div>');
-			$("#accionIdAccionHasGeoPoligono").val(accionHasGeoPoligono[codigoRegistro].accionId);
-			$("#geoPoligonoIdAccionHasGeoPoligono").val(accionHasGeoPoligono[codigoRegistro].geoPoligonoId);
-			$("#geoPoligonoGeoPoligonoIdAccionHasGeoPoligono").val(accionHasGeoPoligono[codigoRegistro].geoPoligonoGeoPoligonoId);
-			$("#proporcionAccionHasGeoPoligono").val(accionHasGeoPoligono[codigoRegistro].proporcion);
-			$("#borradoAccionHasGeoPoligono").val(accionHasGeoPoligono[codigoRegistro].borrado);
+			$("#borradoLabelEvidencia").remove();
+			$("#borradoBotonEvidencia").remove();
+			$("#guardarEvidencia").remove();
+			$('#evidencia').modal('show');
+			//$("#evidencia").find(".form-horizontal").append('<div class="form-group" id="borradoLabelEvidencia"><label for="borradoEvidencia" class="col-lg-2 control-label">Borrado</label><div class="col-lg-10"><input type="text" class="form-control" id="borradoEvidencia" placeholder="borrado"></div></div>');
+			$("#evidencia").find(".form-horizontal").append('<div class="form-group" id="borradoBotonEvidencia"><div class="col-lg-offset-2 col-lg-10"><button type="submit" class="btn btn-success" id="actualizarEvidencia">Actualizar</button></div></div>');
+			$("#idEvidencia").val(evidencia[codigoRegistro].id);
+			$("#nombreEvidencia").val(evidencia[codigoRegistro].nombre);
+			$("#descripcionEvidencia").val(evidencia[codigoRegistro].descripcion);
+			$("#wsIdEvidencia").val(evidencia[codigoRegistro].wsId);
+			$("#borradoEvidencia").val(evidencia[codigoRegistro].borrado);
 		});
 		
 	});
@@ -155,7 +155,7 @@ if (user != null) { %>
 	          <div class="box" height="1000px">
 	            <div class="box-header with-border" height="1000px">
 	              <h2 class="box-title text-center" id="tituloTipoPrograma">
-	                Editar Registros
+	                Editar Registros	
 	              </h2>
 	              <div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
 	              </div>
@@ -222,7 +222,7 @@ if (user != null) { %>
     <!-- Librerias para la rutina de cambio de contraseña -->
     <script src="dist/js/jquerymd5.js" type="text/javascript"></script>    	
     <%@ include file="/frames/pass.jsp" %>
-    <%@ include file="/frames/accion_has_geo_poligono.jsp" %>          
+    <%@ include file="/frames/evidencia.jsp" %>
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js" type="text/javascript"></script>
         <%  } else { %>

@@ -98,40 +98,26 @@ if (user != null) { %>
 					  '<tr><td>accionId</td><td>etiquetaId</td><td>proporcion</td><td>borrado</td><td>Insertar</td><td>Editar</td></tr>';
 		for(var w=0; w<accionHasEtiqueta.length;w++)
 		{
-			tablaAccionHasEtiqueta+='<tr><td>'+accionHasEtiqueta[w].accionId+'</td><td>'+accionHasEtiqueta[w].etiquetaId+'</td><td>'+accionHasEtiqueta[w].proporcion+'</td><td>'+accionHasEtiqueta[w].borrado+'</td><td><a href="#" data-toggle="modal" data-target="#accionHasEtiqueta"><span class="glyphicon glyphicon-plus"></span></a></td><td><span class="glyphicon glyphicon-pencil registrosAccionHasEtiqueta" codigoRegistroBeneficiario='+w+'-'+accionHasEtiqueta[w].accionId+'-'+accionHasEtiqueta[w].etiquetaId+'-'+accionHasEtiqueta[w].proporcion+'-'+accionHasEtiqueta[w].borrado+'></span></td></tr>';
+			tablaAccionHasEtiqueta+='<tr><td>'+accionHasEtiqueta[w].accionId+'</td><td>'+accionHasEtiqueta[w].etiquetaId+'</td><td>'+accionHasEtiqueta[w].proporcion+'</td><td>'+accionHasEtiqueta[w].borrado+'</td><td><a href="#" data-toggle="modal" data-target="#accionHasEtiqueta"><span class="glyphicon glyphicon-plus"></span></a></td><td><span class="glyphicon glyphicon-pencil registrosAccionHasEtiqueta" codigoRegistroAccionHasEtiqueta='+w+'></span></td></tr>';
 		}
 		tablaAccionHasEtiqueta +='</table>';				
 		
 		$('.box-body').html(tablaAccionHasEtiqueta);
 
 		
-		$("body").on("click", ".registrosAccion",function(event){
-			var codigoRegistro = $(this).attr("codigoRegistroAccion");
-		    var idParsed = codigoRegistro.split("-"); 
-		    var posicionVector=idParsed[0];
-			var insLineaAccionId=idParsed[1];
-			var nombre=idParsed[2];
-			var descripcion=idParsed[3];
-			var costo=idParsed[4];
-			var peso=idParsed[5];
-			var borrado=idParsed[6];
-			var fechaInicio=idParsed[7];
-			var fechaFin=idParsed[8];
+		$("body").on("click", ".registrosAccionHasEtiqueta",function(event){
+			var codigoRegistro = $(this).attr("codigoRegistroAccionHasEtiqueta");
 				
-			$("#borradoLabelAccion").remove();
-			$("#borradoBotonAccion").remove();
-			$("#guardarAccion").remove();
-			$('#accion').modal('show');
-			$("#accion").find(".form-horizontal").append('<div class="form-group" id="borradoLabelAccion"><label for="borradoAccion" class="col-lg-2 control-label">Borrado</label><div class="col-lg-10"><input type="text" class="form-control" id="borradoAccion" placeholder="borrado"></div></div>');
-			$("#accion").find(".form-horizontal").append('<div class="form-group" id="borradoBotonAccion"><div class="col-lg-offset-2 col-lg-10"><button type="submit" class="btn btn-success" id="actualizarAccion">Actualizar</button></div></div>');
-			$("#insLineaAccionIdAccion").val(insLineaAccionId);
-			$("#nombreAccion").val(nombre);
-			$("#descripcionAccion").val(descripcion);
-			$("#costoAccion").val(costo);
-			$("#pesoAccion").val(peso);
-			$("#fechaInicioAccion").val(fechaInicio);
-			$("#fechaFinAccion").val(fechaFin);
-			$("#borradoAccion").val(borrado);
+			//$("#borradoLabelAccion").remove();
+			$("#borradoAccionHasEtiqueta").remove();
+			$("#guardarAccionHasEtiqueta").remove();
+			$('#accionHasEtiqueta').modal('show');
+			//$("#accionHasEtiqueta").find(".form-horizontal").append('<div class="form-group" id="borradoLabelAccion"><label for="borradoAccion" class="col-lg-2 control-label">Borrado</label><div class="col-lg-10"><input type="text" class="form-control" id="borradoAccionHasEtiqueta" placeholder="borrado"></div></div>');
+			$("#accionHasEtiqueta").find(".form-horizontal").append('<div class="form-group" id="borradoAccionHasEtiqueta"><div class="col-lg-offset-2 col-lg-10"><button type="submit" class="btn btn-success" id="actualizarAccionHasEtiqueta">Actualizar</button></div></div>');
+			$("#accionIdAccionHasEtiqueta").val(accionHasEtiqueta[codigoRegistro].accionId);
+			$("#etiquetaIdAccionHasEtiqueta").val(accionHasEtiqueta[codigoRegistro].etiquetaId);
+			$("#proporcionAccionHasEtiqueta").val(accionHasEtiqueta[codigoRegistro].proporcion);
+			$("#borradoAccionHasEtiqueta").val(accionHasEtiqueta[codigoRegistro].borrado);
 		});
 		
 	});

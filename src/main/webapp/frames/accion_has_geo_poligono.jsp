@@ -6,16 +6,11 @@
 		        <h4 class="modal-title">Registrar Acción Has Geo Polígono</h4>
 			</div>
 		    <div class="modal-body" >
-				<form class="form-horizontal" role="form">
-				  <div class="form-group">
-				    <label for="accionIdAccionHasGeoPoligono" class="col-lg-2 control-label">Accion Id</label>
-				    <div class="col-lg-10">
-				      <input type="text" class="form-control" id="accionIdAccionHasGeoPoligono" placeholder="Accion Id">
-				    </div>
-				  </div>				
+				<form class="form-horizontal" role="form">				
 				  <div class="form-group">
 				    <label for="geoPoligonoIdAccionHasGeoPoligono" class="col-lg-2 control-label">Geo Poligono Id</label>
 				    <div class="col-lg-10">
+				    	<input type="hidden" class="form-control" id="accionIdAccionHasGeoPoligono">
 				      <input type="text" class="form-control" id="geoPoligonoIdAccionHasGeoPoligono" placeholder="Geo Polígono Id">
 				    </div>
 				  </div>
