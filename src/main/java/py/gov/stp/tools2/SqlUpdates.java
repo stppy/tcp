@@ -1481,12 +1481,13 @@ public class SqlUpdates {
 	  	 Statement statement = null;
 
 					 String										query = "update periodo set ";
-					 if(objeto.getNombre()!=null)				query+= "nombre=\""+objeto.getNombre()+"\"";	
-					 if(objeto.getDescripcion()!=null)			query+= "descripcion=\""+objeto.getDescripcion()+"\"";
-					 if(objeto.getFechaInicio()!=null)			query+= "fecha_inicio=\""+objeto.getFechaInicio()+"\"";
-					 if(objeto.getFechaFin()!=null)				query+= "fecha_fin=\""+objeto.getFechaFin()+"\"";
+					 if(objeto.getNombre()!=null)				query+= "nombre='"+objeto.getNombre()+"'";	
+					 if(objeto.getDescripcion()!=null)			query+= ", descripcion='"+objeto.getDescripcion()+"'";
+					 if(objeto.getFechaInicio()!=null)			query+= ", fecha_inicio='"+objeto.getFechaInicio()+"'";
+					 if(objeto.getFechaFin()!=null)				query+= ", fecha_fin='"+objeto.getFechaFin()+"'";
 					 //if(objeto.isBorrado()!=false)			query+= "borrado=\""+objeto.isBorrado()+"\"";	
 
+					 query+=" where id ="+objeto.getId();
 					 try {
 						statement=conect.createStatement();
 						statement.execute(query);
