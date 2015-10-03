@@ -1,4 +1,4 @@
-<div class="modal fade" id="Periodo" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="periodo" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
 <div class="modal-dialog modal-lg">
 <div class="modal-content" >
 <div class="modal-header">
@@ -10,6 +10,7 @@
 <div class="form-group">
 <label for="nombrePeriodo" class="col-lg-2 control-label">Nombre</label>
 <div class="col-lg-10">
+<input type="hidden" class="form-control" id="idPeriodo">
 <input type="text" class="form-control" id="nombrePeriodo" placeholder="Nombre">
 </div>
 </div>

@@ -39,6 +39,7 @@ public class SqlSelects {
 			while(rs.next()){
 				TipoAccion objeto = new TipoAccion();
 		
+				objeto.setId(rs.getInt("id"));
 				objeto.setNombre(rs.getString("nombre"));
 				objeto.setDescripcion(rs.getString("descripcion"));
 				objeto.setBorrado(rs.getBoolean("borrado"));
@@ -68,6 +69,7 @@ public class SqlSelects {
 			while(rs.next()){
 				UnidadMedida objeto = new UnidadMedida();
 		
+				objeto.setId(rs.getInt("id"));
 				objeto.setNombre(rs.getString("nombre"));
 				objeto.setDescripcion(rs.getString("descripcion"));
 				objeto.setSigla(rs.getString("sigla"));
@@ -98,6 +100,7 @@ public class SqlSelects {
 			while(rs.next()){
 				LineaEstrategica objeto = new LineaEstrategica();
 		
+				objeto.setId(rs.getInt("id"));
 				objeto.setNombre(rs.getString("nombre"));
 				objeto.setDescripcion(rs.getString("descripcion"));
 				objeto.setOrden(rs.getInt("orden"));
@@ -127,6 +130,7 @@ public class SqlSelects {
 			while(rs.next()){
 				LineaAccion objeto = new LineaAccion();
 		
+				objeto.setId(rs.getInt("id"));
 				objeto.setNombre(rs.getString("nombre"));
 				objeto.setDescripcion(rs.getString("descripcion"));
 				objeto.setOrden(rs.getInt("orden"));
@@ -162,6 +166,7 @@ public class SqlSelects {
 			while(rs.next()){
 				InsLineaAccion objeto = new InsLineaAccion();
 		
+				objeto.setId(rs.getInt("id"));
 				objeto.setLineaAccionId(rs.getInt("linea_accion_id"));
 				objeto.setInstitucionId(rs.getInt("institucion_id"));
 				objeto.setPeriodoId(rs.getInt("periodo_id"));
@@ -193,13 +198,14 @@ public class SqlSelects {
 			while(rs.next()){
 				Institucion objeto = new Institucion();
 		
+				objeto.setId(rs.getInt("id"));
 				objeto.setNombre(rs.getString("nombre"));
 				objeto.setDescripcion(rs.getString("descripcion"));
 				objeto.setSigla(rs.getString("sigla"));
 				objeto.setNivelId(rs.getInt("nivel_id"));
 				objeto.setEntidadId(rs.getInt("entidad_id"));
 				objeto.setUnidadJerarquicaId(rs.getInt("unidad_jerarquica_id"));
-				objeto.setUnidadResponsableId(rs.getInt("unidad_responsable"));
+				objeto.setUnidadResponsableId(rs.getInt("unidad_responsable_id"));
 				objeto.setOrden(rs.getInt("orden"));
 				objeto.setBorrado(rs.getBoolean("borrado"));
 
@@ -228,6 +234,7 @@ public class SqlSelects {
 			while(rs.next()){
 				Periodo objeto = new Periodo();
 		
+				objeto.setId(rs.getInt("id"));
 				objeto.setNombre(rs.getString("nombre"));
 				objeto.setDescripcion(rs.getString("descripcion"));
 				objeto.setFechaInicio(rs.getDate("fecha_inicio"));
@@ -259,6 +266,7 @@ public class SqlSelects {
 			while(rs.next()){
 				HitoTipo objeto = new HitoTipo();
 		
+				objeto.setId(rs.getInt("id"));
 				objeto.setNombre(rs.getString("nombre"));
 				objeto.setDescripcion(rs.getString("descripcion"));
 				objeto.setBorrado(rs.getBoolean("borrado"));
@@ -287,7 +295,8 @@ public class SqlSelects {
 			rs=statement.executeQuery(query);
 			while(rs.next()){
 				Hito objeto = new Hito();
-		
+				
+				objeto.setId(rs.getInt("id"));;
 				objeto.setNombre(rs.getString("nombre"));
 				objeto.setDescripcion(rs.getString("descripcion"));
 				objeto.setCantidad(rs.getDouble("cantidad"));
@@ -359,6 +368,7 @@ public class SqlSelects {
 			while(rs.next()){
 				AccionHasProducto objeto = new AccionHasProducto();
 		
+				objeto.setId(rs.getInt("id"));
 				objeto.setProporcion(rs.getInt("proporcion"));
 				objeto.setAccionId(rs.getInt("accion_id"));
 				objeto.setSprProductoId(rs.getInt("spr_producto_id"));
@@ -388,10 +398,11 @@ public class SqlSelects {
 			while(rs.next()){
 				SprProducto objeto = new SprProducto();
 		
+				objeto.setId(rs.getInt("id"));
 				objeto.setNivelId(rs.getInt("nivel_id"));
 				objeto.setEntidadId(rs.getInt("entidad_id"));
 				objeto.setTipoId(rs.getInt("tipo_id"));
-				objeto.setProgramaId(rs.getInt("programa_id"));
+				objeto.setProgramaId(rs.getInt("progama_id"));
 				objeto.setSubprogramaId(rs.getInt("subprograma_id"));
 				objeto.setProyectoId(rs.getInt("proyecto_id"));
 				objeto.setFuncionalId(rs.getInt("funcional_id"));

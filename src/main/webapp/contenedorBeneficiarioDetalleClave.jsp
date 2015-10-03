@@ -84,41 +84,36 @@ if (user != null) { %>
 		$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
 		$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
 		
-		var evidencia = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getEvidencia',
+		var beneficiarioDetalleClave = $.ajax({
+			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioDetalleClave',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
 		}).responseText;		
-		evidencia=JSON.parse(evidencia);
+		beneficiarioDetalleClave=JSON.parse(beneficiarioDetalleClave);
 		
-		var tablaEvidencia="";
-		tablaEvidencia = '<table class="table table-striped ">'+
-					  '<tr><td colspan="7">Tabla Evidencia</td></tr>'+
-					  '<tr><td>Id</td><td>Nombre</td><td>Descripción</td><td>wsId</td><td>borrado</td></tr>';
-		for(var w=0; w<evidencia.length;w++)
+		var tablaBeneficiarioDetalleClave="";
+		tablaBeneficiarioDetalleClave = '<table class="table table-striped ">'+
+					  '<tr><td colspan="2">Tabla BeneficiarioDetalleClave</td><td><a href="#" data-toggle="modal" data-target="#beneficiarioDetalleClave"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
+					  '<tr><td>Id</td><td>Clave</td><td>Editar</td></tr>';
+		for(var w=0; w<beneficiarioDetalleClave.length;w++)
 		{
-			tablaEvidencia+='<tr><td>'+evidencia[w].id+'</td><td>'+evidencia[w].nombre+'</td><td>'+evidencia[w].descripcion+'</td><td>'+evidencia[w].wsId+'</td><td>'+evidencia[w].borrado+'</td><td><a href="#" data-toggle="modal" data-target="#evidencia"><span class="glyphicon glyphicon-plus"></span></a></td><td><span class="glyphicon glyphicon-pencil registrosEvidencia" codigoRegistroEvidencia='+w+'></span></td></tr>';
+			tablaBeneficiarioDetalleClave+='<tr><td>'+beneficiarioDetalleClave[w].id+'</td><td>'+beneficiarioDetalleClave[w].clave+'</td><<td><span class="glyphicon glyphicon-pencil registrosBeneficiarioDetalleClave" codigoRegistroBeneficiarioDetalleClave='+w+'></span></td></tr>';
 		}
-		tablaEvidencia +='</table>';				
+		tablaBeneficiarioDetalleClave +='</table>';				
 		
-		$('.box-body').html(tablaEvidencia);
+		$('.box-body').html(tablaBeneficiarioDetalleClave);
 
 		 
-		$("body").on("click", ".registrosEvidencia",function(event){
-			var codigoRegistro = $(this).attr("codigoRegistroEvidencia");
+		$("body").on("click", ".registrosBeneficiarioDetalleClave",function(event){
+			var codigoRegistro = $(this).attr("codigoRegistroBeneficiarioDetalleClave");
 				
-			$("#borradoLabelEvidencia").remove();
-			$("#borradoBotonEvidencia").remove();
-			$("#guardarEvidencia").remove();
-			$('#evidencia').modal('show');
-			//$("#evidencia").find(".form-horizontal").append('<div class="form-group" id="borradoLabelEvidencia"><label for="borradoEvidencia" class="col-lg-2 control-label">Borrado</label><div class="col-lg-10"><input type="text" class="form-control" id="borradoEvidencia" placeholder="borrado"></div></div>');
-			$("#evidencia").find(".form-horizontal").append('<div class="form-group" id="borradoBotonEvidencia"><div class="col-lg-offset-2 col-lg-10"><button type="submit" class="btn btn-success" id="actualizarEvidencia">Actualizar</button></div></div>');
-			$("#idEvidencia").val(evidencia[codigoRegistro].id);
-			$("#nombreEvidencia").val(evidencia[codigoRegistro].nombre);
-			$("#descripcionEvidencia").val(evidencia[codigoRegistro].descripcion);
-			$("#wsIdEvidencia").val(evidencia[codigoRegistro].wsId);
-			$("#borradoEvidencia").val(evidencia[codigoRegistro].borrado);
+			$("#borradoBotonBeneficiarioDetalleClave").remove();
+			$("#guardarBeneficiarioDetalleClave").remove();
+			$('#beneficiarioDetalleClave').modal('show');
+			$("#beneficiarioDetalleClave").find(".form-horizontal").append('<div class="form-group" id="borradoBotonBeneficiarioDetalleClave"><div class="col-lg-offset-2 col-lg-10"><button type="submit" class="btn btn-success" id="actualizarBeneficiarioDetalleClave">Actualizar</button></div></div>');
+			$("#idBeneficiarioDetalleClave").val(beneficiarioDetalleClave[codigoRegistro].id);
+			$("#claveBeneficiarioDetalleClave").val(beneficiarioDetalleClave[codigoRegistro].clave);
 		});
 		
 	});
@@ -162,7 +157,6 @@ if (user != null) { %>
 	            </div>
 	            <div class="box-body table-responsive" style="scroll-x:hidden;scroll-y:auto;">
 	            
-
 	            </div>
 			   </div>
 			</div>
@@ -222,7 +216,7 @@ if (user != null) { %>
     <!-- Librerias para la rutina de cambio de contraseña -->
     <script src="dist/js/jquerymd5.js" type="text/javascript"></script>    	
     <%@ include file="/frames/pass.jsp" %>
-    <%@ include file="/frames/evidencia.jsp" %>
+    <%@ include file="/frames/beneficiarioDetalleClave.jsp" %>
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js" type="text/javascript"></script>
         <%  } else { %>

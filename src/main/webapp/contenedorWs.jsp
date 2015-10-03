@@ -84,41 +84,44 @@ if (user != null) { %>
 		$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
 		$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
 		
-		var evidencia = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getEvidencia',
+		var ws = $.ajax({
+			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getWs',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
 		}).responseText;		
-		evidencia=JSON.parse(evidencia);
+		ws=JSON.parse(ws);
 		
-		var tablaEvidencia="";
-		tablaEvidencia = '<table class="table table-striped ">'+
-					  '<tr><td colspan="7">Tabla Evidencia</td></tr>'+
-					  '<tr><td>Id</td><td>Nombre</td><td>Descripción</td><td>wsId</td><td>borrado</td></tr>';
-		for(var w=0; w<evidencia.length;w++)
+		var tablaWs="";
+		tablaWs = '<table class="table table-hover">'+
+					  '<tr class="active"><td colspan="12">Tabla Ws</td><td><a href="#" data-toggle="modal" data-target="#ws"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
+					  '<tr class="active"><td>Id</td><td>Nombre</td><td>Descripción</td><td>Url</td><td>Metodo</td><td>Usuario</td><td>Pass</td><td>idClave</td><td>idValor</td><td>wsTipoId</td><td>borrado</td><td>Editar</td><td>Borrar</td></tr>';
+		for(var w=0; w<ws.length;w++)
 		{
-			tablaEvidencia+='<tr><td>'+evidencia[w].id+'</td><td>'+evidencia[w].nombre+'</td><td>'+evidencia[w].descripcion+'</td><td>'+evidencia[w].wsId+'</td><td>'+evidencia[w].borrado+'</td><td><a href="#" data-toggle="modal" data-target="#evidencia"><span class="glyphicon glyphicon-plus"></span></a></td><td><span class="glyphicon glyphicon-pencil registrosEvidencia" codigoRegistroEvidencia='+w+'></span></td></tr>';
+			tablaWs+='<tr><td>'+ws[w].id+'</td><td>'+ws[w].nombre+'</td><td>'+ws[w].descripcion+'</td><td>'+ws[w].url+'</td><td>'+ws[w].metodo+'</td><td>'+ws[w].usuario+'</td><td>'+ws[w].pass+'</td><td>'+ws[w].idClave+'</td><td>'+ws[w].idValor+'</td><td>'+ws[w].wsTipoId+'</td><td>'+ws[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosWs" codigoRegistroWs='+w+'></span></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';
 		}
-		tablaEvidencia +='</table>';				
+		tablaWs +='</table>';				
 		
-		$('.box-body').html(tablaEvidencia);
+		$('.box-body').html(tablaWs);
 
 		 
-		$("body").on("click", ".registrosEvidencia",function(event){
-			var codigoRegistro = $(this).attr("codigoRegistroEvidencia");
+		$("body").on("click", ".registrosWs",function(event){
+			var codigoRegistro = $(this).attr("codigoRegistroWs");
 				
-			$("#borradoLabelEvidencia").remove();
-			$("#borradoBotonEvidencia").remove();
-			$("#guardarEvidencia").remove();
-			$('#evidencia').modal('show');
-			//$("#evidencia").find(".form-horizontal").append('<div class="form-group" id="borradoLabelEvidencia"><label for="borradoEvidencia" class="col-lg-2 control-label">Borrado</label><div class="col-lg-10"><input type="text" class="form-control" id="borradoEvidencia" placeholder="borrado"></div></div>');
-			$("#evidencia").find(".form-horizontal").append('<div class="form-group" id="borradoBotonEvidencia"><div class="col-lg-offset-2 col-lg-10"><button type="submit" class="btn btn-success" id="actualizarEvidencia">Actualizar</button></div></div>');
-			$("#idEvidencia").val(evidencia[codigoRegistro].id);
-			$("#nombreEvidencia").val(evidencia[codigoRegistro].nombre);
-			$("#descripcionEvidencia").val(evidencia[codigoRegistro].descripcion);
-			$("#wsIdEvidencia").val(evidencia[codigoRegistro].wsId);
-			$("#borradoEvidencia").val(evidencia[codigoRegistro].borrado);
+			$("#borradoWs").remove();
+			$("#guardarWs").remove();
+			$('#ws').modal('show');
+			$("#ws").find(".form-horizontal").append('<div class="form-group" id="borradoWs"><div class="col-lg-offset-2 col-lg-10"><button type="submit" class="btn btn-success" id="actualizarWs">Actualizar</button></div></div>');
+			$("#idWs").val(ws[codigoRegistro].id);
+			$("#nombreWs").val(ws[codigoRegistro].nombre);
+			$("#descripcionWs").val(ws[codigoRegistro].descripcion);
+			$("#urlWs").val(ws[codigoRegistro].url);
+			$("#metodoWs").val(ws[codigoRegistro].metodo);
+			$("#usuarioWs").val(ws[codigoRegistro].usuario);
+			$("#passWs").val(ws[codigoRegistro].pass);
+			$("#idClaveWs").val(ws[codigoRegistro].idClave);
+			$("#idValorWs").val(ws[codigoRegistro].idValor);
+			$("#wsTipoIdWs").val(ws[codigoRegistro].wsTipoId);
 		});
 		
 	});
@@ -222,7 +225,7 @@ if (user != null) { %>
     <!-- Librerias para la rutina de cambio de contraseña -->
     <script src="dist/js/jquerymd5.js" type="text/javascript"></script>    	
     <%@ include file="/frames/pass.jsp" %>
-    <%@ include file="/frames/evidencia.jsp" %>
+    <%@ include file="/frames/ws.jsp" %>
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js" type="text/javascript"></script>
         <%  } else { %>

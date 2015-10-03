@@ -84,41 +84,37 @@ if (user != null) { %>
 		$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
 		$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
 		
-		var evidencia = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getEvidencia',
+		var etiqueta = $.ajax({
+			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getEtiqueta',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
 		}).responseText;		
-		evidencia=JSON.parse(evidencia);
+		etiqueta=JSON.parse(etiqueta);
 		
-		var tablaEvidencia="";
-		tablaEvidencia = '<table class="table table-striped ">'+
-					  '<tr><td colspan="7">Tabla Evidencia</td></tr>'+
-					  '<tr><td>Id</td><td>Nombre</td><td>Descripción</td><td>wsId</td><td>borrado</td></tr>';
-		for(var w=0; w<evidencia.length;w++)
+		var tablaEtiqueta="";
+		tablaEtiqueta = '<table class="table table-hover">'+
+					  '<tr class="active"><td colspan="5">Tabla Etiqueta</td><td><a href="#" data-toggle="modal" data-target="#etiqueta"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
+					  '<tr class="active"><td>Id</td><td>Nombre</td><td>Descripción</td><td>borrado</td><td>Editar</td><td>Borrar</td></tr>';
+		for(var w=0; w<etiqueta.length;w++)
 		{
-			tablaEvidencia+='<tr><td>'+evidencia[w].id+'</td><td>'+evidencia[w].nombre+'</td><td>'+evidencia[w].descripcion+'</td><td>'+evidencia[w].wsId+'</td><td>'+evidencia[w].borrado+'</td><td><a href="#" data-toggle="modal" data-target="#evidencia"><span class="glyphicon glyphicon-plus"></span></a></td><td><span class="glyphicon glyphicon-pencil registrosEvidencia" codigoRegistroEvidencia='+w+'></span></td></tr>';
+			tablaEtiqueta+='<tr><td>'+etiqueta[w].id+'</td><td>'+etiqueta[w].nombre+'</td><td>'+etiqueta[w].descripcion+'</td><td>'+etiqueta[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosEtiqueta" codigoRegistroEtiqueta='+w+'></span></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';
 		}
-		tablaEvidencia +='</table>';				
+		tablaEtiqueta +='</table>';				
 		
-		$('.box-body').html(tablaEvidencia);
+		$('.box-body').html(tablaEtiqueta);
 
 		 
-		$("body").on("click", ".registrosEvidencia",function(event){
-			var codigoRegistro = $(this).attr("codigoRegistroEvidencia");
+		$("body").on("click", ".registrosEtiqueta",function(event){
+			var codigoRegistro = $(this).attr("codigoRegistroEtiqueta");
 				
-			$("#borradoLabelEvidencia").remove();
-			$("#borradoBotonEvidencia").remove();
-			$("#guardarEvidencia").remove();
-			$('#evidencia').modal('show');
-			//$("#evidencia").find(".form-horizontal").append('<div class="form-group" id="borradoLabelEvidencia"><label for="borradoEvidencia" class="col-lg-2 control-label">Borrado</label><div class="col-lg-10"><input type="text" class="form-control" id="borradoEvidencia" placeholder="borrado"></div></div>');
-			$("#evidencia").find(".form-horizontal").append('<div class="form-group" id="borradoBotonEvidencia"><div class="col-lg-offset-2 col-lg-10"><button type="submit" class="btn btn-success" id="actualizarEvidencia">Actualizar</button></div></div>');
-			$("#idEvidencia").val(evidencia[codigoRegistro].id);
-			$("#nombreEvidencia").val(evidencia[codigoRegistro].nombre);
-			$("#descripcionEvidencia").val(evidencia[codigoRegistro].descripcion);
-			$("#wsIdEvidencia").val(evidencia[codigoRegistro].wsId);
-			$("#borradoEvidencia").val(evidencia[codigoRegistro].borrado);
+			$("#borradoBotonEtiqueta").remove();
+			$("#guardarEtiqueta").remove();
+			$('#etiqueta').modal('show');
+			$("#etiqueta").find(".form-horizontal").append('<div class="form-group" id="borradoBotonEtiqueta"><div class="col-lg-offset-2 col-lg-10"><button type="submit" class="btn btn-success" id="actualizarEtiqueta">Actualizar</button></div></div>');
+			$("#idEtiqueta").val(etiqueta[codigoRegistro].id);
+			$("#nombreEtiqueta").val(etiqueta[codigoRegistro].nombre);
+			$("#descripcionEtiqueta").val(etiqueta[codigoRegistro].descripcion);
 		});
 		
 	});
@@ -222,7 +218,7 @@ if (user != null) { %>
     <!-- Librerias para la rutina de cambio de contraseña -->
     <script src="dist/js/jquerymd5.js" type="text/javascript"></script>    	
     <%@ include file="/frames/pass.jsp" %>
-    <%@ include file="/frames/evidencia.jsp" %>
+    <%@ include file="/frames/etiqueta.jsp" %>
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js" type="text/javascript"></script>
         <%  } else { %>

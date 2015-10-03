@@ -10,6 +10,7 @@
 				  <div class="form-group">
 				    <label for="nombreGeoPoligono" class="col-lg-2 control-label">Nombre</label>
 				    <div class="col-lg-10">
+				      <input type="hidden" class="form-control" id="idGeoPoligono">
 				      <input type="text" class="form-control" id="nombreGeoPoligono" placeholder="Nombre">
 				    </div>
 				  </div>

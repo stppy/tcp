@@ -227,7 +227,7 @@ public class ajaxSelects extends HttpServlet {
         	
         	
        }
-        	if (action.equals("getPoligono")){
+        	if (action.equals("getGeoPoligono")){
         		List objetos=null;
            		try {objetos = SqlSelects.selectGeoPoligono();}
         		catch (SQLException e) {e.printStackTrace();}
@@ -236,7 +236,7 @@ public class ajaxSelects extends HttpServlet {
         	
         	
        }
-        	if (action.equals("getPoligonoTipo")){
+        	if (action.equals("getGeoPoligonoTipo")){
         		List objetos=null;
            		try {objetos = SqlSelects.selectGeoPoligonoTipo();}
         		catch (SQLException e) {e.printStackTrace();}
@@ -251,8 +251,6 @@ public class ajaxSelects extends HttpServlet {
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());        	
-        	
-        	
        }         	
 
         	if (action.equals("getTipoAccion")){

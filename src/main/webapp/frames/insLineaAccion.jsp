@@ -10,6 +10,7 @@
 				  <div class="form-group">
 				    <label for="lineaAccionIdInsLineaAccion" class="col-lg-2 control-label">Linea de Accion Id</label>
 				    <div class="col-lg-10">
+				      <input type="hidden" class="form-control" id="idInsLineaAccion">
 				      <input type="text" class="form-control" id="lineaAccionIdInsLineaAccion" placeholder="Linea de Accion Id">
 				    </div>
 				  </div>

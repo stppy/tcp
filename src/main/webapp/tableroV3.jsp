@@ -179,24 +179,24 @@ if (user != null) { %>
               	<tr><td><a href="contenedorBeneficiario.jsp">Beneficiario</a></td></tr>      
               	<tr><td><a href="contenedorBeneficiarioDetalle.jsp">Beneficiario Detalle</a></td></tr>          
               	<tr><td><a href="contenedorEvidencia.jsp">Evidencia</a></td></tr>
-              	<tr><td><a href="#" data-toggle="modal" data-target="#geoPoligonoTipo">GeoPoligonoTipo</a></td></tr>
-              	<tr><td><a href="#" data-toggle="modal" data-target="#beneficiarioDetalleClave">Beneficiario Detalle Clave</a></td></tr>              	    	        	
-              	<tr><td><a href="#" data-toggle="modal" data-target="#beneficiarioTipo">Beneficiario Tipo</a></td></tr> 
-              	<tr><td><a href="#" data-toggle="modal" data-target="#etiqueta">Etiqueta</a></td></tr>
-              	<tr><td><a href="#" data-toggle="modal" data-target="#geoPoligono">Geo Poligono</a></td></tr>
-              	<tr><td><a href="#" data-toggle="modal" data-target="#hito">Hito</a></td></tr>
-              	<tr><td><a href="#" data-toggle="modal" data-target="#hitoHasBeneficiario">Hito Has Beneficiario</a></td></tr>
-              	<tr><td><a href="#" data-toggle="modal" data-target="#hitoTipo">Hito Tipo</a></td></tr>
-              	<tr><td><a href="#" data-toggle="modal" data-target="#insLineaAccion">Ins Linea Accion</a></td></tr>              	
-              	<tr><td><a href="#" data-toggle="modal" data-target="#institucion">Institución</a></td></tr>
-              	<tr><td><a href="#" data-toggle="modal" data-target="#lineaAccion">Linea Acción</a></td></tr>
-              	<tr><td><a href="#" data-toggle="modal" data-target="#lineaEstrategica">Linea Estrategica</a></td></tr>
-              	<tr><td><a href="#" data-toggle="modal" data-target="#Periodo">Periodo</a></td></tr>    
-              	<tr><td><a href="#" data-toggle="modal" data-target="#sprProducto">Spr Producto</a></td></tr>
-              	<tr><td><a href="#" data-toggle="modal" data-target="#tipoAccion">Tipo Acción</a></td></tr>
-              	<tr><td><a href="#" data-toggle="modal" data-target="#unidadMedida">Unidad Medida</a></td></tr>
-              	<tr><td><a href="#" data-toggle="modal" data-target="#wsTipo">Ws Tipo</a></td></tr>              	    	        	    	    	        	
-              	<tr><td><a href="#" data-toggle="modal" data-target="#ws">Ws</a></td></tr>               
+              	<tr><td><a href="contenedorGeoPoligonoTipo.jsp">GeoPoligonoTipo</a></td></tr>
+              	<tr><td><a href="contenedorBeneficiarioDetalleClave.jsp">Beneficiario Detalle Clave</a></td></tr>              	    	        	
+              	<tr><td><a href="contenedorBeneficiarioTipo.jsp">Beneficiario Tipo</a></td></tr> 
+              	<tr><td><a href="contenedorEtiqueta.jsp">Etiqueta</a></td></tr>
+              	<tr><td><a href="contenedorGeoPoligono.jsp">Geo Poligono</a></td></tr>
+              	<tr><td><a href="contenedorHito.jsp">Hito</a></td></tr>
+              	<tr><td><a href="contenedorHitoHasBeneficiario.jsp">Hito Has Beneficiario</a></td></tr>
+              	<tr><td><a href="contenedorHitoTipo.jsp">Hito Tipo</a></td></tr>
+              	<tr><td><a href="contenedorInsLineaAccion.jsp">Ins Linea Accion</a></td></tr>              	
+              	<tr><td><a href="contenedorInstitucion.jsp">Institución</a></td></tr>
+              	<tr><td><a href="contenedorLineaAccion.jsp">Linea Acción</a></td></tr>
+              	<tr><td><a href="contenedorLineaEstrategica.jsp">Linea Estrategica</a></td></tr>
+              	<tr><td><a href="contenedorPeriodo.jsp">Periodo</a></td></tr>    
+              	<tr><td><a href="contenedorSprProducto.jsp">Spr Producto</a></td></tr>
+              	<tr><td><a href="contenedorTipoAccion.jsp">Tipo Acción</a></td></tr>
+              	<tr><td><a href="contenedorUnidadMedida.jsp">Unidad Medida</a></td></tr>
+              	<tr><td><a href="contenedorWsTipo.jsp">Ws Tipo</a></td></tr>              	    	        	    	    	        	
+              	<tr><td><a href="contenedorWs.jsp">Ws</a></td></tr>               
               </tbody> 
             </table>
 
@@ -270,7 +270,7 @@ if (user != null) { %>
     <%@ include file="/frames/etiqueta.jsp" %>  
     <%@ include file="/frames/evidencia.jsp" %>
     <%@ include file="/frames/geo_poligono.jsp" %>
-    <%@ include file="/frames/GeoPoligonoTipo.jsp" %>
+    <%@ include file="/frames/geoPoligonoTipo.jsp" %>
     <%@ include file="/frames/hito.jsp" %>
     <%@ include file="/frames/hito_has_beneficiario.jsp" %>
     <%@ include file="/frames/hitoTipo.jsp" %>
@@ -280,7 +280,7 @@ if (user != null) { %>
     <%@ include file="/frames/lineaEstrategica.jsp" %>
     <%@ include file="/frames/periodo.jsp" %>
     <%@ include file="/frames/sprProducto.jsp" %>
-    <%@ include file="/frames/TipoAccion.jsp" %>
+    <%@ include file="/frames/tipoAccion.jsp" %>
     <%@ include file="/frames/unidadMedida.jsp" %>
     <%@ include file="/frames/ws.jsp" %>
     <%@ include file="/frames/wsTipo.jsp" %>           

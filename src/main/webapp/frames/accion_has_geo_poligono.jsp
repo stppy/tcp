@@ -83,9 +83,52 @@
 			        }
 			 });
 
-
-			
 		});
+	
+	$("body").on("click", "#actualizarAccionHasGeoPoligono",function(event){		
+		var objeto = new Object();
+		var accion = "actAccionHasGeoPoligono";
+		var accionId = $("#accionIdAccionHasGeoPoligono").val();
+		var geoPoligonoId= $("#geoPoligonoIdAccionHasGeoPoligono").val();
+		var geoPoligonoGeoPoligonoId= $("#geoPoligonoGeoPoligonoIdAccionHasGeoPoligono").val();
+		var proporcion= $("#proporcionAccionHasGeoPoligono").val();	
+			
+		objeto.accionId = accionId;
+		objeto.geoPoligonoId = geoPoligonoId;
+		objeto.geoPoligonoGeoPoligonoId = geoPoligonoGeoPoligonoId;
+		objeto.proporcion = proporcion;	
+
+		$.ajax({
+		        url: "http://tablero2015.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
+		        type: 'POST',
+		        dataType: 'json',
+		        data: JSON.stringify(objeto),
+		        contentType: 'application/json',
+		        mimeType: 'application/json',
+		        
+		        success: function (data)
+		        {
+		        	if (data.success == true)
+		        	{
+		        		$("#tituloModalUsuario").html('');
+						$("#tituloModalUsuario").append('<p class="text-success">GUARDADO</p>');
+			    		$("#pass-viejo-form").val("");
+						$("#pass-nuevo-form").val("");
+						$("#pass-nuevo1-form").val("");	
+		        	}else{
+		        		if (data.success == false){
+		        			$("#tituloModalUsuario").html('');
+				        	$("#tituloModalUsuario").append('<p class="text-danger">Error no se ha guardado</p>');
+		        		}
+		        	}
+		        },
+		        error: function(data,status,er)
+		        {
+		        	$("#tituloModalUsuario").html('');
+		        	$("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intente de nuevo</p>');
+		        }
+		 });		
+	});		
 	</script>	
 
 

@@ -1609,10 +1609,11 @@ public class SqlUpdates {
 	  	 Statement statement = null;
 
 					 String										query = "update accion_has_producto set ";
-					 if(objeto.getProporcion()!=0)				query+= "proporcion=\""+objeto.getProporcion()+"\"";	
-					 if(objeto.getAccionId()!=0)				query+= "accion_id=\""+objeto.getAccionId()+"\"";
-					 if(objeto.getSprProductoId()!=0)			query+= "spr-producto_id=\""+objeto.getSprProductoId()+"\"";	
+					 if(objeto.getProporcion()!=0)				query+= "proporcion="+objeto.getProporcion()+"";	
+					 if(objeto.getAccionId()!=0)				query+= ", accion_id="+objeto.getAccionId()+"";
+					 if(objeto.getSprProductoId()!=0)			query+= ", spr_producto_id="+objeto.getSprProductoId()+"";	
 
+					 query+=" where id ="+objeto.getId();
 					 try {
 						statement=conect.createStatement();
 						statement.execute(query);
@@ -1882,7 +1883,9 @@ public class SqlUpdates {
 	  	 Statement statement = null;
 
 					 String											query = "update beneficiario_detalle_clave set ";
-					 if(objeto.getClave()!=null)					query+= "clave=\""+objeto.getClave()+"\"";
+					 if(objeto.getClave()!=null)					query+= "clave='"+objeto.getClave()+"'";
+					 
+					 query+=" where id ="+objeto.getId();
 					 		 
 					 try {
 						statement=conect.createStatement();
@@ -1921,12 +1924,14 @@ public class SqlUpdates {
 	  	 Statement statement = null;
 
 					 String											query = "update accion_has_geo_poligono set ";
-					 if(objeto.getAccionId()!=0)					query+= "accion_id=\""+objeto.getAccionId()+"\"";
-					 if(objeto.getGeoPoligonoId()!=0)				query+= "geo_poligono_id=\""+objeto.getGeoPoligonoId()+"\"";
-					 if(objeto.getGeoPoligonoGeoPoligonoId()!=0)	query+= "geo_poligono_geo_poligono_id=\""+objeto.getGeoPoligonoGeoPoligonoId()+"\"";
-					 if(objeto.getProporcion()!=0)					query+= "proporcion=\""+objeto.getProporcion()+"\"";
+					 if(objeto.getAccionId()!=0)					query+= "accion_id="+objeto.getAccionId()+"";
+					 if(objeto.getGeoPoligonoId()!=0)				query+= ", geo_poligono_id="+objeto.getGeoPoligonoId()+"";
+					 if(objeto.getGeoPoligonoGeoPoligonoId()!=0)	query+= ", geo_poligono_geo_poligono_id="+objeto.getGeoPoligonoGeoPoligonoId()+"";
+					 if(objeto.getProporcion()!=0)					query+= ", proporcion="+objeto.getProporcion()+"";
 					 //if(objeto.isBorrado()!=false)				query+= "borrado=\""+objeto.isBorrado()+"\"";	
-					 		 
+					 
+					 query+=" where accion_id ="+objeto.getAccionId()+" AND geo_poligono_id="+objeto.getGeoPoligonoId()+" AND geo_poligono_geo_poligono_id="+objeto.getGeoPoligonoGeoPoligonoId();
+		 
 					 try {
 						statement=conect.createStatement();
 						statement.execute(query);
@@ -1942,10 +1947,12 @@ public class SqlUpdates {
 	  	 Statement statement = null;
 
 					 String											query = "update geo_poligono_tipo set ";
-					 if(objeto.getNombre()!=null)					query+= "nombre=\""+objeto.getNombre()+"\"";
-					 if(objeto.getDescripcion()!=null)				query+= "descripcion=\""+objeto.getDescripcion()+"\"";
+					 if(objeto.getNombre()!=null)					query+= "nombre='"+objeto.getNombre()+"'";
+					 if(objeto.getDescripcion()!=null)				query+= ", descripcion='"+objeto.getDescripcion()+"'";
 					 //if(objeto.isBorrado()!=false)				query+= "borrado=\""+objeto.isBorrado()+"\"";	
 					 		 
+					 query+=" where id ="+objeto.getId();
+							 
 					 try {
 						statement=conect.createStatement();
 						statement.execute(query);

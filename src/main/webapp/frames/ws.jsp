@@ -10,6 +10,7 @@
 				  <div class="form-group">
 				    <label for="nombreWs" class="col-lg-2 control-label">Nombre</label>
 				    <div class="col-lg-10">
+				      <input type="hidden" class="form-control" id="idWs">
 				      <input type="text" class="form-control" id="nombreWs" placeholder="Nombre">
 				    </div>
 				  </div>

@@ -10,6 +10,7 @@
 				  <div class="form-group">
 				    <label for="nombreInstitucion" class="col-lg-2 control-label">Nombre</label>
 				    <div class="col-lg-10">
+				      <input type="hidden" class="form-control" id="idInstitucion">
 				      <input type="text" class="form-control" id="nombreInstitucion" placeholder="Nombre">
 				    </div>
 				  </div>
@@ -19,12 +20,6 @@
 				      <input type="text" class="form-control" id="descripcionInstitucion" placeholder="Descripción">
 				    </div>
 				  </div>
-				  <div class="form-group">
-				    <label for="urlWs" class="col-lg-2 control-label">Url</label>
-				    <div class="col-lg-10">
-				      <input type="url" class="form-control" id="urlWs" placeholder="Url">
-				    </div>
-				  </div>	
 				  <div class="form-group">
 				    <label for="siglaInstitucion" class="col-lg-2 control-label">Sigla</label>
 				    <div class="col-lg-10">

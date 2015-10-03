@@ -83,40 +83,38 @@ if (user != null) { %>
 		$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
 		$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
 		
-		var accionHasEtiqueta = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getAccionHasEtiqueta',
+		var accionHasProducto = $.ajax({
+			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getAccionHasProducto',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
 		}).responseText;		
-		accionHasEtiqueta=JSON.parse(accionHasEtiqueta);
+		accionHasProducto=JSON.parse(accionHasProducto);
 		
-		var tablaAccionHasEtiqueta="";
-		tablaAccionHasEtiqueta = '<table class="table table-striped ">'+
-					  '<tr><td colspan="6">Tabla Accion Has Etiqueta</td></tr>'+
-					  '<tr><td>accionId</td><td>etiquetaId</td><td>proporcion</td><td>borrado</td><td>Insertar</td><td>Editar</td></tr>';
-		for(var w=0; w<accionHasEtiqueta.length;w++)
+		var tablaAccionHasProducto="";
+		tablaAccionHasProducto = '<table class="table table-striped ">'+
+					  '<tr><td colspan="6">Tabla Accion Has Producto</td></tr>'+
+					  '<tr><td>Id</td><td>Proporcion</td><td>Accion Id</td><td>sprProductoId</td><td>Insertar</td><td>Editar</td></tr>';
+		for(var w=0; w<accionHasProducto.length;w++)
 		{
-			tablaAccionHasEtiqueta+='<tr><td>'+accionHasEtiqueta[w].accionId+'</td><td>'+accionHasEtiqueta[w].etiquetaId+'</td><td>'+accionHasEtiqueta[w].proporcion+'</td><td>'+accionHasEtiqueta[w].borrado+'</td><td><a href="#" data-toggle="modal" data-target="#accionHasEtiqueta"><span class="glyphicon glyphicon-plus"></span></a></td><td><span class="glyphicon glyphicon-pencil registrosAccionHasEtiqueta" codigoRegistroAccionHasEtiqueta='+w+'></span></td></tr>';
+			tablaAccionHasProducto+='<tr><td>'+accionHasProducto[w].id+'</td><td>'+accionHasProducto[w].proporcion+'</td><td>'+accionHasProducto[w].accionId+'</td><td>'+accionHasProducto[w].sprProductoId+'</td><td><a href="#" data-toggle="modal" data-target="#accionHasProducto"><span class="glyphicon glyphicon-plus"></span></a></td><td><span class="glyphicon glyphicon-pencil registrosAccionHasProducto" codigoRegistroAccionHasProducto='+w+'></span></td></tr>';
 		}
-		tablaAccionHasEtiqueta +='</table>';				
+		tablaAccionHasProducto +='</table>';				
 		
-		$('.box-body').html(tablaAccionHasEtiqueta);
+		$('.box-body').html(tablaAccionHasProducto);
 
 		
-		$("body").on("click", ".registrosAccionHasEtiqueta",function(event){
-			var codigoRegistro = $(this).attr("codigoRegistroAccionHasEtiqueta");
+		$("body").on("click", ".registrosAccionHasProducto",function(event){
+			var codigoRegistro = $(this).attr("codigoRegistroAccionHasProducto");
 	
-			$("#borradoLabelAccionHasEtiqueta").remove();
-			$("#borradoBotonAccionHasEtiqueta").remove();
-			$("#guardarAccionHasEtiqueta").remove();
-			$('#accionHasEtiqueta').modal('show');
-			//$("#accionHasEtiqueta").find(".form-horizontal").append('<div class="form-group" id="borradoLabelAccionHasEtiqueta"><label for="borradoAccionHasEtiqueta" class="col-lg-2 control-label">Borrado</label><div class="col-lg-10"><input type="text" class="form-control" id="borradoAccionHasEtiqueta" placeholder="borrado"></div></div>');
-			$("#accionHasEtiqueta").find(".form-horizontal").append('<div class="form-group" id="borradoBotonAccionHasEtiqueta"><div class="col-lg-offset-2 col-lg-10"><button type="submit" class="btn btn-success" id="actualizarAccionHasEtiqueta">Actualizar</button></div></div>');
-			$("#accionIdAccionHasEtiqueta").val(accionHasEtiqueta[codigoRegistro].accionId);
-			$("#etiquetaIdAccionHasEtiqueta").val(accionHasEtiqueta[codigoRegistro].etiquetaId);
-			$("#proporcionAccionHasEtiqueta").val(accionHasEtiqueta[codigoRegistro].proporcion);
-			$("#borradoAccionHasEtiqueta").val(accionHasEtiqueta[codigoRegistro].borrado);
+			$("#borradoBotonAccionHasProducto").remove();
+			$("#guardarAccionHasProducto").remove();
+			$('#accionHasProducto').modal('show');
+			$("#accionHasProducto").find(".form-horizontal").append('<div class="form-group" id="borradoBotonAccionHasProducto"><div class="col-lg-offset-2 col-lg-10"><button type="submit" class="btn btn-success" id="actualizarAccionHasProducto">Actualizar</button></div></div>');
+			$("#idAccionHasProducto").val(accionHasProducto[codigoRegistro].id);
+			$("#proporcionAccionHasProducto").val(accionHasProducto[codigoRegistro].proporcion);
+			$("#accionIdAccionHasProducto").val(accionHasProducto[codigoRegistro].accionId);
+			$("#sprProductoIdAccionHasProducto").val(accionHasProducto[codigoRegistro].sprProductoId);
 		});
 		
 	});

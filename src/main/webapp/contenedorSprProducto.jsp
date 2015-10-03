@@ -84,41 +84,44 @@ if (user != null) { %>
 		$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
 		$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
 		
-		var evidencia = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getEvidencia',
+		var sprProducto = $.ajax({
+			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getSprProducto',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
 		}).responseText;		
-		evidencia=JSON.parse(evidencia);
+		sprProducto=JSON.parse(sprProducto);
 		
-		var tablaEvidencia="";
-		tablaEvidencia = '<table class="table table-striped ">'+
-					  '<tr><td colspan="7">Tabla Evidencia</td></tr>'+
-					  '<tr><td>Id</td><td>Nombre</td><td>Descripción</td><td>wsId</td><td>borrado</td></tr>';
-		for(var w=0; w<evidencia.length;w++)
+		var tablaSprProducto="";
+		tablaSprProducto = '<table class="table table-hover">'+
+					  '<tr class="active"><td colspan="11">Tabla Spr Productos</td><td><a href="#" data-toggle="modal" data-target="#sprProducto"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
+					  '<tr class="active"><td>Id</td><td>nivelId</td><td>entidadId</td><td>tipoId</td><td>programaId</td><td>subprogramaId</td><td>proyectoId</td><td>funcionalId</td><td>unidadResponsableId</td><td>productoId</td><td>Editar</td><td>Borrar</td></tr>';
+		for(var w=0; w<sprProducto.length;w++)
 		{
-			tablaEvidencia+='<tr><td>'+evidencia[w].id+'</td><td>'+evidencia[w].nombre+'</td><td>'+evidencia[w].descripcion+'</td><td>'+evidencia[w].wsId+'</td><td>'+evidencia[w].borrado+'</td><td><a href="#" data-toggle="modal" data-target="#evidencia"><span class="glyphicon glyphicon-plus"></span></a></td><td><span class="glyphicon glyphicon-pencil registrosEvidencia" codigoRegistroEvidencia='+w+'></span></td></tr>';
+			tablaSprProducto+='<tr><td>'+sprProducto[w].id+'</td><td>'+sprProducto[w].nivelId+'</td><td>'+sprProducto[w].entidadId+'</td><td>'+sprProducto[w].tipoId+'</td><td>'+sprProducto[w].programaId+'</td><td>'+sprProducto[w].subprogramaId+'</td><td>'+sprProducto[w].proyectoId+'</td><td>'+sprProducto[w].funcionalId+'</td><td>'+sprProducto[w].unidadResponsableId+'</td><td>'+sprProducto[w].productoId+'</td><td><span class="glyphicon glyphicon-pencil registrosSprProducto" codigoRegistroSprProducto='+w+'></span></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';
 		}
-		tablaEvidencia +='</table>';				
+		tablaSprProducto +='</table>';				
 		
-		$('.box-body').html(tablaEvidencia);
+		$('.box-body').html(tablaSprProducto);
 
 		 
-		$("body").on("click", ".registrosEvidencia",function(event){
-			var codigoRegistro = $(this).attr("codigoRegistroEvidencia");
+		$("body").on("click", ".registrosSprProducto",function(event){
+			var codigoRegistro = $(this).attr("codigoRegistroSprProducto");
 				
-			$("#borradoLabelEvidencia").remove();
-			$("#borradoBotonEvidencia").remove();
-			$("#guardarEvidencia").remove();
-			$('#evidencia').modal('show');
-			//$("#evidencia").find(".form-horizontal").append('<div class="form-group" id="borradoLabelEvidencia"><label for="borradoEvidencia" class="col-lg-2 control-label">Borrado</label><div class="col-lg-10"><input type="text" class="form-control" id="borradoEvidencia" placeholder="borrado"></div></div>');
-			$("#evidencia").find(".form-horizontal").append('<div class="form-group" id="borradoBotonEvidencia"><div class="col-lg-offset-2 col-lg-10"><button type="submit" class="btn btn-success" id="actualizarEvidencia">Actualizar</button></div></div>');
-			$("#idEvidencia").val(evidencia[codigoRegistro].id);
-			$("#nombreEvidencia").val(evidencia[codigoRegistro].nombre);
-			$("#descripcionEvidencia").val(evidencia[codigoRegistro].descripcion);
-			$("#wsIdEvidencia").val(evidencia[codigoRegistro].wsId);
-			$("#borradoEvidencia").val(evidencia[codigoRegistro].borrado);
+			$("#borradoSprProducto").remove();
+			$("#guardarSprProducto").remove();
+			$('#sprProducto').modal('show');
+			$("#sprProducto").find(".form-horizontal").append('<div class="form-group" id="borradoSprProducto"><div class="col-lg-offset-2 col-lg-10"><button type="submit" class="btn btn-success" id="actualizarSprProducto">Actualizar</button></div></div>');
+			$("#idSprProducto").val(sprProducto[codigoRegistro].id);
+			$("#nivelIdSprProducto").val(sprProducto[codigoRegistro].nivelId);
+			$("#entidadIdSprProducto").val(sprProducto[codigoRegistro].entidadId);
+			$("#tipoIdSprProducto").val(sprProducto[codigoRegistro].tipoId);
+			$("#programaIdSprProducto").val(sprProducto[codigoRegistro].programaId);
+			$("#subprogramaIdSprProducto").val(sprProducto[codigoRegistro].subprogramaId);
+			$("#proyectoIdSprProducto").val(sprProducto[codigoRegistro].proyectoId);
+			$("#funcionalIdSprProducto").val(sprProducto[codigoRegistro].funcionalId);
+			$("#unidadResponsableIdSprProducto").val(sprProducto[codigoRegistro].unidadResponsableId);
+			$("#productoIdSprProducto").val(sprProducto[codigoRegistro].productoId);
 		});
 		
 	});
@@ -222,7 +225,7 @@ if (user != null) { %>
     <!-- Librerias para la rutina de cambio de contraseña -->
     <script src="dist/js/jquerymd5.js" type="text/javascript"></script>    	
     <%@ include file="/frames/pass.jsp" %>
-    <%@ include file="/frames/evidencia.jsp" %>
+    <%@ include file="/frames/sprProducto.jsp" %>
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js" type="text/javascript"></script>
         <%  } else { %>

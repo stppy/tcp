@@ -84,41 +84,38 @@ if (user != null) { %>
 		$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
 		$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
 		
-		var evidencia = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getEvidencia',
+		var lineaEstrategica = $.ajax({
+			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getLineaEstrategica',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
 		}).responseText;		
-		evidencia=JSON.parse(evidencia);
+		lineaEstrategica=JSON.parse(lineaEstrategica);
 		
-		var tablaEvidencia="";
-		tablaEvidencia = '<table class="table table-striped ">'+
-					  '<tr><td colspan="7">Tabla Evidencia</td></tr>'+
-					  '<tr><td>Id</td><td>Nombre</td><td>Descripción</td><td>wsId</td><td>borrado</td></tr>';
-		for(var w=0; w<evidencia.length;w++)
+		var tablaLineaEstrategica="";
+		tablaLineaEstrategica = '<table class="table table-hover">'+
+					  '<tr class="active"><td colspan="11">Tabla Linea Estrategica</td><td><a href="#" data-toggle="modal" data-target="#lineaEstrategica"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
+					  '<tr class="active"><td>Id</td><td>Nombre</td><td>Descripción</td><td>Orden</td><td>borrado</td><td>Editar</td><td>Borrar</td></tr>';
+		for(var w=0; w<lineaEstrategica.length;w++)
 		{
-			tablaEvidencia+='<tr><td>'+evidencia[w].id+'</td><td>'+evidencia[w].nombre+'</td><td>'+evidencia[w].descripcion+'</td><td>'+evidencia[w].wsId+'</td><td>'+evidencia[w].borrado+'</td><td><a href="#" data-toggle="modal" data-target="#evidencia"><span class="glyphicon glyphicon-plus"></span></a></td><td><span class="glyphicon glyphicon-pencil registrosEvidencia" codigoRegistroEvidencia='+w+'></span></td></tr>';
+			tablaLineaEstrategica+='<tr><td>'+lineaEstrategica[w].id+'</td><td>'+lineaEstrategica[w].nombre+'</td><td>'+lineaEstrategica[w].descripcion+'</td><td>'+lineaEstrategica[w].orden+'</td><td>'+lineaAccion[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosLineaEstrategica" codigoRegistroLineaEstrategica='+w+'></span></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';
 		}
-		tablaEvidencia +='</table>';				
+		tablaLineaEstrategica +='</table>';				
 		
-		$('.box-body').html(tablaEvidencia);
+		$('.box-body').html(tablaLineaEstrategica);
 
 		 
-		$("body").on("click", ".registrosEvidencia",function(event){
-			var codigoRegistro = $(this).attr("codigoRegistroEvidencia");
+		$("body").on("click", ".registrosLineaEstrategica",function(event){
+			var codigoRegistro = $(this).attr("codigoRegistroLineaEstrategica");
 				
-			$("#borradoLabelEvidencia").remove();
-			$("#borradoBotonEvidencia").remove();
-			$("#guardarEvidencia").remove();
-			$('#evidencia').modal('show');
-			//$("#evidencia").find(".form-horizontal").append('<div class="form-group" id="borradoLabelEvidencia"><label for="borradoEvidencia" class="col-lg-2 control-label">Borrado</label><div class="col-lg-10"><input type="text" class="form-control" id="borradoEvidencia" placeholder="borrado"></div></div>');
-			$("#evidencia").find(".form-horizontal").append('<div class="form-group" id="borradoBotonEvidencia"><div class="col-lg-offset-2 col-lg-10"><button type="submit" class="btn btn-success" id="actualizarEvidencia">Actualizar</button></div></div>');
-			$("#idEvidencia").val(evidencia[codigoRegistro].id);
-			$("#nombreEvidencia").val(evidencia[codigoRegistro].nombre);
-			$("#descripcionEvidencia").val(evidencia[codigoRegistro].descripcion);
-			$("#wsIdEvidencia").val(evidencia[codigoRegistro].wsId);
-			$("#borradoEvidencia").val(evidencia[codigoRegistro].borrado);
+			$("#borradoLineaEstrategica").remove();
+			$("#guardarLineaEstrategica").remove();
+			$('#lineaEstrategica').modal('show');
+			$("#lineaEstrategica").find(".form-horizontal").append('<div class="form-group" id="borradoLineaEstrategica"><div class="col-lg-offset-2 col-lg-10"><button type="submit" class="btn btn-success" id="actualizarLineaEstrategica">Actualizar</button></div></div>');
+			$("#idLineaEstrategica").val(lineaEstrategica[codigoRegistro].id);
+			$("#nombreLineaEstrategica").val(lineaEstrategica[codigoRegistro].nombre);
+			$("#descripcionLineaEstrategica").val(lineaEstrategica[codigoRegistro].descripcion);
+			$("#ordenLineaEstrategica").val(lineaEstrategica[codigoRegistro].orden);
 		});
 		
 	});
@@ -222,7 +219,7 @@ if (user != null) { %>
     <!-- Librerias para la rutina de cambio de contraseña -->
     <script src="dist/js/jquerymd5.js" type="text/javascript"></script>    	
     <%@ include file="/frames/pass.jsp" %>
-    <%@ include file="/frames/evidencia.jsp" %>
+    <%@ include file="/frames/lineaAccion.jsp" %>
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js" type="text/javascript"></script>
         <%  } else { %>

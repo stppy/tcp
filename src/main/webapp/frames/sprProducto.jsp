@@ -10,6 +10,7 @@
 				  <div class="form-group">
 				    <label for="nivelIdSprProducto" class="col-lg-2 control-label">Nivel Id</label>
 				    <div class="col-lg-10">
+				      <input type="hidden" class="form-control" id="idSprProducto">
 				      <input type="number" class="form-control" id="nivelIdSprProducto" placeholder="NIvel Id">
 				    </div>
 				  </div>

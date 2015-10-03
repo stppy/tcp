@@ -1,10 +1,17 @@
 package py.gov.stp.objetosV2;
 
 public class AccionHasProducto {
+	protected int id;
 	protected int proporcion;
 	protected int accionId;
 	protected int sprProductoId;
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public int getProporcion() {
 		return proporcion;
 	}
@@ -23,6 +30,7 @@ public class AccionHasProducto {
 	public void setSprProductoId(int sprProductoId) {
 		this.sprProductoId = sprProductoId;
 	}
+	
 	
 	
 }

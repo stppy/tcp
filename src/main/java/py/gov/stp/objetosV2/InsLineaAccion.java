@@ -1,12 +1,19 @@
 package py.gov.stp.objetosV2;
 
 public class InsLineaAccion {
+	protected int id;
 	protected int lineaAccionId;
 	protected int institucionId;
 	protected int periodoId;
 	protected double meta;
 	protected boolean borrado=false;
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public int getLineaAccionId() {
 		return lineaAccionId;
 	}

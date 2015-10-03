@@ -84,41 +84,37 @@ if (user != null) { %>
 		$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
 		$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
 		
-		var evidencia = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getEvidencia',
+		var geoPoligonoTipo = $.ajax({
+			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getGeoPoligonoTipo',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
 		}).responseText;		
-		evidencia=JSON.parse(evidencia);
+		geoPoligonoTipo=JSON.parse(geoPoligonoTipo);
 		
-		var tablaEvidencia="";
-		tablaEvidencia = '<table class="table table-striped ">'+
-					  '<tr><td colspan="7">Tabla Evidencia</td></tr>'+
-					  '<tr><td>Id</td><td>Nombre</td><td>Descripción</td><td>wsId</td><td>borrado</td></tr>';
-		for(var w=0; w<evidencia.length;w++)
+		var tablaGeoPoligonoTipo="";
+		tablaGeoPoligonoTipo = '<table class="table table-striped ">'+
+					  '<tr><td colspan="4">Tabla GeoPoligonoTipo</td><td><a href="#" data-toggle="modal" data-target="#geoPoligonoTipo"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
+					  '<tr><td>Id</td><td>Nombre</td><td>Descripción</td><td>borrado</td><td>Editar</td></tr>';
+		for(var w=0; w<geoPoligonoTipo.length;w++)
 		{
-			tablaEvidencia+='<tr><td>'+evidencia[w].id+'</td><td>'+evidencia[w].nombre+'</td><td>'+evidencia[w].descripcion+'</td><td>'+evidencia[w].wsId+'</td><td>'+evidencia[w].borrado+'</td><td><a href="#" data-toggle="modal" data-target="#evidencia"><span class="glyphicon glyphicon-plus"></span></a></td><td><span class="glyphicon glyphicon-pencil registrosEvidencia" codigoRegistroEvidencia='+w+'></span></td></tr>';
+			tablaGeoPoligonoTipo+='<tr><td>'+geoPoligonoTipo[w].id+'</td><td>'+geoPoligonoTipo[w].nombre+'</td><td>'+geoPoligonoTipo[w].descripcion+'</td><td>'+geoPoligonoTipo[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosGeoPoligonoTipo" codigoRegistroGeoPoligonoTipo='+w+'></span></td></tr>';
 		}
-		tablaEvidencia +='</table>';				
+		tablaGeoPoligonoTipo +='</table>';				
 		
-		$('.box-body').html(tablaEvidencia);
+		$('.box-body').html(tablaGeoPoligonoTipo);
 
 		 
-		$("body").on("click", ".registrosEvidencia",function(event){
-			var codigoRegistro = $(this).attr("codigoRegistroEvidencia");
+		$("body").on("click", ".registrosGeoPoligonoTipo",function(event){
+			var codigoRegistro = $(this).attr("codigoRegistroGeoPoligonoTipo");
 				
-			$("#borradoLabelEvidencia").remove();
-			$("#borradoBotonEvidencia").remove();
-			$("#guardarEvidencia").remove();
-			$('#evidencia').modal('show');
-			//$("#evidencia").find(".form-horizontal").append('<div class="form-group" id="borradoLabelEvidencia"><label for="borradoEvidencia" class="col-lg-2 control-label">Borrado</label><div class="col-lg-10"><input type="text" class="form-control" id="borradoEvidencia" placeholder="borrado"></div></div>');
-			$("#evidencia").find(".form-horizontal").append('<div class="form-group" id="borradoBotonEvidencia"><div class="col-lg-offset-2 col-lg-10"><button type="submit" class="btn btn-success" id="actualizarEvidencia">Actualizar</button></div></div>');
-			$("#idEvidencia").val(evidencia[codigoRegistro].id);
-			$("#nombreEvidencia").val(evidencia[codigoRegistro].nombre);
-			$("#descripcionEvidencia").val(evidencia[codigoRegistro].descripcion);
-			$("#wsIdEvidencia").val(evidencia[codigoRegistro].wsId);
-			$("#borradoEvidencia").val(evidencia[codigoRegistro].borrado);
+			$("#borradoBotonGeoPoligonoTipo").remove();
+			$("#guardarGeoPoligonoTipo").remove();
+			$('#geoPoligonoTipo').modal('show');
+			$("#geoPoligonoTipo").find(".form-horizontal").append('<div class="form-group" id="borradoBotonGeoPoligonoTipo"><div class="col-lg-offset-2 col-lg-10"><button type="submit" class="btn btn-success" id="actualizarGeoPoligonoTipo">Actualizar</button></div></div>');
+			$("#idGeoPoligonoTipo").val(geoPoligonoTipo[codigoRegistro].id);
+			$("#nombreGeoPoligonoTipo").val(geoPoligonoTipo[codigoRegistro].nombre);
+			$("#descripcionGeoPoligonoTipo").val(geoPoligonoTipo[codigoRegistro].descripcion);
 		});
 		
 	});
@@ -222,7 +218,7 @@ if (user != null) { %>
     <!-- Librerias para la rutina de cambio de contraseña -->
     <script src="dist/js/jquerymd5.js" type="text/javascript"></script>    	
     <%@ include file="/frames/pass.jsp" %>
-    <%@ include file="/frames/evidencia.jsp" %>
+    <%@ include file="/frames/geoPoligonoTipo.jsp" %>
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js" type="text/javascript"></script>
         <%  } else { %>

@@ -1,6 +1,7 @@
 package py.gov.stp.objetosV2;
 
 public class SprProducto {
+	protected int id;
 	protected int nivelId;
 	protected int entidadId;
 	protected int tipoId;
@@ -11,6 +12,12 @@ public class SprProducto {
 	protected int unidadResponsableId;
 	protected int productoId;
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public int getNivelId() {
 		return nivelId;
 	}
@@ -65,6 +72,7 @@ public class SprProducto {
 	public void setProductoId(int productoId) {
 		this.productoId = productoId;
 	}
+	
 	
 	
 
