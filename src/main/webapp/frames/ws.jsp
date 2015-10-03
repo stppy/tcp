@@ -131,4 +131,62 @@
 
 			
 		});
+	
+	
+	$("body").on("click", "#actualizarWs",function(event){		
+		var objeto = new Object();
+		var accion = "actWs";
+		var id = $("#idWs").val();
+		var nombre= $("#nombreWs").val();
+		var descripcion= $("#descripcionWs").val();		
+		var url= $("#urlWs").val();	
+		var metodo= $("#metodoWs").val();		
+		var usuario= $("#usuarioWs").val();		
+		var pass= $("#passWs").val();
+		var idClave= $("#idClaveWs").val();
+		var idValor= $("#idValorWs").val();
+		var wsTipoId= $("#wsTipoIdWs").val();
+			
+		objeto.id=id;
+		objeto.nombre=nombre;
+		objeto.descripcion=descripcion;		
+		objeto.url=url;	
+		objeto.metodo=metodo;	
+		objeto.usuario=usuario;				
+		objeto.pass=pass;				
+		objeto.idClave=idClave;		
+		objeto.idValor=idValor;		
+		objeto.wsTipoId=wsTipoId;
+
+		$.ajax({
+		        url: "http://tablero2015.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
+		        type: 'POST',
+		        dataType: 'json',
+		        data: JSON.stringify(objeto),
+		        contentType: 'application/json',
+		        mimeType: 'application/json',
+		        
+		        success: function (data)
+		        {
+		        	if (data.success == true)
+		        	{
+		        		$("#tituloModalUsuario").html('');
+						$("#tituloModalUsuario").append('<p class="text-success">GUARDADO</p>');
+			    		$("#pass-viejo-form").val("");
+						$("#pass-nuevo-form").val("");
+						$("#pass-nuevo1-form").val("");	
+		        	}else{
+		        		if (data.success == false){
+		        			$("#tituloModalUsuario").html('');
+				        	$("#tituloModalUsuario").append('<p class="text-danger">Error no se ha guardado</p>');
+		        		}
+		        	}
+		        },
+		        error: function(data,status,er)
+		        {
+		        	$("#tituloModalUsuario").html('');
+		        	$("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intente de nuevo</p>');
+		        }
+		 });		
+	});	
 	</script>	

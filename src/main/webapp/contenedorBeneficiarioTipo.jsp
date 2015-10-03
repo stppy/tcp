@@ -115,6 +115,7 @@ if (user != null) { %>
 			$("#idBeneficiarioTipo").val(beneficiarioTipo[codigoRegistro].id);
 			$("#nombreBeneficiarioTipo").val(beneficiarioTipo[codigoRegistro].nombre);
 			$("#descripcionBeneficiarioTipo").val(beneficiarioTipo[codigoRegistro].descripcion);
+			$("#borradoBeneficiarioTipo").val(beneficiarioTipo[codigoRegistro].borrado);
 		});
 		
 	});

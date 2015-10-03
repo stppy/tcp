@@ -1267,10 +1267,12 @@ public class SqlUpdates {
   	 Statement statement = null;
 
 				 String										query = "update tipo_accion set ";
-				 if(objeto.getNombre()!=null)				query+= "nombre=\""+objeto.getNombre()+"\"";
-				 if(objeto.getDescripcion()!=null)			query+= "descripcion=\""+objeto.getDescripcion()+"\"";
+				 if(objeto.getNombre()!=null)			    query+= "nombre='"+objeto.getNombre()+"'";
+				 if(objeto.getDescripcion()!=null)			query+= ", descripcion='"+objeto.getDescripcion()+"'";
 				 //if(objeto.isBorrado()!=false)			query+= "borrado=\""+objeto.isBorrado()+"\"";	
-
+				 
+				 query+=" where id ="+objeto.getId();
+				 
 				 try {
 					statement=conect.createStatement();
 					statement.execute(query);
@@ -1299,10 +1301,12 @@ public class SqlUpdates {
 	  	 Statement statement = null;
 
 					 String										query = "update unidad_medida set ";
-					 if(objeto.getNombre()!=null)				query+= "nombre=\""+objeto.getNombre()+"\"";
-					 if(objeto.getDescripcion()!=null)			query+= "descripcion=\""+objeto.getDescripcion()+"\"";
-					 if(objeto.getSigla()!=null)			 	query+= "sigla=\""+objeto.getSigla()+"\"";
-					 //if(objeto.isBorrado()!=false)			query+= "borrado=\""+objeto.isBorrado()+"\"";	
+					 if(objeto.getNombre()!=null)			    query+= "nombre='"+objeto.getNombre()+"'";
+					 if(objeto.getDescripcion()!=null)			query+= ", descripcion='"+objeto.getDescripcion()+"'";
+					 if(objeto.getSigla()!=null)			 	query+= ", sigla='"+objeto.getSigla()+"'";	
+					 
+					 
+					 query+=" where id ="+objeto.getId();
 
 					 try {
 						statement=conect.createStatement();
@@ -1400,12 +1404,13 @@ public class SqlUpdates {
 	  	 Statement statement = null;
 
 					 String										query = "update ins_linea_accion set ";
-					 if(objeto.getLineaAccionId()!=0)			query+= "linea_accion_id=\""+objeto.getLineaAccionId()+"\"";	
-					 if(objeto.getInstitucionId()!=0)			query+= "institucion_id=\""+objeto.getInstitucionId()+"\"";
-					 if(objeto.getPeriodoId()!=0)				query+= "periodo_id=\""+objeto.getPeriodoId()+"\"";
-					 if(objeto.getMeta()!=0)					query+= "meta=\""+objeto.getMeta()+"\"";					 
+					 if(objeto.getLineaAccionId()!=0)			query+= "linea_accion_id="+objeto.getLineaAccionId()+"";	
+					 if(objeto.getInstitucionId()!=0)			query+= ", institucion_id="+objeto.getInstitucionId()+"";
+					 if(objeto.getPeriodoId()!=0)				query+= ", periodo_id="+objeto.getPeriodoId()+"";
+					 if(objeto.getMeta()!=0)					query+= ", meta="+objeto.getMeta()+"";					 
 					 //if(objeto.isBorrado()!=false)			query+= "borrado=\""+objeto.isBorrado()+"\"";	
 
+					 query+=" where id ="+objeto.getId();
 					 try {
 						statement=conect.createStatement();
 						statement.execute(query);
@@ -1433,16 +1438,19 @@ public class SqlUpdates {
 	  	 Statement statement = null;  
 
 					 String										query = "update institucion set ";
-					 if(objeto.getNombre()!=null)				query+= "nombre=\""+objeto.getNombre()+"\"";	
-					 if(objeto.getDescripcion()!=null)			query+= "descripcion=\""+objeto.getDescripcion()+"\"";
-					 if(objeto.getSigla()!=null)				query+= "sigla=\""+objeto.getSigla()+"\"";
-					 if(objeto.getNivelId()!=0)					query+= "nivel_id=\""+objeto.getNivelId()+"\"";	
-					 if(objeto.getEntidadId()!=0)				query+= "entidad_id=\""+objeto.getEntidadId()+"\"";
-					 if(objeto.getUnidadJerarquicaId()!=0)		query+= "unidad_jerarquica_id=\""+objeto.getUnidadJerarquicaId()+"\"";
-					 if(objeto.getUnidadResponsableId()!=0)		query+= "unidad_responsable_id=\""+objeto.getUnidadResponsableId()+"\"";
-					 if(objeto.getOrden()!=0)					query+= "orden=\""+objeto.getOrden()+"\"";	
+					 if(objeto.getNombre()!=null)				query+= "nombre='"+objeto.getNombre()+"'";	
+					 if(objeto.getDescripcion()!=null)			query+= ", descripcion='"+objeto.getDescripcion()+"'";
+					 if(objeto.getSigla()!=null)				query+= ", sigla='"+objeto.getSigla()+"'";
+					 if(objeto.getNivelId()!=0)					query+= ", nivel_id="+objeto.getNivelId()+"";	
+					 if(objeto.getEntidadId()!=0)				query+= ", entidad_id="+objeto.getEntidadId()+"";
+					 if(objeto.getUnidadJerarquicaId()!=0)		query+= ", unidad_jerarquica_id="+objeto.getUnidadJerarquicaId()+"";
+					 if(objeto.getUnidadResponsableId()!=0)		query+= ", unidad_responsable_id="+objeto.getUnidadResponsableId()+"";
+					 if(objeto.getOrden()!=0)					query+= ", orden="+objeto.getOrden()+"";	
 					 //if(objeto.isBorrado()!=false)			query+= "borrado=\""+objeto.isBorrado()+"\"";	
-
+					 
+					 
+					 query+=" where id ="+objeto.getId();
+					 
 					 try {
 						statement=conect.createStatement();
 						statement.execute(query);
@@ -1451,6 +1459,8 @@ public class SqlUpdates {
 					} catch (SQLException e) {e.printStackTrace(); return false;}
 
 		}	
+	
+	 	
 	
 	public static boolean borradoInstitucion(boolean flagBorrado){
 	  	 Connection conect=ConnectionConfiguration.conectar();
@@ -1629,16 +1639,18 @@ public class SqlUpdates {
 	  	 Statement statement = null;
 
 					 String										query = "update spr-producto set ";
-					 if(objeto.getNivelId()!=0)					query+= "nivel_id=\""+objeto.getNivelId()+"\"";	
-					 if(objeto.getEntidadId()!=0)				query+= "entidad_id=\""+objeto.getEntidadId()+"\"";
-					 if(objeto.getTipoId()!=0)					query+= "tipo_id=\""+objeto.getTipoId()+"\"";	
-					 if(objeto.getProgramaId()!=0)				query+= "programa_id=\""+objeto.getProgramaId()+"\"";
-					 if(objeto.getSubprogramaId()!=0)			query+= "subprograma_id=\""+objeto.getSubprogramaId()+"\"";
-					 if(objeto.getProyectoId()!=0)				query+= "proyecto_id=\""+objeto.getProyectoId()+"\"";	
-					 if(objeto.getFuncionalId()!=0)				query+= "funcional_id=\""+objeto.getFuncionalId()+"\"";
-					 if(objeto.getUnidadResponsableId()!=0)		query+= "unidad_responsable_id=\""+objeto.getUnidadResponsableId()+"\"";
-					 if(objeto.getProductoId()!=0)				query+= "producto_id=\""+objeto.getProductoId()+"\"";	
+					 if(objeto.getNivelId()!=0)					query+= "nivel_id="+objeto.getNivelId()+"";	
+					 if(objeto.getEntidadId()!=0)				query+= ", entidad_id="+objeto.getEntidadId()+"";
+					 if(objeto.getTipoId()!=0)					query+= ", tipo_id="+objeto.getTipoId()+"";	
+					 if(objeto.getProgramaId()!=0)				query+= ", programa_id="+objeto.getProgramaId()+"";
+					 if(objeto.getSubprogramaId()!=0)			query+= ", subprograma_id="+objeto.getSubprogramaId()+"";
+					 if(objeto.getProyectoId()!=0)				query+= ", proyecto_id="+objeto.getProyectoId()+"";	
+					 if(objeto.getFuncionalId()!=0)				query+= ", funcional_id="+objeto.getFuncionalId()+"";
+					 if(objeto.getUnidadResponsableId()!=0)		query+= ", unidad_responsable_id="+objeto.getUnidadResponsableId()+"";
+					 if(objeto.getProductoId()!=0)				query+= ", producto_id="+objeto.getProductoId()+"";	
 					 		 
+					 query+=" where id ="+objeto.getId();
+					 
 					 try {
 						statement=conect.createStatement();
 						statement.execute(query);
@@ -1654,18 +1666,19 @@ public class SqlUpdates {
 	  	 Statement statement = null;
 
 					 String										query = "update ws set ";
-					 if(objeto.getNombre()!=null)				query+= "nombre=\""+objeto.getNombre()+"\"";
-					 if(objeto.getDescripcion()!=null)			query+= "descripcion=\""+objeto.getDescripcion()+"\"";
-					 if(objeto.getUrl()!=null)					query+= "url=\""+objeto.getUrl()+"\"";
-					 if(objeto.getMetodo()!=null)				query+= "metodo=\""+objeto.getMetodo()+"\"";
-					 if(objeto.getUsuario()!=null)				query+= "usuario=\""+objeto.getUsuario()+"\"";
-					 if(objeto.getPass()!=null)					query+= "pass=\""+objeto.getPass()+"\"";
-					 if(objeto.getIdClave()!=null)				query+= "id_clave=\""+objeto.getIdClave()+"\"";
-					 if(objeto.getIdValor()!=null)				query+= "id_valor=\""+objeto.getIdValor()+"\"";
-					 if(objeto.getWsTipoId()!=0)				query+= "ws_tipo_id=\""+objeto.getWsTipoId()+"\"";	
+					 if(objeto.getNombre()!=null)				query+= "nombre='"+objeto.getNombre()+"'";
+					 if(objeto.getDescripcion()!=null)			query+= ", descripcion='"+objeto.getDescripcion()+"'";
+					 if(objeto.getUrl()!=null)					query+= ", url='"+objeto.getUrl()+"'";
+					 if(objeto.getMetodo()!=null)				query+= ", metodo='"+objeto.getMetodo()+"'";
+					 if(objeto.getUsuario()!=null)				query+= ", usuario='"+objeto.getUsuario()+"'";
+					 if(objeto.getPass()!=null)					query+= ", pass='"+objeto.getPass()+"'";
+					 if(objeto.getIdClave()!=null)				query+= ", id_clave='"+objeto.getIdClave()+"'";
+					 if(objeto.getIdValor()!=null)				query+= ", id_valor='"+objeto.getIdValor()+"'";
+					 if(objeto.getWsTipoId()!=0)				query+= ", ws_tipo_id="+objeto.getWsTipoId()+"";	
 					 //if(objeto.isBorrado()!=false)				query+= "borrado=\""+objeto.isBorrado()+"\"";	
 
-					 		 
+					 query+=" where id ="+objeto.getId();
+					 
 					 try {
 						statement=conect.createStatement();
 						statement.execute(query);
@@ -1728,9 +1741,11 @@ public class SqlUpdates {
 	  	 Statement statement = null;
 
 					 String										query = "update ws_tipo set ";
-					 if(objeto.getNombre()!=null)				query+= "nombre=\""+objeto.getNombre()+"\"";
-					 if(objeto.getDescripcion()!=null)			query+= "descripcion=\""+objeto.getDescripcion()+"\"";
+					 if(objeto.getNombre()!=null)			    query+= "nombre='"+objeto.getNombre()+"'";
+					 if(objeto.getDescripcion()!=null)			query+= ", descripcion='"+objeto.getDescripcion()+"'";
 					 //if(objeto.isBorrado()!=false)			query+= "borrado=\""+objeto.isBorrado()+"\"";	
+					 
+					 query+=" where id ="+objeto.getId();
 					 		 
 					 try {
 						statement=conect.createStatement();
@@ -1778,11 +1793,13 @@ public class SqlUpdates {
 	   	
 	  	 Statement statement = null;
 
-					 String										query = "update beneficiario_tipo set ";
-					 if(objeto.getNombre()!=null)				query+= "nombre=\""+objeto.getNombre()+"\"";
-					 if(objeto.getDescripcion()!=null)			query+= "descripcion=\""+objeto.getDescripcion()+"\"";
+	  	 			String										query = "update beneficiario_tipo set ";
+	  	 			if(objeto.getNombre()!=null)			    query+= "nombre='"+objeto.getNombre()+"'";
+					if(objeto.getDescripcion()!=null)			query+= ", descripcion='"+objeto.getDescripcion()+"'";
 					 //if(objeto.isBorrado()!=false)			query+= "borrado=\""+objeto.isBorrado()+"\"";	
-					 		 
+					 
+					 query+=" where id ="+objeto.getId();;
+					 
 					 try {
 						statement=conect.createStatement();
 						statement.execute(query);
@@ -1842,9 +1859,11 @@ public class SqlUpdates {
 	  	 Statement statement = null;
 
 					 String										query = "update etiqueta set ";
-					 if(objeto.getNombre()!=null)				query+= "nombre=\""+objeto.getNombre()+"\"";
-					 if(objeto.getDescripcion()!=null)			query+= "descripcion=\""+objeto.getDescripcion()+"\"";
+					 if(objeto.getNombre()!=null)			    query+= "nombre='"+objeto.getNombre()+"'";
+					 if(objeto.getDescripcion()!=null)			query+= ", descripcion='"+objeto.getDescripcion()+"'";
 					 //if(objeto.isBorrado()!=false)			query+= "borrado=\""+objeto.isBorrado()+"\"";	
+					 
+					 query+=" where id ="+objeto.getId();
 					 		 
 					 try {
 						statement=conect.createStatement();
