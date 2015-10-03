@@ -1335,11 +1335,12 @@ public class SqlUpdates {
 	  	 Statement statement = null;
 
 					 String										query = "update linea_estrategica set ";
-					 if(objeto.getNombre()!=null)				query+= "nombre=\""+objeto.getNombre()+"\"";
-					 if(objeto.getDescripcion()!=null)			query+= "descripcion=\""+objeto.getDescripcion()+"\"";
-					 if(objeto.getOrden()!=0)			 		query+= "orden=\""+objeto.getOrden()+"\"";
+					 if(objeto.getNombre()!=null)				query+= "nombre='"+objeto.getNombre()+"'";
+					 if(objeto.getDescripcion()!=null)			query+= ", descripcion='"+objeto.getDescripcion()+"'";
+					 if(objeto.getOrden()!=0)			 		query+= ", orden="+objeto.getOrden()+"";
 					 //if(objeto.isBorrado()!=false)			query+= "borrado=\""+objeto.isBorrado()+"\"";	
 
+					 query+=" where id ="+objeto.getId();
 					 try {
 						statement=conect.createStatement();
 						statement.execute(query);

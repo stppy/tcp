@@ -84,40 +84,38 @@ if (user != null) { %>
 		$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
 		$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
 		
-		var geoPoligono = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getGeoPoligono',
+		var lineaEstrategica = $.ajax({
+			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getLineaEstrategica',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
 		}).responseText;		
-		geoPoligono=JSON.parse(geoPoligono);
+		lineaEstrategica=JSON.parse(lineaEstrategica);
 		
-		var tablaGeoPoligono="";
-		tablaGeoPoligono = '<table class="table table-hover">'+
-					  '<tr class="active"><td colspan="8">Tabla GeoPoligono</td><td><a href="#" data-toggle="modal" data-target="#geoPoligono"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
-					  '<tr class="active"><td>Id</td><td>Nombre</td><td>Descripción</td><td>Geo</td><td>geoPoligonoId</td><td>geoPoligonoTipoId</td><td>borrado</td><td>Editar</td><td>Borrar</td></tr>';
-		for(var w=0; w<geoPoligono.length;w++)
+		var tablaLineaEstrategica="";
+		tablaLineaEstrategica = '<table class="table table-hover">'+
+					  '<tr class="active"><td colspan="6">Tabla Linea Estrategica</td><td><a href="#" data-toggle="modal" data-target="#lineaEstrategica"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
+					  '<tr class="active"><td>Id</td><td>Nombre</td><td>Descripción</td><td>Orden</td><td>borrado</td><td>Editar</td><td>Borrar</td></tr>';
+		for(var w=0; w<lineaEstrategica.length;w++)
 		{
-			tablaGeoPoligono+='<tr><td>'+geoPoligono[w].id+'</td><td>'+geoPoligono[w].nombre+'</td><td>'+geoPoligono[w].descripcion+'</td><td>'+geoPoligono[w].geo+'</td><td>'+geoPoligono[w].geoPoligonoId+'</td><td>'+geoPoligono[w].geoPoligonoTipoId+'</td><td>'+geoPoligono[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosGeoPoligono" codigoRegistroGeoPoligono='+w+'></span></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';
+			tablaLineaEstrategica+='<tr><td>'+lineaEstrategica[w].id+'</td><td>'+lineaEstrategica[w].nombre+'</td><td>'+lineaEstrategica[w].descripcion+'</td><td>'+lineaEstrategica[w].orden+'</td><td>'+lineaEstrategica[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosLineaEstrategica" codigoRegistroLineaEstrategica='+w+'></span></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';
 		}
-		tablaGeoPoligono +='</table>';				
+		tablaLineaEstrategica +='</table>';				
 		
-		$('.box-body').html(tablaGeoPoligono);
+		$('.box-body').html(tablaLineaEstrategica);
 
 		 
-		$("body").on("click", ".registrosGeoPoligono",function(event){
-			var codigoRegistro = $(this).attr("codigoRegistroGeoPoligono");
+		$("body").on("click", ".registrosLineaEstrategica",function(event){
+			var codigoRegistro = $(this).attr("codigoRegistroLineaEstrategica");
 				
-			$("#borradoGeoPoligono").remove();
-			$("#guardarGeoPoligono").remove();
-			$('#geoPoligono').modal('show');
-			$("#geoPoligono").find(".form-horizontal").append('<div class="form-group" id="borradoGeoPoligono"><div class="col-lg-offset-2 col-lg-10"><button type="submit" class="btn btn-success" id="actualizarGeoPoligono">Actualizar</button></div></div>');
-			$("#idGeoPoligono").val(geoPoligono[codigoRegistro].id);
-			$("#nombreGeoPoligono").val(geoPoligono[codigoRegistro].nombre);
-			$("#descripcionGeoPoligono").val(geoPoligono[codigoRegistro].descripcion);
-			$("#geoGeoPoligono").val(geoPoligono[codigoRegistro].geo);
-			$("#geoPoligonoIdGeoPoligono").val(geoPoligono[codigoRegistro].geoPoligonoId);
-			$("#geoPoligonoTipoIdGeoPoligono").val(geoPoligono[codigoRegistro].geoPoligonoTipoId);
+			$("#borradoLineaEstrategica").remove();
+			$("#guardarLineaEstrategica").remove();
+			$('#lineaEstrategica').modal('show');
+			$("#lineaEstrategica").find(".form-horizontal").append('<div class="form-group" id="borradoLineaEstrategica"><div class="col-lg-offset-2 col-lg-10"><button type="submit" class="btn btn-success" id="actualizarLineaEstrategica">Actualizar</button></div></div>');
+			$("#idLineaEstrategica").val(lineaEstrategica[codigoRegistro].id);
+			$("#nombreLineaEstrategica").val(lineaEstrategica[codigoRegistro].nombre);
+			$("#descripcionLineaEstrategica").val(lineaEstrategica[codigoRegistro].descripcion);
+			$("#ordenLineaEstrategica").val(lineaEstrategica[codigoRegistro].orden);
 		});
 		
 	});
@@ -221,7 +219,7 @@ if (user != null) { %>
     <!-- Librerias para la rutina de cambio de contraseña -->
     <script src="dist/js/jquerymd5.js" type="text/javascript"></script>    	
     <%@ include file="/frames/pass.jsp" %>
-    <%@ include file="/frames/geo_poligono.jsp" %>
+    <%@ include file="/frames/lineaEstrategica.jsp" %>
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js" type="text/javascript"></script>
         <%  } else { %>
