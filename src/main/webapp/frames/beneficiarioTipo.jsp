@@ -81,13 +81,14 @@ $("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intent
 $("body").on("click", "#actualizarBeneficiarioTipo",function(event){		
 	var objeto = new Object();
 	var accion = "actBeneficiarioTipo";
-	var id = $("#idBeneficiaroTipo").val();
-	var nombre= $("#nombreBeneficiarioTipo").val();	
-	var descripcion= $("#descripcionBeneficiarioTipo").val();		
+	var id = $("#idBeneficiarioTipo").val();
+	var nombre= $("#nombreBeneficiarioTipo").val();
+	var descripcion= $("#descripcionBeneficiarioTipo").val();
 	
-	objeto.id =id;
-	objeto.nombre =nombre;
-	objeto.descripcion =descripcion;	
+	objeto.id=id;
+	objeto.nombre=nombre;
+	objeto.descripcion=descripcion;
+
 	
 
 	$.ajax({
@@ -120,5 +121,5 @@ $("body").on("click", "#actualizarBeneficiarioTipo",function(event){
 	        	$("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intente de nuevo</p>');
 	        }
 	 });		
-});	
+});		
 </script>

@@ -142,10 +142,10 @@
 		objeto.id =id;
 		objeto.nombre =nombre;
 		objeto.descripcion =descripcion;	
-		objeto.sigla =borrado;
+		objeto.sigla =sigla;
 		objeto.nivelId=nivelId;
 		objeto.entidadId=entidadId;
-		objeto.unidadJerarquicaId=unidadJerarquicaIdunidadJerarquicaId;
+		objeto.unidadJerarquicaId=unidadJerarquicaId;
 		objeto.unidadResponsableId=unidadResponsableId;
 		objeto.orden=orden;
 		

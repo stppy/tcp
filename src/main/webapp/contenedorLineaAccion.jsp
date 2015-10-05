@@ -84,38 +84,42 @@ if (user != null) { %>
 		$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
 		$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
 		
-		var lineaEstrategica = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getLineaEstrategica',
+		var lineaAccion = $.ajax({
+			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
 		}).responseText;		
-		lineaEstrategica=JSON.parse(lineaEstrategica);
+		lineaAccion=JSON.parse(lineaAccion);
 		
-		var tablaLineaEstrategica="";
-		tablaLineaEstrategica = '<table class="table table-hover">'+
-					  '<tr class="active"><td colspan="11">Tabla Linea Estrategica</td><td><a href="#" data-toggle="modal" data-target="#lineaEstrategica"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
-					  '<tr class="active"><td>Id</td><td>Nombre</td><td>Descripción</td><td>Orden</td><td>borrado</td><td>Editar</td><td>Borrar</td></tr>';
-		for(var w=0; w<lineaEstrategica.length;w++)
+		var tablaLineaAccion="";
+		tablaLineaAcccion = '<table class="table table-hover">'+
+					  '<tr class="active"><td colspan="11">Tabla Linea Accion</td><td><a href="#" data-toggle="modal" data-target="#lineaAccion"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
+					  '<tr class="active"><td>Id</td><td>Nombre</td><td>Descripción</td><td>Orden</td><td>Peso</td><td>tipo_accion_id</td><td>estrategia_id</td><td>unidad_medida</td><td>borrado</td><td>Editar</td><td>Borrar</td></tr>';
+		for(var w=0; w<lineaAccion.length;w++)
 		{
-			tablaLineaEstrategica+='<tr><td>'+lineaEstrategica[w].id+'</td><td>'+lineaEstrategica[w].nombre+'</td><td>'+lineaEstrategica[w].descripcion+'</td><td>'+lineaEstrategica[w].orden+'</td><td>'+lineaAccion[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosLineaEstrategica" codigoRegistroLineaEstrategica='+w+'></span></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';
+			tablaLineaAccion+='<tr><td>'+lineaAccion[w].id+'</td><td>'+lineaAccion[w].nombre+'</td><td>'+lineaAccion[w].descripcion+'</td><td>'+lineaAccion[w].orden+'</td><td>'+lineaAccion[w].peso+'</td><td>'+lineaAccion[w].tipo_accion_id+'</td><td>'+lineaAccion[w].estrategia_id+'</td><td>'+lineaAccion[w].unidad_medida+'</td><td>'+lineaAccion[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosLineaAccion" codigoRegistroLineaAccion='+w+'></span></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';
 		}
-		tablaLineaEstrategica +='</table>';				
+		tablaLineaAccion +='</table>';				
 		
-		$('.box-body').html(tablaLineaEstrategica);
+		$('.box-body').html(tablaLineaAccion);
 
 		 
-		$("body").on("click", ".registrosLineaEstrategica",function(event){
-			var codigoRegistro = $(this).attr("codigoRegistroLineaEstrategica");
+		$("body").on("click", ".registrosLineaAccion",function(event){
+			var codigoRegistro = $(this).attr("codigoRegistroLineaAccion");
 				
-			$("#borradoLineaEstrategica").remove();
-			$("#guardarLineaEstrategica").remove();
-			$('#lineaEstrategica').modal('show');
-			$("#lineaEstrategica").find(".form-horizontal").append('<div class="form-group" id="borradoLineaEstrategica"><div class="col-lg-offset-2 col-lg-10"><button type="submit" class="btn btn-success" id="actualizarLineaEstrategica">Actualizar</button></div></div>');
-			$("#idLineaEstrategica").val(lineaEstrategica[codigoRegistro].id);
-			$("#nombreLineaEstrategica").val(lineaEstrategica[codigoRegistro].nombre);
-			$("#descripcionLineaEstrategica").val(lineaEstrategica[codigoRegistro].descripcion);
-			$("#ordenLineaEstrategica").val(lineaEstrategica[codigoRegistro].orden);
+			$("#borradoLineaAccion").remove();
+			$("#guardarLineaAccion").remove();
+			$('#lineaAccion').modal('show');
+			$("#lineaAccion").find(".form-horizontal").append('<div class="form-group" id="borradoLineaAccion"><div class="col-lg-offset-2 col-lg-10"><button type="submit" class="btn btn-success" id="actualizarLineaAccion">Actualizar</button></div></div>');
+			$("#idLineaAccion").val(lineaAccion[codigoRegistro].id);
+			$("#nombreLineaAccion").val(lineaAccion[codigoRegistro].nombre);
+			$("#descripcionLineaAccion").val(lineaAccion[codigoRegistro].descripcion);
+			$("#ordenLineaAccion").val(lineaAccion[codigoRegistro].orden);
+			$("#pesoLineaAccion").val(lineaAccion[codigoRegistro].peso);
+			$("#tipoAccionIdLineaAccion").val(lineaAccion[codigoRegistro].tipoAccionId);
+			$("#estrategiaIdLineaAccion").val(lineaAccion[codigoRegistro].estrategiaId);
+			$("#unidadMedidaIdLineaAccion").val(lineaAccion[codigoRegistro].unidadMedidaIdLineaAccion);
 		});
 		
 	});

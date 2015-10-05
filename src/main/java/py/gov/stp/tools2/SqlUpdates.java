@@ -1368,15 +1368,19 @@ public class SqlUpdates {
 	  	 Statement statement = null;
 
 					 String										query = "update linea_accion set ";
-					 if(objeto.getNombre()!=null)				query+= "nombre=\""+objeto.getNombre()+"\"";
-					 if(objeto.getDescripcion()!=null)			query+= "descripcion=\""+objeto.getDescripcion()+"\"";
-					 if(objeto.getOrden()!=0)			 		query+= "orden=\""+objeto.getOrden()+"\"";
-					 if(objeto.getPeso()!=null)					query+= "peso=\""+objeto.getPeso()+"\"";
-					 //Preguntar si esta bien if(objeto.isAcumulador()!=false)			query+= "acumulador=\""+objeto.isAcumulador()+"\"";
-					 if(objeto.getTipoAccionId()!=0)			query+= "tipo_accion_id=\""+objeto.getTipoAccionId()+"\"";
-					 if(objeto.getEstrategiaId()!=0)			query+= "estrategia_id=\""+objeto.getEstrategiaId()+"\"";
-					 if(objeto.getUnidadMedidaId()!=0)			query+= "unidad_medida_id=\""+objeto.getUnidadMedidaId()+"\"";					 
+					 if(objeto.getNombre()!=null)				query+= "nombre='"+objeto.getNombre()+"'";
+					 if(objeto.getDescripcion()!=null)			query+= ", descripcion='"+objeto.getDescripcion()+"'";
+					 if(objeto.getOrden()!=0)			 		query+= ", orden="+objeto.getOrden()+"";
+					 if(objeto.getPeso()!=null)					query+= ", peso='"+objeto.getPeso()+"'";
+					 if(objeto.isAcumular()!=false)				query+= ", acumular='"+objeto.isAcumular()+"'";	
+					 if(objeto.getTipoAccionId()!=0)			query+= ", tipo_accion_id="+objeto.getTipoAccionId()+"";
+					 if(objeto.getEstrategiaId()!=0)			query+= ", estrategia_id="+objeto.getEstrategiaId()+"";
+					 if(objeto.getUnidadMedidaId()!=0)			query+= ", unidad_medida_id="+objeto.getUnidadMedidaId()+"";					 
+					 
+					 
 					 //if(objeto.isBorrado()!=false)			query+= "borrado=\""+objeto.isBorrado()+"\"";	
+
+					 query+=" where id ="+objeto.getId();
 
 					 try {
 						statement=conect.createStatement();
@@ -1546,16 +1550,20 @@ public class SqlUpdates {
 	  	 Statement statement = null;
 
 					 String										query = "update hito set ";
-					 if(objeto.getNombre()!=null)				query+= "nombre=\""+objeto.getNombre()+"\"";	
-					 if(objeto.getDescripcion()!=null)			query+= "descripcion=\""+objeto.getDescripcion()+"\"";
-					 if(objeto.getCantidad()!=0)				query+= "cantidad=\""+objeto.getCantidad()+"\"";
-					 if(objeto.getFechaEntrega()!=null)			query+= "fecha_entrega=\""+objeto.getFechaEntrega()+"\"";
-					 if(objeto.getHitoTipoId()!=0)				query+= "hito_tipo_id=\""+objeto.getHitoTipoId()+"\"";
-					 if(objeto.getAccionId()!=0)				query+= "accion_id=\""+objeto.getAccionId()+"\"";
-					 if(objeto.getEvidenciaId()!=0)				query+= "evidencia_id=\""+objeto.getEvidenciaId()+"\"";
-					 if(objeto.getUnidadMedidaId()!=0)			query+= "unidad_medida_id=\""+objeto.getUnidadMedidaId()+"\"";
-					 if(objeto.getPeso()!=0)					query+= "peso=\""+objeto.getPeso()+"\"";
+					 if(objeto.getNombre()!=null)				query+= "nombre='"+objeto.getNombre()+"'";	
+					 if(objeto.getDescripcion()!=null)			query+= ", descripcion='"+objeto.getDescripcion()+"'";
+					 if(objeto.getCantidad()!=0)				query+= ", cantidad="+objeto.getCantidad()+"";
+					 if(objeto.getFechaEntrega()!=null)			query+= ", fecha_entrega='"+objeto.getFechaEntrega()+"'";
+					 if(objeto.getHitoTipoId()!=0)				query+= ", hito_tipo_id="+objeto.getHitoTipoId()+"";
+					 if(objeto.getAccionId()!=0)				query+= ", accion_id="+objeto.getAccionId()+"";
+					 if(objeto.getEvidenciaId()!=0)				query+= ", evidencia_id="+objeto.getEvidenciaId()+"";
+					 if(objeto.getUnidadMedidaId()!=0)			query+= ", unidad_medida_id="+objeto.getUnidadMedidaId()+"";
+					 if(objeto.getPeso()!=0)					query+= ", peso="+objeto.getPeso()+"";
 					 //if(objeto.isBorrado()!=false)			query+= "borrado=\""+objeto.isBorrado()+"\"";	
+					 
+					
+					 query+=" where id ="+objeto.getId()+" AND accion_id="+objeto.getAccionId();
+
 
 					 try {
 						statement=conect.createStatement();
@@ -1640,7 +1648,7 @@ public class SqlUpdates {
 	   	
 	  	 Statement statement = null;
 
-					 String										query = "update spr-producto set ";
+					 String										query = "update spr_producto set ";
 					 if(objeto.getNivelId()!=0)					query+= "nivel_id="+objeto.getNivelId()+"";	
 					 if(objeto.getEntidadId()!=0)				query+= ", entidad_id="+objeto.getEntidadId()+"";
 					 if(objeto.getTipoId()!=0)					query+= ", tipo_id="+objeto.getTipoId()+"";	
@@ -1797,10 +1805,12 @@ public class SqlUpdates {
 
 	  	 			String										query = "update beneficiario_tipo set ";
 	  	 			if(objeto.getNombre()!=null)			    query+= "nombre='"+objeto.getNombre()+"'";
-					if(objeto.getDescripcion()!=null)			query+= ", descripcion='"+objeto.getDescripcion()+"'";
-					 //if(objeto.isBorrado()!=false)			query+= "borrado=\""+objeto.isBorrado()+"\"";	
+	  	 			if(objeto.getDescripcion()!=null)			query+= ", descripcion='"+objeto.getDescripcion()+"'";
+	  	 			//if(objeto.isBorrado()!=false)			query+= "borrado=\""+objeto.isBorrado()+"\"";	
+				 
+	  	 			query+=" where id ="+objeto.getId();
 					 
-					 query+=" where id ="+objeto.getId();;
+					 
 					 
 					 try {
 						statement=conect.createStatement();

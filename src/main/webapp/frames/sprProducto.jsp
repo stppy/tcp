@@ -86,6 +86,7 @@
 			var funcionalId= $("#funcionalIdSprProducto").val();
 			var unidadResponsableId= $("#unidadResponsableIdSprProducto").val();
 			var productoId= $("#productoIdSprProducto").val();
+			
 
 			objeto.nivelId=nivelId;
 			objeto.entidadId=entidadId;		
