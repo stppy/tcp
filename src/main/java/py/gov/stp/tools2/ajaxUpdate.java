@@ -162,7 +162,7 @@ public class ajaxUpdate extends HttpServlet {
         		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
                 String json = "";
                 if(br != null){ json = br.readLine();}
-                Gson gsonInsert = new Gson();
+                Gson gsonInsert = new Gson();a
                 objeto=gsonInsert.fromJson(json, UnidadMedida.class);
                 boolean status = SqlUpdates.borradoUnidadMedida(objeto.isBorrado());
         		myObj.addProperty("success", status);
