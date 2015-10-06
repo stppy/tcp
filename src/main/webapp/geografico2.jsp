@@ -499,7 +499,12 @@ tbody {
                   	<div id="map" style="width: 800x; height: 600px"></div>
 
 					<script src="plugins/mapa/deptos2012.geojson" type="text/javascript"></script>
+					<!-- <script src="mapa/0.geojson" type="text/javascript"></script>  -->
 					<script src="plugins/mapa/leaflet.js"></script>
+					<script type="text/javascript" src="mapa/leaflet.ajax.js"></script>
+					<script src="mapa/spin.js"></script>
+					<script src="mapa/leaflet.spin.js"></script>
+					
 				
 					<script>
 					
@@ -993,6 +998,16 @@ tbody {
 						        fillOpacity: 0.6
 						    };						    
 						}
+						function style2(feature) {
+							return {
+								 fillColor: 'green',
+						        weight: 2,
+						        opacity: 0.6,
+						        color: 'white',
+						        dashArray: '3',
+						        fillOpacity: 0.6
+						    };						    
+						}
 						
 						function highlightFeature(e) {
 						    var layer = e.target;
@@ -1011,19 +1026,30 @@ tbody {
 						var map = L.map('map').setView([-24.5, -57], 6);
 						var depto = new L.geoJson(deptoGeojson,{style:style,onEachFeature: onEachFeature});
 						depto.addTo(map);
+						var distLayer;
 
 						function renderEntidad(e){
 							depto.eachLayer(function(l){depto.resetStyle(l);});
+							if (typeof distLayer !== "undefined")  map.removeLayer(distLayer);
 							highlightFeature(e);
 							renderEntidades(e);
 							map.fitBounds(e.target.getBounds());
-							
+							e.target.feature.properties.dpto
+							distLayer = new L.GeoJSON.AJAX("mapa/"+e.target.feature.properties.dpto+".geojson",{style:style,onEachFeature: onEachFeature2});
+							distLayer.addTo(map);
+							/* var distritos = new L.geoJson(dist0Geojson,{style:style2,onEachFeature: onEachFeature2});
+							distritos.addTo(map);*/
 						}
 						function onEachFeature(feature, layer) {
 						layer.on({
 								click: renderEntidad
 							});
-						}					
+						}
+						function onEachFeature2(feature, layer) {
+							/*layer.on({
+									click: renderEntidad
+								});*/
+							}
 	
 						//var depto = new L.geoJson(depto,{style:miestilo})
 						
