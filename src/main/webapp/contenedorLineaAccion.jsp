@@ -93,12 +93,12 @@ if (user != null) { %>
 		lineaAccion=JSON.parse(lineaAccion);
 		
 		var tablaLineaAccion="";
-		tablaLineaAcccion = '<table class="table table-hover">'+
+		tablaLineaAccion = '<table class="table table-hover">'+
 					  '<tr class="active"><td colspan="11">Tabla Linea Accion</td><td><a href="#" data-toggle="modal" data-target="#lineaAccion"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
-					  '<tr class="active"><td>Id</td><td>Nombre</td><td>Descripción</td><td>Orden</td><td>Peso</td><td>tipo_accion_id</td><td>estrategia_id</td><td>unidad_medida</td><td>borrado</td><td>Editar</td><td>Borrar</td></tr>';
+					  '<tr class="active"><td>Id</td><td>Nombre</td><td>Descripción</td><td>Orden</td><td>Peso</td><td>Acumular</td><td>tipoAccionId</td><td>estrategiaId</td><td>unidadMedidaId</td><td>borrado</td><td>Editar</td><td>Borrar</td></tr>';
 		for(var w=0; w<lineaAccion.length;w++)
 		{
-			tablaLineaAccion+='<tr><td>'+lineaAccion[w].id+'</td><td>'+lineaAccion[w].nombre+'</td><td>'+lineaAccion[w].descripcion+'</td><td>'+lineaAccion[w].orden+'</td><td>'+lineaAccion[w].peso+'</td><td>'+lineaAccion[w].tipo_accion_id+'</td><td>'+lineaAccion[w].estrategia_id+'</td><td>'+lineaAccion[w].unidad_medida+'</td><td>'+lineaAccion[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosLineaAccion" codigoRegistroLineaAccion='+w+'></span></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';
+			tablaLineaAccion+='<tr><td>'+lineaAccion[w].id+'</td><td>'+lineaAccion[w].nombre+'</td><td>'+lineaAccion[w].descripcion+'</td><td>'+lineaAccion[w].orden+'</td><td>'+lineaAccion[w].peso+'</td><td>'+lineaAccion[w].acumular+'</td><td>'+lineaAccion[w].tipoAccionId+'</td><td>'+lineaAccion[w].estrategiaId+'</td><td>'+lineaAccion[w].unidadMedidaId+'</td><td>'+lineaAccion[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosLineaAccion" codigoRegistroLineaAccion='+w+'></span></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';
 		}
 		tablaLineaAccion +='</table>';				
 		
@@ -117,9 +117,10 @@ if (user != null) { %>
 			$("#descripcionLineaAccion").val(lineaAccion[codigoRegistro].descripcion);
 			$("#ordenLineaAccion").val(lineaAccion[codigoRegistro].orden);
 			$("#pesoLineaAccion").val(lineaAccion[codigoRegistro].peso);
+			$("#acumularLineaAccion").val(lineaAccion[codigoRegistro].acumular);
 			$("#tipoAccionIdLineaAccion").val(lineaAccion[codigoRegistro].tipoAccionId);
 			$("#estrategiaIdLineaAccion").val(lineaAccion[codigoRegistro].estrategiaId);
-			$("#unidadMedidaIdLineaAccion").val(lineaAccion[codigoRegistro].unidadMedidaIdLineaAccion);
+			$("#unidadMedidaIdLineaAccion").val(lineaAccion[codigoRegistro].unidadMedidaId);
 		});
 		
 	});
@@ -228,7 +229,7 @@ if (user != null) { %>
     <script src="dist/js/demo.js" type="text/javascript"></script>
         <%  } else { %>
 				est<p>Favor Iniciar Sesion</p>
-			<% } %> 
+			<% } %>
 
 <!-- Piwik -->
 <script type="text/javascript">

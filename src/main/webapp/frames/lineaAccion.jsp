@@ -135,6 +135,7 @@
 				var descripcion= $("#descripcionLineaAccion").val();
 				var orden= $("#ordenLineaAccion").val();
 				var peso= $("#pesoLineaAccion").val();
+				var acumular= $("#acumularLineaAccion").val();
 				var tipoAccionId= $("#tipoAccionIdLineaAccion").val();
 				var estrategiaId= $("#estrategiaIdLineaAccion").val();
 				var unidadMedidaId= $("#unidadMedidaIdLineaAccion").val();
@@ -143,7 +144,8 @@
 				objeto.nombre=nombre;
 				objeto.descripcion=descripcion;
 				objeto.orden=orden;
-				objeto.peso=peso;			
+				objeto.peso=peso;
+				objeto.acumular=acumular;
 				objeto.tipoAccionId=tipoAccionId;
 				objeto.estrategiaId=estrategiaId;
 				objeto.unidadMedidaId=unidadMedidaId;

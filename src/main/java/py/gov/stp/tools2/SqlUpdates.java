@@ -1372,7 +1372,7 @@ public class SqlUpdates {
 					 if(objeto.getDescripcion()!=null)			query+= ", descripcion='"+objeto.getDescripcion()+"'";
 					 if(objeto.getOrden()!=0)			 		query+= ", orden="+objeto.getOrden()+"";
 					 if(objeto.getPeso()!=null)					query+= ", peso='"+objeto.getPeso()+"'";
-					 //if(objeto.isAcumular()!=false)				query+= ", acumular='"+objeto.isAcumular()+"'";	
+					 if(objeto.isAcumular()!=false)			    query+= ", acumular='"+objeto.isAcumular()+"'";	
 					 if(objeto.getTipoAccionId()!=0)			query+= ", tipo_accion_id="+objeto.getTipoAccionId()+"";
 					 if(objeto.getEstrategiaId()!=0)			query+= ", estrategia_id="+objeto.getEstrategiaId()+"";
 					 if(objeto.getUnidadMedidaId()!=0)			query+= ", unidad_medida_id="+objeto.getUnidadMedidaId()+"";					 
@@ -1652,7 +1652,7 @@ public class SqlUpdates {
 					 if(objeto.getNivelId()!=0)					query+= "nivel_id="+objeto.getNivelId()+"";	
 					 if(objeto.getEntidadId()!=0)				query+= ", entidad_id="+objeto.getEntidadId()+"";
 					 if(objeto.getTipoId()!=0)					query+= ", tipo_id="+objeto.getTipoId()+"";	
-					 if(objeto.getProgramaId()!=0)				query+= ", programa_id="+objeto.getProgramaId()+"";
+					 if(objeto.getProgramaId()!=0)				query+= ", progama_id="+objeto.getProgramaId()+"";
 					 if(objeto.getSubprogramaId()!=0)			query+= ", subprograma_id="+objeto.getSubprogramaId()+"";
 					 if(objeto.getProyectoId()!=0)				query+= ", proyecto_id="+objeto.getProyectoId()+"";	
 					 if(objeto.getFuncionalId()!=0)				query+= ", funcional_id="+objeto.getFuncionalId()+"";
