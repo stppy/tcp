@@ -275,7 +275,7 @@ public class ajaxUpdate extends HttpServlet {
                 if(br != null){ json = br.readLine();}
                 Gson gsonInsert = new Gson();
                 objeto=gsonInsert.fromJson(json, Periodo.class);
-                boolean status = SqlUpdates.borradoPeriodo(objeto.isBorrado());
+                boolean status = SqlUpdates.borradoPeriodo(objeto);
         		myObj.addProperty("success", status);
         		out.println(myObj.toString());
         	}         	
@@ -297,7 +297,7 @@ public class ajaxUpdate extends HttpServlet {
                 if(br != null){ json = br.readLine();}
                 Gson gsonInsert = new Gson();
                 objeto=gsonInsert.fromJson(json, HitoTipo.class);
-                boolean status = SqlUpdates.borradoHitoTipo(objeto.isBorrado());
+                boolean status = SqlUpdates.borradoHitoTipo(objeto);
         		myObj.addProperty("success", status);
         		out.println(myObj.toString());
         	}           	

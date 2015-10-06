@@ -84,6 +84,9 @@ if (user != null) { %>
 		$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
 		$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
 		
+	renderRegistros();
+	function renderRegistros() {
+		
 		var hitoTipo = $.ajax({
 			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getHitoTipo',
 		  	type:'get',
@@ -92,29 +95,38 @@ if (user != null) { %>
 		}).responseText;		
 		hitoTipo=JSON.parse(hitoTipo);
 		
+		$('.box-body').html('');
 		var tablaHitoTipo="";
 		tablaHitoTipo = '<table class="table table-hover">'+
 					  '<tr class="active"><td colspan="5">Tabla Hito Tipo</td><td><a href="#" data-toggle="modal" data-target="#hitoTipo"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
 					  '<tr class="active"><td>Id</td><td>Nombre</td><td>Descripción</td><td>borrado</td><td>Editar</td><td>Borrar</td></tr>';
 		for(var w=0; w<hitoTipo.length;w++)
 		{
-			tablaHitoTipo+='<tr><td>'+hitoTipo[w].id+'</td><td>'+hitoTipo[w].nombre+'</td><td>'+hitoTipo[w].descripcion+'</td><td>'+hitoTipo[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosHitoTipo" codigoRegistroHitoTipo='+w+'></span></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';
+			if(hitoTipo[w].borrado ==  true)
+			{
+				tablaHitoTipo+='<tr><td><del>'+hitoTipo[w].id+'</del></td><td><del>'+hitoTipo[w].nombre+'</del></td><td><del>'+hitoTipo[w].descripcion+'</del></td><td><del>'+hitoTipo[w].borrado+'</del></td><td><span class="glyphicon glyphicon-pencil registrosHitoTipo" codigoRegistroHitoTipo='+w+' disabled></span></td><td><span class="glyphicon glyphicon-trash" id="borrarHitoTipo" codigoRegistroHitoTipo='+hitoTipo[w].id+' codigoRegistroHitoTipoBorrado='+hitoTipo[w].borrado+'></span></td></tr>';
+			}else{
+				tablaHitoTipo+='<tr><td>'+hitoTipo[w].id+'</td><td>'+hitoTipo[w].nombre+'</td><td>'+hitoTipo[w].descripcion+'</td><td>'+hitoTipo[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosHitoTipo" codigoRegistroHitoTipo='+w+'></span></td><td><span class="glyphicon glyphicon-trash" id="borrarHitoTipo" codigoRegistroHitoTipo='+hitoTipo[w].id+' codigoRegistroHitoTipoBorrado='+hitoTipo[w].borrado+'></span></td></tr>';
+
+			}
 		}
 		tablaHitoTipo +='</table>';				
 		
 		$('.box-body').html(tablaHitoTipo);
-
+		
+	}
 		 
 		$("body").on("click", ".registrosHitoTipo",function(event){
 			var codigoRegistro = $(this).attr("codigoRegistroHitoTipo");
 				
-			$("#borradoHitoTipo").remove();
+			$("#borradoBotonActualizarHitoTipo").remove();
 			$("#guardarHitoTipo").remove();
 			$('#hitoTipo').modal('show');
-			$("#hitoTipo").find(".form-horizontal").append('<div class="form-group" id="borradoHitoTipo"><div class="col-lg-offset-2 col-lg-10"><button type="submit" class="btn btn-success" id="actualizarHitoTipo">Actualizar</button></div></div>');
+			$("#hitoTipo").find(".form-horizontal").append('<div class="form-group" id="borradoBotonActualizarHitoTipo"><div class="col-lg-offset-2 col-lg-10"><button type="submit" class="btn btn-success" id="actualizarHitoTipo">Actualizar</button></div></div>');
 			$("#idHitoTipo").val(hitoTipo[codigoRegistro].id);
 			$("#nombreHitoTipo").val(hitoTipo[codigoRegistro].nombre);
 			$("#descripcionHitoTipo").val(hitoTipo[codigoRegistro].descripcion);
+			$("#borradoHitoTipo").val(hitoTipo[codigoRegistro].borrado);
 
 		});
 		

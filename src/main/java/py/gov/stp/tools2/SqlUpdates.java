@@ -1501,10 +1501,11 @@ public class SqlUpdates {
 
 		}	
 	
-	public static boolean borradoPeriodo(boolean flagBorrado){
+	public static boolean borradoPeriodo(Periodo objeto){
 	  	 Connection conect=ConnectionConfiguration.conectar();
 	  	 Statement statement = null;
-			 String query = "update periodo set borrado=\""+flagBorrado+"\"";	
+	  	 objeto.changeBorrado();
+			 String query = "update periodo set borrado=\""+objeto.isBorrado()+"\"";	
 			 try {
 				statement=conect.createStatement();
 				statement.execute(query);
@@ -1519,10 +1520,12 @@ public class SqlUpdates {
 	  	 Statement statement = null;
 
 					 String										query = "update hito_tipo set ";
-					 if(objeto.getNombre()!=null)				query+= "nombre=\""+objeto.getNombre()+"\"";	
-					 if(objeto.getDescripcion()!=null)			query+= "descripcion=\""+objeto.getDescripcion()+"\"";
+					 if(objeto.getNombre()!=null)				query+= "nombre='"+objeto.getNombre()+"'";	
+					 if(objeto.getDescripcion()!=null)			query+= ", descripcion='"+objeto.getDescripcion()+"'";
 					 //if(objeto.isBorrado()!=false)			query+= "borrado=\""+objeto.isBorrado()+"\"";	
 
+					 query+=" where id ="+objeto.getId(); 
+					 
 					 try {
 						statement=conect.createStatement();
 						statement.execute(query);
@@ -1532,10 +1535,14 @@ public class SqlUpdates {
 
 		}
 	
-	public static boolean borradoHitoTipo(boolean flagBorrado){
+	public static boolean borradoHitoTipo(HitoTipo objeto){
 	  	 Connection conect=ConnectionConfiguration.conectar();
 	  	 Statement statement = null;
-			 String query = "update hito_tipo set borrado=\""+flagBorrado+"\"";	
+	  	objeto.changeBorrado();
+	  	
+			 String query = "update hito_tipo set borrado='"+objeto.isBorrado()+"'";	
+			 
+			 query+=" where id ="+objeto.getId(); 
 			 try {
 				statement=conect.createStatement();
 				statement.execute(query);
