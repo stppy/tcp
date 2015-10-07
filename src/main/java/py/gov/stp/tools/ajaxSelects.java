@@ -58,6 +58,7 @@ public class ajaxSelects extends HttpServlet {
     	Integer mes = null;
     	Integer pais = null;
     	Integer departamento = null;
+    	Integer distrito = null;
     	Integer objetivo = null;
     	Integer estrategia = null;
     	Integer indicador = null;
@@ -103,6 +104,7 @@ public class ajaxSelects extends HttpServlet {
     	if (request.getParameter("anio")!=null) anio = Integer.parseInt(request.getParameter("anio")); else anio=0;
     	if (request.getParameter("mes")!=null) mes = Integer.parseInt(request.getParameter("mes")); else mes=0;
     	if (request.getParameter("departamento")!=null) departamento = Integer.parseInt(request.getParameter("departamento")); else departamento=99;
+    	if (request.getParameter("distrito")!=null) distrito = Integer.parseInt(request.getParameter("distrito")); else distrito=99;
     	if (request.getParameter("objetivo")!=null) objetivo = Integer.parseInt(request.getParameter("objetivo")); else objetivo=0;
     	if (request.getParameter("estrategia")!=null) estrategia = Integer.parseInt(request.getParameter("estrategia")); else estrategia=0;
     	if (request.getParameter("indicador")!=null) indicador = Integer.parseInt(request.getParameter("indicador")); else indicador=0;
@@ -177,10 +179,16 @@ public class ajaxSelects extends HttpServlet {
         		JsonElement json = new Gson().toJsonTree(objetos);
         		out.println(json.toString());
         	}
-        	
         	if (action.equals("getLineasAccionDepartamento")){
         		List objetos=null;
         		try {objetos = SqlSelects.selectLineaAccionDepartamento();}
+				catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos);
+        		out.println(json.toString());
+        	}
+        	if (action.equals("getLineasAccionDistrito")){
+        		List objetos=null;
+        		try {objetos = SqlSelects.selectLineaAccionDistrito();}
 				catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos);
         		out.println(json.toString());
@@ -309,6 +317,23 @@ public class ajaxSelects extends HttpServlet {
         	if (action.equals("getDesempPaisPorDepto")){
         		List objetos=null;
            		try {objetos = SqlSelects.selectGenerico("", "fact_desemp_depto");}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());
+        		}
+        	if (action.equals("getDesempPaisPorDist")){
+        		List objetos=null;
+           		try {objetos = SqlSelects.selectGenerico2("", "fact_desemp_dist");}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());
+        		}
+        	if (action.equals("getDesempPaisPorDistInst")){
+        		List objetos=null;
+        		condition = "where true ";
+        		if (departamento!=99) condition += "and accion_departamento_id="+departamento+" ";
+        		if (distrito!=99) condition += "and accion_distrito_id="+distrito+" ";
+           		try {objetos = SqlSelects.selectGenerico3(condition, "fact_desemp_dist_inst");}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
