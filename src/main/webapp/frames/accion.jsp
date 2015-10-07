@@ -113,58 +113,103 @@
 			 });		
 		});
 	
-	$("body").on("click", "#actualizarAccion",function(event){		
-		var objeto = new Object();
-		var accion = "actAccion";
-		var id = $("#idAccion").val();
-		var insLineaAccionId= $("#insLineaAccionIdAccion").val();
-		var nombre= $("#nombreAccion").val();
-		var descripcion= $("#descripcionAccion").val();	
-		var costo= $("#costoAccion").val();		
-		var peso= $("#pesoAccion").val();	
-		var fechaInicio= $("#fechaInicioAccion").val();	
-		var fechaFin= $("#fechaFinAccion").val();		
-		var borrado= $("#borradoAccion").val();
-			
-		objeto.id = id;
-		objeto.insLineaAccionId = insLineaAccionId;
-		objeto.nombre = nombre;
-		objeto.descripcion = descripcion;	
-		objeto.costo = costo;			
-		objeto.peso = peso;			
-		objeto.fechaInicio = fechaInicio;		
-		objeto.fechaFin = fechaFin;		
-		objeto.borrado = borrado;
+$("body").on("click", "#actualizarAccion",function(event){		
+	var objeto = new Object();
+	var accion = "actAccion";
+	var id = $("#idAccion").val();
+	var insLineaAccionId= $("#insLineaAccionIdAccion").val();
+	var nombre= $("#nombreAccion").val();
+	var descripcion= $("#descripcionAccion").val();	
+	var costo= $("#costoAccion").val();		
+	var peso= $("#pesoAccion").val();	
+	var fechaInicio= $("#fechaInicioAccion").val();	
+	var fechaFin= $("#fechaFinAccion").val();		
+	var borrado= $("#borradoAccion").val();
+		
+	objeto.id = id;
+	objeto.insLineaAccionId = insLineaAccionId;
+	objeto.nombre = nombre;
+	objeto.descripcion = descripcion;	
+	objeto.costo = costo;			
+	objeto.peso = peso;			
+	objeto.fechaInicio = fechaInicio;		
+	objeto.fechaFin = fechaFin;		
+	objeto.borrado = borrado;
 
-		$.ajax({
-		        url: "http://tablero2015.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
-		        type: 'POST',
-		        dataType: 'json',
-		        data: JSON.stringify(objeto),
-		        contentType: 'application/json',
-		        mimeType: 'application/json',
-		        
-		        success: function (data)
-		        {
-		        	if (data.success == true)
-		        	{
-		        		$("#tituloModalUsuario").html('');
-						$("#tituloModalUsuario").append('<p class="text-success">GUARDADO</p>');
-			    		$("#pass-viejo-form").val("");
-						$("#pass-nuevo-form").val("");
-						$("#pass-nuevo1-form").val("");	
-		        	}else{
-		        		if (data.success == false){
-		        			$("#tituloModalUsuario").html('');
-				        	$("#tituloModalUsuario").append('<p class="text-danger">Error no se ha guardado</p>');
-		        		}
-		        	}
-		        },
-		        error: function(data,status,er)
-		        {
-		        	$("#tituloModalUsuario").html('');
-		        	$("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intente de nuevo</p>');
-		        }
-		 });		
-	});	
+	$.ajax({
+	        url: "http://tablero2015.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
+	        type: 'POST',
+	        dataType: 'json',
+	        data: JSON.stringify(objeto),
+	        contentType: 'application/json',
+	        mimeType: 'application/json',
+	        
+	        success: function (data)
+	        {
+	        	if (data.success == true)
+	        	{
+	        		$("#tituloModalUsuario").html('');
+					$("#tituloModalUsuario").append('<p class="text-success">GUARDADO</p>');
+		    		$("#pass-viejo-form").val("");
+					$("#pass-nuevo-form").val("");
+					$("#pass-nuevo1-form").val("");	
+	        	}else{
+	        		if (data.success == false){
+	        			$("#tituloModalUsuario").html('');
+			        	$("#tituloModalUsuario").append('<p class="text-danger">Error no se ha guardado</p>');
+	        		}
+	        	}
+	        },
+	        error: function(data,status,er)
+	        {
+	        	$("#tituloModalUsuario").html('');
+	        	$("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intente de nuevo</p>');
+	        }
+	 });		
+});	
+
+$("body").on("click", "#iconoBorradoAccion",function(event){		
+	var objeto = new Object();
+	var accion = "borradoAccion";
+	var parametrosBorradoAccion = $(this).attr("parametrosBorradoAccion");
+    var idParsed = parametrosBorradoAccion.split("-");                                                            
+	var id = idParsed[0];
+	var borrado = idParsed[1];
+	
+	objeto.id = id;
+	objeto.borrado = borrado;
+
+	$.ajax({
+	    url: "http://tablero2015.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
+	    type: 'POST',
+	    dataType: 'json',
+	    data: JSON.stringify(objeto),
+	    contentType: 'application/json',
+	    mimeType: 'application/json',
+    
+	    success: function (data)
+	    {
+	    	if (data.success == true)
+	    	{
+	    		$("#tituloModalUsuario").html('');
+				$("#tituloModalUsuario").append('<p class="text-success">GUARDADO</p>');
+				 		$("#pass-viejo-form").val("");
+				$("#pass-nuevo-form").val("");
+				$("#pass-nuevo1-form").val("");	
+			}else{
+	    		if (data.success == false)
+	    		{
+	    			$("#tituloModalUsuario").html('');
+	      			$("#tituloModalUsuario").append('<p class="text-danger">Error no se ha guardado</p>');
+	    		}
+	    	}
+	    },
+	    error: function(data,status,er)
+	    {
+	    	$("#tituloModalUsuario").html('');
+	    	$("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intente de nuevo</p>');
+	    }
+	});
+		window.location.href = "http://tablero2015.stp.gov.py/tablero/contenedorAccion.jsp";
+});	
 	</script>	

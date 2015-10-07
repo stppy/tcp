@@ -92,18 +92,28 @@ if (user != null) { %>
 		}).responseText;		
 		wsTipo=JSON.parse(wsTipo);
 		
-		var tablaWsTipo="";
-		tablaWsTipo = '<table class="table table-hover">'+
-					  '<tr class="active"><td colspan="5">Tabla WsTipo</td><td><a href="#" data-toggle="modal" data-target="#wsTipo"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
-					  '<tr class="active"><td>Id</td><td>Nombre</td><td>Descripción</td><td>borrado</td><td>Editar</td><td>Borrar</td></tr>';
-		for(var w=0; w<wsTipo.length;w++)
-		{
-			tablaWsTipo+='<tr><td>'+wsTipo[w].id+'</td><td>'+wsTipo[w].nombre+'</td><td>'+wsTipo[w].descripcion+'</td><td>'+wsTipo[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosWsTipo" codigoRegistroWsTipo='+w+'></span></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';
-		}
-		tablaWsTipo +='</table>';				
-		
-		$('.box-body').html(tablaWsTipo);
+		renderWsTipo();
+		function renderWsTipo(){
+			
+			$('.box-body').html('');
+			var tablaWsTipo="";
+			tablaWsTipo = '<table class="table table-hover">'+
+						  '<tr class="active"><td colspan="5">Tabla WsTipo</td><td><a href="#" data-toggle="modal" data-target="#wsTipo"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
+						  '<tr class="active"><td>Id</td><td>Nombre</td><td>Descripción</td><td>borrado</td><td>Editar</td><td>Borrar</td></tr>';
+			for(var w=0; w<wsTipo.length;w++)
+			{
+				if(wsTipo[w].borrado == true)
+				{
+					tablaWsTipo+='<tr><td><del>'+wsTipo[w].id+'</del></td><td><del>'+wsTipo[w].nombre+'</del></td><td><del>'+wsTipo[w].descripcion+'</del></td><td><del>'+wsTipo[w].borrado+'</del></td><td><span class="glyphicon glyphicon-pencil registrosWsTipo" codigoRegistroWsTipo='+w+'></span></td><td><span class="glyphicon glyphicon-trash" id="iconoBorradoWsTipo" parametrosBorradoWsTipo='+wsTipo[w].id+'-'+wsTipo[w].borrado+'></span></td></tr>';
+				}else{
+					tablaWsTipo+='<tr><td>'+wsTipo[w].id+'</td><td>'+wsTipo[w].nombre+'</td><td>'+wsTipo[w].descripcion+'</td><td>'+wsTipo[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosWsTipo" codigoRegistroWsTipo='+w+'></span></td><td><span class="glyphicon glyphicon-trash" id="iconoBorradoWsTipo" parametrosBorradoWsTipo='+wsTipo[w].id+'-'+wsTipo[w].borrado+'></span></td></tr>';
+				}
+			}
+			tablaWsTipo +='</table>';				
+			
+			$('.box-body').html(tablaWsTipo);
 
+		}
 		 
 		$("body").on("click", ".registrosWsTipo",function(event){
 			var codigoRegistro = $(this).attr("codigoRegistroWsTipo");

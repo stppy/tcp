@@ -92,18 +92,27 @@ if (user != null) { %>
 		}).responseText;		
 		ws=JSON.parse(ws);
 		
-		var tablaWs="";
-		tablaWs = '<table class="table table-hover">'+
-					  '<tr class="active"><td colspan="12">Tabla Ws</td><td><a href="#" data-toggle="modal" data-target="#ws"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
-					  '<tr class="active"><td>Id</td><td>Nombre</td><td>Descripción</td><td>Url</td><td>Metodo</td><td>Usuario</td><td>Pass</td><td>idClave</td><td>idValor</td><td>wsTipoId</td><td>borrado</td><td>Editar</td><td>Borrar</td></tr>';
-		for(var w=0; w<ws.length;w++)
-		{
-			tablaWs+='<tr><td>'+ws[w].id+'</td><td>'+ws[w].nombre+'</td><td>'+ws[w].descripcion+'</td><td>'+ws[w].url+'</td><td>'+ws[w].metodo+'</td><td>'+ws[w].usuario+'</td><td>'+ws[w].pass+'</td><td>'+ws[w].idClave+'</td><td>'+ws[w].idValor+'</td><td>'+ws[w].wsTipoId+'</td><td>'+ws[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosWs" codigoRegistroWs='+w+'></span></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';
+		renderWs();
+		function renderWs(){
+			
+			$('.box-body').html('');
+			var tablaWs="";
+			tablaWs = '<table class="table table-hover">'+
+						  '<tr class="active"><td colspan="12">Tabla Ws</td><td><a href="#" data-toggle="modal" data-target="#ws"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
+						  '<tr class="active"><td>Id</td><td>Nombre</td><td>Descripción</td><td>Url</td><td>Metodo</td><td>Usuario</td><td>Pass</td><td>idClave</td><td>idValor</td><td>wsTipoId</td><td>borrado</td><td>Editar</td><td>Borrar</td></tr>';
+			for(var w=0; w<ws.length;w++)
+			{
+				if(ws[w].borrado == true)
+				{
+					tablaWs+='<tr><td><del>'+ws[w].id+'</del></td><td><del>'+ws[w].nombre+'</del></td><td><del>'+ws[w].descripcion+'</del></td><td><del>'+ws[w].url+'</del></td><td><del>'+ws[w].metodo+'</del></td><td><del>'+ws[w].usuario+'</del></td><td><del>'+ws[w].pass+'</del></td><td><del>'+ws[w].idClave+'</del></td><td><del>'+ws[w].idValor+'</del></td><td><del>'+ws[w].wsTipoId+'</del></td><td><del>'+ws[w].borrado+'</del></td><td><span class="glyphicon glyphicon-pencil registrosWs" codigoRegistroWs='+w+'></span></td><td><span class="glyphicon glyphicon-trash" id="iconoBorradoWs" parametrosBorradoWs='+ws[w].id+'-'+ws[w].borrado+'></span></td></tr>';
+				}else{
+					tablaWs+='<tr><td>'+ws[w].id+'</td><td>'+ws[w].nombre+'</td><td>'+ws[w].descripcion+'</td><td>'+ws[w].url+'</td><td>'+ws[w].metodo+'</td><td>'+ws[w].usuario+'</td><td>'+ws[w].pass+'</td><td>'+ws[w].idClave+'</td><td>'+ws[w].idValor+'</td><td>'+ws[w].wsTipoId+'</td><td>'+ws[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosWs" codigoRegistroWs='+w+'></span></td><td><span class="glyphicon glyphicon-trash" id="iconoBorradoWs" parametrosBorradoWs='+ws[w].id+'-'+ws[w].borrado+'></span></td></tr>';
+				}
+			}
+			tablaWs +='</table>';				
+			
+			$('.box-body').html(tablaWs);
 		}
-		tablaWs +='</table>';				
-		
-		$('.box-body').html(tablaWs);
-
 		 
 		$("body").on("click", ".registrosWs",function(event){
 			var codigoRegistro = $(this).attr("codigoRegistroWs");

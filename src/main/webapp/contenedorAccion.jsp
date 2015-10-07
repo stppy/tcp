@@ -128,76 +128,27 @@ if (user != null) { %>
 		}).responseText;		
 		accion=JSON.parse(accion);
 		
-		var tablaAccion="";
-		tablaAccion = '<table class="table table-striped ">'+
-					  '<tr><td colspan="11">Tabla Acción</td></tr>'+
-					  '<tr><td>Id</td><td>insLineaAccionId</td><td>Nombre</td><td>Descripción</td><td>Costo</td><td>Peso</td><td>FechaInicio</td><td>FechaFin</td><td>Borrado</td><td>Insertar</td><td>Editar</td></tr>';
-		for(var m=0; m<accion.length;m++)
-		{
-			tablaAccion+='<tr><td>'+accion[m].id+'</td><td>'+accion[m].insLineaAccionId+'</td><td>'+accion[m].nombre+'</td><td>'+accion[m].descripcion+'</td><td>'+accion[m].costo+'</td><td>'+accion[m].peso+'</td><td>'+accion[m].fechaInicio+'</td><td>'+accion[m].fechaFin+'</td><td>'+accion[m].borrado+'</td><td><a href="#" data-toggle="modal" data-target="#accion"><span class="glyphicon glyphicon-plus"></span></a></td><td><span class="glyphicon glyphicon-pencil registrosAccion" codigoRegistroAccion='+m+'></span></td></tr>';
+		renderAccion();
+		function renderAccion(){
+					
+			$('.box-body').html('');
+			var tablaAccion="";
+			tablaAccion = '<table class="table table-striped ">'+
+						  '<tr><td colspan="10">Tabla Acción</td><td><a href="#" data-toggle="modal" data-target="#accion"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
+						  '<tr><td>Id</td><td>insLineaAccionId</td><td>Nombre</td><td>Descripción</td><td>Costo</td><td>Peso</td><td>FechaInicio</td><td>FechaFin</td><td>Borrado</td><td>Insertar</td><td>Editar</td></tr>';
+			for(var m=0; m<accion.length;m++)
+			{
+				if(accion[m].borrado == true)
+				{
+					tablaAccion+='<tr><td><del>'+accion[m].id+'</del></td><td><del>'+accion[m].insLineaAccionId+'</del></td><td><del>'+accion[m].nombre+'</del></td><td><del>'+accion[m].descripcion+'</del></td><td><del>'+accion[m].costo+'</del></td><td><del>'+accion[m].peso+'</del></td><td><del>'+accion[m].fechaInicio+'</del></td><td><del>'+accion[m].fechaFin+'</del></td><td><del>'+accion[m].borrado+'</del></td><td><span class="glyphicon glyphicon-pencil registrosAccion" codigoRegistroAccion='+m+'></span></td><td><span class="glyphicon glyphicon-trash" id="iconoBorradoAccion" parametrosBorradoAccion='+accion[m].id+'-'+accion[m].borrado+'></span></td></tr>';	
+				}else{
+					tablaAccion+='<tr><td>'+accion[m].id+'</td><td>'+accion[m].insLineaAccionId+'</td><td>'+accion[m].nombre+'</td><td>'+accion[m].descripcion+'</td><td>'+accion[m].costo+'</td><td>'+accion[m].peso+'</td><td>'+accion[m].fechaInicio+'</td><td>'+accion[m].fechaFin+'</td><td>'+accion[m].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosAccion" codigoRegistroAccion='+m+'></span></td><td><span class="glyphicon glyphicon-trash" id="iconoBorradoAccion" parametrosBorradoAccion='+accion[m].id+'-'+accion[m].borrado+'></span></td></tr>';
+				}
+			}
+			tablaAccion +=  '</table>';
+					
+			$('.box-body').html(tablaAccion);
 		}
-		tablaAccion +=  '</table>';
-		
-		var accionHasGeoPoligono = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getAccionHasGeoPoligono',
-		  	type:'get',
-		  	dataType:'json',
-		  	async:false       
-		}).responseText;		
-		accionHasGeoPoligono=JSON.parse(accionHasGeoPoligono);
-		
-		var tablaAccionHasGeoPoligono="";
-		tablaAccionHasGeoPoligono = '<table class="table table-striped ">'+
-					  '<tr><td colspan="5">Tabla Acción Has Geo Poligono</td></tr>'+
-					  '<tr><td>accionId</td><td>geoPoligonoId</td><td>geoPoligonoGeoPoligonoId</td><td>proporcion</td><td>borrado</td></tr>';
-		for(var q=0; q<accionHasGeoPoligono.length;q++)
-		{
-			tablaAccionHasGeoPoligono+='<tr class="registrosAccionHasGeoPoligono" codigoRegistroAccionHasGeoPoligono='+q+'-'+accionHasGeoPoligono[q].accionId+'-'+accionHasGeoPoligono[q].geoPoligonoId+'-'+accionHasGeoPoligono[q].geoPoligonoGeoPoligonoId+'-'+accionHasGeoPoligono[q].proporcion+'-'+accionHasGeoPoligono[q].borrado+'><td>'+accionHasGeoPoligono[q].accionId+'</td><td>'+accionHasGeoPoligono[q].geoPoligonoId+'</td><td>'+accionHasGeoPoligono[q].geoPoligonoGeoPoligonoId+'</td><td>'+accionHasGeoPoligono[q].proporcion+'</td><td>'+accionHasGeoPoligono[q].borrado+'</td></tr>';
-		}
-		tablaAccionHasGeoPoligono +='</table>';		
-		
-		var beneficiario = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiario',
-		  	type:'get',
-		  	dataType:'json',
-		  	async:false       
-		}).responseText;		
-		beneficiario=JSON.parse(beneficiario);
-		
-		var tablaBeneficiario="";
-		tablaBeneficiario = '<table class="table table-striped ">'+
-					  '<tr><td colspan="5">Tabla Beneficiario</td></tr>'+
-					  '<tr><td>Id</td><td>Nombre</td><td>Descripción</td><td>beneficiarioTipoId</td><td>borrado</td></tr>';
-		for(var w=0; w<beneficiario.length;w++)
-		{
-			tablaBeneficiario+='<tr class="registrosBeneficiario" codigoRegistroBeneficiario='+w+'-'+beneficiario[w].id+'-'+beneficiario[w].nombre+'-'+beneficiario[w].descripcion+'-'+beneficiario[w].beneficiarioTipoId+'-'+beneficiario[w].borrado+'><td>'+beneficiario[w].id+'</td><td>'+beneficiario[w].nombre+'</td><td>'+beneficiario[w].descripcion+'</td><td>'+beneficiario[w].beneficiarioTipoId+'</td><td>'+beneficiario[w].borrado+'</td></tr>';
-		}
-		tablaBeneficiario +='</table>';			
-		
-		var beneficiarioDetalle = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioDetalle',
-		  	type:'get',
-		  	dataType:'json',
-		  	async:false       
-		}).responseText;		
-		beneficiarioDetalle=JSON.parse(beneficiarioDetalle);
-		
-		var tablaBeneficiarioDetalle="";
-		tablaBeneficiarioDetalle = '<table class="table table-striped ">'+
-					  '<tr><td colspan="5">Tabla Beneficiario Detalle</td></tr>'+
-					  '<tr><td>Id</td><td>Valor</td><td>beneficiarioDetalleClavesId</td><td>beneficiarioId</td></tr>';
-		for(var e=0; e<beneficiarioDetalle.length;e++)
-		{
-			tablaBeneficiarioDetalle+='<tr class="registrosBeneficiarioDetalle" codigoRegistroBeneficiarioDetalle='+e+'-'+beneficiarioDetalle[e].id+'-'+beneficiarioDetalle[e].valor+'-'+beneficiarioDetalle[e].beneficiarioDetalleClavesId+'-'+beneficiarioDetalle[e].beneficiarioId+'><td>'+beneficiarioDetalle[e].id+'</td><td>'+beneficiarioDetalle[e].valor+'</td><td>'+beneficiarioDetalle[e].beneficiarioDetalleClavesId+'</td><td>'+beneficiarioDetalle[e].beneficiarioId+'</td></tr>';
-		}
-		tablaBeneficiarioDetalle +='</table>';			
-		
-		
-		$('.box-body').html(tablaAccion);
-		//$('.box-body').find("#tablaAccionHasGeoPoligono").html(tablaAccionHasGeoPoligono);
-		//$('.box-body').find("#tablaBeneficiario").html(tablaBeneficiario);
-		//$('.box-body').find("#tablaBeneficiarioDetalle").html(tablaBeneficiarioDetalle);		
-
 		
 		$("body").on("click", ".registrosAccion",function(event){
 			var codigoRegistro = parseInt($(this).attr("codigoRegistroAccion"));

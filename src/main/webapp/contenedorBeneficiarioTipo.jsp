@@ -92,19 +92,28 @@ if (user != null) { %>
 		}).responseText;		
 		beneficiarioTipo=JSON.parse(beneficiarioTipo);
 		
-		var tablaBeneficiarioTipo="";
-		tablaBeneficiarioTipo = '<table class="table table-striped ">'+
-					  '<tr><td colspan="5">Tabla Beneficiario Tipo</td><td><a href="#" data-toggle="modal" data-target="#beneficiarioTipo"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
-					  '<tr><td>Id</td><td>Nombre</td><td>Descripción</td><td>borrado</td><td>Editar</td><td>Borrar</td></tr>';
-		for(var w=0; w<beneficiarioTipo.length;w++)
-		{
-			tablaBeneficiarioTipo+='<tr><td>'+beneficiarioTipo[w].id+'</td><td>'+beneficiarioTipo[w].nombre+'</td><td>'+beneficiarioTipo[w].descripcion+'</td><td>'+beneficiarioTipo[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosBeneficiarioTipo" codigoRegistroBeneficiarioTipo='+w+'></span></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';
+		renderBeneficiarioTipo();
+		function renderBeneficiarioTipo(){
+					
+			$('.box-body').html('');
+			var tablaBeneficiarioTipo="";
+			tablaBeneficiarioTipo = '<table class="table table-striped ">'+
+						  '<tr><td colspan="5">Tabla Beneficiario Tipo</td><td><a href="#" data-toggle="modal" data-target="#beneficiarioTipo"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
+						  '<tr><td>Id</td><td>Nombre</td><td>Descripción</td><td>borrado</td><td>Editar</td><td>Borrar</td></tr>';
+			for(var w=0; w<beneficiarioTipo.length;w++)
+			{
+				if(beneficiarioTipo[w].borrado == true)
+				{
+					tablaBeneficiarioTipo+='<tr><td><del>'+beneficiarioTipo[w].id+'</del></td><td><del>'+beneficiarioTipo[w].nombre+'</del></td><td><del>'+beneficiarioTipo[w].descripcion+'</del></td><td><del>'+beneficiarioTipo[w].borrado+'</del></td><td><span class="glyphicon glyphicon-pencil registrosBeneficiarioTipo" codigoRegistroBeneficiarioTipo='+w+'></span></td><td><span class="glyphicon glyphicon-trash" id="iconoBorradoBeneficiarioTipo" parametrosBorradoBeneficiarioTipo='+beneficiarioTipo[w].id+'-'+beneficiarioTipo[w].borrado+'></span></td></tr>';
+				}else{
+					tablaBeneficiarioTipo+='<tr><td>'+beneficiarioTipo[w].id+'</td><td>'+beneficiarioTipo[w].nombre+'</td><td>'+beneficiarioTipo[w].descripcion+'</td><td>'+beneficiarioTipo[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosBeneficiarioTipo" codigoRegistroBeneficiarioTipo='+w+'></span></td><td><span class="glyphicon glyphicon-trash" id="iconoBorradoBeneficiarioTipo" parametrosBorradoBeneficiarioTipo='+beneficiarioTipo[w].id+'-'+beneficiarioTipo[w].borrado+'></span></td></tr>';
+				}
+			}
+			tablaBeneficiarioTipo +='</table>';				
+			
+			$('.box-body').html(tablaBeneficiarioTipo);
 		}
-		tablaBeneficiarioTipo +='</table>';				
 		
-		$('.box-body').html(tablaBeneficiarioTipo);
-
-		 
 		$("body").on("click", ".registrosBeneficiarioTipo",function(event){
 			var codigoRegistro = $(this).attr("codigoRegistroBeneficiarioTipo");
 				

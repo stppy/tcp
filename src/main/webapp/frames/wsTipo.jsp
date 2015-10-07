@@ -119,4 +119,49 @@ $("body").on("click", "#actualizarWsTipo",function(event){
 	        }
 	 });		
 });	
+
+$("body").on("click", "#iconoBorradoWsTipo",function(event){		
+	var objeto = new Object();
+	var accion = "borradoWsTipo";
+	var parametrosBorradoWsTipo = $(this).attr("parametrosBorradoWsTipo");
+    var idParsed = parametrosBorradoWsTipo.split("-");                                                            
+	var id = idParsed[0];
+	var borrado = idParsed[1];
+	
+	objeto.id = id;
+	objeto.borrado = borrado;
+
+	$.ajax({
+	    url: "http://tablero2015.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
+	    type: 'POST',
+	    dataType: 'json',
+	    data: JSON.stringify(objeto),
+	    contentType: 'application/json',
+	    mimeType: 'application/json',
+    
+	    success: function (data)
+	    {
+	    	if (data.success == true)
+	    	{
+	    		$("#tituloModalUsuario").html('');
+				$("#tituloModalUsuario").append('<p class="text-success">GUARDADO</p>');
+				 		$("#pass-viejo-form").val("");
+				$("#pass-nuevo-form").val("");
+				$("#pass-nuevo1-form").val("");	
+			}else{
+	    		if (data.success == false)
+	    		{
+	    			$("#tituloModalUsuario").html('');
+	      			$("#tituloModalUsuario").append('<p class="text-danger">Error no se ha guardado</p>');
+	    		}
+	    	}
+	    },
+	    error: function(data,status,er)
+	    {
+	    	$("#tituloModalUsuario").html('');
+	    	$("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intente de nuevo</p>');
+	    }
+	});
+	window.location.href = "http://tablero2015.stp.gov.py/tablero/contenedorWsTipo.jsp";
+});	
 </script>
