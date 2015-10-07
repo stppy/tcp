@@ -83,18 +83,18 @@ $(document).ready(function(){
 	usuarios = usuarios.usuarios;
 	$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
 	$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
+	
+	var lineaAccion = $.ajax({
+		url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;		
+	lineaAccion=JSON.parse(lineaAccion);	
 		
 	renderLineaAccion();
 	function renderLineaAccion(){
-		
-		var lineaAccion = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
-		  	type:'get',
-		  	dataType:'json',
-		  	async:false       
-		}).responseText;		
-		lineaAccion=JSON.parse(lineaAccion);
-		
+				
 		$('.box-body').html('');
 		var tablaLineaAccion="";
 		tablaLineaAccion = '<table class="table table-hover">'+

@@ -77,49 +77,6 @@ $("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intent
 
 
 });
-
-$("body").on("click", "#guardarHitoTipo",function(event){
-	var objeto = new Object();
-	var accion = "insHitoTipo";
-	var nombre= $("#nombreHitoTipo").val();
-	var descripcion= $("#descripcionHitoTipo").val();
-
-	objeto.nombre=nombre;
-	objeto.descripcion=descripcion;
-
-
-	$.ajax({
-	url: "http://tablero2015.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
-	type: 'POST',
-	dataType: 'json',
-	data: JSON.stringify(objeto),
-	contentType: 'application/json',
-	mimeType: 'application/json',
-
-	success: function (data)
-	{
-	if (data.success == true)
-	{
-	$("#tituloModalUsuario").html('');
-	$("#tituloModalUsuario").append('<p class="text-success">GUARDADO</p>');
-	$("#pass-viejo-form").val("");
-	$("#pass-nuevo-form").val("");
-	$("#pass-nuevo1-form").val("");
-	}else{
-	if (data.success == false){
-	$("#tituloModalUsuario").html('');
-	$("#tituloModalUsuario").append('<p class="text-danger">Error no se ha guardado</p>');
-	}
-	}
-	},
-	error: function(data,status,er)
-	{
-	$("#tituloModalUsuario").html('');
-	$("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intente de nuevo</p>');
-	}
-	});
-	
-	});
 	
 $("body").on("click", "#actualizarHitoTipo",function(event){		
 	var objeto = new Object();
@@ -166,43 +123,48 @@ $("body").on("click", "#actualizarHitoTipo",function(event){
 	 });		
 });
 
-$("body").on("click", "#borrarHitoTipo",function(event){		
+$("body").on("click", "#iconoBorradoHitoTipo",function(event){		
 	var objeto = new Object();
 	var accion = "borradoHitoTipo";
+	var parametrosBorradoHitoTipo = $(this).attr("parametrosBorradoHitoTipo");
+    var idParsed = parametrosBorradoHitoTipo.split("-");                                                            
+	var id = idParsed[0];
+	var borrado = idParsed[1];
 	
-	objeto.id = $(this).attr("codigoRegistroHitoTipo");
-	objeto.borrado = $(this).attr("codigoRegistroHitoTipoBorrado");
+	objeto.id = id;
+	objeto.borrado = borrado;
 
 	$.ajax({
-	        url: "http://tablero2015.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
-	        type: 'POST',
-	        dataType: 'json',
-	        data: JSON.stringify(objeto),
-	        contentType: 'application/json',
-	        mimeType: 'application/json',
-	        
-	        success: function (data)
-	        {
-	        	if (data.success == true)
-	        	{
-	        		$("#tituloModalUsuario").html('');
-					$("#tituloModalUsuario").append('<p class="text-success">GUARDADO</p>');
-		    		$("#pass-viejo-form").val("");
-					$("#pass-nuevo-form").val("");
-					$("#pass-nuevo1-form").val("");	
-	        	}else{
-	        		if (data.success == false){
-	        			$("#tituloModalUsuario").html('');
-			        	$("#tituloModalUsuario").append('<p class="text-danger">Error no se ha guardado</p>');
-	        		}
-	        	}
-	        },
-	        error: function(data,status,er)
-	        {
-	        	$("#tituloModalUsuario").html('');
-	        	$("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intente de nuevo</p>');
-	        }
-	 });
-	window.location.href = "http://tablero2015.stp.gov.py/tablero/contenedorHitoTipo.jsp";
+	    url: "http://tablero2015.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
+	    type: 'POST',
+	    dataType: 'json',
+	    data: JSON.stringify(objeto),
+	    contentType: 'application/json',
+	    mimeType: 'application/json',
+    
+	    success: function (data)
+	    {
+	    	if (data.success == true)
+	    	{
+	    		$("#tituloModalUsuario").html('');
+				$("#tituloModalUsuario").append('<p class="text-success">GUARDADO</p>');
+				 		$("#pass-viejo-form").val("");
+				$("#pass-nuevo-form").val("");
+				$("#pass-nuevo1-form").val("");	
+			}else{
+	    		if (data.success == false)
+	    		{
+	    			$("#tituloModalUsuario").html('');
+	      			$("#tituloModalUsuario").append('<p class="text-danger">Error no se ha guardado</p>');
+	    		}
+	    	}
+	    },
+	    error: function(data,status,er)
+	    {
+	    	$("#tituloModalUsuario").html('');
+	    	$("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intente de nuevo</p>');
+	    }
+	});
+		window.location.href = "http://tablero2015.stp.gov.py/tablero/contenedorHitoTipo.jsp";
 });	
 </script>
