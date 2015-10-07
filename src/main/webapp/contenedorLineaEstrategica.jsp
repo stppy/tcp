@@ -92,19 +92,32 @@ if (user != null) { %>
 		}).responseText;		
 		lineaEstrategica=JSON.parse(lineaEstrategica);
 		
+		renderLineaEstrategica();
+		function renderLineaEstrategica(){		
+		
 		var tablaLineaEstrategica="";
 		tablaLineaEstrategica = '<table class="table table-hover">'+
 					  '<tr class="active"><td colspan="6">Tabla Linea Estrategica</td><td><a href="#" data-toggle="modal" data-target="#lineaEstrategica"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
 					  '<tr class="active"><td>Id</td><td>Nombre</td><td>Descripción</td><td>Orden</td><td>borrado</td><td>Editar</td><td>Borrar</td></tr>';
 		for(var w=0; w<lineaEstrategica.length;w++)
 		{
-			tablaLineaEstrategica+='<tr><td>'+lineaEstrategica[w].id+'</td><td>'+lineaEstrategica[w].nombre+'</td><td>'+lineaEstrategica[w].descripcion+'</td><td>'+lineaEstrategica[w].orden+'</td><td>'+lineaEstrategica[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosLineaEstrategica" codigoRegistroLineaEstrategica='+w+'></span></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';
+			if(lineaEstrategica[w].borrado == true)
+			{	
+				tablaLineaEstrategica+='<tr><td><del>'+lineaEstrategica[w].id+'</del></td><td><del>'+lineaEstrategica[w].nombre+'</del></td><td><del>'+lineaEstrategica[w].descripcion+'</del></td><td><del>'+lineaEstrategica[w].orden+'</del></td><td><del>'+lineaEstrategica[w].borrado+'</del></td><td><span class="glyphicon glyphicon-pencil registrosLineaEstrategica" codigoRegistroLineaEstrategica='+w+'></span></td><td><span class="glyphicon glyphicon-trash" parametrosBorradoLineaEstrategica='+lineaEstrategica[w].id+'-'+lineaEstrategica[w].borrado+' id="iconoBorradoLineaEstrategica"></span></td></tr>';
+				
+			}else{
+				tablaLineaEstrategica+='<tr><td>'+lineaEstrategica[w].id+'</td><td>'+lineaEstrategica[w].nombre+'</td><td>'+lineaEstrategica[w].descripcion+'</td><td>'+lineaEstrategica[w].orden+'</td><td>'+lineaEstrategica[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosLineaEstrategica" codigoRegistroLineaEstrategica='+w+'></span></td><td><span class="glyphicon glyphicon-trash" parametrosBorradoLineaEstrategica='+lineaEstrategica[w].id+'-'+lineaEstrategica[w].borrado+' id="iconoBorradoLineaEstrategica"></span></td></tr>';
+					
+				
+			}
 		}
+
 		tablaLineaEstrategica +='</table>';				
 		
 		$('.box-body').html(tablaLineaEstrategica);
 
-		 
+	}
+		
 		$("body").on("click", ".registrosLineaEstrategica",function(event){
 			var codigoRegistro = $(this).attr("codigoRegistroLineaEstrategica");
 				

@@ -186,7 +186,7 @@ public class ajaxUpdate extends HttpServlet {
                 if(br != null){ json = br.readLine();}
                 Gson gsonInsert = new Gson();
                 objeto=gsonInsert.fromJson(json, LineaEstrategica.class);
-                boolean status = SqlUpdates.borradoLineaEstrategica(objeto.isBorrado());
+                boolean status = SqlUpdates.borradoLineaEstrategica(objeto);
         		myObj.addProperty("success", status);
         		out.println(myObj.toString());
         	}         	
