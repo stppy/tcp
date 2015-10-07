@@ -202,13 +202,13 @@ public class ajaxUpdate extends HttpServlet {
         		out.println(myObj.toString());
         	}  
         	if (accion.equals("borradoLineaAccion")){
-        		InsLineaAccion objeto = new InsLineaAccion();
+        		LineaAccion objeto = new LineaAccion();
         		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
                 String json = "";
                 if(br != null){ json = br.readLine();}
                 Gson gsonInsert = new Gson();
-                objeto=gsonInsert.fromJson(json, InsLineaAccion.class);
-                boolean status = SqlUpdates.borradoLineaAccion(objeto.isBorrado());
+                objeto=gsonInsert.fromJson(json, LineaAccion.class);
+                boolean status = SqlUpdates.borradoLineaAccion(objeto);
         		myObj.addProperty("success", status); 
         		out.println(myObj.toString());
         	}           	

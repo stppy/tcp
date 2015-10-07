@@ -32,8 +32,6 @@ public class HitoTipo {
 	}
 	public void changeBorrado(){
 		this.borrado=!borrado;
-		
 	}
 	
-
 }

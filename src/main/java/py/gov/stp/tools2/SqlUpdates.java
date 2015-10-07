@@ -1391,10 +1391,14 @@ public class SqlUpdates {
 
 		}	
 	
-	public static boolean borradoLineaAccion(boolean flagBorrado){
+	public static boolean borradoLineaAccion(LineaAccion objeto){
 	  	 Connection conect=ConnectionConfiguration.conectar();
 	  	 Statement statement = null;
-			 String query = "update linea_accion set borrado=\""+flagBorrado+"\"";	
+		  	objeto.changeBorrado();
+	  	 
+			 String query = "update linea_accion set borrado='"+objeto.isBorrado()+"'";	
+			 
+			 query+=" where id ="+objeto.getId(); 
 			 try {
 				statement=conect.createStatement();
 				statement.execute(query);

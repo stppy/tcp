@@ -70,19 +70,22 @@ if (user != null) { %>
 
 <script>
 	
-	$(document).ready(function(){
-		var entidadCas = "";
-		entidadCas ="<%=attributes.get("entidad") %>";
-		var usuarios = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
-		  	type:'get',
-		  	dataType:'json',
-		  	async:false       
-		}).responseText;
-		usuarios = JSON.parse(usuarios);
-		usuarios = usuarios.usuarios;
-		$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
-		$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
+$(document).ready(function(){
+	var entidadCas = "";
+	entidadCas ="<%=attributes.get("entidad") %>";
+	var usuarios = $.ajax({
+		url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	usuarios = JSON.parse(usuarios);
+	usuarios = usuarios.usuarios;
+	$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
+	$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
+		
+	renderLineaAccion();
+	function renderLineaAccion(){
 		
 		var lineaAccion = $.ajax({
 			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
@@ -92,18 +95,25 @@ if (user != null) { %>
 		}).responseText;		
 		lineaAccion=JSON.parse(lineaAccion);
 		
+		$('.box-body').html('');
 		var tablaLineaAccion="";
 		tablaLineaAccion = '<table class="table table-hover">'+
 					  '<tr class="active"><td colspan="11">Tabla Linea Accion</td><td><a href="#" data-toggle="modal" data-target="#lineaAccion"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
 					  '<tr class="active"><td>Id</td><td>Nombre</td><td>Descripción</td><td>Orden</td><td>Peso</td><td>Acumular</td><td>tipoAccionId</td><td>estrategiaId</td><td>unidadMedidaId</td><td>borrado</td><td>Editar</td><td>Borrar</td></tr>';
 		for(var w=0; w<lineaAccion.length;w++)
 		{
-			tablaLineaAccion+='<tr><td>'+lineaAccion[w].id+'</td><td>'+lineaAccion[w].nombre+'</td><td>'+lineaAccion[w].descripcion+'</td><td>'+lineaAccion[w].orden+'</td><td>'+lineaAccion[w].peso+'</td><td>'+lineaAccion[w].acumular+'</td><td>'+lineaAccion[w].tipoAccionId+'</td><td>'+lineaAccion[w].estrategiaId+'</td><td>'+lineaAccion[w].unidadMedidaId+'</td><td>'+lineaAccion[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosLineaAccion" codigoRegistroLineaAccion='+w+'></span></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';
+			if(lineaAccion[w].borrado == true)
+			{
+				tablaLineaAccion+='<tr><td><del>'+lineaAccion[w].id+'</del></td><td><del>'+lineaAccion[w].nombre+'</del></td><td><del>'+lineaAccion[w].descripcion+'</del></td><td><del>'+lineaAccion[w].orden+'</del></td><td><del>'+lineaAccion[w].peso+'</del></td><td><del>'+lineaAccion[w].acumular+'</del></td><td><del>'+lineaAccion[w].tipoAccionId+'</del></td><td><del>'+lineaAccion[w].estrategiaId+'</del></td><td><del>'+lineaAccion[w].unidadMedidaId+'</del></td><td><del>'+lineaAccion[w].borrado+'</del></td><td><span class="glyphicon glyphicon-pencil registrosLineaAccion" codigoRegistroLineaAccion='+w+'></span></td><td><span class="glyphicon glyphicon-trash" parametrosBorradoLineaAccion='+lineaAccion[w].id+'-'+lineaAccion[w].borrado+' id="iconoBorradoLineaAccion"></span></td></tr>';
+
+			}else{
+				tablaLineaAccion+='<tr><td>'+lineaAccion[w].id+'</td><td>'+lineaAccion[w].nombre+'</td><td>'+lineaAccion[w].descripcion+'</td><td>'+lineaAccion[w].orden+'</td><td>'+lineaAccion[w].peso+'</td><td>'+lineaAccion[w].acumular+'</td><td>'+lineaAccion[w].tipoAccionId+'</td><td>'+lineaAccion[w].estrategiaId+'</td><td>'+lineaAccion[w].unidadMedidaId+'</td><td>'+lineaAccion[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosLineaAccion" codigoRegistroLineaAccion='+w+'></span></td><td><span class="glyphicon glyphicon-trash" parametrosBorradoLineaAccion='+lineaAccion[w].id+'-'+lineaAccion[w].borrado+' id="iconoBorradoLineaAccion"></span></td></tr>';
+			}
 		}
 		tablaLineaAccion +='</table>';				
 		
 		$('.box-body').html(tablaLineaAccion);
-
+	
 		 
 		$("body").on("click", ".registrosLineaAccion",function(event){
 			var codigoRegistro = $(this).attr("codigoRegistroLineaAccion");
@@ -122,8 +132,8 @@ if (user != null) { %>
 			$("#estrategiaIdLineaAccion").val(lineaAccion[codigoRegistro].estrategiaId);
 			$("#unidadMedidaIdLineaAccion").val(lineaAccion[codigoRegistro].unidadMedidaId);
 		});
-		
-	});
+	}
+});
 </script>
 	
     <div class="wrapper">
