@@ -95,6 +95,7 @@ if (user != null) { %>
 		renderLineaEstrategica();
 		function renderLineaEstrategica(){		
 		
+		$('.box-body').html('');
 		var tablaLineaEstrategica="";
 		tablaLineaEstrategica = '<table class="table table-hover">'+
 					  '<tr class="active"><td colspan="6">Tabla Linea Estrategica</td><td><a href="#" data-toggle="modal" data-target="#lineaEstrategica"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+

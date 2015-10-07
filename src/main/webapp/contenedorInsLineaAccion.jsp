@@ -92,18 +92,30 @@ if (user != null) { %>
 		}).responseText;		
 		insLineaAccion=JSON.parse(insLineaAccion);
 		
+		renderInsLineaAccion();
+		function renderInsLineaAccion(){
+			
+		$('.box-body').html('');
 		var tablaInsLineaAccion="";
 		tablaInsLineaAccion = '<table class="table table-hover">'+
 					  '<tr class="active"><td colspan="7">Tabla InsLineaAccion</td><td><a href="#" data-toggle="modal" data-target="#insLineaAccion"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
 					  '<tr class="active"><td>Id</td><td>lineaAccionId</td><td>institucionId</td><td>periodoId</td><td>meta</td><td>borrado</td><td>Editar</td><td>Borrar</td></tr>';
 		for(var w=0; w<insLineaAccion.length;w++)
 		{
-			tablaInsLineaAccion+='<tr><td>'+insLineaAccion[w].id+'</td><td>'+insLineaAccion[w].lineaAccionId+'</td><td>'+insLineaAccion[w].institucionId+'</td><td>'+insLineaAccion[w].periodoId+'</td><td>'+insLineaAccion[w].meta+'</td><td>'+insLineaAccion[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosInsLineaAccion" codigoRegistroInsLineaAccion='+w+'></span></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';
+			if(insLineaAccion[w].borrado == true)
+			{
+				tablaInsLineaAccion+='<tr><td><del>'+insLineaAccion[w].id+'</del></td><td><del>'+insLineaAccion[w].lineaAccionId+'</del></td><td><del>'+insLineaAccion[w].institucionId+'</del></td><td><del>'+insLineaAccion[w].periodoId+'</del></td><td><del>'+insLineaAccion[w].meta+'</del></td><td><del>'+insLineaAccion[w].borrado+'</del></td><td><span class="glyphicon glyphicon-pencil registrosInsLineaAccion" codigoRegistroInsLineaAccion='+w+'></span></td><td><span class="glyphicon glyphicon-trash" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+' id="iconoBorradoInsLineaAccion"></span></td></tr>';
+			}else{
+				tablaInsLineaAccion+='<tr><td>'+insLineaAccion[w].id+'</td><td>'+insLineaAccion[w].lineaAccionId+'</td><td>'+insLineaAccion[w].institucionId+'</td><td>'+insLineaAccion[w].periodoId+'</td><td>'+insLineaAccion[w].meta+'</td><td>'+insLineaAccion[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosInsLineaAccion" codigoRegistroInsLineaAccion='+w+'></span></td><td><span class="glyphicon glyphicon-trash" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+' id="iconoBorradoInsLineaAccion"></span></td></tr>';
+
+				
+				}
 		}
 		tablaInsLineaAccion +='</table>';				
 		
 		$('.box-body').html(tablaInsLineaAccion);
-
+		
+		}
 		 
 		$("body").on("click", ".registrosInsLineaAccion",function(event){
 			var codigoRegistro = $(this).attr("codigoRegistroInsLineaAccion");
