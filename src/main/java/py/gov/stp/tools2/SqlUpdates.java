@@ -1354,10 +1354,14 @@ public class SqlUpdates {
 
 		}	
 	
-	public static boolean borradoLineaEstrategica(boolean flagBorrado){
+	public static boolean borradoLineaEstrategica(LineaEstrategica objeto){
 	  	 Connection conect=ConnectionConfiguration.conectar();
 	  	 Statement statement = null;
-			 String query = "update linea_estrategica set borrado=\""+flagBorrado+"\"";	
+	  	 	objeto.changeBorrado();
+	  	 	
+			 String query = "update linea_estrategica set borrado='"+objeto.isBorrado()+"'";
+			 
+			 query+=" where id ="+objeto.getId(); 
 			 try {
 				statement=conect.createStatement();
 				statement.execute(query);
@@ -1433,10 +1437,14 @@ public class SqlUpdates {
 
 		}
 	
-	public static boolean borradoInsLineaAccion(boolean flagBorrado){
+	public static boolean borradoInsLineaAccion(InsLineaAccion objeto){
 	  	 Connection conect=ConnectionConfiguration.conectar();
 	  	 Statement statement = null;
-			 String query = "update ins_linea_accion set borrado=\""+flagBorrado+"\"";	
+		  	objeto.changeBorrado();
+	  	 
+			 String query = "update ins_linea_accion set borrado='"+objeto.isBorrado()+"'";
+			 
+			 query+=" where id ="+objeto.getId();
 			 try {
 				statement=conect.createStatement();
 				statement.execute(query);

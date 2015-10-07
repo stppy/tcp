@@ -186,7 +186,7 @@ public class ajaxUpdate extends HttpServlet {
                 if(br != null){ json = br.readLine();}
                 Gson gsonInsert = new Gson();
                 objeto=gsonInsert.fromJson(json, LineaEstrategica.class);
-                boolean status = SqlUpdates.borradoLineaEstrategica(objeto.isBorrado());
+                boolean status = SqlUpdates.borradoLineaEstrategica(objeto);
         		myObj.addProperty("success", status);
         		out.println(myObj.toString());
         	}         	
@@ -230,7 +230,7 @@ public class ajaxUpdate extends HttpServlet {
                 if(br != null){ json = br.readLine();}
                 Gson gsonInsert = new Gson();
                 objeto=gsonInsert.fromJson(json, InsLineaAccion.class);
-                boolean status = SqlUpdates.borradoInsLineaAccion(objeto.isBorrado());
+                boolean status = SqlUpdates.borradoInsLineaAccion(objeto);
         		myObj.addProperty("success", status);
         		out.println(myObj.toString());
         	}           	
