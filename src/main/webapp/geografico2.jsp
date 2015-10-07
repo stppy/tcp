@@ -572,7 +572,16 @@ tbody {
 				      	async:false       
 				    }).responseText;
 					var desPaisDepto=JSON.parse(desPaisDeptojson);
-				
+					
+					var desPaisDistjson = $.ajax({
+				    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getDesempPaisPorDist',
+				      	type:'get',
+				      	dataType:'json',
+				      	crossDomain:true,
+				      	async:false       
+				    }).responseText;
+					var desPaisDist=JSON.parse(desPaisDistjson);
+				    
 
 					
 					var totalLineaPais=[];
@@ -607,12 +616,17 @@ tbody {
 						var array=[];
 						$("#tablaInstituciones").html("");
 						if (typeof e != 'undefined'){
-							array=lineaAccionDepartamento;
-							$("#tabla-derecho").html("");
-							$("#tabla-derecho").append('Instituciones en '+e.target.feature.properties.dpto_desc);
+							if (e.target.feature.hasOwnProperty("distrito")){
+								alert("distritos");
+							}else{
+								
+								array=lineaAccionDepartamento;
+								$("#tabla-derecho").html("");
+								$("#tabla-derecho").append('Instituciones en '+e.target.feature.properties.dpto_desc);
+							}
+							
 						}else{
 							array=elPais;
-							
 						}
 						for (var i = 0; i< entidades.length;i++){
 							var iteracion=0;
@@ -985,6 +999,14 @@ tbody {
 							    return 1;
 							  return 0;
 							}
+
+						function getClave2(array, clave1, clave2) {
+							var val;
+							for (val of array){
+								if (val.clave1==clave1 && val.clave2==clave2)
+									return val.valor;
+							}
+						}
 						
 						desPaisDepto=desPaisDepto.sort(compareGenerico);
 						// fillColor: getColor(), feature.properties.dpto
@@ -1000,12 +1022,12 @@ tbody {
 						}
 						function style2(feature) {
 							return {
-								 fillColor: 'green',
+								 fillColor: getColor(parseFloat(getClave2(desPaisDist,parseInt(feature.properties.dpto), parseInt(feature.properties.distrito))).toFixed(0)),
 						        weight: 2,
-						        opacity: 0.6,
+						        opacity: 1,
 						        color: 'white',
 						        dashArray: '3',
-						        fillOpacity: 0.6
+						        fillOpacity: 1
 						    };						    
 						}
 						
@@ -1014,7 +1036,7 @@ tbody {
 
 						    layer.setStyle({
 						        weight: 5,
-						        fillOpacity: 0.7
+						        fillOpacity: 1
 						    });
 
 						    if (!L.Browser.ie && !L.Browser.opera) {
@@ -1030,15 +1052,33 @@ tbody {
 
 						function renderEntidad(e){
 							depto.eachLayer(function(l){depto.resetStyle(l);});
-							if (typeof distLayer !== "undefined")  map.removeLayer(distLayer);
-							highlightFeature(e);
-							renderEntidades(e);
-							map.fitBounds(e.target.getBounds());
-							e.target.feature.properties.dpto
-							distLayer = new L.GeoJSON.AJAX("mapa/"+e.target.feature.properties.dpto+".geojson",{style:style,onEachFeature: onEachFeature2});
-							distLayer.addTo(map);
-							/* var distritos = new L.geoJson(dist0Geojson,{style:style2,onEachFeature: onEachFeature2});
-							distritos.addTo(map);*/
+							if (typeof distLayer !== "undefined"){
+								if (e.target.feature.properties.hasOwnProperty("distrito")){
+									alert("buscar por distrito")
+								}else{
+									map.removeLayer(distLayer);
+									highlightFeature(e);
+									renderEntidades(e);
+									map.fitBounds(e.target.getBounds());
+									e.target.feature.properties.dpto
+									distLayer = new L.GeoJSON.AJAX("mapa/"+e.target.feature.properties.dpto+".geojson",{style:style2,onEachFeature: onEachFeature2});
+									distLayer.addTo(map);
+								}
+							}else{
+								highlightFeature(e);
+								renderEntidades(e);
+								map.fitBounds(e.target.getBounds());
+								e.target.feature.properties.dpto
+								distLayer = new L.GeoJSON.AJAX("mapa/"+e.target.feature.properties.dpto+".geojson",{style:style2,onEachFeature: onEachFeature2});
+								distLayer.addTo(map);
+								/* var distritos = new L.geoJson(dist0Geojson,{style:style2,onEachFeature: onEachFeature2});
+								distritos.addTo(map);*/
+							}
+							
+								
+							
+							
+							
 						}
 						function onEachFeature(feature, layer) {
 						layer.on({
@@ -1046,9 +1086,9 @@ tbody {
 							});
 						}
 						function onEachFeature2(feature, layer) {
-							/*layer.on({
+							layer.on({
 									click: renderEntidad
-								});*/
+								});
 							}
 	
 						//var depto = new L.geoJson(depto,{style:miestilo})

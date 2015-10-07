@@ -21,9 +21,12 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import objetos.Entidad;
 import objetos.FactHitos;
 import objetos.Generica;
+import objetos.Generica2;
+import objetos.Generica3;
 import objetos.LineaAccion;
 import objetos.LineaAccionAcumuladoMes;
 import objetos.LineaAccionDepartamento;
+import objetos.LineaAccionDistrito;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -518,6 +521,61 @@ public class SqlSelects {
 			}
 			return objetos; 
 	  }
+	public static List<Generica2> selectGenerico2(String condition, String tabla) throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+			 String query = " select * from "+tabla+" "+condition;
+			 
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 List<Generica2> objetos = new ArrayList<Generica2>();
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					Generica2 objeto = new Generica2();
+					objeto.setClave1(rs.getInt(1));
+					objeto.setClave2(rs.getInt(2));
+					objeto.setValor(rs.getDouble(3));
+					objetos.add(objeto);
+				}
+			}
+			catch (SQLException e) {
+				e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos; 
+	  }
+	public static List<Generica3> selectGenerico3(String condition, String tabla) throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+			 String query = " select * from "+tabla+" "+condition;
+			 
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 List<Generica3> objetos = new ArrayList<Generica3>();
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					Generica3 objeto = new Generica3();
+					objeto.setClave1(rs.getInt(1));
+					objeto.setClave2(rs.getInt(2));
+					objeto.setClave3(rs.getInt(3));
+					objeto.setValor(rs.getDouble(4));
+					objetos.add(objeto);
+				}
+			}
+			catch (SQLException e) {
+				e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos; 
+	  }
 	
 	public static List<LineaAccion> seletLineaAccionSnpp(String condition) throws SQLException{
 	   	 Connection conect=ConnectionConfiguration.conectarSnpp();
@@ -589,6 +647,51 @@ public class SqlSelects {
 					objeto.setOrden_linea_accion(rs.getInt("orden_linea_accion"));
 					objeto.setAccion_departamento_id(rs.getInt("accion_departamento_id"));
 					objeto.setAccion_unidad_medida_id(rs.getInt("accion_unidad_medida_id"));
+
+					objetos.add(objeto);
+				}
+			}
+			catch (SQLException e) {e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos; 
+	  }
+	
+	public static List<LineaAccionDistrito> selectLineaAccionDistrito() throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+			 String query = " select * from fact_entidad_linea_dist ";
+			 
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 List<LineaAccionDistrito> objetos = new ArrayList<LineaAccionDistrito>();
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					LineaAccionDistrito objeto = new LineaAccionDistrito();
+					objeto.setInstitucion(rs.getString("institucion"));
+					objeto.setInstitucion_id(rs.getInt("institucion_id"));
+					objeto.setLinea_accion(rs.getString("linea_accion"));
+					objeto.setLinea_accion_id(rs.getInt("linea_accion_id"));
+					objeto.setAccion_unidad_medida(rs.getString("accion_unidad_medida"));
+					objeto.setCantidad_ejecutada_hoy(rs.getDouble("sum"));
+					objeto.setAnho(rs.getInt("date_part"));
+					objeto.setSuma_programada_anho(rs.getDouble("sumprog"));
+					objeto.setSuma_programada_hoy(rs.getDouble("sumproghoy"));
+					objeto.setCosto_ejecutado(rs.getDouble("costo_ejecutado"));
+					objeto.setCosto_programado_anho(rs.getDouble("costo_programado_anho"));
+					objeto.setCosto_programado_hoy(rs.getDouble("costo_programado_hoy"));
+					objeto.setLinea_accion_meta(rs.getDouble("linea_accion_meta"));
+					objeto.setHito_cantidad_ejecutado_hoy(rs.getDouble("hito_cantidad_ejecutado_hoy"));
+					objeto.setOrden(rs.getString("orden"));
+					objeto.setOrden_linea_accion(rs.getInt("orden_linea_accion"));
+					objeto.setAccion_departamento_id(rs.getInt("accion_departamento_id"));
+					objeto.setAccion_unidad_medida_id(rs.getInt("accion_unidad_medida_id"));
+					objeto.setAccion_unidad_medida_id(rs.getInt("accion_unidad_medida_id"));
+					objeto.setAccion_distrito_id(rs.getInt("accion_distrito_id"));
 
 					objetos.add(objeto);
 				}
