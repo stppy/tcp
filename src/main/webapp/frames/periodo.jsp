@@ -70,22 +70,20 @@ success: function (data)
 {
 if (data.success == true)
 {
-$("#tituloModalUsuario").html('');
-$("#tituloModalUsuario").append('<p class="text-success">GUARDADO</p>');
-$("#pass-viejo-form").val("");
-$("#pass-nuevo-form").val("");
-$("#pass-nuevo1-form").val(""); 
+$(".modal-title").html('');
+$(".modal-title").append('<p class="text-success">GUARDADO</p>');
+
 }else{
 if (data.success == false){
-$("#tituloModalUsuario").html('');
-$("#tituloModalUsuario").append('<p class="text-danger">Error no se ha guardado</p>');
+$(".modal-title").html('');
+$(".modal-title").append('<p class="text-danger">Error no se ha guardado</p>');
 }
 }
 },
 error: function(data,status,er)
 {
-$("#tituloModalUsuario").html('');
-$("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intente de nuevo</p>');
+$("#.modal-title").html('');
+$(".modal-title").append('<p class="text-danger">Error de conexion intente de nuevo</p>');
 }
 });
 });
