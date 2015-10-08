@@ -402,19 +402,6 @@ if (user != null) { %>
 		
 		renderEntidades();
 
-		/*for (var indexI=0; indexI<19;indexI++){
-			renderLineaAccion(indexI, 22691);
-			renderLineaAccion(indexI, 22691);
-			renderLineaAccion(indexI, 22691);
-			renderLineaAccion(indexI, 22691);
-			renderLineaAccion(indexI, 22691);
-			renderLineaAccion(indexI, 22691);
-			renderLineaAccion(indexI, 22691);
-			renderLineaAccion(indexI, 22691);
-		}*/
-
-		//renderLineaAccion(0, 1359);
-		//renderLineaAccion();
 		
 		
 	});
@@ -689,7 +676,7 @@ tbody {
 						}
 					}
 					
-					function renderLineaAccion(depto_id, institucion_id)
+					function renderLineaAccion(depto_id, institucion_id, dist_id)
 					{
 						var iteracionDepto=0;
 						var porcentajeAnhoAcumuladoDepto=0;
@@ -790,8 +777,6 @@ tbody {
 
 												porHejeClassRow="";
 
-
-												
 												
 												if (  porcentajeHoyEje ==="NaN"){ porcentajeHoyEje="";porHejeClassRow="";}
 											}else{
@@ -948,11 +933,15 @@ tbody {
 						
 						var institucion_id=event.target.attributes.institucion_id.value;
 						var depto_id=event.target.attributes.depto_id.value;
+						var dist_id=event.target.attributes.dist_id.value;
 						if (depto_id==""){
 							alert("Favor seleccionar previamente Departamento en el mapa");
 							event.stopPropagation();
+						}else{
+							renderLineaAccion(depto_id, institucion_id, dist_id);
 						}
-						renderLineaAccion(depto_id, institucion_id);
+						
+						
 						event.stopPropagation();
 						
 						
