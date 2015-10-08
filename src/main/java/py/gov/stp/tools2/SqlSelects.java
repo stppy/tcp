@@ -408,7 +408,8 @@ public class SqlSelects {
 				objeto.setProyectoId(rs.getInt("proyecto_id"));
 				objeto.setFuncionalId(rs.getInt("funcional_id"));
 				objeto.setUnidadResponsableId(rs.getInt("unidad_responsable_id"));
-				objeto.setProductoId(rs.getInt("producto_id"));				
+				objeto.setProductoId(rs.getInt("producto_id"));	
+				objeto.setBorrado(rs.getBoolean("borrado"));
 
 				objetos.add(objeto);
 			}
@@ -674,6 +675,7 @@ public class SqlSelects {
 					objeto.setValor(rs.getString("valor"));
 					objeto.setBeneficiarioDetalleClavesId(rs.getInt("beneficiario_detalle_claves_id"));
 					objeto.setBeneficiarioId(rs.getInt("beneficiario_id"));
+					objeto.setBorrado(rs.getBoolean("borrado"));
 					
 					objetos.add(objeto);
 				}

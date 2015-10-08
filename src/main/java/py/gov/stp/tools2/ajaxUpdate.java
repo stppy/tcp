@@ -392,6 +392,17 @@ public class ajaxUpdate extends HttpServlet {
         		myObj.addProperty("success", status);
         		out.println(myObj.toString());
         	}  
+        	if (accion.equals("borradoSprProducto")){
+        		SprProducto objeto = new SprProducto();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                objeto=gsonInsert.fromJson(json, SprProducto.class);
+                boolean status = SqlUpdates.borradoSprProducto(objeto);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	}         	
         	if (accion.equals("actWs")){
         		Ws objeto = new Ws();
         		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
@@ -559,7 +570,18 @@ public class ajaxUpdate extends HttpServlet {
                 boolean status = SqlUpdates.updateBeneficiarioDetalle(objeto);    
         		myObj.addProperty("success", status);
         		out.println(myObj.toString());
-        	}  
+        	}
+        	if (accion.equals("borradoBeneficiarioDetalle")){
+        		BeneficiarioDetalle objeto = new BeneficiarioDetalle();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                objeto=gsonInsert.fromJson(json, BeneficiarioDetalle.class);
+                boolean status = SqlUpdates.borradoBeneficiarioDetalle(objeto);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	}         	
         	if (accion.equals("actBeneficiarioDetalleClave")){
         		BeneficiarioDetalleClave objeto = new BeneficiarioDetalleClave();
         		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
@@ -582,6 +604,17 @@ public class ajaxUpdate extends HttpServlet {
         		myObj.addProperty("success", status);
         		out.println(myObj.toString());
         	}  
+        	if (accion.equals("borradoGeoPoligono")){
+        		GeoPoligono objeto = new GeoPoligono();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                objeto=gsonInsert.fromJson(json, GeoPoligono.class);
+                boolean status = SqlUpdates.borradoGeoPoligono(objeto);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	}          	
         	if (accion.equals("actAccionHasGeoPoligono")){
         		AccionHasGeoPoligono objeto = new AccionHasGeoPoligono();
         		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
@@ -592,7 +625,18 @@ public class ajaxUpdate extends HttpServlet {
                 boolean status = SqlUpdates.updateAccionHasGeoPoligono(objeto);     
         		myObj.addProperty("success", status);
         		out.println(myObj.toString());
-        	}      
+        	}
+        	if (accion.equals("borradoAccionHasGeoPoligono")){
+        		AccionHasGeoPoligono objeto = new AccionHasGeoPoligono();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                objeto=gsonInsert.fromJson(json, AccionHasGeoPoligono.class);
+                boolean status = SqlUpdates.borradoAccionHasGeoPoligono(objeto);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	}         	
         	if (accion.equals("actGeoPoligonoTipo")){
         		GeoPoligonoTipo objeto = new GeoPoligonoTipo();
         		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));

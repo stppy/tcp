@@ -5,6 +5,7 @@ public class BeneficiarioDetalle {
 	protected String valor;
 	protected int beneficiarioDetalleClavesId;
 	protected int beneficiarioId;
+	protected boolean borrado=false;
 	
 	public int getId() {
 		return id;
@@ -30,6 +31,14 @@ public class BeneficiarioDetalle {
 	public void setBeneficiarioId(int beneficiarioId) {
 		this.beneficiarioId = beneficiarioId;
 	}
-	
+	public boolean isBorrado() {
+		return borrado;
+	}
+	public void setBorrado(boolean borrado) {
+		this.borrado = borrado;
+	}
+	public void changeBorrado(){
+		this.borrado=!borrado;
+	}
 
 }

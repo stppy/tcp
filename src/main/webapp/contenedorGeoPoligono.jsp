@@ -92,18 +92,27 @@ if (user != null) { %>
 		}).responseText;		
 		geoPoligono=JSON.parse(geoPoligono);
 		
-		var tablaGeoPoligono="";
-		tablaGeoPoligono = '<table class="table table-hover">'+
-					  '<tr class="active"><td colspan="8">Tabla GeoPoligono</td><td><a href="#" data-toggle="modal" data-target="#geoPoligono"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
-					  '<tr class="active"><td>Id</td><td>Nombre</td><td>Descripción</td><td>Geo</td><td>geoPoligonoId</td><td>geoPoligonoTipoId</td><td>borrado</td><td>Editar</td><td>Borrar</td></tr>';
-		for(var w=0; w<geoPoligono.length;w++)
-		{
-			tablaGeoPoligono+='<tr><td>'+geoPoligono[w].id+'</td><td>'+geoPoligono[w].nombre+'</td><td>'+geoPoligono[w].descripcion+'</td><td>'+geoPoligono[w].geo+'</td><td>'+geoPoligono[w].geoPoligonoId+'</td><td>'+geoPoligono[w].geoPoligonoTipoId+'</td><td>'+geoPoligono[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosGeoPoligono" codigoRegistroGeoPoligono='+w+'></span></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';
+		renderGeoPoligono();
+		function renderGeoPoligono(){
+			
+			$('.box-body').html('');
+			var tablaGeoPoligono="";
+			tablaGeoPoligono = '<table class="table table-hover">'+
+						  '<tr class="active"><td colspan="8">Tabla GeoPoligono</td><td><a href="#" data-toggle="modal" data-target="#geoPoligono"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
+						  '<tr class="active"><td>Id</td><td>Nombre</td><td>Descripción</td><td>Geo</td><td>geoPoligonoId</td><td>geoPoligonoTipoId</td><td>borrado</td><td>Editar</td><td>Borrar</td></tr>';
+			for(var w=0; w<geoPoligono.length;w++)
+			{
+				if(geoPoligono[w].borrado == true)
+				{
+					tablaGeoPoligono+='<tr><td><del>'+geoPoligono[w].id+'</del></td><td><del>'+geoPoligono[w].nombre+'</del></td><td><del>'+geoPoligono[w].descripcion+'</del></td><td><del>'+geoPoligono[w].geo+'</del></td><td><del>'+geoPoligono[w].geoPoligonoId+'</del></td><td><del>'+geoPoligono[w].geoPoligonoTipoId+'</del></td><td><del>'+geoPoligono[w].borrado+'</del></td><td><span class="glyphicon glyphicon-pencil registrosGeoPoligono" codigoRegistroGeoPoligono='+w+'></span></td><td><span class="glyphicon glyphicon-trash" id="iconoBorradoGeoPoligono" parametrosBorradoGeoPoligono='+geoPoligono[w].id+'-'+geoPoligono[w].geoPoligonoId+'-'+geoPoligono[w].borrado+'></span></td></tr>';
+				}else{
+					tablaGeoPoligono+='<tr><td>'+geoPoligono[w].id+'</td><td>'+geoPoligono[w].nombre+'</td><td>'+geoPoligono[w].descripcion+'</td><td>'+geoPoligono[w].geo+'</td><td>'+geoPoligono[w].geoPoligonoId+'</td><td>'+geoPoligono[w].geoPoligonoTipoId+'</td><td>'+geoPoligono[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosGeoPoligono" codigoRegistroGeoPoligono='+w+'></span></td><td><span class="glyphicon glyphicon-trash" id="iconoBorradoGeoPoligono" parametrosBorradoGeoPoligono='+geoPoligono[w].id+'-'+geoPoligono[w].geoPoligonoId+'-'+geoPoligono[w].borrado+'></span></td></tr>';
+				}
+			}
+			tablaGeoPoligono +='</table>';				
+			
+			$('.box-body').html(tablaGeoPoligono);
 		}
-		tablaGeoPoligono +='</table>';				
-		
-		$('.box-body').html(tablaGeoPoligono);
-
 		 
 		$("body").on("click", ".registrosGeoPoligono",function(event){
 			var codigoRegistro = $(this).attr("codigoRegistroGeoPoligono");

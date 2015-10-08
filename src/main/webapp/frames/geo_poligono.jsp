@@ -50,56 +50,149 @@
 	</div>
 </div>
 	<script>
-	$("body").on("click", "#guardarGeoPoligono",function(event){		
-			var objeto = new Object();
-			var accion = "insGeoPoligono";
-			var nombre= $("#nombreGeoPoligono").val();
-			var descripcion= $("#descripcionGeoPoligono").val();
-			var geo=$("#geoGeoPoligono").val();
-			var geoPoligonoId = $("#geoPoligonoIdGeoPoligono").val();
-			var geoPoligonoTipoId=$("#geoPoligonoTipoIdGeoPoligono").val();
-							
-			objeto.nombre=nombre;
-			objeto.descripcion=descripcion;
-			objeto.geo=geo;
-			objeto.geoPoligonoId=geoPoligonoId;
-			objeto.geoPoligonoTipoId=geoPoligonoTipoId;
-			
-				 
-			$.ajax({
-			        url: "http://tablero2015.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
-			        type: 'POST',
-			        dataType: 'json',
-			        data: JSON.stringify(objeto),
-			        contentType: 'application/json',
-			        mimeType: 'application/json',
-			        
-			        success: function (data)
-			        {
-			        	if (data.success == true)
-			        	{
-			        		$("#tituloModalUsuario").html('');
-							$("#tituloModalUsuario").append('<p class="text-success">GUARDADO</p>');
-				    		$("#pass-viejo-form").val("");
-							$("#pass-nuevo-form").val("");
-							$("#pass-nuevo1-form").val("");	
-			        	}else{
-			        		if (data.success == false){
-			        			$("#tituloModalUsuario").html('');
-					        	$("#tituloModalUsuario").append('<p class="text-danger">Error no se ha guardado</p>');
-			        		}
-			        	}
-			        },
-			        error: function(data,status,er)
-			        {
-			        	$("#tituloModalUsuario").html('');
-			        	$("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intente de nuevo</p>');
-			        }
-			 });
-
-
-			
+$("body").on("click", "#guardarGeoPoligono",function(event){		
+		var objeto = new Object();
+		var accion = "insGeoPoligono";
+		var nombre= $("#nombreGeoPoligono").val();
+		var descripcion= $("#descripcionGeoPoligono").val();
+		var geo=$("#geoGeoPoligono").val();
+		var geoPoligonoId = $("#geoPoligonoIdGeoPoligono").val();
+		var geoPoligonoTipoId=$("#geoPoligonoTipoIdGeoPoligono").val();
+						
+		objeto.nombre=nombre;
+		objeto.descripcion=descripcion;
+		objeto.geo=geo;
+		objeto.geoPoligonoId=geoPoligonoId;
+		objeto.geoPoligonoTipoId=geoPoligonoTipoId;
+		 
+		$.ajax({
+		        url: "http://tablero2015.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
+		        type: 'POST',
+		        dataType: 'json',
+		        data: JSON.stringify(objeto),
+		        contentType: 'application/json',
+		        mimeType: 'application/json',
+		        
+		        success: function (data)
+		        {
+		        	if (data.success == true)
+		        	{
+		        		$("#tituloModalUsuario").html('');
+						$("#tituloModalUsuario").append('<p class="text-success">GUARDADO</p>');
+			    		$("#pass-viejo-form").val("");
+						$("#pass-nuevo-form").val("");
+						$("#pass-nuevo1-form").val("");	
+		        	}else{
+		        		if (data.success == false){
+		        			$("#tituloModalUsuario").html('');
+				        	$("#tituloModalUsuario").append('<p class="text-danger">Error no se ha guardado</p>');
+		        		}
+		        	}
+		        },
+		        error: function(data,status,er)
+		        {
+		        	$("#tituloModalUsuario").html('');
+		        	$("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intente de nuevo</p>');
+		        }
 		});
+});
+
+$("body").on("click", "#actualizarGeoPoligono",function(event){		
+	var objeto = new Object();
+	var accion = "actGeoPoligono";
+	var id = $("#idGeoPoligono").val();
+	var nombre= $("#nombreGeoPoligono").val();
+	var descripcion= $("#descripcionGeoPoligono").val();
+	var geo= $("#geoGeoPoligono").val();
+	var geoPoligonoId= $("#geoPoligonoIdGeoPoligono").val();
+	var geoPoligonoTipoId= $("#geoPoligonoTipoIdGeoPoligono").val();
+	
+		
+	objeto.id = id;
+	objeto.nombre = nombre;
+	objeto.descripcion = descripcion;
+	objeto.geo = geo;
+	objeto.geoPoligonoId = geoPoligonoId;
+	objeto.geoPoligonoTipoId = geoPoligonoTipoId;
+
+	$.ajax({
+	        url: "http://tablero2015.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
+	        type: 'POST',
+	        dataType: 'json',
+	        data: JSON.stringify(objeto),
+	        contentType: 'application/json',
+	        mimeType: 'application/json',
+	        
+	        success: function (data)
+	        {
+	        	if (data.success == true)
+	        	{
+	        		$("#tituloModalUsuario").html('');
+					$("#tituloModalUsuario").append('<p class="text-success">GUARDADO</p>');
+		    		$("#pass-viejo-form").val("");
+					$("#pass-nuevo-form").val("");
+					$("#pass-nuevo1-form").val("");	
+	        	}else{
+	        		if (data.success == false){
+	        			$("#tituloModalUsuario").html('');
+			        	$("#tituloModalUsuario").append('<p class="text-danger">Error no se ha guardado</p>');
+	        		}
+	        	}
+	        },
+	        error: function(data,status,er)
+	        {
+	        	$("#tituloModalUsuario").html('');
+	        	$("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intente de nuevo</p>');
+	        }
+	 });		
+});
+
+$("body").on("click", "#iconoBorradoGeoPoligono",function(event){		
+	var objeto = new Object();
+	var accion = "borradoGeoPoligono";
+	var parametrosBorradoGeoPoligono = $(this).attr("parametrosBorradoGeoPoligono");
+    var idParsed = parametrosBorradoGeoPoligono.split("-");                                                            
+	var id = idParsed[0];
+	var geoPoligonoId = idParsed[1];
+	var borrado = idParsed[2];
+	
+	objeto.id = id;
+	objeto.geoPoligonoId = geoPoligonoId;
+	objeto.borrado = borrado;
+
+	$.ajax({
+	    url: "http://tablero2015.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
+	    type: 'POST',
+	    dataType: 'json',
+	    data: JSON.stringify(objeto),
+	    contentType: 'application/json',
+	    mimeType: 'application/json',
+    
+	    success: function (data)
+	    {
+	    	if (data.success == true)
+	    	{
+	    		$("#tituloModalUsuario").html('');
+				$("#tituloModalUsuario").append('<p class="text-success">GUARDADO</p>');
+				 		$("#pass-viejo-form").val("");
+				$("#pass-nuevo-form").val("");
+				$("#pass-nuevo1-form").val("");	
+			}else{
+	    		if (data.success == false)
+	    		{
+	    			$("#tituloModalUsuario").html('');
+	      			$("#tituloModalUsuario").append('<p class="text-danger">Error no se ha guardado</p>');
+	    		}
+	    	}
+	    },
+	    error: function(data,status,er)
+	    {
+	    	$("#tituloModalUsuario").html('');
+	    	$("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intente de nuevo</p>');
+	    }
+	});
+		window.location.href = "http://tablero2015.stp.gov.py/tablero/contenedorGeoPoligono.jsp";
+});
 	</script>	
 
 
