@@ -1704,7 +1704,23 @@ public static boolean borradoHito(Hito objeto){
 					    return true;
 					} catch (SQLException e) {e.printStackTrace(); return false;}
 
-		}	
+		}
+	
+	public static boolean borradoSprProducto(SprProducto objeto){
+	  	 Connection conect=ConnectionConfiguration.conectar();
+	  	 Statement statement = null;
+	  	 objeto.changeBorrado();
+	  	 
+		 String query = "update spr_producto set borrado='"+objeto.isBorrado()+"'";	
+		 
+		 query+=" where id ="+objeto.getId(); 	
+		 try {
+			statement=conect.createStatement();
+			statement.execute(query);
+		    conect.close();
+		    return true;
+		 }catch (SQLException e) {e.printStackTrace(); return false;}
+	}	
 	
 	public static boolean updateWs(Ws objeto){
 	  	 Connection conect=ConnectionConfiguration.conectar();
@@ -1979,6 +1995,22 @@ public static boolean borradoHito(Hito objeto){
 
 		}	
 	
+	public static boolean borradoBeneficiarioDetalle(BeneficiarioDetalle objeto){
+	  	 Connection conect=ConnectionConfiguration.conectar();
+	  	 Statement statement = null;
+		 objeto.changeBorrado();
+		 	  	 
+			 String query = "update beneficiario_detalle set borrado='"+objeto.isBorrado()+"'";
+			 
+			 query+=" where id ="+objeto.getId(); 
+			 try {
+				statement=conect.createStatement();
+				statement.execute(query);
+			    conect.close();
+			    return true;
+			} catch (SQLException e) {e.printStackTrace(); return false;}
+	}		
+	
 	
 	public static boolean updateBeneficiarioDetalleClave(BeneficiarioDetalleClave objeto){
 	  	 Connection conect=ConnectionConfiguration.conectar();
@@ -2005,13 +2037,14 @@ public static boolean borradoHito(Hito objeto){
 	  	 Statement statement = null;
 
 					 String											query = "update geo_poligono set ";
-					 if(objeto.getNombre()!=null)					query+= "nombre=\""+objeto.getNombre()+"\"";
-					 if(objeto.getDescripcion()!=null)				query+= "descripcion=\""+objeto.getDescripcion()+"\"";
-					 if(objeto.getGeo()!=null)						query+= "geo=\""+objeto.getGeo()+"\"";
-					 if(objeto.getGeoPoligonoId()!=0)				query+= "geo_poligono_id=\""+objeto.getGeoPoligonoId()+"\"";
-					 if(objeto.getGeoPoligonoTipoId()!=0)			query+= "geo_poligono_tipo_id=\""+objeto.getGeoPoligonoTipoId()+"\"";
+					 if(objeto.getNombre()!=null)					query+= "nombre='"+objeto.getNombre()+"'";
+					 if(objeto.getDescripcion()!=null)				query+= ", descripcion='"+objeto.getDescripcion()+"'";
+					 if(objeto.getGeo()!=null)						query+= ", geo='"+objeto.getGeo()+"'";
+					 if(objeto.getGeoPoligonoId()!=0)				query+= ", geo_poligono_id="+objeto.getGeoPoligonoId()+"";
+					 if(objeto.getGeoPoligonoTipoId()!=0)			query+= ", geo_poligono_tipo_id="+objeto.getGeoPoligonoTipoId()+"";
 					 //if(objeto.isBorrado()!=false)				query+= "borrado=\""+objeto.isBorrado()+"\"";	
 					 		 
+					 query+=" where id ="+objeto.getId()+" AND geo_poligono_id="+objeto.getGeoPoligonoId();
 					 try {
 						statement=conect.createStatement();
 						statement.execute(query);
@@ -2020,6 +2053,22 @@ public static boolean borradoHito(Hito objeto){
 					} catch (SQLException e) {e.printStackTrace(); return false;}
 
 		}
+	
+	public static boolean borradoGeoPoligono(GeoPoligono objeto){
+	  	 Connection conect=ConnectionConfiguration.conectar();
+	  	 Statement statement = null;
+		 objeto.changeBorrado();
+		 	  	 
+			 String query = "update geo_poligono set borrado='"+objeto.isBorrado()+"'";
+			 
+			 query+=" where id ="+objeto.getId()+" AND geo_poligono_id="+objeto.getGeoPoligonoId(); 
+			 try {
+				statement=conect.createStatement();
+				statement.execute(query);
+			    conect.close();
+			    return true;
+			} catch (SQLException e) {e.printStackTrace(); return false;}
+	}	
 	
 	public static boolean updateAccionHasGeoPoligono(AccionHasGeoPoligono objeto){
 	  	 Connection conect=ConnectionConfiguration.conectar();
@@ -2042,7 +2091,22 @@ public static boolean borradoHito(Hito objeto){
 					    return true;
 					} catch (SQLException e) {e.printStackTrace(); return false;}
 
-		}	
+		}
+	public static boolean borradoAccionHasGeoPoligono(AccionHasGeoPoligono objeto){
+	  	 Connection conect=ConnectionConfiguration.conectar();
+	  	 Statement statement = null;
+		 objeto.changeBorrado();
+		 	  	 
+			 String query = "update accion_has_geo_poligono set borrado='"+objeto.isBorrado()+"'";
+			 
+			 query+=" where accion_id ="+objeto.getAccionId()+" AND geo_poligono_id="+objeto.getGeoPoligonoId()+" AND geo_poligono_geo_poligono_id="+objeto.getGeoPoligonoGeoPoligonoId(); 
+			 try {
+				statement=conect.createStatement();
+				statement.execute(query);
+			    conect.close();
+			    return true;
+			} catch (SQLException e) {e.printStackTrace(); return false;}
+	}		
 	
 	public static boolean updateGeoPoligonoTipo(GeoPoligonoTipo objeto){
 	  	 Connection conect=ConnectionConfiguration.conectar();
