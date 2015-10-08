@@ -99,7 +99,7 @@ if (user != null) { %>
 		tablaAccionHasEtiqueta = '<table class="table table-striped ">'+
 					  '<tr><td colspan="5">Tabla Accion Has Etiqueta</td><td><a href="#" data-toggle="modal" data-target="#accionHasEtiqueta"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
 					  '<tr><td>accionId</td><td>etiquetaId</td><td>proporcion</td><td>borrado</td><td>Editar</td><td>Borrar</td></tr>';
-		for(var w=0; w<accionHasEtiqueta.length;w++)p
+		for(var w=0; w<accionHasEtiqueta.length;w++)
 		{
 			if(accionHasEtiqueta[w].borrado == true){
 				
