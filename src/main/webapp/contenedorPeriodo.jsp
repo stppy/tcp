@@ -92,19 +92,28 @@ if (user != null) { %>
 		}).responseText;		
 		periodo=JSON.parse(periodo);
 		
+		renderPeriodo();
+		function renderPeriodo(){
+		
 		var tablaPeriodo="";
 		tablaPeriodo = '<table class="table table-hover">'+
 					  '<tr class="active"><td colspan="7">Tabla Periodo</td><td><a href="#" data-toggle="modal" data-target="#periodo"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
 					  '<tr class="active"><td>Id</td><td>Nombre</td><td>Descripción</td><td>FecheInicio</td><td>FechaFin</td><td>Borrado</td><td>Editar</td><td>Borrar</td></tr>';
-		for(var w=0; w<periodo.length;w++)
-		{
-			tablaPeriodo+='<tr><td>'+periodo[w].id+'</td><td>'+periodo[w].nombre+'</td><td>'+periodo[w].descripcion+'</td><td>'+periodo[w].fechaInicio+'</td><td>'+periodo[w].fechaFin+'</td><td>'+periodo[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosPeriodo" codigoRegistroPeriodo='+w+'></span></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';
-		}
+					  for(var w=0; w<periodo.length;w++)
+						{
+							if(periodo[w].borrado == true)
+							{
+								tablaPeriodo+='<tr><td><del>'+periodo[w].id+'</del></td><td><del>'+periodo[w].nombre+'</del></td><td><del>'+periodo[w].descripcion+'</del></td><td><del>'+periodo[w].fechaInicio+'</del></td><td><del>'+periodo[w].fechaFin+'</del></td><td><del>'+periodo[w].borrado+'</del></td><td><span class="glyphicon glyphicon-pencil registrosPeriodo" codigoRegistroPeriodo='+w+'></span></td><td><span class="glyphicon glyphicon-trash" parametrosBorradoPeriodo='+periodo[w].id+'-'+periodo[w].borrado+' id="iconoBorradoPeriodo"></span></td></tr>';
+
+							}else{
+								tablaPeriodo+='<tr><td>'+periodo[w].id+'</td><td>'+periodo[w].nombre+'</td><td>'+periodo[w].descripcion+'</td><td>'+periodo[w].fechaInicio+'</td><td>'+periodo[w].fechaFin+'</td><td>'+periodo[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosPeriodo" codigoRegistroPeriodo='+w+'></span></td><td><span class="glyphicon glyphicon-trash" parametrosBorradoPeriodo='+periodo[w].id+'-'+periodo[w].borrado+' id="iconoBorradoPeriodo"></span></td></tr>';
+							}
+						}
 		tablaPeriodo +='</table>';				
 		
 		$('.box-body').html(tablaPeriodo);
 
-		 
+		}
 		$("body").on("click", ".registrosPeriodo",function(event){
 			var codigoRegistro = $(this).attr("codigoRegistroPeriodo");
 				

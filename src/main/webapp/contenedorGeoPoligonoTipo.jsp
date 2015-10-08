@@ -92,19 +92,30 @@ if (user != null) { %>
 		}).responseText;		
 		geoPoligonoTipo=JSON.parse(geoPoligonoTipo);
 		
+		renderGeoPoligonoTipo();
+		function renderGeoPoligonoTipo(){
+		
 		var tablaGeoPoligonoTipo="";
 		tablaGeoPoligonoTipo = '<table class="table table-striped ">'+
-					  '<tr><td colspan="4">Tabla GeoPoligonoTipo</td><td><a href="#" data-toggle="modal" data-target="#geoPoligonoTipo"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
-					  '<tr><td>Id</td><td>Nombre</td><td>Descripción</td><td>borrado</td><td>Editar</td></tr>';
+					  '<tr><td colspan="5">Tabla GeoPoligonoTipo</td><td><a href="#" data-toggle="modal" data-target="#geoPoligonoTipo"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
+					  '<tr><td>Id</td><td>Nombre</td><td>Descripción</td><td>borrado</td><td>Editar</td><td>Borrado</td></tr>';
+		
 		for(var w=0; w<geoPoligonoTipo.length;w++)
 		{
-			tablaGeoPoligonoTipo+='<tr><td>'+geoPoligonoTipo[w].id+'</td><td>'+geoPoligonoTipo[w].nombre+'</td><td>'+geoPoligonoTipo[w].descripcion+'</td><td>'+geoPoligonoTipo[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosGeoPoligonoTipo" codigoRegistroGeoPoligonoTipo='+w+'></span></td></tr>';
+			if(geoPoligonoTipo[w].borrado == true)
+			{
+				tablaGeoPoligonoTipo+='<tr><td><del>'+geoPoligonoTipo[w].id+'</del></td><td><del>'+geoPoligonoTipo[w].nombre+'</del></td><td><del>'+geoPoligonoTipo[w].descripcion+'</del></td><td><del>'+geoPoligonoTipo[w].borrado+'</del></td><td><span class="glyphicon glyphicon-pencil registrosGeoPoligonoTipo" codigoRegistrogeoPoligonoTipo='+w+'></span></td><td><span class="glyphicon glyphicon-trash" parametrosBorradoGeoPoligonoTipo='+geoPoligonoTipo[w].id+'-'+geoPoligonoTipo[w].borrado+' id="iconoBorradoGeoPoligonoTipo"></span></td></tr>';
+			}else{
+				tablaGeoPoligonoTipo+='<tr><td>'+geoPoligonoTipo[w].id+'</td><td>'+geoPoligonoTipo[w].nombre+'</td><td>'+geoPoligonoTipo[w].descripcion+'</td><td>'+geoPoligonoTipo[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosGeoPoligonoTipo" codigoRegistrogeoPoligonoTipo='+w+'></span></td><td><span class="glyphicon glyphicon-trash" parametrosBorradoGeoPoligonoTipo='+geoPoligonoTipo[w].id+'-'+geoPoligonoTipo[w].borrado+' id="iconoBorradoGeoPoligonoTipo"></span></td></tr>';
+
+				
+				}
 		}
 		tablaGeoPoligonoTipo +='</table>';				
 		
 		$('.box-body').html(tablaGeoPoligonoTipo);
 
-		 
+		}
 		$("body").on("click", ".registrosGeoPoligonoTipo",function(event){
 			var codigoRegistro = $(this).attr("codigoRegistroGeoPoligonoTipo");
 				
@@ -210,9 +221,7 @@ if (user != null) { %>
     <script src="plugins/chartjs/Chart.min.js" type="text/javascript"></script>
      <!-- AdminLTE App -->
     <script src="dist/js/app.min.js" type="text/javascript"></script>   
-    
-    
-    <!-- AdminLTE dashboard demo (This is only for demo purposes) 
+       <!-- AdminLTE dashboard demo (This is only for demo purposes) 
     <script src="dist/js/pages/dashboard2.js" type="text/javascript"></script>-->
 
     <!-- Librerias para la rutina de cambio de contraseña -->

@@ -5,6 +5,7 @@ public class AccionHasProducto {
 	protected int proporcion;
 	protected int accionId;
 	protected int sprProductoId;
+	protected boolean borrado=false;
 	
 	public int getId() {
 		return id;
@@ -30,7 +31,14 @@ public class AccionHasProducto {
 	public void setSprProductoId(int sprProductoId) {
 		this.sprProductoId = sprProductoId;
 	}
-	
-	
+	public boolean isBorrado() {
+		return borrado;
+	}
+	public void setBorrado(boolean borrado) {
+		this.borrado = borrado;
+	}
+	public void changeBorrado(){
+		this.borrado=!borrado;
+	}	
 	
 }
