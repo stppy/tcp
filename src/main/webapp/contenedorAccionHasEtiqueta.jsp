@@ -92,13 +92,25 @@ if (user != null) { %>
 		}).responseText;		
 		accionHasEtiqueta=JSON.parse(accionHasEtiqueta);
 		
+		renderAccionHasEtiqueta();
+		function renderAccionHasEtiqueta(){		
+		
 		var tablaAccionHasEtiqueta="";
 		tablaAccionHasEtiqueta = '<table class="table table-striped ">'+
-					  '<tr><td colspan="6">Tabla Accion Has Etiqueta</td></tr>'+
-					  '<tr><td>accionId</td><td>etiquetaId</td><td>proporcion</td><td>borrado</td><td>Insertar</td><td>Editar</td></tr>';
-		for(var w=0; w<accionHasEtiqueta.length;w++)
+					  '<tr><td colspan="5">Tabla Accion Has Etiqueta</td><td><a href="#" data-toggle="modal" data-target="#accionHasEtiqueta"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
+					  '<tr><td>accionId</td><td>etiquetaId</td><td>proporcion</td><td>borrado</td><td>Editar</td><td>Borrar</td></tr>';
+		for(var w=0; w<accionHasEtiqueta.length;w++)p
 		{
-			tablaAccionHasEtiqueta+='<tr><td>'+accionHasEtiqueta[w].accionId+'</td><td>'+accionHasEtiqueta[w].etiquetaId+'</td><td>'+accionHasEtiqueta[w].proporcion+'</td><td>'+accionHasEtiqueta[w].borrado+'</td><td><a href="#" data-toggle="modal" data-target="#accionHasEtiqueta"><span class="glyphicon glyphicon-plus"></span></a></td><td><span class="glyphicon glyphicon-pencil registrosAccionHasEtiqueta" codigoRegistroAccionHasEtiqueta='+w+'></span></td></tr>';
+			if(accionHasEtiqueta[w].borrado == true){
+				
+					tablaAccionHasEtiqueta+='<tr><td><del>'+accionHasEtiqueta[w].accionId+'</del></td><td><del>'+accionHasEtiqueta[w].etiquetaId+'</del></td><td><del>'+accionHasEtiqueta[w].proporcion+'</del></td><td><del>'+accionHasEtiqueta[w].borrado+'</del></td><td><span class="glyphicon glyphicon-pencil registrosAccionHasEtiqueta" codigoRegistroAccionHasEtiqueta='+w+'></span></td><td><span class="glyphicon glyphicon-trash" parametrosBorradoAccionHasEtiqueta='+accionHasEtiqueta[w].accionId+'-'+accionHasEtiqueta[w].etiquetaId+'-'+accionHasEtiqueta[w].borrado+' id="iconoBorradoAccionHasEtiqueta"></span></td></tr>';
+			
+			}else{
+				
+				tablaAccionHasEtiqueta+='<tr><td>'+accionHasEtiqueta[w].accionId+'</td><td>'+accionHasEtiqueta[w].etiquetaId+'</td><td>'+accionHasEtiqueta[w].proporcion+'</td><td>'+accionHasEtiqueta[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosAccionHasEtiqueta" codigoRegistroAccionHasEtiqueta='+w+'></span></td><td><span class="glyphicon glyphicon-trash" parametrosBorradoAccionHasEtiqueta='+accionHasEtiqueta[w].accionId+'-'+accionHasEtiqueta[w].etiquetaId+'-'+accionHasEtiqueta[w].borrado+' id="iconoBorradoAccionHasEtiqueta"></span></td></tr>';
+			}
+		
+		
 		}
 		tablaAccionHasEtiqueta +='</table>';				
 		
@@ -120,6 +132,7 @@ if (user != null) { %>
 			$("#borradoAccionHasEtiqueta").val(accionHasEtiqueta[codigoRegistro].borrado);
 		});
 		
+		}
 	});
 </script>
 	

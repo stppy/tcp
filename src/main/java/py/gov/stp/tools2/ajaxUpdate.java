@@ -444,7 +444,18 @@ public class ajaxUpdate extends HttpServlet {
                 boolean status = SqlUpdates.updateHitoHasBeneficiario(objeto);   
         		myObj.addProperty("success", status);
         		out.println(myObj.toString());
-        	}    
+        	}
+        	if (accion.equals("borradoHitoHasBeneficiario")){
+        		HitoHasBeneficiario objeto = new HitoHasBeneficiario();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                objeto=gsonInsert.fromJson(json, HitoHasBeneficiario.class);
+                boolean status = SqlUpdates.borradoHitoHasBeneficiario(objeto);  
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	}         	
         	if (accion.equals("actBeneficiarioTipo")){
         		BeneficiarioTipo objeto = new BeneficiarioTipo();
         		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
@@ -466,7 +477,18 @@ public class ajaxUpdate extends HttpServlet {
                 boolean status = SqlUpdates.updateAccionHasEtiqueta(objeto);    
         		myObj.addProperty("success", status);
         		out.println(myObj.toString());
-        	}          
+        	}
+        	if (accion.equals("borradoAccionHasEtiqueta")){
+        		AccionHasEtiqueta objeto = new AccionHasEtiqueta();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                objeto=gsonInsert.fromJson(json, AccionHasEtiqueta.class);
+                boolean status = SqlUpdates.borradoAccionHasEtiqueta(objeto);  
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	}        	
         	if (accion.equals("actBeneficiario")){
         		Beneficiario objeto = new Beneficiario();
         		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
