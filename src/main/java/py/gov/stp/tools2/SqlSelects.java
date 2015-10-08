@@ -372,6 +372,7 @@ public class SqlSelects {
 				objeto.setProporcion(rs.getInt("proporcion"));
 				objeto.setAccionId(rs.getInt("accion_id"));
 				objeto.setSprProductoId(rs.getInt("spr_producto_id"));
+				objeto.setBorrado(rs.getBoolean("borrado"));
 
 				objetos.add(objeto);
 			}
