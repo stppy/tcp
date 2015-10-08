@@ -5,6 +5,7 @@ public class HitoHasBeneficiario {
 	protected int hitoAccionId;
 	protected int beneficiarioId;
 	protected boolean borrado = false;
+	protected int version;
 	
 	public int getHitoId() {
 		return hitoId;
@@ -32,7 +33,14 @@ public class HitoHasBeneficiario {
 	}
 	public void changeBorrado(){
 		this.borrado=!borrado;
-	}		
+	}
+	public int getVersion() {
+		return version;
+	}
+	public void setVersion(int version) {
+		this.version = version;
+	}
+	
 	
 	
 

@@ -6,6 +6,7 @@ public class InsLineaAccion {
 	protected int institucionId;
 	protected int periodoId;
 	protected double meta;
+	protected int version;
 	protected boolean borrado=false;
 	
 	public int getId() {
@@ -43,6 +44,12 @@ public class InsLineaAccion {
 	}
 	public void setBorrado(boolean borrado) {
 		this.borrado = borrado;
+	}
+	public int getVersion() {
+		return version;
+	}
+	public void setVersion(int version) {
+		this.version = version;
 	}
 	public void changeBorrado(){
 		this.borrado=!borrado;

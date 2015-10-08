@@ -6,6 +6,7 @@ public class BeneficiarioDetalle {
 	protected int beneficiarioDetalleClavesId;
 	protected int beneficiarioId;
 	protected boolean borrado=false;
+	protected int version;
 	
 	public int getId() {
 		return id;
@@ -40,5 +41,12 @@ public class BeneficiarioDetalle {
 	public void changeBorrado(){
 		this.borrado=!borrado;
 	}
+	public int getVersion() {
+		return version;
+	}
+	public void setVersion(int version) {
+		this.version = version;
+	}
+	
 
 }

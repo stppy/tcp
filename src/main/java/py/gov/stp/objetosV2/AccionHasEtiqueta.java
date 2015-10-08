@@ -5,6 +5,7 @@ public class AccionHasEtiqueta {
 	protected int etiquetaId;
 	protected int proporcion;
 	protected boolean borrado = false;
+	protected int version;
 	
 	public int getAccionId() {
 		return accionId;
@@ -30,6 +31,12 @@ public class AccionHasEtiqueta {
 	public void setBorrado(boolean borrado) {
 		this.borrado = borrado;
 	}
+	public int getVersion() {
+		return version;
+	}
+	public void setVersion(int version) {
+		this.version = version;
+	}	
 	public void changeBorrado(){
 		this.borrado=!borrado;
 	}		
