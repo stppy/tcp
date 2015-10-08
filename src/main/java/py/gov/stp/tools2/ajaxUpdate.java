@@ -164,7 +164,7 @@ public class ajaxUpdate extends HttpServlet {
                 if(br != null){ json = br.readLine();}
                 Gson gsonInsert = new Gson();
                 objeto=gsonInsert.fromJson(json, UnidadMedida.class);
-                boolean status = SqlUpdates.borradoUnidadMedida(objeto.isBorrado());
+                boolean status = SqlUpdates.borradoUnidadMedida(objeto);
         		myObj.addProperty("success", status);
         		out.println(myObj.toString());
         	}         	
@@ -252,7 +252,7 @@ public class ajaxUpdate extends HttpServlet {
                 if(br != null){ json = br.readLine();}
                 Gson gsonInsert = new Gson();
                 objeto=gsonInsert.fromJson(json, Institucion.class);
-                boolean status = SqlUpdates.borradoInstitucion(objeto.isBorrado());
+                boolean status = SqlUpdates.borradoInstitucion(objeto);
         		myObj.addProperty("success", status);
         		out.println(myObj.toString());
         	}          	
@@ -306,7 +306,8 @@ public class ajaxUpdate extends HttpServlet {
         		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
                 String json = "";
                 if(br != null){ json = br.readLine();}
-                Gson gsonInsert = new Gson();
+                //Gson gsonInsert = new Gson();
+                Gson gsonInsert = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
                 objeto=gsonInsert.fromJson(json, Hito.class);
                 boolean status = SqlUpdates.updateHito(objeto);
         		myObj.addProperty("success", status);
@@ -319,7 +320,7 @@ public class ajaxUpdate extends HttpServlet {
                 if(br != null){ json = br.readLine();}
                 Gson gsonInsert = new Gson();
                 objeto=gsonInsert.fromJson(json, Hito.class);
-                boolean status = SqlUpdates.borradoHito(objeto.isBorrado());
+                boolean status = SqlUpdates.borradoHito(objeto);
         		myObj.addProperty("success", status);
         		out.println(myObj.toString());
         	}         	
@@ -342,10 +343,33 @@ public class ajaxUpdate extends HttpServlet {
                 if(br != null){ json = br.readLine();}
                 Gson gsonInsert = new Gson();
                 objeto=gsonInsert.fromJson(json, Accion.class);
-                boolean status = SqlUpdates.borradoAccion(objeto.isBorrado());
+                boolean status = SqlUpdates.borradoAccion(objeto);
         		myObj.addProperty("success", status);
         		out.println(myObj.toString());
         	}         	
+        	
+        	if (accion.equals("borradoGeoPoligonoTipo")){
+        		GeoPoligonoTipo objeto = new GeoPoligonoTipo();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                objeto=gsonInsert.fromJson(json, GeoPoligonoTipo.class);
+                boolean status = SqlUpdates.borradoGeoPoligonoTipo(objeto);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	} 
+         	if (accion.equals("borradoAccionHasProducto")){
+        		AccionHasProducto objeto = new AccionHasProducto();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                objeto=gsonInsert.fromJson(json, AccionHasProducto.class);
+                boolean status = SqlUpdates.borradoAccionHasProducto(objeto);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	}  
         	if (accion.equals("actAccionHasProducto")){
         		AccionHasProducto objeto = new AccionHasProducto();
         		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
@@ -368,6 +392,17 @@ public class ajaxUpdate extends HttpServlet {
         		myObj.addProperty("success", status);
         		out.println(myObj.toString());
         	}  
+        	if (accion.equals("borradoSprProducto")){
+        		SprProducto objeto = new SprProducto();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                objeto=gsonInsert.fromJson(json, SprProducto.class);
+                boolean status = SqlUpdates.borradoSprProducto(objeto);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	}         	
         	if (accion.equals("actWs")){
         		Ws objeto = new Ws();
         		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
@@ -386,7 +421,7 @@ public class ajaxUpdate extends HttpServlet {
                 if(br != null){ json = br.readLine();}
                 Gson gsonInsert = new Gson();
                 objeto=gsonInsert.fromJson(json, Ws.class);
-                boolean status = SqlUpdates.borradoWs(objeto.isBorrado()); 
+                boolean status = SqlUpdates.borradoWs(objeto);
         		myObj.addProperty("success", status);
         		out.println(myObj.toString());
         	}         	
@@ -401,6 +436,7 @@ public class ajaxUpdate extends HttpServlet {
         		myObj.addProperty("success", status);
         		out.println(myObj.toString());
         	}   
+
         	if (accion.equals("borradoEvidencia")){
         		Evidencia objeto = new Evidencia();
         		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
@@ -408,10 +444,11 @@ public class ajaxUpdate extends HttpServlet {
                 if(br != null){ json = br.readLine();}
                 Gson gsonInsert = new Gson();
                 objeto=gsonInsert.fromJson(json, Evidencia.class);
-                boolean status = SqlUpdates.borradoEvidencia(objeto.isBorrado());  
+                boolean status = SqlUpdates.borradoEvidencia(objeto);  
         		myObj.addProperty("success", status);
         		out.println(myObj.toString());
-        	}          	
+        	}         	
+        
         	if (accion.equals("actWsTipo")){
         		WsTipo objeto = new WsTipo();
         		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
@@ -430,7 +467,7 @@ public class ajaxUpdate extends HttpServlet {
                 if(br != null){ json = br.readLine();}
                 Gson gsonInsert = new Gson();
                 objeto=gsonInsert.fromJson(json, WsTipo.class);
-                boolean status = SqlUpdates.borradoWsTipo(objeto.isBorrado());  
+                boolean status = SqlUpdates.borradoWsTipo(objeto);
         		myObj.addProperty("success", status);
         		out.println(myObj.toString());
         	}            	
@@ -467,6 +504,29 @@ public class ajaxUpdate extends HttpServlet {
         		myObj.addProperty("success", status);
         		out.println(myObj.toString());
         	}    
+        	if (accion.equals("borradoBeneficiarioTipo")){
+        		BeneficiarioTipo objeto = new BeneficiarioTipo();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                objeto=gsonInsert.fromJson(json, BeneficiarioTipo.class);
+                boolean status = SqlUpdates.borradoBeneficiarioTipo(objeto);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	}          
+        	
+        	if (accion.equals("borradoBeneficiario")){
+        		Beneficiario objeto = new Beneficiario();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                objeto=gsonInsert.fromJson(json, Beneficiario.class);
+                boolean status = SqlUpdates.borradoBeneficiario(objeto);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	}  
         	if (accion.equals("actAccionHasEtiqueta")){
         		AccionHasEtiqueta objeto = new AccionHasEtiqueta();
         		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
@@ -511,6 +571,17 @@ public class ajaxUpdate extends HttpServlet {
         		myObj.addProperty("success", status);
         		out.println(myObj.toString());
         	}  
+        	if (accion.equals("borradoEtiqueta")){
+        		Etiqueta objeto = new Etiqueta();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                objeto=gsonInsert.fromJson(json, Etiqueta.class);
+                boolean status = SqlUpdates.borradoEtiqueta(objeto);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	}          	
         	if (accion.equals("actBeneficiarioDetalle")){
         		BeneficiarioDetalle objeto = new BeneficiarioDetalle();
         		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
@@ -521,7 +592,18 @@ public class ajaxUpdate extends HttpServlet {
                 boolean status = SqlUpdates.updateBeneficiarioDetalle(objeto);    
         		myObj.addProperty("success", status);
         		out.println(myObj.toString());
-        	}  
+        	}
+        	if (accion.equals("borradoBeneficiarioDetalle")){
+        		BeneficiarioDetalle objeto = new BeneficiarioDetalle();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                objeto=gsonInsert.fromJson(json, BeneficiarioDetalle.class);
+                boolean status = SqlUpdates.borradoBeneficiarioDetalle(objeto);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	}         	
         	if (accion.equals("actBeneficiarioDetalleClave")){
         		BeneficiarioDetalleClave objeto = new BeneficiarioDetalleClave();
         		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
@@ -544,6 +626,17 @@ public class ajaxUpdate extends HttpServlet {
         		myObj.addProperty("success", status);
         		out.println(myObj.toString());
         	}  
+        	if (accion.equals("borradoGeoPoligono")){
+        		GeoPoligono objeto = new GeoPoligono();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                objeto=gsonInsert.fromJson(json, GeoPoligono.class);
+                boolean status = SqlUpdates.borradoGeoPoligono(objeto);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	}          	
         	if (accion.equals("actAccionHasGeoPoligono")){
         		AccionHasGeoPoligono objeto = new AccionHasGeoPoligono();
         		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
@@ -554,7 +647,18 @@ public class ajaxUpdate extends HttpServlet {
                 boolean status = SqlUpdates.updateAccionHasGeoPoligono(objeto);     
         		myObj.addProperty("success", status);
         		out.println(myObj.toString());
-        	}      
+        	}
+        	if (accion.equals("borradoAccionHasGeoPoligono")){
+        		AccionHasGeoPoligono objeto = new AccionHasGeoPoligono();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                objeto=gsonInsert.fromJson(json, AccionHasGeoPoligono.class);
+                boolean status = SqlUpdates.borradoAccionHasGeoPoligono(objeto);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	}         	
         	if (accion.equals("actGeoPoligonoTipo")){
         		GeoPoligonoTipo objeto = new GeoPoligonoTipo();
         		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));

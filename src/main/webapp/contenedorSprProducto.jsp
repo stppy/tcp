@@ -92,18 +92,27 @@ if (user != null) { %>
 		}).responseText;		
 		sprProducto=JSON.parse(sprProducto);
 		
-		var tablaSprProducto="";
-		tablaSprProducto = '<table class="table table-hover">'+
-					  '<tr class="active"><td colspan="11">Tabla Spr Productos</td><td><a href="#" data-toggle="modal" data-target="#sprProducto"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
-					  '<tr class="active"><td>Id</td><td>nivelId</td><td>entidadId</td><td>tipoId</td><td>programaId</td><td>subprogramaId</td><td>proyectoId</td><td>funcionalId</td><td>unidadResponsableId</td><td>productoId</td><td>Editar</td><td>Borrar</td></tr>';
-		for(var w=0; w<sprProducto.length;w++)
-		{
-			tablaSprProducto+='<tr><td>'+sprProducto[w].id+'</td><td>'+sprProducto[w].nivelId+'</td><td>'+sprProducto[w].entidadId+'</td><td>'+sprProducto[w].tipoId+'</td><td>'+sprProducto[w].programaId+'</td><td>'+sprProducto[w].subprogramaId+'</td><td>'+sprProducto[w].proyectoId+'</td><td>'+sprProducto[w].funcionalId+'</td><td>'+sprProducto[w].unidadResponsableId+'</td><td>'+sprProducto[w].productoId+'</td><td><span class="glyphicon glyphicon-pencil registrosSprProducto" codigoRegistroSprProducto='+w+'></span></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';
+		renderSprProducto();
+		function renderSprProducto(){
+			
+			$('.box-body').html('');
+			var tablaSprProducto="";
+			tablaSprProducto = '<table class="table table-hover">'+
+						  '<tr class="active"><td colspan="12">Tabla Spr Productos</td><td><a href="#" data-toggle="modal" data-target="#sprProducto"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
+						  '<tr class="active"><td>Id</td><td>nivelId</td><td>entidadId</td><td>tipoId</td><td>programaId</td><td>subprogramaId</td><td>proyectoId</td><td>funcionalId</td><td>unidadResponsableId</td><td>productoId</td><td>Borrado</td><td>Editar</td><td>Borrar</td></tr>';
+			for(var w=0; w<sprProducto.length;w++)
+			{
+				if(sprProducto[w].borrado == true)
+				{
+					tablaSprProducto+='<tr><td><del>'+sprProducto[w].id+'</del></td><td><del>'+sprProducto[w].nivelId+'</del></td><td><del>'+sprProducto[w].entidadId+'</del></td><td><del>'+sprProducto[w].tipoId+'</del></td><td><del>'+sprProducto[w].programaId+'</del></td><td><del>'+sprProducto[w].subprogramaId+'</del></td><td><del>'+sprProducto[w].proyectoId+'</del></td><td><del>'+sprProducto[w].funcionalId+'</del></td><td><del>'+sprProducto[w].unidadResponsableId+'</del></td><td><del>'+sprProducto[w].productoId+'</del></td><td><del>'+sprProducto[w].borrado+'</del></td><td><span class="glyphicon glyphicon-pencil registrosSprProducto" codigoRegistroSprProducto='+w+'></span></td><td><span class="glyphicon glyphicon-trash" id="iconoBorradoSprProducto" parametrosBorradoSprProducto='+sprProducto[w].id+'-'+sprProducto[w].borrado+'></span></td></tr>';
+				}else{
+					tablaSprProducto+='<tr><td>'+sprProducto[w].id+'</td><td>'+sprProducto[w].nivelId+'</td><td>'+sprProducto[w].entidadId+'</td><td>'+sprProducto[w].tipoId+'</td><td>'+sprProducto[w].programaId+'</td><td>'+sprProducto[w].subprogramaId+'</td><td>'+sprProducto[w].proyectoId+'</td><td>'+sprProducto[w].funcionalId+'</td><td>'+sprProducto[w].unidadResponsableId+'</td><td>'+sprProducto[w].productoId+'</td><td>'+sprProducto[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosSprProducto" codigoRegistroSprProducto='+w+'></span></td><td><span class="glyphicon glyphicon-trash" id="iconoBorradoSprProducto" parametrosBorradoSprProducto='+sprProducto[w].id+'-'+sprProducto[w].borrado+'></span></td></tr>';
+				}
+			}
+			tablaSprProducto +='</table>';				
+			
+			$('.box-body').html(tablaSprProducto);
 		}
-		tablaSprProducto +='</table>';				
-		
-		$('.box-body').html(tablaSprProducto);
-
 		 
 		$("body").on("click", ".registrosSprProducto",function(event){
 			var codigoRegistro = $(this).attr("codigoRegistroSprProducto");

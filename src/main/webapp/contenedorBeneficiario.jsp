@@ -92,19 +92,31 @@ if (user != null) { %>
 		}).responseText;		
 		beneficiario=JSON.parse(beneficiario);
 		
+		
+		renderBeneficiario();
+		function renderBeneficiario(){
+		$('.box-body').html('');
+		
 		var tablaBeneficiario="";
 		tablaBeneficiario = '<table class="table table-striped ">'+
 					  '<tr><td colspan="5">Tabla Beneficiario</td></tr>'+
-					  '<tr><td>Id</td><td>Nombre</td><td>Descripción</td><td>beneficiarioTipoId</td><td>borrado</td></tr>';
+					  '<tr><td>Id</td><td>Nombre</td><td>Descripción</td><td>beneficiarioTipoId</td><td>borrado</td><td>Editar</td><td>Borrar</td></tr>';
+	
 		for(var w=0; w<beneficiario.length;w++)
 		{
-			tablaBeneficiario+='<tr><td>'+beneficiario[w].id+'</td><td>'+beneficiario[w].nombre+'</td><td>'+beneficiario[w].descripcion+'</td><td>'+beneficiario[w].beneficiarioTipoId+'</td><td>'+beneficiario[w].borrado+'</td><td><a href="#" data-toggle="modal" data-target="#beneficiario"><span class="glyphicon glyphicon-plus"></span></a></td><td><span class="glyphicon glyphicon-pencil registrosBeneficiario" codigoRegistroBeneficiario='+w+'></span></td></tr>';
+			if(beneficiario[w].borrado == true)
+			{
+				tablaBeneficiario+='<tr><td><del>'+beneficiario[w].id+'</del></td><td><del>'+beneficiario[w].nombre+'</del></td><td><del>'+beneficiario[w].descripcion+'</del></td><td><del>'+beneficiario[w].beneficiarioTipoId+'</del></td><td><del>'+beneficiario[w].borrado+'</del></td><td><span class="glyphicon glyphicon-pencil registrosBeneficiario" codigoRegistroBeneficiario='+w+'></span></td><td><span class="glyphicon glyphicon-trash" parametrosBorradoBeneficiario='+beneficiario[w].id+'-'+beneficiario[w].borrado+' id="iconoBorradoBeneficiario"></span></td></tr>';
+
+			}else{
+				tablaBeneficiario+='<tr><td>'+beneficiario[w].id+'</td><td>'+beneficiario[w].nombre+'</td><td>'+beneficiario[w].descripcion+'</td><td>'+beneficiario[w].beneficiarioTipoId+'</td><td>'+beneficiario[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosBeneficiario" codigoRegistroBeneficiario='+w+'></span></td><td><span class="glyphicon glyphicon-trash" parametrosBorradoBeneficiario='+beneficiario[w].id+'-'+beneficiario[w].borrado+' id="iconoBorradoBeneficiario"></span></td></tr>';
+			}
 		}
 		tablaBeneficiario +='</table>';				
 		
 		$('.box-body').html(tablaBeneficiario);
 
-		 
+		} 
 		$("body").on("click", ".registrosBeneficiario",function(event){
 			var codigoRegistro = $(this).attr("codigoRegistroBeneficiario");
 				

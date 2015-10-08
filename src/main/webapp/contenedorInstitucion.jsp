@@ -70,60 +70,69 @@ if (user != null) { %>
 
 <script>
 	
-	$(document).ready(function(){
-		var entidadCas = "";
-		entidadCas ="<%=attributes.get("entidad") %>";
-		var usuarios = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
-		  	type:'get',
-		  	dataType:'json',
-		  	async:false       
-		}).responseText;
-		usuarios = JSON.parse(usuarios);
-		usuarios = usuarios.usuarios;
-		$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
-		$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
+$(document).ready(function(){
+	var entidadCas = "";
+	entidadCas ="<%=attributes.get("entidad") %>";
+	var usuarios = $.ajax({
+		url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	usuarios = JSON.parse(usuarios);
+	usuarios = usuarios.usuarios;
+	$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
+	$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
+	
+	var institucion = $.ajax({
+		url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;		
+	institucion=JSON.parse(institucion);
+	
+	renderInstitucion();
+	function renderInstitucion(){
 		
-		var institucion = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
-		  	type:'get',
-		  	dataType:'json',
-		  	async:false       
-		}).responseText;		
-		institucion=JSON.parse(institucion);
-		
+		$('.box-body').html('');
 		var tablaInstitucion="";
 		tablaInstitucion = '<table class="table table-hover">'+
 					  '<tr class="active"><td colspan="11">Tabla Institución</td><td><a href="#" data-toggle="modal" data-target="#institucion"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
 					  '<tr class="active"><td>Id</td><td>Nombre</td><td>Descripción</td><td>Sigla</td><td>nivelId</td><td>entidadId</td><td>unidadJerarquicaId</td><td>unidadResponsableId</td><td>orden</td><td>borrado</td><td>Editar</td><td>Borrar</td></tr>';
 		for(var w=0; w<institucion.length;w++)
 		{
-			tablaInstitucion+='<tr><td>'+institucion[w].id+'</td><td>'+institucion[w].nombre+'</td><td>'+institucion[w].descripcion+'</td><td>'+institucion[w].sigla+'</td><td>'+institucion[w].nivelId+'</td><td>'+institucion[w].entidadId+'</td><td>'+institucion[w].unidadJerarquicaId+'</td><td>'+institucion[w].unidadResponsableId+'</td><td>'+institucion[w].orden+'</td><td>'+institucion[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosInstitucion" codigoRegistroInstitucion='+w+'></span></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';
+			if(institucion[w].borrado == true)
+			{
+				tablaInstitucion+='<tr><td><del>'+institucion[w].id+'</del></td><td><del>'+institucion[w].nombre+'</del></td><td><del>'+institucion[w].descripcion+'</del></td><td><del>'+institucion[w].sigla+'</del></td><td><del>'+institucion[w].nivelId+'</del></td><td><del>'+institucion[w].entidadId+'</del></td><td><del>'+institucion[w].unidadJerarquicaId+'</del></td><td><del>'+institucion[w].unidadResponsableId+'</del></td><td><del>'+institucion[w].orden+'</del></td><td><del>'+institucion[w].borrado+'</del></td><td><span class="glyphicon glyphicon-pencil registrosInstitucion" codigoRegistroInstitucion='+w+'></span></td><td><span class="glyphicon glyphicon-trash" id="iconoBorradoInstitucion" parametrosBorradoInstitucion='+institucion[w].id+'-'+institucion[w].borrado+'></span></td></tr>';
+			}else{
+				tablaInstitucion+='<tr><td>'+institucion[w].id+'</td><td>'+institucion[w].nombre+'</td><td>'+institucion[w].descripcion+'</td><td>'+institucion[w].sigla+'</td><td>'+institucion[w].nivelId+'</td><td>'+institucion[w].entidadId+'</td><td>'+institucion[w].unidadJerarquicaId+'</td><td>'+institucion[w].unidadResponsableId+'</td><td>'+institucion[w].orden+'</td><td>'+institucion[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosInstitucion" codigoRegistroInstitucion='+w+'></span></td><td><span class="glyphicon glyphicon-trash" id="iconoBorradoInstitucion" parametrosBorradoInstitucion='+institucion[w].id+'-'+institucion[w].borrado+'></span></td></tr>';
+			}
 		}
 		tablaInstitucion +='</table>';				
 		
 		$('.box-body').html(tablaInstitucion);
-
-		 
-		$("body").on("click", ".registrosInstitucion",function(event){
-			var codigoRegistro = $(this).attr("codigoRegistroInstitucion");
-				
-			$("#borradoInstitucion").remove();
-			$("#guardarInstitucion").remove();
-			$('#institucion').modal('show');
-			$("#institucion").find(".form-horizontal").append('<div class="form-group" id="borradoInstitucion"><div class="col-lg-offset-2 col-lg-10"><button type="submit" class="btn btn-success" id="actualizarInstitucion">Actualizar</button></div></div>');
-			$("#idInstitucion").val(institucion[codigoRegistro].id);
-			$("#nombreInstitucion").val(institucion[codigoRegistro].nombre);
-			$("#descripcionInstitucion").val(institucion[codigoRegistro].descripcion);
-			$("#siglaInstitucion").val(institucion[codigoRegistro].sigla);
-			$("#nivelIdInstitucion").val(institucion[codigoRegistro].nivelId);
-			$("#entidadIdInstitucion").val(institucion[codigoRegistro].entidadId);
-			$("#unidadJerarquicaIdInstitucion").val(institucion[codigoRegistro].unidadJerarquicaId);
-			$("#unidadResponsableIdInstitucion").val(institucion[codigoRegistro].unidadResponsableId);
-			$("#ordenInstitucion").val(institucion[codigoRegistro].orden);
-		});
-		
+	}
+	 
+	$("body").on("click", ".registrosInstitucion",function(event){
+		var codigoRegistro = $(this).attr("codigoRegistroInstitucion");
+			
+		$("#borradoInstitucion").remove();
+		$("#guardarInstitucion").remove();
+		$('#institucion').modal('show');
+		$("#institucion").find(".form-horizontal").append('<div class="form-group" id="borradoInstitucion"><div class="col-lg-offset-2 col-lg-10"><button type="submit" class="btn btn-success" id="actualizarInstitucion">Actualizar</button></div></div>');
+		$("#idInstitucion").val(institucion[codigoRegistro].id);
+		$("#nombreInstitucion").val(institucion[codigoRegistro].nombre);
+		$("#descripcionInstitucion").val(institucion[codigoRegistro].descripcion);
+		$("#siglaInstitucion").val(institucion[codigoRegistro].sigla);
+		$("#nivelIdInstitucion").val(institucion[codigoRegistro].nivelId);
+		$("#entidadIdInstitucion").val(institucion[codigoRegistro].entidadId);
+		$("#unidadJerarquicaIdInstitucion").val(institucion[codigoRegistro].unidadJerarquicaId);
+		$("#unidadResponsableIdInstitucion").val(institucion[codigoRegistro].unidadResponsableId);
+		$("#ordenInstitucion").val(institucion[codigoRegistro].orden);
 	});
+	
+});
 </script>
 	
     <div class="wrapper">

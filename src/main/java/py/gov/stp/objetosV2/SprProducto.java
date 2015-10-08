@@ -11,6 +11,7 @@ public class SprProducto {
 	protected int funcionalId;
 	protected int unidadResponsableId;
 	protected int productoId;
+	protected boolean borrado=false;
 	
 	public int getId() {
 		return id;
@@ -72,8 +73,14 @@ public class SprProducto {
 	public void setProductoId(int productoId) {
 		this.productoId = productoId;
 	}
-	
-	
-	
+	public boolean isBorrado() {
+		return borrado;
+	}
+	public void setBorrado(boolean borrado) {
+		this.borrado = borrado;
+	}
+	public void changeBorrado(){
+		this.borrado=!borrado;
+	}
 
 }

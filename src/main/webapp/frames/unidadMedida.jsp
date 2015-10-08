@@ -130,4 +130,49 @@ $("body").on("click", "#actualizarUnidadMedida",function(event){
 	        }
 	 });		
 });	
+
+$("body").on("click", "#iconoBorradoUnidadMedida",function(event){		
+	var objeto = new Object();
+	var accion = "borradoUnidadMedida";
+	var parametrosBorradoUnidadMedida = $(this).attr("parametrosBorradoUnidadMedida");
+    var idParsed = parametrosBorradoUnidadMedida.split("-");                                                            
+	var id = idParsed[0];
+	var borrado = idParsed[1];
+	
+	objeto.id = id;
+	objeto.borrado = borrado;
+
+	$.ajax({
+		url: "http://tablero2015.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
+	    type: 'POST',
+	    dataType: 'json',
+	    data: JSON.stringify(objeto),
+	    contentType: 'application/json',
+	    mimeType: 'application/json',
+    
+	    success: function (data)
+	    {
+	    	if (data.success == true)
+	    	{
+	    		$("#tituloModalUsuario").html('');
+				$("#tituloModalUsuario").append('<p class="text-success">GUARDADO</p>');
+				 		$("#pass-viejo-form").val("");
+				$("#pass-nuevo-form").val("");
+				$("#pass-nuevo1-form").val("");	
+			}else{
+	    		if (data.success == false)
+	    		{
+	    			$("#tituloModalUsuario").html('');
+	      			$("#tituloModalUsuario").append('<p class="text-danger">Error no se ha guardado</p>');
+	    		}
+	    	}
+	    },
+	    error: function(data,status,er)
+	    {
+	    	$("#tituloModalUsuario").html('');
+	    	$("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intente de nuevo</p>');
+	    }
+	});
+	window.location.href = "http://tablero2015.stp.gov.py/tablero/contenedorUnidadMedida.jsp";
+});	
 </script>

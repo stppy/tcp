@@ -92,18 +92,29 @@ if (user != null) { %>
 		}).responseText;		
 		unidadMedida=JSON.parse(unidadMedida);
 		
+		renderUnidadMedida();
+		function renderUnidadMedida(){
+			
+		$('.box-body').html('');
 		var tablaUnidadMedida="";
 		tablaUnidadMedida = '<table class="table table-hover">'+
 					  '<tr class="active"><td colspan="6">Tabla Unidad Medida</td><td><a href="#" data-toggle="modal" data-target="#unidadMedida"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
 					  '<tr class="active"><td>Id</td><td>Nombre</td><td>Descripción</td><td>Sigla</td><td>borrado</td><td>Editar</td><td>Borrar</td></tr>';
 		for(var w=0; w<unidadMedida.length;w++)
 		{
-			tablaUnidadMedida+='<tr><td>'+unidadMedida[w].id+'</td><td>'+unidadMedida[w].nombre+'</td><td>'+unidadMedida[w].descripcion+'</td><td>'+unidadMedida[w].sigla+'</td><td>'+unidadMedida[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosUnidadMedida" codigoRegistroUnidadMedida='+w+'></span></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';
+			if (unidadMedida[w].borrado == true)
+			{
+				tablaUnidadMedida+='<tr><td><del>'+unidadMedida[w].id+'</del></td><td><del>'+unidadMedida[w].nombre+'</del></td><td><del>'+unidadMedida[w].descripcion+'</del></td><td><del>'+unidadMedida[w].sigla+'</del></td><td><del>'+unidadMedida[w].borrado+'</del></td><td><span class="glyphicon glyphicon-pencil registrosUnidadMedida" codigoRegistroUnidadMedida='+w+'></span></td><td><span class="glyphicon glyphicon-trash" id="iconoBorradoUnidadMedida" parametrosBorradoUnidadMedida='+unidadMedida[w].id+'-'+unidadMedida[w].borrado+'></span></td></tr>';
+			}else{
+				tablaUnidadMedida+='<tr><td>'+unidadMedida[w].id+'</td><td>'+unidadMedida[w].nombre+'</td><td>'+unidadMedida[w].descripcion+'</td><td>'+unidadMedida[w].sigla+'</td><td>'+unidadMedida[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosUnidadMedida" codigoRegistroUnidadMedida='+w+'></span></td><td><span class="glyphicon glyphicon-trash" id="iconoBorradoUnidadMedida" parametrosBorradoUnidadMedida='+unidadMedida[w].id+'-'+unidadMedida[w].borrado+'></span></td></tr>';
+				
+			}
 		}
 		tablaUnidadMedida +='</table>';				
 		
 		$('.box-body').html(tablaUnidadMedida);
 
+		}
 		 
 		$("body").on("click", ".registrosUnidadMedida",function(event){
 			var codigoRegistro = $(this).attr("codigoRegistroUnidadMedida");

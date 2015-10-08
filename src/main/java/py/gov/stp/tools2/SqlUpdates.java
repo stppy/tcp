@@ -1317,10 +1317,14 @@ public class SqlUpdates {
 
 		}
 	
-	public static boolean borradoUnidadMedida(boolean flagBorrado){
+	public static boolean borradoUnidadMedida(UnidadMedida objeto){
 	  	 Connection conect=ConnectionConfiguration.conectar();
 	  	 Statement statement = null;
-			 String query = "update unidad_medida set borrado=\""+flagBorrado+"\"";	
+		 objeto.changeBorrado();
+			 	  	 
+			 String query = "update unidad_medida set borrado='"+objeto.isBorrado()+"'";	
+			 
+			 query+=" where id ="+objeto.getId(); 
 			 try {
 				statement=conect.createStatement();
 				statement.execute(query);
@@ -1433,6 +1437,24 @@ public class SqlUpdates {
 
 		}
 	
+	public static boolean borradoGeoPoligonoTipo(GeoPoligonoTipo objeto){
+	  	 Connection conect=ConnectionConfiguration.conectar();
+	  	 Statement statement = null;
+		  	objeto.changeBorrado();
+	  	 
+			 String query = "update geo_poligono_tipo set borrado='"+objeto.isBorrado()+"'";
+			 
+			 query+=" where id ="+objeto.getId();
+			 try {
+				statement=conect.createStatement();
+				statement.execute(query);
+			    conect.close();
+			    return true;
+			} catch (SQLException e) {e.printStackTrace(); return false;}
+	}	
+	
+		
+	
 	public static boolean borradoInsLineaAccion(InsLineaAccion objeto){
 	  	 Connection conect=ConnectionConfiguration.conectar();
 	  	 Statement statement = null;
@@ -1479,16 +1501,21 @@ public class SqlUpdates {
 	
 	 	
 	
-	public static boolean borradoInstitucion(boolean flagBorrado){
+	public static boolean borradoInstitucion(Institucion objeto){
 	  	 Connection conect=ConnectionConfiguration.conectar();
 	  	 Statement statement = null;
-			 String query = "update institucion set borrado=\""+flagBorrado+"\"";	
-			 try {
-				statement=conect.createStatement();
-				statement.execute(query);
-			    conect.close();
-			    return true;
-			} catch (SQLException e) {e.printStackTrace(); return false;}
+	  	 objeto.changeBorrado();
+		  	 
+		 String query = "update institucion set borrado='"+objeto.isBorrado()+"'";	
+		 
+		 query+=" where id ="+objeto.getId(); 
+		 
+		 try {
+			statement=conect.createStatement();
+			statement.execute(query);
+		    conect.close();
+		    return true;
+		 } catch (SQLException e) {e.printStackTrace(); return false;}
 	}		
 	
 	public static boolean updatePeriodo(Periodo objeto){
@@ -1514,17 +1541,22 @@ public class SqlUpdates {
 		}	
 	
 	public static boolean borradoPeriodo(Periodo objeto){
-	  	 Connection conect=ConnectionConfiguration.conectar();
+		Connection conect=ConnectionConfiguration.conectar();
 	  	 Statement statement = null;
-	  	 objeto.changeBorrado();
-			 String query = "update periodo set borrado=\""+objeto.isBorrado()+"\"";	
+		  	objeto.changeBorrado();
+	  	 
+			 String query = "update periodo set borrado='"+objeto.isBorrado()+"'";
+			 
+			 query+=" where id ="+objeto.getId();
 			 try {
 				statement=conect.createStatement();
 				statement.execute(query);
 			    conect.close();
 			    return true;
 			} catch (SQLException e) {e.printStackTrace(); return false;}
-	}		
+	}	
+	
+	
 	
 	public static boolean updateHitoTipo(HitoTipo objeto){
 	  	 Connection conect=ConnectionConfiguration.conectar();
@@ -1550,7 +1582,7 @@ public class SqlUpdates {
 	public static boolean borradoHitoTipo(HitoTipo objeto){
 	  	 Connection conect=ConnectionConfiguration.conectar();
 	  	 Statement statement = null;
-	  	objeto.changeBorrado();
+	  	 objeto.changeBorrado();
 	  	
 			 String query = "update hito_tipo set borrado='"+objeto.isBorrado()+"'";	
 			 
@@ -1593,17 +1625,21 @@ public class SqlUpdates {
 
 		}
 	
-	public static boolean borradoHito(boolean flagBorrado){
-	  	 Connection conect=ConnectionConfiguration.conectar();
-	  	 Statement statement = null;
-			 String query = "update hito set borrado=\""+flagBorrado+"\"";	
-			 try {
-				statement=conect.createStatement();
-				statement.execute(query);
-			    conect.close();
-			    return true;
-			} catch (SQLException e) {e.printStackTrace(); return false;}
-	}		
+public static boolean borradoHito(Hito objeto){
+  	 Connection conect=ConnectionConfiguration.conectar();
+  	 Statement statement = null;
+  	 objeto.changeBorrado();
+  	 
+  	 String query = "update hito set borrado='"+objeto.isBorrado()+"'";	
+			 
+	 query+=" where id ="+objeto.getId()+" AND accion_id ="+objeto.getAccionId(); 
+	 try {
+		statement=conect.createStatement();
+		statement.execute(query);
+	    conect.close();
+	    return true;
+	  } catch (SQLException e) {e.printStackTrace(); return false;}
+}		
 	
 	public static boolean updateAccion(Accion objeto){
 	  	 Connection conect=ConnectionConfiguration.conectar();
@@ -1630,16 +1666,20 @@ public class SqlUpdates {
 
 		}
 	
-	public static boolean borradoAccion(boolean flagBorrado){
+	public static boolean borradoAccion(Accion objeto){
 	  	 Connection conect=ConnectionConfiguration.conectar();
 	  	 Statement statement = null;
-			 String query = "update accion set borrado=\""+flagBorrado+"\"";	
-			 try {
-				statement=conect.createStatement();
-				statement.execute(query);
-			    conect.close();
-			    return true;
-			} catch (SQLException e) {e.printStackTrace(); return false;}
+	  	 objeto.changeBorrado();
+	  	 
+		 String query = "update accion set borrado='"+objeto.isBorrado()+"'";	
+		 
+		 query+=" where id ="+objeto.getId(); 	
+		 try {
+			statement=conect.createStatement();
+			statement.execute(query);
+		    conect.close();
+		    return true;
+		 }catch (SQLException e) {e.printStackTrace(); return false;}
 	}		
 	
 	public static boolean updateAccionHasProducto(AccionHasProducto objeto){
@@ -1687,7 +1727,23 @@ public class SqlUpdates {
 					    return true;
 					} catch (SQLException e) {e.printStackTrace(); return false;}
 
-		}	
+		}
+	
+	public static boolean borradoSprProducto(SprProducto objeto){
+	  	 Connection conect=ConnectionConfiguration.conectar();
+	  	 Statement statement = null;
+	  	 objeto.changeBorrado();
+	  	 
+		 String query = "update spr_producto set borrado='"+objeto.isBorrado()+"'";	
+		 
+		 query+=" where id ="+objeto.getId(); 	
+		 try {
+			statement=conect.createStatement();
+			statement.execute(query);
+		    conect.close();
+		    return true;
+		 }catch (SQLException e) {e.printStackTrace(); return false;}
+	}	
 	
 	public static boolean updateWs(Ws objeto){
 	  	 Connection conect=ConnectionConfiguration.conectar();
@@ -1717,10 +1773,14 @@ public class SqlUpdates {
 
 		}	
 	
-	public static boolean borradoWs(boolean flagBorrado){
+	public static boolean borradoWs(Ws objeto){
 	  	 Connection conect=ConnectionConfiguration.conectar();
 	  	 Statement statement = null;
-			 String query = "update ws set borrado=\""+flagBorrado+"\"";	
+	  	 objeto.changeBorrado();
+	  	 
+	  	 String query = "update ws set borrado='"+objeto.isBorrado()+"'";	
+				 
+		 query+=" where id ="+objeto.getId();	
 			 try {
 				statement=conect.createStatement();
 				statement.execute(query);
@@ -1752,17 +1812,22 @@ public class SqlUpdates {
 
 		}
 	
-	public static boolean borradoEvidencia(boolean flagBorrado){
+	
+	public static boolean borradoEvidencia(Evidencia objeto){
 	  	 Connection conect=ConnectionConfiguration.conectar();
 	  	 Statement statement = null;
-			 String query = "update evidencia set borrado=\""+flagBorrado+"\"";	
-			 try {
-				statement=conect.createStatement();
-				statement.execute(query);
-			    conect.close();
-			    return true;
-			} catch (SQLException e) {e.printStackTrace(); return false;}
-	}		
+	  	 objeto.changeBorrado();
+	  	 
+		 String query = "update evidencia set borrado='"+objeto.isBorrado()+"'";	
+		 
+		 query+=" where id ="+objeto.getId(); 	
+		 try {
+			statement=conect.createStatement();
+			statement.execute(query);
+		    conect.close();
+		    return true;
+		 }catch (SQLException e) {e.printStackTrace(); return false;}
+	}			
 	
 	public static boolean updateWsTipo(WsTipo objeto){
 	  	 Connection conect=ConnectionConfiguration.conectar();
@@ -1785,10 +1850,14 @@ public class SqlUpdates {
 
 		}
 	
-	public static boolean borradoWsTipo(boolean flagBorrado){
+	public static boolean borradoWsTipo(WsTipo objeto){
 	  	 Connection conect=ConnectionConfiguration.conectar();
 	  	 Statement statement = null;
-			 String query = "update ws_tipo set borrado=\""+flagBorrado+"\"";	
+		 objeto.changeBorrado();
+		 	  	 
+			 String query = "update ws_tipo set borrado='"+objeto.isBorrado()+"'";
+			 
+			 query+=" where id ="+objeto.getId(); 
 			 try {
 				statement=conect.createStatement();
 				statement.execute(query);
@@ -1836,7 +1905,6 @@ public class SqlUpdates {
 	
 	public static boolean updateBeneficiarioTipo(BeneficiarioTipo objeto){
 	  	 Connection conect=ConnectionConfiguration.conectar();
-	   	
 	  	 Statement statement = null;
 
 	  	 			String										query = "update beneficiario_tipo set ";
@@ -1845,17 +1913,64 @@ public class SqlUpdates {
 	  	 			//if(objeto.isBorrado()!=false)			query+= "borrado=\""+objeto.isBorrado()+"\"";	
 				 
 	  	 			query+=" where id ="+objeto.getId();
-					 
-					 
-					 
+				
 					 try {
 						statement=conect.createStatement();
 						statement.execute(query);
 					    conect.close();
 					    return true;
 					} catch (SQLException e) {e.printStackTrace(); return false;}
-
 		}	
+	
+	public static boolean borradoBeneficiarioTipo(BeneficiarioTipo objeto){
+	  	 Connection conect=ConnectionConfiguration.conectar();
+	  	 Statement statement = null;
+		 objeto.changeBorrado();
+		 	  	 
+			 String query = "update beneficiario_tipo set borrado='"+objeto.isBorrado()+"'";
+			 
+			 query+=" where id ="+objeto.getId(); 
+			 try {
+				statement=conect.createStatement();
+				statement.execute(query);
+			    conect.close();
+			    return true;
+			} catch (SQLException e) {e.printStackTrace(); return false;}
+	}		
+	
+	
+	public static boolean borradoBeneficiario(Beneficiario objeto){
+	  	 Connection conect=ConnectionConfiguration.conectar();
+	  	 Statement statement = null;
+		 objeto.changeBorrado();
+		 	  	 
+			 String query = "update beneficiario set borrado='"+objeto.isBorrado()+"'";
+			 
+			 query+=" where id ="+objeto.getId(); 
+			 try {
+				statement=conect.createStatement();
+				statement.execute(query);
+			    conect.close();
+			    return true;
+			} catch (SQLException e) {e.printStackTrace(); return false;}
+	}		
+	
+	
+	public static boolean borradoAccionHasProducto(AccionHasProducto objeto){
+	  	 Connection conect=ConnectionConfiguration.conectar();
+	  	 Statement statement = null;
+		  	objeto.changeBorrado();
+	  	 
+			 String query = "update accion_has_producto set borrado='"+objeto.isBorrado()+"'";
+			 
+			 query+=" where id ="+objeto.getId();
+			 try {
+				statement=conect.createStatement();
+				statement.execute(query);
+			    conect.close();
+			    return true;
+			} catch (SQLException e) {e.printStackTrace(); return false;}
+	}		
 	
 	public static boolean updateAccionHasEtiqueta(AccionHasEtiqueta objeto){
 	  	 Connection conect=ConnectionConfiguration.conectar();
@@ -1936,7 +2051,22 @@ public class SqlUpdates {
 					    return true;
 					} catch (SQLException e) {e.printStackTrace(); return false;}
 
-		}		
+		}	
+	public static boolean borradoEtiqueta(Etiqueta objeto){
+	  	 Connection conect=ConnectionConfiguration.conectar();
+	  	 Statement statement = null;
+		 objeto.changeBorrado();
+		 	  	 
+			 String query = "update etiqueta set borrado='"+objeto.isBorrado()+"'";
+			 
+			 query+=" where id ="+objeto.getId(); 
+			 try {
+				statement=conect.createStatement();
+				statement.execute(query);
+			    conect.close();
+			    return true;
+			} catch (SQLException e) {e.printStackTrace(); return false;}
+	}			
 	
 	public static boolean updateBeneficiarioDetalle(BeneficiarioDetalle objeto){
 	  	 Connection conect=ConnectionConfiguration.conectar();
@@ -1958,6 +2088,22 @@ public class SqlUpdates {
 					} catch (SQLException e) {e.printStackTrace(); return false;}
 
 		}	
+	
+	public static boolean borradoBeneficiarioDetalle(BeneficiarioDetalle objeto){
+	  	 Connection conect=ConnectionConfiguration.conectar();
+	  	 Statement statement = null;
+		 objeto.changeBorrado();
+		 	  	 
+			 String query = "update beneficiario_detalle set borrado='"+objeto.isBorrado()+"'";
+			 
+			 query+=" where id ="+objeto.getId(); 
+			 try {
+				statement=conect.createStatement();
+				statement.execute(query);
+			    conect.close();
+			    return true;
+			} catch (SQLException e) {e.printStackTrace(); return false;}
+	}		
 	
 	
 	public static boolean updateBeneficiarioDetalleClave(BeneficiarioDetalleClave objeto){
@@ -1985,13 +2131,14 @@ public class SqlUpdates {
 	  	 Statement statement = null;
 
 					 String											query = "update geo_poligono set ";
-					 if(objeto.getNombre()!=null)					query+= "nombre=\""+objeto.getNombre()+"\"";
-					 if(objeto.getDescripcion()!=null)				query+= "descripcion=\""+objeto.getDescripcion()+"\"";
-					 if(objeto.getGeo()!=null)						query+= "geo=\""+objeto.getGeo()+"\"";
-					 if(objeto.getGeoPoligonoId()!=0)				query+= "geo_poligono_id=\""+objeto.getGeoPoligonoId()+"\"";
-					 if(objeto.getGeoPoligonoTipoId()!=0)			query+= "geo_poligono_tipo_id=\""+objeto.getGeoPoligonoTipoId()+"\"";
+					 if(objeto.getNombre()!=null)					query+= "nombre='"+objeto.getNombre()+"'";
+					 if(objeto.getDescripcion()!=null)				query+= ", descripcion='"+objeto.getDescripcion()+"'";
+					 if(objeto.getGeo()!=null)						query+= ", geo='"+objeto.getGeo()+"'";
+					 if(objeto.getGeoPoligonoId()!=0)				query+= ", geo_poligono_id="+objeto.getGeoPoligonoId()+"";
+					 if(objeto.getGeoPoligonoTipoId()!=0)			query+= ", geo_poligono_tipo_id="+objeto.getGeoPoligonoTipoId()+"";
 					 //if(objeto.isBorrado()!=false)				query+= "borrado=\""+objeto.isBorrado()+"\"";	
 					 		 
+					 query+=" where id ="+objeto.getId()+" AND geo_poligono_id="+objeto.getGeoPoligonoId();
 					 try {
 						statement=conect.createStatement();
 						statement.execute(query);
@@ -2000,6 +2147,22 @@ public class SqlUpdates {
 					} catch (SQLException e) {e.printStackTrace(); return false;}
 
 		}
+	
+	public static boolean borradoGeoPoligono(GeoPoligono objeto){
+	  	 Connection conect=ConnectionConfiguration.conectar();
+	  	 Statement statement = null;
+		 objeto.changeBorrado();
+		 	  	 
+			 String query = "update geo_poligono set borrado='"+objeto.isBorrado()+"'";
+			 
+			 query+=" where id ="+objeto.getId()+" AND geo_poligono_id="+objeto.getGeoPoligonoId(); 
+			 try {
+				statement=conect.createStatement();
+				statement.execute(query);
+			    conect.close();
+			    return true;
+			} catch (SQLException e) {e.printStackTrace(); return false;}
+	}	
 	
 	public static boolean updateAccionHasGeoPoligono(AccionHasGeoPoligono objeto){
 	  	 Connection conect=ConnectionConfiguration.conectar();
@@ -2022,7 +2185,22 @@ public class SqlUpdates {
 					    return true;
 					} catch (SQLException e) {e.printStackTrace(); return false;}
 
-		}	
+		}
+	public static boolean borradoAccionHasGeoPoligono(AccionHasGeoPoligono objeto){
+	  	 Connection conect=ConnectionConfiguration.conectar();
+	  	 Statement statement = null;
+		 objeto.changeBorrado();
+		 	  	 
+			 String query = "update accion_has_geo_poligono set borrado='"+objeto.isBorrado()+"'";
+			 
+			 query+=" where accion_id ="+objeto.getAccionId()+" AND geo_poligono_id="+objeto.getGeoPoligonoId()+" AND geo_poligono_geo_poligono_id="+objeto.getGeoPoligonoGeoPoligonoId(); 
+			 try {
+				statement=conect.createStatement();
+				statement.execute(query);
+			    conect.close();
+			    return true;
+			} catch (SQLException e) {e.printStackTrace(); return false;}
+	}		
 	
 	public static boolean updateGeoPoligonoTipo(GeoPoligonoTipo objeto){
 	  	 Connection conect=ConnectionConfiguration.conectar();

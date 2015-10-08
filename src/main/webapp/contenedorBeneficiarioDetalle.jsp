@@ -88,28 +88,34 @@ $(document).ready(function(){
 	}).responseText;		
 	beneficiarioDetalle=JSON.parse(beneficiarioDetalle);
 	
-	var tablaBeneficiarioDetalle="";
-	tablaBeneficiarioDetalle = '<table class="table table-striped ">'+
-				  '<tr><td colspan="6">Tabla Beneficiario Detalle</td></tr>'+
-				  '<tr><td>Id</td><td>Valor</td><td>beneficiarioDetalleClavesId</td><td>beneficiarioId</td><td>Insertar</td><td>Editar</td></tr>';
-	for(var e=0; e<beneficiarioDetalle.length;e++)
-	{
-		tablaBeneficiarioDetalle+='<tr><td>'+beneficiarioDetalle[e].id+'</td><td>'+beneficiarioDetalle[e].valor+'</td><td>'+beneficiarioDetalle[e].beneficiarioDetalleClavesId+'</td><td>'+beneficiarioDetalle[e].beneficiarioId+'</td><td><a href="#" data-toggle="modal" data-target="#beneficiarioDetalle"><span class="glyphicon glyphicon-plus"></span></a></td><td><span class="glyphicon glyphicon-pencil registrosBeneficiarioDetalle" codigoRegistroBeneficiarioDetalle='+e+'></span></td></tr>';
+	renderBeneficiarioDetalle();
+	function renderBeneficiarioDetalle(){
+		
+		$('.box-body').html('');
+		var tablaBeneficiarioDetalle="";
+		tablaBeneficiarioDetalle = '<table class="table table-striped ">'+
+					  '<tr><td colspan="6">Tabla Beneficiario Detalle</td><td><a href="#" data-toggle="modal" data-target="#beneficiarioDetalle"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
+					  '<tr><td>Id</td><td>Valor</td><td>beneficiarioDetalleClavesId</td><td>beneficiarioId</td><td>Borrado</td><td>Editar</td><td>Borrado</td></tr>';
+		for(var e=0; e<beneficiarioDetalle.length;e++)
+		{
+			if(beneficiarioDetalle[e].borrado == true)
+			{
+				tablaBeneficiarioDetalle+='<tr><td><del>'+beneficiarioDetalle[e].id+'</del></td><td><del>'+beneficiarioDetalle[e].valor+'</del></td><td><del>'+beneficiarioDetalle[e].beneficiarioDetalleClavesId+'</del></td><td><del>'+beneficiarioDetalle[e].beneficiarioId+'</del></td><td><del>'+beneficiarioDetalle[e].borrado+'</del></td><td><span class="glyphicon glyphicon-pencil registrosBeneficiarioDetalle" codigoRegistroBeneficiarioDetalle='+e+'></span></td><td><span class="glyphicon glyphicon-trash" id="iconoBorradoBeneficiarioDetalle" parametrosBorradoBeneficiarioDetalle='+beneficiarioDetalle[e].id+'-'+beneficiarioDetalle[e].borrado+'></span></td></tr>';
+			}else{
+				tablaBeneficiarioDetalle+='<tr><td>'+beneficiarioDetalle[e].id+'</td><td>'+beneficiarioDetalle[e].valor+'</td><td>'+beneficiarioDetalle[e].beneficiarioDetalleClavesId+'</td><td>'+beneficiarioDetalle[e].beneficiarioId+'</td><td>'+beneficiarioDetalle[e].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosBeneficiarioDetalle" codigoRegistroBeneficiarioDetalle='+e+'></span></td><td><span class="glyphicon glyphicon-trash" id="iconoBorradoBeneficiarioDetalle" parametrosBorradoBeneficiarioDetalle='+beneficiarioDetalle[e].id+'-'+beneficiarioDetalle[e].borrado+'></span></td></tr>';
+			}
+		}
+		tablaBeneficiarioDetalle +='</table>';			
+		
+		$('.box-body').html(tablaBeneficiarioDetalle);		
 	}
-	tablaBeneficiarioDetalle +='</table>';			
-	
-	$('.box-body').html(tablaBeneficiarioDetalle);		
-
 	
 	$("body").on("click", ".registrosBeneficiarioDetalle",function(event){
 		var codigoRegistro = $(this).attr("codigoRegistroBeneficiarioDetalle");
 
-			
-		$("#borradoLabelBeneficiarioDetalle").remove();
 		$("#borradoBotonBeneficiarioDetalle").remove();
 		$("#guardarBeneficiarioDetalle").remove();
 		$('#beneficiarioDetalle').modal('show');
-		//$("#beneficiarioDetalle").find(".form-horizontal").append('<div class="form-group" id="borradoLabelBeneficiarioDetalle"><label for="borradoAccion" class="col-lg-2 control-label">Borrado</label><div class="col-lg-10"><input type="text" class="form-control" id="borradoBeneficiarioDetalle" placeholder="borrado"></div></div>');
 		$("#beneficiarioDetalle").find(".form-horizontal").append('<div class="form-group" id="borradoBotonBeneficiarioDetalle"><div class="col-lg-offset-2 col-lg-10"><button type="submit" class="btn btn-success" id="actualizarBeneficiarioDetalle">Actualizar</button></div></div>');
 		$("#idBeneficiarioDetalle").val(beneficiarioDetalle[codigoRegistro].id);
 		$("#valorBeneficiarioDetalle").val(beneficiarioDetalle[codigoRegistro].valor);

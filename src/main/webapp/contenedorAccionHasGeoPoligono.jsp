@@ -92,27 +92,34 @@ if (user != null) { %>
 		}).responseText;		
 		accionHasGeoPoligono=JSON.parse(accionHasGeoPoligono);
 		
-		var tablaAccionHasGeoPoligono="";
-		tablaAccionHasGeoPoligono = '<table class="table table-striped ">'+
-					  '<tr><td colspan="7">Tabla Acción Has Geo Poligono</td></tr>'+
-					  '<tr><td>accionId</td><td>geoPoligonoId</td><td>geoPoligonoGeoPoligonoId</td><td>proporcion</td><td>borrado</td><td>Insertar</td><td>Editar</td></tr>';
-		for(var q=0; q<accionHasGeoPoligono.length;q++)
-		{
-			tablaAccionHasGeoPoligono+='<tr><td>'+accionHasGeoPoligono[q].accionId+'</td><td>'+accionHasGeoPoligono[q].geoPoligonoId+'</td><td>'+accionHasGeoPoligono[q].geoPoligonoGeoPoligonoId+'</td><td>'+accionHasGeoPoligono[q].proporcion+'</td><td>'+accionHasGeoPoligono[q].borrado+'</td><td><a href="#" data-toggle="modal" data-target="#accionHasGeoPoligono"><span class="glyphicon glyphicon-plus"></span></a></td><td><span class="glyphicon glyphicon-pencil registrosAccionHasGeoPoligono" codigoRegistroAccionHasGeoPoligono='+q+'></span></td></tr>';
+		renderAccionHasGeoPoligono();
+		function renderAccionHasGeoPoligono(){
+			
+			$('.box-body').html('');
+			var tablaAccionHasGeoPoligono="";
+			tablaAccionHasGeoPoligono = '<table class="table table-striped ">'+
+						  '<tr><td colspan="6">Tabla Acción Has Geo Poligono</td><td><a href="#" data-toggle="modal" data-target="#accionHasGeoPoligono"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
+						  '<tr><td>accionId</td><td>geoPoligonoId</td><td>geoPoligonoGeoPoligonoId</td><td>proporcion</td><td>borrado</td><td>Editar</td><td>Borrado</td></tr>';
+			for(var q=0; q<accionHasGeoPoligono.length;q++)
+			{
+				if(accionHasGeoPoligono[q].borrado == true)
+				{
+					tablaAccionHasGeoPoligono+='<tr><td><del>'+accionHasGeoPoligono[q].accionId+'</del></td><td><del>'+accionHasGeoPoligono[q].geoPoligonoId+'</del></td><td><del>'+accionHasGeoPoligono[q].geoPoligonoGeoPoligonoId+'</del></td><td><del>'+accionHasGeoPoligono[q].proporcion+'</del></td><td><del>'+accionHasGeoPoligono[q].borrado+'</del></td><td><span class="glyphicon glyphicon-pencil registrosAccionHasGeoPoligono" codigoRegistroAccionHasGeoPoligono='+q+'></span></td><td><span class="glyphicon glyphicon-trash" id="iconoBorradoAccionHasGeoPoligono" parametrosBorradoAccionHasGeoPoligono='+accionHasGeoPoligono[q].accionId+'-'+accionHasGeoPoligono[q].geoPoligonoId+'-'+accionHasGeoPoligono[q].geoPoligonoGeoPoligonoId+'-'+accionHasGeoPoligono[q].borrado+'></span></td></tr>';
+				}else{
+					tablaAccionHasGeoPoligono+='<tr><td>'+accionHasGeoPoligono[q].accionId+'</td><td>'+accionHasGeoPoligono[q].geoPoligonoId+'</td><td>'+accionHasGeoPoligono[q].geoPoligonoGeoPoligonoId+'</td><td>'+accionHasGeoPoligono[q].proporcion+'</td><td>'+accionHasGeoPoligono[q].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosAccionHasGeoPoligono" codigoRegistroAccionHasGeoPoligono='+q+'></span></td><td><span class="glyphicon glyphicon-trash" id="iconoBorradoAccionHasGeoPoligono" parametrosBorradoAccionHasGeoPoligono='+accionHasGeoPoligono[q].accionId+'-'+accionHasGeoPoligono[q].geoPoligonoId+'-'+accionHasGeoPoligono[q].geoPoligonoGeoPoligonoId+'-'+accionHasGeoPoligono[q].borrado+'></span></td></tr>';
+				}
+			}
+			tablaAccionHasGeoPoligono +='</table>';		
+			
+			$('.box-body').html(tablaAccionHasGeoPoligono);
 		}
-		tablaAccionHasGeoPoligono +='</table>';		
-		
-		$('.box-body').html(tablaAccionHasGeoPoligono);
-
 		
 		$("body").on("click", ".registrosAccionHasGeoPoligono",function(event){
 			var codigoRegistro = $(this).attr("codigoRegistroAccionHasGeoPoligono");
 				
-			//$("#borradoLabelAccion").remove();
 			$("#borradoBotonAccionHasGeoPoligono").remove();
 			$("#guardarAccionHasGeoPoligono").remove();
 			$('#accionHasGeoPoligono').modal('show');
-			//$("#AccionHasGeoPoligono").find(".form-horizontal").append('<div class="form-group" id="borradoLabelAccionHasGeoPoligono"><label for="borradoAccionHasGeoPoligono" class="col-lg-2 control-label">Borrado</label><div class="col-lg-10"><input type="text" class="form-control" id="borradoAccionHasGeoPoligono" placeholder="borrado"></div></div>');
 			$("#accionHasGeoPoligono").find(".form-horizontal").append('<div class="form-group" id="borradoBotonAccionHasGeoPoligono"><div class="col-lg-offset-2 col-lg-10"><button type="submit" class="btn btn-success" id="actualizarAccionHasGeoPoligono">Actualizar</button></div></div>');
 			$("#accionIdAccionHasGeoPoligono").val(accionHasGeoPoligono[codigoRegistro].accionId);
 			$("#geoPoligonoIdAccionHasGeoPoligono").val(accionHasGeoPoligono[codigoRegistro].geoPoligonoId);
