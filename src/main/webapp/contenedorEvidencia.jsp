@@ -1,3 +1,5 @@
+contenedorevidencia
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page import="org.jasig.cas.client.authentication.AttributePrincipalImpl"%>
@@ -70,6 +72,7 @@ if (user != null) { %>
 
 <script>
 	
+	
 	$(document).ready(function(){
 		var entidadCas = "";
 		entidadCas ="<%=attributes.get("entidad") %>";
@@ -90,21 +93,34 @@ if (user != null) { %>
 		  	dataType:'json',
 		  	async:false       
 		}).responseText;		
-		evidencia=JSON.parse(evidencia);
+		evidencia=JSON.parse(evidencia);		
 		
+		renderEvidencia();
+		function renderEvidencia(){
+		
+		$('.box-body').html('');
 		var tablaEvidencia="";
 		tablaEvidencia = '<table class="table table-striped ">'+
 					  '<tr><td colspan="7">Tabla Evidencia</td></tr>'+
 					  '<tr><td>Id</td><td>Nombre</td><td>Descripción</td><td>wsId</td><td>borrado</td></tr>';
+	
 		for(var w=0; w<evidencia.length;w++)
 		{
-			tablaEvidencia+='<tr><td>'+evidencia[w].id+'</td><td>'+evidencia[w].nombre+'</td><td>'+evidencia[w].descripcion+'</td><td>'+evidencia[w].wsId+'</td><td>'+evidencia[w].borrado+'</td><td><a href="#" data-toggle="modal" data-target="#evidencia"><span class="glyphicon glyphicon-plus"></span></a></td><td><span class="glyphicon glyphicon-pencil registrosEvidencia" codigoRegistroEvidencia='+w+'></span></td></tr>';
+			if(evidencia[w].borrado == true)
+			{
+				tablaEvidencia+='<tr><td><del>'+evidencia[w].id+'</del></td><td><del>'+evidencia[w].nombre+'</del></td><td><del>'+evidencia[w].descripcion+'</del></td><td><del>'+evidencia[w].wsId+'</del></td><td><del>'+evidencia[w].borrado+'</del></td><td><span class="glyphicon glyphicon-pencil registrosEvidencia" codigoRegistroEvidencia='+w+'></span></td><td><span class="glyphicon glyphicon-trash" parametrosBorradoEvidencia='+evidencia[w].id+'-'+evidencia[w].borrado+' id="iconoBorradoEvidencia"></span></td></tr>';
+
+			}else{
+				tablaEvidencia+='<tr><td>'+evidencia[w].id+'</td><td>'+evidencia[w].nombre+'</td><td>'+evidencia[w].descripcion+'</td><td>'+evidencia[w].wsId+'</td><td>'+evidencia[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosEvidencia" codigoRegistroEvidencia='+w+'></span></td><td><span class="glyphicon glyphicon-trash" parametrosBorradoEvidencia='+evidencia[w].id+'-'+evidencia[w].borrado+' id="iconoBorradoEvidencia"></span></td></tr>';
+			}
 		}
+		
 		tablaEvidencia +='</table>';				
 		
 		$('.box-body').html(tablaEvidencia);
 
-		 
+		}	 
+		
 		$("body").on("click", ".registrosEvidencia",function(event){
 			var codigoRegistro = $(this).attr("codigoRegistroEvidencia");
 				
@@ -120,6 +136,7 @@ if (user != null) { %>
 			$("#wsIdEvidencia").val(evidencia[codigoRegistro].wsId);
 			$("#borradoEvidencia").val(evidencia[codigoRegistro].borrado);
 		});
+		
 		
 	});
 </script>

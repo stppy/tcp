@@ -38,6 +38,8 @@ public class Evidencia {
 		this.borrado = borrado;
 	}
 	
-	
+	public void changeBorrado(){
+		this.borrado=!borrado;
+	}	
 
 }

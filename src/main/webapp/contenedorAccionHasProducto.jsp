@@ -91,18 +91,27 @@ if (user != null) { %>
 		}).responseText;		
 		accionHasProducto=JSON.parse(accionHasProducto);
 		
-		var tablaAccionHasProducto="";
-		tablaAccionHasProducto = '<table class="table table-striped ">'+
-					  '<tr><td colspan="6">Tabla Accion Has Producto</td></tr>'+
-					  '<tr><td>Id</td><td>Proporcion</td><td>Accion Id</td><td>sprProductoId</td><td>Insertar</td><td>Editar</td></tr>';
-		for(var w=0; w<accionHasProducto.length;w++)
-		{
-			tablaAccionHasProducto+='<tr><td>'+accionHasProducto[w].id+'</td><td>'+accionHasProducto[w].proporcion+'</td><td>'+accionHasProducto[w].accionId+'</td><td>'+accionHasProducto[w].sprProductoId+'</td><td><a href="#" data-toggle="modal" data-target="#accionHasProducto"><span class="glyphicon glyphicon-plus"></span></a></td><td><span class="glyphicon glyphicon-pencil registrosAccionHasProducto" codigoRegistroAccionHasProducto='+w+'></span></td></tr>';
-		}
-		tablaAccionHasProducto +='</table>';				
+		renderAccionHasProducto();
+		function renderAccionHasProducto(){
 		
-		$('.box-body').html(tablaAccionHasProducto);
+			$('.box-body').html('');
+			var tablaAccionHasProducto="";
+			tablaAccionHasProducto = '<table class="table table-striped ">'+
+						  '<tr><td colspan="6">Tabla Accion Has Producto</td><td><a href="#" data-toggle="modal" data-target="#accionHasProducto"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
+						  '<tr><td>Id</td><td>Proporcion</td><td>Accion Id</td><td>sprProductoId</td><td>Insertar</td><td>Editar</td><td>Borrar</td></tr>';
+			for(var w=0; w<accionHasProducto.length;w++)
+			{
+				if(accionHasProducto[w].borrado == true)
+				{
+							tablaAccionHasProducto+='<tr><td><del>'+accionHasProducto[w].id+'</del></td><td><del>'+accionHasProducto[w].proporcion+'</del></td><td><del>'+accionHasProducto[w].accionId+'</del></td><td><del>'+accionHasProducto[w].sprProductoId+'</del></td><td><del>'+accionHasProducto[w].borrado+'</del></td><td><span class="glyphicon glyphicon-pencil registrosAccionHasProducto" codigoRegistroAccionHasProducto='+w+'></span></td><td><span class="glyphicon glyphicon-trash" id="iconoBorradoAccionHasProducto" parametrosBorradoAccionHasProducto='+accionHasProducto[w].id+'-'+accionHasProducto[w].borrado+'></span></td></tr>';
+				}else{
+							tablaAccionHasProducto+='<tr><td>'+accionHasProducto[w].id+'</td><td>'+accionHasProducto[w].proporcion+'</td><td>'+accionHasProducto[w].accionId+'</td><td>'+accionHasProducto[w].sprProductoId+'</td><td>'+accionHasProducto[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosAccionHasProducto" codigoRegistroAccionHasProducto='+w+'></span></td><td><span class="glyphicon glyphicon-trash" id="iconoBorradoAccionHasProducto" parametrosBorradoAccionHasProducto='+accionHasProducto[w].id+'-'+accionHasProducto[w].borrado+'></span></td></tr>';
+				}
+			}				
+			tablaAccionHasProducto +='</table>';	
+			$('.box-body').html(tablaAccionHasProducto);
 
+		}
 		
 		$("body").on("click", ".registrosAccionHasProducto",function(event){
 			var codigoRegistro = $(this).attr("codigoRegistroAccionHasProducto");

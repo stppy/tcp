@@ -92,13 +92,25 @@ if (user != null) { %>
 		}).responseText;		
 		hitoHasBeneficiario=JSON.parse(hitoHasBeneficiario);
 		
+		renderHitoHasBeneficiario();
+		function renderHitoHasBeneficiario(){			
+		
 		var tablaHitoHasBeneficiario="";
 		tablaHitoHasBeneficiario = '<table class="table table-hover">'+
 					  '<tr class="active"><td colspan="5">Tabla HitoHasBeneficiario</td><td><a href="#" data-toggle="modal" data-target="#hitoHasBeneficiario"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
 					  '<tr class="active"><td>hitoId</td><td>hitoAccionId</td><td>beneficiarioId</td><td>borrado</td><td>Editar</td><td>Borrar</td></tr>';
 		for(var w=0; w<hitoHasBeneficiario.length;w++)
 		{
-			tablaHitoHasBeneficiario+='<tr><td>'+hitoHasBeneficiario[w].hitoId+'</td><td>'+hitoHasBeneficiario[w].hitoAccionId+'</td><td>'+hitoHasBeneficiario[w].beneficiarioId+'</td><td>'+hitoHasBeneficiario[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosHitoHasBeneficiario" codigoRegistroHitoHasBeneficiario='+w+'></span></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';
+			if(hitoHasBeneficiario[w].borrado == true){
+			
+				tablaHitoHasBeneficiario+='<tr><td><del>'+hitoHasBeneficiario[w].hitoId+'</del></td><td><del>'+hitoHasBeneficiario[w].hitoAccionId+'</del></td><td><del>'+hitoHasBeneficiario[w].beneficiarioId+'</del></td><td><del>'+hitoHasBeneficiario[w].borrado+'</del></td><td><span class="glyphicon glyphicon-pencil registrosHitoHasBeneficiario" codigoRegistroHitoHasBeneficiario='+w+'></span></td><td><span class="glyphicon glyphicon-trash" parametrosBorradoHitoHasBeneficiario='+hitoHasBeneficiario[w].hitoId+'-'+hitoHasBeneficiario[w].hitoAccionId+'-'+hitoHasBeneficiario[w].beneficiarioId+'-'+hitoHasBeneficiario[w].borrado+' id="iconoBorradoHitoHasBeneficiario"></span></td></tr>';
+			
+			}else{
+				
+				tablaHitoHasBeneficiario+='<tr><td>'+hitoHasBeneficiario[w].hitoId+'</td><td>'+hitoHasBeneficiario[w].hitoAccionId+'</td><td>'+hitoHasBeneficiario[w].beneficiarioId+'</td><td>'+hitoHasBeneficiario[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosHitoHasBeneficiario" codigoRegistroHitoHasBeneficiario='+w+'></span></td><td><span class="glyphicon glyphicon-trash" parametrosBorradoHitoHasBeneficiario='+hitoHasBeneficiario[w].hitoId+'-'+hitoHasBeneficiario[w].hitoAccionId+'-'+hitoHasBeneficiario[w].beneficiarioId+'-'+hitoHasBeneficiario[w].borrado+' id="iconoBorradoHitoHasBeneficiario"></span></td></tr>';
+				
+			}
+		
 		}
 		tablaHitoHasBeneficiario +='</table>';				
 		
@@ -118,6 +130,7 @@ if (user != null) { %>
 
 		});
 		
+		}
 	});
 </script>
 	

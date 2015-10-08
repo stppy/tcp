@@ -92,18 +92,27 @@ if (user != null) { %>
 		}).responseText;		
 		etiqueta=JSON.parse(etiqueta);
 		
-		var tablaEtiqueta="";
-		tablaEtiqueta = '<table class="table table-hover">'+
-					  '<tr class="active"><td colspan="5">Tabla Etiqueta</td><td><a href="#" data-toggle="modal" data-target="#etiqueta"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
-					  '<tr class="active"><td>Id</td><td>Nombre</td><td>Descripción</td><td>borrado</td><td>Editar</td><td>Borrar</td></tr>';
-		for(var w=0; w<etiqueta.length;w++)
-		{
-			tablaEtiqueta+='<tr><td>'+etiqueta[w].id+'</td><td>'+etiqueta[w].nombre+'</td><td>'+etiqueta[w].descripcion+'</td><td>'+etiqueta[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosEtiqueta" codigoRegistroEtiqueta='+w+'></span></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';
+		renderEtiqueta();
+		function renderEtiqueta(){
+			
+			$('.box-body').html('');			
+			var tablaEtiqueta="";
+			tablaEtiqueta = '<table class="table table-hover">'+
+						  '<tr class="active"><td colspan="5">Tabla Etiqueta</td><td><a href="#" data-toggle="modal" data-target="#etiqueta"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
+						  '<tr class="active"><td>Id</td><td>Nombre</td><td>Descripción</td><td>borrado</td><td>Editar</td><td>Borrar</td></tr>';
+			for(var w=0; w<etiqueta.length;w++)
+			{
+				if(etiqueta[w].borrado == true)
+				{
+					tablaEtiqueta+='<tr><td><del>'+etiqueta[w].id+'</del></td><td><del>'+etiqueta[w].nombre+'</del></td><td><del>'+etiqueta[w].descripcion+'</del></td><td><del>'+etiqueta[w].borrado+'</del></td><td><span class="glyphicon glyphicon-pencil registrosEtiqueta" codigoRegistroEtiqueta='+w+'></span></td><td><span class="glyphicon glyphicon-trash" id="iconoBorradoEtiqueta" parametrosBorradoEtiqueta='+etiqueta[w].id+'-'+etiqueta[w].borrado+'></span></td></tr>';
+				}else{
+					tablaEtiqueta+='<tr><td>'+etiqueta[w].id+'</td><td>'+etiqueta[w].nombre+'</td><td>'+etiqueta[w].descripcion+'</td><td>'+etiqueta[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosEtiqueta" codigoRegistroEtiqueta='+w+'></span></td><td><span class="glyphicon glyphicon-trash" id="iconoBorradoEtiqueta" parametrosBorradoEtiqueta='+etiqueta[w].id+'-'+etiqueta[w].borrado+'></span></td></tr>';
+				}
+			}
+			tablaEtiqueta +='</table>';				
+			
+			$('.box-body').html(tablaEtiqueta);
 		}
-		tablaEtiqueta +='</table>';				
-		
-		$('.box-body').html(tablaEtiqueta);
-
 		 
 		$("body").on("click", ".registrosEtiqueta",function(event){
 			var codigoRegistro = $(this).attr("codigoRegistroEtiqueta");

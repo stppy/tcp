@@ -38,68 +38,22 @@
 	</div>
 </div>
 	<script>
-	$("body").on("click", "#guardarAccionHasGeoPoligono",function(event){		
-			var objeto = new Object();
-			var accion = "insAccionHasGeoPoligono";
-			var accionId = $("#accionIdAccionHasGeoPoligono").val();
-			var geoPoligonoId= $("#geoPoligonoIdAccionHasGeoPoligono").val();
-			var geoPoligonoGeoPoligonoId= $("#geoPoligonoGeoPoligonoIdAccionHasGeoPoligono").val();
-			var proporcion = $("#proporcionAccionHasGeoPoligono").val();
-							
-			objeto.accionId=accionId;
-			objeto.geoPoligonoId=geoPoligonoId;
-			objeto.geoPoligonoGeoPoligonoId=geoPoligonoGeoPoligonoId;
-			objeto.proporcion=proporcion;
-			
-				 
-			$.ajax({
-			        url: "http://tablero2015.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
-			        type: 'POST',
-			        dataType: 'json',
-			        data: JSON.stringify(objeto),
-			        contentType: 'application/json',
-			        mimeType: 'application/json',
-			        
-			        success: function (data)
-			        {
-			        	if (data.success == true)
-			        	{
-			        		$("#tituloModalUsuario").html('');
-							$("#tituloModalUsuario").append('<p class="text-success">GUARDADO</p>');
-				    		$("#pass-viejo-form").val("");
-							$("#pass-nuevo-form").val("");
-							$("#pass-nuevo1-form").val("");	
-			        	}else{
-			        		if (data.success == false){
-			        			$("#tituloModalUsuario").html('');
-					        	$("#tituloModalUsuario").append('<p class="text-danger">Error no se ha guardado</p>');
-			        		}
-			        	}
-			        },
-			        error: function(data,status,er)
-			        {
-			        	$("#tituloModalUsuario").html('');
-			        	$("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intente de nuevo</p>');
-			        }
-			 });
-
-		});
-	
-	$("body").on("click", "#actualizarAccionHasGeoPoligono",function(event){		
+$("body").on("click", "#guardarAccionHasGeoPoligono",function(event){		
 		var objeto = new Object();
-		var accion = "actAccionHasGeoPoligono";
+		var accion = "insAccionHasGeoPoligono";
 		var accionId = $("#accionIdAccionHasGeoPoligono").val();
 		var geoPoligonoId= $("#geoPoligonoIdAccionHasGeoPoligono").val();
 		var geoPoligonoGeoPoligonoId= $("#geoPoligonoGeoPoligonoIdAccionHasGeoPoligono").val();
-		var proporcion= $("#proporcionAccionHasGeoPoligono").val();	
-			
-		objeto.accionId = accionId;
-		objeto.geoPoligonoId = geoPoligonoId;
-		objeto.geoPoligonoGeoPoligonoId = geoPoligonoGeoPoligonoId;
-		objeto.proporcion = proporcion;	
-
+		var proporcion = $("#proporcionAccionHasGeoPoligono").val();
+						
+		objeto.accionId=accionId;
+		objeto.geoPoligonoId=geoPoligonoId;
+		objeto.geoPoligonoGeoPoligonoId=geoPoligonoGeoPoligonoId;
+		objeto.proporcion=proporcion;
+		
+			 
 		$.ajax({
-		        url: "http://tablero2015.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
+		        url: "http://tablero2015.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
 		        type: 'POST',
 		        dataType: 'json',
 		        data: JSON.stringify(objeto),
@@ -127,8 +81,104 @@
 		        	$("#tituloModalUsuario").html('');
 		        	$("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intente de nuevo</p>');
 		        }
-		 });		
-	});		
+		 });
+
+	});
+	
+$("body").on("click", "#actualizarAccionHasGeoPoligono",function(event){		
+	var objeto = new Object();
+	var accion = "actAccionHasGeoPoligono";
+	var accionId = $("#accionIdAccionHasGeoPoligono").val();
+	var geoPoligonoId= $("#geoPoligonoIdAccionHasGeoPoligono").val();
+	var geoPoligonoGeoPoligonoId= $("#geoPoligonoGeoPoligonoIdAccionHasGeoPoligono").val();
+	var proporcion= $("#proporcionAccionHasGeoPoligono").val();	
+		
+	objeto.accionId = accionId;
+	objeto.geoPoligonoId = geoPoligonoId;
+	objeto.geoPoligonoGeoPoligonoId = geoPoligonoGeoPoligonoId;
+	objeto.proporcion = proporcion;	
+
+	$.ajax({
+	        url: "http://tablero2015.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
+	        type: 'POST',
+	        dataType: 'json',
+	        data: JSON.stringify(objeto),
+	        contentType: 'application/json',
+	        mimeType: 'application/json',
+	        
+	        success: function (data)
+	        {
+	        	if (data.success == true)
+	        	{
+	        		$("#tituloModalUsuario").html('');
+					$("#tituloModalUsuario").append('<p class="text-success">GUARDADO</p>');
+		    		$("#pass-viejo-form").val("");
+					$("#pass-nuevo-form").val("");
+					$("#pass-nuevo1-form").val("");	
+	        	}else{
+	        		if (data.success == false){
+	        			$("#tituloModalUsuario").html('');
+			        	$("#tituloModalUsuario").append('<p class="text-danger">Error no se ha guardado</p>');
+	        		}
+	        	}
+	        },
+	        error: function(data,status,er)
+	        {
+	        	$("#tituloModalUsuario").html('');
+	        	$("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intente de nuevo</p>');
+	        }
+	 });		
+});		
+$("body").on("click", "#iconoBorradoAccionHasGeoPoligono",function(event){		
+	var objeto = new Object();
+	var accion = "borradoAccionHasGeoPoligono";
+	var parametrosBorradoAccionHasGeoPoligono = $(this).attr("parametrosBorradoAccionHasGeoPoligono");
+    var idParsed = parametrosBorradoAccionHasGeoPoligono.split("-");                                                            
+	var accionId = idParsed[0];
+	var geoPoligonoId = idParsed[1];
+	var geoPoligonoGeoPoligonoId = idParsed[2];
+	var borrado = idParsed[3];
+
+	
+	objeto.accionId = accionId;
+	objeto.geoPoligonoId = geoPoligonoId;
+	objeto.geoPoligonoGeoPoligonoId = geoPoligonoGeoPoligonoId;
+	objeto.borrado = borrado;
+
+
+	$.ajax({
+	    url: "http://tablero2015.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
+	    type: 'POST',
+	    dataType: 'json',
+	    data: JSON.stringify(objeto),
+	    contentType: 'application/json',
+	    mimeType: 'application/json',
+    
+	    success: function (data)
+	    {
+	    	if (data.success == true)
+	    	{
+	    		$("#tituloModalUsuario").html('');
+				$("#tituloModalUsuario").append('<p class="text-success">GUARDADO</p>');
+				 		$("#pass-viejo-form").val("");
+				$("#pass-nuevo-form").val("");
+				$("#pass-nuevo1-form").val("");	
+			}else{
+	    		if (data.success == false)
+	    		{
+	    			$("#tituloModalUsuario").html('');
+	      			$("#tituloModalUsuario").append('<p class="text-danger">Error no se ha guardado</p>');
+	    		}
+	    	}
+	    },
+	    error: function(data,status,er)
+	    {
+	    	$("#tituloModalUsuario").html('');
+	    	$("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intente de nuevo</p>');
+	    }
+	});
+		window.location.href = "http://tablero2015.stp.gov.py/tablero/contenedorAccionHasGeoPoligono.jsp";
+});	
 	</script>	
 
 

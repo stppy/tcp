@@ -92,18 +92,27 @@ if (user != null) { %>
 		}).responseText;		
 		hito=JSON.parse(hito);
 		
-		var tablaHito="";
-		tablaHito = '<table class="table table-hover">'+
-					  '<tr class="active"><td colspan="11">Tabla Hito</td><td><a href="#" data-toggle="modal" data-target="#hito"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
-					  '<tr class="active"><td>Nombre</td><td>Descripción</td><td>Cantidad</td><td>fechaEntrega</td><td>hitoTipoId</td><td>accionId</td><td>evidenciaId</td><td>unidadMedidaId</td><td>peso</td><td>borrado</td><td>Editar</td><td>Borrar</td></tr>';
-		for(var w=0; w<hito.length;w++)
-		{
-			tablaHito+='<tr><td>'+hito[w].nombre+'</td><td>'+hito[w].descripcion+'</td><td>'+hito[w].cantidad+'</td><td>'+hito[w].fechaEntrega+'</td><td>'+hito[w].hitoTipoId+'</td><td>'+hito[w].accionId+'</td><td>'+hito[w].evidenciaId+'</td><td>'+hito[w].unidadMedidaId+'</td><td>'+hito[w].peso+'</td><td>'+hito[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosHito" codigoRegistroHito='+w+'></span></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';
+		renderHito();
+		function renderHito(){
+			
+			$('.box-body').html('');
+			var tablaHito="";
+			tablaHito = '<table class="table table-hover">'+
+						  '<tr class="active"><td colspan="11">Tabla Hito</td><td><a href="#" data-toggle="modal" data-target="#hito"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
+						  '<tr class="active"><td>Nombre</td><td>Descripción</td><td>Cantidad</td><td>fechaEntrega</td><td>hitoTipoId</td><td>accionId</td><td>evidenciaId</td><td>unidadMedidaId</td><td>peso</td><td>borrado</td><td>Editar</td><td>Borrar</td></tr>';
+			for(var w=0; w<hito.length;w++)
+			{
+				if(hito[w].borrado == true)
+				{
+					tablaHito+='<tr><td><del>'+hito[w].nombre+'</del></td><td><del>'+hito[w].descripcion+'</del></td><td><del>'+hito[w].cantidad+'</del></td><td><del>'+hito[w].fechaEntrega+'</del></td><td><del>'+hito[w].hitoTipoId+'</del></td><td><del>'+hito[w].accionId+'</del></td><td><del>'+hito[w].evidenciaId+'</del></td><td><del>'+hito[w].unidadMedidaId+'</del></td><td><del>'+hito[w].peso+'</del></td><td><del>'+hito[w].borrado+'</del></td><td><span class="glyphicon glyphicon-pencil registrosHito" codigoRegistroHito='+w+'></span></td><td><span class="glyphicon glyphicon-trash" id="iconoBorradoHito" parametrosBorradoHito='+hito[w].id+'-'+hito[w].accionId+'-'+hito[w].borrado+'></span></td></tr>';
+				}else{
+					tablaHito+='<tr><td>'+hito[w].nombre+'</td><td>'+hito[w].descripcion+'</td><td>'+hito[w].cantidad+'</td><td>'+hito[w].fechaEntrega+'</td><td>'+hito[w].hitoTipoId+'</td><td>'+hito[w].accionId+'</td><td>'+hito[w].evidenciaId+'</td><td>'+hito[w].unidadMedidaId+'</td><td>'+hito[w].peso+'</td><td>'+hito[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosHito" codigoRegistroHito='+w+'></span></td><td><span class="glyphicon glyphicon-trash" id="iconoBorradoHito" parametrosBorradoHito='+hito[w].id+'-'+hito[w].accionId+'-'+hito[w].borrado+'></span></td></tr>';
+				}
+			}
+			tablaHito +='</table>';				
+			
+			$('.box-body').html(tablaHito);
 		}
-		tablaHito +='</table>';				
-		
-		$('.box-body').html(tablaHito);
-
 		 
 		$("body").on("click", ".registrosHito",function(event){
 			var codigoRegistro = $(this).attr("codigoRegistroHito");
