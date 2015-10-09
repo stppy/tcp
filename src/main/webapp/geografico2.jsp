@@ -408,8 +408,49 @@ tbody {
 						$("#cuerpoTabla").html("");
 						var lineasDeAccion= [];
 						
-						if (dist_id==""){
+						if (dist_id=="" && depto_id != ""){
+							var metasDistEntLineajson = $.ajax({
+						    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getMetasDistEntLinea&departamento='+depto_id+'&institucion_id='+institucion_id,
+						      	type:'get',
+						      	dataType:'json',
+						      	crossDomain:true,
+						      	async:false       
+						    }).responseText;
+							var metasDistEntLinea=JSON.parse(metasDistEntLineajson);
+							var desemp=0.0;
+							var color="";
+							var porHejeClassRow="";
+							var acumuladorPlanificacionAnho=0.0;
+							var acumuladorPlanificacion=0.0;
+							var acumuladorEjecucion=0.0;
+							var acumuladorInversion=0.0;
+							var desempenho=0.0;
+							var lineasDeAccion=[];
 							
+							for(var l=0;l<metasDistEntLinea.length;l++){
+							
+								if (lineasDeAccion.indexOf(metasDistEntLinea[l].lineaAccionId)<0){
+									lineasDeAccion.push(metasDistEntLinea[l].lineaAccionId);
+									acumuladorPlanificacionAnho=0.0;
+									acumuladorPlanificacion=0.0;
+									acumuladorEjecucion=0.0;
+									acumuladorInversion=0.0;
+									
+									for(var k=0;k<metasDistEntLinea.length;k++){
+										if(metasDistEntLinea[l].lineaAccionId==metasDistEntLinea[k].lineaAccionId){
+											acumuladorPlanificacionAnho += parseFloat(metasDistEntLinea[k].sumProgAnho);
+											acumuladorPlanificacion += parseFloat(metasDistEntLinea[k].cantidadProgHoy);
+											acumuladorEjecucion += parseFloat(metasDistEntLinea[k].cantidadEjecHoy);
+											acumuladorInversion += parseFloat(metasDistEntLinea[k].costoProgHoy);													
+										}
+									}
+									desempenho = parseFloat((acumuladorEjecucion/acumuladorPlanificacion)*100);
+									color= getColorDesemp(desempenho)
+									$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+l+'-'+metasDistEntLinea[l].institucionId+'-'+metasDistEntLinea[l].lineaAccionId+'-'+metasDistEntLinea[l].accionDepartamentoId+'> '+metasDistEntLinea[l].institucion+'- '+metasDistEntLinea[l].lineaAccion+'</a></td><td>'+metasDistEntLinea[l].accionUnidadMedida+'</td><td >'+numeroConComa(parseFloat(acumuladorPlanificacionAnho).toFixed(2))+'</td><td class="cell-bordered2">'+numeroConComa(parseFloat(acumuladorPlanificacion).toFixed(2))+'</td><td >'+numeroConComa(parseFloat(acumuladorEjecucion).toFixed(2))+'</td><td >'+numeroConComa(parseFloat(desempenho).toFixed(2))+'</td><td>'+numeroConComa((acumuladorInversion/1000000).toFixed(0)))+'</td></tr>';
+								}
+								
+		
+							}
 						}else{
 							var metasDistEntLineajson = $.ajax({
 						    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getMetasDistEntLinea&departamento='+depto_id+'&distrito='+dist_id+'&institucion_id='+institucion_id,
@@ -426,7 +467,7 @@ tbody {
 								
 								desemp=metasDistEntLinea[j].cantidadEjecHoy/metasDistEntLinea[j].cantidadProgHoy;
 								color= getColorDesemp(desemp)
-								$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+metasDistEntLinea[j].institucionId+'-'+metasDistEntLinea[j].lineaAccionId+'-'+metasDistEntLinea[j].accionDepartamentoId+'> '+metasDistEntLinea[j].institucion+'- '+metasDistEntLinea[j].lineaAccion+'</a></td><td>'+metasDistEntLinea[j].accionUnidadMedidaId+'</td><td >'+numeroConComa(metasDistEntLinea[j].sumProgAnho)+'</td><td class="cell-bordered2">'+numeroConComa(metasDistEntLinea[j].cantidadProgHoy)+'</td><td >'+numeroConComa(metasDistEntLinea[j].cantidadEjecHoy)+'</td><td >'+desemp+'</td><td>'+numeroConComa((metasDistEntLinea[j].costoEjecHoy/1000000).toFixed(0))+'</td></tr>');	
+								$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+metasDistEntLinea[j].institucionId+'-'+metasDistEntLinea[j].lineaAccionId+'-'+metasDistEntLinea[j].accionDepartamentoId+'> '+metasDistEntLinea[j].institucion+'- '+metasDistEntLinea[j].lineaAccion+'</a></td><td>'+metasDistEntLinea[j].accionUnidadMedida+'</td><td >'+numeroConComa(metasDistEntLinea[j].sumProgAnho)+'</td><td class="cell-bordered2">'+numeroConComa(metasDistEntLinea[j].cantidadProgHoy)+'</td><td >'+numeroConComa(metasDistEntLinea[j].cantidadEjecHoy)+'</td><td >'+desemp+'</td><td>'+numeroConComa((metasDistEntLinea[j].costoEjecHoy/1000000).toFixed(0))+'</td></tr>');	
 							}
 							
 									
