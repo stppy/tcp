@@ -117,294 +117,8 @@ if (user != null) { %>
 
 <script>
 	
-	$(document).ready(function(){
-		var lineaAccionAcumuladoMesDepto;
-		
-		var vectorMin=0;
-		var vectorMax=0;
-		var vectorMinEjecucion=0;
-		var vectorMaxEjecucion=0;
-		
-		function dibujarLineaAccionAcumuladoMesDepto(lineaAccionAcumuladoMesDepto, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion){
-			
-			var dataPoints=[];
-			var ejecutada=[];
-			
-			var mes;
-			var anho;
-			var cantidadTotalProgramada=parseFloat(0);
-			var cantidadTotalEjecutada=parseFloat(0);
-			
-			
-			$("#rango-fecha").attr("data-slider-min",vectorMin);
-			$("#rango-fecha").attr("data-slider-max",vectorMax);
-			$("#rango-fecha").attr("data-slider-value","["+vectorMin+","+vectorMax+"]");
-			
-			$("#rango-fecha-ejecucion").attr("data-slider-min",vectorMinEjecucion);
-			$("#rango-fecha-ejecucion").attr("data-slider-max",vectorMaxEjecucion);
-			$("#rango-fecha-ejecucion").attr("data-slider-value","["+vectorMinEjecucion+","+vectorMaxEjecucion+"]");
-			
-			
-			$("#fechaInicio").html(lineaAccionAcumuladoMesDepto[vectorMin].mes+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-			$("#fechaInicioEjecucion").html(lineaAccionAcumuladoMesDepto[vectorMinEjecucion].mes+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-			$("#fechaFin").html("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+lineaAccionAcumuladoMesDepto[vectorMax].mes);
-			$("#fechaFinEjecucion").html("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+lineaAccionAcumuladoMesDepto[vectorMaxEjecucion].mes);
-			
-			$("#rango-fecha").slider({});
-			$("#rango-fecha-ejecucion").slider({});
-			for(var i = 0;i<lineaAccionAcumuladoMesDepto.length; i++)
-			{
-				cantidadTotalProgramada+=lineaAccionAcumuladoMesDepto[i].cantidad_programada;
-		
-				if(lineaAccionAcumuladoMesDepto[i].mes >= lineaAccionAcumuladoMesDepto[vectorMin].mes && lineaAccionAcumuladoMesDepto[i].mes <= lineaAccionAcumuladoMesDepto[vectorMax].mes)
-				{
-	 				dataPoints.push({ x: new Date( lineaAccionAcumuladoMesDepto[i].mes), y: cantidadTotalProgramada});
-				}
-
-			}
-			
-			for(var i = 0;i<lineaAccionAcumuladoMesDepto.length; i++)
-			{
-				cantidadTotalEjecutada+=lineaAccionAcumuladoMesDepto[i].cantidad_ejecutda;
-		
-				if(lineaAccionAcumuladoMesDepto[i].mes >= lineaAccionAcumuladoMesDepto[vectorMinEjecucion].mes && lineaAccionAcumuladoMesDepto[i].mes <= lineaAccionAcumuladoMesDepto[vectorMaxEjecucion].mes)
-				{
-	 				if (lineaAccionAcumuladoMesDepto[i].cantidad_ejecutda!=0)  ejecutada.push({ x: new Date( lineaAccionAcumuladoMesDepto[i].mes), y: cantidadTotalEjecutada});
-				}
-
-			}
-
-
-			var chart = new CanvasJS.Chart("chartContainer",
-					{
-							zoomEnabled: true,
-							exportEnabled: true,
-							exportFileName: lineaAccionAcumuladoMesDepto[0].institucion+" - "+lineaAccionAcumuladoMesDepto[0].linea_accion+" ("+lineaAccionAcumuladoMesDepto[0].accion_unidad_medida+")",
-							title: {
-								text: "Evolución Mensual" +" ("+lineaAccionAcumuladoMesDepto[0].accion_unidad_medida+")" 
-							},
-	                        	animationEnabled: true,
-	                        	width: 800,
-						axisX:{      
-							valueFormatString: "YYYY-MM" ,
-							interval: 1,
-							intervalType: "month",
-							labelAngle: -50,
-							labelFontColor: "rgb(0,75,141)",
-						},
-						axisY: {
-							title: "",
-							interlacedColor: "#F0FFFF",
-							tickColor: "azure",
-							titleFontColor: "rgb(0,75,141)"
-						},
-						data: [
-						{        
-							indexLabelFontColor: "darkSlateGray",
-							showInLegend: true, 
-							name: 'programada',
-							type: "line",
-							//color: "rgba(0,75,141,0.7)",
-							markerSize:8,
-							legendText:"Programación",
-							dataPoints:dataPoints
-						},
-						{        
-							indexLabelFontColor: "darkSlateGray",
-							showInLegend: true, 
-							name: 'ejecutadas',
-							type: "area",
-							//color: "rgba(0,75,141,0.8)",
-							markerSize:8,
-							legendText:"Ejecución",
-							dataPoints:ejecutada
-						}
-					  ]
-					});
-					
-			chart.render();
-		 }
-
-		$("body").on("change", "#rango-fecha",function(event){
-			var rangoDeFecha= $("#rango-fecha").val();
-			var splitDeRango=rangoDeFecha.split(",");
-			vectorMin=splitDeRango[0];
-			vectorMax=splitDeRango[1];
-			
-			var rangoDeFechaEjecucion= $("#rango-fecha-ejecucion").val();
-			var splitDeRangoEjecucion=rangoDeFechaEjecucion.split(",");
-			vectorMinEjecucion=splitDeRangoEjecucion[0];
-			vectorMaxEjecucion=splitDeRangoEjecucion[1];
-			
-			dibujarLineaAccionAcumuladoMesDepto(lineaAccionAcumuladoMesDepto, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion);
-			
-		});
-		
-		$("body").on("change", "#rango-fecha-ejecucion",function(event){
-			var rangoDeFecha= $("#rango-fecha").val();
-			var splitDeRango=rangoDeFecha.split(",");
-			vectorMin=splitDeRango[0];
-			vectorMax=splitDeRango[1];
-			
-			var rangoDeFechaEjecucion= $("#rango-fecha-ejecucion").val();
-			var splitDeRangoEjecucion=rangoDeFechaEjecucion.split(",");
-			vectorMinEjecucion=splitDeRangoEjecucion[0];
-			vectorMaxEjecucion=splitDeRangoEjecucion[1];
-			
-			dibujarLineaAccionAcumuladoMesDepto(lineaAccionAcumuladoMesDepto, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion);
-			
-		});
-		
-		$("body").on("click", ".registro",function(event){
-			var codigoRegistro = $(this).attr("codigoRegistro");
-		    var idParsed = codigoRegistro.split("-");                                                            
-			var institucion_id=idParsed[1];
-			var linea_accion_id=idParsed[2];
-			//var unidad_medida= idParsed[3];
-			var idDepartamento= idParsed[3];
-			var tituloModal="";
-			var cuerpoModal="";
-			var footerModal="<br><br><br>";
-			
-			var registros = $.ajax({
-		    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id+'&departamento='+idDepartamento,
-		      	type:'get',
-		      	dataType:'json',
-		      	crossDomain:true,
-		      	async:false       
-		    }).responseText;
-			var elRegistro=JSON.parse(registros);
-			
-			
-
-			cuerpoModal='<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">'+
-						'<div class="row">'+
-							'<div class="row">'+
-								'<div class="col-sm-12">'+
-									'<div class="table-responsive">'+
-										'<table id="example1" class="table table-hover" >'+
-										    '<thead>'+
-											'<tr class="active"><th>Acción</th><th>Departamento</th><th>Distrito</th><th>U. Medida</th><th>Cantidad. Programado</th><th>Inversión Estimada (Millones de G.)</th><th>Fecha Terminación</th><th>% Programado</th><th>% Ejecutado</th></tr>'+
-											'</thead><tbody>';
-						var totalCantidadProgramada=0;
-						tituloModal='<h3><center>'+elRegistro[0].institucion+'&nbsp;&nbsp;-&nbsp;&nbsp;'+elRegistro[0].linea_accion+'</center></h3>';
-						for(var m=0; m<elRegistro.length;m++)
-						{
-								var registroFecha= elRegistro[m].hito_fecha_entrega.split(" ");
-								if (registroFecha[0]=="Jan" || registroFecha[0]=="ene") registroFecha[0]=1;
-								if (registroFecha[0]=="Feb" || registroFecha[0]=="feb") registroFecha[0]=2;
-								if (registroFecha[0]=="Mar" || registroFecha[0]=="mar") registroFecha[0]=3;
-								if (registroFecha[0]=="Apr" || registroFecha[0]=="abr") registroFecha[0]=4;
-								if (registroFecha[0]=="May" || registroFecha[0]=="may") registroFecha[0]=5;
-								if (registroFecha[0]=="Jun" || registroFecha[0]=="jun") registroFecha[0]=6;
-								if (registroFecha[0]=="Jul" || registroFecha[0]=="jul") registroFecha[0]=7;
-								if (registroFecha[0]=="Aug" || registroFecha[0]=="ago") registroFecha[0]=8;
-								if (registroFecha[0]=="Sep" || registroFecha[0]=="sep") registroFecha[0]=9;
-								if (registroFecha[0]=="Oct" || registroFecha[0]=="oct") registroFecha[0]=10;
-								if (registroFecha[0]=="Nov" || registroFecha[0]=="nov") registroFecha[0]=11;
-								if (registroFecha[0]=="Dec" || registroFecha[0]=="dic") registroFecha[0]=12;
-								registroFecha[1].split(",");
-								
-								cuerpoModal+='<tr><td>'+elRegistro[m].accion+'</td><td>'+elRegistro[m].accion_departamento+'</td><td>'+elRegistro[m].accion_distrito+'</td><td>'+elRegistro[m].accion_unidad_edida+'</td><td>'+elRegistro[m].hito_cantidad_programado+'</td><td>'+numeroConComa((elRegistro[m].accion_costo*elRegistro[m].hito_porcentaje_ejecutado/100000000).toFixed(0))+'</td><td>'+registroFecha[2]+'-'+registroFecha[0]+'-'+registroFecha[1][0]+'</td><td>'+elRegistro[m].hito_porcentaje_programado+'</td><td>'+elRegistro[m].hito_porcentaje_ejecutado+'</td></tr>';
-								totalCantidadProgramada+=elRegistro[m].hito_cantidad_programado;
-						}
-						totalCantidadProgramada=parseFloat(totalCantidadProgramada).toFixed(2);
-
-						cuerpoModal+='</tbody><tfoot><tr class="active"><td colspan="2">Total Cantidad Programada: </td><td colspan="8">'+totalCantidadProgramada+'</td></tr></tfoot>'+
-									 '</table>'+
-									 '</div></div></div></div></div>';
-			
-			$('#myModal').find(".modal-title").html("");			
-			$('#myModal').find("#tab_1-1").html(""); 
-			$('#myModal').find("#tab_2-2").html("");
-			$('#myModal').find("#tab_3-2").html("");			
-			
-			$('#myModal').find(".modal-title").html(tituloModal);
-			$('#myModal').find("#tab_1-1").html(cuerpoModal);
-			$("#tab_3-2").append('Programación: <label id="fechaInicio"></label><input id="rango-fecha" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="1" data-slider-value="[250,450]"/><label id="fechaFin"></label>');
-			$("#tab_3-2").append('<br><br>Ejecución: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label id="fechaInicioEjecucion"></label><input id="rango-fecha-ejecucion" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="1" data-slider-value="[250,450]"/><label id="fechaFinEjecucion"></label>');
-
 	
-			//$('#myModal').find(".modal-footer").html(footerModal);
-			
-			lineaAccionAcumuladoMesDepto = $.ajax({
-		    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getLineaAccionAcumuladoMesDepto&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id+'&departamento='+idDepartamento,
-		      	type:'get',
-		      	dataType:'json',
-		      	async:false       
-		    }).responseText;
-			
-			
-			lineaAccionAcumuladoMesDepto = JSON.parse(lineaAccionAcumuladoMesDepto);
-			
-			 vectorMin=0;
-			 vectorMax=lineaAccionAcumuladoMesDepto.length-1;
-			 
-			 vectorMinEjecucion=0;
-			 vectorMaxEjecucion=lineaAccionAcumuladoMesDepto.length-1;
-			//grafico de total cantidad programada y total cantidad ejecutada
-			
-			$('#myModal').find("#tab_3-2").append('<div id="chartContainer" style="height:400px;"></div>');
-			
-			function compare(a,b) {             
-				  if (a.mes < b.mes)
-				    return -1;
-				  if (a.mes > b.mes)
-				    return 1;
-				  return 0;
-				}
-			
-			
-			lineaAccionAcumuladoMesDepto=lineaAccionAcumuladoMesDepto.sort(compare);
-			
-			dibujarLineaAccionAcumuladoMesDepto(lineaAccionAcumuladoMesDepto, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion);
-			
-			 $(function () {
-			       
-			        $('#example1').dataTable({
-			          "bPaginate": false,
-			          "bLengthChange": false,
-			          "bFilter": true,
-			          "bSort": true,
-			          "bInfo": true,
-			          "bAutoWidth": false,
-			          "language":{
-			        	    "sProcessing":     "Procesando...",
-			        	    "sLengthMenu":     "Mostrar _MENU_ registros",
-			        	    "sZeroRecords":    "No se encontraron resultados",
-			        	    "sEmptyTable":     "Ningún dato disponible en esta tabla",
-			        	    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-			        	    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-			        	    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-			        	    "sInfoPostFix":    "",
-			        	    "sSearch":         "Buscar:",
-			        	    "sUrl":            "",
-			        	    "sInfoThousands":  ",",
-			        	    "sLoadingRecords": "Cargando...",
-			        	    "oPaginate": {
-			        	        "sFirst":    "Primero",
-			        	        "sLast":     "Último",
-			        	        "sNext":     "Siguiente",
-			        	        "sPrevious": "Anterior"
-			        	    },
-			        	    "oAria": {
-			        	        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-			        	        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-			        	    }
-			        	}
-			        });
-			      });
-	});
-		
-		
-		
-		
-		
-		renderEntidades();
-
-		
-		
-	});
+	
 	
 	//event.stopPropagation();
 	
@@ -595,10 +309,7 @@ tbody {
 						}
 					}
 					y=0;
-					
-					
-					
-					
+
 					var sumporAClass="";
 					var porAejeClass="";
 					var porHejeClass="";
@@ -657,7 +368,7 @@ tbody {
 									if (!isNaN(despTotDeptoInst)) $("#tablaInstituciones").append('<tr><td class="col-md-3"><a tipo="filtroPorEntidad" institucion_id='+entidades[i].institucion_id+' depto_id='+e.target.feature.properties.dpto+' >'+entidades[i].institucion+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotDeptoInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotDeptoInst).toFixed(2)+'%</p></div></div></td></tr>');
 								}
 							}
-						}else{
+						}else{ //d
 							var color="";var depemInst;var countInst;var despTotInst;
 							for (var i = 0; i< entidades.length;i++){
 								countInst=0;
@@ -948,202 +659,7 @@ tbody {
 								click: renderEntidad
 							});
 						}
-						
-	
-						//var depto = new L.geoJson(depto,{style:miestilo})
-						
-	
-					
-					$("body").on("click", "#tablaInstituciones",function(event){
-						
-						
-						var institucion_id=event.target.attributes.institucion_id.value;
-						var depto_id=event.target.attributes.depto_id.value;
-						var dist_id="";
-						if (event.target.attributes.hasOwnProperty("dist_id")){
-							dist_id=event.target.attributes.dist_id.value;
-						}
-						if (depto_id==""){
-							alert("Favor seleccionar previamente Departamento en el mapa");
-						}else{
-							renderLineaAccion(depto_id, institucion_id, dist_id);
-						}
-						
-						
-						event.stopPropagation();
-						
-						
-					});
-						
-						
-						$("document").ready(function(){
-							
-							
-							function renderTodasLasLineas(){
-								
-								
-								var sumporAClass="";
-								var porAejeClass="";
-								var porHejeClass="";
-								var porHejeClassRow="";
-								
-								for (var i = 0; i< 18;i++){
-									$("#cuerpoTabla").append('<tr><td colspan="12" ><strong>'+departamento[i].nombreDepartamento+'</strong></td></tr>');
-									var lineasDeAccion= [];
-									for(var j=0;j<lineaAccionDepartamento.length;j++){
-										
-										if (lineaAccionDepartamento[j].accion_departamento_id==departamento[i].idDepartamento){
-											if (lineasDeAccion.indexOf(lineaAccionDepartamento[j].linea_accion_id)<0){
-												lineasDeAccion.push(lineaAccionDepartamento[j].linea_accion_id);
-												if(lineaAccionDepartamento[j].anho<="2014"){
-													var anho1=lineaAccionDepartamento[j];
-													
-													var anho2;
-													for(var k=0;k<lineaAccionDepartamento.length;k++){
-														if (anho1.institucion_id==lineaAccionDepartamento[k].institucion_id && anho1.linea_accion_id==lineaAccionDepartamento[k].linea_accion_id && lineaAccionDepartamento[k].anho =="2015" && lineaAccionDepartamento[k].accion_departamento_id ==anho1.accion_departamento_id){
-															anho2=lineaAccionDepartamento[k];
-														}
-													}
-													if (typeof anho1==="undefined") {var anho1= new Object(); anho1.cantidad_ejecutada_hoy=""};
-													if (typeof anho2==="undefined") {var anho2= new Object(); anho2.cantidad_ejecutada_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
-													if (anho2.suma_programada_anho>0){
-														
-														//for para recorrer totalLineaPais con if para seleccionar la insittucion, la linea y anho considerando lo cargado en anho2, luego 
-														//     anho2.linea_accion_meta = anho2.suma_programada_anho  * 100 / totalLineaPais[y].suma_programada_anho_pais
-														for(var l=0; l<totalLineaPais.length;l++)
-														{
-																if(totalLineaPais[l].institucion_id == anho2.institucion_id && totalLineaPais[l].linea_accion_id == anho2.linea_accion_id && totalLineaPais[l].anho == anho2.anho)
-																{
-																	anho2.linea_accion_meta = parseFloat((anho2.suma_programada_anho / totalLineaPais[l].suma_programada_anho_pais)*anho2.linea_accion_meta).toFixed(2);
-																}
-														}
-												
-													//	var porcentajeAnho = (anho2.suma_programada_hoy*100)/anho2.suma_programada_anho;
-														var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
-														porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
-														var porcentajeAnhoEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_anho;
-														porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
-														var porcentajeHoyEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_hoy;
-														porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
-														/*if (porcentajeAnho<=70) sumporAClass = "text-danger";
-														if (porcentajeAnho>70) sumporAClass = "text-warning";
-														if (porcentajeAnho>90) sumporAClass = "text-success";
-														
-														if (porcentajeAnhoEje<=70) porAejeClass = "text-danger";
-														if (porcentajeAnhoEje>70) porAejeClass = "text-warning";
-														if (porcentajeAnhoEje>90) porAejeClass = "text-success";
-														*/
-														porHejeClassRow="";
-														/*
-														if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";porHejeClassRow="danger";}
-														if (porcentajeHoyEje>70){ porHejeClass = "text-warning";porHejeClassRow="warning";}
-														if (porcentajeHoyEje>90){ porHejeClass = "text-success";porHejeClassRow="success";}
-														
-														if (porcentajeAnho<=70){ porHejeClassRow="danger";porHejeClass="";} */
-														if (porcentajeAnho<90){ porHejeClassRow="danger";porHejeClass="";}
-														if (porcentajeAnho>=90){ porHejeClassRow="success";
-															if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";}
-															if (porcentajeHoyEje>70){ porHejeClass = "text-warning";}
-															if (porcentajeHoyEje>90){ porHejeClass = "text-success";}
-														}
-														
-														//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
-														$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+lineaAccionDepartamento[j].institucion_id+'-'+lineaAccionDepartamento[j].linea_accion_id+'-'+lineaAccionDepartamento[j].accion_departamento_id+'> '+lineaAccionDepartamento[j].institucion+'- '+anho2.linea_accion+'</a></td></td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</a></td><td>'+anho2.accion_unidad_medida+'</td><td class="cell-bordered2">'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_hoy)+'</td><td >'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class="text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
-																					
-														
-														
-														//<td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td> penultimo
-														if ( porcentajeHoyEje ==="NaN"){ porcentajeHoyEje="";porHejeClassRow="";}
-													}else{
-														var porcentajeAnho = "";
-														var porcentajeAnhoEje = "";
-														var porcentajeHoyEje ="";
-														porHejeClassRow="";
-													}
-													
-													anho2="";
-													anho1="";
-												}
-												if(lineaAccionDepartamento[j].anho>="2015"){
-													var anho2=lineaAccionDepartamento[j];
-						 							var anho1="";
-													for(var k=0;k<lineaAccionDepartamento.length;k++){
-														if (anho2.institucion_id==lineaAccionDepartamento[k].institucion_id && anho2.linea_accion_id==lineaAccionDepartamento[k].linea_accion_id && lineaAccionDepartamento[k].date_part =="2014"){
-															anho1=lineaAccionDepartamento[k];
-														}
-													}
-													if (typeof anho1==="undefined") {var anho1= new Object(); anho1.cantidad_ejecutada_hoy="";};
-													if (typeof anho2==="undefined") {var anho2= new Object(); anho2.cantidad_ejecutada_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
-													if (anho2.suma_programada_anho>0){// tenia suma_programada_anho --------------------------------------------------
-														
-														
-														//     anho2.linea_accion_meta = anho2.suma_programada_anho  * 100 / totalLineaPais[y].suma_programada_anho_pais
-														for(var l=0; l<totalLineaPais.length;l++)
-														{
-																if(totalLineaPais[l].institucion_id == anho2.institucion_id && totalLineaPais[l].linea_accion_id == anho2.linea_accion_id && totalLineaPais[l].anho == anho2.anho)
-																{
-																	anho2.linea_accion_meta = parseFloat((anho2.suma_programada_anho / totalLineaPais[l].suma_programada_anho_pais)*anho2.linea_accion_meta).toFixed(2);
-																}
-														}
-														
-														
-														//var porcentajeAnho = (anho2.suma_programada_hoy*100)/anho2.suma_programada_anho;
-														var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
-														porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
-														var porcentajeAnhoEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_anho;
-														porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
-														var porcentajeHoyEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_hoy;
-														porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
-														/*if (porcentajeAnho<=70) sumporAClass = "text-danger";
-														if (porcentajeAnho>70) sumporAClass = "text-warning";
-														if (porcentajeAnho>90) sumporAClass = "text-success";
-														
-														if (porcentajeAnhoEje<=70) porAejeClass = "text-danger";
-														if (porcentajeAnhoEje>70) porAejeClass = "text-warning";
-														if (porcentajeAnhoEje>90) porAejeClass = "text-success";
-														*/
-														porHejeClassRow="";
-														/*
-														if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";porHejeClassRow="danger";}
-														if (porcentajeHoyEje>70){ porHejeClass = "text-warning";porHejeClassRow="warning";}
-														if (porcentajeHoyEje>90){ porHejeClass = "text-success";porHejeClassRow="success";}
 
-														if (porcentajeAnho<=70){ porHejeClassRow="danger";porHejeClass="";} */
-														if (porcentajeAnho<90){ porHejeClassRow="danger";porHejeClass="";}
-														if (porcentajeAnho>=90){ porHejeClassRow="success";
-															if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";}
-															if (porcentajeHoyEje>70){ porHejeClass = "text-warning";}
-															if (porcentajeHoyEje>90){ porHejeClass = "text-success";}
-														}
-														
-														
-														if (  porcentajeHoyEje ==="NaN"){ porcentajeHoyEje="";porHejeClassRow="";}
-													}else{
-														var porcentajeAnho = "";
-														var porcentajeAnhoEje = "";
-														var porcentajeHoyEje ="";
-														porHejeClassRow="";
-													}
-													//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
-													$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+lineaAccionDepartamento[j].institucion_id+'-'+lineaAccionDepartamento[j].linea_accion_id+'-'+lineaAccionDepartamento[j].accion_departamento_id+'> '+lineaAccionDepartamento[j].institucion+'- '+anho2.linea_accion+'</a></td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+anho2.accion_unidad_medida+'</td><td class="cell-bordered2">'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_hoy)+'</td><td>'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class=" text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
-													
-													//<td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td> penultima
-													anho2="";
-													anho1="";
-												}
-											}
-										}
-									}
-								}	
-								
-								
-								
-							}
-							
-							
-							//renderTodasLasLineas();
-							
-						});
 
 					</script>
                   
@@ -1317,7 +833,485 @@ var $tabla=$("#lineasPorEntidad");
 <script type="text/javascript" src="bootstrap/js/jquery.min.js"></script>--> 
 <script type="text/javascript" src="bootstrap/js/bootstrap-slider.js"></script>
 
-    
+<script>
+
+$("body").on("click", "#tablaInstituciones",function(event){
+	
+	
+	var institucion_id=event.target.attributes.institucion_id.value;
+	var depto_id=event.target.attributes.depto_id.value;
+	var dist_id="";
+	if (event.target.attributes.hasOwnProperty("dist_id")){
+		dist_id=event.target.attributes.dist_id.value;
+	}
+	if (depto_id==""){
+		alert("Favor seleccionar previamente Departamento en el mapa");
+	}else{
+		renderLineaAccion(depto_id, institucion_id, dist_id);
+	}
+	
+	
+	event.stopPropagation();
+	
+	
+});
+
+
+$(document).ready(function(){
+	var lineaAccionAcumuladoMesDepto;
+	
+	var vectorMin=0;
+	var vectorMax=0;
+	var vectorMinEjecucion=0;
+	var vectorMaxEjecucion=0;
+	
+	function dibujarLineaAccionAcumuladoMesDepto(lineaAccionAcumuladoMesDepto, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion){
+		
+		var dataPoints=[];
+		var ejecutada=[];
+		
+		var mes;
+		var anho;
+		var cantidadTotalProgramada=parseFloat(0);
+		var cantidadTotalEjecutada=parseFloat(0);
+		
+		
+		$("#rango-fecha").attr("data-slider-min",vectorMin);
+		$("#rango-fecha").attr("data-slider-max",vectorMax);
+		$("#rango-fecha").attr("data-slider-value","["+vectorMin+","+vectorMax+"]");
+		
+		$("#rango-fecha-ejecucion").attr("data-slider-min",vectorMinEjecucion);
+		$("#rango-fecha-ejecucion").attr("data-slider-max",vectorMaxEjecucion);
+		$("#rango-fecha-ejecucion").attr("data-slider-value","["+vectorMinEjecucion+","+vectorMaxEjecucion+"]");
+		
+		
+		$("#fechaInicio").html(lineaAccionAcumuladoMesDepto[vectorMin].mes+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+		$("#fechaInicioEjecucion").html(lineaAccionAcumuladoMesDepto[vectorMinEjecucion].mes+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+		$("#fechaFin").html("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+lineaAccionAcumuladoMesDepto[vectorMax].mes);
+		$("#fechaFinEjecucion").html("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+lineaAccionAcumuladoMesDepto[vectorMaxEjecucion].mes);
+		
+		$("#rango-fecha").slider({});
+		$("#rango-fecha-ejecucion").slider({});
+		for(var i = 0;i<lineaAccionAcumuladoMesDepto.length; i++)
+		{
+			cantidadTotalProgramada+=lineaAccionAcumuladoMesDepto[i].cantidad_programada;
+	
+			if(lineaAccionAcumuladoMesDepto[i].mes >= lineaAccionAcumuladoMesDepto[vectorMin].mes && lineaAccionAcumuladoMesDepto[i].mes <= lineaAccionAcumuladoMesDepto[vectorMax].mes)
+			{
+ 				dataPoints.push({ x: new Date( lineaAccionAcumuladoMesDepto[i].mes), y: cantidadTotalProgramada});
+			}
+
+		}
+		
+		for(var i = 0;i<lineaAccionAcumuladoMesDepto.length; i++)
+		{
+			cantidadTotalEjecutada+=lineaAccionAcumuladoMesDepto[i].cantidad_ejecutda;
+	
+			if(lineaAccionAcumuladoMesDepto[i].mes >= lineaAccionAcumuladoMesDepto[vectorMinEjecucion].mes && lineaAccionAcumuladoMesDepto[i].mes <= lineaAccionAcumuladoMesDepto[vectorMaxEjecucion].mes)
+			{
+ 				if (lineaAccionAcumuladoMesDepto[i].cantidad_ejecutda!=0)  ejecutada.push({ x: new Date( lineaAccionAcumuladoMesDepto[i].mes), y: cantidadTotalEjecutada});
+			}
+
+		}
+
+
+		var chart = new CanvasJS.Chart("chartContainer",
+				{
+						zoomEnabled: true,
+						exportEnabled: true,
+						exportFileName: lineaAccionAcumuladoMesDepto[0].institucion+" - "+lineaAccionAcumuladoMesDepto[0].linea_accion+" ("+lineaAccionAcumuladoMesDepto[0].accion_unidad_medida+")",
+						title: {
+							text: "Evolución Mensual" +" ("+lineaAccionAcumuladoMesDepto[0].accion_unidad_medida+")" 
+						},
+                        	animationEnabled: true,
+                        	width: 800,
+					axisX:{      
+						valueFormatString: "YYYY-MM" ,
+						interval: 1,
+						intervalType: "month",
+						labelAngle: -50,
+						labelFontColor: "rgb(0,75,141)",
+					},
+					axisY: {
+						title: "",
+						interlacedColor: "#F0FFFF",
+						tickColor: "azure",
+						titleFontColor: "rgb(0,75,141)"
+					},
+					data: [
+					{        
+						indexLabelFontColor: "darkSlateGray",
+						showInLegend: true, 
+						name: 'programada',
+						type: "line",
+						//color: "rgba(0,75,141,0.7)",
+						markerSize:8,
+						legendText:"Programación",
+						dataPoints:dataPoints
+					},
+					{        
+						indexLabelFontColor: "darkSlateGray",
+						showInLegend: true, 
+						name: 'ejecutadas',
+						type: "area",
+						//color: "rgba(0,75,141,0.8)",
+						markerSize:8,
+						legendText:"Ejecución",
+						dataPoints:ejecutada
+					}
+				  ]
+				});
+				
+		chart.render();
+	 }
+
+	$("body").on("change", "#rango-fecha",function(event){
+		var rangoDeFecha= $("#rango-fecha").val();
+		var splitDeRango=rangoDeFecha.split(",");
+		vectorMin=splitDeRango[0];
+		vectorMax=splitDeRango[1];
+		
+		var rangoDeFechaEjecucion= $("#rango-fecha-ejecucion").val();
+		var splitDeRangoEjecucion=rangoDeFechaEjecucion.split(",");
+		vectorMinEjecucion=splitDeRangoEjecucion[0];
+		vectorMaxEjecucion=splitDeRangoEjecucion[1];
+		
+		dibujarLineaAccionAcumuladoMesDepto(lineaAccionAcumuladoMesDepto, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion);
+		
+	});
+	
+	
+	$("body").on("change", "#rango-fecha-ejecucion",function(event){
+		var rangoDeFecha= $("#rango-fecha").val();
+		var splitDeRango=rangoDeFecha.split(",");
+		vectorMin=splitDeRango[0];
+		vectorMax=splitDeRango[1];
+		
+		var rangoDeFechaEjecucion= $("#rango-fecha-ejecucion").val();
+		var splitDeRangoEjecucion=rangoDeFechaEjecucion.split(",");
+		vectorMinEjecucion=splitDeRangoEjecucion[0];
+		vectorMaxEjecucion=splitDeRangoEjecucion[1];
+		
+		dibujarLineaAccionAcumuladoMesDepto(lineaAccionAcumuladoMesDepto, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion);
+		
+	});
+	
+	$("body").on("click", ".registro",function(event){
+		var codigoRegistro = $(this).attr("codigoRegistro");
+	    var idParsed = codigoRegistro.split("-");                                                            
+		var institucion_id=idParsed[1];
+		var linea_accion_id=idParsed[2];
+		//var unidad_medida= idParsed[3];
+		var idDepartamento= idParsed[3];
+		var tituloModal="";
+		var cuerpoModal="";
+		var footerModal="<br><br><br>";
+		
+		var registros = $.ajax({
+	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id+'&departamento='+idDepartamento,
+	      	type:'get',
+	      	dataType:'json',
+	      	crossDomain:true,
+	      	async:false       
+	    }).responseText;
+		var elRegistro=JSON.parse(registros);
+		
+		
+
+		cuerpoModal='<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">'+
+					'<div class="row">'+
+						'<div class="row">'+
+							'<div class="col-sm-12">'+
+								'<div class="table-responsive">'+
+									'<table id="example1" class="table table-hover" >'+
+									    '<thead>'+
+										'<tr class="active"><th>Acción</th><th>Departamento</th><th>Distrito</th><th>U. Medida</th><th>Cantidad. Programado</th><th>Inversión Estimada (Millones de G.)</th><th>Fecha Terminación</th><th>% Programado</th><th>% Ejecutado</th></tr>'+
+										'</thead><tbody>';
+					var totalCantidadProgramada=0;
+					tituloModal='<h3><center>'+elRegistro[0].institucion+'&nbsp;&nbsp;-&nbsp;&nbsp;'+elRegistro[0].linea_accion+'</center></h3>';
+					for(var m=0; m<elRegistro.length;m++)
+					{
+							var registroFecha= elRegistro[m].hito_fecha_entrega.split(" ");
+							if (registroFecha[0]=="Jan" || registroFecha[0]=="ene") registroFecha[0]=1;
+							if (registroFecha[0]=="Feb" || registroFecha[0]=="feb") registroFecha[0]=2;
+							if (registroFecha[0]=="Mar" || registroFecha[0]=="mar") registroFecha[0]=3;
+							if (registroFecha[0]=="Apr" || registroFecha[0]=="abr") registroFecha[0]=4;
+							if (registroFecha[0]=="May" || registroFecha[0]=="may") registroFecha[0]=5;
+							if (registroFecha[0]=="Jun" || registroFecha[0]=="jun") registroFecha[0]=6;
+							if (registroFecha[0]=="Jul" || registroFecha[0]=="jul") registroFecha[0]=7;
+							if (registroFecha[0]=="Aug" || registroFecha[0]=="ago") registroFecha[0]=8;
+							if (registroFecha[0]=="Sep" || registroFecha[0]=="sep") registroFecha[0]=9;
+							if (registroFecha[0]=="Oct" || registroFecha[0]=="oct") registroFecha[0]=10;
+							if (registroFecha[0]=="Nov" || registroFecha[0]=="nov") registroFecha[0]=11;
+							if (registroFecha[0]=="Dec" || registroFecha[0]=="dic") registroFecha[0]=12;
+							registroFecha[1].split(",");
+							
+							cuerpoModal+='<tr><td>'+elRegistro[m].accion+'</td><td>'+elRegistro[m].accion_departamento+'</td><td>'+elRegistro[m].accion_distrito+'</td><td>'+elRegistro[m].accion_unidad_edida+'</td><td>'+elRegistro[m].hito_cantidad_programado+'</td><td>'+numeroConComa((elRegistro[m].accion_costo*elRegistro[m].hito_porcentaje_ejecutado/100000000).toFixed(0))+'</td><td>'+registroFecha[2]+'-'+registroFecha[0]+'-'+registroFecha[1][0]+'</td><td>'+elRegistro[m].hito_porcentaje_programado+'</td><td>'+elRegistro[m].hito_porcentaje_ejecutado+'</td></tr>';
+							totalCantidadProgramada+=elRegistro[m].hito_cantidad_programado;
+					}
+					totalCantidadProgramada=parseFloat(totalCantidadProgramada).toFixed(2);
+
+					cuerpoModal+='</tbody><tfoot><tr class="active"><td colspan="2">Total Cantidad Programada: </td><td colspan="8">'+totalCantidadProgramada+'</td></tr></tfoot>'+
+								 '</table>'+
+								 '</div></div></div></div></div>';
+		
+		$('#myModal').find(".modal-title").html("");			
+		$('#myModal').find("#tab_1-1").html(""); 
+		$('#myModal').find("#tab_2-2").html("");
+		$('#myModal').find("#tab_3-2").html("");			
+		
+		$('#myModal').find(".modal-title").html(tituloModal);
+		$('#myModal').find("#tab_1-1").html(cuerpoModal);
+		$("#tab_3-2").append('Programación: <label id="fechaInicio"></label><input id="rango-fecha" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="1" data-slider-value="[250,450]"/><label id="fechaFin"></label>');
+		$("#tab_3-2").append('<br><br>Ejecución: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label id="fechaInicioEjecucion"></label><input id="rango-fecha-ejecucion" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="1" data-slider-value="[250,450]"/><label id="fechaFinEjecucion"></label>');
+
+
+		//$('#myModal').find(".modal-footer").html(footerModal);
+		
+		lineaAccionAcumuladoMesDepto = $.ajax({
+	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getLineaAccionAcumuladoMesDepto&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id+'&departamento='+idDepartamento,
+	      	type:'get',
+	      	dataType:'json',
+	      	async:false       
+	    }).responseText;
+		
+		
+		lineaAccionAcumuladoMesDepto = JSON.parse(lineaAccionAcumuladoMesDepto);
+		
+		 vectorMin=0;
+		 vectorMax=lineaAccionAcumuladoMesDepto.length-1;
+		 
+		 vectorMinEjecucion=0;
+		 vectorMaxEjecucion=lineaAccionAcumuladoMesDepto.length-1;
+		//grafico de total cantidad programada y total cantidad ejecutada
+		
+		$('#myModal').find("#tab_3-2").append('<div id="chartContainer" style="height:400px;"></div>');
+		
+		function compare(a,b) {             
+			  if (a.mes < b.mes)
+			    return -1;
+			  if (a.mes > b.mes)
+			    return 1;
+			  return 0;
+			}
+		
+		
+		lineaAccionAcumuladoMesDepto=lineaAccionAcumuladoMesDepto.sort(compare);
+		
+		dibujarLineaAccionAcumuladoMesDepto(lineaAccionAcumuladoMesDepto, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion);
+		
+		 $(function () {
+		       
+		        $('#example1').dataTable({
+		          "bPaginate": false,
+		          "bLengthChange": false,
+		          "bFilter": true,
+		          "bSort": true,
+		          "bInfo": true,
+		          "bAutoWidth": false,
+		          "language":{
+		        	    "sProcessing":     "Procesando...",
+		        	    "sLengthMenu":     "Mostrar _MENU_ registros",
+		        	    "sZeroRecords":    "No se encontraron resultados",
+		        	    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+		        	    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+		        	    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+		        	    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+		        	    "sInfoPostFix":    "",
+		        	    "sSearch":         "Buscar:",
+		        	    "sUrl":            "",
+		        	    "sInfoThousands":  ",",
+		        	    "sLoadingRecords": "Cargando...",
+		        	    "oPaginate": {
+		        	        "sFirst":    "Primero",
+		        	        "sLast":     "Último",
+		        	        "sNext":     "Siguiente",
+		        	        "sPrevious": "Anterior"
+		        	    },
+		        	    "oAria": {
+		        	        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+		        	        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+		        	    }
+		        	}
+		        });
+		      });
+});
+	
+	
+	
+	
+	
+	renderEntidades();
+	
+	function renderTodasLasLineas(){
+		
+		
+		var sumporAClass="";
+		var porAejeClass="";
+		var porHejeClass="";
+		var porHejeClassRow="";
+		
+		for (var i = 0; i< 18;i++){
+			$("#cuerpoTabla").append('<tr><td colspan="12" ><strong>'+departamento[i].nombreDepartamento+'</strong></td></tr>');
+			var lineasDeAccion= [];
+			for(var j=0;j<lineaAccionDepartamento.length;j++){
+				
+				if (lineaAccionDepartamento[j].accion_departamento_id==departamento[i].idDepartamento){
+					if (lineasDeAccion.indexOf(lineaAccionDepartamento[j].linea_accion_id)<0){
+						lineasDeAccion.push(lineaAccionDepartamento[j].linea_accion_id);
+						if(lineaAccionDepartamento[j].anho<="2014"){
+							var anho1=lineaAccionDepartamento[j];
+							
+							var anho2;
+							for(var k=0;k<lineaAccionDepartamento.length;k++){
+								if (anho1.institucion_id==lineaAccionDepartamento[k].institucion_id && anho1.linea_accion_id==lineaAccionDepartamento[k].linea_accion_id && lineaAccionDepartamento[k].anho =="2015" && lineaAccionDepartamento[k].accion_departamento_id ==anho1.accion_departamento_id){
+									anho2=lineaAccionDepartamento[k];
+								}
+							}
+							if (typeof anho1==="undefined") {var anho1= new Object(); anho1.cantidad_ejecutada_hoy=""};
+							if (typeof anho2==="undefined") {var anho2= new Object(); anho2.cantidad_ejecutada_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
+							if (anho2.suma_programada_anho>0){
+								
+								//for para recorrer totalLineaPais con if para seleccionar la insittucion, la linea y anho considerando lo cargado en anho2, luego 
+								//     anho2.linea_accion_meta = anho2.suma_programada_anho  * 100 / totalLineaPais[y].suma_programada_anho_pais
+								for(var l=0; l<totalLineaPais.length;l++)
+								{
+										if(totalLineaPais[l].institucion_id == anho2.institucion_id && totalLineaPais[l].linea_accion_id == anho2.linea_accion_id && totalLineaPais[l].anho == anho2.anho)
+										{
+											anho2.linea_accion_meta = parseFloat((anho2.suma_programada_anho / totalLineaPais[l].suma_programada_anho_pais)*anho2.linea_accion_meta).toFixed(2);
+										}
+								}
+						
+							//	var porcentajeAnho = (anho2.suma_programada_hoy*100)/anho2.suma_programada_anho;
+								var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
+								porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
+								var porcentajeAnhoEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_anho;
+								porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
+								var porcentajeHoyEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_hoy;
+								porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
+								/*if (porcentajeAnho<=70) sumporAClass = "text-danger";
+								if (porcentajeAnho>70) sumporAClass = "text-warning";
+								if (porcentajeAnho>90) sumporAClass = "text-success";
+								
+								if (porcentajeAnhoEje<=70) porAejeClass = "text-danger";
+								if (porcentajeAnhoEje>70) porAejeClass = "text-warning";
+								if (porcentajeAnhoEje>90) porAejeClass = "text-success";
+								*/
+								porHejeClassRow="";
+								/*
+								if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";porHejeClassRow="danger";}
+								if (porcentajeHoyEje>70){ porHejeClass = "text-warning";porHejeClassRow="warning";}
+								if (porcentajeHoyEje>90){ porHejeClass = "text-success";porHejeClassRow="success";}
+								
+								if (porcentajeAnho<=70){ porHejeClassRow="danger";porHejeClass="";} */
+								if (porcentajeAnho<90){ porHejeClassRow="danger";porHejeClass="";}
+								if (porcentajeAnho>=90){ porHejeClassRow="success";
+									if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";}
+									if (porcentajeHoyEje>70){ porHejeClass = "text-warning";}
+									if (porcentajeHoyEje>90){ porHejeClass = "text-success";}
+								}
+								
+								//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
+								$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+lineaAccionDepartamento[j].institucion_id+'-'+lineaAccionDepartamento[j].linea_accion_id+'-'+lineaAccionDepartamento[j].accion_departamento_id+'> '+lineaAccionDepartamento[j].institucion+'- '+anho2.linea_accion+'</a></td></td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</a></td><td>'+anho2.accion_unidad_medida+'</td><td class="cell-bordered2">'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_hoy)+'</td><td >'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class="text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
+															
+								
+								
+								//<td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td> penultimo
+								if ( porcentajeHoyEje ==="NaN"){ porcentajeHoyEje="";porHejeClassRow="";}
+							}else{
+								var porcentajeAnho = "";
+								var porcentajeAnhoEje = "";
+								var porcentajeHoyEje ="";
+								porHejeClassRow="";
+							}
+							
+							anho2="";
+							anho1="";
+						}
+						if(lineaAccionDepartamento[j].anho>="2015"){
+							var anho2=lineaAccionDepartamento[j];
+ 							var anho1="";
+							for(var k=0;k<lineaAccionDepartamento.length;k++){
+								if (anho2.institucion_id==lineaAccionDepartamento[k].institucion_id && anho2.linea_accion_id==lineaAccionDepartamento[k].linea_accion_id && lineaAccionDepartamento[k].date_part =="2014"){
+									anho1=lineaAccionDepartamento[k];
+								}
+							}
+							if (typeof anho1==="undefined") {var anho1= new Object(); anho1.cantidad_ejecutada_hoy="";};
+							if (typeof anho2==="undefined") {var anho2= new Object(); anho2.cantidad_ejecutada_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
+							if (anho2.suma_programada_anho>0){// tenia suma_programada_anho --------------------------------------------------
+								
+								
+								//     anho2.linea_accion_meta = anho2.suma_programada_anho  * 100 / totalLineaPais[y].suma_programada_anho_pais
+								for(var l=0; l<totalLineaPais.length;l++)
+								{
+										if(totalLineaPais[l].institucion_id == anho2.institucion_id && totalLineaPais[l].linea_accion_id == anho2.linea_accion_id && totalLineaPais[l].anho == anho2.anho)
+										{
+											anho2.linea_accion_meta = parseFloat((anho2.suma_programada_anho / totalLineaPais[l].suma_programada_anho_pais)*anho2.linea_accion_meta).toFixed(2);
+										}
+								}
+								
+								
+								//var porcentajeAnho = (anho2.suma_programada_hoy*100)/anho2.suma_programada_anho;
+								var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
+								porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
+								var porcentajeAnhoEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_anho;
+								porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
+								var porcentajeHoyEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_hoy;
+								porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
+								/*if (porcentajeAnho<=70) sumporAClass = "text-danger";
+								if (porcentajeAnho>70) sumporAClass = "text-warning";
+								if (porcentajeAnho>90) sumporAClass = "text-success";
+								
+								if (porcentajeAnhoEje<=70) porAejeClass = "text-danger";
+								if (porcentajeAnhoEje>70) porAejeClass = "text-warning";
+								if (porcentajeAnhoEje>90) porAejeClass = "text-success";
+								*/
+								porHejeClassRow="";
+								/*
+								if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";porHejeClassRow="danger";}
+								if (porcentajeHoyEje>70){ porHejeClass = "text-warning";porHejeClassRow="warning";}
+								if (porcentajeHoyEje>90){ porHejeClass = "text-success";porHejeClassRow="success";}
+
+								if (porcentajeAnho<=70){ porHejeClassRow="danger";porHejeClass="";} */
+								if (porcentajeAnho<90){ porHejeClassRow="danger";porHejeClass="";}
+								if (porcentajeAnho>=90){ porHejeClassRow="success";
+									if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";}
+									if (porcentajeHoyEje>70){ porHejeClass = "text-warning";}
+									if (porcentajeHoyEje>90){ porHejeClass = "text-success";}
+								}
+								
+								
+								if (  porcentajeHoyEje ==="NaN"){ porcentajeHoyEje="";porHejeClassRow="";}
+							}else{
+								var porcentajeAnho = "";
+								var porcentajeAnhoEje = "";
+								var porcentajeHoyEje ="";
+								porHejeClassRow="";
+							}
+							//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
+							$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+lineaAccionDepartamento[j].institucion_id+'-'+lineaAccionDepartamento[j].linea_accion_id+'-'+lineaAccionDepartamento[j].accion_departamento_id+'> '+lineaAccionDepartamento[j].institucion+'- '+anho2.linea_accion+'</a></td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+anho2.accion_unidad_medida+'</td><td class="cell-bordered2">'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_hoy)+'</td><td>'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class=" text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
+							
+							//<td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td> penultima
+							anho2="";
+							anho1="";
+						}
+					}
+				}
+			}
+		}	
+		
+		
+		
+	}
+	
+	
+	//renderTodasLasLineas();
+
+	
+	
+});
+
+</script>    
     
   </body>
 </html>
