@@ -338,6 +338,14 @@ public class ajaxSelects extends HttpServlet {
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
         		}
+        	if (action.equals("getMetasDistEntLinea")){
+        		List objetos=null;
+        		try {objetos = SqlSelects.selectMetasDistEntLinea();}
+
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos);
+        		out.println(json.toString());
+        	}        	
         	
        }
        out.close();

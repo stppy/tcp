@@ -3,7 +3,7 @@
 		<div class="modal-content" >
 			<div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title">Registrar Acción Has Geo Polígono</h4>
+		        <h4 class="modal-title">Registrar Acción Has Geo Polígono</h4><h4 id="asd"></h4>
 			</div>
 		    <div class="modal-body" >
 				<form class="form-horizontal" role="form">				
@@ -110,8 +110,8 @@ $("body").on("click", "#actualizarAccionHasGeoPoligono",function(event){
 	        {
 	        	if (data.success == true)
 	        	{
-	        		$("#tituloModalUsuario").html('');
-					$("#tituloModalUsuario").append('<p class="text-success">GUARDADO</p>');
+	        		$("#asd").html('');
+					$("#asd").append('<p class="text-success">GUARDADO</p>');
 		    		$("#pass-viejo-form").val("");
 					$("#pass-nuevo-form").val("");
 					$("#pass-nuevo1-form").val("");	
@@ -158,9 +158,9 @@ $("body").on("click", "#iconoBorradoAccionHasGeoPoligono",function(event){
 	    {
 	    	if (data.success == true)
 	    	{
-	    		$("#tituloModalUsuario").html('');
-				$("#tituloModalUsuario").append('<p class="text-success">GUARDADO</p>');
-				 		$("#pass-viejo-form").val("");
+	    		$("#asd").html('');
+				$("#asd").append('<p class="text-success">GUARDADO</p>');
+				$("#pass-viejo-form").val("");
 				$("#pass-nuevo-form").val("");
 				$("#pass-nuevo1-form").val("");	
 			}else{
