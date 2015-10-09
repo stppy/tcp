@@ -806,7 +806,28 @@ tbody {
 					      }		
 						 }
 						}else{
-							//distrito seleccionado
+							var metasDistEntLineajson = $.ajax({
+						    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getMetasDistEntLinea&departamento='+depto_id+'&distrito='+dist_id+'&institucion_id='+institucion_id,
+						      	type:'get',
+						      	dataType:'json',
+						      	crossDomain:true,
+						      	async:false       
+						    }).responseText;
+							var metasDistEntLinea=JSON.parse(metasDistEntLineajson);
+							var desemp=0.0;
+							var color="";
+							var porHejeClassRow="";
+							for(var j=0;j<metasDistEntLinea.length;j++){
+								
+								desemp=metasDistEntLinea[j].cantidadEjecHoy/metasDistEntLinea[j].cantidadProgHoy;
+								color= getColorDesemp(desemp)
+								$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+metasDistEntLinea[j].institucionId+'-'+metasDistEntLinea[j].lineaAccionId+'-'+metasDistEntLinea[j].accionDepartamentoId+'> '+metasDistEntLinea[j].institucion+'- '+metasDistEntLinea[j].lineaAccion+'</a></td><td>'+metasDistEntLinea[j].accionUnidadMedidaId+'</td><td >'+numeroConComa(metasDistEntLinea[j].sumProgAnho)+'</td><td class="cell-bordered2">'+numeroConComa(metasDistEntLinea[j].cantidadProgHoy)+'</td><td >'+numeroConComa(metasDistEntLinea[j].cantidadEjecHoy)+'</td><td >'+desemp+'</td><td>'+numeroConComa((metasDistEntLinea[j].costoEjecHoy/1000000).toFixed(0))+'</td></tr>');	
+							}
+							
+									
+							
+							
+							
 						}
 					}
 

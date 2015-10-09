@@ -340,7 +340,10 @@ public class ajaxSelects extends HttpServlet {
         		}
         	if (action.equals("getMetasDistEntLinea")){
         		List objetos=null;
-        		try {objetos = SqlSelects.selectMetasDistEntLinea();}
+        		if (departamento!=99) condition += " AND accion_departamento_id ='"+departamento+"'";
+        		if (distrito!=0) condition += " AND accion_distrito_id ='"+distrito+"'";
+        		if (institucion_id!=0) condition += " AND institucion_id ='"+institucion_id+"'"; 
+        		try {objetos = SqlSelects.selectMetasDistEntLinea(condition);}
 
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos);

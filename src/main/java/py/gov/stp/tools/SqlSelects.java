@@ -797,9 +797,9 @@ public class SqlSelects {
 		return objetos; 
 		}
 	
-	public static List<MetasDistEntLinea> selectMetasDistEntLinea() throws SQLException{
+	public static List<MetasDistEntLinea> selectMetasDistEntLinea(String condition) throws SQLException{
 	   	 Connection conect=ConnectionConfiguration.conectar();
-			 String query = " select * from fact_meta_dist_entidad_linea WHERE periodo = 2015";
+			 String query = " select * from fact_meta_dist_entidad_linea WHERE periodo = 2015"+condition;
 			 
 			 Statement statement = null;
 			 ResultSet rs=null;
