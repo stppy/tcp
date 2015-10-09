@@ -337,7 +337,16 @@ tbody {
 							if (e.target.feature.properties.hasOwnProperty("distrito")){
 								tipoInstituciones="distrito";
 								$("#tabla-derecho").html("");
-								$("#tabla-derecho").append('Instituciones en '+e.target.feature.properties.dpto_desc+', '+e.target.feature.properties.dist_desc);
+														
+								$("#tabla-derecho").append('<div class="alert col-md-4  alert-dismissable" style="margin:0">Instituciones en </div><div class="alert col-md-4  alert-dismissable" style="margin:0">'+
+									    '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>'+
+									    e.target.feature.properties.dpto_desc+
+									 '</div>'+
+									 '<div class="alert col-md-4 alert-dismissable" style="margin:0">'+
+									    '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>'+
+									    e.target.feature.properties.dist_desc+ 
+									  '</div>'+
+									'</div>');
 								var color="";
 								for (var i = 0; i< entidades.length;i++){
 									for(var j=0;j < desPaisDistInst.length;j++){
