@@ -27,6 +27,7 @@ import objetos.LineaAccion;
 import objetos.LineaAccionAcumuladoMes;
 import objetos.LineaAccionDepartamento;
 import objetos.LineaAccionDistrito;
+import objetos.MetasDistEntLinea;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -348,10 +349,7 @@ public class SqlSelects {
 				objeto.setHito_comentario_aprob(rs.getString("hito_comentario_aprob"));
 				objeto.setHito_status(rs.getString("hito_status").toCharArray()[0]);
 				objeto.setHito_total_doc(rs.getInt("hito_total_doc"));
-
-
 				
-
 				objetos.add(objeto);
 			}
 		}
@@ -798,6 +796,54 @@ public class SqlSelects {
 		}
 		return objetos; 
 		}
+	
+	public static List<MetasDistEntLinea> selectMetasDistEntLinea() throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+			 String query = " select * from fact_meta_dist_entidad_linea ";
+			 
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 List<MetasDistEntLinea> objetos = new ArrayList<MetasDistEntLinea>();
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					MetasDistEntLinea objeto = new MetasDistEntLinea();
+
+					objeto.setAccionDepartamentoId(rs.getInt("accion_departamento_id"));;
+					objeto.setAccionDistritoId(rs.getInt("accion_distrito_id"));
+					objeto.setOrden(rs.getInt("orden"));
+					objeto.setInstitucionId(rs.getInt("institucion_id"));
+					objeto.setInstitucion(rs.getString("institucion"));
+					objeto.setOrdenLineaAccion(rs.getInt("orden_linea_accion"));
+					objeto.setLineaAccionId(rs.getInt("linea_accion_id"));
+					objeto.setLineaAccion(rs.getString("linea_accion"));
+					objeto.setAccionUnidadMedidaId(rs.getInt("accion_unidad_medida_id"));
+					objeto.setAccionUnidadMedida(rs.getString("accion_unidad_medida"));
+					objeto.setPeriodo(rs.getInt("periodo"));
+					objeto.setLineaAccionMeta(rs.getInt("linea_accion_meta"));
+					objeto.setDatePart(rs.getDouble("date_part"));
+					objeto.setSumProgAnho(rs.getDouble("sum_prog_anho"));
+					objeto.setSumEjecAnho(rs.getDouble("sum_ejec_anho"));
+					objeto.setCostoEjecAnho(rs.getDouble("costo_ejec_anho"));
+					objeto.setCostoProgAnho(rs.getDouble("costo_prog_anho"));
+					objeto.setCostoProgHoy(rs.getDouble("costo_prog_hoy"));
+					objeto.setCostoEjecHoy(rs.getDouble("costo_ejec_hoy"));
+					objeto.setCantidadProgHoy(rs.getDouble("cantidad_prog_hoy"));
+					objeto.setCantidadEjecHoy(rs.getDouble("cantidad_ejec_hoy"));
+										
+					
+					objetos.add(objeto);
+				}
+			}
+			catch (SQLException e) {e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos;
+	  }	
 
 //    public static List<ProyectoSNIP> selectProyectoSnip(String condition) throws SQLException{
 //     	 Connection conect=ConnectionConfiguration.conectar();
@@ -898,7 +944,7 @@ public class SqlSelects {
 //		 String query = " select DISTINCT(objetivo.nombre), objetivo.id as objetivo_id, estrategia.id as estrategia_id from estrategia_has_objetivo "+
 //				 	"inner join estrategia on estrategia_id=estrategia.id "+
 //				 	"inner join objetivo on objetivo_id=objetivo.id "+
-//				 	"where estrategia_has_objetivo.objetivo_tipo_objetivo_id =1 "+condition;
+//				 	"where estrategia_has_objetipublic int getAccionDepartamentoId() {
 //		 
 //		 Statement statement = null;
 //		 ResultSet rs=null;
