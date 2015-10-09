@@ -5,6 +5,8 @@ public class LineaEstrategica {
 	protected String nombre;
 	protected String descripcion;
 	protected int orden;
+	protected int version;
+	
 	protected boolean borrado=false;
 	
 	public int getId() {
@@ -36,6 +38,12 @@ public class LineaEstrategica {
 	}
 	public void setBorrado(boolean borrado) {
 		this.borrado = borrado;
+	}
+	public int getVersion() {
+		return version;
+	}
+	public void setVersion(int version) {
+		this.version = version;
 	}
 	public void changeBorrado(){
 		this.borrado=!borrado;
