@@ -235,7 +235,10 @@ public class ajaxSelects extends HttpServlet {
         		if (accion!="") condition += " and accion ='"+accion+"'";
         		if (accion_id!=0) condition += " and accion_id ='"+accion_id+"'";
         		if (departamento!=99) condition += " and accion_departamento_id ='"+departamento+"'";
-        		if (db=="20150731") {try {objetos = SqlSelects.selectFactHitos2015Base(condition);}catch (SQLException e) {e.printStackTrace();}}
+        		if (distrito!=99) condition += " and accion_distrito_id ='"+distrito+"'";
+        		if (db=="20150731") {
+        			try {objetos = SqlSelects.selectFactHitos2015Base(condition);}
+        			catch (SQLException e) {e.printStackTrace();}}
         		else{
 	        		
 					try {objetos = SqlSelects.selectFactHitos2015(condition);}
@@ -303,6 +306,18 @@ public class ajaxSelects extends HttpServlet {
         		if (linea_accion_id!=0) condition += " and linea_accion_id ='"+linea_accion_id+"'";
         		if (departamento!=99) condition += " and accion_departamento_id ='"+departamento+"'"; 
         		try {objetos = SqlSelects.selectLineaAccionAcumuladoMesDepto(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());
+        		}
+        	if (action.equals("getLineaAccionAcumuladoMesDistrito")){
+        		List objetos=null;
+        		condition = "where true ";
+        		if (institucion_id!=0) condition += " and institucion_id ='"+institucion_id+"'";
+        		if (linea_accion_id!=0) condition += " and linea_accion_id ='"+linea_accion_id+"'";
+        		if (departamento!=99) condition += " and accion_departamento_id ='"+departamento+"'";
+        		if (distrito!=99) condition += " and accion_distrito_id ='"+distrito+"'"; 
+        		try {objetos = SqlSelects.selectLineaAccionAcumuladoMesDistrito(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());

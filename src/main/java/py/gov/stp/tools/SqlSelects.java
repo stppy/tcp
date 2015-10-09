@@ -768,6 +768,40 @@ public class SqlSelects {
 		}
 		return objetos; 
 		}
+	public static List<LineaAccionAcumuladoMesDistrito> selectLineaAccionAcumuladoMesDistrito(String condition) throws SQLException{
+		Connection conect=ConnectionConfiguration.conectar();
+		String query = " select * from linea_accion_acumulado_mes_distrito "+condition;
+
+		Statement statement = null;
+		ResultSet rs=null;
+		List<LineaAccionAcumuladoMesDistrito> objetos = new ArrayList<LineaAccionAcumuladoMesDistrito>();
+
+		try {
+			statement = conect.createStatement();
+			rs=statement.executeQuery(query);
+			while(rs.next()){
+				LineaAccionAcumuladoMesDistrito objeto = new LineaAccionAcumuladoMesDistrito();
+		
+				objeto.setLinea_accion_id(rs.getInt("linea_accion_id"));
+				objeto.setLinea_accion(rs.getString("linea_accion"));
+				objeto.setInstitucion_id(rs.getInt("institucion_id"));
+				objeto.setInstitucion(rs.getString("institucion"));
+				objeto.setAccion_unidad_medida(rs.getString("accion_unidad_medida"));
+				objeto.setMes(rs.getString("mes"));
+				objeto.setCantidad_programada(rs.getDouble("cantidad_programada"));
+				objeto.setCantidad_ejecutda(rs.getDouble("cantidad_ejecutada"));
+				objeto.setDistrito_id(rs.getInt("accion_distrito_id"));
+				objeto.setDepartamento_id(rs.getInt("accion_departamento_id"));
+				objetos.add(objeto);
+			}
+		}
+		catch (SQLException e) {e.printStackTrace();}
+		finally{
+			if (statement != null) {statement.close();}
+			if (conect != null) {conect.close();}
+		}
+		return objetos; 
+		}
 
 	public static List<Departamento> selectDepartamento() throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();

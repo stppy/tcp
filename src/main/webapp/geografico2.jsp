@@ -338,12 +338,12 @@ tbody {
 								tipoInstituciones="distrito";
 								$("#tabla-derecho").html("");
 														
-								$("#tabla-derecho").append('<div class="alert col-md-4  alert-dismissable" style="margin:0">Instituciones en </div><div class="alert col-md-4  alert-dismissable" style="margin:0">'+
-									    '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>'+
+								$("#tabla-derecho").append('<div class="col-md-4"style="margin:0">Instituciones en: </div><div class="label label-default  col-md-4  label-dismissable" >'+
+									    '<button type="button" class="close" data-dismiss="label" aria-hidden="true" id="cierreEtiquetaDepartamento">×</button>'+
 									    e.target.feature.properties.dpto_desc+
 									 '</div>'+
-									 '<div class="alert col-md-4 alert-dismissable" style="margin:0">'+
-									    '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>'+
+									 '<div class="label  label-default  col-md-4 label-dismissable" >'+
+									    '<button type="button" class="close" data-dismiss="label" aria-hidden="true" id="cierreEtiquetaDistrito" parametroDepartamento='+e.target.feature.properties.dpto+'>×</button>'+
 									    e.target.feature.properties.dist_desc+ 
 									  '</div>'+
 									'</div>');
@@ -465,9 +465,9 @@ tbody {
 							var porHejeClassRow="";
 							for(var j=0;j<metasDistEntLinea.length;j++){
 								
-								desemp=metasDistEntLinea[j].cantidadEjecHoy/metasDistEntLinea[j].cantidadProgHoy;
+								desemp = parseFloat((metasDistEntLinea[j].cantidadEjecHoy/metasDistEntLinea[j].cantidadProgHoy)*100);
 								color= getColorDesemp(desemp)
-								$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+metasDistEntLinea[j].institucionId+'-'+metasDistEntLinea[j].lineaAccionId+'-'+metasDistEntLinea[j].accionDepartamentoId+'> '+metasDistEntLinea[j].institucion+'- '+metasDistEntLinea[j].lineaAccion+'</a></td><td>'+metasDistEntLinea[j].accionUnidadMedida+'</td><td >'+numeroConComa(metasDistEntLinea[j].sumProgAnho)+'</td><td class="cell-bordered2">'+numeroConComa(metasDistEntLinea[j].cantidadProgHoy)+'</td><td >'+numeroConComa(metasDistEntLinea[j].cantidadEjecHoy)+'</td><td >'+desemp+'</td><td>'+numeroConComa((metasDistEntLinea[j].costoEjecHoy/1000000).toFixed(0))+'</td></tr>');	
+								$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+metasDistEntLinea[j].institucionId+'-'+metasDistEntLinea[j].lineaAccionId+'-'+metasDistEntLinea[j].accionDepartamentoId+'-'+metasDistEntLinea[j].accionDistritoId+'> '+metasDistEntLinea[j].institucion+'- '+metasDistEntLinea[j].lineaAccion+'</a></td><td>'+metasDistEntLinea[j].accionUnidadMedida+'</td><td >'+numeroConComa(metasDistEntLinea[j].sumProgAnho)+'</td><td class="cell-bordered2">'+numeroConComa(metasDistEntLinea[j].cantidadProgHoy)+'</td><td >'+numeroConComa(metasDistEntLinea[j].cantidadEjecHoy)+'</td><td >'+numeroConComa(parseFloat(desemp).toFixed(2))+'</td><td>'+numeroConComa((metasDistEntLinea[j].costoEjecHoy/1000000).toFixed(0))+'</td></tr>');	
 							}
 							
 									
@@ -562,6 +562,8 @@ tbody {
 						var distLayer;
 
 						function renderEntidad(e){
+							$("#cuerpoTabla").html("");
+							
 							depto.eachLayer(function(l){depto.resetStyle(l);});
 							if (typeof distLayer !== "undefined"){
 								if (e.target.feature.properties.hasOwnProperty("distrito")){
@@ -770,6 +772,31 @@ var $tabla=$("#lineasPorEntidad");
 
 <script>
 
+$("body").on("click", "#cierreEtiquetaDepartamento",function(event){
+	var distrito;
+	if($("#cierreEtiquetaDistrito").attr("value")!= ""){
+		alert ("existe un distrito");
+		
+		
+	}else{
+		alert("puede cerrar");
+		
+	}
+	
+});
+
+
+$("body").on("click", "#cierreEtiquetaDistrito",function(event){
+	
+
+	var idDepartamento = $(this).attr("parametroDepartamento");
+	renderEntidades(idDepartamento);
+	
+});
+
+
+
+
 $("body").on("click", "#tablaInstituciones",function(event){
 	
 	
@@ -938,12 +965,18 @@ $(document).ready(function(){
 		var linea_accion_id=idParsed[2];
 		//var unidad_medida= idParsed[3];
 		var idDepartamento= idParsed[3];
+		var idDistrito= idParsed[4];
 		var tituloModal="";
 		var cuerpoModal="";
 		var footerModal="<br><br><br>";
-		
+		var urlFactHitos="";
+		urlFactHitos+='http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015';
+		if (typeof institucion_id != "undefined") urlFactHitos+='&institucion_id='+institucion_id;
+		if (typeof linea_accion_id != "undefined") urlFactHitos+='&linea_accion_id='+linea_accion_id;
+		if (typeof idDepartamento != "undefined") urlFactHitos+='&departamento='+idDepartamento;
+		if (typeof idDistrito != "undefined") urlFactHitos+='&distrito='+idDistrito;
 		var registros = $.ajax({
-	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id+'&departamento='+idDepartamento,
+	    	url:urlFactHitos,
 	      	type:'get',
 	      	dataType:'json',
 	      	crossDomain:true,
@@ -1002,9 +1035,16 @@ $(document).ready(function(){
 
 
 		//$('#myModal').find(".modal-footer").html(footerModal);
+		var urlAcumulado="";
+		var urlFinal="";
+		
+		
+		if (typeof idDistrito != "undefined") {urlAcumulado+='getLineaAccionAcumuladoMesDistrito';urlFinal+="&distrito="+idDistrito}else{
+			if (typeof idDepartamento != "undefined") urlAcumulado+='getLineaAccionAcumuladoMesDepto';	
+		}
 		
 		lineaAccionAcumuladoMesDepto = $.ajax({
-	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getLineaAccionAcumuladoMesDepto&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id+'&departamento='+idDepartamento,
+	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action='+urlAcumulado+'&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id+'&departamento='+idDepartamento+urlFinal,
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
