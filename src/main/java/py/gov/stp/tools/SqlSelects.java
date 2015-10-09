@@ -799,7 +799,7 @@ public class SqlSelects {
 	
 	public static List<MetasDistEntLinea> selectMetasDistEntLinea() throws SQLException{
 	   	 Connection conect=ConnectionConfiguration.conectar();
-			 String query = " select * from fact_meta_dist_entidad_linea ";
+			 String query = " select * from fact_meta_dist_entidad_linea WHERE periodo = 2015";
 			 
 			 Statement statement = null;
 			 ResultSet rs=null;
