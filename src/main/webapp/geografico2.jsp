@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%-- 
 <%@ page import="org.jasig.cas.client.authentication.AttributePrincipalImpl"%>
 <%@ page import="org.jasig.cas.client.authentication.AttributePrincipal"%>
+Comment --%>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.util.*" %>
 
@@ -111,9 +113,9 @@ var datosGeo=[];
 		</div>
 
 		
-<% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%>
+<%-- <% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%>
 <% Map attributes = user.getAttributes(); 
-if (user != null) { %>
+if (user != null) { %>--%>
 
 <script>
 	
@@ -209,10 +211,17 @@ tbody {
 				
 					<script>
 					
+					<%-- 
 					var entidadCas = "";
 					entidadCas ="<%=attributes.get("entidad") %>";
+					--%>  
+					var entidadCas = "";
+					entidadCas ="STP";
 					var usuarios = $.ajax({
+						<%-- 
 						url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
+						--%>
+						url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=rpalau@stp.gov.py',
 					  	type:'get',
 					  	dataType:'json',
 					  	async:false       
@@ -745,9 +754,11 @@ var $tabla=$("#lineasPorEntidad");
     
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js" type="text/javascript"></script>
+    <%-- 
         <%  } else { %>
 				est<p>Favor Iniciar Sesion</p>
 			<%  } %>
+			 --%>
 
 <!-- Piwik -->
 <script type="text/javascript">

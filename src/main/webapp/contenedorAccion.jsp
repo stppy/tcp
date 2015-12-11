@@ -135,7 +135,7 @@ if (user != null) { %>
 			var tablaAccion="";
 			tablaAccion = '<table class="table table-striped ">'+
 						  '<tr><td colspan="10">Tabla Acción</td><td><a href="#" data-toggle="modal" data-target="#accion"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
-						  '<tr><td>Id</td><td>insLineaAccionId</td><td>Nombre</td><td>Descripción</td><td>Costo</td><td>Peso</td><td>FechaInicio</td><td>FechaFin</td><td>Borrado</td><td>Insertar</td><td>Editar</td></tr>';
+						  '<tr><td>Id</td><td>insLineaAccionId</td><td>Nombre</td><td>Descripción</td><td>Costo</td><td>Peso</td><td>FechaInicio</td><td>FechaFin</td><td>Borrado</td><td>Editar</td><td>Borrar</td></tr>';
 			for(var m=0; m<accion.length;m++)
 			{
 				if(accion[m].borrado == true)
