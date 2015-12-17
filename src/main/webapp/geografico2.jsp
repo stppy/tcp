@@ -360,6 +360,23 @@ tbody {
 							}
 						}
 					}
+					
+					function setColorBarras(pocentajeColor1, pocentajeColor2){
+						
+						$("div.progress-bar").each(function(){
+							var varlor = parseInt($(this).find('p').html());
+							if (varlor >= pocentajeColor2){
+								$(this).attr("class", "progress-bar bg-green-active color-palette");
+							}else{
+								if (varlor >= pocentajeColor1){
+									$(this).attr("class", "progress-bar bg-yellow-active color-palette");
+								}else{
+									$(this).attr("class", "progress-bar bg-red-active color-palette");
+								}
+							}
+						});
+
+					}
 
 					
 					
@@ -871,7 +888,10 @@ $(document).ready(function(){
 		var splitDeRango=rangoDeColor.split(",");
 		pocentajeColor1 = parseInt(splitDeRango[0]);
 		pocentajeColor2 = parseInt(splitDeRango[1]); 
-		distLayer.eachLayer(function(l2){distLayer.resetStyle(l2);});
+		if (typeof distLayer !== "undefined"){
+			distLayer.eachLayer(function(l2){distLayer.resetStyle(l2);});
+		}
+		setColorBarras(pocentajeColor1, pocentajeColor2);
 		depto.eachLayer(function(l){depto.resetStyle(l);});
 
 	});
