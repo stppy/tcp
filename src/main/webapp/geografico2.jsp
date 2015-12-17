@@ -1,10 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page contentType="text/html; charset=UTF-8"%>
-<%-- 
+<%@ page contentType="text/html; charset=UTF-8"%> 
 <%@ page import="org.jasig.cas.client.authentication.AttributePrincipalImpl"%>
 <%@ page import="org.jasig.cas.client.authentication.AttributePrincipal"%>
-Comment --%>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.util.*" %>
 
@@ -23,6 +21,9 @@ Comment --%>
         
 	<!--<script src="frames/entidad.js" type="text/javascript"></script> -->
 	<script type="text/javascript" src="dist/canvasjs/canvasjs.min.js" ></script>
+	
+	<link href="bootstrap/css/bootstrapslider.css" rel="stylesheet">
+	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <script>
 var datosGeo=[];
@@ -62,6 +63,19 @@ var datosGeo=[];
 		}
 		#R, #G, #B {
 			width: 300px;
+		}
+		
+		
+		#slider12a .slider-track-high, #slider12c .slider-track-high {
+			background: #008d4c;
+		}
+		
+		#slider12b .slider-track-low, #slider12c .slider-track-low {
+			background: #d33724;
+		}
+		
+		#slider12c .slider-selection {
+			background: #db8b0b;
 		}
     </style>
     
@@ -113,9 +127,9 @@ var datosGeo=[];
 		</div>
 
 		
-<%-- <% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%>
-<% Map attributes = user.getAttributes(); 
-if (user != null) { %>--%>
+ <% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%>
+ <% Map attributes = user.getAttributes(); 
+if (user != null) { %>
 
 <script>
 	
@@ -211,17 +225,16 @@ tbody {
 				
 					<script>
 					
-					<%-- 
+					var pocentajeColor1 = parseInt(70);
+					var pocentajeColor2 = parseInt(90);
+					
 					var entidadCas = "";
 					entidadCas ="<%=attributes.get("entidad") %>";
-					--%>  
-					var entidadCas = "";
-					entidadCas ="STP";
-					var usuarios = $.ajax({
-						<%-- 
+					
+					var usuarios = $.ajax({						 
 						url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
-						--%>
-						url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=rpalau@stp.gov.py',
+						
+						
 					  	type:'get',
 					  	dataType:'json',
 					  	async:false       
@@ -323,12 +336,24 @@ tbody {
 					var porAejeClass="";
 					var porHejeClass="";
 					var porHejeClassRow="";
-					
-					function getColorDesemp(val){
+							
+/* 					function getColorDesemp(val){
 						if (parseFloat(val).toFixed(0)>=90){
 							return "green";
 						}else{
 							if (parseFloat(val).toFixed(0)>=70){
+								return  color="yellow";
+							}else{
+								return  color="red";
+							}
+						}
+					} */
+					
+					function getColorDesemp2(val){
+						if (parseFloat(val).toFixed(0)>=pocentajeColor2){
+							return "green";
+						}else{
+							if (parseFloat(val).toFixed(0)>=pocentajeColor1){
 								return  color="yellow";
 							}else{
 								return  color="red";
@@ -360,7 +385,7 @@ tbody {
 								for (var i = 0; i< entidades.length;i++){
 									for(var j=0;j < desPaisDistInst.length;j++){
 										if ((desPaisDistInst[j].clave3==entidades[i].institucion_id) && (desPaisDistInst[j].clave1==e.target.feature.properties.dpto) && (desPaisDistInst[j].clave2 == e.target.feature.properties.distrito)){
-											color=getColorDesemp(desPaisDistInst[j].valor);
+											color=getColorDesemp2(desPaisDistInst[j].valor);
 											$("#tablaInstituciones").append('<tr><td class="col-md-3"><a tipo="filtroPorEntidad" institucion_id='+entidades[i].institucion_id+' depto_id='+e.target.feature.properties.dpto+' dist_id='+e.target.feature.properties.distrito+' >'+entidades[i].institucion+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(desPaisDistInst[j].valor).toFixed(0)+'%"><p class="text-left">'+parseFloat(desPaisDistInst[j].valor).toFixed(2)+'%</p></div></div></td></tr>');
 										}
 									}
@@ -382,7 +407,7 @@ tbody {
 										}
 									}
 									despTotDeptoInst=depemDeptoInst/countDeptoInst;
-									color=getColorDesemp(despTotDeptoInst);
+									color=getColorDesemp2(despTotDeptoInst);
 									if (!isNaN(despTotDeptoInst)) $("#tablaInstituciones").append('<tr><td class="col-md-3"><a tipo="filtroPorEntidad" institucion_id='+entidades[i].institucion_id+' depto_id='+e.target.feature.properties.dpto+' >'+entidades[i].institucion+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotDeptoInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotDeptoInst).toFixed(2)+'%</p></div></div></td></tr>');
 								}
 							}
@@ -399,7 +424,7 @@ tbody {
 									}
 								}
 								despTotInst=depemInst/countInst;
-								color=getColorDesemp(despTotInst);
+								color=getColorDesemp2(despTotInst);
 								if (!isNaN(despTotInst)) $("#tablaInstituciones").append('<tr><td class="col-md-3"><a tipo="filtroPorEntidad" institucion_id='+entidades[i].institucion_id+'  >'+entidades[i].institucion+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotInst).toFixed(2)+'%</p></div></div></td></tr>');
 							}
 						}
@@ -454,7 +479,7 @@ tbody {
 										}
 									}
 									desempenho = parseFloat((acumuladorEjecucion/acumuladorPlanificacion)*100);
-									color= getColorDesemp(desempenho)
+									color= getColorDesemp2(desempenho)
 									$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+l+'-'+metasDistEntLinea[l].institucionId+'-'+metasDistEntLinea[l].lineaAccionId+'-'+metasDistEntLinea[l].accionDepartamentoId+'> '+metasDistEntLinea[l].institucion+'- '+metasDistEntLinea[l].lineaAccion+'</a></td><td>'+metasDistEntLinea[l].accionUnidadMedida+'</td><td >'+numeroConComa(parseFloat(acumuladorPlanificacionAnho).toFixed(2))+'</td><td class="cell-bordered2">'+numeroConComa(parseFloat(acumuladorPlanificacion).toFixed(2))+'</td><td >'+numeroConComa(parseFloat(acumuladorEjecucion).toFixed(2))+'</td><td >'+numeroConComa(parseFloat(desempenho).toFixed(2))+'</td><td>'+numeroConComa((acumuladorInversion/1000000).toFixed(0)))+'</td></tr>';
 								}
 								
@@ -475,7 +500,7 @@ tbody {
 							for(var j=0;j<metasDistEntLinea.length;j++){
 								
 								desemp = parseFloat((metasDistEntLinea[j].cantidadEjecHoy/metasDistEntLinea[j].cantidadProgHoy)*100);
-								color= getColorDesemp(desemp)
+								color= getColorDesemp2(desemp)
 								$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+metasDistEntLinea[j].institucionId+'-'+metasDistEntLinea[j].lineaAccionId+'-'+metasDistEntLinea[j].accionDepartamentoId+'-'+metasDistEntLinea[j].accionDistritoId+'> '+metasDistEntLinea[j].institucion+'- '+metasDistEntLinea[j].lineaAccion+'</a></td><td>'+metasDistEntLinea[j].accionUnidadMedida+'</td><td >'+numeroConComa(metasDistEntLinea[j].sumProgAnho)+'</td><td class="cell-bordered2">'+numeroConComa(metasDistEntLinea[j].cantidadProgHoy)+'</td><td >'+numeroConComa(metasDistEntLinea[j].cantidadEjecHoy)+'</td><td >'+numeroConComa(parseFloat(desemp).toFixed(2))+'</td><td>'+numeroConComa((metasDistEntLinea[j].costoEjecHoy/1000000).toFixed(0))+'</td></tr>');	
 							}
 							
@@ -488,8 +513,8 @@ tbody {
 
 						function getColor(d) {
 						  
-						  return d >= 90  ? '#008d4c' :
-						           d >= 70  ? '#db8b0b' :
+						  return d >= pocentajeColor2  ? '#008d4c' :
+						           d >= pocentajeColor1  ? '#db8b0b' :
 						                      '#d33724';
 						 /*
 							return d >= 90  ? 'green' :
@@ -754,11 +779,11 @@ var $tabla=$("#lineasPorEntidad");
     
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js" type="text/javascript"></script>
-    <%-- 
+     
         <%  } else { %>
 				est<p>Favor Iniciar Sesion</p>
 			<%  } %>
-			 --%>
+	
 
 <!-- Piwik -->
 <script type="text/javascript">
@@ -831,12 +856,37 @@ $("body").on("click", "#tablaInstituciones",function(event){
 
 
 $(document).ready(function(){
+
+	$("#ex12c").slider({
+		id: "slider12c",
+		min: 0,
+		max: 100,
+		range: true,
+		value: [ 70, 90 ]
+	});
+
+
+	$("body").on("change", "#ex12c",function(event){
+		var rangoDeColor= $("#ex12c").attr("value");
+		var splitDeRango=rangoDeColor.split(",");
+		pocentajeColor1 = parseInt(splitDeRango[0]);
+		pocentajeColor2 = parseInt(splitDeRango[1]); 
+		distLayer.eachLayer(function(l2){distLayer.resetStyle(l2);});
+		depto.eachLayer(function(l){depto.resetStyle(l);});
+
+	});
+	
+
+	
 	var lineaAccionAcumuladoMesDepto;
 	
 	var vectorMin=0;
 	var vectorMax=0;
 	var vectorMinEjecucion=0;
 	var vectorMaxEjecucion=0;
+	
+	var porcentaje1 = 70; //la variable porcentaje1 se utiliza para colorear las tablas
+	var porcentaje2 = 90 //la variable porcentaje2 se utiliza para colorear las tablas
 	
 	function dibujarLineaAccionAcumuladoMesDepto(lineaAccionAcumuladoMesDepto, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion){
 		
@@ -1004,7 +1054,7 @@ $(document).ready(function(){
 								'<div class="table-responsive">'+
 									'<table id="example1" class="table table-hover" >'+
 									    '<thead>'+
-										'<tr class="active"><th>Acción</th><th>Departamento</th><th>Distrito</th><th>U. Medida</th><th>Cantidad. Programado</th><th>Inversión Estimada (Millones de G.)</th><th>Fecha Terminación</th><th>% Programado</th><th>% Ejecutado</th></tr>'+
+										'<tr class="active"><th>Acción</th><th>Departamento</th><th>Distrito</th><th>U. Medida</th><th>Cantidad. Programado</th><th>Inversión Estimada (Millones de G.)</th><th>Fecha Terminación</th><th>% Programado</th><th>% Ejecutado</th><th>Editar</th><th>Borrar</th></tr>'+
 										'</thead><tbody>';
 					var totalCantidadProgramada=0;
 					tituloModal='<h3><center>'+elRegistro[0].institucion+'&nbsp;&nbsp;-&nbsp;&nbsp;'+elRegistro[0].linea_accion+'</center></h3>';
@@ -1025,7 +1075,7 @@ $(document).ready(function(){
 							if (registroFecha[0]=="Dec" || registroFecha[0]=="dic") registroFecha[0]=12;
 							registroFecha[1].split(",");
 							
-							cuerpoModal+='<tr><td>'+elRegistro[m].accion+'</td><td>'+elRegistro[m].accion_departamento+'</td><td>'+elRegistro[m].accion_distrito+'</td><td>'+elRegistro[m].accion_unidad_edida+'</td><td>'+elRegistro[m].hito_cantidad_programado+'</td><td>'+numeroConComa((elRegistro[m].accion_costo*elRegistro[m].hito_porcentaje_ejecutado/100000000).toFixed(0))+'</td><td>'+registroFecha[2]+'-'+registroFecha[0]+'-'+registroFecha[1][0]+'</td><td>'+elRegistro[m].hito_porcentaje_programado+'</td><td>'+elRegistro[m].hito_porcentaje_ejecutado+'</td></tr>';
+							cuerpoModal+='<tr><td>'+elRegistro[m].accion+'</td><td>'+elRegistro[m].accion_departamento+'</td><td>'+elRegistro[m].accion_distrito+'</td><td>'+elRegistro[m].accion_unidad_edida+'</td><td>'+elRegistro[m].hito_cantidad_programado+'</td><td>'+numeroConComa((elRegistro[m].accion_costo*elRegistro[m].hito_porcentaje_ejecutado/100000000).toFixed(0))+'</td><td>'+registroFecha[2]+'-'+registroFecha[0]+'-'+registroFecha[1][0]+'</td><td>'+elRegistro[m].hito_porcentaje_programado+'</td><td>'+elRegistro[m].hito_porcentaje_ejecutado+'</td><td><a href="#" class="modalHitoAvances" parametros="'+institucion_id+'-'+linea_accion_id+'-'+idDepartamento+'-'+idDistrito+'" "><span class="glyphicon glyphicon-pencil"></span></a></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';
 							totalCantidadProgramada+=elRegistro[m].hito_cantidad_programado;
 					}
 					totalCantidadProgramada=parseFloat(totalCantidadProgramada).toFixed(2);
@@ -1190,11 +1240,11 @@ $(document).ready(function(){
 								if (porcentajeHoyEje>90){ porHejeClass = "text-success";porHejeClassRow="success";}
 								
 								if (porcentajeAnho<=70){ porHejeClassRow="danger";porHejeClass="";} */
-								if (porcentajeAnho<90){ porHejeClassRow="danger";porHejeClass="";}
-								if (porcentajeAnho>=90){ porHejeClassRow="success";
-									if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";}
-									if (porcentajeHoyEje>70){ porHejeClass = "text-warning";}
-									if (porcentajeHoyEje>90){ porHejeClass = "text-success";}
+								if (porcentajeAnho<porcentaje2){ porHejeClassRow="danger";porHejeClass="";}
+								if (porcentajeAnho>=porcentaje2){ porHejeClassRow="success";
+									if (porcentajeHoyEje<=porcentaje1){ porHejeClass = "text-danger";}
+									if (porcentajeHoyEje>porcentaje1){ porHejeClass = "text-warning";}
+									if (porcentajeHoyEje>porcentaje2){ porHejeClass = "text-success";}
 								}
 								
 								//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
@@ -1259,11 +1309,11 @@ $(document).ready(function(){
 								if (porcentajeHoyEje>90){ porHejeClass = "text-success";porHejeClassRow="success";}
 
 								if (porcentajeAnho<=70){ porHejeClassRow="danger";porHejeClass="";} */
-								if (porcentajeAnho<90){ porHejeClassRow="danger";porHejeClass="";}
-								if (porcentajeAnho>=90){ porHejeClassRow="success";
-									if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";}
-									if (porcentajeHoyEje>70){ porHejeClass = "text-warning";}
-									if (porcentajeHoyEje>90){ porHejeClass = "text-success";}
+								if (porcentajeAnho<porcentaje2){ porHejeClassRow="danger";porHejeClass="";}
+								if (porcentajeAnho>=porcentaje2){ porHejeClassRow="success";
+									if (porcentajeHoyEje<=porcentaje1){ porHejeClass = "text-danger";}
+									if (porcentajeHoyEje>porcentaje1){ porHejeClass = "text-warning";}
+									if (porcentajeHoyEje>porcentaje2){ porHejeClass = "text-success";}
 								}
 								
 								
@@ -1290,14 +1340,127 @@ $(document).ready(function(){
 		
 	}
 	
-	
 	//renderTodasLasLineas();
+	
+	//Falta pregunta si existe el modal y borrar si existe
+	$("body").on("click", ".modalHitoAvances",function(event){
+		var parametros = $(this).attr("parametros");
+	    var idParsed = parametros.split("-");                                                            
+		var institucionId=idParsed[0];
+		var lineaAccionId=idParsed[1];
+		var idDepartamento= idParsed[2];
+		var idDistrito= idParsed[3];
+		var modalHito = "";
+		
+		
+		modalHito =	'<div class="modal fade" id="myModal2" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">'+
+						'<div class="modal-dialog modal-lg" style="width:90%;">'+
+						    '<div class="modal-content" >'+
+						      '<div class="modal-header">'+
+						        '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+						        '<h4 class="modal-title" id="myModalLabel1"></h4>'+
+						      '</div>'+
+						      '<div class="modal-body" id="" >'+ 
+						      
+							      	'<div class="row">'+ 
+								    	'<div class="col-md-6">'+
+								    		'<div class="box" height="1000px">'+
+								      			'<div class="box-header with-border" height="1000px">'+
+								       				'<h2 class="box-title text-center" id="tituloTipoPrograma">'+
+								          				'Agregar Hito'+ 	
+								        			'</h2>'+
+								        			'<div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+								        			'</div>'+
+								      			'</div>'+
+								      			'<div class="box-body table-responsive" style="scroll-x:hidden;scroll-y:auto;">'+
+								      			'<form role="form">'+
+									      		  '<div class="form-group">'+
+									      		    '<label for="nombreHito">Nombre Hito</label>'+
+									      		    '<input type="text" class="form-control" id="nombreHito" placeholder="Introduzca nombre del hito">'+
+									      		  '</div>'+
+									      		  '<div class="form-group">'+
+									      		    '<label for="descripcion">Descripción</label>'+
+									      		    '<input type="text" class="form-control" id="descripcion" placeholder="Descripción">'+
+									      		  '</div>'+
+									      		  '<div class="form-group">'+
+									      		    '<label for="tipo">tipo</label>'+
+									      		    '<input type="text" id="tipo" class="form-control">'+
+									      		  '</div>'+
+									      		  '<div class="form-group">'+
+									      		    '<label for="unidad">Unidad</label>'+
+									      		    '<input type="text" class="form-control" id="unidad" placeholder="Unidad">'+
+									      		  '</div>'+
+									      		  '<div class="form-group">'+
+									      		    '<label for="cantidad">Cantidad</label>'+
+									      		    '<input type="text" class="form-control" id="cantidad" placeholder="Descripción">'+
+									      		  '</div>'+
+									      		  '<div class="form-group">'+
+									      		    '<label for="fechaInicio">Fecha Inicio</label>'+
+									      		    '<input type="date" class="form-control" id="fechaInicio" placeholder="Fecha Inicio">'+
+									      		  '</div>'+
+									      		  '<div class="form-group">'+
+									      		    '<label for="fechaFin">Fecha Fin</label>'+
+									      		    '<input type="date" class="form-control" id="fechaFin" placeholder="Fecha Fin">'+
+									      		  '</div>'+
+									      		  '<button type="submit" class="btn btn-success">Guardar</button>'+
+								      			'</form>'+
+								      			'</div>'+
+									   		'</div>'+
+										'</div>'+
+								    	'<div class="col-md-6">'+
+							    		'<div class="box" height="1000px">'+
+							      			'<div class="box-header with-border" height="1000px">'+
+							       				'<h2 class="box-title text-center" id="tituloTipoPrograma">'+
+							          				'Avance'+ 	
+							        			'</h2>'+
+							        			'<div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+							        			'</div>'+
+							      			'</div>'+
+							      			'<div class="box-body table-responsive" style="scroll-x:hidden;scroll-y:auto;">'+
+							      			'<form role="form">'+
+								      		  '<div class="form-group">'+
+								      		    '<label for="cantidadAvances">Cantidad</label>'+
+								      		    '<input type="number" class="form-control" id="cantidadAvances" placeholder="Introduzca cantidad">'+
+								      		  '</div>'+
+								      		  '<div class="form-group">'+
+								      		    '<label for="url">Url</label>'+
+								      		    '<input type="url" class="form-control" id="url" placeholder="Introduzca URL">'+
+								      		  '</div>'+
+								      		  '<div class="form-group">'+
+								      		    '<label for="fecha">Fecha</label>'+
+								      		    '<input type="date" class="form-control" id="fecha" placeholder="Fecha">'+
+								      		  '</div>'+
+								      		  '<button type="submit" class="btn btn-success">Guardar</button>'+
+							      			'</form>'+
+							      			'</div>'+
+								   		'</div>'+
+									'</div>'+					
+							      	
+							    '</div>'+//fin row
+							    
+						      '</div>'+// fin body
+							  '<div class="modal-footer">'+
+								
+							  '</div>'+
+						    '</div>'+
+						 '</div>'+
+						'</div>';
+		
+		$("body").append(modalHito);
+		$("#myModal").modal('hide');
+		$("#myModal2").modal('show');
 
+		
+	});
+	
+
+	
 	
 	
 });
 
+
 </script>    
-    
+<script type="text/javascript" src="bootstrap/js/bootstrap-slider.js"></script>
   </body>
 </html>
