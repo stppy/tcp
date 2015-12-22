@@ -96,7 +96,7 @@ var datosGeo=[];
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		        <h4 class="modal-title" id="myModalLabel1"></h4>
 		      </div>
-		      <div class="modal-body" id="editar-subprograma" >
+		      <div class="modal-body" id="cuerpoModalAcciones" >
 		     		
 		     	<div class="nav-tabs-custom">
                 <ul class="nav nav-tabs pull-right">
@@ -1391,8 +1391,18 @@ $(document).ready(function(){
 	      	async:false       
 	    }).responseText;		
 		var registroHitos=JSON.parse(registrosHitos);
+		
+		var accion = $.ajax({
+	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015Accion&accion_id='+accionId,
+	      	type:'get',
+	      	dataType:'json',
+	      	crossDomain:true,
+	      	async:false       
+	    }).responseText;		
+		accion=JSON.parse(accion);
 
 		var totalCantidadProgramada=0;
+		
 		
 		modalHito +=	'<div class="modal fade" id="myModal2" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">'+
 						'<div class="modal-dialog modal-lg" style="width:90%;" >'+
@@ -1402,6 +1412,34 @@ $(document).ready(function(){
 						        '<h4 class="modal-title" id="myModalLabel1"></h4>'+
 						      '</div>'+
 						      '<div class="modal-body" style="height:1200px;" >'+ 
+						      
+					      			'<div class="row">'+
+									'<div class="col-md-12">'+
+							         '<div class="box" height="1000px">'+
+							           '<div class="box-header with-border" height="1000px">'+
+							             '<h2 class="box-title text-center" id="tituloTipoPrograma">'+
+							               'Acción'+
+							             '</h2>'+
+							             '<div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+							             '</div>'+
+							           '</div>'+
+							           '<div class="box-body" style="display: block;">'+//INICIO DEL BODY
+							           '<form role="form">'+
+							           '<div class="table-responsive">'+
+										'<table class="table table-hover hitos">'+
+											'<tbody>'+
+												'<tr><td><div class="form-group"><label for="nombreAccion">Acción</label><input type="text" class="form-control" id="nombreAccion" value="'+accion[0].linea_accion+'"></div></td><td><div class="form-group"><label for="umedida">U. medida</label><input type="text" class="form-control" id="umedida" value="'+accion[0].accion_unidad_edida+'"></div></td></tr>'+
+												'<tr><td><div class="form-group"><label for="departamento">Departamento</label><input type="text" class="form-control" id="departamento" value="'+accion[0].accion_departamento+'"></div></td><td><div class="form-group"><label for="distrito">Distrito</label><input type="text" class="form-control" id="distrito" value="'+accion[0].accion_distrito+'"></div></td></tr>'+
+												'<tr><td colspan="2"><button type="submit" class="btn btn-success">Guardar</button><button type="submit" class="btn btn-success modalAgregarHito">Agregar Hito</button></td></tr>'+
+											'</tbody>'+
+							           
+										'</table>'+
+										'</div>'+
+										'</form>'+
+							           '</div>'+//FIN DEL BODY
+									   '</div>'+
+									'</div>'+
+							     '</div>'+	
 						      
 							      	'<div class="row">'+ 
 								    	'<div class="col-md-6">'+
@@ -1413,11 +1451,11 @@ $(document).ready(function(){
 								        			'<div class="box-tools pull-right"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
 								        			'</div>'+
 								      			'</div>'+
-								      			'<div class="box-body">'+//cuerpo del body
+								      			'<div class="box-body hitosProgramado">'+//cuerpo del body    			
 								      				'<div class="table-responsive">'+
 														'<table class="table table-hover hitos">'+
 															'<thead>'+
-																'<tr class="active"><th>Acción</th><th>Departamento</th><th>Distrito</th><th>U. Medida</th><th>Cantidad. Programado</th><th>Costo Total</th><th>Fecha Terminación</th><th>% Programado</th></tr>'+
+																'<tr class="active"><th>Acción</th><th>Departamento</th><th>Distrito</th><th>U. Medida</th><th>Cantidad. Programado</th><th>Costo Total</th><th>Fecha Terminación</th><th>% Programado</th><th>Editar</th></tr>'+
 															'</thead>'+
 															'<tbody>';
 															
@@ -1426,7 +1464,7 @@ $(document).ready(function(){
 															{
 																if(registroHitos[m].hito_porcentaje_programado > 0)
 																{
-																	modalHito += '<tr><td>'+registroHitos[m].accion+'</td><td>'+registroHitos[m].accion_departamento+'</td><td>'+registroHitos[m].accion_distrito+'</td><td>'+registroHitos[m].accion_unidad_edida+'</td><td>'+registroHitos[m].hito_cantidad_programado+'</td><td>'+registroHitos[m].accion_costo+'</td><td>'+registroHitos[m].hito_fecha_entrega+'</td><td>'+registroHitos[m].hito_porcentaje_programado+'</td></tr>';
+																	modalHito += '<tr><td>'+registroHitos[m].accion+'</td><td>'+registroHitos[m].accion_departamento+'</td><td>'+registroHitos[m].accion_distrito+'</td><td>'+registroHitos[m].accion_unidad_edida+'</td><td>'+registroHitos[m].hito_cantidad_programado+'</td><td>'+registroHitos[m].accion_costo+'</td><td>'+registroHitos[m].hito_fecha_entrega+'</td><td>'+registroHitos[m].hito_porcentaje_programado+'</td><td><a href="#" class="modalEditarHito" parametros="'+registroHitos[m].hito_id+'"><span class="glyphicon glyphicon-pencil"></span></a></td></tr>';
 																	totalCantidadProgramada+=registroHitos[m].hito_cantidad_programado;
 																}
 															}
@@ -1434,41 +1472,7 @@ $(document).ready(function(){
 
 															modalHito += '</tbody><tfoot><tr class="active"><td colspan="2">Total Cantidad Programada: </td><td colspan="8">'+totalCantidadProgramada+'</td></tr></tfoot>'+
 																		 '</table>'+
-																		 '</div>';
-															
-															
-															
-		modalHito +=		      				'<form role="form">'+
-									      		  '<div class="form-group">'+
-									      		    '<label for="nombreHito">Nombre Hito</label>'+
-									      		    '<input type="text" class="form-control" id="nombreHito" placeholder="Introduzca nombre del hito">'+
-									      		  '</div>'+
-									      		  '<div class="form-group">'+
-									      		    '<label for="descripcion">Descripción</label>'+
-									      		    '<input type="text" class="form-control" id="descripcion" placeholder="Descripción">'+
-									      		  '</div>'+
-									      		  '<div class="form-group">'+
-									      		    '<label for="tipo">tipo</label>'+
-									      		    '<input type="text" id="tipo" class="form-control">'+
-									      		  '</div>'+
-									      		  '<div class="form-group">'+
-									      		    '<label for="unidad">Unidad</label>'+
-									      		    '<input type="text" class="form-control" id="unidad" placeholder="Unidad">'+
-									      		  '</div>'+
-									      		  '<div class="form-group">'+
-									      		    '<label for="cantidad">Cantidad</label>'+
-									      		    '<input type="text" class="form-control" id="cantidad" placeholder="Descripción">'+
-									      		  '</div>'+
-									      		  '<div class="form-group">'+
-									      		    '<label for="fechaInicio">Fecha Inicio</label>'+
-									      		    '<input type="date" class="form-control" id="fechaInicio" placeholder="Fecha Inicio">'+
-									      		  '</div>'+
-									      		  '<div class="form-group">'+
-									      		    '<label for="fechaFin">Fecha Fin</label>'+
-									      		    '<input type="date" class="form-control" id="fechaFin" placeholder="Fecha Fin">'+
-									      		  '</div>'+
-									      		  '<button type="submit" class="btn btn-success">Guardar</button>'+
-								      			'</form>'+
+																		 '</div>'+
 								      			'</div>'+
 									   		'</div>'+
 										'</div>'+
@@ -1485,7 +1489,7 @@ $(document).ready(function(){
 						      				'<div class="table-responsive">'+
 											'<table class="table table-hover hitos">'+
 												'<thead>'+
-													'<tr class="active"><th>Acción</th><th>Departamento</th><th>Distrito</th><th>U. Medida</th><th>Cantidad. Programado</th><th>Costo Total</th><th>Fecha Terminación</th><th>% Ejecutado</th></tr>'+
+													'<tr class="active"><th>Acción</th><th>Departamento</th><th>Distrito</th><th>U. Medida</th><th>Cantidad. Programado</th><th>Costo Total</th><th>Fecha Terminación</th><th>% Ejecutado</th><th>Editar</th></tr>'+
 												'</thead>'+
 												'<tbody>';
 												
@@ -1494,7 +1498,7 @@ $(document).ready(function(){
 												{
 													if(registroHitos[m].hito_porcentaje_ejecutado > 0)
 													{
-														modalHito += '<tr><td>'+registroHitos[m].accion+'</td><td>'+registroHitos[m].accion_departamento+'</td><td>'+registroHitos[m].accion_distrito+'</td><td>'+registroHitos[m].accion_unidad_edida+'</td><td>'+registroHitos[m].hito_cantidad_programado+'</td><td>'+registroHitos[m].accion_costo+'</td><td>'+registroHitos[m].hito_fecha_entrega+'</td><td>'+registroHitos[m].hito_porcentaje_ejecutado+'</td></tr>';
+														modalHito += '<tr><td>'+registroHitos[m].accion+'</td><td>'+registroHitos[m].accion_departamento+'</td><td>'+registroHitos[m].accion_distrito+'</td><td>'+registroHitos[m].accion_unidad_edida+'</td><td>'+registroHitos[m].hito_cantidad_programado+'</td><td>'+registroHitos[m].accion_costo+'</td><td>'+registroHitos[m].hito_fecha_entrega+'</td><td>'+registroHitos[m].hito_porcentaje_ejecutado+'</td><td><a href="#" class="modalEditarHito" parametros="'+registroHitos[m].hito_id+'"><span class="glyphicon glyphicon-pencil"></span></a></td></tr>';
 														totalCantidadProgramada+=registroHitos[m].hito_cantidad_programado;
 													}
 												}
@@ -1503,21 +1507,6 @@ $(document).ready(function(){
 												modalHito += '</tbody><tfoot><tr class="active"><td colspan="2">Total Cantidad Programada: </td><td colspan="8">'+totalCantidadProgramada+'</td></tr></tfoot>'+
 															 '</table>'+
 															 '</div>'+						      			
-							      			'<form role="form">'+
-								      		  '<div class="form-group">'+
-								      		    '<label for="cantidadAvances">Cantidad</label>'+
-								      		    '<input type="number" class="form-control" id="cantidadAvances" placeholder="Introduzca cantidad">'+
-								      		  '</div>'+
-								      		  '<div class="form-group">'+
-								      		    '<label for="url">Url</label>'+
-								      		    '<input type="url" class="form-control" id="url" placeholder="Introduzca URL">'+
-								      		  '</div>'+
-								      		  '<div class="form-group">'+
-								      		    '<label for="fecha">Fecha</label>'+
-								      		    '<input type="date" class="form-control" id="fecha" placeholder="Fecha">'+
-								      		  '</div>'+
-								      		  '<button type="submit" class="btn btn-success">Guardar</button>'+
-							      			'</form>'+
 							      			'</div>'+
 								   		'</div>'+
 									'</div>'+					
@@ -1537,10 +1526,147 @@ $(document).ready(function(){
 
 		
 	});
-	
 
+	$("body").on("click", ".modalEditarHito",function(event){
+		$("#modalEditarHito").remove();
+		
+		
+		var parametros = $(this).attr("parametros");
+	    var idParsed = parametros.split("-");                                                            
+		var var1=idParsed[0];
+		
+		var hitoParaEditar = $.ajax({
+	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015&hito_id='+var1,
+	      	type:'get',
+	      	dataType:'json',
+	      	crossDomain:true,
+	      	async:false       
+	    }).responseText;		
+		hitoParaEditar=JSON.parse(hitoParaEditar);		
+
+		
+//MODAL PARA EDITAR HITO
+		var modalEditarHito = "";
+
+		modalEditarHito =	 '<div class="modal fade" role="dialog" id="modalEditarHito">'+ 
+							    '<div class="modal-dialog modal-lg">'+ 
+							    
+							      '<div class="modal-content">'+ 
+							        '<div class="modal-header">'+ 
+							          '<button type="button" class="close" data-dismiss="modal">&times;</button>'+ 
+							          '<h4 class="modal-title">Editar Hito</h4><small>('+hitoParaEditar[0].accion_departamento+'-'+hitoParaEditar[0].accion_distrito+'-'+hitoParaEditar[0].institucion+'-'+hitoParaEditar[0].linea_accion+'-'+hitoParaEditar[0].accion+')</small>'+ 
+							        '</div>'+ 
+							        '<div class="modal-body">'+ 				        
+							        '<form role="form">'+
+								  	  '<div class="form-group">'+
+								  	    '<label for="nombreHito">Nombre Hito</label>'+
+								  	    '<input type="text" class="form-control" id="nombreHito" value="'+hitoParaEditar[0].hito+'">'+
+								  	  '</div>'+
+								  	  '<div class="form-group">'+
+								  	    '<label for="unidadMedida">U. Medida</label>'+
+								  	    '<input type="text" class="form-control" id="uMedida" value="'+hitoParaEditar[0].accion_unidad_edida+'">'+
+								  	  '</div>'+
+								  	  '<div class="form-group">'+
+								  	    '<label for="cantProgramado">Cantidad Programado</label>'+
+								  	    '<input type="text" id="cantProgramado" class="form-control" value="'+hitoParaEditar[0].hito_cantidad_programado+'">'+
+								  	  '</div>'+
+								  	  '<div class="form-group">'+
+								  	    '<label for="costoTotal">Costo Total</label>'+
+								  	    '<input type="text" class="form-control" id="costoTotal" value="'+hitoParaEditar[0].accion_costo+'">'+
+								  	  '</div>'+
+								  	  '<div class="form-group">'+
+								  	    '<label for="fechaTerminacion">Fecha Terminación</label>'+
+								  	    '<input type="text" class="form-control" id="fechaTerminacion" value="'+hitoParaEditar[0].hito_fecha_entrega+'">'+
+								  	  '</div>'+
+								  	  '<div class="form-group">'+
+								  	    '<label for="porcProgramado">% Programado</label>'+
+								  	    '<input type="date" class="form-control" id="porcProgramado" value="'+hitoParaEditar[0].hito_porcentaje_programado+'">'+
+								  	  '</div>'+
+								  	  '<button type="submit" class="btn btn-success">Guardar</button>'+
+								  	'</form>'+
+							        
+							        '</div>'+ 
+							        '<div class="modal-footer">'+ 
+							          '<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>'+ 
+							        '</div>'+ 
+							      '</div>'+ 
+							      
+							    '</div>'+ 
+							  '</div>';
+							
+															
+															
+		
+		$("body").append(modalEditarHito);
+		$("#modalEditarHito").modal('show');
+//FIN MODAL PARA EDITAR HITO
+		
+	});
 	
-	
+	$("body").on("click", ".modalAgregarHito",function(event){
+		$("#modalAgregarHito").remove();
+
+		var modalAgregarHito = "";
+
+		modalAgregarHito =	 '<div class="modal fade" role="dialog" id="modalAgregarHito">'+ 
+							    '<div class="modal-dialog modal-lg">'+ 
+							    
+							      '<div class="modal-content">'+ 
+							        '<div class="modal-header">'+ 
+							          '<button type="button" class="close" data-dismiss="modal">&times;</button>'+ 
+							          '<h4 class="modal-title">Modal Header</h4>'+ 
+							        '</div>'+ 
+							        '<div class="modal-body">'+ 
+							        	
+								    	'<form role="form">'+
+									  	  '<div class="form-group">'+
+									  	    '<label for="nombreHito">Nombre Hito</label>'+
+									  	    '<input type="text" class="form-control" id="nombreHito" placeholder="Introduzca nombre del hito">'+
+									  	  '</div>'+
+									  	  '<div class="form-group">'+
+									  	    '<label for="descripcion">Descripción</label>'+
+									  	    '<input type="text" class="form-control" id="descripcion" placeholder="Descripción">'+
+									  	  '</div>'+
+									  	  '<div class="form-group">'+
+									  	    '<label for="tipo">tipo</label>'+
+									  	    '<input type="text" id="tipo" class="form-control">'+
+									  	  '</div>'+
+									  	  '<div class="form-group">'+
+									  	    '<label for="unidad">Unidad</label>'+
+									  	    '<input type="text" class="form-control" id="unidad" placeholder="Unidad">'+
+									  	  '</div>'+
+									  	  '<div class="form-group">'+
+									  	    '<label for="cantidad">Cantidad</label>'+
+									  	    '<input type="text" class="form-control" id="cantidad" placeholder="Descripción">'+
+									  	  '</div>'+
+									  	  '<div class="form-group">'+
+									  	    '<label for="fechaInicio">Fecha Inicio</label>'+
+									  	    '<input type="date" class="form-control" id="fechaInicio" placeholder="Fecha Inicio">'+
+									  	  '</div>'+
+									  	  '<div class="form-group">'+
+									  	    '<label for="fechaFin">Fecha Fin</label>'+
+									  	    '<input type="date" class="form-control" id="fechaFin" placeholder="Fecha Fin">'+
+									  	  '</div>'+
+									  	  '<button type="submit" class="btn btn-success">Guardar</button>'+
+									  	'</form>'+
+							        
+							        '</div>'+ 
+							        '<div class="modal-footer">'+ 
+							          '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'+ 
+							        '</div>'+ 
+							      '</div>'+ 
+							      
+							    '</div>'+ 
+							  '</div>';
+							
+															
+															
+		
+		$("body").append(modalAgregarHito);
+		$("#modalAgregarHito").modal('show');
+		
+	});
+
 	
 });
 

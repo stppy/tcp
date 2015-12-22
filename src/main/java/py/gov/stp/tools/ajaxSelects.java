@@ -67,6 +67,7 @@ public class ajaxSelects extends HttpServlet {
     	Integer snipAutorizado = null;
     	Integer funcional = null;
     	Integer catalogoDestinatario = null;
+    	Integer hito_id = null;
     	
     	Integer institucion_id=null;
     	Integer accion_id=null;
@@ -120,6 +121,7 @@ public class ajaxSelects extends HttpServlet {
       	if (request.getParameter("institucion_id")!=null) institucion_id=Integer.parseInt(request.getParameter("institucion_id")); else institucion_id=0;
       	if (request.getParameter("accion_id")!=null) accion_id=Integer.parseInt(request.getParameter("accion_id")); else accion_id=0;
       	if (request.getParameter("linea_accion_id")!=null) linea_accion_id=Integer.parseInt(request.getParameter("linea_accion_id")); else linea_accion_id=0;
+      	if (request.getParameter("hito_id")!=null) hito_id=Integer.parseInt(request.getParameter("hito_id")); else hito_id=0;
     	
         PrintWriter out = response.getWriter();
         response.setContentType("text/html");
@@ -236,6 +238,7 @@ public class ajaxSelects extends HttpServlet {
         		if (accion_id!=0) condition += " and accion_id ='"+accion_id+"'";
         		if (departamento!=99) condition += " and accion_departamento_id ='"+departamento+"'";
         		if (distrito!=99) condition += " and accion_distrito_id ='"+distrito+"'";
+        		if (hito_id!=0) condition += " and hito_id ='"+hito_id+"'";        		
         		if (db=="20150731") {
         			try {objetos = SqlSelects.selectFactHitos2015Base(condition);}
         			catch (SQLException e) {e.printStackTrace();}}
