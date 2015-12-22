@@ -256,6 +256,7 @@ public class ajaxSelects extends HttpServlet {
         		if (accion!="") condition += " and accion ='"+accion+"'";
         		if (accion_id!=0) condition += " and accion_id ='"+accion_id+"'";
         		if (departamento!=99) condition += " and accion_departamento_id ='"+departamento+"'";
+        		if (distrito!=99) condition += " and accion_distrito_id ='"+distrito+"'";
         		if (db=="20150731") {try {objetos = SqlSelects.selectFactHitos2015Accion(condition);}catch (SQLException e) {e.printStackTrace();}}
         		else{
 	        		

@@ -1051,7 +1051,7 @@ $(document).ready(function(){
 		var cuerpoModal="";
 		var footerModal="<br><br><br>";
 		var urlFactHitos="";
-		urlFactHitos+='http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015';
+		urlFactHitos+='http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015Accion';
 		if (typeof institucion_id != "undefined") urlFactHitos+='&institucion_id='+institucion_id;
 		if (typeof linea_accion_id != "undefined") urlFactHitos+='&linea_accion_id='+linea_accion_id;
 		if (typeof idDepartamento != "undefined") urlFactHitos+='&departamento='+idDepartamento;
