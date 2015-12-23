@@ -31,10 +31,10 @@ public class ConnectionConfiguration {
 	        try {Class.forName("org.postgresql.Driver");}
 	        catch (ClassNotFoundException e) {e.printStackTrace();}
 	        String url = "";
-	        String user = "bpm";
-	        String password = "cybiraconsulting2";
+	        String user = "postgres";
+	        String password = "t3R3R3.ol";
 
-	        try {con = DriverManager.getConnection("jdbc:postgresql://pg02.stp.gov.py/stp_crm2?useUnicode=true&characterEncoding=UTF-8&user=bpm&password=cybiraconsulting2");}
+	        try {con = DriverManager.getConnection("jdbc:postgresql://pg01.stp.gov.py/tablero2015v3?useUnicode=true&characterEncoding=UTF-8&user=postgres&password=t3R3R3.ol");}
 	        catch (SQLException ex) {
 	            Logger lgr = Logger.getLogger(SqlHelper.class.getName());
 	            lgr.log(Level.SEVERE, ex.getMessage(), ex);

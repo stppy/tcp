@@ -571,6 +571,31 @@ public class SqlInserts {
 	} catch (SQLException e) {e.printStackTrace();}
 		
 }	
+	public static void insertHitoPrueba(HitoPrueba hito){
+	try {
+		Connection conn=ConnectionConfiguration.conectar();
+	   	
+		String query = " insert into hitoPrueba (accion,nombreHito,tipoHito,unidadMedida,cantidadPrevista,cantidadReal)"
+	+ " values (?, ?, ?, ?, ?, ?)";
+		
+		PreparedStatement insert = conn.prepareStatement(query);
+		
+		insert.setString (1, hito.getAccion());
+		insert.setString (2, hito.getNombreHito());
+		insert.setString (3, hito.getTipoHito());	
+		insert.setString (4, hito.getUnidadMedida());	
+		insert.setInt (5, hito.getCantidadPrevista());	
+		insert.setInt (6, hito.getCantidadReal());	
+
+
+
+		
+		insert.execute();
+		   
+		conn.close();
+	} catch (SQLException e) {e.printStackTrace();}
+		
+}	
 	
 	
 }

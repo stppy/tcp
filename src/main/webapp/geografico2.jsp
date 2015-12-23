@@ -1364,8 +1364,11 @@ $(document).ready(function(){
 	
 	//Falta pregunta si existe el modal y borrar si existe
 	$("body").on("click", ".modalHitoAvances",function(event){
-		$("#myModal2").remove();
 		
+		if ( $("#myModal2").length ) {
+			$("#myModal2").remove();
+		}
+			
 		var parametros = $(this).attr("parametros");
 	    var idParsed = parametros.split("-");                                                            
 		var institucionId=idParsed[0];
@@ -1430,7 +1433,7 @@ $(document).ready(function(){
 											'<tbody>'+
 												'<tr><td><div class="form-group"><label for="nombreAccion">Acción</label><input type="text" class="form-control" id="nombreAccion" value="'+accion[0].linea_accion+'"></div></td><td><div class="form-group"><label for="umedida">U. medida</label><input type="text" class="form-control" id="umedida" value="'+accion[0].accion_unidad_edida+'"></div></td></tr>'+
 												'<tr><td><div class="form-group"><label for="departamento">Departamento</label><input type="text" class="form-control" id="departamento" value="'+accion[0].accion_departamento+'"></div></td><td><div class="form-group"><label for="distrito">Distrito</label><input type="text" class="form-control" id="distrito" value="'+accion[0].accion_distrito+'"></div></td></tr>'+
-												'<tr><td colspan="2"><button type="submit" class="btn btn-success">Guardar</button><button type="submit" class="btn btn-success modalAgregarHito">Agregar Hito</button></td></tr>'+
+												'<tr><td colspan="2"><button type="submit" class="btn btn-success">Guardar Acción</button><button type="submit" class="btn btn-success modalAgregarHito">Programar Hito</button> <button type="submit" class="btn btn-success modalProgramarAvance">Programar Avance</button></td></tr>'+
 											'</tbody>'+
 							           
 										'</table>'+
@@ -1523,7 +1526,7 @@ $(document).ready(function(){
 		
 		$("body").append(modalHito);
 		$("#myModal2").modal('show');
-
+		
 		
 	});
 
@@ -1533,10 +1536,10 @@ $(document).ready(function(){
 		
 		var parametros = $(this).attr("parametros");
 	    var idParsed = parametros.split("-");                                                            
-		var var1=idParsed[0];
+		var hitoId=idParsed[0];
 		
 		var hitoParaEditar = $.ajax({
-	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015&hito_id='+var1,
+	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015&hito_id='+hitoId,
 	      	type:'get',
 	      	dataType:'json',
 	      	crossDomain:true,
@@ -1604,7 +1607,10 @@ $(document).ready(function(){
 	});
 	
 	$("body").on("click", ".modalAgregarHito",function(event){
-		$("#modalAgregarHito").remove();
+		
+		if ( $("#modalAgregarHito").length ) {
+			$("#modalAgregarHito").remove();
+		}
 
 		var modalAgregarHito = "";
 
@@ -1617,37 +1623,34 @@ $(document).ready(function(){
 							          '<h4 class="modal-title">Modal Header</h4>'+ 
 							        '</div>'+ 
 							        '<div class="modal-body">'+ 
-							        	
+							        
+								    	'<form role="form">'+
+									  	  '<div class="form-group">'+
+									  	    '<label for="accionHito">Acción</label>'+
+									  	    '<input type="text" class="form-control" id="accionHito" placeholder="Acciñon">'+
+									  	  '</div>'+
 								    	'<form role="form">'+
 									  	  '<div class="form-group">'+
 									  	    '<label for="nombreHito">Nombre Hito</label>'+
 									  	    '<input type="text" class="form-control" id="nombreHito" placeholder="Introduzca nombre del hito">'+
 									  	  '</div>'+
 									  	  '<div class="form-group">'+
-									  	    '<label for="descripcion">Descripción</label>'+
-									  	    '<input type="text" class="form-control" id="descripcion" placeholder="Descripción">'+
+									  	    '<label for="tipoHito">Tipo Hito</label>'+
+									  	    '<input type="text" class="form-control" id="tipoHito" placeholder="Tipo Hito">'+
 									  	  '</div>'+
 									  	  '<div class="form-group">'+
-									  	    '<label for="tipo">tipo</label>'+
-									  	    '<input type="text" id="tipo" class="form-control">'+
+									  	    '<label for="unidadMedidaHito">Unidad Medida</label>'+
+									  	    '<input type="text" id="unidadMedidaHito" class="form-control" placeholder="Unidad Medida">'+
 									  	  '</div>'+
 									  	  '<div class="form-group">'+
-									  	    '<label for="unidad">Unidad</label>'+
-									  	    '<input type="text" class="form-control" id="unidad" placeholder="Unidad">'+
+									  	    '<label for="cantidadPrevistaHito">Cantidad Prevista</label>'+
+									  	    '<input type="text" class="form-control" id="cantidadPrevistaHito" placeholder="Cantidad Prevista">'+
 									  	  '</div>'+
 									  	  '<div class="form-group">'+
-									  	    '<label for="cantidad">Cantidad</label>'+
-									  	    '<input type="text" class="form-control" id="cantidad" placeholder="Descripción">'+
+									  	    '<label for="cantidadRealHito">Cantidad Real</label>'+
+									  	    '<input type="text" class="form-control" id="cantidadRealHito" placeholder="Cantidad Real">'+
 									  	  '</div>'+
-									  	  '<div class="form-group">'+
-									  	    '<label for="fechaInicio">Fecha Inicio</label>'+
-									  	    '<input type="date" class="form-control" id="fechaInicio" placeholder="Fecha Inicio">'+
-									  	  '</div>'+
-									  	  '<div class="form-group">'+
-									  	    '<label for="fechaFin">Fecha Fin</label>'+
-									  	    '<input type="date" class="form-control" id="fechaFin" placeholder="Fecha Fin">'+
-									  	  '</div>'+
-									  	  '<button type="submit" class="btn btn-success">Guardar</button>'+
+									  	  '<button type="submit" class="btn btn-success guardarHito">Guardar</button>'+
 									  	'</form>'+
 							        
 							        '</div>'+ 
@@ -1665,6 +1668,39 @@ $(document).ready(function(){
 		$("body").append(modalAgregarHito);
 		$("#modalAgregarHito").modal('show');
 		
+	});
+	
+	$("body").on("click", ".guardarHito",function(event){
+		
+		var accionhito = $("#accionHito").val();
+		var nombreHito = $("#nombreHito").val();
+		var tipoHito = $("#tipoHito").val();
+		var unidadMedida = $("#unidadMedidaHito").val();
+		var cantidadPrevista = $("#cantidadPrevistaHito").val();
+		var cantidadReal = $("#cantidadRealHito").val();
+		var accion = "insHitoPrueba";
+		var obj= new Object();
+		
+		//aca como la clase
+		obj.accion = accionhito;
+		obj.nombreHito = nombreHito;
+		obj.unidadMedida = unidadMedida;
+		obj.cantidadPrevista = cantidadPrevista;
+		obj.cantidadReal = cantidadReal;
+
+		 $.ajax({
+		        url: "ajaxInserts?accion="+accion,
+		        type: 'POST',
+		        dataType: 'json',
+		        data: JSON.stringify(obj),
+		        contentType: 'application/json',
+		        mimeType: 'application/json',
+		        success: function (data) {},
+		        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
+		        error: function(data,status,er) {}
+		 });
+
+
 	});
 
 	

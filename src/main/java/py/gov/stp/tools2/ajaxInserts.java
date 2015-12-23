@@ -341,7 +341,18 @@ public class ajaxInserts  extends HttpServlet {
             productoObj=gsonInsert.fromJson(json, WsTipo.class);
 			SqlInserts.insertWsTipo(productoObj);
     	}
-       }        
+       }
+        if (accion!=null && accion!=""){
+    	if (accion.equals("insHitoPrueba")){
+    		HitoPrueba obj = new HitoPrueba();
+    		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+            String json = "";
+            if(br != null){ json = br.readLine();}
+            Gson gsonInsert = new Gson();
+            obj=gsonInsert.fromJson(json, HitoPrueba.class);
+			SqlInserts.insertHitoPrueba(obj);
+    	}
+       }    
     
     }
 }
