@@ -586,9 +586,6 @@ public class SqlInserts {
 		insert.setString (4, hito.getUnidadMedida());	
 		insert.setInt (5, hito.getCantidadPrevista());	
 		insert.setInt (6, hito.getCantidadReal());	
-
-
-
 		
 		insert.execute();
 		   

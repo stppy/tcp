@@ -25,6 +25,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import py.gov.stp.objetosV2.*;
+import py.gov.stp.tools2.*;
 
 public class ajaxInserts  extends HttpServlet {
 	
