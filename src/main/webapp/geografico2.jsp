@@ -1484,7 +1484,7 @@ $(document).ready(function(){
 					      			
 					      			'<div class="row">'+
 									
-					      	             ' <ul class="col-md-12">'+
+ 					      	             ' <ul class="col-md-12">'+
 					      					'<form class="form-horizontal" role="form" id="formulario" method="post" action="/ajaxUpdate">'+
 					      					'<div id="tituloFormulario"></div>'+
 					      					'<input type="hidden" name="accion" value="actEntidad">'+
@@ -1542,16 +1542,12 @@ $(document).ready(function(){
 					      					    		'<input type="text" name="producto" id="producto-formulario" placeholder="Producto" list="listaf7c2" class="form-control">'+
 					      					    	'</div>'+
 					      					    	'<label for="producto-formulario" class="col-lg-3 control-label" id="f7c2"></label> '+
-					      					  	'</div>'+						      					  	
+					      					  	'</div>'+ 
 					      					  	
-					      					
-					      					'</form>'+
-					      				'</ul>'+
+						      					'</form>'+
+							      				'</ul>'+
+					      					  	
 
-					      	        
-					      	        
-					      	        
-					      	        
 					      			'</div>'+
 						   		'</div>'+
 							'</div>'+	
