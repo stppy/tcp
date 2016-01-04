@@ -46,7 +46,8 @@
 				
 				
 				var obtenerUsuario = $.ajax({
-					url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
+					<%-- url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',--%>
+					url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=rpalau@stp.gov.py',
 				  	type:'get',
 				  	dataType:'json',
 				  	async:false       
