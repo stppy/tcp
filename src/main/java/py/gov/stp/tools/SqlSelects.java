@@ -145,12 +145,12 @@ public class SqlSelects {
  				objeto.setAccion_departamento(rs.getString("accion_departamento"));
  				objeto.setAccion_distrito_id(rs.getInt("accion_distrito_id"));
  				objeto.setAccion_distrito(rs.getString("accion_distrito"));
- 				objeto.setAccion_fecha_inicio(rs.getDate("accion_fecha_inicio"));
- 				objeto.setAccion_fecha_entrega(rs.getDate("accion_fecha_entrega"));
- 				objeto.setAccion_status_fin(rs.getString("accion_status_fin").toCharArray()[0]);
- 				objeto.setAccion_avance_programado(rs.getDouble("accion_avance_programado"));
- 				objeto.setAccion_avance_ejecutado(rs.getDouble("accion_avance_ejecutado"));
- 				objeto.setAccion_cantidad_hito(rs.getDouble("accion_cantidad_hito"));
+// 				objeto.setAccion_fecha_inicio(rs.getDate("accion_fecha_inicio"));
+// 				objeto.setAccion_fecha_entrega(rs.getDate("accion_fecha_entrega"));
+// 				objeto.setAccion_status_fin(rs.getString("accion_status_fin").toCharArray()[0]);
+// 				objeto.setAccion_avance_programado(rs.getDouble("accion_avance_programado"));
+// 				objeto.setAccion_avance_ejecutado(rs.getDouble("accion_avance_ejecutado"));
+// 				objeto.setAccion_cantidad_hito(rs.getDouble("accion_cantidad_hito"));
  				objeto.setHito_id(rs.getInt("hito_id"));
  				objeto.setHito(rs.getString("hito"));
  				objeto.setHito_fecha_entrega(rs.getDate("hito_fecha_entrega"));
@@ -160,9 +160,9 @@ public class SqlSelects {
  				objeto.setHito_cantidad_ejecutado(rs.getDouble("hito_cantidad_ejecutado"));
  				objeto.setHito_costo_programado(rs.getDouble("hito_costo_programado"));
  				objeto.setHito_costo_ejecutado(rs.getDouble("hito_costo_ejecutado"));
- 				objeto.setHito_comentario_aprob(rs.getString("hito_comentario_aprob"));
- 				objeto.setHito_status(rs.getString("hito_status").toCharArray()[0]);
- 				objeto.setHito_total_doc(rs.getInt("hito_total_doc"));
+// 				objeto.setHito_comentario_aprob(rs.getString("hito_comentario_aprob"));
+// 				objeto.setHito_status(rs.getString("hito_status").toCharArray()[0]);
+// 				objeto.setHito_total_doc(rs.getInt("hito_total_doc"));
 
 
  				
@@ -271,12 +271,12 @@ public class SqlSelects {
 					objeto.setAccion_departamento(rs.getString("accion_departamento"));
 					objeto.setAccion_distrito_id(rs.getInt("accion_distrito_id"));
 					objeto.setAccion_distrito(rs.getString("accion_distrito"));
-					objeto.setAccion_fecha_inicio(rs.getDate("accion_fecha_inicio"));
-					objeto.setAccion_fecha_entrega(rs.getDate("accion_fecha_entrega"));
-					objeto.setAccion_status_fin(rs.getString("accion_status_fin").toCharArray()[0]);
-					objeto.setAccion_avance_programado(rs.getDouble("accion_avance_programado"));
-					objeto.setAccion_avance_ejecutado(rs.getDouble("accion_avance_ejecutado"));
-					objeto.setAccion_cantidad_hito(rs.getDouble("accion_cantidad_hito"));
+//					objeto.setAccion_fecha_inicio(rs.getDate("accion_fecha_inicio"));
+//					objeto.setAccion_fecha_entrega(rs.getDate("accion_fecha_entrega"));
+//					objeto.setAccion_status_fin(rs.getString("accion_status_fin").toCharArray()[0]);
+//					objeto.setAccion_avance_programado(rs.getDouble("accion_avance_programado"));
+//					objeto.setAccion_avance_ejecutado(rs.getDouble("accion_avance_ejecutado"));
+//					objeto.setAccion_cantidad_hito(rs.getDouble("accion_cantidad_hito"));
 					objeto.setHito_id(rs.getInt("hito_id"));
 					objeto.setHito(rs.getString("hito"));
 					objeto.setHito_fecha_entrega(rs.getDate("hito_fecha_entrega"));
@@ -286,9 +286,9 @@ public class SqlSelects {
 					objeto.setHito_cantidad_ejecutado(rs.getDouble("hito_cantidad_ejecutado"));
 					objeto.setHito_costo_programado(rs.getDouble("hito_costo_programado"));
 					objeto.setHito_costo_ejecutado(rs.getDouble("hito_costo_ejecutado"));
-					objeto.setHito_comentario_aprob(rs.getString("hito_comentario_aprob"));
-					objeto.setHito_status(rs.getString("hito_status").toCharArray()[0]);
-					objeto.setHito_total_doc(rs.getInt("hito_total_doc"));
+//					objeto.setHito_comentario_aprob(rs.getString("hito_comentario_aprob"));
+//					objeto.setHito_status(rs.getString("hito_status").toCharArray()[0]);
+//					objeto.setHito_total_doc(rs.getInt("hito_total_doc"));
 
 					objetos.add(objeto);
 				}

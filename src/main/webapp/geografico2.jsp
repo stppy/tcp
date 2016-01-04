@@ -242,14 +242,7 @@ tbody {
 				    }).responseText;
 					departamento=JSON.parse(departamento);
 					
-					var elPaisjson = $.ajax({
-				    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getLineasAccion',
-				      	type:'get',
-				      	dataType:'json',
-				      	crossDomain:true,
-				      	async:false       
-				    }).responseText;
-					var elPais=JSON.parse(elPaisjson);
+
 					
  					var desPaisDeptojson = $.ajax({
 				    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getDesempPaisPorDepto',
@@ -280,9 +273,9 @@ tbody {
 				    
 
 					
-					var totalLineaPais=[];
+					//var totalLineaPais=[];
 					var y=0;
-					for (var z=0; z<elPais.length;z++){
+					/*for (var z=0; z<elPais.length;z++){
 						if (elPais[z].anho=="2015")
 						{
 							totalLineaPais[y] = new Object();
@@ -293,7 +286,7 @@ tbody {
 							totalLineaPais[y].accion_departamento_id= elPais[z].suma_programada_anho;
 							y++;
 						}
-					}
+					}*/
 					y=0;
 
 					var sumporAClass="";
@@ -353,12 +346,10 @@ tbody {
 								tipoInstituciones="distrito";
 								$("#tabla-derecho").html("");
 														
-								$("#tabla-derecho").append('<div class="col-md-4"style="margin:0">Instituciones en: </div><div class="label label-default  col-md-4  label-dismissable" >'+
-									    '<button type="button" class="close" data-dismiss="label" aria-hidden="true" id="cierreEtiquetaDepartamento">×</button>'+
+								$("#tabla-derecho").append('<div class="col-md-4" style="margin:0">Instituciones en: </div><div  class="col-md-4" >'+
 									    e.target.feature.properties.dpto_desc+
 									 '</div>'+
-									 '<div class="label  label-default  col-md-4 label-dismissable" >'+
-									    '<button type="button" class="close" data-dismiss="label" aria-hidden="true" id="cierreEtiquetaDistrito" parametroDepartamento='+e.target.feature.properties.dpto+'>×</button>'+
+									 '<div class="col-md-4" >'+
 									    e.target.feature.properties.dist_desc+ 
 									  '</div>'+
 									'</div>');
@@ -1218,7 +1209,7 @@ $(document).ready(function(){
 	
 	
 	renderEntidades();
-	
+
 	function renderTodasLasLineas(){
 		
 		
@@ -2364,7 +2355,8 @@ $(document).ready(function(){
 	});
 	
 	$("body").on("click", ".modalAgregarHito",function(event){
-		
+		event.stopPropagation();
+		event.preventDefault();
 		if ( $("#modalAgregarHito").length ) {
 			$("#modalAgregarHito").remove();
 		}
@@ -2408,8 +2400,8 @@ $(document).ready(function(){
 									  	    '<input type="text" class="form-control" id="cantidadPrevistaHito" placeholder="Cantidad Prevista">'+
 									  	  '</div>'+
 									  	  '<div class="form-group">'+
-									  	    '<label for="cantidadRealHito">Cantidad Real</label>'+
-									  	    '<input type="text" class="form-control" id="cantidadRealHito" placeholder="Cantidad Real">'+
+									  	    '<label for="cantidadRealHito">Fecha de Entrega</label>'+
+									  	    '<input type="text" class="form-control" id="cantidadRealHito" placeholder="Fecha de Entrega">'+
 									  	  '</div>'+
 									  	  '<button type="submit" class="btn btn-success guardarHito">Guardar</button>'+
 									  	'</form>'+
@@ -2471,6 +2463,8 @@ $(document).ready(function(){
 
 
 $("body").on("click", ".modalDeclararAvance",function(event){
+	event.stopPropagation();
+	event.preventDefault();
 	
 	if ( $("#modalDeclararAvance").length ) {
 		$("#modalDeclararAvance").remove();

@@ -40,7 +40,24 @@ public class ConnectionConfiguration {
 	            lgr.log(Level.SEVERE, ex.getMessage(), ex);
 	        } 
 	        return con;
-	}
+    }
+//    	
+//    	 Connection con = null;
+//	        Statement st = null;
+//	        ResultSet rs = null;
+//	        try {Class.forName("com.mysql.jdbc.Driver");}
+//	        catch (ClassNotFoundException e) {e.printStackTrace();}
+//	        String url = "";
+//	        String user = "root";
+//	        String password = "t3R3R3.ol";
+//
+//	        try {con = DriverManager.getConnection("jdbc:mysql://mysql01.stp.gov.py/tablero2015?useUnicode=true&characterEncoding=UTF-8", "root", "t3R3R3.ol");}
+//	        catch (SQLException ex) {
+//	            Logger lgr = Logger.getLogger(SqlHelper.class.getName());
+//	            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+//	        } 
+//	        return con;
+//	}
     public static Connection conectarBase(){
 		 Connection con = null;
 	        Statement st = null;
@@ -92,5 +109,6 @@ public class ConnectionConfiguration {
 	        } 
 	        return con;
 	}
+    
  
 }
