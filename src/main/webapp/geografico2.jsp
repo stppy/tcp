@@ -1899,7 +1899,7 @@ $(document).ready(function(){
 			        		var mostrarTipoPrograma = datosTipoPrograma.tiposPrograma[x].nombreTipoPrograma;
 			          		var ntText=document.createTextNode(mostrarTipoPrograma);
 			              	var nt=document.createElement('small');
-			              	var ntText = document.createTextNode(mostrarNivel);
+			              	var ntText = document.createTextNode(mostrarTipoPrograma);
 			              	nt.appendChild(ntText);
 			              	var separador=document.createTextNode(" > ");
 			          		var nparrafo=document.getElementById('tituloFormulario');
@@ -2369,7 +2369,7 @@ $(document).ready(function(){
 							      '<div class="modal-content">'+ 
 							        '<div class="modal-header">'+ 
 							          '<button type="button" class="close" data-dismiss="modal">&times;</button>'+ 
-							          '<h4 class="modal-title">Modal Header</h4>'+ 
+							          '<h4 class="modal-title">Agregar Hito</h4>'+ 
 							        '</div>'+ 
 							        '<div class="modal-body">'+ 
 							        
@@ -2478,7 +2478,7 @@ $("body").on("click", ".modalDeclararAvance",function(event){
 						      '<div class="modal-content">'+ 
 						        '<div class="modal-header">'+ 
 						          '<button type="button" class="close" data-dismiss="modal">&times;</button>'+ 
-						          '<h4 class="modal-title">Modal Header</h4>'+ 
+						          '<h4 class="modal-title">Declarar Avances</h4>'+ 
 						        '</div>'+ 
 						        '<div class="modal-body">'+ 
 						        
@@ -2492,8 +2492,21 @@ $("body").on("click", ".modalDeclararAvance",function(event){
 						      		    '<input type="url" class="form-control" id="url" placeholder="Introduzca URL">'+
 						      		  '</div>'+
 						      		  '<div class="form-group">'+
-						      		    '<label for="fecha">Fecha</label>'+
+						      		    '<label for="fecha">Fecha Avance</label>'+
 						      		    '<input type="date" class="form-control" id="fecha" placeholder="Fecha">'+
+						      		  '</div>'+
+						      		  '<div class="form-group">'+
+						      		    '<label for="coordenadas">Coordenadas Geográficas</label>'+
+						      		    '<input type="text" class="form-control" placeholder="Latitud">'+
+						      		    '<input type="text" class="form-control" placeholder="Longitud">'+
+						      		  '</div>'+
+						      		  '<div class="form-group">'+
+						      		    '<label for="codigoContratacion">Código Contratación</label>'+
+						      		    '<input type="text" class="form-control" id="codigoContratacion" placeholder="Código Contratación">'+
+						      		  '</div>'+
+						      		  '<div class="form-group">'+
+						      		    '<label for="codigoSinarh">Código SINARH</label>'+
+						      		    '<input type="text" class="form-control" id="codigoSinarh" placeholder="Código SINARH">'+
 						      		  '</div>'+
 						      		  '<button type="submit" class="btn btn-success guardarAvance">Guardar</button>'+
 					      			'</form>'+
