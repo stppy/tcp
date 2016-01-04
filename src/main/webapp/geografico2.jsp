@@ -1557,6 +1557,7 @@ $(document).ready(function(){
 
 						      	             ' <ul class="col-md-12">'+
 						      					'<form class="form-horizontal" role="form" id="formulario" method="post" action="/ajaxUpdate">'+
+						      					'<div id="tituloFormulario"></div>'+
 						      					'<input type="hidden" name="accion" value="actEntidad">'+
 						      						'<div class="form-group">'+
 						      						<!-- <label for="nivel-formulario" class="col-lg-3 control-label" >Nivel:</label> -->
@@ -1695,7 +1696,7 @@ $(document).ready(function(){
 		        	{
 			        	var mostrarNivel = datosNiveles.niveles[x].nombreNivel;
 			          	var nt=document.createTextNode(mostrarNivel+" >");
-			          	var nparrafo=document.getElementById('f1c2');
+			          	var nparrafo=document.getElementById('tituloFormulario');
 			          	nparrafo.innerHTML="";
 			          	nparrafo.appendChild(nt);
 			        }
@@ -1744,8 +1745,8 @@ $(document).ready(function(){
 		        		document.getElementById('entidad-formulario').setAttribute("entidad",rutaEntidad2 );
 		        		var mostrarEntidad = datosEntidades.entidades[x].nombreEntidad;
 		          		var nt=document.createTextNode(mostrarEntidad);
-		          		var nparrafo=document.getElementById('f2c2');
-		          		nparrafo.innerHTML="";
+		          		var nparrafo=document.getElementById('tituloFormulario');
+		          		//nparrafo.innerHTML="";
 		          		nparrafo.appendChild(nt);
 		        	} 
 		      	} 
@@ -1778,10 +1779,17 @@ $(document).ready(function(){
 					        	if(datosNiveles.niveles[y].nivel === parseInt(rutaNivel))
 					        	{
 						        	var mostrarNivel = datosNiveles.niveles[y].nombreNivel;
-						          	var nt=document.createTextNode(mostrarNivel+" >");
-						          	var nparrafo=document.getElementById('f1c2');
+						          	var nt=document.createElement('small');
+						          	var ntText = document.createTextNode(mostrarNivel);
+						          	nt.appendChild(ntText);
+						          	var separador=document.createTextNode(" > ");
+						          	var nparrafo=document.getElementById('tituloFormulario');
+						          	var strong = document.createElement('strong');
+						          	strong.appendChild(separador);
 						          	nparrafo.innerHTML="";
 						          	nparrafo.appendChild(nt);
+						          	nparrafo.appendChild(strong);
+						          	
 						        }
 					      	}
 					    	
@@ -1814,13 +1822,18 @@ $(document).ready(function(){
 						        	{
 						        		document.getElementById('entidad-formulario').setAttribute("entidad",rutaEntidad2 );
 						        		var mostrarEntidad = datosEntidades.entidades[x].nombreEntidad;
-						          		var nt=document.createTextNode(mostrarEntidad);
-						          		var nparrafo=document.getElementById('f2c2');
-						          		nparrafo.innerHTML="";
+						        		var nt=document.createElement('small');
+						          		var ntText=document.createTextNode(mostrarEntidad);
+						          		nt.appendChild(ntText);
+							          	var separador=document.createTextNode(" > ");
+							          	var nparrafo=document.getElementById('tituloFormulario');
+							          	var strong = document.createElement('strong');
+							          	strong.appendChild(separador);
 						          		nparrafo.appendChild(nt);
+							          	nparrafo.appendChild(strong);
+
 						        	} 
-						      	} 
-						    	   	
+						      	}
 						    	
 						      	var datosTipoPrograma = [];
 						      		$.ajax({
@@ -1895,14 +1908,20 @@ $(document).ready(function(){
 			        	if(datosTipoPrograma.tiposPrograma[x].numeroFila === parseInt(linkTipoPrograma)) 
 			        	{
 			        		var mostrarTipoPrograma = datosTipoPrograma.tiposPrograma[x].nombreTipoPrograma;
-			          		var nt=document.createTextNode(mostrarTipoPrograma);
-			          		var nparrafo=document.getElementById('f3c2');
-			          		nparrafo.innerHTML="";
-			          		nparrafo.appendChild(nt);
+			          		var ntText=document.createTextNode(mostrarTipoPrograma);
+			              	var nt=document.createElement('small');
+			              	var ntText = document.createTextNode(mostrarNivel);
+			              	nt.appendChild(ntText);
+			              	var separador=document.createTextNode(" > ");
+			          		var nparrafo=document.getElementById('tituloFormulario');
+			              	var strong = document.createElement('strong');
+			              	strong.appendChild(separador);
+			              	nparrafo.appendChild(nt);
+			              	nparrafo.appendChild(strong);
 			        	} 
 			      	}
 			    }
-		    }
+		    }    	
 
 		    this.programasFocus = function(){
 		      	//var linkNivel = document.getElementById('nivel-formulario').value;
@@ -1981,10 +2000,16 @@ $(document).ready(function(){
 			        	if(datosProgramas.programas[x].codigoPrograma === parseInt(numeroProgramaIngresado))
 			        	{
 			        		var mostrarNombrePrograma = datosProgramas.programas[x].nombrePrograma;
-					        var nt=document.createTextNode(mostrarNombrePrograma);
-					        var nparrafo=document.getElementById('f4c2');
-					        nparrafo.innerHTML="";
-					        nparrafo.appendChild(nt);
+			        		var nt=document.createElement('small');
+					        var ntText=document.createTextNode(mostrarNombrePrograma);
+					        nt.appendChild(ntText);
+					        var separador=document.createTextNode(" > ");
+					        var nparrafo=document.getElementById('tituloFormulario');
+				          	var strong = document.createElement('strong');
+				          	strong.appendChild(separador);
+				          	nparrafo.appendChild(nt);
+				          	nparrafo.appendChild(strong);
+
 					    }
 			      	}
 			    }
@@ -2067,15 +2092,20 @@ $(document).ready(function(){
 			        	if(datosSubProgramas.subprogramas[x].id === parseInt(numeroSubProgramaIngresado))
 			        	{
 				        	var mostrarNombrePrograma = datosSubProgramas.subprogramas[x].nombre;
-				          	var nt=document.createTextNode(mostrarNombrePrograma);
-				          	var nparrafo=document.getElementById('f5c2');
-				          	nparrafo.innerHTML="";
+				        	var nt=document.createElement('small');
+				          	var ntText=document.createTextNode(mostrarNombrePrograma);
+					        nt.appendChild(ntText);
+					        var separador=document.createTextNode(" > ");
+				          	var nparrafo=document.getElementById('tituloFormulario');
+				          	var strong = document.createElement('strong');
+				          	strong.appendChild(separador);
 				          	nparrafo.appendChild(nt);
+				          	nparrafo.appendChild(strong);
 				        }
 			      	}
 			    }
 		    } 
-
+		    
 		    this.proyectoFocus = function(){
 			    //var linkNivel = document.getElementById("nivel-formulario").value;
 			    //var linkEntidad = document.getElementById("entidad-formulario").value;
@@ -2152,10 +2182,16 @@ $(document).ready(function(){
 			        	if(datosProyectos.proyectos[x].codigoProyecto === parseInt(numeroProyectoIngresado))
 			        	{
 			        		var mostrarNombreProyecto = datosProyectos.proyectos[x].nombreProyecto;
-			          		var nt=document.createTextNode(mostrarNombreProyecto);
-			          		var nparrafo=document.getElementById('f6c2');
-			          		nparrafo.innerHTML="";
-			          		nparrafo.appendChild(nt);
+			        		var nt=document.createElement('small');
+			          		var ntText=document.createTextNode(mostrarNombreProyecto);
+			    	        nt.appendChild(ntText);
+			    	        var separador=document.createTextNode(" > ");
+			          		var nparrafo=document.getElementById('tituloFormulario');
+			              	var strong = document.createElement('strong');
+			              	strong.appendChild(separador);
+			              	nparrafo.appendChild(nt);
+			              	nparrafo.appendChild(strong);
+
 			        	}
 			      	}
 			   }
@@ -2169,14 +2205,14 @@ $(document).ready(function(){
 			    var linkTipoPrograma = document.getElementById("tipoPrograma-formulario").value;
 			    var linkPrograma = document.getElementById('programa-formulario').value;
 			    var linkSubPrograma = document.getElementById('subPrograma-formulario').value;
-			    var linkProducto = document.getElementById('producto-formulario').value;
+			    var linkProyecto = document.getElementById('proyecto-formulario').value;   
 
 
 		    	var datosProductos = [];
 		    	var datosProductosDetalle = [];
 		    	
 		    	$.ajax({
-		         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductosPresupuesto&proyecto_subprograma_programa_entidad_nivel_id='+linkNivel+'&proyecto_subprograma_programa_entidad_id='+linkEntidad+'&proyecto_subprograma_programa_tipo_presupuesto_id='+linkTipoPrograma+'&proyecto_subprograma_programa_id='+linkPrograma+'&proyecto_subprograma_id='+linkSubPrograma+'&proyecto_id='+linkProducto,
+		         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductosPresupuesto&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto,
 		          	type:'get',
 		          	crossDomain: 'true',
 		          	dataType:'jsonp',
