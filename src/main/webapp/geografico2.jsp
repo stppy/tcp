@@ -2218,11 +2218,12 @@ $(document).ready(function(){
 			    function jsonpCallbackProducto(data) {
 			    	datosProductos = data;
 			    	
+			    	
 			        var datalistProductos = document.createElement('datalist');
 			        datalistProductos.setAttribute('id','listaf7c2'); 
 			        var ubicacionDatalistProductos = document.getElementById('formulario');
 			        ubicacionDatalistProductos.appendChild(datalistProductos);
-			    	
+			        
 			          for(var i = 0; i < datosProductos.producto.length ; i++) 
 			          {       
 
@@ -2244,13 +2245,11 @@ $(document).ready(function(){
 						    function jsonpCallbackProductoDetalle(data) {
 						    	datosProductosDetalle = data;
 					    	
-						          for(var a = 0; a < datosProductosDetalle.productos.length ; a++) 
-						          {       
+     
 							          var option = document.createElement('option');
-							          option.setAttribute('value', datosProductosDetalle.productos[a].codigoCatalogo);
-							          option.setAttribute('label', datosProductosDetalle.productos[a].nombreCatalogo);
+							          option.setAttribute('value', datosProductosDetalle.productos[0].codigoCatalogo);
+							          option.setAttribute('label', datosProductosDetalle.productos[0].nombreCatalogo);
 							          datalistProductos.appendChild(option);      
-						      	  } 
 						    }
 			        	  
 			      	  } 
