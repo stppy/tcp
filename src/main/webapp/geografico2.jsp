@@ -1460,6 +1460,94 @@ $(document).ready(function(){
 							     '</div>'+	
 						      
 							      	'<div class="row">'+ 
+
+							      	
+							    	'<div class="col-md-12">'+
+						    		'<div class="box">'+
+					      			'<div class="box-header with-border">'+
+					       				'<h2 class="box-title text-center">'+
+					          				'VINCULACIÓN DE LA ACCIÓN CON PRODUCTOS PRESUPUESTARIOS'+ 	
+					        			'</h2>'+
+					        			'<div class="box-tools pull-right"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+					        			'</div>'+
+					      			'</div>'+
+					      			'<div class="box-body">'+ 
+					      			
+					      			'<div class="row">'+
+									
+					      	             ' <ul class="col-md-12">'+
+					      					'<form class="form-horizontal" role="form" id="formulario" method="post" action="/ajaxUpdate">'+
+					      					'<div id="tituloFormulario"></div>'+
+					      					'<input type="hidden" name="accion" value="actEntidad">'+
+					      						'<div class="form-group">'+
+					      						<!-- <label for="nivel-formulario" class="col-lg-3 control-label" >Nivel:</label> -->
+					      					    	'<div class="col-lg-8">'+
+					      					    	'<input type="hidden" name="nivel" id="nivel-formulario" placeholder="Nivel" list="listaf1c2" class="form-control">'+
+					      					    	'</div>'+
+					      					    	'<label for="nivel-formulario" class="col-lg-3 control-label" id="f1c2"></label>'+
+					      					  	'</div>'+
+					      					
+					      						'<div class="form-group">'+
+					      						<!-- <label for="nivel-formulario" class="col-lg-1 control-label" >Entidad:</label> -->
+					      					    	'<div class="col-lg-2">'+
+					      					    		'<input type="hidden" name="entidad" id="entidad-formulario" placeholder="Entidad" list="listaf2c2" class="form-control">'+
+					      					    	'</div>'+
+					      					    	'<label for="entidad-formulario" class="col-lg-3 control-label" id="f2c2"></label> '+
+					      					  	'</div> '+
+					      					  					
+					      						'<div class="form-group">'+
+					      						'<label for="nivel-formulario" class="col-lg-3 control-label">Tipo de Programa:</label>'+ 
+					      					    	'<div class="col-lg-8">'+
+					      					    		'<input type="text" name="tipoPrograma" id="tipoPrograma-formulario" placeholder="Tipo Programa" list="listaf3c2" class="form-control">'+
+					      					    	'</div>'+
+					      					    	'<label for="tipoPrograma-formulario" class="col-lg-3 control-label" id="f3c2"></label> '+
+					      					  	'</div>'+
+					      					
+					      						'<div class="form-group">'+
+					      						'<label for="nivel-formulario" class="col-lg-3 control-label">Programa:</label> '+
+					      					    	'<div class="col-lg-8">'+
+					      					    		'<input type="text" name="programa" id="programa-formulario" placeholder="Programa" list="listaf4c2" class="form-control">'+
+					      					    	'</div>'+
+					      					    	'<label for="programa-formulario" class="col-lg-3 control-label" id="f4c2"></label> '+
+					      					  	'</div>'+
+					      					
+					      						'<div class="form-group">'+
+					      						'<label for="nivel-formulario" class="col-lg-3 control-label">Subprograma:</label> '+
+					      					    	'<div class="col-lg-8">'+
+					      					    		'<input type="text" name="subPrograma" id="subPrograma-formulario" placeholder="SubPrograma" list="listaf5c2" class="form-control">'+
+					      					    	'</div>'+
+					      					    	'<label for="subPrograma-formulario" class="col-lg-3 control-label" id="f5c2"></label> '+
+					      					  	'</div>'+
+					      					
+					      						'<div class="form-group">'+
+					      						'<label for="nivel-formulario" class="col-lg-3 control-label">Proyecto:</label> '+
+					      					    	'<div class="col-lg-8">'+
+					      					    		'<input type="text" name="proyecto" id="proyecto-formulario" placeholder="Proyecto" list="listaf6c2" class="form-control">'+
+					      					    	'</div>'+
+					      					    	'<label for="proyecto-formulario" class="col-lg-3 control-label" id="f6c2"></label> '+
+					      					  	'</div>'+
+					      					  	
+					      						'<div class="form-group">'+
+					      						'<label for="producto-formulario" class="col-lg-3 control-label">Producto:</label> '+
+					      					    	'<div class="col-lg-8">'+
+					      					    		'<input type="text" name="producto" id="producto-formulario" placeholder="Producto" list="listaf7c2" class="form-control">'+
+					      					    	'</div>'+
+					      					    	'<label for="producto-formulario" class="col-lg-3 control-label" id="f7c2"></label> '+
+					      					  	'</div>'+						      					  	
+					      					  	
+					      					
+					      					'</form>'+
+					      				'</ul>'+
+
+					      	        
+					      	        
+					      	        
+					      	        
+					      			'</div>'+
+						   		'</div>'+
+							'</div>'+	
+							      	
+						      	
 								    	'<div class="col-md-6">'+
 								    		 '<div class="box">'+
 								      			'<div class="box-header with-border">'+
@@ -1530,93 +1618,7 @@ $(document).ready(function(){
 									'</div>'+	
 									
 									
-									
-							    	'<div class="col-md-12">'+
-							    		'<div class="box">'+
-						      			'<div class="box-header with-border">'+
-						       				'<h2 class="box-title text-center">'+
-						          				'VINCULACIÓN DE LA ACCIÓN CON PRODUCTOS PRESUPUESTARIOS'+ 	
-						        			'</h2>'+
-						        			'<div class="box-tools pull-right"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
-						        			'</div>'+
-						      			'</div>'+
-						      			'<div class="box-body">'+ 
-						      			
-						      			'<div class="row">'+
-										
-
-
-						      	             ' <ul class="col-md-12">'+
-						      					'<form class="form-horizontal" role="form" id="formulario" method="post" action="/ajaxUpdate">'+
-						      					'<div id="tituloFormulario"></div>'+
-						      					'<input type="hidden" name="accion" value="actEntidad">'+
-						      						'<div class="form-group">'+
-						      						<!-- <label for="nivel-formulario" class="col-lg-3 control-label" >Nivel:</label> -->
-						      					    	'<div class="col-lg-8">'+
-						      					    	'<input type="hidden" name="nivel" id="nivel-formulario" placeholder="Nivel" list="listaf1c2" class="form-control">'+
-						      					    	'</div>'+
-						      					    	'<label for="nivel-formulario" class="col-lg-3 control-label" id="f1c2"></label>'+
-						      					  	'</div>'+
-						      					
-						      						'<div class="form-group">'+
-						      						<!-- <label for="nivel-formulario" class="col-lg-1 control-label" >Entidad:</label> -->
-						      					    	'<div class="col-lg-2">'+
-						      					    		'<input type="hidden" name="entidad" id="entidad-formulario" placeholder="Entidad" list="listaf2c2" class="form-control">'+
-						      					    	'</div>'+
-						      					    	'<label for="entidad-formulario" class="col-lg-3 control-label" id="f2c2"></label> '+
-						      					  	'</div> '+
-						      					  					
-						      						'<div class="form-group">'+
-						      						'<label for="nivel-formulario" class="col-lg-3 control-label">Tipo de Programa:</label>'+ 
-						      					    	'<div class="col-lg-8">'+
-						      					    		'<input type="text" name="tipoPrograma" id="tipoPrograma-formulario" placeholder="Tipo Programa" list="listaf3c2" class="form-control">'+
-						      					    	'</div>'+
-						      					    	'<label for="tipoPrograma-formulario" class="col-lg-3 control-label" id="f3c2"></label> '+
-						      					  	'</div>'+
-						      					
-						      						'<div class="form-group">'+
-						      						'<label for="nivel-formulario" class="col-lg-3 control-label">Programa:</label> '+
-						      					    	'<div class="col-lg-8">'+
-						      					    		'<input type="text" name="programa" id="programa-formulario" placeholder="Programa" list="listaf4c2" class="form-control">'+
-						      					    	'</div>'+
-						      					    	'<label for="programa-formulario" class="col-lg-3 control-label" id="f4c2"></label> '+
-						      					  	'</div>'+
-						      					
-						      						'<div class="form-group">'+
-						      						'<label for="nivel-formulario" class="col-lg-3 control-label">Subprograma:</label> '+
-						      					    	'<div class="col-lg-8">'+
-						      					    		'<input type="text" name="subPrograma" id="subPrograma-formulario" placeholder="SubPrograma" list="listaf5c2" class="form-control">'+
-						      					    	'</div>'+
-						      					    	'<label for="subPrograma-formulario" class="col-lg-3 control-label" id="f5c2"></label> '+
-						      					  	'</div>'+
-						      					
-						      						'<div class="form-group">'+
-						      						'<label for="nivel-formulario" class="col-lg-3 control-label">Proyecto:</label> '+
-						      					    	'<div class="col-lg-8">'+
-						      					    		'<input type="text" name="proyecto" id="proyecto-formulario" placeholder="Proyecto" list="listaf6c2" class="form-control">'+
-						      					    	'</div>'+
-						      					    	'<label for="proyecto-formulario" class="col-lg-3 control-label" id="f6c2"></label> '+
-						      					  	'</div>'+
-						      					  	
-						      						'<div class="form-group">'+
-						      						'<label for="producto-formulario" class="col-lg-3 control-label">Producto:</label> '+
-						      					    	'<div class="col-lg-8">'+
-						      					    		'<input type="text" name="producto" id="producto-formulario" placeholder="Producto" list="listaf7c2" class="form-control">'+
-						      					    	'</div>'+
-						      					    	'<label for="producto-formulario" class="col-lg-3 control-label" id="f7c2"></label> '+
-						      					  	'</div>'+						      					  	
-						      					  	
-						      					
-						      					'</form>'+
-						      				'</ul>'+
-
-						      	        
-						      	        
-						      	        
-						      	        
-						      			'</div>'+
-							   		'</div>'+
-								'</div>'+	
+		
 									
 									
 							      	
