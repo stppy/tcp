@@ -2357,7 +2357,8 @@ $(document).ready(function(){
 	});
 	
 	$("body").on("click", ".modalAgregarHito",function(event){
-		
+		event.stopPropagation();
+		event.preventDefault();
 		if ( $("#modalAgregarHito").length ) {
 			$("#modalAgregarHito").remove();
 		}
@@ -2401,8 +2402,8 @@ $(document).ready(function(){
 									  	    '<input type="text" class="form-control" id="cantidadPrevistaHito" placeholder="Cantidad Prevista">'+
 									  	  '</div>'+
 									  	  '<div class="form-group">'+
-									  	    '<label for="cantidadRealHito">Cantidad Real</label>'+
-									  	    '<input type="text" class="form-control" id="cantidadRealHito" placeholder="Cantidad Real">'+
+									  	    '<label for="cantidadRealHito">Fecha de Entrega</label>'+
+									  	    '<input type="text" class="form-control" id="cantidadRealHito" placeholder="Fecha de Entrega">'+
 									  	  '</div>'+
 									  	  '<button type="submit" class="btn btn-success guardarHito">Guardar</button>'+
 									  	'</form>'+
@@ -2464,6 +2465,8 @@ $(document).ready(function(){
 
 
 $("body").on("click", ".modalDeclararAvance",function(event){
+	event.stopPropagation();
+	event.preventDefault();
 	
 	if ( $("#modalDeclararAvance").length ) {
 		$("#modalDeclararAvance").remove();
