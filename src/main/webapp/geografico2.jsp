@@ -1379,6 +1379,13 @@ $(document).ready(function(){
 		if ( $("#myModal2").length ) {
 			$("#myModal2").remove();
 		}
+ 		if ( $("#modalAgregarHito").length ) {
+			$("#modalAgregarHito").remove();
+		} 
+		if ( $("#modalDeclararAvance").length ) {
+			$("#modalDeclararAvance").remove();
+		}
+		
 			
 		var parametros = $(this).attr("parametros");
 	    var idParsed = parametros.split("-");                                                            
@@ -1429,7 +1436,7 @@ $(document).ready(function(){
 						        '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
 						        '<h4 class="modal-title" id="myModalLabel1"></h4>'+
 						      '</div>'+
-						      '<div class="modal-body" style="height:1200px;" >'+ 
+						      '<div class="modal-body" style="heigth:1200px;">'+ 
 						      
 					      			'<div class="row">'+
 									'<div class="col-md-12">'+
@@ -1446,11 +1453,11 @@ $(document).ready(function(){
 							           '<div class="table-responsive">'+
 										'<table class="table table-hover hitos">'+
 											'<tbody>'+
-												'<tr><td><div class="form-group"><label for="nombreAccion">Acción</label><input type="text" class="form-control" id="nombreAccion" value="'+accion[0].linea_accion+'"></div></td><td><div class="form-group"><label for="umedida">U. medida</label><input type="text" class="form-control" id="umedida" value="'+accion[0].accion_unidad_edida+'"></div></td></tr>'+
+												'<tr><td><div class="form-group"><label for="nombreAccion">Acción</label><input type="text" class="form-control" id="nombreAccion" value="'+accion[0].accion 
+												+'"></div></td><td><div class="form-group"><label for="umedida">U. medida</label><input type="text" class="form-control" id="umedida" value="'+accion[0].accion_unidad_edida+'"></div></td></tr>'+
 												'<tr><td><div class="form-group"><label for="departamento">Departamento</label><input type="text" class="form-control" id="departamento" value="'+accion[0].accion_departamento+'"></div></td><td><div class="form-group"><label for="distrito">Distrito</label><input type="text" class="form-control" id="distrito" value="'+accion[0].accion_distrito+'"></div></td></tr>'+
-												'<tr><td colspan="2"><button type="submit" class="btn btn-success">Guardar Acción</button><button type="submit" class="btn btn-success modalAgregarHito">Programar Hito</button> <button type="submit" class="btn btn-success modalDeclararAvance">Declarar Avance</button></td></tr>'+
-											'</tbody>'+
-							           
+												'<tr><td colspan="2"><button type="submit" class="btn btn-success">Guardar Acción</button><button type="submit" class="btn btn-success modalAgregarHito" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'-'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'">Programar Hito</button> <button type="submit" class="btn btn-success modalDeclararAvance" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'-'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'" >Declarar Avance</button></td></tr>'+
+											'</tbody>'+							           
 										'</table>'+
 										'</div>'+
 										'</form>'+
@@ -1489,7 +1496,7 @@ $(document).ready(function(){
 				      									'<input type="hidden" name="entidad" id="entidad-formulario" placeholder="Entidad" list="listaf2c2" class="form-control">'+
 				      								'</div>'+
 					      					    	
-					      					    	'<div class="col-lg-1">'+
+					      					    	'<div class="col-lg-2">'+
 					      					    		'<input type="text" name="tipoPrograma" id="tipoPrograma-formulario" placeholder="Tipo Programa" list="listaf3c2" class="form-control">'+
 					      					    	'</div>'+
 					      					  	
@@ -1505,13 +1512,13 @@ $(document).ready(function(){
 					      					    		'<input type="text" name="proyecto" id="proyecto-formulario" placeholder="Proyecto" list="listaf6c2" class="form-control">'+
 					      					    	'</div>'+
 
-					      					    	'<div class="col-lg-1">'+
+					      					    	'<div class="col-lg-2">'+
 					      					    		'<input type="text" name="producto" id="producto-formulario" placeholder="Producto" list="listaf7c2" class="form-control">'+
 					      					    	'</div>'+
-					      					    	'<div class="col-lg-1">'+
+					      					    	'<div class="col-lg-2">'+
 				      									'Total Fis.'+
 				      								'</div>'+
-				      								'<div class="col-lg-1">'+
+				      								'<div class="col-lg-2">'+
 			      										'Total Fin.'+
 			      									'</div>'+
 					      					    	
@@ -1727,7 +1734,21 @@ $(document).ready(function(){
 
 		    	var rutaNivel = 12;
 		    	var datosNiveles = [];
-			    	 $.ajax({
+		    	
+				if ( $("#listaf3c2").length ) {
+					$("#listaf3c2").remove();
+					$('#tipoPrograma-formulario').val('');
+					$("#listaf4c2").remove();
+					$('#programa-formulario').val('');
+					$("#listaf5c2").remove();
+					$('#subPrograma-formulario').val('');
+					$("#listaf6c2").remove();
+					$('#proyecto-formulario').val('');
+					$("#listaf7c2").remove();
+					$('#producto-formulario').val('');
+				}
+				
+			    $.ajax({
 			        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getNiveles',
 			          	type:'get',
 			          	crossDomain: 'true',
@@ -1904,6 +1925,17 @@ $(document).ready(function(){
 
 		    	var datosProgramas = [];
 		    	
+				if ( $("#listaf4c2").length ) {
+					$("#listaf4c2").remove();
+					$('#programa-formulario').val('');
+					$("#listaf5c2").remove();
+					$('#subPrograma-formulario').val('');
+					$("#listaf6c2").remove();
+					$('#proyecto-formulario').val('');
+					$("#listaf7c2").remove();
+					$('#producto-formulario').val('');
+				}
+		    	
 		    	$.ajax({
 		        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getProgramas&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipoPresupuesto='+linkTipoPrograma,
 		          	type:'get',
@@ -1996,6 +2028,15 @@ $(document).ready(function(){
 
 		    	var datosSubProgramas = [];
 		    	
+				if ( $("#listaf5c2").length ) {
+					$("#listaf5c2").remove();
+					$('#subPrograma-formulario').val('');
+					$("#listaf6c2").remove();
+					$('#proyecto-formulario').val('');
+					$("#listaf7c2").remove();
+					$('#producto-formulario').val('');
+				}
+		    	
 		    	$.ajax({
 		        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getSubprogramas&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipoPresupuesto='+linkTipoPrograma+'&programa='+linkPrograma,
 		          	type:'get',
@@ -2087,6 +2128,13 @@ $(document).ready(function(){
 			    var linkSubPrograma = document.getElementById('subPrograma-formulario').value;
 
 		    	var datosProyectos = [];
+		    	
+				if ( $("#listaf6c2").length ) {
+					$("#listaf6c2").remove();
+					$('#proyecto-formulario').val('');
+					$("#listaf7c2").remove();
+					$('#producto-formulario').val('');
+				}
 		    	
 		    	$.ajax({
 		         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getProyectos&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipoPresupuesto='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma,
@@ -2182,6 +2230,11 @@ $(document).ready(function(){
 		    	var datosProductos = [];
 		    	var datosProductosDetalle = [];
 		    	
+				if ( $("#listaf7c2").length ) {
+					$("#listaf7c2").remove();
+					 $('#producto-formulario').val('');
+					
+				}
 		    	$.ajax({
 		         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductosPresupuesto&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto,
 		          	type:'get',
@@ -2224,10 +2277,10 @@ $(document).ready(function(){
 					          	}    
 					        });
 					    	
-						    function jsonpCallbackProductoDetalle(data) {
+			        	  function jsonpCallbackProductoDetalle(data) {
 						    	datosProductosDetalle = data;
 					    	
-     
+   
 							          var option = document.createElement('option');
 							          option.setAttribute('value', datosProductosDetalle.productos[0].codigoCatalogo);
 							          option.setAttribute('label', datosProductosDetalle.productos[0].nombreCatalogo);
@@ -2237,6 +2290,96 @@ $(document).ready(function(){
 			      	  } 
 			    	
 			    }//fin primer callback
+		    }
+		    
+		    this.producto = function(){
+			    //var linkNivel = document.getElementById("nivel-formulario").value;
+			    //var linkEntidad = document.getElementById("entidad-formulario").value;
+		    	var linkNivel = 12;
+		      	var linkEntidad = 1;
+			    var linkTipoPrograma = document.getElementById("tipoPrograma-formulario").value;
+			    var linkPrograma = document.getElementById('programa-formulario').value;
+			    var linkSubPrograma = document.getElementById('subPrograma-formulario').value;
+			    var linkProyecto = document.getElementById('proyecto-formulario').value; 
+			    var linkProducto = document.getElementById('producto-formulario').value;  
+			    var datosProductos = [];
+			    var valorProducto = [];
+			    var sumaTotal=0;
+			    var maxValor = 0;			    
+			    
+		    	$.ajax({
+		         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductos&producto='+linkProducto,
+		          	type:'get',
+		          	crossDomain: 'true',
+		          	dataType:'jsonp',
+	                jsonp: 'callback',
+	                jsonpCallback: 'jsonpCallbackProducto',
+		          	async:false,
+		          	success: function( data, textStatus, jqXHR) {
+		          		if(data.success){
+		          			jsonpCallbackProducto(data)
+		          		}
+		          	}    
+		        });
+		    	
+		    	function jsonpCallbackProducto(data) {
+					datosProductos = data;
+		    		
+					if( datosProductos.productos[0].clase === "N" )
+					{
+				    	$.ajax({
+				         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductoTipoN&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto,
+				          	type:'get',
+				          	crossDomain: 'true',
+				          	dataType:'jsonp',
+			                jsonp: 'callback',
+			                jsonpCallback: 'jsonpCallbackProducto',
+				          	async:false,
+				          	success: function( data, textStatus, jqXHR) {
+				          		if(data.success){
+				          			jsonpCallbackProductoTipo(data)
+				          		}
+				          	}    
+				        });
+				    	function jsonpCallbackProductoTipo(data) {
+				    		valorProducto = data;
+				    		
+				    		for(var x = 0; x < valorProducto.productoTipoN.length; x++){
+				    			sumaTotal += parseInt(valorProducto.productoTipoN[x].valor);
+				    		}
+				    	}				    	
+					}//finIf
+					
+					if( datosProductos.productos[0].clase === "C" )
+					{
+				    	$.ajax({
+				         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductoTipoN&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto,
+				          	type:'get',
+				          	crossDomain: 'true',
+				          	dataType:'jsonp',
+			                jsonp: 'callback',
+			                jsonpCallback: 'jsonpCallbackProducto',
+				          	async:false,
+				          	success: function( data, textStatus, jqXHR) {
+				          		if(data.success){
+				          			jsonpCallbackProductoTipo(data)
+				          		}
+				          	}    
+				        });
+				    	function jsonpCallbackProductoTipo(data) {
+				    		valorProducto = data;
+				    		
+				    		for(var x = 0; x < valorProducto.length; x++){
+				    			if(valorProducto[x].valor > maxValor)
+				    			{
+				    				maxValor = valorProducto.productoTipoN[x].valor;
+				    			}
+				    		}
+				    	}		
+					}//finIf
+					alert(sumaTotal+"-"+maxValor);
+		    	}//finCallbackProducto
+
 		    }
 		    
 		}//fin combo
@@ -2255,6 +2398,8 @@ $(document).ready(function(){
 		  document.getElementById('proyecto-formulario').addEventListener('focus',eje1.proyectoFocus,false); 
 		  document.getElementById('proyecto-formulario').addEventListener('change',eje1.proyecto,false);
 		  document.getElementById('producto-formulario').addEventListener('focus',eje1.productoFocus,false); 
+		  document.getElementById('producto-formulario').addEventListener('change',eje1.producto,false); 
+
 		
 		
 	});
@@ -2341,6 +2486,27 @@ $(document).ready(function(){
 		if ( $("#modalAgregarHito").length ) {
 			$("#modalAgregarHito").remove();
 		}
+		
+		var parametros = $(this).attr("parametros");
+	    var idParsed = parametros.split("-");                                                            
+		var institucionId=idParsed[0];
+		var lineaAccionId=idParsed[1];
+		var idDepartamento= idParsed[2];
+		var idDistrito= idParsed[3];
+		var accionId = idParsed[4];
+		var institucionId=idParsed[5];
+		var lineaAccionId=idParsed[6];
+		var idDepartamento= idParsed[7];
+		var idDistrito= idParsed[8];
+		
+		var accion = $.ajax({
+	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015Accion&accion_id='+accionId,
+	      	type:'get',
+	      	dataType:'json',
+	      	crossDomain:true,
+	      	async:false       
+	    }).responseText;		
+		accion=JSON.parse(accion);
 
 		var modalAgregarHito = "";
 
@@ -2349,15 +2515,23 @@ $(document).ready(function(){
 							    
 							      '<div class="modal-content">'+ 
 							        '<div class="modal-header">'+ 
-							          '<button type="button" class="close" data-dismiss="modal">&times;</button>'+ 
+							          '<button type="button" class="close modalHitoAvances" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'-'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'">&times;</button>'+ 
 							          '<h4 class="modal-title">Agregar Hito</h4>'+ 
 							        '</div>'+ 
 							        '<div class="modal-body">'+ 
 							        
 								    	'<form role="form">'+
 									  	  '<div class="form-group">'+
+									  	    '<label for="departamento">Departamento</label>'+
+									  	    '<input type="text" class="form-control" id="departamento" value="'+accion[0].accion_departamento+'" disabled>'+
+									  	  '</div>'+
+									  	  '<div class="form-group">'+
+									  	    '<label for="distrito">Distrito</label>'+
+									  	    '<input type="text" class="form-control" id="distrito" value="'+accion[0].accion_distrito+'" disabled>'+
+									  	  '</div>'+										  	  
+									  	  '<div class="form-group">'+
 									  	    '<label for="accionHito">Acción</label>'+
-									  	    '<input type="text" class="form-control" id="accionHito" placeholder="Acciñon">'+
+									  	    '<input type="text" class="form-control" id="accionHito" value="'+accion[0].accion+'" disabled>'+
 									  	  '</div>'+
 								    	'<form role="form">'+
 									  	  '<div class="form-group">'+
@@ -2389,7 +2563,7 @@ $(document).ready(function(){
 							        
 							        '</div>'+ 
 							        '<div class="modal-footer">'+ 
-							          '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'+ 
+							          '<button type="button" class="btn btn-default modalHitoAvances" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'-'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'">Cerrar</button>'+ 
 							        '</div>'+ 
 							      '</div>'+ 
 							      
@@ -2450,6 +2624,27 @@ $("body").on("click", ".modalDeclararAvance",function(event){
 	if ( $("#modalDeclararAvance").length ) {
 		$("#modalDeclararAvance").remove();
 	}
+	
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-");                                                            
+	var institucionId=idParsed[0];
+	var lineaAccionId=idParsed[1];
+	var idDepartamento= idParsed[2];
+	var idDistrito= idParsed[3];
+	var accionId = idParsed[4];
+	var institucionId=idParsed[5];
+	var lineaAccionId=idParsed[6];
+	var idDepartamento= idParsed[7];
+	var idDistrito= idParsed[8];
+	
+	var accion = $.ajax({
+    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015Accion&accion_id='+accionId,
+      	type:'get',
+      	dataType:'json',
+      	crossDomain:true,
+      	async:false       
+    }).responseText;		
+	accion=JSON.parse(accion);
 
 	var modalDeclararAvance = "";
 
@@ -2458,12 +2653,20 @@ $("body").on("click", ".modalDeclararAvance",function(event){
 						    
 						      '<div class="modal-content">'+ 
 						        '<div class="modal-header">'+ 
-						          '<button type="button" class="close" data-dismiss="modal">&times;</button>'+ 
+						          '<button type="button" class="close modalHitoAvances" data-dismiss="modal" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'-'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'">&times;</button>'+ 
 						          '<h4 class="modal-title">Declarar Avances</h4>'+ 
 						        '</div>'+ 
 						        '<div class="modal-body">'+ 
 						        
 					      			'<form role="form">'+
+						      		  '<div class="form-group">'+
+						      		    '<label for="departamento">Departamento</label>'+
+						      		    '<input type="text" class="form-control" id="departamento" value="'+accion[0].accion_departamento+'" disabled>'+
+						      		  '</div>'+
+						      		  '<div class="form-group">'+
+						      		    '<label for="distrito">Distrito</label>'+
+						      		    '<input type="text" class="form-control" id="distrito" value="'+accion[0].accion_distrito+'" disabled>'+
+						      		  '</div>'+
 						      		  '<div class="form-group">'+
 						      		    '<label for="cantidadAvances">Cantidad</label>'+
 						      		    '<input type="number" class="form-control" id="cantidadAvances" placeholder="Introduzca cantidad">'+
@@ -2478,8 +2681,9 @@ $("body").on("click", ".modalDeclararAvance",function(event){
 						      		  '</div>'+
 						      		  '<div class="form-group">'+
 						      		    '<label for="coordenadas">Coordenadas Geográficas</label>'+
-						      		    '<input type="text" class="form-control" placeholder="Latitud">'+
-						      		    '<input type="text" class="form-control" placeholder="Longitud">'+
+						      		    '<table class="table">'+
+						      		    '<tr><td><input type="text" class="form-control" placeholder="Latitud"></td><td><input type="text" class="form-control" placeholder="Longitud"></td></tr>'+
+										'</table>'+
 						      		  '</div>'+
 						      		  '<div class="form-group">'+
 						      		    '<label for="codigoContratacion">Código Contratación</label>'+
@@ -2494,7 +2698,7 @@ $("body").on("click", ".modalDeclararAvance",function(event){
 						        
 						        '</div>'+ 
 						        '<div class="modal-footer">'+ 
-						          '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'+ 
+						          '<button type="button" class="btn btn-default modalHitoAvances" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'-'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'">Cerrar</button>'+ 
 						        '</div>'+ 
 						      '</div>'+ 
 						      
