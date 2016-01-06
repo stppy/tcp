@@ -1486,7 +1486,7 @@ $(document).ready(function(){
 					      					'<form class="form-horizontal" role="form" id="formulario" method="post" action="/ajaxUpdate">'+
 					      					'<div id="tituloFormulario"></div>'+
 					      					'<input type="hidden" name="accion" value="actEntidad">'+
-					      						'<div class="form-group col-lg-12">'+
+					      						'<div class="form-group row">'+
 					      							'<div class="col-lg-1">'+
 					      								'12'+
 					      								'<input type="hidden" name="nivel" id="nivel-formulario" placeholder="Nivel" list="listaf1c2" class="form-control">'+
@@ -1514,15 +1514,16 @@ $(document).ready(function(){
 
 					      					    	'<div class="col-lg-2">'+
 					      					    		'<input type="text" name="producto" id="producto-formulario" placeholder="Producto" list="listaf7c2" class="form-control">'+
-					      					    	'</div>'+
-					      					    	'<div class="col-lg-2">'+
-				      									'Total Fis.'+
-				      								'</div>'+
-				      								'<div class="col-lg-2">'+
-			      										'Total Fin.'+
-			      									'</div>'+
-					      					    	
+					      					    	'</div>'+					      					    	
 					      					  	'</div>'+ 
+					      					  	
+				      					    	'<div class="col-lg-2" id="TotalFisico">'+
+		      										'Total Fis.'+
+			      								'</div>'+
+			      								'<div class="col-lg-2">'+
+		      										'Total Fin.'+
+		      									'</div>'+
+					      					  	
 					      					  	
 						      					'</form>'+
 							      				'</ul>'+
@@ -2333,24 +2334,26 @@ $(document).ready(function(){
 				          	crossDomain: 'true',
 				          	dataType:'jsonp',
 			                jsonp: 'callback',
-			                jsonpCallback: 'jsonpCallbackProducto',
+			                jsonpCallback: 'jsonpCallbackProductoTipoN',
 				          	async:false,
 				          	success: function( data, textStatus, jqXHR) {
 				          		if(data.success){
-				          			jsonpCallbackProductoTipo(data)
+				          			jsonpCallbackProductoTipoN(data)
 				          		}
-				          	}    
+				          	}
 				        });
-				    	function jsonpCallbackProductoTipo(data) {
+				    	
+				    	function jsonpCallbackProductoTipoN(data) {
 				    		valorProducto = data;
 				    		
 				    		for(var x = 0; x < valorProducto.productoTipoN.length; x++){
 				    			sumaTotal += parseInt(valorProducto.productoTipoN[x].valor);
 				    		}
-				    	}				    	
+				    	}	
+				    	alert(sumaTotal);
 					}//finIf
 					
-					if( datosProductos.productos[0].clase === "C" )
+ 					if( datosProductos.productos[0].clase === "C" )
 					{
 				    	$.ajax({
 				         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductoTipoN&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto,
@@ -2358,26 +2361,25 @@ $(document).ready(function(){
 				          	crossDomain: 'true',
 				          	dataType:'jsonp',
 			                jsonp: 'callback',
-			                jsonpCallback: 'jsonpCallbackProducto',
+			                jsonpCallback: 'jsonpCallbackProductoTipoC',
 				          	async:false,
-				          	success: function( data, textStatus, jqXHR) {
+ 				          	success: function( data, textStatus, jqXHR) {
 				          		if(data.success){
-				          			jsonpCallbackProductoTipo(data)
+				          			jsonpCallbackProductoTipoC(data)
 				          		}
-				          	}    
+				          	}   
 				        });
-				    	function jsonpCallbackProductoTipo(data) {
+				    	function jsonpCallbackProductoTipoC(data) {
 				    		valorProducto = data;
 				    		
 				    		for(var x = 0; x < valorProducto.length; x++){
 				    			if(valorProducto[x].valor > maxValor)
 				    			{
-				    				maxValor = valorProducto.productoTipoN[x].valor;
+				    				maxValor = valorProducto[x].valor;
 				    			}
 				    		}
 				    	}		
-					}//finIf
-					alert(sumaTotal+"-"+maxValor);
+					} 
 		    	}//finCallbackProducto
 
 		    }
