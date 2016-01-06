@@ -2349,8 +2349,8 @@ $(document).ready(function(){
 				    		for(var x = 0; x < valorProducto.productoTipoN.length; x++){
 				    			sumaTotal += parseInt(valorProducto.productoTipoN[x].valor);
 				    		}
+					    	alert(sumaTotal);
 				    	}	
-				    	alert(sumaTotal);
 					}//finIf
 					
  					if( datosProductos.productos[0].clase === "C" )
