@@ -12,7 +12,7 @@ public class AccionHasProducto {
 	protected int subPrograma;
 	protected int proyecto;
 	protected int producto;
-	protected String anho;
+	protected int anho;
 	protected int version;
 	protected boolean borrado=false;
 	
@@ -82,10 +82,10 @@ public class AccionHasProducto {
 	public void setProducto(int producto) {
 		this.producto = producto;
 	}
-	public String getAnho() {
+	public int getAnho() {
 		return anho;
 	}
-	public void setAnho(String anho) {
+	public void setAnho(int anho) {
 		this.anho = anho;
 	}
 	public int getVersion() {

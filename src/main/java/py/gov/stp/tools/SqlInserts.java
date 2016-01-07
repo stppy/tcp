@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import py.gov.stp.objetosV2.AccionHasProducto;
 import py.gov.stp.objetosV2.HitoPrueba;
 import py.gov.stp.tools.ConnectionConfiguration;
 
@@ -1355,6 +1356,35 @@ public class SqlInserts {
 
 
 		
+		insert.execute();
+		   
+		conn.close();
+	} catch (SQLException e) {e.printStackTrace();}
+		
+}	
+	
+	public static void insertAccionHasProducto(AccionHasProducto dato){
+	try {
+		Connection conn=ConnectionConfiguration.conectar();
+	   	
+		String query = "insert into \"accion_has_producto\" (\"spr_nivel_id\",\"spr_entidad_id\",\"spr_tiprograma_id\",\"spr_programa_id\",\"spr_subprograma_id\",\"srp_proyecto_id\",\"spr_producto_id\",\"accion_id\",\"spr_anho\",\"spr_version\")"
+	+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		
+		PreparedStatement insert = conn.prepareStatement(query);
+		
+		insert.setInt (1, dato.getNivel());
+		insert.setInt (2, dato.getEntidad());
+		insert.setInt (3, dato.getTipoPrograma());	
+		insert.setInt (4, dato.getPrograma());	
+		insert.setInt (5, dato.getSubPrograma());	
+		insert.setInt (6, dato.getProyecto());
+		insert.setInt (7, dato.getProducto());	
+		insert.setInt (8, dato.getAccionId());
+		insert.setInt (9, dato.getAnho());
+		insert.setInt (10, dato.getVersion());	
+
+
+	
 		insert.execute();
 		   
 		conn.close();
