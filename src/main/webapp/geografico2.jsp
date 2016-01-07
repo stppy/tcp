@@ -1535,7 +1535,7 @@ $(document).ready(function(){
 				      					'</form>'+
 				      					
 		      					  	'</div>'+
-		      					  	'<button type="submit" class="btn btn-success guardarComboProducto"">Guardar</button>'+
+		      					  
 					                		'<div class="row">'+
 					      					    '<div class="form-group col-md-2">'+
 					      					  		'<label for="totalFisico-formulario">Total Fisico</label>'+
@@ -1556,7 +1556,8 @@ $(document).ready(function(){
 				      					    			'<input type="text" name="totalFinanciero" id="totalFinanciero-formulario" value="" class="form-control" disabled>'+
 							      					'</div>'+
 			      					    		'</div>'+
-			      					    	'</div>'+					                		
+			      					    	'</div>'+		// fin row
+			      					  	'<button type="submit" class="btn btn-success guardarComboProducto"">Guardar</button>'+
 					                	'</div>'+//fin box-footer
 					              	'</div>'+//fin box-danger
 					            '</div>'+//fin col-md-6
