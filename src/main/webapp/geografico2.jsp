@@ -1505,6 +1505,8 @@ $(document).ready(function(){
 												
 					                	
 					                	'</div>'+//fin box-body
+					                	'<div class="box-footer">'+
+					                	
 					                	'<div id="tituloFormulario"></div>'+
 				      					'<form class="form-horizontal" role="form" id="formulario" method="post" action="/ajaxUpdate">'+
 				      						'<input type="hidden" name="accion" value="actEntidad">'+
@@ -1534,7 +1536,6 @@ $(document).ready(function(){
 				      					
 		      					  	'</div>'+
 		      					  	'<button type="submit" class="btn btn-success guardarComboProducto"">Guardar</button>'+
-					                	'<div class="box-footer">'+
 					                		'<div class="row">'+
 					      					    '<div class="form-group col-md-2">'+
 					      					  		'<label for="totalFisico-formulario">Total Fisico</label>'+
