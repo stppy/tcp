@@ -1469,7 +1469,7 @@ $(document).ready(function(){
 							      	'<div class="col-md-12">'+
 									'<div class="box box-danger">'+
 					                	'<div class="box-header with-border">'+
-					                  		'<h3 class="box-title">Latest Members</h3>'+
+					                  		'<h3 class="box-title">Vinculación de Productos de la acción</h3>'+
 				                  			'<div class="box-tools pull-right">'+
 							                    '<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>'+
 					                    		'</button>'+
@@ -1479,7 +1479,7 @@ $(document).ready(function(){
 					                	'</div>'+//fin box-heder
 					                	'<div class="box-body no-padding">'+
 					                	
-							      			'<div class="row">'+
+							      			'<div >'+
 												'<div id="tituloFormulario"></div>'+
 						      					'<form class="form-horizontal" role="form" id="formulario" method="post" action="/ajaxUpdate">'+
 						      						'<input type="hidden" name="accion" value="actEntidad">'+
