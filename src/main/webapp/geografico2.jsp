@@ -1480,37 +1480,60 @@ $(document).ready(function(){
 					                	'<div class="box-body no-padding">'+
 					                	
 							      			'<div >'+
-												'<div id="tituloFormulario"></div>'+
-						      					'<form class="form-horizontal" role="form" id="formulario" method="post" action="/ajaxUpdate">'+
-						      						'<input type="hidden" name="accion" value="actEntidad">'+
-						      						
-						      						'<div class="form-group col-md-1">'+
-						      							'<input type="text" name="nivel" id="nivel-formulario" value="12" class="form-control" disabled>'+
-						      						'</div>'+
-						      						'<div class="form-group col-md-1">'+
-						  								'<input type="text" name="entidad" id="entidad-formulario" value="1" class="form-control" disabled>'+
-						  							'</div>'+
-						      					    '<div class="form-group col-md-2">'+
-						      					    	'<input type="text" name="tipoPrograma" id="tipoPrograma-formulario" placeholder="Tipo Programa" list="listaf3c2" class="form-control">'+
-						      					    '</div>'+
-						      					    '<div class="form-group col-md-2">'+
-						      					    	'<input type="text" name="programa" id="programa-formulario" placeholder="Programa" list="listaf4c2" class="form-control">'+
-						      					    '</div>'+
-						      					    '<div class="form-group col-md-2">'+
-						      					    	'<input type="text" name="subPrograma" id="subPrograma-formulario" placeholder="SubPrograma" list="listaf5c2" class="form-control">'+
-						      					    '</div>'+
-						      					    '<div class="form-group col-md-2">'+
-						      					    	'<input type="text" name="proyecto" id="proyecto-formulario" placeholder="Proyecto" list="listaf6c2" class="form-control">'+
-						      					    '</div>'+
-						  					    	'<div class="form-group col-md-2">'+
-						  					    		'<input type="text" name="producto" id="producto-formulario" placeholder="Producto" list="listaf7c2" class="form-control">'+
-						      					  	'</div>'+ 
-						      					'</form>'+
-						      					
-				      					  	'</div>'+
-				      					  	'<button type="submit" class="btn btn-success guardarComboProducto"">Guardar</button>'+
+							      			
+							      			'<div class="table-responsive">'+
+							                '<table class="table table-striped table-bordered  table-hover">'+
+							               ' 	<tr>'+
+							                '		<th>Nivel</th>'+
+							                '		<th>Entidad</th>'+
+							                '		<th>Tipo</th>'+
+							                '		<th>Programa</th>'+
+							                '		<th>Subprograma</th>'+
+							                '		<th>Proyecto</th>'+
+							                '		<th>Producto</th>'+
+							                '		<th>Total Fisico</th>'+
+							                '		<th>U. Medida</th>'+
+							                '		<th>Clase</th>'+
+							                '		<th>Total Financiero</th>'+
+							                '	</tr>'+
+							                '<tbody class="table-body-producto" id="TablaAccionHasProductos">'+
+							                '</tbody>'+
+							                '</table>'+
+							      			
+							      			
+							      			
+												
 					                	
 					                	'</div>'+//fin box-body
+					                	'<div id="tituloFormulario"></div>'+
+				      					'<form class="form-horizontal" role="form" id="formulario" method="post" action="/ajaxUpdate">'+
+				      						'<input type="hidden" name="accion" value="actEntidad">'+
+				      						
+				      						'<div class="form-group col-md-1">'+
+				      							'<input type="text" name="nivel" id="nivel-formulario" value="12" class="form-control" disabled>'+
+				      						'</div>'+
+				      						'<div class="form-group col-md-1">'+
+				  								'<input type="text" name="entidad" id="entidad-formulario" value="1" class="form-control" disabled>'+
+				  							'</div>'+
+				      					    '<div class="form-group col-md-2">'+
+				      					    	'<input type="text" name="tipoPrograma" id="tipoPrograma-formulario" placeholder="Tipo Programa" list="listaf3c2" class="form-control">'+
+				      					    '</div>'+
+				      					    '<div class="form-group col-md-2">'+
+				      					    	'<input type="text" name="programa" id="programa-formulario" placeholder="Programa" list="listaf4c2" class="form-control">'+
+				      					    '</div>'+
+				      					    '<div class="form-group col-md-2">'+
+				      					    	'<input type="text" name="subPrograma" id="subPrograma-formulario" placeholder="SubPrograma" list="listaf5c2" class="form-control">'+
+				      					    '</div>'+
+				      					    '<div class="form-group col-md-2">'+
+				      					    	'<input type="text" name="proyecto" id="proyecto-formulario" placeholder="Proyecto" list="listaf6c2" class="form-control">'+
+				      					    '</div>'+
+				  					    	'<div class="form-group col-md-2">'+
+				  					    		'<input type="text" name="producto" id="producto-formulario" placeholder="Producto" list="listaf7c2" class="form-control">'+
+				      					  	'</div>'+ 
+				      					'</form>'+
+				      					
+		      					  	'</div>'+
+		      					  	'<button type="submit" class="btn btn-success guardarComboProducto"">Guardar</button>'+
 					                	'<div class="box-footer">'+
 					                		'<div class="row">'+
 					      					    '<div class="form-group col-md-2">'+
