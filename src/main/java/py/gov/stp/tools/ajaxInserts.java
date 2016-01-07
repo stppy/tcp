@@ -77,6 +77,7 @@ public class ajaxInserts  extends HttpServlet {
 			SqlInserts.insertHitoPrueba(obj);
     	}
        }
+
         
         if (accion!=null && accion!=""){
     	if (accion.equals("insAccionHasProducto")){
@@ -90,5 +91,6 @@ public class ajaxInserts  extends HttpServlet {
     	}
        } 
     
+
     }
 }
