@@ -486,9 +486,7 @@ tbody {
 								color= getColorDesemp2(desemp)
 								$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+metasDistEntLinea[j].institucionId+'-'+metasDistEntLinea[j].lineaAccionId+'-'+metasDistEntLinea[j].accionDepartamentoId+'-'+metasDistEntLinea[j].accionDistritoId+'> '+metasDistEntLinea[j].institucion+'- '+metasDistEntLinea[j].lineaAccion+'</a></td><td>'+metasDistEntLinea[j].accionUnidadMedida+'</td><td >'+numeroConComa(metasDistEntLinea[j].sumProgAnho)+'</td><td class="cell-bordered2">'+numeroConComa(metasDistEntLinea[j].cantidadProgHoy)+'</td><td >'+numeroConComa(metasDistEntLinea[j].cantidadEjecHoy)+'</td><td >'+numeroConComa(parseFloat(desemp).toFixed(2))+'</td><td>'+numeroConComa((metasDistEntLinea[j].costoEjecHoy/1000000).toFixed(0))+'</td></tr>');	
 							}
-							
-									
-							
+	
 							
 							
 						}
@@ -1427,7 +1425,7 @@ $(document).ready(function(){
 		accion=JSON.parse(accion);
 
 		var totalCantidadProgramada=0;
-		
+	
 		
 		modalHito +=	'<div class="modal fade" id="myModal2" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">'+
 						'<div class="modal-dialog modal-lg" style="width:90%;" >'+
@@ -1468,70 +1466,73 @@ $(document).ready(function(){
 						      
 							      	'<div class="row">'+ 
 
-							      	
-							    	'<div class="col-md-12">'+
-						    		'<div class="box">'+
-					      			'<div class="box-header with-border">'+
-					       				'<h2 class="box-title text-center">'+
-					          				'INVERSÍON'+ 	
-					        			'</h2>'+
-					        			'<div class="box-tools pull-right"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
-					        			'</div>'+
-					      			'</div>'+
-					      			'<div class="box-body">'+ 
-					      			
-					      			'<div class="row">'+
-									
- 					      	             ' <ul class="col-md-12">'+
-					      					'<form class="form-horizontal" role="form" id="formulario" method="post" action="/ajaxUpdate">'+
-					      					'<div id="tituloFormulario"></div>'+
-					      					'<input type="hidden" name="accion" value="actEntidad">'+
-					      						'<div class="form-group row">'+
-					      							'<div class="col-lg-1">'+
-					      								'12'+
-					      								'<input type="hidden" name="nivel" id="nivel-formulario" placeholder="Nivel" list="listaf1c2" class="form-control">'+
-					      							'</div>'+
-					      							'<div class="col-lg-1">'+
-				      									'1'+
-				      									'<input type="hidden" name="entidad" id="entidad-formulario" placeholder="Entidad" list="listaf2c2" class="form-control">'+
-				      								'</div>'+
-					      					    	
-					      					    	'<div class="col-lg-2">'+
-					      					    		'<input type="text" name="tipoPrograma" id="tipoPrograma-formulario" placeholder="Tipo Programa" list="listaf3c2" class="form-control">'+
-					      					    	'</div>'+
-					      					  	
-					      					    	'<div class="col-lg-2">'+
-					      					    		'<input type="text" name="programa" id="programa-formulario" placeholder="Programa" list="listaf4c2" class="form-control">'+
-					      					    	'</div>'+
-					      					  	
-					      					    	'<div class="col-lg-2">'+
-					      					    		'<input type="text" name="subPrograma" id="subPrograma-formulario" placeholder="SubPrograma" list="listaf5c2" class="form-control">'+
-					      					    	'</div>'+
-					      					    	
-					      					    	'<div class="col-lg-2">'+
-					      					    		'<input type="text" name="proyecto" id="proyecto-formulario" placeholder="Proyecto" list="listaf6c2" class="form-control">'+
-					      					    	'</div>'+
-
-					      					    	'<div class="col-lg-2">'+
-					      					    		'<input type="text" name="producto" id="producto-formulario" placeholder="Producto" list="listaf7c2" class="form-control">'+
-					      					    	'</div>'+					      					    	
-					      					  	'</div>'+ 
-					      					  	
-				      					    	'<div class="col-lg-2" id="TotalFisico">'+
-		      										'Total Fis.'+
-			      								'</div>'+
-			      								'<div class="col-lg-2">'+
-		      										'Total Fin.'+
-		      									'</div>'+
-					      					  	
-					      					  	
+							      	'<div class="col-md-12">'+
+									'<div class="box box-danger">'+
+					                	'<div class="box-header with-border">'+
+					                  		'<h3 class="box-title">Latest Members</h3>'+
+				                  			'<div class="box-tools pull-right">'+
+							                    '<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>'+
+					                    		'</button>'+
+					                    		'<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>'+
+					                    		'</button>'+
+					                  		'</div>'+
+					                	'</div>'+//fin box-heder
+					                	'<div class="box-body no-padding">'+
+					                	
+							      			'<div class="row">'+
+												'<div id="tituloFormulario"></div>'+
+						      					'<form class="form-horizontal" role="form" id="formulario" method="post" action="/ajaxUpdate">'+
+						      						'<input type="hidden" name="accion" value="actEntidad">'+
+						      						
+						      						'<div class="form-group col-md-1">'+
+						      							'<input type="text" name="nivel" id="nivel-formulario" value="12" class="form-control" disabled>'+
+						      						'</div>'+
+						      						'<div class="form-group col-md-1">'+
+						  								'<input type="text" name="entidad" id="entidad-formulario" value="1" class="form-control" disabled>'+
+						  							'</div>'+
+						      					    '<div class="form-group col-md-2">'+
+						      					    	'<input type="text" name="tipoPrograma" id="tipoPrograma-formulario" placeholder="Tipo Programa" list="listaf3c2" class="form-control">'+
+						      					    '</div>'+
+						      					    '<div class="form-group col-md-2">'+
+						      					    	'<input type="text" name="programa" id="programa-formulario" placeholder="Programa" list="listaf4c2" class="form-control">'+
+						      					    '</div>'+
+						      					    '<div class="form-group col-md-2">'+
+						      					    	'<input type="text" name="subPrograma" id="subPrograma-formulario" placeholder="SubPrograma" list="listaf5c2" class="form-control">'+
+						      					    '</div>'+
+						      					    '<div class="form-group col-md-2">'+
+						      					    	'<input type="text" name="proyecto" id="proyecto-formulario" placeholder="Proyecto" list="listaf6c2" class="form-control">'+
+						      					    '</div>'+
+						  					    	'<div class="form-group col-md-2">'+
+						  					    		'<input type="text" name="producto" id="producto-formulario" placeholder="Producto" list="listaf7c2" class="form-control">'+
+						      					  	'</div>'+ 
 						      					'</form>'+
-							      				'</ul>'+
-					      					  	
+						      					
+				      					  	'</div>'+
+					                	
+					                	'</div>'+//fin box-body
+					                	'<div class="box-footer">'+
+					                		'<div class="row">'+
+					      					    '<div class="form-group col-md-2">'+
+					      					  		'<label for="totalFisico-formulario">Total Fisico</label>'+
+				      					    		'<input type="text" name="totalFisico" id="totalFisico-formulario" value="" class="form-control" disabled>'+
+				      					    	'</div>'+
+					      					    '<div class="form-group col-md-2">'+
+				      					  			'<label for="unidadMedida-formulario">U. Medida</label>'+
+			      					    			'<input type="text" name="totalFisico" id="unidadMedida-formulario" value="" class="form-control" disabled>'+
+			      					    		'</div>'+
+					      					    '<div class="form-group col-md-2">'+
+			      					  				'<label for="clase-formulario">Clase</label>'+
+		      					    				'<input type="text" name="totalFisico" id="clase-formulario" value="" class="form-control" disabled>'+
+		      					    			'</div>'+			      					    		
+					      					    '<div class="form-group col-md-6">'+
+				      					  			'<label for="totalFinanciero-formulario">Total Financiero</label>'+
+			      					    			'<input type="text" name="totalFinanciero" id="totalFinanciero-formulario" value="" class="form-control" disabled>'+
+			      					    		'</div>'+
+			      					    	'</div>'+					                		
+					                	'</div>'+//fin box-footer
+					              	'</div>'+//fin box-danger
+					            '</div>'+//fin col-md-6
 
-					      			'</div>'+
-						   		'</div>'+
-							'</div>'+	
 							      	
 						      	
 								    	'<div class="col-md-6">'+
@@ -1565,7 +1566,7 @@ $(document).ready(function(){
 															modalHito += '</tbody><tfoot><tr class="active"><td colspan="2">Total Cantidad Programada: </td><td colspan="8">'+totalCantidadProgramada+'</td></tr></tfoot>'+
 																		 '</table>'+
 																		 '</div>'+
-								      			'</div>'+
+								      			'</div>'+//FIN BODY
 									   		'</div>'+
 										'</div>'+
 								    	'<div class="col-md-6">'+
@@ -1747,6 +1748,10 @@ $(document).ready(function(){
 					$('#proyecto-formulario').val('');
 					$("#listaf7c2").remove();
 					$('#producto-formulario').val('');
+					$('#totalFisico-formulario').val('');
+					$('#unidadMedida-formulario').val('');
+					$('#clase-formulario').val('');
+
 				}
 				
 			    $.ajax({
@@ -1935,6 +1940,10 @@ $(document).ready(function(){
 					$('#proyecto-formulario').val('');
 					$("#listaf7c2").remove();
 					$('#producto-formulario').val('');
+					$('#totalFisico-formulario').val('');
+					$('#unidadMedida-formulario').val('');
+					$('#clase-formulario').val('');
+
 				}
 		    	
 		    	$.ajax({
@@ -2036,6 +2045,9 @@ $(document).ready(function(){
 					$('#proyecto-formulario').val('');
 					$("#listaf7c2").remove();
 					$('#producto-formulario').val('');
+					$('#totalFisico-formulario').val('');
+					$('#unidadMedida-formulario').val('');
+					$('#clase-formulario').val('');
 				}
 		    	
 		    	$.ajax({
@@ -2135,6 +2147,9 @@ $(document).ready(function(){
 					$('#proyecto-formulario').val('');
 					$("#listaf7c2").remove();
 					$('#producto-formulario').val('');
+					$('#totalFisico-formulario').val('');
+					$('#unidadMedida-formulario').val('');
+					$('#clase-formulario').val('');
 				}
 		    	
 		    	$.ajax({
@@ -2233,7 +2248,12 @@ $(document).ready(function(){
 		    	
 				if ( $("#listaf7c2").length ) {
 					$("#listaf7c2").remove();
-					 $('#producto-formulario').val('');
+					$('#producto-formulario').val('');
+					$('#totalFisico-formulario').val('');
+					$('#unidadMedida-formulario').val('');
+					$('#clase-formulario').val('');
+
+
 					
 				}
 		    	$.ajax({
@@ -2305,8 +2325,10 @@ $(document).ready(function(){
 			    var linkProducto = document.getElementById('producto-formulario').value;  
 			    var datosProductos = [];
 			    var valorProducto = [];
+			    var datosProductoUnidadMedida = [];
 			    var sumaTotal=0;
-			    var maxValor = 0;			    
+			    var maxValor = 0;	
+			    var totalFinanciero;
 			    
 		    	$.ajax({
 		         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductos&producto='+linkProducto,
@@ -2326,6 +2348,67 @@ $(document).ready(function(){
 		    	function jsonpCallbackProducto(data) {
 					datosProductos = data;
 		    		
+			    	$.ajax({
+			         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductoUnidadMedida&unidadMedidaId='+datosProductos.productos[0].codUnidadMedida,
+			          	type:'get',
+			          	crossDomain: 'true',
+			          	dataType:'jsonp',
+		                jsonp: 'callback',
+		                jsonpCallback: 'jsonpCallbackProductoUnidadMedida',
+			          	async:false,
+			          	success: function( data, textStatus, jqXHR) {
+			          		if(data.success){
+			          			jsonpCallbackProductoUnidadMedida(data)
+			          		}
+			          	}    
+			        });
+			    	
+			    	function jsonpCallbackProductoUnidadMedida(data) {
+						datosProductoUnidadMedida = data;
+						
+		        		var mostrarUnidadMedida = datosProductoUnidadMedida.producto[0].unidadMedidaNombre;
+			    		$("#unidadMedida-formulario").val(mostrarUnidadMedida);
+			    	}
+			    	
+			    	$.ajax({
+			         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getAsignacionPresiVersion&nivel=12&entidad=1&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subPrograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto,
+			          	type:'get',
+			          	crossDomain: 'true',
+			          	dataType:'jsonp',
+		                jsonp: 'callback',
+		                jsonpCallback: 'jsonpCallbackAsignacionPresi',
+			          	async:false,
+			          	success: function( data, textStatus, jqXHR) {
+			          		if(data.success){
+			          			jsonpCallbackAsignacionPresi(data)
+			          		}
+			          	}    
+			        });
+			    	
+			    	function jsonpCallbackAsignacionPresi(data) {
+						datos = data;
+						totalFinanciero = 0;
+		        		for(var z = 0; z < datos.length; z++)
+		        		{
+		        			totalFinanciero += ( parseFloat(datos[z].planificado1) + parseFloat(datos[z].planificado2) + parseFloat(datos[z].planificado3) + parseFloat(datos[z].planificado4) + parseFloat(datos[z].planificado5) + parseFloat(datos[z].planificado6) + parseFloat(datos[z].planificado7) + parseFloat(datos[z].planificado8) + parseFloat(datos[z].planificado9) + parseFloat(datos[z].planificado10) + parseFloat(datos[z].planificado11) + parseFloat(datos[z].planificado12) );
+		        		}
+			    		$("#totalFinanciero-formulario").val(totalFinanciero);
+			    	}
+			    	
+	        		var mostrarNombreProducto = datosProductos.productos[0].nombreCatalogo;
+	        		var nt=document.createElement('small');
+	          		var ntText=document.createTextNode(mostrarNombreProducto);
+	    	        nt.appendChild(ntText);
+	    	        var separador=document.createTextNode(" > ");
+	          		var nparrafo=document.getElementById('tituloFormulario');
+	              	var strong = document.createElement('strong');
+	              	strong.appendChild(separador);
+	              	nparrafo.appendChild(nt);
+	              	nparrafo.appendChild(strong);
+	    	              	
+	        		var mostrarClase = datosProductos.productos[0].clase;
+		    		$("#clase-formulario").val(mostrarClase);
+	              	
 					if( datosProductos.productos[0].clase === "N" )
 					{
 				    	$.ajax({
@@ -2349,7 +2432,7 @@ $(document).ready(function(){
 				    		for(var x = 0; x < valorProducto.productoTipoN.length; x++){
 				    			sumaTotal += parseInt(valorProducto.productoTipoN[x].valor);
 				    		}
-					    	alert(sumaTotal);
+				    		$("#totalFisico-formulario").val(sumaTotal);
 				    	}	
 					}//finIf
 					
@@ -2372,10 +2455,10 @@ $(document).ready(function(){
 				    	function jsonpCallbackProductoTipoC(data) {
 				    		valorProducto = data;
 				    		
-				    		for(var x = 0; x < valorProducto.length; x++){
-				    			if(valorProducto[x].valor > maxValor)
+				    		for(var x = 0; x < valorProducto.productoTipoN.length; x++){
+				    			if(valorProducto.productoTipoN[x].valor > maxValor)
 				    			{
-				    				maxValor = valorProducto[x].valor;
+				    				maxValor = valorProducto.productoTipoN[x].valor;
 				    			}
 				    		}
 				    	}		
