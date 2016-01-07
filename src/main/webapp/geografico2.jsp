@@ -1451,8 +1451,7 @@ $(document).ready(function(){
 							           '<div class="table-responsive">'+
 										'<table class="table table-hover hitos">'+
 											'<tbody>'+
-												'<tr><td><div class="form-group"><label for="nombreAccion">Acción</label><input type="text" class="form-control" id="nombreAccion" value="'+accion[0].accion 
-												+'"></div></td><td><div class="form-group"><label for="umedida">U. medida</label><input type="text" class="form-control" id="umedida" value="'+accion[0].accion_unidad_edida+'"></div></td></tr>'+
+												'<tr><td><div class="form-group"><label for="nombreAccion">Acción</label><input type="text" class="form-control" id="nombreAccion" value="'+accion[0].accion+'"><input type="hidden" class="form-control" id="accionId" value="'+accion[0].accion_id+'"></div></td><td><div class="form-group"><label for="umedida">U. medida</label><input type="text" class="form-control" id="umedida" value="'+accion[0].accion_unidad_edida+'"></div></td></tr>'+
 												'<tr><td><div class="form-group"><label for="departamento">Departamento</label><input type="text" class="form-control" id="departamento" value="'+accion[0].accion_departamento+'"></div></td><td><div class="form-group"><label for="distrito">Distrito</label><input type="text" class="form-control" id="distrito" value="'+accion[0].accion_distrito+'"></div></td></tr>'+
 												'<tr><td colspan="2"><button type="submit" class="btn btn-success">Guardar Acción</button><button type="submit" class="btn btn-success modalAgregarHito" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'-'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'">Programar Hito</button> <button type="submit" class="btn btn-success modalDeclararAvance" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'-'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'" >Declarar Avance</button></td></tr>'+
 											'</tbody>'+							           
@@ -1478,7 +1477,6 @@ $(document).ready(function(){
 					                  		'</div>'+
 					                	'</div>'+//fin box-heder
 					                	'<div class="box-body no-padding">'+
-					                	
 							      			'<div >'+
 							      			
 							      			'<div class="table-responsive">'+
@@ -1499,11 +1497,7 @@ $(document).ready(function(){
 							                '<tbody class="table-body-producto" id="TablaAccionHasProductos">'+
 							                '</tbody>'+
 							                '</table>'+
-							      			
-							      			
-							      			
-												
-					                	
+
 					                	'</div>'+//fin box-body
 					                	'<div class="box-footer">'+
 					                	
@@ -2351,7 +2345,7 @@ $(document).ready(function(){
 			    var linkPrograma = document.getElementById('programa-formulario').value;
 			    var linkSubPrograma = document.getElementById('subPrograma-formulario').value;
 			    var linkProyecto = document.getElementById('proyecto-formulario').value; 
-			    var linkProducto = document.getElementById('producto-formulario').value;  
+			    var linkProducto = document.getElementById('producto-formulario').value; 
 			    var datosProductos = [];
 			    var valorProducto = [];
 			    var datosProductoUnidadMedida = [];
@@ -2420,6 +2414,10 @@ $(document).ready(function(){
 			        			totalFinanciero += ( parseFloat(datos[z].planificado1) + parseFloat(datos[z].planificado2) + parseFloat(datos[z].planificado3) + parseFloat(datos[z].planificado4) + parseFloat(datos[z].planificado5) + parseFloat(datos[z].planificado6) + parseFloat(datos[z].planificado7) + parseFloat(datos[z].planificado8) + parseFloat(datos[z].planificado9) + parseFloat(datos[z].planificado10) + parseFloat(datos[z].planificado11) + parseFloat(datos[z].planificado12) );
 			        		}
 				    		$("#totalFinanciero-formulario").val(numeroConComa(totalFinanciero));
+				    		$("#anhoProducto-formulario").val(datos[0].anho);
+				    		$("#versionProducto-formulario").val(datos[0].version);
+
+
 				    	}
 			    	}
 			    	    	
@@ -2605,6 +2603,9 @@ $(document).ready(function(){
 	    var subPrograma = document.getElementById('subPrograma-formulario').value;
 	    var proyecto = document.getElementById('proyecto-formulario').value; 
 	    var producto = document.getElementById('producto-formulario').value; 
+	    var accionId = document.getElementById('accionId').value; 
+	    var anho = document.getElementById('anhoProducto-formulario').value; 
+	    var version = document.getElementById('versionProducto-formulario').value; 
 	    
 	    var datos = new Object();
 	    
@@ -2615,10 +2616,13 @@ $(document).ready(function(){
 	    datos.subPrograma = subPrograma;
 	    datos.proyecto = proyecto;
 	    datos.producto = producto;
+	    datos.accionId = accionId;
+	    datos.anho = anho;
+	    datos.version = version;
 
 	  	var info = JSON.stringify(datos);
 	    $.ajax({
-	        url: "ajaxUpdate?accion=",
+	        url: "ajaxInserts?accion=insAccionHasProducto",
 	        type: 'POST',
 	        dataType: 'json',
 	        data: info,
@@ -2628,6 +2632,18 @@ $(document).ready(function(){
 	        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
 	        error: function(data,status,er) {alert("Guardado");}
 		 });
+		$('#tipoPrograma-formulario').val('');
+		$('#programa-formulario').val('');
+		$('#subPrograma-formulario').val('');
+		$('#proyecto-formulario').val('');
+		$('#producto-formulario').val('');
+		$('#totalFisico-formulario').val('');
+		$('#unidadMedida-formulario').val('');
+		$('#clase-formulario').val('');
+		$('#totalFinanciero-formulario').val('');
+		$('#anhoProducto-formulario').val('');
+		$('#versionProducto-formulario').val('');
+
 	});
 	
 	$("body").on("click", ".modalAgregarHito",function(event){
