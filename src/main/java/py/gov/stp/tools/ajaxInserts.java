@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import javax.xml.datatype.DatatypeConfigurationException;
 
+import py.gov.stp.objetosV2.AccionHasProducto;
 import py.gov.stp.objetosV2.HitoPrueba;
 import py.gov.stp.tools.SqlInserts;
 
@@ -75,7 +76,19 @@ public class ajaxInserts  extends HttpServlet {
             obj=gsonInsert.fromJson(json, HitoPrueba.class);
 			SqlInserts.insertHitoPrueba(obj);
     	}
-       }  
+       }
+        
+        if (accion!=null && accion!=""){
+    	if (accion.equals("insAccionHasProducto")){
+    		AccionHasProducto obj = new AccionHasProducto();
+    		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+            String json = "";
+            if(br != null){ json = br.readLine();}
+            Gson gsonInsert = new Gson();
+            obj=gsonInsert.fromJson(json, AccionHasProducto.class);
+			SqlInserts.insertHitoPrueba(obj);
+    	}
+       } 
     
     }
 }

@@ -1508,6 +1508,7 @@ $(document).ready(function(){
 						      					'</form>'+
 						      					
 				      					  	'</div>'+
+				      					  	'<button type="submit" class="btn btn-success guardarComboProducto"">Guardar</button>'+
 					                	
 					                	'</div>'+//fin box-body
 					                	'<div class="box-footer">'+
@@ -1525,8 +1526,11 @@ $(document).ready(function(){
 		      					    				'<input type="text" name="totalFisico" id="clase-formulario" value="" class="form-control" disabled>'+
 		      					    			'</div>'+			      					    		
 					      					    '<div class="form-group col-md-6">'+
-				      					  			'<label for="totalFinanciero-formulario">Total Financiero</label>'+
-			      					    			'<input type="text" name="totalFinanciero" id="totalFinanciero-formulario" value="" class="form-control" disabled>'+
+		      					  					'<label for="totalFinanciero-formulario">Total Financiero</label>'+
+							      					'<div class="input-group input-group-sm">'+
+							      						'<span class="input-group-addon">Gs</span>'+
+				      					    			'<input type="text" name="totalFinanciero" id="totalFinanciero-formulario" value="" class="form-control" disabled>'+
+							      					'</div>'+
 			      					    		'</div>'+
 			      					    	'</div>'+					                		
 					                	'</div>'+//fin box-footer
@@ -2326,9 +2330,10 @@ $(document).ready(function(){
 			    var datosProductos = [];
 			    var valorProducto = [];
 			    var datosProductoUnidadMedida = [];
+			    var datos = [];
 			    var sumaTotal=0;
 			    var maxValor = 0;	
-			    var totalFinanciero;
+			    var totalFinanciero;  
 			    
 		    	$.ajax({
 		         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductos&producto='+linkProducto,
@@ -2368,33 +2373,31 @@ $(document).ready(function(){
 						
 		        		var mostrarUnidadMedida = datosProductoUnidadMedida.producto[0].unidadMedidaNombre;
 			    		$("#unidadMedida-formulario").val(mostrarUnidadMedida);
+			    		
+				    	$.ajax({
+				         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getAsignacionPresiVersion&nivel=12&entidad=1&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subPrograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto,
+				          	type:'get',
+				          	crossDomain: 'true',
+				          	dataType:'jsonp',
+			                jsonp: 'callback',
+			                jsonpCallback: 'jsonpCallbackAsignacionPresi',
+				          	async:false,
+				          	success: function( data, textStatus, jqXHR) {
+				          			jsonpCallbackAsignacionPresi(data);
+				          	}    
+				        });
+				    	
+				    	function jsonpCallbackAsignacionPresi(data) {
+							datos = data;
+							totalFinanciero = 0;
+			        		for(var z = 0; z < datos.length; z++)
+			        		{
+			        			totalFinanciero += ( parseFloat(datos[z].planificado1) + parseFloat(datos[z].planificado2) + parseFloat(datos[z].planificado3) + parseFloat(datos[z].planificado4) + parseFloat(datos[z].planificado5) + parseFloat(datos[z].planificado6) + parseFloat(datos[z].planificado7) + parseFloat(datos[z].planificado8) + parseFloat(datos[z].planificado9) + parseFloat(datos[z].planificado10) + parseFloat(datos[z].planificado11) + parseFloat(datos[z].planificado12) );
+			        		}
+				    		$("#totalFinanciero-formulario").val(numeroConComa(totalFinanciero));
+				    	}
 			    	}
-			    	
-			    	$.ajax({
-			         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getAsignacionPresiVersion&nivel=12&entidad=1&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subPrograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto,
-			          	type:'get',
-			          	crossDomain: 'true',
-			          	dataType:'jsonp',
-		                jsonp: 'callback',
-		                jsonpCallback: 'jsonpCallbackAsignacionPresi',
-			          	async:false,
-			          	success: function( data, textStatus, jqXHR) {
-			          		if(data.success){
-			          			jsonpCallbackAsignacionPresi(data)
-			          		}
-			          	}    
-			        });
-			    	
-			    	function jsonpCallbackAsignacionPresi(data) {
-						datos = data;
-						totalFinanciero = 0;
-		        		for(var z = 0; z < datos.length; z++)
-		        		{
-		        			totalFinanciero += ( parseFloat(datos[z].planificado1) + parseFloat(datos[z].planificado2) + parseFloat(datos[z].planificado3) + parseFloat(datos[z].planificado4) + parseFloat(datos[z].planificado5) + parseFloat(datos[z].planificado6) + parseFloat(datos[z].planificado7) + parseFloat(datos[z].planificado8) + parseFloat(datos[z].planificado9) + parseFloat(datos[z].planificado10) + parseFloat(datos[z].planificado11) + parseFloat(datos[z].planificado12) );
-		        		}
-			    		$("#totalFinanciero-formulario").val(totalFinanciero);
-			    	}
-			    	
+			    	    	
 	        		var mostrarNombreProducto = datosProductos.productos[0].nombreCatalogo;
 	        		var nt=document.createElement('small');
 	          		var ntText=document.createTextNode(mostrarNombreProducto);
@@ -2563,6 +2566,43 @@ $(document).ready(function(){
 		$("#modalEditarHito").modal('show');
 //FIN MODAL PARA EDITAR HITO
 		
+	});
+	
+	//Guarda nivel-entidad-tipo-programa-subPrograma-proyecto-producto-anho-version en la tabla accion_has_producto
+	$("body").on("click", ".guardarComboProducto",function(event){
+		event.stopPropagation();
+		event.preventDefault();
+		
+    	var nivel = 12;
+      	var entidad = 1;
+	    var tipoPrograma = document.getElementById("tipoPrograma-formulario").value;
+	    var programa = document.getElementById('programa-formulario').value;
+	    var subPrograma = document.getElementById('subPrograma-formulario').value;
+	    var proyecto = document.getElementById('proyecto-formulario').value; 
+	    var producto = document.getElementById('producto-formulario').value; 
+	    
+	    var datos = new Object();
+	    
+	    datos.nivel = nivel;
+	    datos.entidad = entidad;
+	    datos.tipoPrograma = tipoPrograma;
+	    datos.programa = programa;
+	    datos.subPrograma = subPrograma;
+	    datos.proyecto = proyecto;
+	    datos.producto = producto;
+
+	  	var info = JSON.stringify(datos);
+	    $.ajax({
+	        url: "ajaxUpdate?accion=",
+	        type: 'POST',
+	        dataType: 'json',
+	        data: info,
+	        contentType: 'application/json',
+	        mimeType: 'application/json',
+	        success: function (data) {alert("Guardado!");},
+	        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
+	        error: function(data,status,er) {alert("Guardado");}
+		 });
 	});
 	
 	$("body").on("click", ".modalAgregarHito",function(event){
