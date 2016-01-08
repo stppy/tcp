@@ -832,6 +832,35 @@ public class SqlSelects {
 		return objetos; 
 		}
 	
+	public static List<Distrito> selectDistritos(String condition) throws SQLException{
+		Connection conect=ConnectionConfiguration.conectar();
+		String query = " select * from distrito "+condition;
+
+		Statement statement = null;
+		ResultSet rs=null;
+		List<Distrito> objetos = new ArrayList<Distrito>();
+
+		try {
+			statement = conect.createStatement();
+			rs=statement.executeQuery(query);
+			while(rs.next()){
+				Distrito objeto = new Distrito();
+		
+				objeto.setId(rs.getInt("id"));
+				objeto.setDescripcion(rs.getString("descripcion"));
+				objeto.setDepartamentoId(rs.getInt("departamentoid"));
+
+				objetos.add(objeto);
+			}
+		}
+		catch (SQLException e) {e.printStackTrace();}
+		finally{
+			if (statement != null) {statement.close();}
+			if (conect != null) {conect.close();}
+		}
+		return objetos; 
+		}
+	
 	public static List<MetasDistEntLinea> selectMetasDistEntLinea(String condition) throws SQLException{
 	   	 Connection conect=ConnectionConfiguration.conectar();
 			 String query = " select * from fact_meta_dist_entidad_linea WHERE periodo = 2015"+condition;

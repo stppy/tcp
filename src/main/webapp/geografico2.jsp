@@ -1421,6 +1421,8 @@ $(document).ready(function(){
 		var idDistrito= idParsed[8];
 		var modalHito = "";
 		var urlFactHitos="";
+		var optionDepartamentos = "";
+		var optionDistritos = "";
 		urlFactHitos+='http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015';
 		if (typeof institucionId != "undefined"){ urlFactHitos+='&institucion_id='+institucionId;}
 		if (typeof lineaAccionId != "undefined"){ urlFactHitos+='&linea_accion_id='+lineaAccionId;}
@@ -1446,7 +1448,31 @@ $(document).ready(function(){
 	      	async:false       
 	    }).responseText;		
 		accion=JSON.parse(accion);
+		
+		var departamentos = $.ajax({
+	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
+	      	type:'get',
+	      	dataType:'json',
+	      	async:false       
+	    }).responseText;
+		departamentos = JSON.parse(departamentos);
+	
+		for(i = 0;i<18; i++){
+			optionDepartamentos+='<option value="'+departamentos[i].idDepartamento+'" parametro="'+departamentos[i].idDepartamento+'" class="departamentoSeleccionado">'+departamentos[i].nombreDepartamento+'</option>';
+		}
+/*
+		function Combo2(){
+			
+		    this.selectorDistrito = function(){
+		    	
+		    }
+		}*/
+	    
+/* 		var eje2 = new Combo();		
+		document.getElementsByClassName('departamentoSeleccionado').addEventListener('change',eje2.selectorDistrito,false); */
+		
 
+		
 		var totalCantidadProgramada=0;
 	
 		
@@ -1475,7 +1501,7 @@ $(document).ready(function(){
 										'<table class="table table-hover hitos">'+
 											'<tbody>'+
 												'<tr><td><div class="form-group"><label for="nombreAccion">Acción</label><input type="text" class="form-control" id="nombreAccion" value="'+accion[0].accion+'"><input type="hidden" class="form-control" id="accionId" value="'+accion[0].accion_id+'"></div></td><td><div class="form-group"><label for="umedida">U. medida</label><input type="text" class="form-control" id="umedida" value="'+accion[0].accion_unidad_edida+'"></div></td></tr>'+
-												'<tr><td><div class="form-group"><label for="departamento">Departamento</label><input type="text" class="form-control" id="departamento" value="'+accion[0].accion_departamento+'"></div></td><td><div class="form-group"><label for="distrito">Distrito</label><input type="text" class="form-control" id="distrito" value="'+accion[0].accion_distrito+'"></div></td></tr>'+
+												'<tr><td><div class="form-group"><label for="departamento">Departamento</label><select id="selectorDepartamento" name="departamento" class="form-control">'+optionDepartamentos+'</select></div></td><td><div class="form-group"><label for="distrito">Distrito</label><select name="departamento" class="form-control" id="distritosDepartamento"></select></div></td></tr>'+
 												'<tr><td colspan="2"><button type="submit" class="btn btn-success">Guardar Acción</button><button type="submit" class="btn btn-success modalAgregarHito" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'-'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'">Programar Hito</button> <button type="submit" class="btn btn-success modalDeclararAvance" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'-'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'" >Declarar Avance</button></td></tr>'+
 											'</tbody>'+							           
 										'</table>'+
@@ -1671,6 +1697,26 @@ $(document).ready(function(){
 		$("body").append(modalHito);
 		$("#myModal2").modal('show');
 		
+		$("body").on("change", "#selectorDepartamento",function(event){
+			//var departamentoId = $(this).attr("parametro");
+			var departamentoId = $("#selectorDepartamento option:selected").val();
+	    	
+			var distritos = $.ajax({
+		    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getDistrito&departamento='+departamentoId,
+		      	type:'get',
+		      	dataType:'json',
+		      	async:false       
+		    }).responseText;
+			distritos = JSON.parse(distritos);
+			optionDistritos="";
+			for(k = 0;k<distritos.length; k++){
+				
+				optionDistritos+='<option value="'+distritos[k].id+'">'+distritos[k].descripcion+'</option>';
+			}
+			$("#distritosDepartamento").html("");
+			$("#distritosDepartamento").append(optionDistritos);
+			
+		});
 		
 		cargarTablaAccionHasProducto(accionId);
 		
