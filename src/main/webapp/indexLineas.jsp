@@ -581,11 +581,35 @@ tbody {
                
               </tbody>
             </table>
-
+			
 	            </div>
 			   </div>
 			</div>
           </div><!-- /.row -->
+          
+           <div class="row">
+	         <div class="col-md-12">
+	          <div class="box" height="1000px">
+	            <div class="box-header with-border" height="1000px">
+	              <h2 class="box-title text-center" id="tituloTipoPrograma">
+	               Documentaciones 	
+	              </h2>
+	              <div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+	              </div>
+	            </div>
+	            <div class="box-body table-responsive" style="scroll-x:hidden;scroll-y:auto;">
+	            
+	            Descargue el instructivo <a href="#" target="_blank"/>aqui</a>.<br>
+	            
+	            Para más información sobre como cargar Lineas de Acción, Acciones, Planificar Acciones o Declarar avances, acceda a nuestra plataforma de <a href="http://cursos.stp.gov.py/course/view.php?id=21" target="_blank"/>cursos.</a>
+	            
+	            
+			
+	            </div>
+			   </div>
+			</div>
+          </div><!-- /.row -->
+          
 
 
 <script>
@@ -596,6 +620,1642 @@ var $tabla=$("#lineasPorEntidad");
 	}
 })*/
 </script>
+          <script>
+          
+          $(document).ready(function(){
+        	  
+        	  
+        	  
+        	  function cargarTablaAccionHasProducto(accionId){
+        			
+        			var accionHasProducto = $.ajax({
+        		    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getAccionHasProducto&accion_id='+accionId,
+        		      	type:'get',
+        		      	dataType:'json',
+        		      	crossDomain:true,
+        		      	async:false       
+        		    }).responseText;		
+        			accionHasProducto=JSON.parse(accionHasProducto);
+        			
+        			
+        			$("#TablaAccionHasProductos").html("");
+        			var fila ="";
+        			if (accionId>0){
+	        			for(var f = 0; f < accionHasProducto.length; f++)
+	        			{
+	        				
+	        				fila += "<tr><td>"+accionHasProducto[f].nivel+"</td><td>"+accionHasProducto[f].entidad+"</td><td>"+accionHasProducto[f].tipoPrograma+"</td><td>"+accionHasProducto[f].programa+"</td><td>"+accionHasProducto[f].subPrograma+"</td><td>"+accionHasProducto[f].proyecto+"</td><td>"+accionHasProducto[f].producto+
+	        				"</td><td>"+accionHasProducto[f].cantFisica+"</td><td>"+accionHasProducto[f].uMedida+"</td><td>"+accionHasProducto[f].clase+"</td><td>Gs."+accionHasProducto[f].cantFinanciera+"</td></tr>";
+	        			}
+	        			
+	        			$("#TablaAccionHasProductos").append(fila);
+        			}
+        			
+        		}
+        		//Falta pregunta si existe el modal y borrar si existe
+        		$("body").on("click", ".modalAcciones",function(event){
+        			
+        			if ( $("#myModal2").length ) {
+        				$("#myModal2").remove();
+        			}
+        	 		if ( $("#modalAgregarHito").length ) {
+        				$("#modalAgregarHito").remove();
+        			} 
+        			if ( $("#modalDeclararAvance").length ) {
+        				$("#modalDeclararAvance").remove();
+        			}
+        			
+        				
+        			var parametros = $(this).attr("parametros");
+        		    var idParsed = parametros.split("-");                                                            
+        			var institucionId=idParsed[0];
+        			var lineaAccionId=idParsed[1];
+        			/* var idDepartamento= idParsed[2];
+        			var idDistrito= idParsed[3];
+        			var accionId = idParsed[4];
+        			var institucionId=idParsed[5];
+        			var lineaAccionId=idParsed[6];
+        			var idDepartamento= idParsed[7];
+        			var idDistrito= idParsed[8]; */
+        			var modalHito = "";
+        			var urlFactHitos="";
+        			var optionDepartamentos = "";
+        			var optionDistritos = "";
+        			urlFactHitos+='http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015';
+        			if (typeof institucionId != "undefined"){ urlFactHitos+='&institucion_id='+institucionId;}else{institucionId=0;}
+        			if (typeof lineaAccionId != "undefined"){ urlFactHitos+='&linea_accion_id='+lineaAccionId;}else{lineaAccionId=0;}
+        			if (typeof idDepartamento != "undefined"){ urlFactHitos+='&departamento='+idDepartamento;}else{idDepartamento=1;}
+        			if (typeof idDistrito != "undefined"){ urlFactHitos+='&distrito='+idDistrito;}else{idDistrito=1;}
+        			if (typeof accionId != "undefined"){ urlFactHitos+='&accion_id='+accionId;}else{accionId=0;}
+
+        			
+        			var registrosHitos = $.ajax({
+        		    	url:urlFactHitos,
+        		      	type:'get',
+        		      	dataType:'json',
+        		      	crossDomain:true,
+        		      	async:false       
+        		    }).responseText;		
+        			var registroHitos=JSON.parse(registrosHitos);
+        			
+        			var accion = $.ajax({
+        		    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015Accion&accion_id='+accionId,
+        		      	type:'get',
+        		      	dataType:'json',
+        		      	crossDomain:true,
+        		      	async:false       
+        		    }).responseText;		
+        			accion=JSON.parse(accion);
+        			
+        			var departamentos = $.ajax({
+        		    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
+        		      	type:'get',
+        		      	dataType:'json',
+        		      	async:false       
+        		    }).responseText;
+        			departamentos = JSON.parse(departamentos);
+        		
+        			for(i = 0;i<18; i++){
+        				optionDepartamentos+='<option value="'+departamentos[i].idDepartamento+'" parametro="'+departamentos[i].idDepartamento+'" class="departamentoSeleccionado">'+departamentos[i].nombreDepartamento+'</option>';
+        			}
+        
+        			
+        			var totalCantidadProgramada=0;
+        		
+        			
+        			modalHito +=	'<div class="modal fade" id="myModal2" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">'+
+        							'<div class="modal-dialog modal-lg" style="width:90%;" >'+
+        							    '<div class="modal-content" >'+
+        							      '<div class="modal-header">'+
+        							        '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+        							        '<h4 class="modal-title" id="myModalLabel1"></h4>'+
+        							      '</div>'+
+        							      '<div class="modal-body" style="heigth:1200px;">'+ 
+        							      
+        						      			'<div class="row">'+
+        										'<div class="col-md-12">'+
+        								         '<div class="box" height="1000px">'+
+        								           '<div class="box-header with-border" height="1000px">'+
+        								             '<h2 class="box-title text-center" id="tituloTipoPrograma">'+
+        								               'Acción'+
+        								             '</h2>'+
+        								             '<div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+        								             '</div>'+
+        								           '</div>'+
+        								           '<div class="box-body" style="display: block;">'+//INICIO DEL BODY
+        								           '<form role="form">'+
+        								           '<div class="table-responsive">'+
+        											'<table class="table table-hover hitos">'+
+        												'<tbody>'+
+        													'<tr><td><div class="form-group"><label for="nombreAccion">Acción</label><input type="text" class="form-control" id="nombreAccion" value=""><input type="hidden" class="form-control" id="accionId" value="">'+
+        													'</div></td><td><div class="form-group"><label for="umedida">U. medida</label><input type="text" class="form-control" id="umedida" value=""></div></td></tr>'+
+															'<tr><td><div class="form-group"><label for="departamento">Departamento</label><select id="selectorDepartamento" name="departamento" class="form-control">'+optionDepartamentos+'</select></div></td>'+
+															'<td><div class="form-group"><label for="distrito">Distrito</label><select name="departamento" class="form-control" id="distritosDepartamento"></select></div></td></tr>'+
+        													'<tr><td colspan="2"><button type="submit" class="btn btn-success">Guardar Acción</button><button type="submit" class="btn btn-success modalAgregarHito" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'-'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'">Programar Hito</button> <button type="submit" class="btn btn-success modalDeclararAvance" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'-'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'" >Declarar Avance</button></td></tr>'+
+        												'</tbody>'+							           
+        											'</table>'+
+        											'</div>'+
+        											'</form>'+
+        								           '</div>'+//FIN DEL BODY
+        										   '</div>'+
+        										'</div>'+
+        								     '</div>'+	
+        							      
+        								      	'<div class="row">'+ 
+
+        								      	'<div class="col-md-12">'+
+        										'<div class="box box-danger">'+
+        						                	'<div class="box-header with-border">'+
+        						                  		'<h3 class="box-title">Vinculación de Productos de la acción</h3>'+
+        					                  			'<div class="box-tools pull-right">'+
+        								                    '<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>'+
+        						                    		'</button>'+
+        						                    		'<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>'+
+        						                    		'</button>'+
+        						                  		'</div>'+
+        						                	'</div>'+//fin box-heder
+        						                	'<div class="box-body no-padding">'+
+        								      			'<div >'+
+        								      			
+        								      			'<div class="table-responsive">'+
+        								                '<table class="table table-striped table-bordered  table-hover">'+
+        								               ' 	<tr>'+
+        								                '		<th>Nivel</th>'+
+        								                '		<th>Entidad</th>'+
+        								                '		<th>Tipo</th>'+
+        								                '		<th>Programa</th>'+
+        								                '		<th>Subprograma</th>'+
+        								                '		<th>Proyecto</th>'+
+        								                '		<th>Producto</th>'+
+        								                '		<th>Total Fisico</th>'+
+        								                '		<th>U. Medida</th>'+
+        								                '		<th>Clase</th>'+
+        								                '		<th>Total Financiero</th>'+
+        								                '	</tr>'+
+        								                '<tbody class="table-body-producto" id="TablaAccionHasProductos">'+
+        								                '</tbody>'+
+        								                '</table>'+
+
+        						                	'</div>'+//fin box-body
+        						                	'<div class="box-footer">'+
+        						                	
+        						                	'<div id="tituloFormulario"></div>'+
+        					      					'<form class="form-horizontal" role="form" id="formulario" method="post" action="/ajaxUpdate">'+
+        					      						'<input type="hidden" name="accion" value="actEntidad">'+
+        					      						'<input type="hidden" name="anho" value="" id="anhoProducto-formulario">'+
+        					      						'<input type="hidden" name="version" value="" id="versionProducto-formulario">'+
+
+        					      						'<div class="form-group col-md-1">'+
+        					      							'<input type="text" name="nivel" id="nivel-formulario" value="12" class="form-control" disabled>'+
+        					      						'</div>'+
+        					      						'<div class="form-group col-md-1">'+
+        					  								'<input type="text" name="entidad" id="entidad-formulario" value="1" class="form-control" disabled>'+
+        					  							'</div>'+
+        					      					    '<div class="form-group col-md-2">'+
+        					      					    	'<input type="text" name="tipoPrograma" id="tipoPrograma-formulario" placeholder="Tipo Programa" list="listaf3c2" class="form-control">'+
+        					      					    '</div>'+
+        					      					    '<div class="form-group col-md-2">'+
+        					      					    	'<input type="text" name="programa" id="programa-formulario" placeholder="Programa" list="listaf4c2" class="form-control">'+
+        					      					    '</div>'+
+        					      					    '<div class="form-group col-md-2">'+
+        					      					    	'<input type="text" name="subPrograma" id="subPrograma-formulario" placeholder="SubPrograma" list="listaf5c2" class="form-control">'+
+        					      					    '</div>'+
+        					      					    '<div class="form-group col-md-2">'+
+        					      					    	'<input type="text" name="proyecto" id="proyecto-formulario" placeholder="Proyecto" list="listaf6c2" class="form-control">'+
+        					      					    '</div>'+
+        					  					    	'<div class="form-group col-md-2">'+
+        					  					    		'<input type="text" name="producto" id="producto-formulario" placeholder="Producto" list="listaf7c2" class="form-control">'+
+        					      					  	'</div>'+ 
+        					      					'</form>'+
+        					      					
+        			      					  	'</div>'+
+        			      					  
+        						                		'<div class="row">'+
+        						      					    '<div class="form-group col-md-2">'+
+        						      					  		'<label for="totalFisico-formulario">Total Fisico</label>'+
+        					      					    		'<input type="text" name="totalFisico" id="totalFisico-formulario" value="" class="form-control" disabled>'+
+        					      					    	'</div>'+
+        						      					    '<div class="form-group col-md-2">'+
+        					      					  			'<label for="unidadMedida-formulario">U. Medida</label>'+
+        				      					    			'<input type="text" name="totalFisico" id="unidadMedida-formulario" value="" class="form-control" disabled>'+
+        				      					    		'</div>'+
+        						      					    '<div class="form-group col-md-2">'+
+        				      					  				'<label for="clase-formulario">Clase</label>'+
+        			      					    				'<input type="text" name="totalFisico" id="clase-formulario" value="" class="form-control" disabled>'+
+        			      					    			'</div>'+			      					    		
+        						      					    '<div class="form-group col-md-6">'+
+        			      					  					'<label for="totalFinanciero-formulario">Total Financiero</label>'+
+        								      					'<div class="input-group input-group-sm">'+
+        								      						'<span class="input-group-addon">Gs</span>'+
+        					      					    			'<input type="text" name="totalFinanciero" id="totalFinanciero-formulario" value="" class="form-control" disabled>'+
+        								      					'</div>'+
+        				      					    		'</div>'+
+        				      					    	'</div>'+		// fin row
+        				      					  	'<button type="submit" class="btn btn-success guardarComboProducto"">Guardar</button>'+
+        						                	'</div>'+//fin box-footer
+        						              	'</div>'+//fin box-danger
+        						            '</div>'+//fin col-md-6
+
+        								      	
+        							      	
+        									    	'<div class="col-md-6">'+
+        									    		 '<div class="box">'+
+        									      			'<div class="box-header with-border">'+
+        									       				'<h2 class="box-title text-center">'+
+        									          				'Cronograma de Entregables (Planificación de Actividades)'+ 	
+        									        			'</h2>'+
+        									        			'<div class="box-tools pull-right"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+        									        			'</div>'+
+        									      			'</div>'+
+        									      			'<div class="box-body hitosProgramado">'+//cuerpo del body    			
+        									      				'<div class="table-responsive">'+
+        															'<table class="table table-hover hitos">'+
+        																'<thead>'+
+        																	'<tr class="active"><th>Acción</th><th>Departamento</th><th>Distrito</th><th>U. Medida</th><th>Cantidad. Programado</th><th>Costo Total</th><th>Fecha Terminación</th><th>% Programado</th><th>Editar</th></tr>'+
+        																'</thead>'+
+        																'<tbody>';
+        																
+        																
+        															/*	for(var m = 0; m < registroHitos.length; m++)
+        																{
+        																	if(registroHitos[m].hito_porcentaje_programado > 0)
+        																	{
+        																		modalHito += '<tr><td>'+registroHitos[m].accion+'</td><td>'+registroHitos[m].accion_departamento+'</td><td>'+registroHitos[m].accion_distrito+'</td><td>'+registroHitos[m].accion_unidad_edida+'</td><td>'+registroHitos[m].hito_cantidad_programado+'</td><td>'+registroHitos[m].accion_costo+'</td><td>'+registroHitos[m].hito_fecha_entrega+'</td><td>'+registroHitos[m].hito_porcentaje_programado+'</td><td><a href="#" class="modalEditarHito" parametros="'+registroHitos[m].hito_id+'"><span class="glyphicon glyphicon-pencil"></span></a></td></tr>';
+        																		totalCantidadProgramada+=registroHitos[m].hito_cantidad_programado;
+        																	}
+        																}
+        																totalCantidadProgramada=parseFloat(totalCantidadProgramada).toFixed(2);
+*/
+        																modalHito += '</tbody><tfoot><tr class="active"><td colspan="2">Total Cantidad Programada: </td><td colspan="8">'+totalCantidadProgramada+'</td></tr></tfoot>'+
+        																			 '</table>'+
+        																			 '</div>'+
+        									      			'</div>'+//FIN BODY
+        										   		'</div>'+
+        											'</div>'+
+        									    	'<div class="col-md-6">'+
+        	 							    		'<div class="box">'+
+        								      			'<div class="box-header with-border">'+
+        								       				'<h2 class="box-title text-center">'+
+        								          				'Declaraciones de Avance (Ejecución)'+ 	
+        								        			'</h2>'+
+        								        			'<div class="box-tools pull-right"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+        								        			'</div>'+
+        								      			'</div>'+
+        								      			'<div class="box-body">'+ 
+        							      				'<div class="table-responsive">'+
+        												'<table class="table table-hover hitos">'+
+        													'<thead>'+
+        														'<tr class="active"><th>Acción</th><th>Departamento</th><th>Distrito</th><th>U. Medida</th><th>Cantidad. Programado</th><th>Costo Total</th><th>Fecha Terminación</th><th>% Ejecutado</th><th>Editar</th></tr>'+
+        													'</thead>'+
+        													'<tbody>';
+        													
+        													/*
+        													for(var m = 0; m < registroHitos.length; m++)
+        													{
+        														if(registroHitos[m].hito_porcentaje_ejecutado > 0)
+        														{
+        															modalHito += '<tr><td>'+registroHitos[m].accion+'</td><td>'+registroHitos[m].accion_departamento+'</td><td>'+registroHitos[m].accion_distrito+'</td><td>'+registroHitos[m].accion_unidad_edida+'</td><td>'+registroHitos[m].hito_cantidad_programado+'</td><td>'+registroHitos[m].accion_costo+'</td><td>'+registroHitos[m].hito_fecha_entrega+'</td><td>'+registroHitos[m].hito_porcentaje_ejecutado+'</td><td><a href="#" class="modalEditarHito" parametros="'+registroHitos[m].hito_id+'"><span class="glyphicon glyphicon-pencil"></span></a></td></tr>';
+        															totalCantidadProgramada+=registroHitos[m].hito_cantidad_programado;
+        														}
+        													}
+        													totalCantidadProgramada=parseFloat(totalCantidadProgramada).toFixed(2);
+*/
+        													modalHito += '</tbody><tfoot><tr class="active"><td colspan="2">Total Cantidad Programada: </td><td colspan="8">'+totalCantidadProgramada+'</td></tr></tfoot>'+
+        																 '</table>'+
+        																 '</div>'+						      			
+        								      			'</div>'+
+        									   		'</div>'+
+        										'</div>'+	
+        										
+        										
+        			
+        										
+        										
+        								      	
+        								    '</div>'+//fin row
+        								    
+        							      '</div>'+// fin body
+        								  '<div class="modal-footer">'+
+        								 	'<button type="button" class="btn btn-success registro" data-dismiss="modal" codigoregistro="'+institucionId+'-'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'" data-toggle="modal" data-target="#myModal">Cerrar</button>'+
+        								  '</div>'+
+        							    '</div>'+
+        							 '</div>'+
+        							'</div>';
+
+        			
+        			$("body").append(modalHito);
+        			$("#myModal2").modal('show');
+        			
+        			$("body").on("change", "#selectorDepartamento",function(event){
+        				//var departamentoId = $(this).attr("parametro");
+        				var departamentoId = $("#selectorDepartamento option:selected").val();
+        		    	
+        				var distritos = $.ajax({
+        			    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getDistrito&departamento='+departamentoId,
+        			      	type:'get',
+        			      	dataType:'json',
+        			      	async:false       
+        			    }).responseText;
+        				distritos = JSON.parse(distritos);
+        				optionDistritos="";
+        				for(k = 0;k<distritos.length; k++){
+        					
+        					optionDistritos+='<option value="'+distritos[k].id+'">'+distritos[k].descripcion+'</option>';
+        				}
+        				$("#distritosDepartamento").html("");
+        				$("#distritosDepartamento").append(optionDistritos);
+        				
+        			});
+        			
+        			cargarTablaAccionHasProducto(accionId);
+        			
+        			function Combo(){
+
+        			    this.nivelFocus = function(){
+        				
+        			   	  var listaDatalist=document.getElementsByTagName('datalist');
+        			      var datosNiveles = $.ajax({
+        			          url:'http://spr.stp.gov.py/ajaxSelects?accion=getNiveles',
+        			          type:'get',
+        			          	crossDomain: 'true',
+        			          	dataType:'jsonp',	
+        			          async:false       
+        			        }).responseText;  
+        			  
+        			        
+        			        datosNiveles = JSON.parse(datosNiveles);
+        					
+        			        if(listaDatalist.length === 0 )
+        			        {
+        				        var datalistNiveles = document.createElement('datalist');
+        				        datalistNiveles.setAttribute('id','listaf1c2');
+        				        datalistNiveles.setAttribute('size','5'); 
+        				        var ubicacionDatalistNiveles = document.getElementById('formulario');
+        				        ubicacionDatalistNiveles.appendChild(datalistNiveles);
+        				
+        				        for(var i = 0; i < datosNiveles.niveles.length ; i++) 
+        				        {    
+        				        	var option = document.createElement('option');
+        				          	option.setAttribute('value',datosNiveles.niveles[i].nivel);
+        				          	option.setAttribute('label',datosNiveles.niveles[i].nombreNivel);
+        				          	datalistNiveles.appendChild(option);      
+        				      	} 
+        			        }
+        			    } 
+
+        			    this.nivel = function(){
+        			    	//var rutaNivel = document.getElementById('nivel-formulario').value;
+        			    	var rutaNivel = 12;
+        			    	var datosNiveles = $.ajax({
+        			        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getNiveles',
+        			          	type:'get',
+        			          	crossDomain: 'true',
+        			          	dataType:'jsonp',		          	
+        			          	async:false       
+        			        }).responseText;
+
+        			        
+        			        datosNiveles = JSON.parse(datosNiveles);
+        			      	for(var x = 0; x < datosNiveles.niveles.length; x++)
+        			      	{
+        			        	if(datosNiveles.niveles[x].nivel === parseInt(rutaNivel))
+        			        	{
+        				        	var mostrarNivel = datosNiveles.niveles[x].nombreNivel;
+        				          	var nt=document.createTextNode(mostrarNivel+" >");
+        				          	var nparrafo=document.getElementById('tituloFormulario');
+        				          	nparrafo.innerHTML="";
+        				          	nparrafo.appendChild(nt);
+        				        }
+        			      	}
+        			    }  
+
+
+        			    this.entidadFocus = function(){ 
+        			      	//var linkEntidad = document.getElementById('nivel-formulario').value;
+        			    	var linkEntidad = 12;
+        			    	var datosEntidades = $.ajax({
+        			         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getEntidades&nivel='+linkEntidad,
+        			          	type:'get',
+        			          	crossDomain: 'true',
+        			          	dataType:'jsonp',
+        			          	async:false
+        			    	}).responseText;
+
+        			          	option.setAttribute('value',datosEntidades.entidades[i].entidad);
+        			          	option.setAttribute('label',datosEntidades.entidades[i].nombreEntidad);
+        			          	datalistEntidades.appendChild(option);      
+        			      	}   
+        			     
+
+
+        			    this.entidad = function(){ 
+        			    	//var linkEntidad = document.getElementById('nivel-formulario').value;
+        			      	//var rutaEntidad2 = document.getElementById('entidad-formulario').value;
+        			    	var linkEntidad = 12;
+        			      	var rutaEntidad2 = 1;
+        			      	
+
+        			      	var datosEntidades = $.ajax({
+        			        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getEntidades&nivel='+linkEntidad,
+        			          	type:'get',
+        			          	dataType:'json',
+        			          	async:false       
+        			        }).responseText;
+
+        			        datosEntidades = JSON.parse(datosEntidades);
+        			 
+        			    	for(var x = 0; x < datosEntidades.entidades.length; x++)
+        			      	{
+        			        	if(datosEntidades.entidades[x].entidad === parseInt(rutaEntidad2)) 
+        			        	{
+        			        		document.getElementById('entidad-formulario').setAttribute("entidad",rutaEntidad2 );
+        			        		var mostrarEntidad = datosEntidades.entidades[x].nombreEntidad;
+        			          		var nt=document.createTextNode(mostrarEntidad);
+        			          		var nparrafo=document.getElementById('tituloFormulario');
+        			          		//nparrafo.innerHTML="";
+        			          		nparrafo.appendChild(nt);
+        			        	} 
+        			      	} 
+        			    }  
+
+        			    this.tipoProgramaFocus = function(){
+
+        			    	var rutaNivel = 12;
+        			    	var datosNiveles = [];
+        			    	
+        					if ( $("#listaf3c2").length ) {
+        						$("#listaf3c2").remove();
+        						$('#tipoPrograma-formulario').val('');
+        						$("#listaf4c2").remove();
+        						$('#programa-formulario').val('');
+        						$("#listaf5c2").remove();
+        						$('#subPrograma-formulario').val('');
+        						$("#listaf6c2").remove();
+        						$('#proyecto-formulario').val('');
+        						$("#listaf7c2").remove();
+        						$('#producto-formulario').val('');
+        						$('#totalFisico-formulario').val('');
+        						$('#unidadMedida-formulario').val('');
+        						$('#clase-formulario').val('');
+
+        					}
+        					
+        				    $.ajax({
+        				        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getNiveles',
+        				          	type:'get',
+        				          	crossDomain: 'true',
+        				          	dataType:'jsonp',
+        			                jsonp: 'callback',
+        			                jsonpCallback: 'jsonpCallback',
+        				          	async:false,
+        				          	success: function( data, textStatus, jqXHR) {
+        				          		if(data.success){
+        				          			jsonpCallback(data)
+        				          		}
+        				          	}
+        				        });
+        			    			
+        	 			    	 function jsonpCallback(data) {
+        				          		datosNiveles= data;
+        				          		
+        						      	for(var y = 0; y < datosNiveles.niveles.length; y++)
+        						      	{
+        						        	if(datosNiveles.niveles[y].nivel === parseInt(rutaNivel))
+        						        	{
+        							        	var mostrarNivel = datosNiveles.niveles[y].nombreNivel;
+        							          	var nt=document.createElement('small');
+        							          	var ntText = document.createTextNode(mostrarNivel);
+        							          	nt.appendChild(ntText);
+        							          	var separador=document.createTextNode(" > ");
+        							          	var nparrafo=document.getElementById('tituloFormulario');
+        							          	var strong = document.createElement('strong');
+        							          	strong.appendChild(separador);
+        							          	nparrafo.innerHTML="";
+        							          	nparrafo.appendChild(nt);
+        							          	nparrafo.appendChild(strong);
+        							          	
+        							        }
+        						      	}
+        						    	
+        						    	var linkEntidad = 12;
+        						      	var rutaEntidad2 = 1;
+        						      	
+
+        						      	var datosEntidades =[];
+        						      		$.ajax({
+        						        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getEntidades&nivel='+linkEntidad,
+        						          	type:'get',
+        						          	crossDomain: 'true',
+        						          	dataType:'jsonp',
+        					                jsonp: 'callback',
+        					                jsonpCallback: 'jsonpCallbackEntidad',
+        						          	async:false,
+        						          	success: function( data, textStatus, jqXHR) {
+        						          		if(data.success){
+        						          			jsonpCallbackEntidad(data)
+        						          		}
+        						          	}
+        						        });
+        						      		
+        						      	function jsonpCallbackEntidad(data) {
+        						      		datosEntidades= data;
+        						 
+        							    	for(var x = 0; x < datosEntidades.entidades.length; x++)
+        							      	{
+        							        	if(datosEntidades.entidades[x].entidad === parseInt(rutaEntidad2)) 
+        							        	{
+        							        		document.getElementById('entidad-formulario').setAttribute("entidad",rutaEntidad2 );
+        							        		var mostrarEntidad = datosEntidades.entidades[x].nombreEntidad;
+        							        		var nt=document.createElement('small');
+        							          		var ntText=document.createTextNode(mostrarEntidad);
+        							          		nt.appendChild(ntText);
+        								          	var separador=document.createTextNode(" > ");
+        								          	var nparrafo=document.getElementById('tituloFormulario');
+        								          	var strong = document.createElement('strong');
+        								          	strong.appendChild(separador);
+        							          		nparrafo.appendChild(nt);
+        								          	nparrafo.appendChild(strong);
+
+        							        	} 
+        							      	}
+        							    	
+        							      	var datosTipoPrograma = [];
+        							      		$.ajax({
+        							        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getTiposPrograma',
+        							          	type:'get',
+        							          	crossDomain: 'true',
+        							          	dataType:'jsonp',
+        						                jsonp: 'callback',
+        						                jsonpCallback: 'jsonpCallbackTipoPrograma',
+        							          	async:false,
+        							          	success: function( data, textStatus, jqXHR) {
+        							          		if(data.success){
+        							          			jsonpCallbackTipoPrograma(data)
+        							          		}
+        							          	}    
+        							        });
+        		
+        								    function jsonpCallbackTipoPrograma(data) {
+        								    	datosTipoPrograma= data;
+        								    	
+        								      	var datalistEntidades = document.createElement('datalist'); 
+        								        datalistEntidades.setAttribute('id','listaf3c2'); 
+        								        var ubicacionDatalistEntidades = document.getElementById('formulario');
+        								        ubicacionDatalistEntidades.appendChild(datalistEntidades);
+        			
+        								        for(var i = 0; i < datosTipoPrograma.tiposPrograma.length ; i++) 
+        								        {       
+        								        	var option = document.createElement('option');
+        								          	option.setAttribute('value',datosTipoPrograma.tiposPrograma[i].numeroFila);
+        								          	option.setAttribute('label',datosTipoPrograma.tiposPrograma[i].nombreTipoPrograma);
+        								          	datalistEntidades.appendChild(option);      
+        								      	}   
+        								        
+        								    }
+        				          		
+        						      	}
+        				          		
+        				          		
+        				          		
+        				          		
+        				          		
+        	 			    	 } 
+        			    	   
+        			    	
+        			    	   
+        			    }
+        			    this.tipoPrograma = function(){
+        			    	var linkTipoPrograma = document.getElementById('tipoPrograma-formulario').value;
+
+        			      	var datosTipoPrograma = [];
+        			      	
+        			      	$.ajax({
+        			        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getTiposPrograma',
+        			          	type:'get',
+        			          	crossDomain: 'true',
+        			          	dataType:'jsonp',
+        		                jsonp: 'callback',
+        		                jsonpCallback: 'jsonpCallbackTipoPrograma',
+        			          	async:false,
+        			          	success: function( data, textStatus, jqXHR) {
+        			          		if(data.success){
+        			          			jsonpCallbackTipoPrograma(data)
+        			          		}
+        			          	}        
+        			        });
+        			      	
+        				    function jsonpCallbackTipoPrograma(data) {
+        				    	datosTipoPrograma= data;
+
+        				    	for(var x = 0; x < datosTipoPrograma.tiposPrograma.length; x++)
+        				      	{
+        				        	if(datosTipoPrograma.tiposPrograma[x].numeroFila === parseInt(linkTipoPrograma)) 
+        				        	{
+        				        		var mostrarTipoPrograma = datosTipoPrograma.tiposPrograma[x].nombreTipoPrograma;
+        				          		var ntText=document.createTextNode(mostrarTipoPrograma);
+        				              	var nt=document.createElement('small');
+        				              	var ntText = document.createTextNode(mostrarTipoPrograma);
+        				              	nt.appendChild(ntText);
+        				              	var separador=document.createTextNode(" > ");
+        				          		var nparrafo=document.getElementById('tituloFormulario');
+        				              	var strong = document.createElement('strong');
+        				              	strong.appendChild(separador);
+        				              	nparrafo.appendChild(nt);
+        				              	nparrafo.appendChild(strong);
+        				        	} 
+        				      	}
+        				    }
+        			    }    	
+
+        			    this.programasFocus = function(){
+        			      	//var linkNivel = document.getElementById('nivel-formulario').value;
+        			      	//var linkEntidad = document.getElementById("entidad-formulario").value;
+        			    	var linkNivel = 12;
+        			      	var linkEntidad = 1;
+        			      	var linkTipoPrograma = parseInt(document.getElementById("tipoPrograma-formulario").value)
+        			      	;
+
+        			    	var datosProgramas = [];
+        			    	
+        					if ( $("#listaf4c2").length ) {
+        						$("#listaf4c2").remove();
+        						$('#programa-formulario').val('');
+        						$("#listaf5c2").remove();
+        						$('#subPrograma-formulario').val('');
+        						$("#listaf6c2").remove();
+        						$('#proyecto-formulario').val('');
+        						$("#listaf7c2").remove();
+        						$('#producto-formulario').val('');
+        						$('#totalFisico-formulario').val('');
+        						$('#unidadMedida-formulario').val('');
+        						$('#clase-formulario').val('');
+
+        					}
+        			    	
+        			    	$.ajax({
+        			        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getProgramas&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipoPresupuesto='+linkTipoPrograma,
+        			          	type:'get',
+        			          	crossDomain: 'true',
+        			          	dataType:'jsonp',
+        		                jsonp: 'callback',
+        		                jsonpCallback: 'jsonpCallbackPrograma',
+        			          	async:false,
+        			          	success: function( data, textStatus, jqXHR) {
+        			          		if(data.success){
+        			          			jsonpCallbackPrograma(data)
+        			          		}
+        			          	}         
+        			        });
+        			        
+        				    function jsonpCallbackPrograma(data) {
+        				    	datosProgramas = data;
+
+        				    	$("#listaf4c2").remove();
+        				        var datalistProgramas = document.createElement('datalist');
+        				        datalistProgramas.setAttribute('id','listaf4c2'); 
+        				        var ubicacionDatalistProgramas = document.getElementById('formulario');
+        				        ubicacionDatalistProgramas.appendChild(datalistProgramas);
+        		
+        				        for(var i = 0; i < datosProgramas.programas.length ; i++) 
+        				        {       
+        					        var option = document.createElement('option');
+        				    	    option.setAttribute('value',datosProgramas.programas[i].codigoPrograma);
+        				    	    option.setAttribute('label',datosProgramas.programas[i].nombrePrograma);
+        				        	datalistProgramas.appendChild(option);       
+        				      	} 
+        				    }
+        			    }
+        			    
+        			    this.programas = function(){
+        			      	//var linkNivel = document.getElementById('nivel-formulario').value;
+        			      	//var linkEntidad = document.getElementById("entidad-formulario").value;
+        			    	var linkNivel = 12;
+        			      	var linkEntidad = 1;
+        			      	var linkTipoPrograma = document.getElementById("tipoPrograma-formulario").value;
+        			      	var numeroProgramaIngresado = document.getElementById("programa-formulario").value;
+
+        			    	var datosProgramas =  [];
+        			    	
+        			    	$.ajax({
+        			        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getProgramas&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipoPresupuesto='+linkTipoPrograma,
+        			          	type:'get',
+        			          	crossDomain: 'true',
+        			          	dataType:'jsonp',
+        		                jsonp: 'callback',
+        		                jsonpCallback: 'jsonpCallbackPrograma',
+        			          	async:false,
+        			          	success: function( data, textStatus, jqXHR) {
+        			          		if(data.success){
+        			          			jsonpCallbackPrograma(data)
+        			          		}
+        			          	}      
+        			        });
+
+        				    function jsonpCallbackPrograma(data) {
+        				    	datosProgramas = data;
+        				    	
+        				    	for(var x = 0; x < datosProgramas.programas.length; x++)
+        				    	{
+        				        	if(datosProgramas.programas[x].codigoPrograma === parseInt(numeroProgramaIngresado))
+        				        	{
+        				        		var mostrarNombrePrograma = datosProgramas.programas[x].nombrePrograma;
+        				        		var nt=document.createElement('small');
+        						        var ntText=document.createTextNode(mostrarNombrePrograma);
+        						        nt.appendChild(ntText);
+        						        var separador=document.createTextNode(" > ");
+        						        var nparrafo=document.getElementById('tituloFormulario');
+        					          	var strong = document.createElement('strong');
+        					          	strong.appendChild(separador);
+        					          	nparrafo.appendChild(nt);
+        					          	nparrafo.appendChild(strong);
+
+        						    }
+        				      	}
+        				    }
+        			    } 
+
+        			    this.subProgramasFocus = function(){
+        				    //var linkNivel = document.getElementById('nivel-formulario').value;
+        				    //var linkEntidad = document.getElementById('entidad-formulario').value;
+        			    	var linkNivel = 12;
+        			      	var linkEntidad = 1;    	
+        				    var linkTipoPrograma = document.getElementById("tipoPrograma-formulario").value;
+        				    var linkPrograma = document.getElementById("programa-formulario").value;
+
+        			    	var datosSubProgramas = [];
+        			    	
+        					if ( $("#listaf5c2").length ) {
+        						$("#listaf5c2").remove();
+        						$('#subPrograma-formulario').val('');
+        						$("#listaf6c2").remove();
+        						$('#proyecto-formulario').val('');
+        						$("#listaf7c2").remove();
+        						$('#producto-formulario').val('');
+        						$('#totalFisico-formulario').val('');
+        						$('#unidadMedida-formulario').val('');
+        						$('#clase-formulario').val('');
+        					}
+        			    	
+        			    	$.ajax({
+        			        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getSubprogramas&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipoPresupuesto='+linkTipoPrograma+'&programa='+linkPrograma,
+        			          	type:'get',
+        			          	crossDomain: 'true',
+        			          	dataType:'jsonp',
+        		                jsonp: 'callback',
+        		                jsonpCallback: 'jsonpCallbackSubPrograma',
+        			          	async:false,
+        			          	success: function( data, textStatus, jqXHR) {
+        			          		if(data.success){
+        			          			jsonpCallbackSubPrograma(data)
+        			          		}
+        			          	}       
+        			        });
+
+        				    function jsonpCallbackSubPrograma(data) {
+        				    	datosSubProgramas = data;
+        				    	
+        				        var datalistSubProgramas = document.createElement('datalist');
+        				        datalistSubProgramas.setAttribute('id','listaf5c2'); 
+        				        var ubicacionDatalistProgramas = document.getElementById('formulario');
+        				        ubicacionDatalistProgramas.appendChild(datalistSubProgramas);
+        		
+        				          for(var i = 0; i < datosSubProgramas.subprogramas.length ; i++) 
+        				          {       
+        					          var option = document.createElement('option');
+        					          option.setAttribute('value', datosSubProgramas.subprogramas[i].id);
+        					          option.setAttribute('label', datosSubProgramas.subprogramas[i].nombre);
+        					          datalistSubProgramas.appendChild(option);     
+        				      	  } 
+        				    }
+        			    } 
+        			    
+        			    this.subProgramas = function(){
+        				    //var linkNivel = document.getElementById('nivel-formulario').value;
+        				    //var linkEntidad = document.getElementById('entidad-formulario').value;
+        			    	var linkNivel = 12;
+        			      	var linkEntidad = 1;
+        				    var linkTipoPrograma = document.getElementById("tipoPrograma-formulario").value;
+        				    var linkPrograma = document.getElementById("programa-formulario").value;
+        				    var numeroSubProgramaIngresado = document.getElementById("subPrograma-formulario").value;
+
+        			    	var datosSubProgramas = [];
+        			    	
+        			    	$.ajax({
+        			        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getSubprogramas&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipoPresupuesto='+linkTipoPrograma+'&programa='+linkPrograma,
+        			          	type:'get',
+        			          	crossDomain: 'true',
+        			          	dataType:'jsonp',
+        		                jsonp: 'callback',
+        		                jsonpCallback: 'jsonpCallbackSubPrograma',
+        			          	async:false,
+        			          	success: function( data, textStatus, jqXHR) {
+        			          		if(data.success){
+        			          			jsonpCallbackSubPrograma(data)
+        			          		}
+        			          	} 
+        			        });
+
+        				    function jsonpCallbackSubPrograma(data) {
+        				    	datosSubProgramas = data;
+        				    	
+        				      	for(var x = 0; x < datosSubProgramas.subprogramas.length; x++)
+        				      	{
+        				        	if(datosSubProgramas.subprogramas[x].id === parseInt(numeroSubProgramaIngresado))
+        				        	{
+        					        	var mostrarNombrePrograma = datosSubProgramas.subprogramas[x].nombre;
+        					        	var nt=document.createElement('small');
+        					          	var ntText=document.createTextNode(mostrarNombrePrograma);
+        						        nt.appendChild(ntText);
+        						        var separador=document.createTextNode(" > ");
+        					          	var nparrafo=document.getElementById('tituloFormulario');
+        					          	var strong = document.createElement('strong');
+        					          	strong.appendChild(separador);
+        					          	nparrafo.appendChild(nt);
+        					          	nparrafo.appendChild(strong);
+        					        }
+        				      	}
+        				    }
+        			    } 
+        			    
+        			    this.proyectoFocus = function(){
+        				    //var linkNivel = document.getElementById("nivel-formulario").value;
+        				    //var linkEntidad = document.getElementById("entidad-formulario").value;
+        			    	var linkNivel = 12;
+        			      	var linkEntidad = 1;
+        				    var linkTipoPrograma = document.getElementById("tipoPrograma-formulario").value;
+        				    var linkPrograma = document.getElementById('programa-formulario').value;
+        				    var linkSubPrograma = document.getElementById('subPrograma-formulario').value;
+
+        			    	var datosProyectos = [];
+        			    	
+        					if ( $("#listaf6c2").length ) {
+        						$("#listaf6c2").remove();
+        						$('#proyecto-formulario').val('');
+        						$("#listaf7c2").remove();
+        						$('#producto-formulario').val('');
+        						$('#totalFisico-formulario').val('');
+        						$('#unidadMedida-formulario').val('');
+        						$('#clase-formulario').val('');
+        					}
+        			    	
+        			    	$.ajax({
+        			         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getProyectos&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipoPresupuesto='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma,
+        			          	type:'get',
+        			          	crossDomain: 'true',
+        			          	dataType:'jsonp',
+        		                jsonp: 'callback',
+        		                jsonpCallback: 'jsonpCallbackProyecto',
+        			          	async:false,
+        			          	success: function( data, textStatus, jqXHR) {
+        			          		if(data.success){
+        			          			jsonpCallbackProyecto(data)
+        			          		}
+        			          	}    
+        			        });
+
+        				    function jsonpCallbackProyecto(data) {
+        				    	datosProyectos = data;
+
+        				        var datalistProyectos = document.createElement('datalist');
+        				        datalistProyectos.setAttribute('id','listaf6c2'); 
+        				        var ubicacionDatalistProyectos = document.getElementById('formulario');
+        				        ubicacionDatalistProyectos.appendChild(datalistProyectos);
+        		
+        				          for(var i = 0; i < datosProyectos.proyectos.length ; i++) 
+        				          {       
+        					          var option = document.createElement('option');
+        					          option.setAttribute('value', datosProyectos.proyectos[i].codigoProyecto);
+        					          option.setAttribute('label', datosProyectos.proyectos[i].nombreProyecto);
+        					          datalistProyectos.appendChild(option);      
+        				      	  } 
+        				    }
+        			    }
+        			    this.proyecto = function(){
+        				    //var linkNivel = document.getElementById("nivel-formulario").value;
+        				    //var linkEntidad = document.getElementById("entidad-formulario").value;
+        			    	var linkNivel = 12;
+        			      	var linkEntidad = 1;
+        				    var linkTipoPrograma = document.getElementById("tipoPrograma-formulario").value;
+        				    var linkPrograma = document.getElementById('programa-formulario').value;
+        				    var linkSubPrograma = document.getElementById('subPrograma-formulario').value;
+        				    var numeroProyectoIngresado = document.getElementById("proyecto-formulario").value;
+
+        			    	var datosProyectos = [];
+        			    	$.ajax({
+        			          url:'http://spr.stp.gov.py/ajaxSelects?accion=getProyectos&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipoPresupuesto='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma,
+        			          type:'get',
+        			          	crossDomain: 'true',
+        			          	dataType:'jsonp',
+        		                jsonp: 'callback',
+        		                jsonpCallback: 'jsonpCallbackProyecto',
+        			          	async:false,
+        			          	success: function( data, textStatus, jqXHR) {
+        			          		if(data.success){
+        			          			jsonpCallbackProyecto(data)
+        			          		}
+        			          	}    
+        			        });
+
+        				    function jsonpCallbackProyecto(data) {
+        				    	datosProyectos = data;
+        					    for(var x = 0; x < datosProyectos.proyectos.length; x++)
+        				      	{
+        				        	if(datosProyectos.proyectos[x].codigoProyecto === parseInt(numeroProyectoIngresado))
+        				        	{
+        				        		var mostrarNombreProyecto = datosProyectos.proyectos[x].nombreProyecto;
+        				        		var nt=document.createElement('small');
+        				          		var ntText=document.createTextNode(mostrarNombreProyecto);
+        				    	        nt.appendChild(ntText);
+        				    	        var separador=document.createTextNode(" > ");
+        				          		var nparrafo=document.getElementById('tituloFormulario');
+        				              	var strong = document.createElement('strong');
+        				              	strong.appendChild(separador);
+        				              	nparrafo.appendChild(nt);
+        				              	nparrafo.appendChild(strong);
+
+        				        	}
+        				      	}
+        				   }
+        			    }
+        			    
+        			    this.productoFocus = function(){
+        				    //var linkNivel = document.getElementById("nivel-formulario").value;
+        				    //var linkEntidad = document.getElementById("entidad-formulario").value;
+        			    	var linkNivel = 12;
+        			      	var linkEntidad = 1;
+        				    var linkTipoPrograma = document.getElementById("tipoPrograma-formulario").value;
+        				    var linkPrograma = document.getElementById('programa-formulario').value;
+        				    var linkSubPrograma = document.getElementById('subPrograma-formulario').value;
+        				    var linkProyecto = document.getElementById('proyecto-formulario').value;   
+
+
+        			    	var datosProductos = [];
+        			    	var datosProductosDetalle = [];
+        			    	
+        					if ( $("#listaf7c2").length ) {
+        						$("#listaf7c2").remove();
+        						$('#producto-formulario').val('');
+        						$('#totalFisico-formulario').val('');
+        						$('#unidadMedida-formulario').val('');
+        						$('#clase-formulario').val('');
+
+
+        						
+        					}
+        			    	$.ajax({
+        			         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductosPresupuesto&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto,
+        			          	type:'get',
+        			          	crossDomain: 'true',
+        			          	dataType:'jsonp',
+        		                jsonp: 'callback',
+        		                jsonpCallback: 'jsonpCallbackProducto',
+        			          	async:false,
+        			          	success: function( data, textStatus, jqXHR) {
+        			          		if(data.success){
+        			          			jsonpCallbackProducto(data)
+        			          		}
+        			          	}    
+        			        });
+
+        				    function jsonpCallbackProducto(data) {
+        				    	datosProductos = data;
+        				    	
+        				    	
+        				        var datalistProductos = document.createElement('datalist');
+        				        datalistProductos.setAttribute('id','listaf7c2'); 
+        				        var ubicacionDatalistProductos = document.getElementById('formulario');
+        				        ubicacionDatalistProductos.appendChild(datalistProductos);
+        				        
+        				          for(var i = 0; i < datosProductos.producto.length ; i++) 
+        				          {       
+
+        						    	$.ajax({
+        						         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductos&producto='+datosProductos.producto[i].producto_id,
+        						          	type:'get',
+        						          	crossDomain: 'true',
+        						          	dataType:'jsonp',
+        					                jsonp: 'callback',
+        					                jsonpCallback: 'jsonpCallbackProductoDetalle',
+        						          	async:false,
+        						          	success: function( data, textStatus, jqXHR) {
+        						          		if(data.success){
+        						          			jsonpCallbackProductoDetalle(data)
+        						          		}
+        						          	}    
+        						        });
+        						    	
+        				        	  function jsonpCallbackProductoDetalle(data) {
+        							    	datosProductosDetalle = data;
+        						    	
+        	   
+        								          var option = document.createElement('option');
+        								          option.setAttribute('value', datosProductosDetalle.productos[0].codigoCatalogo);
+        								          option.setAttribute('label', datosProductosDetalle.productos[0].nombreCatalogo);
+        								          datalistProductos.appendChild(option);      
+        							    }
+        				        	  
+        				      	  } 
+        				    	
+        				    }//fin primer callback
+        			    }
+        			    
+        			    this.producto = function(){
+        				    //var linkNivel = document.getElementById("nivel-formulario").value;
+        				    //var linkEntidad = document.getElementById("entidad-formulario").value;
+        			    	var linkNivel = 12;
+        			      	var linkEntidad = 1;
+        				    var linkTipoPrograma = document.getElementById("tipoPrograma-formulario").value;
+        				    var linkPrograma = document.getElementById('programa-formulario').value;
+        				    var linkSubPrograma = document.getElementById('subPrograma-formulario').value;
+        				    var linkProyecto = document.getElementById('proyecto-formulario').value; 
+        				    var linkProducto = document.getElementById('producto-formulario').value; 
+        				    var datosProductos = [];
+        				    var valorProducto = [];
+        				    var datosProductoUnidadMedida = [];
+        				    var datos = [];
+        				    var sumaTotal=0;
+        				    var maxValor = 0;	
+        				    var totalFinanciero;  
+        				    
+        			    	$.ajax({
+        			         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductos&producto='+linkProducto,
+        			          	type:'get',
+        			          	crossDomain: 'true',
+        			          	dataType:'jsonp',
+        		                jsonp: 'callback',
+        		                jsonpCallback: 'jsonpCallbackProducto',
+        			          	async:false,
+        			          	success: function( data, textStatus, jqXHR) {
+        			          		if(data.success){
+        			          			jsonpCallbackProducto(data)
+        			          		}
+        			          	}    
+        			        });
+        			    	
+        			    	function jsonpCallbackProducto(data) {
+        						datosProductos = data;
+        			    		
+        				    	$.ajax({
+        				         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductoUnidadMedida&unidadMedidaId='+datosProductos.productos[0].codUnidadMedida,
+        				          	type:'get',
+        				          	crossDomain: 'true',
+        				          	dataType:'jsonp',
+        			                jsonp: 'callback',
+        			                jsonpCallback: 'jsonpCallbackProductoUnidadMedida',
+        				          	async:false,
+        				          	success: function( data, textStatus, jqXHR) {
+        				          		if(data.success){
+        				          			jsonpCallbackProductoUnidadMedida(data)
+        				          		}
+        				          	}    
+        				        });
+        				    	
+        				    	function jsonpCallbackProductoUnidadMedida(data) {
+        							datosProductoUnidadMedida = data;
+        							
+        			        		var mostrarUnidadMedida = datosProductoUnidadMedida.producto[0].unidadMedidaNombre;
+        				    		$("#unidadMedida-formulario").val(mostrarUnidadMedida);
+        				    		
+        					    	$.ajax({
+        					         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getAsignacionPresiVersion&nivel=12&entidad=1&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subPrograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto,
+        					          	type:'get',
+        					          	crossDomain: 'true',
+        					          	dataType:'jsonp',
+        				                jsonp: 'callback',
+        				                jsonpCallback: 'jsonpCallbackAsignacionPresi',
+        					          	async:false,
+        					          	success: function( data, textStatus, jqXHR) {
+        					          			jsonpCallbackAsignacionPresi(data);
+        					          	}    
+        					        });
+        					    	
+        					    	function jsonpCallbackAsignacionPresi(data) {
+        								datos = data;
+        								totalFinanciero = 0;
+        				        		for(var z = 0; z < datos.length; z++)
+        				        		{
+        				        			totalFinanciero += ( parseFloat(datos[z].planificado1) + parseFloat(datos[z].planificado2) + parseFloat(datos[z].planificado3) + parseFloat(datos[z].planificado4) + parseFloat(datos[z].planificado5) + parseFloat(datos[z].planificado6) + parseFloat(datos[z].planificado7) + parseFloat(datos[z].planificado8) + parseFloat(datos[z].planificado9) + parseFloat(datos[z].planificado10) + parseFloat(datos[z].planificado11) + parseFloat(datos[z].planificado12) );
+        				        		}
+        					    		//$("#totalFinanciero-formulario").val(numeroConComa(totalFinanciero));
+        					    		$("#totalFinanciero-formulario").val(totalFinanciero);
+        					    		$("#anhoProducto-formulario").val(datos[0].anho);
+        					    		$("#versionProducto-formulario").val(datos[0].version);
+
+
+        					    	}
+        				    	}
+        				    	    	
+        		        		var mostrarNombreProducto = datosProductos.productos[0].nombreCatalogo;
+        		        		var nt=document.createElement('small');
+        		          		var ntText=document.createTextNode(mostrarNombreProducto);
+        		    	        nt.appendChild(ntText);
+        		    	        var separador=document.createTextNode(" > ");
+        		          		var nparrafo=document.getElementById('tituloFormulario');
+        		              	var strong = document.createElement('strong');
+        		              	strong.appendChild(separador);
+        		              	nparrafo.appendChild(nt);
+        		              	nparrafo.appendChild(strong);
+        		    	              	
+        		        		var mostrarClase = datosProductos.productos[0].clase;
+        			    		$("#clase-formulario").val(mostrarClase);
+        		              	
+        						if( datosProductos.productos[0].clase === "N" )
+        						{
+        					    	$.ajax({
+        					         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductoTipoN&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto,
+        					          	type:'get',
+        					          	crossDomain: 'true',
+        					          	dataType:'jsonp',
+        				                jsonp: 'callback',
+        				                jsonpCallback: 'jsonpCallbackProductoTipoN',
+        					          	async:false,
+        					          	success: function( data, textStatus, jqXHR) {
+        					          		if(data.success){
+        					          			jsonpCallbackProductoTipoN(data)
+        					          		}
+        					          	}
+        					        });
+        					    	
+        					    	function jsonpCallbackProductoTipoN(data) {
+        					    		valorProducto = data;
+        					    		
+        					    		for(var x = 0; x < valorProducto.productoTipoN.length; x++){
+        					    			sumaTotal += parseInt(valorProducto.productoTipoN[x].valor);
+        					    		}
+        					    		$("#totalFisico-formulario").val(sumaTotal);
+        					    	}	
+        						}//finIf
+        						
+        	 					if( datosProductos.productos[0].clase === "C" )
+        						{
+        					    	$.ajax({
+        					         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductoTipoN&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto,
+        					          	type:'get',
+        					          	crossDomain: 'true',
+        					          	dataType:'jsonp',
+        				                jsonp: 'callback',
+        				                jsonpCallback: 'jsonpCallbackProductoTipoC',
+        					          	async:false,
+        	 				          	success: function( data, textStatus, jqXHR) {
+        					          		if(data.success){
+        					          			jsonpCallbackProductoTipoC(data)
+        					          		}
+        					          	}   
+        					        });
+        					    	function jsonpCallbackProductoTipoC(data) {
+        					    		valorProducto = data;
+        					    		
+        					    		for(var x = 0; x < valorProducto.productoTipoN.length; x++){
+        					    			if(valorProducto.productoTipoN[x].valor > maxValor)
+        					    			{
+        					    				maxValor = valorProducto.productoTipoN[x].valor;
+        					    			}
+        					    		}
+        					    	}		
+        						} 
+        			    	}//finCallbackProducto
+
+        			    }
+        			    
+        			}//fin combo
+        			
+        			  var eje1 = new Combo();
+        			  document.getElementById('nivel-formulario').addEventListener('focus',eje1.nivelFocus,false);
+        			  document.getElementById('nivel-formulario').addEventListener('change',eje1.nivel,false);
+        			  document.getElementById('entidad-formulario').addEventListener('focus',eje1.entidadFocus,false);
+        			  document.getElementById('entidad-formulario').addEventListener('change',eje1.entidad,false);
+        			  document.getElementById('tipoPrograma-formulario').addEventListener('focus',eje1.tipoProgramaFocus,false); 
+        			  document.getElementById('tipoPrograma-formulario').addEventListener('change',eje1.tipoPrograma,false);
+        			  document.getElementById('programa-formulario').addEventListener('focus',eje1.programasFocus,false); 
+        			  document.getElementById('programa-formulario').addEventListener('change',eje1.programas,false); 
+        			  document.getElementById('subPrograma-formulario').addEventListener('focus',eje1.subProgramasFocus,false); 
+        			  document.getElementById('subPrograma-formulario').addEventListener('change',eje1.subProgramas,false);  
+        			  document.getElementById('proyecto-formulario').addEventListener('focus',eje1.proyectoFocus,false); 
+        			  document.getElementById('proyecto-formulario').addEventListener('change',eje1.proyecto,false);
+        			  document.getElementById('producto-formulario').addEventListener('focus',eje1.productoFocus,false); 
+        			  document.getElementById('producto-formulario').addEventListener('change',eje1.producto,false); 
+
+        			
+        			
+        		});
+
+        		$("body").on("click", ".modalEditarHito",function(event){
+        			$("#modalEditarHito").remove();
+        			
+        			
+        			var parametros = $(this).attr("parametros");
+        		    var idParsed = parametros.split("-");                                                            
+        			var hitoId=idParsed[0];
+        			
+        			var hitoParaEditar = $.ajax({
+        		    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015&hito_id='+hitoId,
+        		      	type:'get',
+        		      	dataType:'json',
+        		      	crossDomain:true,
+        		      	async:false       
+        		    }).responseText;		
+        			hitoParaEditar=JSON.parse(hitoParaEditar);		
+
+        			
+        	//MODAL PARA EDITAR HITO
+        			var modalEditarHito = "";
+
+        			modalEditarHito =	 '<div class="modal fade" role="dialog" id="modalEditarHito" data-backdrop="static" data-keyboard="false">'+ 
+        								    '<div class="modal-dialog modal-lg">'+ 
+        								    
+        								      '<div class="modal-content">'+ 
+        								        '<div class="modal-header">'+ 
+        								          '<button type="button" class="close" data-dismiss="modal">&times;</button>'+ 
+        								          '<h4 class="modal-title">Editar Hito</h4><small>('+hitoParaEditar[0].accion_departamento+'-'+hitoParaEditar[0].accion_distrito+'-'+hitoParaEditar[0].institucion+'-'+hitoParaEditar[0].linea_accion+'-'+hitoParaEditar[0].accion+')</small>'+ 
+        								        '</div>'+ 
+        								        '<div class="modal-body">'+ 				        
+        								        '<form role="form">'+
+        									  	  '<div class="form-group">'+
+        									  	    '<label for="nombreHito">Nombre Hito</label>'+
+        									  	    '<input type="text" class="form-control" id="nombreHito" value="'+hitoParaEditar[0].hito+'">'+
+        									  	  '</div>'+
+        									  	  '<div class="form-group">'+
+        									  	    '<label for="unidadMedida">U. Medida</label>'+
+        									  	    '<input type="text" class="form-control" id="uMedida" value="'+hitoParaEditar[0].accion_unidad_edida+'">'+
+        									  	  '</div>'+
+        									  	  '<div class="form-group">'+
+        									  	    '<label for="cantProgramado">Cantidad Programado</label>'+
+        									  	    '<input type="text" id="cantProgramado" class="form-control" value="'+hitoParaEditar[0].hito_cantidad_programado+'">'+
+        									  	  '</div>'+
+        									  	  '<div class="form-group">'+
+        									  	    '<label for="costoTotal">Costo Total</label>'+
+        									  	    '<input type="text" class="form-control" id="costoTotal" value="'+hitoParaEditar[0].accion_costo+'">'+
+        									  	  '</div>'+
+        									  	  '<div class="form-group">'+
+        									  	    '<label for="fechaTerminacion">Fecha Terminación</label>'+
+        									  	    '<input type="text" class="form-control" id="fechaTerminacion" value="'+hitoParaEditar[0].hito_fecha_entrega+'">'+
+        									  	  '</div>'+
+        									  	  '<div class="form-group">'+
+        									  	    '<label for="porcProgramado">% Programado</label>'+
+        									  	    '<input type="date" class="form-control" id="porcProgramado" value="'+hitoParaEditar[0].hito_porcentaje_programado+'">'+
+        									  	  '</div>'+
+        									  	  '<button type="submit" class="btn btn-success">Guardar</button>'+
+        									  	'</form>'+
+        								        
+        								        '</div>'+ 
+        								        '<div class="modal-footer">'+ 
+        								          '<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>'+ 
+        								        '</div>'+ 
+        								      '</div>'+ 
+        								      
+        								    '</div>'+ 
+        								  '</div>';
+        								
+        																
+        																
+        			
+        			$("body").append(modalEditarHito);
+        			$("#modalEditarHito").modal('show');
+        	//FIN MODAL PARA EDITAR HITO
+        			
+        		});
+        		
+        		//Guarda nivel-entidad-tipo-programa-subPrograma-proyecto-producto-anho-version en la tabla accion_has_producto
+        		$("body").on("click", ".guardarComboProducto",function(event){
+        			event.stopPropagation();
+        			event.preventDefault();
+        			
+        	    	var nivel = 12;
+        	      	var entidad = 1;
+        		    var tipoPrograma = document.getElementById("tipoPrograma-formulario").value;
+        		    var programa = document.getElementById('programa-formulario').value;
+        		    var subPrograma = document.getElementById('subPrograma-formulario').value;
+        		    var proyecto = document.getElementById('proyecto-formulario').value; 
+        		    var producto = document.getElementById('producto-formulario').value; 
+        		    var accionId = document.getElementById('accionId').value; 
+        		    var anho = document.getElementById('anhoProducto-formulario').value; 
+        		    var version = document.getElementById('versionProducto-formulario').value; 
+        		    var totalFisico = document.getElementById('totalFisico-formulario').value; 
+        		    var unidadMedida = document.getElementById('unidadMedida-formulario').value; 
+        		    var clase = document.getElementById('clase-formulario').value; 
+        		    var totalFinanciero = document.getElementById('totalFinanciero-formulario').value; 
+
+        		    var datos = new Object();
+        		    
+        		    datos.nivel = nivel;
+        		    datos.entidad = entidad;
+        		    datos.tipoPrograma = tipoPrograma;
+        		    datos.programa = programa;
+        		    datos.subPrograma = subPrograma;
+        		    datos.proyecto = proyecto;
+        		    datos.producto = producto;
+        		    datos.accionId = accionId;
+        		    datos.anho = anho;
+        		    datos.version = version;
+        		    datos.uMedida = unidadMedida;
+        		    datos.cantFisica = totalFisico;
+        		    datos.clase = clase;
+        		    datos.cantFinanciera = totalFinanciero;
+
+        		  	var info = JSON.stringify(datos);
+        		    $.ajax({
+        		        url: "ajaxInserts?accion=insAccionHasProducto",
+        		        type: 'POST',
+        		        dataType: 'json',
+        		        data: info,
+        		        contentType: 'application/json',
+        		        mimeType: 'application/json',
+        		        success: function (data) {
+        		        	alert("Guardado!");
+        		        	cargarTablaAccionHasProducto(accionId);
+        		        	},
+        		        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
+        		        error: function(data,status,er) {
+        		        	alert("Guardado");
+        		        	cargarTablaAccionHasProducto(accionId);
+        		        	}
+        			 });
+        			$('#tipoPrograma-formulario').val('');
+        			$('#programa-formulario').val('');
+        			$('#subPrograma-formulario').val('');
+        			$('#proyecto-formulario').val('');
+        			$('#producto-formulario').val('');
+        			$('#totalFisico-formulario').val('');
+        			$('#unidadMedida-formulario').val('');
+        			$('#clase-formulario').val('');
+        			$('#totalFinanciero-formulario').val('');
+        			$('#anhoProducto-formulario').val('');
+        			$('#versionProducto-formulario').val('');
+
+        			
+        			
+
+        			
+        			
+        		});
+        		
+        		$("body").on("click", ".modalAgregarHito",function(event){
+        			event.stopPropagation();
+        			event.preventDefault();
+        			if ( $("#modalAgregarHito").length ) {
+        				$("#modalAgregarHito").remove();
+        			}
+        			
+        			var parametros = $(this).attr("parametros");
+        		    var idParsed = parametros.split("-");                                                            
+        			var institucionId=idParsed[0];
+        			var lineaAccionId=idParsed[1];
+        			var idDepartamento= idParsed[2];
+        			var idDistrito= idParsed[3];
+        			var accionId = idParsed[4];
+        			var institucionId=idParsed[5];
+        			var lineaAccionId=idParsed[6];
+        			var idDepartamento= idParsed[7];
+        			var idDistrito= idParsed[8];
+        			
+        			var accion = $.ajax({
+        		    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015Accion&accion_id='+accionId,
+        		      	type:'get',
+        		      	dataType:'json',
+        		      	crossDomain:true,
+        		      	async:false       
+        		    }).responseText;		
+        			accion=JSON.parse(accion);
+
+        			var modalAgregarHito = "";
+
+        			modalAgregarHito =	 '<div class="modal fade" role="dialog" id="modalAgregarHito" data-backdrop="static" data-keyboard="false">'+ 
+        								    '<div class="modal-dialog modal-lg">'+ 
+        								    
+        								      '<div class="modal-content">'+ 
+        								        '<div class="modal-header">'+ 
+        								          '<button type="button" class="close modalHitoAvances" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'-'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'">&times;</button>'+ 
+        								          '<h4 class="modal-title">Cronograma de Entregables (Planificación de Actividades)</h4>'+ 
+        								        '</div>'+ 
+        								        '<div class="modal-body">'+ 
+        								        
+        									    	'<form role="form">'+
+        										  	  '<div class="form-group">'+
+        										  	    '<label for="departamento">Departamento</label>'+
+        										  	    '<input type="text" class="form-control" id="departamento" value="'+accion[0].accion_departamento+'" disabled>'+
+        										  	  '</div>'+
+        										  	  '<div class="form-group">'+
+        										  	    '<label for="distrito">Distrito</label>'+
+        										  	    '<input type="text" class="form-control" id="distrito" value="'+accion[0].accion_distrito+'" disabled>'+
+        										  	  '</div>'+										  	  
+        										  	  '<div class="form-group">'+
+        										  	    '<label for="accionHito">Acción</label>'+
+        										  	    '<input type="text" class="form-control" id="accionHito" value="'+accion[0].accion+'" disabled>'+
+        										  	  '</div>'+
+        									    	'<form role="form">'+
+        										  	  '<div class="form-group">'+
+        										  	    '<label for="nombreHito">Nombre Hito</label>'+
+        										  	    '<input type="text" class="form-control" id="nombreHito" placeholder="Introduzca nombre del hito">'+
+        										  	  '</div>'+
+        										  	  '<div class="form-group">'+
+        										  	    '<label for="tipoHito">Tipo Hito</label>'+
+        													'<select class="form-control" id="tipoHito">'+
+        												  	  '<option value="Entregable">Entregable</option>'+
+        												  	  '<option value="Intermedio">Intermedio</option>'+
+        												  	  '<option value="Autonomo">Autonomo</option>'+
+        												  	'</select>'+
+        										  	  '</div>'+
+        										  	  '<div class="form-group">'+
+        										  	    '<label for="unidadMedidaHito">Unidad Medida</label>'+
+        										  	    '<input type="text" id="unidadMedidaHito" class="form-control" placeholder="Unidad Medida">'+
+        										  	  '</div>'+
+        										  	  '<div class="form-group">'+
+        										  	    '<label for="cantidadPrevistaHito">Cantidad Prevista</label>'+
+        										  	    '<input type="text" class="form-control" id="cantidadPrevistaHito" placeholder="Cantidad Prevista">'+
+        										  	  '</div>'+
+        										  	  '<div class="form-group">'+
+        										  	    '<label for="cantidadRealHito">Fecha de Entrega</label>'+
+        										  	    '<input type="text" class="form-control" id="cantidadRealHito" placeholder="Fecha de Entrega">'+
+        										  	  '</div>'+
+        										  	  '<button type="submit" class="btn btn-success guardarHito">Guardar</button>'+
+        										  	'</form>'+
+        								        
+        								        '</div>'+ 
+        								        '<div class="modal-footer">'+ 
+        								          '<button type="button" class="btn btn-default modalHitoAvances" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'-'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'">Cerrar</button>'+ 
+        								        '</div>'+ 
+        								      '</div>'+ 
+        								      
+        								    '</div>'+ 
+        								  '</div>';
+        								
+        																
+        																
+        			
+        			$("body").append(modalAgregarHito);
+        			$("#modalAgregarHito").modal('show');
+        			
+        		});
+        		
+        		$("body").on("click", ".guardarHito",function(event){
+        			
+        			var accionhito = $("#accionHito").val();
+        			var nombreHito = $("#nombreHito").val();
+        			var tipoHito = $("#tipoHito").val();
+        			var unidadMedida = $("#unidadMedidaHito").val();
+        			var cantidadPrevista = $("#cantidadPrevistaHito").val();
+        			var cantidadReal = $("#cantidadRealHito").val();
+        			var accion = "insHitoPrueba";
+        			var obj= new Object();
+        			
+        			//aca como la clase
+        			obj.accion = accionhito;
+        			obj.nombreHito = nombreHito;
+        			obj.tipoHito = tipoHito;		
+        			obj.unidadMedida = unidadMedida;
+        			obj.cantidadPrevista = cantidadPrevista;
+        			obj.cantidadReal = cantidadReal;
+
+        			 $.ajax({
+        			        url: "ajaxInserts?accion="+accion,
+        			        type: 'POST',
+        			        dataType: 'json',
+        			        data: JSON.stringify(obj),
+        			        contentType: 'application/json',
+        			        mimeType: 'application/json',
+        			        success: function (data) {},
+        			        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
+        			        error: function(data,status,er) {}
+        			 });
+
+        			 $("#modalAgregarHito").modal('hide');
+        		});
+        		
+
+        		
+        	});
+
+
+        	$("body").on("click", ".modalDeclararAvance",function(event){
+        		event.stopPropagation();
+        		event.preventDefault();
+        		
+        		if ( $("#modalDeclararAvance").length ) {
+        			$("#modalDeclararAvance").remove();
+        		}
+        		
+        		var parametros = $(this).attr("parametros");
+        	    var idParsed = parametros.split("-");                                                            
+        		var institucionId=idParsed[0];
+        		var lineaAccionId=idParsed[1];
+        		var idDepartamento= idParsed[2];
+        		var idDistrito= idParsed[3];
+        		var accionId = idParsed[4];
+        		var institucionId=idParsed[5];
+        		var lineaAccionId=idParsed[6];
+        		var idDepartamento= idParsed[7];
+        		var idDistrito= idParsed[8];
+        		
+        		var accion = $.ajax({
+        	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015Accion&accion_id='+accionId,
+        	      	type:'get',
+        	      	dataType:'json',
+        	      	crossDomain:true,
+        	      	async:false       
+        	    }).responseText;		
+        		accion=JSON.parse(accion);
+
+        		var modalDeclararAvance = "";
+
+        		modalDeclararAvance =	 '<div class="modal fade" role="dialog" id="modalDeclararAvance" data-backdrop="static" data-keyboard="false">'+ 
+        							    '<div class="modal-dialog modal-lg">'+ 
+        							    
+        							      '<div class="modal-content">'+ 
+        							        '<div class="modal-header">'+ 
+        							          '<button type="button" class="close modalHitoAvances" data-dismiss="modal" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'-'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'">&times;</button>'+ 
+        							          '<h4 class="modal-title">Declarar Avances</h4>'+ 
+        							        '</div>'+ 
+        							        '<div class="modal-body">'+ 
+        							        
+        						      			'<form role="form">'+
+        							      		  '<div class="form-group">'+
+        							      		    '<label for="departamento">Departamento</label>'+
+        							      		    '<input type="text" class="form-control" id="departamento" value="'+accion[0].accion_departamento+'" disabled>'+
+        							      		  '</div>'+
+        							      		  '<div class="form-group">'+
+        							      		    '<label for="distrito">Distrito</label>'+
+        							      		    '<input type="text" class="form-control" id="distrito" value="'+accion[0].accion_distrito+'" disabled>'+
+        							      		  '</div>'+
+        							      		  '<div class="form-group">'+
+        							      		    '<label for="cantidadAvances">Cantidad</label>'+
+        							      		    '<input type="number" class="form-control" id="cantidadAvances" placeholder="Introduzca cantidad">'+
+        							      		  '</div>'+
+        							      		  '<div class="form-group">'+
+        							      		    '<label for="url">Url</label>'+
+        							      		    '<input type="url" class="form-control" id="url" placeholder="Introduzca URL">'+
+        							      		  '</div>'+
+        							      		  '<div class="form-group">'+
+        							      		    '<label for="fecha">Fecha Avance</label>'+
+        							      		    '<input type="date" class="form-control" id="fecha" placeholder="Fecha">'+
+        							      		  '</div>'+
+        							      		  '<div class="form-group">'+
+        							      		    '<label for="coordenadas">Coordenadas Geográficas</label>'+
+        							      		    '<table class="table">'+
+        							      		    '<tr><td><input type="text" class="form-control" placeholder="Latitud"></td><td><input type="text" class="form-control" placeholder="Longitud"></td></tr>'+
+        											'</table>'+
+        							      		  '</div>'+
+        							      		  '<div class="form-group">'+
+        							      		    '<label for="codigoContratacion">Código Contratación</label>'+
+        							      		    '<input type="text" class="form-control" id="codigoContratacion" placeholder="Código Contratación">'+
+        							      		  '</div>'+
+        							      		  '<div class="form-group">'+
+        							      		    '<label for="codigoSinarh">Código SINARH</label>'+
+        							      		    '<input type="text" class="form-control" id="codigoSinarh" placeholder="Código SINARH">'+
+        							      		  '</div>'+
+        							      		  '<button type="submit" class="btn btn-success guardarAvance">Guardar</button>'+
+        						      			'</form>'+
+        							        
+        							        '</div>'+ 
+        							        '<div class="modal-footer">'+ 
+        							          '<button type="button" class="btn btn-default modalHitoAvances" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'-'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'">Cerrar</button>'+ 
+        							        '</div>'+ 
+        							      '</div>'+ 
+        							      
+        							    '</div>'+ 
+        							  '</div>';
+        							
+        															
+        															
+        		
+        		$("body").append(modalDeclararAvance);
+        		$("#modalDeclararAvance").modal('show');
+
+        	});
+
+        	$("body").on("click", ".guardarAvance",function(event){
+        		var cantidadAvance = $("#cantidadAvances").val();
+        		var url = $("#url").val();
+        		//var fecha = $("#Fecha").val();
+        		var accion = "insAvancePrueba";
+        		var obj= new Object();
+        		
+        		//aca como la clase
+        		obj.cantidadAvance = cantidadAvance;
+        		obj.url = url;
+
+
+        		 $.ajax({
+        		        url: "ajaxInserts?accion="+accion,
+        		        type: 'POST',
+        		        dataType: 'json',
+        		        data: JSON.stringify(obj),
+        		        contentType: 'application/json',
+        		        mimeType: 'application/json',
+        		        success: function (data) {},
+        		        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
+        		        error: function(data,status,er) {}
+        		 });
+
+        		 $("#modalAgregarHito").modal('hide');
+
+        	});
+
+        	  
+        	  
+         
+     
+          
+          </script>
           
           
                
