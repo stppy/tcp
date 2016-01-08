@@ -1370,7 +1370,30 @@ $(document).ready(function(){
 	}
 	
 	//renderTodasLasLineas();
-	
+	function cargarTablaAccionHasProducto(accionId){
+		
+		var accionHasProducto = $.ajax({
+	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getAccionHasProducto&accion_id='+accionId,
+	      	type:'get',
+	      	dataType:'json',
+	      	crossDomain:true,
+	      	async:false       
+	    }).responseText;		
+		accionHasProducto=JSON.parse(accionHasProducto);
+		
+		
+		$("#TablaAccionHasProductos").html("");
+		var fila ="";
+		for(var f = 0; f < accionHasProducto.length; f++)
+		{
+			
+			fila += "<tr><td>"+accionHasProducto[f].nivel+"</td><td>"+accionHasProducto[f].entidad+"</td><td>"+accionHasProducto[f].tipoPrograma+"</td><td>"+accionHasProducto[f].programa+"</td><td>"+accionHasProducto[f].subPrograma+"</td><td>"+accionHasProducto[f].proyecto+"</td><td>"+accionHasProducto[f].producto+
+			"</td><td>"+accionHasProducto[f].cantFisica+"</td><td>"+accionHasProducto[f].uMedida+"</td><td>"+accionHasProducto[f].clase+"</td><td>Gs."+accionHasProducto[f].cantFinanciera+"</td></tr>";
+		}
+		
+		$("#TablaAccionHasProductos").append(fila);
+		
+	}
 	//Falta pregunta si existe el modal y borrar si existe
 	$("body").on("click", ".modalHitoAvances",function(event){
 		
@@ -1504,7 +1527,9 @@ $(document).ready(function(){
 					                	'<div id="tituloFormulario"></div>'+
 				      					'<form class="form-horizontal" role="form" id="formulario" method="post" action="/ajaxUpdate">'+
 				      						'<input type="hidden" name="accion" value="actEntidad">'+
-				      						
+				      						'<input type="hidden" name="anho" value="" id="anhoProducto-formulario">'+
+				      						'<input type="hidden" name="version" value="" id="versionProducto-formulario">'+
+
 				      						'<div class="form-group col-md-1">'+
 				      							'<input type="text" name="nivel" id="nivel-formulario" value="12" class="form-control" disabled>'+
 				      						'</div>'+
@@ -1645,6 +1670,9 @@ $(document).ready(function(){
 		
 		$("body").append(modalHito);
 		$("#myModal2").modal('show');
+		
+		
+		cargarTablaAccionHasProducto(accionId);
 		
 		function Combo(){
 
@@ -2413,7 +2441,8 @@ $(document).ready(function(){
 			        		{
 			        			totalFinanciero += ( parseFloat(datos[z].planificado1) + parseFloat(datos[z].planificado2) + parseFloat(datos[z].planificado3) + parseFloat(datos[z].planificado4) + parseFloat(datos[z].planificado5) + parseFloat(datos[z].planificado6) + parseFloat(datos[z].planificado7) + parseFloat(datos[z].planificado8) + parseFloat(datos[z].planificado9) + parseFloat(datos[z].planificado10) + parseFloat(datos[z].planificado11) + parseFloat(datos[z].planificado12) );
 			        		}
-				    		$("#totalFinanciero-formulario").val(numeroConComa(totalFinanciero));
+				    		//$("#totalFinanciero-formulario").val(numeroConComa(totalFinanciero));
+				    		$("#totalFinanciero-formulario").val(totalFinanciero);
 				    		$("#anhoProducto-formulario").val(datos[0].anho);
 				    		$("#versionProducto-formulario").val(datos[0].version);
 
@@ -2606,7 +2635,11 @@ $(document).ready(function(){
 	    var accionId = document.getElementById('accionId').value; 
 	    var anho = document.getElementById('anhoProducto-formulario').value; 
 	    var version = document.getElementById('versionProducto-formulario').value; 
-	    
+	    var totalFisico = document.getElementById('totalFisico-formulario').value; 
+	    var unidadMedida = document.getElementById('unidadMedida-formulario').value; 
+	    var clase = document.getElementById('clase-formulario').value; 
+	    var totalFinanciero = document.getElementById('totalFinanciero-formulario').value; 
+
 	    var datos = new Object();
 	    
 	    datos.nivel = nivel;
@@ -2619,6 +2652,10 @@ $(document).ready(function(){
 	    datos.accionId = accionId;
 	    datos.anho = anho;
 	    datos.version = version;
+	    datos.uMedida = unidadMedida;
+	    datos.cantFisica = totalFisico;
+	    datos.clase = clase;
+	    datos.cantFinanciera = totalFinanciero;
 
 	  	var info = JSON.stringify(datos);
 	    $.ajax({
@@ -2628,9 +2665,15 @@ $(document).ready(function(){
 	        data: info,
 	        contentType: 'application/json',
 	        mimeType: 'application/json',
-	        success: function (data) {alert("Guardado!");},
+	        success: function (data) {
+	        	alert("Guardado!");
+	        	cargarTablaAccionHasProducto(accionId);
+	        	},
 	        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
-	        error: function(data,status,er) {alert("Guardado");}
+	        error: function(data,status,er) {
+	        	alert("Guardado");
+	        	cargarTablaAccionHasProducto(accionId);
+	        	}
 		 });
 		$('#tipoPrograma-formulario').val('');
 		$('#programa-formulario').val('');
@@ -2644,6 +2687,11 @@ $(document).ready(function(){
 		$('#anhoProducto-formulario').val('');
 		$('#versionProducto-formulario').val('');
 
+		
+		
+
+		
+		
 	});
 	
 	$("body").on("click", ".modalAgregarHito",function(event){

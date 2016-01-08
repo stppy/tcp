@@ -28,6 +28,7 @@ import objetos.LineaAccionAcumuladoMes;
 import objetos.LineaAccionDepartamento;
 import objetos.LineaAccionDistrito;
 import objetos.MetasDistEntLinea;
+import py.gov.stp.objetosV2.AccionHasProducto;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -867,6 +868,46 @@ public class SqlSelects {
 					objeto.setCantidadProgHoy(rs.getDouble("cantidad_prog_hoy"));
 					objeto.setCantidadEjecHoy(rs.getDouble("cantidad_ejec_hoy"));
 										
+					
+					objetos.add(objeto);
+				}
+			}
+			catch (SQLException e) {e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos;
+	  }	
+	
+	public static List<AccionHasProducto> selectAccionHasProducto(String condition) throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+			 String query = " select * from accion_has_producto "+condition;
+			 
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 List<AccionHasProducto> objetos = new ArrayList<AccionHasProducto>();
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					AccionHasProducto objeto = new AccionHasProducto();
+
+					objeto.setNivel(rs.getInt("spr_nivel_id"));
+					objeto.setEntidad(rs.getInt("spr_entidad_id"));
+					objeto.setTipoPrograma(rs.getInt("spr_tiprograma_id"));
+					objeto.setPrograma(rs.getInt("spr_programa_id"));
+					objeto.setSubPrograma(rs.getInt("spr_subprograma_id"));
+					objeto.setProyecto(rs.getInt("srp_proyecto_id"));
+					objeto.setProducto(rs.getInt("spr_producto_id"));
+					objeto.setAnho(rs.getInt("spr_anho"));
+					objeto.setVersion(rs.getInt("spr_version"));
+					objeto.setAccionId(rs.getInt("accion_id"));
+					objeto.setuMedida(rs.getString("u_medida"));
+					objeto.setCantFisica(rs.getDouble("cant_fisica"));
+					objeto.setClase(rs.getString("clase"));
+					objeto.setCantFinanciera(rs.getDouble("cant_financiera"));
 					
 					objetos.add(objeto);
 				}

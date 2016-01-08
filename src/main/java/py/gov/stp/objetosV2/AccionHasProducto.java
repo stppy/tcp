@@ -14,6 +14,10 @@ public class AccionHasProducto {
 	protected int producto;
 	protected int anho;
 	protected int version;
+	protected String uMedida;
+	protected Double cantFisica;
+	protected String clase;
+	protected Double cantFinanciera;
 	protected boolean borrado=false;
 	
 	public int getId() {
@@ -102,6 +106,31 @@ public class AccionHasProducto {
 	}
 	public void changeBorrado(){
 		this.borrado=!borrado;
+	}
+	public String getuMedida() {
+		return uMedida;
+	}
+	public void setuMedida(String uMedida) {
+		this.uMedida = uMedida;
+	}
+	public Double getCantFisica() {
+		return cantFisica;
+	}
+	public void setCantFisica(Double cantFisica) {
+		this.cantFisica = cantFisica;
+	}
+	public String getClase() {
+		return clase;
+	}
+	public void setClase(String clase) {
+		this.clase = clase;
+	}
+	public Double getCantFinanciera() {
+		return cantFinanciera;
+	}
+	public void setCantFinanciera(Double cantFinanciera) {
+		this.cantFinanciera = cantFinanciera;
 	}	
-		
+
+	
 }
