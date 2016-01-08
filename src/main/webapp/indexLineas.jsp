@@ -573,15 +573,9 @@ tbody {
 	              <table id="lineasPorEntidad" class="table table-striped ">
               <thead>
                 <tr style="background-color: white;">
-                  <th>
-                  	Líneas de Acción 
-                  </th>
-                  <th>
-                  	Unidad de Medida
-                  </th>
-                  <th>
-                  	Acciones
-                  </tr>
+                  <th>Líneas de Acción </th>
+                  <th>Unidad de Medida</th>
+                  <th>Acciones</tr>
               </thead>
               <tbody id="cuerpoTabla">
                
