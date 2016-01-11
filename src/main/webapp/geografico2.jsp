@@ -2377,7 +2377,7 @@ $(document).ready(function(){
 			        var ubicacionDatalistProductos = document.getElementById('formulario');
 			        ubicacionDatalistProductos.appendChild(datalistProductos);
 			        
-			          for(var i = 0; i < datosProductos.producto.length ; i++) 
+ 			          for(var i = 0; i < datosProductos.producto.length ; i++) 
 			          {       
 
 					    	$.ajax({
@@ -2394,9 +2394,11 @@ $(document).ready(function(){
 					          		}
 					          	}    
 					        });
+			          } 
 					    	
 			        	  function jsonpCallbackProductoDetalle(data) {
 						    	datosProductosDetalle = data;
+						    	
 					    	
    
 							          var option = document.createElement('option');
@@ -2405,7 +2407,7 @@ $(document).ready(function(){
 							          datalistProductos.appendChild(option);      
 						    }
 			        	  
-			      	  } 
+			      	  
 			    	
 			    }//fin primer callback
 		    }
