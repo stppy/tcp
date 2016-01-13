@@ -1599,16 +1599,55 @@ $(document).ready(function(){
 			      					  				'<label for="clase-formulario">Clase</label>'+
 		      					    				'<input type="text" name="totalFisico" id="clase-formulario" value="" class="form-control" disabled>'+
 		      					    			'</div>'+			      					    		
-					      					    '<div class="form-group col-md-6">'+
+					      					    '<div class="form-group col-md-3">'+
 		      					  					'<label for="totalFinanciero-formulario">Total Financiero</label>'+
 							      					'<div class="input-group input-group-sm">'+
 							      						'<span class="input-group-addon">Gs</span>'+
 				      					    			'<input type="text" name="totalFinanciero" id="totalFinanciero-formulario" value="" class="form-control" disabled>'+
 							      					'</div>'+
 			      					    		'</div>'+
+					      					    '<div class="form-group col-md-3">'+
+	      					  						'<label for="total-formulario">Total</label>'+
+						      						'<div class="input-group input-group-sm">'+
+						      							'<span class="input-group-addon">Gs</span>'+
+			      					    				'<input type="text" name="total" id="total-formulario" value="" class="form-control" >'+
+						      						'</div>'+
+		      					    			'</div>'+			      					    		
 			      					    	'</div>'+		// fin row
 			      					  	'<button type="submit" class="btn btn-success guardarComboProducto"">Guardar</button> <button type="submit" class="btn btn-success verificarDestinatarios" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'-'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'">Verificar Destinatarios</button>'+
 			      					  	
+
+			      					    	
+			      					    	'<div class="row">'+//inicio row
+				      					    '<div class="form-group col-md-3">'+
+      					  					'<label for="totalFinanciero-formulario">Primer Trimestre</label>'+
+					      					'<div class="input-group input-group-sm">'+						      			
+		      					    			'<input type="text" name="primerTrimestre" id="primerTrimestre-formulario" value="" class="form-control">'+
+					      					'</div>'+
+	      					    		'</div>'+
+	      					    		
+				      					'<div class="form-group col-md-3">'+
+	  					  					'<label for="totalFinanciero-formulario">Segundo Trimestre</label>'+
+					      					'<div class="input-group input-group-sm">'+
+		      					    			'<input type="text" name="segundoTrimestre" id="segundoTrimestre-formulario" value="" class="form-control">'+
+					      					'</div>'+
+	      					    		'</div>'+
+      					    		
+				      					'<div class="form-group col-md-3">'+
+							  					'<label for="totalFinanciero-formulario">Tercer Trimestre</label>'+
+					      					'<div class="input-group input-group-sm">'+
+		      					    			'<input type="text" name="tercerTrimestre" id="tercerTrimestre-formulario" value="" class="form-control">'+
+					      					'</div>'+
+		  					    		'</div>'+
+  					    		
+			      					    '<div class="form-group col-md-3">'+
+						  					'<label for="totalFinanciero-formulario">Cuarto Trimestre</label>'+
+				      					'<div class="input-group input-group-sm">'+
+		  					    			'<input type="text" name="cuartoTrimestre" id="cuartoTrimestre-formulario" value="" class="form-control">'+
+				      					'</div>'+
+							    		'</div>'+
+	      					    	'</div>'+//fin row
+			      					  	'<button type="submit" class="btn btn-success guardarComboProducto"">Guardar</button>'+
 					                	'</div>'+//fin box-footer
 					              	'</div>'+//fin box-danger
 					            '</div>'+//fin col-md-6
@@ -1854,7 +1893,7 @@ $(document).ready(function(){
 					$('#totalFisico-formulario').val('');
 					$('#unidadMedida-formulario').val('');
 					$('#clase-formulario').val('');
-
+					$('#totalFinanciero-formulario').val('');
 				}
 				
 			    $.ajax({
@@ -2046,6 +2085,7 @@ $(document).ready(function(){
 					$('#totalFisico-formulario').val('');
 					$('#unidadMedida-formulario').val('');
 					$('#clase-formulario').val('');
+					$('#totalFinanciero-formulario').val('');
 
 				}
 		    	
@@ -2151,6 +2191,7 @@ $(document).ready(function(){
 					$('#totalFisico-formulario').val('');
 					$('#unidadMedida-formulario').val('');
 					$('#clase-formulario').val('');
+					$('#totalFinanciero-formulario').val('');
 				}
 		    	
 		    	$.ajax({
@@ -2253,6 +2294,7 @@ $(document).ready(function(){
 					$('#totalFisico-formulario').val('');
 					$('#unidadMedida-formulario').val('');
 					$('#clase-formulario').val('');
+					$('#totalFinanciero-formulario').val('');
 				}
 		    	
 		    	$.ajax({
@@ -2355,8 +2397,7 @@ $(document).ready(function(){
 					$('#totalFisico-formulario').val('');
 					$('#unidadMedida-formulario').val('');
 					$('#clase-formulario').val('');
-
-
+					$('#totalFinanciero-formulario').val('');
 					
 				}
 		    	$.ajax({
@@ -2383,7 +2424,7 @@ $(document).ready(function(){
 			        var ubicacionDatalistProductos = document.getElementById('formulario');
 			        ubicacionDatalistProductos.appendChild(datalistProductos);
 			        
-			          for(var i = 0; i < datosProductos.producto.length ; i++) 
+ 			          for(var i = 0; i < datosProductos.producto.length ; i++) 
 			          {       
 
 					    	$.ajax({
@@ -2400,9 +2441,11 @@ $(document).ready(function(){
 					          		}
 					          	}    
 					        });
+			          } 
 					    	
 			        	  function jsonpCallbackProductoDetalle(data) {
 						    	datosProductosDetalle = data;
+						    	
 					    	
    
 							          var option = document.createElement('option');
@@ -2411,7 +2454,7 @@ $(document).ready(function(){
 							          datalistProductos.appendChild(option);      
 						    }
 			        	  
-			      	  } 
+			      	  
 			    	
 			    }//fin primer callback
 		    }
@@ -3143,9 +3186,17 @@ $("body").on("click", ".modalDeclararAvance",function(event){
 						      		    '<input type="text" class="form-control" id="codigoContratacion" placeholder="Código Contratación">'+
 						      		  '</div>'+
 						      		  '<div class="form-group">'+
-						      		    '<label for="codigoSinarh">Código SINARH</label>'+
-						      		    '<input type="text" class="form-control" id="codigoSinarh" placeholder="Código SINARH">'+
+						      		    '<label for="beneficiarios">Beneficiarios</label>'+
+						      		    '<input type="text" class="form-control" id="beneficiarios" placeholder="Beneficiarios">'+
 						      		  '</div>'+
+						      		  '<div class="form-group">'+
+						      		    '<label for="objetoGasto">Objeto de Gasto</label>'+
+						      		    '<input type="text" class="form-control" id="objetoGasto" placeholder="Objeto Gasto">'+
+						      		  '</div>'+			
+						      		  '<div class="form-group">'+
+						      		    '<label for="monto">Monto</label>'+
+						      		    '<input type="text" class="form-control" id="monto" placeholder="Monto">'+
+						      		  '</div>'+							      		  
 						      		  '<button type="submit" class="btn btn-success guardarAvance">Guardar</button>'+
 					      			'</form>'+
 						        

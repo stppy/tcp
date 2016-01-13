@@ -851,6 +851,38 @@ var $tabla=$("#lineasPorEntidad");
         								      					'</div>'+
         				      					    		'</div>'+
         				      					    	'</div>'+		// fin row
+        				      					    	
+        				      					    	'<div class="row">'+//inicio row
+		    						      					    '<div class="form-group col-md-3">'+
+					      					  					'<label for="totalFinanciero-formulario">Primer Trimestre</label>'+
+										      					'<div class="input-group input-group-sm">'+						      			
+							      					    			'<input type="text" name="primerTrimestre" id="primerTrimestre-formulario" value="" class="form-control">'+
+										      					'</div>'+
+						      					    		'</div>'+
+						      					    		
+        						      					    '<div class="form-group col-md-3">'+
+    			      					  					'<label for="totalFinanciero-formulario">Segundo Trimestre</label>'+
+    								      					'<div class="input-group input-group-sm">'+
+    					      					    			'<input type="text" name="segundoTrimestre" id="segundoTrimestre-formulario" value="" class="form-control">'+
+    								      					'</div>'+
+    				      					    		'</div>'+
+    				      					    		
+    						      					    '<div class="form-group col-md-3">'+
+			      					  					'<label for="totalFinanciero-formulario">Tercer Trimestre</label>'+
+								      					'<div class="input-group input-group-sm">'+
+					      					    			'<input type="text" name="tercerTrimestre" id="tercerTrimestre-formulario" value="" class="form-control">'+
+								      					'</div>'+
+				      					    		'</div>'+
+				      					    		
+						      					    '<div class="form-group col-md-3">'+
+		      					  					'<label for="totalFinanciero-formulario">Cuarto Trimestre</label>'+
+							      					'<div class="input-group input-group-sm">'+
+				      					    			'<input type="text" name="cuartoTrimestre" id="cuartoTrimestre-formulario" value="" class="form-control">'+
+							      					'</div>'+
+			      					    		'</div>'+
+        				      					    	'</div>'+//fin row
+        				      					    	
+        				      					    	
         				      					  	'<button type="submit" class="btn btn-success guardarComboProducto"">Guardar</button>'+
         						                	'</div>'+//fin box-footer
         						              	'</div>'+//fin box-danger
@@ -862,7 +894,7 @@ var $tabla=$("#lineasPorEntidad");
         									    		 '<div class="box">'+
         									      			'<div class="box-header with-border">'+
         									       				'<h2 class="box-title text-center">'+
-        									          				'Cronograma de Entregables (Planificación de Actividades)'+ 	
+        									          				'Cronograma de Entregables (Planificación)'+ 	
         									        			'</h2>'+
         									        			'<div class="box-tools pull-right"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
         									        			'</div>'+
