@@ -3000,8 +3000,6 @@ $("body").on("click", ".verificarDestinatarios",function(event){
           		}
           	}
         });
-      		
-      		
 
       	function jsonpCallbackDepartamento(data) {
       		datosDepartamentos= data;
