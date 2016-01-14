@@ -1507,7 +1507,7 @@ $(document).ready(function(){
 											'<tbody>'+
 												'<tr><td><div class="form-group"><label for="nombreAccion">Acción</label><input type="text" class="form-control" id="nombreAccion" value="'+accion[0].accion+'"><input type="hidden" class="form-control" id="accionId" value="'+accion[0].accion_id+'"></div></td><td><div class="form-group"><label for="umedida">U. medida</label><input type="text" class="form-control" id="umedida" value="'+accion[0].accion_unidad_edida+'"></div></td></tr>'+
 												'<tr><td><div class="form-group"><label for="departamento">Departamento</label><select id="selectorDepartamento" name="departamento" class="form-control">'+optionDepartamentos+'</select></div></td><td><div class="form-group"><label for="distrito">Distrito</label><select name="departamento" class="form-control" id="distritosDepartamento"></select></div></td></tr>'+
-												'<tr><td colspan="2"><button type="submit" class="btn btn-success">Guardar Acción</button><button type="submit" class="btn btn-success modalAgregarHito" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'-'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'">Programar Hito</button> <button type="submit" class="btn btn-success modalDeclararAvance" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'-'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'" >Declarar Avance</button></td></tr>'+
+												'<tr><td colspan="2"><button type="submit" class="btn btn-success">Guardar Acción</button>&nbsp&nbsp<button type="submit" class="btn btn-success modalAgregarHito" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'-'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'">Programar Hito</button>&nbsp&nbsp<button type="submit" class="btn btn-success modalDeclararAvance" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'-'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'" >Declarar Avance</button></td></tr>'+
 											'</tbody>'+							           
 										'</table>'+
 										'</div>'+
@@ -1614,10 +1614,6 @@ $(document).ready(function(){
 						      						'</div>'+
 		      					    			'</div>'+			      					    		
 			      					    	'</div>'+		// fin row
-			      					  	'<button type="submit" class="btn btn-success guardarComboProducto"">Guardar</button> <button type="submit" class="btn btn-success verificarDestinatarios" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'-'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'">Verificar Destinatarios</button>'+
-			      					  	
-
-			      					    	
 			      					    	'<div class="row">'+//inicio row
 				      					    '<div class="form-group col-md-3">'+
       					  					'<label for="totalFinanciero-formulario">Primer Trimestre</label>'+
@@ -1647,13 +1643,13 @@ $(document).ready(function(){
 				      					'</div>'+
 							    		'</div>'+
 	      					    	'</div>'+//fin row
-			      					  	'<button type="submit" class="btn btn-success guardarComboProducto"">Guardar</button>'+
+			      					  	'<button type="submit" class="btn btn-success guardarComboProducto"">Guardar</button>&nbsp&nbsp'+
+			      					  	'<button type="submit" class="btn btn-success verificarDestinatarios" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'-'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'">Verificar Destinatarios</button>'+
 					                	'</div>'+//fin box-footer
 					              	'</div>'+//fin box-danger
 					            '</div>'+//fin col-md-6
 
-							      	
-						      	
+
 								    	'<div class="col-md-6">'+
 								    		 '<div class="box">'+
 								      			'<div class="box-header with-border">'+
