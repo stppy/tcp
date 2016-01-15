@@ -1367,8 +1367,8 @@ public class SqlInserts {
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = "insert into \"accion_has_producto\" (\"spr_nivel_id\",\"spr_entidad_id\",\"spr_tiprograma_id\",\"spr_programa_id\",\"spr_subprograma_id\",\"srp_proyecto_id\",\"spr_producto_id\",\"accion_id\",\"spr_anho\",\"spr_version\",\"u_medida\",\"cant_fisica\",\"clase\",\"cant_financiera\")"
-	+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?)";
+		String query = "insert into \"accion_has_producto\" (\"spr_nivel_id\",\"spr_entidad_id\",\"spr_tiprograma_id\",\"spr_programa_id\",\"spr_subprograma_id\",\"srp_proyecto_id\",\"spr_producto_id\",\"accion_id\",\"spr_anho\",\"spr_version\",\"u_medida\",\"cant_fisica\",\"clase\",\"cant_financiera\",\"asignacion_financiera\")"
+	+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
@@ -1385,9 +1385,8 @@ public class SqlInserts {
 		insert.setString (11, dato.getuMedida());	
 		insert.setDouble (12, dato.getCantFisica());	
 		insert.setString (13, dato.getClase());	
-		insert.setDouble (14, dato.getCantFinanciera());	
-
-
+		insert.setDouble (14, dato.getCantFinanciera());
+		insert.setDouble(15, dato.getTotalAsignacion());
 	
 		insert.execute();
 		   

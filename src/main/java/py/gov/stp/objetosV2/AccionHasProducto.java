@@ -18,6 +18,7 @@ public class AccionHasProducto {
 	protected Double cantFisica;
 	protected String clase;
 	protected Double cantFinanciera;
+	protected Double totalAsignacion;
 	protected boolean borrado=false;
 	
 	public int getId() {
@@ -130,7 +131,12 @@ public class AccionHasProducto {
 	}
 	public void setCantFinanciera(Double cantFinanciera) {
 		this.cantFinanciera = cantFinanciera;
+	}
+	public Double getTotalAsignacion() {
+		return totalAsignacion;
+	}
+	public void setTotalAsignacion(Double totalAsignacion) {
+		this.totalAsignacion = totalAsignacion;
 	}	
-
 	
 }

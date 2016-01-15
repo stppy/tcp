@@ -1388,7 +1388,7 @@ $(document).ready(function(){
 		{
 			
 			fila += "<tr><td>"+accionHasProducto[f].nivel+"</td><td>"+accionHasProducto[f].entidad+"</td><td>"+accionHasProducto[f].tipoPrograma+"</td><td>"+accionHasProducto[f].programa+"</td><td>"+accionHasProducto[f].subPrograma+"</td><td>"+accionHasProducto[f].proyecto+"</td><td>"+accionHasProducto[f].producto+
-			"</td><td>"+accionHasProducto[f].cantFisica+"</td><td>"+accionHasProducto[f].uMedida+"</td><td>"+accionHasProducto[f].clase+"</td><td>Gs."+accionHasProducto[f].cantFinanciera+"</td></tr>";
+			"</td><td>"+accionHasProducto[f].cantFisica+"</td><td>"+accionHasProducto[f].uMedida+"</td><td>"+accionHasProducto[f].clase+"</td><td>Gs."+accionHasProducto[f].cantFinanciera+"</td><td>Gs."+accionHasProducto[f].totalAsignacion+"</td></tr>";
 		}
 		
 		$("#TablaAccionHasProductos").append(fila);
@@ -1461,10 +1461,10 @@ $(document).ready(function(){
 		departamentos = JSON.parse(departamentos);
 	
 		for(i = 0;i<18; i++){
-			optionDepartamentos+='<option value="'+departamentos[i].idDepartamento+'" parametro="'+departamentos[i].idDepartamento+'" class="departamentoSeleccionado">'+departamentos[i].nombreDepartamento+'</option>';
+			optionDepartamentos+='<option value="'+departamentos[i].idDepartamento+'" parametro="'+departamentos[i].idDepartamento+'">'+departamentos[i].nombreDepartamento+'</option>';
 		}
-		optionDepartamentos+='<option value="88" parametro="88" class="departamentoSeleccionado">AUX.TRASP.</option>';
-		optionDepartamentos+='<option value="99" parametro="99" class="departamentoSeleccionado">ALC.NACIONAL</option>';
+		optionDepartamentos+='<option value="88" parametro="88">AUX.TRASP.</option>';
+		optionDepartamentos+='<option value="99" parametro="99">ALC.NACIONAL</option>';
 /*
 		function Combo2(){
 			
@@ -1516,6 +1516,53 @@ $(document).ready(function(){
 									   '</div>'+
 									'</div>'+
 							     '</div>'+	
+							     
+					      			'<div class="row">'+
+									'<div class="col-md-12">'+
+							         '<div class="box" height="1000px">'+
+							           '<div class="box-header with-border" height="1000px">'+
+							             '<h2 class="box-title text-center">'+
+							               'Planificación Trimestral'+
+							             '</h2>'+
+							             '<div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+							             '</div>'+
+							           '</div>'+
+							           '<div class="box-body" style="display: block;">'+
+							           
+					      			   	'<div class="row">'+
+				      					    '<div class="form-group col-md-3">'+
+	  					  						'<label for="totalFinanciero-formulario">Primer Trimestre</label>'+
+					      						'<div class="input-group input-group-sm">'+						      			
+		      					    				'<input type="text" name="primerTrimestre" id="primerTrimestre-formulario" value="" class="form-control">'+
+					      						'</div>'+
+			      					    	'</div>'+
+			      					    		
+					      					'<div class="form-group col-md-3">'+
+		  					  					'<label for="totalFinanciero-formulario">Segundo Trimestre</label>'+
+						      					'<div class="input-group input-group-sm">'+
+			      					    			'<input type="text" name="segundoTrimestre" id="segundoTrimestre-formulario" value="" class="form-control">'+
+						      					'</div>'+
+		      					    		'</div>'+
+			  					    		
+					      					'<div class="form-group col-md-3">'+
+								  					'<label for="totalFinanciero-formulario">Tercer Trimestre</label>'+
+						      					'<div class="input-group input-group-sm">'+
+			      					    			'<input type="text" name="tercerTrimestre" id="tercerTrimestre-formulario" value="" class="form-control">'+
+						      					'</div>'+
+			  					    		'</div>'+
+								    		
+				      					    '<div class="form-group col-md-3">'+
+							  					'<label for="totalFinanciero-formulario">Cuarto Trimestre</label>'+
+					      						'<div class="input-group input-group-sm">'+
+			  					    				'<input type="text" name="cuartoTrimestre" id="cuartoTrimestre-formulario" value="" class="form-control">'+
+					      						'</div>'+
+								    		'</div>'+
+			      					    '</div>'+
+			      					    	
+							           '</div>'+
+									   '</div>'+
+									'</div>'+
+							     '</div>'+	
 						      
 							      	'<div class="row">'+ 
 
@@ -1547,6 +1594,7 @@ $(document).ready(function(){
 							                '		<th>U. Medida</th>'+
 							                '		<th>Clase</th>'+
 							                '		<th>Total Financiero</th>'+
+							                '		<th>Asignación Financiera</th>'+
 							                '	</tr>'+
 							                '<tbody class="table-body-producto" id="TablaAccionHasProductos">'+
 							                '</tbody>'+
@@ -1560,42 +1608,52 @@ $(document).ready(function(){
 				      						'<input type="hidden" name="accion" value="actEntidad">'+
 				      						'<input type="hidden" name="anho" value="" id="anhoProducto-formulario">'+
 				      						'<input type="hidden" name="version" value="" id="versionProducto-formulario">'+
-
-				      						'<div class="form-group col-md-1">'+
-				      							'<input type="text" name="nivel" id="nivel-formulario" value="12" class="form-control" disabled>'+
-				      						'</div>'+
-				      						'<div class="form-group col-md-1">'+
-				  								'<input type="text" name="entidad" id="entidad-formulario" value="1" class="form-control" disabled>'+
-				  							'</div>'+
-				      					    '<div class="form-group col-md-2">'+
-				      					    	'<input type="text" name="tipoPrograma" id="tipoPrograma-formulario" placeholder="Tipo Programa" list="listaf3c2" class="form-control">'+
-				      					    '</div>'+
-				      					    '<div class="form-group col-md-2">'+
-				      					    	'<input type="text" name="programa" id="programa-formulario" placeholder="Programa" list="listaf4c2" class="form-control">'+
-				      					    '</div>'+
-				      					    '<div class="form-group col-md-2">'+
-				      					    	'<input type="text" name="subPrograma" id="subPrograma-formulario" placeholder="SubPrograma" list="listaf5c2" class="form-control">'+
-				      					    '</div>'+
-				      					    '<div class="form-group col-md-2">'+
-				      					    	'<input type="text" name="proyecto" id="proyecto-formulario" placeholder="Proyecto" list="listaf6c2" class="form-control">'+
-				      					    '</div>'+
-				  					    	'<div class="form-group col-md-2">'+
-				  					    		'<input type="text" name="producto" id="producto-formulario" placeholder="Producto" list="listaf7c2" class="form-control">'+
-				      					  	'</div>'+ 
+											'<row>'+
+					      						'<div class="form-group col-md-1">'+
+					      							'<input type="text" name="nivel" id="nivel-formulario" value="12" class="form-control" disabled>'+
+					      						'</div>'+
+					      						'<div class="form-group col-md-1">'+
+					  								'<input type="text" name="entidad" id="entidad-formulario" value="1" class="form-control" disabled>'+
+					  							'</div>'+
+					      					    '<div class="form-group col-md-1">'+
+					      					    	'<input type="text" name="tipoPrograma" id="tipoPrograma-formulario" placeholder="Tipo Programa" list="listaf3c2" class="form-control">'+
+					      					    '</div>'+
+					      					    '<div class="form-group col-md-1">'+
+					      					    	'<input type="text" name="programa" id="programa-formulario" placeholder="Programa" list="listaf4c2" class="form-control">'+
+					      					    '</div>'+
+					      					    '<div class="form-group col-md-1">'+
+					      					    	'<input type="text" name="subPrograma" id="subPrograma-formulario" placeholder="SubPrograma" list="listaf5c2" class="form-control">'+
+					      					    '</div>'+
+					      					    '<div class="form-group col-md-2">'+
+					      					    	'<input type="text" name="proyecto" id="proyecto-formulario" placeholder="Proyecto" list="listaf6c2" class="form-control">'+
+					      					    '</div>'+
+					  					    	'<div class="form-group col-md-2">'+
+					  					    		'<input type="text" name="producto" id="producto-formulario" placeholder="Producto" list="listaf7c2" class="form-control">'+
+					      					  	'</div>'+ 
+					  					    	'<div class="form-group col-md-3">'+
+						      						'<div class="input-group input-group-md">'+
+						      							'<span class="input-group-addon">Gs</span>'+
+			      					    				'<input type="text" name="total" id="total-formulario" value="" class="form-control" >'+
+			      					                    '<div class="input-group-btn">'+
+				      					                	'<button type="submit" class="btn btn-success guardarComboProducto"><span class="glyphicon glyphicon-plus"></span></button>'+
+				      					                '</div>'+			      					    				
+			      					    			'</div>'+
+					  					    	'</div>'+ 	
+					  					    '</div>'+
 				      					'</form>'+
 				      					
 		      					  	'</div>'+
 		      					  
 					                		'<div class="row">'+
-					      					    '<div class="form-group col-md-2">'+
+					      					    '<div class="form-group col-md-3">'+
 					      					  		'<label for="totalFisico-formulario">Total Fisico</label>'+
 				      					    		'<input type="text" name="totalFisico" id="totalFisico-formulario" value="" class="form-control" disabled>'+
 				      					    	'</div>'+
-					      					    '<div class="form-group col-md-2">'+
+					      					    '<div class="form-group col-md-3">'+
 				      					  			'<label for="unidadMedida-formulario">U. Medida</label>'+
 			      					    			'<input type="text" name="totalFisico" id="unidadMedida-formulario" value="" class="form-control" disabled>'+
 			      					    		'</div>'+
-					      					    '<div class="form-group col-md-2">'+
+					      					    '<div class="form-group col-md-3">'+
 			      					  				'<label for="clase-formulario">Clase</label>'+
 		      					    				'<input type="text" name="totalFisico" id="clase-formulario" value="" class="form-control" disabled>'+
 		      					    			'</div>'+			      					    		
@@ -1605,45 +1663,8 @@ $(document).ready(function(){
 							      						'<span class="input-group-addon">Gs</span>'+
 				      					    			'<input type="text" name="totalFinanciero" id="totalFinanciero-formulario" value="" class="form-control" disabled>'+
 							      					'</div>'+
-			      					    		'</div>'+
-					      					    '<div class="form-group col-md-3">'+
-	      					  						'<label for="total-formulario">Total</label>'+
-						      						'<div class="input-group input-group-sm">'+
-						      							'<span class="input-group-addon">Gs</span>'+
-			      					    				'<input type="text" name="total" id="total-formulario" value="" class="form-control" >'+
-						      						'</div>'+
-		      					    			'</div>'+			      					    		
-			      					    	'</div>'+		// fin row
-			      					    	'<div class="row">'+//inicio row
-				      					    '<div class="form-group col-md-3">'+
-      					  					'<label for="totalFinanciero-formulario">Primer Trimestre</label>'+
-					      					'<div class="input-group input-group-sm">'+						      			
-		      					    			'<input type="text" name="primerTrimestre" id="primerTrimestre-formulario" value="" class="form-control">'+
-					      					'</div>'+
-	      					    		'</div>'+
-	      					    		
-				      					'<div class="form-group col-md-3">'+
-	  					  					'<label for="totalFinanciero-formulario">Segundo Trimestre</label>'+
-					      					'<div class="input-group input-group-sm">'+
-		      					    			'<input type="text" name="segundoTrimestre" id="segundoTrimestre-formulario" value="" class="form-control">'+
-					      					'</div>'+
-	      					    		'</div>'+
-      					    		
-				      					'<div class="form-group col-md-3">'+
-							  					'<label for="totalFinanciero-formulario">Tercer Trimestre</label>'+
-					      					'<div class="input-group input-group-sm">'+
-		      					    			'<input type="text" name="tercerTrimestre" id="tercerTrimestre-formulario" value="" class="form-control">'+
-					      					'</div>'+
-		  					    		'</div>'+
-  					    		
-			      					    '<div class="form-group col-md-3">'+
-						  					'<label for="totalFinanciero-formulario">Cuarto Trimestre</label>'+
-				      					'<div class="input-group input-group-sm">'+
-		  					    			'<input type="text" name="cuartoTrimestre" id="cuartoTrimestre-formulario" value="" class="form-control">'+
-				      					'</div>'+
-							    		'</div>'+
-	      					    	'</div>'+//fin row
-			      					  	'<button type="submit" class="btn btn-success guardarComboProducto"">Guardar</button>&nbsp&nbsp'+
+			      					    		'</div>'+   					    				
+			      					    	'</div>'+// fin row
 			      					  	'<button type="submit" class="btn btn-success verificarDestinatarios" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'-'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'">Verificar Destinatarios</button>'+
 					                	'</div>'+//fin box-footer
 					              	'</div>'+//fin box-danger
@@ -1718,12 +1739,7 @@ $(document).ready(function(){
 							      			'</div>'+
 								   		'</div>'+
 									'</div>'+	
-									
-									
-		
-									
-									
-							      	
+
 							    '</div>'+//fin row
 							    
 						      '</div>'+// fin body
@@ -1736,6 +1752,26 @@ $(document).ready(function(){
 
 		
 		$("body").append(modalHito);
+		
+		$('#selectorDepartamento > option[value="'+idDepartamento+'"]').attr('selected', 'selected');
+		
+		//var departamentoId = $("#selectorDepartamento option:selected").val();
+		var distritos = $.ajax({
+	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getDistrito&departamento='+idDepartamento,
+	      	type:'get',
+	      	dataType:'json',
+	      	async:false       
+	    }).responseText;
+		distritos = JSON.parse(distritos);
+		optionDistritos="";
+		for(k = 0;k<distritos.length; k++){
+			
+			optionDistritos+='<option value="'+distritos[k].id+'">'+distritos[k].descripcion+'</option>';
+		}
+		$("#distritosDepartamento").html("");
+		$("#distritosDepartamento").append(optionDistritos);
+		
+		$('#distritosDepartamento > option[value="'+idDistrito+'"]').attr('selected', 'selected');
 		$("#myModal2").modal('show');
 		
 		$("body").on("change", "#selectorDepartamento",function(event){
@@ -2730,6 +2766,7 @@ $(document).ready(function(){
 	    var unidadMedida = document.getElementById('unidadMedida-formulario').value; 
 	    var clase = document.getElementById('clase-formulario').value; 
 	    var totalFinanciero = document.getElementById('totalFinanciero-formulario').value; 
+	    var totalAsignacion = document.getElementById('total-formulario').value; 
 
 	    var datos = new Object();
 	    
@@ -2747,6 +2784,8 @@ $(document).ready(function(){
 	    datos.cantFisica = totalFisico;
 	    datos.clase = clase;
 	    datos.cantFinanciera = totalFinanciero;
+	    datos.totalAsignacion = totalAsignacion;
+
 
 	  	var info = JSON.stringify(datos);
 	    $.ajax({
@@ -2777,11 +2816,7 @@ $(document).ready(function(){
 		$('#totalFinanciero-formulario').val('');
 		$('#anhoProducto-formulario').val('');
 		$('#versionProducto-formulario').val('');
-
-		
-		
-
-		
+		$('#total-formulario').val('');
 		
 	});
 	
