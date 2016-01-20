@@ -171,6 +171,7 @@ public class SqlSelects {
 				objeto.setInstitucionId(rs.getInt("institucion_id"));
 				objeto.setPeriodoId(rs.getInt("periodo_id"));
 				objeto.setMeta(rs.getDouble("meta"));
+				objeto.setVersion(rs.getInt("version"));
 				objeto.setBorrado(rs.getBoolean("borrado"));
 
 				objetos.add(objeto);

@@ -92,44 +92,84 @@ if (user != null) { %>
 		}).responseText;		
 		insLineaAccion=JSON.parse(insLineaAccion);
 		
+		var lineaAccion = $.ajax({
+			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		lineaAccion = JSON.parse(lineaAccion);
+		
+		var institucion = $.ajax({
+			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		institucion = JSON.parse(institucion);
+		
+		var periodo = $.ajax({
+			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		periodo = JSON.parse(periodo);
+
+		
 		renderInsLineaAccion();
 		function renderInsLineaAccion(){
 			
 		$('.box-body').html('');
 		var tablaInsLineaAccion="";
-		tablaInsLineaAccion = '<table class="table table-hover">'+
-					  '<tr class="active"><td colspan="7">Tabla InsLineaAccion</td><td><a href="#" data-toggle="modal" data-target="#insLineaAccion"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
-					  '<tr class="active"><td>Id</td><td>lineaAccionId</td><td>institucionId</td><td>periodoId</td><td>meta</td><td>borrado</td><td>Editar</td><td>Borrar</td></tr>';
+		tablaInsLineaAccion = 	'<div class="table-responsive">'+
+								'<table class="table table-hover">'+
+								  '<tr class="active"><td colspan="7">Tabla InsLineaAccion</td><td><a href="#" data-toggle="modal" data-target="#insLineaAccion"><span class="glyphicon glyphicon-plus nuevaInsLineaAccion"></span></a></td></tr>'+
+								  '<tr class="active"><td>Id</td><td>lineaAccionId</td><td>institucionId</td><td>periodoId</td><td>meta</td><td>borrado</td><td>Editar</td><td>Borrar</td></tr>';
 		for(var w=0; w<insLineaAccion.length;w++)
 		{
-			if(insLineaAccion[w].borrado == true)
-			{
-				tablaInsLineaAccion+='<tr><td><del>'+insLineaAccion[w].id+'</del></td><td><del>'+insLineaAccion[w].lineaAccionId+'</del></td><td><del>'+insLineaAccion[w].institucionId+'</del></td><td><del>'+insLineaAccion[w].periodoId+'</del></td><td><del>'+insLineaAccion[w].meta+'</del></td><td><del>'+insLineaAccion[w].borrado+'</del></td><td><span class="glyphicon glyphicon-pencil registrosInsLineaAccion" codigoRegistroInsLineaAccion='+w+'></span></td><td><span class="glyphicon glyphicon-trash" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+' id="iconoBorradoInsLineaAccion"></span></td></tr>';
-			}else{
-				tablaInsLineaAccion+='<tr><td>'+insLineaAccion[w].id+'</td><td>'+insLineaAccion[w].lineaAccionId+'</td><td>'+insLineaAccion[w].institucionId+'</td><td>'+insLineaAccion[w].periodoId+'</td><td>'+insLineaAccion[w].meta+'</td><td>'+insLineaAccion[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosInsLineaAccion" codigoRegistroInsLineaAccion='+w+'></span></td><td><span class="glyphicon glyphicon-trash" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+' id="iconoBorradoInsLineaAccion"></span></td></tr>';
-
-				
+			for(i = 0;i<lineaAccion.length; i++){				
+				if(insLineaAccion[w].lineaAccionId == lineaAccion[i].id)
+				{
+					if(insLineaAccion[w].borrado == true){
+						tablaInsLineaAccion+='<tr><td><del>'+insLineaAccion[w].id+'</del></td><td><del>'+lineaAccion[i].nombre+'</del></td>';
+					}else{
+						tablaInsLineaAccion+='<tr><td>'+insLineaAccion[w].id+'</td><td>'+lineaAccion[i].nombre+'</td>';	
+					}
 				}
+			}
+			
+			for(m = 0;m<institucion.length; m++){
+				if(insLineaAccion[w].institucionId == institucion[m].id)
+				{
+					if(insLineaAccion[w].borrado == true){
+						tablaInsLineaAccion+='<td><del>'+institucion[m].nombre+'</del></td>';
+					}else{
+						tablaInsLineaAccion+='<td>'+institucion[m].nombre+'</td>';	
+					}
+				}	
+			}
+			
+			for(p = 0;p<periodo.length; p++)
+			{
+				if(insLineaAccion[w].periodoId == periodo[p].id)
+				{
+					if(insLineaAccion[w].borrado == true){
+						tablaInsLineaAccion+='<td><del>'+periodo[p].nombre+'</del></td><td><del>'+insLineaAccion[w].meta+'</del></td><td><del>'+insLineaAccion[w].borrado+'</del></td><td><span class="glyphicon glyphicon-pencil registrosInsLineaAccion" codigoRegistroInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'-'+insLineaAccion[w].meta+'-'+insLineaAccion[w].version+'></span></td><td><span class="glyphicon glyphicon-trash" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+' id="iconoBorradoInsLineaAccion"></span></td></tr>';
+					}else{
+						tablaInsLineaAccion+='<td>'+periodo[p].nombre+'</td><td>'+insLineaAccion[w].meta+'</td><td>'+insLineaAccion[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosInsLineaAccion" codigoRegistroInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'-'+insLineaAccion[w].meta+'-'+insLineaAccion[w].version+'></span></td><td><span class="glyphicon glyphicon-trash" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+' id="iconoBorradoInsLineaAccion"></span></td></tr>';	
+					}
+				}
+
+			}
 		}
-		tablaInsLineaAccion +='</table>';				
+		
+		tablaInsLineaAccion +='</table></div>';				
 		
 		$('.box-body').html(tablaInsLineaAccion);
 		
 		}
 		 
-		$("body").on("click", ".registrosInsLineaAccion",function(event){
-			var codigoRegistro = $(this).attr("codigoRegistroInsLineaAccion");
-				
-			$("#borradoInsLineaAccion").remove();
-			$("#guardarInsLineaAccion").remove();
-			$('#insLineaAccion').modal('show');
-			$("#insLineaAccion").find(".form-horizontal").append('<div class="form-group" id="borradoInsLineaAccion"><div class="col-lg-offset-2 col-lg-10"><button type="submit" class="btn btn-success" id="actualizarInsLineaAccion">Actualizar</button></div></div>');
-			$("#idInsLineaAccion").val(insLineaAccion[codigoRegistro].id);
-			$("#lineaAccionIdInsLineaAccion").val(insLineaAccion[codigoRegistro].lineaAccionId);
-			$("#institucionIdInsLineaAccion").val(insLineaAccion[codigoRegistro].institucionId);
-			$("#periodoIdInsLineaAccion").val(insLineaAccion[codigoRegistro].periodoId);
-			$("#metaInsLineaAccion").val(insLineaAccion[codigoRegistro].meta);
-		});
 		
 	});
 </script>
@@ -162,15 +202,15 @@ if (user != null) { %>
 	          <!-- Info row de buscador de productos -->
 	          <div class="row">
 	         <div class="col-md-12">
-	          <div class="box" height="1000px">
-	            <div class="box-header with-border" height="1000px">
+	          <div class="box" >
+	            <div class="box-header with-border">
 	              <h2 class="box-title text-center" id="tituloTipoPrograma">
-	                Editar Registros	
+	                Contenedor InsLineaAcción	
 	              </h2>
-	              <div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+	              <div class="box-tools pull-right"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
 	              </div>
 	            </div>
-	            <div class="box-body table-responsive" style="scroll-x:hidden;scroll-y:auto;">
+	            <div class="box-body" style="height:600px; overflow: auto; display: block;">
 	            
 
 	            </div>

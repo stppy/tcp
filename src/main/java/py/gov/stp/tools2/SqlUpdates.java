@@ -1424,7 +1424,8 @@ public class SqlUpdates {
 					 if(objeto.getLineaAccionId()!=0)			query+= "linea_accion_id="+objeto.getLineaAccionId()+"";	
 					 if(objeto.getInstitucionId()!=0)			query+= ", institucion_id="+objeto.getInstitucionId()+"";
 					 if(objeto.getPeriodoId()!=0)				query+= ", periodo_id="+objeto.getPeriodoId()+"";
-					 if(objeto.getMeta()!=0)					query+= ", meta="+objeto.getMeta()+"";					 
+					 if(objeto.getMeta()!=0)					query+= ", meta="+objeto.getMeta()+"";		
+					 if(objeto.getVersion()!=0)					query+= ", version="+objeto.getVersion()+"";					 
 					 //if(objeto.isBorrado()!=false)			query+= "borrado=\""+objeto.isBorrado()+"\"";	
 
 					 query+=" where id ="+objeto.getId();

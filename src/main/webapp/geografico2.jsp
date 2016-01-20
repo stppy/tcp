@@ -1558,6 +1558,7 @@ $(document).ready(function(){
 					      						'</div>'+
 								    		'</div>'+
 			      					    '</div>'+
+			      					    '<button type="submit" class="btn btn-success guardarMetas">Guardar Metas</button>'+
 			      					    	
 							           '</div>'+
 									   '</div>'+
@@ -2817,6 +2818,51 @@ $(document).ready(function(){
 		$('#anhoProducto-formulario').val('');
 		$('#versionProducto-formulario').val('');
 		$('#total-formulario').val('');
+		
+	});
+	
+	$("body").on("click", ".guardarMetas",function(event){
+		event.stopPropagation();
+		event.preventDefault();
+		
+    	var nivel = 12;
+      	var entidad = 1;
+	    var meta1 = document.getElementById("primerTrimestre-formulario").value;
+	    var mets2 = document.getElementById('segundoTrimestre-formulario').value;
+	    var meta3 = document.getElementById('tercerTrimestre-formulario').value;
+	    var mets4 = document.getElementById('cuartoTrimestre-formulario').value; 
+
+
+	    var datos = new Object();
+	    
+	    datos.meta1 = meta1;
+	    datos.meta2 = meta2;
+	    datos.meta3 = meta3;
+	    datos.meta4 = meta4;
+
+
+	  	var info = JSON.stringify(datos);
+	    $.ajax({
+	        url: "ajaxInserts?accion=insAccionHasProducto",
+	        type: 'POST',
+	        dataType: 'json',
+	        data: info,
+	        contentType: 'application/json',
+	        mimeType: 'application/json',
+	        success: function (data) {
+	        	alert("Guardado!");
+	        	cargarTablaAccionHasProducto(accionId);
+	        	},
+	        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
+	        error: function(data,status,er) {
+	        	alert("Guardado");
+	        	cargarTablaAccionHasProducto(accionId);
+	        	}
+		 });
+		$('#primerTrimestre-formulario').val('');
+		$('#segundoTrimestre-formulario').val('');
+		$('#tercerTrimestre-formulario').val('');
+		$('#cuartoTrimestre-formulario').val('');
 		
 	});
 	
