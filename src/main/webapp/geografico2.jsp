@@ -1104,7 +1104,7 @@ $(document).ready(function(){
 							if (registroFecha[0]=="Dec" || registroFecha[0]=="dic") registroFecha[0]=12;
 							registroFecha[1].split(",");
 							
-							cuerpoModal+='<tr><td>'+elRegistro[m].accion+'</td><td>'+elRegistro[m].accion_departamento+'</td><td>'+elRegistro[m].accion_distrito+'</td><td>'+elRegistro[m].accion_unidad_edida+'</td><td>'+elRegistro[m].hito_cantidad_programado+'</td><td>'+numeroConComa((elRegistro[m].accion_costo*elRegistro[m].hito_porcentaje_ejecutado/100000000).toFixed(0))+'</td><td>'+registroFecha[2]+'-'+registroFecha[0]+'-'+registroFecha[1][0]+'</td><td>'+elRegistro[m].hito_porcentaje_programado+'</td><td>'+elRegistro[m].hito_porcentaje_ejecutado+'</td><td><a href="#" class="modalHitoAvances" parametros="'+institucion_id+'-'+linea_accion_id+'-'+idDepartamento+'-'+idDistrito+'-'+elRegistro[m].accion_id+'-'+institucion_id+'-'+linea_accion_id+'-'+idDepartamento+'-'+idDistrito+'" "><span class="glyphicon glyphicon-pencil"></span></a></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';
+							cuerpoModal+='<tr><td>'+elRegistro[m].accion+'</td><td>'+elRegistro[m].accion_departamento+'</td><td>'+elRegistro[m].accion_distrito+'</td><td>'+elRegistro[m].accion_unidad_edida+'</td><td>'+elRegistro[m].hito_cantidad_programado+'</td><td>'+numeroConComa((elRegistro[m].accion_costo*elRegistro[m].hito_porcentaje_ejecutado/100000000).toFixed(0))+'</td><td>'+registroFecha[2]+'-'+registroFecha[0]+'-'+registroFecha[1][0]+'</td><td>'+elRegistro[m].hito_porcentaje_programado+'</td><td>'+elRegistro[m].hito_porcentaje_ejecutado+'</td><td><a href="#" class="modalHitoAvances" parametros="'+institucion_id+'-'+linea_accion_id+'-'+idDepartamento+'-'+idDistrito+'-'+elRegistro[m].accion_id+'" "><span class="glyphicon glyphicon-pencil"></span></a></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';
 							totalCantidadProgramada+=elRegistro[m].hito_cantidad_programado;
 					}
 					totalCantidadProgramada=parseFloat(totalCantidadProgramada).toFixed(2);
@@ -1370,7 +1370,13 @@ $(document).ready(function(){
 	}
 	
 	//renderTodasLasLineas();
-	function cargarTablaAccionHasProducto(accionId){
+	function cargarTablaAccionHasProducto(institucionId, lineaAccionId, idDepartamento, idDistrito, accionId){
+		
+		var accionId= accionId;
+		var institucionId= institucionId;
+		var lineaAccionId= lineaAccionId;
+		var idDepartamento= idDepartamento;
+		var idDistrito= idDistrito;
 		
 		var accionHasProducto = $.ajax({
 	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getAccionHasProducto&accion_id='+accionId,
@@ -1383,12 +1389,12 @@ $(document).ready(function(){
 		
 		
 		$("#TablaAccionHasProductos").html("");
+	    var departamentoId = document.getElementById('selectorDepartamento').value;
 		var fila ="";
 		for(var f = 0; f < accionHasProducto.length; f++)
 		{
 			
-			fila += "<tr><td>"+accionHasProducto[f].nivel+"</td><td>"+accionHasProducto[f].entidad+"</td><td>"+accionHasProducto[f].tipoPrograma+"</td><td>"+accionHasProducto[f].programa+"</td><td>"+accionHasProducto[f].subPrograma+"</td><td>"+accionHasProducto[f].proyecto+"</td><td>"+accionHasProducto[f].producto+
-			"</td><td>"+accionHasProducto[f].cantFisica+"</td><td>"+accionHasProducto[f].uMedida+"</td><td>"+accionHasProducto[f].clase+"</td><td>Gs."+accionHasProducto[f].cantFinanciera+"</td><td>Gs."+accionHasProducto[f].totalAsignacion+"</td></tr>";
+			fila += "<tr><td>"+accionHasProducto[f].nivel+"</td><td>"+accionHasProducto[f].entidad+"</td><td>"+accionHasProducto[f].tipoPrograma+"</td><td>"+accionHasProducto[f].programa+"</td><td>"+accionHasProducto[f].subPrograma+"</td><td>"+accionHasProducto[f].proyecto+"</td><td>"+accionHasProducto[f].producto+"</td><td>"+accionHasProducto[f].cantFisica+"</td><td>"+accionHasProducto[f].uMedida+"</td><td>"+accionHasProducto[f].clase+"</td><td>Gs."+accionHasProducto[f].cantFinanciera+"</td><td>Gs."+accionHasProducto[f].totalAsignacion+"</td><td><center><button type='submit' class='btn btn-success verificarDestinatarios' parametros="+accionHasProducto[f].nivel+"-"+accionHasProducto[f].entidad+"-"+accionHasProducto[f].tipoPrograma+"-"+accionHasProducto[f].programa+"-"+accionHasProducto[f].subPrograma+"-"+accionHasProducto[f].proyecto+"-"+accionHasProducto[f].producto+"-"+institucionId+"-"+lineaAccionId+"-"+idDepartamento+"-"+idDistrito+"-"+accionId+"><span class='glyphicon glyphicon-user'></span></button></center></td></tr>";
 		}
 		
 		$("#TablaAccionHasProductos").append(fila);
@@ -1418,10 +1424,6 @@ $(document).ready(function(){
 		var idDepartamento= idParsed[2];
 		var idDistrito= idParsed[3];
 		var accionId = idParsed[4];
-		var institucionId=idParsed[5];
-		var lineaAccionId=idParsed[6];
-		var idDepartamento= idParsed[7];
-		var idDistrito= idParsed[8];
 		var modalHito = "";
 		var urlFactHitos="";
 		var optionDepartamentos = "";
@@ -1485,7 +1487,7 @@ $(document).ready(function(){
 						'<div class="modal-dialog modal-lg" style="width:90%;" >'+
 						    '<div class="modal-content" >'+
 						      '<div class="modal-header">'+
-						        '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+						        '<button type="button" class="close registro" data-dismiss="modal"  codigoregistro="'+institucionId+'-'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'" data-toggle="modal" data-target="#myModal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
 						        '<h4 class="modal-title" id="myModalLabel1"></h4>'+
 						      '</div>'+
 						      '<div class="modal-body" style="heigth:1200px;">'+ 
@@ -1507,7 +1509,7 @@ $(document).ready(function(){
 											'<tbody>'+
 												'<tr><td><div class="form-group"><label for="nombreAccion">Acción</label><input type="text" class="form-control" id="nombreAccion" value="'+accion[0].accion+'"><input type="hidden" class="form-control" id="accionId" value="'+accion[0].accion_id+'"></div></td><td><div class="form-group"><label for="umedida">U. medida</label><input type="text" class="form-control" id="umedida" value="'+accion[0].accion_unidad_edida+'"></div></td></tr>'+
 												'<tr><td><div class="form-group"><label for="departamento">Departamento</label><select id="selectorDepartamento" name="departamento" class="form-control">'+optionDepartamentos+'</select></div></td><td><div class="form-group"><label for="distrito">Distrito</label><select name="departamento" class="form-control" id="distritosDepartamento"></select></div></td></tr>'+
-												'<tr><td colspan="2"><button type="submit" class="btn btn-success">Guardar Acción</button>&nbsp&nbsp<button type="submit" class="btn btn-success modalAgregarHito" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'-'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'">Programar Hito</button>&nbsp&nbsp<button type="submit" class="btn btn-success modalDeclararAvance" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'-'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'" >Declarar Avance</button></td></tr>'+
+												'<tr><td colspan="2"><button type="submit" class="btn btn-success">Guardar Acción</button>&nbsp&nbsp<button type="submit" class="btn btn-success modalAgregarHito" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'">Programar Hito</button>&nbsp&nbsp<button type="submit" class="btn btn-success modalDeclararAvance" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'" >Declarar Avance</button></td></tr>'+
 											'</tbody>'+							           
 										'</table>'+
 										'</div>'+
@@ -1596,6 +1598,7 @@ $(document).ready(function(){
 							                '		<th>Clase</th>'+
 							                '		<th>Total Financiero</th>'+
 							                '		<th>Asignación Financiera</th>'+
+							                '		<th>Destinatarios</th>'+
 							                '	</tr>'+
 							                '<tbody class="table-body-producto" id="TablaAccionHasProductos">'+
 							                '</tbody>'+
@@ -1636,7 +1639,7 @@ $(document).ready(function(){
 						      							'<span class="input-group-addon">Gs</span>'+
 			      					    				'<input type="text" name="total" id="total-formulario" value="" class="form-control" >'+
 			      					                    '<div class="input-group-btn">'+
-				      					                	'<button type="submit" class="btn btn-success guardarComboProducto"><span class="glyphicon glyphicon-plus"></span></button>'+
+				      					                	'<button type="submit" class="btn btn-success guardarComboProducto" parametros='+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'><span class="glyphicon glyphicon-plus"></span></button>'+
 				      					                '</div>'+			      					    				
 			      					    			'</div>'+
 					  					    	'</div>'+ 	
@@ -1666,7 +1669,6 @@ $(document).ready(function(){
 							      					'</div>'+
 			      					    		'</div>'+   					    				
 			      					    	'</div>'+// fin row
-			      					  	'<button type="submit" class="btn btn-success verificarDestinatarios" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'-'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'">Verificar Destinatarios</button>'+
 					                	'</div>'+//fin box-footer
 					              	'</div>'+//fin box-danger
 					            '</div>'+//fin col-md-6
@@ -1796,7 +1798,8 @@ $(document).ready(function(){
 			
 		});
 		
-		cargarTablaAccionHasProducto(accionId);
+		cargarTablaAccionHasProducto(institucionId, lineaAccionId, idDepartamento, idDistrito, accionId);
+		
 		
 		function Combo(){
 
@@ -2753,6 +2756,15 @@ $(document).ready(function(){
 		event.stopPropagation();
 		event.preventDefault();
 		
+		var parametros = $(this).attr("parametros");
+    	var idParsed = parametros.split("-");                                                            
+		var institucionId=idParsed[0];
+		var lineaAccionId=idParsed[1];
+		var idDepartamento= idParsed[2];
+		var idDistrito= idParsed[3];
+		var accionId = idParsed[4];
+		
+		
     	var nivel = 12;
       	var entidad = 1;
 	    var tipoPrograma = document.getElementById("tipoPrograma-formulario").value;
@@ -2760,7 +2772,7 @@ $(document).ready(function(){
 	    var subPrograma = document.getElementById('subPrograma-formulario').value;
 	    var proyecto = document.getElementById('proyecto-formulario').value; 
 	    var producto = document.getElementById('producto-formulario').value; 
-	    var accionId = document.getElementById('accionId').value; 
+	    //var accionId = document.getElementById('accionId').value; 
 	    var anho = document.getElementById('anhoProducto-formulario').value; 
 	    var version = document.getElementById('versionProducto-formulario').value; 
 	    var totalFisico = document.getElementById('totalFisico-formulario').value; 
@@ -2798,12 +2810,12 @@ $(document).ready(function(){
 	        mimeType: 'application/json',
 	        success: function (data) {
 	        	alert("Guardado!");
-	        	cargarTablaAccionHasProducto(accionId);
+	        	cargarTablaAccionHasProducto(institucionId, lineaAccionId, idDepartamento, idDistrito, accionId);
 	        	},
 	        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
 	        error: function(data,status,er) {
 	        	alert("Guardado");
-	        	cargarTablaAccionHasProducto(accionId);
+	        	cargarTablaAccionHasProducto(institucionId, lineaAccionId, idDepartamento, idDistrito, accionId);
 	        	}
 		 });
 		$('#tipoPrograma-formulario').val('');
@@ -2880,10 +2892,6 @@ $(document).ready(function(){
 		var idDepartamento= idParsed[2];
 		var idDistrito= idParsed[3];
 		var accionId = idParsed[4];
-		var institucionId=idParsed[5];
-		var lineaAccionId=idParsed[6];
-		var idDepartamento= idParsed[7];
-		var idDistrito= idParsed[8];
 		
 		var accion = $.ajax({
 	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015Accion&accion_id='+accionId,
@@ -2901,7 +2909,7 @@ $(document).ready(function(){
 							    
 							      '<div class="modal-content">'+ 
 							        '<div class="modal-header">'+ 
-							          '<button type="button" class="close modalHitoAvances" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'-'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'">&times;</button>'+ 
+							          '<button type="button" class="close modalHitoAvances" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'">&times;</button>'+ 
 							          '<h4 class="modal-title">Agregar Hito</h4>'+ 
 							        '</div>'+ 
 							        '<div class="modal-body">'+ 
@@ -2949,7 +2957,7 @@ $(document).ready(function(){
 							        
 							        '</div>'+ 
 							        '<div class="modal-footer">'+ 
-							          '<button type="button" class="btn btn-default modalHitoAvances" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'-'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'">Cerrar</button>'+ 
+							          '<button type="button" class="btn btn-default modalHitoAvances" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'">Cerrar</button>'+ 
 							        '</div>'+ 
 							      '</div>'+ 
 							      
@@ -3015,30 +3023,34 @@ $("body").on("click", ".verificarDestinatarios",function(event){
 	}
 	
 	var parametros = $(this).attr("parametros");
-    var idParsed = parametros.split("-");                                                            
-	var institucionId=idParsed[0];
-	var lineaAccionId=idParsed[1];
-	var idDepartamento= idParsed[2];
-	var idDistrito= idParsed[3];
-	var accionId = idParsed[4];
-	var institucionId=idParsed[5];
-	var lineaAccionId=idParsed[6];
-	var idDepartamento= idParsed[7];
-	var idDistrito= idParsed[8];
+    var idParsed = parametros.split("-"); 
+    var nivel=idParsed[0];
+    var entidad=idParsed[1];
+    var tipoPrograma=idParsed[2];
+    var programa=idParsed[3];
+    var subPrograma=idParsed[4];
+    var proyecto=idParsed[5];
+    var producto=idParsed[6]
+	var institucionId=idParsed[7];
+	var lineaAccionId=idParsed[8];
+	var idDepartamento= idParsed[9];
+	var idDistrito= idParsed[10];
+	var accionId = idParsed[11];
+	
 
-	var linkNivel = 12;
+/* 	var linkNivel = 12;
   	var linkEntidad = 1;
     var linkTipoPrograma = document.getElementById("tipoPrograma-formulario").value;
     var linkPrograma = document.getElementById('programa-formulario').value;
     var linkSubPrograma = document.getElementById('subPrograma-formulario').value;
     var linkProyecto = document.getElementById('proyecto-formulario').value; 
-    var linkProducto = document.getElementById('producto-formulario').value;
+    var linkProducto = document.getElementById('producto-formulario').value; */
     var linkDepartamentoId = document.getElementById('selectorDepartamento').value;
     var nombreDepartamento = $("#selectorDepartamento option:selected").text();
     
 	var modalVerificarDestinatarios = "";
 	var cuerpoTablaDestinatario="";
-	var tabla='#tabla-destinatarios-'+linkNivel+'-'+linkEntidad+'-'+linkTipoPrograma+'-'+linkPrograma+'-'+linkSubPrograma+'-'+linkProyecto+'-'+linkProducto;
+	var tabla='#tabla-destinatarios-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto;
 	
 
 	      $(tabla).html("");
@@ -3046,7 +3058,7 @@ $("body").on("click", ".verificarDestinatarios",function(event){
 	      //callback ProductoPresupuestoDestinatario
 	      	var datosProductoPresupuestoDestinatario =[];
       		$.ajax({
-        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductoPresupuestoDestinatario&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipoPresupuesto='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto+'&deptoPais='+linkDepartamentoId,
+        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductoPresupuestoDestinatario&nivel='+nivel+'&entidad='+entidad+'&tipoPresupuesto='+tipoPrograma+'&programa='+programa+'&subprograma='+subPrograma+'&proyecto='+proyecto+'&producto='+producto+'&deptoPais='+linkDepartamentoId,
           	type:'get',
           	crossDomain: 'true',
           	dataType:'jsonp',
@@ -3093,7 +3105,7 @@ $("body").on("click", ".verificarDestinatarios",function(event){
  		  '<div class="modal-dialog modal-lg" >'+
  		    '<div class="modal-content">'+
  		      '<div class="modal-header">'+
-	          '<button type="button" class="btn btn-default modalHitoAvances" data-dismiss="modal" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'-'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'" aria-label="Close"><span aria-hidden="true">&times;</button>'+ 
+	          '<button type="button" class="btn btn-default modalHitoAvances" data-dismiss="modal" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'" aria-label="Close"><span aria-hidden="true">&times;</button>'+ 
  		      '</div>'+
  		      '<div class="modal-body">'; 
  		    modalVerificarDestinatarios+=
@@ -3107,7 +3119,7 @@ $("body").on("click", ".verificarDestinatarios",function(event){
  		            
  		            '<div class="box-body scroll-x pre-scrollable">'+
  		              '<ul  class="col-md-12">'+
- 		              '<form id="form-guardar-destinatario-'+linkNivel+'-'+linkEntidad+'-'+linkTipoPrograma+'-'+linkPrograma+'-'+linkSubPrograma+'-'+linkProyecto+'-'+linkProducto+'">'+
+ 		              '<form id="form-guardar-destinatario-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'">'+
                        '<table class="table table-striped table-bordered  table-hover">'+
  	                     ' 	<tr>'+
                        '<th>Destinatario</th>';
@@ -3117,12 +3129,12 @@ $("body").on("click", ".verificarDestinatarios",function(event){
  		    				
  		    				
  		    				modalVerificarDestinatarios+='	</tr>'+
- 	                      '<tbody class="table-body-producto-destinatario" id="tabla-destinatarios-'+linkNivel+'-'+linkEntidad+'-'+linkTipoPrograma+'-'+linkPrograma+'-'+linkSubPrograma+'-'+linkProyecto+'-'+linkProducto+'">'+
+ 	                      '<tbody class="table-body-producto-destinatario" id="tabla-destinatarios-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'">'+
  	                      '</tbody>'+
  	                      '</table>'+
  	                      '<br>'+
  		                    '<div class="box-footer">'+
-					          '<button type="button" class="btn btn-default modalHitoAvances" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'-'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'">Cerrar</button>'+ 
+					          '<button type="button" class="btn btn-default modalHitoAvances" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'">Cerrar</button>'+ 
  		                    '</div>'+
  						'</form>'+
  					'</ul>'+
@@ -3143,31 +3155,28 @@ $("body").on("click", ".verificarDestinatarios",function(event){
 		    				    	  if (datosProductoPresupuestoDestinatario.producto.length>0){  
 		    				    		  for (var iDepto=0;iDepto<18;iDepto++){
 		    				    			  if(datosProductoPresupuestoDestinatario.producto[iDest].departamento == iDepto){
-			    				    		  	cuerpoTablaDestinatario+='<td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+linkProducto+'-'+iDest+'-'+iDepto+'" id="dest-'+linkNivel+'-'+linkEntidad+'-'+linkTipoPrograma+'-'+linkPrograma+'-'+linkSubPrograma+'-'+linkProyecto+'-'+linkProducto+'-'+iDest+'-'+iDepto+'" value="'+datosProductoPresupuestoDestinatario.producto[iDest].cantidad+'"></td>';
+			    				    		  	cuerpoTablaDestinatario+='<td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+producto+'-'+iDest+'-'+iDepto+'" id="dest-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'-'+iDest+'-'+iDepto+'" value="'+datosProductoPresupuestoDestinatario.producto[iDest].cantidad+'"></td>';
 		    				    			  }else{
-				    				    		cuerpoTablaDestinatario+='<td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+linkProducto+'-'+iDest+'-'+iDepto+'" id="dest-'+linkNivel+'-'+linkEntidad+'-'+linkTipoPrograma+'-'+linkPrograma+'-'+linkSubPrograma+'-'+linkProyecto+'-'+linkProducto+'-'+iDest+'-'+iDepto+'" value=""></td>';		 
+				    				    		cuerpoTablaDestinatario+='<td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+producto+'-'+iDest+'-'+iDepto+'" id="dest-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'-'+iDest+'-'+iDepto+'" value=""></td>';		 
 		    				    			  }
 		    				    		  }
 		    				    		  	if (datosProductoPresupuestoDestinatario.producto[iDest].departamento == 88){
-			    				    		  	cuerpoTablaDestinatario+='<td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+linkProducto+'-'+iDest+'-'+iDepto+'" id="dest-'+linkNivel+'-'+linkEntidad+'-'+linkTipoPrograma+'-'+linkPrograma+'-'+linkSubPrograma+'-'+linkProyecto+'-'+linkProducto+'-'+iDest+'-'+iDepto+'" value="'+datosProductoPresupuestoDestinatario.producto[iDest].cantidad+'"></td><td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+linkProducto+'-'+iDest+'-'+iDepto+'" id="dest-'+linkNivel+'-'+linkEntidad+'-'+linkTipoPrograma+'-'+linkPrograma+'-'+linkSubPrograma+'-'+linkProyecto+'-'+linkProducto+'-'+iDest+'-'+iDepto+'" value=""></td>';			    				    		  		
+			    				    		  	cuerpoTablaDestinatario+='<td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+producto+'-'+iDest+'-'+iDepto+'" id="dest-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'-'+iDest+'-'+iDepto+'" value="'+datosProductoPresupuestoDestinatario.producto[iDest].cantidad+'"></td><td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+producto+'-'+iDest+'-'+iDepto+'" id="dest-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'-'+iDest+'-'+iDepto+'" value=""></td>';			    				    		  		
 		    				    		  	}
 		    				    		  	if (datosProductoPresupuestoDestinatario.producto[iDest].departamento == 99){
-			    				    		  	cuerpoTablaDestinatario+='<td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+linkProducto+'-'+iDest+'-'+iDepto+'" id="dest-'+linkNivel+'-'+linkEntidad+'-'+linkTipoPrograma+'-'+linkPrograma+'-'+linkSubPrograma+'-'+linkProyecto+'-'+linkProducto+'-'+iDest+'-'+iDepto+'" value=""></td><td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+linkProducto+'-'+iDest+'-'+iDepto+'" id="dest-'+linkNivel+'-'+linkEntidad+'-'+linkTipoPrograma+'-'+linkPrograma+'-'+linkSubPrograma+'-'+linkProyecto+'-'+linkProducto+'-'+iDest+'-'+iDepto+'" value="'+datosProductoPresupuestoDestinatario.producto[iDest].cantidad+'"></td>';			    				    		  		
+			    				    		  	cuerpoTablaDestinatario+='<td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+producto+'-'+iDest+'-'+iDepto+'" id="dest-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'-'+iDest+'-'+iDepto+'" value=""></td><td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+producto+'-'+iDest+'-'+iDepto+'" id="dest-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'-'+iDest+'-'+iDepto+'" value="'+datosProductoPresupuestoDestinatario.producto[iDest].cantidad+'"></td>';			    				    		  		
 		    				    		  	
 	    				    			  	}
 		    				    		  	if (datosProductoPresupuestoDestinatario.producto[iDest].departamento != 88 && datosProductoPresupuestoDestinatario.producto[iDest].departamento != 99){
-			    				    		  	cuerpoTablaDestinatario+='<td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+linkProducto+'-'+iDest+'-'+iDepto+'" id="dest-'+linkNivel+'-'+linkEntidad+'-'+linkTipoPrograma+'-'+linkPrograma+'-'+linkSubPrograma+'-'+linkProyecto+'-'+linkProducto+'-'+iDest+'-'+iDepto+'" value=""></td><td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+linkProducto+'-'+iDest+'-'+iDepto+'" id="dest-'+linkNivel+'-'+linkEntidad+'-'+linkTipoPrograma+'-'+linkPrograma+'-'+linkSubPrograma+'-'+linkProyecto+'-'+linkProducto+'-'+iDest+'-'+iDepto+'" value=""></td>';			    				    		  			  
+			    				    		  	cuerpoTablaDestinatario+='<td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+producto+'-'+iDest+'-'+iDepto+'" id="dest-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'-'+iDest+'-'+iDepto+'" value=""></td><td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+producto+'-'+iDest+'-'+iDepto+'" id="dest-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'-'+iDest+'-'+iDepto+'" value=""></td>';			    				    		  			  
 	    				    			  	}
-		    				    		  
-/* 		    				    		  iDepto=88; cuerpoTablaDestinatario+='<td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+linkProducto+'-'+iDest+'-'+iDepto+'" id="dest-'+linkNivel+'-'+linkEntidad+'-'+linkTipoPrograma+'-'+linkPrograma+'-'+linkSubPrograma+'-'+linkProyecto+'-'+linkProducto+'-'+iDest+'-'+iDepto+'" value="'+datosProductoPresupuestoDestinatario.producto[iDest].cantidad+'"></td>';
-		    				    		  iDepto=99; cuerpoTablaDestinatario+='<td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+linkProducto+'-'+iDest+'-'+iDepto+'" id="dest-'+linkNivel+'-'+linkEntidad+'-'+linkTipoPrograma+'-'+linkPrograma+'-'+linkSubPrograma+'-'+linkProyecto+'-'+linkProducto+'-'+iDest+'-'+iDepto+'" value="'+datosProductoPresupuestoDestinatario.producto[iDest].cantidad+'"></td>'; */
+		    				    		 
 		    				    	  }else{
 		    				    		  for (var iDepto=0;iDepto<20;iDepto++){
-		    				    			  cuerpoTablaDestinatario+='<td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+linkProducto+'-'+iDest+'-'+iDepto+'" id="dest-'+linkNivel+'-'+linkEntidad+'-'+linkTipoPrograma+'-'+linkPrograma+'-'+linkSubPrograma+'-'+linkProyecto+'-'+linkProducto+'-'+iDest+'-'+iDepto+'" value=""></td>';
+		    				    			  cuerpoTablaDestinatario+='<td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+producto+'-'+iDest+'-'+iDepto+'" id="dest-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'-'+iDest+'-'+iDepto+'" value=""></td>';
 		    				    			  
 		    				    		  }
-/* 		    				    		  iDepto=88; cuerpoTablaDestinatario+='<td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+linkProducto+'-'+iDest+'-'+iDepto+'" id="dest-'+linkNivel+'-'+linkEntidad+'-'+linkTipoPrograma+'-'+linkPrograma+'-'+linkSubPrograma+'-'+linkProyecto+'-'+linkProducto+'-'+iDest+'-'+iDepto+'" value=""></td>';
-		    				    		  iDepto=99; cuerpoTablaDestinatario+='<td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+linkProducto+'-'+iDest+'-'+iDepto+'" id="dest-'+linkNivel+'-'+linkEntidad+'-'+linkTipoPrograma+'-'+linkPrograma+'-'+linkSubPrograma+'-'+linkProyecto+'-'+linkProducto+'-'+iDest+'-'+iDepto+'" value=""></td>'; */
+
 		    				    	  }
 		    			  		  cuerpoTablaDestinatario+='<input type="hidden" name="catalogo_destinatario[]" value="'+datosProductoPresupuestoDestinatario.producto[iDest].id+'">'
 		    			  		  cuerpoTablaDestinatario+='</tr>';
@@ -3203,10 +3212,6 @@ $("body").on("click", ".modalDeclararAvance",function(event){
 	var idDepartamento= idParsed[2];
 	var idDistrito= idParsed[3];
 	var accionId = idParsed[4];
-	var institucionId=idParsed[5];
-	var lineaAccionId=idParsed[6];
-	var idDepartamento= idParsed[7];
-	var idDistrito= idParsed[8];
 	
 	var accion = $.ajax({
     	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015Accion&accion_id='+accionId,
@@ -3224,7 +3229,7 @@ $("body").on("click", ".modalDeclararAvance",function(event){
 						    
 						      '<div class="modal-content">'+ 
 						        '<div class="modal-header">'+ 
-						          '<button type="button" class="close modalHitoAvances" data-dismiss="modal" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'-'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'">&times;</button>'+ 
+						          '<button type="button" class="close modalHitoAvances" data-dismiss="modal" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'">&times;</button>'+ 
 						          '<h4 class="modal-title">Declarar Avances</h4>'+ 
 						        '</div>'+ 
 						        '<div class="modal-body">'+ 
@@ -3277,7 +3282,7 @@ $("body").on("click", ".modalDeclararAvance",function(event){
 						        
 						        '</div>'+ 
 						        '<div class="modal-footer">'+ 
-						          '<button type="button" class="btn btn-default modalHitoAvances" data-dismiss="modal" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'-'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'">Cerrar</button>'+ 
+						          '<button type="button" class="btn btn-default modalHitoAvances" data-dismiss="modal" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'">Cerrar</button>'+ 
 						        '</div>'+ 
 						      '</div>'+ 
 						      
