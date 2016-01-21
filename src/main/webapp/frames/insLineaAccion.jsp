@@ -48,7 +48,10 @@
 				optionPeriodo+='<option value="'+periodo[p].id+'" >'+periodo[p].nombre+'</option>';
 			}
 		}
-		$("#insLineaAccion").remove();
+		if ( $("#insLineaAccion").length )
+		{
+			$("#insLineaAccion").remove();
+		}
 		var contenido = "";
 
 		contenido =			'<div class="modal fade" id="insLineaAccion" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">'+
@@ -96,12 +99,13 @@
 	});
 
 	$("body").on("click", "#guardarInsLineaAccion",function(event){		
-		event.stopPropagation();
-		event.preventDefault();
+		//event.stopPropagation();
+		//event.preventDefault(); 
 		$("#actualizarInsLineaAccionBoton").remove();
+		$("#guardarInsLineaAccionBoton").remove();
 		$("#insLineaAccion").find("#formularioInsLineaAccion").append('<div class="form-group" id="guardarInsLineaAccionBoton"><button type="submit" class="btn btn-success" id="guardarInsLineaAccion">Guardar</button></div>');
 		var accion = "insInsLineaAccion";
-		var lineaAccionId = $("#nombreInstitucionInsLineaAccion option:selected").val();
+		var lineaAccionId = $("#nombreLineaAccionInsLineaAccion option:selected").val();
 		var institucionId = $("#nombreInstitucionInsLineaAccion option:selected").val();
 		var periodoId = $("#periodoInsLineaAccion option:selected").val();
 	    var meta = document.getElementById('metaInsLineaAccion').value; 
@@ -114,7 +118,6 @@
 	    datos.meta = meta;
 	    datos.version = version;		
 
-			
 				 
 		$.ajax({
 		        url: "http://tablero2015.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
@@ -128,15 +131,131 @@
 		        {
 		        	if (data.success == true)
 		        	{
-		        		$("#tituloModalUsuario").html('');
-						$("#tituloModalUsuario").append('<p class="text-success">GUARDADO</p>');
-			    		$("#pass-viejo-form").val("");
-						$("#pass-nuevo-form").val("");
-						$("#pass-nuevo1-form").val("");	
+						alert("Datos Guardados");
+						
+						var insLineaAccion = $.ajax({
+							url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion',
+						  	type:'get',
+						  	dataType:'json',
+						  	async:false       
+						}).responseText;		
+						insLineaAccion=JSON.parse(insLineaAccion);
+						
+						var lineaAccion = $.ajax({
+							url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+						  	type:'get',
+						  	dataType:'json',
+						  	async:false       
+						}).responseText;
+						lineaAccion = JSON.parse(lineaAccion);
+						
+						var institucion = $.ajax({
+							url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+						  	type:'get',
+						  	dataType:'json',
+						  	async:false       
+						}).responseText;
+						institucion = JSON.parse(institucion);
+						
+						var periodo = $.ajax({
+							url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+						  	type:'get',
+						  	dataType:'json',
+						  	async:false       
+						}).responseText;
+						periodo = JSON.parse(periodo);
+							
+						$('.box-body').html('');
+						var tablaInsLineaAccion="";
+						tablaInsLineaAccion = 	'<div class="table-responsive">'+
+												'<table class="table table-hover">'+
+												  '<tr class="active"><td colspan="7">Tabla InsLineaAccion</td><td><a href="#" data-toggle="modal" data-target="#insLineaAccion"><span class="glyphicon glyphicon-plus nuevaInsLineaAccion"></span></a></td></tr>'+
+												  '<tr class="active"><td>Id</td><td>lineaAccionId</td><td>institucionId</td><td>periodoId</td><td>meta</td><td>borrado</td><td>Editar</td><td>Borrar</td></tr>';
+												  
+					 	var bandLineaAccion;
+					 	var bandInstitucion;
+					 	var bandPeriodo;
+						for(var w=0; w<insLineaAccion.length;w++)
+						{
+						 	bandLineaAccion = 0;
+						 	bandInstitucion = 0;
+						 	bandPeriodo = 0;
+							
+							if(insLineaAccion[w].borrado == true){
+								tablaInsLineaAccion+='<tr><td><del>'+insLineaAccion[w].id+'</del></td>';
+							}else{
+								tablaInsLineaAccion+='<tr><td>'+insLineaAccion[w].id+'</td>';	
+							}
+						
+							
+							for(i = 0;i<lineaAccion.length; i++){				
+								if(insLineaAccion[w].lineaAccionId == lineaAccion[i].id)
+								{
+									if(insLineaAccion[w].borrado == true){
+										tablaInsLineaAccion+='<td><del>'+lineaAccion[i].nombre+'</del></td>';
+									}else{
+										tablaInsLineaAccion+='<td>'+lineaAccion[i].nombre+'</td>';	
+									}
+									bandLineaAccion = 1;
+								}
+							}
+							
+							if(bandLineaAccion == 0)
+							{
+								tablaInsLineaAccion+='<td>'+insLineaAccion[w].lineaAccionId+'</td>';
+							}
+										
+							for(m = 0;m<institucion.length; m++){
+								if(insLineaAccion[w].institucionId == institucion[m].id)
+								{
+									if(insLineaAccion[w].borrado == true){
+										tablaInsLineaAccion+='<td><del>'+institucion[m].sigla+'</del></td>';
+									}else{
+										tablaInsLineaAccion+='<td>'+institucion[m].sigla+'</td>';	
+									}
+									bandInstitucion = 1;
+								}
+							}
+							
+							if(bandInstitucion == 0)
+							{
+								tablaInsLineaAccion+='<td>'+insLineaAccion[w].institucionId+'</td>';
+							}
+										
+							for(p = 0;p<periodo.length; p++)
+							{
+								if(insLineaAccion[w].periodoId == periodo[p].id)
+								{
+									if(insLineaAccion[w].borrado == true){
+										tablaInsLineaAccion+='<td><del>'+periodo[p].nombre+'</del></td>';
+									}else{
+										tablaInsLineaAccion+='<td>'+periodo[p].nombre+'</td>';	
+									}
+									bandPeriodo = 1;
+								}
+							}
+							
+							if(bandPeriodo == 0)
+							{
+								tablaInsLineaAccion+='<td>'+insLineaAccion[w].periodoId+'</td>';
+							}
+							
+							if(insLineaAccion[w].borrado == true){
+								tablaInsLineaAccion+='<td><del>'+insLineaAccion[w].meta+'</del></td><td><del>'+insLineaAccion[w].borrado+'</del></td><td><span class="glyphicon glyphicon-pencil registrosInsLineaAccion" codigoRegistroInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'-'+insLineaAccion[w].meta+'-'+insLineaAccion[w].version+'></span></td><td><span class="glyphicon glyphicon-trash" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+' id="iconoBorradoInsLineaAccion"></span></td></tr>';
+							}else{
+								tablaInsLineaAccion+='<td>'+insLineaAccion[w].meta+'</td><td>'+insLineaAccion[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosInsLineaAccion" codigoRegistroInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'-'+insLineaAccion[w].meta+'-'+insLineaAccion[w].version+'></span></td><td><span class="glyphicon glyphicon-trash" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+' id="iconoBorradoInsLineaAccion"></span></td></tr>';	
+							}
+							
+						}
+						
+						tablaInsLineaAccion +='</table></div>';				
+						
+						$('.box-body').html(tablaInsLineaAccion);
+						
 		        	}else{
 		        		if (data.success == false){
-		        			$("#tituloModalUsuario").html('');
-				        	$("#tituloModalUsuario").append('<p class="text-danger">Error no se ha guardado</p>');
+
+							alert("Error");
 		        		}
 		        	}
 		        },
@@ -146,6 +265,9 @@
 		        	$("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intente de nuevo</p>');
 		        }
 		 });
+		
+		
+		
 			
 	});
 	
@@ -341,11 +463,125 @@
 		        {
 		        	if (data.success == true)
 		        	{
-		        		$("#tituloModalUsuario").html('');
-						$("#tituloModalUsuario").append('<p class="text-success">GUARDADO</p>');
-			    		$("#pass-viejo-form").val("");
-						$("#pass-nuevo-form").val("");
-						$("#pass-nuevo1-form").val("");	
+		        		alert("Actualizado");
+		        		var insLineaAccion = $.ajax({
+		        			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion',
+		        		  	type:'get',
+		        		  	dataType:'json',
+		        		  	async:false       
+		        		}).responseText;		
+		        		insLineaAccion=JSON.parse(insLineaAccion);
+		        		
+		        		var lineaAccion = $.ajax({
+		        			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+		        		  	type:'get',
+		        		  	dataType:'json',
+		        		  	async:false       
+		        		}).responseText;
+		        		lineaAccion = JSON.parse(lineaAccion);
+		        		
+		        		var institucion = $.ajax({
+		        			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+		        		  	type:'get',
+		        		  	dataType:'json',
+		        		  	async:false       
+		        		}).responseText;
+		        		institucion = JSON.parse(institucion);
+		        		
+		        		var periodo = $.ajax({
+		        			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+		        		  	type:'get',
+		        		  	dataType:'json',
+		        		  	async:false       
+		        		}).responseText;
+		        		periodo = JSON.parse(periodo);
+		        			
+		        		$('.box-body').html('');
+		        		var tablaInsLineaAccion="";
+		        		tablaInsLineaAccion = 	'<div class="table-responsive">'+
+		        								'<table class="table table-hover">'+
+		        								  '<tr class="active"><td colspan="7">Tabla InsLineaAccion</td><td><a href="#" data-toggle="modal" data-target="#insLineaAccion"><span class="glyphicon glyphicon-plus nuevaInsLineaAccion"></span></a></td></tr>'+
+		        								  '<tr class="active"><td>Id</td><td>lineaAccionId</td><td>institucionId</td><td>periodoId</td><td>meta</td><td>borrado</td><td>Editar</td><td>Borrar</td></tr>';
+		        								  
+		        	 	var bandLineaAccion;
+		        	 	var bandInstitucion;
+		        	 	var bandPeriodo;
+		        		for(var w=0; w<insLineaAccion.length;w++)
+		        		{
+		        		 	bandLineaAccion = 0;
+		        		 	bandInstitucion = 0;
+		        		 	bandPeriodo = 0;
+		        			
+		        			if(insLineaAccion[w].borrado == true){
+		        				tablaInsLineaAccion+='<tr><td><del>'+insLineaAccion[w].id+'</del></td>';
+		        			}else{
+		        				tablaInsLineaAccion+='<tr><td>'+insLineaAccion[w].id+'</td>';	
+		        			}
+		        		
+		        			
+		        			for(i = 0;i<lineaAccion.length; i++){				
+		        				if(insLineaAccion[w].lineaAccionId == lineaAccion[i].id)
+		        				{
+		        					if(insLineaAccion[w].borrado == true){
+		        						tablaInsLineaAccion+='<td><del>'+lineaAccion[i].nombre+'</del></td>';
+		        					}else{
+		        						tablaInsLineaAccion+='<td>'+lineaAccion[i].nombre+'</td>';	
+		        					}
+		        					bandLineaAccion = 1;
+		        				}
+		        			}
+		        			
+		        			if(bandLineaAccion == 0)
+		        			{
+		        				tablaInsLineaAccion+='<td>'+insLineaAccion[w].lineaAccionId+'</td>';
+		        			}
+		        						
+		        			for(m = 0;m<institucion.length; m++){
+		        				if(insLineaAccion[w].institucionId == institucion[m].id)
+		        				{
+		        					if(insLineaAccion[w].borrado == true){
+		        						tablaInsLineaAccion+='<td><del>'+institucion[m].sigla+'</del></td>';
+		        					}else{
+		        						tablaInsLineaAccion+='<td>'+institucion[m].sigla+'</td>';	
+		        					}
+		        					bandInstitucion = 1;
+		        				}
+		        			}
+		        			
+		        			if(bandInstitucion == 0)
+		        			{
+		        				tablaInsLineaAccion+='<td>'+insLineaAccion[w].institucionId+'</td>';
+		        			}
+		        						
+		        			for(p = 0;p<periodo.length; p++)
+		        			{
+		        				if(insLineaAccion[w].periodoId == periodo[p].id)
+		        				{
+		        					if(insLineaAccion[w].borrado == true){
+		        						tablaInsLineaAccion+='<td><del>'+periodo[p].nombre+'</del></td>';
+		        					}else{
+		        						tablaInsLineaAccion+='<td>'+periodo[p].nombre+'</td>';	
+		        					}
+		        					bandPeriodo = 1;
+		        				}
+		        			}
+		        			
+		        			if(bandPeriodo == 0)
+		        			{
+		        				tablaInsLineaAccion+='<td>'+insLineaAccion[w].periodoId+'</td>';
+		        			}
+		        			
+		        			if(insLineaAccion[w].borrado == true){
+		        				tablaInsLineaAccion+='<td><del>'+insLineaAccion[w].meta+'</del></td><td><del>'+insLineaAccion[w].borrado+'</del></td><td><span class="glyphicon glyphicon-pencil registrosInsLineaAccion" codigoRegistroInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'-'+insLineaAccion[w].meta+'-'+insLineaAccion[w].version+'></span></td><td><span class="glyphicon glyphicon-trash" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+' id="iconoBorradoInsLineaAccion"></span></td></tr>';
+		        			}else{
+		        				tablaInsLineaAccion+='<td>'+insLineaAccion[w].meta+'</td><td>'+insLineaAccion[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosInsLineaAccion" codigoRegistroInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'-'+insLineaAccion[w].meta+'-'+insLineaAccion[w].version+'></span></td><td><span class="glyphicon glyphicon-trash" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+' id="iconoBorradoInsLineaAccion"></span></td></tr>';	
+		        			}
+		        			
+		        		}
+
+		        		tablaInsLineaAccion +='</table></div>';				
+		        		
+		        		$('.box-body').html(tablaInsLineaAccion);
 		        	}else{
 		        		if (data.success == false){
 		        			$("#tituloModalUsuario").html('');
@@ -360,39 +596,7 @@
 		        }
 		 });	
 		
-		var insLineaAccion = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion',
-		  	type:'get',
-		  	dataType:'json',
-		  	async:false       
-		}).responseText;		
-		insLineaAccion=JSON.parse(insLineaAccion);
-		
-		renderInsLineaAccion();
-		function renderInsLineaAccion(){
-			
-		$('.box-body').html('');
-		var tablaInsLineaAccion="";
-		tablaInsLineaAccion = 	'<div class="table-responsive">'+
-								'<table class="table table-hover">'+
-								  '<tr class="active"><td colspan="7">Tabla InsLineaAccion</td><td><a href="#" data-toggle="modal" data-target="#insLineaAccion"><span class="glyphicon glyphicon-plus nuevaInsLineaAccion"></span></a></td></tr>'+
-								  '<tr class="active"><td>Id</td><td>lineaAccionId</td><td>institucionId</td><td>periodoId</td><td>meta</td><td>borrado</td><td>Editar</td><td>Borrar</td></tr>';
-		for(var w=0; w<insLineaAccion.length;w++)
-		{
-			if(insLineaAccion[w].borrado == true)
-			{
-				tablaInsLineaAccion+='<tr><td><del>'+insLineaAccion[w].id+'</del></td><td><del>'+insLineaAccion[w].lineaAccionId+'</del></td><td><del>'+insLineaAccion[w].institucionId+'</del></td><td><del>'+insLineaAccion[w].periodoId+'</del></td><td><del>'+insLineaAccion[w].meta+'</del></td><td><del>'+insLineaAccion[w].borrado+'</del></td><td><span class="glyphicon glyphicon-pencil registrosInsLineaAccion" codigoRegistroInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'-'+insLineaAccion[w].meta+'-'+insLineaAccion[w].version+'></span></td><td><span class="glyphicon glyphicon-trash" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+' id="iconoBorradoInsLineaAccion"></span></td></tr>';
-			}else{
-				tablaInsLineaAccion+='<tr><td>'+insLineaAccion[w].id+'</td><td>'+insLineaAccion[w].lineaAccionId+'</td><td>'+insLineaAccion[w].institucionId+'</td><td>'+insLineaAccion[w].periodoId+'</td><td>'+insLineaAccion[w].meta+'</td><td>'+insLineaAccion[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosInsLineaAccion" codigoRegistroInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'-'+insLineaAccion[w].meta+'-'+insLineaAccion[w].version+'></span></td><td><span class="glyphicon glyphicon-trash" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+' id="iconoBorradoInsLineaAccion"></span></td></tr>';
-
-				
-			}
-		}
-		tablaInsLineaAccion +='</table></div>';				
-		
-		$('.box-body').html(tablaInsLineaAccion);
-		
-		}	
+	
 		
 	});	
 	

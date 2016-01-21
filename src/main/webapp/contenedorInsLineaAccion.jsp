@@ -126,28 +126,55 @@ if (user != null) { %>
 								'<table class="table table-hover">'+
 								  '<tr class="active"><td colspan="7">Tabla InsLineaAccion</td><td><a href="#" data-toggle="modal" data-target="#insLineaAccion"><span class="glyphicon glyphicon-plus nuevaInsLineaAccion"></span></a></td></tr>'+
 								  '<tr class="active"><td>Id</td><td>lineaAccionId</td><td>institucionId</td><td>periodoId</td><td>meta</td><td>borrado</td><td>Editar</td><td>Borrar</td></tr>';
+								  
+	 	var bandLineaAccion;
+	 	var bandInstitucion;
+	 	var bandPeriodo;
 		for(var w=0; w<insLineaAccion.length;w++)
 		{
+		 	bandLineaAccion = 0;
+		 	bandInstitucion = 0;
+		 	bandPeriodo = 0;
+			
+			if(insLineaAccion[w].borrado == true){
+				tablaInsLineaAccion+='<tr><td><del>'+insLineaAccion[w].id+'</del></td>';
+			}else{
+				tablaInsLineaAccion+='<tr><td>'+insLineaAccion[w].id+'</td>';	
+			}
+		
+			
 			for(i = 0;i<lineaAccion.length; i++){				
 				if(insLineaAccion[w].lineaAccionId == lineaAccion[i].id)
 				{
 					if(insLineaAccion[w].borrado == true){
-						tablaInsLineaAccion+='<tr><td><del>'+insLineaAccion[w].id+'</del></td><td><del>'+lineaAccion[i].nombre+'</del></td>';
+						tablaInsLineaAccion+='<td><del>'+lineaAccion[i].nombre+'</del></td>';
 					}else{
-						tablaInsLineaAccion+='<tr><td>'+insLineaAccion[w].id+'</td><td>'+lineaAccion[i].nombre+'</td>';	
+						tablaInsLineaAccion+='<td>'+lineaAccion[i].nombre+'</td>';	
 					}
+					bandLineaAccion = 1;
 				}
+			}
+			
+			if(bandLineaAccion == 0)
+			{
+				tablaInsLineaAccion+='<td>'+insLineaAccion[w].lineaAccionId+'</td>';
 			}
 						
 			for(m = 0;m<institucion.length; m++){
 				if(insLineaAccion[w].institucionId == institucion[m].id)
 				{
 					if(insLineaAccion[w].borrado == true){
-						tablaInsLineaAccion+='<td><del>'+institucion[m].nombre+'</del></td>';
+						tablaInsLineaAccion+='<td><del>'+institucion[m].sigla+'</del></td>';
 					}else{
-						tablaInsLineaAccion+='<td>'+institucion[m].nombre+'</td>';	
+						tablaInsLineaAccion+='<td>'+institucion[m].sigla+'</td>';	
 					}
+					bandInstitucion = 1;
 				}
+			}
+			
+			if(bandInstitucion == 0)
+			{
+				tablaInsLineaAccion+='<td>'+insLineaAccion[w].institucionId+'</td>';
 			}
 						
 			for(p = 0;p<periodo.length; p++)
@@ -159,8 +186,13 @@ if (user != null) { %>
 					}else{
 						tablaInsLineaAccion+='<td>'+periodo[p].nombre+'</td>';	
 					}
+					bandPeriodo = 1;
 				}
-
+			}
+			
+			if(bandPeriodo == 0)
+			{
+				tablaInsLineaAccion+='<td>'+insLineaAccion[w].periodoId+'</td>';
 			}
 			
 			if(insLineaAccion[w].borrado == true){

@@ -240,7 +240,11 @@ public class ajaxInserts  extends HttpServlet {
             if(br != null){ json = br.readLine();}
             Gson gsonInsert = new Gson();
             productoObj=gsonInsert.fromJson(json, InsLineaAccion.class);
-			SqlInserts.insertInsLineaAccion(productoObj);
+			//SqlInserts.insertInsLineaAccion(productoObj);
+            SqlInserts.insertInsLineaAccion(productoObj);
+            boolean status = true;
+    		myObj.addProperty("success", status);
+    		out.println(myObj.toString());
     	}
        }
         if (accion!=null && accion!=""){
