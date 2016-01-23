@@ -120,8 +120,8 @@ if (user != null) { %>
 		var tablaInsLineaAccion="";
 		tablaInsLineaAccion = 	'<div class="table-responsive">'+
 								'<table class="table table-hover">'+
-								  '<tr class="active"><td colspan="8">Tabla InsLineaAccion</td><td><a href="#" data-toggle="modal" data-target="#insLineaAccion"><span class="glyphicon glyphicon-plus nuevaInsLineaAccion"></span></a></td></tr>'+
-								  '<tr class="active"><td>Id</td><td>LineaAcción</td><td>Institución</td><td>Periodo</td><td>Meta</td><td>Estado</td><td>Editar</td><td>Borrar</td><td>Acción</td></tr>';
+								  '<tr class="active"><td colspan="9">Linea de Acción por Institución</td></tr>'+
+								  '<tr class="active"><td>Id</td><td>Linea de Acción</td><td>Institución</td><td>Periodo</td><td>Meta</td><td>Estado</td><td>Editar</td><td>Borrar</td><td>Acción</td></tr>';
 								  
 	 	var bandLineaAccion;
 	 	var bandInstitucion;
@@ -200,7 +200,7 @@ if (user != null) { %>
 		}
 		
 		
-		
+		tablaInsLineaAccion +='<tr><td colspan="9"></td></tr>';
 		tablaInsLineaAccion +='</table></div>';				
 		
 		$('.box-body').html(tablaInsLineaAccion);
@@ -251,6 +251,9 @@ if (user != null) { %>
 	            
 	            
 	            </div>
+	             <div class="box-footer" style="height:600px; overflow: auto; display: block;">
+	             	<button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#insLineaAccion">Agregar Linea de Acción</button>
+	             </div>
 			   </div>
 			</div>
           </div><!-- /.row -->
