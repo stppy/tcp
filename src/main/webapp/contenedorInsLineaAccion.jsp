@@ -254,18 +254,6 @@ if (user != null) { %>
 			   </div>
 			</div>
           </div><!-- /.row -->
-          
-          
-          
-          	            
-	            
-	            
-	            
-	            
-	            
-
-
-
 
             
     </section><!-- /.content -->

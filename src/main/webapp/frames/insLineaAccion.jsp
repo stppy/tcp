@@ -945,8 +945,8 @@
 							
 		$("#programacion").append(cuerpoModalAccion);
 		$('#myModal').modal('show');
-
 		$('#myModal').modalSteps();
+
 		
 	});
 	
