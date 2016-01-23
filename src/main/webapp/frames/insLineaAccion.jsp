@@ -875,10 +875,24 @@
 			optionDepartamentos+='<option value="'+departamentos[i].idDepartamento+'" parametro="'+departamentos[i].idDepartamento+'">'+departamentos[i].nombreDepartamento+'</option>';
 		}
 		optionDepartamentos+='<option value="99" parametro="99">ALC.NACIONAL</option>';
+		
+		var accion_catalogo = $.ajax({
+	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo',
+	      	type:'get',
+	      	dataType:'json',
+	      	async:false       
+	    }).responseText;
+		accion_catalogo = JSON.parse(accion_catalogo);
+		
+		var optionAccionCatalogo = "";
+		for(i = 0;i<18; i++){
+			optionAccionCatalogo+='<option value="'+accion_catalogo[i].id+'" parametro="'+accion_catalogo[i].id+'">'+accion_catalogo[i].nombre+'</option>';
+		}		
 				
 		//var cuerpoModalAccion = "";
 		$('#modalAgregarAccion').find("#selectorDepartamento").append(optionDepartamentos);
 		$('#modalAgregarAccion').find("#selectorUnidadMedida").append(optionUnidadMedida);
+		$('#modalAgregarAccion').find("#selectorAccion").append(optionAccionCatalogo);
 		$('#modalAgregarAccion').modalSteps();
 		$('#modalAgregarAccion').modal('show');
 

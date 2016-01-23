@@ -2222,5 +2222,28 @@ public static boolean borradoHito(Hito objeto){
 					    return true;
 					} catch (SQLException e) {e.printStackTrace(); return false;}
 
-		}	
+		}
+	public static boolean updateAccionCatalogo(AccionCatalogo objeto){
+	  	 Connection conect=ConnectionConfiguration.conectar();
+	   	
+	  	 Statement statement = null;
+
+					 String											query = "update accion_catalogo set ";
+					 if(objeto.getNombre()!=null)					query+= "nombre='"+objeto.getNombre()+"'";
+					 if(objeto.getDescripcion()!=null)				query+= "descripcion='"+objeto.getDescripcion()+"'";
+					 if(objeto.getIdUnidadMedida()!=0)				query+= "id_unidad_medida='"+objeto.getIdUnidadMedida()+"'";
+					 if(objeto.getVersion()!=0)						query+= "verdion='"+objeto.getVersion()+"'";
+					 if(objeto.isBorrado()!=false)					query+= ", borrado='"+objeto.isBorrado()+"'";
+
+					 		 
+					 query+=" where id ="+objeto.getId();
+							 
+					 try {
+						statement=conect.createStatement();
+						statement.execute(query);
+					    conect.close();
+					    return true;
+					} catch (SQLException e) {e.printStackTrace(); return false;}
+
+		}		
 }

@@ -283,7 +283,7 @@ if (user != null) { %>
 						<div class="table-responsive">
 							<table class="table table-hover">
 								<tbody>
-									<tr><td><div class="form-group"><label for="nombreAccion">Acción</label><input type="text" class="form-control" id="nombreAccion" value=""><input type="hidden" class="form-control" id="insLineaAccionId" value="'+insLineaAccionId+'"></div></td><td><div class="form-group"><label for="umedida">U. medida</label><select id="selectorUnidadMedida" class="form-control">'+optionUnidadMedida+'</select></div></td></tr>
+									<tr><td><div class="form-group"><label for="nombreAccion">Acción</label><select id="selectorAccion" name="accion" class="form-control">'+optionAccionCatalogo+'</select></div></td><td><div class="form-group"><label for="umedida">U. medida</label><select id="selectorUnidadMedida" class="form-control">'+optionUnidadMedida+'</select></div></td></tr>
 									<tr><td><div class="form-group"><label for="departamento">Departamento</label><select id="selectorDepartamento" name="departamento" class="form-control">'+optionDepartamentos+'</select></div></td><td><div class="form-group"><label for="distrito">Distrito</label><select name="departamento" class="form-control" id="distritosDepartamento"></select></div></td></tr>
 								</tbody>
 							</table>
@@ -325,6 +325,61 @@ if (user != null) { %>
 		          </div>
 		        </div>
 		      </div>
+		      
+		      
+		        <div class="row" data-step="3" data-title="Vinculación de Productos de la acción">
+		          <div class="well">
+			 		<form role="form">
+						<div class="table-responsive">
+							<table class="table table-hover">
+								<tbody>
+									<tr>
+										<td><div class="form-group"><label for="nivel">Acción</label><input type="text" name="nivel" id="modalStepAccion" value="" class="form-control"></div></td>
+										<td><div class="form-group"><label for="entidad">Entidad</label><input type="text" name="entidad" id="modalStepEntidad" value="" class="form-control"></div></td>
+										<td><div class="form-group"><label for="programa">Programa</label><input type="text" name="programa" id="modalStepPrograma" value="" class="form-control"></div></td>
+										<td><div class="form-group"><label for="subPrograma">SubPrograma</label><input type="text" name="subPrograma" id="modalStepSubPrograma" value="" class="form-control"></div></td>
+										<td><div class="form-group"><label for="proyecto">Proyecto</label><input type="text" name="proyecto" id="modalStepProyecto" value="" class="form-control"></div></td>
+										<td><div class="form-group"><label for="producto">Producto</label><input type="text" name="producto" id="modalStepProducto" value="" class="form-control"></div></td>
+										<td><div class="form-group"><label for="totalFisico">Total Fisico</label><input type="text" name="totalFisico" id="modalStepTotalFisico" value="" class="form-control"></div></td>
+									</tr>	
+									<tr>	
+										<td><div class="form-group"><label for="unidadMedida">U. Medida</label><input type="text" name="unidadMedida" id="modalStepUnidadMedida" value="" class="form-control"></div></td>
+										<td><div class="form-group"><label for="clase">Clase</label><input type="text" name="clase" id="modalStepClase" value="" class="form-control"></div></td>
+										<td><div class="form-group"><label for="totalFinanciero">Total Financiero</label><input type="text" name="totalFinanciero" id="modalStepTotalFinanciero" value="" class="form-control"></div></td>
+										<td><div class="form-group"><label for="asignacionFinanciera">Asignación Financiera</label><input type="text" name="asignacionFinanciera" id="modalStepAsignacionFinanciera" value="" class="form-control"></div></td>
+										<td><div class="form-group"><label for="entidad">Destinatarios</label><input type="text" name="destinatarios" id="modalStepDestinatarios" value="" class="form-control"></div></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</form>
+		          </div>
+		        </div>		      
+		      
+		        <div class="row" data-step="4" data-title="Agregar Hito">
+		          <div class="well">
+			 		<form role="form">
+						<div class="table-responsive">
+							<table class="table table-hover">
+								<tbody>
+									<tr>
+										<td><div class="form-group"><label for="accion">Acción</label><input type="text" name="accion" id="modalStepAccion2" value="" class="form-control"></div></td>
+										<td><div class="form-group"><label for="departamento">Departamento</label><input type="text" name="departamento" id="modalStepDepartamento" value="" class="form-control"></div></td>
+										<td><div class="form-group"><label for="distrito">Distrito</label><input type="text" name="distrito" id="modalStepDistrito" value="" class="form-control"></div></td>
+										<td><div class="form-group"><label for="unidadMedida">U. Medida</label><input type="text" name="unidadMedida" id="modalStepUnidadMedida2" value="" class="form-control"></div></td>
+										<td><div class="form-group"><label for="cantidadProgramado">Cantidad Programado</label><input type="text" name="cantidadProgramado" id="modalStepCantProgramado" value="" class="form-control"></div></td>
+										<td><div class="form-group"><label for="fechaTerminacion">Fecha Terminación</label><input type="text" name="fechaTerminacion" id="modalStepFechaTerminacion" value="" class="form-control"></div></td>
+										<td><div class="form-group"><label for="porcentajeProgramado">% Programado</label><input type="text" name="porcentajeProgramado" id="modalStepPorcentajeProgramado" value="" class="form-control"></div></td>
+									</tr>	
+								</tbody>
+							</table>
+						</div>
+					</form>
+		          </div>
+		        </div>		      
+		      
+		      
+		      
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-default js-btn-step pull-left" data-orientation="cancel" data-dismiss="modal">Cancelar</button>
 		        <button type="button" class="btn btn-warning js-btn-step" data-orientation="previous">Prev.</button>

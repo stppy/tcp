@@ -338,6 +338,14 @@ public class ajaxSelects extends HttpServlet {
         		out.println(json.toString());
         	}
         	
+        	if (action.equals("getAccionCatalogo")){
+        		List objetos=null; 
+           		try {objetos = SqlSelects.selectAccionCatalogo();}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());
+        	}
+        	
        	
         	
        }
