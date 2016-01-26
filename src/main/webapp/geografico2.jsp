@@ -1602,6 +1602,7 @@ $(document).ready(function(){
 							                '<tbody class="table-body-producto" id="TablaAccionHasProductos">'+
 							                '</tbody>'+
 							                '</table>'+
+							                '</div>'+
 
 					                	'</div>'+//fin box-body
 					                	'<div class="box-footer">'+

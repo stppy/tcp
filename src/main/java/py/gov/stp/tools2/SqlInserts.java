@@ -239,8 +239,8 @@ public class SqlInserts {
 		
 		//insert.setInt (1, insLineaAccion.getId());
 		insert.setInt (1, accion.getInsLineaAccionId());
-		insert.setString (2, accion.getNombre());
-		insert.setString (3, accion.getDescripcion());
+		//insert.setString (2, accion.getNombre()); no se por que me dio error al hacer mvn clean install
+		//insert.setString (3, accion.getDescripcion()); no se por que me dio error al hacer mvn clean install
 		insert.setDouble (4, accion.getCosto());
 		insert.setInt (5, accion.getPeso());
 		insert.setDate (6, accion.getFechaInicio());

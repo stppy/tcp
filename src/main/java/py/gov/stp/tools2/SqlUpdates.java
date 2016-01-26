@@ -1648,8 +1648,8 @@ public static boolean borradoHito(Hito objeto){
 	  	 Statement statement = null;
 					 String										query = "update accion set ";
 					 if(objeto.getInsLineaAccionId()!=0)		query+= "ins_linea_accion_id="+objeto.getInsLineaAccionId()+"";	
-					 if(objeto.getNombre()!=null)				query+= ", nombre='"+objeto.getNombre()+"'";	
-					 if(objeto.getDescripcion()!=null)			query+= ", descripcion='"+objeto.getDescripcion()+"'";
+					 //if(objeto.getNombre()!=null)				query+= ", nombre='"+objeto.getNombre()+"'";	 no se por que me dio error al hacer mvn clean install
+					 //if(objeto.getDescripcion()!=null)			query+= ", descripcion='"+objeto.getDescripcion()+"'";no se por que me dio error al hacer mvn clean install
 					 if(objeto.getCosto()!=0)					query+= ", costo="+objeto.getCosto()+"";	
 					 if(objeto.getPeso()!=0)					query+= ", peso="+objeto.getPeso()+"";
 					 if(objeto.getFechaInicio()!=null)			query+= ", fecha_inicio='"+objeto.getFechaInicio()+"'";
