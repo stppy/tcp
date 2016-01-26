@@ -870,6 +870,15 @@
 	    }).responseText;
 		departamentos = JSON.parse(departamentos);
 		
+		
+		var distritos = $.ajax({
+	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getDistrito',
+	      	type:'get',
+	      	dataType:'json',
+	      	async:false       
+	    }).responseText;
+		distritos = JSON.parse(distritos);		
+		
 		var optionDepartamentos = "";
 		for(i = 0;i<18; i++){
 			optionDepartamentos+='<option value="'+departamentos[i].idDepartamento+'" parametro="'+departamentos[i].idDepartamento+'">'+departamentos[i].nombreDepartamento+'</option>';
@@ -885,14 +894,57 @@
 		accion_catalogo = JSON.parse(accion_catalogo);
 		
 		var optionAccionCatalogo = "";
-		for(i = 0;i<18; i++){
+		for(var i = 0;i<accion_catalogo.length; i++){
 			optionAccionCatalogo+='<option value="'+accion_catalogo[i].id+'" parametro="'+accion_catalogo[i].id+'">'+accion_catalogo[i].nombre+'</option>';
 		}		
+		
+		var accion = $.ajax({
+			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccionId,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		accion = JSON.parse(accion);
+		var cuerpoAccion="";
+		
+		var nombreDepartamento;
+		for(var a = 0; a < accion.length; a++)
+		{
+			for(var d = 0; d < 18; d++)
+			{
+				if(accion[a].departamentoId == departamentos[d].idDepartamento){
+					nombreDepartamento = departamentos[d].nombreDepartamento;
+				}
+			}
+			
+		}
+		
+		var nombreDistrito;
+		for(var a = 0; a < accion.length; a++)
+		{
+			for(var d = 0; d < distritos.length; d++)
+			{
+				if(accion[a].distritoId == distritos[d].id && accion[a].departamentoId == distritos[d].departamentoId){
+					nombreDistrito = distritos[d].descripcion;
+				}
+			}
+			
+		}		
+		
+		for(var z = 0; z < accion.length; z++)
+		{
+			cuerpoAccion +="<tr><td class='text-center'>"+nombreDepartamento+"</td><td class='text-center'>"+nombreDistrito+"</td><td class='text-center'>"+accion[z].fechaInicio+"</td><td class='text-center'>"+accion[z].fechaFin+"</td><td class='text-center'>"+accion[z].costo+"</td><td class='text-center'>"+accion[z].meta1+"</td><td class='text-center'>"+accion[z].meta2+"</td><td class='text-center'>"+accion[z].meta3+"</td><td class='text-center'>"+accion[z].meta4+"</td><td class='text-center'>"+accion[z].peso+"</td><td class='text-center'>"+accion[z].version+"</td></tr>";
+		}
+		
+
 				
 		//var cuerpoModalAccion = "";
 		$('#modalAgregarAccion').find("#selectorDepartamento").append(optionDepartamentos);
 		$('#modalAgregarAccion').find("#selectorUnidadMedida").append(optionUnidadMedida);
 		$('#modalAgregarAccion').find("#selectorAccion").append(optionAccionCatalogo);
+		$('#modalAgregarAccion').find("#tablaAcciones").html("");
+		$('#modalAgregarAccion').find(".modal-header").html("");
+		$('#modalAgregarAccion').find("#tablaAcciones").append(cuerpoAccion);
 		$('#modalAgregarAccion').modalSteps();
 		$('#modalAgregarAccion').modal('show');
 
@@ -921,6 +973,4 @@
 	});
 	
 
-	
-	
 	</script>	

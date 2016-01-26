@@ -1581,7 +1581,6 @@ $(document).ready(function(){
 					                  		'</div>'+
 					                	'</div>'+//fin box-heder
 					                	'<div class="box-body no-padding">'+
-							      			'<div >'+
 							      			
 							      			'<div class="table-responsive">'+
 							                '<table class="table table-striped table-bordered  table-hover">'+

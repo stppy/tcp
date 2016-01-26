@@ -1,5 +1,5 @@
 package py.gov.stp.tools2;
-import py.gov.stp.objetos2.AccionCatalogo;
+import py.gov.stp.objetosV2.AccionCatalogo;
 import py.gov.stp.objetosV2.*;
 
 import java.sql.Connection;
@@ -357,9 +357,9 @@ public class SqlSelects {
 		return objetos; 
 		}	
 	
-	public static List<Accion> selectAccion() throws SQLException{
+	public static List<Accion> selectAccion(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select * from accion";
+		String query = " select * from accion "+condition;
 
 		Statement statement = null;
 		ResultSet rs=null;
@@ -372,14 +372,20 @@ public class SqlSelects {
 				Accion objeto = new Accion();
 				
 				objeto.setId(rs.getInt("id"));
-				objeto.setInsLineaAccionId(rs.getInt("ins_linea_accion_id")); 
-				objeto.setNombre(rs.getString("nombre"));
-				objeto.setDescripcion(rs.getString("descripcion"));
 				objeto.setCosto(rs.getDouble("costo"));
 				objeto.setPeso(rs.getInt("peso"));
 				objeto.setFechaInicio(rs.getDate("fecha_inicio"));
 				objeto.setFechaFin(rs.getDate("fecha_fin"));
+				objeto.setVersion(rs.getInt("version"));
 				objeto.setBorrado(rs.getBoolean("borrado"));
+				objeto.setMeta1(rs.getDouble("meta1"));
+				objeto.setMeta2(rs.getDouble("meta2"));
+				objeto.setMeta3(rs.getDouble("meta3"));
+				objeto.setMeta4(rs.getDouble("meta4"));
+				objeto.setInsLineaAccionId(rs.getInt("ins_linea_accion_id")); 
+				objeto.setDepartamentoId(rs.getInt("depto_id"));
+				objeto.setDistritoId(rs.getInt("dist_id"));
+				objeto.setAccionCatalogoId(rs.getInt("id_accion_catalogo"));
 
 				objetos.add(objeto);
 			}

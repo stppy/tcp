@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
- 
+
 
 
 
@@ -70,6 +70,8 @@ public class ajaxSelects extends HttpServlet {
     	Integer institucion_id=null;
     	Integer accion_id=null;
     	Integer linea_accion_id=null;
+    	Integer lineaAccionId=null;
+
     	
     	String institucion=null;
     	String usuario=null;
@@ -118,7 +120,9 @@ public class ajaxSelects extends HttpServlet {
       	if (request.getParameter("institucion_id")!=null) institucion_id=Integer.parseInt(request.getParameter("institucion_id")); else institucion_id=0;
       	if (request.getParameter("accion_id")!=null) accion_id=Integer.parseInt(request.getParameter("accion_id")); else accion_id=0;
       	if (request.getParameter("linea_accion_id")!=null) linea_accion_id=Integer.parseInt(request.getParameter("linea_accion_id")); else linea_accion_id=0;
-    	
+      	if (request.getParameter("lineaAccionId")!=null) lineaAccionId=Integer.parseInt(request.getParameter("lineaAccionId"));
+
+      	
         PrintWriter out = response.getWriter();
         response.setContentType("text/html");
         response.setHeader("Cache-control", "no-cache, no-store");
@@ -318,7 +322,9 @@ public class ajaxSelects extends HttpServlet {
         	} 
         	if (action.equals("getAccion")){
         		List objetos=null; 
-           		try {objetos = SqlSelects.selectAccion();}
+        		condition = " where true ";
+        		if (lineaAccionId!=null) condition += " and ins_linea_accion_id ='"+lineaAccionId+"'";
+           		try {objetos = SqlSelects.selectAccion(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -345,6 +351,7 @@ public class ajaxSelects extends HttpServlet {
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
         	}
+        	
         	
        	
         	
