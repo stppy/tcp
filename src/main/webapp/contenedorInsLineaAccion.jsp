@@ -195,7 +195,7 @@ if (user != null) { %>
 			if(insLineaAccion[w].borrado == true){
 				tablaInsLineaAccion+='<td><del>'+insLineaAccion[w].meta+'</del></td><td><del>'+insLineaAccion[w].borrado+'</del></td><td><span class="glyphicon glyphicon-pencil registrosInsLineaAccion" codigoRegistroInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'-'+insLineaAccion[w].meta+'-'+insLineaAccion[w].version+'></span></td><td><span class="glyphicon glyphicon-trash" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+' id="iconoBorradoInsLineaAccion"></span></td><td><span class="glyphicon glyphicon-list-alt" parametrosAccionInsLineaAccion="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"></span></td></tr>';
 			}else{
-				tablaInsLineaAccion+='<td>'+insLineaAccion[w].meta+'</td><td>'+insLineaAccion[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosInsLineaAccion" codigoRegistroInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'-'+insLineaAccion[w].meta+'-'+insLineaAccion[w].version+'></span></td><td><span class="glyphicon glyphicon-trash" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+' id="iconoBorradoInsLineaAccion"></span></td><td><span class="glyphicon glyphicon-list-alt agregarAccion2" parametrosAccionInsLineaAccion="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"></span></td></tr>';	
+				tablaInsLineaAccion+='<td>'+insLineaAccion[w].meta+'</td><td>'+insLineaAccion[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosInsLineaAccion" codigoRegistroInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'-'+insLineaAccion[w].meta+'-'+insLineaAccion[w].version+'></span></td><td><span class="glyphicon glyphicon-trash" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+' id="iconoBorradoInsLineaAccion"></span></td><td><span class="glyphicon glyphicon-list-alt agregarAccion" parametrosAccionInsLineaAccion="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"></span></td></tr>';	
 			}
 			
 		}
@@ -272,132 +272,16 @@ if (user != null) { %>
 		  
 		   <div class="modal-content">
 		      <div class="modal-header">
-		        <h4 class="js-title-step"></h4>
+		        <h4 class="title-modal"></h4>
 		      </div>
 		      <div class="modal-body">
-		        <div class="row" data-step="1" data-title="Agregar Acción">
-		          <div class="well">
-		          					
-			  <div class="table-responsive">
-					<table class="table table-hover">
-				    	<thead>
-				      		<tr><th rowspan="2" class="text-center">Depto</th><th rowspan="2" class="text-center">Distrito</th><th rowspan="2" class="text-center">FechaInicio</th><th rowspan="2" class="text-center">FechaFin</th><th rowspan="2" class="text-center">Costo</th><th colspan="4" class="text-center">Metas</th><th rowspan="2" class="text-center">Contribución</th><th rowspan="2" class="text-center">Versión</th><th rowspan="2" class="text-center">VincularProducto</th></tr>
-				      		<tr><th class="text-center">1er Trimestre</th><th class="text-center">2do Trimestre</th><th class="text-center">3er Trimestre</th><th class="text-center">4to Trimestre</th></tr>
-				      	</thead>
-				      	<tbody id="tablaAcciones">
-				      	</tbody>
-				    </table>
-				</div>
-								
-				<form role="form">
-					<div class="table-responsive">
-						<table class="table table-hover">
-							<tbody>
-								<input type="hidden" value="3" id="versionAccion">
-								<tr><td><div class="form-group"><label for="nombreAccion">Acción</label><select id="selectorAccion" name="accion" class="form-control">'+optionAccionCatalogo+'</select></div></td><td><div class="form-group"><label for="umedida">U. medida</label><select id="selectorUnidadMedida" class="form-control">'+optionUnidadMedida+'</select></div></td></tr>
-								<tr><td><div class="form-group"><label for="departamento">Departamento</label><select id="selectorDepartamento" name="departamento" class="form-control">'+optionDepartamentos+'</select></div></td><td><div class="form-group"><label for="distrito">Distrito</label><select name="departamento" class="form-control" id="distritosDepartamento"></select></div></td></tr>
-							</tbody>
-						</table>
-					</div>
-				</form>
-				
-	          </div>
-	        </div>
-		        <div class="row hide" data-step="2" data-title="Planificar Metas">
-		          <div class="well">
-		  			   	<div class="row">
-		 					<div class="form-group col-md-3">
-		 						<label for="totalFinanciero-formulario">Primer Trimestre</label>
-		  						<div class="input-group input-group-sm">     			
-						    				<input type="text" name="primerTrimestre" id="primerTrimestre-formulario" value="" class="form-control">
-		  						</div>
-							</div>
-							    		
-		  					<div class="form-group col-md-3">
-		  					<label for="totalFinanciero-formulario">Segundo Trimestre</label>
-		   					<div class="input-group input-group-sm">
-							    			<input type="text" name="segundoTrimestre" id="segundoTrimestre-formulario" value="" class="form-control">
-		   					</div>
-						    </div>
-			    		
-		  					<div class="form-group col-md-3">
-		 					<label for="totalFinanciero-formulario">Tercer Trimestre</label>
-		   					<div class="input-group input-group-sm">
-							   <input type="text" name="tercerTrimestre" id="tercerTrimestre-formulario" value="" class="form-control">
-		   					</div>
-			    			</div>
-		 					    <div class="form-group col-md-3">
-									<label for="totalFinanciero-formulario">Cuarto Trimestre</label>
-		  						<div class="input-group input-group-sm">
-			    				<input type="text" name="cuartoTrimestre" id="cuartoTrimestre-formulario" value="" class="form-control">
-		  						</div>
-		   					</div>
-						</div>
-					      			       
-		          </div>
-		        </div>
-		        	                  	        		        	        
-		        <div class="row hide" data-step="3" data-title="Declarar Hito">
-		          <div class="well">
-		  			   	<div class="row">
-		 					<div class="form-group col-md-3">
-		 						<label for="accion2">Acción</label>
-		  						<div class="input-group input-group-sm">     			
-						    				<input type="text" name="accionStep2" id="accionStep2" value="" class="form-control">
-		  						</div>
-							</div>
-							    		
-		  					<div class="form-group col-md-3">
-		  					<label for="departamento">Departamento</label>
-		   					<div class="input-group input-group-sm">
-							    			<input type="text" name="departamentoStep" id="departamentoStep" value="" class="form-control">
-		   					</div>
-						    </div>
-			    		
-		  					<div class="form-group col-md-3">
-		 					<label for="distrito">Distrito</label>
-		   					<div class="input-group input-group-sm">
-							   <input type="text" name="distritoStep" id="distritoStep" value="" class="form-control">
-		   					</div>
-			    			</div>
-		 					    <div class="form-group col-md-3">
-									<label for="unidadMedida2">U. Medida</label>
-		  						<div class="input-group input-group-sm">
-			    				<input type="text" name="unidadMedidaStep2" id="unidadMedidaStep2" value="" class="form-control">
-		  						</div>
-		   					</div>
-						</div>
-						
-		  			   	<div class="row">
-		 					<div class="form-group col-md-3">
-		 						<label for="cantidadProgramada">Cantidad Programada</label>
-		  						<div class="input-group input-group-sm">     			
-						    				<input type="text" name="cantProgramadaStep" id="cantProgramadaStep" value="" class="form-control">
-		  						</div>
-							</div>
-							    		
-		  					<div class="form-group col-md-3">
-		  					<label for="fechaTerminacion">Fecha Terminación</label>
-		   					<div class="input-group input-group-sm">
-							    			<input type="text" name="fechaTerminacionStep" id="fechaTerminacionStep" value="" class="form-control">
-		   					</div>
-						    </div>
-			    		
-		  					<div class="form-group col-md-3">
-		 					<label for="porcentajeProgramado">% Programado</label>
-		   					<div class="input-group input-group-sm">
-							   <input type="text" name="porcentajeProgramadoStep" id="porcentajeProgramadoStep" value="" class="form-control">
-		   					</div>
-			    			</div>
-						</div>											    			       
-		          </div>
-		        </div>			        
- 
+
+
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-default js-btn-step pull-left" data-orientation="cancel" data-dismiss="modal">Cancelar</button>
 		        <button type="button" class="btn btn-warning js-btn-step" data-orientation="previous">Prev.</button>
-		        <button type="button" class="btn btn-success js-btn-step" data-orientation="next">Sig.</button>
+		        <button type="button" class="btn btn-success js-btn-step modalAccion" data-orientation="next" id="abc">Sig.</button>
 		      </div>
 		    </div>
 		  </div>
