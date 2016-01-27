@@ -167,7 +167,7 @@ public class ajaxSelects extends HttpServlet {
         		JsonElement json = new Gson().toJsonTree(objetos);
         		out.println(json.toString());
         	}
-        	
+// tuve problemas desde que ejecute el comando mvn clean install, de todos modos SqlSelects.seletLineaAccionSnpp estaba comentado       	
 //        	if (action.equals("getLineasAccionSnpp")){ me dio error al hacer mvn clean install
 //        		List objetos=null;
 //        		condition = " where true ";

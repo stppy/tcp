@@ -257,7 +257,7 @@ if (user != null) { %>
 	            
 	            </div>
 	             <div class="box-footer" style="height:600px; overflow: auto; display: block;">
-	             	<button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#insLineaAccion">Agregar Linea de Acción</button>
+	             	<button type="submit" class="btn btn-primary nuevaInsLineaAccion">Agregar Linea de Acción</button>
 	             </div>
 			   </div>
 			</div>

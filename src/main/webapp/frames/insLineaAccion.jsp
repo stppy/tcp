@@ -66,7 +66,7 @@
 							'		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
 							'		        <h4 class="modal-title">Registrar Linea de Acción por Institución</h4>'+
 							'			</div>'+
-							'		    <div class="modal-body" id="insLineaAccion" >'+
+							'		    <div class="modal-body" >'+
 									    
 							'				<form role="form" id="formularioInsLineaAccion">'+
 							'					<div class="form-group">'+
