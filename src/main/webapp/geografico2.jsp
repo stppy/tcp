@@ -1670,88 +1670,94 @@ $(document).ready(function(){
 			      					    		'</div>'+   					    				
 			      					    	'</div>'+// fin row
 					                	'</div>'+//fin box-footer
-					              	'</div>'+//fin box-danger
-					            '</div>'+//fin col-md-6
-
-
+					                	
+					                	
 								    	'<div class="col-md-6">'+
-								    		 '<div class="box">'+
-								      			'<div class="box-header with-border">'+
-								       				'<h2 class="box-title text-center">'+
-								          				'Agregar Hito'+ 	
-								        			'</h2>'+
-								        			'<div class="box-tools pull-right"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
-								        			'</div>'+
-								      			'</div>'+
-								      			'<div class="box-body hitosProgramado">'+//cuerpo del body    			
-								      				'<div class="table-responsive">'+
-														'<table class="table table-hover hitos">'+
-															'<thead>'+
-																'<tr class="active"><th>Acción</th><th>Departamento</th><th>Distrito</th><th>U. Medida</th><th>Cantidad. Programado</th><th>Costo Total</th><th>Fecha Terminación</th><th>% Programado</th><th>Editar</th></tr>'+
-															'</thead>'+
-															'<tbody>';
-															
-															
-															for(var m = 0; m < registroHitos.length; m++)
-															{
-																if(registroHitos[m].hito_porcentaje_programado > 0)
-																{
-																	modalHito += '<tr><td>'+registroHitos[m].accion+'</td><td>'+registroHitos[m].accion_departamento+'</td><td>'+registroHitos[m].accion_distrito+'</td><td>'+registroHitos[m].accion_unidad_edida+'</td><td>'+registroHitos[m].hito_cantidad_programado+'</td><td>'+registroHitos[m].accion_costo+'</td><td>'+registroHitos[m].hito_fecha_entrega+'</td><td>'+registroHitos[m].hito_porcentaje_programado+'</td><td><a href="#" class="modalEditarHito" parametros="'+registroHitos[m].hito_id+'"><span class="glyphicon glyphicon-pencil"></span></a></td></tr>';
-																	totalCantidadProgramada+=registroHitos[m].hito_cantidad_programado;
-																}
-															}
-															totalCantidadProgramada=parseFloat(totalCantidadProgramada).toFixed(2);
-
-															modalHito += '</tbody><tfoot><tr class="active"><td colspan="2">Total Cantidad Programada: </td><td colspan="8">'+totalCantidadProgramada+'</td></tr></tfoot>'+
-																		 '</table>'+
-																		 '</div>'+
-								      			'</div>'+//FIN BODY
-									   		'</div>'+
-										'</div>'+
-								    	'<div class="col-md-6">'+
- 							    		'<div class="box">'+
+							    		 '<div class="box">'+
 							      			'<div class="box-header with-border">'+
 							       				'<h2 class="box-title text-center">'+
-							          				'Avance'+ 	
+							          				'Agregar Hito'+ 	
 							        			'</h2>'+
 							        			'<div class="box-tools pull-right"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
 							        			'</div>'+
 							      			'</div>'+
-							      			'<div class="box-body">'+ 
-						      				'<div class="table-responsive">'+
-											'<table class="table table-hover hitos">'+
-												'<thead>'+
-													'<tr class="active"><th>Acción</th><th>Departamento</th><th>Distrito</th><th>U. Medida</th><th>Cantidad. Programado</th><th>Costo Total</th><th>Fecha Terminación</th><th>% Ejecutado</th><th>Editar</th></tr>'+
-												'</thead>'+
-												'<tbody>';
-												
-												
-												for(var m = 0; m < registroHitos.length; m++)
-												{
-													if(registroHitos[m].hito_porcentaje_ejecutado > 0)
-													{
-														modalHito += '<tr><td>'+registroHitos[m].accion+'</td><td>'+registroHitos[m].accion_departamento+'</td><td>'+registroHitos[m].accion_distrito+'</td><td>'+registroHitos[m].accion_unidad_edida+'</td><td>'+registroHitos[m].hito_cantidad_programado+'</td><td>'+registroHitos[m].accion_costo+'</td><td>'+registroHitos[m].hito_fecha_entrega+'</td><td>'+registroHitos[m].hito_porcentaje_ejecutado+'</td><td><a href="#" class="modalEditarHito" parametros="'+registroHitos[m].hito_id+'"><span class="glyphicon glyphicon-pencil"></span></a></td></tr>';
-														totalCantidadProgramada+=registroHitos[m].hito_cantidad_programado;
-													}
-												}
-												totalCantidadProgramada=parseFloat(totalCantidadProgramada).toFixed(2);
+							      			'<div class="box-body hitosProgramado">'+//cuerpo del body    			
+							      				'<div class="table-responsive">'+
+													'<table class="table table-hover hitos">'+
+														'<thead>'+
+															'<tr class="active"><th>Acción</th><th>Departamento</th><th>Distrito</th><th>U. Medida</th><th>Cantidad. Programado</th><th>Costo Total</th><th>Fecha Terminación</th><th>% Programado</th><th>Editar</th></tr>'+
+														'</thead>'+
+														'<tbody>';
+														
+														
+														for(var m = 0; m < registroHitos.length; m++)
+														{
+															if(registroHitos[m].hito_porcentaje_programado > 0)
+															{
+																modalHito += '<tr><td>'+registroHitos[m].accion+'</td><td>'+registroHitos[m].accion_departamento+'</td><td>'+registroHitos[m].accion_distrito+'</td><td>'+registroHitos[m].accion_unidad_edida+'</td><td>'+registroHitos[m].hito_cantidad_programado+'</td><td>'+registroHitos[m].accion_costo+'</td><td>'+registroHitos[m].hito_fecha_entrega+'</td><td>'+registroHitos[m].hito_porcentaje_programado+'</td><td><a href="#" class="modalEditarHito" parametros="'+registroHitos[m].hito_id+'"><span class="glyphicon glyphicon-pencil"></span></a></td></tr>';
+																totalCantidadProgramada+=registroHitos[m].hito_cantidad_programado;
+															}
+														}
+														totalCantidadProgramada=parseFloat(totalCantidadProgramada).toFixed(2);
 
-												modalHito += '</tbody><tfoot><tr class="active"><td colspan="2">Total Cantidad Programada: </td><td colspan="8">'+totalCantidadProgramada+'</td></tr></tfoot>'+
-															 '</table>'+
-															 '</div>'+						      			
-							      			'</div>'+
+														modalHito += '</tbody><tfoot><tr class="active"><td colspan="2">Total Cantidad Programada: </td><td colspan="8">'+totalCantidadProgramada+'</td></tr></tfoot>'+
+																	 '</table>'+
+																	 '</div>'+
+							      			'</div>'+//FIN BODY
 								   		'</div>'+
-									'</div>'+	
+									'</div>'+
+									
+							    	'<div class="col-md-6">'+
+						    		'<div class="box">'+
+						      			'<div class="box-header with-border">'+
+						       				'<h2 class="box-title text-center">'+
+						          				'Avance'+ 	
+						        			'</h2>'+
+						        			'<div class="box-tools pull-right"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+						        			'</div>'+
+						      			'</div>'+
+						      			'<div class="box-body">'+ 
+					      				'<div class="table-responsive">'+
+										'<table class="table table-hover hitos">'+
+											'<thead>'+
+												'<tr class="active"><th>Acción</th><th>Departamento</th><th>Distrito</th><th>U. Medida</th><th>Cantidad. Programado</th><th>Costo Total</th><th>Fecha Terminación</th><th>% Ejecutado</th><th>Editar</th></tr>'+
+											'</thead>'+
+											'<tbody>';
+											
+											
+											for(var m = 0; m < registroHitos.length; m++)
+											{
+												if(registroHitos[m].hito_porcentaje_ejecutado > 0)
+												{
+													modalHito += '<tr><td>'+registroHitos[m].accion+'</td><td>'+registroHitos[m].accion_departamento+'</td><td>'+registroHitos[m].accion_distrito+'</td><td>'+registroHitos[m].accion_unidad_edida+'</td><td>'+registroHitos[m].hito_cantidad_programado+'</td><td>'+registroHitos[m].accion_costo+'</td><td>'+registroHitos[m].hito_fecha_entrega+'</td><td>'+registroHitos[m].hito_porcentaje_ejecutado+'</td><td><a href="#" class="modalEditarHito" parametros="'+registroHitos[m].hito_id+'"><span class="glyphicon glyphicon-pencil"></span></a></td></tr>';
+													totalCantidadProgramada+=registroHitos[m].hito_cantidad_programado;
+												}
+											}
+											totalCantidadProgramada=parseFloat(totalCantidadProgramada).toFixed(2);
 
-							    '</div>'+//fin row
-							    
-						      '</div>'+// fin body
-							  '<div class="modal-footer">'+
-							 	'<button type="button" class="btn btn-success registro" data-dismiss="modal" codigoregistro="'+institucionId+'-'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'" data-toggle="modal" data-target="#myModal">Cerrar</button>'+
-							  '</div>'+
-						    '</div>'+
-						 '</div>'+
-						'</div>';
+											modalHito += '</tbody><tfoot><tr class="active"><td colspan="2">Total Cantidad Programada: </td><td colspan="8">'+totalCantidadProgramada+'</td></tr></tfoot>'+
+														 '</table>'+
+														 '</div>'+						      			
+						      			'</div>'+
+							   		'</div>'+
+								'</div>'+	
+
+						    '</div>'+//fin row
+						    
+					      '</div>'+// fin body
+						  '<div class="modal-footer">'+
+						 	'<button type="button" class="btn btn-success registro" data-dismiss="modal" codigoregistro="'+institucionId+'-'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'" data-toggle="modal" data-target="#myModal">Cerrar</button>'+
+						  '</div>'+
+					    '</div>'+
+					 '</div>'+
+					'</div>'+
+					
+					               	
+           	'</div>'+//fin modal-content
+         '</div>'+//fin modal-dialog
+         '</div>';//fon myModal2
+
+
 
 		
 		$("body").append(modalHito);

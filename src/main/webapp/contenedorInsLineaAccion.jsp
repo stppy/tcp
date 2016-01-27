@@ -262,11 +262,7 @@ if (user != null) { %>
 			   </div>
 			</div>
           </div><!-- /.row -->
-<<<<<<< HEAD
-=======
-          
 
->>>>>>> 7e068e29b912bb0af0df3d555fb8f80256d14692
 
             
     </section><!-- /.content -->

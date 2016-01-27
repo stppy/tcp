@@ -483,14 +483,14 @@ if (user != null) { %>
 		var el=JSON.parse(eljson);
 		
 		
-		/*var elSnppjson = $.ajax({
+ 		var elSnppjson = $.ajax({
 	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getLineasAccionSnpp',
 	      	type:'get',
 	      	dataType:'json',
 	      	crossDomain:true,
 	      	async:false       
 	    }).responseText;
-		var elSnpp=JSON.parse(elSnppjson);*/
+		var elSnpp=JSON.parse(elSnppjson);
 		
 		var lineasDeAccion= [];
 		
