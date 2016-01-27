@@ -67,6 +67,7 @@ if (user != null) { %>
 <script>
 	
 	$(document).ready(function(){
+
 		var entidadCas = "";
 		entidadCas ="<%=attributes.get("entidad") %>";
 		var usuarios = $.ajax({
@@ -120,8 +121,8 @@ if (user != null) { %>
 		var tablaInsLineaAccion="";
 		tablaInsLineaAccion = 	'<div class="table-responsive">'+
 								'<table class="table table-hover">'+
-								  '<tr class="active"><td colspan="8">Tabla InsLineaAccion</td><td><a href="#" data-toggle="modal" data-target="#insLineaAccion"><span class="glyphicon glyphicon-plus nuevaInsLineaAccion"></span></a></td></tr>'+
-								  '<tr class="active"><td>Id</td><td>LineaAcción</td><td>Institución</td><td>Periodo</td><td>Meta</td><td>Estado</td><td>Editar</td><td>Borrar</td><td>Acción</td></tr>';
+								  '<tr class="active"><td colspan="9">Linea de Acción por Institución</td></tr>'+
+								  '<tr class="active"><td>Id</td><td>Linea de Acción</td><td>Institución</td><td>Periodo</td><td>Meta</td><td>Estado</td><td>Editar</td><td>Borrar</td><td>Acción</td></tr>';
 								  
 	 	var bandLineaAccion;
 	 	var bandInstitucion;
@@ -200,12 +201,16 @@ if (user != null) { %>
 		}
 		
 		
-		
+		tablaInsLineaAccion +='<tr><td colspan="9"></td></tr>';
 		tablaInsLineaAccion +='</table></div>';				
 		
 		$('.box-body').html(tablaInsLineaAccion);
 		
 		}
+		
+		
+		
+		
 		 
 		
 	});
@@ -251,12 +256,157 @@ if (user != null) { %>
 	            
 	            
 	            </div>
+	             <div class="box-footer" style="height:600px; overflow: auto; display: block;">
+	             	<button type="submit" class="btn btn-primary nuevaInsLineaAccion">Agregar Linea de Acción</button>
+	             </div>
 			   </div>
 			</div>
           </div><!-- /.row -->
+<<<<<<< HEAD
+=======
+          
+
+>>>>>>> 7e068e29b912bb0af0df3d555fb8f80256d14692
 
             
     </section><!-- /.content -->
+    
+    <div class="modal fade" id="modalAgregarAccion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog modal-lg" style="width:90%">	
+		  
+		   <div class="modal-content">
+		      <div class="modal-header">
+		        <h4 class="js-title-step"></h4>
+		      </div>
+		      <div class="modal-body">
+		        <div class="row" data-step="1" data-title="Agregar Acción">
+		          <div class="well">
+		          					
+			  <div class="table-responsive">
+					<table class="table table-hover">
+				    	<thead>
+				      		<tr><th rowspan="2" class="text-center">Depto</th><th rowspan="2" class="text-center">Distrito</th><th rowspan="2" class="text-center">FechaInicio</th><th rowspan="2" class="text-center">FechaFin</th><th rowspan="2" class="text-center">Costo</th><th colspan="4" class="text-center">Metas</th><th rowspan="2" class="text-center">Contribución</th><th rowspan="2" class="text-center">Versión</th><th rowspan="2" class="text-center">VincularProducto</th></tr>
+				      		<tr><th class="text-center">1er Trimestre</th><th class="text-center">2do Trimestre</th><th class="text-center">3er Trimestre</th><th class="text-center">4to Trimestre</th></tr>
+				      	</thead>
+				      	<tbody id="tablaAcciones">
+				      	</tbody>
+				    </table>
+				</div>
+								
+				<form role="form">
+					<div class="table-responsive">
+						<table class="table table-hover">
+							<tbody>
+								<input type="hidden" value="3" id="versionAccion">
+								<tr><td><div class="form-group"><label for="nombreAccion">Acción</label><select id="selectorAccion" name="accion" class="form-control">'+optionAccionCatalogo+'</select></div></td><td><div class="form-group"><label for="umedida">U. medida</label><select id="selectorUnidadMedida" class="form-control">'+optionUnidadMedida+'</select></div></td></tr>
+								<tr><td><div class="form-group"><label for="departamento">Departamento</label><select id="selectorDepartamento" name="departamento" class="form-control">'+optionDepartamentos+'</select></div></td><td><div class="form-group"><label for="distrito">Distrito</label><select name="departamento" class="form-control" id="distritosDepartamento"></select></div></td></tr>
+							</tbody>
+						</table>
+					</div>
+				</form>
+				
+	          </div>
+	        </div>
+		        <div class="row hide" data-step="2" data-title="Planificar Metas">
+		          <div class="well">
+		  			   	<div class="row">
+		 					<div class="form-group col-md-3">
+		 						<label for="totalFinanciero-formulario">Primer Trimestre</label>
+		  						<div class="input-group input-group-sm">     			
+						    				<input type="text" name="primerTrimestre" id="primerTrimestre-formulario" value="" class="form-control">
+		  						</div>
+							</div>
+							    		
+		  					<div class="form-group col-md-3">
+		  					<label for="totalFinanciero-formulario">Segundo Trimestre</label>
+		   					<div class="input-group input-group-sm">
+							    			<input type="text" name="segundoTrimestre" id="segundoTrimestre-formulario" value="" class="form-control">
+		   					</div>
+						    </div>
+			    		
+		  					<div class="form-group col-md-3">
+		 					<label for="totalFinanciero-formulario">Tercer Trimestre</label>
+		   					<div class="input-group input-group-sm">
+							   <input type="text" name="tercerTrimestre" id="tercerTrimestre-formulario" value="" class="form-control">
+		   					</div>
+			    			</div>
+		 					    <div class="form-group col-md-3">
+									<label for="totalFinanciero-formulario">Cuarto Trimestre</label>
+		  						<div class="input-group input-group-sm">
+			    				<input type="text" name="cuartoTrimestre" id="cuartoTrimestre-formulario" value="" class="form-control">
+		  						</div>
+		   					</div>
+						</div>
+					      			       
+		          </div>
+		        </div>
+		        	                  	        		        	        
+		        <div class="row hide" data-step="3" data-title="Declarar Hito">
+		          <div class="well">
+		  			   	<div class="row">
+		 					<div class="form-group col-md-3">
+		 						<label for="accion2">Acción</label>
+		  						<div class="input-group input-group-sm">     			
+						    				<input type="text" name="accionStep2" id="accionStep2" value="" class="form-control">
+		  						</div>
+							</div>
+							    		
+		  					<div class="form-group col-md-3">
+		  					<label for="departamento">Departamento</label>
+		   					<div class="input-group input-group-sm">
+							    			<input type="text" name="departamentoStep" id="departamentoStep" value="" class="form-control">
+		   					</div>
+						    </div>
+			    		
+		  					<div class="form-group col-md-3">
+		 					<label for="distrito">Distrito</label>
+		   					<div class="input-group input-group-sm">
+							   <input type="text" name="distritoStep" id="distritoStep" value="" class="form-control">
+		   					</div>
+			    			</div>
+		 					    <div class="form-group col-md-3">
+									<label for="unidadMedida2">U. Medida</label>
+		  						<div class="input-group input-group-sm">
+			    				<input type="text" name="unidadMedidaStep2" id="unidadMedidaStep2" value="" class="form-control">
+		  						</div>
+		   					</div>
+						</div>
+						
+		  			   	<div class="row">
+		 					<div class="form-group col-md-3">
+		 						<label for="cantidadProgramada">Cantidad Programada</label>
+		  						<div class="input-group input-group-sm">     			
+						    				<input type="text" name="cantProgramadaStep" id="cantProgramadaStep" value="" class="form-control">
+		  						</div>
+							</div>
+							    		
+		  					<div class="form-group col-md-3">
+		  					<label for="fechaTerminacion">Fecha Terminación</label>
+		   					<div class="input-group input-group-sm">
+							    			<input type="text" name="fechaTerminacionStep" id="fechaTerminacionStep" value="" class="form-control">
+		   					</div>
+						    </div>
+			    		
+		  					<div class="form-group col-md-3">
+		 					<label for="porcentajeProgramado">% Programado</label>
+		   					<div class="input-group input-group-sm">
+							   <input type="text" name="porcentajeProgramadoStep" id="porcentajeProgramadoStep" value="" class="form-control">
+		   					</div>
+			    			</div>
+						</div>											    			       
+		          </div>
+		        </div>			        
+ 
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default js-btn-step pull-left" data-orientation="cancel" data-dismiss="modal">Cancelar</button>
+		        <button type="button" class="btn btn-warning js-btn-step" data-orientation="previous">Prev.</button>
+		        <button type="button" class="btn btn-success js-btn-step" data-orientation="next">Sig.</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+    
       </div><!-- /.content-wrapper -->
 
       <footer class="main-footer">
@@ -334,6 +484,6 @@ if (user != null) { %>
 <!-- End Piwik Code -->
 <script type="text/javascript" src="bootstrap/js/bootstrap-slider.js"></script>
  
-    
+
   </body>
 </html>

@@ -1581,7 +1581,6 @@ $(document).ready(function(){
 					                  		'</div>'+
 					                	'</div>'+//fin box-heder
 					                	'<div class="box-body no-padding">'+
-							      			'<div >'+
 							      			
 							      			'<div class="table-responsive">'+
 							                '<table class="table table-striped table-bordered  table-hover">'+
@@ -1603,6 +1602,7 @@ $(document).ready(function(){
 							                '<tbody class="table-body-producto" id="TablaAccionHasProductos">'+
 							                '</tbody>'+
 							                '</table>'+
+							                '</div>'+
 
 					                	'</div>'+//fin box-body
 					                	'<div class="box-footer">'+

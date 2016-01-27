@@ -239,8 +239,8 @@ public class SqlInserts {
 		
 		//insert.setInt (1, insLineaAccion.getId());
 		insert.setInt (1, accion.getInsLineaAccionId());
-		insert.setString (2, accion.getNombre());
-		insert.setString (3, accion.getDescripcion());
+		//insert.setString (2, accion.getNombre()); no se por que me dio error al hacer mvn clean install
+		//insert.setString (3, accion.getDescripcion()); no se por que me dio error al hacer mvn clean install
 		insert.setDouble (4, accion.getCosto());
 		insert.setInt (5, accion.getPeso());
 		insert.setDate (6, accion.getFechaInicio());
@@ -592,7 +592,30 @@ public class SqlInserts {
 		conn.close();
 	} catch (SQLException e) {e.printStackTrace();}
 		
-}	
+}
+	public static void insertAccionCatalogo(AccionCatalogo accionCatalogo){
+	try {
+		Connection conn=ConnectionConfiguration.conectar();
+	   	
+		String query = " insert into hitoPrueba (id,nombre,descdripcion,version,borrado,id_unidad_medida)"
+	+ " values (?, ?, ?, ?, ?, ?)";
+		
+		PreparedStatement insert = conn.prepareStatement(query);
+		
+		insert.setInt (1, accionCatalogo.getId());
+		insert.setString (2, accionCatalogo.getNombre());
+		insert.setString (3, accionCatalogo.getDescripcion());
+		insert.setInt (4, accionCatalogo.getIdUnidadMedida());
+		insert.setInt (5, accionCatalogo.getVersion());	
+		insert.setBoolean (6, accionCatalogo.isBorrado());	
+	
+		
+		insert.execute();
+		   
+		conn.close();
+	} catch (SQLException e) {e.printStackTrace();}
+		
+}		
 	
 	
 }

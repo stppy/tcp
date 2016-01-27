@@ -669,7 +669,19 @@ public class ajaxUpdate extends HttpServlet {
                 boolean status = SqlUpdates.updateGeoPoligonoTipo(objeto);     
         		myObj.addProperty("success", status);
         		out.println(myObj.toString());
-        	}          	
+        	}
+        	
+        	if (accion.equals("actAccionCatalogo")){
+        		AccionCatalogo objeto = new AccionCatalogo();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                objeto=gsonInsert.fromJson(json, AccionCatalogo.class);
+                boolean status = SqlUpdates.updateAccionCatalogo(objeto);     
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	}         	
         	
         }     
         
