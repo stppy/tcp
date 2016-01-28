@@ -266,27 +266,7 @@ if (user != null) { %>
 
             
     </section><!-- /.content -->
-    
-    <div class="modal fade" id="modalAgregarAccion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		  <div class="modal-dialog modal-lg" style="width:90%">	
-		  
-		   <div class="modal-content">
-		      <div class="modal-header">
-		        <h4 class="title-modal"></h4>
-		      </div>
-		      <div class="modal-body">
-
-
-		      </div>
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-default js-btn-step pull-left" data-orientation="cancel" data-dismiss="modal">Cancelar</button>
-		        <button type="button" class="btn btn-warning js-btn-step" data-orientation="previous">Prev.</button>
-		        <button type="button" class="btn btn-success js-btn-step modalAccion" data-orientation="next" id="abc">Sig.</button>
-		      </div>
-		    </div>
-		  </div>
-		</div>
-    
+        
       </div><!-- /.content-wrapper -->
 
       <footer class="main-footer">

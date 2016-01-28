@@ -815,89 +815,107 @@
 							'		        <h4 class="modal-title">Registrar Acción de '+nombreLineaAccion+' ('+nombreInstitucion+') - '+nombrePeriodo+'</h4>'+ 
 							'			</div>'+
 							'		    <div class="modal-body" id="accionCuerpo" >'+
-							'				<form role="form">'+
-							'					<div class="table-responsive">'+
-							'						<table class="table table-hover">'+
-							'							<tbody>'+
-							'								<tr><td><div class="form-group"><label for="nombreAccion">Acción</label><select id="selectorCatalogoAccion" class="form-control">'+optionCatalogoAccion+'</select><input type="hidden" class="form-control" id="insLineaAccionId" value="'+insLineaAccionId+'"></div></td><td><div class="form-group"><label for="umedida">U. medida</label><select id="selectorUnidadMedida" class="form-control">'+optionUnidadMedida+'</select></div></td></tr>'+
-							'								<tr><td><div class="form-group"><label for="departamento">Departamento</label><select id="selectorDepartamento" name="departamento" class="form-control">'+optionDepartamentos+'</select></div></td><td><div class="form-group"><label for="distrito">Distrito</label><select name="departamento" class="form-control" id="distritosDepartamento"></select></div></td></tr>'+
-							'							</tbody>'+							           
-							'						</table>'+
-							'					</div>'+
-							'					<div class="row">'+
-						      					    '<div class="form-group col-md-3">'+
-									  						'<label for="totalFinanciero-formulario">Primer Trimestre</label>'+
-							      						'<div class="input-group input-group-sm">'+						      			
-											    				'<input type="text" name="primerTrimestre" id="primerTrimestre-formulario" value="" class="form-control">'+
-							      						'</div>'+
-						  					    	'</div>'+
-						  					    		
-							      					'<div class="form-group col-md-3">'+
-										  					'<label for="totalFinanciero-formulario">Segundo Trimestre</label>'+
-								      					'<div class="input-group input-group-sm">'+
-						  					    			'<input type="text" name="segundoTrimestre" id="segundoTrimestre-formulario" value="" class="form-control">'+
-								      					'</div>'+
-											    		'</div>'+
-											    		
-							      					'<div class="form-group col-md-3">'+
-										  					'<label for="totalFinanciero-formulario">Tercer Trimestre</label>'+
-								      					'<div class="input-group input-group-sm">'+
-						  					    			'<input type="text" name="tercerTrimestre" id="tercerTrimestre-formulario" value="" class="form-control">'+
-								      					'</div>'+
-											    		'</div>'+
-										    		
-						      					    '<div class="form-group col-md-3">'+
-									  					'<label for="totalFinanciero-formulario">Cuarto Trimestre</label>'+
-							      						'<div class="input-group input-group-sm">'+
-											    				'<input type="text" name="cuartoTrimestre" id="cuartoTrimestre-formulario" value="" class="form-control">'+
-							      						'</div>'+
-										    		'</div>'+
-						  	'					</div>'+							
-							'				</form>'+
 							
 							
-					      	'<div class="row">'+ 
-					      		'<div class="col-md-12">'+
-									'<div class="box box-danger">'+
-					                	'<div class="box-header with-border">'+
-					                  		'<h3 class="box-title">Acciones Precargadas</h3>'+
-				                  			'<div class="box-tools pull-right">'+
-							                    '<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>'+
-					                    		'</button>'+
-					                    		'<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>'+
-					                    		'</button>'+
-					                  		'</div>'+
-			                			'</div>'+//fin box-heder
-			                			'<div class="box-body">'+
+							'		      	<div class="row">'+ 
+							'		      		<div class="col-md-12">'+
+							'						<div class="box box-danger">'+
+							'		                	<div class="box-header with-border">'+
+							'		                  		<h3 class="box-title">Agregar Acción</h3>'+
+							'	                  			<div class="box-tools pull-right">'+
+							'				                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>'+
+							'		                    		</button>'+
+							'		                    		<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>'+
+							'		                    		</button>'+
+							'		                  		</div>'+
+							'               			</div>'+//fin box-heder
+							'               			<div class="box-body">'+
+							
+							'								<form role="form">'+
+							'									<div class="table-responsive">'+
+							'										<table class="table table-hover">'+
+							'											<tbody>'+
+							'												<tr><td><div class="form-group"><label for="nombreAccion">Acción</label><select id="selectorCatalogoAccion" class="form-control">'+optionCatalogoAccion+'</select><input type="hidden" class="form-control" id="insLineaAccionId" value="'+insLineaAccionId+'"></div></td><td><div class="form-group"><label for="umedida">U. medida</label><select id="selectorUnidadMedida" class="form-control">'+optionUnidadMedida+'</select></div></td></tr>'+
+							'												<tr><td><div class="form-group"><label for="departamento">Departamento</label><select id="selectorDepartamento" name="departamento" class="form-control">'+optionDepartamentos+'</select></div></td><td><div class="form-group"><label for="distrito">Distrito</label><select name="departamento" class="form-control" id="distritosDepartamento"></select></div></td></tr>'+
+							'											</tbody>'+							           
+							'										</table>'+
+							'									</div>'+
+							'									<div class="row">'+
+							'			      					    <div class="form-group col-md-3">'+
+							'						  						<label for="totalFinanciero-formulario">Primer Trimestre</label>'+
+							'				      						<div class="input-group input-group-sm">'+						      			
+							'								    				<input type="text" name="primerTrimestre" id="primerTrimestre-formulario" value="" class="form-control">'+
+							'				      						</div>'+
+							'			  					    	</div>'+
+										  					    		
+							'				     					<div class="form-group col-md-3">'+
+							'							  					<label for="totalFinanciero-formulario">Segundo Trimestre</label>'+
+							'					      					<div class="input-group input-group-sm">'+
+							'			  					    			<input type="text" name="segundoTrimestre" id="segundoTrimestre-formulario" value="" class="form-control">'+
+							'					      					</div>'+
+							'								    		</div>'+
+															    		
+							'				     					<div class="form-group col-md-3">'+
+							'							  					<label for="totalFinanciero-formulario">Tercer Trimestre</label>'+
+							'					      					<div class="input-group input-group-sm">'+
+							'			  					    			<input type="text" name="tercerTrimestre" id="tercerTrimestre-formulario" value="" class="form-control">'+
+							'					      					</div>'+
+							'								    		</div>'+
+														    		
+							'			      					    <div class="form-group col-md-3">'+
+							'						  					<label for="totalFinanciero-formulario">Cuarto Trimestre</label>'+
+							'				      						<div class="input-group input-group-sm">'+
+							'								    				<input type="text" name="cuartoTrimestre" id="cuartoTrimestre-formulario" value="" class="form-control">'+
+							'				      						</div>'+
+							'							    		</div>'+
+							'			  						</div>'+							
+							'								</form>'+
+											
+							'               			</div>'+//fin box-body
+							'							<div class="modal-footer">'+
+							'								<button type="button" class="btn btn-success btn-sm">Guardar Acción</button>'+
+							'							</div>'+
+							'                		</div>'+	
+							'                	</div>'+
+							'                </div>'+											
+											
+											
+											
+							
+							
+							'		      	<div class="row">'+ 
+							'		      		<div class="col-md-12">'+
+							'						<div class="box box-danger">'+
+							'		                	<div class="box-header with-border">'+
+							'		                  		<h3 class="box-title">Acciones Precargadas</h3>'+
+							'	                  			<div class="box-tools pull-right">'+
+							'				                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>'+
+							'		                    		</button>'+
+							'		                    		<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>'+
+							'		                    		</button>'+
+							'		                  		</div>'+
+							'               			</div>'+//fin box-heder
+							'               			<div class="box-body">'+
+							
+							'	                			<div class="table-responsive">'+
+							'	                				<table class="table table-hover">'+
+							'	                					<thead>'+
+							'	                						<tr><th rowspan="2" class="text-center">Depto</th><th rowspan="2" class="text-center">Distrito</th><th rowspan="2" class="text-center">FechaInicio</th><th rowspan="2" class="text-center">FechaFin</th><th rowspan="2" class="text-center">Costo</th><th colspan="4" class="text-center">Metas</th><th rowspan="2" class="text-center">Contribución</th><th rowspan="2" class="text-center">Versión</th><th rowspan="2" class="text-center">VincularProducto</th><th rowspan="2" class="text-center">Borrado</th><th rowspan="2" class="text-center">Editar</th></tr>'+
+							'	                						<tr><th class="text-center">1er Trimestre</th><th class="text-center">2do Trimestre</th><th class="text-center">3er Trimestre</th><th class="text-center">4to Trimestre</th></tr>'+
+							'	                					</thead>'+
+							'	                						<tbody id="tablaAccionesPrecargadas">'+
+							'	                						</tbody>'+
+							'	                				</table>'+
+							'	                			</div>'+		                			
+					
+							'               			</div>'+//fin box-body
+							'                		</div>'+	
+							'                	</div>'+
+							'                </div>'+
+							
 
-
-			                			'<div class="table-responsive">'+
-			                				'<table class="table table-hover">'+
-			                					'<thead>'+
-			                						'<tr><th rowspan="2" class="text-center">Depto</th><th rowspan="2" class="text-center">Distrito</th><th rowspan="2" class="text-center">FechaInicio</th><th rowspan="2" class="text-center">FechaFin</th><th rowspan="2" class="text-center">Costo</th><th colspan="4" class="text-center">Metas</th><th rowspan="2" class="text-center">Contribución</th><th rowspan="2" class="text-center">Versión</th><th rowspan="2" class="text-center">VincularProducto</th><th rowspan="2" class="text-center">Borrado</th><th rowspan="2" class="text-center">Editar</th></tr>'+
-			                						'<tr><th class="text-center">1er Trimestre</th><th class="text-center">2do Trimestre</th><th class="text-center">3er Trimestre</th><th class="text-center">4to Trimestre</th></tr>'+
-			                					'</thead>'+
-			                						'<tbody id="tablaAccionesPrecargadas">'+
-			                						'</tbody>'+
-			                				'</table>'+
-			                			'</div>'+		                			
-
-			                			'</div>'+//fin box-body
-			                		'</div>'+	
-			                	'</div>'+
-			                '</div>'+
-							
-							
-							
-							
-							
-							
-							
 							'		    </div>'+
 							'			<div class="modal-footer">'+
-					        '				<button type="button" class="btn btn-default js-btn-step pull-left" data-orientation="cancel" data-dismiss="modal">Cancel</button>'+
-					        '				<button type="button" class="btn btn-warning js-btn-step" data-orientation="previous" data-step="0" disabled="disabled">Previous</button>'+
-					        '				<button type="button" class="btn btn-success js-btn-step" data-orientation="next" data-step="1">Next</button>'+
 					      	'			</div>'+														
 							'		</div>'+ 
 							'	</div>'+
