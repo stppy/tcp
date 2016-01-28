@@ -25,6 +25,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import py.gov.stp.objetosV2.*;
+import py.gov.stp.tools.SqlSelects;
 import py.gov.stp.tools2.*;
 
 public class ajaxInserts  extends HttpServlet {
@@ -64,7 +65,7 @@ public class ajaxInserts  extends HttpServlet {
             productoObj=gsonInsert.fromJson(json, TipoAccion.class);
 			SqlInserts.insertTipoAccion(productoObj);
     	}
-       }
+       }      
         if (accion!=null && accion!=""){
     	if (accion.equals("insAccion")){
     		Accion objeto = new Accion();

@@ -66,6 +66,7 @@ public class ajaxSelects extends HttpServlet {
     	Integer snipAutorizado = null;
     	Integer funcional = null;
     	Integer catalogoDestinatario = null;
+    	Integer catalogoAccionId = null;
     	
     	Integer institucion_id=null;
     	Integer accion_id=null;
@@ -121,6 +122,7 @@ public class ajaxSelects extends HttpServlet {
       	if (request.getParameter("accion_id")!=null) accion_id=Integer.parseInt(request.getParameter("accion_id")); else accion_id=0;
       	if (request.getParameter("linea_accion_id")!=null) linea_accion_id=Integer.parseInt(request.getParameter("linea_accion_id")); else linea_accion_id=0;
       	if (request.getParameter("lineaAccionId")!=null) lineaAccionId=Integer.parseInt(request.getParameter("lineaAccionId"));
+      	if (request.getParameter("catalogoAccionId")!=null) catalogoAccionId=Integer.parseInt(request.getParameter("catalogoAccionId"));
 
       	
         PrintWriter out = response.getWriter();
@@ -346,7 +348,9 @@ public class ajaxSelects extends HttpServlet {
         	
         	if (action.equals("getAccionCatalogo")){
         		List objetos=null; 
-           		try {objetos = SqlSelects.selectAccionCatalogo();}
+        		condition = " where true ";
+        		if (catalogoAccionId!=null) condition += " and id ='"+catalogoAccionId+"'";
+           		try {objetos = SqlSelects.selectAccionCatalogo(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());

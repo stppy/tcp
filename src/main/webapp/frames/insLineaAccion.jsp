@@ -776,34 +776,32 @@
 		accion = JSON.parse(accion);
 		
 		var nombreDepartamento;
+		var nombreDistrito;
+		var cuerpoAccion = "";
+
 		for(var a = 0; a < accion.length; a++)
 		{
 			for(var d = 0; d < 18; d++)
 			{
 				if(accion[a].departamentoId == departamentos[d].idDepartamento){
 					nombreDepartamento = departamentos[d].nombreDepartamento;
+					cuerpoAccion +="<tr><td class='text-center'>"+nombreDepartamento+"</td>";
 				}
 			}
 			
-		}
-		
-		var nombreDistrito;
-		for(var a = 0; a < accion.length; a++)
-		{
-			for(var d = 0; d < distritos.length; d++)
+
+			for(var e = 0; e < distritos.length; e++)
 			{
-				if(accion[a].distritoId == distritos[d].id && accion[a].departamentoId == distritos[d].departamentoId){
-					nombreDistrito = distritos[d].descripcion;
+				if(accion[a].distritoId == distritos[e].id && accion[a].departamentoId == distritos[e].departamentoId){
+					nombreDistrito = distritos[e].descripcion;
+					cuerpoAccion +="<td class='text-center'>"+nombreDistrito+"</td>";
 				}
 			}
-			
-		}	
-		
-		var cuerpoAccion = "";
-		for(var z = 0; z < accion.length; z++)
-		{
-			cuerpoAccion +="<tr><td class='text-center'>"+nombreDepartamento+"</td><td class='text-center'>"+nombreDistrito+"</td><td class='text-center'>"+accion[z].fechaInicio+"</td><td class='text-center'>"+accion[z].fechaFin+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[z].costo).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[z].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[z].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[z].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[z].meta4).toFixed(2))+"</td><td class='text-center'>"+accion[z].peso+"</td><td class='text-center'>"+accion[z].version+"</td><td class='text-center'><span class='glyphicon glyphicon-plus modalVincularProducto' parametros="+accion[z].id+"></span></td></tr>";
+
+			cuerpoAccion +="<td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].costo).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'>"+accion[a].peso+"</td><td class='text-center'>"+accion[a].version+"</td><td class='text-center'><span class='glyphicon glyphicon-plus modalVincularProducto' parametros="+accion[a].id+"></span></td></tr>";
 		}
+		
+		
 				
 		var cuerpoModalAccion = "";
 
@@ -819,7 +817,7 @@
 							
 							'		      	<div class="row">'+ 
 							'		      		<div class="col-md-12">'+
-							'						<div class="box box-danger">'+
+							'						<div class="box box-warning">'+
 							'		                	<div class="box-header with-border">'+
 							'		                  		<h3 class="box-title">Agregar Acción</h3>'+
 							'	                  			<div class="box-tools pull-right">'+
@@ -835,8 +833,9 @@
 							'									<div class="table-responsive">'+
 							'										<table class="table table-hover">'+
 							'											<tbody>'+
-							'												<tr><td><div class="form-group"><label for="nombreAccion">Acción</label><select id="selectorCatalogoAccion" class="form-control">'+optionCatalogoAccion+'</select><input type="hidden" class="form-control" id="insLineaAccionId" value="'+insLineaAccionId+'"></div></td><td><div class="form-group"><label for="umedida">U. medida</label><select id="selectorUnidadMedida" class="form-control">'+optionUnidadMedida+'</select></div></td></tr>'+
+							'												<tr><td><div class="form-group"><label for="nombreAccion">Acción</label><select id="selectorCatalogoAccion" class="form-control">'+optionCatalogoAccion+'</select><input type="hidden" class="form-control" id="insLineaAccionId" value="'+insLineaAccionId+'"></div></td><td><div class="form-group"><label for="umedida">U. medida</label><input type="text" id="unidadMedidaAccion" value="" class="form-control" disabled> </div></td></tr>'+
 							'												<tr><td><div class="form-group"><label for="departamento">Departamento</label><select id="selectorDepartamento" name="departamento" class="form-control">'+optionDepartamentos+'</select></div></td><td><div class="form-group"><label for="distrito">Distrito</label><select name="departamento" class="form-control" id="distritosDepartamento"></select></div></td></tr>'+
+							'												<tr><td><div class="form-group"><label for="fechaInicioAccion">Fecha Inicio</label><input type="date" id="fechaInicioAccion" class="form-control" /></div></td><td><div class="form-group"><label for="fechaFinAccion">Fecha Fin</label><input type="date" id="fechaFinAccion" class="form-control" /></div></td></tr>'+							
 							'											</tbody>'+							           
 							'										</table>'+
 							'									</div>'+
@@ -845,6 +844,11 @@
 							'						  						<label for="totalFinanciero-formulario">Primer Trimestre</label>'+
 							'				      						<div class="input-group input-group-sm">'+						      			
 							'								    				<input type="text" name="primerTrimestre" id="primerTrimestre-formulario" value="" class="form-control">'+
+							'													<input type="hidden" class="form-control" id="versionAccion" value="3">'+//Aqui estan los input hidden que en este formulario son 3
+							'													<input type="hidden" class="form-control" id="costoAccion" value="0">'+
+							'													<input type="hidden" class="form-control" id="pesoAccion" value="1">'+
+							
+							
 							'				      						</div>'+
 							'			  					    	</div>'+
 										  					    		
@@ -873,19 +877,15 @@
 											
 							'               			</div>'+//fin box-body
 							'							<div class="modal-footer">'+
-							'								<button type="button" class="btn btn-success btn-sm">Guardar Acción</button>'+
+							'								<button type="button" class="btn btn-success btn-sm guardarAccion" parametros = '+insLineaAccionId+'>Guardar Acción</button>'+
 							'							</div>'+
 							'                		</div>'+	
 							'                	</div>'+
 							'                </div>'+											
 											
-											
-											
-							
-							
 							'		      	<div class="row">'+ 
 							'		      		<div class="col-md-12">'+
-							'						<div class="box box-danger">'+
+							'						<div class="box box-warning">'+
 							'		                	<div class="box-header with-border">'+
 							'		                  		<h3 class="box-title">Acciones Precargadas</h3>'+
 							'	                  			<div class="box-tools pull-right">'+
@@ -898,10 +898,10 @@
 							'               			<div class="box-body">'+
 							
 							'	                			<div class="table-responsive">'+
-							'	                				<table class="table table-hover">'+
+							'	                				<table class="table table-hover table-bordered">'+
 							'	                					<thead>'+
-							'	                						<tr><th rowspan="2" class="text-center">Depto</th><th rowspan="2" class="text-center">Distrito</th><th rowspan="2" class="text-center">FechaInicio</th><th rowspan="2" class="text-center">FechaFin</th><th rowspan="2" class="text-center">Costo</th><th colspan="4" class="text-center">Metas</th><th rowspan="2" class="text-center">Contribución</th><th rowspan="2" class="text-center">Versión</th><th rowspan="2" class="text-center">VincularProducto</th><th rowspan="2" class="text-center">Borrado</th><th rowspan="2" class="text-center">Editar</th></tr>'+
-							'	                						<tr><th class="text-center">1er Trimestre</th><th class="text-center">2do Trimestre</th><th class="text-center">3er Trimestre</th><th class="text-center">4to Trimestre</th></tr>'+
+							'	                						<tr class="active"><th rowspan="2" class="text-center">Depto</th><th rowspan="2" class="text-center">Distrito</th><th rowspan="2" class="text-center">FechaInicio</th><th rowspan="2" class="text-center">FechaFin</th><th rowspan="2" class="text-center">Costo</th><th colspan="4" class="text-center">Metas</th><th rowspan="2" class="text-center">Contribución</th><th rowspan="2" class="text-center">Versión</th><th rowspan="2" class="text-center">VincularProducto</th><th rowspan="2" class="text-center">Borrado</th><th rowspan="2" class="text-center">Editar</th></tr>'+
+							'	                						<tr class="active"><th class="text-center">1er Trimestre</th><th class="text-center">2do Trimestre</th><th class="text-center">3er Trimestre</th><th class="text-center">4to Trimestre</th></tr>'+
 							'	                					</thead>'+
 							'	                						<tbody id="tablaAccionesPrecargadas">'+
 							'	                						</tbody>'+
@@ -1126,6 +1126,44 @@
 		}
 		$("#distritosDepartamento").html("");
 		$("#distritosDepartamento").append(optionDistritos);
+		
+	});
+	
+	$("body").on("change", "#selectorCatalogoAccion",function(event){
+		//var departamentoId = $(this).attr("parametro");
+		var catalogoAccionId = $("#selectorCatalogoAccion option:selected").val();
+    	
+		var catalogoAccion = $.ajax({
+	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+catalogoAccionId,
+	      	type:'get',
+	      	dataType:'json',
+	      	async:false       
+	    }).responseText;
+		catalogoAccion = JSON.parse(catalogoAccion);
+		
+		var unidadMedida = $.ajax({
+			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		unidadMedida = JSON.parse(unidadMedida);
+		var nombreUnidadMedida
+		
+		for(k = 0;k<catalogoAccion.length; k++)
+		{
+
+			for(var u = 0; u < unidadMedida.length; u++)
+			{
+				if(catalogoAccion[k].idUnidadMedida == unidadMedida[u].id)
+				{
+					nombreUnidadMedida = unidadMedida[u].descripcion
+				}
+			}
+			
+		}
+		
+		$("#unidadMedidaAccion").val(nombreUnidadMedida);
 		
 	});
 	
@@ -2233,12 +2271,130 @@
 		
 	});
 
-	$("body").on("click", "#guardarAccion",function(event){
-		var parametro1 = $(this).attr
-		
+	$("body").on("click", ".guardarAccion",function(event){
+		var costo = document.getElementById("costoAccion").value;
+		var peso = document.getElementById("pesoAccion").value;
+		var fechaInicio = document.getElementById("fechaInicioAccion").value;
+		var fechaFin = document.getElementById("fechaFinAccion").value;
+		var version = document.getElementById("versionAccion").value;
+	    var meta1 = document.getElementById("primerTrimestre-formulario").value;
+	    var meta2 = document.getElementById("segundoTrimestre-formulario").value;
+	    var meta3 = document.getElementById("tercerTrimestre-formulario").value;
+	    var meta4 = document.getElementById("cuartoTrimestre-formulario").value;
+	    var insLineaAccionId = document.getElementById("insLineaAccionId").value;
+		var departamentoId = $("#selectorDepartamento option:selected").val();
+		var distritoId = $("#distritosDepartamento option:selected").val();
+		var catalogoAccion = $("#selectorCatalogoAccion option:selected").val();
+
+ 		var datos = new Object();
+	    
+	    datos.costo = costo;
+	    datos.peso = peso;
+	    datos.fechaInicio = fechaInicio;
+	    datos.fechaFin = fechaFin;
+	    datos.version = version;
+	    datos.meta1 = meta1;
+	    datos.meta2 = meta2;
+	    datos.meta3 = meta3;
+	    datos.meta4 = meta4;
+	    datos.insLineaAccionId = insLineaAccionId;
+	    datos.departamentoId = departamentoId;
+	    datos.distritoId = distritoId;
+	    datos.accionCatalogoId = catalogoAccion;
 
 
+	  	var info = JSON.stringify(datos);
+	    $.ajax({
+	        url: "ajaxInserts2?accion=insAccion",
+	        type: 'POST',
+	        dataType: 'json',
+	        data: info,
+	        contentType: 'application/json',
+	        mimeType: 'application/json',
+	        success: function (data) {
+	        	alert("Guardado!");
+	        	actualizarTablaAcciones(insLineaAccionId);
+	        	},
+	        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
+	        error: function(data,status,er) {
+	        	alert("Guardado");
+	        	actualizarTablaAcciones(insLineaAccionId);
+	        	}
+		 });
+	    
 	});	
+	
+	function actualizarTablaAcciones(insLineaAccionId){
+		var insLineaAccionId = insLineaAccionId;
+		var accion = $.ajax({
+			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccionId,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		accion = JSON.parse(accion);
+		
+		var departamentos = $.ajax({
+	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
+	      	type:'get',
+	      	dataType:'json',
+	      	async:false       
+	    }).responseText;
+		departamentos = JSON.parse(departamentos);
+		
+		var distritos = $.ajax({
+	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getDistrito',
+	      	type:'get',
+	      	dataType:'json',
+	      	async:false       
+	    }).responseText;
+		distritos = JSON.parse(distritos);
+		
+		var nombreDepartamento;
+		var cuerpoAccion = "";
+		var nombreDistrito;
+
+		
+		for(var a = 0; a < accion.length; a++)
+		{
+			for(var d = 0; d < 18; d++)
+			{
+				if(accion[a].departamentoId == departamentos[d].idDepartamento){
+					nombreDepartamento = departamentos[d].nombreDepartamento;
+					cuerpoAccion +="<tr><td class='text-center'>"+nombreDepartamento+"</td>";
+				}
+			}
+			
+
+			for(var e = 0; e < distritos.length; e++)
+			{
+				if(accion[a].distritoId == distritos[e].id && accion[a].departamentoId == distritos[e].departamentoId){
+					nombreDistrito = distritos[e].descripcion;
+					cuerpoAccion +="<td class='text-center'>"+nombreDistrito+"</td>";
+				}
+			}
+
+			cuerpoAccion +="<td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].costo).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'>"+accion[a].peso+"</td><td class='text-center'>"+accion[a].version+"</td><td class='text-center'><span class='glyphicon glyphicon-plus modalVincularProducto' parametros="+accion[a].id+"></span></td></tr>";
+		}
+		
+		$('#tablaAccionesPrecargadas').html("");
+		$('#tablaAccionesPrecargadas').append(cuerpoAccion);
+		$("#costoAccion").val('');
+		$("#pesoAccion").val('');
+		$("#fechaInicioAccion").val('');
+		$("#fechaFinAccion").val('');
+		$("#versionAccion").val('');
+		$("#primerTrimestre-formulario").val('');
+		$("#segundoTrimestre-formulario").val('');
+		$("#tercerTrimestre-formulario").val('');
+		$("#cuartoTrimestre-formulario").val('');
+		$("#insLineaAccionId").val('');
+		$("#selectorDepartamento").val('');
+		$("#distritosDepartamento").val('');
+		$("#selectorCatalogoAccion").val('');
+		$("#unidadMedidaAccion").val('');
+		
+	}
 	
 
 	</script>	

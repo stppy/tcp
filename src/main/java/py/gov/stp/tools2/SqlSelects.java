@@ -88,9 +88,9 @@ public class SqlSelects {
 		return objetos; 
 		}
 	
-	public static List<AccionCatalogo> selectAccionCatalogo() throws SQLException{
+	public static List<AccionCatalogo> selectAccionCatalogo(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select * from accion_catalogo";
+		String query = " select * from accion_catalogo"+condition;
 
 		Statement statement = null;
 		ResultSet rs=null;

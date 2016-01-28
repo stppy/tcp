@@ -232,20 +232,25 @@ public class SqlInserts {
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into accion (ins_linea_accion_id,nombre,descripcion,costo,peso,fecha_inicio,fecha_fin,borrado)"
-	+ " values (?, ?, ?, ?, ?, ?, ?, ?)";
+		String query = " insert into accion (costo,peso,fecha_inicio,fecha_fin,version,borrado,meta1,meta2,meta3,meta4,ins_linea_accion_id,depto_id,dist_id,id_accion_catalogo)"
+	+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
-		//insert.setInt (1, insLineaAccion.getId());
-		insert.setInt (1, accion.getInsLineaAccionId());
-		//insert.setString (2, accion.getNombre()); no se por que me dio error al hacer mvn clean install
-		//insert.setString (3, accion.getDescripcion()); no se por que me dio error al hacer mvn clean install
-		insert.setDouble (4, accion.getCosto());
-		insert.setInt (5, accion.getPeso());
-		insert.setDate (6, accion.getFechaInicio());
-		insert.setDate (7, accion.getFechaFin());
-		insert.setBoolean (8, accion.isBorrado());		
+		insert.setDouble (1, accion.getCosto());
+		insert.setInt (2, accion.getPeso());
+		insert.setDate (3, accion.getFechaInicio());
+		insert.setDate (4, accion.getFechaFin());
+		insert.setInt(5, accion.getVersion());
+		insert.setBoolean (6, accion.isBorrado());		
+		insert.setDouble (7, accion.getMeta1());
+		insert.setDouble (8, accion.getMeta2());
+		insert.setDouble (9, accion.getMeta3());
+		insert.setDouble (10, accion.getMeta4());
+		insert.setInt (11, accion.getInsLineaAccionId());
+		insert.setInt (12, accion.getDepartamentoId());
+		insert.setInt (13, accion.getDistritoId());
+		insert.setInt (14, accion.getAccionCatalogoId());
 		
 		insert.execute();
 		   
