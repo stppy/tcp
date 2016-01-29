@@ -4,9 +4,9 @@
         <!-- Logo -->
         <a href="index.jsp" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>s</b>pr</span>
+          <span class="logo-mini"><b>t</b>cp</span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>spr</b>STP</span>
+          <span class="logo-lg"><b>tcp</b>STP</span>
         </a>
 
         <!-- Header Navbar: style can be found in header.less -->
@@ -20,7 +20,7 @@
             <ul class="nav navbar-nav">
 
               <li class="dropdown user user-menu">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <a id="user-menu" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                  <img src="dist/img/2/user.png" class="user-image" alt="User Image"/>
                  
                   <span id="PerfilUsuario" class="hidden-xs"></span>
@@ -29,10 +29,9 @@
                   <!-- User image -->
                   <li class="user-header">
                      <img src="dist/img/2/user.png" class="img-circle" alt="User Image"/>
-                    
-                    <p>
-                      Rafael Palau - DGTIC
-                      <small>Secretaría Técnica de Planificación para el Desarrollo Económico y Social</small>
+                   <p> 
+                    <span id="PerfilNombre" class="hidden-xs"></span>
+                      <small><span id="PerfilEntidad" class="hidden-xs"></span></small>
                     </p>
                   </li>
                   <!-- Menu Body 
@@ -50,10 +49,12 @@
                   <!-- Menu Footer-->
                   <li class="user-footer">
                     <div class="pull-left">
-                      <a href="#" class="btn btn-default btn-flat">Perfil</a>
+                      <!--  Modal para cambio de contraseña -->                      
+                      	 <button id="launchPass" type="button" class="btn btn-default btn-flat btnPass" data-toggle="modal" data-target="#pass_modal">Cambiar Clave</button>
                     </div>
+                    
                     <div class="pull-right">
-                      <a href="https://login.stp.gov.py:8443/cas/logout" class="btn btn-default btn-flat">Salir</a>
+                      <a href="https://login.stp.gov.py/cas/logout" class="btn btn-default btn-flat">Salir</a>
                     </div>
                   </li>
                 </ul>
@@ -64,5 +65,9 @@
               </li>-->
             </ul>
           </div>
+          <div class="navbar-custom-menu">
+          	<div style="padding-top:5px">.</div>
+          	<input id="ex12c" type="text"/>
+           </div>
 
         </nav>

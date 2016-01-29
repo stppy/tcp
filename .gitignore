@@ -1,0 +1,8 @@
+target/
+target/*
+*/target/**
+*.class
+*.properties
+*/pom.properties
+.metadata/*
+/pom.xml

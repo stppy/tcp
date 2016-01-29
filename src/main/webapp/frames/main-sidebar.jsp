@@ -19,45 +19,35 @@
           <!-- /.search form -->
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
-            <li class="header">PROGRAMACIÓN</li>
-            <li class="treeview">
-              <a href="/entidad.jsp" id="listarEntidades">
-                <i class="fa fa-dashboard"></i> <span>Entidad</span> <i class="fa fa-angle-left pull-right"></i>
-              </a>
-              <ul class="treeview-menu" id="listaEntidades" atyle="display: none;">
-              </ul>
-            </li>
-            <li class="treeview">
-             <a href="./programacion.jsp" id="listarProgramacion">
-                <i class="fa fa-files-o"></i>
-                <span>Estructura Programática</span>
-                <span class="label label-primary pull-right">4</span>
-              </a>
-              <ul class="treeview-menu" id="listaProgramacion">
-                
-              </ul>
-            </li>
-            <!-- <li class="treeview">
-            	<a href="/estructura-programatica.jsp">
-            	<i class="fa fa-book"></i> <span>Modificación de Estructura Programática</span></a></li>
-           <li class="treeview">
-               <a href="/pnd.jsp" id="listarPnd">
-                <i class="fa fa-folder"></i> <span>Vinculación PND</span>
-                <i class="fa fa-angle-left pull-right"></i>
-              </a>
-            </li> -->
+            <li class="header">Tablero</li>
             
             <li class="treeview">
-              <a href="/producto.jsp" id="listarProductos">
-                <i class="fa fa-edit"></i> <span>Programación de Productos</span>
-                <i class="fa fa-angle-left pull-right"></i>
+             <a href=".#" id="vistaInstitucional">
+                <i class="fa fa-files-o"></i><span>Institucional</span>
               </a>
-              <ul class="treeview-menu">
-              </ul>
+              
+            </li>
+             <li class="treeview">
+             <a href=".#" id="vistaDepartamental">
+                <i class="fa fa-files-o"></i><span>Departamental</span>
+              </a>
+              
+            </li>
+            
+            <li class="treeview">
+              <a href="#" id="vistaGeografica">
+                <i class="fa fa-edit"></i> <span>Geografico</span>
+              </a>
+            </li>
+            <li class="treeview">
+              <a href="#" id="vistaCiudadana">
+                <i class="fa fa-edit"></i> <span>Ciudadano</span>
+              </a>
+              
             </li>
             
             <li class="header">LABELS</li>
-            <li><a href="/documentacion.jsp"><i class="fa fa-circle-o text-red"></i> <span>Documentación</span></a></li>
+            <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Documentación</span></a></li>
             <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Diccionario de Datos</span></a></li>
             <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Preguntas Frecuentes</span></a></li>
           </ul>
