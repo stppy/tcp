@@ -98,7 +98,7 @@
 							'</div>';
 							
 			$("#programacion").append(contenido);
-			$("#insLineaAccion").find("#formularioInsLineaAccion").append('<div class="form-group" id="guardarInsLineaAccionBoton"><button type="submit" class="btn btn-success" id="guardarInsLineaAccion">Guardar</button></div>');
+			$("#insLineaAccion").find("#formularioInsLineaAccion").append('<div class="form-group" id="guardarInsLineaAccionBoton"><button type="submit" class="btn btn-success" id="guardarInsLineaAccion" data-dismiss="modal">Guardar</button></div>');
 			$('#insLineaAccion').modal('show');
 
 	});
@@ -254,6 +254,7 @@
 						tablaInsLineaAccion +='</table></div>';				
 						
 						$('.box-body').html(tablaInsLineaAccion);
+												
 						
 		        	}else{
 		        		if (data.success == false){
