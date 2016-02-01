@@ -909,7 +909,7 @@
 											
 							'               			</div>'+//fin box-body
 							'							<div class="modal-footer">'+
-							'								<button type="button" class="btn btn-success btn-sm guardarAccion" parametros = '+insLineaAccionId+'>Guardar Acción</button>'+
+							'								<button type="button" class="btn btn-success btn-sm guardarAccion" parametros = '+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'>Guardar Acción</button>'+
 							'							</div>'+
 							'                		</div>'+	
 							'                	</div>'+
@@ -2350,6 +2350,13 @@
 	});
 
 	$("body").on("click", ".guardarAccion",function(event){
+		var codigoRegistro = $(this).attr("parametros");
+	    var idParsed = codigoRegistro.split("-"); 
+	    var insLineaAccionId = idParsed[0];
+	    var lineaAccionId = idParsed[1];
+	    var institucionId = idParsed[2];
+	    var periodoId = idParsed[3];
+		
 		var costo = document.getElementById("costoAccion").value;
 		var peso = document.getElementById("pesoAccion").value;
 		var fechaInicio = document.getElementById("fechaInicioAccion").value;
@@ -2359,7 +2366,6 @@
 	    var meta2 = document.getElementById("segundoTrimestre-formulario").value;
 	    var meta3 = document.getElementById("tercerTrimestre-formulario").value;
 	    var meta4 = document.getElementById("cuartoTrimestre-formulario").value;
-	    var insLineaAccionId = document.getElementById("insLineaAccionId").value;
 		var departamentoId = $("#selectorDepartamento option:selected").val();
 		var distritoId = $("#distritosDepartamento option:selected").val();
 		var catalogoAccion = $("#selectorCatalogoAccion option:selected").val();
@@ -2390,18 +2396,22 @@
 	        contentType: 'application/json',
 	        mimeType: 'application/json',
 	        success: function (data) {
-	        	actualizarTablaAcciones(insLineaAccionId);
+	        	actualizarTablaAcciones(insLineaAccionId,lineaAccionId,institucionId,periodoId);
 	        	},
 	        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
 	        error: function(data,status,er) {
-	        	actualizarTablaAcciones(insLineaAccionId);
+	        	actualizarTablaAcciones(insLineaAccionId,lineaAccionId,institucionId,periodoId);
 	        	}
 		 });
 	    
 	});	
 	
-	function actualizarTablaAcciones(insLineaAccionId){
+	function actualizarTablaAcciones(insLineaAccionId,lineaAccionId,institucionId,periodoId){
 		var insLineaAccionId = insLineaAccionId;
+		var lineaAccionId = lineaAccionId;
+		var institucionId = institucionId;
+		var periodoId = periodoId;
+	
 		var accion = $.ajax({
 			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccionId,
 		  	type:'get',
@@ -2460,21 +2470,22 @@
 				}
 			}
 
-			cuerpoAccion +="<td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm'><span class='glyphicon glyphicon-plus modalVincularProducto' parametros="+accion[a].id+"></span></button></td></tr>";
+			cuerpoAccion +="<td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos'><span class='glyphicon glyphicon-usd modalVincularProducto' parametros="+accion[a].id+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"></span></button><button type='button' class='btn btn-default btn-sm'><span class='glyphicon glyphicon-time'></span></button><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button></td></tr>";
+
 		}
 		
 		$('#tablaAccionesPrecargadas').html("");
 		$('#tablaAccionesPrecargadas').append(cuerpoAccion);
-		$("#costoAccion").val('');
-		$("#pesoAccion").val('');
+		//$("#costoAccion").val('');
+		//$("#pesoAccion").val('');
 		$("#fechaInicioAccion").val('');
 		$("#fechaFinAccion").val('');
-		$("#versionAccion").val('');
+		//$("#versionAccion").val('');
 		$("#primerTrimestre-formulario").val('');
 		$("#segundoTrimestre-formulario").val('');
 		$("#tercerTrimestre-formulario").val('');
 		$("#cuartoTrimestre-formulario").val('');
-		$("#insLineaAccionId").val('');
+		//$("#insLineaAccionId").val('');
 		$("#selectorDepartamento").val('');
 		$("#distritosDepartamento").val('');
 		$("#selectorCatalogoAccion").val('');
