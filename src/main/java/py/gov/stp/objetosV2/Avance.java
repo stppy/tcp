@@ -4,11 +4,11 @@ import java.sql.Date;
 public class Avance {
 	protected int id;
 	protected String justificacion;
-	protected int cantidad;
+	protected double cantidad;
 	protected Date fechaEntrega;
 	protected int objetoGasto;
 	protected String codigoContratacion;
-	protected int monto;
+	protected double monto;
 	protected int actividad;
 	protected int version;
 	protected boolean borrado=false;
@@ -24,10 +24,10 @@ public class Avance {
 	public void setJustificacion(String justificacion) {
 		this.justificacion = justificacion;
 	}
-	public int getCantidad() {
+	public double getCantidad() {
 		return cantidad;
 	}
-	public void setCantidad(int cantidad) {
+	public void setCantidad(double cantidad) {
 		this.cantidad = cantidad;
 	}
 	public Date getFechaEntrega() {
@@ -48,10 +48,10 @@ public class Avance {
 	public void setCodigoContratacion(String codigoContratacion) {
 		this.codigoContratacion = codigoContratacion;
 	}
-	public int getMonto() {
+	public double getMonto() {
 		return monto;
 	}
-	public void setMonto(int monto) {
+	public void setMonto(double monto) {
 		this.monto = monto;
 	}
 	public int getActividad() {

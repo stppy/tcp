@@ -3,7 +3,7 @@ import java.sql.Date;
 
 public class Programacion {
 	protected int id;
-	protected int cantidad;
+	protected double cantidad;
 	protected Date fechaEntrega;
 	protected int actividad;
 	protected int version;
@@ -14,10 +14,10 @@ public class Programacion {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getCantidad() {
+	public double getCantidad() {
 		return cantidad;
 	}
-	public void setCantidad(int cantidad) {
+	public void setCantidad(double cantidad) {
 		this.cantidad = cantidad;
 	}
 	public Date getFechaEntrega() {
