@@ -153,9 +153,9 @@ public class SqlSelects {
 		return objetos; 
 		}
 	
-	public static List<LineaAccion> selectLineaAccion() throws SQLException{
+	public static List<LineaAccion> selectLineaAccion(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select * from linea_accion";
+		String query = " select * from linea_accion "+condition;
 
 		Statement statement = null;
 		ResultSet rs=null;
@@ -189,9 +189,9 @@ public class SqlSelects {
 		return objetos; 
 		}	
 	
-	public static List<InsLineaAccion> selectInsLineaAccion() throws SQLException{
+	public static List<InsLineaAccion> selectInsLineaAccion(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select * from ins_linea_accion";
+		String query = " select * from ins_linea_accion "+condition;
 
 		Statement statement = null;
 		ResultSet rs=null;
@@ -222,9 +222,9 @@ public class SqlSelects {
 		return objetos; 
 		}	
 	
-	public static List<Institucion> selectInstitucion() throws SQLException{
+	public static List<Institucion> selectInstitucion(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select * from institucion";
+		String query = " select * from institucion "+condition;
 
 		Statement statement = null;
 		ResultSet rs=null;

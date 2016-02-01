@@ -70,9 +70,11 @@ public class ajaxSelects extends HttpServlet {
     	
     	Integer institucion_id=null;
     	Integer accion_id=null;
+    	Integer accionId = null;
     	Integer linea_accion_id=null;
     	Integer lineaAccionId=null;
-
+    	Integer insLineaAccionId = null;
+    	Integer institucionId = null;
     	
     	String institucion=null;
     	String usuario=null;
@@ -120,6 +122,9 @@ public class ajaxSelects extends HttpServlet {
       	
       	if (request.getParameter("institucion_id")!=null) institucion_id=Integer.parseInt(request.getParameter("institucion_id")); else institucion_id=0;
       	if (request.getParameter("accion_id")!=null) accion_id=Integer.parseInt(request.getParameter("accion_id")); else accion_id=0;
+      	if (request.getParameter("accionId")!=null) accionId=Integer.parseInt(request.getParameter("accionId"));
+      	if (request.getParameter("institucionId")!=null) institucionId=Integer.parseInt(request.getParameter("institucionId"));
+      	if (request.getParameter("insLineaAccionId")!=null) insLineaAccionId=Integer.parseInt(request.getParameter("insLineaAccionId"));
       	if (request.getParameter("linea_accion_id")!=null) linea_accion_id=Integer.parseInt(request.getParameter("linea_accion_id")); else linea_accion_id=0;
       	if (request.getParameter("lineaAccionId")!=null) lineaAccionId=Integer.parseInt(request.getParameter("lineaAccionId"));
       	if (request.getParameter("catalogoAccionId")!=null) catalogoAccionId=Integer.parseInt(request.getParameter("catalogoAccionId"));
@@ -282,21 +287,27 @@ public class ajaxSelects extends HttpServlet {
         		}      
         	if (action.equals("getLineaAccion")){
         		List objetos=null; 
-           		try {objetos = SqlSelects.selectLineaAccion();}
+        		condition = " where true ";
+        		if (lineaAccionId!=null) condition += " and id ='"+lineaAccionId+"'";
+           		try {objetos = SqlSelects.selectLineaAccion(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
         	}  
         	if (action.equals("getInsLineaAccion")){
         		List objetos=null; 
-           		try {objetos = SqlSelects.selectInsLineaAccion();}
+        		condition = " where true ";
+        		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
+           		try {objetos = SqlSelects.selectInsLineaAccion(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
         	}    
         	if (action.equals("getInstitucion")){
-        		List objetos=null; 
-           		try {objetos = SqlSelects.selectInstitucion();}
+        		List objetos=null;
+        		condition = " where true ";
+        		if (institucionId!=null) condition += " and id ='"+institucionId+"'";
+           		try {objetos = SqlSelects.selectInstitucion(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -326,6 +337,7 @@ public class ajaxSelects extends HttpServlet {
         		List objetos=null; 
         		condition = " where true ";
         		if (lineaAccionId!=null) condition += " and ins_linea_accion_id ='"+lineaAccionId+"'";
+        		if (accionId!=null) condition += " and id ='"+accionId+"'";
            		try {objetos = SqlSelects.selectAccion(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
