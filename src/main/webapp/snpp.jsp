@@ -75,7 +75,7 @@ if (user != null) { %>
 		}
 		
 	/* 	var entidadesjson = $.ajax({
-	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getEntidades',
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getEntidades',
 	      	type:'get',
 	      	dataType:'json',
 	      	crossDomain:true,
@@ -84,7 +84,7 @@ if (user != null) { %>
 		var entidades=JSON.parse(entidadesjson);
 	 */	
 		var eljson = $.ajax({
-	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getLineasAccion',
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getLineasAccion',
 	      	type:'get',
 	      	dataType:'json',
 	      	crossDomain:true,

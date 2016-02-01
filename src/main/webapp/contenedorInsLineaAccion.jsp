@@ -71,7 +71,7 @@ if (user != null) { %>
 		var entidadCas = "";
 		entidadCas ="<%=attributes.get("entidad") %>";
 		var usuarios = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -82,7 +82,7 @@ if (user != null) { %>
 		$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
 		
 		var insLineaAccion = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion',
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -90,7 +90,7 @@ if (user != null) { %>
 		insLineaAccion=JSON.parse(insLineaAccion);
 		
 		var lineaAccion = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -98,7 +98,7 @@ if (user != null) { %>
 		lineaAccion = JSON.parse(lineaAccion);
 		
 		var institucion = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -106,7 +106,7 @@ if (user != null) { %>
 		institucion = JSON.parse(institucion);
 		
 		var periodo = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -114,7 +114,7 @@ if (user != null) { %>
 		periodo = JSON.parse(periodo);
 		
 		var unidadMedida = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       

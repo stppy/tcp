@@ -4,7 +4,7 @@
 		event.stopPropagation();
 		event.preventDefault();
 		var lineaAccion = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -18,7 +18,7 @@
 
 
 		var institucion = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -31,7 +31,7 @@
 		}
 
 		var periodo = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -125,7 +125,7 @@
 
 				 
 		$.ajax({
-		        url: "http://tablero2015.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
+		        url: "http://spr.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
 		        type: 'POST',
 		        dataType: 'json',
 		        data: JSON.stringify(datos),
@@ -137,7 +137,7 @@
 		        	if (data.success == true)
 		        	{						
 						var insLineaAccion = $.ajax({
-							url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion',
+							url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion',
 						  	type:'get',
 						  	dataType:'json',
 						  	async:false       
@@ -145,7 +145,7 @@
 						insLineaAccion=JSON.parse(insLineaAccion);
 						
 						var lineaAccion = $.ajax({
-							url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+							url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
 						  	type:'get',
 						  	dataType:'json',
 						  	async:false       
@@ -153,7 +153,7 @@
 						lineaAccion = JSON.parse(lineaAccion);
 						
 						var institucion = $.ajax({
-							url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+							url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
 						  	type:'get',
 						  	dataType:'json',
 						  	async:false       
@@ -161,7 +161,7 @@
 						institucion = JSON.parse(institucion);
 						
 						var periodo = $.ajax({
-							url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+							url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
 						  	type:'get',
 						  	dataType:'json',
 						  	async:false       
@@ -293,7 +293,7 @@
 		}		
 		
 		var lineaAccion = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -307,7 +307,7 @@
 
 
 		var institucion = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -320,7 +320,7 @@
 		}
 
 		var periodo = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -386,7 +386,7 @@
 		$("#idInsLineaAccion").val(id);
 		
 		var lineaAccion = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -402,7 +402,7 @@
 		}
 		
 		var institucion = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -417,7 +417,7 @@
 		}	
 
 		var periodo = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -458,7 +458,7 @@
 		
 
 		$.ajax({
-		        url: "http://tablero2015.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
+		        url: "http://spr.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
 		        type: 'POST',
 		        dataType: 'json',
 		        data: JSON.stringify(objeto),
@@ -471,7 +471,7 @@
 		        	{
 		        		alert("Actualizado");
 		        		var insLineaAccion = $.ajax({
-		        			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion',
+		        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion',
 		        		  	type:'get',
 		        		  	dataType:'json',
 		        		  	async:false       
@@ -479,7 +479,7 @@
 		        		insLineaAccion=JSON.parse(insLineaAccion);
 		        		
 		        		var lineaAccion = $.ajax({
-		        			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+		        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
 		        		  	type:'get',
 		        		  	dataType:'json',
 		        		  	async:false       
@@ -487,7 +487,7 @@
 		        		lineaAccion = JSON.parse(lineaAccion);
 		        		
 		        		var institucion = $.ajax({
-		        			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+		        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
 		        		  	type:'get',
 		        		  	dataType:'json',
 		        		  	async:false       
@@ -495,7 +495,7 @@
 		        		institucion = JSON.parse(institucion);
 		        		
 		        		var periodo = $.ajax({
-		        			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+		        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
 		        		  	type:'get',
 		        		  	dataType:'json',
 		        		  	async:false       
@@ -617,7 +617,7 @@
 				objeto.borrado=borrado;
 				
 				$.ajax({
-					url: "http://tablero2015.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
+					url: "http://spr.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
 					type: 'POST',
 					dataType: 'json',
 					data: JSON.stringify(objeto),
@@ -647,7 +647,7 @@
 						$("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intente de nuevo</p>');
 					}
 				});
-				window.location.href = "http://tablero2015.stp.gov.py/tablero/contenedorInsLineaAccion.jsp";
+				window.location.href = "http://spr.stp.gov.py/tablero/contenedorInsLineaAccion.jsp";
 			});	
 	
 	$("body").on("click", ".agregarAccion",function(event){
@@ -668,7 +668,7 @@
 		}		
 		
 		var lineaAccion = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -684,7 +684,7 @@
 		}
 		
 		var catalogoAccion = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo',
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -698,7 +698,7 @@
 		}
 		
 		var institucion = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -714,7 +714,7 @@
 		}
 		
 		var periodo = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -730,7 +730,7 @@
 		}
 		
 		var unidadMedida = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -743,7 +743,7 @@
 		}
 		
 		var departamentos = $.ajax({
-	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -757,7 +757,7 @@
 		optionDepartamentos+='<option value="99" parametro="99">ALC.NACIONAL</option>';
 		
 		var distritos = $.ajax({
-	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getDistrito',
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito',
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -765,7 +765,7 @@
 		distritos = JSON.parse(distritos);
 		
 		var accion = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccionId,
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccionId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -955,7 +955,7 @@
 		}		 
 		
 		var lineaAccion = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -971,7 +971,7 @@
 		}
 		
 		var institucion = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -987,7 +987,7 @@
 		}
 		
 		var periodo = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -1003,7 +1003,7 @@
 		}
 		
 		var unidadMedida = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -1016,7 +1016,7 @@
 		}
 		
 		var departamentos = $.ajax({
-	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -1025,7 +1025,7 @@
 		
 		
 		var distritos = $.ajax({
-	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getDistrito',
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito',
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -1041,7 +1041,7 @@
 
 		
 		var accion_catalogo = $.ajax({
-	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo',
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo',
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -1054,7 +1054,7 @@
 		}		
 		
 		var accion = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccionId,
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccionId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -1112,7 +1112,7 @@
 		var departamentoId = $("#selectorDepartamento option:selected").val();
     	
 		var distritos = $.ajax({
-	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getDistrito&departamento='+departamentoId,
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito&departamento='+departamentoId,
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -1133,7 +1133,7 @@
 		var catalogoAccionId = $("#selectorCatalogoAccion option:selected").val();
     	
 		var catalogoAccion = $.ajax({
-	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+catalogoAccionId,
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+catalogoAccionId,
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -1141,7 +1141,7 @@
 		catalogoAccion = JSON.parse(catalogoAccion);
 		
 		var unidadMedida = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -1258,7 +1258,7 @@
 		var idDistrito= idDistrito;*/
 		
 		var accionHasProducto = $.ajax({
-	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getAccionHasProducto&accion_id='+accionId,
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getAccionHasProducto&accion_id='+accionId,
 	      	type:'get',
 	      	dataType:'json',
 	      	crossDomain:true,
@@ -2322,7 +2322,7 @@
 	function actualizarTablaAcciones(insLineaAccionId){
 		var insLineaAccionId = insLineaAccionId;
 		var accion = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccionId,
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccionId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -2330,7 +2330,7 @@
 		accion = JSON.parse(accion);
 		
 		var departamentos = $.ajax({
-	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -2338,7 +2338,7 @@
 		departamentos = JSON.parse(departamentos);
 		
 		var distritos = $.ajax({
-	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getDistrito',
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito',
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
