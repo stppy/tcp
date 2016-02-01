@@ -782,11 +782,21 @@
 
 		for(var a = 0; a < accion.length; a++)
 		{
+			var catalogoAccion = $.ajax({
+				url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[a].accionCatalogoId,
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+			}).responseText;
+			catalogoAccion = JSON.parse(catalogoAccion);
+			
+			cuerpoAccion +="<tr><td class='text-center'>"+catalogoAccion[0].nombre+"</td>";
+			
 			for(var d = 0; d < 18; d++)
 			{
 				if(accion[a].departamentoId == departamentos[d].idDepartamento){
 					nombreDepartamento = departamentos[d].nombreDepartamento;
-					cuerpoAccion +="<tr><td class='text-center'>"+nombreDepartamento+"</td>";
+					cuerpoAccion +="<td class='text-center'>"+nombreDepartamento+"</td>";
 				}
 			}
 			
@@ -799,7 +809,7 @@
 				}
 			}
 
-			cuerpoAccion +="<td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm'><span class='glyphicon glyphicon-plus modalVincularProducto' parametros="+accion[a].id+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"></span></button></td></tr>";
+			cuerpoAccion +="<td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos'><span class='glyphicon glyphicon-usd modalVincularProducto' parametros="+accion[a].id+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"></span></button><button type='button' class='btn btn-default btn-sm'><span class='glyphicon glyphicon-time'></span></button><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button></td></tr>";
 		}
 		
 		
@@ -901,7 +911,7 @@
 							'	                			<div class="table-responsive">'+
 							'	                				<table class="table table-hover table-bordered">'+
 							'	                					<thead>'+
-							'	                						<tr class="active"><th rowspan="2" class="text-center">Depto</th><th rowspan="2" class="text-center">Distrito</th><th rowspan="2" class="text-center">FechaInicio</th><th rowspan="2" class="text-center">FechaFin</th><th colspan="4" class="text-center">Metas</th><th rowspan="2" class="text-center">VincularProducto</th><th rowspan="2" class="text-center">Borrado</th><th rowspan="2" class="text-center">Editar</th></tr>'+
+							'	                						<tr class="active"><th rowspan="2" class="text-center">Acción</th><th rowspan="2" class="text-center">Depto</th><th rowspan="2" class="text-center">Distrito</th><th rowspan="2" class="text-center">FechaInicio</th><th rowspan="2" class="text-center">FechaFin</th><th colspan="4" class="text-center">Metas</th><th rowspan="2" class="text-center" style="min-width:160px">Administrar Acción</th></tr>'+
 							'	                						<tr class="active"><th class="text-center">1er Trimestre</th><th class="text-center">2do Trimestre</th><th class="text-center">3er Trimestre</th><th class="text-center">4to Trimestre</th></tr>'+
 							'	                					</thead>'+
 							'	                						<tbody id="tablaAccionesPrecargadas">'+
@@ -1289,8 +1299,7 @@
 		{
 			$("#modalVincularProductos").remove();
 		}	
-		
-		
+				
 		var parametros = $(this).attr("parametros");
 	    var idParsed = parametros.split("-");                                                            
 		var accionId = idParsed[0];
@@ -1299,7 +1308,46 @@
 		var lineaAccionId = idParsed[2];
 		var institucionId = idParsed[3];
 		var periodoId = idParsed[4];
-
+				
+		var accion = $.ajax({
+			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getAccion&accionId='+accionId,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		accion = JSON.parse(accion);
+		
+		var catalogoAccion = $.ajax({
+	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[0].accionCatalogoId,
+	      	type:'get',
+	      	dataType:'json',
+	      	async:false       
+	    }).responseText;
+		catalogoAccion = JSON.parse(catalogoAccion);
+		
+		var insLineaAccion = $.ajax({
+			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion&insLineaAccionId='+insLineaAccionId,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;		
+		insLineaAccion=JSON.parse(insLineaAccion);
+		
+		var institucion = $.ajax({
+			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion&institucionId='+insLineaAccion[0].institucionId,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		institucion = JSON.parse(institucion);
+		
+		var lineaAccion = $.ajax({
+			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId='+lineaAccionId,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		lineaAccion = JSON.parse(lineaAccion);
 
 
 		
@@ -1311,7 +1359,7 @@
 							      '<div class="modal-content">'+ 
 							        '<div class="modal-header">'+ 
 							          '<button type="button" class="close agregarAccion" data-dismiss="modal" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'>&times;</button>'+ 
-							          '<h4 class="modal-title"></h4>'+ 
+							          '<h4 class="modal-title">Vincular Producto con '+catalogoAccion[0].nombre+' de '+lineaAccion[0].nombre+' ('+institucion[0].sigla+') año '+insLineaAccion[0].periodoId+'</h4>'+ 
 							        '</div>'+ 
 							        '<div class="modal-body">'+ 				        
 
@@ -2364,11 +2412,21 @@
 		
 		for(var a = 0; a < accion.length; a++)
 		{
+			var catalogoAccion = $.ajax({
+				url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[a].accionCatalogoId,
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+			}).responseText;
+			catalogoAccion = JSON.parse(catalogoAccion);
+			
+			cuerpoAccion +="<tr><td class='text-center'>"+catalogoAccion[0].nombre+"</td>";
+			
 			for(var d = 0; d < 18; d++)
 			{
 				if(accion[a].departamentoId == departamentos[d].idDepartamento){
 					nombreDepartamento = departamentos[d].nombreDepartamento;
-					cuerpoAccion +="<tr><td class='text-center'>"+nombreDepartamento+"</td>";
+					cuerpoAccion +="<td class='text-center'>"+nombreDepartamento+"</td>";
 				}
 			}
 			
