@@ -783,7 +783,7 @@
 		for(var a = 0; a < accion.length; a++)
 		{
 			var catalogoAccion = $.ajax({
-				url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[a].accionCatalogoId,
+				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[a].accionCatalogoId,
 			  	type:'get',
 			  	dataType:'json',
 			  	async:false       
@@ -1310,7 +1310,7 @@
 		var periodoId = idParsed[4];
 				
 		var accion = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getAccion&accionId='+accionId,
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&accionId='+accionId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -1318,7 +1318,7 @@
 		accion = JSON.parse(accion);
 		
 		var catalogoAccion = $.ajax({
-	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[0].accionCatalogoId,
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[0].accionCatalogoId,
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -1326,7 +1326,7 @@
 		catalogoAccion = JSON.parse(catalogoAccion);
 		
 		var insLineaAccion = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion&insLineaAccionId='+insLineaAccionId,
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion&insLineaAccionId='+insLineaAccionId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -1334,7 +1334,7 @@
 		insLineaAccion=JSON.parse(insLineaAccion);
 		
 		var institucion = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion&institucionId='+insLineaAccion[0].institucionId,
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion&institucionId='+insLineaAccion[0].institucionId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -1342,7 +1342,7 @@
 		institucion = JSON.parse(institucion);
 		
 		var lineaAccion = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId='+lineaAccionId,
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId='+lineaAccionId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -2413,7 +2413,7 @@
 		for(var a = 0; a < accion.length; a++)
 		{
 			var catalogoAccion = $.ajax({
-				url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[a].accionCatalogoId,
+				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[a].accionCatalogoId,
 			  	type:'get',
 			  	dataType:'json',
 			  	async:false       
