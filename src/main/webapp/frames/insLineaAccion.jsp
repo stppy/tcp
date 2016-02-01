@@ -651,7 +651,7 @@
 			});	
 	
 	$("body").on("click", ".agregarAccion",function(event){
-		var codigoRegistro = $(this).attr("parametrosAccionInsLineaAccion");
+		var codigoRegistro = $(this).attr("parametros");
 	    var idParsed = codigoRegistro.split("-"); 
 	    var insLineaAccionId = idParsed[0];
 	    var lineaAccionId = idParsed[1];
@@ -666,6 +666,10 @@
 		{
 			$("#modalAccion").remove();
 		}		
+		if ( $("#modalVincularProductos").length )
+		{
+			$("#modalVincularProductos").remove();
+		}	
 		
 		var lineaAccion = $.ajax({
 			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
@@ -795,7 +799,7 @@
 				}
 			}
 
-			cuerpoAccion +="<td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm'><span class='glyphicon glyphicon-plus modalVincularProducto' parametros="+accion[a].id+"></span></button></td></tr>";
+			cuerpoAccion +="<td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm'><span class='glyphicon glyphicon-plus modalVincularProducto' parametros="+accion[a].id+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"></span></button></td></tr>";
 		}
 		
 		
@@ -1290,6 +1294,14 @@
 		var parametros = $(this).attr("parametros");
 	    var idParsed = parametros.split("-");                                                            
 		var accionId = idParsed[0];
+		//Las siguentes 4 variables se utiliza en esta funcion para redibujar el modal anterior
+		var insLineaAccionId = idParsed[1];
+		var lineaAccionId = idParsed[2];
+		var institucionId = idParsed[3];
+		var periodoId = idParsed[4];
+
+
+
 		
 		var modalProductos = "";
 
@@ -1298,7 +1310,7 @@
 							    
 							      '<div class="modal-content">'+ 
 							        '<div class="modal-header">'+ 
-							          '<button type="button" class="close" data-dismiss="modal">&times;</button>'+ 
+							          '<button type="button" class="close agregarAccion" data-dismiss="modal" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'>&times;</button>'+ 
 							          '<h4 class="modal-title"></h4>'+ 
 							        '</div>'+ 
 							        '<div class="modal-body">'+ 				        
@@ -1390,7 +1402,7 @@
 							        
 							        '</div>'+ 
 							        '<div class="modal-footer">'+ 
-							          '<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>'+ 
+							          '<button type="button" class="btn btn-default agregarAccion" data-dismiss="modal" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'>Cerrar</button>'+ 
 							        '</div>'+ 
 							      '</div>'+ 
 							      
