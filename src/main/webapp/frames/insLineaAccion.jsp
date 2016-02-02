@@ -2638,7 +2638,6 @@ $("body").on("click", ".guardarActividad",function(event){
 	    var hito_tipo_id = document.getElementById("hitoTipoIdActividad").value;
 
 		var objeto = new Object();
-		var accion = "";
 		
 		objeto.nombre = nombre;
 		objeto.descripcion = descripcion;
@@ -2648,6 +2647,23 @@ $("body").on("click", ".guardarActividad",function(event){
 		objeto.accion_id = accion_id;
 		objeto.unidad_medida_id = unidad_medida_id;
 		objeto.hito_tipo_id = hito_tipo_id;
+		
+	  	var info = JSON.stringify(objeto);
+	    $.ajax({
+	        url: "ajaxInserts2?accion=insActividad",
+	        type: 'POST',
+	        dataType: 'json',
+	        data: info,
+	        contentType: 'application/json',
+	        mimeType: 'application/json',
+	        success: function (data) {
+	        	//actualizarTablaAcciones(insLineaAccionId,lineaAccionId,institucionId,periodoId);
+	        	},
+	        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
+	        error: function(data,status,er) {
+	        	a//ctualizarTablaAcciones(insLineaAccionId,lineaAccionId,institucionId,periodoId);
+	        	}
+		 });
 		
 	});	
 

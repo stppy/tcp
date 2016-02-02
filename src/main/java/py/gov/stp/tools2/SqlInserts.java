@@ -625,13 +625,20 @@ public class SqlInserts {
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into hitoPrueba (nombre,descripcion,proporcion,peso,version,borrado,accion_id,unidad_medida_id,hito_tipo_id)"
+		String query = " insert into actividad (nombre,descripcion,proporcion,peso,version,borrado,accion_id,unidad_medida_id,hito_tipo_id)"
 	+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
-
-	
+		insert.setString (1, actividad.getNombre());
+		insert.setString (2, actividad.getDescripcion());
+		insert.setDouble (3, actividad.getProporcion());
+		insert.setDouble (4, actividad.getPeso());
+		insert.setInt (5, actividad.getVersion());
+		insert.setBoolean (6, actividad.isBorrado());
+		insert.setInt (7, actividad.getAccion_id());
+		insert.setInt (8, actividad.getUnidad_medida_id());
+		insert.setInt (9, actividad.getHito_tipo_id());	
 		
 		insert.execute();
 		   
