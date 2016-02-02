@@ -2543,6 +2543,27 @@
 			optionTipoHito+='<option value="'+hitoTipo[u].id+'" parametro="'+hitoTipo[u].id+'">'+hitoTipo[u].nombre+'</option>';
 		}
 		
+		var actividades = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getCronograma&accionId='+accionId,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		actividades = JSON.parse(actividades);
+		
+		
+		var cuerpoActividad = "";
+		for(var u = 0; u < actividades.length; u++)
+		{
+			if(actividades[u].borrado == false)
+			{
+				cuerpoActividad+='<tr><td>'+actividades[u].nombre+'</td><td>'+actividades[u].descripcion+'</td><td>'+actividades[u].proporcion+'</td><td>'+actividades[u].peso+'</td><td>'+actividades[u].version+'</td><td>'+actividades[u].accion_id+'</td><td>'+actividades[u].unidad_medida_id+'</td><td>'+actividades[u].hito_tipo_id+'</td></tr>';
+			}else{
+				cuerpoActividad+='<tr><td><del>'+actividades[u].nombre+'</del></td><td><del>'+actividades[u].descripcion+'</del></td><td><del>'+actividades[u].proporcion+'</del></td><td><del>'+actividades[u].peso+'</del></td><td><del>'+actividades[u].version+'</del></td><td><del>'+actividades[u].accion_id+'</del></td><td><del>'+actividades[u].unidad_medida_id+'</del></td><td><del>'+actividades[u].hito_tipo_id+'</del></td></tr>';
+			}
+		}
+		
+		
 		//var optionTipoHito='<option value="0" parametro="0">Entregable</option><option value="1" parametro="1">Intermedio</option><option value="2" parametro="2">Autonomo</option>';
 
 		
@@ -2610,9 +2631,9 @@
 		'	                			<div class="table-responsive">'+
 		'	                				<table class="table table-hover table-bordered">'+
 		'	                					<thead>'+
-		'	                						<tr class="active"><th class="text-center">Nombre</th><th class="text-center">Descripción</th><th class="text-center">Proporción</th><th class="text-center">Peso</th><th class="text-center">Peso</th><th class="text-center">Versión</th><th class="text-center">Acción Id</th><th class="text-center">Unidad Medida Id</th><th class="text-center">Hito Tipo Id</th></tr>'+
+		'	                						<tr class="active"><th class="text-center">Nombre</th><th class="text-center">Descripción</th><th class="text-center">Proporción</th><th class="text-center">Peso</th><th class="text-center">Versión</th><th class="text-center">Acción Id</th><th class="text-center">Unidad Medida Id</th><th class="text-center">Hito Tipo Id</th></tr>'+
 		'	                					</thead>'+
-		'	                						<tbody id="tablaAccionesPrecargadas">'+
+		'	                						<tbody id="tablaActividades">'+
 		'	                						</tbody>'+
 		'	                				</table>'+
 		'	                			</div>'+		                			
@@ -2631,7 +2652,10 @@
 		'</div>'; 
 
 		$("body").append(cuerpoModalActividades);
+		$('#tablaActividades').html("");
+		$('#tablaActividades').append(cuerpoActividad);
 		$("#modalActividad").modal('show');
+		
 	});
 	
 $("body").on("click", ".guardarActividad",function(event){
@@ -2674,14 +2698,49 @@ $("body").on("click", ".guardarActividad",function(event){
 	        contentType: 'application/json',
 	        mimeType: 'application/json',
 	        success: function (data) {
-	        	//actualizarTablaAcciones(insLineaAccionId,lineaAccionId,institucionId,periodoId);
+	        	actualizarTablaActividades(accion_id);
 	        	},
 	        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
 	        error: function(data,status,er) {
-	        	a//ctualizarTablaAcciones(insLineaAccionId,lineaAccionId,institucionId,periodoId);
+	        	actualizarTablaActividades(accion_id);
 	        	}
 		 });
 		
-	});	
+});	
+
+function actualizarTablaActividades(accionId){
+	var accionId = accionId;
+	
+	var actividades = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getCronograma&accionId='+accionId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	actividades = JSON.parse(actividades);
+	
+	
+	var cuerpoActividad="";
+	for(var u = 0; u < actividades.length; u++)
+	{
+		if(actividades[u].borrado == false)
+		{
+			cuerpoActividad+='<tr><td>'+actividades[u].nombre+'</td><td>'+actividades[u].descripcion+'</td><td>'+actividades[u].proporcion+'</td><td>'+actividades[u].peso+'</td><td>'+actividades[u].version+'</td><td>'+actividades[u].accion_id+'</td><td>'+actividades[u].unidad_medida_id+'</td><td>'+actividades[u].hito_tipo_id+'</td></tr>';
+		}else{
+			cuerpoActividad+='<tr><td><del>'+actividades[u].nombre+'</del></td><td><del>'+actividades[u].descripcion+'</del></td><td><del>'+actividades[u].proporcion+'</del></td><td><del>'+actividades[u].peso+'</del></td><td><del>'+actividades[u].version+'</del></td><td><del>'+actividades[u].accion_id+'</del></td><td><del>'+actividades[u].unidad_medida_id+'</del></td><td><del>'+actividades[u].hito_tipo_id+'</del></td></tr>';
+		}
+	}
+	
+	$('#tablaActividades').html("");
+	$('#tablaActividades').append(cuerpoActividad);
+	
+	$("#nombreActividad").val('');
+	$("#descripcionActividad").val('');
+	$("#unidadMedidaIdActividad").val('');
+	$("#hitoTipoIdActividad").val('');
+	$("#proporcionActividad").val('');
+	$("#pesoActividad").val('');
+		
+}
 
 	</script>	
