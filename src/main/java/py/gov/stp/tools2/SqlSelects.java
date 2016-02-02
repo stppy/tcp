@@ -365,9 +365,9 @@ public class SqlSelects {
 		return objetos; 
 		}
 	
-	public static List<Periodo> selectPeriodo() throws SQLException{
+	public static List<Periodo> selectPeriodo(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select * from periodo";
+		String query = " select * from periodo "+condition;
 
 		Statement statement = null;
 		ResultSet rs=null;

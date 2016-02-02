@@ -2961,9 +2961,9 @@ $("body").on("click", ".consultaBorrarAccion",function(event){
 			
 			if(actividades[u].borrado == false)
 			{
-				cuerpoActividad+='<tr><td>'+actividades[u].nombre+'</td><td>'+actividades[u].descripcion+'</td><td>'+nombreUnidadMedida+'</td><td>'+nombreHitoTipo+'</td><td>'+actividades[u].proporcion+'</td><td>'+actividades[u].version+'</td><td><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Hito"><span class="glyphicon glyphicon-time"></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Declarar Avance"><span class="fa fa-line-chart"></span></button></td></tr>';
+				cuerpoActividad+='<tr><td>'+actividades[u].nombre+'</td><td>'+actividades[u].descripcion+'</td><td>'+nombreUnidadMedida+'</td><td>'+nombreHitoTipo+'</td><td>'+actividades[u].proporcion+'</td><td>'+actividades[u].version+'</td><td><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Hito"><span class="glyphicon glyphicon-time agregarProgramacion" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Declarar Avance"><span class="fa fa-line-chart"></span></button></td></tr>';
 			}else{
-				cuerpoActividad+='<tr><td><del>'+actividades[u].nombre+'</del></td><td><del>'+actividades[u].descripcion+'</del></td><td><del>'+nombreUnidadMedida+'</del></td><td><del>'+nombreHitoTipo+'</del></td><td><del>'+actividades[u].proporcion+'</del></td><td><del>'+actividades[u].version+'</del></td><td><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Hito"><span class="glyphicon glyphicon-time"></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Declarar Avance"><span class="fa fa-line-chart"></span></button></td></tr>';
+				cuerpoActividad+='<tr><td><del>'+actividades[u].nombre+'</del></td><td><del>'+actividades[u].descripcion+'</del></td><td><del>'+nombreUnidadMedida+'</del></td><td><del>'+nombreHitoTipo+'</del></td><td><del>'+actividades[u].proporcion+'</del></td><td><del>'+actividades[u].version+'</del></td><td><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Hito"><span class="glyphicon glyphicon-time agregarProgramacion" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Declarar Avance"><span class="fa fa-line-chart"></span></button></td></tr>';
 			}
 		}
 		
@@ -3182,5 +3182,138 @@ function actualizarTablaActividades(accionId){
 	$("#pesoActividad").val('');
 		
 }
+
+$("body").on("click", ".agregarProgramacion",function(event){
+	
+	if ( $("#modalActividad").length )
+	{
+		$("#modalActividad").remove();
+	}	
+	
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-");                                                            
+	
+	//Las siguentes 4 variables se utiliza en esta funcion para redibujar el modal anterior
+	var insLineaAccionId = idParsed[0];
+	var lineaAccionId = idParsed[1];
+	var institucionId = idParsed[2];
+	var periodoId = idParsed[3];
+	var accionId = idParsed[4];//trae el id de la lista de cronogramas
+	
+	var accion = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&accionId='+accionId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	accion = JSON.parse(accion);
+	
+	var accionCatalogo = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[0].accionCatalogoId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	accionCatalogo = JSON.parse(accionCatalogo);
+	
+	var lineaAccion = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId='+lineaAccionId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	lineaAccion = JSON.parse(lineaAccion)
+	
+	var periodo = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo&&periodoId='+periodoId,
+  		type:'get',
+  		dataType:'json',
+  		async:false       
+	}).responseText;
+	periodo = JSON.parse(periodo);
+	
+
+	
+	var modalProgramacion = "";
+
+	modalProgramacion += '<div class="modal fade" id="modalProgramacion" tabindex="-1" aria-labelledby="myLargeModalLabel">'+
+							'	<div class="modal-dialog modal-lg" style="width:90%">'+
+							'		<div class="modal-content" >'+
+							'			<div class="modal-header">'+
+							'		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+							'		        <h4 class="modal-title">Programación de '+accionCatalogo[0].nombre+' ('+lineaAccion[0].nombre+' - '+periodo[0].nombre+')</h4>'+ 
+							'			</div>'+
+							'		    <div class="modal-body">'+
+							'		      	<div class="row">'+ 
+							'		      		<div class="col-md-12">'+
+							'						<div class="box box-warning">'+
+							'		                	<div class="box-header with-border">'+
+							'		                  		<h3 class="box-title">Agregar Programación</h3>'+
+							'	                  			<div class="box-tools pull-right">'+
+							'				                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>'+
+							'		                    		</button>'+
+							'		                    		<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>'+
+							'		                    		</button>'+
+							'		                  		</div>'+
+							'               			</div>'+//fin box-heder
+							'               			<div class="box-body">'+
+							'			      				<form class="form-horizontal" role="form">'+
+							'									<div class="row">'+
+							'				      					<div class="form-group col-md-4">'+
+							'				      						<input type="text" id="cantidadProgramacion" value="" class="form-control" placeholder="Ingres Cantidad" />'+
+							'				      					</div>'+
+							'				      					<div class="form-group col-md-4">'+
+							'				      						<input type="date" id="fechaEntregaProgramacion" class="form-control" />'+
+							'				      					</div>'+
+							'				      					<div class="form-group col-md-4">'+
+							'				      						<input type="number" id="versionProgramacion" value="" class="form-control" placeholder="Ingres Version" />'+
+							'				      					</div>'+
+							'				      				</div>'+
+							'			      				</form>	'+							
+											
+							'               			</div>'+//fin box-body
+							'							<div class="modal-footer">'+ 
+							'					        	<button type="button" class="btn btn-default guardarProgramacion">Guardar</button>'+ 
+							'					          	<button type="button" class="btn btn-default " data-dismiss="modal" >Cerrar</button>'+ 
+							'							</div>'+
+							'                		</div>'+	
+							'                	</div>'+
+							'                </div>'+											
+											
+							'		      	<div class="row">'+ 
+							'		      		<div class="col-md-12">'+
+							'						<div class="box box-warning">'+
+							'		                	<div class="box-header with-border">'+
+							'		                  		<h3 class="box-title">Lista Programación</h3>'+
+							'	                  			<div class="box-tools pull-right">'+
+							'				                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>'+
+							'		                    		</button>'+
+							'		                    		<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>'+
+							'		                    		</button>'+
+							'		                  		</div>'+
+							'               			</div>'+//fin box-heder
+							'               			<div class="box-body">'+	                			
+					
+							'               			</div>'+//fin box-body
+							'                		</div>'+	
+							'                	</div>'+
+							'                </div>'+
+							
+
+							'		    </div>'+
+							'			<div class="modal-footer">'+
+					      	'			</div>'+														
+							'		</div>'+ 
+							'	</div>'+
+							'</div>';
+						  
+						  
+						  
+						  
+
+	$("body").append(modalProgramacion);
+	$("#modalProgramacion").modal('show');
+});	
+
 
 	</script>	
