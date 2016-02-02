@@ -830,7 +830,7 @@
 				}
 			}
 
-			cuerpoAccion +="<td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos'><span class='glyphicon glyphicon-usd modalVincularProducto' parametros="+accion[a].id+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"></span></button><button type='button' class='btn btn-default btn-sm'><span class='glyphicon glyphicon-time agregarActividad' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"></span></button><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button></td></tr>";
+			cuerpoAccion +="<td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos'><span class='glyphicon glyphicon-usd modalVincularProducto' parametros="+accion[a].id+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"></span></button><button type='button' class='btn btn-default btn-sm'><span class='glyphicon glyphicon-time agregarActividad' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"></span></button><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button></td></tr>";
 		}
 		
 		
@@ -2512,9 +2512,22 @@
 		var lineaAccionId = idParsed[1];
 		var institucionId = idParsed[2];
 		var periodoId = idParsed[3];
+		var accionId = idParsed[4];
 				
-
-
+		var unidadMedida = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		unidadMedida = JSON.parse(unidadMedida);
+		var optionUnidadMedida;
+		for(var u = 0; u < unidadMedida.length; u++)
+		{
+			optionUnidadMedida+='<option value="'+unidadMedida[u].id+'" parametro="'+unidadMedida[u].id+'">'+unidadMedida[u].descripcion+'</option>';
+		}
+		
+		var optionTipoHito='<option value="0" parametro="0">Entregable</option><option value="1" parametro="1">Intermedio</option><option value="2" parametro="2">Autonomo</option>';
 		
 		var cuerpoModalActividades = "";
 
@@ -2523,7 +2536,7 @@
 		'		<div class="modal-content" >'+
 		'			<div class="modal-header">'+
 		'		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
-		'		        <h4 class="modal-title">Actividad</h4>'+ 
+		'		        <h4 class="modal-title">Cronograma</h4>'+ 
 		'			</div>'+
 		'		    <div class="modal-body" id="accionCuerpo" >'+
 		
@@ -2532,7 +2545,7 @@
 		'		      		<div class="col-md-12">'+
 		'						<div class="box box-warning">'+
 		'		                	<div class="box-header with-border">'+
-		'		                  		<h3 class="box-title">Agregar Actividad</h3>'+
+		'		                  		<h3 class="box-title">Agregar Nuevo Cronograma</h3>'+
 		'	                  			<div class="box-tools pull-right">'+
 		'				                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>'+
 		'		                    		</button>'+
@@ -2546,16 +2559,15 @@
 		'									<div class="table-responsive">'+
 		'										<table class="table table-hover">'+
 		'											<tbody>'+
-		'												<tr><td><div class="form-group"><label for="nombreActividad">Actividad</label><input type="text" class="form-control" id="nombreActividad" value="" placeholder="Ingrese Nombre Actividad"><input type="hidden" class="form-control" id="insLineaAccionId" value="'+insLineaAccionId+'"></div></td><td><div class="form-group"><label for="descripcionActividad">Descripción</label><input type="text" id="descripcionActividad" value="" class="form-control"> </div></td></tr>'+
+		'												<tr><td><div class="form-group"><label for="nombreActividad">Cronograma</label><input type="text" class="form-control" id="nombreActividad" value="" placeholder="Ingrese Nombre del Cronograma"><input type="hidden" class="form-control" id="insLineaAccionId" value="'+insLineaAccionId+'"></div></td><td><div class="form-group"><label for="descripcionActividad">Descripción</label><input type="text" id="descripcionActividad" value="" class="form-control"> </div></td></tr>'+
+		'												<tr><td><div class="form-group"><label for="unidadMedidaIdActividad">Unidad de Medida</label><select id="unidadMedidaIdActividad" class="form-control" placeholder="Ingrese Unidad Medida Id">'+optionUnidadMedida+'</div></td><td><div class="form-group"><label for="hitoTipoIdActividad">Tipo de Cronograma</label>'+
+		'												<select id="hitoTipoIdActividad" class="form-control" placeholder="Ingrese Tipo de Cronograma">'+optionTipoHito+'</select></div></td></tr>'+
 		'												<tr><td><div class="form-group"><label for="proporcionActividad">Proporción</label><input type="text" class="form-control" id="proporcionActividad" value="" placeholder="Ingrese Proporción" /></div></td><td><div class="form-group"><label for="pesoActividad">Peso</label><input type="text" class="form-control" id="pesoActividad" value="" placeholder="IngresePeso" /></div></td></tr>'+
-		'												<tr><td><div class="form-group"><label for="versionActividad">Version</label><input type="number" id="versionActividad" class="form-control" placeholder="Ingrese Versión" /></div></td><td><div class="form-group"><label for="accionIdActividad">Acción Id</label><input type="number" id="accionIdActividad" class="form-control" placeholder="Ingrese Accion Id" /></div></td></tr>'+
-		'												<tr><td><div class="form-group"><label for="unidadMedidaIdActividad">Unidad Medida Id</label><input type="number" id="unidadMedidaIdActividad" class="form-control" placeholder="Ingrese Unidad Medida Id" /></div></td><td><div class="form-group"><label for="hitoTipoIdActividad">Hito Tipo Id</label><input type="number" id="hitoTipoIdActividad" class="form-control" placeholder="Ingrese Hito Tipo Id" /></div></td></tr>'+							
-
 		'											</tbody>'+							           
 		'										</table>'+
 		'									</div>'+
+		'								<input type="hidden" id="versionActividad" class="form-control" placeholder="Ingrese Versión" /><input type="hidden" id="accionIdActividad" class="form-control" placeholder="Ingrese Accion Id" value="'+accionId+'" />'+
 		'								</form>'+
-						
 		'               			</div>'+//fin box-body
 		'							<div class="modal-footer">'+
 		'								<button type="button" class="btn btn-success btn-sm guardarActividad" parametros = '+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'>Guardar Actividad</button>'+
