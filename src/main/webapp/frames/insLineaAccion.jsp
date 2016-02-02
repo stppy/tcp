@@ -2551,15 +2551,52 @@
 		}).responseText;
 		actividades = JSON.parse(actividades);
 		
+		var accion = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&accionId='+accionId,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		accion = JSON.parse(accion);
+		
+		var accionCatalogo = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[0].accionCatalogoId,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		accionCatalogo = JSON.parse(accionCatalogo);
+		
+				
 		
 		var cuerpoActividad = "";
+		
 		for(var u = 0; u < actividades.length; u++)
 		{
+			var nombreUnidadMedida = "";
+			var nombreHitoTipo = "";
+			for(var x = 0; x < unidadMedida.length; x++)
+			{
+				if(unidadMedida[x].id == actividades[u].unidad_medida_id)
+				{
+					nombreUnidadMedida = unidadMedida[x].descripcion;
+				}
+			}
+			
+			for(var l = 0; l < hitoTipo.length; l++)
+			{
+				if(hitoTipo[l].id == actividades[u].hito_tipo_id)
+				{
+					nombreHitoTipo = hitoTipo[l].nombre;
+				}
+			}
+			
+			
 			if(actividades[u].borrado == false)
 			{
-				cuerpoActividad+='<tr><td>'+actividades[u].nombre+'</td><td>'+actividades[u].descripcion+'</td><td>'+actividades[u].proporcion+'</td><td>'+actividades[u].peso+'</td><td>'+actividades[u].version+'</td><td>'+actividades[u].accion_id+'</td><td>'+actividades[u].unidad_medida_id+'</td><td>'+actividades[u].hito_tipo_id+'</td></tr>';
+				cuerpoActividad+='<tr><td>'+actividades[u].nombre+'</td><td>'+actividades[u].descripcion+'</td><td>'+nombreUnidadMedida+'</td><td>'+nombreHitoTipo+'</td><td>'+actividades[u].proporcion+'</td><td>'+actividades[u].version+'</td><td><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Hito"><span class="glyphicon glyphicon-time"></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Declarar Avance"><span class="fa fa-line-chart"></span></button></td></tr>';
 			}else{
-				cuerpoActividad+='<tr><td><del>'+actividades[u].nombre+'</del></td><td><del>'+actividades[u].descripcion+'</del></td><td><del>'+actividades[u].proporcion+'</del></td><td><del>'+actividades[u].peso+'</del></td><td><del>'+actividades[u].version+'</del></td><td><del>'+actividades[u].accion_id+'</del></td><td><del>'+actividades[u].unidad_medida_id+'</del></td><td><del>'+actividades[u].hito_tipo_id+'</del></td></tr>';
+				cuerpoActividad+='<tr><td><del>'+actividades[u].nombre+'</del></td><td><del>'+actividades[u].descripcion+'</del></td><td><del>'+nombreUnidadMedida+'</del></td><td><del>'+nombreHitoTipo+'</del></td><td><del>'+actividades[u].proporcion+'</del></td><td><del>'+actividades[u].version+'</del></td><td><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Hito"><span class="glyphicon glyphicon-time"></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Declarar Avance"><span class="fa fa-line-chart"></span></button></td></tr>';
 			}
 		}
 		
@@ -2574,7 +2611,7 @@
 		'		<div class="modal-content" >'+
 		'			<div class="modal-header">'+
 		'		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
-		'		        <h4 class="modal-title">Cronograma</h4>'+   
+		'		        <h4 class="modal-title">'+accionCatalogo[0].nombre+'</h4>'+   
 		'			</div>'+
 		'		    <div class="modal-body" id="accionCuerpo" >'+
 		
@@ -2618,7 +2655,7 @@
 		'		      		<div class="col-md-12">'+
 		'						<div class="box box-warning">'+
 		'		                	<div class="box-header with-border">'+
-		'		                  		<h3 class="box-title">Actividades Precargadas</h3>'+
+		'		                  		<h3 class="box-title">Lista de Cronogramas</h3>'+
 		'	                  			<div class="box-tools pull-right">'+
 		'				                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>'+
 		'		                    		</button>'+
@@ -2631,7 +2668,7 @@
 		'	                			<div class="table-responsive">'+
 		'	                				<table class="table table-hover table-bordered">'+
 		'	                					<thead>'+
-		'	                						<tr class="active"><th class="text-center">Nombre</th><th class="text-center">Descripción</th><th class="text-center">Proporción</th><th class="text-center">Peso</th><th class="text-center">Versión</th><th class="text-center">Acción Id</th><th class="text-center">Unidad Medida Id</th><th class="text-center">Hito Tipo Id</th></tr>'+
+		'	                						<tr class="active"><th class="text-center">Nombre</th><th class="text-center">Descripción</th><th class="text-center">Unidad Medida</th><th class="text-center">Tipo Cronograma</th><th class="text-center">Proporción</th><th class="text-center">Versión</th><th class="text-center">Administrar Cronograma</th></tr>'+
 		'	                					</thead>'+
 		'	                						<tbody id="tablaActividades">'+
 		'	                						</tbody>'+
@@ -2719,15 +2756,51 @@ function actualizarTablaActividades(accionId){
 	}).responseText;
 	actividades = JSON.parse(actividades);
 	
+	var unidadMedida = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	unidadMedida = JSON.parse(unidadMedida);
+
+	var hitoTipo = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getHitoTipo',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	hitoTipo = JSON.parse(hitoTipo);
 	
-	var cuerpoActividad="";
+	
+	var cuerpoActividad = "";
+	
 	for(var u = 0; u < actividades.length; u++)
 	{
+		var nombreUnidadMedida = "";
+		var nombreHitoTipo = "";
+		for(var x = 0; x < unidadMedida.length; x++)
+		{
+			if(unidadMedida[x].id == actividades[u].unidad_medida_id)
+			{
+				nombreUnidadMedida = unidadMedida[x].descripcion;
+			}
+		}
+		
+		for(var l = 0; l < hitoTipo.length; l++)
+		{
+			if(hitoTipo[l].id == actividades[u].hito_tipo_id)
+			{
+				nombreHitoTipo = hitoTipo[l].nombre;
+			}
+		}
+		
+		
 		if(actividades[u].borrado == false)
 		{
-			cuerpoActividad+='<tr><td>'+actividades[u].nombre+'</td><td>'+actividades[u].descripcion+'</td><td>'+actividades[u].proporcion+'</td><td>'+actividades[u].peso+'</td><td>'+actividades[u].version+'</td><td>'+actividades[u].accion_id+'</td><td>'+actividades[u].unidad_medida_id+'</td><td>'+actividades[u].hito_tipo_id+'</td></tr>';
+			cuerpoActividad+='<tr><td>'+actividades[u].nombre+'</td><td>'+actividades[u].descripcion+'</td><td>'+nombreUnidadMedida+'</td><td>'+nombreHitoTipo+'</td><td>'+actividades[u].proporcion+'</td><td>'+actividades[u].version+'</td><td><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Hito"><span class="glyphicon glyphicon-time"></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Declarar Avance"><span class="fa fa-line-chart"></span></button></td></tr>';
 		}else{
-			cuerpoActividad+='<tr><td><del>'+actividades[u].nombre+'</del></td><td><del>'+actividades[u].descripcion+'</del></td><td><del>'+actividades[u].proporcion+'</del></td><td><del>'+actividades[u].peso+'</del></td><td><del>'+actividades[u].version+'</del></td><td><del>'+actividades[u].accion_id+'</del></td><td><del>'+actividades[u].unidad_medida_id+'</del></td><td><del>'+actividades[u].hito_tipo_id+'</del></td></tr>';
+			cuerpoActividad+='<tr><td><del>'+actividades[u].nombre+'</del></td><td><del>'+actividades[u].descripcion+'</del></td><td><del>'+nombreUnidadMedida+'</del></td><td><del>'+nombreHitoTipo+'</del></td><td><del>'+actividades[u].proporcion+'</del></td><td><del>'+actividades[u].version+'</del></td><td><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Hito"><span class="glyphicon glyphicon-time"></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Declarar Avance"><span class="fa fa-line-chart"></span></button></td></tr>';
 		}
 	}
 	
