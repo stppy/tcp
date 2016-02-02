@@ -12,6 +12,7 @@ public class Cronograma {
 	protected int accion_id;
 	protected int unidad_medida_id;
 	protected int hito_tipo_id;
+	
 	public int getId() {
 		return id;
 	}

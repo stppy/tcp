@@ -2499,6 +2499,10 @@
 		{
 			$("#modalVincularProductos").remove();
 		}	
+		if ( $("#modalActividad").length )
+		{
+			$("#modalActividad").remove();
+		}	
 				
 		var parametros = $(this).attr("parametros");
 	    var idParsed = parametros.split("-");                                                            
@@ -2514,111 +2518,125 @@
 		
 		var cuerpoModalActividades = "";
 
-		cuerpoModalActividades +=	 '<div class="modal fade" role="dialog" id="modalActividades" data-backdrop="static" data-keyboard="false">'+ 
-							    '<div class="modal-dialog modal-lg" style="width:90%">'+ 
-							    
-							      '<div class="modal-content">'+ 
-							        '<div class="modal-header">'+ 
-							          '<button type="button" class="close agregarAccion" data-dismiss="modal">&times;</button>'+ 
-							          '<h4 class="modal-title">Actividades</h4>'+ 
-							        '</div>'+ 
-							        '<div class="modal-body">'+ 				        
+		cuerpoModalActividades +=	'<div class="modal fade" id="modalActividad" tabindex="-1" aria-labelledby="myLargeModalLabel">'+
+		'	<div class="modal-dialog modal-lg" style="width:90%">'+
+		'		<div class="modal-content" >'+
+		'			<div class="modal-header">'+
+		'		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+		'		        <h4 class="modal-title">Actividad</h4>'+ 
+		'			</div>'+
+		'		    <div class="modal-body" id="accionCuerpo" >'+
+		
+		
+		'		      	<div class="row">'+ 
+		'		      		<div class="col-md-12">'+
+		'						<div class="box box-warning">'+
+		'		                	<div class="box-header with-border">'+
+		'		                  		<h3 class="box-title">Agregar Actividad</h3>'+
+		'	                  			<div class="box-tools pull-right">'+
+		'				                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>'+
+		'		                    		</button>'+
+		'		                    		<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>'+
+		'		                    		</button>'+
+		'		                  		</div>'+
+		'               			</div>'+//fin box-heder
+		'               			<div class="box-body">'+
+		
+		'								<form role="form">'+
+		'									<div class="table-responsive">'+
+		'										<table class="table table-hover">'+
+		'											<tbody>'+
+		'												<tr><td><div class="form-group"><label for="nombreActividad">Actividad</label><input type="text" class="form-control" id="nombreActividad" value="" placeholder="Ingrese Nombre Actividad"><input type="hidden" class="form-control" id="insLineaAccionId" value="'+insLineaAccionId+'"></div></td><td><div class="form-group"><label for="descripcionActividad">Descripción</label><input type="text" id="descripcionActividad" value="" class="form-control"> </div></td></tr>'+
+		'												<tr><td><div class="form-group"><label for="proporcionActividad">Proporción</label><input type="text" class="form-control" id="proporcionActividad" value="" placeholder="Ingrese Proporción" /></div></td><td><div class="form-group"><label for="pesoActividad">Peso</label><input type="text" class="form-control" id="pesoActividad" value="" placeholder="IngresePeso" /></div></td></tr>'+
+		'												<tr><td><div class="form-group"><label for="versionActividad">Version</label><input type="number" id="versionActividad" class="form-control" placeholder="Ingrese Versión" /></div></td><td><div class="form-group"><label for="accionIdActividad">Acción Id</label><input type="number" id="accionIdActividad" class="form-control" placeholder="Ingrese Accion Id" /></div></td></tr>'+
+		'												<tr><td><div class="form-group"><label for="unidadMedidaIdActividad">Unidad Medida Id</label><input type="number" id="unidadMedidaIdActividad" class="form-control" placeholder="Ingrese Unidad Medida Id" /></div></td><td><div class="form-group"><label for="hitoTipoIdActividad">Hito Tipo Id</label><input type="number" id="hitoTipoIdActividad" class="form-control" placeholder="Ingrese Hito Tipo Id" /></div></td></tr>'+							
 
-						      		'	<div class="table-responsive">'+
-						            '    <table class="table table-striped table-bordered  table-hover">'+
-						            '    	<tr>'+
-						            '    		<th>Nivel</th>'+
-						            '    		<th>Entidad</th>'+
-						            '    		<th>Tipo</th>'+
-						            '    		<th>Programa</th>'+
-						            '    		<th>Subprograma</th>'+
-						            '   		<th>Proyecto</th>'+
-						            '   		<th>Producto</th>'+
-						            '    		<th>Total Fisico</th>'+
-						            '    		<th>U. Medida</th>'+
-						            '    		<th>Clase</th>'+
-						            '    		<th>Total Financiero</th>'+
-						            '    		<th>Asignación Financiera</th>'+
-						            '    		<th>Destinatarios</th>'+
-						            '    	</tr>'+
-						            '    <tbody class="table-body-producto" id="TablaAccionHasProductos">'+
-						            '    </tbody>'+
-						            '   </table>'+
-						            '    </div>'+
-					                
-									' 	<br>'+
-									'  	<br>'+
-					   				'	<div id="tituloFormulario"></div>'+
-					      			'		<form class="form-horizontal" role="form" id="formulario" method="post" action="/ajaxUpdate">'+
-					      			'			<input type="hidden" name="accion" value="actEntidad">'+
-					      			'			<input type="hidden" name="anho" value="" id="anhoProducto-formulario">'+
-					      			'			<input type="hidden" name="version" value="" id="versionProducto-formulario">'+
-									'			<div class="row">'+
-						      		'				<div class="form-group col-md-1">'+
-						      		'					<input type="text" name="nivel" id="nivel-formulario" value="12" class="form-control" disabled>'+
-						      		'				</div>'+
-						      		'				<div class="form-group col-md-1">'+
-						  			'					<input type="text" name="entidad" id="entidad-formulario" value="1" class="form-control" disabled>'+
-						  			'				</div>'+
-						      		'			    <div class="form-group col-md-1">'+
-						      		'			    	<input type="text" name="tipoPrograma" id="tipoPrograma-formulario" placeholder="Tipo Programa" list="listaf3c2" class="form-control">'+
-						      		'			    </div>'+
-						      		'			    <div class="form-group col-md-1">'+
-						      		'			    	<input type="text" name="programa" id="programa-formulario" placeholder="Programa" list="listaf4c2" class="form-control">'+
-						      		'			    </div>'+
-						      		'			    <div class="form-group col-md-1">'+
-						      		'			    	<input type="text" name="subPrograma" id="subPrograma-formulario" placeholder="SubPrograma" list="listaf5c2" class="form-control">'+
-						      		'			    </div>'+
-						      		'			    <div class="form-group col-md-2">'+
-						      		'			    	<input type="text" name="proyecto" id="proyecto-formulario" placeholder="Proyecto" list="listaf6c2" class="form-control">'+
-						      		'			    </div>'+
-						  			'		    	<div class="form-group col-md-2">'+
-						  			'		    		<input type="text" name="producto" id="producto-formulario" placeholder="Producto" list="listaf7c2" class="form-control">'+
-						      		'			  	</div>'+
-						  			'		    	<div class="form-group col-md-3">'+
-							      	'					<div class="input-group input-group-md">'+
-							      	'						<span class="input-group-addon">Gs</span>'+
-				      				'	    				<input type="text" name="total" id="total-formulario" value="" class="form-control">'+
-				      				'	                    <div class="input-group-btn">'+
-					      			'		                	<button type="submit" class="btn btn-success guardarComboProducto" ><span class="glyphicon glyphicon-plus"></span></button>'+
-					      			'		                </div>'+	      					    				
-				      				'	    			</div>'+
-						  			'		    	</div>'+
-						  			'		    </div>'+
-					      			'		</form>	'+
-					      					
-					      			'			<div class="row">'+
-						      		'			    <div class="form-group col-md-3">'+
-						      		'			  		<label for="totalFisico-formulario">Total Fisico</label>'+
-					      			'		    		<input type="text" name="totalFisico" id="totalFisico-formulario" value="" class="form-control" disabled>'+
-					      			'		    	</div>'+
-						      		'			    <div class="form-group col-md-3">'+
-					      			'		  			<label for="unidadMedida-formulario">U. Medida</label>'+
-				      				'	    			<input type="text" name="totalFisico" id="unidadMedida-formulario" value="" class="form-control" disabled>'+
-				      				'	    		</div>'+
-						      		'			    <div class="form-group col-md-3">'+
-				      				'	  				<label for="clase-formulario">Clase</label>'+
-			      					'    				<input type="text" name="totalFisico" id="clase-formulario" value="" class="form-control" disabled>'+
-			      					'    			</div>'+
-						      		'			    <div class="form-group col-md-3">'+
-			      					'  					<label for="totalFinanciero-formulario">Total Financiero</label>'+
-								    '  					<div class="input-group input-group-sm">'+
-								    '  						<span class="input-group-addon">Gs</span>'+
-					      			'		    			<input type="text" name="totalFinanciero" id="totalFinanciero-formulario" value="" class="form-control" disabled>'+
-								    ' 					</div>'+
-				      				'	    		</div>'+ 					    				
-				      				'	    	</div>'+	
-							        
-							        '</div>'+ 
-							        '<div class="modal-footer">'+ 
-							          '<button type="button" class="btn btn-default agregarAccion" data-dismiss="modal" >Cerrar</button>'+ 
-							        '</div>'+ 
-							      '</div>'+ 
-							      
-							    '</div>'+ 
-							  '</div>';
+		'											</tbody>'+							           
+		'										</table>'+
+		'									</div>'+
+		'								</form>'+
+						
+		'               			</div>'+//fin box-body
+		'							<div class="modal-footer">'+
+		'								<button type="button" class="btn btn-success btn-sm guardarActividad" parametros = '+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'>Guardar Actividad</button>'+
+		'							</div>'+
+		'                		</div>'+	
+		'                	</div>'+
+		'                </div>'+											
+						
+		'		      	<div class="row">'+ 
+		'		      		<div class="col-md-12">'+
+		'						<div class="box box-warning">'+
+		'		                	<div class="box-header with-border">'+
+		'		                  		<h3 class="box-title">Actividades Precargadas</h3>'+
+		'	                  			<div class="box-tools pull-right">'+
+		'				                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>'+
+		'		                    		</button>'+
+		'		                    		<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>'+
+		'		                    		</button>'+
+		'		                  		</div>'+
+		'               			</div>'+//fin box-heder
+		'               			<div class="box-body">'+
+		
+		'	                			<div class="table-responsive">'+
+		'	                				<table class="table table-hover table-bordered">'+
+		'	                					<thead>'+
+		'	                						<tr class="active"><th class="text-center">Nombre</th><th class="text-center">Descripción</th><th class="text-center">Proporción</th><th class="text-center">Peso</th><th class="text-center">Peso</th><th class="text-center">Versión</th><th class="text-center">Acción Id</th><th class="text-center">Unidad Medida Id</th><th class="text-center">Hito Tipo Id</th></tr>'+
+		'	                					</thead>'+
+		'	                						<tbody id="tablaAccionesPrecargadas">'+
+		'	                						</tbody>'+
+		'	                				</table>'+
+		'	                			</div>'+		                			
+
+		'               			</div>'+//fin box-body
+		'                		</div>'+	
+		'                	</div>'+
+		'                </div>'+
+		
+
+		'		    </div>'+
+		'			<div class="modal-footer">'+
+      	'			</div>'+														
+		'		</div>'+ 
+		'	</div>'+
+		'</div>'; 
 
 		$("body").append(cuerpoModalActividades);
-		$("#modalActividades").modal('show');
+		$("#modalActividad").modal('show');
+	});
+	
+$("body").on("click", ".guardarActividad",function(event){
+		
+		var parametros = $(this).attr("parametros");
+	    var idParsed = parametros.split("-");                                                            
+		
+		//Las siguentes 4 variables se utiliza en esta funcion para redibujar el modal anterior
+		var insLineaAccionId = idParsed[0];
+		var lineaAccionId = idParsed[1];
+		var institucionId = idParsed[2];
+		var periodoId = idParsed[3];
+		
+		var nombre = document.getElementById("nombreActividad").value;
+	    var descripcion = document.getElementById("descripcionActividad").value;
+	    var proporcion = document.getElementById("proporcionActividad").value;
+	    var peso = document.getElementById("pesoActividad").value;
+	    var version = document.getElementById("versionActividad").value;
+	    var accion_id = document.getElementById("accionIdActividad").value;
+	    var unidad_medida_id = document.getElementById("unidadMedidaIdActividad").value;
+	    var hito_tipo_id = document.getElementById("hitoTipoIdActividad").value;
+
+		var objeto = new Object();
+		var accion = "";
+		
+		objeto.nombre = nombre;
+		objeto.descripcion = descripcion;
+		objeto.proporcion = proporcion;
+		objeto.peso = peso;
+		objeto.version = version;
+		objeto.accion_id = accion_id;
+		objeto.unidad_medida_id = unidad_medida_id;
+		objeto.hito_tipo_id = hito_tipo_id;
+		
 	});	
+
 	</script>	
