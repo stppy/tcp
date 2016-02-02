@@ -76,6 +76,10 @@ public class ajaxSelects extends HttpServlet {
     	Integer insLineaAccionId = null;
     	Integer institucionId = null;
     	
+    	Integer cronogramaId=null;
+    	Integer programacionId = null;
+    	Integer avanceId = null;
+    	
     	String institucion=null;
     	String usuario=null;
     	String condition = "";
@@ -128,6 +132,9 @@ public class ajaxSelects extends HttpServlet {
       	if (request.getParameter("linea_accion_id")!=null) linea_accion_id=Integer.parseInt(request.getParameter("linea_accion_id")); else linea_accion_id=0;
       	if (request.getParameter("lineaAccionId")!=null) lineaAccionId=Integer.parseInt(request.getParameter("lineaAccionId"));
       	if (request.getParameter("catalogoAccionId")!=null) catalogoAccionId=Integer.parseInt(request.getParameter("catalogoAccionId"));
+      	if (request.getParameter("cronogramaId")!=null) linea_accion_id=Integer.parseInt(request.getParameter("cronogramaId"));
+      	if (request.getParameter("programacionId")!=null) lineaAccionId=Integer.parseInt(request.getParameter("programacionId"));
+      	if (request.getParameter("avanceId")!=null) catalogoAccionId=Integer.parseInt(request.getParameter("avanceId"));
 
       	
         PrintWriter out = response.getWriter();
@@ -368,9 +375,35 @@ public class ajaxSelects extends HttpServlet {
         		out.println(json.toString());
         	}
         	
-        	
-       	
-        	
+        	if (action.equals("getCronograma")){
+        		List objetos=null; 
+        		condition = " where true ";
+        		if (cronogramaId!=null) condition += " and id ='"+cronogramaId+"'";
+        		if (accionId!=null) condition += " and accion_id ='"+accionId+"'";
+           		try {objetos = SqlSelects.selectCronograma(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());
+        	}
+        	if (action.equals("getProgramacion")){
+        		List objetos=null; 
+        		condition = " where true ";
+        		if (programacionId!=null) condition += " and id ='"+programacionId+"'";
+           		try {objetos = SqlSelects.selectProgramacion(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());
+        	}
+        	if (action.equals("getProgramacion")){
+        		List objetos=null; 
+        		condition = " where true ";
+        		if (avanceId!=null) condition += " and id ='"+avanceId+"'";
+           		try {objetos = SqlSelects.selectAvance(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());
+        	}
+
        }
 
        out.close();

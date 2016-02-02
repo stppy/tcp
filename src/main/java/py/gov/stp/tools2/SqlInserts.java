@@ -239,8 +239,8 @@ public class SqlInserts {
 		
 		insert.setDouble (1, accion.getCosto());
 		insert.setInt (2, accion.getPeso());
-		insert.setDate (3, accion.getFechaInicio());
-		insert.setDate (4, accion.getFechaFin());
+		insert.setString (3, accion.getFechaInicio());
+		insert.setString (4, accion.getFechaFin());
 		insert.setInt(5, accion.getVersion());
 		insert.setBoolean (6, accion.isBorrado());		
 		insert.setDouble (7, accion.getMeta1());
@@ -614,6 +614,31 @@ public class SqlInserts {
 		insert.setInt (5, accionCatalogo.getVersion());	
 		insert.setBoolean (6, accionCatalogo.isBorrado());	
 	
+		
+		insert.execute();
+		   
+		conn.close();
+	} catch (SQLException e) {e.printStackTrace();}
+		
+}		
+	public static void insertActividad(Cronograma actividad){
+	try {
+		Connection conn=ConnectionConfiguration.conectar();
+	   	
+		String query = " insert into actividad (nombre,descripcion,proporcion,peso,version,borrado,accion_id,unidad_medida_id,hito_tipo_id)"
+	+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		
+		PreparedStatement insert = conn.prepareStatement(query);
+		
+		insert.setString (1, actividad.getNombre());
+		insert.setString (2, actividad.getDescripcion());
+		insert.setDouble (3, actividad.getProporcion());
+		insert.setDouble (4, actividad.getPeso());
+		insert.setInt (5, actividad.getVersion());
+		insert.setBoolean (6, actividad.isBorrado());
+		insert.setInt (7, actividad.getAccion_id());
+		insert.setInt (8, actividad.getUnidad_medida_id());
+		insert.setInt (9, actividad.getHito_tipo_id());	
 		
 		insert.execute();
 		   
