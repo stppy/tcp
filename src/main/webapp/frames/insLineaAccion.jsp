@@ -2527,7 +2527,7 @@
 			optionUnidadMedida+='<option value="'+unidadMedida[u].id+'" parametro="'+unidadMedida[u].id+'">'+unidadMedida[u].descripcion+'</option>';
 		}
 		
-		var optionTipoHito='<option value="0" parametro="0">Entregable</option><option value="1" parametro="1">Intermedio</option><option value="2" parametro="2">Autonomo</option>';
+		var optionTipoHito='<option value="1" parametro="0">Entregable</option><option value="2" parametro="1">Intermedio</option><option value="3" parametro="2">Autonomo</option>';
 		
 		var cuerpoModalActividades = "";
 
@@ -2536,7 +2536,7 @@
 		'		<div class="modal-content" >'+
 		'			<div class="modal-header">'+
 		'		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
-		'		        <h4 class="modal-title">Cronograma</h4>'+ 
+		'		        <h4 class="modal-title">Cronograma</h4>'+   
 		'			</div>'+
 		'		    <div class="modal-body" id="accionCuerpo" >'+
 		
@@ -2566,7 +2566,7 @@
 		'											</tbody>'+							           
 		'										</table>'+
 		'									</div>'+
-		'								<input type="hidden" id="versionActividad" class="form-control" placeholder="Ingrese Versión" /><input type="hidden" id="accionIdActividad" class="form-control" placeholder="Ingrese Accion Id" value="'+accionId+'" />'+
+		'								<input type="hidden" id="versionActividad" class="form-control" placeholder="Ingrese Versión" value="3"/><input type="hidden" id="accionIdActividad" class="form-control" placeholder="Ingrese Accion Id" value="'+accionId+'" />'+
 		'								</form>'+
 		'               			</div>'+//fin box-body
 		'							<div class="modal-footer">'+

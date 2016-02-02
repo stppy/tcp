@@ -621,6 +621,24 @@ public class SqlInserts {
 	} catch (SQLException e) {e.printStackTrace();}
 		
 }		
+	public static void insertActividad(Cronograma actividad){
+	try {
+		Connection conn=ConnectionConfiguration.conectar();
+	   	
+		String query = " insert into hitoPrueba (nombre,descripcion,proporcion,peso,version,borrado,accion_id,unidad_medida_id,hito_tipo_id)"
+	+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		
+		PreparedStatement insert = conn.prepareStatement(query);
+		
+
+	
+		
+		insert.execute();
+		   
+		conn.close();
+	} catch (SQLException e) {e.printStackTrace();}
+		
+}		
 	
 	
 }
