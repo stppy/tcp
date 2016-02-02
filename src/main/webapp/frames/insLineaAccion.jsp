@@ -830,7 +830,7 @@
 				}
 			}
 
-			cuerpoAccion +="<td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos'><span class='glyphicon glyphicon-usd modalVincularProducto' parametros="+accion[a].id+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"></span></button><button type='button' class='btn btn-default btn-sm'><span class='glyphicon glyphicon-time'></span></button><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button></td></tr>";
+			cuerpoAccion +="<td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos'><span class='glyphicon glyphicon-usd modalVincularProducto' parametros="+accion[a].id+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"></span></button><button type='button' class='btn btn-default btn-sm'><span class='glyphicon glyphicon-time agregarActividad' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"></span></button><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button></td></tr>";
 		}
 		
 		
@@ -2493,4 +2493,132 @@
 		
 	}
 	
+	$("body").on("click", ".agregarActividad",function(event){
+		
+		if ( $("#modalVincularProductos").length )
+		{
+			$("#modalVincularProductos").remove();
+		}	
+				
+		var parametros = $(this).attr("parametros");
+	    var idParsed = parametros.split("-");                                                            
+		
+		//Las siguentes 4 variables se utiliza en esta funcion para redibujar el modal anterior
+		var insLineaAccionId = idParsed[0];
+		var lineaAccionId = idParsed[1];
+		var institucionId = idParsed[2];
+		var periodoId = idParsed[3];
+				
+
+
+		
+		var cuerpoModalActividades = "";
+
+		cuerpoModalActividades +=	 '<div class="modal fade" role="dialog" id="modalActividades" data-backdrop="static" data-keyboard="false">'+ 
+							    '<div class="modal-dialog modal-lg" style="width:90%">'+ 
+							    
+							      '<div class="modal-content">'+ 
+							        '<div class="modal-header">'+ 
+							          '<button type="button" class="close agregarAccion" data-dismiss="modal">&times;</button>'+ 
+							          '<h4 class="modal-title">Actividades</h4>'+ 
+							        '</div>'+ 
+							        '<div class="modal-body">'+ 				        
+
+						      		'	<div class="table-responsive">'+
+						            '    <table class="table table-striped table-bordered  table-hover">'+
+						            '    	<tr>'+
+						            '    		<th>Nivel</th>'+
+						            '    		<th>Entidad</th>'+
+						            '    		<th>Tipo</th>'+
+						            '    		<th>Programa</th>'+
+						            '    		<th>Subprograma</th>'+
+						            '   		<th>Proyecto</th>'+
+						            '   		<th>Producto</th>'+
+						            '    		<th>Total Fisico</th>'+
+						            '    		<th>U. Medida</th>'+
+						            '    		<th>Clase</th>'+
+						            '    		<th>Total Financiero</th>'+
+						            '    		<th>Asignación Financiera</th>'+
+						            '    		<th>Destinatarios</th>'+
+						            '    	</tr>'+
+						            '    <tbody class="table-body-producto" id="TablaAccionHasProductos">'+
+						            '    </tbody>'+
+						            '   </table>'+
+						            '    </div>'+
+					                
+									' 	<br>'+
+									'  	<br>'+
+					   				'	<div id="tituloFormulario"></div>'+
+					      			'		<form class="form-horizontal" role="form" id="formulario" method="post" action="/ajaxUpdate">'+
+					      			'			<input type="hidden" name="accion" value="actEntidad">'+
+					      			'			<input type="hidden" name="anho" value="" id="anhoProducto-formulario">'+
+					      			'			<input type="hidden" name="version" value="" id="versionProducto-formulario">'+
+									'			<div class="row">'+
+						      		'				<div class="form-group col-md-1">'+
+						      		'					<input type="text" name="nivel" id="nivel-formulario" value="12" class="form-control" disabled>'+
+						      		'				</div>'+
+						      		'				<div class="form-group col-md-1">'+
+						  			'					<input type="text" name="entidad" id="entidad-formulario" value="1" class="form-control" disabled>'+
+						  			'				</div>'+
+						      		'			    <div class="form-group col-md-1">'+
+						      		'			    	<input type="text" name="tipoPrograma" id="tipoPrograma-formulario" placeholder="Tipo Programa" list="listaf3c2" class="form-control">'+
+						      		'			    </div>'+
+						      		'			    <div class="form-group col-md-1">'+
+						      		'			    	<input type="text" name="programa" id="programa-formulario" placeholder="Programa" list="listaf4c2" class="form-control">'+
+						      		'			    </div>'+
+						      		'			    <div class="form-group col-md-1">'+
+						      		'			    	<input type="text" name="subPrograma" id="subPrograma-formulario" placeholder="SubPrograma" list="listaf5c2" class="form-control">'+
+						      		'			    </div>'+
+						      		'			    <div class="form-group col-md-2">'+
+						      		'			    	<input type="text" name="proyecto" id="proyecto-formulario" placeholder="Proyecto" list="listaf6c2" class="form-control">'+
+						      		'			    </div>'+
+						  			'		    	<div class="form-group col-md-2">'+
+						  			'		    		<input type="text" name="producto" id="producto-formulario" placeholder="Producto" list="listaf7c2" class="form-control">'+
+						      		'			  	</div>'+
+						  			'		    	<div class="form-group col-md-3">'+
+							      	'					<div class="input-group input-group-md">'+
+							      	'						<span class="input-group-addon">Gs</span>'+
+				      				'	    				<input type="text" name="total" id="total-formulario" value="" class="form-control">'+
+				      				'	                    <div class="input-group-btn">'+
+					      			'		                	<button type="submit" class="btn btn-success guardarComboProducto" ><span class="glyphicon glyphicon-plus"></span></button>'+
+					      			'		                </div>'+	      					    				
+				      				'	    			</div>'+
+						  			'		    	</div>'+
+						  			'		    </div>'+
+					      			'		</form>	'+
+					      					
+					      			'			<div class="row">'+
+						      		'			    <div class="form-group col-md-3">'+
+						      		'			  		<label for="totalFisico-formulario">Total Fisico</label>'+
+					      			'		    		<input type="text" name="totalFisico" id="totalFisico-formulario" value="" class="form-control" disabled>'+
+					      			'		    	</div>'+
+						      		'			    <div class="form-group col-md-3">'+
+					      			'		  			<label for="unidadMedida-formulario">U. Medida</label>'+
+				      				'	    			<input type="text" name="totalFisico" id="unidadMedida-formulario" value="" class="form-control" disabled>'+
+				      				'	    		</div>'+
+						      		'			    <div class="form-group col-md-3">'+
+				      				'	  				<label for="clase-formulario">Clase</label>'+
+			      					'    				<input type="text" name="totalFisico" id="clase-formulario" value="" class="form-control" disabled>'+
+			      					'    			</div>'+
+						      		'			    <div class="form-group col-md-3">'+
+			      					'  					<label for="totalFinanciero-formulario">Total Financiero</label>'+
+								    '  					<div class="input-group input-group-sm">'+
+								    '  						<span class="input-group-addon">Gs</span>'+
+					      			'		    			<input type="text" name="totalFinanciero" id="totalFinanciero-formulario" value="" class="form-control" disabled>'+
+								    ' 					</div>'+
+				      				'	    		</div>'+ 					    				
+				      				'	    	</div>'+	
+							        
+							        '</div>'+ 
+							        '<div class="modal-footer">'+ 
+							          '<button type="button" class="btn btn-default agregarAccion" data-dismiss="modal" >Cerrar</button>'+ 
+							        '</div>'+ 
+							      '</div>'+ 
+							      
+							    '</div>'+ 
+							  '</div>';
+
+		$("body").append(cuerpoModalActividades);
+		$("#modalActividades").modal('show');
+	});	
 	</script>	
