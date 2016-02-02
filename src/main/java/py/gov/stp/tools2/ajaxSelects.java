@@ -379,6 +379,7 @@ public class ajaxSelects extends HttpServlet {
         		List objetos=null; 
         		condition = " where true ";
         		if (cronogramaId!=null) condition += " and id ='"+cronogramaId+"'";
+        		if (accionId!=null) condition += " and accion_id ='"+accionId+"'";
            		try {objetos = SqlSelects.selectCronograma(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
@@ -402,10 +403,7 @@ public class ajaxSelects extends HttpServlet {
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
         	}
-        	
-        	
-       	
-        	
+
        }
 
        out.close();

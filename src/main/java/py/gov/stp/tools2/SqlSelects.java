@@ -123,7 +123,7 @@ public class SqlSelects {
 	
 	public static List<Cronograma> selectCronograma(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select * from cronograma "+condition;
+		String query = " select * from actividad "+condition;
 
 		Statement statement = null;
 		ResultSet rs=null;
