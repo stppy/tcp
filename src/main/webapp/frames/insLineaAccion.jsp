@@ -1324,12 +1324,7 @@ $("body").on("click", ".consultaBorrarAccion",function(event){
 						'		        <h4 class="modal-title">Borrar Acción: </h4>'+
 						'			</div>'+
 						'		    <div class="modal-body" >'+
-								    
-		  							<footer>
-											<div></div>
-									</footer>
-			
-						
+
 						
 						'		    </div>'+
 						'		</div>'+ 
