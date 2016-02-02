@@ -28,6 +28,10 @@
 			 $("#"+id).attr("class", "fa fa-minus");
 			 event.stopPropagation();
 		});
+		$("body").on("click", "#programarPlan",function(event){
+			window.location.replace("/tablero/contenedorInsLineaAccion.jsp");
+			event.stopPropagation();
+		});
 		$("body").on("click", "#vistaInsitucional",function(event){
 			window.location.replace("/tablero/");
 			event.stopPropagation();
@@ -41,7 +45,9 @@
 			event.stopPropagation();
 		});
 		$("body").on("click", "#vistaCiudadana",function(event){
-			window.location.replace("./indexDepartamento4.jsp");
+			//window.location.replace("./indexDepartamento4.jsp");
+			window.location.replace("http://rc.stp.gov.py/");
+			
 			event.stopPropagation();
 		});      		
   });

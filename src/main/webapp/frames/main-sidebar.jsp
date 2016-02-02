@@ -22,10 +22,17 @@
             <li class="header">Tablero</li>
             
             <li class="treeview">
+             <a href=".#" id="programarPlan">
+                <i class="fa fa-files-o"></i><span>Programar Plan de Accion</span>
+              </a>
+              
+            </li>
+             <!--
+            <li class="treeview">
              <a href=".#" id="vistaInstitucional">
                 <i class="fa fa-files-o"></i><span>Institucional</span>
               </a>
-              
+               
             </li>
              <li class="treeview">
              <a href=".#" id="vistaDepartamental">
@@ -33,7 +40,7 @@
               </a>
               
             </li>
-            
+            -->
             <li class="treeview">
               <a href="#" id="vistaGeografica">
                 <i class="fa fa-edit"></i> <span>Geografico</span>
