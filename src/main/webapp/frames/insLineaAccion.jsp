@@ -2521,13 +2521,30 @@
 		  	async:false       
 		}).responseText;
 		unidadMedida = JSON.parse(unidadMedida);
+		
+		
 		var optionUnidadMedida;
 		for(var u = 0; u < unidadMedida.length; u++)
 		{
 			optionUnidadMedida+='<option value="'+unidadMedida[u].id+'" parametro="'+unidadMedida[u].id+'">'+unidadMedida[u].descripcion+'</option>';
 		}
+
+		var hitoTipo = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getHitoTipo',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		hitoTipo = JSON.parse(hitoTipo);
 		
-		var optionTipoHito='<option value="1" parametro="0">Entregable</option><option value="2" parametro="1">Intermedio</option><option value="3" parametro="2">Autonomo</option>';
+		var optionTipoHito;
+		for(var u = 0; u < hitoTipo.length; u++)
+		{
+			optionTipoHito+='<option value="'+hitoTipo[u].id+'" parametro="'+hitoTipo[u].id+'">'+hitoTipo[u].nombre+'</option>';
+		}
+		
+		//var optionTipoHito='<option value="0" parametro="0">Entregable</option><option value="1" parametro="1">Intermedio</option><option value="2" parametro="2">Autonomo</option>';
+
 		
 		var cuerpoModalActividades = "";
 
