@@ -1293,6 +1293,8 @@ $("body").on("click", ".actualizarAccion",function(event){
 
 //consulta para borrar accion
 $("body").on("click", ".consultaBorrarAccion",function(event){
+
+	
 	var parametros = $(this).attr("parametros");
     var idParsed = parametros.split("-"); 
     var id = idParsed[0];
@@ -1316,11 +1318,11 @@ $("body").on("click", ".consultaBorrarAccion",function(event){
 	
 	var contenido = "";
 
-	contenido =			'<div class="modal fade" id="modalBorrarAccion" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">'+
+	contenido =			'<div class="modal fade" id="modalBorrarAccion"  tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">'+
 						'	<div class="modal-dialog modal-lg">'+
 						'		<div class="modal-content" >'+
 						'			<div class="modal-header">'+
-						'		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+						'		        <button type="button" class="close "  data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
 						'		        <h4 class="modal-title">Borrar Acción: </h4>'+
 						'			</div>'+
 						'		    <div class="modal-body" >'+
@@ -1331,7 +1333,7 @@ $("body").on("click", ".consultaBorrarAccion",function(event){
 						'	</div>'+
 						'</div>';
 						
-		//$("#programacion").append(contenido);
+		$("#programacion").append(contenido);
 		$('#modalBorrarAccion').modal('show');
     
 	
