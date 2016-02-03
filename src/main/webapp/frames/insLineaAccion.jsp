@@ -2849,6 +2849,14 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	}).responseText;
 	accionCatalogo = JSON.parse(accionCatalogo);
 	
+	var unidadMedida = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	unidadMedida = JSON.parse(unidadMedida);
+	
 	var lineaAccion = $.ajax({
 		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId='+lineaAccionId,
 	  	type:'get',
@@ -2865,6 +2873,14 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	}).responseText;
 	periodo = JSON.parse(periodo);
 	
+	var nombreUnidadMedida="";
+	for(var f = 0; f < unidadMedida.length; f++ )
+	{
+		if(accionCatalogo[0].idUnidadMedida == unidadMedida[f].id)
+		{
+			nombreUnidadMedida = unidadMedida[f].descripcion;
+		}
+	}
 
 	
 	var modalProgramacion = "";
@@ -2890,24 +2906,23 @@ $("body").on("click", ".agregarProgramacion",function(event){
 							'		                  		</div>'+
 							'               			</div>'+//fin box-heder
 							'               			<div class="box-body">'+
-							'			      				<form class="form-horizontal" role="form">'+
-							'									<div class="row">'+
-							'				      					<div class="form-group col-md-4">'+
-							'				      						<input type="text" id="cantidadProgramacion" value="" class="form-control" placeholder="Ingres Cantidad" />'+
-							'				      					</div>'+
-							'				      					<div class="form-group col-md-4">'+
-							'				      						<input type="date" id="fechaEntregaProgramacion" class="form-control" />'+
-							'				      					</div>'+
-							'				      					<div class="form-group col-md-4">'+
-							'				      						<input type="number" id="versionProgramacion" value="" class="form-control" placeholder="Ingres Version" />'+
-							'				      					</div>'+
-							'				      				</div>'+
-							'			      				</form>	'+							
-											
+							
+							'								<div class="table-responsive">'+
+							'									<table class="table table-hover">'+
+							'										<tbody>'+
+							'			      							<form class="form-horizontal" role="form">'+
+							'											<tr><td><label for="accionProgramacion">Accion</label><input type="text" id="accionProgramacion" value="'+accionCatalogo[0].nombre+'" class="form-control" disabled /></td><td><label for="unidadMedidaProgramacion">U. Medida</label><input type="text" id="unidadMedidaProgramacion" class="form-control" value="'+nombreUnidadMedida+'" disabled /></td></tr>'+
+							'											<tr><td><label for="cronogramaProgramacion">Cronograma</label><input type="text" id="cronogramaProgramacion" value="" class="form-control" /></td><td><label for="tipoCronogramaProgramacion">Tipo Cronograma</label><input type="text" id="tipoCronogramaProgramacion" class="form-control" /></td></tr>'+														
+							'											<tr><td><label for="cantidadProgramacion">Cantidad</label><input type="text" id="cantidadProgramacion" value="" class="form-control" placeholder="Ingres Cantidad" /></td><td><label for="fechaEntregaProgramacion">Fecha Entrega</label><input type="date" id="fechaEntregaProgramacion" class="form-control" /></td></tr>'+
+							'			      							</form>	'+												
+							'										</tbody>'+
+							'									</table>'+
+							'				      			</div>'+
+							
 							'               			</div>'+//fin box-body
 							'							<div class="modal-footer">'+ 
-							'					        	<button type="button" class="btn btn-default guardarProgramacion">Guardar</button>'+ 
-							'					          	<button type="button" class="btn btn-default " data-dismiss="modal" >Cerrar</button>'+ 
+							'					        	<button type="button" class="btn btn-success guardarProgramacion">Guardar</button>'+ 
+							'					          	<button type="button" class="btn btn-success " data-dismiss="modal" >Cerrar</button>'+ 
 							'							</div>'+
 							'                		</div>'+	
 							'                	</div>'+
