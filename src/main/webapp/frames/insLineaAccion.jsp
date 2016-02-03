@@ -3200,7 +3200,25 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	var lineaAccionId = idParsed[1];
 	var institucionId = idParsed[2];
 	var periodoId = idParsed[3];
-	var accionId = idParsed[4];//trae el id de la lista de cronogramas
+	var accionId = idParsed[4];
+	var cronogramaId = idParsed[5];
+
+	
+	var cronogramas = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getCronograma&cronogramaId='+cronogramaId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	cronogramas = JSON.parse(cronogramas);
+	
+	var hitoTipo = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getHitoTipo',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	hitoTipo = JSON.parse(hitoTipo);
 	
 	var accion = $.ajax({
 		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&accionId='+accionId,
@@ -3250,6 +3268,15 @@ $("body").on("click", ".agregarProgramacion",function(event){
 			nombreUnidadMedida = unidadMedida[f].descripcion;
 		}
 	}
+	
+	var nombreHitoTipo ="";
+	for(var l = 0; l < hitoTipo.length; l++)
+	{
+		if(hitoTipo[l].id == cronogramas[0].hito_tipo_id)
+		{
+			nombreHitoTipo = hitoTipo[l].nombre;
+		}
+	}
 
 	
 	var modalProgramacion = "";
@@ -3281,7 +3308,7 @@ $("body").on("click", ".agregarProgramacion",function(event){
 							'										<tbody>'+
 							'			      							<form class="form-horizontal" role="form">'+
 							'											<tr><td><label for="accionProgramacion">Accion</label><input type="text" id="accionProgramacion" value="'+accionCatalogo[0].nombre+'" class="form-control" disabled /></td><td><label for="unidadMedidaProgramacion">U. Medida</label><input type="text" id="unidadMedidaProgramacion" class="form-control" value="'+nombreUnidadMedida+'" disabled /></td></tr>'+
-							'											<tr><td><label for="cronogramaProgramacion">Cronograma</label><input type="text" id="cronogramaProgramacion" value="" class="form-control" /></td><td><label for="tipoCronogramaProgramacion">Tipo Cronograma</label><input type="text" id="tipoCronogramaProgramacion" class="form-control" /></td></tr>'+														
+							'											<tr><td><label for="cronogramaProgramacion">Cronograma</label><input type="text" id="cronogramaProgramacion" value="'+cronogramas[0].nombre+'" class="form-control" disabled /></td><td><label for="tipoCronogramaProgramacion">Tipo Cronograma</label><input type="text" id="tipoCronogramaProgramacion" class="form-control" value="'+nombreHitoTipo+'" disabled /></td></tr>'+														
 							'											<tr><td><label for="cantidadProgramacion">Cantidad</label><input type="text" id="cantidadProgramacion" value="" class="form-control" placeholder="Ingres Cantidad" /></td><td><label for="fechaEntregaProgramacion">Fecha Entrega</label><input type="date" id="fechaEntregaProgramacion" class="form-control" /></td></tr>'+
 							'			      							</form>	'+												
 							'										</tbody>'+
