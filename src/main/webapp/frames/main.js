@@ -14,6 +14,7 @@
 			window.location.replace("./pnd.jsp");
 		});
 		*/
+	  
 		$("body").on("click", ".fa-minus",function(event){
 			var id =event.target.attributes[0].nodeValue;
 			 $("#"+id).parent().parent().parent().next().attr("style","display:none" );
