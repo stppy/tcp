@@ -14,6 +14,7 @@
 			window.location.replace("./pnd.jsp");
 		});
 		*/
+	  
 		$("body").on("click", ".fa-minus",function(event){
 			var id =event.target.attributes[0].nodeValue;
 			 $("#"+id).parent().parent().parent().next().attr("style","display:none" );
@@ -28,6 +29,10 @@
 			 $("#"+id).attr("class", "fa fa-minus");
 			 event.stopPropagation();
 		});
+		$("body").on("click", "#programarPlan",function(event){
+			window.location.replace("/tablero/contenedorInsLineaAccion.jsp");
+			event.stopPropagation();
+		});
 		$("body").on("click", "#vistaInsitucional",function(event){
 			window.location.replace("/tablero/");
 			event.stopPropagation();
@@ -41,7 +46,9 @@
 			event.stopPropagation();
 		});
 		$("body").on("click", "#vistaCiudadana",function(event){
-			window.location.replace("./indexDepartamento4.jsp");
+			//window.location.replace("./indexDepartamento4.jsp");
+			window.location.replace("http://rc.stp.gov.py/");
+			
 			event.stopPropagation();
 		});      		
   });
