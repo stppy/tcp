@@ -16,7 +16,7 @@ public class Accion {
 	protected int departamentoId;
 	protected int distritoId;
 	protected int accionCatalogoId;
-	protected boolean borrado=false;
+	protected boolean borrado;
 	
 	
 	public int getId() {
@@ -109,6 +109,10 @@ public class Accion {
 	public void setBorrado(boolean borrado) {
 		this.borrado = borrado;
 	}
+	public void changeBorrado(){
+		this.borrado=!borrado;
+
+		}
 	
 	
 	
