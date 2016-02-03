@@ -1647,15 +1647,21 @@ public static boolean borradoHito(Hito objeto){
 	   	
 	  	 Statement statement = null;
 					 String										query = "update accion set ";
-					 if(objeto.getInsLineaAccionId()!=0)		query+= "ins_linea_accion_id="+objeto.getInsLineaAccionId()+"";	
-					 //if(objeto.getNombre()!=null)				query+= ", nombre='"+objeto.getNombre()+"'";	 no se por que me dio error al hacer mvn clean install
-					 //if(objeto.getDescripcion()!=null)			query+= ", descripcion='"+objeto.getDescripcion()+"'";no se por que me dio error al hacer mvn clean install
-					 if(objeto.getCosto()!=0)					query+= ", costo="+objeto.getCosto()+"";	
-					 if(objeto.getPeso()!=0)					query+= ", peso="+objeto.getPeso()+"";
-					 if(objeto.getFechaInicio()!=null)			query+= ", fecha_inicio='"+objeto.getFechaInicio()+"'";
-					 if(objeto.getFechaFin()!=null)				query+= ", fecha_fin='"+objeto.getFechaFin()+"'";
-					 //if(objeto.isBorrado()!=false)				query+= ", borrado='"+objeto.isBorrado()+"' ";	
+					 if(objeto.getCosto() != 0)					query+= "costo="+objeto.getCosto()+"";
+					 if(objeto.getPeso() != 0)					query+= ", peso="+objeto.getPeso()+"";
+					 //if(objeto.getFechaInicio() != null)		query+= ", fecha_inicio="+objeto.getFechaInicio()+"";
+					 //if(objeto.getFechaFin() != null)			query+= ", fecha_fin="+objeto.getFechaFin()+"";
+					 if(objeto.getVersion() != 0)				query+= ", version="+objeto.getVersion()+"";
+					 if(objeto.getMeta1() != 0)					query+= ", meta1="+objeto.getMeta1()+"";
+					 if(objeto.getMeta2() != 0)					query+= ", meta2="+objeto.getMeta2()+"";
+					 if(objeto.getMeta3() != 0)					query+= ", meta3="+objeto.getMeta3()+"";
+					 if(objeto.getMeta4() != 0)					query+= ", meta4="+objeto.getMeta4()+"";
+					 if(objeto.getInsLineaAccionId() != 0)		query+= ", ins_linea_accion_id="+objeto.getInsLineaAccionId()+"";
+					 if(objeto.getDepartamentoId() != 0)		query+= ", depto_id="+objeto.getDepartamentoId()+"";
+					 if(objeto.getDistritoId() != 0)			query+= ", dist_id="+objeto.getDistritoId()+"";
+					 if(objeto.getAccionCatalogoId() != 0)		query+= ", id_accion_catalogo="+objeto.getAccionCatalogoId()+"";
 					 
+
 					 query+=" where id ="+objeto.getId();
 
 					 try {
@@ -1670,7 +1676,7 @@ public static boolean borradoHito(Hito objeto){
 	public static boolean borradoAccion(Accion objeto){
 	  	 Connection conect=ConnectionConfiguration.conectar();
 	  	 Statement statement = null;
-	  	 objeto.changeBorrado();
+	  	 objeto.isBorrado();
 	  	 
 		 String query = "update accion set borrado='"+objeto.isBorrado()+"'";	
 		 
