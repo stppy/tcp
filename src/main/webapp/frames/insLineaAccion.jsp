@@ -679,7 +679,11 @@
 	    var institucionId = idParsed[2];
 	    var periodoId = idParsed[3];
 		
-		if ( $("#insLineaAccion").length )
+	    if ( $("#modalEditarAccion").length )
+		{
+			$("#modalEditarAccion").remove();
+		}
+	    if ( $("#insLineaAccion").length )
 		{
 			$("#insLineaAccion").remove();
 		}
@@ -830,14 +834,15 @@
 				}
 			}
 
-			cuerpoAccion +="<td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos'><span class='glyphicon glyphicon-usd modalVincularProducto' parametros="+accion[a].id+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"></span></button><button type='button' class='btn btn-default btn-sm'><span class='glyphicon glyphicon-time agregarActividad' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"></span></button><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button></td></tr>";
+			cuerpoAccion +="<td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos'><span class='glyphicon glyphicon-usd modalVincularProducto' parametros="+accion[a].id+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"></span></button><button type='button' class='btn btn-default btn-sm'><span class='glyphicon glyphicon-time agregarActividad' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"></span></button><button type='button' class='btn btn-default btn-sm editarAccion' parametros="+accion[a].id+"-"+accion[a].accionCatalogoId+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+" data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+accion[a].id+"-"+accion[a].accionCatalogoId+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+" data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button></td></tr>";
+
 		}
 		
 		
 				
 		var cuerpoModalAccion = "";
 
-		cuerpoModalAccion =	'<div class="modal fade" id="modalAccion" tabindex="-1" aria-labelledby="myLargeModalLabel">'+
+		cuerpoModalAccion =	'<div class="modal fade" id="modalAccion" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="myLargeModalLabel">'+
 							'	<div class="modal-dialog modal-lg" style="width:90%">'+
 							'		<div class="modal-content" >'+
 							'			<div class="modal-header">'+
@@ -962,6 +967,384 @@
 
 	});
 	
+	
+	//editarAccion
+	$("body").on("click", ".editarAccion",function(event){
+		var parametros = $(this).attr("parametros");
+	    var idParsed = parametros.split("-"); 
+	    var id = idParsed[0];
+	    var accionCatalogoId = idParsed[1];
+	    var insLineaAccionId = idParsed[2];
+	    var lineaAccionId = idParsed[3];
+	    var institucionId = idParsed[4];
+	    var periodoId = idParsed[5];    
+	   
+
+		
+		
+		if ( $("#modalEditarAccion").length )
+		{
+			$("#modalEditarAccion").remove();
+		}
+		if ( $("#modalAccion").length )
+		{
+			$("#modalAccion").remove();
+		}		
+
+		
+		var catalogoAccion = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		catalogoAccion = JSON.parse(catalogoAccion);
+		var optionCatalogoAccion = "";
+
+		for(l = 0; l < catalogoAccion.length; l++)
+		{
+			optionCatalogoAccion+='<option value="'+catalogoAccion[l].id+'" parametro="'+catalogoAccion[l].id+'">'+catalogoAccion[l].nombre+'</option>';
+		}
+		
+
+		
+		var unidadMedida = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		unidadMedida = JSON.parse(unidadMedida);
+		var optionUnidadMedida;
+		for(var u = 0; u < unidadMedida.length; u++)
+		{
+			optionUnidadMedida+='<option value="'+unidadMedida[u].id+'" parametro="'+unidadMedida[u].id+'">'+unidadMedida[u].descripcion+'</option>';
+		}
+		
+		var accion = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&accionId='+id,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		accion = JSON.parse(accion);
+
+		var departamentos = $.ajax({
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
+	      	type:'get',
+	      	dataType:'json',
+	      	async:false       
+	    }).responseText;
+		departamentos = JSON.parse(departamentos);
+		
+		var optionDepartamentos = "";
+		for(i = 0;i<18; i++){
+			optionDepartamentos+='<option value="'+departamentos[i].idDepartamento+'" parametro="'+departamentos[i].idDepartamento+'">'+departamentos[i].nombreDepartamento+'</option>';
+		}
+		optionDepartamentos+='<option value="99" parametro="99">ALC.NACIONAL</option>';
+		
+		var distritos = $.ajax({
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito&departamento='+accion[0].departamentoId,
+	      	type:'get',
+	      	dataType:'json',
+	      	async:false       
+	    }).responseText;
+		distritos = JSON.parse(distritos);
+		optionDistritos="";
+		for(k = 0;k<distritos.length; k++){
+			
+			optionDistritos+='<option value="'+distritos[k].id+'">'+distritos[k].descripcion+'</option>';
+		}
+		
+		var nombreDepartamento;
+		for(var a = 0; a < accion.length; a++)
+		{
+			for(var d = 0; d < 18; d++)
+			{
+				if(accion[a].departamentoId == departamentos[d].idDepartamento){
+					nombreDepartamento = departamentos[d].nombreDepartamento;
+				}
+			}
+			
+		}
+		
+		var nombreDistrito;
+		for(var a = 0; a < accion.length; a++)
+		{
+			for(var d = 0; d < distritos.length; d++)
+			{
+				if(accion[a].distritoId == distritos[d].id && accion[a].departamentoId == distritos[d].departamentoId){
+					nombreDistrito = distritos[d].descripcion;
+				}
+			}
+			
+		}		
+		
+		
+	
+		
+		var cuerpoAccion = "";
+		for(var z = 0; z < accion.length; z++)
+		{
+				if(accion[z].borrado == true){
+					cuerpoAccion +="<tr><td class='text-center'><del>"+nombreDepartamento+"</del></td><td class='text-center'><del>"+nombreDistrito+"</del></td><td class='text-center'><del>"+accion[z].fechaInicio+"</del></td><td class='text-center'><del>"+accion[z].fechaFin+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[z].costo).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[z].meta1).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[z].meta2).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[z].meta3).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[z].meta4).toFixed(2))+"</del></td><td class='text-center'><del>"+accion[z].peso+"</del></td><td class='text-center'><del>"+accion[z].version+"</del></td><td class='text-center'><del>"+accion[z].borrado+"</del></td><td class='text-center'><span class='glyphicon glyphicon-plus modalVincularProducto' parametros="+accion[z].id+"></span></td><td class='text-center'><span class='glyphicon glyphicon-pencil editarAccion' parametros="+accion[z].id+"></span></td></tr>";
+				}else{
+					cuerpoAccion +="<tr><td class='text-center'>"+nombreDepartamento+"</td><td class='text-center'>"+nombreDistrito+"</td><td class='text-center'>"+accion[z].fechaInicio+"</td><td class='text-center'>"+accion[z].fechaFin+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[z].costo).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[z].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[z].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[z].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[z].meta4).toFixed(2))+"</td><td class='text-center'>"+accion[z].peso+"</td><td class='text-center'>"+accion[z].version+"</td><td class='text-center'>"+accion[z].borrado+"</td><td class='text-center'><span class='glyphicon glyphicon-plus modalVincularProducto' parametros="+accion[z].id+"></span></td><td class='text-center'><span class='glyphicon glyphicon-pencil editarAccion' parametros="+accion[z].id+"></span></td></tr>";
+				}
+		}
+				
+		var cuerpoModalEditarAccion = "";
+
+		cuerpoModalEditarAccion =	'<div class="modal fade" id="modalEditarAccion" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="myLargeModalLabel">'+
+							'	<div class="modal-dialog modal-lg" style="width:90%">'+
+							'		<div class="modal-content" >'+
+							'			<div class="modal-header">'+
+							'		        <button type="button" class="close agregarAccion" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+' data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+							'			</div>'+
+							'		    <div class="modal-body" id="accionCuerpo" >'+
+							
+							
+							'		      	<div class="row">'+ 
+							'		      		<div class="col-md-12">'+
+							'						<div class="box box-danger">'+
+							'		                	<div class="box-header with-border">'+
+							'		                  		<h3 class="box-title">Editar Acción</h3>'+
+							'	                  			<div class="box-tools pull-right">'+
+							'				                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>'+
+							'		                    		</button>'+
+							'		                    		<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>'+
+							'		                    		</button>'+
+							'		                  		</div>'+
+							'               			</div>'+//fin box-heder
+							'               			<div class="box-body">'+
+							
+							'								<form role="form">'+
+							'									<div class="table-responsive">'+
+							'										<table class="table table-hover">'+
+							'											<tbody>'+
+							'												<tr><td><div class="form-group"><label for="nombreAccion">Acción</label><select id="selectorCatalogoAccion" class="form-control">'+optionCatalogoAccion+'</select><input type="hidden" class="form-control" id="insLineaAccionId" value="'+insLineaAccionId+'"></div></td><td><div class="form-group"><label for="umedida">U. medida</label><select id="selectorUnidadMedida" class="form-control">'+optionUnidadMedida+'</select></div></td></tr>'+
+							'												<tr><td><div class="form-group"><label for="departamento">Departamento</label><select id="selectorDepartamento" name="departamento" class="form-control">'+optionDepartamentos+'</select></div></td><td><div class="form-group"><label for="distrito">Distrito</label><select class="form-control" id="distritosDepartamento">'+optionDistritos+'</select></div></td></tr>'+
+							'												<tr><td><div class="form-group"><label for="fechaInicio">Fecha Inicio</label><input type="date"  id="fechaInicio" value='+accion[0].fechaInicio+' class="form-control"></div></td><td><div class="form-group"><label for="fichaFin">Fecha Fin</label><input type="date"  id="fechaFin" value='+accion[0].fechaFin+' class="form-control"></div></td></tr>'+
+
+							'											</tbody>'+							           
+							'										</table>'+
+							'									</div>'+
+							'									<div class="row">'+
+							'			      					    <div class="form-group col-md-3">'+
+							'						  						<label for="totalFinanciero-formulario">Primer Trimestre</label>'+
+							'				      						<div class="input-group input-group-sm">'+						      			
+							'								    				<input type="text" name="primerTrimestre" id="primerTrimestre-formulario" value='+accion[0].meta1+' class="form-control">'+
+							'													<input type="hidden" class="form-control" id="versionAccion" value="3">'+//Aqui estan los input hidden que en este formulario son 3
+							'													<input type="hidden" class="form-control" id="costoAccion" value="99">'+
+							'													<input type="hidden" class="form-control" id="pesoAccion" value="1">'+
+							
+							
+							
+							'				      						</div>'+
+							'			  					    	</div>'+
+										  					    		
+							'				     					<div class="form-group col-md-3">'+
+							'							  					<label for="totalFinanciero-formulario">Segundo Trimestre</label>'+
+							'					      					<div class="input-group input-group-sm">'+
+							'			  					    			<input type="text" name="segundoTrimestre" id="segundoTrimestre-formulario" value='+accion[0].meta2+' class="form-control">'+
+							'					      					</div>'+
+							'								    		</div>'+
+															    		
+							'				     					<div class="form-group col-md-3">'+
+							'							  					<label for="totalFinanciero-formulario">Tercer Trimestre</label>'+
+							'					      					<div class="input-group input-group-sm">'+
+							'			  					    			<input type="text" name="tercerTrimestre" id="tercerTrimestre-formulario" value='+accion[0].meta3+' class="form-control">'+
+							'					      					</div>'+
+							'								    		</div>'+
+														    		
+							'			      					    <div class="form-group col-md-3">'+
+							'						  					<label for="totalFinanciero-formulario">Cuarto Trimestre</label>'+
+							'				      						<div class="input-group input-group-sm">'+
+							'								    				<input type="text" name="cuartoTrimestre" id="cuartoTrimestre-formulario" value='+accion[0].meta4+' class="form-control">'+
+							'				      						</div>'+
+							'							    		</div>'+
+							'			  						</div>'+							
+							'								</form>'+
+											
+							'               			</div>'+//fin box-body
+							'							<div class="modal-footer">'+
+							'								<button type="button" class="btn btn-success btn-sm actualizarAccion" parametros='+id+'-'+accionCatalogoId+'-'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+' >Actualizar Acción</button>'+
+							'								<button type="button" class="btn btn-success btn-sm agregarAccion" data-dismiss="modal" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+' >Cerrar</button>'+
+
+							'							</div>'+
+							'                		</div>'+	
+							'                	</div>'+
+							'                </div>'+											
+											
+
+							
+
+							'		    </div>'+
+							'			<div class="modal-footer">'+
+					      	'			</div>'+														
+							'		</div>'+ 
+							'	</div>'+
+							'</div>';
+							
+		$("#programacion").append(cuerpoModalEditarAccion);
+		$('#selectorDepartamento > option[value="'+accion[0].departamentoId+'"]').attr('selected', 'selected');
+		$('#distritosDepartamento > option[value="'+accion[0].distritoId+'"]').attr('selected', 'selected');
+		$('#selectorCatalogoAccion > option[value="'+accion[0].accionCatalogoId+'"]').attr('selected', 'selected');
+
+
+		$('#modalEditarAccion').modal('show');
+		
+	});
+//fin editarAccion	
+	
+	
+//actualizar Acción
+$("body").on("click", ".actualizarAccion",function(event){
+	if ( $("#insLineaAccion").length )
+	{
+		$("#insLineaAccion").remove();
+	}
+	if ( $("#modalAccion").length )
+	{
+		$("#modalAccion").remove();
+	}		
+	if ( $("#modalVincularProductos").length )
+	{
+		$("#modalVincularProductos").remove();
+	}	
+	
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-"); 
+    var id = idParsed[0];
+    var accionCatalogoId = idParsed[1];
+    var insLineaAccionId = idParsed[2];
+    var lineaAccionId = idParsed[3];
+    var institucionId = idParsed[4];
+    var periodoId = idParsed[5]; 
+    
+
+	
+	var accionCatalogo = $("#selectorCatalogoAccion option:selected").val();
+	var departamento = $("#selectorDepartamento option:selected").val();
+	var distrito = $("#distritosDepartamento option:selected").val();
+    var fechaInicio = document.getElementById('fechaInicio').value;
+    var fechaFin = document.getElementById('fechaFin').value;
+    var metaPrimerTrimestre = document.getElementById('primerTrimestre-formulario').value;
+    var metaSegundoTrimestre = document.getElementById('segundoTrimestre-formulario').value;
+    var metaTercerTrimestre = document.getElementById('tercerTrimestre-formulario').value;
+    var metaCuartoTrimestre = document.getElementById('cuartoTrimestre-formulario').value;
+    var version = $("#versionAccion").val();
+    var peso = $("#pesoAccion").val();
+    var costo = $("#costoAccion").val();
+    
+    //aca vacío el formulario de edición de acción
+    $("#selectorCatalogoAccion").val('');
+    $("#selectorUnidadMedida").val('');
+    $("#selectorDepartamento").val('');
+    $("#distritosDepartamento").val('');
+    $("#fechaInicio").val('');
+    $("#fechaFin").val('');
+    $("#primerTrimestre-formulario").val('');
+    $("#segundoTrimestre-formulario").val('');
+    $("#tercerTrimestre-formulario").val('');
+    $("#cuartoTrimestre-formulario").val('');
+
+    
+    var datos = new Object();
+    datos.id = id;
+    datos.costo = costo;
+    datos.peso = peso;
+    datos.fechaInicio = fechaInicio;
+    datos.fechaFin = fechaFin;
+    datos.version = version;
+    datos.meta1 = metaPrimerTrimestre;
+    datos.meta2 = metaSegundoTrimestre;
+    datos.meta3 = metaTercerTrimestre;
+    datos.meta4 = metaCuartoTrimestre;
+    datos.insLineaAccionId = insLineaAccionId;
+    datos.departamentoId = departamento;
+    datos.distritoId = distrito;
+    datos.accionCatalogoId = accionCatalogoId;
+    
+    
+    
+    
+    
+  	var info = JSON.stringify(datos);
+    $.ajax({
+        url: "ajaxUpdate2?accion=actAccion",
+        type: 'POST',
+        dataType: 'json',
+        data: info,
+        contentType: 'application/json',
+        mimeType: 'application/json',
+        success: function (data) {
+        	//actualizarTablaAcciones(insLineaAccionId);
+        	},
+
+        error: function(data,status,er) {
+        	//actualizarTablaAcciones(insLineaAccionId);
+        	}
+	 });
+ 
+    
+  
+});
+
+//consulta para borrar accion
+$("body").on("click", ".consultaBorrarAccion",function(event){
+
+	
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-"); 
+    var id = idParsed[0];
+    var accionCatalogoId = idParsed[1];
+    var insLineaAccionId = idParsed[2];
+    var lineaAccionId = idParsed[3];
+    var institucionId = idParsed[4];
+    var periodoId = idParsed[5];
+    
+    
+	var accion = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&id='+id,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	accion = JSON.parse(accion);
+    
+    
+	
+	
+	var contenido = "";
+
+	contenido =			'<div class="modal fade" id="modalBorrarAccion"  tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">'+
+						'	<div class="modal-dialog modal-lg">'+
+						'		<div class="modal-content" >'+
+						'			<div class="modal-header">'+
+						'		        <button type="button" class="close "  data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+						'		        <h4 class="modal-title">Borrar Acción: </h4>'+
+						'			</div>'+
+						'		    <div class="modal-body" >'+
+
+						
+						'		    </div>'+
+						'		</div>'+ 
+						'	</div>'+
+						'</div>';
+						
+		$("#programacion").append(contenido);
+		$('#modalBorrarAccion').modal('show');
+    
+	
+					
+});
+	
+	
+
+	
+	
+	
 	function numeroConComa(x) {
 		return x.toString().replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 	}
@@ -979,11 +1362,7 @@
 	    var lineaAccionId = idParsed[1];
 	    var institucionId = idParsed[2];
 	    var periodoId = idParsed[3];
-		
-/* 		if ( $("#insLineaAccion").length )
-		{
-			$("#insLineaAccion").remove();
-		}*/
+
 		if ( $("#myModal").length )
 		{
 			$("#myModal").remove();
@@ -1206,13 +1585,7 @@
 		event.preventDefault();
 		
 		var parametros = $(this).attr("parametros");
-    	var idParsed = parametros.split("-");                                                            
-	/*	var institucionId=idParsed[0];
-		var lineaAccionId=idParsed[1];
-		var idDepartamento= idParsed[2];
-		var idDistrito= idParsed[3];
-		var accionId = idParsed[4];*/
-		
+    	var idParsed = parametros.split("-");                                                            	
 		var accionId = idParsed[0];
 
 		
@@ -1287,10 +1660,6 @@
 	function cargarTablaAccionHasProducto(accionId){
 		
 		var accionId= accionId;
-/*		var institucionId= institucionId;
-		var lineaAccionId= lineaAccionId;
-		var idDepartamento= idDepartamento;
-		var idDistrito= idDistrito;*/
 		
 		var accionHasProducto = $.ajax({
 	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getAccionHasProducto&accion_id='+accionId,
@@ -2594,9 +2963,9 @@
 			
 			if(actividades[u].borrado == false)
 			{
-				cuerpoActividad+='<tr><td>'+actividades[u].nombre+'</td><td>'+actividades[u].descripcion+'</td><td>'+nombreUnidadMedida+'</td><td>'+nombreHitoTipo+'</td><td>'+actividades[u].proporcion+'</td><td>'+actividades[u].version+'</td><td><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Hito"><span class="glyphicon glyphicon-time"></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Declarar Avance"><span class="fa fa-line-chart"></span></button></td></tr>';
+				cuerpoActividad+='<tr><td>'+actividades[u].nombre+'</td><td>'+actividades[u].descripcion+'</td><td>'+nombreUnidadMedida+'</td><td>'+nombreHitoTipo+'</td><td>'+actividades[u].proporcion+'</td><td>'+actividades[u].version+'</td><td><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Hito"><span class="glyphicon glyphicon-time agregarProgramacion" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Declarar Avance"><span class="fa fa-line-chart"></span></button></td></tr>';
 			}else{
-				cuerpoActividad+='<tr><td><del>'+actividades[u].nombre+'</del></td><td><del>'+actividades[u].descripcion+'</del></td><td><del>'+nombreUnidadMedida+'</del></td><td><del>'+nombreHitoTipo+'</del></td><td><del>'+actividades[u].proporcion+'</del></td><td><del>'+actividades[u].version+'</del></td><td><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Hito"><span class="glyphicon glyphicon-time"></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Declarar Avance"><span class="fa fa-line-chart"></span></button></td></tr>';
+				cuerpoActividad+='<tr><td><del>'+actividades[u].nombre+'</del></td><td><del>'+actividades[u].descripcion+'</del></td><td><del>'+nombreUnidadMedida+'</del></td><td><del>'+nombreHitoTipo+'</del></td><td><del>'+actividades[u].proporcion+'</del></td><td><del>'+actividades[u].version+'</del></td><td><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Hito"><span class="glyphicon glyphicon-time agregarProgramacion" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Declarar Avance"><span class="fa fa-line-chart"></span></button></td></tr>';
 			}
 		}
 		
@@ -2815,5 +3184,138 @@ function actualizarTablaActividades(accionId){
 	$("#pesoActividad").val('');
 		
 }
+
+$("body").on("click", ".agregarProgramacion",function(event){
+	
+	if ( $("#modalActividad").length )
+	{
+		$("#modalActividad").remove();
+	}	
+	
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-");                                                            
+	
+	//Las siguentes 4 variables se utiliza en esta funcion para redibujar el modal anterior
+	var insLineaAccionId = idParsed[0];
+	var lineaAccionId = idParsed[1];
+	var institucionId = idParsed[2];
+	var periodoId = idParsed[3];
+	var accionId = idParsed[4];//trae el id de la lista de cronogramas
+	
+	var accion = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&accionId='+accionId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	accion = JSON.parse(accion);
+	
+	var accionCatalogo = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[0].accionCatalogoId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	accionCatalogo = JSON.parse(accionCatalogo);
+	
+	var lineaAccion = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId='+lineaAccionId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	lineaAccion = JSON.parse(lineaAccion)
+	
+	var periodo = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo&&periodoId='+periodoId,
+  		type:'get',
+  		dataType:'json',
+  		async:false       
+	}).responseText;
+	periodo = JSON.parse(periodo);
+	
+
+	
+	var modalProgramacion = "";
+
+	modalProgramacion += '<div class="modal fade" id="modalProgramacion" tabindex="-1" aria-labelledby="myLargeModalLabel">'+
+							'	<div class="modal-dialog modal-lg" style="width:90%">'+
+							'		<div class="modal-content" >'+
+							'			<div class="modal-header">'+
+							'		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+							'		        <h4 class="modal-title">Programación de '+accionCatalogo[0].nombre+' ('+lineaAccion[0].nombre+' - '+periodo[0].nombre+')</h4>'+ 
+							'			</div>'+
+							'		    <div class="modal-body">'+
+							'		      	<div class="row">'+ 
+							'		      		<div class="col-md-12">'+
+							'						<div class="box box-warning">'+
+							'		                	<div class="box-header with-border">'+
+							'		                  		<h3 class="box-title">Agregar Programación</h3>'+
+							'	                  			<div class="box-tools pull-right">'+
+							'				                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>'+
+							'		                    		</button>'+
+							'		                    		<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>'+
+							'		                    		</button>'+
+							'		                  		</div>'+
+							'               			</div>'+//fin box-heder
+							'               			<div class="box-body">'+
+							'			      				<form class="form-horizontal" role="form">'+
+							'									<div class="row">'+
+							'				      					<div class="form-group col-md-4">'+
+							'				      						<input type="text" id="cantidadProgramacion" value="" class="form-control" placeholder="Ingres Cantidad" />'+
+							'				      					</div>'+
+							'				      					<div class="form-group col-md-4">'+
+							'				      						<input type="date" id="fechaEntregaProgramacion" class="form-control" />'+
+							'				      					</div>'+
+							'				      					<div class="form-group col-md-4">'+
+							'				      						<input type="number" id="versionProgramacion" value="" class="form-control" placeholder="Ingres Version" />'+
+							'				      					</div>'+
+							'				      				</div>'+
+							'			      				</form>	'+							
+											
+							'               			</div>'+//fin box-body
+							'							<div class="modal-footer">'+ 
+							'					        	<button type="button" class="btn btn-default guardarProgramacion">Guardar</button>'+ 
+							'					          	<button type="button" class="btn btn-default " data-dismiss="modal" >Cerrar</button>'+ 
+							'							</div>'+
+							'                		</div>'+	
+							'                	</div>'+
+							'                </div>'+											
+											
+							'		      	<div class="row">'+ 
+							'		      		<div class="col-md-12">'+
+							'						<div class="box box-warning">'+
+							'		                	<div class="box-header with-border">'+
+							'		                  		<h3 class="box-title">Lista Programación</h3>'+
+							'	                  			<div class="box-tools pull-right">'+
+							'				                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>'+
+							'		                    		</button>'+
+							'		                    		<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>'+
+							'		                    		</button>'+
+							'		                  		</div>'+
+							'               			</div>'+//fin box-heder
+							'               			<div class="box-body">'+	                			
+					
+							'               			</div>'+//fin box-body
+							'                		</div>'+	
+							'                	</div>'+
+							'                </div>'+
+							
+
+							'		    </div>'+
+							'			<div class="modal-footer">'+
+					      	'			</div>'+														
+							'		</div>'+ 
+							'	</div>'+
+							'</div>';
+						  
+						  
+						  
+						  
+
+	$("body").append(modalProgramacion);
+	$("#modalProgramacion").modal('show');
+});	
+
 
 	</script>	

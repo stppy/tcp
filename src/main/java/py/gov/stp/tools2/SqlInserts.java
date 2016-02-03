@@ -239,8 +239,8 @@ public class SqlInserts {
 		
 		insert.setDouble (1, accion.getCosto());
 		insert.setInt (2, accion.getPeso());
-		insert.setDate (3, accion.getFechaInicio());
-		insert.setDate (4, accion.getFechaFin());
+		insert.setString (3, accion.getFechaInicio());
+		insert.setString (4, accion.getFechaFin());
 		insert.setInt(5, accion.getVersion());
 		insert.setBoolean (6, accion.isBorrado());		
 		insert.setDouble (7, accion.getMeta1());
