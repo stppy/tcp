@@ -694,7 +694,11 @@
 		if ( $("#modalVincularProductos").length )
 		{
 			$("#modalVincularProductos").remove();
-		}	
+		}
+		if ( $("#modalBorrarAccion").length )
+		{
+			$("#modalBorrarAccion").remove();
+		}
 		
 		var lineaAccion = $.ajax({
 			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
@@ -807,6 +811,7 @@
 
 		for(var a = 0; a < accion.length; a++)
 		{
+			
 			var catalogoAccion = $.ajax({
 				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[a].accionCatalogoId,
 			  	type:'get',
@@ -814,14 +819,21 @@
 			  	async:false       
 			}).responseText;
 			catalogoAccion = JSON.parse(catalogoAccion);
-			
-			cuerpoAccion +="<tr><td class='text-center'>"+catalogoAccion[0].nombre+"</td>";
+			if (accion[a].borrado == false){
+				cuerpoAccion +="<tr><td class='text-center'>"+catalogoAccion[0].nombre+"</td>";
+				}else{
+					cuerpoAccion +="<tr><td class='text-center'><del>"+catalogoAccion[0].nombre+"</del></td>";
+				}
 			
 			for(var d = 0; d < 18; d++)
 			{
 				if(accion[a].departamentoId == departamentos[d].idDepartamento){
 					nombreDepartamento = departamentos[d].nombreDepartamento;
+					if (accion[a].borrado == false){
 					cuerpoAccion +="<td class='text-center'>"+nombreDepartamento+"</td>";
+					}else{
+						cuerpoAccion +="<td class='text-center'><del>"+nombreDepartamento+"</del></td>";
+					}
 				}
 			}
 			
@@ -830,12 +842,22 @@
 			{
 				if(accion[a].distritoId == distritos[e].id && accion[a].departamentoId == distritos[e].departamentoId){
 					nombreDistrito = distritos[e].descripcion;
+					
+					if (accion[a].borrado == false){
 					cuerpoAccion +="<td class='text-center'>"+nombreDistrito+"</td>";
+					}else{
+						cuerpoAccion +="<td class='text-center'><del>"+nombreDistrito+"<del></td>";
+					}
 				}
 			}
-
-			cuerpoAccion +="<td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos'><span class='glyphicon glyphicon-usd modalVincularProducto' parametros="+accion[a].id+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"></span></button><button type='button' class='btn btn-default btn-sm'><span class='glyphicon glyphicon-time agregarActividad' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"></span></button><button type='button' class='btn btn-default btn-sm editarAccion' parametros="+accion[a].id+"-"+accion[a].accionCatalogoId+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+" data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+accion[a].id+"-"+accion[a].accionCatalogoId+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+" data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button></td></tr>";
-
+			if(accion[a].borrado == false){	
+				
+			cuerpoAccion +="<td class='text-center'>"+accion[a].borrado+"</td><td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos'><span class='glyphicon glyphicon-usd modalVincularProducto' parametros="+accion[a].id+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"></span></button><button type='button' class='btn btn-default btn-sm'><span class='glyphicon glyphicon-time agregarActividad' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"></span></button><button type='button' class='btn btn-default btn-sm editarAccion' parametros="+accion[a].id+"-"+accion[a].accionCatalogoId+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+" data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+accion[a].id+"-"+accion[a].accionCatalogoId+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+" data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button></td></tr>";
+			
+			}else{
+				cuerpoAccion +="<td class='text-center'><del>"+accion[a].borrado+"</del></td><td class='text-center'><del>"+accion[a].fechaInicio+"</del></td><td class='text-center'><del>"+accion[a].fechaFin+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</del></td><td class='text-center'><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos'><span class='glyphicon glyphicon-usd modalVincularProducto' parametros="+accion[a].id+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"></span></button><button type='button' class='btn btn-default btn-sm'><span class='glyphicon glyphicon-time agregarActividad' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"></span></button><button type='button' class='btn btn-default btn-sm editarAccion' parametros="+accion[a].id+"-"+accion[a].accionCatalogoId+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+" data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+accion[a].id+"-"+accion[a].accionCatalogoId+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+" data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button></td></tr>";
+				
+			}
 		}
 		
 		
@@ -937,7 +959,7 @@
 							'	                			<div class="table-responsive">'+
 							'	                				<table class="table table-hover table-bordered">'+
 							'	                					<thead>'+
-							'	                						<tr class="active"><th rowspan="2" class="text-center">Acción</th><th rowspan="2" class="text-center">Depto</th><th rowspan="2" class="text-center">Distrito</th><th rowspan="2" class="text-center">FechaInicio</th><th rowspan="2" class="text-center">FechaFin</th><th colspan="4" class="text-center">Metas</th><th rowspan="2" class="text-center" style="min-width:160px">Administrar Acción</th></tr>'+
+							'	                						<tr class="active"><th rowspan="2" class="text-center">Acción</th><th rowspan="2" class="text-center">Depto</th><th rowspan="2" class="text-center">Distrito</th><th rowspan="2" class="text-center">Borrado</th><th rowspan="2" class="text-center">FechaInicio</th><th rowspan="2" class="text-center">FechaFin</th><th colspan="4" class="text-center">Metas</th><th rowspan="2" class="text-center" style="min-width:160px">Administrar Acción</th></tr>'+
 							'	                						<tr class="active"><th class="text-center">1er Trimestre</th><th class="text-center">2do Trimestre</th><th class="text-center">3er Trimestre</th><th class="text-center">4to Trimestre</th></tr>'+
 							'	                					</thead>'+
 							'	                						<tbody id="tablaAccionesPrecargadas">'+
@@ -1293,8 +1315,6 @@ $("body").on("click", ".actualizarAccion",function(event){
 
 //consulta para borrar accion
 $("body").on("click", ".consultaBorrarAccion",function(event){
-
-	
 	var parametros = $(this).attr("parametros");
     var idParsed = parametros.split("-"); 
     var id = idParsed[0];
@@ -1302,33 +1322,57 @@ $("body").on("click", ".consultaBorrarAccion",function(event){
     var insLineaAccionId = idParsed[2];
     var lineaAccionId = idParsed[3];
     var institucionId = idParsed[4];
-    var periodoId = idParsed[5];
+    var periodoId = idParsed[5];   
     
-    
+	if ( $("#modalBorrarAccion").length )
+	{
+		$("#modalBorrarAccion").remove();
+	}		
+
+   
 	var accion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&id='+id,
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&accionId='+id,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
 	}).responseText;
 	accion = JSON.parse(accion);
     
+	var catalogoAccion = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	catalogoAccion = JSON.parse(catalogoAccion);
+	
+	var nombreAccion;
+	for(var a = 0; a < catalogoAccion.length; a++)
+	{
+			if(catalogoAccion[a].id == accion[0].accionCatalogoId){
+				nombreAccion = catalogoAccion[a].nombre;
+			}	
+	}
+	
     
 	
 	
 	var contenido = "";
 
-	contenido =			'<div class="modal fade" id="modalBorrarAccion"  tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">'+
+	contenido =			'<div class="modal fade" id="modalBorrarAccion"  data-backdrop="static" data-keyboard="false" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">'+
 						'	<div class="modal-dialog modal-lg">'+
 						'		<div class="modal-content" >'+
 						'			<div class="modal-header">'+
-						'		        <button type="button" class="close "  data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
-						'		        <h4 class="modal-title">Borrar Acción: </h4>'+
+						'		        <button type="button" class="close agregarAccion"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+' aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+						'		        <h4 class="modal-title">Borrar - Reestablecer Acción</h4>'+
 						'			</div>'+
 						'		    <div class="modal-body" >'+
-
-						
+						'			<div class="alert alert-warning" id="mensajeBorrado"><center>Borrar o reestablecer la Acción: <strong>'+nombreAccion+'</strong></center></div>'+
 						'		    </div>'+
+						'							<div class="modal-footer">'+
+						'								<button type="button" class="btn btn-success btn-sm borrarAccion" parametros='+id+'>Borrar o Reestablecer Acción</button>'+
+						'								<button type="button" class="btn btn-success btn-sm agregarAccion"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'>Cerrar</button>'+
+						'							</div>'+
 						'		</div>'+ 
 						'	</div>'+
 						'</div>';
@@ -1340,9 +1384,46 @@ $("body").on("click", ".consultaBorrarAccion",function(event){
 					
 });
 	
-	
+//borrar accion
+$("body").on("click", ".borrarAccion",function(event){	
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-"); 
+    var id = idParsed[0];
+    
+    
+	var accion = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&accionId='+id,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	accion = JSON.parse(accion);
+    
+    var objeto = new Object();
+    objeto.id = id;
+    objeto.borrado= accion[0].borrado;
 
+  	var info = JSON.stringify(objeto);
+    $.ajax({
+        url: "ajaxUpdate2?accion=borradoAccion",
+        type: 'POST',
+        dataType: 'json',
+        data: info,
+        contentType: 'application/json',
+        mimeType: 'application/json',
+        success: function (data) {
+        	$("#mensajeBorrado").html("");
+        	$("#mensajeBorrado").html("La Acción ha sido modificada");
+        	
+        	},
+
+        error: function(data,status,er) {
+        	
+        	}
+	 });
 	
+	
+});
 	
 	
 	function numeroConComa(x) {

@@ -1676,7 +1676,7 @@ public static boolean borradoHito(Hito objeto){
 	public static boolean borradoAccion(Accion objeto){
 	  	 Connection conect=ConnectionConfiguration.conectar();
 	  	 Statement statement = null;
-	  	 objeto.isBorrado();
+	  	 objeto.changeBorrado();
 	  	 
 		 String query = "update accion set borrado='"+objeto.isBorrado()+"'";	
 		 
