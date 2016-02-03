@@ -7,7 +7,7 @@ public class Programacion {
 	protected Date fechaEntrega;
 	protected int actividad;
 	protected int version;
-	protected boolean borrado=false;
+	protected boolean borrado;
 	public int getId() {
 		return id;
 	}

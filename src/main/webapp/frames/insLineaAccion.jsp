@@ -2872,6 +2872,14 @@ $("body").on("click", ".consultaBorrarAccion",function(event){
 		{
 			$("#modalActividad").remove();
 		}	
+		if ( $("#modalAccion").length )
+		{
+			$("#modalAccion").remove();
+		}	
+		if ( $("#modalProgramacion").length )
+		{
+			$("#modalProgramacion").remove();
+		}	
 				
 		var parametros = $(this).attr("parametros");
 	    var idParsed = parametros.split("-");                                                            
@@ -3191,6 +3199,10 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	{
 		$("#modalActividad").remove();
 	}	
+	if ( $("#modalAccion").length )
+	{
+		$("#modalAccion").remove();
+	}	
 	
 	var parametros = $(this).attr("parametros");
     var idParsed = parametros.split("-");                                                            
@@ -3285,7 +3297,7 @@ $("body").on("click", ".agregarProgramacion",function(event){
 							'	<div class="modal-dialog modal-lg" style="width:90%">'+
 							'		<div class="modal-content" >'+
 							'			<div class="modal-header">'+
-							'		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+							'		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="agregarActividad" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'">&times;</span></button>'+
 							'		        <h4 class="modal-title">Programación de '+accionCatalogo[0].nombre+' ('+lineaAccion[0].nombre+' - '+periodo[0].nombre+')</h4>'+ 
 							'			</div>'+
 							'		    <div class="modal-body">'+
@@ -3310,6 +3322,7 @@ $("body").on("click", ".agregarProgramacion",function(event){
 							'											<tr><td><label for="accionProgramacion">Accion</label><input type="text" id="accionProgramacion" value="'+accionCatalogo[0].nombre+'" class="form-control" disabled /></td><td><label for="unidadMedidaProgramacion">U. Medida</label><input type="text" id="unidadMedidaProgramacion" class="form-control" value="'+nombreUnidadMedida+'" disabled /></td></tr>'+
 							'											<tr><td><label for="cronogramaProgramacion">Cronograma</label><input type="text" id="cronogramaProgramacion" value="'+cronogramas[0].nombre+'" class="form-control" disabled /></td><td><label for="tipoCronogramaProgramacion">Tipo Cronograma</label><input type="text" id="tipoCronogramaProgramacion" class="form-control" value="'+nombreHitoTipo+'" disabled /></td></tr>'+														
 							'											<tr><td><label for="cantidadProgramacion">Cantidad</label><input type="text" id="cantidadProgramacion" value="" class="form-control" placeholder="Ingres Cantidad" /></td><td><label for="fechaEntregaProgramacion">Fecha Entrega</label><input type="date" id="fechaEntregaProgramacion" class="form-control" /></td></tr>'+
+							'											<input type="hidden" id="versionProgramacion" value="3" /><input type="hidden" id="actividadIdProgramacion" value="'+cronogramaId+'" />'+		
 							'			      							</form>	'+												
 							'										</tbody>'+
 							'									</table>'+
@@ -3317,8 +3330,8 @@ $("body").on("click", ".agregarProgramacion",function(event){
 							
 							'               			</div>'+//fin box-body
 							'							<div class="modal-footer">'+ 
-							'					        	<button type="button" class="btn btn-success guardarProgramacion">Guardar</button>'+ 
-							'					          	<button type="button" class="btn btn-success " data-dismiss="modal" >Cerrar</button>'+ 
+							'					        	<button type="button" class="btn btn-success guardarProgramacion" >Guardar</button>'+ 
+							'					          	<button type="button" class="btn btn-success agregarActividad" data-dismiss="modal" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'">Cerrar</button>'+ 
 							'							</div>'+
 							'                		</div>'+	
 							'                	</div>'+
@@ -3336,7 +3349,7 @@ $("body").on("click", ".agregarProgramacion",function(event){
 							'		                    		</button>'+
 							'		                  		</div>'+
 							'               			</div>'+//fin box-heder
-							'               			<div class="box-body">'+	                			
+							'               			<div class="box-body" id="listaProgramacion">'+	                			
 					
 							'               			</div>'+//fin box-body
 							'                		</div>'+	
@@ -3349,14 +3362,81 @@ $("body").on("click", ".agregarProgramacion",function(event){
 					      	'			</div>'+														
 							'		</div>'+ 
 							'	</div>'+
-							'</div>';
-						  
-						  
-						  
-						  
+							'</div>';					  
 
 	$("body").append(modalProgramacion);
 	$("#modalProgramacion").modal('show');
+});	
+
+$("body").on("click", ".guardarProgramacion",function(event){
+		
+	var cantidad = $("#cantidadProgramacion").val();
+	var fechaEntrega = $("#fechaEntregaProgramacion").val();
+	var version = $("#versionProgramacion").val();
+	var actividadId = $("#actividadIdProgramacion").val();
+	
+	//Vaciar el input
+	$("#cantidadProgramacion").val('');
+	$("#fechaEntregaProgramacion").val('');
+	
+	var objeto = new Object();
+	
+	objeto.cantidad = cantidad;
+	objeto.fechaEntrega = fechaEntrega;
+	objeto.actividad = actividadId;
+	objeto.version = version;
+
+	
+  	var info = JSON.stringify(objeto);
+    $.ajax({
+        url: "ajaxInserts2?accion=insProgramacion",
+        type: 'POST',
+        dataType: 'json',
+        data: info,
+        contentType: 'application/json',
+        mimeType: 'application/json',
+        success: function (data) {
+        	
+        	if(data.success == true)
+        	{
+        		var programacion = $.ajax({
+        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getProgramacion&actividadId='+actividadId,
+        		  	type:'get',
+        		  	dataType:'json',
+        		  	async:false       
+        		}).responseText;
+        		programacion = JSON.parse(programacion);
+        		
+        		var registroProgramacion="";
+        		for(var j = 0; j < programacion.length; j++)
+        		{
+        			registroProgramacion += "<tr><td>"+programacion[j].cantidad+"</td><td>"+programacion[j].fechaEntrega+"</td><td>"+programacion[j].version+"</td><td>"+programacion[j].actividad+"</td>";
+        		}
+        		
+        		
+        		var cuerpoTabla =	'<div class="table-responsive">'+
+									'	<table class="table table-hover">'+
+									'		<thead><tr><th>Cantidad</th><th>FechaEntrega</th><th>Versión</th><th>Cronograma</th></tr>'+
+									'		<tbody id="tablaProgramacion">'+
+									'		</tbody>'+
+									'	</table>'+
+									'</div>';
+									
+        		$("#listaProgramacion").html("");
+        		$("#listaProgramacion").append(cuerpoTabla);
+        		$("#tablaProgramacion").append(registroProgramacion);
+
+        		
+        	}else{
+        		alert("ERROR");
+        	}
+        	},
+        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
+        error: function(data,status,er) {
+        	
+        	}
+	 });
+
 });	
 
 
