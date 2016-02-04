@@ -2953,6 +2953,14 @@ $("body").on("click", ".borrarAccion",function(event){
 		{
 			$("#modalActividad").remove();
 		}	
+		if ( $("#modalAccion").length )
+		{
+			$("#modalAccion").remove();
+		}	
+		if ( $("#modalProgramacion").length )
+		{
+			$("#modalProgramacion").remove();
+		}	
 				
 		var parametros = $(this).attr("parametros");
 	    var idParsed = parametros.split("-");                                                            
@@ -3185,18 +3193,22 @@ $("body").on("click", ".guardarActividad",function(event){
 	        contentType: 'application/json',
 	        mimeType: 'application/json',
 	        success: function (data) {
-	        	actualizarTablaActividades(accion_id);
+	        	actualizarTablaActividades(accion_id,insLineaAccionId,lineaAccionId,institucionId,periodoId);
 	        	},
 	        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
 	        error: function(data,status,er) {
-	        	actualizarTablaActividades(accion_id);
+	        	actualizarTablaActividades(accion_id,insLineaAccionId,lineaAccionId,institucionId,periodoId);
 	        	}
 		 });
 		
 });	
 
-function actualizarTablaActividades(accionId){
-	var accionId = accionId;
+function actualizarTablaActividades(accion_id,insLineaAccionId,lineaAccionId,institucionId,periodoId){
+	var accionId = accion_id;
+	var insLineaAccionId = insLineaAccionId;
+	var lineaAccionId = lineaAccionId;
+	var institucionId = institucionId;
+	var periodoId = periodoId;
 	
 	var actividades = $.ajax({
 		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getCronograma&accionId='+accionId,
@@ -3248,9 +3260,9 @@ function actualizarTablaActividades(accionId){
 		
 		if(actividades[u].borrado == false)
 		{
-			cuerpoActividad+='<tr><td>'+actividades[u].nombre+'</td><td>'+actividades[u].descripcion+'</td><td>'+nombreUnidadMedida+'</td><td>'+nombreHitoTipo+'</td><td>'+actividades[u].proporcion+'</td><td>'+actividades[u].version+'</td><td><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Hito"><span class="glyphicon glyphicon-time"></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Declarar Avance"><span class="fa fa-line-chart"></span></button></td></tr>';
+			cuerpoActividad+='<tr><td>'+actividades[u].nombre+'</td><td>'+actividades[u].descripcion+'</td><td>'+nombreUnidadMedida+'</td><td>'+nombreHitoTipo+'</td><td>'+actividades[u].proporcion+'</td><td>'+actividades[u].version+'</td><td><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Hito"><span class="glyphicon glyphicon-time agregarProgramacion" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Declarar Avance"><span class="fa fa-line-chart"></span></button></td></tr>';
 		}else{
-			cuerpoActividad+='<tr><td><del>'+actividades[u].nombre+'</del></td><td><del>'+actividades[u].descripcion+'</del></td><td><del>'+nombreUnidadMedida+'</del></td><td><del>'+nombreHitoTipo+'</del></td><td><del>'+actividades[u].proporcion+'</del></td><td><del>'+actividades[u].version+'</del></td><td><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Hito"><span class="glyphicon glyphicon-time"></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Declarar Avance"><span class="fa fa-line-chart"></span></button></td></tr>';
+			cuerpoActividad+='<tr><td><del>'+actividades[u].nombre+'</del></td><td><del>'+actividades[u].descripcion+'</del></td><td><del>'+nombreUnidadMedida+'</del></td><td><del>'+nombreHitoTipo+'</del></td><td><del>'+actividades[u].proporcion+'</del></td><td><del>'+actividades[u].version+'</del></td><td><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Hito"><span class="glyphicon glyphicon-time agregarProgramacion" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Declarar Avance"><span class="fa fa-line-chart"></span></button></td></tr>';
 		}
 	}
 	
@@ -3272,6 +3284,10 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	{
 		$("#modalActividad").remove();
 	}	
+	if ( $("#modalAccion").length )
+	{
+		$("#modalAccion").remove();
+	}	
 	
 	var parametros = $(this).attr("parametros");
     var idParsed = parametros.split("-");                                                            
@@ -3292,6 +3308,14 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	  	async:false       
 	}).responseText;
 	cronogramas = JSON.parse(cronogramas);
+	
+	var programacionWebService = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getProgramacion&actividadId='+cronogramaId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	programacionWebService = JSON.parse(programacionWebService);
 	
 	var hitoTipo = $.ajax({
 		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getHitoTipo',
@@ -3358,6 +3382,13 @@ $("body").on("click", ".agregarProgramacion",function(event){
 			nombreHitoTipo = hitoTipo[l].nombre;
 		}
 	}
+	
+	var cuerpoActividades ="";
+	for(var n = 0; n < programacionWebService.length; n++)
+	{
+		cuerpoActividades += "<tr><td>"+programacionWebService[n].cantidad+"</td><td>"+programacionWebService[n].fechaEntrega+"</td><td>"+programacionWebService[n].version+"</td><td>"+cronogramas[0].nombre+"</td>";
+	}
+	
 
 	
 	var modalProgramacion = "";
@@ -3366,7 +3397,7 @@ $("body").on("click", ".agregarProgramacion",function(event){
 							'	<div class="modal-dialog modal-lg" style="width:90%">'+
 							'		<div class="modal-content" >'+
 							'			<div class="modal-header">'+
-							'		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+							'		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="agregarActividad" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'">&times;</span></button>'+
 							'		        <h4 class="modal-title">Programación de '+accionCatalogo[0].nombre+' ('+lineaAccion[0].nombre+' - '+periodo[0].nombre+')</h4>'+ 
 							'			</div>'+
 							'		    <div class="modal-body">'+
@@ -3389,8 +3420,9 @@ $("body").on("click", ".agregarProgramacion",function(event){
 							'										<tbody>'+
 							'			      							<form class="form-horizontal" role="form">'+
 							'											<tr><td><label for="accionProgramacion">Accion</label><input type="text" id="accionProgramacion" value="'+accionCatalogo[0].nombre+'" class="form-control" disabled /></td><td><label for="unidadMedidaProgramacion">U. Medida</label><input type="text" id="unidadMedidaProgramacion" class="form-control" value="'+nombreUnidadMedida+'" disabled /></td></tr>'+
-							'											<tr><td><label for="cronogramaProgramacion">Cronograma</label><input type="text" id="cronogramaProgramacion" value="'+cronogramas[0].nombre+'" class="form-control" disabled /></td><td><label for="tipoCronogramaProgramacion">Tipo Cronograma</label><input type="text" id="tipoCronogramaProgramacion" class="form-control" value="'+nombreHitoTipo+'" disabled /></td></tr>'+														
+							'											<tr><td><label for="cronogramaProgramacion">Cronograma</label><input type="text" id="cronogramaProgramacion" value="'+cronogramas[0].nombre+'" class="form-control" disabled /><input type="hidden" id="cronogramaIdProgramacion" value="'+cronogramas[0].id+'" /></td><td><label for="tipoCronogramaProgramacion">Tipo Cronograma</label><input type="text" id="tipoCronogramaProgramacion" class="form-control" value="'+nombreHitoTipo+'" disabled /></td></tr>'+														
 							'											<tr><td><label for="cantidadProgramacion">Cantidad</label><input type="text" id="cantidadProgramacion" value="" class="form-control" placeholder="Ingres Cantidad" /></td><td><label for="fechaEntregaProgramacion">Fecha Entrega</label><input type="date" id="fechaEntregaProgramacion" class="form-control" /></td></tr>'+
+							'											<input type="hidden" id="versionProgramacion" value="3" /><input type="hidden" id="actividadIdProgramacion" value="'+cronogramaId+'" />'+		
 							'			      							</form>	'+												
 							'										</tbody>'+
 							'									</table>'+
@@ -3398,8 +3430,8 @@ $("body").on("click", ".agregarProgramacion",function(event){
 							
 							'               			</div>'+//fin box-body
 							'							<div class="modal-footer">'+ 
-							'					        	<button type="button" class="btn btn-success guardarProgramacion">Guardar</button>'+ 
-							'					          	<button type="button" class="btn btn-success " data-dismiss="modal" >Cerrar</button>'+ 
+							'					        	<button type="button" class="btn btn-success guardarProgramacion" >Guardar</button>'+ 
+							'					          	<button type="button" class="btn btn-success agregarActividad" data-dismiss="modal" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'">Cerrar</button>'+ 
 							'							</div>'+
 							'                		</div>'+	
 							'                	</div>'+
@@ -3417,7 +3449,15 @@ $("body").on("click", ".agregarProgramacion",function(event){
 							'		                    		</button>'+
 							'		                  		</div>'+
 							'               			</div>'+//fin box-heder
-							'               			<div class="box-body">'+	                			
+							'               			<div class="box-body">'+	 
+							
+							'								<div class="table-responsive">'+
+							'									<table class="table table-hover table-bordered">'+
+							'										<thead><tr class="active"><th>Cantidad</th><th>FechaEntrega</th><th>Versión</th><th>Cronograma</th></tr>'+
+							'										<tbody id="listaActividades">'+
+							'										</tbody>'+
+							'									</table>'+
+							'								</div>';
 					
 							'               			</div>'+//fin box-body
 							'                		</div>'+	
@@ -3430,14 +3470,82 @@ $("body").on("click", ".agregarProgramacion",function(event){
 					      	'			</div>'+														
 							'		</div>'+ 
 							'	</div>'+
-							'</div>';
-						  
-						  
-						  
-						  
+							'</div>';					  
 
 	$("body").append(modalProgramacion);
+	$("#listaActividades").append(cuerpoActividades);
 	$("#modalProgramacion").modal('show');
+});	
+
+$("body").on("click", ".guardarProgramacion",function(event){
+		
+	var cantidad = $("#cantidadProgramacion").val();
+	var fechaEntrega = $("#fechaEntregaProgramacion").val();
+	var version = $("#versionProgramacion").val();
+	var actividadId = $("#actividadIdProgramacion").val();
+	var cronogramaId = $("#cronogramaIdProgramacion").val();
+	
+	//Vaciar el input
+	$("#cantidadProgramacion").val('');
+	$("#fechaEntregaProgramacion").val('');
+	
+	var objeto = new Object();
+	
+	objeto.cantidad = cantidad;
+	objeto.fechaEntrega = fechaEntrega;
+	objeto.actividad = actividadId;
+	objeto.version = version;
+
+	
+  	var info = JSON.stringify(objeto);
+    $.ajax({
+        url: "ajaxInserts2?accion=insProgramacion",
+        type: 'POST',
+        dataType: 'json',
+        data: info,
+        contentType: 'application/json',
+        mimeType: 'application/json',
+        success: function (data) {
+        	
+        	if(data.success == true)
+        	{
+        		var programacion = $.ajax({
+        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getProgramacion&actividadId='+actividadId,
+        		  	type:'get',
+        		  	dataType:'json',
+        		  	async:false       
+        		}).responseText;
+        		programacion = JSON.parse(programacion);
+        		
+        		var cronogramas = $.ajax({
+        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getCronograma&cronogramaId='+cronogramaId,
+        		  	type:'get',
+        		  	dataType:'json',
+        		  	async:false       
+        		}).responseText;
+        		cronogramas = JSON.parse(cronogramas);
+        		
+        		var registroProgramacion="";
+        		for(var j = 0; j < programacion.length; j++)
+        		{
+        			registroProgramacion += "<tr><td>"+programacion[j].cantidad+"</td><td>"+programacion[j].fechaEntrega+"</td><td>"+programacion[j].version+"</td><td>"+cronogramas[0].nombre+"</td>";
+        		}
+        		
+									
+        		$("#listaActividades").html("");
+        		$("#listaActividades").append(registroProgramacion);
+
+        		
+        	}else{
+        		alert("ERROR");
+        	}
+        	},
+        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
+        error: function(data,status,er) {
+        	
+        	}
+	 });
+
 });	
 
 

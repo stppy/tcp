@@ -381,6 +381,20 @@ public class ajaxInserts  extends HttpServlet {
 			SqlInserts.insertActividad(obj);
     	}
        }  
+        if (accion!=null && accion!=""){
+    	if (accion.equals("insProgramacion")){
+    		Programacion obj = new Programacion();
+    		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+            String json = "";
+            if(br != null){ json = br.readLine();}
+            Gson gsonInsert = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+            obj=gsonInsert.fromJson(json, Programacion.class);
+            boolean status = SqlInserts.insertProgramacion(obj);
+    		myObj.addProperty("success", status);
+    		out.println(myObj.toString());
+			
+    	}
+       }          
     
     }
 }

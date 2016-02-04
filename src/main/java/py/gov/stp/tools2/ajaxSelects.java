@@ -81,6 +81,7 @@ public class ajaxSelects extends HttpServlet {
     	Integer cronogramaId=null;
     	Integer programacionId = null;
     	Integer avanceId = null;
+    	Integer actividadId = null;
     	
     	String institucion=null;
     	String usuario=null;
@@ -136,8 +137,9 @@ public class ajaxSelects extends HttpServlet {
       	if (request.getParameter("lineaAccionId")!=null) lineaAccionId=Integer.parseInt(request.getParameter("lineaAccionId"));
       	if (request.getParameter("catalogoAccionId")!=null) catalogoAccionId=Integer.parseInt(request.getParameter("catalogoAccionId"));
       	if (request.getParameter("cronogramaId")!=null) cronogramaId=Integer.parseInt(request.getParameter("cronogramaId"));
-      	if (request.getParameter("programacionId")!=null) lineaAccionId=Integer.parseInt(request.getParameter("programacionId"));
-      	if (request.getParameter("avanceId")!=null) catalogoAccionId=Integer.parseInt(request.getParameter("avanceId"));
+      	if (request.getParameter("programacionId")!=null) programacionId=Integer.parseInt(request.getParameter("programacionId"));
+      	if (request.getParameter("avanceId")!=null) avanceId=Integer.parseInt(request.getParameter("avanceId"));
+      	if (request.getParameter("actividadId")!=null) actividadId=Integer.parseInt(request.getParameter("actividadId"));
 
       	
         PrintWriter out = response.getWriter();
@@ -394,12 +396,14 @@ public class ajaxSelects extends HttpServlet {
         		List objetos=null; 
         		condition = " where true ";
         		if (programacionId!=null) condition += " and id ='"+programacionId+"'";
+        		if (actividadId!=null) condition += " and actividad_id ='"+actividadId+"'";
+
            		try {objetos = SqlSelects.selectProgramacion(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
         	}
-        	if (action.equals("getProgramacion")){
+        	if (action.equals("getAvance")){
         		List objetos=null; 
         		condition = " where true ";
         		if (avanceId!=null) condition += " and id ='"+avanceId+"'";

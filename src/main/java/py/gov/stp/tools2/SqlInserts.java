@@ -644,7 +644,29 @@ public class SqlInserts {
 		   
 		conn.close();
 	} catch (SQLException e) {e.printStackTrace();}
+	
+}		
+	
+	public static boolean insertProgramacion(Programacion programacion){
+	try {
+		Connection conn=ConnectionConfiguration.conectar();
+	   	
+		String query = " insert into programacion (cantidad,fecha_entrega,version,actividad_id)"
+	+ " values (?, ?, ?, ?)";
 		
+		PreparedStatement insert = conn.prepareStatement(query);
+		
+		insert.setDouble (1, programacion.getCantidad());
+		insert.setDate (2, programacion.getFechaEntrega());
+		insert.setInt (3, programacion.getVersion());
+		insert.setInt (4, programacion.getActividad());
+		
+		insert.execute();
+		   
+		conn.close();
+		return true;
+	} catch (SQLException e) {e.printStackTrace(); return false;}
+	
 }		
 	
 	
