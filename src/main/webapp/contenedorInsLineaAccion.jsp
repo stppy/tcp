@@ -265,7 +265,7 @@ if (user != null) { %>
 	          <div class="box" >
 	            <div class="box-header with-border">
 	              <h2 class="box-title text-center" id="tituloTipoPrograma">
-	                Contenedor InsLineaAcción	
+	                Lineas de Acción	
 	              </h2>
 	              <div class="box-tools pull-right"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
 	              </div>
