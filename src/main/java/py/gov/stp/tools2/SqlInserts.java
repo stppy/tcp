@@ -667,7 +667,31 @@ public class SqlInserts {
 		return true;
 	} catch (SQLException e) {e.printStackTrace(); return false;}
 	
-}		
+}	
+	
+	public static boolean insertAvance(Avance avance){
+	try {
+		Connection conn=ConnectionConfiguration.conectar();
+	   	
+		String query = " insert into avance (justificacion,cantidad,fecha_entrega,cantidad_beneficiarios,actividad_id,version)"
+	+ " values (?, ?, ?, ?, ?, ?)";
+		
+		PreparedStatement insert = conn.prepareStatement(query);
+		
+		insert.setString (1, avance.getJustificacion());
+		insert.setDouble (2, avance.getCantidad());
+		insert.setDate (3, avance.getFechaEntrega());
+		insert.setInt (4, avance.getCantidadBeneficiarios());
+		insert.setInt (5, avance.getActividadId());
+		insert.setInt (6, avance.getVersion());
+		
+		insert.execute();
+		   
+		conn.close();
+		return true;
+	} catch (SQLException e) {e.printStackTrace(); return false;}
+	
+}	
 	
 	
 }

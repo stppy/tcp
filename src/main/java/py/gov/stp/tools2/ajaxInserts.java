@@ -392,9 +392,22 @@ public class ajaxInserts  extends HttpServlet {
             boolean status = SqlInserts.insertProgramacion(obj);
     		myObj.addProperty("success", status);
     		out.println(myObj.toString());
-			
     	}
-       }          
+       }    
+        
+        if (accion!=null && accion!=""){
+    	if (accion.equals("insAvance")){
+    		Avance obj = new Avance();
+    		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+            String json = "";
+            if(br != null){ json = br.readLine();}
+            Gson gsonInsert = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+            obj=gsonInsert.fromJson(json, Avance.class);
+            boolean status = SqlInserts.insertAvance(obj);
+    		myObj.addProperty("success", status);
+    		out.println(myObj.toString());
+    	}
+       }        
     
     }
 }

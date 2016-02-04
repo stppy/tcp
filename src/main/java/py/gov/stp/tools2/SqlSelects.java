@@ -194,7 +194,7 @@ public class SqlSelects {
 	
 	public static List<Avance> selectAvance(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select * from programacion "+condition;
+		String query = " select * from avance "+condition;
 
 		Statement statement = null;
 		ResultSet rs=null;
@@ -210,14 +210,10 @@ public class SqlSelects {
 				objeto.setJustificacion(rs.getString("justificacion"));
 				objeto.setCantidad(rs.getDouble("cantidad"));
 				objeto.setFechaEntrega(rs.getDate("fecha_entrega"));
-				objeto.setObjetoGasto(rs.getInt("objeto_gasto_id"));
-				objeto.setCodigoContratacion(rs.getString("codigo_contratacion"));
-				objeto.setMonto(rs.getDouble("monto"));
-				objeto.setActividad(rs.getInt("actividad_id"));
+				objeto.setCantidadBeneficiarios(rs.getInt("cantidad_beneficiarios"));
+				objeto.setActividadId(rs.getInt("actividad_id"));
 				objeto.setVersion(rs.getInt("version"));
 				objeto.setBorrado(rs.getBoolean("borrado"));
-
-				
 
 				objetos.add(objeto);
 			}
