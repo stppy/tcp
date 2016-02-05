@@ -3604,6 +3604,20 @@ $("body").on("click", ".agregarAvance",function(event){
 	var accionId = idParsed[4];
 	var actividadId = idParsed[5];//es el id de la tabla actidad
 	
+	var webServicesAvance = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvance&actividadId='+actividadId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	webServicesAvance = JSON.parse(webServicesAvance); 
+	
+	var cuerpoAvance = "";
+	for(var d = 0; d < webServicesAvance.length; d++)
+	{
+		cuerpoAvance += "<tr><td>"+webServicesAvance[d].justificacion+"</td><td>"+webServicesAvance[d].cantidad+"</td><td>"+webServicesAvance[d].fechaEntrega+"</td><td>"+webServicesAvance[d].cantidadBeneficiarios+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Administrar'><span class='fa fa-gear'></span></button></td></tr>";
+	}
+		
 	var modalAvance = "";
 
 	modalAvance += '<div class="modal fade" id="modalAvance" tabindex="-1" aria-labelledby="myLargeModalLabel">'+
@@ -3665,7 +3679,7 @@ $("body").on("click", ".agregarAvance",function(event){
 							
 							'								<div class="table-responsive">'+
 							'									<table class="table table-hover table-bordered">'+
-							'										<thead><tr class="active"><th>Justificación</th><th>cantidad</th><th>Fecha Entrega</th><th>Cantidad Beneficiarios</th></tr>'+
+							'										<thead><tr class="active"><th>Justificación</th><th>cantidad</th><th>Fecha Entrega</th><th>Cantidad Beneficiarios</th><th>Administrar</th></tr>'+
 							'										<tbody id="listaAvances">'+
 							'										</tbody>'+
 							'									</table>'+
@@ -3686,6 +3700,8 @@ $("body").on("click", ".agregarAvance",function(event){
 							'</div>';					  
 
 	$("body").append(modalAvance);
+	$("#listaAvances").html("");
+	$("#listaAvances").html(cuerpoAvance);
 	$("#modalAvance").modal('show');		
 
 });	
@@ -3738,7 +3754,7 @@ $("body").on("click", ".guardarAvance",function(event){
         		var cuerpoAvance = "";
         		for(var d = 0; d < webServicesAvance.length; d++)
         		{
-        			cuerpoAvance += "<tr><td>"+webServicesAvance[d].justificacion+"</td><td>"+webServicesAvance[d].cantidad+"</td><td>"+webServicesAvance[d].fechaEntrega+"</td><td>"+webServicesAvance[d].cantidadBeneficiarios+"</td></tr>";
+        			cuerpoAvance += "<tr><td>"+webServicesAvance[d].justificacion+"</td><td>"+webServicesAvance[d].cantidad+"</td><td>"+webServicesAvance[d].fechaEntrega+"</td><td>"+webServicesAvance[d].cantidadBeneficiarios+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Administrar'><span class='fa fa-gear'></span></button></td></tr>";
         		}
         		
         		$("#listaAvances").html("");
