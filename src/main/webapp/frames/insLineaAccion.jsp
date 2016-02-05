@@ -2894,40 +2894,6 @@ $("body").on("click", ".borrarAccion",function(event){
 		var nombreDepartamento;
 		var cuerpoAccion = "";
 		var nombreDistrito;
-
-		
-	/*	for(var a = 0; a < accion.length; a++)
-		{
-			var catalogoAccion = $.ajax({
-				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[a].accionCatalogoId,
-			  	type:'get',
-			  	dataType:'json',
-			  	async:false       
-			}).responseText;
-			catalogoAccion = JSON.parse(catalogoAccion);
-			
-			cuerpoAccion +="<tr><td class='text-center'>"+catalogoAccion[0].nombre+"</td>";
-			
-			for(var d = 0; d < 18; d++)
-			{
-				if(accion[a].departamentoId == departamentos[d].idDepartamento){
-					nombreDepartamento = departamentos[d].nombreDepartamento;
-					cuerpoAccion +="<td class='text-center'>"+nombreDepartamento+"</td>";
-				}
-			}
-			
-
-			for(var e = 0; e < distritos.length; e++)
-			{
-				if(accion[a].distritoId == distritos[e].id && accion[a].departamentoId == distritos[e].departamentoId){
-					nombreDistrito = distritos[e].descripcion;
-					cuerpoAccion +="<td class='text-center'>"+nombreDistrito+"</td>";
-				}
-			}
-
-			cuerpoAccion +="<td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos'><span class='glyphicon glyphicon-usd modalVincularProducto' parametros="+accion[a].id+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"></span></button><button type='button' class='btn btn-default btn-sm'><span class='glyphicon glyphicon-time'></span></button><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button></td></tr>";
-
-		}*/
 		
 		for(var a = 0; a < accion.length; a++)
 		{
@@ -3017,6 +2983,10 @@ $("body").on("click", ".borrarAccion",function(event){
 		if ( $("#modalProgramacion").length )
 		{
 			$("#modalProgramacion").remove();
+		}
+		if ( $("#modalAvance").length )
+		{
+			$("#modalAvance").remove();
 		}	
 				
 		var parametros = $(this).attr("parametros");
@@ -3109,9 +3079,9 @@ $("body").on("click", ".borrarAccion",function(event){
 			
 			if(actividades[u].borrado == false)
 			{
-				cuerpoActividad+='<tr><td>'+actividades[u].nombre+'</td><td>'+actividades[u].descripcion+'</td><td>'+nombreUnidadMedida+'</td><td>'+nombreHitoTipo+'</td><td>'+actividades[u].proporcion+'</td><td>'+actividades[u].version+'</td><td><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Hito"><span class="glyphicon glyphicon-time agregarProgramacion" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Declarar Avance"><span class="fa fa-line-chart"></span></button></td></tr>';
+				cuerpoActividad+='<tr><td>'+actividades[u].nombre+'</td><td>'+actividades[u].descripcion+'</td><td>'+nombreUnidadMedida+'</td><td>'+nombreHitoTipo+'</td><td>'+actividades[u].proporcion+'</td><td>'+actividades[u].version+'</td><td><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Hito"><span class="glyphicon glyphicon-time agregarProgramacion" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
 			}else{
-				cuerpoActividad+='<tr><td><del>'+actividades[u].nombre+'</del></td><td><del>'+actividades[u].descripcion+'</del></td><td><del>'+nombreUnidadMedida+'</del></td><td><del>'+nombreHitoTipo+'</del></td><td><del>'+actividades[u].proporcion+'</del></td><td><del>'+actividades[u].version+'</del></td><td><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Hito"><span class="glyphicon glyphicon-time agregarProgramacion" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Declarar Avance"><span class="fa fa-line-chart"></span></button></td></tr>';
+				cuerpoActividad+='<tr><td><del>'+actividades[u].nombre+'</del></td><td><del>'+actividades[u].descripcion+'</del></td><td><del>'+nombreUnidadMedida+'</del></td><td><del>'+nombreHitoTipo+'</del></td><td><del>'+actividades[u].proporcion+'</del></td><td><del>'+actividades[u].version+'</del></td><td><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Hito"><span class="glyphicon glyphicon-time agregarProgramacion" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
 			}
 		}
 		
@@ -3602,6 +3572,194 @@ $("body").on("click", ".guardarProgramacion",function(event){
         	
         	}
 	 });
+
+});	
+
+$("body").on("click", ".agregarAvance",function(event){
+	
+	if ( $("#modalVincularProductos").length )
+	{
+		$("#modalVincularProductos").remove();
+	}	
+	if ( $("#modalActividad").length )
+	{
+		$("#modalActividad").remove();
+	}	
+	if ( $("#modalAccion").length )
+	{
+		$("#modalAccion").remove();
+	}	
+	if ( $("#modalProgramacion").length )
+	{
+		$("#modalProgramacion").remove();
+	}	
+	if ( $("#modalAvance").length )
+	{
+		$("#modalAvance").remove();
+	}	
+	
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-");                                                            
+	
+	//Las siguentes 4 variables se utiliza en esta funcion para redibujar el modal anterior
+	var insLineaAccionId = idParsed[0];
+	var lineaAccionId = idParsed[1];
+	var institucionId = idParsed[2];
+	var periodoId = idParsed[3];
+	var accionId = idParsed[4];
+	var actividadId = idParsed[5];//es el id de la tabla actidad
+	
+	var modalAvance = "";
+
+	modalAvance += '<div class="modal fade" id="modalAvance" tabindex="-1" aria-labelledby="myLargeModalLabel">'+
+							'	<div class="modal-dialog modal-lg" style="width:90%">'+
+							'		<div class="modal-content" >'+
+							'			<div class="modal-header">'+
+							'		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="agregarActividad" class="agregarActividad" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'" >&times;</span></button>'+
+							'		        <h4 class="modal-title">Avance</h4>'+ 
+							'			</div>'+
+							'		    <div class="modal-body">'+
+							'		      	<div class="row">'+ 
+							'		      		<div class="col-md-12">'+
+							'						<div class="box box-warning">'+
+							'		                	<div class="box-header with-border">'+
+							'		                  		<h3 class="box-title">Agregar Avance</h3>'+
+							'	                  			<div class="box-tools pull-right">'+
+							'				                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>'+
+							'		                    		</button>'+
+							'		                    		<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>'+
+							'		                    		</button>'+
+							'		                  		</div>'+
+							'               			</div>'+//fin box-heder
+							'               			<div class="box-body">'+
+							
+							'								<div class="table-responsive">'+
+							'									<table class="table table-hover">'+
+							'										<tbody>'+
+							'			      							<form class="form-horizontal" role="form">'+
+							'											<tr><td><label for="justificacionAvance">Justificación</label><input type="text" id="justificacionAvance" value="" class="form-control" /></td><td><label for="cantidadAvance">Cantidad</label><input type="number" id="cantidadAvance" class="form-control" value=""  /></td></tr>'+
+							'											<tr><td><label for="fechaEntregaAvance">Fecha Entrega</label><input type="date" id="fechaEntregaAvance" value="" class="form-control"  /></td><td><label for="cantidadBeneficiariosAvance">Cantidad Beneficiarios</label><input type="number" id="cantidadBeneficiariosAvance" class="form-control" value="" /></td></tr>'+														
+							'											<input type="hidden" id="versionAvance" value="3" /><input type="hidden" id="actividadIdAvance" value="'+actividadId+'" />'+		
+							'			      							</form>	'+												
+							'										</tbody>'+
+							'									</table>'+
+							'				      			</div>'+							
+							
+							'               			</div>'+//fin box-body
+							'							<div class="modal-footer">'+ 
+							'					        	<button type="button" class="btn btn-success guardarAvance" >Guardar Avance</button>'+ 
+							'					          	<button type="button" class="btn btn-success agregarActividad" data-dismiss="modal" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'">Cerrar</button>'+ 
+							'							</div>'+
+							'                		</div>'+	
+							'                	</div>'+
+							'                </div>'+											
+											
+							'		      	<div class="row">'+ 
+							'		      		<div class="col-md-12">'+
+							'						<div class="box box-warning">'+
+							'		                	<div class="box-header with-border">'+
+							'		                  		<h3 class="box-title">Lista de Avance</h3>'+
+							'	                  			<div class="box-tools pull-right">'+
+							'				                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>'+
+							'		                    		</button>'+
+							'		                    		<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>'+
+							'		                    		</button>'+
+							'		                  		</div>'+
+							'               			</div>'+//fin box-heder
+							'               			<div class="box-body">'+
+							
+							'								<div class="table-responsive">'+
+							'									<table class="table table-hover table-bordered">'+
+							'										<thead><tr class="active"><th>Justificación</th><th>cantidad</th><th>Fecha Entrega</th><th>Cantidad Beneficiarios</th></tr>'+
+							'										<tbody id="listaAvances">'+
+							'										</tbody>'+
+							'									</table>'+
+							'								</div>';
+							
+					
+							'               			</div>'+//fin box-body
+							'                		</div>'+	
+							'                	</div>'+
+							'                </div>'+
+							
+
+							'		    </div>'+
+							'			<div class="modal-footer">'+
+					      	'			</div>'+														
+							'		</div>'+ 
+							'	</div>'+
+							'</div>';					  
+
+	$("body").append(modalAvance);
+	$("#modalAvance").modal('show');		
+
+});	
+
+$("body").on("click", ".guardarAvance",function(event){
+	var justificacion = $("#justificacionAvance").val();
+	var cantidad = $("#cantidadAvance").val();
+	var fechaEntrega = $("#fechaEntregaAvance").val();
+	var cantidadBeneficiarios = $("#cantidadBeneficiariosAvance").val();
+	var version = $("#versionAvance").val();
+	var actividadId = $("#actividadIdAvance").val();
+
+	//Vaciar los inputs
+	$("#justificacionAvance").val("");
+	$("#cantidadAvance").val("");
+	$("#fechaEntregaAvance").val("");
+	$("#cantidadBeneficiariosAvance").val("");
+	$("#versionAvance").val();
+	$("#actividadIdAvance").val();
+	
+	var objeto = new Object();
+	
+	objeto.justificacion = justificacion;
+	objeto.cantidad = cantidad;
+	objeto.fechaEntrega = fechaEntrega;
+	objeto.cantidadBeneficiarios = cantidadBeneficiarios;
+	objeto.actividadId = actividadId;
+	objeto.version = version;
+
+	
+  	var info = JSON.stringify(objeto);
+    $.ajax({
+        url: "ajaxInserts2?accion=insAvance",
+        type: 'POST',
+        dataType: 'json',
+        data: info,
+        contentType: 'application/json',
+        mimeType: 'application/json',
+        success: function (data) {
+        	if(data.success == true)
+        	{
+        		var webServicesAvance = $.ajax({
+        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvance&actividadId='+actividadId,
+        		  	type:'get',
+        		  	dataType:'json',
+        		  	async:false       
+        		}).responseText;
+        		webServicesAvance = JSON.parse(webServicesAvance);
+        		
+        		var cuerpoAvance = "";
+        		for(var d = 0; d < webServicesAvance.length; d++)
+        		{
+        			cuerpoAvance += "<tr><td>"+webServicesAvance[d].justificacion+"</td><td>"+webServicesAvance[d].cantidad+"</td><td>"+webServicesAvance[d].fechaEntrega+"</td><td>"+webServicesAvance[d].cantidadBeneficiarios+"</td></tr>";
+        		}
+        		
+        		$("#listaAvances").html("");
+        		$("#listaAvances").html(cuerpoAvance);
+        		
+        	}else{
+        		alert("ERROR");        		
+        	}
+        	
+        	},
+        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
+        error: function(data,status,er) {
+        	
+        	}
+	 });
+	
 
 });	
 
