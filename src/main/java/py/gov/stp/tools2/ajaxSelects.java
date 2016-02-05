@@ -407,6 +407,7 @@ public class ajaxSelects extends HttpServlet {
         		List objetos=null; 
         		condition = " where true ";
         		if (actividadId!=null) condition += " and actividad_id ='"+actividadId+"'";
+        		if (avanceId!=null) condition += " and id ='"+avanceId+"'";
            		try {objetos = SqlSelects.selectAvance(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
