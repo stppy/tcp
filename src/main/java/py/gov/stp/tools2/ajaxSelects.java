@@ -82,7 +82,8 @@ public class ajaxSelects extends HttpServlet {
     	Integer programacionId = null;
     	Integer avanceId = null;
     	Integer actividadId = null;
-    	
+    	Integer idEvidencia = null;
+    			
     	String institucion=null;
     	String usuario=null;
     	String condition = "";
@@ -140,6 +141,8 @@ public class ajaxSelects extends HttpServlet {
       	if (request.getParameter("programacionId")!=null) programacionId=Integer.parseInt(request.getParameter("programacionId"));
       	if (request.getParameter("avanceId")!=null) avanceId=Integer.parseInt(request.getParameter("avanceId"));
       	if (request.getParameter("actividadId")!=null) actividadId=Integer.parseInt(request.getParameter("actividadId"));
+      	if (request.getParameter("idEvidencia")!=null) idEvidencia=Integer.parseInt(request.getParameter("idEvidencia"));
+
 
       	
         PrintWriter out = response.getWriter();
@@ -171,7 +174,10 @@ public class ajaxSelects extends HttpServlet {
         	}
         	if (action.equals("getEvidencia")){
         		List objetos=null;
-           		try {objetos = SqlSelects.selectEvidencia();}
+        		condition = " where true ";
+        		if (avanceId!=null) condition += " and avance_id ='"+avanceId+"'"; 
+        		if (idEvidencia!=null) condition += " and id ='"+idEvidencia+"'"; 
+           		try {objetos = SqlSelects.selectEvidencia(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());        	
@@ -409,6 +415,16 @@ public class ajaxSelects extends HttpServlet {
         		if (actividadId!=null) condition += " and actividad_id ='"+actividadId+"'";
         		if (avanceId!=null) condition += " and id ='"+avanceId+"'";
            		try {objetos = SqlSelects.selectAvance(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());
+        	}
+        	
+        	if (action.equals("getAvanceCosto")){
+        		List objetos=null; 
+        		condition = " where true ";
+        		if (avanceId!=null) condition += " and avance_id ='"+avanceId+"'";
+           		try {objetos = SqlSelects.selectAvanceCosto(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());

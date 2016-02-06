@@ -172,9 +172,11 @@ public class ajaxInserts  extends HttpServlet {
     		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
             String json = "";
             if(br != null){ json = br.readLine();}
-            Gson gsonInsert = new Gson();
+            Gson gsonInsert = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
             productoObj=gsonInsert.fromJson(json, Evidencia.class);
-			SqlInserts.insertEvidencia(productoObj);
+			boolean status = SqlInserts.insertEvidencia(productoObj);
+    		myObj.addProperty("success", status);
+    		out.println(myObj.toString());
     	}
        }
         if (accion!=null && accion!=""){
@@ -407,7 +409,21 @@ public class ajaxInserts  extends HttpServlet {
     		myObj.addProperty("success", status);
     		out.println(myObj.toString());
     	}
-       }        
+       }   
+        
+        if (accion!=null && accion!=""){
+    	if (accion.equals("insAvanceCosto")){
+    		AvanceCosto obj = new AvanceCosto();
+    		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+            String json = "";
+            if(br != null){ json = br.readLine();}
+            Gson gsonInsert = new Gson();
+            obj=gsonInsert.fromJson(json, AvanceCosto.class);
+            boolean status = SqlInserts.insertAvanceCosto(obj);
+    		myObj.addProperty("success", status);
+    		out.println(myObj.toString());
+    	}
+       } 
     
     }
 }

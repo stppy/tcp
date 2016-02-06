@@ -352,25 +352,27 @@ public class SqlInserts {
 	} catch (SQLException e) {e.printStackTrace();}
 		
 }
-	public static void insertEvidencia(Evidencia evidencia){
+	public static boolean insertEvidencia(Evidencia evidencia){
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into evidencia (nombre,descripcion,ws_id,borrado)"
-	+ " values (?, ?, ?,?)";
+		String query = " insert into evidencia (nombre,descripcion,url,ws_id,version,avance_id)"
+	+ " values (?, ?, ?, ?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
-		//insert.setInt (1, evidencia.getId());
 		insert.setString (1, evidencia.getNombre());
 		insert.setString (2, evidencia.getDescripcion());
-		insert.setInt (3, evidencia.getWsId());
-		insert.setBoolean (4, evidencia.isBorrado());
+		insert.setString (3, evidencia.getUrl());
+		insert.setInt (4, evidencia.getWsId());
+		insert.setInt (5, evidencia.getVersion());
+		insert.setInt (6, evidencia.getAvanceId());
 							
 		insert.execute();
 		   
 		conn.close();
-	} catch (SQLException e) {e.printStackTrace();}
+		return true;
+	} catch (SQLException e) {e.printStackTrace(); return false;}
 		
 }
 	public static void insertAccionHasEtiqueta(AccionHasEtiqueta accionHasEtiqueta){
@@ -684,6 +686,28 @@ public class SqlInserts {
 		insert.setInt (4, avance.getCantidadBeneficiarios());
 		insert.setInt (5, avance.getActividadId());
 		insert.setInt (6, avance.getVersion());
+		
+		insert.execute();
+		   
+		conn.close();
+		return true;
+	} catch (SQLException e) {e.printStackTrace(); return false;}
+	
+}	
+	
+	public static boolean insertAvanceCosto(AvanceCosto costo){
+	try {
+		Connection conn=ConnectionConfiguration.conectar();
+	   	
+		String query = " insert into avance_costo (monto,codigo_contratacionl,objeto_gasto,avance_id)"
+	+ " values (?, ?, ?, ?)";
+		
+		PreparedStatement insert = conn.prepareStatement(query);
+		
+		insert.setDouble (1, costo.getMonto());
+		insert.setInt (2, costo.getCodigoContratacional());
+		insert.setInt (3, costo.getObjetoGasto());
+		insert.setInt (4, costo.getAvanceId());
 		
 		insert.execute();
 		   

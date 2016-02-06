@@ -3820,6 +3820,34 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	}).responseText;
 	webServicesAvance = JSON.parse(webServicesAvance); 
 	
+	var webServicesEvidencia = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getEvidencia&avanceId='+avanceId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	webServicesEvidencia = JSON.parse(webServicesEvidencia);
+	
+	var cuerpoEvidencia = "";
+	for(var d = 0; d < webServicesEvidencia.length; d++)
+	{
+		cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[d].nombre+'</td><td>'+webServicesEvidencia[d].descripcion+'</td><td>'+webServicesEvidencia[d].url+'</td><td>'+webServicesEvidencia[d].wsId+'</td><td>'+webServicesEvidencia[d].version+'</td><td>'+webServicesEvidencia[d].avanceId+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" ><span class="fa fa-transh"></span></button></td></tr>';
+	}
+	
+	var webServicesAvanceCosto = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCosto&avanceId='+avanceId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	webServicesAvanceCosto = JSON.parse(webServicesAvanceCosto);
+	
+	var cuerpoAvanceCosto = "";
+	for(var d = 0; d < webServicesAvanceCosto.length; d++)
+	{
+		cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].monto+'</td><td>'+webServicesAvanceCosto[d].codigoContratacional+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td>'+webServicesAvanceCosto[d].avanceId+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Borrar" ><span class="fa fa-trash"></span></button></td></tr>';
+	}
+			
 	var contenidoModalAdministrador = "";
 
 	contenidoModalAdministrador +=  '<div class="modal fade" id="modalAdministrador" tabindex="-1" aria-labelledby="myLargeModalLabel">'+
@@ -3833,7 +3861,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									
 									'		      	<div class="row">'+ 
 									'		      		<div class="col-md-12">'+
-									'						<div class="box box-warning">'+
+									'						<div class="box box-warning box-solid">'+
 									'		                	<div class="box-header with-border">'+
 									'		                  		<h3 class="box-title">Avance</h3>'+
 									'	                  			<div class="box-tools pull-right">'+
@@ -3846,20 +3874,19 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'               			<div class="box-body">'+
 									
 									'								<div class="table-responsive">'+
-									'									<table class="table table-hover">'+
+									'									<table class="table table-hover table-bordered">'+
+									'										<thead>'+
+									'											<tr class="active"><th>Justificación</th><th>Cantidad</th><th>FechaEntrega</th><th>CantidadBeneficiarios</th><th class="text-center">Administrar</th></tr>'+
+									' 										</thead>'+
 									'										<tbody>'+
-									'			      							<form class="form-horizontal" role="form">'+
-									'											<tr><td><label for="justificacionAvance">Justificación</label><input type="text" id="justificacionAvance" value="'+webServicesAvance[0].justificacion+'" class="form-control" disabled /></td><td><label for="cantidadAvance">Cantidad</label><input type="number" id="cantidadAvance" class="form-control" value='+webServicesAvance[0].cantidad+' disabled /></td></tr>'+
-									'											<tr><td><label for="fechaEntregaAvance">Fecha Entrega</label><input type="date" id="fechaEntregaAvance" value='+webServicesAvance[0].fechaEntrega+' class="form-control"  disabled/></td><td><label for="cantidadBeneficiariosAvance">Cantidad Beneficiarios</label><input type="number" id="cantidadBeneficiariosAvance" class="form-control" value='+webServicesAvance[0].cantidadBeneficiarios+' disabled/></td></tr>'+														
-									'											<input type="hidden" id="versionAvance" value="3" /><input type="hidden" id="actividadIdAvance" value="'+actividadId+'" />'+		
-									'			      							</form>	'+												
+									'											<tr><td>'+webServicesAvance[0].justificacion+'</td><td>'+webServicesAvance[0].cantidad+'</td><td>'+webServicesAvance[0].fechaEntrega+'</td><td>'+webServicesAvance[0].cantidadBeneficiarios+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Borrar" ><span class="fa fa-trash"></span></button></td></tr>'+
 									'										</tbody>'+
 									'									</table>'+
 									'				      			</div>'+							
 									
 									'               			</div>'+//fin box-body
 									'							<div class="modal-footer">'+ 
-									'					        	<button type="button" class="btn btn-success guardarAvance" >Guardar Avance</button>'+ 
+									'					        	<button type="button" class="btn btn-success btn-sm guardarAvance" >Guardar Avance</button>'+ 
 									'							</div>'+
 									'                		</div>'+	
 									'                	</div>'+
@@ -3869,7 +3896,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'		      	<div class="row">'+ 
 									
 									'		      		<div class="col-md-6">'+
-									'						<div class="box box-warning">'+
+									'						<div class="box box-warning box-solid">'+
 									'		                	<div class="box-header with-border">'+
 									'	                  			<h3 class="box-title">Costos</h3>'+
 									'	                  			<div class="box-tools pull-right">'+
@@ -3881,7 +3908,59 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'              				</div>'+
 									'               			<div class="box-body">'+
 					
-									'								<h1>Probando el SISTEMA</h1>'+
+									'		      					<div class="col-md-12">'+
+									'									<div class="box box-default box-solid">'+
+									'		                				<div class="box-header with-border">'+
+									'		                  					<h3 class="box-title">Agregar Costos</h3>'+
+									'	                  						<div class="box-tools pull-right">'+
+									'				                    			<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+									'		                    					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>'+
+									'		                  					</div>'+
+									'              							</div>'+
+									'              						<div class="box-body">'+
+									
+									'										<div class="table-responsive">'+
+									'											<table class="table table-hover">'+
+									'												<tbody>'+
+									'			      									<form class="form-horizontal" role="form">'+
+									'													<tr><td><label for="montoCosto">Monto</label><input type="number" id="montoCosto" class="form-control" placeholder="Ingrese Monto" /></td></tr>'+
+									'													<input type="hidden" id="codigoContratacionalCosto" value="1" /><input type="hidden" id="objetoGastoCosto" value="1"/><input type="hidden" id="avanceIdCosto" value="'+avanceId+'"/>'+		
+									'			      									</form>	'+												
+									'												</tbody>'+
+									'											</table>'+
+									'				      					</div>'+
+									
+									'				      				 </div>'+//fin box body
+									'									 <div class="modal-footer">'+ 
+									'					        			<button type="button" class="btn btn-success btn-sm guardarCosto">Guardar Costo</button>'+ 
+									'									 </div>'+									
+									'				      			 	</div>'+
+									'				      			</div>'+							
+
+
+									'		      					<div class="col-md-12">'+
+									'									<div class="box box-default box-solid">'+
+									'		                				<div class="box-header with-border">'+
+									'		                  					<h3 class="box-title">Lista Costos</h3>'+
+									'	                  						<div class="box-tools pull-right">'+
+									'				                    			<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+									'		                    					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>'+
+									'		                  					</div>'+
+									'              							</div>'+
+									'              						<div class="box-body">'+	
+									'										<div class="table-responsive">'+
+									'											<table class="table table-hover table-bordered">'+
+									'												<thead>'+
+									'													<tr class="active"><th>Monto</th><th>CodigoContratacional</th><th>ObjetoGasto</th><th>AvanceId</th><th class="text-center">Administrar</th></tr>'+
+									'												</thead>'+
+									'												<tbody id="listaCosto">'+
+									'												</tbody>'+
+									'											</table>'+
+									'				      					</div>'+
+									
+									'				      				</div>'+
+									'				      			</div>'+
+									'              				</div>'+
 					
 									'              				</div>'+
 									'                		</div>'+	
@@ -3891,7 +3970,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									
 
 									'		      		<div class="col-md-6">'+
-									'						<div class="box box-warning">'+
+									'						<div class="box box-warning box-solid">'+
 									'		                	<div class="box-header with-border">'+
 									'		                  		<h3 class="box-title">Evidencias</h3>'+
 									'	                  			<div class="box-tools pull-right">'+
@@ -3903,43 +3982,64 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'              				</div>'+
 									'              				<div class="box-body">'+
 									
-									'								<div class="row">'+
-									' 									<div class="col-md-12">'+	
+									'		      					<div class="col-md-12">'+
+									'									<div class="box box-default box-solid">'+
+									'		                				<div class="box-header with-border">'+
+									'		                  					<h3 class="box-title">Agregar Evidencia</h3>'+
+									'	                  						<div class="box-tools pull-right">'+
+									'				                    			<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+									'		                    					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>'+
+									'		                  					</div>'+
+									'              							</div>'+
+									'              						<div class="box-body">'+
+									
 									'										<div class="table-responsive">'+
 									'											<table class="table table-hover">'+
 									'												<tbody>'+
 									'			      									<form class="form-horizontal" role="form">'+
-									'													<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" placeholder="Ingrese Nombre" /></td><td><label for="urlEvidencia">Url</label><input type="text" id="urlEvidencia" class="form-control" placeholder="Ingrese Url" /></td></tr>'+
+									'													<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" placeholder="Ingrese Nombre" /></td><td><label for="urlEvidencia">Url</label><input type="url" id="urlEvidencia" class="form-control" placeholder="Ingrese Url" /></td></tr>'+
 									'													<tr><td colspan="2"><label for="descripcionEvidencia">Descripción</label><input type="text" id="descripcionEvidencia" class="form-control" placeholder="Ingrese Descripción" /></td></tr>'+
-									'													<input type="hidden" id="wsIdEvidencia" value="3" /><input type="hidden" id="versionEvidencia" value=""/><input type="hidden" id="borradoEvidencia" value=""/><input type="hidden" id="avanceIdEvidencia" value=""/>'+		
+									'													<input type="hidden" id="wsIdEvidencia" value="3" /><input type="hidden" id="versionEvidencia" value="3"/><input type="hidden" id="avanceIdEvidencia" value="'+avanceId+'"/>'+		
 									'			      									</form>	'+												
 									'												</tbody>'+
 									'											</table>'+
 									'				      					</div>'+
-									'				      				</div>'+
+									
+									'				      				 </div>'+//fin box body
+									'									 <div class="modal-footer">'+ 
+									'					        			<button type="button" class="btn btn-success btn-sm guardarEvidencia" >Guardar Evidencia</button>'+ 
+									'									 </div>'+									
+									'				      			 	</div>'+
 									'				      			</div>'+							
 
-									'								<div class="row">'+
-									' 									<div class="col-md-12">'+	
+
+									'		      					<div class="col-md-12">'+
+									'									<div class="box box-default box-solid">'+
+									'		                				<div class="box-header with-border">'+
+									'		                  					<h3 class="box-title">Lista Evidencia</h3>'+
+									'	                  						<div class="box-tools pull-right">'+
+									'				                    			<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+									'		                    					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>'+
+									'		                  					</div>'+
+									'              							</div>'+
+									'              						<div class="box-body">'+	
 									'										<div class="table-responsive">'+
-									'											<table class="table table-hover">'+
+									'											<table class="table table-hover table-bordered">'+
 									'												<thead>'+
-									'													<tr><th>Nombre</th><th>Descripción</th><th>Url</th></tr>'+
+									'													<tr class="active"><th>Nombre</th><th>Descripción</th><th>Url</th><th>WsId</th><th>Versión</th><th>AvanceId</th><th class="text-center">Administrar</th></tr>'+
 									'												</thead>'+
 									'												<tbody>'+
-									'												</tbody>'+
+									'												</tbody id="listaEvidencia">'+
 									'											</table>'+
 									'				      					</div>'+
+									
 									'				      				</div>'+
 									'				      			</div>'+
-									
 									'              				</div>'+
-									'							<div class="modal-footer">'+
-									'								<button type="button" class="btn btn-success" data-dismiss="modal">Guardar Evidencia</button>'+ 
-							      	'							</div>'+	
-									'                		</div>'+	
-									'                	</div>'+
 									
+									'				    	</div>'+
+									'              		</div>'+
+																
 									'                </div>'+//fin row 
 
 									
@@ -3953,9 +4053,138 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'</div>';					  
 
 	$("body").append(contenidoModalAdministrador);
-
+	$("#listaEvidencia").html("");
+	$("#listaEvidencia").html(cuerpoEvidencia);
+	$("#listaCosto").html("");
+	$("#listaCosto").html(cuerpoAvanceCosto);
 	$("#modalAdministrador").modal('show');	
 
+});	
+
+$("body").on("click", ".guardarEvidencia",function(event){
+	
+	var nombre = $("#nombreEvidencia").val();
+	var url = $("#urlEvidencia").val();
+	var descripcion = $("#descripcionEvidencia").val();
+	var wsId = $("#wsIdEvidencia").val();
+	var version = $("#versionEvidencia").val();
+	var avanceId = $("#avanceIdEvidencia").val();
+
+	//Vaciar los inputs
+	$("#nombreEvidencia").val("");
+	$("#urlEvidencia").val("");
+	$("#descripcionEvidencia").val("");
+
+	
+	var objeto = new Object();
+	
+	objeto.nombre = nombre;
+	objeto.url = url;
+	objeto.descripcion = descripcion;
+	objeto.wsId = wsId;
+	objeto.version = version;
+	objeto.avanceId = avanceId;
+
+	
+  	var info = JSON.stringify(objeto);
+    $.ajax({
+        url: "ajaxInserts2?accion=insEvidencia",
+        type: 'POST',
+        dataType: 'json',
+        data: info,
+        contentType: 'application/json',
+        mimeType: 'application/json',
+        success: function (data) {
+        	if(data.success == true)
+        	{
+        		
+        		var webServicesEvidencia = $.ajax({
+        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getEvidencia&avanceId='+avanceId,
+        		  	type:'get',
+        		  	dataType:'json',
+        		  	async:false       
+        		}).responseText;
+        		webServicesEvidencia = JSON.parse(webServicesEvidencia);
+        		
+        		var cuerpoEvidencia = "";
+        		for(var d = 0; d < webServicesEvidencia.length; d++)
+        		{
+        			cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[d].nombre+'</td><td>'+webServicesEvidencia[d].descripcion+'</td><td>'+webServicesEvidencia[d].url+'</td><td>'+webServicesEvidencia[d].wsId+'</td><td>'+webServicesEvidencia[d].version+'</td><td>'+webServicesEvidencia[d].avanceId+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" ><span class="fa fa-transh"></span></button></td></tr>';
+        		}
+        		
+        		$("#listaEvidencia").html("");
+        		$("#listaEvidencia").html(cuerpoEvidencia);
+        		
+        	}else{
+  		
+        	}
+        	
+        	},
+        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
+        error: function(data,status,er) {
+        	
+        	}
+	 });
+	
+});
+
+$("body").on("click", ".guardarCosto",function(event){
+	
+	var monto = $("#montoCosto").val();
+	var codigoContratacional = $("#codigoContratacionalCosto").val();
+	var objetoGasto = $("#objetoGastoCosto").val();
+	var avanceId = $("#avanceIdCosto").val();
+
+	//Vaciar los inputs
+	$("#montoCosto").val("");
+
+	var objeto = new Object();
+	
+	objeto.monto = monto;
+	objeto.codigoContratacional = codigoContratacional;
+	objeto.objetoGasto = objetoGasto;
+	objeto.avanceId = avanceId;
+
+  	var info = JSON.stringify(objeto);
+    $.ajax({
+        url: "ajaxInserts2?accion=insAvanceCosto",
+        type: 'POST',
+        dataType: 'json',
+        data: info,
+        contentType: 'application/json',
+        mimeType: 'application/json',
+        success: function (data) {
+        	if(data.success == true)
+        	{
+        		
+        		var webServicesAvanceCosto = $.ajax({
+        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCosto&avanceId='+avanceId,
+        		  	type:'get',
+        		  	dataType:'json',
+        		  	async:false       
+        		}).responseText;
+        		webServicesAvanceCosto = JSON.parse(webServicesAvanceCosto);
+        		
+        		var cuerpoAvanceCosto = "";
+        		for(var d = 0; d < webServicesAvanceCosto.length; d++)
+        		{
+        			cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].monto+'</td><td>'+webServicesAvanceCosto[d].codigoContratacional+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td>'+webServicesAvanceCosto[d].avanceId+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Borrar" ><span class="fa fa-trash"></span></button></td></tr>';
+        		}
+        		
+        		$("#listaCosto").html("");
+        		$("#listaCosto").html(cuerpoAvanceCosto);
+        		
+        	}else{
+  		
+        	}
+        	
+        	},
+        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
+        error: function(data,status,er) {
+        	
+        	}
+	 });
+	
 });	
 
 	</script>	

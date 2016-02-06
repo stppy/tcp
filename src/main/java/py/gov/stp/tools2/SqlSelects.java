@@ -226,6 +226,37 @@ public class SqlSelects {
 		return objetos; 
 		}
 	
+	public static List<AvanceCosto> selectAvanceCosto(String condition) throws SQLException{
+		Connection conect=ConnectionConfiguration.conectar();
+		String query = " select * from avance_costo "+condition;
+
+		Statement statement = null;
+		ResultSet rs=null;
+		List<AvanceCosto> objetos = new ArrayList<AvanceCosto>();
+
+		try {
+			statement = conect.createStatement();
+			rs=statement.executeQuery(query);
+			while(rs.next()){
+				AvanceCosto objeto = new AvanceCosto();
+		
+				objeto.setId(rs.getInt("id"));
+				objeto.setMonto(rs.getDouble("monto"));
+				objeto.setCodigoContratacional(rs.getInt("codigo_contratacionl"));
+				objeto.setObjetoGasto(rs.getInt("objeto_gasto"));
+				objeto.setAvanceId(rs.getInt("avance_id"));				
+
+				objetos.add(objeto);
+			}
+		}
+		catch (SQLException e) {e.printStackTrace();}
+		finally{
+			if (statement != null) {statement.close();}
+			if (conect != null) {conect.close();}
+		}
+		return objetos; 
+		}
+	
 	public static List<LineaEstrategica> selectLineaEstrategica() throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
 		String query = " select * from linea_estrategica";
@@ -607,9 +638,9 @@ public class SqlSelects {
 	  }	
 	
 	
-	public static List<Evidencia> selectEvidencia() throws SQLException{
+	public static List<Evidencia> selectEvidencia(String condition) throws SQLException{
 	   	 Connection conect=ConnectionConfiguration.conectar();
-			 String query = " select * from evidencia";
+			 String query = " select * from evidencia"+condition;
 			 
 			 Statement statement = null;
 			 ResultSet rs=null;
@@ -623,8 +654,11 @@ public class SqlSelects {
 					objeto.setId(rs.getInt("id"));
 					objeto.setNombre(rs.getString("nombre"));
 					objeto.setDescripcion(rs.getString("descripcion"));
+					objeto.setUrl(rs.getString("url"));
 					objeto.setWsId(rs.getInt("ws_id"));
+					objeto.setVersion(rs.getInt("version"));
 					objeto.setBorrado(rs.getBoolean("borrado"));
+					objeto.setAvanceId(rs.getInt("avance_id"));
 					
 					objetos.add(objeto);
 				}
