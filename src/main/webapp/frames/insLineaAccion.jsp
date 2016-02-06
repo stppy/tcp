@@ -3901,11 +3901,42 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'		                    		</button>'+
 									'		                  		</div>'+
 									'              				</div>'+
-									'               				<div class="box-body">'+
-					
-									'							<h1>Probando el SISTEMA</h1>'+
-					
+									'              				<div class="box-body">'+
+									
+									'								<div class="row">'+
+									' 									<div class="col-md-12">'+	
+									'										<div class="table-responsive">'+
+									'											<table class="table table-hover">'+
+									'												<tbody>'+
+									'			      									<form class="form-horizontal" role="form">'+
+									'													<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" placeholder="Ingrese Nombre" /></td><td><label for="urlEvidencia">Url</label><input type="text" id="urlEvidencia" class="form-control" placeholder="Ingrese Url" /></td></tr>'+
+									'													<tr><td colspan="2"><label for="descripcionEvidencia">Descripción</label><input type="text" id="descripcionEvidencia" class="form-control" placeholder="Ingrese Descripción" /></td></tr>'+
+									'													<input type="hidden" id="wsIdEvidencia" value="3" /><input type="hidden" id="versionEvidencia" value=""/><input type="hidden" id="borradoEvidencia" value=""/><input type="hidden" id="avanceIdEvidencia" value=""/>'+		
+									'			      									</form>	'+												
+									'												</tbody>'+
+									'											</table>'+
+									'				      					</div>'+
+									'				      				</div>'+
+									'				      			</div>'+							
+
+									'								<div class="row">'+
+									' 									<div class="col-md-12">'+	
+									'										<div class="table-responsive">'+
+									'											<table class="table table-hover">'+
+									'												<thead>'+
+									'													<tr><th>Nombre</th><th>Descripción</th><th>Url</th></tr>'+
+									'												</thead>'+
+									'												<tbody>'+
+									'												</tbody>'+
+									'											</table>'+
+									'				      					</div>'+
+									'				      				</div>'+
+									'				      			</div>'+
+									
 									'              				</div>'+
+									'							<div class="modal-footer">'+
+									'								<button type="button" class="btn btn-success" data-dismiss="modal">Guardar Evidencia</button>'+ 
+							      	'							</div>'+	
 									'                		</div>'+	
 									'                	</div>'+
 									
