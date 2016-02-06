@@ -2251,5 +2251,45 @@ public static boolean borradoHito(Hito objeto){
 					    return true;
 					} catch (SQLException e) {e.printStackTrace(); return false;}
 
-		}		
+		}
+	public static boolean updateCronograma(Cronograma objeto){
+	  	 Connection conect=ConnectionConfiguration.conectar();
+	   	
+	  	 Statement statement = null;
+
+					 String											query = "update actividad set ";
+					 if(objeto.getNombre()!=null)					query+= "nombre='"+objeto.getNombre()+"'";
+					 if(objeto.getDescripcion()!=null)				query+= ", descripcion='"+objeto.getDescripcion()+"'";
+					 if(objeto.getProporcion()!=0)					query+= ", proporcion='"+objeto.getProporcion()+"'";
+					 if(objeto.getVersion()!=0)						query+= ", version='"+objeto.getVersion()+"'";
+					 if(objeto.getUnidad_medida_id()!=0)			query+= ", unidad_medida_id='"+objeto.getUnidad_medida_id()+"'";
+					 if(objeto.getHito_tipo_id()!=0)				query+= ", hito_tipo_id='"+objeto.getHito_tipo_id()+"'";
+					 
+					 					 		 
+					 		 
+					 query+=" where id ="+objeto.getId();
+							 
+					 try {
+						statement=conect.createStatement();
+						statement.execute(query);
+					    conect.close();
+					    return true;
+					} catch (SQLException e) {e.printStackTrace(); return false;}
+
+		}
+	public static boolean borradoCronograma(Cronograma objeto){
+	  	 Connection conect=ConnectionConfiguration.conectar();
+	  	 Statement statement = null;
+	  	 objeto.changeBorrado();
+	  	 
+		 String query = "update actividad set borrado='"+objeto.isBorrado()+"'";	
+		 
+		 query+=" where id ="+objeto.getId(); 	
+		 try {
+			statement=conect.createStatement();
+			statement.execute(query);
+		    conect.close();
+		    return true;
+		 }catch (SQLException e) {e.printStackTrace(); return false;}
+	}	
 }

@@ -681,6 +681,28 @@ public class ajaxUpdate extends HttpServlet {
                 boolean status = SqlUpdates.updateAccionCatalogo(objeto);     
         		myObj.addProperty("success", status);
         		out.println(myObj.toString());
+        	}
+        	if (accion.equals("actCronograma")){
+        		Cronograma objeto = new Cronograma();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                objeto=gsonInsert.fromJson(json, Cronograma.class);
+                boolean status = SqlUpdates.updateCronograma(objeto);     
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	}
+        	if (accion.equals("borradoCronograma")){
+        		Cronograma objeto = new Cronograma();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                objeto=gsonInsert.fromJson(json, Cronograma.class);
+                boolean status = SqlUpdates.borradoCronograma(objeto);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
         	}         	
         	
         }     
