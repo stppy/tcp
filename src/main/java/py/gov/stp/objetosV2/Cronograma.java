@@ -55,6 +55,10 @@ public class Cronograma {
 	public void setBorrado(boolean borrado) {
 		this.borrado = borrado;
 	}
+	public void changeBorrado(){
+		this.borrado=!borrado;
+
+		}
 	public int getAccion_id() {
 		return accion_id;
 	}

@@ -855,10 +855,10 @@
 			}
 			if(accion[a].borrado == false){	
 				
-			cuerpoAccion +="<td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos'><span class='glyphicon glyphicon-usd modalVincularProducto' parametros="+accion[a].id+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"></span></button><button type='button' class='btn btn-default btn-sm'><span class='glyphicon glyphicon-time agregarActividad' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+"></span></button><button type='button' class='btn btn-default btn-sm editarAccion' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button></td></tr>";
+			cuerpoAccion +="<td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos'><span class='glyphicon glyphicon-usd modalVincularProducto' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"></span></button><button type='button' class='btn btn-default btn-sm'><span class='glyphicon glyphicon-time agregarActividad' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+"></span></button><button type='button' class='btn btn-default btn-sm editarAccion' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button></td></tr>";
 			
 			}else{
-				cuerpoAccion +="<td class='text-center'><del>"+accion[a].fechaInicio+"</del></td><td class='text-center'><del>"+accion[a].fechaFin+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</del></td><td class='text-center'><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos'><span class='glyphicon glyphicon-usd modalVincularProducto' parametros="+accion[a].id+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"></span></button><button type='button' class='btn btn-default btn-sm'><span class='glyphicon glyphicon-time agregarActividad' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+"></span></button><button type='button' class='btn btn-default btn-sm editarAccion' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button></td></tr>";
+				cuerpoAccion +="<td class='text-center'><del>"+accion[a].fechaInicio+"</del></td><td class='text-center'><del>"+accion[a].fechaFin+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</del></td><td class='text-center'><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos'><span class='glyphicon glyphicon-usd modalVincularProducto' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"></span></button><button type='button' class='btn btn-default btn-sm'><span class='glyphicon glyphicon-time agregarActividad' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+"></span></button><button type='button' class='btn btn-default btn-sm editarAccion' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button></td></tr>";
 				
 			}
 		}
@@ -1777,12 +1777,12 @@ $("body").on("click", ".borrarAccion",function(event){
 				
 		var parametros = $(this).attr("parametros");
 	    var idParsed = parametros.split("-");                                                            
-		var accionId = idParsed[0];
 		//Las siguentes 4 variables se utiliza en esta funcion para redibujar el modal anterior
-		var insLineaAccionId = idParsed[1];
-		var lineaAccionId = idParsed[2];
-		var institucionId = idParsed[3];
-		var periodoId = idParsed[4];
+		var insLineaAccionId = idParsed[0];
+		var lineaAccionId = idParsed[1];
+		var institucionId = idParsed[2];
+		var periodoId = idParsed[3];
+		var accionId = idParsed[4];
 				
 		var accion = $.ajax({
 			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&accionId='+accionId,
@@ -2987,6 +2987,14 @@ $("body").on("click", ".borrarAccion",function(event){
 		{
 			$("#modalAvance").remove();
 		}	
+		if ( $("#modalEditarCronograma").length )
+		{
+			$("#modalEditarCronograma").remove();
+		}
+		if ( $("#modalBorrarCronograma").length )
+		{
+			$("#modalBorrarCronograma").remove();
+		}
 				
 		var parametros = $(this).attr("parametros");
 	    var idParsed = parametros.split("-");    
@@ -3077,9 +3085,9 @@ $("body").on("click", ".borrarAccion",function(event){
 			
 			if(actividades[u].borrado == false)
 			{
-				cuerpoActividad+='<tr><td>'+actividades[u].nombre+'</td><td>'+actividades[u].descripcion+'</td><td>'+nombreUnidadMedida+'</td><td>'+nombreHitoTipo+'</td><td>'+actividades[u].proporcion+'</td><td>'+actividades[u].version+'</td><td><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Hito"><span class="glyphicon glyphicon-time agregarProgramacion" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
+				cuerpoActividad+='<tr><td>'+actividades[u].nombre+'</td><td>'+actividades[u].descripcion+'</td><td>'+nombreUnidadMedida+'</td><td>'+nombreHitoTipo+'</td><td>'+actividades[u].proporcion+'</td><td>'+actividades[u].version+'</td><td><button type="button" class="btn btn-default btn-sm editarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+' data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Hito"><span class="glyphicon glyphicon-time agregarProgramacion" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
 			}else{
-				cuerpoActividad+='<tr><td><del>'+actividades[u].nombre+'</del></td><td><del>'+actividades[u].descripcion+'</del></td><td><del>'+nombreUnidadMedida+'</del></td><td><del>'+nombreHitoTipo+'</del></td><td><del>'+actividades[u].proporcion+'</del></td><td><del>'+actividades[u].version+'</del></td><td><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Hito"><span class="glyphicon glyphicon-time agregarProgramacion" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
+				cuerpoActividad+='<tr><td><del>'+actividades[u].nombre+'</del></td><td><del>'+actividades[u].descripcion+'</del></td><td><del>'+nombreUnidadMedida+'</del></td><td><del>'+nombreHitoTipo+'</del></td><td><del>'+actividades[u].proporcion+'</del></td><td><del>'+actividades[u].version+'</del></td><td><button type="button" class="btn btn-default btn-sm editarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+' data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Hito"><span class="glyphicon glyphicon-time agregarProgramacion" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
 			}
 		}
 		
@@ -3179,6 +3187,319 @@ $("body").on("click", ".borrarAccion",function(event){
 		$("#modalActividad").modal('show');
 		
 	});
+	
+	
+$("body").on("click", ".editarCronograma", function(event){
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-");    
+    var insLineaAccionId = idParsed[0];
+    var lineaAccionId = idParsed[1];
+    var institucionId = idParsed[2];
+    var periodoId = idParsed[3];    
+    var accionId = idParsed[4];
+    var accionCatalogoId = idParsed[5];
+    var cronogramaId = idParsed[6];
+    
+	if ( $("#modalEditarCronograma").length )
+	{
+		$("#modalEditarCronograma").remove();
+	}
+	if ( $("#modalActividad").length )
+	{
+		$("#modalActividad").remove();
+	}
+
+	
+	var actividades = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getCronograma&cronogramaId='+cronogramaId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	actividades = JSON.parse(actividades);
+	
+	
+	var unidadMedida = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	unidadMedida = JSON.parse(unidadMedida);
+	
+	var optionUnidadMedida;
+	for(var u = 0; u < unidadMedida.length; u++)
+	{
+		optionUnidadMedida+='<option value="'+unidadMedida[u].id+'" parametro="'+unidadMedida[u].id+'">'+unidadMedida[u].descripcion+'</option>';
+	}
+	
+	var hitoTipo = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getHitoTipo',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	hitoTipo = JSON.parse(hitoTipo);
+	
+	var optionTipoHito;
+	for(var h = 0; h < hitoTipo.length; h++)
+	{
+		optionTipoHito+='<option value="'+hitoTipo[h].id+'" parametro="'+hitoTipo[h].id+'">'+hitoTipo[h].nombre+'</option>';
+	}
+	
+	
+	
+	
+	for(var a = 0; u < actividades.length; a++)
+	{
+		var nombreUnidadMedida = "";
+		var nombreHitoTipo = "";
+		for(var x = 0; x < unidadMedida.length; x++)
+		{
+			if(unidadMedida[x].id == actividades[a].unidad_medida_id)
+			{
+				nombreUnidadMedida = unidadMedida[x].descripcion;
+			}
+		}
+		
+		for(var l = 0; l < hitoTipo.length; l++)
+		{
+			if(hitoTipo[l].id == actividades[u].hito_tipo_id)
+			{
+				nombreHitoTipo = hitoTipo[l].nombre;
+			}
+		}
+		
+		
+		if(actividades[u].borrado == false)
+		{
+			cuerpoCronograma+='<tr><td>'+actividades[a].nombre+'</td><td>'+actividades[a].descripcion+'</td><td>'+nombreUnidadMedida+'</td><td>'+nombreHitoTipo+'</td><td>'+actividades[u].proporcion+'</td><td>'+actividades[a].version+'</td><td><button type="button" class="btn btn-default btn-sm editarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+' data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Hito"><span class="glyphicon glyphicon-time agregarProgramacion" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[a].id+'></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[a].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
+		}else{
+			cuerpoCronograma+='<tr><td><del>'+actividades[a].nombre+'</del></td><td><del>'+actividades[a].descripcion+'</del></td><td><del>'+nombreUnidadMedida+'</del></td><td><del>'+nombreHitoTipo+'</del></td><td><del>'+actividades[a].proporcion+'</del></td><td><del>'+actividades[a].version+'</del></td><td><button type="button" class="btn btn-default btn-sm editarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+' data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Hito"><span class="glyphicon glyphicon-time agregarProgramacion" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[a].id+'></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[a].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
+		}
+	}
+	
+	
+	
+	
+	
+	
+	var cuerpoModalEditarCronograma = "";
+	cuerpoModalEditarCronograma =	'<div class="modal fade" id="modalEditarCronograma" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="myLargeModalLabel">'+
+						'	<div class="modal-dialog modal-lg" style="width:90%">'+
+						'		<div class="modal-content" >'+
+						'			<div class="modal-header">'+
+						'		        <button type="button" class="close agregarActividad"  data-dismiss="modal" aria-label="Close" parametros ='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'><span aria-hidden="true">&times;</span></button>'+
+						'			</div>'+
+						'						<div class="box box-danger">'+
+						'		                	<div class="box-header with-border">'+//box-header
+						'		                  		<h3 class="box-title">Editar Cronograma</h3>'+
+						'	                  			<div class="box-tools pull-right">'+
+						'				                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>'+
+						'		                    		</button>'+
+						'		                  		</div>'+
+						'               			</div>'+//fin box-header
+						'		    <div class="modal-body" >'+
+
+						'								<div class="table-responsive">'+
+						'									<table class="table table-hover">'+
+						'										<tbody>'+
+						'			      							<form class="form-horizontal" role="form">'+
+						'												<tr><td><label for="nombreCronograma">Nombre</label><input type="text" id="nombreCronograma" value='+actividades[0].nombre+' class="form-control" /></td><td><label for="descripcionCronograma">Descripcion</label><input type="text" id="descripcionCronograma" class="form-control" value='+actividades[0].descripcion+'  /></td></tr>'+
+						'												<tr><td><div class="form-group"><label for="unidadMedidaIdCronograma">Unidad de Medida</label><select id="selectorUnidadMedidaCronograma" class="form-control">'+optionUnidadMedida+'</div></td><td><div class="form-group"><label for="hitoTipoIdCronograma">Tipo Cronograma</label><select id="selectorHitoTipoIdCronograma" class="form-control">'+optionTipoHito+'</div></td></tr>'+
+						'												<tr><td><label for="proporcionCronograma">Proporción</label><input type="text" id="proporcionCronograma" value='+actividades[0].proporcion+' class="form-control" /></td><td><label for="versionCronograma">Versión</label><input type="text" id="versionCronograma" class="form-control" value='+actividades[0].version+'  /></td></tr>'+
+						'			      							</form>	'+												
+						'										</tbody>'+
+						'									</table>'+
+						'				      			</div>'+
+												
+						'		    </div>'+//fin modal-body
+						'			<div class="modal-footer">'+					
+						'				<button type="button" class="btn btn-success btn-sm actualizarCronograma" parametros ='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+cronogramaId+'>Actualizar Cronograma</button>'+
+						'				<button type="button" class="btn btn-success btn-sm agregarActividad" parametros ='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'>Cerrar</button>'+
+						
+						'			</div>'+
+						'		</div>'+ 
+						'	</div>'+
+						'</div>';
+						
+		$("#programacion").append(cuerpoModalEditarCronograma);
+		$('#selectorUnidadMedidaCronograma > option[value="'+actividades[0].unidad_medida_id+'"]').attr('selected', 'selected');
+		$('#selectorHitoTipoIdCronograma > option[value="'+actividades[0].hito_tipo_id+'"]').attr('selected', 'selected');	
+
+		$('#modalEditarCronograma').modal('show');		
+	
+	
+	
+});
+
+
+//consulta para borrar cronograma
+$("body").on("click", ".consultaBorrarCronograma",function(event){
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-");    
+    var insLineaAccionId = idParsed[0];
+    var lineaAccionId = idParsed[1];
+    var institucionId = idParsed[2];
+    var periodoId = idParsed[3];    
+    var accionId = idParsed[4];
+    var accionCatalogoId = idParsed[5];
+    var cronogramaId = idParsed[6];
+    
+	if ( $("#modalBorrarCronograma").length )
+	{
+		$("#modalBorrarCronograma").remove();
+	}		
+	if ( $("#modalActividad").length )
+	{
+		$("#modalActividad").remove();
+	}		
+
+   
+	var actividades = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getCronograma&cronogramaId='+cronogramaId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	actividades = JSON.parse(actividades);
+   
+	
+	
+	var contenido = "";
+
+	contenido =			'<div class="modal fade" id="modalBorrarCronograma"  data-backdrop="static" data-keyboard="false" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">'+
+						'	<div class="modal-dialog modal-lg">'+
+						'		<div class="modal-content" >'+
+						'			<div class="modal-header">'+
+						'		        <button type="button" class="close agregarActividad"  parametros ='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+' aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+						'		        <h4 class="modal-title">Borrar - Reestablecer Cronograma</h4>'+
+						'			</div>'+
+						'		    <div class="modal-body" >'+
+						'			<div id="mensajeBorrado"><center>Borrar o reestablecer le Cronograma: <strong>'+actividades[0].nombre+'</strong></center></div>'+
+						'		    </div>'+
+						'							<div class="modal-footer">'+
+						'								<button type="button" class="btn btn-success btn-sm borrarCronograma" id="botonBorrarCronograma" parametros='+cronogramaId+'>Borrar Cronograma</button>'+
+						'								<button type="button" class="btn btn-success btn-sm borrarCronograma" id="botonReestablecerCronograma" parametros='+cronogramaId+'>Reestablecer Cronograma</button>'+						
+						'								<button type="button" class="btn btn-success btn-sm agregarActividad"  parametros ='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'>Cerrar</button>'+
+						'							</div>'+
+						'		</div>'+ 
+						'	</div>'+
+						'</div>';
+						
+		$("#programacion").append(contenido);
+		$('#modalBorrarCronograma').modal('show');
+    
+	
+					
+});
+
+//borrar cronograma
+$("body").on("click", ".borrarCronograma",function(event){	
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-"); 
+    var cronogramaId = idParsed[0];
+    
+				var actividades = $.ajax({
+					url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getCronograma&cronogramaId='+cronogramaId,
+				  	type:'get',
+				  	dataType:'json',
+				  	async:false       
+				}).responseText;
+				actividades = JSON.parse(actividades);
+		    
+		    var objeto = new Object();
+		    objeto.id = cronogramaId;
+		    objeto.borrado= actividades[0].borrado;
+
+		    
+		  	var info = JSON.stringify(objeto);
+		    $.ajax({
+		        url: "ajaxUpdate2?accion=borradoCronograma",
+		        type: 'POST',
+		        dataType: 'json',
+		        data: info,
+		        contentType: 'application/json',
+		        mimeType: 'application/json',
+		        success: function (data) {
+		        	$("#mensajeBorrado").html("");
+		        	$("#mensajeBorrado").html("El Cronograma ha sido modificado");
+		        	
+		        	},
+		
+		        error: function(data,status,er) {
+		        	
+		        	}
+			 });
+
+	
+});
+
+
+
+
+
+
+
+$("body").on("click", ".actualizarCronograma", function(event){
+	
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-");    
+    var insLineaAccionId = idParsed[0];
+    var lineaAccionId = idParsed[1];
+    var institucionId = idParsed[2];
+    var periodoId = idParsed[3];    
+    var accionId = idParsed[4];
+    var accionCatalogoId = idParsed[5];
+    var cronogramaId = idParsed[6];
+
+    
+    
+    var cronogramaId = cronogramaId;
+    var nombreCronograma = $("#nombreCronograma").val();
+    var descripcionCronograma = $("#descripcionCronograma").val();
+    var unidadMedidaCronograma =  $("#selectorUnidadMedidaCronograma option:selected").val();
+    var tipoCronograma = $("#selectorHitoTipoIdCronograma option:selected").val();
+    var proporcionCronograma = $("#proporcionCronograma").val();
+    var versionCronograma = $("#versionCronograma").val();
+    
+    //aca vacío el formulario de edición de cronograma
+    $("#nombreCronograma").val('');
+    $("#descripcionCronograma").val('');
+    $("#selectorUnidadMedidaCronograma").val('');
+    $("#selectorHitoTipoIdCronograma").val('');
+    $("#proporcionCronograma").val('');
+    $("#versionCronograma").val('');
+    
+
+    
+    var datos = new Object();
+    datos.id = cronogramaId;
+    datos.nombre = nombreCronograma;
+    datos.descripcion = descripcionCronograma;
+    datos.unidad_medida_id = unidadMedidaCronograma;
+    datos.hito_tipo_id = tipoCronograma;
+    datos.proporcion = proporcionCronograma;
+    datos.version = versionCronograma;
+
+    
+  	var info = JSON.stringify(datos);
+    $.ajax({
+        url: "ajaxUpdate2?accion=actCronograma",
+        type: 'POST',
+        dataType: 'json',
+        data: info,
+        contentType: 'application/json',
+        mimeType: 'application/json',
+        success: function (data) {
+        	},
+
+        error: function(data,status,er) {
+        	}
+	 });
+ 
+});
+	
 	
 $("body").on("click", ".guardarActividad",function(event){
 		
