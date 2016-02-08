@@ -1911,7 +1911,7 @@ $("body").on("click", ".borrarAccion",function(event){
 				      				'	    			<input type="text" name="totalFisico" id="unidadMedida-formulario" value="" class="form-control" disabled>'+
 				      				'	    		</div>'+
 						      		'			    <div class="form-group col-md-3">'+
-				      				'	  				<label for="clase-formulario">Clase</label>'+
+				      				'	  				<label for="clase-formulario">Tipo</label>'+
 			      					'    				<input type="text" name="totalFisico" id="clase-formulario" value="" class="form-control" disabled>'+
 			      					'    			</div>'+
 						      		'			    <div class="form-group col-md-3">'+
