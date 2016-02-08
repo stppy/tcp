@@ -1878,8 +1878,8 @@ $("body").on("click", ".borrarAccion",function(event){
 						            '    <table class="table table-striped table-bordered  table-hover">'+
 						            '    	<tr>'+
 						            '    		<th colspan="6" class="text-center" data-toggle="tooltip" data-placement="top" title="Nivel,Entidad,Tipo,Programa,SubPrograma,Proyecto">Cod. Pres.</th>'+
-						            '   		<th>NombreProducto</th>'+						            
-						            '   		<th>Cod. Prod</th>'+
+						            '   		<th>Cod. Prod</th>'+						            
+						            '   		<th>NombreProducto</th>'+
 						            '    		<th>Cantidad</th>'+
 						            '    		<th>U. Medida</th>'+
 						            '    		<th>Tipo</th>'+
