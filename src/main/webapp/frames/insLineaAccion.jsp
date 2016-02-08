@@ -787,10 +787,9 @@
 		departamentos = JSON.parse(departamentos);
 		
 		var optionDepartamentos = "";
-		for(i = 0;i<18; i++){
+		for(i = 0;i<departamentos.length; i++){
 			optionDepartamentos+='<option value="'+departamentos[i].idDepartamento+'" parametro="'+departamentos[i].idDepartamento+'">'+departamentos[i].nombreDepartamento+'</option>';
 		}
-		optionDepartamentos+='<option value="99" parametro="99">ALC.NACIONAL</option>';
 		
 		var distritos = $.ajax({
 	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito',
@@ -1062,10 +1061,9 @@
 		departamentos = JSON.parse(departamentos);
 		
 		var optionDepartamentos = "";
-		for(i = 0;i<18; i++){
+		for(i = 0;i<departamentos.length; i++){
 			optionDepartamentos+='<option value="'+departamentos[i].idDepartamento+'" parametro="'+departamentos[i].idDepartamento+'">'+departamentos[i].nombreDepartamento+'</option>';
 		}
-		optionDepartamentos+='<option value="99" parametro="99">ALC.NACIONAL</option>';
 		
 		var distritos = $.ajax({
 	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito&departamento='+accion[0].departamentoId,
@@ -1532,12 +1530,9 @@ $("body").on("click", ".borrarAccion",function(event){
 		distritos = JSON.parse(distritos);		
 		
 		var optionDepartamentos = "";
-		for(i = 0;i<18; i++){
+		for(i = 0;i<departamentos.length; i++){
 			optionDepartamentos+='<option value="'+departamentos[i].idDepartamento+'" parametro="'+departamentos[i].idDepartamento+'">'+departamentos[i].nombreDepartamento+'</option>';
 		}
-		optionDepartamentos+='<option value="99" parametro="99">ALC.NACIONAL</option>';
-
-
 		
 		var accion_catalogo = $.ajax({
 	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo',
