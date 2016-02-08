@@ -1595,8 +1595,8 @@ $(document).ready(function(){
 							                '		<th>Cantidad</th>'+
 							                '		<th>U. Medida</th>'+
 							                '		<th>Tipo</th>'+
-							                '		<th>Total Financiero</th>'+
-							                '		<th>Asignación Financiera</th>'+
+							                '		<th>Asig. Financiera</th>'+
+							                '		<th>Costo de la Acción</th>'+
 							                '		<th>Destinatarios</th>'+
 							                '	</tr>'+
 							                '<tbody class="table-body-producto" id="TablaAccionHasProductos">'+
@@ -1662,7 +1662,7 @@ $(document).ready(function(){
 		      					    				'<input type="text" name="totalFisico" id="clase-formulario" value="" class="form-control" disabled>'+
 		      					    			'</div>'+			      					    		
 					      					    '<div class="form-group col-md-3">'+
-		      					  					'<label for="totalFinanciero-formulario">Total Financiero</label>'+
+		      					  					'<label for="totalFinanciero-formulario">Asig. Financiera</label>'+
 							      					'<div class="input-group input-group-sm">'+
 							      						'<span class="input-group-addon">Gs</span>'+
 				      					    			'<input type="text" name="totalFinanciero" id="totalFinanciero-formulario" value="" class="form-control" disabled>'+
