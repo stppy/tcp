@@ -64,7 +64,7 @@
 							'		<div class="modal-content" >'+
 							'			<div class="modal-header">'+
 							'		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
-							'		        <h4 class="modal-title">Registrar Linea de Acción por Institución</h4>'+
+							'		        <h4 class="modal-title">Registrar Línea de Acción por Institución</h4>'+
 							'			</div>'+
 							'		    <div class="modal-body" >'+
 									    
@@ -180,8 +180,8 @@
 						var tablaInsLineaAccion="";
 						tablaInsLineaAccion += 	'<div class="table-responsive">'+
 												'<table class="table table-hover">'+
-												  '<tr class="active"><td colspan="6">Linea de Acción por Institución</td></tr>'+
-												  '<tr class="active"><td style="min-width:110px">Periodo</td><td>Institución</td><td>Linea de Acción</td><td>Meta</td><td class="text-center">U.Medida</td><td style="min-width:250px" class="text-center">Administrar Linea Acción</td></tr>';
+												  '<tr class="active"><td colspan="6">Línea de Acción por Institución</td></tr>'+
+												  '<tr class="active"><td style="min-width:110px">Periodo</td><td>Institución</td><td>Línea de Acción</td><td>Meta</td><td class="text-center">U.Medida</td><td style="min-width:250px" class="text-center">Administrar Linea Acción</td></tr>';
 												  
 					 	var bandLineaAccion;
 					 	var bandInstitucion;
@@ -363,7 +363,7 @@
 							'		<div class="modal-content" >'+
 							'			<div class="modal-header">'+
 							'		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
-							'		        <h4 class="modal-title">Registrar Linea de Acción por Institución</h4>'+
+							'		        <h4 class="modal-title">Registrar Línea de Acción por Institución</h4>'+
 							'			</div>'+
 							'		    <div class="modal-body" id="insLineaAccion" >'+
 									    
