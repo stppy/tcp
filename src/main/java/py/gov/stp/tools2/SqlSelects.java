@@ -534,7 +534,7 @@ public class SqlSelects {
 	
 	public static List<AccionHasProducto> selectAccionHasProducto() throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select * from accion_has_producto";
+		String query = " select * from accion_has_producto ";
 
 		Statement statement = null;
 		ResultSet rs=null;

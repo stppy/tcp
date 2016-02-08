@@ -1592,11 +1592,11 @@ $(document).ready(function(){
 							                '		<th>Subprograma</th>'+
 							                '		<th>Proyecto</th>'+
 							                '		<th>Producto</th>'+
-							                '		<th>Total Fisico</th>'+
+							                '		<th>Cantidad</th>'+
 							                '		<th>U. Medida</th>'+
-							                '		<th>Clase</th>'+
-							                '		<th>Total Financiero</th>'+
-							                '		<th>Asignación Financiera</th>'+
+							                '		<th>Tipo</th>'+
+							                '		<th>Asig. Financiera</th>'+
+							                '		<th>Costo de la Acción</th>'+
 							                '		<th>Destinatarios</th>'+
 							                '	</tr>'+
 							                '<tbody class="table-body-producto" id="TablaAccionHasProductos">'+
@@ -1650,7 +1650,7 @@ $(document).ready(function(){
 		      					  
 					                		'<div class="row">'+
 					      					    '<div class="form-group col-md-3">'+
-					      					  		'<label for="totalFisico-formulario">Total Fisico</label>'+
+					      					  		'<label for="totalFisico-formulario">Cantidad</label>'+
 				      					    		'<input type="text" name="totalFisico" id="totalFisico-formulario" value="" class="form-control" disabled>'+
 				      					    	'</div>'+
 					      					    '<div class="form-group col-md-3">'+
@@ -1658,11 +1658,11 @@ $(document).ready(function(){
 			      					    			'<input type="text" name="totalFisico" id="unidadMedida-formulario" value="" class="form-control" disabled>'+
 			      					    		'</div>'+
 					      					    '<div class="form-group col-md-3">'+
-			      					  				'<label for="clase-formulario">Clase</label>'+
+			      					  				'<label for="clase-formulario">Tipo</label>'+
 		      					    				'<input type="text" name="totalFisico" id="clase-formulario" value="" class="form-control" disabled>'+
 		      					    			'</div>'+			      					    		
 					      					    '<div class="form-group col-md-3">'+
-		      					  					'<label for="totalFinanciero-formulario">Total Financiero</label>'+
+		      					  					'<label for="totalFinanciero-formulario">Asig. Financiera</label>'+
 							      					'<div class="input-group input-group-sm">'+
 							      						'<span class="input-group-addon">Gs</span>'+
 				      					    			'<input type="text" name="totalFinanciero" id="totalFinanciero-formulario" value="" class="form-control" disabled>'+

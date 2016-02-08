@@ -64,7 +64,7 @@
 							'		<div class="modal-content" >'+
 							'			<div class="modal-header">'+
 							'		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
-							'		        <h4 class="modal-title">Registrar Linea de Acción por Institución</h4>'+
+							'		        <h4 class="modal-title">Registrar Línea de Acción por Institución</h4>'+
 							'			</div>'+
 							'		    <div class="modal-body" >'+
 									    
@@ -180,8 +180,8 @@
 						var tablaInsLineaAccion="";
 						tablaInsLineaAccion += 	'<div class="table-responsive">'+
 												'<table class="table table-hover">'+
-												  '<tr class="active"><td colspan="6">Linea de Acción por Institución</td></tr>'+
-												  '<tr class="active"><td style="min-width:110px">Periodo</td><td>Institución</td><td>Linea de Acción</td><td>Meta</td><td class="text-center">U.Medida</td><td style="min-width:250px" class="text-center">Administrar Linea Acción</td></tr>';
+												  '<tr class="active"><td colspan="6">Línea de Acción por Institución</td></tr>'+
+												  '<tr class="active"><td style="min-width:110px">Periodo</td><td>Institución</td><td>Línea de Acción</td><td>Meta</td><td class="text-center">U.Medida</td><td style="min-width:250px" class="text-center">Administrar Linea Acción</td></tr>';
 												  
 					 	var bandLineaAccion;
 					 	var bandInstitucion;
@@ -363,7 +363,7 @@
 							'		<div class="modal-content" >'+
 							'			<div class="modal-header">'+
 							'		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
-							'		        <h4 class="modal-title">Registrar Linea de Acción por Institución</h4>'+
+							'		        <h4 class="modal-title">Registrar Línea de Acción por Institución</h4>'+
 							'			</div>'+
 							'		    <div class="modal-body" id="insLineaAccion" >'+
 									    
@@ -855,10 +855,10 @@
 			}
 			if(accion[a].borrado == false){	
 				
-			cuerpoAccion +="<td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos'><span class='glyphicon glyphicon-usd modalVincularProducto' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"></span></button><button type='button' class='btn btn-default btn-sm'><span class='glyphicon glyphicon-time agregarActividad' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+"></span></button><button type='button' class='btn btn-default btn-sm editarAccion' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button></td></tr>";
+			cuerpoAccion +="<td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos Presupuestarios'><span class='glyphicon glyphicon-usd modalVincularProducto' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"></span></button><button type='button' class='btn btn-default btn-sm'><span class='glyphicon glyphicon-time agregarActividad' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+"></span></button><button type='button' class='btn btn-default btn-sm editarAccion' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button></td></tr>";
 			
 			}else{
-				cuerpoAccion +="<td class='text-center'><del>"+accion[a].fechaInicio+"</del></td><td class='text-center'><del>"+accion[a].fechaFin+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</del></td><td class='text-center'><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos'><span class='glyphicon glyphicon-usd modalVincularProducto' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"></span></button><button type='button' class='btn btn-default btn-sm'><span class='glyphicon glyphicon-time agregarActividad' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+"></span></button><button type='button' class='btn btn-default btn-sm editarAccion' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button></td></tr>";
+				cuerpoAccion +="<td class='text-center'><del>"+accion[a].fechaInicio+"</del></td><td class='text-center'><del>"+accion[a].fechaFin+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</del></td><td class='text-center'><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos Presupuestarios'><span class='glyphicon glyphicon-usd modalVincularProducto' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"></span></button><button type='button' class='btn btn-default btn-sm'><span class='glyphicon glyphicon-time agregarActividad' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+"></span></button><button type='button' class='btn btn-default btn-sm editarAccion' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button></td></tr>";
 				
 			}
 		}
@@ -1718,13 +1718,13 @@ $("body").on("click", ".borrarAccion",function(event){
 	        contentType: 'application/json',
 	        mimeType: 'application/json',
 	        success: function (data) {
-	        	cargarTablaAccionHasProducto(accionId);
+	        	cargarTablaAccionHasProducto(accionId,producto);
 	        	//cargarTablaAccionHasProducto(institucionId, lineaAccionId, idDepartamento, idDistrito, accionId); asi esta el original
 
 	        	},
 	        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
 	        error: function(data,status,er) {
-	        	cargarTablaAccionHasProducto(accionId);
+	        	cargarTablaAccionHasProducto(accionId,producto);
 	        	}
 		 });
 		$('#tipoPrograma-formulario').val('');
@@ -1742,9 +1742,11 @@ $("body").on("click", ".borrarAccion",function(event){
 		
 	});
 	
-	function cargarTablaAccionHasProducto(accionId){
+	function cargarTablaAccionHasProducto(accionId,producto){
 		
 		var accionId= accionId;
+		var producto = producto;
+		var nombreProducto = "";
 		
 		var accionHasProducto = $.ajax({
 	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getAccionHasProducto&accion_id='+accionId,
@@ -1754,17 +1756,51 @@ $("body").on("click", ".borrarAccion",function(event){
 	      	async:false       
 	    }).responseText;		
 		accionHasProducto=JSON.parse(accionHasProducto);
+				
+    	$.ajax({
+        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductos',
+          	type:'get',
+          	crossDomain: 'true',
+          	dataType:'jsonp',
+            jsonp: 'callback',
+            jsonpCallback: 'jsonpCallbackProducto',
+          	async:false,
+          	success: function( data, textStatus, jqXHR) {
+          		if(data.success){
+          			jsonpCallbackProducto(data)
+          		}
+          	} 
+        });
+    	
+    	var productos;
+    	var nombreProducto;
+    	
+    	function jsonpCallbackProducto(data){
+    	 
+    		productos = data;
+    		
+    		$("#TablaAccionHasProductos").html("");
+    		var fila ="";
+    		for(var f = 0; f < accionHasProducto.length; f++)
+    		{
+    			
+    			fila += "<tr><td>"+accionHasProducto[f].nivel+"</td><td>"+accionHasProducto[f].entidad+"</td><td>"+accionHasProducto[f].tipoPrograma+"</td><td>"+accionHasProducto[f].programa+"</td><td>"+accionHasProducto[f].subPrograma+"</td><td>"+accionHasProducto[f].proyecto+"</td><td>"+accionHasProducto[f].producto+"</td>";
+    			
+    			nombreProducto = "";
+    			for(var j = 0; j < productos.productos.length; j++){
+    				if(productos.productos[j].codigoCatalogo == accionHasProducto[f].producto){
+    					nombreProducto = productos.productos[j].nombreCatalogo;
+    				}
+    			}
+    			
+    	    	fila += "<td>"+nombreProducto+"</td><td>"+accionHasProducto[f].cantFisica+"</td><td>"+accionHasProducto[f].uMedida+"</td><td>"+accionHasProducto[f].clase+"</td><td>Gs."+accionHasProducto[f].cantFinanciera+"</td><td>Gs."+accionHasProducto[f].totalAsignacion+"</td><td><center><button type='submit' class='btn btn-success verificarDestinatarios' parametros="+accionHasProducto[f].nivel+"-"+accionHasProducto[f].entidad+"-"+accionHasProducto[f].tipoPrograma+"-"+accionHasProducto[f].programa+"-"+accionHasProducto[f].subPrograma+"-"+accionHasProducto[f].proyecto+"-"+accionHasProducto[f].producto+"><span class='glyphicon glyphicon-user'></span></button></center></td></tr>";
+    		}
+    		
+    		$("#TablaAccionHasProductos").append(fila);
+    		
+    	}
+    	
 		
-		
-		$("#TablaAccionHasProductos").html("");
-		var fila ="";
-		for(var f = 0; f < accionHasProducto.length; f++)
-		{
-			
-			fila += "<tr><td>"+accionHasProducto[f].nivel+"</td><td>"+accionHasProducto[f].entidad+"</td><td>"+accionHasProducto[f].tipoPrograma+"</td><td>"+accionHasProducto[f].programa+"</td><td>"+accionHasProducto[f].subPrograma+"</td><td>"+accionHasProducto[f].proyecto+"</td><td>"+accionHasProducto[f].producto+"</td><td>"+accionHasProducto[f].cantFisica+"</td><td>"+accionHasProducto[f].uMedida+"</td><td>"+accionHasProducto[f].clase+"</td><td>Gs."+accionHasProducto[f].cantFinanciera+"</td><td>Gs."+accionHasProducto[f].totalAsignacion+"</td><td><center><button type='submit' class='btn btn-success verificarDestinatarios' parametros="+accionHasProducto[f].nivel+"-"+accionHasProducto[f].entidad+"-"+accionHasProducto[f].tipoPrograma+"-"+accionHasProducto[f].programa+"-"+accionHasProducto[f].subPrograma+"-"+accionHasProducto[f].proyecto+"-"+accionHasProducto[f].producto+"><span class='glyphicon glyphicon-user'></span></button></center></td></tr>";
-		}
-		
-		$("#TablaAccionHasProductos").append(fila);
 		
 	}
 	
@@ -1841,13 +1877,14 @@ $("body").on("click", ".borrarAccion",function(event){
 						      		'	<div class="table-responsive">'+
 						            '    <table class="table table-striped table-bordered  table-hover">'+
 						            '    	<tr>'+
-						            '    		<th colspan="6" class="text-center">Cod. Pres.</th>'+
-						            '   		<th>Cod.Producto</th>'+
-						            '    		<th>Total Fisico</th>'+
+						            '    		<th colspan="6" class="text-center" data-toggle="tooltip" data-placement="top" title="Nivel,Entidad,Tipo,Programa,SubPrograma,Proyecto">Cod. Pres.</th>'+
+						            '   		<th>NombreProducto</th>'+						            
+						            '   		<th>Cod. Prod</th>'+
+						            '    		<th>Cantidad</th>'+
 						            '    		<th>U. Medida</th>'+
-						            '    		<th>Clase</th>'+
-						            '    		<th>Total Financiero</th>'+
-						            '    		<th>Asignación Financiera</th>'+
+						            '    		<th>Tipo</th>'+
+						            '    		<th>Asig. Financiera</th>'+
+						            '    		<th>Costo de la Acción</th>'+
 						            '    		<th>Destinatarios</th>'+
 						            '    	</tr>'+
 						            '    <tbody class="table-body-producto" id="TablaAccionHasProductos">'+
@@ -1898,7 +1935,7 @@ $("body").on("click", ".borrarAccion",function(event){
 					      					
 					      			'			<div class="row">'+
 						      		'			    <div class="form-group col-md-3">'+
-						      		'			  		<label for="totalFisico-formulario">Total Fisico</label>'+
+						      		'			  		<label for="totalFisico-formulario">Cantidad</label>'+
 					      			'		    		<input type="text" name="totalFisico" id="totalFisico-formulario" value="" class="form-control" disabled>'+
 					      			'		    	</div>'+
 						      		'			    <div class="form-group col-md-3">'+
@@ -1906,11 +1943,11 @@ $("body").on("click", ".borrarAccion",function(event){
 				      				'	    			<input type="text" name="totalFisico" id="unidadMedida-formulario" value="" class="form-control" disabled>'+
 				      				'	    		</div>'+
 						      		'			    <div class="form-group col-md-3">'+
-				      				'	  				<label for="clase-formulario">Clase</label>'+
+				      				'	  				<label for="clase-formulario">Tipo</label>'+
 			      					'    				<input type="text" name="totalFisico" id="clase-formulario" value="" class="form-control" disabled>'+
 			      					'    			</div>'+
 						      		'			    <div class="form-group col-md-3">'+
-			      					'  					<label for="totalFinanciero-formulario">Total Financiero</label>'+
+			      					'  					<label for="totalFinanciero-formulario">Asig. Financiera</label>'+
 								    '  					<div class="input-group input-group-sm">'+
 								    '  						<span class="input-group-addon">Gs</span>'+
 					      			'		    			<input type="text" name="totalFinanciero" id="totalFinanciero-formulario" value="" class="form-control" disabled>'+
@@ -2932,10 +2969,10 @@ $("body").on("click", ".borrarAccion",function(event){
 			}
 			if(accion[a].borrado == false){	
 				
-			cuerpoAccion +="<td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos'><span class='glyphicon glyphicon-usd modalVincularProducto' parametros="+accion[a].id+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"></span></button><button type='button' class='btn btn-default btn-sm'><span class='glyphicon glyphicon-time agregarActividad' parametros="+accion[a].id+"-"+accion[a].accionCatalogoId+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"></span></button><button type='button' class='btn btn-default btn-sm editarAccion' parametros="+accion[a].id+"-"+accion[a].accionCatalogoId+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+" data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+accion[a].id+"-"+accion[a].accionCatalogoId+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+" data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button></td></tr>";
+			cuerpoAccion +="<td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos Presupuestarios'><span class='glyphicon glyphicon-usd modalVincularProducto' parametros="+accion[a].id+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"></span></button><button type='button' class='btn btn-default btn-sm'><span class='glyphicon glyphicon-time agregarActividad' parametros="+accion[a].id+"-"+accion[a].accionCatalogoId+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"></span></button><button type='button' class='btn btn-default btn-sm editarAccion' parametros="+accion[a].id+"-"+accion[a].accionCatalogoId+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+" data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+accion[a].id+"-"+accion[a].accionCatalogoId+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+" data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button></td></tr>";
 			
 			}else{
-				cuerpoAccion +="<td class='text-center'><del>"+accion[a].fechaInicio+"</del></td><td class='text-center'><del>"+accion[a].fechaFin+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</del></td><td class='text-center'><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos'><span class='glyphicon glyphicon-usd modalVincularProducto' parametros="+accion[a].id+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"></span></button><button type='button' class='btn btn-default btn-sm'><span class='glyphicon glyphicon-time agregarActividad' parametros="+accion[a].id+"-"+accion[a].accionCatalogoId+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"></span></button><button type='button' class='btn btn-default btn-sm editarAccion' parametros="+accion[a].id+"-"+accion[a].accionCatalogoId+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+" data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+accion[a].id+"-"+accion[a].accionCatalogoId+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+" data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button></td></tr>";
+				cuerpoAccion +="<td class='text-center'><del>"+accion[a].fechaInicio+"</del></td><td class='text-center'><del>"+accion[a].fechaFin+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</del></td><td class='text-center'><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos Presupuestarios'><span class='glyphicon glyphicon-usd modalVincularProducto' parametros="+accion[a].id+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"></span></button><button type='button' class='btn btn-default btn-sm'><span class='glyphicon glyphicon-time agregarActividad' parametros="+accion[a].id+"-"+accion[a].accionCatalogoId+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"></span></button><button type='button' class='btn btn-default btn-sm editarAccion' parametros="+accion[a].id+"-"+accion[a].accionCatalogoId+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+" data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+accion[a].id+"-"+accion[a].accionCatalogoId+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+" data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button></td></tr>";
 				
 			}
 		}

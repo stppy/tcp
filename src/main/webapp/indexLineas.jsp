@@ -73,7 +73,7 @@
                   <li><a href="#tab_3-2" data-toggle="tab" title="Evolución"><i class="glyphicon glyphicon-stats"></i></a></li>
                   <li><a href="#tab_4-2" data-toggle="tab" title="Beneficiarios"><i class="glyphicon glyphicon-user"></i></a></li>
                   <li><a href="#tab_5-2" data-toggle="tab" title="Ubicaciones"><i class="glyphicon glyphicon glyphicon-map-marker"></i></a></li>
-              		Detalle de Linea de Accion      
+              		Detalle de Línea de Accion      
                </ul>
                 <div class="tab-content">
                   <div class="tab-pane active" id="tab_1-1"></div><!-- /.tab-pane -->
@@ -787,10 +787,10 @@ var $tabla=$("#lineasPorEntidad");
         								                '		<th>Subprograma</th>'+
         								                '		<th>Proyecto</th>'+
         								                '		<th>Producto</th>'+
-        								                '		<th>Total Fisico</th>'+
+        								                '		<th>Cantidad</th>'+
         								                '		<th>U. Medida</th>'+
-        								                '		<th>Clase</th>'+
-        								                '		<th>Total Financiero</th>'+
+        								                '		<th>Tipo</th>'+
+        								                '		<th>Asig. Financiera</th>'+
         								                '	</tr>'+
         								                '<tbody class="table-body-producto" id="TablaAccionHasProductos">'+
         								                '</tbody>'+
@@ -832,7 +832,7 @@ var $tabla=$("#lineasPorEntidad");
         			      					  
         						                		'<div class="row">'+
         						      					    '<div class="form-group col-md-2">'+
-        						      					  		'<label for="totalFisico-formulario">Total Fisico</label>'+
+        						      					  		'<label for="totalFisico-formulario">Cantidad</label>'+
         					      					    		'<input type="text" name="totalFisico" id="totalFisico-formulario" value="" class="form-control" disabled>'+
         					      					    	'</div>'+
         						      					    '<div class="form-group col-md-2">'+
@@ -840,11 +840,11 @@ var $tabla=$("#lineasPorEntidad");
         				      					    			'<input type="text" name="totalFisico" id="unidadMedida-formulario" value="" class="form-control" disabled>'+
         				      					    		'</div>'+
         						      					    '<div class="form-group col-md-2">'+
-        				      					  				'<label for="clase-formulario">Clase</label>'+
+        				      					  				'<label for="clase-formulario">Tipo</label>'+
         			      					    				'<input type="text" name="totalFisico" id="clase-formulario" value="" class="form-control" disabled>'+
         			      					    			'</div>'+			      					    		
         						      					    '<div class="form-group col-md-6">'+
-        			      					  					'<label for="totalFinanciero-formulario">Total Financiero</label>'+
+        			      					  					'<label for="totalFinanciero-formulario">Asig. Financiera</label>'+
         								      					'<div class="input-group input-group-sm">'+
         								      						'<span class="input-group-addon">Gs</span>'+
         					      					    			'<input type="text" name="totalFinanciero" id="totalFinanciero-formulario" value="" class="form-control" disabled>'+
