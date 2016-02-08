@@ -2622,35 +2622,40 @@ $("body").on("click", ".borrarAccion",function(event){
 			        var ubicacionDatalistProductos = document.getElementById('formulario');
 			        ubicacionDatalistProductos.appendChild(datalistProductos);
 			        
-				          for(var i = 0; i < datosProductos.producto.length ; i++) 
-			          {       
+     
 
-					    	$.ajax({
-					         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductos&producto='+datosProductos.producto[i].producto_id,
-					          	type:'get',
-					          	crossDomain: 'true',
-					          	dataType:'jsonp',
-				                jsonp: 'callback',
-				                jsonpCallback: 'jsonpCallbackProductoDetalle',
-					          	async:false,
-					          	success: function( data, textStatus, jqXHR) {
-					          		if(data.success){
-					          			jsonpCallbackProductoDetalle(data)
-					          		}
-					          	}    
-					        });
-			          } 
+			    	$.ajax({
+			         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductos',
+			          	type:'get',
+			          	crossDomain: 'true',
+			          	dataType:'jsonp',
+		                jsonp: 'callback',
+		                jsonpCallback: 'jsonpCallbackProductoDetalle',
+			          	async:false,
+			          	success: function( data, textStatus, jqXHR) {
+			          		if(data.success){
+			          			jsonpCallbackProductoDetalle(data,datosProductos)
+			          		}
+			          	}    
+			        });
+			          
 					    	
-			        	  function jsonpCallbackProductoDetalle(data) {
-						    	datosProductosDetalle = data;
-						    	
-					    	
-
+	        	  function jsonpCallbackProductoDetalle(data,datosProductos) {
+				    	datosProductosDetalle = data;
+				    	
+				    	for(var d = 0; d < datosProductos.producto.length; d++){
+				    		
+				    		for(var f = 0; f < datosProductosDetalle.productos.length; f++){
+				    			if(datosProductosDetalle.productos[f].codigoCatalogo == datosProductos.producto[d].producto_id){
 							          var option = document.createElement('option');
-							          option.setAttribute('value', datosProductosDetalle.productos[0].codigoCatalogo);
-							          option.setAttribute('label', datosProductosDetalle.productos[0].nombreCatalogo);
-							          datalistProductos.appendChild(option);      
-						    }
+							          option.setAttribute('value', datosProductosDetalle.productos[f].codigoCatalogo);
+							          option.setAttribute('label', datosProductosDetalle.productos[f].nombreCatalogo);
+							          datalistProductos.appendChild(option);  
+				    			}
+				    		}
+				    	}
+    
+				    }
 			        	  
 			      	  
 			    	
