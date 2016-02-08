@@ -1841,13 +1841,8 @@ $("body").on("click", ".borrarAccion",function(event){
 						      		'	<div class="table-responsive">'+
 						            '    <table class="table table-striped table-bordered  table-hover">'+
 						            '    	<tr>'+
-						            '    		<th>Nivel</th>'+
-						            '    		<th>Entidad</th>'+
-						            '    		<th>Tipo</th>'+
-						            '    		<th>Programa</th>'+
-						            '    		<th>Subprograma</th>'+
-						            '   		<th>Proyecto</th>'+
-						            '   		<th>Producto</th>'+
+						            '    		<th colspan="6" class="text-center">Cod. Pres.</th>'+
+						            '   		<th>Cod.Producto</th>'+
 						            '    		<th>Total Fisico</th>'+
 						            '    		<th>U. Medida</th>'+
 						            '    		<th>Clase</th>'+
