@@ -57,6 +57,19 @@
 			$("#modalAccion").remove();
 		}
 		
+		var unidadMedida = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		unidadMedida = JSON.parse(unidadMedida);
+		var optionUnidadMedida;
+		for(var u = 0; u < unidadMedida.length; u++)
+		{
+			optionUnidadMedida+='<option value="'+unidadMedida[u].id+'" parametro="'+unidadMedida[u].id+'">'+unidadMedida[u].descripcion+'</option>';
+		}
+		
 		var contenido = "";
 
 		contenido =			'<div class="modal fade" id="insLineaAccion" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">'+
@@ -74,6 +87,10 @@
 							'						<input type="hidden" id="idInsLineaAccion" value="">'+					
 							'						<select name="lineaAccion" id="nombreLineaAccionInsLineaAccion" class="form-control">'+optionLineaAccion+'</select>'+
 							'					</div>'+
+							'					<div class="form-group">'+
+							'						<label for="unidadMedida">U. Medida</label>'+
+							'						<input type="text" id="unidadMedidaInsLineaAccion" class="form-control" placeholder="U. Medida" disabled>'+
+							'					</div>'+				
 							'					<div class="form-group">'+
 							'						<label for="nombreInstitucion">Nombre Institución</label>'+
 							'						<select name="institucion" id="nombreInstitucionInsLineaAccion" class="form-control">'+optionInstitucion+'</select>'+
@@ -98,11 +115,50 @@
 							'</div>';
 							
 			$("#programacion").append(contenido);
+			$("#unidadMedidaInsLineaAccion")
 			$("#insLineaAccion").find("#formularioInsLineaAccion").append('<div class="form-group" id="guardarInsLineaAccionBoton"><button type="submit" class="btn btn-success" id="guardarInsLineaAccion" data-dismiss="modal">Guardar</button></div>');
 			$('#insLineaAccion').modal('show');
 
 	});
+	
+	$("body").on("change", "#nombreLineaAccionInsLineaAccion",function(event){
+		//var departamentoId = $(this).attr("parametro");
+		var catalogoLineaAccionId = $("#nombreLineaAccionInsLineaAccion option:selected").val();
+    	
+		var catalogoLineaAccion = $.ajax({
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId='+catalogoLineaAccionId,
+	      	type:'get',
+	      	dataType:'json',
+	      	async:false       
+	    }).responseText;
+		catalogoLineaAccion = JSON.parse(catalogoLineaAccion);
+		
+		var unidadMedida = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		unidadMedida = JSON.parse(unidadMedida);
+		var nombreUnidadMedida
+		
+		for(k = 0;k<catalogoLineaAccion.length; k++)
+		{
 
+			for(var u = 0; u < unidadMedida.length; u++)
+			{
+				if(catalogoLineaAccion[k].unidadMedidaId == unidadMedida[u].id)
+				{
+					nombreUnidadMedida = unidadMedida[u].descripcion
+				}
+			}
+			
+		}
+		
+		$("#unidadMedidaInsLineaAccion").val(nombreUnidadMedida);
+		
+	});
+	
 	$("body").on("click", "#guardarInsLineaAccion",function(event){		
 		//event.stopPropagation();
 		//event.preventDefault(); 
