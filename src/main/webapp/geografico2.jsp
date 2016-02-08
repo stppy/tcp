@@ -1592,9 +1592,9 @@ $(document).ready(function(){
 							                '		<th>Subprograma</th>'+
 							                '		<th>Proyecto</th>'+
 							                '		<th>Producto</th>'+
-							                '		<th>Total Fisico</th>'+
+							                '		<th>Cantidad</th>'+
 							                '		<th>U. Medida</th>'+
-							                '		<th>Clase</th>'+
+							                '		<th>Tipo</th>'+
 							                '		<th>Total Financiero</th>'+
 							                '		<th>Asignación Financiera</th>'+
 							                '		<th>Destinatarios</th>'+
@@ -1650,7 +1650,7 @@ $(document).ready(function(){
 		      					  
 					                		'<div class="row">'+
 					      					    '<div class="form-group col-md-3">'+
-					      					  		'<label for="totalFisico-formulario">Total Fisico</label>'+
+					      					  		'<label for="totalFisico-formulario">Cantidad</label>'+
 				      					    		'<input type="text" name="totalFisico" id="totalFisico-formulario" value="" class="form-control" disabled>'+
 				      					    	'</div>'+
 					      					    '<div class="form-group col-md-3">'+
@@ -1658,7 +1658,7 @@ $(document).ready(function(){
 			      					    			'<input type="text" name="totalFisico" id="unidadMedida-formulario" value="" class="form-control" disabled>'+
 			      					    		'</div>'+
 					      					    '<div class="form-group col-md-3">'+
-			      					  				'<label for="clase-formulario">Clase</label>'+
+			      					  				'<label for="clase-formulario">Tipo</label>'+
 		      					    				'<input type="text" name="totalFisico" id="clase-formulario" value="" class="form-control" disabled>'+
 		      					    			'</div>'+			      					    		
 					      					    '<div class="form-group col-md-3">'+

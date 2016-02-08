@@ -1848,9 +1848,9 @@ $("body").on("click", ".borrarAccion",function(event){
 						            '    		<th>Subprograma</th>'+
 						            '   		<th>Proyecto</th>'+
 						            '   		<th>Producto</th>'+
-						            '    		<th>Total Fisico</th>'+
+						            '    		<th>Cantidad</th>'+
 						            '    		<th>U. Medida</th>'+
-						            '    		<th>Clase</th>'+
+						            '    		<th>Tipo</th>'+
 						            '    		<th>Total Financiero</th>'+
 						            '    		<th>Asignación Financiera</th>'+
 						            '    		<th>Destinatarios</th>'+
@@ -1903,7 +1903,7 @@ $("body").on("click", ".borrarAccion",function(event){
 					      					
 					      			'			<div class="row">'+
 						      		'			    <div class="form-group col-md-3">'+
-						      		'			  		<label for="totalFisico-formulario">Total Fisico</label>'+
+						      		'			  		<label for="totalFisico-formulario">Cantidad</label>'+
 					      			'		    		<input type="text" name="totalFisico" id="totalFisico-formulario" value="" class="form-control" disabled>'+
 					      			'		    	</div>'+
 						      		'			    <div class="form-group col-md-3">'+
