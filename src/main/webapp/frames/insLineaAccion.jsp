@@ -1443,9 +1443,9 @@ $("body").on("click", ".consultaBorrarAccion",function(event){
 						'		        <h4 class="modal-title" >Borrar - Restaurar Acción</h4>'+
 						'			</div>'+
 						'		    <div class="modal-body">'+
-						'			<div id="mensajeBorrado"></div>'+
+						'			<div id="mensajeBorradoAccion"></div>'+
 						'		    </div>'+
-						'			<div class="modal-footer" id="agregarBotonBorrado">'+
+						'			<div class="modal-footer" id="agregarBotonBorradoAccion">'+
 						'			</div>'+
 						'		</div>'+ 
 						'	</div>'+
@@ -1454,17 +1454,17 @@ $("body").on("click", ".consultaBorrarAccion",function(event){
 		$("#programacion").append(contenido);
 		
 		if(accion[0].borrado == true){
-			$("#mensajeBorrado").html("");
-			$("#mensajeBorrado").append('<h3 class="text-center">Ud. esta seguro que desea RESTABLACER<strong> '+nombreAccion+'</strong></h3>');
-			$("#agregarBotonBorrado").html("");
-			$("#agregarBotonBorrado").append('<button type="button" class="btn btn-success btn-sm borrarAccion" parametros='+id+'>Restaurar Acción</button>');
-			$("#agregarBotonBorrado").append('<button type="button" class="btn btn-success btn-sm agregarAccion"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'>Cerrar</button>');
+			$("#mensajeBorradoAccion").html("");
+			$("#mensajeBorradoAccion").append('<h3 class="text-center">Ud. esta seguro que desea RESTABLACER<strong> '+nombreAccion+'</strong></h3>');
+			$("#agregarBotonBorradoAccion").html("");
+			$("#agregarBotonBorradoAccion").append('<button type="button" class="btn btn-success btn-sm borrarAccion" id="botonRestaurarAccion" parametros='+id+'-r>Restaurar Acción</button>');
+			$("#agregarBotonBorradoAccion").append('<button type="button" class="btn btn-success btn-sm agregarAccion"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'>Cerrar</button>');
 		}else{
-			$("#mensajeBorrado").html("");
-			$("#mensajeBorrado").append('<h3 class="text-center">Ud. esta seguro que desea BORRAR<strong> '+nombreAccion+'</strong></h3');
-			$("#agregarBotonBorrado").html("");
-			$("#agregarBotonBorrado").append('<button type="button" class="btn btn-danger btn-sm borrarAccion" parametros='+id+'>Borrar Acción</button>');
-			$("#agregarBotonBorrado").append('<button type="button" class="btn btn-success btn-sm agregarAccion"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'>Cerrar</button>');
+			$("#mensajeBorradoAccion").html("");
+			$("#mensajeBorradoAccion").append('<h3 class="text-center">Ud. esta seguro que desea BORRAR<strong> '+nombreAccion+'</strong></h3');
+			$("#agregarBotonBorradoAccion").html("");
+			$("#agregarBotonBorradoAccion").append('<button type="button" class="btn btn-danger btn-sm borrarAccion" id="botonBorradoAccion" parametros='+id+'-b>Borrar Acción</button>');
+			$("#agregarBotonBorradoAccion").append('<button type="button" class="btn btn-success btn-sm agregarAccion"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'>Cerrar</button>');
 		}
 		
 		$('#modalBorrarAccion').modal('show');
@@ -1476,6 +1476,18 @@ $("body").on("click", ".borrarAccion",function(event){
 	var parametros = $(this).attr("parametros");
     var idParsed = parametros.split("-"); 
     var id = idParsed[0];
+    var estado = idParsed[1];
+    
+    if(estado == "b"){
+		$("#botonBorradoAccion").remove();
+    	$("#mensajeBorradoAccion").html("");
+    	$("#mensajeBorradoAccion").html("<h3 class='text-center'>BORRADO EXITOSAMENTE!!</h3>");
+    }else{
+		$("#botonRestaurarAccion").remove();
+    	$("#mensajeBorradoAccion").html("");
+    	$("#mensajeBorradoAccion").html("<h3 class='text-center'>RESTAURADO EXITOSAMENTE!!</h3>");
+    }
+
     
 			var accion = $.ajax({
 				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&accionId='+id,
@@ -1499,8 +1511,6 @@ $("body").on("click", ".borrarAccion",function(event){
 		        contentType: 'application/json',
 		        mimeType: 'application/json',
 		        success: function (data) {
-		        	$("#mensajeBorrado").html("");
-		        	$("#mensajeBorrado").html("<h3 class='text-center'>CAMBIO EXITOSO!!</h3>");
 		        	
 		        	},
 		
@@ -3461,18 +3471,30 @@ $("body").on("click", ".consultaBorrarCronograma",function(event){
 						'		        <h4 class="modal-title">Borrar - Reestablecer Cronograma</h4>'+
 						'			</div>'+
 						'		    <div class="modal-body" >'+
-						'			<div id="mensajeBorrado"><center>Borrar o reestablecer le Cronograma: <strong>'+actividades[0].nombre+'</strong></center></div>'+
+						'			<div id="mensajeBorradoCronograma"></div>'+
 						'		    </div>'+
-						'							<div class="modal-footer">'+
-						'								<button type="button" class="btn btn-success btn-sm borrarCronograma" id="botonBorrarCronograma" parametros='+cronogramaId+'>Borrar Cronograma</button>'+
-						'								<button type="button" class="btn btn-success btn-sm borrarCronograma" id="botonReestablecerCronograma" parametros='+cronogramaId+'>Reestablecer Cronograma</button>'+						
-						'								<button type="button" class="btn btn-success btn-sm agregarActividad"  parametros ='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'>Cerrar</button>'+
-						'							</div>'+
+						'			<div class="modal-footer" id="pieCronograma">'+
+						'			</div>'+
 						'		</div>'+ 
 						'	</div>'+
 						'</div>';
 						
 		$("#programacion").append(contenido);
+		if(actividades[0].borrado == true){
+			$("#mensajeBorradoCronograma").html("");
+			$("#mensajeBorradoCronograma").append("<h3 class='text-center'>Ud esta seguro que desea RESTAURAR <strong>"+actividades[0].nombre+"</strong></h3>");
+			
+			$("#pieCronograma").html("");
+			$("#pieCronograma").append("<button type='button' class='btn btn-success btn-sm borrarCronograma' id='botonRestaurarCronograma' parametros="+cronogramaId+"-r>Restaurar Cronograma</button>");
+			$("#pieCronograma").append("<button type='button' class='btn btn-success btn-sm agregarActividad'  parametros ="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accionId+"-"+accionCatalogoId+">Cerrar</button>");
+		}else{
+			$("#mensajeBorradoCronograma").html("");
+			$("#mensajeBorradoCronograma").append("<h3 class='text-center'>Ud esta seguro que desea BORRAR <strong>"+actividades[0].nombre+"</strong></h3>");
+			
+			$("#pieCronograma").html("");
+			$("#pieCronograma").append("<button type='button' class='btn btn-danger btn-sm borrarCronograma' id='botonBorrarCronograma' parametros="+cronogramaId+"-b>Borrar Cronograma</button>");
+			$("#pieCronograma").append("<button type='button' class='btn btn-success btn-sm agregarActividad'  parametros ="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accionId+"-"+accionCatalogoId+">Cerrar</button>");
+		}
 		$('#modalBorrarCronograma').modal('show');
     
 	
@@ -3484,6 +3506,17 @@ $("body").on("click", ".borrarCronograma",function(event){
 	var parametros = $(this).attr("parametros");
     var idParsed = parametros.split("-"); 
     var cronogramaId = idParsed[0];
+    var estatus = idParsed[1];
+
+    if(estatus == "b"){
+    	$("#botonBorrarCronograma").remove();
+    	$("#mensajeBorradoCronograma").html("");
+    	$("#mensajeBorradoCronograma").html("<h3 class='text-center'>Borrado Exitosamente!!</h3>");
+    }else{
+    	$("#botonRestaurarCronograma").remove();
+    	$("#mensajeBorradoCronograma").html("");
+    	$("#mensajeBorradoCronograma").html("<h3 class='text-center'>Restaurado Exitosamente!!</h3>");
+    }
     
 				var actividades = $.ajax({
 					url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getCronograma&cronogramaId='+cronogramaId,
@@ -3507,8 +3540,6 @@ $("body").on("click", ".borrarCronograma",function(event){
 		        contentType: 'application/json',
 		        mimeType: 'application/json',
 		        success: function (data) {
-		        	$("#mensajeBorrado").html("");
-		        	$("#mensajeBorrado").html("El Cronograma ha sido modificado");
 		        	
 		        	},
 		
@@ -4575,7 +4606,7 @@ $("body").on("click", ".guardarCosto",function(event){
         		var cuerpoAvanceCosto = "";
         		for(var d = 0; d < webServicesAvanceCosto.length; d++)
         		{
-        			cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].monto+'</td><td>'+webServicesAvanceCosto[d].codigoContratacional+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td>'+webServicesAvanceCosto[d].avanceId+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Borrar" ><span class="fa fa-trash"></span></button></td></tr>';
+        			cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].monto+'</td><td>'+webServicesAvanceCosto[d].codigoContratacional+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Borrar" ><span class="fa fa-trash"></span></button></td></tr>';
         		}
         		
         		$("#listaCosto").html("");
