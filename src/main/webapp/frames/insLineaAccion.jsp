@@ -1413,7 +1413,7 @@ $("body").on("click", ".consultaBorrarAccion",function(event){
 	  	async:false       
 	}).responseText;
 	accion = JSON.parse(accion);
-    
+
 	var catalogoAccion = $.ajax({
 		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo',
 	  	type:'get',
@@ -1440,25 +1440,35 @@ $("body").on("click", ".consultaBorrarAccion",function(event){
 						'		<div class="modal-content" >'+
 						'			<div class="modal-header">'+
 						'		        <button type="button" class="close agregarAccion"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+' aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
-						'		        <h4 class="modal-title">Borrar - Reestablecer Acción</h4>'+
+						'		        <h4 class="modal-title" >Borrar - Restaurar Acción</h4>'+
 						'			</div>'+
-						'		    <div class="modal-body" >'+
-						'			<div id="mensajeBorrado"><center>Borrar o reestablecer la Acción: <strong>'+nombreAccion+'</strong></center></div>'+
+						'		    <div class="modal-body">'+
+						'			<div id="mensajeBorrado"></div>'+
 						'		    </div>'+
-						'							<div class="modal-footer">'+
-						'								<button type="button" class="btn btn-success btn-sm borrarAccion" id="botonBorrarAccion" parametros='+id+'>Borrar Acción</button>'+
-						'								<button type="button" class="btn btn-success btn-sm borrarAccion" id="botonReestablecerAccion" parametros='+id+'>Reestablecer Acción</button>'+						
-						'								<button type="button" class="btn btn-success btn-sm agregarAccion"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'>Cerrar</button>'+
-						'							</div>'+
+						'			<div class="modal-footer" id="agregarBotonBorrado">'+
+						'			</div>'+
 						'		</div>'+ 
 						'	</div>'+
 						'</div>';
 						
 		$("#programacion").append(contenido);
+		
+		if(accion[0].borrado == true){
+			$("#mensajeBorrado").html("");
+			$("#mensajeBorrado").append('<h3 class="text-center">Ud. esta seguro que desea RESTABLACER<strong> '+nombreAccion+'</strong></h3>');
+			$("#agregarBotonBorrado").html("");
+			$("#agregarBotonBorrado").append('<button type="button" class="btn btn-success btn-sm borrarAccion" parametros='+id+'>Restaurar Acción</button>');
+			$("#agregarBotonBorrado").append('<button type="button" class="btn btn-success btn-sm agregarAccion"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'>Cerrar</button>');
+		}else{
+			$("#mensajeBorrado").html("");
+			$("#mensajeBorrado").append('<h3 class="text-center">Ud. esta seguro que desea BORRAR<strong> '+nombreAccion+'</strong></h3');
+			$("#agregarBotonBorrado").html("");
+			$("#agregarBotonBorrado").append('<button type="button" class="btn btn-danger btn-sm borrarAccion" parametros='+id+'>Borrar Acción</button>');
+			$("#agregarBotonBorrado").append('<button type="button" class="btn btn-success btn-sm agregarAccion"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'>Cerrar</button>');
+		}
+		
 		$('#modalBorrarAccion').modal('show');
-    
-	
-					
+			
 });
 	
 //borrar accion
@@ -1490,7 +1500,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		        mimeType: 'application/json',
 		        success: function (data) {
 		        	$("#mensajeBorrado").html("");
-		        	$("#mensajeBorrado").html("La Acción ha sido modificada");
+		        	$("#mensajeBorrado").html("<h3 class='text-center'>CAMBIO EXITOSO!!</h3>");
 		        	
 		        	},
 		
