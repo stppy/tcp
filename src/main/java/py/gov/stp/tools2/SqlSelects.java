@@ -508,8 +508,8 @@ public class SqlSelects {
 				objeto.setId(rs.getInt("id"));
 				objeto.setCosto(rs.getDouble("costo"));
 				objeto.setPeso(rs.getInt("peso"));
-				objeto.setFechaInicio(rs.getDate("fecha_inicio"));
-				objeto.setFechaFin(rs.getDate("fecha_fin"));
+				objeto.setFechaInicio(rs.getString("fecha_inicio"));
+				objeto.setFechaFin(rs.getString("fecha_fin"));
 				objeto.setVersion(rs.getInt("version"));
 				objeto.setBorrado(rs.getBoolean("borrado"));
 				objeto.setMeta1(rs.getDouble("meta1"));

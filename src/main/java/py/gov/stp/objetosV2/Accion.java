@@ -5,8 +5,8 @@ public class Accion {
 	protected int id;
 	protected double costo;
 	protected int peso;
-	protected Date fechaInicio;
-	protected Date fechaFin;
+	protected String fechaInicio;
+	protected String fechaFin;
 	protected int version;
 	protected double meta1;
 	protected double meta2;
@@ -55,25 +55,25 @@ public class Accion {
 
 
 
-	public Date getFechaInicio() {
+	public String getFechaInicio() {
 		return fechaInicio;
 	}
 
 
 
-	public void setFechaInicio(Date fechaInicio) {
+	public void setFechaInicio(String fechaInicio) {
 		this.fechaInicio = fechaInicio;
 	}
 
 
 
-	public Date getFechaFin() {
+	public String getFechaFin() {
 		return fechaFin;
 	}
 
 
 
-	public void setFechaFin(Date fechaFin) {
+	public void setFechaFin(String fechaFin) {
 		this.fechaFin = fechaFin;
 	}
 
