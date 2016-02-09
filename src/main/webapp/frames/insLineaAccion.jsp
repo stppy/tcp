@@ -1201,7 +1201,7 @@
 							
 							'		      	<div class="row">'+ 
 							'		      		<div class="col-md-12">'+
-							'						<div class="box box-danger">'+
+							'						<div class="box box-warning">'+
 							'		                	<div class="box-header with-border">'+
 							'		                  		<h3 class="box-title">Editar Acción</h3>'+
 							'	                  			<div class="box-tools pull-right">'+
@@ -1211,7 +1211,7 @@
 							'		                    		</button>'+
 							'		                  		</div>'+
 							'               			</div>'+//fin box-heder
-							'               			<div class="box-body">'+
+							'               			<div class="box-body cuerpoEdicionAccion" >'+
 							
 							'								<form role="form">'+
 							'									<div class="table-responsive">'+
@@ -1263,7 +1263,7 @@
 											
 							'               			</div>'+//fin box-body
 							'							<div class="modal-footer">'+
-							'								<button type="button" class="btn btn-success btn-sm actualizarAccion" parametros='+id+'-'+accionCatalogoId+'-'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+' >Actualizar Acción</button>'+
+							'								<button type="button" class="btn btn-success btn-sm actualizarAccion" id="botonActualizarAccion" parametros='+id+'-'+accionCatalogoId+'-'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+' >Actualizar Acción</button>'+
 							'								<button type="button" class="btn btn-success btn-sm agregarAccion" data-dismiss="modal" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+' >Cerrar</button>'+
 
 							'							</div>'+
@@ -1346,7 +1346,11 @@ $("body").on("click", ".actualizarAccion",function(event){
     $("#tercerTrimestre-formulario").val('');
     $("#cuartoTrimestre-formulario").val('');
     $("#unidadMedidaAccion").val('');
-
+    $('.cuerpoEdicionAccion').html('');
+    $(".cuerpoEdicionAccion").html('<h3 class="text-center">La Acción ha sido modificada</h3>');
+    $("#botonActualizarAccion").remove();
+    
+    
     
     var datos = new Object();
     datos.id = id;
