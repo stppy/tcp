@@ -1029,7 +1029,6 @@
 			optionCatalogoAccion+='<option value="'+catalogoAccion[l].id+'" parametro="'+catalogoAccion[l].id+'">'+catalogoAccion[l].nombre+'</option>';
 		}
 		
-
 		
 		var unidadMedida = $.ajax({
 			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
@@ -3279,43 +3278,6 @@ $("body").on("click", ".editarCronograma", function(event){
 		optionTipoHito+='<option value="'+hitoTipo[h].id+'" parametro="'+hitoTipo[h].id+'">'+hitoTipo[h].nombre+'</option>';
 	}
 	
-	
-	
-	
-	for(var a = 0; u < actividades.length; a++)
-	{
-		var nombreUnidadMedida = "";
-		var nombreHitoTipo = "";
-		for(var x = 0; x < unidadMedida.length; x++)
-		{
-			if(unidadMedida[x].id == actividades[a].unidad_medida_id)
-			{
-				nombreUnidadMedida = unidadMedida[x].descripcion;
-			}
-		}
-		
-		for(var l = 0; l < hitoTipo.length; l++)
-		{
-			if(hitoTipo[l].id == actividades[u].hito_tipo_id)
-			{
-				nombreHitoTipo = hitoTipo[l].nombre;
-			}
-		}
-		
-		
-		if(actividades[u].borrado == false)
-		{
-			cuerpoCronograma+='<tr><td>'+actividades[a].nombre+'</td><td>'+actividades[a].descripcion+'</td><td>'+nombreUnidadMedida+'</td><td>'+nombreHitoTipo+'</td><td>'+actividades[u].proporcion+'</td><td>'+actividades[a].version+'</td><td><button type="button" class="btn btn-default btn-sm editarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+' data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Hito"><span class="glyphicon glyphicon-time agregarProgramacion" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[a].id+'></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[a].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
-		}else{
-			cuerpoCronograma+='<tr><td><del>'+actividades[a].nombre+'</del></td><td><del>'+actividades[a].descripcion+'</del></td><td><del>'+nombreUnidadMedida+'</del></td><td><del>'+nombreHitoTipo+'</del></td><td><del>'+actividades[a].proporcion+'</del></td><td><del>'+actividades[a].version+'</del></td><td><button type="button" class="btn btn-default btn-sm editarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+' data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Hito"><span class="glyphicon glyphicon-time agregarProgramacion" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[a].id+'></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[a].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
-		}
-	}
-	
-	
-	
-	
-	
-	
 	var cuerpoModalEditarCronograma = "";
 	cuerpoModalEditarCronograma =	'<div class="modal fade" id="modalEditarCronograma" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="myLargeModalLabel">'+
 						'	<div class="modal-dialog modal-lg" style="width:90%">'+
@@ -3337,8 +3299,8 @@ $("body").on("click", ".editarCronograma", function(event){
 						'									<table class="table table-hover">'+
 						'										<tbody>'+
 						'			      							<form class="form-horizontal" role="form">'+
-						'												<tr><td><label for="nombreCronograma">Nombre</label><input type="text" id="nombreCronograma" value='+actividades[0].nombre+' class="form-control" /></td><td><label for="descripcionCronograma">Descripcion</label><input type="text" id="descripcionCronograma" class="form-control" value='+actividades[0].descripcion+'  /></td></tr>'+
-						'												<tr><td><div class="form-group"><label for="unidadMedidaIdCronograma">Unidad de Medida</label><select id="selectorUnidadMedidaCronograma" class="form-control">'+optionUnidadMedida+'</div></td><td><div class="form-group"><label for="hitoTipoIdCronograma">Tipo Cronograma</label><select id="selectorHitoTipoIdCronograma" class="form-control">'+optionTipoHito+'</div></td></tr>'+
+						'												<tr><td><label for="nombreCronograma">Nombre</label><input type="text" id="nombreCronograma" value="'+actividades[0].nombre+'" class="form-control" /></td><td><label for="descripcionCronograma">Descripcion</label><input type="text" id="descripcionCronograma" class="form-control" value="'+actividades[0].descripcion+'"  /></td></tr>'+
+						'												<tr><td><div class="form-group"><label for="unidadMedidaIdCronograma">Unidad de Medida</label><select id="selectorUnidadMedidaCronograma" class="form-control">'+optionUnidadMedida+'</div></td><td><div class="form-group"><label for="hitoTipoIdCronograma">Tipo Cronograma</label><select id="selectorHitoTipoIdCronograma" class="form-control">"'+optionTipoHito+'"</div></td></tr>'+
 						'												<tr><td><label for="proporcionCronograma">Proporción</label><input type="text" id="proporcionCronograma" value='+actividades[0].proporcion+' class="form-control" /></td><td><label for="versionCronograma">Versión</label><input type="text" id="versionCronograma" class="form-control" value='+actividades[0].version+'  /></td></tr>'+
 						'			      							</form>	'+												
 						'										</tbody>'+
