@@ -1649,8 +1649,8 @@ public static boolean borradoHito(Hito objeto){
 					 String										query = "update accion set ";
 					 if(objeto.getCosto() != 0)					query+= "costo="+objeto.getCosto()+"";
 					 if(objeto.getPeso() != 0)					query+= ", peso="+objeto.getPeso()+"";
-					 //if(objeto.getFechaInicio() != null)		query+= ", fecha_inicio="+objeto.getFechaInicio()+"";
-					 //if(objeto.getFechaFin() != null)			query+= ", fecha_fin="+objeto.getFechaFin()+"";
+					 if(objeto.getFechaInicio() != null)		query+= ", fecha_inicio='"+objeto.getFechaInicio()+"'";
+					 if(objeto.getFechaFin() != null)			query+= ", fecha_fin='"+objeto.getFechaFin()+"'";
 					 if(objeto.getVersion() != 0)				query+= ", version="+objeto.getVersion()+"";
 					 if(objeto.getMeta1() != 0)					query+= ", meta1="+objeto.getMeta1()+"";
 					 if(objeto.getMeta2() != 0)					query+= ", meta2="+objeto.getMeta2()+"";
