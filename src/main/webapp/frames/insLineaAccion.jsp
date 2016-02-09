@@ -4216,7 +4216,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	var cuerpoAvanceCosto = "";
 	for(var d = 0; d < webServicesAvanceCosto.length; d++)
 	{
-		cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].monto+'</td><td>'+webServicesAvanceCosto[d].codigoContratacional+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td>'+webServicesAvanceCosto[d].avanceId+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Borrar" ><span class="fa fa-trash"></span></button></td></tr>';
+		cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].monto+'</td><td>'+webServicesAvanceCosto[d].codigoContratacional+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Borrar" ><span class="fa fa-trash"></span></button></td></tr>';
 	}
 			
 	var contenidoModalAdministrador = "";
@@ -4294,8 +4294,9 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'											<table class="table table-hover">'+
 									'												<tbody>'+
 									'			      									<form class="form-horizontal" role="form">'+
-									'													<tr><td><label for="montoCosto">Monto</label><input type="number" id="montoCosto" class="form-control" placeholder="Ingrese Monto" /></td></tr>'+
-									'													<input type="hidden" id="codigoContratacionalCosto" value="1" /><input type="hidden" id="objetoGastoCosto" value="1"/><input type="hidden" id="avanceIdCosto" value="'+avanceId+'"/>'+		
+									'													<tr><td><label for="codigoContratacionalCosto">Cod. Contratacional</label><input type="number" id="codigoContratacionalCosto" class="form-control" placeholder="Ingrese Codigo Contratacional" /></td><td><label for="objetoGastoCosto">Objeto Gasto</label><input type="number" id="objetoGastoCosto" class="form-control" placeholder="Ingrese Objeto de Gasto" /></td></tr>'+									
+									'													<tr><td colspan="2"><label for="montoCosto">Monto</label><input type="number" id="montoCosto" class="form-control" placeholder="Ingrese Monto" /></td></tr>'+
+									'													<input type="hidden" id="avanceIdCosto" value="'+avanceId+'"/>'+		
 									'			      									</form>	'+												
 									'												</tbody>'+
 									'											</table>'+
@@ -4322,7 +4323,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'										<div class="table-responsive">'+
 									'											<table class="table table-hover table-bordered">'+
 									'												<thead>'+
-									'													<tr class="active"><th>Monto</th><th>CodigoContratacional</th><th>ObjetoGasto</th><th>AvanceId</th><th class="text-center">Administrar</th></tr>'+
+									'													<tr class="active"><th>Monto</th><th>Cod.Contratacional</th><th>ObjetoGasto</th><th class="text-center">Administrar</th></tr>'+
 									'												</thead>'+
 									'												<tbody id="listaCosto">'+
 									'												</tbody>'+
@@ -4397,7 +4398,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'										<div class="table-responsive">'+
 									'											<table class="table table-hover table-bordered">'+
 									'												<thead>'+
-									'													<tr class="active"><th>Nombre</th><th>Descripción</th><th>Url</th><th>WsId</th><th>Versión</th><th>AvanceId</th><th class="text-center">Administrar</th></tr>'+
+									'													<tr class="active"><th>Nombre</th><th>Descripción</th><th>Url</th><th>Versión</th><th class="text-center">Administrar</th></tr>'+
 									'												</thead>'+
 									'												<tbody>'+
 									'												</tbody id="listaEvidencia">'+
