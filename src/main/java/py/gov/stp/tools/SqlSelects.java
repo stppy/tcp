@@ -866,7 +866,7 @@ public class SqlSelects {
 
 	public static List<Departamento> selectDepartamento() throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select * from departamento ORDER BY id ASC";
+		String query = " select * from departamento where paisid = 'PY' ORDER BY id ASC";
 
 		Statement statement = null;
 		ResultSet rs=null;
