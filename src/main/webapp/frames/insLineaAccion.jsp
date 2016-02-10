@@ -1482,46 +1482,45 @@ $("body").on("click", ".borrarAccion",function(event){
     var id = idParsed[0];
     var estado = idParsed[1];
     
-    if(estado == "b"){
-		$("#botonBorradoAccion").remove();
-    	$("#mensajeBorradoAccion").html("");
-    	$("#mensajeBorradoAccion").html("<h3 class='text-center'>BORRADO EXITOSAMENTE!!</h3>");
-    }else{
-		$("#botonRestaurarAccion").remove();
-    	$("#mensajeBorradoAccion").html("");
-    	$("#mensajeBorradoAccion").html("<h3 class='text-center'>RESTAURADO EXITOSAMENTE!!</h3>");
-    }
+	var accion = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&accionId='+id,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	accion = JSON.parse(accion);
+    
+    var objeto = new Object();
+    objeto.id = id;
+    objeto.borrado= accion[0].borrado;
 
     
-			var accion = $.ajax({
-				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&accionId='+id,
-			  	type:'get',
-			  	dataType:'json',
-			  	async:false       
-			}).responseText;
-			accion = JSON.parse(accion);
-		    
-		    var objeto = new Object();
-		    objeto.id = id;
-		    objeto.borrado= accion[0].borrado;
+  	var info = JSON.stringify(objeto);
+    $.ajax({
+        url: "ajaxUpdate2?accion=borradoAccion",
+        type: 'POST',
+        dataType: 'json',
+        data: info,
+        contentType: 'application/json',
+        mimeType: 'application/json',
+        success: function (data) {
+        	
+            if(estado == "b"){
+        		$("#botonBorradoAccion").remove();
+            	$("#mensajeBorradoAccion").html("");
+            	$("#mensajeBorradoAccion").html("<h3 class='text-center'>BORRADO EXITOSAMENTE!!</h3>");
+            }else{
+        		$("#botonRestaurarAccion").remove();
+            	$("#mensajeBorradoAccion").html("");
+            	$("#mensajeBorradoAccion").html("<h3 class='text-center'>RESTAURADO EXITOSAMENTE!!</h3>");
+        	}
 
-		    
-		  	var info = JSON.stringify(objeto);
-		    $.ajax({
-		        url: "ajaxUpdate2?accion=borradoAccion",
-		        type: 'POST',
-		        dataType: 'json',
-		        data: info,
-		        contentType: 'application/json',
-		        mimeType: 'application/json',
-		        success: function (data) {
-		        	
-		        	},
-		
-		        error: function(data,status,er) {
-		        	
-		        	}
-			 });
+        },
+
+        error: function(data,status,er) {
+        	
+        	}
+	 });
 
 	
 });
@@ -3022,6 +3021,16 @@ $("body").on("click", ".borrarAccion",function(event){
 	    }).responseText;
 		distritos = JSON.parse(distritos);
 		
+		var unidadMedida = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		unidadMedida = JSON.parse(unidadMedida);
+		var nombreUnidadMedidaAccion;
+
+		
 		var nombreDepartamento;
 		var cuerpoAccion = "";
 		var nombreDistrito;
@@ -3036,6 +3045,7 @@ $("body").on("click", ".borrarAccion",function(event){
 			  	async:false       
 			}).responseText;
 			catalogoAccion = JSON.parse(catalogoAccion);
+			
 			if (accion[a].borrado == false){
 				cuerpoAccion +="<tr><td class='text-center'>"+catalogoAccion[0].nombre+"</td>";
 				}else{
@@ -3068,9 +3078,15 @@ $("body").on("click", ".borrarAccion",function(event){
 				}
 			}
 			
-
-	
+			for(var u = 0; u < unidadMedida.length; u++)
+			{
+				if(catalogoAccion[0].idUnidadMedida == unidadMedida[u].id){
+					nombreUnidadMedidaAccion = unidadMedida[u].descripcion;
+				}
+			}
 			
+
+
 			
 			if(accion[a].borrado == false){	
 				cuerpoAccion +="<td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+nombreUnidadMedidaAccion+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos Presupuestarios'><span class='glyphicon glyphicon-usd modalVincularProducto' parametros="+accion[a].id+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"></span></button><button type='button' class='btn btn-default btn-sm'><span class='glyphicon glyphicon-time agregarActividad' parametros="+accion[a].id+"-"+accion[a].accionCatalogoId+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"></span></button><button type='button' class='btn btn-default btn-sm editarAccion' parametros="+accion[a].id+"-"+accion[a].accionCatalogoId+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+" data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+accion[a].id+"-"+accion[a].accionCatalogoId+"-"+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+" data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button></td></tr>";
@@ -3511,46 +3527,46 @@ $("body").on("click", ".borrarCronograma",function(event){
     var idParsed = parametros.split("-"); 
     var cronogramaId = idParsed[0];
     var estatus = idParsed[1];
-
-    if(estatus == "b"){
-    	$("#botonBorrarCronograma").remove();
-    	$("#mensajeBorradoCronograma").html("");
-    	$("#mensajeBorradoCronograma").html("<h3 class='text-center'>Borrado Exitosamente!!</h3>");
-    }else{
-    	$("#botonRestaurarCronograma").remove();
-    	$("#mensajeBorradoCronograma").html("");
-    	$("#mensajeBorradoCronograma").html("<h3 class='text-center'>Restaurado Exitosamente!!</h3>");
-    }
     
-				var actividades = $.ajax({
-					url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getCronograma&cronogramaId='+cronogramaId,
-				  	type:'get',
-				  	dataType:'json',
-				  	async:false       
-				}).responseText;
-				actividades = JSON.parse(actividades);
-		    
-		    var objeto = new Object();
-		    objeto.id = cronogramaId;
-		    objeto.borrado= actividades[0].borrado;
+	var actividades = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getCronograma&cronogramaId='+cronogramaId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	actividades = JSON.parse(actividades);
+    
+    var objeto = new Object();
+    objeto.id = cronogramaId;
+    objeto.borrado= actividades[0].borrado;
 
-		    
-		  	var info = JSON.stringify(objeto);
-		    $.ajax({
-		        url: "ajaxUpdate2?accion=borradoCronograma",
-		        type: 'POST',
-		        dataType: 'json',
-		        data: info,
-		        contentType: 'application/json',
-		        mimeType: 'application/json',
-		        success: function (data) {
-		        	
-		        	},
-		
-		        error: function(data,status,er) {
-		        	
-		        	}
-			 });
+    
+  	var info = JSON.stringify(objeto);
+    $.ajax({
+        url: "ajaxUpdate2?accion=borradoCronograma",
+        type: 'POST',
+        dataType: 'json',
+        data: info,
+        contentType: 'application/json',
+        mimeType: 'application/json',
+        success: function (data) {
+        	
+            if(estatus == "b"){
+            	$("#botonBorrarCronograma").remove();
+            	$("#mensajeBorradoCronograma").html("");
+            	$("#mensajeBorradoCronograma").html("<h3 class='text-center'>Borrado Exitosamente!!</h3>");
+            }else{
+            	$("#botonRestaurarCronograma").remove();
+            	$("#mensajeBorradoCronograma").html("");
+            	$("#mensajeBorradoCronograma").html("<h3 class='text-center'>Restaurado Exitosamente!!</h3>");
+            }
+        	
+        },
+
+        error: function(data,status,er) {
+        	
+        	}
+	 });
 
 	
 });

@@ -228,7 +228,7 @@ public class SqlInserts {
 	} catch (SQLException e) {e.printStackTrace();}
 		
 }
-	public static void insertAccion(Accion accion){
+	public static void insertAccion(Accion accion) throws ParseException{
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
@@ -237,10 +237,20 @@ public class SqlInserts {
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
+		String startDate = accion.getFechaInicio();
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+		java.util.Date date = sdf1.parse(startDate);
+		java.sql.Date sqlStartDate = new java.sql.Date(date.getTime());
+		
+		String endDate=accion.getFechaFin();
+		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+		java.util.Date date2 = sdf1.parse(endDate);
+		java.sql.Date sqlEndDate = new java.sql.Date(date2.getTime());
+		
 		insert.setDouble (1, accion.getCosto());
 		insert.setInt (2, accion.getPeso());
-		insert.setString (3, accion.getFechaInicio());
-		insert.setString (4, accion.getFechaFin());
+		insert.setDate (3, sqlStartDate);
+		insert.setDate (4, sqlEndDate);
 		insert.setInt(5, accion.getVersion());
 		insert.setBoolean (6, accion.isBorrado());		
 		insert.setDouble (7, accion.getMeta1());
