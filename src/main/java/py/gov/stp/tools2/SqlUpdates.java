@@ -2292,4 +2292,81 @@ public static boolean borradoHito(Hito objeto){
 		    return true;
 		 }catch (SQLException e) {e.printStackTrace(); return false;}
 	}	
+	
+	public static boolean borradoAvanceCosto(AvanceCosto objeto){
+	  	 Connection conect=ConnectionConfiguration.conectar();
+	  	 Statement statement = null;
+	  	 objeto.changeBorrado();
+	  	 
+		 String query = "update avance_costo set borrado='"+objeto.isBorrado()+"'";	
+		 
+		 query+=" where id ="+objeto.getId(); 	
+		 try {
+			statement=conect.createStatement();
+			statement.execute(query);
+		    conect.close();
+		    return true;
+		 }catch (SQLException e) {e.printStackTrace(); return false;}
+	}
+	
+	public static boolean actAvanceCosto(AvanceCosto objeto){
+	  	 Connection conect=ConnectionConfiguration.conectar();
+	   	
+	  	 Statement statement = null;
+
+					 String											query = "update avance_costo set ";
+					 if(objeto.getMonto()!=0)								query+= "monto='"+objeto.getMonto()+"'";
+					 if(objeto.getCodigoContratacional()!=0)				query+= ", codigo_contratacionl='"+objeto.getCodigoContratacional()+"'";
+					 if(objeto.getObjetoGasto()!=0)							query+= ", objeto_gasto='"+objeto.getObjetoGasto()+"'";
+					 if(objeto.getAvanceId()!=0)							query+= ", avance_id='"+objeto.getAvanceId()+"'";
+
+					 					 		 
+					 		 
+					 query+=" where id ="+objeto.getId();
+							 
+					 try {
+						statement=conect.createStatement();
+						statement.execute(query);
+					    conect.close();
+					    return true;
+					} catch (SQLException e) {e.printStackTrace(); return false;}
+
+		}
+	public static boolean borradoAvance(Avance objeto){
+	  	 Connection conect=ConnectionConfiguration.conectar();
+	  	 Statement statement = null;
+	  	  objeto.changeBorrado();
+	  	 
+		 String query = "update avance set borrado='"+objeto.isBorrado()+"'";	
+		 
+		 query+=" where id ="+objeto.getId(); 	
+		 try {
+			statement=conect.createStatement();
+			statement.execute(query);
+		    conect.close();
+		    return true;
+		 }catch (SQLException e) {e.printStackTrace(); return false;}
+	}	
+	
+	public static boolean actAvance(Avance objeto){
+	  	 Connection conect=ConnectionConfiguration.conectar();
+	  	 Statement statement = null;
+	  	 
+		 String													query = "update avance set ";
+		 if(objeto.getJustificacion()!=null)					query+= "justificacion='"+objeto.getJustificacion()+"'";
+		 if(objeto.getCantidad()!=0)							query+= ", cantidad='"+objeto.getCantidad()+"'";
+		 if(objeto.getFechaEntrega()!=null)						query+= ", fecha_entrega='"+objeto.getFechaEntrega()+"'";
+		 if(objeto.getCantidadBeneficiarios()!=0)				query+= ", cantidad_beneficiarios='"+objeto.getCantidadBeneficiarios()+"'";	
+		 if(objeto.getActividadId()!=0)							query+= ", actividad_id='"+objeto.getActividadId()+"'";
+		 if(objeto.getVersion()!=0)								query+= ", version='"+objeto.getVersion()+"'";
+
+		 query+=" where id ="+objeto.getId(); 	
+		 try {
+			statement=conect.createStatement();
+			statement.execute(query);
+		    conect.close();
+		    return true;
+		 }catch (SQLException e) {e.printStackTrace(); return false;}
+	}	
+	
 }

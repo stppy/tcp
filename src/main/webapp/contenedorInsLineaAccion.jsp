@@ -407,6 +407,243 @@ if (user != null) { %>
 		
 		}
 		
+		
+		
+	    $("body").on("click", ".consultaBorrarAvance",function(event){
+	    	var parametros = $(this).attr("parametros");
+	        var idParsed = parametros.split("-");                                                            
+	    	
+	    	//Las siguentes variables se utiliza en esta funcion para redibujar el modal anterior
+	    	var insLineaAccionId = idParsed[0];
+	    	var lineaAccionId = idParsed[1];
+	    	var institucionId = idParsed[2];
+	    	var periodoId = idParsed[3];
+	    	var accionId = idParsed[4];
+	    	var actividadId = idParsed[5];
+	    	var avanceId = idParsed[6];
+
+	    	if ( $("#modalAdministrador").length )
+	    	{
+	    		$("#modalAdministrador").remove();
+	    	}		
+	    	
+			var webServicesAvance = $.ajax({
+				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvance&avanceId='+avanceId,
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+			}).responseText;
+			webServicesAvance = JSON.parse(webServicesAvance);
+	    	
+	    	var contenido = "";
+
+	    	contenido =			'<div class="modal fade" id="modalConsultaBorrarAvance"  data-backdrop="static" data-keyboard="false" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">'+
+	    						'	<div class="modal-dialog modal-lg">'+
+	    						'		<div class="modal-content" >'+
+	    						'			<div class="modal-header">'+
+	    						'		        <button type="button" class="close agregarModalAdministrador"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+	    						'		        <h4 class="modal-title" >Borrar - Restaurar Avance</h4>'+
+	    						'			</div>'+
+	    						'		    <div class="modal-body">'+
+	    						'			<div id="mensajeBorradoAvance"></div>'+
+	    						'		    </div>'+
+	    						'			<div class="modal-footer" id="agregarBotonBorradoAvance">'+
+	    						'			</div>'+
+	    						'		</div>'+ 
+	    						'	</div>'+
+	    						'</div>';
+	    						
+	    		$("#programacion").append(contenido);
+	    		
+	    		if(webServicesAvance[0].borrado == true){
+	    			$("#mensajeBorradoAvance").html("");
+	    			$("#mensajeBorradoAvance").append('<h3 class="text-center">Ud. esta seguro que desea RESTABLACER este registro</h3>');
+	    			$("#agregarBotonBorradoAvance").html("");
+	    			$("#agregarBotonBorradoAvance").append('<button type="button" class="btn btn-success btn-sm borrarAvance" id="botonRestaurarAvance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-r>Restaurar Avance</button>');
+	    			$("#agregarBotonBorradoAvance").append('<button type="button" class="btn btn-success btn-sm agregarModalAdministrador"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'>Cerrar</button>');
+	    		}else{
+	    			$("#mensajeBorradoAvance").html("");
+	    			$("#mensajeBorradoAvance").append('<h3 class="text-center">Ud. esta seguro que desea BORRAR este registro</h3');
+	    			$("#agregarBotonBorradoAvance").html("");
+	    			$("#agregarBotonBorradoAvance").append('<button type="button" class="btn btn-danger btn-sm borrarAvance" id="botonBorradoAvance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-b>Borrar Avance</button>');
+	    			$("#agregarBotonBorradoAvance").append('<button type="button" class="btn btn-success btn-sm agregarModalAdministrador"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'>Cerrar</button>');
+	    		}
+	    		
+	    		$('#modalConsultaBorrarAvance').modal('show');
+	    			
+	    });
+	    
+	    $("body").on("click", ".borrarAvance",function(event){	
+	    	var parametros = $(this).attr("parametros");
+	        var idParsed = parametros.split("-");                                                            
+	    	var insLineaAccionId = idParsed[0];
+	    	var lineaAccionId = idParsed[1];
+	    	var institucionId = idParsed[2];
+	    	var periodoId = idParsed[3];
+	    	var accionId = idParsed[4];
+	    	var actividadId = idParsed[5];
+	    	var avanceId = idParsed[6];
+	    	var estado = idParsed[7];
+
+	        
+			var webServicesAvance = $.ajax({
+				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvance&avanceId='+avanceId,
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+			}).responseText;
+			webServicesAvance = JSON.parse(webServicesAvance);
+	        
+	        var objeto = new Object();
+	        objeto.id = avanceId;
+	        objeto.borrado= webServicesAvance[0].borrado;
+
+	        
+	      	var info = JSON.stringify(objeto);
+	        $.ajax({
+	            url: "ajaxUpdate2?accion=actBorradoAvance",
+	            type: 'POST',
+	            dataType: 'json',
+	            data: info,
+	            contentType: 'application/json',
+	            mimeType: 'application/json',
+	            success: function (data) {
+	            	
+	                if(estado == "b"){
+	            		$("#botonBorradoAvance").remove();
+	                	$("#mensajeBorradoAvance").html("");
+	                	$("#mensajeBorradoAvance").html("<h3 class='text-center'>BORRADO EXITOSAMENTE!!</h3>");
+	                }else{
+	            		$("#botonRestaurarAvance").remove();
+	                	$("#mensajeBorradoAvance").html("");
+	                	$("#mensajeBorradoAvance").html("<h3 class='text-center'>RESTAURADO EXITOSAMENTE!!</h3>");
+	            	}
+
+	            },
+
+	            error: function(data,status,er) {
+	            	
+	            	}
+	    	 });
+	    	
+	    }); 
+	    
+	    $("body").on("click", ".consultaEditarAvance",function(event){
+	    	var parametros = $(this).attr("parametros");
+	        var idParsed = parametros.split("-");                                                            
+	    	
+	    	//Las siguentes variables se utiliza en esta funcion para redibujar el modal anterior
+	    	var insLineaAccionId = idParsed[0];
+	    	var lineaAccionId = idParsed[1];
+	    	var institucionId = idParsed[2];
+	    	var periodoId = idParsed[3];
+	    	var accionId = idParsed[4];
+	    	var actividadId = idParsed[5];
+	    	var avanceId = idParsed[6];
+
+	    	if ( $("#modalAdministrador").length )
+	    	{
+	    		$("#modalAdministrador").remove();
+	    	}	
+	    	
+	    	var webServicesAvance = $.ajax({
+	    		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvance&avanceId='+avanceId,
+	    	  	type:'get',
+	    	  	dataType:'json',
+	    	  	async:false       
+	    	}).responseText;
+	    	webServicesAvance = JSON.parse(webServicesAvance); 
+	    	
+	    	var contenido = "";
+
+	    	contenido +=		'<div class="modal fade" id="modalEditarCosto"  data-backdrop="static" data-keyboard="false" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">'+
+	    						'	<div class="modal-dialog modal-lg">'+
+	    						'		<div class="modal-content" >'+
+	    						'			<div class="modal-header">'+
+	    						'		        <button type="button" class="close agregarModalAdministrador"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+	    						'		        <h4 class="modal-title" >Editar Avance</h4>'+
+	    						'			</div>'+
+	    						'		    <div class="modal-body" id="cuerpoModalEditarAvance">'+
+	    										
+								'				<div class="table-responsive">'+
+								'					<table class="table table-hover">'+
+								'						<tbody>'+
+								'			      			<form class="form-horizontal" role="form">'+
+								'							<tr><td><label for="justificacionAvance">Justificación</label><input type="text" id="justificacionAvance" value='+webServicesAvance[0].justificacion+' class="form-control" /></td><td><label for="cantidadAvance">Cantidad</label><input type="number" id="cantidadAvance" class="form-control" value='+webServicesAvance[0].cantidad+' /></td></tr>'+
+								'							<tr><td><label for="fechaEntregaAvance">Fecha Entrega</label><input type="date" id="fechaEntregaAvance" value='+webServicesAvance[0].fechaEntrega+' class="form-control"  /></td><td><label for="cantidadBeneficiariosAvance">Cantidad Beneficiarios</label><input type="number" id="cantidadBeneficiariosAvance" class="form-control" value='+webServicesAvance[0].cantidadBeneficiarios+' /></td></tr>'+														
+								'							<input type="hidden" id="versionAvance" value="3" /><input type="hidden" id="actividadIdAvance" value='+avanceId+' />'+		
+								'			      			</form>	'+												
+								'						</tbody>'+
+								'					</table>'+
+								'				 </div>'+	
+	    						
+
+	    						'		    </div>'+
+	    						'			<div class="modal-footer">'+
+	    						' 				<button type="button" class="btn btn-success btn-sm guardarAvance" id="botonGuardarAvance" parametros='+avanceId+'>Guardar Cambios</button>'+
+	    						'			</div>'+
+	    						'		</div>'+ 
+	    						'	</div>'+
+	    						'</div>';
+	    						
+	    	$("body").append(contenido);
+	    	$('#modalEditarCosto').modal('show');
+
+	    });
+	    
+	    $("body").on("click", ".guardarAvance",function(event){	
+	    	var parametros = $(this).attr("parametros");
+	        var idParsed = parametros.split("-");                                                            
+	    	var avanceId = idParsed[0];
+	        
+			var webServicesAvance = $.ajax({
+				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvance&avanceId='+avanceId,
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+			}).responseText;
+			webServicesAvance = JSON.parse(webServicesAvance);
+	        
+			var justificacion = $("#justificacionAvance").val();
+			var cantidad = $("#cantidadAvance").val();
+			var fechaEntrega = $("#fechaEntregaAvance").val();
+			var cantidadBeneficiarios = $("#cantidadBeneficiariosAvance").val();
+			var actividadId = $("#actividadIdAvance").val();
+			var version = $("#versionAvance").val();
+		
+	        var objeto = new Object();
+	        objeto.id = avanceId;
+	        objeto.justificacion = justificacion;
+	        objeto.cantidad = cantidad;
+	        objeto.fechaEntrega = fechaEntrega;
+	        objeto.cantidadBeneficiarios = cantidadBeneficiarios;
+	        objeto.actividadId = actividadId;
+	        objeto.version = version;
+
+	        
+	      	var info = JSON.stringify(objeto);
+	        $.ajax({
+	            url: "ajaxUpdate2?accion=actAvance",
+	            type: 'POST',
+	            dataType: 'json',
+	            data: info,
+	            contentType: 'application/json',
+	            mimeType: 'application/json',
+	            success: function (data) {
+
+            		$("#botonGuardarAvance").remove();
+                	$("#cuerpoModalEditarAvance").html("");
+                	$("#cuerpoModalEditarAvance").html("<h3 class='text-center'>Cambios actualizados exitosamente!!</h3>");
+
+	            },
+
+	            error: function(data,status,er) {
+	            	
+	            	}
+	    	 });
+	    	
+	    }); 	    
+		
 	});
 </script>
 	

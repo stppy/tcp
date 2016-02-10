@@ -703,7 +703,52 @@ public class ajaxUpdate extends HttpServlet {
                 boolean status = SqlUpdates.borradoCronograma(objeto);
         		myObj.addProperty("success", status);
         		out.println(myObj.toString());
-        	}         	
+        	}
+        	if (accion.equals("actBorradoAvanceCosto")){
+        		AvanceCosto objeto = new AvanceCosto();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                objeto=gsonInsert.fromJson(json, AvanceCosto.class);
+                boolean status = SqlUpdates.borradoAvanceCosto(objeto);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	}        	
+        	if (accion.equals("actAvanceCosto")){
+        		AvanceCosto objeto = new AvanceCosto();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                objeto=gsonInsert.fromJson(json, AvanceCosto.class);
+                boolean status = SqlUpdates.actAvanceCosto(objeto);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	}
+        	if (accion.equals("actBorradoAvance")){
+        		Avance objeto = new Avance();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                objeto=gsonInsert.fromJson(json, Avance.class);
+                boolean status = SqlUpdates.borradoAvance(objeto);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	}      
+        	if (accion.equals("actAvance")){
+        		Avance objeto = new Avance();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                //Gson gsonInsert = new Gson();
+                Gson gsonInsert = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+                objeto=gsonInsert.fromJson(json, Avance.class);
+                boolean status = SqlUpdates.actAvance(objeto);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	} 
         	
         }     
         

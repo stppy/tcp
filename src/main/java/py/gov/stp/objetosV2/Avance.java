@@ -5,7 +5,7 @@ public class Avance {
 	protected int id;
 	protected String justificacion;
 	protected double cantidad;
-	protected Date fechaEntrega;
+	protected String fechaEntrega;
 	protected int cantidadBeneficiarios;
 	protected int actividadId;
 	protected int version;
@@ -42,12 +42,12 @@ public class Avance {
 	}
 
 
-	public Date getFechaEntrega() {
+	public String getFechaEntrega() {
 		return fechaEntrega;
 	}
 
 
-	public void setFechaEntrega(Date fechaEntrega) {
+	public void setFechaEntrega(String fechaEntrega) {
 		this.fechaEntrega = fechaEntrega;
 	}
 
@@ -92,8 +92,9 @@ public class Avance {
 	}
 
 
-	public void changeBorrado(boolean borrado) {
-		this.borrado = !borrado;
+	public void changeBorrado(){
+		this.borrado=!borrado;
 	}
+	
 
 }
