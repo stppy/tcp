@@ -681,7 +681,7 @@ public class SqlInserts {
 	
 }	
 	
-	public static boolean insertAvance(Avance avance){
+	public static boolean insertAvance(Avance avance) throws ParseException{
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
@@ -690,9 +690,14 @@ public class SqlInserts {
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
+		String inicio = avance.getFechaEntrega();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		java.util.Date date1 = sdf.parse(inicio);
+		java.sql.Date sqlStart = new java.sql.Date(date1.getTime());
+		
 		insert.setString (1, avance.getJustificacion());
 		insert.setDouble (2, avance.getCantidad());
-		insert.setDate (3, avance.getFechaEntrega());
+		insert.setDate (3, sqlStart); 
 		insert.setInt (4, avance.getCantidadBeneficiarios());
 		insert.setInt (5, avance.getActividadId());
 		insert.setInt (6, avance.getVersion());

@@ -569,7 +569,7 @@ if (user != null) { %>
 								'					<table class="table table-hover">'+
 								'						<tbody>'+
 								'			      			<form class="form-horizontal" role="form">'+
-								'							<tr><td><label for="justificacionAvance">Justificación</label><input type="text" id="justificacionAvance" value='+webServicesAvance[0].justificacion+' class="form-control" /></td><td><label for="cantidadAvance">Cantidad</label><input type="number" id="cantidadAvance" class="form-control" value='+webServicesAvance[0].cantidad+' /></td></tr>'+
+								'							<tr><td><label for="justificacionAvance">Justificación</label><input type="text" id="justificacionAvance" value="'+webServicesAvance[0].justificacion+'" class="form-control" /></td><td><label for="cantidadAvance">Cantidad</label><input type="number" id="cantidadAvance" class="form-control" value='+webServicesAvance[0].cantidad+' /></td></tr>'+
 								'							<tr><td><label for="fechaEntregaAvance">Fecha Entrega</label><input type="date" id="fechaEntregaAvance" value='+webServicesAvance[0].fechaEntrega+' class="form-control"  /></td><td><label for="cantidadBeneficiariosAvance">Cantidad Beneficiarios</label><input type="number" id="cantidadBeneficiariosAvance" class="form-control" value='+webServicesAvance[0].cantidadBeneficiarios+' /></td></tr>'+														
 								'							<input type="hidden" id="versionAvance" value="3" /><input type="hidden" id="actividadIdAvance" value='+avanceId+' />'+		
 								'			      			</form>	'+												
@@ -580,7 +580,7 @@ if (user != null) { %>
 
 	    						'		    </div>'+
 	    						'			<div class="modal-footer">'+
-	    						' 				<button type="button" class="btn btn-success btn-sm guardarAvance" id="botonGuardarAvance" parametros='+avanceId+'>Guardar Cambios</button>'+
+	    						' 				<button type="button" class="btn btn-success btn-sm actualizarAvance" id="botonGuardarAvance" parametros='+avanceId+'>Guardar Cambios</button>'+
 	    						'			</div>'+
 	    						'		</div>'+ 
 	    						'	</div>'+
@@ -591,7 +591,7 @@ if (user != null) { %>
 
 	    });
 	    
-	    $("body").on("click", ".guardarAvance",function(event){	
+	    $("body").on("click", ".actualizarAvance",function(event){	
 	    	var parametros = $(this).attr("parametros");
 	        var idParsed = parametros.split("-");                                                            
 	    	var avanceId = idParsed[0];
@@ -632,7 +632,7 @@ if (user != null) { %>
 	            success: function (data) {
 
             		$("#botonGuardarAvance").remove();
-                	$("#cuerpoModalEditarAvance").html("");
+                	//$("#cuerpoModalEditarAvance").html("");
                 	$("#cuerpoModalEditarAvance").html("<h3 class='text-center'>Cambios actualizados exitosamente!!</h3>");
 
 	            },

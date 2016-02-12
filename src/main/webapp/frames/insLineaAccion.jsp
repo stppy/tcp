@@ -430,7 +430,7 @@
 							'						<select name="lineaAccion" id="nombreLineaAccionInsLineaAccion" class="form-control">'+optionLineaAccion+'</select>'+
 							'					</div>'+
 							'					<div class="form-group">'+
-							'						<label for="nombreInstitucion">Nombre Instituciï¿½n</label>'+
+							'						<label for="nombreInstitucion">Nombre Institución</label>'+
 							'						<select name="institucion" id="nombreInstitucionInsLineaAccion" class="form-control">'+optionInstitucion+'</select>'+
 							'					</div>'+
 							'					<div class="form-group">'+
