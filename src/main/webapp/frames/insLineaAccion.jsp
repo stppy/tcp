@@ -347,6 +347,9 @@
 			
 	});
 	
+	
+		
+	
 	$("body").on("click", ".registrosInsLineaAccion",function(event){
 		var codigoRegistro = $(this).attr("codigoRegistroInsLineaAccion");
 	    var idParsed = codigoRegistro.split("-"); 
@@ -679,13 +682,20 @@
 		
 	});	
 	
-	$("body").on("click", "#iconoBorradoInsLineaAccion",function(event){
+	$("body").on("click", ".iconoBorradoInsLineaAccion",function(event){
+		
+				$("#botonRestaurarInsLineaAccion").remove();
+				$("#botonBorradoInsLineaAccion").remove();
+				
+				
 				var objeto = new Object();
 				var accion = "borradoInsLineaAccion";
 				var parametrosBorradoInsLineaAccion = $(this).attr("parametrosBorradoInsLineaAccion");
 			    var idParsed = parametrosBorradoInsLineaAccion.split("-");                                                            
 				var id = idParsed[0];
 				var borrado = idParsed[1];
+				var letra = idParsed[2];
+				
 				
 				objeto.id = id;
 				objeto.borrado=borrado;
@@ -701,30 +711,162 @@
 				    {
 				    	if (data.success == true)
 				       	{
-				       		$("#tituloModalUsuario").html('');
-							$("#tituloModalUsuario").append('<p class="text-success">GUARDADO</p>');
-				    		$("#pass-viejo-form").val("");
-							$("#pass-nuevo-form").val("");
-							$("#pass-nuevo1-form").val("");	
-							window.location.href = "http://spr.stp.gov.py/tablero/contenedorInsLineaAccion.jsp";
+				    		var cuerpoInsLineaAccion = "";
+				    		var insLineaAccion = $.ajax({
+				    			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion',
+				    		  	type:'get',
+				    		  	dataType:'json',
+				    		  	async:false       
+				    		}).responseText;		
+				    		insLineaAccion=JSON.parse(insLineaAccion);
+				    		
+				    		var lineaAccion = $.ajax({
+				    			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+				    		  	type:'get',
+				    		  	dataType:'json',
+				    		  	async:false       
+				    		}).responseText;
+				    		lineaAccion = JSON.parse(lineaAccion);
+				    		
+				    		var institucion = $.ajax({
+				    			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+				    		  	type:'get',
+				    		  	dataType:'json',
+				    		  	async:false       
+				    		}).responseText;
+				    		institucion = JSON.parse(institucion);
+				    		
+				    		var periodo = $.ajax({
+				    			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+				    		  	type:'get',
+				    		  	dataType:'json',
+				    		  	async:false       
+				    		}).responseText;
+				    		periodo = JSON.parse(periodo);
+				    		
+				    		var unidadMedida = $.ajax({
+				    			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+				    		  	type:'get',
+				    		  	dataType:'json',
+				    		  	async:false       
+				    		}).responseText;
+				    		unidadMedida = JSON.parse(unidadMedida);
+				    		
+				    		
+				    		for(var w=0; w<insLineaAccion.length;w++)
+				    		{
+				    		 	bandLineaAccion = 0;
+				    		 	bandInstitucion = 0;
+				    		 	bandPeriodo = 0;
+				    		 	
+				    		 	if(insLineaAccion[w].periodoId == "2016")
+				    		 	{		 		
+				    				for(p = 0;p<periodo.length; p++)
+				    				{
+				    					if(insLineaAccion[w].periodoId == periodo[p].id)
+				    					{
+				    						if(insLineaAccion[w].borrado == true){
+				    							cuerpoInsLineaAccion+='<tr><td><del>'+periodo[p].nombre+'</del></td>';
+				    						}else{
+				    							cuerpoInsLineaAccion+='<tr><td>'+periodo[p].nombre+'</td>';	
+				    						}
+				    						bandPeriodo = 1;
+				    					}
+				    				}
+				    				
+				    				if(bandPeriodo == 0)
+				    				{
+				    					cuerpoInsLineaAccion+='<td>'+insLineaAccion[w].periodoId+'</td>';
+				    				}
+				    			
+				    				for(m = 0;m<institucion.length; m++){
+				    					if(insLineaAccion[w].institucionId == institucion[m].id)
+				    					{
+				    						if(insLineaAccion[w].borrado == true){
+				    							cuerpoInsLineaAccion+='<td><del>'+institucion[m].sigla+'</del></td>';
+				    						}else{
+				    							cuerpoInsLineaAccion+='<td>'+institucion[m].sigla+'</td>';	
+				    						}
+				    						bandInstitucion = 1;
+				    					}
+				    				}
+				    				
+				    				if(bandInstitucion == 0)
+				    				{
+				    					cuerpoInsLineaAccion+='<td>'+insLineaAccion[w].institucionId+'</td>';
+				    				}
+				    				
+				    				for(i = 0;i<lineaAccion.length; i++){				
+				    					if(insLineaAccion[w].lineaAccionId == lineaAccion[i].id)
+				    					{
+				    						if(insLineaAccion[w].borrado == true){
+				    							cuerpoInsLineaAccion+='<td><del>'+lineaAccion[i].nombre+'</del></td>';
+				    						}else{
+				    							cuerpoInsLineaAccion+='<td>'+lineaAccion[i].nombre+'</td>';	
+				    						}
+				    						bandLineaAccion = 1;
+				    					}
+				    				}
+				    							
+				    				if(bandLineaAccion == 0)
+				    				{
+				    					cuerpoInsLineaAccion+='<td>'+insLineaAccion[w].lineaAccionId+'</td>';
+				    				}
+				    										
+				    				var codigoUnidadMedida;
+				    				var nombreUnidadMedida;
+				    				for(h = 0;h<lineaAccion.length; h++){				
+				    					if(insLineaAccion[w].lineaAccionId == lineaAccion[h].id)
+				    					{
+				    						codigoUnidadMedida=lineaAccion[h].unidadMedidaId;
+				    						
+				    						for(var k = 0; k < unidadMedida.length; k++)
+				    						{
+				    							if(codigoUnidadMedida == unidadMedida[k].id)
+				    							{
+				    								nombreUnidadMedida = unidadMedida[k].descripcion;
+				    							}
+				    						}
+				    					}
+				    				}
+				    				
+				    				if(insLineaAccion[w].borrado == true){
+				    					cuerpoInsLineaAccion+='<td><del>'+insLineaAccion[w].meta+'</del></td><td class="text-center"><del>'+nombreUnidadMedida+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar Acción"><span class="glyphicon glyphicon-pencil registrosInsLineaAccion" codigoRegistroInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'-'+insLineaAccion[w].meta+'-'+insLineaAccion[w].version+'></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Borrar Acción"><span class="glyphicon glyphicon-trash" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+' id="consultaBorrarInsLineaAccion"></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Acción"><span class="glyphicon glyphicon-list-alt agregarAccion" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"></span></button></td></tr>';
+				    				}else{
+				    					cuerpoInsLineaAccion+='<td>'+insLineaAccion[w].meta+'</td><td class="text-center">'+nombreUnidadMedida+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar Acción"><span class="glyphicon glyphicon-pencil registrosInsLineaAccion" codigoRegistroInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'-'+insLineaAccion[w].meta+'-'+insLineaAccion[w].version+'></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Borrar Acción"><span class="glyphicon glyphicon-trash" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+' id="consultaBorrarInsLineaAccion"></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Acción"><span class="glyphicon glyphicon-list-alt agregarAccion" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"></span></button></td></tr>';	
+				    				}
+				    			}
+				    		}
 
+				    		$("#mensajeBorradoInsLineaAccion").html("");
+				    		$("#mensajeBorradoInsLineaAccion").append("<p>Cambio exitoso</p>");
+				    		$("#cuerpoInsLineaAccion").html("");
+				    		$("#cuerpoInsLineaAccion").append(cuerpoInsLineaAccion);
+				    		
 				       	}else
 				       	{
 				       		if (data.success == false)
 				       		{
-				       			$("#tituloModalUsuario").html('');
-					        	$("#tituloModalUsuario").append('<p class="text-danger">Error no se ha guardado</p>');
+				       			$("#cuerpoInsLineaAccion").html('');
+					        	$("#cuerpoInsLineaAccion").append('<p class="text-danger">Error no se ha guardado</p>');
 				       		}
-							window.location.href = "http://spr.stp.gov.py/tablero/contenedorInsLineaAccion.jsp";
+
 
 				       	}
 					},
 					error: function(data,status,er)
 					{
-						$("#tituloModalUsuario").html('');
-						$("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intente de nuevo</p>');
+						$("#cuerpoInsLineaAccion").html('');
+						$("#cuerpoInsLineaAccion").append('<p class="text-danger">Error de conexion intente de nuevo</p>');
 					}
 				});
+	});	
+	
+	$("body").on("click", ".eliminarModal",function(event){
+	    if ( $("#modalConsultaBorrarInsLineaAccion").length )
+		{
+			$("#modalConsultaBorrarInsLineaAccion").remove();
+		}
 	});	
 	
 	$("body").on("click", ".agregarAccion",function(event){

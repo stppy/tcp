@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.text.ParseException;
 import java.util.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -75,7 +76,12 @@ public class ajaxInserts  extends HttpServlet {
             //Gson gsonInsert = new Gson();
             Gson gsonInsert = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();            
             objeto=gsonInsert.fromJson(json, Accion.class);
-			SqlInserts.insertAccion(objeto);
+			try {
+				SqlInserts.insertAccion(objeto);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
     	}
        }
         if (accion!=null && accion!=""){
