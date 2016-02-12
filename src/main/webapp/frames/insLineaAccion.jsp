@@ -433,7 +433,7 @@
 							'						<select name="lineaAccion" id="nombreLineaAccionInsLineaAccion" class="form-control">'+optionLineaAccion+'</select>'+
 							'					</div>'+
 							'					<div class="form-group">'+
-							'						<label for="nombreInstitucion">Nombre Instituciï¿½n</label>'+
+							'						<label for="nombreInstitucion">Nombre Institución</label>'+
 							'						<select name="institucion" id="nombreInstitucionInsLineaAccion" class="form-control">'+optionInstitucion+'</select>'+
 							'					</div>'+
 							'					<div class="form-group">'+
@@ -4396,6 +4396,18 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	if ( $("#modalAvance").length )
 	{
 		$("#modalAvance").remove();
+	}
+	if ( $("#modalBorrarAccion").length )
+	{
+		$("#modalBorrarAccion").remove();
+	}	
+	if ( $("#modalEditarCosto").length )
+	{
+		$("#modalEditarCosto").remove();
+	}	
+	if ( $("#modalConsultaBorrarAvance").length )
+	{
+		$("#modalConsultaBorrarAvance").remove();
 	}	
 	
 	var parametros = $(this).attr("parametros");
@@ -4444,7 +4456,12 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	var cuerpoAvanceCosto = "";
 	for(var d = 0; d < webServicesAvanceCosto.length; d++)
 	{
-		cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].monto+'</td><td>'+webServicesAvanceCosto[d].codigoContratacional+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Borrar" ><span class="fa fa-trash"></span></button></td></tr>';
+		if(webServicesAvanceCosto[d].borrado == true)
+		{
+			cuerpoAvanceCosto += '<tr><td><del>'+webServicesAvanceCosto[d].monto+'</del></td><td><del>'+webServicesAvanceCosto[d].codigoContratacional+'</del></td><td><del>'+webServicesAvanceCosto[d].objetoGasto+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarCosto" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCosto" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+		}else{
+			cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].monto+'</td><td>'+webServicesAvanceCosto[d].codigoContratacional+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarCosto" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCosto" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+		}
 	}
 			
 	var contenidoModalAdministrador = "";
@@ -4477,15 +4494,20 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'										<thead>'+
 									'											<tr class="active"><th>Justificación</th><th>Cantidad</th><th>FechaEntrega</th><th>CantidadBeneficiarios</th><th class="text-center">Administrar</th></tr>'+
 									' 										</thead>'+
-									'										<tbody>'+
-									'											<tr><td>'+webServicesAvance[0].justificacion+'</td><td>'+webServicesAvance[0].cantidad+'</td><td>'+webServicesAvance[0].fechaEntrega+'</td><td>'+webServicesAvance[0].cantidadBeneficiarios+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Borrar" ><span class="fa fa-trash"></span></button></td></tr>'+
-									'										</tbody>'+
+									'										<tbody>';
+																				if(webServicesAvance[0].borrado == true)
+																				{
+	contenidoModalAdministrador +=	'												<tr><td><del>'+webServicesAvance[0].justificacion+'</del></td><td><del>'+webServicesAvance[0].cantidad+'</del></td><td><del>'+webServicesAvance[0].fechaEntrega+'</del></td><td><del>'+webServicesAvance[0].cantidadBeneficiarios+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarAvance" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarAvance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' data-toggle="tooltip" data-placement="top" title="Borrar" ><span class="fa fa-trash"></span></button></td></tr>';
+																				}else{
+	contenidoModalAdministrador +=	'												<tr><td>'+webServicesAvance[0].justificacion+'</td><td>'+webServicesAvance[0].cantidad+'</td><td>'+webServicesAvance[0].fechaEntrega+'</td><td>'+webServicesAvance[0].cantidadBeneficiarios+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarAvance" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarAvance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' data-toggle="tooltip" data-placement="top" title="Borrar" ><span class="fa fa-trash"></span></button></td></tr>';
+																				}
+																				
+	contenidoModalAdministrador +=	'										</tbody>'+
 									'									</table>'+
 									'				      			</div>'+							
 									
 									'               			</div>'+//fin box-body
 									'							<div class="modal-footer">'+ 
-									'					        	<button type="button" class="btn btn-success btn-sm guardarAvance" >Guardar Avance</button>'+ 
 									'							</div>'+
 									'                		</div>'+	
 									'                	</div>'+
@@ -4709,7 +4731,12 @@ $("body").on("click", ".guardarEvidencia",function(event){
         		var cuerpoEvidencia = "";
         		for(var d = 0; d < webServicesEvidencia.length; d++)
         		{
-        			cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[d].nombre+'</td><td>'+webServicesEvidencia[d].descripcion+'</td><td>'+webServicesEvidencia[d].url+'</td><td>'+webServicesEvidencia[d].wsId+'</td><td>'+webServicesEvidencia[d].version+'</td><td>'+webServicesEvidencia[d].avanceId+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" ><span class="fa fa-transh"></span></button></td></tr>';
+        			if(webServicesEvidencia[d].borrado == true)
+        			{
+        				cuerpoEvidencia += '<tr><td><del>'+webServicesEvidencia[d].nombre+'</del></td><td><del>'+webServicesEvidencia[d].descripcion+'</del></td><td><del>'+webServicesEvidencia[d].url+'</del></td><td><del>'+webServicesEvidencia[d].wsId+'</del></td><td><del>'+webServicesEvidencia[d].version+'</del></td><td><del>'+webServicesEvidencia[d].avanceId+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" ><span class="fa fa-transh"></span></button></td></tr>';
+        			}else{
+        				cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[d].nombre+'</td><td>'+webServicesEvidencia[d].descripcion+'</td><td>'+webServicesEvidencia[d].url+'</td><td>'+webServicesEvidencia[d].wsId+'</td><td>'+webServicesEvidencia[d].version+'</td><td>'+webServicesEvidencia[d].avanceId+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" ><span class="fa fa-transh"></span></button></td></tr>';
+        			}	
         		}
         		
         		$("#listaEvidencia").html("");
@@ -4787,4 +4814,233 @@ $("body").on("click", ".guardarCosto",function(event){
 	
 });	
 
+$("body").on("click", ".consultaBorrarCosto",function(event){
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-");                                                            
+	
+	//Las siguentes variables se utiliza en esta funcion para redibujar el modal anterior
+	var insLineaAccionId = idParsed[0];
+	var lineaAccionId = idParsed[1];
+	var institucionId = idParsed[2];
+	var periodoId = idParsed[3];
+	var accionId = idParsed[4];
+	var actividadId = idParsed[5];
+	var avanceId = idParsed[6];
+	var costoId = idParsed[7];
+
+	if ( $("#modalAdministrador").length )
+	{
+		$("#modalAdministrador").remove();
+	}		
+	
+	var webServicesAvanceCosto = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCosto&costoId='+costoId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	webServicesAvanceCosto = JSON.parse(webServicesAvanceCosto);
+	
+	var contenido = "";
+
+	contenido =			'<div class="modal fade" id="modalBorrarAccion"  data-backdrop="static" data-keyboard="false" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">'+
+						'	<div class="modal-dialog modal-lg">'+
+						'		<div class="modal-content" >'+
+						'			<div class="modal-header">'+
+						'		        <button type="button" class="close agregarModalAdministrador"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+						'		        <h4 class="modal-title" >Borrar - Restaurar Costos</h4>'+
+						'			</div>'+
+						'		    <div class="modal-body">'+
+						'			<div id="mensajeBorradoAvanceCosto"></div>'+
+						'		    </div>'+
+						'			<div class="modal-footer" id="agregarBotonBorradoCosto">'+
+						'			</div>'+
+						'		</div>'+ 
+						'	</div>'+
+						'</div>';
+						
+		$("#programacion").append(contenido);
+		
+		if(webServicesAvanceCosto[0].borrado == true){
+			$("#mensajeBorradoAvanceCosto").html("");
+			$("#mensajeBorradoAvanceCosto").append('<h3 class="text-center">Ud. esta seguro que desea RESTABLACER este registro</h3>');
+			$("#agregarBotonBorradoCosto").html("");
+			$("#agregarBotonBorradoCosto").append('<button type="button" class="btn btn-success btn-sm borrarAvanceCosto" id="botonRestaurarAvanceCosto" parametros='+costoId+'-r>Restaurar Costo</button>');
+			$("#agregarBotonBorradoCosto").append('<button type="button" class="btn btn-success btn-sm agregarModalAdministrador"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'>Cerrar</button>');
+		}else{
+			$("#mensajeBorradoAvanceCosto").html("");
+			$("#mensajeBorradoAvanceCosto").append('<h3 class="text-center">Ud. esta seguro que desea BORRAR este registro</h3');
+			$("#agregarBotonBorradoCosto").html("");
+			$("#agregarBotonBorradoCosto").append('<button type="button" class="btn btn-danger btn-sm borrarAvanceCosto" id="botonBorradoAvanceCosto" parametros='+costoId+'-b>Borrar Costo</button>');
+			$("#agregarBotonBorradoCosto").append('<button type="button" class="btn btn-success btn-sm agregarModalAdministrador"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'>Cerrar</button>');
+		}
+		
+		$('#modalBorrarAccion').modal('show');
+			
+});
+
+$("body").on("click", ".borrarAvanceCosto",function(event){	
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-"); 
+    var costoId = idParsed[0];
+    var estado = idParsed[1];
+    
+	var webServicesAvanceCosto = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCosto&costoId='+costoId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	webServicesAvanceCosto = JSON.parse(webServicesAvanceCosto);
+    
+    var objeto = new Object();
+    objeto.id = costoId;
+    objeto.borrado= webServicesAvanceCosto[0].borrado;
+
+    
+  	var info = JSON.stringify(objeto);
+    $.ajax({
+        url: "ajaxUpdate2?accion=actBorradoAvanceCosto",
+        type: 'POST',
+        dataType: 'json',
+        data: info,
+        contentType: 'application/json',
+        mimeType: 'application/json',
+        success: function (data) {
+        	
+            if(estado == "b"){
+        		$("#botonBorradoAvanceCosto").remove();
+            	$("#mensajeBorradoAvanceCosto").html("");
+            	$("#mensajeBorradoAvanceCosto").html("<h3 class='text-center'>BORRADO EXITOSAMENTE!!</h3>");
+            }else{
+        		$("#botonRestaurarAvanceCosto").remove();
+            	$("#mensajeBorradoAvanceCosto").html("");
+            	$("#mensajeBorradoAvanceCosto").html("<h3 class='text-center'>RESTAURADO EXITOSAMENTE!!</h3>");
+        	}
+
+        },
+
+        error: function(data,status,er) {
+        	
+        	}
+	 });
+	
+});
+
+$("body").on("click", ".consultaEditarCosto",function(event){
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-");                                                            
+	
+	//Las siguentes variables se utiliza en esta funcion para redibujar el modal anterior
+	var insLineaAccionId = idParsed[0];
+	var lineaAccionId = idParsed[1];
+	var institucionId = idParsed[2];
+	var periodoId = idParsed[3];
+	var accionId = idParsed[4];
+	var actividadId = idParsed[5];
+	var avanceId = idParsed[6];
+	var costoId = idParsed[7];
+
+	if ( $("#modalAdministrador").length )
+	{
+		$("#modalAdministrador").remove();
+	}	
+	
+	var webServicesAvanceCosto = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCosto&costoId='+costoId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	webServicesAvanceCosto = JSON.parse(webServicesAvanceCosto);
+	
+	var contenido = "";
+
+	contenido +=		'<div class="modal fade" id="modalEditarCosto"  data-backdrop="static" data-keyboard="false" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">'+
+						'	<div class="modal-dialog modal-lg">'+
+						'		<div class="modal-content" >'+
+						'			<div class="modal-header">'+
+						'		        <button type="button" class="close agregarModalAdministrador"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+						'		        <h4 class="modal-title" >Editar Costo Avance</h4>'+
+						'			</div>'+
+						'		    <div class="modal-body" id="cuerpoModalEditarAvanceCosto">'+
+										
+						'					<div class="table-responsive">'+
+						'						<table class="table table-hover">'+
+						'							<tbody>'+
+						'								<form class="form-horizontal" role="form">'+
+						'									<tr><td><label for="codigoContratacionalCosto">Cod. Contratacional</label><input type="number" id="codigoContratacionalCosto" class="form-control" value='+webServicesAvanceCosto[0].codigoContratacional+' /></td><td><label for="objetoGastoCosto">Objeto Gasto</label><input type="number" id="objetoGastoCosto" class="form-control" value='+webServicesAvanceCosto[0].objetoGasto+' /></td></tr>'+									
+						'									<tr><td colspan="2"><label for="montoCosto">Monto</label><input type="number" id="montoCosto" class="form-control" value='+webServicesAvanceCosto[0].monto+'  /></td></tr>'+
+						'									<input type="hidden" id="avanceIdCosto" value="'+webServicesAvanceCosto[0].avanceId+'"/>'+		
+						'								</form>	'+												
+						'  							</tbody>'+
+						'						</table>'+
+						'					</div>'+
+						
+
+						'		    </div>'+
+						'			<div class="modal-footer">'+
+						' 				<button type="button" class="btn btn-success btn-sm guardarAvanceCosto" id="botonGuardarAvanceCosto" parametros='+costoId+'>Guardar Cambios</button>'+
+						'			</div>'+
+						'		</div>'+ 
+						'	</div>'+
+						'</div>';
+						
+	$("body").append(contenido);
+	$('#modalEditarCosto').modal('show');
+
+});
+
+$("body").on("click", ".guardarAvanceCosto",function(event){
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-");                                                            
+	
+	//Las siguentes variables se utiliza en esta funcion para redibujar el modal anterior
+	var costoId = idParsed[0];
+	
+	var webServicesAvanceCosto = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCosto&costoId='+costoId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	webServicesAvanceCosto = JSON.parse(webServicesAvanceCosto);
+	
+	var monto = $("#montoCosto").val();
+	var codigoContratacional = $("#codigoContratacionalCosto").val();
+	var objetoGasto = $("#objetoGastoCosto").val();
+	var avanceId = $("#avanceIdCosto").val();
+
+
+	
+    var objeto = new Object();
+    objeto.id = costoId;
+    objeto.monto = monto; 
+    objeto.codigoContratacional = codigoContratacional;
+    objeto.objetoGasto = objetoGasto;
+    objeto.avanceId = avanceId;
+  
+  	var info = JSON.stringify(objeto);
+    $.ajax({
+        url: "ajaxUpdate2?accion=actAvanceCosto",
+        type: 'POST',
+        dataType: 'json',
+        data: info,
+        contentType: 'application/json',
+        mimeType: 'application/json',
+        success: function (data) {
+        	
+    	  	$("#cuerpoModalEditarAvanceCosto").html("");
+    	  	$("#cuerpoModalEditarAvanceCosto").html("<h3 class='text-center'>Ud. ha modificado exitosamente!!</h3>");
+			$("#botonGuardarAvanceCosto").remove();
+
+        },
+
+        error: function(data,status,er) {
+        	
+        	}
+	 });
+    	
+
+});
 	</script>	

@@ -209,7 +209,7 @@ public class SqlSelects {
 				objeto.setId(rs.getInt("id"));
 				objeto.setJustificacion(rs.getString("justificacion"));
 				objeto.setCantidad(rs.getDouble("cantidad"));
-				objeto.setFechaEntrega(rs.getDate("fecha_entrega"));
+				objeto.setFechaEntrega(rs.getString("fecha_entrega"));
 				objeto.setCantidadBeneficiarios(rs.getInt("cantidad_beneficiarios"));
 				objeto.setActividadId(rs.getInt("actividad_id"));
 				objeto.setVersion(rs.getInt("version"));
@@ -244,7 +244,8 @@ public class SqlSelects {
 				objeto.setMonto(rs.getDouble("monto"));
 				objeto.setCodigoContratacional(rs.getInt("codigo_contratacionl"));
 				objeto.setObjetoGasto(rs.getInt("objeto_gasto"));
-				objeto.setAvanceId(rs.getInt("avance_id"));				
+				objeto.setAvanceId(rs.getInt("avance_id"));	
+				objeto.setBorrado(rs.getBoolean("borrado"));
 
 				objetos.add(objeto);
 			}
