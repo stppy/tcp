@@ -123,6 +123,7 @@ if (user != null) { %>
 
 		
 		renderInsLineaAccion();
+		
 		function renderInsLineaAccion(){
 			
 		$('.box-body').html('');

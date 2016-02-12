@@ -927,7 +927,7 @@
 			
 			if(accion[a].borrado == false){	
 
-			cuerpoAccion +="<td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+nombreUnidadMedidaAccion+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos Presupuestarios'><span class='modalVincularProducto' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+">Gs</span></button><button type='button' class='btn btn-default btn-sm'><span class='glyphicon glyphicon-time agregarActividad' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+"></span></button><button type='button' class='btn btn-default btn-sm editarAccion' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button></td></tr>";
+			cuerpoAccion +="<td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+nombreUnidadMedidaAccion+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos Presupuestarios' disabled='disabled'><span class='modalVincularProducto' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+">Gs</span></button><button type='button' class='btn btn-default btn-sm'><span class='glyphicon glyphicon-time agregarActividad' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+"></span></button><button type='button' class='btn btn-default btn-sm editarAccion' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button></td></tr>";
 			
 			}else{
 				cuerpoAccion +="<td class='text-center'><del>"+accion[a].fechaInicio+"</del></td><td class='text-center'><del>"+accion[a].fechaFin+"</del></td><td class='text-center'><del>"+nombreUnidadMedidaAccion+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</del></td><td class='text-center'><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos Presupuestarios'><span class='modalVincularProducto' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+">Gs.</span></button><button type='button' class='btn btn-default btn-sm'><span class='glyphicon glyphicon-time agregarActividad' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+"></span></button><button type='button' class='btn btn-default btn-sm editarAccion' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button></td></tr>";
@@ -4267,6 +4267,10 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	{
 		$("#modalConsultaBorrarAvance").remove();
 	}	
+	if ( $("#modalBorrarEvidencia").length )
+	{
+		$("#modalBorrarEvidencia").remove();
+	}	
 	
 	var parametros = $(this).attr("parametros");
     var idParsed = parametros.split("-");                                                            
@@ -4300,7 +4304,12 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	var cuerpoEvidencia = "";
 	for(var d = 0; d < webServicesEvidencia.length; d++)
 	{
-		cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[d].nombre+'</td><td>'+webServicesEvidencia[d].descripcion+'</td><td>'+webServicesEvidencia[d].url+'</td><td>'+webServicesEvidencia[d].wsId+'</td><td>'+webServicesEvidencia[d].version+'</td><td>'+webServicesEvidencia[d].avanceId+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" ><span class="fa fa-transh"></span></button></td></tr>';
+		if(webServicesEvidencia[d].borrado == true)
+		{
+			cuerpoEvidencia += '<tr><td><del>'+webServicesEvidencia[d].nombre+'</del></td><td><del>'+webServicesEvidencia[d].descripcion+'</del></td><td><del>'+webServicesEvidencia[d].url+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+		}else{
+			cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[d].nombre+'</td><td>'+webServicesEvidencia[d].descripcion+'</td><td>'+webServicesEvidencia[d].url+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+		}	
 	}
 	
 	var webServicesAvanceCosto = $.ajax({
@@ -4334,7 +4343,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'		    <div class="modal-body">'+
 									
 									'		      	<div class="row">'+ 
-									'		      		<div class="col-md-12">'+
+									'		      		<div class="col-md-6">'+
 									'						<div class="box box-warning box-solid">'+
 									'		                	<div class="box-header with-border">'+
 									'		                  		<h3 class="box-title">Avance</h3>'+
@@ -4350,7 +4359,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'								<div class="table-responsive">'+
 									'									<table class="table table-hover table-bordered">'+
 									'										<thead>'+
-									'											<tr class="active"><th>Justificación</th><th>Cantidad</th><th>FechaEntrega</th><th>CantidadBeneficiarios</th><th class="text-center">Administrar</th></tr>'+
+									'											<tr class="active"><th>Justificación</th><th>Cantidad</th><th>FechaEntrega</th><th>Cant.Beneficiarios</th><th class="text-center">Administrar</th></tr>'+
 									' 										</thead>'+
 									'										<tbody>';
 																				if(webServicesAvance[0].borrado == true)
@@ -4369,6 +4378,76 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'							</div>'+
 									'                		</div>'+	
 									'                	</div>'+
+									'		      		<div class="col-md-6">'+
+									'						<div class="box box-warning box-solid">'+
+									'		                	<div class="box-header with-border">'+
+									'	                  			<h3 class="box-title">Beneficiarios</h3>'+
+									'	                  			<div class="box-tools pull-right">'+
+									'				                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>'+
+									'		                    		</button>'+
+									'		                    		<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>'+
+									'		                    		</button>'+
+									'		                  		</div>'+
+									'              				</div>'+
+									'               			<div class="box-body">'+
+					
+									'		      					<div class="col-md-12">'+
+									'									<div class="box box-default box-solid">'+
+									'		                				<div class="box-header with-border">'+
+									'		                  					<h3 class="box-title">Agregar Beneficiarios</h3>'+
+									'	                  						<div class="box-tools pull-right">'+
+									'				                    			<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+									'		                    					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>'+
+									'		                  					</div>'+
+									'              							</div>'+
+									'              						<div class="box-body">'+
+									
+									'										<div class="table-responsive">'+
+									'											<table class="table table-hover">'+
+									'												<tbody>'+
+			
+									'												</tbody>'+
+									'											</table>'+
+									'				      					</div>'+
+									
+									'				      				 </div>'+//fin box body
+									'									 <div class="modal-footer">'+ 
+									'					        			<button type="button" class="btn btn-success btn-sm">Guardar Beneficiario</button>'+ 
+									'									 </div>'+									
+									'				      			 	</div>'+
+									'				      			</div>'+							
+
+
+									'		      					<div class="col-md-12">'+
+									'									<div class="box box-default box-solid">'+
+									'		                				<div class="box-header with-border">'+
+									'		                  					<h3 class="box-title">Lista Beneficiarios</h3>'+
+									'	                  						<div class="box-tools pull-right">'+
+									'				                    			<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+									'		                    					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>'+
+									'		                  					</div>'+
+									'              							</div>'+
+									'              						<div class="box-body">'+	
+									'										<div class="table-responsive">'+
+									'											<table class="table table-hover table-bordered">'+
+									'												<thead>'+
+									'													<tr class="active"><th>Grupo</th><th>Tipo</th><th>Cantidad</th><th class="text-center">Administrar</th></tr>'+
+									'												</thead>'+
+									'												<tbody>'+
+									'												</tbody>'+
+									'											</table>'+
+									'				      					</div>'+
+									
+									'				      				</div>'+
+									'				      			</div>'+
+									'              				</div>'+
+					
+									'              				</div>'+
+									'                		</div>'+	
+									'               	</div>'+
+									
+									
+									
 									'                </div>'+											
 													
 								
@@ -4402,7 +4481,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'											<table class="table table-hover">'+
 									'												<tbody>'+
 									'			      									<form class="form-horizontal" role="form">'+
-									'													<tr><td><label for="codigoContratacionalCosto">Cod. Contratacional</label><input type="number" id="codigoContratacionalCosto" class="form-control" placeholder="Ingrese Codigo Contratacional" /></td><td><label for="objetoGastoCosto">Objeto Gasto</label><input type="number" id="objetoGastoCosto" class="form-control" placeholder="Ingrese Objeto de Gasto" /></td></tr>'+									
+									'													<tr><td><label for="codigoContratacionalCosto">Cod. Contrato</label><input type="number" id="codigoContratacionalCosto" class="form-control" placeholder="Ingrese Codigo Contrato" /></td><td><label for="objetoGastoCosto">Objeto Gasto</label><input type="number" id="objetoGastoCosto" class="form-control" placeholder="Ingrese Objeto de Gasto" /></td></tr>'+									
 									'													<tr><td colspan="2"><label for="montoCosto">Monto</label><input type="number" id="montoCosto" class="form-control" placeholder="Ingrese Monto" /></td></tr>'+
 									'													<input type="hidden" id="avanceIdCosto" value="'+avanceId+'"/>'+		
 									'			      									</form>	'+												
@@ -4479,15 +4558,16 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'			      									<form class="form-horizontal" role="form">'+
 									'													<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" placeholder="Ingrese Nombre" /></td><td><label for="urlEvidencia">Url</label><input type="url" id="urlEvidencia" class="form-control" placeholder="Ingrese Url" /></td></tr>'+
 									'													<tr><td colspan="2"><label for="descripcionEvidencia">Descripción</label><input type="text" id="descripcionEvidencia" class="form-control" placeholder="Ingrese Descripción" /></td></tr>'+
-									'													<input type="hidden" id="wsIdEvidencia" value="3" /><input type="hidden" id="versionEvidencia" value="3"/><input type="hidden" id="avanceIdEvidencia" value="'+avanceId+'"/>'+		
+									'													<input type="hidden" id="wsIdEvidencia" value="1" /><input type="hidden" id="versionEvidencia" value="3"/><input type="hidden" id="avanceIdEvidencia" value="'+avanceId+'"/>'+		
 									'			      									</form>	'+												
 									'												</tbody>'+
 									'											</table>'+
 									'				      					</div>'+
+								
 									
 									'				      				 </div>'+//fin box body
 									'									 <div class="modal-footer">'+ 
-									'					        			<button type="button" class="btn btn-success btn-sm guardarEvidencia" >Guardar Evidencia</button>'+ 
+									'					        			<button type="button" class="btn btn-success btn-sm guardarEvidencia" parametros='+avanceId+'>Guardar Evidencia</button>'+ 
 									'									 </div>'+									
 									'				      			 	</div>'+
 									'				      			</div>'+							
@@ -4506,10 +4586,11 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'										<div class="table-responsive">'+
 									'											<table class="table table-hover table-bordered">'+
 									'												<thead>'+
-									'													<tr class="active"><th>Nombre</th><th>Descripción</th><th>Url</th><th>Versión</th><th class="text-center">Administrar</th></tr>'+
+									'													<tr class="active"><th>Nombre</th><th>Descripción</th><th>Url</th><th class="text-center">Administrar</th></tr>'+
 									'												</thead>'+
-									'												<tbody>'+
-									'												</tbody id="listaEvidencia">'+
+									'												<tbody  id="listaEvidencia">'+
+									
+									'												</tbody>'+
 									'											</table>'+
 									'				      					</div>'+
 									
@@ -4540,78 +4621,6 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	$("#modalAdministrador").modal('show');	
 
 });	
-
-$("body").on("click", ".guardarEvidencia",function(event){
-	
-	var nombre = $("#nombreEvidencia").val();
-	var url = $("#urlEvidencia").val();
-	var descripcion = $("#descripcionEvidencia").val();
-	var wsId = $("#wsIdEvidencia").val();
-	var version = $("#versionEvidencia").val();
-	var avanceId = $("#avanceIdEvidencia").val();
-
-	//Vaciar los inputs
-	$("#nombreEvidencia").val("");
-	$("#urlEvidencia").val("");
-	$("#descripcionEvidencia").val("");
-
-	
-	var objeto = new Object();
-	
-	objeto.nombre = nombre;
-	objeto.url = url;
-	objeto.descripcion = descripcion;
-	objeto.wsId = wsId;
-	objeto.version = version;
-	objeto.avanceId = avanceId;
-
-	
-  	var info = JSON.stringify(objeto);
-    $.ajax({
-        url: "ajaxInserts2?accion=insEvidencia",
-        type: 'POST',
-        dataType: 'json',
-        data: info,
-        contentType: 'application/json',
-        mimeType: 'application/json',
-        success: function (data) {
-        	if(data.success == true)
-        	{
-        		
-        		var webServicesEvidencia = $.ajax({
-        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getEvidencia&avanceId='+avanceId,
-        		  	type:'get',
-        		  	dataType:'json',
-        		  	async:false       
-        		}).responseText;
-        		webServicesEvidencia = JSON.parse(webServicesEvidencia);
-        		
-        		var cuerpoEvidencia = "";
-        		for(var d = 0; d < webServicesEvidencia.length; d++)
-        		{
-        			if(webServicesEvidencia[d].borrado == true)
-        			{
-        				cuerpoEvidencia += '<tr><td><del>'+webServicesEvidencia[d].nombre+'</del></td><td><del>'+webServicesEvidencia[d].descripcion+'</del></td><td><del>'+webServicesEvidencia[d].url+'</del></td><td><del>'+webServicesEvidencia[d].wsId+'</del></td><td><del>'+webServicesEvidencia[d].version+'</del></td><td><del>'+webServicesEvidencia[d].avanceId+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" ><span class="fa fa-transh"></span></button></td></tr>';
-        			}else{
-        				cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[d].nombre+'</td><td>'+webServicesEvidencia[d].descripcion+'</td><td>'+webServicesEvidencia[d].url+'</td><td>'+webServicesEvidencia[d].wsId+'</td><td>'+webServicesEvidencia[d].version+'</td><td>'+webServicesEvidencia[d].avanceId+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" ><span class="fa fa-transh"></span></button></td></tr>';
-        			}	
-        		}
-        		
-        		$("#listaEvidencia").html("");
-        		$("#listaEvidencia").html(cuerpoEvidencia);
-        		
-        	}else{
-  		
-        	}
-        	
-        	},
-        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
-        error: function(data,status,er) {
-        	
-        	}
-	 });
-	
-});
 
 $("body").on("click", ".guardarCosto",function(event){
 	
@@ -4827,7 +4836,7 @@ $("body").on("click", ".consultaEditarCosto",function(event){
 						'						<table class="table table-hover">'+
 						'							<tbody>'+
 						'								<form class="form-horizontal" role="form">'+
-						'									<tr><td><label for="codigoContratacionalCosto">Cod. Contratacional</label><input type="number" id="codigoContratacionalCosto" class="form-control" value='+webServicesAvanceCosto[0].codigoContratacional+' /></td><td><label for="objetoGastoCosto">Objeto Gasto</label><input type="number" id="objetoGastoCosto" class="form-control" value='+webServicesAvanceCosto[0].objetoGasto+' /></td></tr>'+									
+						'									<tr><td><label for="codigoContratacionalCosto">Cod. Contrato</label><input type="number" id="codigoContratacionalCosto" class="form-control" value='+webServicesAvanceCosto[0].codigoContratacional+' /></td><td><label for="objetoGastoCosto">Objeto Gasto</label><input type="number" id="objetoGastoCosto" class="form-control" value='+webServicesAvanceCosto[0].objetoGasto+' /></td></tr>'+									
 						'									<tr><td colspan="2"><label for="montoCosto">Monto</label><input type="number" id="montoCosto" class="form-control" value='+webServicesAvanceCosto[0].monto+'  /></td></tr>'+
 						'									<input type="hidden" id="avanceIdCosto" value="'+webServicesAvanceCosto[0].avanceId+'"/>'+		
 						'								</form>	'+												
@@ -4898,7 +4907,198 @@ $("body").on("click", ".guardarAvanceCosto",function(event){
         	
         	}
 	 });
-    	
+  
+});
 
+$("body").on("click", ".guardarEvidencia",function(event){
+	
+	var parametros = $(this).attr("parametros");
+	var idParsed = parametros.split("-");                                                            
+
+	var avanceId = idParsed[0];//es el id de la tabla avance
+	
+	
+	var nombre = $("#nombreEvidencia").val();
+	var url = $("#urlEvidencia").val();
+	var descripcion = $("#descripcionEvidencia").val();
+	var wsId = $("#wsIdEvidencia").val();
+	var version = $("#versionEvidencia").val();
+	var avanceId = $("#avanceIdEvidencia").val();
+
+	//Vaciar los inputs
+	$("#nombreEvidencia").val("");
+	$("#urlEvidencia").val("");
+	$("#descripcionEvidencia").val("");
+
+	
+	var objeto = new Object();
+	
+	objeto.nombre = nombre;
+	objeto.url = url;
+	objeto.descripcion = descripcion;
+	objeto.wsId = wsId;
+	objeto.version = version;
+	objeto.avanceId = avanceId;
+
+	
+  	var info = JSON.stringify(objeto);
+    $.ajax({
+        url: "ajaxInserts2?accion=insEvidencia",
+        type: 'POST',
+        dataType: 'json',
+        data: info,
+        contentType: 'application/json',
+        mimeType: 'application/json',
+        success: function (data) {
+        	if(data.success == true)
+        	{
+        		
+        		var webServicesEvidencia = $.ajax({
+        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getEvidencia&avanceId='+avanceId,
+        		  	type:'get',
+        		  	dataType:'json',
+        		  	async:false       
+        		}).responseText;
+        		webServicesEvidencia = JSON.parse(webServicesEvidencia);
+        		
+        		var cuerpoEvidencia = "";
+        		for(var d = 0; d < webServicesEvidencia.length; d++)
+        		{
+        			if(webServicesEvidencia[d].borrado == true)
+        			{
+        				cuerpoEvidencia += '<tr><td><del>'+webServicesEvidencia[d].nombre+'</del></td><td><del>'+webServicesEvidencia[d].descripcion+'</del></td><td><del>'+webServicesEvidencia[d].url+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+        			}else{
+        				cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[d].nombre+'</td><td>'+webServicesEvidencia[d].descripcion+'</td><td>'+webServicesEvidencia[d].url+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+        			}	
+        		}
+        		
+        		$("#listaEvidencia").html("");
+        		$("#listaEvidencia").html(cuerpoEvidencia);
+        		
+        	}else{
+  		
+        	}
+        	
+        	},
+        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
+        error: function(data,status,er) {
+        	
+        	}
+	 });
+	
+});
+
+$("body").on("click", ".consultaBorrarEvidencia",function(event){
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-");                                                            
+	
+	//Las siguentes variables se utiliza en esta funcion para redibujar el modal anterior
+	var insLineaAccionId = idParsed[0];
+	var lineaAccionId = idParsed[1];
+	var institucionId = idParsed[2];
+	var periodoId = idParsed[3];
+	var accionId = idParsed[4];
+	var actividadId = idParsed[5];
+	var avanceId = idParsed[6];
+	var idEvidencia = idParsed[7];
+
+
+	if ( $("#modalAdministrador").length )
+	{
+		$("#modalAdministrador").remove();
+	}		
+	
+	var webServicesEvidencia = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getEvidencia&idEvidencia='+idEvidencia,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	webServicesEvidencia = JSON.parse(webServicesEvidencia);
+	
+	var contenidoEvidencia = "";
+
+	contenidoEvidencia +=			'<div class="modal fade" id="modalBorrarEvidencia"  data-backdrop="static" data-keyboard="false" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">'+
+						'	<div class="modal-dialog modal-lg">'+
+						'		<div class="modal-content" >'+
+						'			<div class="modal-header">'+
+						'		        <button type="button" class="close agregarModalAdministrador"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+						'		        <h4 class="modal-title" >Borrar - Restaurar Evidencia</h4>'+
+						'			</div>'+
+						'		    <div class="modal-body">'+
+						'			<div id="mensajeBorradoEvidencia"></div>'+
+						'		    </div>'+
+						'			<div class="modal-footer" id="agregarBotonBorradoEvidencia">'+
+						'			</div>'+
+						'		</div>'+ 
+						'	</div>'+
+						'</div>';
+						
+		$("#programacion").append(contenidoEvidencia);
+		
+		if(webServicesEvidencia[0].borrado == true){
+			$("#mensajeBorradoEvidencia").html("");
+			$("#mensajeBorradoEvidencia").append('<h3 class="text-center">Ud. esta seguro que desea RESTABLACER este registro</h3>');
+			$("#agregarBotonBorradoEvidencia").html("");
+			$("#agregarBotonBorradoEvidencia").append('<button type="button" class="btn btn-success btn-sm borrarEvidencia" id="botonRestaurarEvidencia" parametros='+webServicesEvidencia[0].id+'-r>Restaurar Evidencia</button>');
+			$("#agregarBotonBorradoEvidencia").append('<button type="button" class="btn btn-success btn-sm agregarModalAdministrador"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'>Cerrar</button>');
+		}else{
+			$("#mensajeBorradoEvidencia").html("");
+			$("#mensajeBorradoEvidencia").append('<h3 class="text-center">Ud. esta seguro que desea BORRAR este registro</h3');
+			$("#agregarBotonBorradoEvidencia").html("");
+			$("#agregarBotonBorradoEvidencia").append('<button type="button" class="btn btn-danger btn-sm borrarEvidencia" id="botonBorradoEvidencia" parametros='+webServicesEvidencia[0].id+'-b>Borrar Evidencia</button>');
+			$("#agregarBotonBorradoEvidencia").append('<button type="button" class="btn btn-success btn-sm agregarModalAdministrador"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'>Cerrar</button>');
+		}
+		
+		$('#modalBorrarEvidencia').modal('show');
+			
+});
+
+$("body").on("click", ".borrarEvidencia",function(event){	
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-"); 
+    var evidenciaId = idParsed[0];
+    var estado = idParsed[1];
+    
+	var webServicesEvidencia = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getEvidencia&idEvidencia='+evidenciaId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	webServicesEvidencia = JSON.parse(webServicesEvidencia);
+    
+    var objeto = new Object();
+    objeto.id = evidenciaId;
+    objeto.borrado= webServicesEvidencia[0].borrado;
+
+    
+  	var info = JSON.stringify(objeto);
+    $.ajax({
+        url: "ajaxUpdate2?accion=actBorradoEvidencia",
+        type: 'POST',
+        dataType: 'json',
+        data: info,
+        contentType: 'application/json',
+        mimeType: 'application/json',
+        success: function (data) {
+        	
+            if(estado == "b"){
+        		$("#botonBorradoEvidencia").remove();
+            	$("#mensajeBorradoEvidencia").html("");
+            	$("#mensajeBorradoEvidencia").html("<h3 class='text-center'>BORRADO EXITOSAMENTE!!</h3>");
+            }else{
+        		$("#botonRestaurarEvidencia").remove();
+            	$("#mensajeBorradoEvidencia").html("");
+            	$("#mensajeBorradoEvidencia").html("<h3 class='text-center'>RESTAURADO EXITOSAMENTE!!</h3>");
+        	}
+
+        },
+
+        error: function(data,status,er) {
+        	
+        	}
+	 });
+	
 });
 	</script>	
