@@ -4654,7 +4654,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									
 									'				      				 </div>'+//fin box body
 									'									 <div class="modal-footer">'+ 
-									'					        			<button type="button" class="btn btn-success btn-sm guardarCosto">Guardar Costo</button>'+ 
+									'					        			<button type="button" class="btn btn-success btn-sm guardarCosto" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'>Guardar Costo</button>'+ 
 									'									 </div>'+									
 									'				      			 	</div>'+
 									'				      			</div>'+							
@@ -5060,6 +5060,16 @@ $("body").on("click", ".borrarAvance",function(event){
 });
 
 $("body").on("click", ".guardarCosto",function(event){
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-");                                                            
+	
+	//Las siguentes variables se utiliza en esta funcion para redibujar el modal anterior
+	var insLineaAccionId = idParsed[0];
+	var lineaAccionId = idParsed[1];
+	var institucionId = idParsed[2];
+	var periodoId = idParsed[3];
+	var accionId = idParsed[4];
+	var actividadId = idParsed[5];
 	
 	var monto = $("#montoCosto").val();
 	var codigoContratacional = $("#codigoContratacionalCosto").val();
@@ -5067,6 +5077,8 @@ $("body").on("click", ".guardarCosto",function(event){
 	var avanceId = $("#avanceIdCosto").val();
 
 	//Vaciar los inputs
+	$("#codigoContratacionalCosto").val("");
+	$("#objetoGastoCosto").val("");
 	$("#montoCosto").val("");
 
 	var objeto = new Object();
@@ -5099,7 +5111,12 @@ $("body").on("click", ".guardarCosto",function(event){
         		var cuerpoAvanceCosto = "";
         		for(var d = 0; d < webServicesAvanceCosto.length; d++)
         		{
-        			cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].monto+'</td><td>'+webServicesAvanceCosto[d].codigoContratacional+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar" ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Borrar" ><span class="fa fa-trash"></span></button></td></tr>';
+        			if(webServicesAvanceCosto[d].borrado == true)
+        			{
+        				cuerpoAvanceCosto += '<tr><td><del>'+webServicesAvanceCosto[d].monto+'</del></td><td><del>'+webServicesAvanceCosto[d].codigoContratacional+'</del></td><td><del>'+webServicesAvanceCosto[d].objetoGasto+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarCosto" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCosto" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+        			}else{
+        				cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].monto+'</td><td>'+webServicesAvanceCosto[d].codigoContratacional+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarCosto" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCosto" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+        			}
         		}
         		
         		$("#listaCosto").html("");
