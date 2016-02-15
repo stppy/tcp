@@ -1379,7 +1379,7 @@ public class SqlUpdates {
 					 if(objeto.getNombre()!=null)				query+= "nombre='"+objeto.getNombre()+"'";
 					 if(objeto.getDescripcion()!=null)			query+= ", descripcion='"+objeto.getDescripcion()+"'";
 					 if(objeto.getOrden()!=0)			 		query+= ", orden="+objeto.getOrden()+"";
-					 if(objeto.getPeso()!=null)					query+= ", peso='"+objeto.getPeso()+"'";
+					 if(objeto.getPeso()!=0)					query+= ", peso='"+objeto.getPeso()+"'";
 					 if(objeto.isAcumular()!=false)			    query+= ", acumular='"+objeto.isAcumular()+"'";	
 					 if(objeto.getTipoAccionId()!=0)			query+= ", tipo_accion_id="+objeto.getTipoAccionId()+"";
 					 if(objeto.getEstrategiaId()!=0)			query+= ", estrategia_id="+objeto.getEstrategiaId()+"";
