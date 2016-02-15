@@ -52,7 +52,7 @@
 				    </div>
 				  </div>	
 				  <div class="form-group">
-				    <label for="unidadMedidaIdLineaAccion" class="col-lg-2 control-label">Unidad_medida</label>
+				    <label for="unidadMedidaIdLineaAccion" class="col-lg-2 control-label">Unidad de Medida</label>
 				    <div class="col-lg-10">
 				      <select name="unidadMedidaIdLineaAccion" id="unidadMedidaIdLineaAccion" class="form-control"></select>
 				    </div>
@@ -112,7 +112,7 @@
 		{
 			optionEstrategia+='<option value="'+estrategia[u].id+'" parametro="'+estrategia[u].id+'">'+estrategia[u].nombre+'</option>';
 		}
-		$("#estrategiaIdLineaAccion").append(estrategia);
+		$("#estrategiaIdLineaAccion").append(optionEstrategia);
 	});
 	
 	$("body").on("click", "#guardarLineaAccion",function(event){		

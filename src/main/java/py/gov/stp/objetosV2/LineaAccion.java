@@ -5,7 +5,7 @@ public class LineaAccion {
 	protected String nombre;
 	protected String descripcion;
 	protected int orden;
-	protected String peso;
+	protected int peso;
 	protected boolean acumular;
 	protected int tipoAccionId;
 	protected int estrategiaId;
@@ -36,10 +36,10 @@ public class LineaAccion {
 	public void setOrden(int orden) {
 		this.orden = orden;
 	}
-	public String getPeso() {
+	public int getPeso() {
 		return peso;
 	}
-	public void setPeso(String peso) {
+	public void setPeso(int peso) {
 		this.peso = peso;
 	}
 	public boolean isAcumular() {

@@ -97,7 +97,7 @@ public class SqlInserts {
 		insert.setString (1, lineaAccion.getNombre());
 		insert.setString (2, lineaAccion.getDescripcion());
 		insert.setInt (3, lineaAccion.getOrden());
-		insert.setString (4, lineaAccion.getPeso());
+		insert.setInt (4, lineaAccion.getPeso());
 		insert.setBoolean(5, lineaAccion.isAcumular());
 		insert.setInt (6, lineaAccion.getTipoAccionId());
 		insert.setInt (7, lineaAccion.getEstrategiaId());

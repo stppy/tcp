@@ -306,7 +306,7 @@ public class SqlSelects {
 				objeto.setNombre(rs.getString("nombre"));
 				objeto.setDescripcion(rs.getString("descripcion"));
 				objeto.setOrden(rs.getInt("orden"));
-				objeto.setPeso(rs.getString("peso"));
+				objeto.setPeso(rs.getInt("peso"));
 				objeto.setAcumular(rs.getBoolean("acumular"));
 				objeto.setTipoAccionId(rs.getInt("tipo_accion_id"));
 				objeto.setEstrategiaId(rs.getInt("estrategia_id"));
@@ -983,6 +983,8 @@ public class SqlSelects {
 				if (conect != null) {conect.close();}
 			}
 			return objetos; 
-	  }	
+	  }
+	
+	
 
 }
