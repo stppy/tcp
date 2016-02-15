@@ -59,7 +59,7 @@ public class SqlSelects {
 	
 	public static List<UnidadMedida> selectUnidadMedida() throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select * from unidad_medida";
+		String query = " select * from unidad_medida ORDER BY descripcion";
 
 		Statement statement = null;
 		ResultSet rs=null;
