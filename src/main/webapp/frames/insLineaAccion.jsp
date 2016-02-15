@@ -320,7 +320,7 @@
 							if(insLineaAccion[w].borrado == true){
 								tablaInsLineaAccion+='<td><del>'+insLineaAccion[w].meta+'</del></td><td class="text-center"><del>'+nombreUnidadMedida+'</del></td><td class="text-center"><span class="glyphicon glyphicon-pencil registrosInsLineaAccion" codigoRegistroInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'-'+insLineaAccion[w].meta+'-'+insLineaAccion[w].version+'></span></td><td><span class="glyphicon glyphicon-trash" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+' id="iconoBorradoInsLineaAccion"></span></td><td><span class="glyphicon glyphicon-list-alt" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"></span></td></tr>';
 							}else{
-								tablaInsLineaAccion+='<td>'+insLineaAccion[w].meta+'</td><td class="text-center">'+nombreUnidadMedida+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar Acción"><span class="glyphicon glyphicon-pencil registrosInsLineaAccion" codigoRegistroInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'-'+insLineaAccion[w].meta+'-'+insLineaAccion[w].version+'></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Borrar Acción"><span class="glyphicon glyphicon-trash" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+' id="iconoBorradoInsLineaAccion"></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Acción"><span class="glyphicon glyphicon-list-alt agregarAccion" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"></span></button></td></tr>';	
+								tablaInsLineaAccion+='<td>'+insLineaAccion[w].meta+'</td><td class="text-center">'+nombreUnidadMedida+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar Linea de Acción"><span class="glyphicon glyphicon-pencil registrosInsLineaAccion" codigoRegistroInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'-'+insLineaAccion[w].meta+'-'+insLineaAccion[w].version+'></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Borrar Acción"><span class="glyphicon glyphicon-trash" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+' id="iconoBorradoInsLineaAccion"></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Acción"><span class="glyphicon glyphicon-list-alt agregarAccion" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"></span></button></td></tr>';	
 							}
 							
 						}
@@ -831,7 +831,7 @@
 				    				}
 				    				
 				    				if(insLineaAccion[w].borrado == true){
-				    					cuerpoInsLineaAccion+='<td><del>'+insLineaAccion[w].meta+'</del></td><td class="text-center"><del>'+nombreUnidadMedida+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar Acción"><span class="glyphicon glyphicon-pencil registrosInsLineaAccion" codigoRegistroInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'-'+insLineaAccion[w].meta+'-'+insLineaAccion[w].version+'></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Borrar Acción"><span class="glyphicon glyphicon-trash" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+' id="consultaBorrarInsLineaAccion"></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Acción"><span class="glyphicon glyphicon-list-alt agregarAccion" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"></span></button></td></tr>';
+				    					cuerpoInsLineaAccion+='<td><del>'+insLineaAccion[w].meta+'</del></td><td class="text-center"><del>'+nombreUnidadMedida+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar Linea de Acción"><span class="glyphicon glyphicon-pencil registrosInsLineaAccion" codigoRegistroInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'-'+insLineaAccion[w].meta+'-'+insLineaAccion[w].version+'></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Borrar Acción"><span class="glyphicon glyphicon-trash" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+' id="consultaBorrarInsLineaAccion"></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Acción"><span class="glyphicon glyphicon-list-alt agregarAccion" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"></span></button></td></tr>';
 				    				}else{
 				    					cuerpoInsLineaAccion+='<td>'+insLineaAccion[w].meta+'</td><td class="text-center">'+nombreUnidadMedida+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar Acción"><span class="glyphicon glyphicon-pencil registrosInsLineaAccion" codigoRegistroInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'-'+insLineaAccion[w].meta+'-'+insLineaAccion[w].version+'></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Borrar Acción"><span class="glyphicon glyphicon-trash" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+' id="consultaBorrarInsLineaAccion"></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Acción"><span class="glyphicon glyphicon-list-alt agregarAccion" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"></span></button></td></tr>';	
 				    				}
@@ -4429,6 +4429,11 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	{
 		$("#modalBorrarEvidencia").remove();
 	}	
+	if ( $("#modalBorrarAvance").length )
+	{
+		$("#modalBorrarAvance").remove();
+	}	
+		
 	
 	var parametros = $(this).attr("parametros");
     var idParsed = parametros.split("-");                                                            
@@ -4783,115 +4788,276 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 $("body").on("click", ".consultaEditarAvance",function(event){
 
 	var parametros = $(this).attr("parametros");
- 	
     var idParsed = parametros.split("-");                                                            
 
-	    	//Las siguentes variables se utiliza en esta funcion para redibujar el modal anterior
+	//Las siguentes variables se utiliza en esta funcion para redibujar el modal anterior
+    var insLineaAccionId = idParsed[0];
+	var lineaAccionId = idParsed[1];
+    var institucionId = idParsed[2];
+  	var periodoId = idParsed[3];
+ 	var accionId = idParsed[4];
+  	var actividadId = idParsed[5];
+  	var avanceId = idParsed[6];
 
-    	var insLineaAccionId = idParsed[0];
-	    	var lineaAccionId = idParsed[1];
-     	var institucionId = idParsed[2];
- 
-	    	var periodoId = idParsed[3];
- 
-	    	var accionId = idParsed[4];
- 
-    	var actividadId = idParsed[5];
- 	
-	    	var avanceId = idParsed[6];
+  	if ( $("#modalAdministrador").length )
+   	{
+		$("#modalAdministrador").remove();
+   	}	
+  	
+   	var webServicesAvance = $.ajax({
 
-	    	if ( $("#modalAdministrador").length )
+   		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvance&avanceId='+avanceId,
 
-	    	{
+   	  	type:'get',
 
-	    		$("#modalAdministrador").remove();
+   	  	dataType:'json',
 
-	    	}	
+   	  	async:false       
 
-    	
+   	}).responseText;
 
-	    	var webServicesAvance = $.ajax({
+   	webServicesAvance = JSON.parse(webServicesAvance); 
 
-	    		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvance&avanceId='+avanceId,
+   	var contenido = "";
 
-	    	  	type:'get',
+   	contenido +=		'<div class="modal fade" id="modalEditarCosto"  data-backdrop="static" data-keyboard="false" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">'+
 
-	    	  	dataType:'json',
+   						'	<div class="modal-dialog modal-lg">'+
 
-	    	  	async:false       
+   						'		<div class="modal-content" >'+
 
-	    	}).responseText;
+   						'			<div class="modal-header">'+
 
-	    	webServicesAvance = JSON.parse(webServicesAvance); 
+   						'		        <button type="button" class="close agregarModalAdministrador" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
 
-	    	
+   						'		        <h4 class="modal-title" >Editar Avance</h4>'+
 
-	    	var contenido = "";
+   						'			</div>'+
 
+   						'		    <div class="modal-body" id="cuerpoModalEditarAvance">'+
+   										
 
+						'				<div class="table-responsive">'+
 
-	    	contenido +=		'<div class="modal fade" id="modalEditarCosto"  data-backdrop="static" data-keyboard="false" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">'+
+						'					<table class="table table-hover">'+
 
-	    						'	<div class="modal-dialog modal-lg">'+
+						'						<tbody>'+
 
-	    						'		<div class="modal-content" >'+
+						'			      			<form class="form-horizontal" role="form">'+
 
-	    						'			<div class="modal-header">'+
- 	
-	    						'		        <button type="button" class="close agregarModalAdministrador"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+						'							<tr><td><label for="justificacionAvance">Justificación</label><input type="text" id="justificacionAvance" value="'+webServicesAvance[0].justificacion+'" class="form-control" /></td><td><label for="cantidadAvance">Cantidad</label><input type="number" id="cantidadAvance" class="form-control" value='+webServicesAvance[0].cantidad+' /></td></tr>'+
 
-	    						'		        <h4 class="modal-title" >Editar Avance</h4>'+
+						'							<tr><td><label for="fechaEntregaAvance">Fecha Entrega</label><input type="date" id="fechaEntregaAvance" value='+webServicesAvance[0].fechaEntrega+' class="form-control"  /></td><td><label for="cantidadBeneficiariosAvance">Cantidad Beneficiarios</label><input type="number" id="cantidadBeneficiariosAvance" class="form-control" value='+webServicesAvance[0].cantidadBeneficiarios+' /></td></tr>'+														
 
-	    						'			</div>'+
+						'							<input type="hidden" id="versionAvance" value="3" /><input type="hidden" id="actividadIdAvance" value='+avanceId+' />'+		
 
-	    						'		    <div class="modal-body" id="cuerpoModalEditarAvance">'+
-	    										
- 	
-								'				<div class="table-responsive">'+
+						'			      			</form>	'+												
 
-								'					<table class="table table-hover">'+
+						'						</tbody>'+
 
-								'						<tbody>'+
+						'					</table>'+
+						'				 </div>'+	
 
-								'			      			<form class="form-horizontal" role="form">'+
- 	
-								'							<tr><td><label for="justificacionAvance">Justificación</label><input type="text" id="justificacionAvance" value="'+webServicesAvance[0].justificacion+'" class="form-control" /></td><td><label for="cantidadAvance">Cantidad</label><input type="number" id="cantidadAvance" class="form-control" value='+webServicesAvance[0].cantidad+' /></td></tr>'+
+   						
 
-								'							<tr><td><label for="fechaEntregaAvance">Fecha Entrega</label><input type="date" id="fechaEntregaAvance" value='+webServicesAvance[0].fechaEntrega+' class="form-control"  /></td><td><label for="cantidadBeneficiariosAvance">Cantidad Beneficiarios</label><input type="number" id="cantidadBeneficiariosAvance" class="form-control" value='+webServicesAvance[0].cantidadBeneficiarios+' /></td></tr>'+														
+   						'		    </div>'+
 
-								'							<input type="hidden" id="versionAvance" value="3" /><input type="hidden" id="actividadIdAvance" value='+avanceId+' />'+		
+   						'			<div class="modal-footer">'+
 
-								'			      			</form>	'+												
+   						' 				<button type="button" class="btn btn-success btn-sm editarAvance" id="botonGuardarAvance" parametros='+avanceId+'>Guardar Cambios</button>'+
+   						'				<button type="button" class="btn btn-success agregarModalAdministrador" data-dismiss="modal" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'>Cerrar</button>'+	
 
-								'						</tbody>'+
+   						'			</div>'+
 
-								'					</table>'+
-								'				 </div>'+	
+   						'		</div>'+ 
 
-	    						
+   						'	</div>'+
 
-	    						'		    </div>'+
+   						'</div>';
 
-	    						'			<div class="modal-footer">'+
+   						
 
-	    						' 				<button type="button" class="btn btn-success btn-sm editarrAvance" id="botonGuardarAvance" parametros='+avanceId+'>Guardar Cambios</button>'+
+   	$("body").append(contenido);
 
-	    						'			</div>'+
-
-	    						'		</div>'+ 
-
-	    						'	</div>'+
-
-	    						'</div>';
-
-	    						
-
-	    	$("body").append(contenido);
-
-	    	$('#modalEditarCosto').modal('show');
+   	$('#modalEditarCosto').modal('show');
 
  });
+ 
+$("body").on("click", ".editarAvance",function(event){	
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-"); 
+    var avanceId = idParsed[0];
+    
+	var justificacion = $("#justificacionAvance").val();
+	var cantidad = $("#cantidadAvance").val();
+	var fechaEntrega = $("#fechaEntregaAvance").val();
+	var cantidadBeneficiarios = $("#cantidadBeneficiariosAvance").val();
 
+
+	//Vaciar los inputs
+	$("#justificacionAvance").val("");
+	$("#cantidadAvance").val("");
+	$("#fechaEntregaAvance").val("");
+	$("#cantidadBeneficiariosAvance").val("");
+    
+   	var webServicesAvance = $.ajax({
+   		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvance&avanceId='+avanceId,
+   	  	type:'get',
+   	  	dataType:'json',
+   	  	async:false       
+   	}).responseText;
+   	webServicesAvance = JSON.parse(webServicesAvance); 
+    
+	var objeto = new Object();
+	
+	objeto.justificacion = justificacion;
+	objeto.cantidad = cantidad;
+	objeto.fechaEntrega = fechaEntrega;
+	objeto.cantidadBeneficiarios = cantidadBeneficiarios;
+	objeto.actividadId = webServicesAvance[0].actividadId;
+	objeto.version = webServicesAvance[0].version;//No obtenemos este valor del formulario sino del webservices entonces si por ahi agregamos la funcionalidad de que el usuario cambien la version debemos de obtener este dato del formulario y ya no del webservice
+	objeto.id = avanceId;
+
+	
+  	var info = JSON.stringify(objeto);
+    $.ajax({
+        url: "ajaxUpdate2?accion=actAvance",
+        type: 'POST',
+        dataType: 'json',
+        data: info,
+        contentType: 'application/json',
+        mimeType: 'application/json',
+        success: function (data) {
+        	if(data.success == true)
+        	{
+				$("#cuerpoModalEditarAvance").html("");
+				$("#cuerpoModalEditarAvance").append("<h3 class='text-center'>Ud ha actualizado exitosamente los cambios!!</h3>");
+				$("#botonGuardarAvance").remove("");
+
+        	}else{
+        		alert("ERROR");
+        	}
+        	
+        	},
+        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
+        error: function(data,status,er) {
+        	
+        	}
+	 });
+	
+});
+
+$("body").on("click", ".consultaBorrarAvance",function(event){
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-");                                                            
+	
+	//Las siguentes variables se utiliza en esta funcion para redibujar el modal anterior
+	var insLineaAccionId = idParsed[0];
+	var lineaAccionId = idParsed[1];
+	var institucionId = idParsed[2];
+	var periodoId = idParsed[3];
+	var accionId = idParsed[4];
+	var actividadId = idParsed[5];
+	var avanceId = idParsed[6];
+
+	if ( $("#modalAdministrador").length )
+	{
+		$("#modalAdministrador").remove();
+	}		
+	
+   	var webServicesAvance = $.ajax({
+   		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvance&avanceId='+avanceId,
+   	  	type:'get',
+   	  	dataType:'json',
+   	  	async:false       
+   	}).responseText;
+   	webServicesAvance = JSON.parse(webServicesAvance); 
+	
+	var contenido = "";
+
+	contenido =			'<div class="modal fade" id="modalBorrarAvance"  data-backdrop="static" data-keyboard="false" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">'+
+						'	<div class="modal-dialog modal-lg">'+
+						'		<div class="modal-content" >'+
+						'			<div class="modal-header">'+
+						'		        <button type="button" class="close agregarModalAdministrador"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+						'		        <h4 class="modal-title" >Borrar - Restaurar Avance</h4>'+
+						'			</div>'+
+						'		    <div class="modal-body">'+
+						'				<div id="mensajeBorradoAvance"></div>'+
+						'		    </div>'+
+						'			<div class="modal-footer" id="agregarBotonBorradoAvance">'+
+						'			</div>'+
+						'		</div>'+ 
+						'	</div>'+
+						'</div>';
+						
+		$("#programacion").append(contenido);
+		
+		if(webServicesAvance[0].borrado == true){
+			$("#mensajeBorradoAvance").html("");
+			$("#mensajeBorradoAvance").append('<h3 class="text-center">Ud. esta seguro que desea RESTABLACER este registro</h3>');
+			$("#agregarBotonBorradoAvance").html("");
+			$("#agregarBotonBorradoAvance").append('<button type="button" class="btn btn-success btn-sm borrarAvance" id="botonRestaurarAvance" parametros='+avanceId+'-r>Restaurar Avance</button>');
+			$("#agregarBotonBorradoAvance").append('<button type="button" class="btn btn-success btn-sm agregarModalAdministrador"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'>Cerrar</button>');
+		}else{
+			$("#mensajeBorradoAvance").html("");
+			$("#mensajeBorradoAvance").append('<h3 class="text-center">Ud. esta seguro que desea BORRAR este registro</h3');
+			$("#agregarBotonBorradoAvance").html("");
+			$("#agregarBotonBorradoAvance").append('<button type="button" class="btn btn-danger btn-sm borrarAvance" id="botonBorradoAvance" parametros='+avanceId+'-b>Borrar Avance</button>');
+			$("#agregarBotonBorradoAvance").append('<button type="button" class="btn btn-success btn-sm agregarModalAdministrador"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'>Cerrar</button>');
+		}
+		
+		$('#modalBorrarAvance').modal('show');
+			
+});
+
+$("body").on("click", ".borrarAvance",function(event){	
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-"); 
+    var avanceId = idParsed[0];
+    var estado = idParsed[1];
+    
+   	var webServicesAvance = $.ajax({
+   		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvance&avanceId='+avanceId,
+   	  	type:'get',
+   	  	dataType:'json',
+   	  	async:false       
+   	}).responseText;
+   	webServicesAvance = JSON.parse(webServicesAvance); 
+    
+    var objeto = new Object();
+    objeto.id = avanceId;
+    objeto.borrado= webServicesAvance[0].borrado;
+
+    
+  	var info = JSON.stringify(objeto);
+    $.ajax({
+        url: "ajaxUpdate2?accion=actBorradoAvance",
+        type: 'POST',
+        dataType: 'json',
+        data: info,
+        contentType: 'application/json',
+        mimeType: 'application/json',
+        success: function (data) {
+        	
+            if(estado == "b"){
+        		$("#botonBorradoAvance").remove();
+            	$("#mensajeBorradoAvance").html("");
+            	$("#mensajeBorradoAvance").html("<h3 class='text-center'>BORRADO EXITOSAMENTE!!</h3>");
+            }else{
+        		$("#botonRestaurarAvance").remove();
+            	$("#mensajeBorradoAvance").html("");
+            	$("#mensajeBorradoAvance").html("<h3 class='text-center'>RESTAURADO EXITOSAMENTE!!</h3>");
+        	}
+
+        },
+
+        error: function(data,status,er) {
+        	
+        	}
+	 });
+	
+});
 
 $("body").on("click", ".guardarCosto",function(event){
 	
@@ -5372,4 +5538,5 @@ $("body").on("click", ".borrarEvidencia",function(event){
 	 });
 	
 });
-	</script>	
+
+</script>	
