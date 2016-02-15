@@ -35,7 +35,7 @@
 				  <div class="form-group">
 				    <label for="acumularLineaAccion" class="col-lg-2 control-label">Acumular</label>
 				    <div class="col-lg-10">
-				      <input type="text" class="form-control" id="acumularLineaAccion" placeholder="Acumulador">
+				      <select name="acumularLineaAccion" id="acumularLineaAccion" class="form-control"></select>
 				    </div>
 				  </div>		
 				  <div class="form-group">

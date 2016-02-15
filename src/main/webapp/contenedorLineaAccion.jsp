@@ -90,7 +90,32 @@ $(document).ready(function(){
 	  	dataType:'json',
 	  	async:false       
 	}).responseText;		
-	lineaAccion=JSON.parse(lineaAccion);	
+	lineaAccion=JSON.parse(lineaAccion);
+	
+	var tipoAccion = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getTipoAccion',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;		
+	tipoAccion=JSON.parse(tipoAccion);
+	
+	var estrategia = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaEstrategica',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	estrategia = JSON.parse(estrategia);	
+	
+	var unidadMedida = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	unidadMedida = JSON.parse(unidadMedida);	
+	
 		
 	renderLineaAccion();
 	function renderLineaAccion(){
@@ -99,16 +124,49 @@ $(document).ready(function(){
 		var tablaLineaAccion="";
 		tablaLineaAccion = '<table class="table table-hover">'+
 					  '<tr class="active"><td colspan="11">Tabla Linea Accion</td><td><a href="#" data-toggle="modal" data-target="#lineaAccion"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
-					  '<tr class="active"><td>Id</td><td>Nombre</td><td>Descripción</td><td>Orden</td><td>Peso</td><td>Acumular</td><td>tipoAccionId</td><td>estrategiaId</td><td>unidadMedidaId</td><td>borrado</td><td>Editar</td><td>Borrar</td></tr>';
+					  '<tr class="active"><td>Id</td><td>Nombre</td><td>Descripción</td><td>Orden</td><td>Peso</td><td>Acumular</td><td>Tipo Acción</td><td>Linea Estratégica</td><td>Unidad Medida</td><td>borrado</td><td>Editar</td><td>Borrar</td></tr>';
+		
+		
 		for(var w=0; w<lineaAccion.length;w++)
 		{
+			var nombreTipoAccion="";
+			for(var x=0; x<tipoAccion.length; x++){
+				if(lineaAccion[w].tipoAccionId == tipoAccion[x].id){
+					nombreTipoAccion = tipoAccion[x].descripcion;
+				}
+			
+			}
+			
+			var nombreEstrategia="";
+			for(var y=0; y<estrategia.length; y++){
+				if(lineaAccion[w].estrategiaId == estrategia[y].id){
+					nombreEstrategia = estrategia[y].nombre;
+				}
+			
+			}
+			
+			var nombreUnidadMedida="";
+			for(var z=0; z<unidadMedida.length; z++){
+				if(lineaAccion[w].unidadMedidaId == unidadMedida[z].id){
+					nombreUnidadMedida = unidadMedida[z].descripcion;
+				}
+			
+			}			
+			
+			var acumular="";
+			if(lineaAccion[w].acumular == true){
+				acumular = "si";
+			}else{
+				acumular = "no";
+			}
+				
 			if(lineaAccion[w].borrado == true)
 			{
-				tablaLineaAccion+='<tr><td><del>'+lineaAccion[w].id+'</del></td><td><del>'+lineaAccion[w].nombre+'</del></td><td><del>'+lineaAccion[w].descripcion+'</del></td><td><del>'+lineaAccion[w].orden+'</del></td><td><del>'+lineaAccion[w].peso+'</del></td><td><del>'+lineaAccion[w].acumular+'</del></td><td><del>'+lineaAccion[w].tipoAccionId+'</del></td><td><del>'+lineaAccion[w].estrategiaId+'</del></td><td><del>'+lineaAccion[w].unidadMedidaId+'</del></td><td><del>'+lineaAccion[w].borrado+'</del></td><td><span class="glyphicon glyphicon-pencil registrosLineaAccion" codigoRegistroLineaAccion='+w+'></span></td><td><span class="glyphicon glyphicon-trash" parametrosBorradoLineaAccion='+lineaAccion[w].id+'-'+lineaAccion[w].borrado+' id="iconoBorradoLineaAccion"></span></td></tr>';
+				tablaLineaAccion+='<tr><td><del>'+lineaAccion[w].id+'</del></td><td><del>'+lineaAccion[w].nombre+'</del></td><td><del>'+lineaAccion[w].descripcion+'</del></td><td><del>'+lineaAccion[w].orden+'</del></td><td><del>'+acumular+'</del></td><td><del>'+lineaAccion[w].acumular+'</del></td><td><del>'+nombreTipoAccion+'</del></td><td><del>'+nombreEstrategia+'</del></td><td><del>'+nombreUnidadMedida+'</del></td><td><del>'+lineaAccion[w].borrado+'</del></td><td><span class="glyphicon glyphicon-pencil registrosLineaAccion" codigoRegistroLineaAccion='+w+'></span></td><td><span class="glyphicon glyphicon-trash" parametrosBorradoLineaAccion='+lineaAccion[w].id+'-'+lineaAccion[w].borrado+' id="iconoBorradoLineaAccion"></span></td></tr>';
 
 			}else{
-				tablaLineaAccion+='<tr><td>'+lineaAccion[w].id+'</td><td>'+lineaAccion[w].nombre+'</td><td>'+lineaAccion[w].descripcion+'</td><td>'+lineaAccion[w].orden+'</td><td>'+lineaAccion[w].peso+'</td><td>'+lineaAccion[w].acumular+'</td><td>'+lineaAccion[w].tipoAccionId+'</td><td>'+lineaAccion[w].estrategiaId+'</td><td>'+lineaAccion[w].unidadMedidaId+'</td><td>'+lineaAccion[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosLineaAccion" codigoRegistroLineaAccion='+w+'></span></td><td><span class="glyphicon glyphicon-trash" parametrosBorradoLineaAccion='+lineaAccion[w].id+'-'+lineaAccion[w].borrado+' id="iconoBorradoLineaAccion"></span></td></tr>';
-			}
+				tablaLineaAccion+='<tr><td>'+lineaAccion[w].id+'</td><td>'+lineaAccion[w].nombre+'</td><td>'+lineaAccion[w].descripcion+'</td><td>'+lineaAccion[w].orden+'</td><td>'+lineaAccion[w].peso+'</td><td>'+acumular+'</td><td>'+nombreTipoAccion+'</td><td>'+nombreEstrategia+'</td><td>'+nombreUnidadMedida+'</td><td>'+lineaAccion[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosLineaAccion" codigoRegistroLineaAccion='+w+'></span></td><td><span class="glyphicon glyphicon-trash" parametrosBorradoLineaAccion='+lineaAccion[w].id+'-'+lineaAccion[w].borrado+' id="iconoBorradoLineaAccion"></span></td></tr>';
+			}	
 		}
 		tablaLineaAccion +='</table>';				
 		
@@ -117,7 +175,8 @@ $(document).ready(function(){
 		 
 		$("body").on("click", ".registrosLineaAccion",function(event){
 			var codigoRegistro = $(this).attr("codigoRegistroLineaAccion");
-				
+			var optionAcumularLineaAccion;
+			
 			$("#borradoLineaAccion").remove();
 			$("#guardarLineaAccion").remove();
 			$('#lineaAccion').modal('show');
@@ -127,10 +186,16 @@ $(document).ready(function(){
 			$("#descripcionLineaAccion").val(lineaAccion[codigoRegistro].descripcion);
 			$("#ordenLineaAccion").val(lineaAccion[codigoRegistro].orden);
 			$("#pesoLineaAccion").val(lineaAccion[codigoRegistro].peso);
-			$("#acumularLineaAccion").val(lineaAccion[codigoRegistro].acumular);
+			
+			optionAcumularLineaAccion =		'<option value="true">Si</option><option value="false">No</option>';
+	
+			
+			$("#acumularLineaAccion").html(optionAcumularLineaAccion);
 			$("#tipoAccionIdLineaAccion").val(lineaAccion[codigoRegistro].tipoAccionId);
 			$("#estrategiaIdLineaAccion").val(lineaAccion[codigoRegistro].estrategiaId);
 			$("#unidadMedidaIdLineaAccion").val(lineaAccion[codigoRegistro].unidadMedidaId);
+			
+			$('#acumularLineaAccion > option[value="'+lineaAccion[codigoRegistro].acumular+'"]').attr('selected', 'selected');
 	
 		});
 	}
