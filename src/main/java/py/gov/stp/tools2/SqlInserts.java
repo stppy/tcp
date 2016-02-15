@@ -228,7 +228,7 @@ public class SqlInserts {
 	} catch (SQLException e) {e.printStackTrace();}
 		
 }
-	public static void insertAccion(Accion accion) throws ParseException{
+	public static boolean insertAccion(Accion accion) throws ParseException{
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
@@ -265,7 +265,8 @@ public class SqlInserts {
 		insert.execute();
 		   
 		conn.close();
-	} catch (SQLException e) {e.printStackTrace();}
+		return true;
+	} catch (SQLException e) {e.printStackTrace(); return false;}
 		
 }
 	public static void insertAccionHasProducto(AccionHasProducto accionHasProducto){

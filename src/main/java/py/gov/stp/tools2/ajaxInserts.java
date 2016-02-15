@@ -77,7 +77,9 @@ public class ajaxInserts  extends HttpServlet {
             Gson gsonInsert = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();            
             objeto=gsonInsert.fromJson(json, Accion.class);
 			try {
-				SqlInserts.insertAccion(objeto);
+				boolean status = SqlInserts.insertAccion(objeto);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
