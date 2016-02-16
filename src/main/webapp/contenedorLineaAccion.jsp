@@ -187,10 +187,10 @@ $(document).ready(function(){
 			$("#ordenLineaAccion").val(lineaAccion[codigoRegistro].orden);
 			$("#pesoLineaAccion").val(lineaAccion[codigoRegistro].peso);
 			
-			optionAcumularLineaAccion =		'<option value="true">Si</option><option value="false">No</option>';
+			//optionAcumularLineaAccion =		'<option value="true">Si</option><option value="false">No</option>';
 	
 			
-			$("#acumularLineaAccion").html(optionAcumularLineaAccion);
+			//$("#acumularLineaAccion").append(optionAcumularLineaAccion);
 			$("#tipoAccionIdLineaAccion").val(lineaAccion[codigoRegistro].tipoAccionId);
 			$("#estrategiaIdLineaAccion").val(lineaAccion[codigoRegistro].estrategiaId);
 			$("#unidadMedidaIdLineaAccion").val(lineaAccion[codigoRegistro].unidadMedidaId);
