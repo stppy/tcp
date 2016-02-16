@@ -252,7 +252,7 @@ entidadIdCas ="<%=attributes.get("entidad_id") %>";
 						tablaInsLineaAccion += 	'<div class="table-responsive">'+
 												'<table class="table table-hover">'+
 												  '<tr class="active"><td colspan="6">Línea de Acción por Institución</td></tr>'+
-												  '<tr class="active"><td style="min-width:110px">Periodo</td><td>Instituciï¿½n</td><td>Línea de Acción</td><td>Meta</td><td class="text-center">U.Medida</td><td style="min-width:250px" class="text-center">Administrar Linea Acción</td></tr>';
+												  '<tr class="active"><td style="min-width:110px">Periodo</td><td>Institución</td><td>Línea de Acción</td><td>Meta</td><td class="text-center">U.Medida</td><td style="min-width:250px" class="text-center">Administrar Linea Acción</td></tr>';
 												  
 					 	var bandLineaAccion;
 					 	var bandInstitucion;
@@ -341,7 +341,7 @@ entidadIdCas ="<%=attributes.get("entidad_id") %>";
 						}
 						
 						tablaInsLineaAccion +='</table></div>';				
-						
+						// no en box body uno en anterior otro en actual y otro en posterior
 						$('.box-body').html(tablaInsLineaAccion);
 												
 						
