@@ -1,5 +1,20 @@
+
+
 <script>
 	
+
+var entidadIdCas = "";
+var nivelIdCas = "";
+<%if (user != null) { %>
+
+nivelIdCas ="<%=attributes.get("nivel_id") %>";
+entidadIdCas ="<%=attributes.get("entidad_id") %>";
+ 
+ <%  } else { %>
+ nivelIdCas=12;
+ entidadIdCas=1;
+<% } %>
+
 	$("body").on("click", ".nuevaInsLineaAccion",function(event){		
 		event.stopPropagation();
 		event.preventDefault();
@@ -1908,11 +1923,10 @@ $("body").on("click", ".borrarAccion",function(event){
 		var parametros = $(this).attr("parametros");
     	var idParsed = parametros.split("-");                                                            	
 		var accionId = idParsed[0];
+		var nivel=nivelIdCas;
+      	var entidad=entidadIdCas;
 
-		
-		
-    	var nivel = 12;
-      	var entidad = 1;
+    	
 	    var tipoPrograma = document.getElementById("tipoPrograma-formulario").value;
 	    var programa = document.getElementById('programa-formulario').value;
 	    var subPrograma = document.getElementById('subPrograma-formulario').value;
@@ -2137,10 +2151,10 @@ $("body").on("click", ".borrarAccion",function(event){
 					      			'			<input type="hidden" name="version" value="" id="versionProducto-formulario">'+
 									'			<div class="row">'+
 						      		'				<div class="form-group col-md-1">'+
-						      		'					<input type="text" name="nivel" id="nivel-formulario" value="12" class="form-control" disabled>'+
+						      		'					<input type="text" name="nivel" id="nivel-formulario" value="'+nivelIdCas+'" class="form-control" disabled>'+
 						      		'				</div>'+
 						      		'				<div class="form-group col-md-1">'+
-						  			'					<input type="text" name="entidad" id="entidad-formulario" value="1" class="form-control" disabled>'+
+						  			'					<input type="text" name="entidad" id="entidad-formulario" value="'+entidadIdCas+'" class="form-control" disabled>'+
 						  			'				</div>'+
 						      		'			    <div class="form-group col-md-1">'+
 						      		'			    	<input type="text" name="tipoPrograma" id="tipoPrograma-formulario" placeholder="Tipo Programa" list="listaf3c2" class="form-control">'+
@@ -2241,7 +2255,7 @@ $("body").on("click", ".borrarAccion",function(event){
 
 		    this.nivel = function(){
 		    	//var rutaNivel = document.getElementById('nivel-formulario').value;
-		    	var rutaNivel = 12;
+		    	var rutaNivel = nivelIdCas;
 		    	var datosNiveles = $.ajax({
 		        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getNiveles',
 		          	type:'get',
@@ -2268,7 +2282,8 @@ $("body").on("click", ".borrarAccion",function(event){
 
 		    this.entidadFocus = function(){ 
 		      	//var linkEntidad = document.getElementById('nivel-formulario').value;
-		    	var linkEntidad = 12;
+		    	//var linkEntidad = 12;
+		    	var linkEntidad = nivelIdCas;
 		    	var datosEntidades = $.ajax({
 		         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getEntidades&nivel='+linkEntidad,
 		          	type:'get',
@@ -2287,8 +2302,10 @@ $("body").on("click", ".borrarAccion",function(event){
 		    this.entidad = function(){ 
 		    	//var linkEntidad = document.getElementById('nivel-formulario').value;
 		      	//var rutaEntidad2 = document.getElementById('entidad-formulario').value;
-		    	var linkEntidad = 12;
-		      	var rutaEntidad2 = 1;
+		    	//var linkEntidad = 12;
+		      	//var rutaEntidad2 = 1;
+		      	var linkEntidad = nivelIdCas;
+		      	var rutaEntidad2 = entidadIdCas;
 		      	
 
 		      	var datosEntidades = $.ajax({
@@ -2316,7 +2333,8 @@ $("body").on("click", ".borrarAccion",function(event){
 
 		    this.tipoProgramaFocus = function(){
 
-		    	var rutaNivel = 12;
+		    	//var rutaNivel = 12;
+		    	var rutaNivel=nivelIdCas;
 		    	var datosNiveles = [];
 		    	
 				if ( $("#listaf3c2").length ) {
@@ -2373,8 +2391,10 @@ $("body").on("click", ".borrarAccion",function(event){
 						        }
 					      	}
 					    	
-					    	var linkEntidad = 12;
-					      	var rutaEntidad2 = 1;
+					    	//var linkEntidad = 12;
+					      	//var rutaEntidad2 = 1;
+					      	var linkEntidad = nivelIdCas;
+					      	var rutaEntidad2 = entidadIdCas;
 					      	
 
 					      	var datosEntidades =[];
@@ -2500,10 +2520,12 @@ $("body").on("click", ".borrarAccion",function(event){
 		    this.programasFocus = function(){
 		      	//var linkNivel = document.getElementById('nivel-formulario').value;
 		      	//var linkEntidad = document.getElementById("entidad-formulario").value;
-		    	var linkNivel = 12;
-		      	var linkEntidad = 1;
-		      	var linkTipoPrograma = parseInt(document.getElementById("tipoPrograma-formulario").value)
-		      	;
+		    	//var linkNivel = 12;
+		      	//var linkEntidad = 1;
+		      	var linkNivel = nivelIdCas;
+		      	var linkEntidad = entidadIdCas;
+		      	var linkTipoPrograma = parseInt(document.getElementById("tipoPrograma-formulario").value);
+		      	
 
 		    	var datosProgramas = [];
 		    	
@@ -2560,8 +2582,10 @@ $("body").on("click", ".borrarAccion",function(event){
 		    this.programas = function(){
 		      	//var linkNivel = document.getElementById('nivel-formulario').value;
 		      	//var linkEntidad = document.getElementById("entidad-formulario").value;
-		    	var linkNivel = 12;
-		      	var linkEntidad = 1;
+		    	//var linkNivel = 12;
+		      	//var linkEntidad = 1;
+		      	var linkNivel = nivelIdCas;
+		      	var linkEntidad = entidadIdCas;
 		      	var linkTipoPrograma = document.getElementById("tipoPrograma-formulario").value;
 		      	var numeroProgramaIngresado = document.getElementById("programa-formulario").value;
 
@@ -2608,8 +2632,10 @@ $("body").on("click", ".borrarAccion",function(event){
 		    this.subProgramasFocus = function(){
 			    //var linkNivel = document.getElementById('nivel-formulario').value;
 			    //var linkEntidad = document.getElementById('entidad-formulario').value;
-		    	var linkNivel = 12;
-		      	var linkEntidad = 1;    	
+		    	//var linkNivel = 12;
+		      	//var linkEntidad = 1;
+		      	var linkNivel = nivelIdCas;
+		      	var linkEntidad = entidadIdCas;
 			    var linkTipoPrograma = document.getElementById("tipoPrograma-formulario").value;
 			    var linkPrograma = document.getElementById("programa-formulario").value;
 
@@ -2664,8 +2690,10 @@ $("body").on("click", ".borrarAccion",function(event){
 		    this.subProgramas = function(){
 			    //var linkNivel = document.getElementById('nivel-formulario').value;
 			    //var linkEntidad = document.getElementById('entidad-formulario').value;
-		    	var linkNivel = 12;
-		      	var linkEntidad = 1;
+		    	//var linkNivel = 12;
+		      	//var linkEntidad = 1;
+		      	var linkNivel = nivelIdCas;
+		      	var linkEntidad = entidadIdCas;
 			    var linkTipoPrograma = document.getElementById("tipoPrograma-formulario").value;
 			    var linkPrograma = document.getElementById("programa-formulario").value;
 			    var numeroSubProgramaIngresado = document.getElementById("subPrograma-formulario").value;
@@ -2712,8 +2740,10 @@ $("body").on("click", ".borrarAccion",function(event){
 		    this.proyectoFocus = function(){
 			    //var linkNivel = document.getElementById("nivel-formulario").value;
 			    //var linkEntidad = document.getElementById("entidad-formulario").value;
-		    	var linkNivel = 12;
-		      	var linkEntidad = 1;
+		    	//var linkNivel = 12;
+		      	//var linkEntidad = 1;
+		      	var linkNivel = nivelIdCas;
+		      	var linkEntidad = entidadIdCas;
 			    var linkTipoPrograma = document.getElementById("tipoPrograma-formulario").value;
 			    var linkPrograma = document.getElementById('programa-formulario').value;
 			    var linkSubPrograma = document.getElementById('subPrograma-formulario').value;
@@ -2766,8 +2796,10 @@ $("body").on("click", ".borrarAccion",function(event){
 		    this.proyecto = function(){
 			    //var linkNivel = document.getElementById("nivel-formulario").value;
 			    //var linkEntidad = document.getElementById("entidad-formulario").value;
-		    	var linkNivel = 12;
-		      	var linkEntidad = 1;
+		    	//var linkNivel = 12;
+		      	//var linkEntidad = 1;
+		      	var linkNivel = nivelIdCas;
+		      	var linkEntidad = entidadIdCas;
 			    var linkTipoPrograma = document.getElementById("tipoPrograma-formulario").value;
 			    var linkPrograma = document.getElementById('programa-formulario').value;
 			    var linkSubPrograma = document.getElementById('subPrograma-formulario').value;
@@ -2814,8 +2846,10 @@ $("body").on("click", ".borrarAccion",function(event){
 		    this.productoFocus = function(){
 			    //var linkNivel = document.getElementById("nivel-formulario").value;
 			    //var linkEntidad = document.getElementById("entidad-formulario").value;
-		    	var linkNivel = 12;
-		      	var linkEntidad = 1;
+		    	//var linkNivel = 12;
+		      	//var linkEntidad = 1;
+		      	var linkNivel = nivelIdCas;
+		      	var linkEntidad = entidadIdCas;
 			    var linkTipoPrograma = document.getElementById("tipoPrograma-formulario").value;
 			    var linkPrograma = document.getElementById('programa-formulario').value;
 			    var linkSubPrograma = document.getElementById('subPrograma-formulario').value;
@@ -2901,8 +2935,10 @@ $("body").on("click", ".borrarAccion",function(event){
 		    this.producto = function(){
 			    //var linkNivel = document.getElementById("nivel-formulario").value;
 			    //var linkEntidad = document.getElementById("entidad-formulario").value;
-		    	var linkNivel = 12;
-		      	var linkEntidad = 1;
+		    	//var linkNivel = 12;
+		      	//var linkEntidad = 1;
+		      	var linkNivel = nivelIdCas;
+		      	var linkEntidad = entidadIdCas;
 			    var linkTipoPrograma = document.getElementById("tipoPrograma-formulario").value;
 			    var linkPrograma = document.getElementById('programa-formulario').value;
 			    var linkSubPrograma = document.getElementById('subPrograma-formulario').value;
@@ -2956,7 +2992,7 @@ $("body").on("click", ".borrarAccion",function(event){
 			    		$("#unidadMedida-formulario").val(mostrarUnidadMedida);
 			    		
 				    	$.ajax({
-				         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getAsignacionPresiVersion&nivel=12&entidad=1&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subPrograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto,
+				         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getAsignacionPresiVersion&nivel='+nivelIdCas+'&entidad='+entidadIdCas+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subPrograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto,
 				          	type:'get',
 				          	crossDomain: 'true',
 				          	dataType:'jsonp',
