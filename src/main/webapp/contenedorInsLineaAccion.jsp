@@ -299,7 +299,7 @@ if (user != null) { %>
 			}
 		 	
 		 	//periodo anterior
-		 	if(insLineaAccion[w].periodoId < 2015)
+		 	if(insLineaAccion[w].periodoId < 2016)
 		 	{		 		
 				for(p = 0;p<periodo.length; p++)
 				{
