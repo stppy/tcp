@@ -14,6 +14,8 @@ import java.sql.SQLException;
 
 
 
+
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.servlet.ServletException;
@@ -24,6 +26,8 @@ import javax.sql.DataSource;
  
 
 import javax.xml.datatype.DatatypeConfigurationException;
+
+import org.jasig.cas.client.authentication.AttributePrincipal;
 
 import py.gov.stp.tools2.SqlSelects;
 
@@ -40,6 +44,10 @@ public class ajaxSelects extends HttpServlet {
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
   
+    	AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();
+    	Map attributes = user.getAttributes(); 
+    	String userNivelId = attributes.get("nivel_id").toString();
+    	String userEntidadId = attributes.get("entidad_id").toString();
     	
     	String action = request.getParameter("action");
     	String accion = request.getParameter("accion");
@@ -319,6 +327,7 @@ public class ajaxSelects extends HttpServlet {
         	if (action.equals("getInsLineaAccion")){
         		List objetos=null; 
         		condition = " where true ";
+        		condition += " and institucion_id IN (select id from institucion where entidad_id="+userEntidadId+" and nivel_id="+userNivelId+") ";
         		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
            		try {objetos = SqlSelects.selectInsLineaAccion(condition);}
         		catch (SQLException e) {e.printStackTrace();}

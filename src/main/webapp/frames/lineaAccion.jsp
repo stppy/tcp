@@ -46,7 +46,7 @@
 				    </div>
 				  </div>
 				  <div class="form-group">
-				    <label for="estrategiaIdLineaAccion" class="col-lg-2 control-label">Estrategia</label>
+				    <label for="estrategiaIdLineaAccion" class="col-lg-2 control-label">Linea Estrategica</label>
 				    <div class="col-lg-10">
 				        <select name="estrategiaIdLineaAccion" id="estrategiaIdLineaAccion" class="form-control"></select>
 				    </div>
@@ -113,6 +113,9 @@
 			optionEstrategia+='<option value="'+estrategia[u].id+'" parametro="'+estrategia[u].id+'">'+estrategia[u].nombre+'</option>';
 		}
 		$("#estrategiaIdLineaAccion").append(optionEstrategia);
+		
+		optionAcumularLineaAccion =		'<option value="true">Si</option><option value="false">No</option>';
+		$("#acumularLineaAccion").append(optionAcumularLineaAccion);
 	});
 	
 	$("body").on("click", "#guardarLineaAccion",function(event){		
