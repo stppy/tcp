@@ -5341,7 +5341,7 @@ $("body").on("click", ".consultaEditarCosto",function(event){
 
 						'		    </div>'+
 						'			<div class="modal-footer">'+
-						' 				<button type="button" class="btn btn-success btn-sm guardarAvanceCosto" id="botonGuardarAvanceCosto" parametros='+costoId+'>Guardar Cambios</button>'+
+						' 				<button type="button" class="btn btn-success btn-sm editarAvanceCosto" id="botonGuardarAvanceCosto" parametros='+costoId+'>Guardar Cambios</button>'+
 						'			</div>'+
 						'		</div>'+ 
 						'	</div>'+
@@ -5352,7 +5352,7 @@ $("body").on("click", ".consultaEditarCosto",function(event){
 
 });
 
-/*$("body").on("click", ".guardarAvanceCosto",function(event){
+$("body").on("click", ".editarAvanceCosto",function(event){
 	var parametros = $(this).attr("parametros");
     var idParsed = parametros.split("-");                                                            
 	
@@ -5402,7 +5402,7 @@ $("body").on("click", ".consultaEditarCosto",function(event){
         	}
 	 });
   
-});*/
+});
 
 $("body").on("click", ".guardarEvidencia",function(event){
 	var parametros = $(this).attr("parametros");
