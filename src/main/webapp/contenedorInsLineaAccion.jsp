@@ -126,26 +126,12 @@ if (user != null) { %>
 		
 		function renderInsLineaAccion(){
 			
-		//$('.box-body').html('');
+
 		var tablaInsLineaAccion="";
 		var tablaInsLineaAccionPosterior = "";
 		var tablaInsLineaAccionAnterior = "";
 		
-		/*tablaInsLineaAccion += 	'<div class="table-responsive">'+
-								'<table class="table table-hover">'+
-								  '<tr class="active"><td colspan="6">Linea de Acción por Institución</td></tr>'+
-								  '<tr class="active"><td style="min-width:110px">Periodo</td><td>Institución</td><td>Linea de Acción</td><td>Meta</td><td class="text-center">U.Medida</td><td style="min-width:250px" class="text-center">Administrar Linea Acción</td></tr>';
-								  
-		tablaInsLineaAccionPosterior += '<div class="table-responsive">'+
-											'<table class="table table-hover">'+
-											  '<tr class="active"><td colspan="6">Linea de Acción por Institución</td></tr>'+
-											  '<tr class="active"><td style="min-width:110px">Periodo</td><td>Institución</td><td>Linea de Acción</td><td>Meta</td><td class="text-center">U.Medida</td><td style="min-width:250px" class="text-center">Administrar Linea Acción</td></tr>';
-											  
-		tablaInsLineaAccionAnterior += '<div class="table-responsive">'+
-												'<table class="table table-hover">'+
-												  '<tr class="active"><td colspan="6">Linea de Acción por Institución</td></tr>'+
-												  '<tr class="active"><td style="min-width:110px">Periodo</td><td>Institución</td><td>Linea de Acción</td><td>Meta</td><td class="text-center">U.Medida</td><td style="min-width:250px" class="text-center">Administrar Linea Acción</td></tr>';*/						
-																	  
+
 	 	var bandLineaAccion;
 	 	var bandInstitucion;
 	 	var bandPeriodo;
