@@ -1551,7 +1551,7 @@
 							'               			<div class="box-body">'+
 							
 							'	                			<div class="table-responsive">'+
-							'	                				<table class="table table-hover table-bordered">'+
+							'	                				<table class="table table-hover table-bordered" id="dataTablesAcciones">'+
 							'	                					<thead>'+
 							'	                						<tr class="active"><th rowspan="2" class="text-center">Acción</th><th rowspan="2" class="text-center">Depto</th><th rowspan="2" class="text-center">Distrito</th><th rowspan="2" class="text-center">FechaInicio</th><th rowspan="2" class="text-center">FechaFin</th><th rowspan="2" class="text-center">Unidad Medida</th><th colspan="4" class="text-center">Metas</th><th rowspan="2" class="text-center" style="min-width:160px">Administrar Acción</th></tr>'+
 							'	                						<tr class="active"><th class="text-center">1er Trimestre</th><th class="text-center">2do Trimestre</th><th class="text-center">3er Trimestre</th><th class="text-center">4to Trimestre</th></tr>'+
@@ -1579,7 +1579,8 @@
 		$('#tablaAccionesPrecargadas').append(cuerpoAccion);
 		$('#modalAccion').modal('show');
 		$("#selectorCatalogoAccion").change();
-		$("#selectorDepartamento").change();		
+		$("#selectorDepartamento").change();
+		$("#dataTablesAcciones").DataTable();
 
 	});
 	
@@ -5027,7 +5028,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'              							</div>'+
 									'              						<div class="box-body">'+	
 									'										<div class="table-responsive">'+
-									'											<table class="table table-hover table-bordered">'+
+									'											<table class="table table-hover table-bordered" id="dataTableBeneficiario">'+
 									'												<thead>'+
 									'													<tr class="active"><th>Tipo</th><th>Grupo</th><th>Nombre</th><th>Cantidad</th><th class="text-center">Administrar</th></tr>'+
 									'												</thead>'+
@@ -5106,7 +5107,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'              							</div>'+
 									'              						<div class="box-body">'+	
 									'										<div class="table-responsive">'+
-									'											<table class="table table-hover table-bordered">'+
+									'											<table class="table table-hover table-bordered" id="dataTableAvanceCosto">'+
 									'												<thead>'+
 									'													<tr class="active"><th>Monto</th><th>Cod.Contratacional</th><th>ObjetoGasto</th><th class="text-center">Administrar</th></tr>'+
 									'												</thead>'+
@@ -5182,7 +5183,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'              							</div>'+
 									'              						<div class="box-body">'+	
 									'										<div class="table-responsive">'+
-									'											<table class="table table-hover table-bordered">'+
+									'											<table class="table table-hover table-bordered" id="dataTableEvidencia">'+
 									'												<thead>'+
 									'													<tr class="active"><th>Nombre</th><th>Descripción</th><th>Url</th><th class="text-center">Administrar</th></tr>'+
 									'												</thead>'+
@@ -5220,6 +5221,10 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	$("#listaBeneficiario").html(cuerpoBeneficiario);
 	$("#modalAdministrador").modal('show');	
 	$("#beneficiarioTipo").change();		
+	$("#dataTableEvidencia").DataTable();
+	$("#dataTableAvanceCosto").DataTable();
+	$("#dataTableBeneficiario").DataTable();
+
 
 });	
 
@@ -6246,4 +6251,6 @@ $("body").on("click", ".guardarBeneficiario",function(event){
 	 });
 	
 });	
+
+
 </script>	

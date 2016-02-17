@@ -389,6 +389,8 @@ if (user != null) { %>
 		tablaInsLineaAccionAnterior +='<tr><td colspan="9"></td></tr>';			
 		$('#cuerpoInsLineaAccionAnterior').html(tablaInsLineaAccionAnterior); 
 		
+		$("#dataTableInsLineaAccion").DataTable();
+
 		}
 		
 		
@@ -510,7 +512,7 @@ if (user != null) { %>
 	            		<div class="box-body" id="periodoActual"style="height:600px; overflow: auto; display: block;">
 	            		
 	            			<div class="table-responsive">
-								<table class="table table-hover">
+								<table class="table table-hover" id="dataTableInsLineaAccion">
 									<thead>
 								  		<tr class="active"><th colspan="6">Linea de Acción por Institución</th></tr>
 								  		<tr class="active"><th style="min-width:110px">Periodo</th><th>Institución</th><th>Linea de Acción</th><th>Meta</th><th class="text-center">U.Medida</th><th style="min-width:250px" class="text-center">Administrar Linea Acción</th></tr>
