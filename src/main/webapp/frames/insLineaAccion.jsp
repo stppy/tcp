@@ -595,14 +595,14 @@
 		
 		var contenido = "";
 
-		contenido =			'<div class="modal fade" id="insLineaAccion" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">'+
+		contenido =			'<div class="modal fade" id="insLineaAccion" data-backdrop="static" data-keyboard="false" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">'+
 							'	<div class="modal-dialog modal-lg">'+
 							'		<div class="modal-content" >'+
 							'			<div class="modal-header">'+
 							'		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
 							'		        <h4 class="modal-title">Registrar Línea de Acción por Institución</h4>'+
 							'			</div>'+
-							'		    <div class="modal-body" id="insLineaAccion" >'+
+							'		    <div class="modal-body" id="cuerpoActualizarInsLineaAccion" >'+
 									    
 							'				<form role="form" id="formularioInsLineaAccion">'+
 							'					<div class="form-group">'+
@@ -637,7 +637,7 @@
 		$("#actualizarInsLineaAccionBoton").remove();
 		$("#guardarInsLineaAccionBoton").remove();
 		$('#insLineaAccion').modal('show');
-		$("#insLineaAccion").find("#formularioInsLineaAccion").append('<div class="form-group" id="actualizarInsLineaAccionBoton"><button type="submit" class="btn btn-success" id="actualizarInsLineaAccion">Actualizar</button></div>');
+		$("#insLineaAccion").find("#formularioInsLineaAccion").append('<div class="form-group" id="actualizarInsLineaAccionBoton"><button type="button" class="btn btn-success" id="actualizarInsLineaAccion">Actualizar</button></div>');
 		$("#idInsLineaAccion").val(id);
 		
 		var lineaAccion = $.ajax({
@@ -724,7 +724,11 @@
 		        {
 		        	if (data.success == true)
 		        	{
-		        		alert("Actualizado");
+		        		
+		        		$('#cuerpoInsLineaAccion').html("");
+		        		$('#cuerpoInsLineaAccionPosterior').html("");
+		        		$('#cuerpoInsLineaAccionAnterior').html(""); 
+
 		        		var insLineaAccion = $.ajax({
 		        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion',
 		        		  	type:'get',
@@ -756,13 +760,29 @@
 		        		  	async:false       
 		        		}).responseText;
 		        		periodo = JSON.parse(periodo);
+		        		
+		        		var unidadMedida = $.ajax({
+		        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+		        		  	type:'get',
+		        		  	dataType:'json',
+		        		  	async:false       
+		        		}).responseText;
+		        		unidadMedida = JSON.parse(unidadMedida);
+
+		        		$('#cuerpoActualizarInsLineaAccion').html('');
+		        		$("#cuerpoActualizarInsLineaAccion").append('<p class="text-center">La Linea de Acción se ha modificado con Exito</p>');
+		        		
+		        		
+		        		renderInsLineaAccion();
+		        		
+		        		function renderInsLineaAccion(){
 		        			
-		        		$('.box-body').html('');
+
 		        		var tablaInsLineaAccion="";
-		        		tablaInsLineaAccion = 	'<div class="table-responsive">'+
-		        								'<table class="table table-hover">'+
-		        								  '<tr class="active"><td colspan="7">Tabla InsLineaAccion</td><td><a href="#" data-toggle="modal" data-target="#insLineaAccion"><span class="glyphicon glyphicon-plus nuevaInsLineaAccion"></span></a></td></tr>'+
-		        								  '<tr class="active"><td>Id</td><td>lineaAccionId</td><td>institucionId</td><td>periodoId</td><td>meta</td><td>borrado</td><td>Editar</td><td>Borrar</td></tr>';  
+		        		var tablaInsLineaAccionPosterior = "";
+		        		var tablaInsLineaAccionAnterior = "";
+		        		
+
 		        	 	var bandLineaAccion;
 		        	 	var bandInstitucion;
 		        	 	var bandPeriodo;
@@ -771,77 +791,256 @@
 		        		 	bandLineaAccion = 0;
 		        		 	bandInstitucion = 0;
 		        		 	bandPeriodo = 0;
-		        			
-		        			if(insLineaAccion[w].borrado == true){
-		        				tablaInsLineaAccion+='<tr><td><del>'+insLineaAccion[w].id+'</del></td>';
-		        			}else{
-		        				tablaInsLineaAccion+='<tr><td>'+insLineaAccion[w].id+'</td>';	
-		        			}
-		        		
-		        			
-		        			for(i = 0;i<lineaAccion.length; i++){				
-		        				if(insLineaAccion[w].lineaAccionId == lineaAccion[i].id)
+		        		 	
+		        		 	if(insLineaAccion[w].periodoId == "2016")
+		        		 	{		 		
+		        				for(p = 0;p<periodo.length; p++)
 		        				{
-		        					if(insLineaAccion[w].borrado == true){
-		        						tablaInsLineaAccion+='<td><del>'+lineaAccion[i].nombre+'</del></td>';
-		        					}else{
-		        						tablaInsLineaAccion+='<td>'+lineaAccion[i].nombre+'</td>';	
+		        					if(insLineaAccion[w].periodoId == periodo[p].id)
+		        					{
+		        						if(insLineaAccion[w].borrado == true){
+		        							tablaInsLineaAccion+='<tr><td><del>'+periodo[p].nombre+'</del></td>';
+		        						}else{
+		        							tablaInsLineaAccion+='<tr><td>'+periodo[p].nombre+'</td>';	
+		        						}
+		        						bandPeriodo = 1;
 		        					}
-		        					bandLineaAccion = 1;
 		        				}
-		        			}
+		        				
+		        				if(bandPeriodo == 0)
+		        				{
+		        					tablaInsLineaAccion+='<td>'+insLineaAccion[w].periodoId+'</td>';
+		        				}
 		        			
-		        			if(bandLineaAccion == 0)
-		        			{
-		        				tablaInsLineaAccion+='<td>'+insLineaAccion[w].lineaAccionId+'</td>';
-		        			}
+		        				for(m = 0;m<institucion.length; m++){
+		        					if(insLineaAccion[w].institucionId == institucion[m].id)
+		        					{
+		        						if(insLineaAccion[w].borrado == true){
+		        							tablaInsLineaAccion+='<td><del>'+institucion[m].sigla+'</del></td>';
+		        						}else{
+		        							tablaInsLineaAccion+='<td>'+institucion[m].sigla+'</td>';	
+		        						}
+		        						bandInstitucion = 1;
+		        					}
+		        				}
+		        				
+		        				if(bandInstitucion == 0)
+		        				{
+		        					tablaInsLineaAccion+='<td>'+insLineaAccion[w].institucionId+'</td>';
+		        				}
+		        				
+		        				for(i = 0;i<lineaAccion.length; i++){				
+		        					if(insLineaAccion[w].lineaAccionId == lineaAccion[i].id)
+		        					{
+		        						if(insLineaAccion[w].borrado == true){
+		        							tablaInsLineaAccion+='<td><del>'+lineaAccion[i].nombre+'</del></td>';
+		        						}else{
+		        							tablaInsLineaAccion+='<td>'+lineaAccion[i].nombre+'</td>';	
+		        						}
+		        						bandLineaAccion = 1;
+		        					}
+		        				}
+		        							
+		        				if(bandLineaAccion == 0)
+		        				{
+		        					tablaInsLineaAccion+='<td>'+insLineaAccion[w].lineaAccionId+'</td>';
+		        				}
+		        										
+		        				var codigoUnidadMedida;
+		        				var nombreUnidadMedida;
+		        				for(h = 0;h<lineaAccion.length; h++){				
+		        					if(insLineaAccion[w].lineaAccionId == lineaAccion[h].id)
+		        					{
+		        						codigoUnidadMedida=lineaAccion[h].unidadMedidaId;
 		        						
-		        			for(m = 0;m<institucion.length; m++){
-		        				if(insLineaAccion[w].institucionId == institucion[m].id)
-		        				{
-		        					if(insLineaAccion[w].borrado == true){
-		        						tablaInsLineaAccion+='<td><del>'+institucion[m].sigla+'</del></td>';
-		        					}else{
-		        						tablaInsLineaAccion+='<td>'+institucion[m].sigla+'</td>';	
+		        						for(var k = 0; k < unidadMedida.length; k++)
+		        						{
+		        							if(codigoUnidadMedida == unidadMedida[k].id)
+		        							{
+		        								nombreUnidadMedida = unidadMedida[k].descripcion;
+		        							}
+		        						}
 		        					}
-		        					bandInstitucion = 1;
+		        				}
+		        				
+		        				if(insLineaAccion[w].borrado == true){
+		        					tablaInsLineaAccion+='<td><del>'+numeroConComa(parseFloat(insLineaAccion[w].meta))+'</del></td><td class="text-center"><del>'+nombreUnidadMedida+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar Acción"><span class="glyphicon glyphicon-pencil registrosInsLineaAccion" codigoRegistroInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'-'+insLineaAccion[w].meta+'-'+insLineaAccion[w].version+'></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Borrar Acción"><span class="glyphicon glyphicon-trash" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+' id="consultaBorrarInsLineaAccion"></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Acción"><span class="glyphicon glyphicon-list-alt agregarAccion" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"></span></button></td></tr>';
+		        				}else{
+		        					tablaInsLineaAccion+='<td>'+numeroConComa(parseFloat(insLineaAccion[w].meta))+'</td><td class="text-center">'+nombreUnidadMedida+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar Acción"><span class="glyphicon glyphicon-pencil registrosInsLineaAccion" codigoRegistroInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'-'+insLineaAccion[w].meta+'-'+insLineaAccion[w].version+'></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Borrar Acción"><span class="glyphicon glyphicon-trash" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+' id="consultaBorrarInsLineaAccion"></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Acción"><span class="glyphicon glyphicon-list-alt agregarAccion" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"></span></button></td></tr>';	
 		        				}
 		        			}
+		        		 	
+		        		 	//Periodo posterior		 	
+		        		 	 if(insLineaAccion[w].periodoId > 2016)
+		        		 	{		 		
+		        				for(p = 0;p<periodo.length; p++)
+		        				{
+		        					if(insLineaAccion[w].periodoId == periodo[p].id)
+		        					{
+		        						if(insLineaAccion[w].borrado == true){
+		        							tablaInsLineaAccionPosterior+='<tr><td><del>'+periodo[p].nombre+'</del></td>';
+		        						}else{
+		        							tablaInsLineaAccionPosterior+='<tr><td>'+periodo[p].nombre+'</td>';	
+		        						}
+		        						bandPeriodo = 1;
+		        					}
+		        				}
+		        				
+		        				if(bandPeriodo == 0)
+		        				{
+		        					tablaInsLineaAccionPosterior+='<td>'+insLineaAccion[w].periodoId+'</td>';
+		        				}
 		        			
-		        			if(bandInstitucion == 0)
-		        			{
-		        				tablaInsLineaAccion+='<td>'+insLineaAccion[w].institucionId+'</td>';
-		        			}
+		        				for(m = 0;m<institucion.length; m++){
+		        					if(insLineaAccion[w].institucionId == institucion[m].id)
+		        					{
+		        						if(insLineaAccion[w].borrado == true){
+		        							tablaInsLineaAccionPosterior+='<td><del>'+institucion[m].sigla+'</del></td>';
+		        						}else{
+		        							tablaInsLineaAccionPosterior+='<td>'+institucion[m].sigla+'</td>';	
+		        						}
+		        						bandInstitucion = 1;
+		        					}
+		        				}
+		        				
+		        				if(bandInstitucion == 0)
+		        				{
+		        					tablaInsLineaAccionPosterior+='<td>'+insLineaAccion[w].institucionId+'</td>';
+		        				}
+		        				
+		        				for(i = 0;i<lineaAccion.length; i++){				
+		        					if(insLineaAccion[w].lineaAccionId == lineaAccion[i].id)
+		        					{
+		        						if(insLineaAccion[w].borrado == true){
+		        							tablaInsLineaAccionPosterior+='<td><del>'+lineaAccion[i].nombre+'</del></td>';
+		        						}else{
+		        							tablaInsLineaAccionPosterior+='<td>'+lineaAccion[i].nombre+'</td>';	
+		        						}
+		        						bandLineaAccion = 1;
+		        					}
+		        				}
+		        							
+		        				if(bandLineaAccion == 0)
+		        				{
+		        					tablaInsLineaAccionPosterior+='<td>'+insLineaAccion[w].lineaAccionId+'</td>';
+		        				}
+		        										
+		        				var codigoUnidadMedida;
+		        				var nombreUnidadMedida;
+		        				for(h = 0;h<lineaAccion.length; h++){				
+		        					if(insLineaAccion[w].lineaAccionId == lineaAccion[h].id)
+		        					{
+		        						codigoUnidadMedida=lineaAccion[h].unidadMedidaId;
 		        						
-		        			for(p = 0;p<periodo.length; p++)
-		        			{
-		        				if(insLineaAccion[w].periodoId == periodo[p].id)
-		        				{
-		        					if(insLineaAccion[w].borrado == true){
-		        						tablaInsLineaAccion+='<td><del>'+periodo[p].nombre+'</del></td>';
-		        					}else{
-		        						tablaInsLineaAccion+='<td>'+periodo[p].nombre+'</td>';	
+		        						for(var k = 0; k < unidadMedida.length; k++)
+		        						{
+		        							if(codigoUnidadMedida == unidadMedida[k].id)
+		        							{
+		        								nombreUnidadMedida = unidadMedida[k].descripcion;
+		        							}
+		        						}
 		        					}
-		        					bandPeriodo = 1;
+		        				}
+		        				
+		        				if(insLineaAccion[w].borrado == true){
+		        					tablaInsLineaAccionPosterior+='<td><del>'+insLineaAccion[w].meta+'</del></td><td class="text-center"><del>'+nombreUnidadMedida+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar Linea de Acción"><span class="glyphicon glyphicon-pencil registrosInsLineaAccion" codigoRegistroInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'-'+insLineaAccion[w].meta+'-'+insLineaAccion[w].version+'></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Borrar Linea de Acción"><span class="glyphicon glyphicon-trash" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+' id="iconoBorradoInsLineaAccion"></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Acción"><span class="glyphicon glyphicon-list-alt agregarAccion" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"></span></button></td></tr>';
+		        				}else{
+		        					tablaInsLineaAccionPosterior+='<td>'+insLineaAccion[w].meta+'</td><td class="text-center">'+nombreUnidadMedida+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar Linea de Acción"><span class="glyphicon glyphicon-pencil registrosInsLineaAccion" codigoRegistroInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'-'+insLineaAccion[w].meta+'-'+insLineaAccion[w].version+'></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Borrar Linea de Acción"><span class="glyphicon glyphicon-trash" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+' id="iconoBorradoInsLineaAccion"></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Acción"><span class="glyphicon glyphicon-list-alt agregarAccion" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"></span></button></td></tr>';	
 		        				}
 		        			}
+		        		 	
+		        		 	//periodo anterior
+		        		 	if(insLineaAccion[w].periodoId < 2016)
+		        		 	{		 		
+		        				for(p = 0;p<periodo.length; p++)
+		        				{
+		        					if(insLineaAccion[w].periodoId == periodo[p].id)
+		        					{
+		        						if(insLineaAccion[w].borrado == true){
+		        							tablaInsLineaAccionAnterior+='<tr><td><del>'+periodo[p].nombre+'</del></td>';
+		        						}else{
+		        							tablaInsLineaAccionAnterior+='<tr><td>'+periodo[p].nombre+'</td>';	
+		        						}
+		        						bandPeriodo = 1;
+		        					}
+		        				}
+		        				
+		        				if(bandPeriodo == 0)
+		        				{
+		        					tablaInsLineaAccionAnterior+='<td>'+insLineaAccion[w].periodoId+'</td>';
+		        				}
 		        			
-		        			if(bandPeriodo == 0)
-		        			{
-		        				tablaInsLineaAccion+='<td>'+insLineaAccion[w].periodoId+'</td>';
-		        			}
-		        			
-		        			if(insLineaAccion[w].borrado == true){
-		        				tablaInsLineaAccion+='<td><del>'+insLineaAccion[w].meta+'</del></td><td><del>'+insLineaAccion[w].borrado+'</del></td><td><span class="glyphicon glyphicon-pencil registrosInsLineaAccion" codigoRegistroInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'-'+insLineaAccion[w].meta+'-'+insLineaAccion[w].version+'></span></td><td><span class="glyphicon glyphicon-trash" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+' id="iconoBorradoInsLineaAccion"></span></td></tr>';
-		        			}else{
-		        				tablaInsLineaAccion+='<td>'+insLineaAccion[w].meta+'</td><td>'+insLineaAccion[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosInsLineaAccion" codigoRegistroInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'-'+insLineaAccion[w].meta+'-'+insLineaAccion[w].version+'></span></td><td><span class="glyphicon glyphicon-trash" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+' id="iconoBorradoInsLineaAccion"></span></td></tr>';	
-		        			}
+		        				for(m = 0;m<institucion.length; m++){
+		        					if(insLineaAccion[w].institucionId == institucion[m].id)
+		        					{
+		        						if(insLineaAccion[w].borrado == true){
+		        							tablaInsLineaAccionAnterior+='<td><del>'+institucion[m].sigla+'</del></td>';
+		        						}else{
+		        							tablaInsLineaAccionAnterior+='<td>'+institucion[m].sigla+'</td>';	
+		        						}
+		        						bandInstitucion = 1;
+		        					}
+		        				}
+		        				
+		        				if(bandInstitucion == 0)
+		        				{
+		        					tablaInsLineaAccionAnterior+='<td>'+insLineaAccion[w].institucionId+'</td>';
+		        				}
+		        				
+		        				for(i = 0;i<lineaAccion.length; i++){				
+		        					if(insLineaAccion[w].lineaAccionId == lineaAccion[i].id)
+		        					{
+		        						if(insLineaAccion[w].borrado == true){
+		        							tablaInsLineaAccionAnterior+='<td><del>'+lineaAccion[i].nombre+'</del></td>';
+		        						}else{
+		        							tablaInsLineaAccionAnterior+='<td>'+lineaAccion[i].nombre+'</td>';	
+		        						}
+		        						bandLineaAccion = 1;
+		        					}
+		        				}
+		        							
+		        				if(bandLineaAccion == 0)
+		        				{
+		        					tablaInsLineaAccionAnterior+='<td>'+insLineaAccion[w].lineaAccionId+'</td>';
+		        				}
+		        										
+		        				var codigoUnidadMedida;
+		        				var nombreUnidadMedida;
+		        				for(h = 0;h<lineaAccion.length; h++){				
+		        					if(insLineaAccion[w].lineaAccionId == lineaAccion[h].id)
+		        					{
+		        						codigoUnidadMedida=lineaAccion[h].unidadMedidaId;
+		        						
+		        						for(var k = 0; k < unidadMedida.length; k++)
+		        						{
+		        							if(codigoUnidadMedida == unidadMedida[k].id)
+		        							{
+		        								nombreUnidadMedida = unidadMedida[k].descripcion;
+		        							}
+		        						}
+		        					}
+		        				}
+		        				
+		        				if(insLineaAccion[w].borrado == true){
+		        					tablaInsLineaAccionAnterior+='<td><del>'+insLineaAccion[w].meta+'</del></td><td class="text-center"><del>'+nombreUnidadMedida+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar Linea de Acción"><span class="glyphicon glyphicon-pencil registrosInsLineaAccion" codigoRegistroInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'-'+insLineaAccion[w].meta+'-'+insLineaAccion[w].version+'></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Borrar Linea de Acción"><span class="glyphicon glyphicon-trash" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+' id="iconoBorradoInsLineaAccion"></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Acción"><span class="glyphicon glyphicon-list-alt agregarAccion" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"></span></button></td></tr>';
+		        				}else{
+		        					tablaInsLineaAccionAnterior+='<td>'+insLineaAccion[w].meta+'</td><td class="text-center">'+nombreUnidadMedida+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Editar Linea de Acción"><span class="glyphicon glyphicon-pencil registrosInsLineaAccion" codigoRegistroInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'-'+insLineaAccion[w].meta+'-'+insLineaAccion[w].version+'></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Borrar Linea de Acción"><span class="glyphicon glyphicon-trash" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+' id="iconoBorradoInsLineaAccion"></span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Acción"><span class="glyphicon glyphicon-list-alt agregarAccion" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"></span></button></td></tr>';	
+		        				}
+		        			} 
 		        			
 		        		}
-
-		        		tablaInsLineaAccion +='</table></div>';				
 		        		
-		        		$('.box-body').html(tablaInsLineaAccion);
+		        		
+		        		tablaInsLineaAccion +='<tr><td colspan="9"></td></tr>';
+		        		$('#cuerpoInsLineaAccion').html(tablaInsLineaAccion);
+		        		
+		         		tablaInsLineaAccionPosterior +='<tr><td colspan="9"></td></tr>';				
+		        		$('#cuerpoInsLineaAccionPosterior').html(tablaInsLineaAccionPosterior);
+		        		
+		        		tablaInsLineaAccionAnterior +='<tr><td colspan="9"></td></tr>';			
+		        		$('#cuerpoInsLineaAccionAnterior').html(tablaInsLineaAccionAnterior); 
+		        		
+		        		}
 		        	}else{
 		        		if (data.success == false){
 		        			$("#tituloModalUsuario").html('');
