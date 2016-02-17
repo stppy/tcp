@@ -446,25 +446,28 @@ public class SqlInserts {
 	} catch (SQLException e) {e.printStackTrace();}
 		
 }
-	public static void insertBeneficiario(Beneficiario beneficiario){
+	public static boolean insertBeneficiario(Beneficiario beneficiario){
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into beneficiario (nombre,descripcion,beneficiario_tipo_id,borrado)"
-	+ " values (?, ?, ?, ?)";
+		String query = " insert into beneficiario (nombre,descripcion,beneficiario_tipo_id,version,cantidad,avance_id,beneficiario_grupo_id)"
+	+ " values (?, ?, ?, ?, ?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
-		//insert.setInt (1, beneficiario.getId());
 		insert.setString (1, beneficiario.getNombre());
 		insert.setString (2, beneficiario.getDescripcion());
-		insert.setInt (3, beneficiario.getBeneficiarioTipoId());
-		insert.setBoolean (4, beneficiario.isBorrado());
+		insert.setInt (3, beneficiario.getTipoId());
+		insert.setInt (4, beneficiario.getVersion());
+		insert.setInt (5, beneficiario.getCantidad());
+		insert.setInt (6, beneficiario.getAvanceId());
+		insert.setInt (7, beneficiario.getGrupoId());
 							
 		insert.execute();
 		   
 		conn.close();
-	} catch (SQLException e) {e.printStackTrace();}
+		return true;
+	} catch (SQLException e) {e.printStackTrace(); return false;}
 		
 }
 	public static void insertBeneficiarioTipo(BeneficiarioTipo beneficiarioTipo){

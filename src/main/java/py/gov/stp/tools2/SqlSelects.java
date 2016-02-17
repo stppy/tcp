@@ -783,9 +783,9 @@ public class SqlSelects {
 			}
 			return objetos; 
 	  }
-	public static List<BeneficiarioTipo> selectBeneficiarioTipo() throws SQLException{
+	public static List<BeneficiarioTipo> selectBeneficiarioTipo(String condition) throws SQLException{
 	   	 Connection conect=ConnectionConfiguration.conectar();
-			 String query = " select * from beneficiario_tipo";
+			 String query = " select * from beneficiario_tipo"+condition;
 			 
 			 Statement statement = null;
 			 ResultSet rs=null;
@@ -841,9 +841,9 @@ public class SqlSelects {
 			}
 			return objetos; 
 	  }		
-	public static List<Beneficiario> selectBeneficiario() throws SQLException{
+	public static List<Beneficiario> selectBeneficiario(String condition) throws SQLException{
 	   	 Connection conect=ConnectionConfiguration.conectar();
-			 String query = " select * from beneficiario";
+			 String query = " select * from beneficiario"+condition;
 			 
 			 Statement statement = null;
 			 ResultSet rs=null;
@@ -857,8 +857,12 @@ public class SqlSelects {
 					objeto.setId(rs.getInt("id"));
 					objeto.setNombre(rs.getString("nombre"));
 					objeto.setDescripcion(rs.getString("descripcion"));
-					objeto.setBeneficiarioTipoId(rs.getInt("beneficiario_tipo_id"));
+					objeto.setTipoId(rs.getInt("beneficiario_tipo_id"));
+					objeto.setVersion(rs.getInt("version"));
 					objeto.setBorrado(rs.getBoolean("borrado"));
+					objeto.setCantidad(rs.getInt("cantidad"));
+					objeto.setAvanceId(rs.getInt("avance_id"));
+					objeto.setGrupoId(rs.getInt("beneficiario_grupo_id"));
 					
 					objetos.add(objeto);
 				}

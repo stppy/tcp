@@ -127,7 +127,9 @@ public class ajaxInserts  extends HttpServlet {
             if(br != null){ json = br.readLine();}
             Gson gsonInsert = new Gson();
             productoObj=gsonInsert.fromJson(json, Beneficiario.class);
-			SqlInserts.insertBeneficiario(productoObj);
+			boolean status = SqlInserts.insertBeneficiario(productoObj);
+    		myObj.addProperty("success", status);
+    		out.println(myObj.toString());
     	}
        }
         if (accion!=null && accion!=""){
