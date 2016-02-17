@@ -1,17 +1,21 @@
 package py.gov.stp.objetosV2;
 
-public class BeneficiarioTipo {
+public class BeneficiarioGrupo {
 	protected int id;
+	protected int beneficiarioTipoId;
 	protected String nombre;
 	protected String descripcion;
-	protected int version;
-	protected boolean borrado=false;
-	
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	public int getBeneficiarioTipoId() {
+		return beneficiarioTipoId;
+	}
+	public void setBeneficiarioTipoId(int beneficiarioTipoId) {
+		this.beneficiarioTipoId = beneficiarioTipoId;
 	}
 	public String getNombre() {
 		return nombre;
@@ -25,20 +29,6 @@ public class BeneficiarioTipo {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-	public boolean isBorrado() {
-		return borrado;
-	}
-	public void setBorrado(boolean borrado) {
-		this.borrado = borrado;
-	}
-	public int getVersion() {
-		return version;
-	}
-	public void setVersion(int version) {
-		this.version = version;
-	}
-	public void changeBorrado(){
-		this.borrado=!borrado;
-	}	
+	
 
 }

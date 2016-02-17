@@ -3600,7 +3600,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		'												<tr><td><div class="form-group"><label for="nombreActividad">Cronograma</label><input type="text" class="form-control" id="nombreActividad" value="" placeholder="Ingrese Nombre del Cronograma"><input type="hidden" class="form-control" id="insLineaAccionId" value="'+insLineaAccionId+'"></div></td><td><div class="form-group"><label for="descripcionActividad">Descripción</label><input type="text" id="descripcionActividad" value="" class="form-control"> </div></td></tr>'+
 		'												<tr><td><div class="form-group"><label for="unidadMedidaIdActividad">Unidad de Medida</label><select id="unidadMedidaIdActividad" class="form-control" placeholder="Ingrese Unidad Medida Id">'+optionUnidadMedida+'</div></td><td><div class="form-group"><label for="hitoTipoIdActividad">Tipo de Cronograma</label>'+
 		'												<select id="hitoTipoIdActividad" class="form-control" placeholder="Ingrese Tipo de Cronograma">'+optionTipoHito+'</select></div></td></tr>'+
-		'												<tr><td><div class="form-group"><label for="proporcionActividad">Proporción</label><input type="text" class="form-control" id="proporcionActividad" value="" placeholder="Ingrese Proporción" /></div></td><td><div class="form-group"><label for="pesoActividad">Peso</label><input type="text" class="form-control" id="pesoActividad" value="" placeholder="IngresePeso" /></div></td></tr>'+
+		'												<tr><td><div class="form-group"><label for="proporcionActividad">Proporción</label><input type="number" class="form-control" id="proporcionActividad" value="1" min="0" max="1" /></div></td><td><div class="form-group"><label for="pesoActividad">Peso</label><input type="number" class="form-control" id="pesoActividad" value="1" min="0" max="1" /></div></td></tr>'+
 		'											</tbody>'+							           
 		'										</table>'+
 		'									</div>'+
@@ -4647,13 +4647,13 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	webServicesEvidencia = JSON.parse(webServicesEvidencia);
 	
 	var cuerpoEvidencia = "";
-	for(var d = 0; d < webServicesEvidencia.length; d++)
+	for(var j = 0; j < webServicesEvidencia.length; j++)
 	{
-		if(webServicesEvidencia[d].borrado == true)
+		if(webServicesEvidencia[j].borrado == true)
 		{
-			cuerpoEvidencia += '<tr><td><del>'+webServicesEvidencia[d].nombre+'</del></td><td><del>'+webServicesEvidencia[d].descripcion+'</del></td><td><del>'+webServicesEvidencia[d].url+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+			cuerpoEvidencia += '<tr><td><del>'+webServicesEvidencia[j].nombre+'</del></td><td><del>'+webServicesEvidencia[j].descripcion+'</del></td><td><del>'+webServicesEvidencia[j].url+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-trash"></span></button></td></tr>';
 		}else{
-			cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[d].nombre+'</td><td>'+webServicesEvidencia[d].descripcion+'</td><td>'+webServicesEvidencia[d].url+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+			cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[j].nombre+'</td><td>'+webServicesEvidencia[j].descripcion+'</td><td>'+webServicesEvidencia[j].url+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-trash"></span></button></td></tr>';
 		}	
 	}
 	
@@ -4675,7 +4675,21 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 			cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].monto+'</td><td>'+webServicesAvanceCosto[d].codigoContratacional+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarCosto" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCosto" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
 		}
 	}
-			
+		
+	var webServicesBeneficiarioTipo = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioTipo',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	webServicesBeneficiarioTipo = JSON.parse(webServicesBeneficiarioTipo);
+	
+	var optionBeneficiarioTipo;
+	
+	for(var z = 0; z < webServicesBeneficiarioTipo.length; z++){
+		optionBeneficiarioTipo+='<option value="'+webServicesBeneficiarioTipo[z].id+'" >'+webServicesBeneficiarioTipo[z].nombre+'</option>';
+	}
+	
 	var contenidoModalAdministrador = "";
 
 	contenidoModalAdministrador +=  '<div class="modal fade" id="modalAdministrador" tabindex="-1" aria-labelledby="myLargeModalLabel">'+
@@ -4750,7 +4764,12 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'										<div class="table-responsive">'+
 									'											<table class="table table-hover">'+
 									'												<tbody>'+
-			
+									'			      									<form class="form-horizontal" role="form">'+
+									'													<tr><td><label for="nombreBeneficiario">Nombre</label><input type="text" id="nombreBeneficiario" class="form-control" placeholder="Ingrese un Nombre" /></td><td><label for="descripcionBeneficiario">Descripción</label><input type="text" id="descripcionBeneficiario" class="form-control" placeholder="Ingrese Objeto una Descripción" /></td></tr>'+									
+									'													<tr><td><label for="tipoBeneficiario">Tipo</label><select id="beneficiarioTipo" class="form-control">'+optionBeneficiarioTipo+'</select></td><td><label for="grupoBeneficiario">Grupo</label><select id="grupoBeneficiario" class="form-control"></select></td></tr>'+
+									'													<tr><td><label for="cantidadBeneficiario">Cantidad</label><input type="number" id="cantidadBeneficiario" class="form-control" placeholder="Ingrese una Cantidad" /></td><td><label for="versionBeneficiario">Versión</label><input type="text" id="versionBeneficiario" class="form-control" placeholder="Ingrese Objeto una Versión" /></td></tr>'+									
+									'													<input type="hidden" id="avanceIdBeneficiario" value="'+avanceId+'"/>'+		
+									'			      									</form>	'+				
 									'												</tbody>'+
 									'											</table>'+
 									'				      					</div>'+
@@ -4964,8 +4983,32 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	$("#listaCosto").html("");
 	$("#listaCosto").html(cuerpoAvanceCosto);
 	$("#modalAdministrador").modal('show');	
+	$("#beneficiarioTipo").change();		
 
 });	
+
+$("body").on("change", "#beneficiarioTipo",function(event){
+	//var departamentoId = $(this).attr("parametro");
+	var beneficiarioTipoId = $("#beneficiarioTipo option:selected").val();
+	
+	var webServicesBeneficiarioGrupo = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioTipoId='+beneficiarioTipoId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	webServicesBeneficiarioGrupo = JSON.parse(webServicesBeneficiarioGrupo);
+	
+	var optionBeneficiarioGrupo="";
+	
+	for(var o = 0; o < webServicesBeneficiarioGrupo.length; o++){
+		optionBeneficiarioGrupo+='<option value="'+webServicesBeneficiarioGrupo[o].id+'" >'+webServicesBeneficiarioGrupo[o].nombre+'</option>';
+	}
+	
+	$("#grupoBeneficiario").html("");
+	$("#grupoBeneficiario").append(optionBeneficiarioGrupo);
+	
+});
 
 $("body").on("click", ".consultaEditarAvance",function(event){
 

@@ -799,7 +799,37 @@ public class SqlSelects {
 					objeto.setId(rs.getInt("id"));
 					objeto.setNombre(rs.getString("nombre"));
 					objeto.setDescripcion(rs.getString("descripcion"));
+					objeto.setVersion(rs.getInt("version"));
 					objeto.setBorrado(rs.getBoolean("borrado"));
+
+					objetos.add(objeto);
+				}
+			}
+			catch (SQLException e) {e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos; 
+	  }		
+	
+	public static List<BeneficiarioGrupo> selectBeneficiarioGrupo(String condition) throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+			 String query = " select * from beneficiario_grupo"+condition;
+			 
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 List<BeneficiarioGrupo> objetos = new ArrayList<BeneficiarioGrupo>();
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					BeneficiarioGrupo objeto = new BeneficiarioGrupo();
+					objeto.setId(rs.getInt("id"));
+					objeto.setNombre(rs.getString("nombre"));
+					objeto.setDescripcion(rs.getString("descripcion"));
+					objeto.setBeneficiarioTipoId(rs.getInt("tipo_beneficiario_grupo_id"));
 
 					objetos.add(objeto);
 				}

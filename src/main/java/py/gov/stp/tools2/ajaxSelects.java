@@ -84,6 +84,7 @@ public class ajaxSelects extends HttpServlet {
     	Integer insLineaAccionId = null;
     	Integer institucionId = null;
     	Integer periodoId = null;
+    	Integer beneficiarioTipoId = null;
 
     	
     	Integer cronogramaId=null;
@@ -153,9 +154,7 @@ public class ajaxSelects extends HttpServlet {
       	if (request.getParameter("actividadId")!=null) actividadId=Integer.parseInt(request.getParameter("actividadId"));
       	if (request.getParameter("idEvidencia")!=null) idEvidencia=Integer.parseInt(request.getParameter("idEvidencia"));
       	if (request.getParameter("costoId")!=null) costoId=Integer.parseInt(request.getParameter("costoId"));
-
-
-
+      	if (request.getParameter("beneficiarioTipoId")!=null) beneficiarioTipoId=Integer.parseInt(request.getParameter("beneficiarioTipoId"));
       	
         PrintWriter out = response.getWriter();
         response.setContentType("text/html");
@@ -250,6 +249,17 @@ public class ajaxSelects extends HttpServlet {
         	
         	
        }
+        	if (action.equals("getBeneficiarioGrupo")){
+        		List objetos=null;
+        		condition = " where true ";
+        		if (beneficiarioTipoId!=null) condition += " and tipo_beneficiario_grupo_id ='"+beneficiarioTipoId+"'";
+           		try {objetos = SqlSelects.selectBeneficiarioGrupo(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());        	
+        	
+        	
+       }        	
         	if (action.equals("getBeneficiarioDetalle")){
         		List objetos=null;
            		try {objetos = SqlSelects.selectBeneficiarioDetalle();}
