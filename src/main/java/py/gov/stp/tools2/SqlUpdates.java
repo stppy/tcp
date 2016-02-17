@@ -769,7 +769,7 @@ public static boolean borradoHito(Hito objeto){
 					 String										query = "update beneficiario set ";
 					 if(objeto.getNombre()!=null)				query+= "nombre='"+objeto.getNombre()+"'";
 					 if(objeto.getDescripcion()!=null)			query+= ", descripcion='"+objeto.getDescripcion()+"'";
-					 if(objeto.getBeneficiarioTipoId()!=0)		query+= ", beneficiario_tipo_id="+objeto.getBeneficiarioTipoId()+"";
+					 if(objeto.getTipoId()!=0)		query+= ", beneficiario_tipo_id="+objeto.getTipoId()+"";
 					 //if(objeto.isBorrado()!=false)			query+= "borrado=\""+objeto.isBorrado()+"\"";
 					 
 					 query+=" where id ="+objeto.getId();
