@@ -1402,7 +1402,7 @@
 					cuerpoAccion +="<tr><td class='text-center'><del>"+catalogoAccion[0].nombre+"</del></td>";
 				}
 			
-			for(var d = 0; d < 18; d++)
+			for(var d = 0; d < departamentos.length; d++)
 			{
 				if(accion[a].departamentoId == departamentos[d].idDepartamento){
 					nombreDepartamento = departamentos[d].nombreDepartamento;
@@ -3572,7 +3572,7 @@ $("body").on("click", ".borrarAccion",function(event){
 					cuerpoAccion +="<tr><td class='text-center'><del>"+catalogoAccion[0].nombre+"</del></td>";
 				}
 			
-			for(var d = 0; d < 18; d++)
+			for(var d = 0; d < departamentos.length; d++)
 			{
 				if(accion[a].departamentoId == departamentos[d].idDepartamento){
 					nombreDepartamento = departamentos[d].nombreDepartamento;
