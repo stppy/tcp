@@ -4815,6 +4815,10 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	{
 		$("#modalEditarEvidencia").remove();
 	}	
+	if ( $("#modalBorrarBeneficiario").length )
+	{
+		$("#modalBorrarBeneficiario").remove();
+	}	
 		
 	
 	var parametros = $(this).attr("parametros");
@@ -5223,8 +5227,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	$("#beneficiarioTipo").change();		
 	$("#dataTableEvidencia").DataTable();
 	$("#dataTableAvanceCosto").DataTable();
-	$("#dataTableBeneficiario").DataTable();
-
+	var dataTableBenficiarios = $("#dataTableBeneficiario").DataTable();
 
 });	
 
@@ -6238,6 +6241,7 @@ $("body").on("click", ".guardarBeneficiario",function(event){
         		
         		$("#listaBeneficiario").html("");
         		$("#listaBeneficiario").html(cuerpoBeneficiario);
+        		$('#dataTableBeneficiario').ajax.reload();
         		
         	}else{
   		
@@ -6252,5 +6256,120 @@ $("body").on("click", ".guardarBeneficiario",function(event){
 	
 });	
 
+$("body").on("click", ".consultaBorrarBeneficiario",function(event){
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-");                                                            
+	
+	//Las siguentes variables se utiliza en esta funcion para redibujar el modal anterior
+	var insLineaAccionId = idParsed[0];
+	var lineaAccionId = idParsed[1];
+	var institucionId = idParsed[2];
+	var periodoId = idParsed[3];
+	var accionId = idParsed[4];
+	var actividadId = idParsed[5];
+	var avanceId = idParsed[6];
+	var beneficiarioId = idParsed[7];
+
+
+	if ( $("#modalAdministrador").length )
+	{
+		$("#modalAdministrador").remove();
+	}		
+	
+	var webServicesBeneficiario = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiario&beneficiarioId='+beneficiarioId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	webServicesBeneficiario = JSON.parse(webServicesBeneficiario);
+	
+	var contenidoEvidencia = "";
+
+	contenidoEvidencia +=			'<div class="modal fade" id="modalBorrarBeneficiario"  data-backdrop="static" data-keyboard="false" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">'+
+						'	<div class="modal-dialog modal-lg">'+
+						'		<div class="modal-content" >'+
+						'			<div class="modal-header">'+
+						'		        <button type="button" class="close agregarModalAdministrador"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+						'		        <h4 class="modal-title" >Borrar - Restaurar Beneficiario</h4>'+
+						'			</div>'+
+						'		    <div class="modal-body">'+
+						'			<div id="mensajeBorradoBeneficiario"></div>'+
+						'		    </div>'+
+						'			<div class="modal-footer" id="agregarBotonBorradoBeneficiario">'+
+						'			</div>'+
+						'		</div>'+ 
+						'	</div>'+
+						'</div>';
+						
+		$("#programacion").append(contenidoEvidencia);
+		
+		if(webServicesBeneficiario[0].borrado == true){
+			$("#mensajeBorradoBeneficiario").html("");
+			$("#mensajeBorradoBeneficiario").append('<h3 class="text-center">Ud. esta seguro que desea RESTABLACER este registro</h3>');
+			$("#agregarBotonBorradoBeneficiario").html("");
+			$("#agregarBotonBorradoBeneficiario").append('<button type="button" class="btn btn-success btn-sm borrarBeneficiario" id="botonRestaurarBeneficiario" parametros='+webServicesBeneficiario[0].id+'-r>Restaurar Beneficiario</button>');
+			$("#agregarBotonBorradoBeneficiario").append('<button type="button" class="btn btn-success btn-sm agregarModalAdministrador"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'>Cerrar</button>');
+		}else{
+			$("#mensajeBorradoBeneficiario").html("");
+			$("#mensajeBorradoBeneficiario").append('<h3 class="text-center">Ud. esta seguro que desea BORRAR este registro</h3');
+			$("#agregarBotonBorradoBeneficiario").html("");
+			$("#agregarBotonBorradoBeneficiario").append('<button type="button" class="btn btn-danger btn-sm borrarBeneficiario" id="botonBorradoBeneficiario" parametros='+webServicesBeneficiario[0].id+'-b>Borrar Beneficiario</button>');
+			$("#agregarBotonBorradoBeneficiario").append('<button type="button" class="btn btn-success btn-sm agregarModalAdministrador"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'>Cerrar</button>');
+		}
+		
+		$('#modalBorrarBeneficiario').modal('show');
+			
+});
+
+$("body").on("click", ".borrarBeneficiario",function(event){	
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-"); 
+    var beneficiarioId = idParsed[0];
+    var estado = idParsed[1];
+    
+	var webServicesBeneficiario = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiario&beneficiarioId='+beneficiarioId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	webServicesBeneficiario = JSON.parse(webServicesBeneficiario);
+    
+    var objeto = new Object();
+    objeto.id = beneficiarioId;
+    objeto.borrado= webServicesBeneficiario[0].borrado;
+
+    
+  	var info = JSON.stringify(objeto);
+    $.ajax({
+        url: "ajaxUpdate2?accion=actBorradoBeneficiario",
+        type: 'POST',
+        dataType: 'json',
+        data: info,
+        contentType: 'application/json',
+        mimeType: 'application/json',
+        success: function (data) {
+        	
+        	if(data.success == true){
+            	if(estado == "b"){
+	        		$("#botonBorradoBeneficiario").remove();
+	            	$("#mensajeBorradoBeneficiario").html("");
+	            	$("#mensajeBorradoBeneficiario").html("<h3 class='text-center'>BORRADO EXITOSAMENTE!!</h3>");
+	            }else{
+	        		$("#botonRestaurarBeneficiario").remove();
+	            	$("#mensajeBorradoBeneficiario").html("");
+	            	$("#mensajeBorradoBeneficiario").html("<h3 class='text-center'>RESTAURADO EXITOSAMENTE!!</h3>");
+	        	}
+        	}
+
+        },
+
+        error: function(data,status,er) {
+        	
+        	}
+	 });
+	
+});     
 
 </script>	
