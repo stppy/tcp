@@ -6516,4 +6516,80 @@ $("body").on("click", ".editarBeneficiario",function(event){
 	
 });
 
+$("body").on("click", "#consultaBorrarInsLineaAccion",function(event){
+	var parametrosBorradoInsLineaAccion = $(this).attr("parametrosBorradoInsLineaAccion");
+    var idParsed = parametrosBorradoInsLineaAccion.split("-");                                                            
+	var id = idParsed[0];
+	var borrado = idParsed[1];
+	
+	if ( $("#modalConsultaBorrarInsLineaAccion").length )
+	{
+		$("#modalConsultaBorrarInsLineaAccion").remove();
+	}	
+	
+	var insLineaAccion = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion&insLineaAccionId='+id,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;		
+	insLineaAccion=JSON.parse(insLineaAccion);
+	
+	
+	var lineaAccion = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	lineaAccion = JSON.parse(lineaAccion);
+	
+	var nombreInsLineaAccion="";
+	for(i= 0;i<lineaAccion.length; i++){
+		if(lineaAccion[i].id == insLineaAccion[0].lineaAccionId){
+			nombreInsLineaAccion = lineaAccion[i].nombre
+		}
+		
+	}
+	
+	var contenido = "";
+
+	contenido =			'<div class="modal fade" id="modalConsultaBorrarInsLineaAccion"  tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">'+
+						'	<div class="modal-dialog modal-lg">'+
+						'		<div class="modal-content" >'+
+						'			<div class="modal-header">'+
+						'		        <button type="button" class="close"  aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+						'		        <h4 class="modal-title" >Borrar - Restaurar Linea de Acción</h4>'+
+						'			</div>'+
+						'		    <div class="modal-body">'+
+						'			<div id="mensajeBorradoInsLineaAccion"></div>'+
+						'		    </div>'+
+						'			<div class="modal-footer" id="agregarBotonBorradoInsLineaAccion">'+
+						'			</div>'+
+						'		</div>'+ 
+						'	</div>'+
+						'</div>';
+						
+		$("#programacion").append(contenido);			
+	
+		if(insLineaAccion[0].borrado == true){
+			$("#mensajeBorradoInsLineaAccion").html("");
+			$("#mensajeBorradoInsLineaAccion").append('<h3 class="text-center">Ud. esta seguro que desea RESTABLACER<strong> '+nombreInsLineaAccion+'</strong></h3>');
+			$("#agregarBotonBorradoInsLineaAccion").html("");
+			$("#agregarBotonBorradoInsLineaAccion").append('<button type="button" class="btn btn-success btn-sm iconoBorradoInsLineaAccion" id="botonRestaurarInsLineaAccion" parametrosBorradoInsLineaAccion='+insLineaAccion[0].id+'-'+insLineaAccion[0].borrado+'-r>Restaurar Linea de Acción</button>');
+			$("#agregarBotonBorradoInsLineaAccion").append('<button type="button" class="btn btn-success eliminarModal" data-dismiss="modal">Cerrar</button>');
+		}else{
+			$("#mensajeBorradoInsLineaAccion").html("");
+			$("#mensajeBorradoInsLineaAccion").append('<h3 class="text-center">Ud. esta seguro que desea BORRAR<strong> '+nombreInsLineaAccion+'</strong></h3');
+			$("#agregarBotonBorradoInsLineaAccion").html("");
+			$("#agregarBotonBorradoInsLineaAccion").append('<button type="button" class="btn btn-danger btn-sm iconoBorradoInsLineaAccion" id="botonBorradoInsLineaAccion" parametrosBorradoInsLineaAccion='+insLineaAccion[0].id+'-'+insLineaAccion[0].borrado+'-b>Borrar Linea de Acción</button>');
+			$("#agregarBotonBorradoInsLineaAccion").append('<button type="button" class="btn btn-success btn-sm eliminarModal" data-dismiss="modal">Cerrar</button>');
+		}
+		
+		$('#modalConsultaBorrarInsLineaAccion').modal('show');
+	
+	
+	
+});
+
 </script>	
