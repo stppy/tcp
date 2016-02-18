@@ -3474,6 +3474,13 @@ $("body").on("click", ".borrarAccion",function(event){
 		var departamentoId = $("#selectorDepartamento option:selected").val();
 		var distritoId = $("#distritosDepartamento option:selected").val();
 		var catalogoAccion = $("#selectorCatalogoAccion option:selected").val();
+		
+		var f1 = new Date(fechaInicio);
+		var f2 = new Date(fechaFin);
+		
+		if(f1 > f2){
+			alert("ERROR");
+		}
 
  		var datos = new Object();
 	    
