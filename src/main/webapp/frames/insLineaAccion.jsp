@@ -5230,6 +5230,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	$("#beneficiarioTipo").change();		
 	$("#dataTableEvidencia").DataTable();
 	$("#dataTableAvanceCosto").DataTable();
+	$("#dataTableBeneficiario").DataTable();
 
 });	
 
@@ -6242,9 +6243,7 @@ $("body").on("click", ".guardarBeneficiario",function(event){
         		}
         		
         		$("#listaBeneficiario").html("");
-        		$("#listaBeneficiario").html(cuerpoBeneficiario);
-        		$('#dataTableBeneficiario').ajax.reload();
-        		
+        		$("#listaBeneficiario").html(cuerpoBeneficiario);        		
         	}else{
   		
         	}
