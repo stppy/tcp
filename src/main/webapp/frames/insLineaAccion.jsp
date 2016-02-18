@@ -4818,6 +4818,10 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	if ( $("#modalBorrarBeneficiario").length )
 	{
 		$("#modalBorrarBeneficiario").remove();
+	}
+	if ( $("#modalEditarBeneficiario").length )
+	{
+		$("#modalEditarBeneficiario").remove();
 	}	
 		
 	
@@ -4923,9 +4927,9 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 		
 		if(webServicesBeneficiario[a].borrado == true)
 		{
-			cuerpoBeneficiario += '<tr><td><del>'+webServicesBeneficiarioTipo[0].nombre+'</del></td><td><del>'+webServicesBeneficiarioGrupo[0].nombre+'</del></td><td><del>'+webServicesBeneficiario[a].nombre+'</del></td><td><del>'+webServicesBeneficiario[a].cantidad+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarBeneficiario" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesBeneficiario[a].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarBeneficiario" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesBeneficiario[a].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+			cuerpoBeneficiario += '<tr><td><del>'+webServicesBeneficiarioTipo[0].nombre+'</del></td><td><del>'+webServicesBeneficiarioGrupo[0].nombre+'</del></td><td><del>'+webServicesBeneficiario[a].descripcion+'</del></td><td><del>'+webServicesBeneficiario[a].cantidad+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarBeneficiario" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesBeneficiario[a].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarBeneficiario" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesBeneficiario[a].id+' ><span class="fa fa-trash"></span></button></td></tr>';
 		}else{
-			cuerpoBeneficiario += '<tr><td>'+webServicesBeneficiarioTipo[0].nombre+'</td><td>'+webServicesBeneficiarioGrupo[0].nombre+'</td><td>'+webServicesBeneficiario[a].nombre+'</td><td>'+webServicesBeneficiario[a].cantidad+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarBeneficiario" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesBeneficiario[a].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarBeneficiario" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesBeneficiario[a].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+			cuerpoBeneficiario += '<tr><td>'+webServicesBeneficiarioTipo[0].nombre+'</td><td>'+webServicesBeneficiarioGrupo[0].nombre+'</td><td>'+webServicesBeneficiario[a].descripcion+'</td><td>'+webServicesBeneficiario[a].cantidad+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarBeneficiario" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesBeneficiario[a].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarBeneficiario" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesBeneficiario[a].id+' ><span class="fa fa-trash"></span></button></td></tr>';
 		}
 	}
 		
@@ -5004,9 +5008,8 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'											<table class="table table-hover">'+
 									'												<tbody>'+
 									'			      									<form class="form-horizontal" role="form">'+
-									'													<tr><td><label for="nombreBeneficiario">Nombre</label><input type="text" id="nombreBeneficiario" class="form-control" placeholder="Ingrese un Nombre" /></td><td><label for="descripcionBeneficiario">Descripción</label><input type="text" id="descripcionBeneficiario" class="form-control" placeholder="Ingrese Objeto una Descripción" /></td></tr>'+									
 									'													<tr><td><label for="tipoBeneficiario">Tipo</label><select id="beneficiarioTipo" class="form-control">'+optionBeneficiarioTipo+'</select></td><td><label for="grupoBeneficiario">Grupo</label><select id="grupoBeneficiario" class="form-control"></select></td></tr>'+
-									'													<tr><td><label for="cantidadBeneficiario">Cantidad</label><input type="number" id="cantidadBeneficiario" class="form-control" placeholder="Ingrese una Cantidad" /></td><td><label for="versionBeneficiario">Versión</label><input type="text" id="versionBeneficiario" class="form-control" placeholder="Ingrese Objeto una Versión" /></td></tr>'+									
+									'													<tr><td><label for="cantidadBeneficiario">Cantidad</label><input type="number" id="cantidadBeneficiario" class="form-control" placeholder="Ingrese una Cantidad" /></td><td><label for="descripcionBeneficiario">Descripción</label><input type="text" id="descripcionBeneficiario" class="form-control" placeholder="Ingrese Objeto una Descripción" /></td></tr>'+																		
 									'													<input type="hidden" id="avanceIdBeneficiario" value="'+avanceId+'"/>'+		
 									'			      									</form>	'+				
 									'												</tbody>'+
@@ -5034,7 +5037,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'										<div class="table-responsive">'+
 									'											<table class="table table-hover table-bordered" id="dataTableBeneficiario">'+
 									'												<thead>'+
-									'													<tr class="active"><th>Tipo</th><th>Grupo</th><th>Nombre</th><th>Cantidad</th><th class="text-center">Administrar</th></tr>'+
+									'													<tr class="active"><th>Tipo</th><th>Grupo</th><th>Descripción</th><th>Cantidad</th><th class="text-center">Administrar</th></tr>'+
 									'												</thead>'+
 									'												<tbody id="listaBeneficiario">'+
 									'												</tbody>'+
@@ -5227,7 +5230,6 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	$("#beneficiarioTipo").change();		
 	$("#dataTableEvidencia").DataTable();
 	$("#dataTableAvanceCosto").DataTable();
-	var dataTableBenficiarios = $("#dataTableBeneficiario").DataTable();
 
 });	
 
@@ -6164,29 +6166,29 @@ $("body").on("click", ".guardarBeneficiario",function(event){
 	var accionId = idParsed[4];
 	var actividadId = idParsed[5];
 	
-	var nombre = $("#nombreBeneficiario").val();
+	//var nombre = $("#nombreBeneficiario").val();
 	var descripcion = $("#descripcionBeneficiario").val();
 	var tipo = $("#beneficiarioTipo").val();
 	var grupo = $("#grupoBeneficiario").val();
 	var cantidad = $("#cantidadBeneficiario").val();
-	var version = $("#versionBeneficiario").val();
+	//var version = $("#versionBeneficiario").val();
 	var avanceId = $("#avanceIdBeneficiario").val();
 
 
 	//Vaciar los inputs
-	$("#nombreBeneficiario").val("");
+	//$("#nombreBeneficiario").val("");
 	$("#descripcionBeneficiario").val("");
 	$("#beneficiarioTipo").val("");
 	$("#grupoBeneficiario").val("");
 	$("#cantidadBeneficiario").val("");
-	$("#versionBeneficiario").val("");
+	//$("#versionBeneficiario").val("");
 
 	var objeto = new Object();
 	
-	objeto.nombre = nombre;
+	//objeto.nombre = nombre;
 	objeto.descripcion = descripcion;
 	objeto.tipoId = tipo;
-	objeto.version = version;
+	//objeto.version = version;
 	objeto.cantidad = cantidad;
 	objeto.avanceId = avanceId;
 	objeto.grupoId = grupo;
@@ -6233,9 +6235,9 @@ $("body").on("click", ".guardarBeneficiario",function(event){
             		
         			if(webServicesBeneficiario[d].borrado == true)
         			{
-        				cuerpoBeneficiario += '<tr><td><del>'+webServicesBeneficiarioGrupo[0].nombre+'</del></td><td><del>'+webServicesBeneficiarioTipo[0].nombre+'</del></td><td><del>'+webServicesBeneficiario[d].nombre+'</del></td><td><del>'+webServicesBeneficiario[d].cantidad+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarBeneficiario" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesBeneficiario[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarBeneficiario" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesBeneficiario[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+        				cuerpoBeneficiario += '<tr><td><del>'+webServicesBeneficiarioGrupo[0].nombre+'</del></td><td><del>'+webServicesBeneficiarioTipo[0].nombre+'</del></td><td><del>'+webServicesBeneficiario[d].descripcion+'</del></td><td><del>'+webServicesBeneficiario[d].cantidad+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarBeneficiario" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesBeneficiario[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarBeneficiario" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesBeneficiario[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
         			}else{
-        				cuerpoBeneficiario += '<tr><td>'+webServicesBeneficiarioGrupo[0].nombre+'</td><td>'+webServicesBeneficiarioTipo[0].nombre+'</td><td>'+webServicesBeneficiario[d].nombre+'</td><td>'+webServicesBeneficiario[d].cantidad+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarBeneficiario" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesBeneficiario[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarBeneficiario" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesBeneficiario[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+        				cuerpoBeneficiario += '<tr><td>'+webServicesBeneficiarioGrupo[0].nombre+'</td><td>'+webServicesBeneficiarioTipo[0].nombre+'</td><td>'+webServicesBeneficiario[d].descripcion+'</td><td>'+webServicesBeneficiario[d].cantidad+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarBeneficiario" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesBeneficiario[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarBeneficiario" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesBeneficiario[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
         			}
         		}
         		
@@ -6371,5 +6373,148 @@ $("body").on("click", ".borrarBeneficiario",function(event){
 	 });
 	
 });     
+
+$("body").on("click", ".consultaEditarBeneficiario",function(event){
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-");                                                            
+	
+	//Las siguentes variables se utiliza en esta funcion para redibujar el modal anterior
+	var insLineaAccionId = idParsed[0];
+	var lineaAccionId = idParsed[1];
+	var institucionId = idParsed[2];
+	var periodoId = idParsed[3];
+	var accionId = idParsed[4];
+	var actividadId = idParsed[5];
+	var avanceId = idParsed[6];
+	var beneficiarioId = idParsed[7];
+
+	if ( $("#modalAdministrador").length )
+	{
+		$("#modalAdministrador").remove();
+	}	
+	
+	var webServicesBeneficiarioTipo = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioTipo',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	webServicesBeneficiarioTipo = JSON.parse(webServicesBeneficiarioTipo);
+	
+	var optionBeneficiarioTipo;
+	
+	for(var z = 0; z < webServicesBeneficiarioTipo.length; z++){
+		optionBeneficiarioTipo+='<option value="'+webServicesBeneficiarioTipo[z].id+'" >'+webServicesBeneficiarioTipo[z].nombre+'</option>';
+	}
+	
+	var webServicesBeneficiario = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiario&beneficiarioId='+beneficiarioId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	webServicesBeneficiario = JSON.parse(webServicesBeneficiario);
+	
+	var webServicesBeneficiarioGrupo = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioTipoId='+webServicesBeneficiario[0].tipoId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	webServicesBeneficiarioGrupo = JSON.parse(webServicesBeneficiarioGrupo);
+	
+	var optionBeneficiarioGrupo="";
+	
+	for(var o = 0; o < webServicesBeneficiarioGrupo.length; o++){
+		optionBeneficiarioGrupo+='<option value="'+webServicesBeneficiarioGrupo[o].id+'" >'+webServicesBeneficiarioGrupo[o].nombre+'</option>';
+	}
+	
+	var contenido = "";
+
+	contenido +=		'<div class="modal fade" id="modalEditarBeneficiario" data-backdrop="static" data-keyboard="false" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">'+
+						'	<div class="modal-dialog modal-lg">'+
+						'		<div class="modal-content" >'+
+						'			<div class="modal-header">'+
+						'		        <button type="button" class="close agregarModalAdministrador"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+						'		        <h4 class="modal-title" >Editar Beneficiario</h4>'+
+						'			</div>'+
+						'		    <div class="modal-body" id="cuerpoModalEditarBeneficiario">'+
+										
+						'				<div class="table-responsive">'+
+						'					<table class="table table-hover">'+
+						'						<tbody>'+
+						'			      			<form class="form-horizontal" role="form">'+
+						'							<tr><td><label for="tipoBeneficiario">Tipo</label><select id="beneficiarioTipo" class="form-control">'+optionBeneficiarioTipo+'</select></td><td><label for="grupoBeneficiario">Grupo</label><select id="grupoBeneficiario" class="form-control">'+optionBeneficiarioGrupo+'</select></td></tr>'+
+						'							<tr><td><label for="cantidadBeneficiario">Cantidad</label><input type="number" id="cantidadBeneficiario" class="form-control" value='+webServicesBeneficiario[0].cantidad+' /></td><td><label for="descripcionBeneficiario">Descripción</label><input type="text" id="descripcionBeneficiario" class="form-control" value="'+webServicesBeneficiario[0].descripcion+'" /></td></tr>'+																		
+						'							<input type="hidden" id="avanceIdBeneficiario" value="'+avanceId+'"/>'+		
+						'			      			</form>	'+				
+						'						</tbody>'+
+						'					</table>'+
+						'				</div>'+
+						
+						'		    </div>'+
+						'			<div class="modal-footer">'+
+						' 				<button type="button" class="btn btn-success btn-sm editarBeneficiario" id="botonGuardarBeneficiario" parametros='+beneficiarioId+'>Guardar Cambios</button>'+
+						' 				<button type="button" class="btn btn-success btn-sm agregarModalAdministrador" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' >Cerrar</button>'+						
+						'			</div>'+
+						'		</div>'+ 
+						'	</div>'+
+						'</div>';
+						
+	$("body").append(contenido);
+	$('#beneficiarioTipo > option[value="'+webServicesBeneficiario[0].tipoId+'"]').attr('selected', 'selected');
+	$('#grupoBeneficiario > option[value="'+webServicesBeneficiario[0].grupoId+'"]').attr('selected', 'selected');
+
+	$('#modalEditarBeneficiario').modal('show');
+
+});
+
+$("body").on("click", ".editarBeneficiario",function(event){
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-");                                                            
+	
+	//Las siguentes variables se utiliza en esta funcion para redibujar el modal anterior
+	var beneficiarioId = idParsed[0];
+
+	var tipo = $("#beneficiarioTipo").val();
+	var grupo = $("#grupoBeneficiario").val();
+	var cantidad = $("#cantidadBeneficiario").val();
+	var descripcion = $("#descripcionBeneficiario").val();
+
+	
+	var objeto = new Object();
+	
+	objeto.id = beneficiarioId;
+	objeto.tipoId = tipo;
+	objeto.grupoId = grupo;
+	objeto.cantidad = cantidad;
+	objeto.descripcion = descripcion;
+	
+  	var info = JSON.stringify(objeto);
+    $.ajax({
+        url: "ajaxUpdate2?accion=actBeneficiario",
+        type: 'POST',
+        dataType: 'json',
+        data: info,
+        contentType: 'application/json',
+        mimeType: 'application/json',
+        success: function (data) {
+        	if(data.success == true)
+        	{
+        		$("#botonGuardarBeneficiario").remove();
+            	$("#cuerpoModalEditarBeneficiario").html("");
+            	$("#cuerpoModalEditarBeneficiario").html("<h3 class='text-center'>Ud ha actualizado exitosamente!!</h3>");        		
+        	}else{
+  		
+        	}
+        	
+        	},
+        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
+        error: function(data,status,er) {
+        	
+        	}
+	 });
+	
+});
 
 </script>	
