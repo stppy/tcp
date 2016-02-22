@@ -90,7 +90,7 @@ public class SqlSelects {
 	
 	public static List<AccionCatalogo> selectAccionCatalogo(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select * from accion_catalogo"+condition;
+		String query = " select * from accion_catalogo"+condition+" ORDER BY nombre";
 
 		Statement statement = null;
 		ResultSet rs=null;
@@ -290,7 +290,7 @@ public class SqlSelects {
 	
 	public static List<LineaAccion> selectLineaAccion(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select * from linea_accion "+condition;
+		String query = " select * from linea_accion "+condition+" ORDER BY nombre";
 
 		Statement statement = null;
 		ResultSet rs=null;
