@@ -1253,6 +1253,11 @@
 	    var lineaAccionId = idParsed[1];
 	    var institucionId = idParsed[2];
 	    var periodoId = idParsed[3];
+	    var f = new Date();
+	    if( (f.getMonth() +1) < 10 ){
+	    	var mes =( 0 +""+ (f.getMonth() +1));
+	    }
+	    var fechaActual = (f.getFullYear() + "-" + mes + "-" + f.getDate());
 		
 	    if ( $("#modalEditarAccion").length )
 		{
@@ -1488,7 +1493,7 @@
 							'											<tbody>'+
 							'												<tr><td><div class="form-group"><label for="nombreAccion">Acción</label><select id="selectorCatalogoAccion" class="form-control">'+optionCatalogoAccion+'</select><input type="hidden" class="form-control" id="insLineaAccionId" value="'+insLineaAccionId+'"></div></td><td><div class="form-group"><label for="umedida">U. medida</label><input type="text" id="unidadMedidaAccion" value="" class="form-control" disabled> </div></td></tr>'+
 							'												<tr><td><div class="form-group"><label for="departamento">Departamento</label><select id="selectorDepartamento" name="departamento" class="form-control">'+optionDepartamentos+'</select></div></td><td><div class="form-group"><label for="distrito">Distrito</label><select name="departamento" class="form-control" id="distritosDepartamento"></select></div></td></tr>'+
-							'												<tr><td><div class="form-group"><label for="fechaInicioAccion">Fecha Inicio</label><input type="date" id="fechaInicioAccion" class="form-control" /></div></td><td><div class="form-group"><label for="fechaFinAccion">Fecha Fin</label><input type="date" id="fechaFinAccion" class="form-control" /></div></td></tr>'+							
+							'												<tr><td><div class="form-group"><label for="fechaInicioAccion">Fecha Inicio</label><input type="date" id="fechaInicioAccion" class="form-control" value="'+fechaActual+'" /></div></td><td><div class="form-group"><label for="fechaFinAccion">Fecha Fin</label><input type="date" id="fechaFinAccion" class="form-control" /></div></td></tr>'+							
 							'											</tbody>'+							           
 							'										</table>'+
 							'									</div>'+
@@ -3477,44 +3482,49 @@ $("body").on("click", ".borrarAccion",function(event){
 		
 		var f1 = new Date(fechaInicio);
 		var f2 = new Date(fechaFin);
+		var fechaActual = new Date();
 		
-		if(f1 > f2){
-			alert("ERROR");
+		//Tambien se debe comparar que la fecha de inicio debe ser mayor o igual a la fecha actual
+		if(f1 < f2 && f1 >= fechaActual){
+
+	 		var datos = new Object();
+		    
+		    datos.costo = costo;
+		    datos.peso = peso;
+		    datos.fechaInicio = fechaInicio;
+		    datos.fechaFin = fechaFin;
+		    datos.version = version;
+		    datos.meta1 = meta1;
+		    datos.meta2 = meta2;
+		    datos.meta3 = meta3;
+		    datos.meta4 = meta4;
+		    datos.insLineaAccionId = insLineaAccionId;
+		    datos.departamentoId = departamentoId;
+		    datos.distritoId = distritoId;
+		    datos.accionCatalogoId = catalogoAccion;
+
+
+		  	var info = JSON.stringify(datos);
+		    $.ajax({
+		        url: "ajaxInserts2?accion=insAccion",
+		        type: 'POST',
+		        dataType: 'json',
+		        data: info,
+		        contentType: 'application/json',
+		        mimeType: 'application/json',
+		        success: function (data) {
+		        	actualizarTablaAcciones(insLineaAccionId,lineaAccionId,institucionId,periodoId);
+		        	},
+		        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
+		        error: function(data,status,er) {
+		        	actualizarTablaAcciones(insLineaAccionId,lineaAccionId,institucionId,periodoId);
+		        	}
+			 });
+		    
+		}else{
+			alert("ERROR la Fecha Inicio debe ser menor a la Fecha Fin");
 		}
 
- 		var datos = new Object();
-	    
-	    datos.costo = costo;
-	    datos.peso = peso;
-	    datos.fechaInicio = fechaInicio;
-	    datos.fechaFin = fechaFin;
-	    datos.version = version;
-	    datos.meta1 = meta1;
-	    datos.meta2 = meta2;
-	    datos.meta3 = meta3;
-	    datos.meta4 = meta4;
-	    datos.insLineaAccionId = insLineaAccionId;
-	    datos.departamentoId = departamentoId;
-	    datos.distritoId = distritoId;
-	    datos.accionCatalogoId = catalogoAccion;
-
-
-	  	var info = JSON.stringify(datos);
-	    $.ajax({
-	        url: "ajaxInserts2?accion=insAccion",
-	        type: 'POST',
-	        dataType: 'json',
-	        data: info,
-	        contentType: 'application/json',
-	        mimeType: 'application/json',
-	        success: function (data) {
-	        	actualizarTablaAcciones(insLineaAccionId,lineaAccionId,institucionId,periodoId);
-	        	},
-	        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
-	        error: function(data,status,er) {
-	        	actualizarTablaAcciones(insLineaAccionId,lineaAccionId,institucionId,periodoId);
-	        	}
-		 });
 	    
 	});	
 	
@@ -4614,6 +4624,12 @@ $("body").on("click", ".agregarAvance",function(event){
 	var accionId = idParsed[4];
 	var actividadId = idParsed[5];//es el id de la tabla actidad
 	
+    var f = new Date();
+    if( (f.getMonth() +1) < 10 ){
+    	var mes =( 0 +""+ (f.getMonth() +1));
+    }
+    var fechaActual = (f.getFullYear() + "-" + mes + "-" + f.getDate());
+    
 	var webServicesAvance = $.ajax({
 		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvance&actividadId='+actividadId,
 	  	type:'get',
@@ -4657,7 +4673,7 @@ $("body").on("click", ".agregarAvance",function(event){
 							'										<tbody>'+
 							'			      							<form class="form-horizontal" role="form">'+
 							'											<tr><td><label for="justificacionAvance">Justificación</label><input type="text" id="justificacionAvance" value="" class="form-control" placeholder="Ingrese Justificación" /></td><td><label for="cantidadAvance">Cantidad</label><input type="number" id="cantidadAvance" class="form-control" value="" placeholder="Ingrese Cantidad" /></td></tr>'+
-							'											<tr><td><label for="fechaEntregaAvance">Fecha Entrega</label><input type="date" id="fechaEntregaAvance" value="" class="form-control"  /></td><td><label for="cantidadBeneficiariosAvance">Cantidad Beneficiarios</label><input type="number" id="cantidadBeneficiariosAvance" class="form-control" value="" placeholder="Ingrese Cantidad Beneficiarios"/></td></tr>'+														
+							'											<tr><td><label for="fechaEntregaAvance">Fecha Entrega</label><input type="date" id="fechaEntregaAvance" value="'+fechaActual+'" class="form-control"  /></td><td><label for="cantidadBeneficiariosAvance">Cantidad Beneficiarios</label><input type="number" id="cantidadBeneficiariosAvance" class="form-control" value="" placeholder="Ingrese Cantidad Beneficiarios"/></td></tr>'+														
 							'											<input type="hidden" id="versionAvance" value="3" />'+		
 							'			      							</form>	'+												
 							'										</tbody>'+
@@ -6599,4 +6615,31 @@ $("body").on("click", "#consultaBorrarInsLineaAccion",function(event){
 	
 });
 
+$("body").on("change", "#fechaFinAccion",function(event){
+	var fechaInicio = $("#fechaInicioAccion").val();
+	var fechaFin = $("#fechaFinAccion").val();
+	
+	if(fechaInicio != ""){
+		if(fechaFin < fechaInicio){
+			$("#fechaFinAccion").val("");
+			alert("Fecha Fin no puede ser menor a Fecha Inicio");
+		}
+	}else{
+		$("#fechaFinAccion").val("");
+		alert("Primero debe seleccionar Fecha Incio");
+	}
+
+});
+$("body").on("change", "#fechaInicioAccion",function(event){
+	var fechaInicio = $("#fechaInicioAccion").val();
+	var fechaFin = $("#fechaFinAccion").val();
+	
+	if(fechaFin != ""){		
+		if(fechaInicio > fechaFin){
+			 $("#fechaInicioAccion").val("");
+			alert("Fecha Inicio no puede ser mayor a Fecha Fin");
+		}
+	}
+
+});
 </script>	
