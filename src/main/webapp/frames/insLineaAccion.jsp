@@ -3817,7 +3817,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		'												<tr><td><div class="form-group"><label for="nombreActividad">Cronograma</label><input type="text" class="form-control" id="nombreActividad" value="" placeholder="Ingrese Nombre del Cronograma"><input type="hidden" class="form-control" id="insLineaAccionId" value="'+insLineaAccionId+'"></div></td><td><div class="form-group"><label for="descripcionActividad">Descripción</label><input type="text" id="descripcionActividad" value="" class="form-control"> </div></td></tr>'+
 		'												<tr><td><div class="form-group"><label for="unidadMedidaIdActividad">Unidad de Medida</label><select id="unidadMedidaIdActividad" class="form-control" placeholder="Ingrese Unidad Medida Id">'+optionUnidadMedida+'</div></td><td><div class="form-group"><label for="hitoTipoIdActividad">Tipo de Cronograma</label>'+
 		'												<select id="hitoTipoIdActividad" class="form-control" placeholder="Ingrese Tipo de Cronograma">'+optionTipoHito+'</select></div></td></tr>'+
-		'												<tr><td><div class="form-group"><label for="proporcionActividad">Proporción</label><input type="number" class="form-control" id="proporcionActividad" value="1" min="0" max="1" /></div></td><td><div class="form-group"><label for="pesoActividad">Peso</label><input type="number" class="form-control" id="pesoActividad" value="1" min="0" max="1" /></div></td></tr>'+
+		'												<tr><td><div class="form-group"><label for="proporcionActividad">Proporción</label><input type="text" class="form-control" id="proporcionActividad" value="1" required /></div></div></td><td><div class="form-group"><label for="pesoActividad">Peso</label><input type="text" class="form-control" id="pesoActividad" value="1" required/></div></td></tr>'+
 		'											</tbody>'+							           
 		'										</table>'+
 		'									</div>'+
@@ -4311,8 +4311,8 @@ function actualizarTablaActividades(accion_id,insLineaAccionId,lineaAccionId,ins
 	$("#descripcionActividad").val('');
 	$("#unidadMedidaIdActividad").val('');
 	$("#hitoTipoIdActividad").val('');
-	$("#proporcionActividad").val('');
-	$("#pesoActividad").val('');
+	//$("#proporcionActividad").val('');
+	//$("#pesoActividad").val('');
 		
 }
 
@@ -6640,6 +6640,27 @@ $("body").on("change", "#fechaInicioAccion",function(event){
 			alert("Fecha Inicio no puede ser mayor a Fecha Fin");
 		}
 	}
+
+});
+$("body").on("change", "#proporcionActividad",function(event){
+	var proporcion = parseInt($("#proporcionActividad").val());
+	
+		if(proporcion < 0 || proporcion > 1){
+			$("#proporcionActividad").val("");
+			$('#proporcionActividad').prop('title', 'La Proporción debe estar comprendido entre 0 y 1');
+			alert("La Proporción debe estar comprendido entre 0 y 1");
+		}
+
+});
+
+$("body").on("change", "#pesoActividad",function(event){
+	var peso = parseInt($("#pesoActividad").val());
+		
+		if(peso < 0 || peso > 1){
+			$("#pesoActividad").val("");
+			$('#pesoActividad').prop('title', 'El Peso debe estar comprendido entre 0 y 1');
+			alert("El valor del Peso debe estar comprendido entre 0 y 1");
+		}
 
 });
 </script>	
