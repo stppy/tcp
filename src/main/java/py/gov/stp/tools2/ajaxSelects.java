@@ -399,8 +399,10 @@ public class ajaxSelects extends HttpServlet {
         		out.println(json.toString());
         	}          
         	if (action.equals("getAccionHasProducto")){
-        		List objetos=null; 
-           		try {objetos = SqlSelects.selectAccionHasProducto();}
+        		List objetos=null;
+        		condition = " where true ";
+        		if (accionId!=null) condition += " and accion_id ='"+accionId+"'";
+           		try {objetos = SqlSelects.selectAccionHasProducto(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());

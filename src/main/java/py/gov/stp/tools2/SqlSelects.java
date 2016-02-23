@@ -533,9 +533,9 @@ public class SqlSelects {
 		return objetos; 
 		}
 	
-	public static List<AccionHasProducto> selectAccionHasProducto() throws SQLException{
+	public static List<AccionHasProducto> selectAccionHasProducto(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select * from accion_has_producto ";
+		String query = " select * from accion_has_producto"+condition;
 
 		Statement statement = null;
 		ResultSet rs=null;
@@ -551,8 +551,20 @@ public class SqlSelects {
 				objeto.setProporcion(rs.getInt("proporcion"));
 				objeto.setAccionId(rs.getInt("accion_id"));
 				objeto.setSprProductoId(rs.getInt("spr_producto_id"));
+				objeto.setVersion(rs.getInt("version"));
 				objeto.setBorrado(rs.getBoolean("borrado"));
-
+				objeto.setProyecto(rs.getInt("srp_proyecto_id"));
+				objeto.setSubPrograma(rs.getInt("spr_subprograma_id"));
+				objeto.setPrograma(rs.getInt("spr_programa_id"));
+				objeto.setTipoPrograma(rs.getInt("spr_tiprograma_id"));
+				objeto.setEntidad(rs.getInt("spr_entidad_id"));
+				objeto.setNivel(rs.getInt("spr_nivel_id"));
+				objeto.setAnho(rs.getInt("spr_anho"));
+				objeto.setUnidadMedida(rs.getString("u_medida"));
+				objeto.setCantidadFisica(rs.getDouble("cant_fisica"));
+				objeto.setClase(rs.getString("clase"));
+				objeto.setCantidadFinanciera(rs.getDouble("cant_financiera"));
+				
 				objetos.add(objeto);
 			}
 		}

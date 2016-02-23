@@ -4860,6 +4860,28 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	var actividadId = idParsed[5];
 	var avanceId = idParsed[6];//es el id de la tabla avance
 
+	var webServicesAccionHasProducto = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionHasProducto&accionId='+accionId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	webServicesAccionHasProducto = JSON.parse(webServicesAccionHasProducto);
+	
+	$.ajax({
+    	url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductos',
+      	type:'get',
+      	crossDomain: 'true',
+      	dataType:'jsonp',
+        jsonp: 'callback',
+        jsonpCallback: 'jsonpCallbackProducto',
+      	async:false,
+      	success: function( data, textStatus, jqXHR) {
+      		if(data.success){
+      			jsonpCallbackProducto(data)
+      		}
+      	} 
+    });
 	
 	var webServicesAvance = $.ajax({
 		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvance&avanceId='+avanceId,
@@ -4955,6 +4977,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 			cuerpoBeneficiario += '<tr><td>'+webServicesBeneficiarioTipo[0].nombre+'</td><td>'+webServicesBeneficiarioGrupo[0].nombre+'</td><td>'+webServicesBeneficiario[a].descripcion+'</td><td>'+webServicesBeneficiario[a].cantidad+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarBeneficiario" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesBeneficiario[a].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarBeneficiario" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesBeneficiario[a].id+' ><span class="fa fa-trash"></span></button></td></tr>';
 		}
 	}
+	
 		
 	var contenidoModalAdministrador = "";
 
@@ -5110,7 +5133,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'											<table class="table table-hover">'+
 									'												<tbody>'+
 									'			      									<form class="form-horizontal" role="form">'+
-									'													<tr><td><label for="codigoContratacionalCosto">Cod. Contrato</label><input type="number" id="codigoContratacionalCosto" class="form-control" placeholder="Ingrese Codigo Contrato" /></td><td><label for="objetoGastoCosto">Objeto Gasto</label><input type="number" id="objetoGastoCosto" class="form-control" placeholder="Ingrese Objeto de Gasto" /></td></tr>'+									
+									'													<tr><td><label for="codigoContratacionalCosto">Cod. Contratación</label><input type="number" id="codigoContratacionalCosto" class="form-control" placeholder="Ingrese Codigo Contratación" /></td><td><label for="objetoGastoCosto">Objeto Gasto</label><input type="number" id="objetoGastoCosto" class="form-control" placeholder="Ingrese Objeto de Gasto" /></td></tr>'+									
 									'													<tr><td colspan="2"><label for="montoCosto">Monto</label><input type="number" id="montoCosto" class="form-control" placeholder="Ingrese Monto" /></td></tr>'+
 									'													<input type="hidden" id="avanceIdCosto" value="'+avanceId+'"/>'+		
 									'			      									</form>	'+												
