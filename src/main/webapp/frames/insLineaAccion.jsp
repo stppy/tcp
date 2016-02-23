@@ -3479,51 +3479,40 @@ $("body").on("click", ".borrarAccion",function(event){
 		var departamentoId = $("#selectorDepartamento option:selected").val();
 		var distritoId = $("#distritosDepartamento option:selected").val();
 		var catalogoAccion = $("#selectorCatalogoAccion option:selected").val();
-		
-		var f1 = new Date(fechaInicio);
-		var f2 = new Date(fechaFin);
-		var fechaActual = new Date();
-		
-		//Tambien se debe comparar que la fecha de inicio debe ser mayor o igual a la fecha actual
-		if(f1 < f2 && f1 >= fechaActual){
 
-	 		var datos = new Object();
-		    
-		    datos.costo = costo;
-		    datos.peso = peso;
-		    datos.fechaInicio = fechaInicio;
-		    datos.fechaFin = fechaFin;
-		    datos.version = version;
-		    datos.meta1 = meta1;
-		    datos.meta2 = meta2;
-		    datos.meta3 = meta3;
-		    datos.meta4 = meta4;
-		    datos.insLineaAccionId = insLineaAccionId;
-		    datos.departamentoId = departamentoId;
-		    datos.distritoId = distritoId;
-		    datos.accionCatalogoId = catalogoAccion;
+ 		var datos = new Object();
+	    
+	    datos.costo = costo;
+	    datos.peso = peso;
+	    datos.fechaInicio = fechaInicio;
+	    datos.fechaFin = fechaFin;
+	    datos.version = version;
+	    datos.meta1 = meta1;
+	    datos.meta2 = meta2;
+	    datos.meta3 = meta3;
+	    datos.meta4 = meta4;
+	    datos.insLineaAccionId = insLineaAccionId;
+	    datos.departamentoId = departamentoId;
+	    datos.distritoId = distritoId;
+	    datos.accionCatalogoId = catalogoAccion;
 
 
-		  	var info = JSON.stringify(datos);
-		    $.ajax({
-		        url: "ajaxInserts2?accion=insAccion",
-		        type: 'POST',
-		        dataType: 'json',
-		        data: info,
-		        contentType: 'application/json',
-		        mimeType: 'application/json',
-		        success: function (data) {
-		        	actualizarTablaAcciones(insLineaAccionId,lineaAccionId,institucionId,periodoId);
-		        	},
-		        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
-		        error: function(data,status,er) {
-		        	actualizarTablaAcciones(insLineaAccionId,lineaAccionId,institucionId,periodoId);
-		        	}
-			 });
-		    
-		}else{
-			alert("ERROR la Fecha Inicio debe ser menor a la Fecha Fin");
-		}
+	  	var info = JSON.stringify(datos);
+	    $.ajax({
+	        url: "ajaxInserts2?accion=insAccion",
+	        type: 'POST',
+	        dataType: 'json',
+	        data: info,
+	        contentType: 'application/json',
+	        mimeType: 'application/json',
+	        success: function (data) {
+	        	actualizarTablaAcciones(insLineaAccionId,lineaAccionId,institucionId,periodoId);
+	        	},
+	        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
+	        error: function(data,status,er) {
+	        	actualizarTablaAcciones(insLineaAccionId,lineaAccionId,institucionId,periodoId);
+	        	}
+		 });
 
 	    
 	});	
