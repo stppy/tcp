@@ -989,14 +989,14 @@ public class SqlSelects {
 					objeto.setPrograma(rs.getInt("spr_programa_id"));
 					objeto.setSubPrograma(rs.getInt("spr_subprograma_id"));
 					objeto.setProyecto(rs.getInt("srp_proyecto_id"));
-					objeto.setProducto(rs.getInt("spr_producto_id"));
+					objeto.setSprProductoId(rs.getInt("spr_producto_id"));
 					objeto.setAnho(rs.getInt("spr_anho"));
 					objeto.setVersion(rs.getInt("spr_version"));
 					objeto.setAccionId(rs.getInt("accion_id"));
-					objeto.setuMedida(rs.getString("u_medida"));
-					objeto.setCantFisica(rs.getDouble("cant_fisica"));
+					objeto.setUnidadMedida(rs.getString("u_medida"));
+					objeto.setCantidadFisica(rs.getDouble("cant_fisica"));
 					objeto.setClase(rs.getString("clase"));
-					objeto.setCantFinanciera(rs.getDouble("cant_financiera"));
+					objeto.setCantidadFinanciera(rs.getDouble("cant_financiera"));
 					objeto.setTotalAsignacion(rs.getDouble("asignacion_financiera"));
 
 					
