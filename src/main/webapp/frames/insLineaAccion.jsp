@@ -4849,7 +4849,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	var actividadId = idParsed[5];
 	var avanceId = idParsed[6];//es el id de la tabla avance
 
-	var webServicesAccionHasProducto = $.ajax({
+/* 	var webServicesAccionHasProducto = $.ajax({
 		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionHasProducto&accionId='+accionId,
 	  	type:'get',
 	  	dataType:'json',
@@ -4870,7 +4870,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
       			jsonpCallbackProducto(data)
       		}
       	} 
-    });
+    }); */
 	
 	var webServicesAvance = $.ajax({
 		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvance&avanceId='+avanceId,
