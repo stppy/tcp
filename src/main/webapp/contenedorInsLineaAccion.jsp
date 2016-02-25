@@ -389,7 +389,7 @@ if (user != null) { %>
 		tablaInsLineaAccionAnterior +='<tr><td colspan="9"></td></tr>';			
 		$('#cuerpoInsLineaAccionAnterior').html(tablaInsLineaAccionAnterior); 
 		
-		$("#dataTableInsLineaAccion").DataTable();
+		//$("#dataTableInsLineaAccion").DataTable();
 
 		}
 		
