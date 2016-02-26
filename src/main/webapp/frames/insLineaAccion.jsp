@@ -3351,7 +3351,7 @@ $("body").on("click", ".borrarAccion",function(event){
 			    		$("#unidadMedida-formulario").val(mostrarUnidadMedida);
 			    		
 				    	$.ajax({
-				         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getAsignacionPresiVersion&nivel=12&entidad=1&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subPrograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto,
+				         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getAsignacionPresiVersion&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subPrograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto,
 				          	type:'get',
 				          	crossDomain: 'true',
 				          	dataType:'jsonp',
