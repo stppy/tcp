@@ -4318,6 +4318,10 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	if ( $("#modalEditarHito").length )
 	{
 		$("#modalEditarHito").remove();
+	}
+	if ( $("#modalBorrarHito").length )
+	{
+		$("#modalBorrarHito").remove();
 	}	
 	var parametros = $(this).attr("parametros");
     var idParsed = parametros.split("-");                                                            
@@ -4416,7 +4420,12 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	var cuerpoActividades ="";
 	for(var n = 0; n < programacionWebService.length; n++)
 	{
-		cuerpoActividades += "<tr><td>"+programacionWebService[n].cantidad+"</td><td>"+programacionWebService[n].fechaEntrega+"</td><td>"+programacionWebService[n].version+"</td><td>"+cronogramas[0].nombre+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm consultaEditarHito'  data-toggle='tooltip' data-placement='top' title='Editar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacionWebService[n].id+" ><span class='glyphicon glyphicon-pencil' ></span></button><button type='button' class='btn btn-default btn-sm' title='Borrar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacionWebService[n].id+" ><span class='glyphicon glyphicon-trash' </span></button></td></tr>";
+		if(programacionWebService[n].borrado == false)
+		{
+			cuerpoActividades += "<tr><td>"+programacionWebService[n].cantidad+"</td><td>"+programacionWebService[n].fechaEntrega+"</td><td>"+programacionWebService[n].version+"</td><td>"+cronogramas[0].nombre+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm consultaEditarHito'  data-toggle='tooltip' data-placement='top' title='Editar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacionWebService[n].id+" ><span class='glyphicon glyphicon-pencil' ></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarHito' title='Borrar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacionWebService[n].id+" ><span class='glyphicon glyphicon-trash' </span></button></td></tr>";
+		}else{
+			cuerpoActividades += "<tr><td><del>"+programacionWebService[n].cantidad+"</del></td><td><del>"+programacionWebService[n].fechaEntrega+"</del></td><td><del>"+programacionWebService[n].version+"</del></td><td><del>"+cronogramas[0].nombre+"</del></td><td class='text-center'><button type='button' class='btn btn-default btn-sm consultaEditarHito'  data-toggle='tooltip' data-placement='top' title='Editar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacionWebService[n].id+" ><span class='glyphicon glyphicon-pencil' ></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarHito' title='Borrar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacionWebService[n].id+" ><span class='glyphicon glyphicon-trash' </span></button></td></tr>";
+		}
 	}
 	
 	
@@ -4567,7 +4576,12 @@ $("body").on("click", ".guardarProgramacion",function(event){
         		var registroProgramacion="";
         		for(var j = 0; j < programacion.length; j++)
         		{
-        			registroProgramacion += "<tr><td>"+programacion[j].cantidad+"</td><td>"+programacion[j].fechaEntrega+"</td><td>"+programacion[j].version+"</td><td>"+cronogramas[0].nombre+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm consultaEditarHito'  data-toggle='tooltip' data-placement='top' title='Editar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacion[j].id+" ><span class='glyphicon glyphicon-pencil' ></span></button><button type='button' class='btn btn-default btn-sm' title='Borrar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacion[j].id+" ><span class='glyphicon glyphicon-trash' </span></button></td></tr>";
+        			if(programacion[j].borrado == false)
+        			{
+            			registroProgramacion += "<tr><td>"+programacion[j].cantidad+"</td><td>"+programacion[j].fechaEntrega+"</td><td>"+programacion[j].version+"</td><td>"+cronogramas[0].nombre+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm consultaEditarHito'  data-toggle='tooltip' data-placement='top' title='Editar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacion[j].id+" ><span class='glyphicon glyphicon-pencil' ></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarHito' title='Borrar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacion[j].id+" ><span class='glyphicon glyphicon-trash' </span></button></td></tr>";
+        			}else{
+            			registroProgramacion += "<tr><td><del>"+programacion[j].cantidad+"</del></td><td><del>"+programacion[j].fechaEntrega+"</del></td><td><del>"+programacion[j].version+"</del></td><td><del>"+cronogramas[0].nombre+"</del></td><td class='text-center'><button type='button' class='btn btn-default btn-sm consultaEditarHito'  data-toggle='tooltip' data-placement='top' title='Editar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacion[j].id+" ><span class='glyphicon glyphicon-pencil' ></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarHito' title='Borrar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacion[j].id+" ><span class='glyphicon glyphicon-trash' </span></button></td></tr>";
+        			}
         		}
         		
 									
@@ -6795,6 +6809,119 @@ $("body").on("click", ".editarHito",function(event){
 	 });
 	
 });
+
+$("body").on("click", ".consultaBorrarHito",function(event){
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-");                                                            
+	
+	//Las siguentes variables se utiliza en esta funcion para redibujar el modal anterior
+	var insLineaAccionId = idParsed[0];
+	var lineaAccionId = idParsed[1];
+	var institucionId = idParsed[2];
+	var periodoId = idParsed[3];
+	var accionId = idParsed[4];
+	var cronogramaId = idParsed[5];
+	var programacionId = idParsed[6];
+
+	if ( $("#modalProgramacion").length )
+	{
+		$("#modalProgramacion").remove();
+	}		
+	
+	var programacionWebService = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getProgramacion&programacionId='+programacionId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	programacionWebService = JSON.parse(programacionWebService);
+	
+	var contenido = "";
+
+	contenido =			'<div class="modal fade" id="modalBorrarHito"  data-backdrop="static" data-keyboard="false" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">'+
+						'	<div class="modal-dialog modal-lg">'+
+						'		<div class="modal-content" >'+
+						'			<div class="modal-header">'+
+						'		        <button type="button" class="close agregarProgramacion" data-dismiss="modal" aria-label="Close" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'"><span aria-hidden="true">&times;</span></button>'+
+						'		        <h4 class="modal-title" >Borrar - Restaurar Hito</h4>'+
+						'			</div>'+
+						'		    <div class="modal-body">'+
+						'				<div id="mensajeBorradoHito"></div>'+
+						'		    </div>'+
+						'			<div class="modal-footer" id="agregarBotonBorradoHito">'+
+						'			</div>'+
+						'		</div>'+ 
+						'	</div>'+
+						'</div>';
+						
+		$("#programacion").append(contenido);
+		
+		if(programacionWebService[0].borrado == true){
+			$("#mensajeBorradoHito").html("");
+			$("#mensajeBorradoHito").append('<h3 class="text-center">Ud. esta seguro que desea RESTABLACER este registro</h3>');
+			$("#agregarBotonBorradoHito").html("");
+			$("#agregarBotonBorradoHito").append('<button type="button" class="btn btn-success btn-sm borrarHito" id="botonRestaurarHito" parametros='+programacionId+'-r>Restaurar Hito</button>');
+			$("#agregarBotonBorradoHito").append('<button type="button" class="btn btn-success btn-sm agregarProgramacion" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'">Cerrar</button>');
+		}else{
+			$("#mensajeBorradoHito").html("");
+			$("#mensajeBorradoHito").append('<h3 class="text-center">Ud. esta seguro que desea BORRAR este registro</h3');
+			$("#agregarBotonBorradoHito").html("");
+			$("#agregarBotonBorradoHito").append('<button type="button" class="btn btn-danger btn-sm borrarHito" id="botonBorradoHito" parametros='+programacionId+'-b>Borrar Hito</button>');
+			$("#agregarBotonBorradoHito").append('<button type="button" class="btn btn-success btn-sm agregarProgramacion" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'">Cerrar</button>');
+		}
+		
+		$('#modalBorrarHito').modal('show');
+			
+});
+$("body").on("click", ".borrarHito",function(event){	
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-"); 
+    var programacionId = idParsed[0];
+    var estado = idParsed[1];
+    
+	var programacionWebService = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getProgramacion&programacionId='+programacionId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	programacionWebService = JSON.parse(programacionWebService);
+    
+    var objeto = new Object();
+    objeto.id = programacionId;
+    objeto.borrado= programacionWebService[0].borrado;
+
+    
+  	var info = JSON.stringify(objeto);
+    $.ajax({
+        url: "ajaxUpdate2?accion=actBorradoProgramacion",
+        type: 'POST',
+        dataType: 'json',
+        data: info,
+        contentType: 'application/json',
+        mimeType: 'application/json',
+        success: function (data) {
+        	
+        	if(data.success == true){
+            	if(estado == "b"){
+	        		$("#botonBorradoHito").remove();
+	            	$("#mensajeBorradoHito").html("");
+	            	$("#mensajeBorradoHito").html("<h3 class='text-center'>BORRADO EXITOSAMENTE!!</h3>");
+	            }else{
+	        		$("#botonRestaurarHito").remove();
+	            	$("#mensajeBorradoHito").html("");
+	            	$("#mensajeBorradoHito").html("<h3 class='text-center'>RESTAURADO EXITOSAMENTE!!</h3>");
+	        	}
+        	}
+
+        },
+
+        error: function(data,status,er) {
+        	
+        	}
+	 });
+	
+});     
 
 
 </script>	
