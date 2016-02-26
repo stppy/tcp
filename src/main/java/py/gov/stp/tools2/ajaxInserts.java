@@ -408,7 +408,7 @@ public class ajaxInserts  extends HttpServlet {
         		out.println(myObj.toString());
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				e.printStackTrace(); 
 			}
     	}
        }    
