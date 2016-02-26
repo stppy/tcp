@@ -663,7 +663,7 @@ public class SqlInserts {
 	
 }		
 	
-	public static boolean insertProgramacion(Programacion programacion){
+	public static boolean insertProgramacion(Programacion programacion) throws ParseException{
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
@@ -672,8 +672,14 @@ public class SqlInserts {
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
+		String startDate = programacion.getFechaEntrega();
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+		java.util.Date date = sdf1.parse(startDate);
+		java.sql.Date sqlStartDate = new java.sql.Date(date.getTime());
+		
+		
 		insert.setDouble (1, programacion.getCantidad());
-		insert.setDate (2, programacion.getFechaEntrega());
+		insert.setDate (2, sqlStartDate);
 		insert.setInt (3, programacion.getVersion());
 		insert.setInt (4, programacion.getActividad());
 		

@@ -4305,7 +4305,7 @@ function actualizarTablaActividades(accion_id,insLineaAccionId,lineaAccionId,ins
 		
 }
 
-$("body").on("click", ".agregarProgramacion",function(event){
+$("body").on("click", ".agregarProgramacion",function(event){ 
 	
 	if ( $("#modalActividad").length )
 	{
@@ -4315,7 +4315,10 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	{
 		$("#modalAccion").remove();
 	}	
-	
+	if ( $("#modalEditarHito").length )
+	{
+		$("#modalEditarHito").remove();
+	}	
 	var parametros = $(this).attr("parametros");
     var idParsed = parametros.split("-");                                                            
 	
@@ -4413,7 +4416,7 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	var cuerpoActividades ="";
 	for(var n = 0; n < programacionWebService.length; n++)
 	{
-		cuerpoActividades += "<tr><td>"+programacionWebService[n].cantidad+"</td><td>"+programacionWebService[n].fechaEntrega+"</td><td>"+programacionWebService[n].version+"</td><td>"+cronogramas[0].nombre+"</td>";
+		cuerpoActividades += "<tr><td>"+programacionWebService[n].cantidad+"</td><td>"+programacionWebService[n].fechaEntrega+"</td><td>"+programacionWebService[n].version+"</td><td>"+cronogramas[0].nombre+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm consultaEditarHito'  data-toggle='tooltip' data-placement='top' title='Editar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacionWebService[n].id+" ><span class='glyphicon glyphicon-pencil' ></span></button><button type='button' class='btn btn-default btn-sm' title='Borrar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacionWebService[n].id+" ><span class='glyphicon glyphicon-trash' </span></button></td></tr>";
 	}
 	
 	
@@ -4456,7 +4459,7 @@ $("body").on("click", ".agregarProgramacion",function(event){
 							
 							'               			</div>'+//fin box-body
 							'							<div class="modal-footer">'+ 
-							'					        	<button type="button" class="btn btn-success guardarProgramacion" >Guardar</button>'+ 
+							'					        	<button type="button" class="btn btn-success guardarProgramacion" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'" >Guardar</button>'+ 
 							'					          	<button type="button" class="btn btn-success agregarActividad" data-dismiss="modal" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'">Cerrar</button>'+ 
 							'							</div>'+
 							'                		</div>'+	
@@ -4479,7 +4482,7 @@ $("body").on("click", ".agregarProgramacion",function(event){
 							
 							'								<div class="table-responsive">'+
 							'									<table class="table table-hover table-bordered">'+
-							'										<thead><tr class="active"><th>Cantidad</th><th>FechaEntrega</th><th>Versión</th><th>Cronograma</th><th>Administrar</th></tr>'+
+							'										<thead><tr class="active"><th>Cantidad</th><th>FechaEntrega</th><th>Versión</th><th>Cronograma</th><th class="text-center">Administrar</th></tr>'+
 							'										<tbody id="listaActividades">'+
 							'										</tbody>'+
 							'									</table>'+
@@ -4504,7 +4507,17 @@ $("body").on("click", ".agregarProgramacion",function(event){
 });	
 
 $("body").on("click", ".guardarProgramacion",function(event){
-		
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-");                                                            
+	
+	//Las siguentes 4 variables se utiliza en esta funcion para redibujar el modal anterior
+	var insLineaAccionId = idParsed[0];
+	var lineaAccionId = idParsed[1];
+	var institucionId = idParsed[2];
+	var periodoId = idParsed[3];
+	var accionId = idParsed[4];
+	var cronogramaId = idParsed[5];
+	
 	var cantidad = $("#cantidadProgramacion").val();
 	var fechaEntrega = $("#fechaEntregaProgramacion").val();
 	var version = $("#versionProgramacion").val();
@@ -4554,7 +4567,7 @@ $("body").on("click", ".guardarProgramacion",function(event){
         		var registroProgramacion="";
         		for(var j = 0; j < programacion.length; j++)
         		{
-        			registroProgramacion += "<tr><td>"+programacion[j].cantidad+"</td><td>"+programacion[j].fechaEntrega+"</td><td>"+programacion[j].version+"</td><td>"+cronogramas[0].nombre+"</td>";
+        			registroProgramacion += "<tr><td>"+programacion[j].cantidad+"</td><td>"+programacion[j].fechaEntrega+"</td><td>"+programacion[j].version+"</td><td>"+cronogramas[0].nombre+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm consultaEditarHito'  data-toggle='tooltip' data-placement='top' title='Editar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacion[j].id+" ><span class='glyphicon glyphicon-pencil' ></span></button><button type='button' class='btn btn-default btn-sm' title='Borrar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacion[j].id+" ><span class='glyphicon glyphicon-trash' </span></button></td></tr>";
         		}
         		
 									
@@ -5124,37 +5137,6 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'													<tr><td><label for="codigoContratacionalCosto">Cod. Contratación</label><input type="number" id="codigoContratacionalCosto" class="form-control" placeholder="Ingrese Codigo Contratación" /></td><td><label for="objetoGastoCosto">Objeto Gasto</label><input type="number" id="objetoGastoCosto" class="form-control" placeholder="Ingrese Objeto de Gasto" /></td></tr>'+									
 									'													<tr><td colspan="2"><label for="montoCosto">Monto</label><input type="number" id="montoCosto" class="form-control" placeholder="Ingrese Monto" /></td></tr>'+
 									'													<input type="hidden" id="avanceIdCosto" value="'+avanceId+'"/>'+	
-									
-									
-
-									'			<div class="row">'+
-						      		'				<div class="form-group col-md-1">'+
-						      		'					<input type="text" name="nivel" id="nivel-formulario" value="12" class="form-control" disabled>'+
-						      		'				</div>'+
-						      		'				<div class="form-group col-md-1">'+
-						  			'					<input type="text" name="entidad" id="entidad-formulario" value="1" class="form-control" disabled>'+
-						  			'				</div>'+
-						      		'			    <div class="form-group col-md-2">'+
-						      		'			    	<input type="text" name="tipoPrograma" id="tipoPrograma-formulario" placeholder="Tipo Programa" list="listaf3c2" class="form-control">'+
-						      		'			    </div>'+
-						      		'			    <div class="form-group col-md-2">'+
-						      		'			    	<input type="text" name="programa" id="programa-formulario" placeholder="Programa" list="listaf4c2" class="form-control">'+
-						      		'			    </div>'+
-						      		'			    <div class="form-group col-md-2">'+
-						      		'			    	<input type="text" name="subPrograma" id="subPrograma-formulario" placeholder="SubPrograma" list="listaf5c2" class="form-control">'+
-						      		'			    </div>'+
-						      		'			    <div class="form-group col-md-2">'+
-						      		'			    	<input type="text" name="proyecto" id="proyecto-formulario" placeholder="Proyecto" list="listaf6c2" class="form-control">'+
-						      		'			    </div>'+
-						  			'		    	<div class="form-group col-md-2">'+
-						  			'		    		<input type="text" name="producto" id="producto-formulario" placeholder="Producto" list="listaf7c2" class="form-control">'+
-						      		'			  	</div>'+
-						  			'		    </div>'+
-									
-									
-									
-									
-									
 									'			      									</form>	'+												
 									'												</tbody>'+
 									'											</table>'+
@@ -6706,6 +6688,112 @@ $("body").on("change", "#pesoActividad",function(event){
 			alert("El valor del Peso debe estar comprendido entre 0 y 1");
 		}
 
+});
+ 
+$("body").on("click", ".consultaEditarHito",function(event){
+	
+	if ( $("#modalProgramacion").length )
+	{
+		$("#modalProgramacion").remove();
+	}	
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-");                                                            
+	
+	//Las siguentes variables se utiliza en esta funcion para redibujar el modal anterior
+	var insLineaAccionId = idParsed[0];
+	var lineaAccionId = idParsed[1];
+	var institucionId = idParsed[2];
+	var periodoId = idParsed[3];
+	var accionId = idParsed[4];
+	var cronogramaId = idParsed[5];
+	var programacionId = idParsed[6];
+
+
+	var programacionWebService = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getProgramacion&programacionId='+programacionId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	programacionWebService = JSON.parse(programacionWebService);
+	
+	var contenido = "";
+
+	contenido +=		'<div class="modal fade" id="modalEditarHito" data-backdrop="static" data-keyboard="false" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">'+
+						'	<div class="modal-dialog modal-lg">'+
+						'		<div class="modal-content" >'+
+						'			<div class="modal-header">'+
+						'		        <button type="button" class="close agregarProgramacion" data-dismiss="modal" aria-label="Close" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'"><span aria-hidden="true">&times;</span></button>'+
+						'		        <h4 class="modal-title" >Editar Hito</h4>'+
+						'			</div>'+
+						'		    <div class="modal-body" id="cuerpoModalEditarHito">'+
+										
+						'				<div class="table-responsive">'+
+						'					<table class="table table-hover">'+
+						'						<tbody>'+
+						'			      			<form class="form-horizontal" role="form">'+
+						'							<tr><td><label for="cantidadHito">Cantidad</label><input type="number" id="cantidadHito" class="form-control" value='+programacionWebService[0].cantidad+' /></td><td><label for="fechaHito">Fecha Entrega</label><input type="date" id="fechaHito" class="form-control" value='+programacionWebService[0].fechaEntrega+' /></td></tr>'+																		
+						'							<input type="hidden" id="programacionIdHito" value="'+programacionWebService[0].id+'"/>'+		
+						'			      			</form>	'+				
+						'						</tbody>'+
+						'					</table>'+
+						'				</div>'+
+						
+						'		    </div>'+
+						'			<div class="modal-footer">'+
+						' 				<button type="button" class="btn btn-success btn-sm editarHito" id="botonGuardarHito" parametros='+programacionWebService[0].id+'>Guardar Cambios</button>'+ 
+						' 				<button type="button" class="btn btn-success btn-sm agregarProgramacion" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'" >Cerrar</button>'+						
+						'			</div>'+
+						'		</div>'+ 
+						'	</div>'+
+						'</div>';
+						
+	$("body").append(contenido);
+	$('#modalEditarHito').modal('show');
+
+});
+$("body").on("click", ".editarHito",function(event){
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-");                                                            
+	
+	//Las siguentes variables se utiliza en esta funcion para redibujar el modal anterior
+	var programacionId = idParsed[0];
+
+	var cantidad = $("#cantidadHito").val();
+	var fechaEntrega = $("#fechaHito").val();
+
+	var objeto = new Object();
+	
+	objeto.id = programacionId;
+	objeto.cantidad = cantidad;
+	objeto.fechaEntrega = fechaEntrega;
+
+	
+  	var info = JSON.stringify(objeto);
+    $.ajax({
+        url: "ajaxUpdate2?accion=actProgramacion",
+        type: 'POST',
+        dataType: 'json',
+        data: info,
+        contentType: 'application/json',
+        mimeType: 'application/json',
+        success: function (data) {
+        	if(data.success == true)
+        	{
+        		$("#botonGuardarHito").remove();
+            	$("#cuerpoModalEditarHito").html("");
+            	$("#cuerpoModalEditarHito").html("<h3 class='text-center'>Ud ha actualizado exitosamente!!</h3>");        		
+        	}else{
+  		
+        	}
+        	
+        	},
+        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
+        error: function(data,status,er) {
+        	
+        	}
+	 });
+	
 });
 
 

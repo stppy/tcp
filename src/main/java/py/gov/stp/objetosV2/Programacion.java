@@ -4,7 +4,7 @@ import java.sql.Date;
 public class Programacion {
 	protected int id;
 	protected double cantidad;
-	protected Date fechaEntrega;
+	protected String fechaEntrega;
 	protected int actividad;
 	protected int version;
 	protected boolean borrado;
@@ -20,10 +20,10 @@ public class Programacion {
 	public void setCantidad(double cantidad) {
 		this.cantidad = cantidad;
 	}
-	public Date getFechaEntrega() {
+	public String getFechaEntrega() {
 		return fechaEntrega;
 	}
-	public void setFechaEntrega(Date fechaEntrega) {
+	public void setFechaEntrega(String fechaEntrega) {
 		this.fechaEntrega = fechaEntrega;
 	}
 	public int getActividad() {

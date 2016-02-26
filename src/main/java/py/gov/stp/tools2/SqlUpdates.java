@@ -1130,5 +1130,21 @@ public static boolean borradoHito(Hito objeto){
 		    return true;
 		 }catch (SQLException e) {e.printStackTrace(); return false;}
 	}
+	public static boolean updateProgramacion(Programacion objeto){
+	  	 Connection conect=ConnectionConfiguration.conectar();
+	  	 Statement statement = null;
+	  	 
+		 String													query = "update programacion set ";
+		 if(objeto.getFechaEntrega()!=null)						query+= "fecha_entrega='"+objeto.getFechaEntrega()+"'";
+		 if(objeto.getCantidad()!=0)							query+= ", cantidad='"+objeto.getCantidad()+"'";
+
+		 query+=" where id ="+objeto.getId(); 	
+		 try {
+			statement=conect.createStatement();
+			statement.execute(query);
+		    conect.close();
+		    return true;
+		 }catch (SQLException e) {e.printStackTrace(); return false;}
+	}	
 	
 }

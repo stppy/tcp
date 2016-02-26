@@ -401,9 +401,15 @@ public class ajaxInserts  extends HttpServlet {
             if(br != null){ json = br.readLine();}
             Gson gsonInsert = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
             obj=gsonInsert.fromJson(json, Programacion.class);
-            boolean status = SqlInserts.insertProgramacion(obj);
-    		myObj.addProperty("success", status);
-    		out.println(myObj.toString());
+            
+			try {
+				boolean status = SqlInserts.insertProgramacion(obj);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
     	}
        }    
         

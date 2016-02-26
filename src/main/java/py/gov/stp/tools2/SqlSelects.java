@@ -174,7 +174,7 @@ public class SqlSelects {
 		
 				objeto.setId(rs.getInt("id"));
 				objeto.setCantidad(rs.getDouble("cantidad"));
-				objeto.setFechaEntrega(rs.getDate("fecha_entrega"));
+				objeto.setFechaEntrega(rs.getString("fecha_entrega"));
 				objeto.setActividad(rs.getInt("actividad_id"));
 				objeto.setVersion(rs.getInt("version"));
 				objeto.setBorrado(rs.getBoolean("borrado"));
