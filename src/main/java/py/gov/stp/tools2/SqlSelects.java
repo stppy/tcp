@@ -1051,6 +1051,7 @@ public class SqlSelects {
 					objeto.setBorrado(rs.getBoolean("borrado"));
 					objeto.setBeneficiarioTipoId(rs.getInt("beneficiario_tipo_id"));
 					objeto.setAccionId(rs.getInt("accion_id"));
+					objeto.setBeneficiarioGrupoId(rs.getInt("beneficiario_grupo_id"));
 
 					objetos.add(objeto);
 				}

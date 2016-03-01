@@ -8,6 +8,7 @@ public class AccionDestinatario {
 	protected boolean borrado=false;
 	protected int beneficiarioTipoId;
 	protected int accionId;
+	protected int beneficiarioGrupoId;
 	
 	public int getId() {
 		return id;
@@ -50,6 +51,12 @@ public class AccionDestinatario {
 	}
 	public void setAccionId(int accionId) {
 		this.accionId = accionId;
+	}
+	public int getBeneficiarioGrupoId() {
+		return beneficiarioGrupoId;
+	}
+	public void setBeneficiarioGrupoId(int beneficiarioGrupoId) {
+		this.beneficiarioGrupoId = beneficiarioGrupoId;
 	}
 
 

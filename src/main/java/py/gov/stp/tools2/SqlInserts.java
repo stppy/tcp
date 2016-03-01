@@ -741,6 +741,30 @@ public class SqlInserts {
 	} catch (SQLException e) {e.printStackTrace(); return false;}
 	
 }	
-	
-	
+
+	public static boolean insertAccionDestinatario(AccionDestinatario destinatario){
+		try {
+			Connection conn=ConnectionConfiguration.conectar();
+
+			String query = " insert into accion_destinatario (cantidad, descripcion, version, borrado, beneficiario_tipo_id, accion_id, beneficiario_grupo_id)"
+		+ " values (?, ?, ?, ?, ?, ?, ?)";
+			
+			PreparedStatement insert = conn.prepareStatement(query);
+			
+			insert.setInt (1, destinatario.getCantidad());
+			insert.setString (2, destinatario.getDescripcion());
+			insert.setInt (3, destinatario.getVersion());
+			insert.setBoolean (4, destinatario.isBorrado());
+			insert.setInt (5, destinatario.getBeneficiarioTipoId());
+			insert.setInt (6, destinatario.getAccionId());
+			insert.setInt (7, destinatario.getBeneficiarioGrupoId());
+			
+			insert.execute();
+			   
+			conn.close();
+			return true;
+		} catch (SQLException e) {e.printStackTrace(); return false;}
+		
+	}	
+		
 }

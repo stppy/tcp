@@ -473,6 +473,7 @@ public class ajaxSelects extends HttpServlet {
         		condition = " where true ";
         		if (beneficiarioTipoId!=null) condition += " and beneficiario_tipo_id ='"+beneficiarioTipoId+"'";
         		if (accionId!=null) condition += " and accion_id ='"+accionId+"'";
+        		if (beneficiarioGrupoId!=null) condition += " and beneficiario_grupo_id ='"+beneficiarioGrupoId+"'";
            		try {objetos = SqlSelects.selectAccionDestinatario(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
