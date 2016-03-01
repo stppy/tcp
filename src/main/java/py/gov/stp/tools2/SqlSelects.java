@@ -427,7 +427,7 @@ public class SqlSelects {
 	
 	public static List<HitoTipo> selectHitoTipo() throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select * from hito_tipo";
+		String query = " select * from hito_tipo order by id";
 
 		Statement statement = null;
 		ResultSet rs=null;
