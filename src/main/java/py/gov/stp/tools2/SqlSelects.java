@@ -1031,6 +1031,36 @@ public class SqlSelects {
 			return objetos; 
 	  }
 	
-	
+	public static List<AccionDestinatario> selectAccionDestinatario(String condition) throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+			 String query = " select * from accion_destinatario " + condition;
+			 
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 List<AccionDestinatario> objetos = new ArrayList<AccionDestinatario>();
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					AccionDestinatario objeto = new AccionDestinatario();
+					objeto.setId(rs.getInt("id"));
+					objeto.setCantidad(rs.getInt("cantidad"));
+					objeto.setDescripcion(rs.getString("descripcion"));
+					objeto.setVersion(rs.getInt("version"));
+					objeto.setBorrado(rs.getBoolean("borrado"));
+					objeto.setBeneficiarioTipoId(rs.getInt("beneficiario_tipo_id"));
+					objeto.setAccionId(rs.getInt("accion_id"));
+
+					objetos.add(objeto);
+				}
+			}
+			catch (SQLException e) {e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos; 
+	  }
 
 }
