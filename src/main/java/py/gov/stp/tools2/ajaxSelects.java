@@ -94,6 +94,7 @@ public class ajaxSelects extends HttpServlet {
     	Integer idEvidencia = null;
     	Integer costoId = null;
     	Integer beneficiarioId = null;
+    	Integer destinatarioId = null;
     			
     	String institucion=null;
     	String usuario=null;
@@ -157,8 +158,8 @@ public class ajaxSelects extends HttpServlet {
       	if (request.getParameter("beneficiarioTipoId")!=null) beneficiarioTipoId=Integer.parseInt(request.getParameter("beneficiarioTipoId"));
       	if (request.getParameter("beneficiarioGrupoId")!=null) beneficiarioGrupoId=Integer.parseInt(request.getParameter("beneficiarioGrupoId"));
       	if (request.getParameter("beneficiarioId")!=null) beneficiarioId=Integer.parseInt(request.getParameter("beneficiarioId"));
-
-
+      	if (request.getParameter("destinatarioId")!=null) destinatarioId=Integer.parseInt(request.getParameter("destinatarioId"));
+      	
       	
         PrintWriter out = response.getWriter();
         response.setContentType("text/html");
@@ -474,6 +475,8 @@ public class ajaxSelects extends HttpServlet {
         		if (beneficiarioTipoId!=null) condition += " and beneficiario_tipo_id ='"+beneficiarioTipoId+"'";
         		if (accionId!=null) condition += " and accion_id ='"+accionId+"'";
         		if (beneficiarioGrupoId!=null) condition += " and beneficiario_grupo_id ='"+beneficiarioGrupoId+"'";
+        		if (destinatarioId!=null) condition += " and id ='"+destinatarioId+"'";
+
            		try {objetos = SqlSelects.selectAccionDestinatario(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
