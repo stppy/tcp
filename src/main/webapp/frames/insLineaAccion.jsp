@@ -1283,6 +1283,10 @@
 		{
 			$("#modalActividad").remove();
 		}
+		if ( $("#modalDestinatario").length )
+		{
+			$("#modalDestinatario").remove();
+		}
 		var lineaAccion = $.ajax({
 			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
 		  	type:'get',
