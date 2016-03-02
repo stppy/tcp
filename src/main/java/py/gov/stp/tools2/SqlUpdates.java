@@ -1169,12 +1169,12 @@ public static boolean borradoHito(Hito objeto){
 	  	 
 		 String										query = "update accion_destinatario set ";
 		 if(objeto.getCantidad()!=0)				query+= "cantidad='"+objeto.getCantidad()+"'";
-		 if(objeto.getDescripcion()!=null)			query+= "descripcion='"+objeto.getDescripcion()+"'";
-		 if(objeto.getVersion()!=0)					query+= "version='"+objeto.getVersion()+"'";
-		 if(objeto.isBorrado()!=false)				query+= "borrado='"+objeto.isBorrado()+"'";
-		 if(objeto.getBeneficiarioTipoId()!=0)		query+= "beneficiario_tipo_id='"+objeto.getBeneficiarioTipoId()+"'";
-		 if(objeto.getAccionId()!=0)				query+= "accion_id='"+objeto.getAccionId()+"'";
-		 if(objeto.getBeneficiarioGrupoId()!=0)		query+= "beneficiario_grupo_id='"+objeto.getBeneficiarioGrupoId()+"'";		 
+		 if(objeto.getDescripcion()!=null)			query+= ", descripcion='"+objeto.getDescripcion()+"'";
+		 if(objeto.getVersion()!=0)					query+= ", version='"+objeto.getVersion()+"'";
+		 if(objeto.isBorrado()!=false)				query+= ", borrado='"+objeto.isBorrado()+"'";
+		 if(objeto.getBeneficiarioTipoId()!=0)		query+= ", beneficiario_tipo_id='"+objeto.getBeneficiarioTipoId()+"'";
+		 if(objeto.getAccionId()!=0)				query+= ", accion_id='"+objeto.getAccionId()+"'";
+		 if(objeto.getBeneficiarioGrupoId()!=0)		query+= ", beneficiario_grupo_id='"+objeto.getBeneficiarioGrupoId()+"'";		 
 
 		 query+=" where id ="+objeto.getId(); 	
 		 try {
