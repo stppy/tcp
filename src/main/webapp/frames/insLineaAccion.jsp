@@ -7036,6 +7036,10 @@ $("body").on("click", ".modalDestinatario",function(event){
 	if ( $("#modalEditarDestinatario").length )
 	{
 		$("#modalEditarDestinatario").remove();
+	}
+	if ( $("#modalBorrarDestinatarioAccion").length )
+	{
+		$("#modalBorrarDestinatarioAccion").remove();
 	}		
 	var webServicesBeneficiarioTipo = $.ajax({
 		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioTipo',
@@ -7082,10 +7086,10 @@ $("body").on("click", ".modalDestinatario",function(event){
 		{
 
 			<% if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0")){%>
-			cuerpoDestinatarioAccion += '<tr><td><del>'+webServicesBeneficiarioTipo[0].nombre+'</del></td><td><del>'+webServicesBeneficiarioGrupo[0].nombre+'</del></td><td><del>'+webServicesBeneficiarioAccion[a].descripcion+'</del></td><td><del>'+webServicesBeneficiarioAccion[a].cantidad+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarDestinatario" data-toggle="tooltip" data-placement="top" title="Editar Destinatario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarBeneficiario" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+			cuerpoDestinatarioAccion += '<tr><td><del>'+webServicesBeneficiarioTipo[0].nombre+'</del></td><td><del>'+webServicesBeneficiarioGrupo[0].nombre+'</del></td><td><del>'+webServicesBeneficiarioAccion[a].descripcion+'</del></td><td><del>'+webServicesBeneficiarioAccion[a].cantidad+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarDestinatario" data-toggle="tooltip" data-placement="top" title="Editar Destinatario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarDestinatarioAccion" data-toggle="tooltip" data-placement="top" title="Borrar Destinatario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-trash"></span></button></td></tr>';
 			<% }%>
 		}else{
-			cuerpoDestinatarioAccion += '<tr><td>'+webServicesBeneficiarioTipo[0].nombre+'</td><td>'+webServicesBeneficiarioGrupo[0].nombre+'</td><td>'+webServicesBeneficiarioAccion[a].descripcion+'</td><td>'+webServicesBeneficiarioAccion[a].cantidad+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarDestinatario" data-toggle="tooltip" data-placement="top" title="Editar Destinatario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarBeneficiario" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+			cuerpoDestinatarioAccion += '<tr><td>'+webServicesBeneficiarioTipo[0].nombre+'</td><td>'+webServicesBeneficiarioGrupo[0].nombre+'</td><td>'+webServicesBeneficiarioAccion[a].descripcion+'</td><td>'+webServicesBeneficiarioAccion[a].cantidad+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarDestinatario" data-toggle="tooltip" data-placement="top" title="Editar Destinatario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarDestinatarioAccion" data-toggle="tooltip" data-placement="top" title="Borrar Destinatario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-trash"></span></button></td></tr>';
 		}
 	}
 			
@@ -7271,11 +7275,11 @@ $("body").on("click", ".guardarAccionBeneficiario",function(event){
         			{
 
         				<% if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0")){%>
-        				cuerpoDestinatarioAccion += '<tr><td><del>'+webServicesBeneficiarioTipo[0].nombre+'</del></td><td><del>'+webServicesBeneficiarioGrupo[0].nombre+'</del></td><td><del>'+webServicesBeneficiarioAccion[a].descripcion+'</del></td><td><del>'+webServicesBeneficiarioAccion[a].cantidad+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarDestinatario" data-toggle="tooltip" data-placement="top" title="Editar Destinatario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarBeneficiario" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+        				cuerpoDestinatarioAccion += '<tr><td><del>'+webServicesBeneficiarioTipo[0].nombre+'</del></td><td><del>'+webServicesBeneficiarioGrupo[0].nombre+'</del></td><td><del>'+webServicesBeneficiarioAccion[a].descripcion+'</del></td><td><del>'+webServicesBeneficiarioAccion[a].cantidad+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarDestinatario" data-toggle="tooltip" data-placement="top" title="Editar Destinatario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarDestinatarioAccion" data-toggle="tooltip" data-placement="top" title="Borrar Destinatario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-trash"></span></button></td></tr>';
         				<% }%>
 
         			}else{
-        				cuerpoDestinatarioAccion += '<tr><td>'+webServicesBeneficiarioTipo[0].nombre+'</td><td>'+webServicesBeneficiarioGrupo[0].nombre+'</td><td>'+webServicesBeneficiarioAccion[a].descripcion+'</td><td>'+webServicesBeneficiarioAccion[a].cantidad+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarDestinatario" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarBeneficiario" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+        				cuerpoDestinatarioAccion += '<tr><td>'+webServicesBeneficiarioTipo[0].nombre+'</td><td>'+webServicesBeneficiarioGrupo[0].nombre+'</td><td>'+webServicesBeneficiarioAccion[a].descripcion+'</td><td>'+webServicesBeneficiarioAccion[a].cantidad+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarDestinatario" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarDestinatarioAccion" data-toggle="tooltip" data-placement="top" title="Borrar Destinatario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-trash"></span></button></td></tr>';
         			}
         		}
         		
@@ -7450,6 +7454,119 @@ $("body").on("click", ".editarDestinatarioAccion",function(event){
         	
         	},
         //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
+        error: function(data,status,er) {
+        	
+        	}
+	 });
+	
+});
+
+$("body").on("click", ".consultaBorrarDestinatarioAccion",function(event){
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-");                                                            
+	
+	//Las siguentes variables se utiliza en esta funcion para redibujar el modal anterior
+	var insLineaAccionId = idParsed[0];
+	var lineaAccionId = idParsed[1];
+	var institucionId = idParsed[2];
+	var periodoId = idParsed[3];
+	var accionId = idParsed[4];
+	var accionCatalogoId = idParsed[5];
+	var destinatarioId = idParsed[6];
+
+	if ( $("#modalDestinatario").length )
+	{
+		$("#modalDestinatario").remove();
+	}		
+	
+	var WebServiceDestinatarioAccion = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionDestinatario&destinatarioId='+destinatarioId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	WebServiceDestinatarioAccion = JSON.parse(WebServiceDestinatarioAccion);
+	
+	var contenido = "";
+
+	contenido =			'<div class="modal fade" id="modalBorrarDestinatarioAccion"  data-backdrop="static" data-keyboard="false" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">'+
+						'	<div class="modal-dialog modal-lg">'+
+						'		<div class="modal-content" >'+
+						'			<div class="modal-header">'+
+						'		        <button type="button" class="close modalDestinatario"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+' ><span aria-hidden="true">&times;</span></button>'+
+						'		        <h4 class="modal-title" >Borrar - Restaurar Destinatario</h4>'+
+						'			</div>'+
+						'		    <div class="modal-body">'+
+						'				<div id="mensajeBorradoDestinatarioAccion"></div>'+
+						'		    </div>'+
+						'			<div class="modal-footer" id="agregarBotonBorradoDestinatarioAccion">'+
+						'			</div>'+
+						'		</div>'+ 
+						'	</div>'+
+						'</div>';
+						
+		$("#programacion").append(contenido);
+		
+		if(WebServiceDestinatarioAccion[0].borrado == true){
+			$("#mensajeBorradoDestinatarioAccion").html("");
+			$("#mensajeBorradoDestinatarioAccion").append('<h3 class="text-center">Ud. esta seguro que desea RESTABLACER este registro</h3>');
+			$("#agregarBotonBorradoDestinatarioAccion").html("");
+			$("#agregarBotonBorradoDestinatarioAccion").append('<button type="button" class="btn btn-success btn-sm borrarDestinatarioAccion" id="botonRestaurarDestinatarioAccion" parametros='+destinatarioId+'-r>Restaurar Destinatario</button>');
+			$("#agregarBotonBorradoDestinatarioAccion").append('<button type="button" class="btn btn-success btn-sm modalDestinatario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'>Cerrar</button>');
+		}else{
+			$("#mensajeBorradoDestinatarioAccion").html("");
+			$("#mensajeBorradoDestinatarioAccion").append('<h3 class="text-center">Ud. esta seguro que desea BORRAR este registro</h3');
+			$("#agregarBotonBorradoDestinatarioAccion").html("");
+			$("#agregarBotonBorradoDestinatarioAccion").append('<button type="button" class="btn btn-danger btn-sm borrarDestinatarioAccion" id="botonBorradoDestinatarioAccion" parametros='+destinatarioId+'-b>Borrar Destinatario</button>');
+			$("#agregarBotonBorradoDestinatarioAccion").append('<button type="button" class="btn btn-success btn-sm modalDestinatario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'>Cerrar</button>');
+		}
+		
+		$('#modalBorrarDestinatarioAccion').modal('show');
+			
+});
+$("body").on("click", ".borrarDestinatarioAccion",function(event){	
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-"); 
+    var destinatarioId = idParsed[0];
+    var estado = idParsed[1];
+    
+	var WebServiceDestinatarioAccion = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionDestinatario&destinatarioId='+destinatarioId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	WebServiceDestinatarioAccion = JSON.parse(WebServiceDestinatarioAccion);
+    
+    var objeto = new Object();
+    objeto.id = destinatarioId;
+    objeto.borrado= WebServiceDestinatarioAccion[0].borrado;
+
+    
+  	var info = JSON.stringify(objeto);
+    $.ajax({
+        url: "ajaxUpdate2?accion=borradoAccionDestinatario",
+        type: 'POST',
+        dataType: 'json',
+        data: info,
+        contentType: 'application/json',
+        mimeType: 'application/json',
+        success: function (data) {
+        	
+        	if(data.success == true){
+            	if(estado == "b"){
+	        		$("#botonBorradoDestinatarioAccion").remove();
+	            	$("#mensajeBorradoDestinatarioAccion").html("");
+	            	$("#mensajeBorradoDestinatarioAccion").html("<h3 class='text-center'>BORRADO EXITOSAMENTE!!</h3>");
+	            }else{
+	        		$("#botonRestaurarDestinatarioAccion").remove();
+	            	$("#mensajeBorradoDestinatarioAccion").html("");
+	            	$("#mensajeBorradoDestinatarioAccion").html("<h3 class='text-center'>RESTAURADO EXITOSAMENTE!!</h3>");
+	        	}
+        	}
+
+        },
+
         error: function(data,status,er) {
         	
         	}
