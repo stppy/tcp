@@ -792,7 +792,31 @@ public class ajaxUpdate extends HttpServlet {
                 boolean status = SqlUpdates.borradoProgramacion(objeto);
         		myObj.addProperty("success", status);
         		out.println(myObj.toString());
+        	}
+        	
+        	if (accion.equals("borradoAccionDestinatario")){
+        		AccionDestinatario objeto = new AccionDestinatario();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                objeto=gsonInsert.fromJson(json, AccionDestinatario.class);
+                boolean status = SqlUpdates.borradoAccionDestinatario(objeto);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
         	} 
+        	
+        	if (accion.equals("actAccionDestinatario")){
+        		AccionDestinatario objeto = new AccionDestinatario();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                objeto=gsonInsert.fromJson(json, AccionDestinatario.class);
+                boolean status = SqlUpdates.updateAccionDestinatario(objeto);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	}    
         	
         }     
         

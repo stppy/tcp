@@ -1162,4 +1162,43 @@ public static boolean borradoHito(Hito objeto){
 		  } catch (SQLException e) {e.printStackTrace(); return false;}
 	}
 	
+	
+	public static boolean updateAccionDestinatario(AccionDestinatario objeto){
+	  	 Connection conect=ConnectionConfiguration.conectar();
+	  	 Statement statement = null;
+	  	 
+		 String										query = "update accion_destinatario set ";
+		 if(objeto.getCantidad()!=0)				query+= "cantidad='"+objeto.getCantidad()+"'";
+		 if(objeto.getDescripcion()!=null)			query+= "descripcion='"+objeto.getDescripcion()+"'";
+		 if(objeto.getVersion()!=0)					query+= "version='"+objeto.getVersion()+"'";
+		 if(objeto.isBorrado()!=false)				query+= "borrado='"+objeto.isBorrado()+"'";
+		 if(objeto.getBeneficiarioTipoId()!=0)		query+= "beneficiario_tipo_id='"+objeto.getBeneficiarioTipoId()+"'";
+		 if(objeto.getAccionId()!=0)				query+= "accion_id='"+objeto.getAccionId()+"'";
+		 if(objeto.getBeneficiarioGrupoId()!=0)		query+= "beneficiario_grupo_id='"+objeto.getBeneficiarioGrupoId()+"'";		 
+
+		 query+=" where id ="+objeto.getId(); 	
+		 try {
+			statement=conect.createStatement();
+			statement.execute(query);
+		    conect.close();
+		    return true;
+		 }catch (SQLException e) {e.printStackTrace(); return false;}
+	}
+	
+	public static boolean borradoAccionDestinatario(AccionDestinatario objeto){
+	  	 Connection conect=ConnectionConfiguration.conectar();
+	  	 Statement statement = null;
+	  	 objeto.changeBorrado();
+	  	 
+	  	 String query = "update accion_destinatario set borrado='"+objeto.isBorrado()+"'";	
+				 
+		 query+=" where id ="+objeto.getId(); 
+		 try {
+			statement=conect.createStatement();
+			statement.execute(query);
+		    conect.close();
+		    return true;
+		  } catch (SQLException e) {e.printStackTrace(); return false;}
+	}
+	
 }
