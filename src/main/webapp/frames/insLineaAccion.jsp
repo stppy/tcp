@@ -1451,10 +1451,10 @@
 			
 			if(accion[a].borrado == false){	
 
-			cuerpoAccion +="<td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+nombreUnidadMedidaAccion+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos Presupuestarios'><span class='modalVincularProducto' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+">Gs</span></button><button type='button' class='btn btn-default btn-sm'><span class='glyphicon glyphicon-time agregarActividad' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+"></span></button><button type='button' class='btn btn-default btn-sm editarAccion' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button></td></tr>";
+			cuerpoAccion +="<td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+nombreUnidadMedidaAccion+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos Presupuestarios'><span class='modalVincularProducto' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+">Gs</span></button><button type='button' class='btn btn-default btn-sm'><span class='glyphicon glyphicon-time agregarActividad' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+"></span></button><button type='button' class='btn btn-default btn-sm editarAccion' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button><button type='button' class='btn btn-default btn-sm modalDestinatario'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Agregar Destinatario'><span class='glyphicon glyphicon-user'></span></button></td></tr>";
 			
 			}else{
-				cuerpoAccion +="<td class='text-center'><del>"+accion[a].fechaInicio+"</del></td><td class='text-center'><del>"+accion[a].fechaFin+"</del></td><td class='text-center'><del>"+nombreUnidadMedidaAccion+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</del></td><td class='text-center'><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos Presupuestarios'><span class='modalVincularProducto' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+">Gs.</span></button><button type='button' class='btn btn-default btn-sm'><span class='glyphicon glyphicon-time agregarActividad' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+"></span></button><button type='button' class='btn btn-default btn-sm editarAccion' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button></td></tr>";
+				cuerpoAccion +="<td class='text-center'><del>"+accion[a].fechaInicio+"</del></td><td class='text-center'><del>"+accion[a].fechaFin+"</del></td><td class='text-center'><del>"+nombreUnidadMedidaAccion+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</del></td><td class='text-center'><button type='button' class='btn btn-default btn-sm' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos Presupuestarios'><span class='modalVincularProducto' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+">Gs.</span></button><button type='button' class='btn btn-default btn-sm'><span class='glyphicon glyphicon-time agregarActividad' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+"></span></button><button type='button' class='btn btn-default btn-sm editarAccion' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button><button type='button' class='btn btn-default btn-sm modalDestinatario'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Agregar Destinatario'><span class='glyphicon glyphicon-user'></span></button></td></tr>";
 				
 			}
 		}
@@ -6933,7 +6933,277 @@ $("body").on("click", ".borrarHito",function(event){
         	}
 	 });
 	
-});     
+});
+
+$("body").on("click", ".modalDestinatario",function(event){
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-"); 
+    var insLineaAccionId = idParsed[0];
+    var lineaAccionId = idParsed[1];
+    var institucionId = idParsed[2];
+    var periodoId = idParsed[3];
+    var accionId = idParsed[4];
+    var accionCatalogoId = idParsed[5];
+    var cuerpoDestinatarioAccion = "";
+	
+	if ( $("#modalDuplicarAccion").length )
+	{
+		$("#modalDuplicarAccion").remove();
+	}
+	if ( $("#modalAccion").length )
+	{
+		$("#modalAccion").remove();
+	}		
+	var webServicesBeneficiarioTipo = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioTipo',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	webServicesBeneficiarioTipo = JSON.parse(webServicesBeneficiarioTipo);
+	
+	var optionBeneficiarioTipo;
+	
+	for(var z = 0; z < webServicesBeneficiarioTipo.length; z++){
+		optionBeneficiarioTipo+='<option value="'+webServicesBeneficiarioTipo[z].id+'" >'+webServicesBeneficiarioTipo[z].nombre+'</option>';
+	}
+	
+	var webServicesBeneficiarioAccion = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionDestinatario&accionId='+accionId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	webServicesBeneficiarioAccion = JSON.parse(webServicesBeneficiarioAccion);
+	
+	var cuerpoBeneficiario = "";
+	for(var a = 0; a < webServicesBeneficiarioAccion.length; a++)
+	{
+		var webServicesBeneficiarioTipo = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioTipo&beneficiarioTipoId='+webServicesBeneficiarioAccion[a].beneficiarioTipoId,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		webServicesBeneficiarioTipo = JSON.parse(webServicesBeneficiarioTipo);
+		
+		var webServicesBeneficiarioGrupo = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioGrupoId='+webServicesBeneficiarioAccion[a].beneficiarioGrupoId,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		webServicesBeneficiarioGrupo = JSON.parse(webServicesBeneficiarioGrupo);
+		
+		if(webServicesBeneficiarioAccion[a].borrado == true)
+		{
+			cuerpoDestinatarioAccion += '<tr><td><del>'+webServicesBeneficiarioTipo[0].nombre+'</del></td><td><del>'+webServicesBeneficiarioGrupo[0].nombre+'</del></td><td><del>'+webServicesBeneficiarioAccion[a].descripcion+'</del></td><td><del>'+webServicesBeneficiarioAccion[a].cantidad+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarBeneficiario" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarBeneficiario" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+		}else{
+			cuerpoDestinatarioAccion += '<tr><td>'+webServicesBeneficiarioTipo[0].nombre+'</td><td>'+webServicesBeneficiarioGrupo[0].nombre+'</td><td>'+webServicesBeneficiarioAccion[a].descripcion+'</td><td>'+webServicesBeneficiarioAccion[a].cantidad+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarBeneficiario" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarBeneficiario" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+		}
+	}
+			
+	var cuerpoModalDestinatario = "";
+
+	cuerpoModalDestinatario =	'<div class="modal fade" id="modalDestinatario" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="myLargeModalLabel">'+
+						'	<div class="modal-dialog modal-lg" style="width:90%">'+
+						'		<div class="modal-content" >'+
+						'			<div class="modal-header">'+
+						'		        <button type="button" class="close agregarAccion" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+' data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+						'			</div>'+
+						'		    <div class="modal-body">'+
+
+						'		      		<div class="row">'+						
+						'		      		<div class="col-md-12">'+
+						'						<div class="box box-warning box-solid">'+
+						'		                	<div class="box-header with-border">'+
+						'	                  			<h3 class="box-title">Beneficiarios</h3>'+
+						'	                  			<div class="box-tools pull-right">'+
+						'				                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>'+
+						'		                    		</button>'+
+						'		                    		<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>'+
+						'		                    		</button>'+
+						'		                  		</div>'+
+						'              				</div>'+
+						'               			<div class="box-body">'+
+		
+						'		      					<div class="col-md-12">'+
+						'									<div class="box box-default box-solid">'+
+						'		                				<div class="box-header with-border">'+
+						'		                  					<h3 class="box-title">Agregar Beneficiarios</h3>'+
+						'	                  						<div class="box-tools pull-right">'+
+						'				                    			<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+						'		                    					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>'+
+						'		                  					</div>'+
+						'              							</div>'+
+						'              						<div class="box-body">'+
+						
+						'										<div class="table-responsive">'+
+						'											<table class="table table-hover">'+
+						'												<tbody>'+
+						'			      									<form class="form-horizontal" role="form">'+
+						'													<tr><td><label for="tipoBeneficiario">Tipo</label><select id="beneficiarioTipo" class="form-control">'+optionBeneficiarioTipo+'</select></td><td><label for="grupoBeneficiario">Grupo</label><select id="grupoBeneficiario" class="form-control"></select></td></tr>'+
+						'													<tr><td><label for="cantidadBeneficiario">Cantidad</label><input type="number" id="cantidadBeneficiario" class="form-control" placeholder="Ingrese una Cantidad" /></td><td><label for="descripcionBeneficiario">Descripción</label><input type="text" id="descripcionBeneficiario" class="form-control" placeholder="Ingrese Objeto una Descripción" /></td></tr>'+																		
+						'													<input type="hidden" id="avanceIdBeneficiario" value=""/>'+		
+						'			      									</form>	'+				
+						'												</tbody>'+
+						'											</table>'+
+						'				      					</div>'+
+						
+						'				      				 </div>'+//fin box body
+						'									 <div class="modal-footer">'+ 
+						'					        			<button type="button" class="btn btn-success btn-sm guardarAccionBeneficiario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+' >Guardar Beneficiario</button>'+ 
+						'									 </div>'+									
+						'				      			 	</div>'+
+						'				      			</div>'+							
+
+
+						'		      					<div class="col-md-12">'+
+						'									<div class="box box-default box-solid">'+
+						'		                				<div class="box-header with-border">'+
+						'		                  					<h3 class="box-title">Lista Beneficiarios</h3>'+
+						'	                  						<div class="box-tools pull-right">'+
+						'				                    			<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+						'		                    					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>'+
+						'		                  					</div>'+
+						'              							</div>'+
+						'              						<div class="box-body">'+	
+						'										<div class="table-responsive">'+
+						'											<table class="table table-hover table-bordered" id="dataTableBeneficiario">'+
+						'												<thead>'+
+						'													<tr class="active"><th>Tipo</th><th>Grupo</th><th>Descripción</th><th>Cantidad</th><th class="text-center">Administrar</th></tr>'+
+						'												</thead>'+
+						'												<tbody id="listaDestinatarioAccion">'+
+						'												</tbody>'+
+						'											</table>'+
+						'				      					</div>'+
+						
+						'				      				</div>'+
+						'				      			</div>'+
+						'              				</div>'+
+		
+						'              				</div>'+
+						'                		</div>'+	
+						'               	</div>'+
+						'                </div>'+//fin row																	
+						
+						'		    </div>'+
+						'			<div class="modal-footer">'+
+				      	'			</div>'+														
+						'		</div>'+ 
+						'	</div>'+
+						'</div>';
+						
+	$("#programacion").append(cuerpoModalDestinatario);
+	$("#listaDestinatarioAccion").html("");
+	$("#listaDestinatarioAccion").html(cuerpoDestinatarioAccion);
+	$('#modalDestinatario').modal('show');
+
+	
+});
+
+$("body").on("click", ".guardarAccionBeneficiario",function(event){
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-"); 
+    var insLineaAccionId = idParsed[0];
+    var lineaAccionId = idParsed[1];
+    var institucionId = idParsed[2];
+    var periodoId = idParsed[3];  
+    var accionId = idParsed[4];
+    var accionCatalogoId = idParsed[5];  
+    
+    var descripcion = $("#descripcionBeneficiario").val();
+	var tipo = $("#beneficiarioTipo").val();
+	var grupo = $("#grupoBeneficiario").val();
+	var cantidad = $("#cantidadBeneficiario").val();
+	var cuerpoDestinatarioAccion ="";
+		
+	var datos = new Object();
+    
+    datos.descripcion = descripcion;
+    datos.beneficiarioTipoId = tipo;
+    datos.beneficiarioGrupoId = grupo;
+    datos.cantidad = cantidad;
+    datos.accionId = accionId;
+
+ 	var info = JSON.stringify(datos);
+    $.ajax({
+        url: "ajaxInserts2?accion=insAccionDestinatario",
+        type: 'POST',
+        dataType: 'json',
+        data: info,
+        contentType: 'application/json',
+        mimeType: 'application/json',
+        success: function (data) {
+        	if(data.success == true){
+        	    $("#descripcionBeneficiario").val('');
+        		$("#beneficiarioTipo").val('');
+        		$("#grupoBeneficiario").val('');
+        		$("#cantidadBeneficiario").val('');
+        		
+        		var webServicesBeneficiarioTipo = $.ajax({
+        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioTipo',
+        		  	type:'get',
+        		  	dataType:'json',
+        		  	async:false       
+        		}).responseText;
+        		webServicesBeneficiarioTipo = JSON.parse(webServicesBeneficiarioTipo);
+        		
+        		var optionBeneficiarioTipo;
+        		
+        		for(var z = 0; z < webServicesBeneficiarioTipo.length; z++){
+        			optionBeneficiarioTipo+='<option value="'+webServicesBeneficiarioTipo[z].id+'" >'+webServicesBeneficiarioTipo[z].nombre+'</option>';
+        		}
+        		
+        		var webServicesBeneficiarioAccion = $.ajax({
+        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionDestinatario&accionId='+accionId,
+        		  	type:'get',
+        		  	dataType:'json',
+        		  	async:false       
+        		}).responseText;
+        		webServicesBeneficiarioAccion = JSON.parse(webServicesBeneficiarioAccion);
+        		
+        		var cuerpoBeneficiario = "";
+        		for(var a = 0; a < webServicesBeneficiarioAccion.length; a++)
+        		{
+        			var webServicesBeneficiarioTipo = $.ajax({
+        				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioTipo&beneficiarioTipoId='+webServicesBeneficiarioAccion[a].beneficiarioTipoId,
+        			  	type:'get',
+        			  	dataType:'json',
+        			  	async:false       
+        			}).responseText;
+        			webServicesBeneficiarioTipo = JSON.parse(webServicesBeneficiarioTipo);
+        			
+        			var webServicesBeneficiarioGrupo = $.ajax({
+        				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioGrupoId='+webServicesBeneficiarioAccion[a].beneficiarioGrupoId,
+        			  	type:'get',
+        			  	dataType:'json',
+        			  	async:false       
+        			}).responseText;
+        			webServicesBeneficiarioGrupo = JSON.parse(webServicesBeneficiarioGrupo);
+        			
+        			if(webServicesBeneficiarioAccion[a].borrado == true)
+        			{
+        				cuerpoDestinatarioAccion += '<tr><td><del>'+webServicesBeneficiarioTipo[0].nombre+'</del></td><td><del>'+webServicesBeneficiarioGrupo[0].nombre+'</del></td><td><del>'+webServicesBeneficiarioAccion[a].descripcion+'</del></td><td><del>'+webServicesBeneficiarioAccion[a].cantidad+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarBeneficiario" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarBeneficiario" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+        			}else{
+        				cuerpoDestinatarioAccion += '<tr><td>'+webServicesBeneficiarioTipo[0].nombre+'</td><td>'+webServicesBeneficiarioGrupo[0].nombre+'</td><td>'+webServicesBeneficiarioAccion[a].descripcion+'</td><td>'+webServicesBeneficiarioAccion[a].cantidad+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarBeneficiario" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarBeneficiario" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+        			}
+        		}
+        		
+        		$("#listaDestinatarioAccion").html("");
+        		$("#listaDestinatarioAccion").html(cuerpoDestinatarioAccion);
+        		
+        	}else{
+        		alert("ERROR");        		
+        	}
+        	},
+        	
+        error: function(data,status,er) {
+        	alert("Destinatario Insertado");
+        	}
+	 });
+	
+});
 
 
 </script>	
