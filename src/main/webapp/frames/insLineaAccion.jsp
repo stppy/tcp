@@ -7187,6 +7187,7 @@ $("body").on("click", ".modalDestinatario",function(event){
 	$("#listaDestinatarioAccion").html("");
 	$("#listaDestinatarioAccion").html(cuerpoDestinatarioAccion);
 	$('#modalDestinatario').modal('show');
+	$('#tipoDestinatarioAccion').change();
 
 	
 });
@@ -7389,6 +7390,7 @@ $("body").on("click", ".consultaEditarDestinatario",function(event){
 	$('#grupoDestinatarioAccion > option[value="'+webServicesDestinatarioAccion[0].beneficiarioGrupoId+'"]').attr('selected', 'selected');
 
 	$('#modalEditarDestinatario').modal('show');
+	$('#tipoDestinatarioAccion').change();
 
 });
 
