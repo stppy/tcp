@@ -15,9 +15,8 @@
 
 	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="bootstrap/css/bootstrapslider.css" rel="stylesheet">	
-	<script src="http://www.jqueryscript.net/demo/Create-Step-By-Step-Modal-with-jQuery-Bootstrap/src/jquery-bootstrap-modal-steps.js"></script>
+	<script src="plugins/jquery-bootstrap-modal-steps.js"></script>
 	
-	<script src="http://www.jqueryscript.net/demo/Create-Step-By-Step-Modal-with-jQuery-Bootstrap/src/jquery-bootstrap-modal-steps.js"></script>
 	
     <style type="text/css">
 		/* Example 1 custom styles */
