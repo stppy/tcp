@@ -2380,8 +2380,8 @@ $("body").on("click", ".borrarAccion",function(event){
 
 		
 		
-    	var nivel = 12;
-      	var entidad = 1;
+    	var nivel = document.getElementById("nivel-formulario").value;
+      	var entidad = document.getElementById("entidad-formulario").value;;
 	    var tipoPrograma = document.getElementById("tipoPrograma-formulario").value;
 	    var programa = document.getElementById('programa-formulario').value;
 	    var subPrograma = document.getElementById('subPrograma-formulario').value;
@@ -2394,6 +2394,19 @@ $("body").on("click", ".borrarAccion",function(event){
 	    var clase = document.getElementById('clase-formulario').value; 
 	    var totalFinanciero = document.getElementById('totalFinanciero-formulario').value; 
 	    var totalAsignacion = document.getElementById('total-formulario').value; 
+	    
+    	$('#tipoPrograma-formulario').val('');
+		$('#programa-formulario').val('');
+		$('#subPrograma-formulario').val('');
+		$('#proyecto-formulario').val('');
+		$('#producto-formulario').val('');
+		$('#totalFisico-formulario').val('');
+		$('#unidadMedida-formulario').val('');
+		$('#clase-formulario').val('');
+		$('#totalFinanciero-formulario').val('');
+		$('#anhoProducto-formulario').val('');
+		$('#versionProducto-formulario').val('');
+		$('#total-formulario').val('');
 
 	    var datos = new Object();
 	    
@@ -2424,24 +2437,12 @@ $("body").on("click", ".borrarAccion",function(event){
 	        mimeType: 'application/json',
 	        success: function (data) {
 	        	
-	        	$('#tipoPrograma-formulario').val('');
-	    		$('#programa-formulario').val('');
-	    		$('#subPrograma-formulario').val('');
-	    		$('#proyecto-formulario').val('');
-	    		$('#producto-formulario').val('');
-	    		$('#totalFisico-formulario').val('');
-	    		$('#unidadMedida-formulario').val('');
-	    		$('#clase-formulario').val('');
-	    		$('#totalFinanciero-formulario').val('');
-	    		$('#anhoProducto-formulario').val('');
-	    		$('#versionProducto-formulario').val('');
-	    		$('#total-formulario').val('');
-	        	cargarTablaAccionHasProducto(accionId,insLineaAccionId,lineaAccionId,institucionId,periodoId);
+	        	if(data.success = true){
+		        	cargarTablaAccionHasProducto(accionId,insLineaAccionId,lineaAccionId,institucionId,periodoId);
+	        	}
 
 	        	},
-	        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
 	        error: function(data,status,er) {
-	        	cargarTablaAccionHasProducto(accionId,producto);
 	        	}
 		 });
 
@@ -2476,7 +2477,7 @@ $("body").on("click", ".borrarAccion",function(event){
             jsonpCallback: 'jsonpCallbackProducto',
           	async:false,
           	success: function( data, textStatus, jqXHR) {
-          		if(data.success){
+          		if(data.success == true){
           			jsonpCallbackProducto(data)
           		}
           	} 
@@ -2691,9 +2692,9 @@ $("body").on("click", ".borrarAccion",function(event){
 							  '</div>';
 
 		$("body").append(modalProductos);
-		$("#modalVincularProductos").modal('show');
 		cargarTablaAccionHasProducto(accionId,insLineaAccionId,lineaAccionId,institucionId,periodoId);
-		
+		$("#modalVincularProductos").modal('show');
+
 		
 		function Combo(){
 			
