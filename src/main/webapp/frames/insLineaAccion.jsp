@@ -1317,8 +1317,16 @@
 	    var f = new Date();
 	    if( (f.getMonth() +1) < 10 ){
 	    	var mes =( 0 +""+ (f.getMonth() +1));
+	    }else{
+	    	var mes =f.getMonth();
 	    }
-	    var fechaActual = (f.getFullYear() + "-" + mes + "-" + f.getDate());
+	    
+	    if( (f.getDate()) < 10 ){
+	    	var dia =( 0 +""+ (f.getDate()));
+	    }else{
+	    	var dia = f.getDate();
+	    }
+	    var fechaActual = (f.getFullYear() + "-" + mes + "-" + dia);
 		
 	    if ( $("#modalEditarAccion").length )
 		{
