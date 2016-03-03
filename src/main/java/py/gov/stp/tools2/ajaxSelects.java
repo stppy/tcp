@@ -48,6 +48,7 @@ public class ajaxSelects extends HttpServlet {
     	Map attributes = user.getAttributes(); 
     	String userNivelId = attributes.get("nivel_id").toString();
     	String userEntidadId = attributes.get("entidad_id").toString();
+    	String userUnrId = attributes.get("unr_id").toString();
     	
     	String action = request.getParameter("action");
     	String accion = request.getParameter("accion");
@@ -350,7 +351,9 @@ public class ajaxSelects extends HttpServlet {
         	if (action.equals("getInsLineaAccion")){
         		List objetos=null; 
         		condition = " where true ";
-        		condition += " and institucion_id IN (select id from institucion where entidad_id="+userEntidadId+" and nivel_id="+userNivelId+") ";
+        		String condition2 = " where entidad_id="+userEntidadId+" and nivel_id="+userNivelId ;
+        		if (!userUnrId.equals("0")){ condition2+= " and unidad_responsable_id="+userUnrId;}
+        		condition += " and institucion_id IN (select id from institucion "+condition2+") ";
         		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
            		try {objetos = SqlSelects.selectInsLineaAccion(condition);}
         		catch (SQLException e) {e.printStackTrace();}
