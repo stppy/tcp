@@ -2692,9 +2692,9 @@ $("body").on("click", ".borrarAccion",function(event){
 							  '</div>';
 
 		$("body").append(modalProductos);
-		$("#modalVincularProductos").modal('show');
 		cargarTablaAccionHasProducto(accionId,insLineaAccionId,lineaAccionId,institucionId,periodoId);
-		
+		$("#modalVincularProductos").modal('show');
+
 		
 		function Combo(){
 			
