@@ -564,7 +564,8 @@ public class SqlSelects {
 				objeto.setCantidadFisica(rs.getDouble("cant_fisica"));
 				objeto.setClase(rs.getString("clase"));
 				objeto.setCantidadFinanciera(rs.getDouble("cant_financiera"));
-				
+				objeto.setTotalAsignacion(rs.getDouble("asignacion_financiera"));
+
 				objetos.add(objeto);
 			}
 		}

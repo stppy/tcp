@@ -1363,7 +1363,7 @@ public class SqlInserts {
 		
 }	
 	
-	public static void insertAccionHasProducto(AccionHasProducto dato){
+	public static boolean insertAccionHasProducto(AccionHasProducto dato){
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
@@ -1391,7 +1391,8 @@ public class SqlInserts {
 		insert.execute();
 		   
 		conn.close();
-	} catch (SQLException e) {e.printStackTrace();}
+		return true;
+	} catch (SQLException e) {e.printStackTrace();return false;}
 		
 }	
 	

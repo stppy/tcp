@@ -1317,8 +1317,16 @@
 	    var f = new Date();
 	    if( (f.getMonth() +1) < 10 ){
 	    	var mes =( 0 +""+ (f.getMonth() +1));
+	    }else{
+	    	var mes =f.getMonth();
 	    }
-	    var fechaActual = (f.getFullYear() + "-" + mes + "-" + f.getDate());
+	    
+	    if( (f.getDate()) < 10 ){
+	    	var dia =( 0 +""+ (f.getDate()));
+	    }else{
+	    	var dia = f.getDate();
+	    }
+	    var fechaActual = (f.getFullYear() + "-" + mes + "-" + dia);
 		
 	    if ( $("#modalEditarAccion").length )
 		{
@@ -1573,7 +1581,7 @@
 							'			      					    <div class="form-group col-md-3">'+
 							'						  						<label for="totalFinanciero-formulario">Primer Trimestre</label>'+
 							'				      						<div class="input-group input-group-sm">'+						      			
-							'								    				<input type="text" name="primerTrimestre" id="primerTrimestre-formulario" value="" class="form-control">'+
+							'								    				<input type="text" name="primerTrimestre" id="primerTrimestre-formulario" value="0" class="form-control">'+
 							'													<input type="hidden" class="form-control" id="versionAccion" value="3">'+//Aqui estan los input hidden que en este formulario son 3
 							'													<input type="hidden" class="form-control" id="costoAccion" value="99">'+
 							'													<input type="hidden" class="form-control" id="pesoAccion" value="1">'+
@@ -1585,21 +1593,21 @@
 							'				     					<div class="form-group col-md-3">'+
 							'							  					<label for="totalFinanciero-formulario">Segundo Trimestre</label>'+
 							'					      					<div class="input-group input-group-sm">'+
-							'			  					    			<input type="text" name="segundoTrimestre" id="segundoTrimestre-formulario" value="" class="form-control">'+
+							'			  					    			<input type="text" name="segundoTrimestre" id="segundoTrimestre-formulario" value="0" class="form-control">'+
 							'					      					</div>'+
 							'								    		</div>'+
 															    		
 							'				     					<div class="form-group col-md-3">'+
 							'							  					<label for="totalFinanciero-formulario">Tercer Trimestre</label>'+
 							'					      					<div class="input-group input-group-sm">'+
-							'			  					    			<input type="text" name="tercerTrimestre" id="tercerTrimestre-formulario" value="" class="form-control">'+
+							'			  					    			<input type="text" name="tercerTrimestre" id="tercerTrimestre-formulario" value="0" class="form-control">'+
 							'					      					</div>'+
 							'								    		</div>'+
 														    		
 							'			      					    <div class="form-group col-md-3">'+
 							'						  					<label for="totalFinanciero-formulario">Cuarto Trimestre</label>'+
 							'				      						<div class="input-group input-group-sm">'+
-							'								    				<input type="text" name="cuartoTrimestre" id="cuartoTrimestre-formulario" value="" class="form-control">'+
+							'								    				<input type="text" name="cuartoTrimestre" id="cuartoTrimestre-formulario" value="0" class="form-control">'+
 							'				      						</div>'+
 							'							    		</div>'+
 							'			  						</div>'+							
@@ -2363,8 +2371,12 @@ $("body").on("click", ".borrarAccion",function(event){
 		event.preventDefault();
 		
 		var parametros = $(this).attr("parametros");
-    	var idParsed = parametros.split("-");                                                            	
-		var accionId = idParsed[0];
+    	var idParsed = parametros.split("-");
+	    var insLineaAccionId = idParsed[0];
+	    var lineaAccionId = idParsed[1];
+	    var institucionId = idParsed[2];
+	    var periodoId = idParsed[3];
+		var accionId = idParsed[4];
 
 		
 		
@@ -2411,8 +2423,20 @@ $("body").on("click", ".borrarAccion",function(event){
 	        contentType: 'application/json',
 	        mimeType: 'application/json',
 	        success: function (data) {
-	        	cargarTablaAccionHasProducto(accionId,producto);
-	        	//cargarTablaAccionHasProducto(institucionId, lineaAccionId, idDepartamento, idDistrito, accionId); asi esta el original
+	        	
+	        	$('#tipoPrograma-formulario').val('');
+	    		$('#programa-formulario').val('');
+	    		$('#subPrograma-formulario').val('');
+	    		$('#proyecto-formulario').val('');
+	    		$('#producto-formulario').val('');
+	    		$('#totalFisico-formulario').val('');
+	    		$('#unidadMedida-formulario').val('');
+	    		$('#clase-formulario').val('');
+	    		$('#totalFinanciero-formulario').val('');
+	    		$('#anhoProducto-formulario').val('');
+	    		$('#versionProducto-formulario').val('');
+	    		$('#total-formulario').val('');
+	        	cargarTablaAccionHasProducto(accionId,insLineaAccionId,lineaAccionId,institucionId,periodoId);
 
 	        	},
 	        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
@@ -2420,29 +2444,22 @@ $("body").on("click", ".borrarAccion",function(event){
 	        	cargarTablaAccionHasProducto(accionId,producto);
 	        	}
 		 });
-		$('#tipoPrograma-formulario').val('');
-		$('#programa-formulario').val('');
-		$('#subPrograma-formulario').val('');
-		$('#proyecto-formulario').val('');
-		$('#producto-formulario').val('');
-		$('#totalFisico-formulario').val('');
-		$('#unidadMedida-formulario').val('');
-		$('#clase-formulario').val('');
-		$('#totalFinanciero-formulario').val('');
-		$('#anhoProducto-formulario').val('');
-		$('#versionProducto-formulario').val('');
-		$('#total-formulario').val('');
+
 		
 	});
 	
-	function cargarTablaAccionHasProducto(accionId,producto){
-		
+	function cargarTablaAccionHasProducto(accionId,insLineaAccionId,lineaAccionId,institucionId,periodoId){
+		var insLineaAccionId = insLineaAccionId;
+		var lineaAccionId = lineaAccionId;
+		var institucionId = institucionId;
+		var periodoId = periodoId;		
 		var accionId= accionId;
-		var producto = producto;
+		
+		//var producto = producto
 		var nombreProducto = "";
 		
 		var accionHasProducto = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getAccionHasProducto&accion_id='+accionId,
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionHasProducto&accionId='+accionId,
 	      	type:'get',
 	      	dataType:'json',
 	      	crossDomain:true,
@@ -2476,8 +2493,11 @@ $("body").on("click", ".borrarAccion",function(event){
     		var fila ="";
     		for(var f = 0; f < accionHasProducto.length; f++)
     		{
-    			
-    			fila += "<tr><td>"+accionHasProducto[f].nivel+"</td><td>"+accionHasProducto[f].entidad+"</td><td>"+accionHasProducto[f].tipoPrograma+"</td><td>"+accionHasProducto[f].programa+"</td><td>"+accionHasProducto[f].subPrograma+"</td><td>"+accionHasProducto[f].proyecto+"</td><td>"+accionHasProducto[f].sprProductoId+"</td>";
+    			if(accionHasProducto[f].borrado == true){
+        			fila += "<tr><td><del>"+accionHasProducto[f].nivel+"</del></td><td><del>"+accionHasProducto[f].entidad+"</del></td><td><del>"+accionHasProducto[f].tipoPrograma+"</del></td><td><del>"+accionHasProducto[f].programa+"</del></td><td><del>"+accionHasProducto[f].subPrograma+"</del></td><td><del>"+accionHasProducto[f].proyecto+"</del></td><td><del>"+accionHasProducto[f].sprProductoId+"</del></td>";
+    			}else{
+        			fila += "<tr><td>"+accionHasProducto[f].nivel+"</td><td>"+accionHasProducto[f].entidad+"</td><td>"+accionHasProducto[f].tipoPrograma+"</td><td>"+accionHasProducto[f].programa+"</td><td>"+accionHasProducto[f].subPrograma+"</td><td>"+accionHasProducto[f].proyecto+"</td><td>"+accionHasProducto[f].sprProductoId+"</td>";
+    			}
     			
     			nombreProducto = "";
     			for(var j = 0; j < productos.productos.length; j++){
@@ -2486,7 +2506,11 @@ $("body").on("click", ".borrarAccion",function(event){
     				}
     			}
     			
-    	    	fila += "<td>"+nombreProducto+"</td><td>"+accionHasProducto[f].cantidadFisica+"</td><td>"+accionHasProducto[f].unidadMedida+"</td><td>"+accionHasProducto[f].clase+"</td><td>Gs."+accionHasProducto[f].cantidadFinanciera+"</td><td>Gs."+accionHasProducto[f].totalAsignacion+"</td><td><center><button type='submit' class='btn btn-success verificarDestinatarios' parametros="+accionHasProducto[f].nivel+"-"+accionHasProducto[f].entidad+"-"+accionHasProducto[f].tipoPrograma+"-"+accionHasProducto[f].programa+"-"+accionHasProducto[f].subPrograma+"-"+accionHasProducto[f].proyecto+"-"+accionHasProducto[f].producto+" disabled='disabled'><span class='glyphicon glyphicon-user'></span></button></center></td></tr>";
+    			if(accionHasProducto[f].borrado == false){
+	    	    	fila += "<td>"+nombreProducto+"</td><td>"+accionHasProducto[f].cantidadFisica+"</td><td>"+accionHasProducto[f].unidadMedida+"</td><td>"+accionHasProducto[f].clase+"</td><td>Gs."+accionHasProducto[f].cantidadFinanciera+"</td><td>Gs."+accionHasProducto[f].totalAsignacion+"</td><td><center><button type='submit' class='btn btn-default sm' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accionId+"-"+accionHasProducto[f].id+" disabled='disabled'><span class='glyphicon glyphicon-pencil'></span></button><button type='submit' class='btn btn-default sm consultaBorrarVinculacionProducto' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accionId+"-"+accionHasProducto[f].id+"><span class='glyphicon glyphicon-trash'></span></button></center></td></tr>";
+    			}else{
+	    	    	fila += "<td><del>"+nombreProducto+"</del></td><td><del>"+accionHasProducto[f].cantidadFisica+"</del></td><td><del>"+accionHasProducto[f].unidadMedida+"</del></td><td><del>"+accionHasProducto[f].clase+"</del></td><td><del>Gs."+accionHasProducto[f].cantidadFinanciera+"</del></td><td><del>Gs."+accionHasProducto[f].totalAsignacion+"</del></td><td><center><button type='submit' class='btn btn-default sm' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accionId+"-"+accionHasProducto[f].id+" disabled='disabled'><span class='glyphicon glyphicon-pencil'></span></button><button type='submit' class='btn btn-default sm consultaBorrarVinculacionProducto' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accionId+"-"+accionHasProducto[f].id+"><span class='glyphicon glyphicon-trash'></span></button></center></td></tr>";
+    			}
     		}
     		
     		$("#TablaAccionHasProductos").append(fila);
@@ -2502,7 +2526,16 @@ $("body").on("click", ".borrarAccion",function(event){
 		if ( $("#modalVincularProductos").length )
 		{
 			$("#modalVincularProductos").remove();
-		}	
+		}
+		if ( $("#modalAccion").length )
+		{
+			$("#modalAccion").remove();
+		}
+		if ( $("#modalBorrarVinculacionProducto").length )
+		{
+			$("#modalBorrarVinculacionProducto").remove();
+		}
+		
 				
 		var parametros = $(this).attr("parametros");
 	    var idParsed = parametros.split("-");                                                            
@@ -2578,7 +2611,7 @@ $("body").on("click", ".borrarAccion",function(event){
 						            '    		<th>Tipo</th>'+
 						            '    		<th>Asig. Financiera</th>'+
 						            '    		<th>Costo de la Acción</th>'+
-						            '    		<th>Destinatarios</th>'+
+						            '    		<th>Administrar</th>'+
 						            '    	</tr>'+
 						            '    <tbody class="table-body-producto" id="TablaAccionHasProductos">'+
 						            '    </tbody>'+
@@ -2619,7 +2652,7 @@ $("body").on("click", ".borrarAccion",function(event){
 							      	'						<span class="input-group-addon">Gs</span>'+
 				      				'	    				<input type="text" name="total" id="total-formulario" value="" class="form-control">'+
 				      				'	                    <div class="input-group-btn">'+
-					      			'		                	<button type="submit" class="btn btn-success guardarComboProducto" parametros='+accionId+'><span class="glyphicon glyphicon-plus"></span></button>'+
+					      			'		                	<button type="submit" class="btn btn-success guardarComboProducto" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'><span class="glyphicon glyphicon-plus"></span></button>'+
 					      			'		                </div>'+	      					    				
 				      				'	    			</div>'+
 						  			'		    	</div>'+
@@ -2659,7 +2692,7 @@ $("body").on("click", ".borrarAccion",function(event){
 
 		$("body").append(modalProductos);
 		$("#modalVincularProductos").modal('show');
-		cargarTablaAccionHasProducto(accionId);
+		cargarTablaAccionHasProducto(accionId,insLineaAccionId,lineaAccionId,institucionId,periodoId);
 		
 		
 		function Combo(){
@@ -3542,6 +3575,119 @@ $("body").on("click", ".borrarAccion",function(event){
 		  document.getElementById('proyecto-formulario').addEventListener('change',eje1.proyecto,false);
 		  document.getElementById('producto-formulario').addEventListener('focus',eje1.productoFocus,false); 
 		  document.getElementById('producto-formulario').addEventListener('change',eje1.producto,false); 
+		
+	});
+	
+	$("body").on("click", ".consultaBorrarVinculacionProducto",function(event){
+		var parametros = $(this).attr("parametros");
+	    var idParsed = parametros.split("-");                                                            
+		
+		//Las siguentes variables se utiliza en esta funcion para redibujar el modal anterior
+		var insLineaAccionId = idParsed[0];
+		var lineaAccionId = idParsed[1];
+		var institucionId = idParsed[2];
+		var periodoId = idParsed[3];
+		var accionId = idParsed[4];
+		var accionHasProductoId = idParsed[5];
+
+
+		if ( $("#modalVincularProductos").length )
+		{
+			$("#modalVincularProductos").remove();
+		}		
+		
+		var WebServiceVinculacionProducto = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionHasProducto&accionHasProductoId='+accionHasProductoId,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		WebServiceVinculacionProducto = JSON.parse(WebServiceVinculacionProducto);
+		
+		var contenido = "";
+
+		contenido =			'<div class="modal fade" id="modalBorrarVinculacionProducto"  data-backdrop="static" data-keyboard="false" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">'+
+							'	<div class="modal-dialog modal-lg">'+
+							'		<div class="modal-content" >'+
+							'			<div class="modal-header">'+
+							'		        <button type="button" class="close modalVincularProducto"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+' ><span aria-hidden="true">&times;</span></button>'+
+							'		        <h4 class="modal-title" >Borrar - Restaurar Vinculación Producto</h4>'+
+							'			</div>'+
+							'		    <div class="modal-body">'+
+							'				<div id="mensajeBorradoVinculacionProducto"></div>'+
+							'		    </div>'+
+							'			<div class="modal-footer" id="agregarBotonBorradoVinculacionProducto">'+
+							'			</div>'+
+							'		</div>'+ 
+							'	</div>'+
+							'</div>';
+							
+			$("#programacion").append(contenido);
+			
+			if(WebServiceVinculacionProducto[0].borrado == true){
+				$("#mensajeBorradoVinculacionProducto").html("");
+				$("#mensajeBorradoVinculacionProducto").append('<h3 class="text-center">Ud. esta seguro que desea RESTABLACER este registro</h3>');
+				$("#agregarBotonBorradoVinculacionProducto").html("");
+				$("#agregarBotonBorradoVinculacionProducto").append('<button type="button" class="btn btn-success btn-sm borrarVinculacionProducto" id="botonRestaurarVinculacionProducto" parametros='+accionHasProductoId+'-r>Restaurar V. Producto</button>');
+				$("#agregarBotonBorradoVinculacionProducto").append('<button type="button" class="btn btn-success btn-sm modalVincularProducto" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'>Cerrar</button>');
+			}else{
+				$("#mensajeBorradoVinculacionProducto").html("");
+				$("#mensajeBorradoVinculacionProducto").append('<h3 class="text-center">Ud. esta seguro que desea BORRAR este registro</h3');
+				$("#agregarBotonBorradoVinculacionProducto").html("");
+				$("#agregarBotonBorradoVinculacionProducto").append('<button type="button" class="btn btn-danger btn-sm borrarVinculacionProducto" id="botonBorradoVinculacionProducto" parametros='+accionHasProductoId+'-b>Borrar V. Producto</button>');
+				$("#agregarBotonBorradoVinculacionProducto").append('<button type="button" class="btn btn-success btn-sm modalVincularProducto" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'>Cerrar</button>')
+			}
+			
+			$('#modalBorrarVinculacionProducto').modal('show');
+				
+	});
+	
+	$("body").on("click", ".borrarVinculacionProducto",function(event){	
+		var parametros = $(this).attr("parametros");
+	    var idParsed = parametros.split("-"); 
+	    var accionHasProductoId = idParsed[0];
+	    var estado = idParsed[1];
+	    
+		var WebServiceVinculacionProducto = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionHasProducto&accionHasProductoId='+accionHasProductoId,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		WebServiceVinculacionProducto = JSON.parse(WebServiceVinculacionProducto);
+	    
+	    var objeto = new Object();
+	    objeto.id = accionHasProductoId;
+	    objeto.borrado= WebServiceVinculacionProducto[0].borrado;
+
+	    
+	  	var info = JSON.stringify(objeto);
+	    $.ajax({
+	        url: "ajaxUpdate2?accion=borradoAccionHasProducto",
+	        type: 'POST',
+	        dataType: 'json',
+	        data: info,
+	        contentType: 'application/json',
+	        mimeType: 'application/json',
+	        success: function (data) {
+	        	
+	            if(estado == "b"){
+	        		$("#botonBorradoVinculacionProducto").remove();
+	            	$("#mensajeBorradoVinculacionProducto").html("");
+	            	$("#mensajeBorradoVinculacionProducto").html("<h3 class='text-center'>BORRADO EXITOSAMENTE!!</h3>");
+	            }else{
+	        		$("#botonRestaurarVinculacionProducto").remove();
+	            	$("#mensajeBorradoVinculacionProducto").html("");
+	            	$("#mensajeBorradoVinculacionProducto").html("<h3 class='text-center'>RESTAURADO EXITOSAMENTE!!</h3>");
+	        	}
+
+	        },
+
+	        error: function(data,status,er) {
+	        	
+	        	}
+		 });
+
 		
 	});
 
