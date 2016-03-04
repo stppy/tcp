@@ -79,8 +79,6 @@ if (user != null) { %>
 		usuarios = JSON.parse(usuarios);
 		usuarios = usuarios.usuarios;
 		
-		
-		
 		$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
 		$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
 		
