@@ -2395,6 +2395,10 @@ $("body").on("click", ".borrarAccion",function(event){
 	    var totalFinanciero = document.getElementById('totalFinanciero-formulario').value; 
 	    var totalAsignacion = document.getElementById('total-formulario').value; 
 	    
+	    
+	    if(totalFisico == ""){
+	    	totalFisico = 0;	    	
+	    }
     	$('#tipoPrograma-formulario').val('');
 		$('#programa-formulario').val('');
 		$('#subPrograma-formulario').val('');
