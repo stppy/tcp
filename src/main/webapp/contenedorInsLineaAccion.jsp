@@ -79,18 +79,6 @@ if (user != null) { %>
 		usuarios = JSON.parse(usuarios);
 		usuarios = usuarios.usuarios;
 		
-		var entidadCasSpr = "";
-		entidadCasSpr ="<%=attributes.get("entidad") %>";
-		usuarioRolCasSpr="<%=attributes.get("role_id") %>";
-		var usuariosSpr = $.ajax({
-			url:'http://spr.stp.gov.py/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
-		  	type:'get',
-		  	dataType:'json',
-		  	async:false       
-		}).responseText;
-		usuariosSpr = JSON.parse(usuariosSpr);
-		usuariosSpr = usuariosSpr.usuarios;
-		
 		$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
 		$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
 		
