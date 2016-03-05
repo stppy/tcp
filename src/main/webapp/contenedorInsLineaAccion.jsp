@@ -617,6 +617,18 @@ if (user != null) { %>
 <!-- End Piwik Code -->
 <script type="text/javascript" src="bootstrap/js/bootstrap-slider.js"></script>
  
-
+<script>
+var entidadCasSpr = "";
+entidadCasSpr ="<%=attributes.get("entidad") %>";
+usuarioRolCasSpr="<%=attributes.get("role_id") %>";
+var usuariosSpr = $.ajax({
+	url:'http://spr.stp.gov.py/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
+  	type:'get',
+  	dataType:'json',
+  	async:false       
+}).responseText;
+usuariosSpr = JSON.parse(usuariosSpr);
+usuariosSpr = usuariosSpr.usuarios;
+</script>
   </body>
 </html>
