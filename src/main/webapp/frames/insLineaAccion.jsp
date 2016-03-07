@@ -4670,6 +4670,14 @@ $("body").on("click", ".agregarProgramacion",function(event){
 			nombreUnidadMedida = unidadMedida[f].descripcion;
 		}
 	}
+	var nombreUnidadMedidaHitoProgramado="";
+	for(var g = 0; g < unidadMedida.length; g++ )
+	{
+		if(cronogramas[0].unidad_medida_id == unidadMedida[g].id)
+		{
+			nombreUnidadMedidaHitoProgramado = unidadMedida[g].descripcion;
+		}
+	}	
 	
 	var nombreHitoTipo ="";
 	for(var l = 0; l < hitoTipo.length; l++)
@@ -4685,10 +4693,10 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	{
 		if(programacionWebService[n].borrado == false)
 		{
-			cuerpoActividades += "<tr><td>"+programacionWebService[n].cantidad+"</td><td>"+programacionWebService[n].fechaEntrega+"</td><td>"+programacionWebService[n].version+"</td><td>"+cronogramas[0].nombre+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm consultaEditarHito'  data-toggle='tooltip' data-placement='top' title='Editar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacionWebService[n].id+" ><span class='glyphicon glyphicon-pencil' ></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarHito' title='Borrar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacionWebService[n].id+" ><span class='glyphicon glyphicon-trash' </span></button></td></tr>";
+			cuerpoActividades += "<tr><td>"+programacionWebService[n].cantidad+"</td><td>"+programacionWebService[n].fechaEntrega+"</td><td>"+programacionWebService[n].version+"</td><td>"+cronogramas[0].nombre+"</td><td>"+nombreUnidadMedidaHitoProgramado+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm consultaEditarHito'  data-toggle='tooltip' data-placement='top' title='Editar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacionWebService[n].id+" ><span class='glyphicon glyphicon-pencil' ></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarHito' title='Borrar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacionWebService[n].id+" ><span class='glyphicon glyphicon-trash' </span></button></td></tr>";
 		}else{
 			<% if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0")){%>
-			cuerpoActividades += "<tr><td><del>"+programacionWebService[n].cantidad+"</del></td><td><del>"+programacionWebService[n].fechaEntrega+"</del></td><td><del>"+programacionWebService[n].version+"</del></td><td><del>"+cronogramas[0].nombre+"</del></td><td class='text-center'><button type='button' class='btn btn-default btn-sm consultaEditarHito'  data-toggle='tooltip' data-placement='top' title='Editar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacionWebService[n].id+" ><span class='glyphicon glyphicon-pencil' ></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarHito' title='Borrar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacionWebService[n].id+" ><span class='glyphicon glyphicon-trash' </span></button></td></tr>";
+			cuerpoActividades += "<tr><td><del>"+programacionWebService[n].cantidad+"</del></td><td><del>"+programacionWebService[n].fechaEntrega+"</del></td><td><del>"+programacionWebService[n].version+"</del></td><td><del>"+cronogramas[0].nombre+"</del></td><td><del>"+nombreUnidadMedidaHitoProgramado+"</del></td><td class='text-center'><button type='button' class='btn btn-default btn-sm consultaEditarHito'  data-toggle='tooltip' data-placement='top' title='Editar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacionWebService[n].id+" ><span class='glyphicon glyphicon-pencil' ></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarHito' title='Borrar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacionWebService[n].id+" ><span class='glyphicon glyphicon-trash' </span></button></td></tr>";
 			<% }%>
 		}
 	}
@@ -4756,7 +4764,7 @@ $("body").on("click", ".agregarProgramacion",function(event){
 							
 							'								<div class="table-responsive">'+
 							'									<table class="table table-hover table-bordered">'+
-							'										<thead><tr class="active"><th>Cantidad</th><th>FechaEntrega</th><th>Versión</th><th>Cronograma</th><th class="text-center">Administrar</th></tr>'+
+							'										<thead><tr class="active"><th>Cantidad</th><th>FechaEntrega</th><th>Versión</th><th>Cronograma</th><th>Unidad Medida</th><th class="text-center">Administrar</th></tr>'+
 							'										<tbody id="listaActividades">'+
 							'										</tbody>'+
 							'									</table>'+
@@ -4822,6 +4830,15 @@ $("body").on("click", ".guardarProgramacion",function(event){
         	
         	if(data.success == true)
         	{
+        		
+        		var unidadMedida = $.ajax({
+        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+        		  	type:'get',
+        		  	dataType:'json',
+        		  	async:false       
+        		}).responseText;
+        		unidadMedida = JSON.parse(unidadMedida);
+        		
         		var programacion = $.ajax({
         			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getProgramacion&actividadId='+actividadId,
         		  	type:'get',
@@ -4838,15 +4855,24 @@ $("body").on("click", ".guardarProgramacion",function(event){
         		}).responseText;
         		cronogramas = JSON.parse(cronogramas);
         		
+        		var nombreUnidadMedidaHitoProgramado="";
+        		for(var g = 0; g < unidadMedida.length; g++ )
+        		{
+        			if(cronogramas[0].unidad_medida_id == unidadMedida[g].id)
+        			{
+        				nombreUnidadMedidaHitoProgramado = unidadMedida[g].descripcion;
+        			}
+        		}	        		
+        		
         		var registroProgramacion="";
         		for(var j = 0; j < programacion.length; j++)
         		{
         			if(programacion[j].borrado == false)
         			{
-            			registroProgramacion += "<tr><td>"+programacion[j].cantidad+"</td><td>"+programacion[j].fechaEntrega+"</td><td>"+programacion[j].version+"</td><td>"+cronogramas[0].nombre+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm consultaEditarHito'  data-toggle='tooltip' data-placement='top' title='Editar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacion[j].id+" ><span class='glyphicon glyphicon-pencil' ></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarHito' title='Borrar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacion[j].id+" ><span class='glyphicon glyphicon-trash' </span></button></td></tr>";
+            			registroProgramacion += "<tr><td>"+programacion[j].cantidad+"</td><td>"+programacion[j].fechaEntrega+"</td><td>"+programacion[j].version+"</td><td>"+cronogramas[0].nombre+"</td><td>"+nombreUnidadMedidaHitoProgramado+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm consultaEditarHito'  data-toggle='tooltip' data-placement='top' title='Editar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacion[j].id+" ><span class='glyphicon glyphicon-pencil' ></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarHito' title='Borrar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacion[j].id+" ><span class='glyphicon glyphicon-trash' </span></button></td></tr>";
         			}else{
         				<% if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0")){%>
-            			registroProgramacion += "<tr><td><del>"+programacion[j].cantidad+"</del></td><td><del>"+programacion[j].fechaEntrega+"</del></td><td><del>"+programacion[j].version+"</del></td><td><del>"+cronogramas[0].nombre+"</del></td><td class='text-center'><button type='button' class='btn btn-default btn-sm consultaEditarHito'  data-toggle='tooltip' data-placement='top' title='Editar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacion[j].id+" ><span class='glyphicon glyphicon-pencil' ></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarHito' title='Borrar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacion[j].id+" ><span class='glyphicon glyphicon-trash' </span></button></td></tr>";
+            			registroProgramacion += "<tr><td><del>"+programacion[j].cantidad+"</del></td><td><del>"+programacion[j].fechaEntrega+"</del></td><td><del>"+programacion[j].version+"</del></td><td><del>"+cronogramas[0].nombre+"</del></td><td><del>"+nombreUnidadMedidaHitoProgramado+"</del></td><td class='text-center'><button type='button' class='btn btn-default btn-sm consultaEditarHito'  data-toggle='tooltip' data-placement='top' title='Editar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacion[j].id+" ><span class='glyphicon glyphicon-pencil' ></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarHito' title='Borrar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacion[j].id+" ><span class='glyphicon glyphicon-trash' </span></button></td></tr>";
             			<% }%>
         			}
         		}
