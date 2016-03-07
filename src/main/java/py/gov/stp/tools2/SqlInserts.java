@@ -730,7 +730,7 @@ public class SqlInserts {
 		PreparedStatement insert = conn.prepareStatement(query);
 		
 		insert.setDouble (1, costo.getMonto());
-		insert.setInt (2, costo.getCodigoContratacional());
+		insert.setString (2, costo.getCodigoContratacion());
 		insert.setInt (3, costo.getObjetoGasto());
 		insert.setInt (4, costo.getAvanceId());
 		

@@ -242,7 +242,7 @@ public class SqlSelects {
 		
 				objeto.setId(rs.getInt("id"));
 				objeto.setMonto(rs.getDouble("monto"));
-				objeto.setCodigoContratacional(rs.getInt("codigo_contratacionl"));
+				objeto.setCodigoContratacion(rs.getString("codigo_contratacionl"));
 				objeto.setObjetoGasto(rs.getInt("objeto_gasto"));
 				objeto.setAvanceId(rs.getInt("avance_id"));	
 				objeto.setBorrado(rs.getBoolean("borrado"));
