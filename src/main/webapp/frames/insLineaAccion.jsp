@@ -4936,7 +4936,11 @@ $("body").on("click", ".agregarAvance",function(event){
     if( (f.getMonth() +1) < 10 ){
     	var mes =( 0 +""+ (f.getMonth() +1));
     }
-    var fechaActual = (f.getFullYear() + "-" + mes + "-" + f.getDate());
+    if( (f.getDate()) < 10 ){
+    	var dia =( 0 +""+ (f.getDate()));
+    }
+    
+    var fechaActual = (f.getFullYear() + "-" + mes + "-" + dia);
     
 	var webServicesAvance = $.ajax({
 		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvance&actividadId='+actividadId,
