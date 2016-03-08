@@ -355,7 +355,57 @@ public class SqlSelects {
 			if (conect != null) {conect.close();}
 		}
 		return objetos; 
-		}	
+		}
+	
+	public static List<LineasProgramadas> selectPivotLineasProgramadas(String condition) throws SQLException{
+		Connection conect=ConnectionConfiguration.conectar();
+		String query = " select * from linea_accion_programado "+condition;
+
+		Statement statement = null;
+		ResultSet rs=null;
+		List<LineasProgramadas> objetos = new ArrayList<LineasProgramadas>();
+
+		try {
+			statement = conect.createStatement();
+			rs=statement.executeQuery(query);
+			while(rs.next()){
+				LineasProgramadas objeto = new LineasProgramadas();
+		
+				objeto.setSigla(rs.getString("sigla"));
+				objeto.setLa_nombre(rs.getString("la_nombre"));
+				objeto.setLa_um_descp(rs.getString("la_um_descp"));
+				objeto.setPeriodo(rs.getString("periodo"));
+				objeto.setIla_meta(rs.getString("ila_meta"));
+				objeto.setAccion_peso(rs.getString("accion_peso"));
+				objeto.setAccion_fecha_ini(rs.getString("accion_fecha_ini")); 
+				objeto.setAccion_fecha_fin(rs.getString("accion_fecha_fin"));
+				objeto.setM1(rs.getString("m1"));
+				objeto.setM2(rs.getString("m2"));
+				objeto.setM3(rs.getString("m3")); 
+				objeto.setM4(rs.getString("m4")); 
+				objeto.setDepto_nombre(rs.getString("depto_nombre")); 
+				objeto.setDist_nombre(rs.getString("dist_nombre")); 
+				objeto.setAc_nombre(rs.getString("ac_nombre"));
+				objeto.setAc_um_descp(rs.getString("ac_um_descp")); 
+				objeto.setCrono_nombre(rs.getString("crono_nombre")); 
+				objeto.setCrono_descp(rs.getString("crono_descp")); 
+				objeto.setCrono_prop(rs.getString("crono_prop")); 
+				objeto.setCrono_peso(rs.getString("crono_peso")); 
+				objeto.setCrono_um_id(rs.getString("crono_um_id"));
+				objeto.setCrono_tipo_nombre(rs.getString("crono_tipo_nombre"));
+				objeto.setCant_prog(rs.getString("cant_prog")); 
+				objeto.setFecha_entrega(rs.getString("fecha_entrega"));
+
+				objetos.add(objeto);
+			}
+		}
+		catch (SQLException e) {e.printStackTrace();}
+		finally{
+			if (statement != null) {statement.close();}
+			if (conect != null) {conect.close();}
+		}
+		return objetos; 
+		}
 	
 	public static List<Institucion> selectInstitucion(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
