@@ -5142,8 +5142,34 @@ $("body").on("click", ".agregarAvance",function(event){
 	  	dataType:'json',
 	  	async:false       
 	}).responseText;
-	webServicesAvance = JSON.parse(webServicesAvance); 
+	webServicesAvance = JSON.parse(webServicesAvance);
 	
+	var actividades = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getCronograma&cronogramaId='+actividadId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	actividades = JSON.parse(actividades);
+	
+	var unidadMedida = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	unidadMedida = JSON.parse(unidadMedida);
+	
+	var nombreUnidadMedida = "";
+	for(var u = 0; u < unidadMedida.length; u++)
+	{
+		if(unidadMedida[u].id == actividades[0].unidad_medida_id)
+		{
+			nombreUnidadMedida = unidadMedida[u].descripcion;
+		}
+	}
+	
+		
 	var cuerpoAvance = "";
 	for(var d = 0; d < webServicesAvance.length; d++)
 	{
@@ -5157,7 +5183,7 @@ $("body").on("click", ".agregarAvance",function(event){
 							'		<div class="modal-content" >'+
 							'			<div class="modal-header">'+
 							'		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="agregarActividad" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'" >&times;</span></button>'+
-							'		        <h4 class="modal-title">Avance</h4>'+ 
+							'		        <h4 class="modal-title">Avance ('+actividades[0].nombre+' - '+nombreUnidadMedida+')</h4>'+ 
 							'			</div>'+
 							'		    <div class="modal-body">'+
 							'		      	<div class="row">'+ 
