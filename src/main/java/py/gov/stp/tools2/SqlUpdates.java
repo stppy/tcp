@@ -1007,7 +1007,7 @@ public static boolean borradoHito(Hito objeto){
 					 if(objeto.getNombre()!=null)					query+= "nombre='"+objeto.getNombre()+"'";
 					 if(objeto.getDescripcion()!=null)				query+= ", descripcion='"+objeto.getDescripcion()+"'";
 					 if(objeto.getProporcion()!=0)					query+= ", proporcion='"+objeto.getProporcion()+"'";
-					 if(objeto.getVersion()!=0)						query+= ", version='"+objeto.getVersion()+"'";
+					 if(objeto.getPeso()!=0)						query+= ", peso='"+objeto.getVersion()+"'";
 					 if(objeto.getUnidad_medida_id()!=0)			query+= ", unidad_medida_id='"+objeto.getUnidad_medida_id()+"'";
 					 if(objeto.getHito_tipo_id()!=0)				query+= ", hito_tipo_id='"+objeto.getHito_tipo_id()+"'";
 					 
@@ -1062,7 +1062,7 @@ public static boolean borradoHito(Hito objeto){
 
 					 String											query = "update avance_costo set ";
 					 if(objeto.getMonto()!=0)								query+= "monto='"+objeto.getMonto()+"'";
-					 if(objeto.getCodigoContratacional()!=0)				query+= ", codigo_contratacionl='"+objeto.getCodigoContratacional()+"'";
+					 if(objeto.getCodigoContratacion()!=null)				query+= ", codigo_contratacionl='"+objeto.getCodigoContratacion()+"'";
 					 if(objeto.getObjetoGasto()!=0)							query+= ", objeto_gasto='"+objeto.getObjetoGasto()+"'";
 					 if(objeto.getAvanceId()!=0)							query+= ", avance_id='"+objeto.getAvanceId()+"'";
 

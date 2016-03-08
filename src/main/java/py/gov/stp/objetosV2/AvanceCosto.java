@@ -4,14 +4,17 @@ public class AvanceCosto {
 	
 protected int id;
 protected double monto;
-protected int codigoContratacional;
+protected String codigoContratacion;
 protected int objetoGasto;
 protected int avanceId;
 protected boolean borrado;
 
+
 public int getId() {
 	return id;
 }
+
+
 
 
 public void setId(int id) {
@@ -19,9 +22,13 @@ public void setId(int id) {
 }
 
 
+
+
 public double getMonto() {
 	return monto;
 }
+
+
 
 
 public void setMonto(double monto) {
@@ -29,14 +36,20 @@ public void setMonto(double monto) {
 }
 
 
-public int getCodigoContratacional() {
-	return codigoContratacional;
+
+
+public String getCodigoContratacion() {
+	return codigoContratacion;
 }
 
 
-public void setCodigoContratacional(int codigoContratacional) {
-	this.codigoContratacional = codigoContratacional;
+
+
+public void setCodigoContratacion(String codigoContratacion) {
+	this.codigoContratacion = codigoContratacion;
 }
+
+
 
 
 public int getObjetoGasto() {
@@ -44,9 +57,13 @@ public int getObjetoGasto() {
 }
 
 
+
+
 public void setObjetoGasto(int objetoGasto) {
 	this.objetoGasto = objetoGasto;
 }
+
+
 
 
 public int getAvanceId() {
@@ -54,9 +71,13 @@ public int getAvanceId() {
 }
 
 
+
+
 public void setAvanceId(int avanceId) {
 	this.avanceId = avanceId;
 }
+
+
 
 
 public boolean isBorrado() {
@@ -64,9 +85,13 @@ public boolean isBorrado() {
 }
 
 
+
+
 public void setBorrado(boolean borrado) {
 	this.borrado = borrado;
 }
+
+
 
 
 public void changeBorrado(){
