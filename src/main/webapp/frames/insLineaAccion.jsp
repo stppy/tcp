@@ -2624,10 +2624,13 @@ $("body").on("click", ".borrarAccion",function(event){
 	        	
 	        	if(data.success = true){
 		        	cargarTablaAccionHasProducto(accionId,insLineaAccionId,lineaAccionId,institucionId,periodoId);
+	        	}else{
+	        		cargarTablaAccionHasProducto(accionId,insLineaAccionId,lineaAccionId,institucionId,periodoId);
 	        	}
 
 	        	},
 	        error: function(data,status,er) {
+	        	cargarTablaAccionHasProducto(accionId,insLineaAccionId,lineaAccionId,institucionId,periodoId);
 	        	}
 		 });
 
