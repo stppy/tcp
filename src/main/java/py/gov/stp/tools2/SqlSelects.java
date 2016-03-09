@@ -20,8 +20,6 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import objetos.LineaAccionProductos;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
