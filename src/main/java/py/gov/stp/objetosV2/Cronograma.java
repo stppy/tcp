@@ -6,16 +6,16 @@ public class Cronograma {
 	protected String nombre;
 	protected String descripcion;
 	protected double proporcion;
-	protected double peso; 
+	protected double peso;
 	protected int version;
 	protected boolean borrado =false;
 	protected int accion_id;
 	protected int unidad_medida_id;
 	protected int hito_tipo_id;
-	protected int acumulable;
+	protected boolean acumulable;
 	
-
-	public int getId() {
+	
+	public int getId() { 
 		return id;
 	}
 
@@ -115,20 +115,18 @@ public class Cronograma {
 	}
 
 
-	public int getAcumulable() {
+	public boolean isAcumulable() {
 		return acumulable;
 	}
 
 
-	public void setAcumulable(int acumulable) {
+	public void setAcumulable(boolean acumulable) {
 		this.acumulable = acumulable;
 	}
 
 
 	public void changeBorrado(){
 		this.borrado=!borrado;
-
-		}
-
+	}
 	
 }

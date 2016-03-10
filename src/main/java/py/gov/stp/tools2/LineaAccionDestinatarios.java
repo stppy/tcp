@@ -32,6 +32,7 @@ public class LineaAccionDestinatarios {
 	public String tipoDestNombre;
 	public String grupoDestNombre;
 	public String cantDest;
+	public String descDest;
 	
 	
 	public int getInsId() {
@@ -201,6 +202,12 @@ public class LineaAccionDestinatarios {
 	}
 	public void setCantDest(String cantDest) {
 		this.cantDest = cantDest;
+	}
+	public String getDescDest() {
+		return descDest;
+	}
+	public void setDescDest(String descDest) {
+		this.descDest = descDest;
 	}
 	
 

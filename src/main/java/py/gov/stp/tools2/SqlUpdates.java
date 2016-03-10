@@ -1010,9 +1010,8 @@ public static boolean borradoHito(Hito objeto){
 					 if(objeto.getPeso()!=0)						query+= ", peso='"+objeto.getVersion()+"'";
 					 if(objeto.getUnidad_medida_id()!=0)			query+= ", unidad_medida_id='"+objeto.getUnidad_medida_id()+"'";
 					 if(objeto.getHito_tipo_id()!=0)				query+= ", hito_tipo_id='"+objeto.getHito_tipo_id()+"'";
-					 
-					 					 		 
-					 		 
+					 												query+= ", acumulable='"+objeto.isAcumulable()+"'";
+
 					 query+=" where id ="+objeto.getId();
 							 
 					 try {
