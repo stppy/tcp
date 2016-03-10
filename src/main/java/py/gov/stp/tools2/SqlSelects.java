@@ -144,7 +144,7 @@ public class SqlSelects {
 				objeto.setAccion_id(rs.getInt("accion_id"));
 				objeto.setHito_tipo_id(rs.getInt("hito_tipo_id"));
 				objeto.setUnidad_medida_id(rs.getInt("unidad_medida_id"));
-				
+				objeto.setAcumulable(rs.getBoolean("acumulable"));				
 
 				objetos.add(objeto);
 			}

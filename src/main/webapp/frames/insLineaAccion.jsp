@@ -4151,8 +4151,8 @@ $("body").on("click", ".borrarAccion",function(event){
 			optionTipoHito+='<option value="'+hitoTipo[u].id+'" parametro="'+hitoTipo[u].id+'">'+hitoTipo[u].nombre+'</option>';
 		}
 		
-		optionAcumulable+='<option value="1" parametro="1">Si</option>';
-		optionAcumulable+='<option value="0" parametro="0">No</option>';
+		optionAcumulable+='<option selected value="TRUE" parametro="TRUE">Si</option>';
+		optionAcumulable+='<option value="FALSE" parametro="FALSE">No</option>';
 		
 		var actividades = $.ajax({
 			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getCronograma&accionId='+accionId,
@@ -4251,7 +4251,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		'												<tr><td><div class="form-group"><label for="unidadMedidaIdActividad">Unidad de Medida</label><select id="unidadMedidaIdActividad" class="form-control" placeholder="Ingrese Unidad Medida Id">'+optionUnidadMedida+'</div></td><td><div class="form-group"><label for="hitoTipoIdActividad">Tipo de Cronograma</label>'+
 		'												<select id="hitoTipoIdActividad" class="form-control" placeholder="Ingrese Tipo de Cronograma">'+optionTipoHito+'</select></div></td></tr>'+
 		'												<tr><td><div class="form-group"><label for="proporcionActividad">Proporción</label><input type="text" class="form-control" id="proporcionActividad" value="1" required /></div></div></td><td><div class="form-group"><label for="pesoActividad">Peso</label><input type="text" class="form-control" id="pesoActividad" value="1" required/></div></td></tr>'+
-		//'												<tr><td><div class="form-group"><label for="acumulableActividad">Acumulable</label><select id="acumulableActividad" class="form-control" placeholder="Ingrese Tipo Acumulable">'+optionAcumulable+'</select></div></td></tr>'+
+		'												<tr><td><div class="form-group"><label for="acumulableActividad">Acumulable</label><select id="acumulableActividad" class="form-control" placeholder="Ingrese Tipo Acumulable">'+optionAcumulable+'</select></div></td></tr>'+
 		'											</tbody>'+							           
 		'										</table>'+
 		'									</div>'+
@@ -4370,6 +4370,10 @@ $("body").on("click", ".editarCronograma", function(event){
 		optionTipoHito+='<option value="'+hitoTipo[h].id+'" parametro="'+hitoTipo[h].id+'">'+hitoTipo[h].nombre+'</option>';
 	}
 	
+	var optionAcumulable;
+	optionAcumulable+='<option value="true" parametro="TRUE">Si</option>';
+	optionAcumulable+='<option value="false" parametro="FALSE">No</option>';
+	
 	var cuerpoModalEditarCronograma = "";
 	cuerpoModalEditarCronograma =	'<div class="modal fade" id="modalEditarCronograma" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="myLargeModalLabel">'+
 						'	<div class="modal-dialog modal-lg" style="width:90%">'+
@@ -4392,8 +4396,10 @@ $("body").on("click", ".editarCronograma", function(event){
 						'										<tbody>'+
 						'			      							<form class="form-horizontal" role="form">'+
 						'												<tr><td><label for="nombreCronograma">Nombre</label><input type="text" id="nombreCronograma" value="'+actividades[0].nombre+'" class="form-control" /></td><td><label for="descripcionCronograma">Descripcion</label><input type="text" id="descripcionCronograma" class="form-control" value="'+actividades[0].descripcion+'"  /></td></tr>'+
-						'												<tr><td><div class="form-group"><label for="unidadMedidaIdCronograma">Unidad de Medida</label><select id="selectorUnidadMedidaCronograma" class="form-control">'+optionUnidadMedida+'</div></td><td><div class="form-group"><label for="hitoTipoIdCronograma">Tipo Cronograma</label><select id="selectorHitoTipoIdCronograma" class="form-control">"'+optionTipoHito+'"</div></td></tr>'+
+						'												<tr><td><div class="form-group"><label for="unidadMedidaIdCronograma">Unidad de Medida</label><select id="selectorUnidadMedidaCronograma" class="form-control">'+optionUnidadMedida+'</select></div></td><td><div class="form-group"><label for="hitoTipoIdCronograma">Tipo Cronograma</label><select id="selectorHitoTipoIdCronograma" class="form-control">"'+optionTipoHito+'"</select></div></td></tr>'+
 						'												<tr><td><label for="proporcionCronograma">Proporción</label><input type="text" id="proporcionCronograma" value='+actividades[0].proporcion+' class="form-control" /></td><td><label for="pesoCronograma">Peso</label><input type="text" id="pesoCronograma" class="form-control" value='+actividades[0].peso+'  /></td></tr>'+
+						'												<tr><td><div class="form-group"><label for="acumulableCronograma">Acumulable</label><select id="acumulableCronograma" class="form-control" placeholder="Ingrese Tipo Acumulable">'+optionAcumulable+'</select></div></td><td></td></tr>'+
+						
 						'			      							</form>	'+												
 						'										</tbody>'+
 						'									</table>'+
@@ -4411,7 +4417,8 @@ $("body").on("click", ".editarCronograma", function(event){
 						
 		$("#programacion").append(cuerpoModalEditarCronograma);
 		$('#selectorUnidadMedidaCronograma > option[value="'+actividades[0].unidad_medida_id+'"]').attr('selected', 'selected');
-		$('#selectorHitoTipoIdCronograma > option[value="'+actividades[0].hito_tipo_id+'"]').attr('selected', 'selected');	
+		$('#selectorHitoTipoIdCronograma > option[value="'+actividades[0].hito_tipo_id+'"]').attr('selected', 'selected');
+		$('#acumulableCronograma > option[value="'+actividades[0].acumulable+'"]').attr('selected', 'selected');	
 
 		$('#modalEditarCronograma').modal('show');		
 	
@@ -4563,8 +4570,10 @@ $("body").on("click", ".actualizarCronograma", function(event){
     var tipoCronograma = $("#selectorHitoTipoIdCronograma option:selected").val();
     var proporcionCronograma = $("#proporcionCronograma").val();
     var pesoCronograma = $("#versionCronograma").val();
+    var acumulable = $("#acumulableCronograma").val();
+
     
-    //aca vacï¿½o el formulario de ediciï¿½n de cronograma
+    //aca vacio el formulario de edición de cronograma
     $("#nombreCronograma").val('');
     $("#descripcionCronograma").val('');
     $("#selectorUnidadMedidaCronograma").val('');
@@ -4582,6 +4591,7 @@ $("body").on("click", ".actualizarCronograma", function(event){
     datos.hito_tipo_id = tipoCronograma;
     datos.proporcion = proporcionCronograma;
     datos.peso = pesoCronograma;
+    datos.acumulable = acumulable;
 
     
   	var info = JSON.stringify(datos);
@@ -4628,7 +4638,7 @@ $("body").on("click", ".guardarActividad",function(event){
 	    var accion_id = document.getElementById("accionIdActividad").value;
 	    var unidad_medida_id = document.getElementById("unidadMedidaIdActividad").value;
 	    var hito_tipo_id = document.getElementById("hitoTipoIdActividad").value;
-	   // var acumulable = document.getElementById("acumulableActividad").value;
+	   var acumulable = document.getElementById("acumulableActividad").value;
 
 
 		var objeto = new Object();
@@ -4641,7 +4651,7 @@ $("body").on("click", ".guardarActividad",function(event){
 		objeto.accion_id = accion_id;
 		objeto.unidad_medida_id = unidad_medida_id;
 		objeto.hito_tipo_id = hito_tipo_id;
-		//objeto.acumulable = acumulable;
+		objeto.acumulable = acumulable;
 
 		
 	  	var info = JSON.stringify(objeto);
@@ -7222,7 +7232,7 @@ $("body").on("click", ".consultaEditarHito",function(event){
 	var accionId = idParsed[4];
 	var cronogramaId = idParsed[5];
 	var programacionId = idParsed[6];
-
+ 
 
 	var programacionWebService = $.ajax({
 		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getProgramacion&programacionId='+programacionId,
@@ -7596,8 +7606,10 @@ $("body").on("click", ".modalDestinatario",function(event){
 	$("#programacion").append(cuerpoModalDestinatario);
 	$("#listaDestinatarioAccion").html("");
 	$("#listaDestinatarioAccion").html(cuerpoDestinatarioAccion);
+	$('#tipoDestinatarioAccion > option[value="1"]').attr('selected', 'selected');
 	$('#modalDestinatario').modal('show');
 	$('#tipoDestinatarioAccion').change();
+
 
 	
 });
