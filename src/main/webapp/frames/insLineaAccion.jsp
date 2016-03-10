@@ -1668,26 +1668,16 @@
 			  	async:false       
 			}).responseText;
 			catalogoAccion = JSON.parse(catalogoAccion);
-			if (accion[a].borrado == false){
-				cuerpoAccion +="<tr><td class='text-center'>"+catalogoAccion[0].nombre+"</td>";
-				}else{
-					<% if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0")){%>
-					cuerpoAccion +="<tr><td class='text-center'><del>"+catalogoAccion[0].nombre+"</del></td>";
-					<% }%>
-				}
+
+				//cuerpoAccion +="<tr><td class='text-center'>"+catalogoAccion[0].nombre+"</td>";
+
 			
 			for(var d = 0; d < departamentos.length; d++)
 			{
 				if(accion[a].departamentoId == departamentos[d].idDepartamento){
 					nombreDepartamento = departamentos[d].nombreDepartamento;
-					if (accion[a].borrado == false){
-					cuerpoAccion +="<td class='text-center'>"+nombreDepartamento+"</td>";
-					}else{
-						<% if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0")){%>
-						cuerpoAccion +="<td class='text-center'><del>"+nombreDepartamento+"</del></td>";
-						<% }%>
+					//cuerpoAccion +="<td class='text-center'>"+nombreDepartamento+"</td>";
 					}
-				}
 			}
 			
 
@@ -1695,14 +1685,7 @@
 			{
 				if(accion[a].distritoId == distritos[e].id && accion[a].departamentoId == distritos[e].departamentoId){
 					nombreDistrito = distritos[e].descripcion;
-					
-					if (accion[a].borrado == false){
-					cuerpoAccion +="<td class='text-center'>"+nombreDistrito+"</td>";
-					}else{
-						<% if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0")){%>
-						cuerpoAccion +="<td class='text-center'><del>"+nombreDistrito+"<del></td>";
-						<% }%>
-					}
+
 				}
 			}
 			
@@ -1720,17 +1703,18 @@
 					}
 				}
 					
-			
-			
-			if(accion[a].borrado == false){	
-
-			cuerpoAccion +="<td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+nombreUnidadMedidaAccion+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm modalVincularProducto' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos Presupuestarios' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"><span>Gs</span></button><button type='button' class='btn btn-default btn-sm agregarActividad' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" ><span class='glyphicon glyphicon-time'></span></button><button type='button' class='btn btn-default btn-sm editarAccion' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button><button type='button' class='btn btn-default btn-sm modalDestinatario'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Agregar Destinatario'><span class='glyphicon glyphicon-user'></span></button></td></tr>";
-			
+			if(accion[a].borrado == true){
+				cuerpoAccion +="<tr><td class='text-center'><del>"+catalogoAccion[0].nombre+"</del></td><td class='text-center'><del>"+nombreDepartamento+"</del></td><td class='text-center'><del>"+nombreDistrito+"</del></td><td class='text-center'><del>"+accion[a].fechaInicio+"</del></td><td class='text-center'><del>"+accion[a].fechaFin+"</del></td><td class='text-center'><del>"+nombreUnidadMedidaAccion+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</del></td><td class='text-center'>";
 			}else{
-				<% if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0")){%>
-				cuerpoAccion +="<td class='text-center'><del>"+accion[a].fechaInicio+"</del></td><td class='text-center'><del>"+accion[a].fechaFin+"</del></td><td class='text-center'><del>"+nombreUnidadMedidaAccion+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</del></td><td class='text-center'><button type='button' class='btn btn-default btn-sm modalVincularProducto' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos Presupuestarios' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"><span>Gs.</span></button><button type='button' class='btn btn-default btn-sm agregarActividad' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+"><span class='glyphicon glyphicon-time'></span></button><button type='button' class='btn btn-default btn-sm editarAccion' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button><button type='button' class='btn btn-default btn-sm modalDestinatario'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Agregar Destinatario'><span class='glyphicon glyphicon-user'></span></button></td></tr>";
-				<% }%>
+				cuerpoAccion +="<tr><td class='text-center'>"+catalogoAccion[0].nombre+"</td><td class='text-center'>"+nombreDepartamento+"</td><td class='text-center'>"+nombreDistrito+"</td><td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+nombreUnidadMedidaAccion+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'>";
 			}
+			
+			<% if (attributes.get("role_id").toString().equals("3")){%>
+				cuerpoAccion +="<button type='button' class='btn btn-default btn-sm modalVincularProducto' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos Presupuestarios' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"><span>Gs</span></button><button type='button' class='btn btn-default btn-sm modalDestinatario'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Agregar Destinatario'><span class='glyphicon glyphicon-user'></span></button></td></tr>";
+			<%}else{%>
+				cuerpoAccion +="<button type='button' class='btn btn-default btn-sm agregarActividad' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" ><span class='glyphicon glyphicon-time'></span></button><button type='button' class='btn btn-default btn-sm editarAccion' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button><button type='button' class='btn btn-default btn-sm modalDestinatario'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Agregar Destinatario'><span class='glyphicon glyphicon-user'></span></button></td></tr>";
+			<%}%>
+
 		}
 		
 		
@@ -1744,10 +1728,12 @@
 							'		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
 							'		        <h4 class="modal-title">Registrar Acción de '+nombreLineaAccion+' ('+nombreInstitucion+') - '+nombrePeriodo+'</h4>'+ 
 							'			</div>'+
-							'		    <div class="modal-body" id="accionCuerpo" >'+
+							'		    <div class="modal-body" id="accionCuerpo" >';
 							
-							
-							'		      	<div class="row">'+ 
+		<% if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>		
+		
+		
+		cuerpoModalAccion +='		      	<div class="row">'+ 
 							'		      		<div class="col-md-12">'+
 							'						<div class="box box-warning">'+
 							'		                	<div class="box-header with-border">'+
@@ -1813,9 +1799,10 @@
 							'							</div>'+
 							'                		</div>'+	
 							'                	</div>'+
-							'                </div>'+											
-											
-							'		      	<div class="row">'+ 
+							'                </div>';											
+		<%}%>	
+		
+		cuerpoModalAccion +='		      	<div class="row">'+ 
 							'		      		<div class="col-md-12">'+
 							'						<div class="box box-warning">'+
 							'		                	<div class="box-header with-border">'+
@@ -5289,7 +5276,7 @@ $("body").on("click", ".guardarAvance",function(event){
 	//Vaciar los inputs
 	$("#justificacionAvance").val("");
 	$("#cantidadAvance").val("");
-	$("#fechaEntregaAvance").val("");
+	//$("#fechaEntregaAvance").val("");
 	$("#cantidadBeneficiariosAvance").val("");
 	
 	var objeto = new Object();
