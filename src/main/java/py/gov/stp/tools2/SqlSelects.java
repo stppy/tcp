@@ -407,6 +407,48 @@ public class SqlSelects {
 		return objetos; 
 		}
 	
+	public static List<ResumenLineaAccion> selectLineasProgramadas(String condition) throws SQLException{
+		Connection conect=ConnectionConfiguration.conectar();
+		String query = " select * from resumen_linea_accion "+condition;
+
+		Statement statement = null;
+		ResultSet rs=null;
+		List<ResumenLineaAccion> objetos = new ArrayList<ResumenLineaAccion>();
+
+		try {
+			statement = conect.createStatement();
+			rs=statement.executeQuery(query);
+			while(rs.next()){
+				ResumenLineaAccion objeto = new ResumenLineaAccion();
+		
+				objeto.setInstitucionId(rs.getInt("ins_id"));
+			    objeto.setInstitucionSigla(rs.getString("sigla"));
+			    objeto.setLineaAccionId(rs.getInt("la_id"));
+			    objeto.setLineaAccionNombre(rs.getString("la_nombre"));
+			    objeto.setLineaAccionTipoId(rs.getInt("la_tipo_id"));
+			    objeto.setLineaAccionEstratagiaId(rs.getInt("la_estrategia_id"));
+			    objeto.setLineaAccionUnidadMedidaId(rs.getInt("la_um_id"));
+			    objeto.setLineaAccionUnidadMedidaNombre(rs.getString("la_um_descp"));
+			    objeto.setInsLineaAccionId(rs.getInt("ila_id"));
+			    objeto.setInsLineaAccionPeriodoId(rs.getInt("periodo"));
+			    objeto.setInsLineaAccionMeta(rs.getDouble("ila_meta"));
+			    objeto.setCantidadProgramada(rs.getDouble("cant_prog"));
+			    objeto.setInsOrden(rs.getInt("ins_orden"));
+			    objeto.setLineaAccionOrden(rs.getInt("la_orden"));
+			    objeto.setCant_dest(rs.getDouble("cant_dest"));
+			    objeto.setCosto_ac(rs.getDouble("costo_ac"));
+
+				objetos.add(objeto);
+			}
+		}
+		catch (SQLException e) {e.printStackTrace();}
+		finally{
+			if (statement != null) {statement.close();}
+			if (conect != null) {conect.close();}
+		}
+		return objetos; 
+		}
+	
 	public static List<Institucion> selectInstitucion(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
 		String query = " select * from institucion "+condition;
