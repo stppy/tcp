@@ -176,6 +176,14 @@ textarea { text-transform: uppercase; }
 			}).responseText;
 			unidadMedida = JSON.parse(unidadMedida);
 			
+			var instituciones = $.ajax({
+				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+			}).responseText;		
+			instituciones=JSON.parse(instituciones);
+			
 			
 			var lineasProgramadas = $.ajax({
 				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineasProgramadas',
@@ -186,13 +194,7 @@ textarea { text-transform: uppercase; }
 			lineasProgramadas = JSON.parse(lineasProgramadas);
 			
 			function renderAccion(){
-				var instituciones = $.ajax({
-					url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
-				  	type:'get',
-				  	dataType:'json',
-				  	async:false       
-				}).responseText;		
-				instituciones=JSON.parse(instituciones);
+				
 				
 				var tablaInstituciones="";
 				tablaInstituciones += '<tr>'+
