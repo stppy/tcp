@@ -62,6 +62,7 @@ $( document ).ready(function() {
 	usuarios = JSON.parse(usuarios);
 	usuarios = usuarios.usuarios;
 	
+	$(".skin-blue.sidebar-mini").addClass("sidebar-collapse");
 	$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
 	$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
 		var i=parseInt(0);
@@ -117,10 +118,11 @@ textarea { text-transform: uppercase; }
 		  <%@ include file="/frames/mainheader.jsp" %>
       </header>
       <!-- Left side column. contains the logo and sidebar -->
-      <aside class="main-sidebar">
-  			 <%@ include file="/frames/main-sidebar.jsp" %>
-      </aside>
-
+      <%if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0")){%>
+	      <aside class="main-sidebar">
+	  			 <%@ include file="/frames/main-sidebar.jsp"%>
+	      </aside>
+	  <% } %> 
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
