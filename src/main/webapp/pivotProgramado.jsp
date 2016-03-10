@@ -41,7 +41,6 @@
     <link type="text/css" rel="stylesheet" href="tablero_files/annotatedtimeline.css">
     <link type="text/css" rel="stylesheet" href="tablero_files/imagesparkline.css">
     <link type="text/css" rel="stylesheet" href="tablero_files/tooltip.css">
-    <script src="jquery-1.11.2.min" type="text/javascript"></script>
 </head>
 <body class="skin-blue sidebar-mini">
 <% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%>
