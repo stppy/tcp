@@ -210,7 +210,7 @@ textarea { text-transform: uppercase; }
 							  '</tr>';
 							  var clase=""; 
 			for(var m=0; m<instituciones.length;m++)
-				{			 
+				{
 				  tablaInstituciones += '<tr><td colspan="7"><strong>'+instituciones[m].sigla+'</strong></td></tr>';
 				  for(var n=0; n<lineasProgramadas.length;n++)
 					{

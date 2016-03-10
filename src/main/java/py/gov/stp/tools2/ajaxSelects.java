@@ -49,6 +49,7 @@ public class ajaxSelects extends HttpServlet {
     	String userNivelId = attributes.get("nivel_id").toString();
     	String userEntidadId = attributes.get("entidad_id").toString();
     	String userUnrId = attributes.get("unr_id").toString();
+    	String userRoleId = attributes.get("role_id").toString();
     	
     	String action = request.getParameter("action");
     	String accion = request.getParameter("accion");
@@ -405,10 +406,17 @@ public class ajaxSelects extends HttpServlet {
            	
         	if (action.equals("getLineasProgramadas")){
         		List objetos=null; 
+
+        		if (institucionId!=null) condition += " and id ='"+institucionId+"'";
+        		
         		condition = " where true ";
-        		String condition2="";
-        		 condition2 = " where entidad_id="+userEntidadId+" and nivel_id="+userNivelId ;
-        		if (!userUnrId.equals("0")){ condition2+= " and unidad_responsable_id="+userUnrId;}
+        		String condition2=" where true ";
+        		if (!userRoleId.equals("0") && !userRoleId.equals("1")){ 
+        			condition2 += " and entidad_id="+userEntidadId+" and nivel_id="+userNivelId;
+        			if ( !userUnrId.equals("0") ){
+        				condition2+= " and unidad_responsable_id="+userUnrId;
+        			}
+        		};
         		condition += " and ins_id IN (select id from institucion "+condition2+") ";
         		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
            		try {objetos = SqlSelects.selectLineasProgramadas(condition);}
@@ -420,8 +428,16 @@ public class ajaxSelects extends HttpServlet {
         	if (action.equals("getInstitucion")){
         		List objetos=null;
         		condition = " where true ";
+        		String condition2="";
+        		if (!userRoleId.equals("0") && !userRoleId.equals("1")){ 
+        			condition2 += " and entidad_id="+userEntidadId+" and nivel_id="+userNivelId;
+        			if ( !userUnrId.equals("0") ){
+        				condition2+= " and unidad_responsable_id="+userUnrId;
+        			}
+        		};
+        		
         		if (institucionId!=null) condition += " and id ='"+institucionId+"'";
-           		try {objetos = SqlSelects.selectInstitucion(condition);}
+           		try {objetos = SqlSelects.selectInstitucion(condition+condition2);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
