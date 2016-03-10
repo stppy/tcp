@@ -1656,21 +1656,18 @@
 		
 		var nombreDepartamento;
 		var nombreDistrito;
+		var nombreAccionCatalogo;
 		var cuerpoAccion = "";
 
 		for(var a = 0; a < accion.length; a++)
 		{
-			
-			var catalogoAccion = $.ajax({
-				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[a].accionCatalogoId,
-			  	type:'get',
-			  	dataType:'json',
-			  	async:false       
-			}).responseText;
-			catalogoAccion = JSON.parse(catalogoAccion);
-
-				//cuerpoAccion +="<tr><td class='text-center'>"+catalogoAccion[0].nombre+"</td>";
-
+					
+			for(var f = 0; f < catalogoAccion.length; f++)
+			{
+				if(accion[a].accionCatalogoId == catalogoAccion[f].id){
+					nombreAccionCatalogo = catalogoAccion[f].nombre;
+					}
+			}			
 			
 			for(var d = 0; d < departamentos.length; d++)
 			{
@@ -1688,10 +1685,7 @@
 
 				}
 			}
-			
 
-			
-			
 			var nombreUnidadMedidaAccion = "";
 				if(accion[a].accionCatalogoId == catalogoAccion[0].id){
 					nombreUnidadMedidaAccion = "";
@@ -1704,9 +1698,9 @@
 				}
 					
 			if(accion[a].borrado == true){
-				cuerpoAccion +="<tr><td class='text-center'><del>"+catalogoAccion[0].nombre+"</del></td><td class='text-center'><del>"+nombreDepartamento+"</del></td><td class='text-center'><del>"+nombreDistrito+"</del></td><td class='text-center'><del>"+accion[a].fechaInicio+"</del></td><td class='text-center'><del>"+accion[a].fechaFin+"</del></td><td class='text-center'><del>"+nombreUnidadMedidaAccion+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</del></td><td class='text-center'>";
+				cuerpoAccion +="<tr><td class='text-center'><del>"+nombreAccionCatalogo+"</del></td><td class='text-center'><del>"+nombreDepartamento+"</del></td><td class='text-center'><del>"+nombreDistrito+"</del></td><td class='text-center'><del>"+accion[a].fechaInicio+"</del></td><td class='text-center'><del>"+accion[a].fechaFin+"</del></td><td class='text-center'><del>"+nombreUnidadMedidaAccion+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</del></td><td class='text-center'>";
 			}else{
-				cuerpoAccion +="<tr><td class='text-center'>"+catalogoAccion[0].nombre+"</td><td class='text-center'>"+nombreDepartamento+"</td><td class='text-center'>"+nombreDistrito+"</td><td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+nombreUnidadMedidaAccion+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'>";
+				cuerpoAccion +="<tr><td class='text-center'>"+nombreAccionCatalogo+"</td><td class='text-center'>"+nombreDepartamento+"</td><td class='text-center'>"+nombreDistrito+"</td><td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+nombreUnidadMedidaAccion+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'>";
 			}
 			
 			<% if (attributes.get("role_id").toString().equals("3")){%>
