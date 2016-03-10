@@ -459,7 +459,7 @@ public class SqlSelects {
 	
 	public static List<LineaAccionPresupuesto> selectLineaAccionPresupuesto(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select * from linea_accion_programado "+condition;
+		String query = " select * from linea_accion_presupuesto "+condition;
 
 		Statement statement = null;
 		ResultSet rs=null;

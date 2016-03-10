@@ -64,7 +64,8 @@
 if (user != null) { %>
 
 <script>
-	
+<%if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0")){%>
+
 	$(document).ready(function(){
 
 		var entidadCas = "";
@@ -419,6 +420,9 @@ if (user != null) { %>
 		
 		
 	});
+<%}else{%>
+	window.location = "http://spr.stp.gov.py/tablero/resumenLineaAccion.jsp";
+<%}%>;	
 </script>
 	
     <div class="wrapper">
