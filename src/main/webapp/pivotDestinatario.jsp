@@ -16,7 +16,7 @@
 
 
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-        <title> Plan de Acción</title>
+        <title>Pivot Table - Plan de Acción</title>
         <link rel="stylesheet" type="text/css" href="tablero_files/pivot.css">
         <script type="text/javascript" src="tablero_files/d3.js"></script>
         <script type="text/javascript" src="tablero_files/jsapi"></script>
@@ -49,8 +49,7 @@
 if (user != null) { %>
 
 <script>
-$( document ).ready(function() {
-	var entidadCas = "";
+	$(do	var entidadCas = "";
 	entidadCas ="<%=attributes.get("entidad") %>";
 	usuarioRolCas="<%=attributes.get("role_id") %>";
 	var usuarios = $.ajax({
@@ -62,11 +61,10 @@ $( document ).ready(function() {
 	usuarios = JSON.parse(usuarios);
 	usuarios = usuarios.usuarios;
 	
-	$(".skin-blue.sidebar-mini").addClass("sidebar-collapse");
 	$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
 	$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
 		var i=parseInt(0);
-		/*var datosNiveles = $.ajax({
+		var datosNiveles = $.ajax({
 	        url:'http://spr.stp.gov.py/ajaxSelects?accion=getNiveles&nivel='+usuarios[0].nivel_id,
 	        type:'get',
 	        dataType:'json',
@@ -88,7 +86,7 @@ $( document ).ready(function() {
 	    	 if (datosEntidad[i].nivel==usuarios[0].nivel_id && datosEntidad[i].entidad==usuarios[0].entidad_id)
 	    		 break;
 	     }
-*/
+
 	     
 	});
 	     </script>
@@ -118,11 +116,10 @@ textarea { text-transform: uppercase; }
 		  <%@ include file="/frames/mainheader.jsp" %>
       </header>
       <!-- Left side column. contains the logo and sidebar -->
-      <%if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0")){%>
-	      <aside class="main-sidebar">
-	  			 <%@ include file="/frames/main-sidebar.jsp"%>
-	      </aside>
-	  <% } %> 
+      <aside class="main-sidebar">
+  			 <%@ include file="/frames/main-sidebar.jsp" %>
+      </aside>
+
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -144,15 +141,126 @@ textarea { text-transform: uppercase; }
 	          <div class="box" height="1000px">
 	            <div class="box-header with-border" height="1000px">
 	              <h3 class="box-title" id="tituloTipoPrograma">
-	                Lineas de Accion Por institucion
+	                Acciones Programadas
 	              </h3> 
 	              <div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
 	              </div>
 	            </div>
 	            <div class="box-body" >
 	            
-	          <table class="table table-striped table-bordered table-hover" id ="tablaLineasPorInstitucion">
+	          <table class="table table-striped table-bordered table-hover">
+	            	<tr>	  					
+	  					<td>
+							<input type="button" name="btn1" id="btn1" value="Ocultar Columnas">
+		<script src="tablero_files/a" type="text/javascript"></script>
+		<link href="tablero_files/uientableencharteditoren.css" type="text/css" rel="stylesheet">
+		<script src="tablero_files/formatendefaultenuientableenorgchartenmotionchartengaugeenann.js" type="text/javascript"></script>
+		<script type="text/javascript">
+		$( document ).ready(function() {
+            google.load("visualization", "1", {packages:["corechart", "charteditor"]});
+            $(function(){
+            	$.noConflict();
+                var derivers = $.pivotUtilities.derivers;
 
+				
+                $.getJSON("http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccionDestinatarios", function(mps) {
+                	$("#output").pivotUI(mps, {
+                        renderers: $.extend(
+                            $.pivotUtilities.renderers, 
+                            $.pivotUtilities.gchart_renderers, 
+                            $.pivotUtilities.d3_renderers
+                            )/*,
+                        derivedAttributes: {
+                            "Age Bin": derivers.bin("Age", 10),
+                            "Gender Imbalance": function(mp) {
+                                return mp["Gender"] == "Male" ? 1 : -1;
+                            }
+                        },
+                        cols: ["Age Bin"], rows: ["Gender"],
+                        rendererName: "Area Chart"
+						*/
+                    });
+                });
+             });
+		});
+        </script>
+
+        
+        <div id="output" style="margin: 30px;">
+        <table cellpadding="5">
+			<tbody>
+				<tr> 
+					<td>
+						<select class="pvtRenderer">
+							<option selected="selected" value="Table">Table</option>
+							<option value="Table Barchart">Table Barchart</option>
+							<option value="Heatmap">Heatmap</option>
+							<option value="Row Heatmap">Row Heatmap</option>
+							<option value="Col Heatmap">Col Heatmap</option>
+							<option value="Line Chart">Line Chart</option>
+							<option value="Bar Chart">Bar Chart</option>
+							<option value="Stacked Bar Chart">Stacked Bar Chart</option>
+							<option value="Area Chart">Area Chart</option>
+							<option value="Treemap">Treemap</option>
+						</select>
+					</td>
+					<td class="pvtAxisContainer pvtUnused pvtHorizList ui-sortable"></td>
+				</tr><tr>
+					<td class="pvtVals">
+						<select class="pvtAggregator">
+							<option selected="selected" value="Count">Count</option>
+							<option value="Count Unique Values">Count Unique Values</option>
+							<option value="List Unique Values">List Unique Values</option>
+							<option value="Sum">Sum</option>
+							<option value="Integer Sum">Integer Sum</option>
+							<option value="Average">Average</option>
+							<option value="Minimum">Minimum</option>
+							<option value="Maximum">Maximum</option>
+							<option value="Sum over Sum">Sum over Sum</option>
+							<option value="80% Upper Bound">80% Upper Bound</option>
+							<option value="80% Lower Bound">80% Lower Bound</option>
+							<option value="Sum as Fraction of Total">Sum as Fraction of Total</option>
+							<option value="Sum as Fraction of Rows">Sum as Fraction of Rows</option>
+							<option value="Sum as Fraction of Columns">Sum as Fraction of Columns</option>
+							<option value="Count as Fraction of Total">Count as Fraction of Total</option>
+							<option value="Count as Fraction of Rows">Count as Fraction of Rows</option>
+							<option value="Count as Fraction of Columns">Count as Fraction of Columns</option>
+						</select><br>
+					</td>
+					<td class="pvtAxisContainer pvtHorizList pvtCols ui-sortable"></td>
+				</tr><tr>
+					<td class="pvtAxisContainer pvtRows ui-sortable" valign="top"></td>
+					<td style="opacity: 1;" class="pvtRendererArea" valign="top">.</td>
+				</tr>
+			</tbody>
+		</table></div> 
+		<script>
+		document.getElementById('btn1').addEventListener('click',pasarParametro,false);
+		function pasarParametro()
+		{
+        	var t = document.getElementById('output');
+        	var boton =document.getElementById('btn1');
+        	var p = t.getElementsByTagName('td')
+        	//p[4].childNodes[0].nodeValue=p[4].childNodes[0].nodeValue + ' NO PUEDO MAS |'; 
+        	if (p[0].style.display != "none" && p[1].style.display != "none" && p[2].style.display != "none" && p[3].style.display != "none" && p[4].style.display != "none") {
+   				p[0].style.display = "none"; //ocultar columna 
+   				p[1].style.display = "none"; //ocultar columna 
+   				p[2].style.display = "none"; //ocultar columna 
+   				p[3].style.display = "none"; //ocultar columna 
+   				p[4].style.display = "none"; //ocultar columna 
+   				boton.value="Ver Columnas";
+ 			} else {
+    			p[0].style.display = ""; //mostrar columna 
+    			p[1].style.display = ""; //mostrar columna
+    			p[2].style.display = ""; //mostrar columna  
+    			p[3].style.display = ""; //mostrar columna 
+    			p[4].style.display = ""; //mostrar columna  
+    			boton.value="Ocultar Columnas";
+  			}
+        }
+	</script>
+	  					</td>
+	  				</tr>
 			
 	  			</table>
 	  			
@@ -164,82 +272,6 @@ textarea { text-transform: uppercase; }
           
           </div><!-- /.row -->
    
-   <script type="text/javascript">
-		$( document ).ready(function() {
-			function numeroConComa(x) {
-				return x.toString().replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-			}
-			
-			var unidadMedida = $.ajax({
-				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
-			  	type:'get',
-			  	dataType:'json',
-			  	async:false       
-			}).responseText;
-			unidadMedida = JSON.parse(unidadMedida);
-			
-			var instituciones = $.ajax({
-				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
-			  	type:'get',
-			  	dataType:'json',
-			  	async:false       
-			}).responseText;		
-			instituciones=JSON.parse(instituciones);
-			
-			
-			var lineasProgramadas = $.ajax({
-				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineasProgramadas',
-			  	type:'get',
-			  	dataType:'json',
-			  	async:false       
-			}).responseText;
-			lineasProgramadas = JSON.parse(lineasProgramadas);
-			
-			function renderAccion(){
-				
-				
-				var tablaInstituciones="";
-				tablaInstituciones += '<tr>'+
-							  	'<th>Línea de Acción</th>'+
-							  	'<th>Unidad de Medida</th>'+
-							  	'<th>Meta 2016</th>'+
-							  	'<th>Programación</th>'+
-							  	'<th>% Programado</th>'+
-							  	'<th>Destinatarios Estimados</th>'+
-							  	'<th>Inversion Estimada</th>'+
-							  '</tr>';
-							  var clase=""; 
-			for(var m=0; m<instituciones.length;m++)
-				{			 
-				  tablaInstituciones += '<tr><td colspan="7"><strong>'+instituciones[m].sigla+'</strong></td></tr>';
-				  for(var n=0; n<lineasProgramadas.length;n++)
-					{
-					  if (instituciones[m].id==lineasProgramadas[n].institucionId){
-						  clase=""; 
-						  if ((lineasProgramadas[n].cantidadProgramada/lineasProgramadas[n].insLineaAccionMeta)*100>=90){
-							  clase="bg-green-active color-palette"; 
-						  }else{
-							  clase="bg-red-active color-palette";
-						  }
-						  tablaInstituciones += '<tr>'+
-						  '<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
-						  '<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
-						  '<td>'+numeroConComa(lineasProgramadas[n].insLineaAccionMeta)+'</td>'+
-						  '<td>'+numeroConComa(lineasProgramadas[n].cantidadProgramada)+'</td>'+
-						  '<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadProgramada/lineasProgramadas[n].insLineaAccionMeta)*100).toFixed(2))+'</td>'+
-						  '<td>'+numeroConComa(lineasProgramadas[n].cant_dest)+'</td>'+
-						  '<td>'+numeroConComa(lineasProgramadas[n].costo_ac)+'</td>'+
-						  '</tr>';
-					  }
-					}
-				}
-
-			  $('#tablaLineasPorInstitucion').html(tablaInstituciones);
-			}
-			
-			renderAccion();
-		})
-        </script>
           
                
           

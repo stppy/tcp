@@ -1,5 +1,4 @@
 package py.gov.stp.tools2;
-import py.gov.stp.objetosV2.AccionCatalogo;
 import py.gov.stp.objetosV2.*;
 
 import java.sql.Connection;
@@ -407,7 +406,121 @@ public class SqlSelects {
 		return objetos; 
 		}
 	
-	public static List<ResumenLineaAccion> selectLineasProgramadas(String condition) throws SQLException{
+	public static List<LineaAccionDestinatarios> selectLineaAccionDestinatarios(String condition) throws SQLException{
+		Connection conect=ConnectionConfiguration.conectar();
+		String query = " select * from linea_accion_destinatarios "+condition;
+
+		Statement statement = null;
+		ResultSet rs=null;
+		List<LineaAccionDestinatarios> objetos = new ArrayList<LineaAccionDestinatarios>();
+
+		try {
+			statement = conect.createStatement();
+			rs=statement.executeQuery(query);
+			while(rs.next()){
+				LineaAccionDestinatarios objeto = new LineaAccionDestinatarios();
+		
+				objeto.setSigla(rs.getString("sigla"));
+				objeto.setLaId(rs.getInt("la_id"));
+				objeto.setLaNombre(rs.getString("la_nombre")); 
+				objeto.setLaTipoId(rs.getInt("la_tipo_id"));
+				objeto.setLaEstrategiaId(rs.getInt("la_estrategia_id"));
+				objeto.setLaUmId(rs.getInt("la_um_id"));
+				objeto.setLaUmDescp(rs.getString("la_um_descp")); 
+				objeto.setIlaId(rs.getInt("ila_id"));;
+				objeto.setPeriodo(rs.getInt("periodo"));
+				objeto.setIlaMeta(rs.getInt("ila_meta"));
+				objeto.setAccionPeso(rs.getInt("accion_peso"));
+				objeto.setAccionFechaIni(rs.getString("accion_fecha_ini")); 
+				objeto.setAccionFechaFin(rs.getString("accion_fecha_fin"));
+				objeto.setM1(rs.getString("m1"));
+				objeto.setM2(rs.getString("m2"));
+				objeto.setM3(rs.getString("m3")); 
+				objeto.setM4(rs.getString("m4")); 
+				objeto.setDeptoNombre(rs.getString("depto_nombre")); 
+				objeto.setIdAccionCatalogo(rs.getString("id_accion_catalogo"));
+				objeto.setAcNombre(rs.getString("ac_nombre"));
+				objeto.setAcUmId(rs.getString("ac_um_id"));
+				objeto.setAcUmDescp(rs.getString("ac_um_descp"));	
+				objeto.setTipoDestNombre(rs.getString("tipo_dest_nombre"));
+				objeto.setGrupoDestNombre(rs.getString("grupo_dest_nombre"));
+				objeto.setCantDest(rs.getString("cant_dest"));
+				
+				objetos.add(objeto);
+			}
+		}
+		catch (SQLException e) {e.printStackTrace();}
+		finally{
+			if (statement != null) {statement.close();}
+			if (conect != null) {conect.close();}
+		}
+		return objetos; 
+		}
+	
+	public static List<LineaAccionPresupuesto> selectLineaAccionPresupuesto(String condition) throws SQLException{
+		Connection conect=ConnectionConfiguration.conectar();
+		String query = " select * from linea_accion_presupuesto "+condition;
+
+		Statement statement = null;
+		ResultSet rs=null;
+		List<LineaAccionPresupuesto> objetos = new ArrayList<LineaAccionPresupuesto>();
+
+		try {
+			statement = conect.createStatement();
+			rs=statement.executeQuery(query);
+			while(rs.next()){
+				LineaAccionPresupuesto objeto = new LineaAccionPresupuesto();
+				
+				objeto.setSigla(rs.getString("sigla"));
+				objeto.setLaId(rs.getString("la_id"));
+				objeto.setLaNombre(rs.getString("la_nombre")); 
+				objeto.setLaTipoId(rs.getString("la_tipo_id"));
+				objeto.setLaEstrategiaId(rs.getString("la_estrategia_id"));
+				objeto.setLaUmId(rs.getString("la_um_id"));
+				objeto.setLaUmDescp(rs.getString("la_um_descp")); 
+				objeto.setIlaId(rs.getString("ila_id"));;
+				objeto.setPeriodo(rs.getString("periodo"));
+				objeto.setIlaMeta(rs.getString("ila_meta"));
+				objeto.setAccionPeso(rs.getString("accion_peso"));
+				objeto.setAccionFechaIni(rs.getString("accion_fecha_ini")); 
+				objeto.setAccionFechaFin(rs.getString("accion_fecha_fin"));
+				objeto.setM1(rs.getString("m1"));
+				objeto.setM2(rs.getString("m2"));
+				objeto.setM3(rs.getString("m3")); 
+				objeto.setM4(rs.getString("m4")); 
+				objeto.setDeptoNombre(rs.getString("depto_nombre")); 
+				objeto.setIdAccionCatalogo(rs.getString("id_accion_catalogo"));
+				objeto.setAcNombre(rs.getString("ac_nombre"));
+				objeto.setAcUmId(rs.getString("ac_um_id"));
+				objeto.setAcUmDescp(rs.getString("ac_um_descp"));	
+				objeto.setProporcion(rs.getString("proporcion"));
+				objeto.setSprNivelId(rs.getString("spr_nivel_id"));
+				objeto.setSprEntidadId(rs.getString("spr_entidad_id"));
+				objeto.setSprTipProgramaId(rs.getString("spr_tiprograma_id"));
+				objeto.setSprProgramaId(rs.getString("spr_programa_id"));
+				objeto.setSprSubProgramaId(rs.getString("spr_subprograma_id"));
+				objeto.setSprProyectoId(rs.getString("srp_proyecto_id"));
+				objeto.setSprProductoId(rs.getString("spr_producto_id"));
+				objeto.setuMedida(rs.getString("u_medida"));
+				objeto.setCantFisica(rs.getString("cant_fisica"));
+				objeto.setClase(rs.getString("clase"));
+				objeto.setProdAsigFInanciera(rs.getString("prod_asig_financiera"));
+				objeto.setAccionCosto(rs.getString("accion_costo"));
+				objeto.setSprAño(rs.getString("spr_anho"));
+				objeto.setSprVersion(rs.getString("spr_version"));
+
+				objetos.add(objeto);
+			}
+		}
+		catch (SQLException e) {e.printStackTrace();}
+		finally{
+			if (statement != null) {statement.close();}
+			if (conect != null) {conect.close();}
+		}
+		return objetos; 
+		}
+	
+		public static List<ResumenLineaAccion> selectLineasProgramadas(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
 		String query = " select * from resumen_linea_accion "+condition;
 
