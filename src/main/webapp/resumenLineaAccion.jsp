@@ -169,6 +169,21 @@ textarea { text-transform: uppercase; }
 				return x.toString().replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 			}
 			
+			function orden(a,b) {             
+				  if (a.orden < b.orden)
+				    return -1;
+				  if (a.orden > b.orden)
+				    return 1;
+				  return 0;
+				}
+			function lineaAccionOrden(a,b) {             
+				  if (a.lineaAccionOrden < b.lineaAccionOrden)
+				    return -1;
+				  if (a.lineaAccionOrden > b.lineaAccionOrden)
+				    return 1;
+				  return 0;
+				}
+			
 					
 			var lineasEstrategicas = $.ajax({
 				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaEstrategica',
@@ -177,6 +192,7 @@ textarea { text-transform: uppercase; }
 			  	async:false       
 			}).responseText;
 			lineasEstrategicas = JSON.parse(lineasEstrategicas);
+			lineasEstrategicas=lineasEstrategicas.sort(orden);
 			
 			var unidadMedida = $.ajax({
 				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
@@ -193,6 +209,7 @@ textarea { text-transform: uppercase; }
 			  	async:false       
 			}).responseText;		
 			instituciones=JSON.parse(instituciones);
+			instituciones=instituciones.sort(orden);
 			
 			
 			var lineasProgramadas = $.ajax({
@@ -202,7 +219,7 @@ textarea { text-transform: uppercase; }
 			  	async:false       
 			}).responseText;
 			lineasProgramadas = JSON.parse(lineasProgramadas);
-			
+			lineasProgramadas=lineasProgramadas.sort(lineaAccionOrden);
 			
 
 			function renderAccion(estrategia){
