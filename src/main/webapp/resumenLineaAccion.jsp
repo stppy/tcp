@@ -229,15 +229,6 @@ textarea { text-transform: uppercase; }
 				var tempInstituciones="";
 				var tempInstLineas="";
 				var flagIns=0;
-				tablaInstituciones += '<tr>'+
-							  	'<th>Línea de Acción</th>'+
-							  	'<th>Unidad de Medida</th>'+
-							  	'<th>Meta 2016</th>'+
-							  	'<th>Programación</th>'+
-							  	'<th>% Programado</th>'+
-							  	'<th>Destinatarios Estimados</th>'+
-							  	'<th>Inversion Estimada</th>'+
-							  '</tr>';
 							  var clase=""; 
 			for(var m=0; m<instituciones.length;m++)
 				{
@@ -274,9 +265,13 @@ textarea { text-transform: uppercase; }
 			}
 			
 			function renderLineasEstrategicas(){
-				var contenidoEnRow=""
+				var contenidoEnRow="";
+				var contenidoEnRowTemp="";
+				
 				for(var l=0; l<lineasEstrategicas.length;l++){
-					 contenidoEnRow+='<div class="row">'+
+					var lineasDeEstrategia="";
+					lineasDeEstrategia=renderAccion(lineasEstrategicas[l].id)
+					 contenidoEnRowTemp='<div class="row">'+
 				         '<div class="col-md-12">'+
 				          '<div class="box" height="1000px">'+
 				            '<div class="box-header with-border" height="1000px">'+
@@ -289,14 +284,30 @@ textarea { text-transform: uppercase; }
 				            '<div class="box-body" >'+
 				            
 				          '<table class="table table-striped table-bordered table-hover tablaLineasPorInstitucion">'+
-				          renderAccion(lineasEstrategicas[l].id)+
+				          '<tr>'+
+						  	'<th>Línea de Acción</th>'+
+						  	'<th>Unidad de Medida</th>'+
+						  	'<th>Meta 2016</th>'+
+						  	'<th>Programación</th>'+
+						  	'<th>% Programado</th>'+
+						  	'<th>Destinatarios Estimados</th>'+
+						  	'<th>Inversion Estimada</th>'+
+						  '</tr>'+
+				          lineasDeEstrategia+
 				  			'</table>'+
 				            '</div>'+
 						   '</div>'+
 						   '</div>'+
 						   '</div>';
+					if (lineasDeEstrategia.length>0){
+						contenidoEnRow+=contenidoEnRowTemp;
+						contenidoEnRowTemp="";
+						lineasDeEstrategia="";
+					}
 				}
-				$("#programacion").html(contenidoEnRow);
+				
+					$("#programacion").html(contenidoEnRow);
+				
 					
 			}
 			
