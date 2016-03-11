@@ -1810,18 +1810,9 @@
 							'		                    		</button>'+
 							'		                  		</div>'+
 							'               			</div>'+//fin box-heder
-							'               			<div class="box-body">'+
+							'               			<div class="box-body" id="cuerpoTablaAccion">'+
 							
-							'	                			<div class="table-responsive">'+
-							'	                				<table class="table table-hover table-bordered" id="dataTablesAcciones">'+
-							'	                					<thead>'+
-							'	                						<tr class="active"><th rowspan="2" class="text-center">Acción</th><th rowspan="2" class="text-center">Depto</th><th rowspan="2" class="text-center">Distrito</th><th rowspan="2" class="text-center">FechaInicio</th><th rowspan="2" class="text-center">FechaFin</th><th rowspan="2" class="text-center">Unidad Medida</th><th colspan="4" class="text-center">Metas</th><th rowspan="2" class="text-center" style="min-width:160px">Administrar Acción</th></tr>'+
-							'	                						<tr class="active"><th class="text-center">1er Trimestre</th><th class="text-center">2do Trimestre</th><th class="text-center">3er Trimestre</th><th class="text-center">4to Trimestre</th></tr>'+
-							'	                					</thead>'+
-							'	                						<tbody id="tablaAccionesPrecargadas">'+
-							'	                						</tbody>'+
-							'	                				</table>'+
-							'	                			</div>'+		                			
+                			
 					
 							'               			</div>'+//fin box-body
 							'                		</div>'+	
@@ -1837,7 +1828,20 @@
 							'</div>';
 							
 		$("#programacion").append(cuerpoModalAccion);
-		$('#tablaAccionesPrecargadas').html("");
+		$('#cuerpoTablaAccion').html("");
+
+		var tablaAccion ='     			<div class="table-responsive">'+
+		'	                				<table class="table table-hover table-bordered" id="dataTablesAcciones">'+
+		'	                					<thead>'+
+		'	                						<tr class="active"><th rowspan="2" class="text-center">Acción</th><th rowspan="2" class="text-center">Depto</th><th rowspan="2" class="text-center">Distrito</th><th rowspan="2" class="text-center">FechaInicio</th><th rowspan="2" class="text-center">FechaFin</th><th rowspan="2" class="text-center">Unidad Medida</th><th colspan="4" class="text-center">Metas</th><th rowspan="2" class="text-center" style="min-width:160px">Administrar Acción</th></tr>'+
+		'	                						<tr class="active"><th class="text-center">1er Trimestre</th><th class="text-center">2do Trimestre</th><th class="text-center">3er Trimestre</th><th class="text-center">4to Trimestre</th></tr>'+
+		'	                					</thead>'+
+		'	                						<tbody id="tablaAccionesPrecargadas">'+
+		'	                						</tbody>'+
+		'	                				</table>'+
+		'	                			</div>';
+		$('#cuerpoTablaAccion').append(tablaAccion);
+		
 		$('#tablaAccionesPrecargadas').append(cuerpoAccion);
 		$('#modalAccion').modal('show');
 		$("#selectorCatalogoAccion").change();
@@ -4060,8 +4064,20 @@ $("body").on("click", ".borrarAccion",function(event){
 				
 			}
 		}
-		
-		$('#tablaAccionesPrecargadas').html("");
+		$('#cuerpoTablaAccion').html("");
+
+		var tablaAccion ='     			<div class="table-responsive">'+
+		'	                				<table class="table table-hover table-bordered" id="dataTablesAcciones">'+
+		'	                					<thead>'+
+		'	                						<tr class="active"><th rowspan="2" class="text-center">Acción</th><th rowspan="2" class="text-center">Depto</th><th rowspan="2" class="text-center">Distrito</th><th rowspan="2" class="text-center">FechaInicio</th><th rowspan="2" class="text-center">FechaFin</th><th rowspan="2" class="text-center">Unidad Medida</th><th colspan="4" class="text-center">Metas</th><th rowspan="2" class="text-center" style="min-width:160px">Administrar Acción</th></tr>'+
+		'	                						<tr class="active"><th class="text-center">1er Trimestre</th><th class="text-center">2do Trimestre</th><th class="text-center">3er Trimestre</th><th class="text-center">4to Trimestre</th></tr>'+
+		'	                					</thead>'+
+		'	                						<tbody id="tablaAccionesPrecargadas">'+
+		'	                						</tbody>'+
+		'	                				</table>'+
+		'	                			</div>';		
+		$('#cuerpoTablaAccion').append(tablaAccion);
+				
 		$('#tablaAccionesPrecargadas').append(cuerpoAccion);
 		//$("#costoAccion").val('');
 		//$("#pesoAccion").val('');
@@ -4077,7 +4093,8 @@ $("body").on("click", ".borrarAccion",function(event){
 		$("#distritosDepartamento").val('');
 		$("#selectorCatalogoAccion").val('');
 		$("#unidadMedidaAccion").val('');
-		
+		$("#dataTablesAcciones").DataTable();
+
 		
 	}
 	
