@@ -41,7 +41,7 @@
     <link type="text/css" rel="stylesheet" href="tablero_files/annotatedtimeline.css">
     <link type="text/css" rel="stylesheet" href="tablero_files/imagesparkline.css">
     <link type="text/css" rel="stylesheet" href="tablero_files/tooltip.css">
-    <script src="jquery-1.11.2.min" type="text/javascript"></script>
+    <!--  <script src="jquery-1.11.2.min" type="text/javascript"></script> -->
 </head>
 <body class="skin-blue sidebar-mini">
 <% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%>
@@ -153,7 +153,6 @@ textarea { text-transform: uppercase; }
 	            
 	          <table class="table table-striped table-bordered table-hover" id ="tablaLineasPorInstitucion">
 
-			
 	  			</table>
 	  			
 	            </div>
@@ -169,6 +168,15 @@ textarea { text-transform: uppercase; }
 			function numeroConComa(x) {
 				return x.toString().replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 			}
+			
+					
+			var lineasEstrategicas = $.ajax({
+				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaEstrategica',
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+			}).responseText;
+			lineasEstrategicas = JSON.parse(lineasEstrategicas);
 			
 			var unidadMedida = $.ajax({
 				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
@@ -195,10 +203,15 @@ textarea { text-transform: uppercase; }
 			}).responseText;
 			lineasProgramadas = JSON.parse(lineasProgramadas);
 			
-			function renderAccion(){
+			
+
+			function renderAccion(estrategia){
 				
 				
 				var tablaInstituciones="";
+				var tempInstituciones="";
+				var tempInstLineas="";
+				var flagIns=0;
 				tablaInstituciones += '<tr>'+
 							  	'<th>Línea de Acción</th>'+
 							  	'<th>Unidad de Medida</th>'+
@@ -211,17 +224,19 @@ textarea { text-transform: uppercase; }
 							  var clase=""; 
 			for(var m=0; m<instituciones.length;m++)
 				{
-				  tablaInstituciones += '<tr><td colspan="7"><strong>'+instituciones[m].sigla+'</strong></td></tr>';
+				tempInstituciones = '<tr><td colspan="7"><strong>'+instituciones[m].sigla+'</strong></td></tr>';
 				  for(var n=0; n<lineasProgramadas.length;n++)
 					{
-					  if (instituciones[m].id==lineasProgramadas[n].institucionId){
-						  clase=""; 
+					  if (instituciones[m].id==lineasProgramadas[n].institucionId && lineasProgramadas[n].lineaAccionEstratagiaId==estrategia){
+						  clase="";
+						  flagIns++;
 						  if ((lineasProgramadas[n].cantidadProgramada/lineasProgramadas[n].insLineaAccionMeta)*100>=90){
 							  clase="bg-green-active color-palette"; 
 						  }else{
 							  clase="bg-red-active color-palette";
 						  }
-						  tablaInstituciones += '<tr>'+
+						  
+						  tempInstLineas += '<tr>'+
 						  '<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
 						  '<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
 						  '<td>'+numeroConComa(lineasProgramadas[n].insLineaAccionMeta)+'</td>'+
@@ -232,12 +247,44 @@ textarea { text-transform: uppercase; }
 						  '</tr>';
 					  }
 					}
+				  if (flagIns>0){
+					  tablaInstituciones+=tempInstituciones+tempInstLineas;
+				  }
+				  tempInstituciones="";tempInstLineas="";flagIns=0;
 				}
 
-			  $('#tablaLineasPorInstitucion').html(tablaInstituciones);
+			 return tablaInstituciones;
 			}
 			
-			renderAccion();
+			function renderLineasEstrategicas(){
+				var contenidoEnRow=""
+				for(var l=0; l<lineasEstrategicas.length;l++){
+					 contenidoEnRow+='<div class="row">'+
+				         '<div class="col-md-12">'+
+				          '<div class="box" height="1000px">'+
+				            '<div class="box-header with-border" height="1000px">'+
+				              '<h3 class="box-title" id="tituloTipoPrograma">'+
+				              lineasEstrategicas[l].nombre+
+				              '</h3> '+
+				              '<div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+				              '</div>'+
+				            '</div>'+
+				            '<div class="box-body" >'+
+				            
+				          '<table class="table table-striped table-bordered table-hover tablaLineasPorInstitucion">'+
+				          renderAccion(lineasEstrategicas[l].id)+
+				  			'</table>'+
+				            '</div>'+
+						   '</div>'+
+						   '</div>'+
+						   '</div>';
+				}
+				$("#programacion").html(contenidoEnRow);
+					
+			}
+			
+			
+			renderLineasEstrategicas();
 		})
         </script>
           
