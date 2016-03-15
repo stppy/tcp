@@ -4221,12 +4221,17 @@ $("body").on("click", ".borrarAccion",function(event){
 		
 			if(actividades[u].borrado == false)
 			{
-				cuerpoActividad+='<tr><td>'+actividades[u].nombre+'</td><td>'+actividades[u].descripcion+'</td><td>'+nombreUnidadMedida+'</td><td>'+nombreHitoTipo+'</td><td>'+actividades[u].proporcion+'</td><td>'+actividades[u].peso+'</td><td>'+acumulable(actividades[u].acumulable)+'</td><td><button type="button" class="btn btn-default btn-sm editarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+' data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm agregarProgramacion" data-toggle="tooltip" data-placement="top" title="Agregar Hito" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-time" ></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
+				cuerpoActividad+='<tr><td>'+actividades[u].nombre+'</td><td>'+actividades[u].descripcion+'</td><td>'+nombreUnidadMedida+'</td><td>'+nombreHitoTipo+'</td><td>'+actividades[u].proporcion+'</td><td>'+actividades[u].peso+'</td><td>'+acumulable(actividades[u].acumulable)+'</td><td>';
 			}else{
-				<% if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0")){%>
-				cuerpoActividad+='<tr><td><del>'+actividades[u].nombre+'</del></td><td><del>'+actividades[u].descripcion+'</del></td><td><del>'+nombreUnidadMedida+'</del></td><td><del>'+nombreHitoTipo+'</del></td><td><del>'+actividades[u].proporcion+'</del></td><td><del>'+actividades[u].peso+'</del></td><td><del>'+acumulable(actividades[u].acumulable)+'</del></td><td><button type="button" class="btn btn-default btn-sm editarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+' data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm agregarProgramacion" data-toggle="tooltip" data-placement="top" title="Agregar Hito" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-time"></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
-				<% }%>
+				cuerpoActividad+='<tr><td><del>'+actividades[u].nombre+'</del></td><td><del>'+actividades[u].descripcion+'</del></td><td><del>'+nombreUnidadMedida+'</del></td><td><del>'+nombreHitoTipo+'</del></td><td><del>'+actividades[u].proporcion+'</del></td><td><del>'+actividades[u].peso+'</del></td><td><del>'+acumulable(actividades[u].acumulable)+'</del></td><td>';
 			}
+			
+			<% if (attributes.get("role_id").toString().equals("3")){%>
+				cuerpoActividad +='<button type="button" class="btn btn-default btn-sm agregarProgramacion" data-toggle="tooltip" data-placement="top" title="Agregar Hito" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-time" ></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
+			<%}else{%>
+				cuerpoActividad +='<button type="button" class="btn btn-default btn-sm editarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+' data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm agregarProgramacion" data-toggle="tooltip" data-placement="top" title="Agregar Hito" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-time" ></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
+			<%}%>
+			
 		}
 		
 		
@@ -4244,7 +4249,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		'			</div>'+
 		'		    <div class="modal-body" id="accionCuerpo" >'+
 		
-		
+		<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>		
 		'		      	<div class="row">'+ 
 		'		      		<div class="col-md-12">'+
 		'						<div class="box box-warning">'+
@@ -4280,7 +4285,10 @@ $("body").on("click", ".borrarAccion",function(event){
 		'                		</div>'+	
 		'                	</div>'+
 		'                </div>'+											
-						
+		
+		<% } %>		
+
+		
 		'		      	<div class="row">'+ 
 		'		      		<div class="col-md-12">'+
 		'						<div class="box box-warning">'+
@@ -4935,12 +4943,17 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	{
 		if(programacionWebService[n].borrado == false)
 		{
-			cuerpoActividades += "<tr><td>"+programacionWebService[n].cantidad+"</td><td>"+programacionWebService[n].fechaEntrega+"</td><td>"+programacionWebService[n].version+"</td><td>"+cronogramas[0].nombre+"</td><td>"+nombreUnidadMedidaHitoProgramado+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm consultaEditarHito'  data-toggle='tooltip' data-placement='top' title='Editar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacionWebService[n].id+" ><span class='glyphicon glyphicon-pencil' ></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarHito' title='Borrar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacionWebService[n].id+" ><span class='glyphicon glyphicon-trash' </span></button></td></tr>";
+			cuerpoActividades += "<tr><td>"+programacionWebService[n].cantidad+"</td><td>"+programacionWebService[n].fechaEntrega+"</td><td>"+programacionWebService[n].version+"</td><td>"+cronogramas[0].nombre+"</td><td>"+nombreUnidadMedidaHitoProgramado+"</td><td class='text-center'>";
 		}else{
-			<% if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0")){%>
-			cuerpoActividades += "<tr><td><del>"+programacionWebService[n].cantidad+"</del></td><td><del>"+programacionWebService[n].fechaEntrega+"</del></td><td><del>"+programacionWebService[n].version+"</del></td><td><del>"+cronogramas[0].nombre+"</del></td><td><del>"+nombreUnidadMedidaHitoProgramado+"</del></td><td class='text-center'><button type='button' class='btn btn-default btn-sm consultaEditarHito'  data-toggle='tooltip' data-placement='top' title='Editar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacionWebService[n].id+" ><span class='glyphicon glyphicon-pencil' ></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarHito' title='Borrar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacionWebService[n].id+" ><span class='glyphicon glyphicon-trash' </span></button></td></tr>";
-			<% }%>
+			cuerpoActividades += "<tr><td><del>"+programacionWebService[n].cantidad+"</del></td><td><del>"+programacionWebService[n].fechaEntrega+"</del></td><td><del>"+programacionWebService[n].version+"</del></td><td><del>"+cronogramas[0].nombre+"</del></td><td><del>"+nombreUnidadMedidaHitoProgramado+"</del></td><td class='text-center'>";
 		}
+		
+		<% if (attributes.get("role_id").toString().equals("3")){%>
+			cuerpoActividades +="</td></tr>";
+		<%}else{%>
+			cuerpoActividades +="<button type='button' class='btn btn-default btn-sm consultaEditarHito'  data-toggle='tooltip' data-placement='top' title='Editar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacionWebService[n].id+" ><span class='glyphicon glyphicon-pencil' ></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarHito' title='Borrar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacionWebService[n].id+" ><span class='glyphicon glyphicon-trash' </span></button></td></tr>";
+		<%}%>
+	
 	}
 	
 	
@@ -4954,6 +4967,8 @@ $("body").on("click", ".agregarProgramacion",function(event){
 							'		        <h4 class="modal-title">Programación de '+accionCatalogo[0].nombre+' ('+lineaAccion[0].nombre+' - '+periodo[0].nombre+')</h4>'+ 
 							'			</div>'+
 							'		    <div class="modal-body">'+
+							
+							<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>		
 							'		      	<div class="row">'+ 
 							'		      		<div class="col-md-12">'+
 							'						<div class="box box-warning">'+
@@ -4990,6 +5005,8 @@ $("body").on("click", ".agregarProgramacion",function(event){
 							'                	</div>'+
 							'                </div>'+											
 											
+							<% }%>		
+
 							'		      	<div class="row">'+ 
 							'		      		<div class="col-md-12">'+
 							'						<div class="box box-warning">'+
@@ -7549,11 +7566,17 @@ $("body").on("click", ".modalDestinatario",function(event){
 		{
 
 			<% if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0")){%>
-			cuerpoDestinatarioAccion += '<tr><td><del>'+webServicesBeneficiarioTipo[0].nombre+'</del></td><td><del>'+webServicesBeneficiarioGrupo[0].nombre+'</del></td><td><del>'+webServicesBeneficiarioAccion[a].descripcion+'</del></td><td><del>'+webServicesBeneficiarioAccion[a].cantidad+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarDestinatario" data-toggle="tooltip" data-placement="top" title="Editar Destinatario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarDestinatarioAccion" data-toggle="tooltip" data-placement="top" title="Borrar Destinatario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+			cuerpoDestinatarioAccion += '<tr><td><del>'+webServicesBeneficiarioTipo[0].nombre+'</del></td><td><del>'+webServicesBeneficiarioGrupo[0].nombre+'</del></td><td><del>'+webServicesBeneficiarioAccion[a].descripcion+'</del></td><td><del>'+webServicesBeneficiarioAccion[a].cantidad+'</del></td><td class="text-center">';
 			<% }%>
 		}else{
-			cuerpoDestinatarioAccion += '<tr><td>'+webServicesBeneficiarioTipo[0].nombre+'</td><td>'+webServicesBeneficiarioGrupo[0].nombre+'</td><td>'+webServicesBeneficiarioAccion[a].descripcion+'</td><td>'+webServicesBeneficiarioAccion[a].cantidad+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarDestinatario" data-toggle="tooltip" data-placement="top" title="Editar Destinatario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarDestinatarioAccion" data-toggle="tooltip" data-placement="top" title="Borrar Destinatario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+			cuerpoDestinatarioAccion += '<tr><td>'+webServicesBeneficiarioTipo[0].nombre+'</td><td>'+webServicesBeneficiarioGrupo[0].nombre+'</td><td>'+webServicesBeneficiarioAccion[a].descripcion+'</td><td>'+webServicesBeneficiarioAccion[a].cantidad+'</td><td class="text-center">';
 		}
+		
+		<% if (attributes.get("role_id").toString().equals("3")){%>
+			cuerpoDestinatarioAccion +='</td></tr>';
+		<%}else{%>
+			cuerpoDestinatarioAccion +='<button type="button" class="btn btn-default btn-sm consultaEditarDestinatario" data-toggle="tooltip" data-placement="top" title="Editar Destinatario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarDestinatarioAccion" data-toggle="tooltip" data-placement="top" title="Borrar Destinatario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+		<%}%>
 	}
 			
 	var cuerpoModalDestinatario = "";
@@ -7565,8 +7588,11 @@ $("body").on("click", ".modalDestinatario",function(event){
 						'		        <button type="button" class="close agregarAccion" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+' data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
 						'			</div>'+
 						'		    <div class="modal-body">'+
+						
+						'		      		<div class="row">'+		
+						
+						<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>		
 
-						'		      		<div class="row">'+						
 						'		      		<div class="col-md-12">'+
 						'						<div class="box box-warning box-solid">'+
 						'		                	<div class="box-header with-border">'+
@@ -7608,6 +7634,8 @@ $("body").on("click", ".modalDestinatario",function(event){
 						'									 </div>'+									
 						'				      			 	</div>'+
 						'				      			</div>'+							
+
+						<% }%>		
 
 
 						'		      					<div class="col-md-12">'+

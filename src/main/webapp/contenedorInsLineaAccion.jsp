@@ -64,7 +64,7 @@
 if (user != null) { %>
 
 <script>
-<%if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0")){%>
+<%-- <%if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0")){%> --%>
 
 	$(document).ready(function(){
 
@@ -420,9 +420,9 @@ if (user != null) { %>
 		
 		
 	});
-<%}else{%>
+<%-- <%}else{%>
 	window.location = "http://spr.stp.gov.py/tablero/resumenLineaAccion.jsp";
-<%}%>;	
+<%}%>;	 --%>
 </script>
 	
     <div class="wrapper">
