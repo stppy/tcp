@@ -368,8 +368,13 @@ public class ajaxSelects extends HttpServlet {
         	if (action.equals("getPivotLineasProgramadas")){
         		List objetos=null; 
         		condition = " where true ";
-        		String condition2 = " where entidad_id="+userEntidadId+" and nivel_id="+userNivelId ;
-        		if (!userUnrId.equals("0")){ condition2+= " and unidad_responsable_id="+userUnrId;}
+        		String condition2=" where true ";
+        		if (!userRoleId.equals("0") && !userRoleId.equals("1")){ 
+        			condition2 += " and entidad_id="+userEntidadId+" and nivel_id="+userNivelId;
+        			if ( !userUnrId.equals("0") ){
+        				condition2+= " and unidad_responsable_id="+userUnrId;
+        			}
+        		};
         		condition += " and ins_id IN (select id from institucion "+condition2+") ";
         		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
            		try {objetos = SqlSelects.selectPivotLineasProgramadas(condition);}
@@ -379,10 +384,15 @@ public class ajaxSelects extends HttpServlet {
         	}
         	
         	if (action.equals("getLineaAccionDestinatarios")){
-        		List objetos=null;
+        		List objetos=null; 
         		condition = " where true ";
-        		String condition2 = " where entidad_id="+userEntidadId+" and nivel_id="+userNivelId ;
-        		if (!userUnrId.equals("0")){ condition2+= " and unidad_responsable_id="+userUnrId;}
+        		String condition2=" where true ";
+        		if (!userRoleId.equals("0") && !userRoleId.equals("1")){ 
+        			condition2 += " and entidad_id="+userEntidadId+" and nivel_id="+userNivelId;
+        			if ( !userUnrId.equals("0") ){
+        				condition2+= " and unidad_responsable_id="+userUnrId;
+        			}
+        		};
         		condition += " and ins_id IN (select id from institucion "+condition2+") ";
         		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
         		try {objetos = SqlSelects.selectLineaAccionDestinatarios(condition);}
@@ -392,10 +402,15 @@ public class ajaxSelects extends HttpServlet {
         	}
         	
         	if (action.equals("getPivotLineaAccionPresupuesto")){
-        		List objetos=null;
+        		List objetos=null; 
         		condition = " where true ";
-        		String condition2 = " where entidad_id="+userEntidadId+" and nivel_id="+userNivelId ;
-        		if (!userUnrId.equals("0")){ condition2+= " and unidad_responsable_id="+userUnrId;}
+        		String condition2=" where true ";
+        		if (!userRoleId.equals("0") && !userRoleId.equals("1")){ 
+        			condition2 += " and entidad_id="+userEntidadId+" and nivel_id="+userNivelId;
+        			if ( !userUnrId.equals("0") ){
+        				condition2+= " and unidad_responsable_id="+userUnrId;
+        			}
+        		};
         		condition += " and ins_id IN (select id from institucion "+condition2+") ";
         		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
         		try {objetos = SqlSelects.selectLineaAccionPresupuesto(condition);}
