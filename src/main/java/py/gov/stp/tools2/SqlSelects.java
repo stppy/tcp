@@ -445,6 +445,7 @@ public class SqlSelects {
 				objeto.setTipoDestNombre(rs.getString("tipo_dest_nombre"));
 				objeto.setGrupoDestNombre(rs.getString("grupo_dest_nombre"));
 				objeto.setCantDest(rs.getString("cant_dest"));
+				objeto.setDescDest(rs.getString("desc_dest"));
 				
 				objetos.add(objeto);
 			}
