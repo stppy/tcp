@@ -22,6 +22,7 @@ public class LineasProgramadas {
 	protected String crono_prop; 
 	protected String crono_peso; 
 	protected String crono_um_id;
+	protected String crono_um_nombre;
 	protected String crono_tipo_nombre;
 	protected String cant_prog; 
 	protected String fecha_entrega;
@@ -150,6 +151,12 @@ public class LineasProgramadas {
 	}
 	public void setCrono_um_id(String crono_um_id) {
 		this.crono_um_id = crono_um_id;
+	}
+	public String getCrono_um_nombre() {
+		return crono_um_nombre;
+	}
+	public void setCrono_um_nombre(String crono_um_nombre) {
+		this.crono_um_nombre = crono_um_nombre;
 	}
 	public String getCrono_tipo_nombre() {
 		return crono_tipo_nombre;

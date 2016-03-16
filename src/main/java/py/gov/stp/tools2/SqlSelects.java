@@ -391,6 +391,7 @@ public class SqlSelects {
 				objeto.setCrono_prop(rs.getString("crono_prop")); 
 				objeto.setCrono_peso(rs.getString("crono_peso")); 
 				objeto.setCrono_um_id(rs.getString("crono_um_id"));
+				objeto.setCrono_um_nombre(rs.getString("crono_um_nombre"));
 				objeto.setCrono_tipo_nombre(rs.getString("crono_tipo_nombre"));
 				objeto.setCant_prog(rs.getString("cant_prog")); 
 				objeto.setFecha_entrega(rs.getString("fecha_entrega"));
