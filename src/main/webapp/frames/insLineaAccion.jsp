@@ -2691,14 +2691,7 @@ $("body").on("click", ".borrarAccion",function(event){
     		var fila ="";
     		for(var f = 0; f < accionHasProducto.length; f++)
     		{
-    			if(accionHasProducto[f].borrado == true){
-    				<% if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0")){%>
-    				fila += "<tr><td><del>"+accionHasProducto[f].nivel+"</del></td><td><del>"+accionHasProducto[f].entidad+"</del></td><td><del>"+accionHasProducto[f].tipoPrograma+"</del></td><td><del>"+accionHasProducto[f].programa+"</del></td><td><del>"+accionHasProducto[f].subPrograma+"</del></td><td><del>"+accionHasProducto[f].proyecto+"</del></td><td><del>"+accionHasProducto[f].sprProductoId+"</del></td>";
-    				<%}%>
-    			}else{
-        			fila += "<tr><td>"+accionHasProducto[f].nivel+"</td><td>"+accionHasProducto[f].entidad+"</td><td>"+accionHasProducto[f].tipoPrograma+"</td><td>"+accionHasProducto[f].programa+"</td><td>"+accionHasProducto[f].subPrograma+"</td><td>"+accionHasProducto[f].proyecto+"</td><td>"+accionHasProducto[f].sprProductoId+"</td>";
-    			}
-    			
+    			    			
     			nombreProducto = "";
     			for(var j = 0; j < productos.productos.length; j++){
     				if(productos.productos[j].codigoCatalogo == accionHasProducto[f].sprProductoId){
@@ -2707,12 +2700,16 @@ $("body").on("click", ".borrarAccion",function(event){
     			}
     			
     			if(accionHasProducto[f].borrado == false){
-	    	    	fila += "<td>"+nombreProducto+"</td><td>"+accionHasProducto[f].cantidadFisica+"</td><td>"+accionHasProducto[f].unidadMedida+"</td><td>"+accionHasProducto[f].clase+"</td><td>Gs."+accionHasProducto[f].cantidadFinanciera+"</td><td>Gs."+accionHasProducto[f].totalAsignacion+"</td><td><center><button type='submit' class='btn btn-default sm' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accionId+"-"+accionHasProducto[f].id+" disabled='disabled'><span class='glyphicon glyphicon-pencil'></span></button><button type='submit' class='btn btn-default sm consultaBorrarVinculacionProducto' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accionId+"-"+accionHasProducto[f].id+"><span class='glyphicon glyphicon-trash'></span></button></center></td></tr>";
+	    	    	fila += "<tr><td>"+accionHasProducto[f].nivel+"</td><td>"+accionHasProducto[f].entidad+"</td><td>"+accionHasProducto[f].tipoPrograma+"</td><td>"+accionHasProducto[f].programa+"</td><td>"+accionHasProducto[f].subPrograma+"</td><td>"+accionHasProducto[f].proyecto+"</td><td>"+accionHasProducto[f].sprProductoId+"</td><td>"+nombreProducto+"</td><td>"+accionHasProducto[f].cantidadFisica+"</td><td>"+accionHasProducto[f].unidadMedida+"</td><td>"+accionHasProducto[f].clase+"</td><td>Gs."+accionHasProducto[f].cantidadFinanciera+"</td><td>Gs."+accionHasProducto[f].totalAsignacion+"</td><td>";
     			}else{
-    				<% if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0")){%>
-	    	    	fila += "<td><del>"+nombreProducto+"</del></td><td><del>"+accionHasProducto[f].cantidadFisica+"</del></td><td><del>"+accionHasProducto[f].unidadMedida+"</del></td><td><del>"+accionHasProducto[f].clase+"</del></td><td><del>Gs."+accionHasProducto[f].cantidadFinanciera+"</del></td><td><del>Gs."+accionHasProducto[f].totalAsignacion+"</del></td><td><center><button type='submit' class='btn btn-default sm' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accionId+"-"+accionHasProducto[f].id+" disabled='disabled'><span class='glyphicon glyphicon-pencil'></span></button><button type='submit' class='btn btn-default sm consultaBorrarVinculacionProducto' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accionId+"-"+accionHasProducto[f].id+"><span class='glyphicon glyphicon-trash'></span></button></center></td></tr>";
-	    	    	<%}%>
+	    	    	fila += "<tr><td><del>"+accionHasProducto[f].nivel+"</del></td><td><del>"+accionHasProducto[f].entidad+"</del></td><td><del>"+accionHasProducto[f].tipoPrograma+"</del></td><td><del>"+accionHasProducto[f].programa+"</del></td><td><del>"+accionHasProducto[f].subPrograma+"</del></td><td><del>"+accionHasProducto[f].proyecto+"</del></td><td><del>"+accionHasProducto[f].sprProductoId+"</del></td><td><del>"+nombreProducto+"</del></td><td><del>"+accionHasProducto[f].cantidadFisica+"</del></td><td><del>"+accionHasProducto[f].unidadMedida+"</del></td><td><del>"+accionHasProducto[f].clase+"</del></td><td><del>Gs."+accionHasProducto[f].cantidadFinanciera+"</del></td><td><del>Gs."+accionHasProducto[f].totalAsignacion+"</del></td><td><center>";
     			}
+    			
+    			<% if (attributes.get("role_id").toString().equals("3")){%>
+    				fila +='</td></tr>';
+				<%}else{%>
+					fila +="<button type='submit' class='btn btn-default sm' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accionId+"-"+accionHasProducto[f].id+" disabled='disabled'><span class='glyphicon glyphicon-pencil'></span></button><button type='submit' class='btn btn-default sm consultaBorrarVinculacionProducto' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accionId+"-"+accionHasProducto[f].id+"><span class='glyphicon glyphicon-trash'></span></button></center></td></tr>";
+				<%}%>
     		}
     		
     		$("#TablaAccionHasProductos").append(fila);
@@ -2822,6 +2819,8 @@ $("body").on("click", ".borrarAccion",function(event){
 					                
 									' 	<br>'+
 									'  	<br>'+
+									<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>		
+
 					   				'	<div id="tituloFormulario"></div>'+
 					      			'		<form class="form-horizontal" role="form" id="formulario" method="post" action="/ajaxUpdate">'+
 					      			'			<input type="hidden" name="accion" value="actEntidad">'+
@@ -2881,7 +2880,9 @@ $("body").on("click", ".borrarAccion",function(event){
 					      			'		    			<input type="text" name="totalFinanciero" id="totalFinanciero-formulario" value="" class="form-control" disabled>'+
 								    ' 					</div>'+
 				      				'	    		</div>'+ 					    				
-				      				'	    	</div>'+	
+				      				'	    	</div>'+
+				      				<% }%>		
+
 							        
 							        '</div>'+ 
 							        '<div class="modal-footer">'+ 
