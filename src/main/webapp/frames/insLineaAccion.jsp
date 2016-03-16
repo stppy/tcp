@@ -5252,6 +5252,8 @@ $("body").on("click", ".agregarAvance",function(event){
 							'		        <h4 class="modal-title">Avance ('+actividades[0].nombre+' - '+nombreUnidadMedida+')</h4>'+ 
 							'			</div>'+
 							'		    <div class="modal-body">'+
+							
+							<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>
 							'		      	<div class="row">'+ 
 							'		      		<div class="col-md-12">'+
 							'						<div class="box box-warning">'+
@@ -5286,6 +5288,8 @@ $("body").on("click", ".agregarAvance",function(event){
 							'                	</div>'+
 							'                </div>'+											
 											
+							<% }%>
+							
 							'		      	<div class="row">'+ 
 							'		      		<div class="col-md-12">'+
 							'						<div class="box box-warning">'+
@@ -5479,12 +5483,17 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	{
 		if(webServicesEvidencia[j].borrado == true)
 		{
-			<% if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0")){%>
-			cuerpoEvidencia += '<tr><td><del>'+webServicesEvidencia[j].nombre+'</del></td><td><del>'+webServicesEvidencia[j].descripcion+'</del></td><td><del>'+webServicesEvidencia[j].url+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-trash"></span></button></td></tr>';
-			<% }%>
+			cuerpoEvidencia += '<tr><td><del>'+webServicesEvidencia[j].nombre+'</del></td><td><del>'+webServicesEvidencia[j].descripcion+'</del></td><td><del>'+webServicesEvidencia[j].url+'</del></td><td class="text-center">';
 		}else{
-			cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[j].nombre+'</td><td>'+webServicesEvidencia[j].descripcion+'</td><td>'+webServicesEvidencia[j].url+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-trash"></span></button></td></tr>';
-		}	
+			cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[j].nombre+'</td><td>'+webServicesEvidencia[j].descripcion+'</td><td>'+webServicesEvidencia[j].url+'</td><td class="text-center">';
+		}
+		
+		<% if (attributes.get("role_id").toString().equals("3")){%>
+			cuerpoEvidencia +='</td></tr>';
+		<%}else{%>
+			cuerpoEvidencia +='<button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+		<%}%>
+		
 	}
 	
 	var webServicesAvanceCosto = $.ajax({
@@ -5500,12 +5509,17 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	{
 		if(webServicesAvanceCosto[d].borrado == true)
 		{
-			<% if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0")){%>
-			cuerpoAvanceCosto += '<tr><td><del>'+webServicesAvanceCosto[d].monto+'</del></td><td><del>'+webServicesAvanceCosto[d].codigoContratacion+'</del></td><td><del>'+webServicesAvanceCosto[d].objetoGasto+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarCosto" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCosto" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
-			<% }%>
+			cuerpoAvanceCosto += '<tr><td><del>'+webServicesAvanceCosto[d].monto+'</del></td><td><del>'+webServicesAvanceCosto[d].codigoContratacion+'</del></td><td><del>'+webServicesAvanceCosto[d].objetoGasto+'</del></td><td class="text-center">';
 		}else{
-			cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].monto+'</td><td>'+webServicesAvanceCosto[d].codigoContratacion+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarCosto" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCosto" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+			cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].monto+'</td><td>'+webServicesAvanceCosto[d].codigoContratacion+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td class="text-center">';
 		}
+		
+		<% if (attributes.get("role_id").toString().equals("3")){%>
+			cuerpoAvanceCosto +='</td></tr>';
+		<%}else{%>
+			cuerpoAvanceCosto +='<button type="button" class="btn btn-default btn-sm consultaEditarCosto" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCosto" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+		<%}%>
+		
 	}
 		
 	var webServicesBeneficiarioTipo = $.ajax({
@@ -5551,12 +5565,17 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 		
 		if(webServicesBeneficiario[a].borrado == true)
 		{
-			<% if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0")){%>
-			cuerpoBeneficiario += '<tr><td><del>'+webServicesBeneficiarioTipo[0].nombre+'</del></td><td><del>'+webServicesBeneficiarioGrupo[0].nombre+'</del></td><td><del>'+webServicesBeneficiario[a].descripcion+'</del></td><td><del>'+webServicesBeneficiario[a].cantidad+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarBeneficiario" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesBeneficiario[a].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarBeneficiario" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesBeneficiario[a].id+' ><span class="fa fa-trash"></span></button></td></tr>';
-			<% }%>
+			cuerpoBeneficiario += '<tr><td><del>'+webServicesBeneficiarioTipo[0].nombre+'</del></td><td><del>'+webServicesBeneficiarioGrupo[0].nombre+'</del></td><td><del>'+webServicesBeneficiario[a].descripcion+'</del></td><td><del>'+webServicesBeneficiario[a].cantidad+'</del></td><td class="text-center">';
 		}else{
-			cuerpoBeneficiario += '<tr><td>'+webServicesBeneficiarioTipo[0].nombre+'</td><td>'+webServicesBeneficiarioGrupo[0].nombre+'</td><td>'+webServicesBeneficiario[a].descripcion+'</td><td>'+webServicesBeneficiario[a].cantidad+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarBeneficiario" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesBeneficiario[a].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarBeneficiario" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesBeneficiario[a].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+			cuerpoBeneficiario += '<tr><td>'+webServicesBeneficiarioTipo[0].nombre+'</td><td>'+webServicesBeneficiarioGrupo[0].nombre+'</td><td>'+webServicesBeneficiario[a].descripcion+'</td><td>'+webServicesBeneficiario[a].cantidad+'</td><td class="text-center">';
 		}
+		
+		<% if (attributes.get("role_id").toString().equals("3")){%>
+			cuerpoBeneficiario +='</td></tr>';
+		<%}else{%>
+			cuerpoBeneficiario +='<button type="button" class="btn btn-default btn-sm consultaEditarBeneficiario" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesBeneficiario[a].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarBeneficiario" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesBeneficiario[a].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+		<%}%>
+	
 	}
 	
 		
@@ -5593,12 +5612,16 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'										<tbody>';
 																				if(webServicesAvance[0].borrado == true)
 																				{
-																					<% if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0")){%>
-	contenidoModalAdministrador +=	'												<tr><td><del>'+webServicesAvance[0].justificacion+'</del></td><td><del>'+webServicesAvance[0].cantidad+'</del></td><td><del>'+webServicesAvance[0].fechaEntrega+'</del></td><td><del>'+webServicesAvance[0].cantidadBeneficiarios+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarAvance" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarAvance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' data-toggle="tooltip" data-placement="top" title="Borrar" ><span class="fa fa-trash"></span></button></td></tr>';
-																					<% }%>
+	contenidoModalAdministrador +=	'												<tr><td><del>'+webServicesAvance[0].justificacion+'</del></td><td><del>'+webServicesAvance[0].cantidad+'</del></td><td><del>'+webServicesAvance[0].fechaEntrega+'</del></td><td><del>'+webServicesAvance[0].cantidadBeneficiarios+'</del></td><td class="text-center">';
 																				}else{
-	contenidoModalAdministrador +=	'												<tr><td>'+webServicesAvance[0].justificacion+'</td><td>'+webServicesAvance[0].cantidad+'</td><td>'+webServicesAvance[0].fechaEntrega+'</td><td>'+webServicesAvance[0].cantidadBeneficiarios+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarAvance" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarAvance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' data-toggle="tooltip" data-placement="top" title="Borrar" ><span class="fa fa-trash"></span></button></td></tr>';
+	contenidoModalAdministrador +=	'												<tr><td>'+webServicesAvance[0].justificacion+'</td><td>'+webServicesAvance[0].cantidad+'</td><td>'+webServicesAvance[0].fechaEntrega+'</td><td>'+webServicesAvance[0].cantidadBeneficiarios+'</td><td class="text-center">';
 																				}
+																				
+																				<% if (attributes.get("role_id").toString().equals("3")){%>
+	contenidoModalAdministrador +=	'												</td></tr>';
+																				<%}else{%>
+	contenidoModalAdministrador +=	'												<button type="button" class="btn btn-default btn-sm consultaEditarAvance" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarAvance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' data-toggle="tooltip" data-placement="top" title="Borrar" ><span class="fa fa-trash"></span></button></td></tr>';
+																				<%}%>
 																				
 	contenidoModalAdministrador +=	'										</tbody>'+
 									'									</table>'+
@@ -5622,6 +5645,8 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'              				</div>'+
 									'               			<div class="box-body">'+
 					
+									<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>	
+
 									'		      					<div class="col-md-12">'+
 									'									<div class="box box-default box-solid">'+
 									'		                				<div class="box-header with-border">'+
@@ -5652,7 +5677,9 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'				      			 	</div>'+
 									'				      			</div>'+							
 
+									<% }%>	
 
+									
 									'		      					<div class="col-md-12">'+
 									'									<div class="box box-default box-solid">'+
 									'		                				<div class="box-header with-border">'+
@@ -5701,6 +5728,8 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'              				</div>'+
 									'               			<div class="box-body">'+
 					
+									<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>	
+
 									'		      					<div class="col-md-12">'+
 									'									<div class="box box-default box-solid">'+
 									'		                				<div class="box-header with-border">'+
@@ -5730,6 +5759,8 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'									 </div>'+									
 									'				      			 	</div>'+
 									'				      			</div>'+							
+
+									<% }%>	
 
 
 									'		      					<div class="col-md-12">'+
@@ -5776,6 +5807,8 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'              				</div>'+
 									'              				<div class="box-body">'+
 									
+									<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>	
+
 									'		      					<div class="col-md-12">'+
 									'									<div class="box box-default box-solid">'+
 									'		                				<div class="box-header with-border">'+
@@ -5799,13 +5832,13 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'											</table>'+
 									'				      					</div>'+
 								
-									
 									'				      				 </div>'+//fin box body
 									'									 <div class="modal-footer">'+ 
 									'					        			<button type="button" class="btn btn-success btn-sm guardarEvidencia" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'>Guardar Evidencia</button>'+ 
 									'									 </div>'+									
 									'				      			 	</div>'+
 									'				      			</div>'+							
+									<% }%>	
 
 
 									'		      					<div class="col-md-12">'+
