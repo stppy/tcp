@@ -5192,13 +5192,16 @@ $("body").on("click", ".agregarAvance",function(event){
 	var accionId = idParsed[4];
 	var actividadId = idParsed[5];//es el id de la tabla actidad
 	
+	var dia;
+	
     var f = new Date();
     if( (f.getMonth() +1) < 10 ){
     	var mes =( 0 +""+ (f.getMonth() +1));
     }
     if( (f.getDate()) < 10 ){
-    	var dia =( 0 +""+ (f.getDate()));
+    	dia =( 0 +""+ (f.getDate()));
     }
+    dia =f.getDate();
     
     var fechaActual = (f.getFullYear() + "-" + mes + "-" + dia);
     
