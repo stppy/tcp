@@ -2700,16 +2700,17 @@ $("body").on("click", ".borrarAccion",function(event){
     			}
     			
     			if(accionHasProducto[f].borrado == false){
-	    	    	fila += "<tr><td>"+accionHasProducto[f].nivel+"</td><td>"+accionHasProducto[f].entidad+"</td><td>"+accionHasProducto[f].tipoPrograma+"</td><td>"+accionHasProducto[f].programa+"</td><td>"+accionHasProducto[f].subPrograma+"</td><td>"+accionHasProducto[f].proyecto+"</td><td>"+accionHasProducto[f].sprProductoId+"</td><td>"+nombreProducto+"</td><td>"+accionHasProducto[f].cantidadFisica+"</td><td>"+accionHasProducto[f].unidadMedida+"</td><td>"+accionHasProducto[f].clase+"</td><td>Gs."+accionHasProducto[f].cantidadFinanciera+"</td><td>Gs."+accionHasProducto[f].totalAsignacion+"</td><td>";
+    				<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>
+		    	    	fila += "<tr><td>"+accionHasProducto[f].nivel+"</td><td>"+accionHasProducto[f].entidad+"</td><td>"+accionHasProducto[f].tipoPrograma+"</td><td>"+accionHasProducto[f].programa+"</td><td>"+accionHasProducto[f].subPrograma+"</td><td>"+accionHasProducto[f].proyecto+"</td><td>"+accionHasProducto[f].sprProductoId+"</td><td>"+nombreProducto+"</td><td>"+accionHasProducto[f].cantidadFisica+"</td><td>"+accionHasProducto[f].unidadMedida+"</td><td>"+accionHasProducto[f].clase+"</td><td>Gs."+accionHasProducto[f].cantidadFinanciera+"</td><td>Gs."+accionHasProducto[f].totalAsignacion+"</td><td><center><button type='submit' class='btn btn-default sm' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accionId+"-"+accionHasProducto[f].id+" disabled='disabled'><span class='glyphicon glyphicon-pencil'></span></button><button type='submit' class='btn btn-default sm consultaBorrarVinculacionProducto' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accionId+"-"+accionHasProducto[f].id+"><span class='glyphicon glyphicon-trash'></span></button></center></td></tr>";
+    				<%} if (attributes.get("role_id").toString().equals("3")){%>
+	    	    		fila += "<tr><td>"+accionHasProducto[f].nivel+"</td><td>"+accionHasProducto[f].entidad+"</td><td>"+accionHasProducto[f].tipoPrograma+"</td><td>"+accionHasProducto[f].programa+"</td><td>"+accionHasProducto[f].subPrograma+"</td><td>"+accionHasProducto[f].proyecto+"</td><td>"+accionHasProducto[f].sprProductoId+"</td><td>"+nombreProducto+"</td><td>"+accionHasProducto[f].cantidadFisica+"</td><td>"+accionHasProducto[f].unidadMedida+"</td><td>"+accionHasProducto[f].clase+"</td><td>Gs."+accionHasProducto[f].cantidadFinanciera+"</td><td>Gs."+accionHasProducto[f].totalAsignacion+"</td><td></td></tr>";
+	    			<%}%>		
     			}else{
-	    	    	fila += "<tr><td><del>"+accionHasProducto[f].nivel+"</del></td><td><del>"+accionHasProducto[f].entidad+"</del></td><td><del>"+accionHasProducto[f].tipoPrograma+"</del></td><td><del>"+accionHasProducto[f].programa+"</del></td><td><del>"+accionHasProducto[f].subPrograma+"</del></td><td><del>"+accionHasProducto[f].proyecto+"</del></td><td><del>"+accionHasProducto[f].sprProductoId+"</del></td><td><del>"+nombreProducto+"</del></td><td><del>"+accionHasProducto[f].cantidadFisica+"</del></td><td><del>"+accionHasProducto[f].unidadMedida+"</del></td><td><del>"+accionHasProducto[f].clase+"</del></td><td><del>Gs."+accionHasProducto[f].cantidadFinanciera+"</del></td><td><del>Gs."+accionHasProducto[f].totalAsignacion+"</del></td><td><center>";
+    				<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") ){%>
+	    	    		fila += "<tr><td><del>"+accionHasProducto[f].nivel+"</del></td><td><del>"+accionHasProducto[f].entidad+"</del></td><td><del>"+accionHasProducto[f].tipoPrograma+"</del></td><td><del>"+accionHasProducto[f].programa+"</del></td><td><del>"+accionHasProducto[f].subPrograma+"</del></td><td><del>"+accionHasProducto[f].proyecto+"</del></td><td><del>"+accionHasProducto[f].sprProductoId+"</del></td><td><del>"+nombreProducto+"</del></td><td><del>"+accionHasProducto[f].cantidadFisica+"</del></td><td><del>"+accionHasProducto[f].unidadMedida+"</del></td><td><del>"+accionHasProducto[f].clase+"</del></td><td><del>Gs."+accionHasProducto[f].cantidadFinanciera+"</del></td><td><del>Gs."+accionHasProducto[f].totalAsignacion+"</del></td><td><center><button type='submit' class='btn btn-default sm' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accionId+"-"+accionHasProducto[f].id+" disabled='disabled'><span class='glyphicon glyphicon-pencil'></span></button><button type='submit' class='btn btn-default sm consultaBorrarVinculacionProducto' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accionId+"-"+accionHasProducto[f].id+"><span class='glyphicon glyphicon-trash'></span></button></center></td></tr>";
+    				<%}%>
     			}
-    			
-    			<% if (attributes.get("role_id").toString().equals("3")){%>
-    				fila +='</td></tr>';
-				<%}else{%>
-					fila +="<button type='submit' class='btn btn-default sm' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accionId+"-"+accionHasProducto[f].id+" disabled='disabled'><span class='glyphicon glyphicon-pencil'></span></button><button type='submit' class='btn btn-default sm consultaBorrarVinculacionProducto' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accionId+"-"+accionHasProducto[f].id+"><span class='glyphicon glyphicon-trash'></span></button></center></td></tr>";
-				<%}%>
+
     		}
     		
     		$("#TablaAccionHasProductos").append(fila);
@@ -4944,19 +4945,18 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	{
 		if(programacionWebService[n].borrado == false)
 		{
-			cuerpoActividades += "<tr><td>"+programacionWebService[n].cantidad+"</td><td>"+programacionWebService[n].fechaEntrega+"</td><td>"+programacionWebService[n].version+"</td><td>"+cronogramas[0].nombre+"</td><td>"+nombreUnidadMedidaHitoProgramado+"</td><td class='text-center'>";
+			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>
+				cuerpoActividades += "<tr><td>"+programacionWebService[n].cantidad+"</td><td>"+programacionWebService[n].fechaEntrega+"</td><td>"+programacionWebService[n].version+"</td><td>"+cronogramas[0].nombre+"</td><td>"+nombreUnidadMedidaHitoProgramado+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm consultaEditarHito'  data-toggle='tooltip' data-placement='top' title='Editar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacionWebService[n].id+" ><span class='glyphicon glyphicon-pencil' ></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarHito' title='Borrar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacionWebService[n].id+" ><span class='glyphicon glyphicon-trash' </span></button></td></tr>";
+			<%} if (attributes.get("role_id").toString().equals("3")){%>
+				cuerpoActividades += "<tr><td>"+programacionWebService[n].cantidad+"</td><td>"+programacionWebService[n].fechaEntrega+"</td><td>"+programacionWebService[n].version+"</td><td>"+cronogramas[0].nombre+"</td><td>"+nombreUnidadMedidaHitoProgramado+"</td><td class='text-center'></td></tr>";
+			<%}%>
 		}else{
-			cuerpoActividades += "<tr><td><del>"+programacionWebService[n].cantidad+"</del></td><td><del>"+programacionWebService[n].fechaEntrega+"</del></td><td><del>"+programacionWebService[n].version+"</del></td><td><del>"+cronogramas[0].nombre+"</del></td><td><del>"+nombreUnidadMedidaHitoProgramado+"</del></td><td class='text-center'>";
+			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") ){%>
+				cuerpoActividades += "<tr><td><del>"+programacionWebService[n].cantidad+"</del></td><td><del>"+programacionWebService[n].fechaEntrega+"</del></td><td><del>"+programacionWebService[n].version+"</del></td><td><del>"+cronogramas[0].nombre+"</del></td><td><del>"+nombreUnidadMedidaHitoProgramado+"</del></td><td class='text-center'><button type='button' class='btn btn-default btn-sm consultaEditarHito'  data-toggle='tooltip' data-placement='top' title='Editar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacionWebService[n].id+" ><span class='glyphicon glyphicon-pencil' ></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarHito' title='Borrar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacionWebService[n].id+" ><span class='glyphicon glyphicon-trash' </span></button></td></tr>";
+			<%}%>	
 		}
-		
-		<% if (attributes.get("role_id").toString().equals("3")){%>
-			cuerpoActividades +="</td></tr>";
-		<%}else{%>
-			cuerpoActividades +="<button type='button' class='btn btn-default btn-sm consultaEditarHito'  data-toggle='tooltip' data-placement='top' title='Editar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacionWebService[n].id+" ><span class='glyphicon glyphicon-pencil' ></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarHito' title='Borrar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacionWebService[n].id+" ><span class='glyphicon glyphicon-trash' </span></button></td></tr>";
-		<%}%>
 	
 	}
-	
 	
 	var modalProgramacion = "";
 
@@ -5192,13 +5192,16 @@ $("body").on("click", ".agregarAvance",function(event){
 	var accionId = idParsed[4];
 	var actividadId = idParsed[5];//es el id de la tabla actidad
 	
+	var dia;
+	
     var f = new Date();
     if( (f.getMonth() +1) < 10 ){
     	var mes =( 0 +""+ (f.getMonth() +1));
     }
     if( (f.getDate()) < 10 ){
-    	var dia =( 0 +""+ (f.getDate()));
+    	dia =( 0 +""+ (f.getDate()));
     }
+    dia =f.getDate();
     
     var fechaActual = (f.getFullYear() + "-" + mes + "-" + dia);
     
@@ -5483,17 +5486,16 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	{
 		if(webServicesEvidencia[j].borrado == true)
 		{
-			cuerpoEvidencia += '<tr><td><del>'+webServicesEvidencia[j].nombre+'</del></td><td><del>'+webServicesEvidencia[j].descripcion+'</del></td><td><del>'+webServicesEvidencia[j].url+'</del></td><td class="text-center">';
+			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") ){%>
+				cuerpoEvidencia += '<tr><td><del>'+webServicesEvidencia[j].nombre+'</del></td><td><del>'+webServicesEvidencia[j].descripcion+'</del></td><td><del>'+webServicesEvidencia[j].url+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+			<%}%>
 		}else{
-			cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[j].nombre+'</td><td>'+webServicesEvidencia[j].descripcion+'</td><td>'+webServicesEvidencia[j].url+'</td><td class="text-center">';
+			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>
+				cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[j].nombre+'</td><td>'+webServicesEvidencia[j].descripcion+'</td><td>'+webServicesEvidencia[j].url+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+			<%} if (attributes.get("role_id").toString().equals("3")){%>
+				cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[j].nombre+'</td><td>'+webServicesEvidencia[j].descripcion+'</td><td>'+webServicesEvidencia[j].url+'</td><td class="text-center"></td></tr>';
+			<%}%>
 		}
-		
-		<% if (attributes.get("role_id").toString().equals("3")){%>
-			cuerpoEvidencia +='</td></tr>';
-		<%}else{%>
-			cuerpoEvidencia +='<button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-trash"></span></button></td></tr>';
-		<%}%>
-		
 	}
 	
 	var webServicesAvanceCosto = $.ajax({
@@ -5509,17 +5511,16 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	{
 		if(webServicesAvanceCosto[d].borrado == true)
 		{
-			cuerpoAvanceCosto += '<tr><td><del>'+webServicesAvanceCosto[d].monto+'</del></td><td><del>'+webServicesAvanceCosto[d].codigoContratacion+'</del></td><td><del>'+webServicesAvanceCosto[d].objetoGasto+'</del></td><td class="text-center">';
+			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") ){%>
+				cuerpoAvanceCosto += '<tr><td><del>'+webServicesAvanceCosto[d].monto+'</del></td><td><del>'+webServicesAvanceCosto[d].codigoContratacion+'</del></td><td><del>'+webServicesAvanceCosto[d].objetoGasto+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarCosto" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCosto" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+			<%}%>	
 		}else{
-			cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].monto+'</td><td>'+webServicesAvanceCosto[d].codigoContratacion+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td class="text-center">';
+			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>
+				cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].monto+'</td><td>'+webServicesAvanceCosto[d].codigoContratacion+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarCosto" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCosto" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+			<%} if (attributes.get("role_id").toString().equals("3")){%>
+				cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].monto+'</td><td>'+webServicesAvanceCosto[d].codigoContratacion+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td class="text-center"></td></tr>';
+			<%}%>
 		}
-		
-		<% if (attributes.get("role_id").toString().equals("3")){%>
-			cuerpoAvanceCosto +='</td></tr>';
-		<%}else{%>
-			cuerpoAvanceCosto +='<button type="button" class="btn btn-default btn-sm consultaEditarCosto" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCosto" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
-		<%}%>
-		
 	}
 		
 	var webServicesBeneficiarioTipo = $.ajax({
@@ -5565,17 +5566,16 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 		
 		if(webServicesBeneficiario[a].borrado == true)
 		{
-			cuerpoBeneficiario += '<tr><td><del>'+webServicesBeneficiarioTipo[0].nombre+'</del></td><td><del>'+webServicesBeneficiarioGrupo[0].nombre+'</del></td><td><del>'+webServicesBeneficiario[a].descripcion+'</del></td><td><del>'+webServicesBeneficiario[a].cantidad+'</del></td><td class="text-center">';
+			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") ){%>
+				cuerpoBeneficiario += '<tr><td><del>'+webServicesBeneficiarioTipo[0].nombre+'</del></td><td><del>'+webServicesBeneficiarioGrupo[0].nombre+'</del></td><td><del>'+webServicesBeneficiario[a].descripcion+'</del></td><td><del>'+webServicesBeneficiario[a].cantidad+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarBeneficiario" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesBeneficiario[a].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarBeneficiario" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesBeneficiario[a].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+			<%}%>	
 		}else{
-			cuerpoBeneficiario += '<tr><td>'+webServicesBeneficiarioTipo[0].nombre+'</td><td>'+webServicesBeneficiarioGrupo[0].nombre+'</td><td>'+webServicesBeneficiario[a].descripcion+'</td><td>'+webServicesBeneficiario[a].cantidad+'</td><td class="text-center">';
+			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>
+				cuerpoBeneficiario += '<tr><td>'+webServicesBeneficiarioTipo[0].nombre+'</td><td>'+webServicesBeneficiarioGrupo[0].nombre+'</td><td>'+webServicesBeneficiario[a].descripcion+'</td><td>'+webServicesBeneficiario[a].cantidad+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarBeneficiario" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesBeneficiario[a].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarBeneficiario" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesBeneficiario[a].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+			<%} if (attributes.get("role_id").toString().equals("3")){%>
+				cuerpoBeneficiario += '<tr><td>'+webServicesBeneficiarioTipo[0].nombre+'</td><td>'+webServicesBeneficiarioGrupo[0].nombre+'</td><td>'+webServicesBeneficiario[a].descripcion+'</td><td>'+webServicesBeneficiario[a].cantidad+'</td><td class="text-center"></td></tr>';
+			<%}%>
 		}
-		
-		<% if (attributes.get("role_id").toString().equals("3")){%>
-			cuerpoBeneficiario +='</td></tr>';
-		<%}else{%>
-			cuerpoBeneficiario +='<button type="button" class="btn btn-default btn-sm consultaEditarBeneficiario" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesBeneficiario[a].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarBeneficiario" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesBeneficiario[a].id+' ><span class="fa fa-trash"></span></button></td></tr>';
-		<%}%>
-	
 	}
 	
 	var webServicesProductoObjetoGasto = $.ajax({
@@ -5625,16 +5625,16 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'										<tbody>';
 																				if(webServicesAvance[0].borrado == true)
 																				{
-	contenidoModalAdministrador +=	'												<tr><td><del>'+webServicesAvance[0].justificacion+'</del></td><td><del>'+webServicesAvance[0].cantidad+'</del></td><td><del>'+webServicesAvance[0].fechaEntrega+'</del></td><td><del>'+webServicesAvance[0].cantidadBeneficiarios+'</del></td><td class="text-center">';
+																					<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") ){%>
+	contenidoModalAdministrador +=	'													<tr><td><del>'+webServicesAvance[0].justificacion+'</del></td><td><del>'+webServicesAvance[0].cantidad+'</del></td><td><del>'+webServicesAvance[0].fechaEntrega+'</del></td><td><del>'+webServicesAvance[0].cantidadBeneficiarios+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarAvance" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarAvance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' data-toggle="tooltip" data-placement="top" title="Borrar" ><span class="fa fa-trash"></span></button></td></tr>';
+																					<%}%>
 																				}else{
-	contenidoModalAdministrador +=	'												<tr><td>'+webServicesAvance[0].justificacion+'</td><td>'+webServicesAvance[0].cantidad+'</td><td>'+webServicesAvance[0].fechaEntrega+'</td><td>'+webServicesAvance[0].cantidadBeneficiarios+'</td><td class="text-center">';
+																					<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>
+	contenidoModalAdministrador +=	'													<tr><td>'+webServicesAvance[0].justificacion+'</td><td>'+webServicesAvance[0].cantidad+'</td><td>'+webServicesAvance[0].fechaEntrega+'</td><td>'+webServicesAvance[0].cantidadBeneficiarios+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarAvance" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarAvance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' data-toggle="tooltip" data-placement="top" title="Borrar" ><span class="fa fa-trash"></span></button></td></tr>';
+																					<%} if (attributes.get("role_id").toString().equals("3")){%>
+	contenidoModalAdministrador +=	'													<tr><td>'+webServicesAvance[0].justificacion+'</td><td>'+webServicesAvance[0].cantidad+'</td><td>'+webServicesAvance[0].fechaEntrega+'</td><td>'+webServicesAvance[0].cantidadBeneficiarios+'</td><td class="text-center"></td></tr>';
+																					<%}%>
 																				}
-																				
-																				<% if (attributes.get("role_id").toString().equals("3")){%>
-	contenidoModalAdministrador +=	'												</td></tr>';
-																				<%}else{%>
-	contenidoModalAdministrador +=	'												<button type="button" class="btn btn-default btn-sm consultaEditarAvance" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarAvance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' data-toggle="tooltip" data-placement="top" title="Borrar" ><span class="fa fa-trash"></span></button></td></tr>';
-																				<%}%>
 																				
 	contenidoModalAdministrador +=	'										</tbody>'+
 									'									</table>'+
@@ -7653,19 +7653,17 @@ $("body").on("click", ".modalDestinatario",function(event){
 		
 		if(webServicesBeneficiarioAccion[a].borrado == true)
 		{
-
 			<% if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0")){%>
-			cuerpoDestinatarioAccion += '<tr><td><del>'+webServicesBeneficiarioTipo[0].nombre+'</del></td><td><del>'+webServicesBeneficiarioGrupo[0].nombre+'</del></td><td><del>'+webServicesBeneficiarioAccion[a].descripcion+'</del></td><td><del>'+webServicesBeneficiarioAccion[a].cantidad+'</del></td><td class="text-center">';
+				cuerpoDestinatarioAccion += '<tr><td><del>'+webServicesBeneficiarioTipo[0].nombre+'</del></td><td><del>'+webServicesBeneficiarioGrupo[0].nombre+'</del></td><td><del>'+webServicesBeneficiarioAccion[a].descripcion+'</del></td><td><del>'+webServicesBeneficiarioAccion[a].cantidad+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarDestinatario" data-toggle="tooltip" data-placement="top" title="Editar Destinatario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarDestinatarioAccion" data-toggle="tooltip" data-placement="top" title="Borrar Destinatario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-trash"></span></button></td></tr>';
 			<% }%>
 		}else{
-			cuerpoDestinatarioAccion += '<tr><td>'+webServicesBeneficiarioTipo[0].nombre+'</td><td>'+webServicesBeneficiarioGrupo[0].nombre+'</td><td>'+webServicesBeneficiarioAccion[a].descripcion+'</td><td>'+webServicesBeneficiarioAccion[a].cantidad+'</td><td class="text-center">';
+			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>
+					cuerpoDestinatarioAccion += '<tr><td>'+webServicesBeneficiarioTipo[0].nombre+'</td><td>'+webServicesBeneficiarioGrupo[0].nombre+'</td><td>'+webServicesBeneficiarioAccion[a].descripcion+'</td><td>'+webServicesBeneficiarioAccion[a].cantidad+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarDestinatario" data-toggle="tooltip" data-placement="top" title="Editar Destinatario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarDestinatarioAccion" data-toggle="tooltip" data-placement="top" title="Borrar Destinatario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+			<%} if (attributes.get("role_id").toString().equals("3")){%>
+					cuerpoDestinatarioAccion += '<tr><td>'+webServicesBeneficiarioTipo[0].nombre+'</td><td>'+webServicesBeneficiarioGrupo[0].nombre+'</td><td>'+webServicesBeneficiarioAccion[a].descripcion+'</td><td>'+webServicesBeneficiarioAccion[a].cantidad+'</td><td class="text-center"></td></tr>';
+			<%}%>
 		}
-		
-		<% if (attributes.get("role_id").toString().equals("3")){%>
-			cuerpoDestinatarioAccion +='</td></tr>';
-		<%}else{%>
-			cuerpoDestinatarioAccion +='<button type="button" class="btn btn-default btn-sm consultaEditarDestinatario" data-toggle="tooltip" data-placement="top" title="Editar Destinatario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarDestinatarioAccion" data-toggle="tooltip" data-placement="top" title="Borrar Destinatario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-trash"></span></button></td></tr>';
-		<%}%>
+
 	}
 			
 	var cuerpoModalDestinatario = "";
