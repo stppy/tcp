@@ -1272,5 +1272,42 @@ public class SqlSelects {
 			}
 			return objetos; 
 	  }
+	
+	public static List<ProductoObjetoGasto> selectProductoObjetoGasto(String condition) throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+			 String query = " select * from producto_objeto_gasto"+condition;
+			 
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 List<ProductoObjetoGasto> objetos = new ArrayList<ProductoObjetoGasto>();
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					ProductoObjetoGasto objeto = new ProductoObjetoGasto();
+					objeto.setId(rs.getInt("id"));
+					objeto.setAccionId(rs.getInt("accion_id"));
+					objeto.setNivelId(rs.getInt("spr_nivel_id"));
+					objeto.setEntidadId(rs.getInt("spr_entidad_id"));
+					objeto.setTiprogramaId(rs.getInt("spr_tiprograma_id"));
+					objeto.setProgramaId(rs.getInt("spr_programa_id"));
+					objeto.setSubprogramaId(rs.getInt("spr_subprograma_id"));
+					objeto.setProyectoId(rs.getInt("srp_proyecto_id"));
+					objeto.setProductoId(rs.getInt("spr_producto_id"));
+					objeto.setProductoConcat(rs.getString("producto_concat"));
+					objeto.setVersion(rs.getInt("version"));
+					objeto.setBorrado(rs.getBoolean("borrado"));
+
+					objetos.add(objeto);
+				}
+			}
+			catch (SQLException e) {e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos; 
+	  }	
 
 }

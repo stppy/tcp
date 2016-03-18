@@ -5578,7 +5578,20 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	
 	}
 	
-		
+	var webServicesProductoObjetoGasto = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getProductoObjetoGasto&accionId='+accionId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	webServicesProductoObjetoGasto = JSON.parse(webServicesProductoObjetoGasto);
+	
+	var optionProductoObjetoGasto;
+	
+	for(var z = 0; z < webServicesProductoObjetoGasto.length; z++){
+		optionProductoObjetoGasto+='<option value="'+webServicesProductoObjetoGasto[z].id+'" >'+webServicesProductoObjetoGasto[z].productoConcat+'</option>';
+	}
+	
 	var contenidoModalAdministrador = "";
 
 	contenidoModalAdministrador +=  '<div class="modal fade" id="modalAdministrador" tabindex="-1" aria-labelledby="myLargeModalLabel">'+
@@ -5745,7 +5758,10 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'											<table class="table table-hover">'+
 									'												<tbody>'+
 									'			      									<form class="form-horizontal" role="form">'+
-									'													<tr><td><label for="codigoContratacionalCosto">Cod. Contratación</label><input type="text" id="codigoContratacionalCosto" class="form-control" placeholder="Ingrese Codigo Contratación" /></td><td><label for="objetoGastoCosto">Objeto Gasto</label><input type="number" id="objetoGastoCosto" class="form-control" placeholder="Ingrese Objeto de Gasto" /></td></tr>'+									
+									'													<tr><td><label for="productoObjetoGasto">Producto</label><select id="productoObjetoGasto" class="form-control">'+optionProductoObjetoGasto+'</select></td>'+
+									'														<td><label for="objetoGastoCosto">Objeto Gasto</label><select id="objetoGastoCosto" class="form-control"></select></td>'+
+									'													</tr>'+	
+									'													<tr><td colspan="2"><label for="codigoContratacionalCosto">Cod. Contratación</label><input type="text" id="codigoContratacionalCosto" class="form-control" placeholder="Ingrese Codigo Contratación" /></td></tr>'+									
 									'													<tr><td colspan="2"><label for="montoCosto">Monto</label><input type="number" id="montoCosto" class="form-control" placeholder="Ingrese Monto" /></td></tr>'+
 									'													<input type="hidden" id="avanceIdCosto" value="'+avanceId+'"/>'+	
 									'			      									</form>	'+												
@@ -5889,7 +5905,8 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	$("#listaBeneficiario").html("");
 	$("#listaBeneficiario").html(cuerpoBeneficiario);
 	$("#modalAdministrador").modal('show');	
-	$("#beneficiarioTipo").change();		
+	$("#beneficiarioTipo").change();
+	$("#productoObjetoGasto").change();
 	$("#dataTableEvidencia").DataTable();
 	$("#dataTableAvanceCosto").DataTable();
 	$("#dataTableBeneficiario").DataTable();
@@ -5897,6 +5914,44 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	
 
 });	
+
+
+
+$("body").on("change", "#productoObjetoGasto",function(event){
+	//var departamentoId = $(this).attr("parametro");
+	var productoObjetoGastoId = $("#productoObjetoGasto option:selected").val();
+	
+	var webServicesDatosProducto = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getProductoObjetoGasto&productoObjetoGastoId='+productoObjetoGastoId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false,
+	  	error: function(data,status,er)
+        {
+        alert(data + ' - ' + status  + ' - ' + er );
+        }
+	}).responseText;
+	webServicesDatosProducto = JSON.parse(webServicesDatosProducto);
+	
+	var webServicesObjetoGastoCosto = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getObjetoGastoCosto&nivelId='+webServicesDatosProducto[0].nivelId+'&entidadId='+webServicesDatosProducto[0].entidadId+'&tiprogramaId='+webServicesDatosProducto[0].tiprogramaId+'&programaId='+webServicesDatosProducto[0].programaId+'&subprogramaId='+webServicesDatosProducto[0].subprogramaId+'&proyectoId='+webServicesDatosProducto[0].proyectoId+'&productoId='+webServicesDatosProducto[0].productoId+'&accionId='+webServicesDatosProducto[0].accionId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	webServicesObjetoGastoCosto = JSON.parse(webServicesObjetoGastoCosto);
+	
+	var optionObjetoGastoCosto="";
+	
+	for(var o = 0; o < webServicesObjetoGastoCosto.length; o++){
+		optionObjetoGastoCosto+='<option value="'+webServicesObjetoGastoCosto[o].id+'" >'+webServicesObjetoGastoCosto[o].codigoObjetoGasto+'</option>';
+	}
+	
+	$("#objetoGastoCosto").html("");
+	$("#objetoGastoCosto").append(optionObjetoGastoCosto);
+	
+});
+
 
 $("body").on("change", "#beneficiarioTipo",function(event){
 	//var departamentoId = $(this).attr("parametro");
