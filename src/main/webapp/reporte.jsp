@@ -146,6 +146,26 @@ if (user != null) { %>
 		}).responseText;		
 		distrito=JSON.parse(distrito);
 		
+		function getDetallePresupuesto(accionId){
+			var pDa = $.ajax({
+				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionHasProducto&accionId='+accionId,
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+			}).responseText;		
+			pDa=JSON.parse(pDa);
+			var tabla="<table class='table table-striped table-bordered table-hover table-condensed'><tr><td>Producto</td><td>Proporcion</td><td>U. Medida</td><td>Clase</td><td>Cant. Física</td><td>Cant. Financiera / Presupuesto</td></tr>";
+			
+			for(var pa=0; pa<pDa.length;pa++){
+				if (!pDa[pa].borrado){
+					tabla+="<tr><td>"+pDa[pa].nivel+"-"+pDa[pa].nivel+"-"+pDa[pa].nivel+"-"+pDa[pa].entidad+"-"+pDa[pa].tipoPrograma+"-"+pDa[pa].subPrograma+pDa[pa].proyecto+"-"+pDa[pa].sprProductoId+"</td><td>"+pDa[pa].proporcion+"</td><td>"+pDa[pa].unidadMedida+"</td><td>"+pDa[pa].clase+"</td><td>"+pDa[pa].cantidadFisica+"</td><td>"+pDa[pa].totalAsignacion+"/"+pDa[pa].cantidadFinanciera+"</td></tr>"
+				}
+			}
+			tabla+="</table>";
+			return tabla;
+			
+		}
+		
 		for(var i=0; i<instituciones.length;i++)
 		{
 			if (!instituciones[i].borrado){
@@ -193,15 +213,16 @@ if (user != null) { %>
 																flagDepto++;flagDist++;
 																
 																if(flagDepto=="1"){
-																	contenidoAcciones+="<table>";
-																	contenidoAcciones+="<tr><td>"+contenidoDepto+"</td></tr>";
+																	contenidoAcciones+="<h3>"+contenidoDepto+"</h3>";
 																}
 																if(flagDist=="1"){
-																	contenidoAcciones+="<tr><td>"+contenidoDist+"</td>";
-																}else{
-																	contenidoAcciones+="<tr><td></td>"
+																	contenidoAcciones+="<h4>"+contenidoDist+"</h4>";
 																}
-																contenidoAcciones+="<td><h4>"+accionCatalogo[ac].nombre+"</h4></td></tr>";
+																contenidoAcciones+='<table class="table table-striped table-bordered table-hover table-condensed">';
+																contenidoAcciones+='<tr><td>Acción</td><td>Peso</td><td>Fecha Ini.</td><td>Fecha Fin</td> <td>1er Trim</td><td>2do Trim</td><td>3er Trim</td><td>4to Trim</td></tr>';
+																contenidoAcciones+="<tr><td>"+accionCatalogo[ac].nombre+"</td><td>"+acciones[x].peso+"</td><td>"+acciones[x].fechaInicio+"</td><td>"+acciones[x].fechaFin+"</td><td>"+acciones[x].meta1+"</td><td>"+acciones[x].meta2+"</td><td>"+acciones[x].meta3+"</td><td>"+acciones[x].meta4+"</td></tr>";
+																contenidoAcciones+="<tr><td colspan='8'>"+getDetallePresupuesto(acciones[x].id)+"</td></tr>";
+																contenidoAcciones+='</table>';
 															}
 										 					/*
 															$("#contenedorReporte").append(contenidoAcciones);
@@ -242,7 +263,7 @@ if (user != null) { %>
 </script>
 	
  <div class="container">
-		<div class="row" id="contenedorReporte">
+		<div class="row" id="contenedorReporte" class="col-md-12 table-responsive">
 		
         </div><!-- /.row -->          	
         
