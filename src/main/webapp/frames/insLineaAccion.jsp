@@ -2666,7 +2666,7 @@ $("body").on("click", ".borrarAccion",function(event){
           	async:false,
           	success: function( data, textStatus, jqXHR) {
           		if(data.success == true){
-          			jsonpCallbackProducto(data)
+          			jsonpCallbackProducto(data);
           		}else {
           			cargarTablaAccionHasProducto(accionId,insLineaAccionId,lineaAccionId,institucionId,periodoId);
           		}

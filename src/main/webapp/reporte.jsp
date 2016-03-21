@@ -105,7 +105,30 @@ if (user != null) { %>
 			    return 1;
 			  return 0;
 			}
-	
+		
+/*     	var productos;
+    	$.ajax({
+        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductos',
+          	type:'get',
+          	crossDomain: 'true',
+          	dataType:'jsonp',
+            jsonp: 'callback',
+            jsonpCallback: 'jsonpCallbackProducto',
+          	async:false,
+          	success: function( data, textStatus, jqXHR) {
+          		if(data.success == true){
+          			jsonpCallbackProducto(data);
+          		}
+          	},
+          	error: function( data, textStatus, jqXHR) {
+
+          	}
+        });
+    	
+    	function jsonpCallbackProducto(data){
+ 	    	productos = data;
+ 	    } */
+    	    		
 		var unidadMedida = $.ajax({
 			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
 		  	type:'get',
@@ -113,6 +136,24 @@ if (user != null) { %>
 		  	async:false       
 		}).responseText;
 		unidadMedida = JSON.parse(unidadMedida);
+		
+		//grupo destinatario
+		var destinatarioGrupo = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioGrupo',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		destinatarioGrupo = JSON.parse(destinatarioGrupo);
+		
+		//tipo destinatario
+		var destinatarioTipo = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioTipo',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		destinatarioTipo = JSON.parse(destinatarioTipo);
 		
 		var instituciones = $.ajax({
 			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
@@ -177,7 +218,15 @@ if (user != null) { %>
 			pDa=JSON.parse(pDa);
 			var tabla="<table class='table table-striped table-bordered table-hover table-condensed'><tr><td>Producto</td><td>Proporcion</td><td>U. Medida</td><td>Clase</td><td>Cant. Física</td><td>Cant. Financiera / Presupuesto</td></tr>";
 			
+ 			//var nombreProducto;	
+
 			for(var pa=0; pa<pDa.length;pa++){
+			/*	nombreProducto = "";	
+				for(var j = 0; j < productos.productos.length; j++){
+					if(productos.productos[j].codigoCatalogo == pDa[pa].sprProductoId){
+						nombreProducto = productos.productos[j].nombreCatalogo;
+					}
+				} */
 				if (!pDa[pa].borrado){
 					tabla+="<tr><td>"+pDa[pa].nivel+"-"+pDa[pa].nivel+"-"+pDa[pa].nivel+"-"+pDa[pa].entidad+"-"+pDa[pa].tipoPrograma+"-"+pDa[pa].subPrograma+pDa[pa].proyecto+"-"+pDa[pa].sprProductoId+"</td><td>"+pDa[pa].proporcion+"</td><td>"+pDa[pa].unidadMedida+"</td><td>"+pDa[pa].clase+"</td><td>"+pDa[pa].cantidadFisica+"</td><td>"+pDa[pa].totalAsignacion+"/"+pDa[pa].cantidadFinanciera+"</td></tr>"
 				}
@@ -186,7 +235,41 @@ if (user != null) { %>
 			return tabla;
 			
 		}
+		function getDetalleDestinatario(accionId){
+			var destinatarios = $.ajax({
+				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionDestinatario&accionId='+accionId,
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+			}).responseText;		
+			destinatarios=JSON.parse(destinatarios);
+			var tabla="<table class='table table-striped table-bordered table-hover table-condensed'><tr><td>Beneficiarios</td><td>Descripción</td><td>Tipo</td><td>Grupo</td></tr>";
+			var tipo;
+			for(var des=0; des<destinatarios.length;des++){
+				tipo="";
+				grupo="";
+				if (!destinatarios[des].borrado){
+					for(var dt=0; dt<destinatarioTipo.length; dt++){
+						if(destinatarioTipo[dt].id == destinatarios[des].beneficiarioTipoId){
+							tipo = destinatarioTipo[dt].nombre;
+						}
+					}
+					for(var dg=0; dg<destinatarioGrupo.length; dg++){
+						if(destinatarioGrupo[dg].id == destinatarios[des].beneficiarioGrupoId){
+							grupo = destinatarioGrupo[dg].nombre;
+						}
+					}
+					
+					tabla+="<tr><td>"+destinatarios[des].cantidad+"</td><td>"+destinatarios[des].descripcion+"</td><td>"+tipo+"</td><td>"+grupo+"</td></tr>"
+				}
+			}
+			tabla+="</table>";
+			return tabla;
+			
+		}
 		
+		
+		           
 		for(var i=0; i<instituciones.length;i++)
 		{
 			if (!instituciones[i].borrado){
@@ -243,6 +326,7 @@ if (user != null) { %>
 																contenidoAcciones+='<tr><td>Acción</td><td>Peso</td><td>Fecha Ini.</td><td>Fecha Fin</td> <td>1er Trim</td><td>2do Trim</td><td>3er Trim</td><td>4to Trim</td></tr>';
 																contenidoAcciones+="<tr><td>"+accionCatalogo[ac].nombre+"</td><td>"+acciones[x].peso+"</td><td>"+acciones[x].fechaInicio+"</td><td>"+acciones[x].fechaFin+"</td><td>"+acciones[x].meta1+"</td><td>"+acciones[x].meta2+"</td><td>"+acciones[x].meta3+"</td><td>"+acciones[x].meta4+"</td></tr>";
 																contenidoAcciones+="<tr><td colspan='8'>"+getDetallePresupuesto(acciones[x].id)+"</td></tr>";
+																contenidoAcciones+="<tr><td colspan='8'>"+getDetalleDestinatario(acciones[x].id)+"</td></tr>";
 																contenidoAcciones+='</table>';
 															}
 														//	contenidoAcciones+="</table>";
