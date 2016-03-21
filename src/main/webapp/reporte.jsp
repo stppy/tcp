@@ -63,22 +63,141 @@
 if (user != null) { %>
 
 <script>
-<%if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0")){%>
+<%//if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0")){%>
  	$(document).ready(function(){
+ 		
+ 		function numeroConComa(x) {
+			return x.toString().replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+		}
+		
+		function orden(a,b) {             
+			  if (a.orden < b.orden)
+			    return -1;
+			  if (a.orden > b.orden)
+			    return 1;
+			  return 0;
+			}
+		function idDepartamentoOrden(a,b) {             
+			  if (a.idDepartamento < b.idDepartamento)
+			    return -1;
+			  if (a.idDepartamento > b.idDepartamento)
+			    return 1;
+			  return 0;
+			}
+	
+		var unidadMedida = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		unidadMedida = JSON.parse(unidadMedida);
+		
+		var instituciones = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;		
+		instituciones=JSON.parse(instituciones);
+		instituciones=instituciones.sort(orden);
+		
+		var insLineaAccion = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;		
+		insLineaAccion=JSON.parse(insLineaAccion);
+		
+		
+		var lineaAccion = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;		
+		lineaAccion=JSON.parse(lineaAccion);
+		
+		var accionCatalogo = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;		
+		accionCatalogo=JSON.parse(accionCatalogo);
+		
+		
+		
+		var departamento = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;		
+		departamento=JSON.parse(departamento);
+		departamento=departamento.sort(idDepartamentoOrden);
+		
+		for(var i=0; i<instituciones.length;i++)
+		{
+			if (!instituciones[i].borrado){
+				for(var il=0; il<insLineaAccion.length;il++)
+				{
+					if (insLineaAccion[il].periodoId=="2016" && !insLineaAccion[il].borrado && insLineaAccion[il].institucionId==instituciones[i].id){
+						
+						for(var la=0; la<lineaAccion.length;la++)
+						{
+							if (insLineaAccion[il].lineaAccionId==lineaAccion[la].id){
+								$("#contenedorReporte").append(lineaAccion[la].nombre+"<br>");
+								
+								var acciones = $.ajax({
+									url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccion[il].id,
+								  	type:'get',
+								  	dataType:'json',
+								  	async:false       
+								}).responseText;		
+								acciones=JSON.parse(acciones);
+								var accionesDistintas=[];
+								for(var x=0; x<acciones.length;x++){
+									if (accionesDistintas.indexOf(acciones[x].accionCatalogoId)<0){
+										accionesDistintas.push(acciones[x].accionCatalogoId);
+										for(var ac=0; ac<accionCatalogo.length;ac++){
+											if 	(accionCatalogo[ac].id==acciones[x].accionCatalogoId){
+												$("#contenedorReporte").append(" &nbsp;  &nbsp;  &nbsp; "+accionCatalogo[ac].nombre+"<br>");
+											}
+										}
+										
+									}
+								}
+								
+							}
+							
+						}
+					}
+				}
+			}
+		}
+		
 
-
+ 		/*
+ 		
+ 		http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito
+ 		http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito&departamento=0
+ 		
+ 		
+*/
 		
 		
 		
 	});
-<%}else{%>
-	window.location = "http://spr.stp.gov.py/tablero/resumenLineaAccion.jsp";
-<%}%>
+<%//}else{%>
+	//window.location = "http://spr.stp.gov.py/tablero/resumenLineaAccion.jsp";
+<%//}%>
 </script>
 	
  <div class="container">
-		<div class="row">
-		aqui
+		<div class="row" id="contenedorReporte">
+		
         </div><!-- /.row -->          	
         
  </div><!-- /.container -->
