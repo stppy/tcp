@@ -170,7 +170,7 @@ if (user != null) { %>
 								var contenidoDist="";
 								var contenidoAcciones="";
 								for(var de=0; de<departamento.length;de++){
-									 flagDepto=0;
+									flagDepto=0;
 									contenidoDepto="<h2>"+departamento[de].nombreDepartamento+"</h2>";
 									for(var di=0; di<distrito.length;di++){
 										flagDist=0;
@@ -184,23 +184,31 @@ if (user != null) { %>
 														for(var ac=0; ac<accionCatalogo.length;ac++){
 															if 	(accionCatalogo[ac].id==acciones[x].accionCatalogoId){
 																flagDepto++;flagDist++;
+																
 																if(flagDepto=="1"){
-																	contenidoAcciones+=contenidoDepto;
+																	contenidoAcciones+="<table>";
+																	contenidoAcciones+="<tr><td>"+contenidoDepto+"</td></tr>";
 																}
 																if(flagDist=="1"){
-																	contenidoAcciones+=contenidoDist;
+																	contenidoAcciones+="<tr><td>"+contenidoDist+"</td>";
+																}else{
+																	contenidoAcciones+="<tr><td></td>"
 																}
-																contenidoAcciones+="<h4>"+accionCatalogo[ac].nombre+"</h4>";
+																contenidoAcciones+="<td><h4>"+accionCatalogo[ac].nombre+"</h4></td></tr>";
 															}
+										 					/*
 															$("#contenedorReporte").append(contenidoAcciones);
-															contenidoAcciones="";
+															contenidoAcciones="";*/
 														}
 													}
 												}
 										}//fin deacciones para acciones distintas
 										accionesDistintas=[];
+										$("#contenedorReporte").append(contenidoAcciones);
+										contenidoAcciones="";
 									}// si es el depto del distrito
 								}//fin distrito
+								$("#contenedorReporte").append("</table>");
 							}//fin departamento
 						}//fin de todas las instancias de esa linea	
 					}//fin de for de lineas
