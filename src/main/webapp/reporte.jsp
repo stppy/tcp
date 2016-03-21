@@ -50,6 +50,27 @@
 		#R, #G, #B {
 			width: 300px;
 		}
+		@media print {
+			h1{
+	    		font-size: 18px;
+	    		margin-bottom: 5px;
+				margin-top: 5px;
+			}
+			h2{
+	    		font-size: 15px;
+	    		margin-bottom: 5px;
+				margin-top: 5px;
+			}
+			h3{
+	    		font-size: 12px;
+	    		margin-bottom: 5px;
+				margin-top: 5px;
+			}
+			td{
+	    		font-size: 8px;
+	    		
+			}
+		}
     </style>
     
     
