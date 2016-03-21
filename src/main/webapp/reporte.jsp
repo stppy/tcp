@@ -138,6 +138,14 @@ if (user != null) { %>
 		departamento=JSON.parse(departamento);
 		departamento=departamento.sort(idDepartamentoOrden);
 		
+		var distrito = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;		
+		distrito=JSON.parse(distrito);
+		
 		for(var i=0; i<instituciones.length;i++)
 		{
 			if (!instituciones[i].borrado){
@@ -149,7 +157,6 @@ if (user != null) { %>
 						{
 							if (insLineaAccion[il].lineaAccionId==lineaAccion[la].id){
 								$("#contenedorReporte").append(lineaAccion[la].nombre+"<br>");
-								
 								var acciones = $.ajax({
 									url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccion[il].id,
 								  	type:'get',
@@ -157,29 +164,32 @@ if (user != null) { %>
 								  	async:false       
 								}).responseText;		
 								acciones=JSON.parse(acciones);
-								var accionesDistintas=[];
-								for(var x=0; x<acciones.length;x++){
-									if (!acciones[x].borrado){
-										if (accionesDistintas.indexOf(acciones[x].accionCatalogoId)<0){
-											accionesDistintas.push(acciones[x].accionCatalogoId);
-											for(var ac=0; ac<accionCatalogo.length;ac++){
-												if 	(accionCatalogo[ac].id==acciones[x].accionCatalogoId){
-													$("#contenedorReporte").append(" &nbsp;  &nbsp;  &nbsp; "+accionCatalogo[ac].nombre+"<br>");
-													// aca falta recorrer departamentos y distritos y si tiene acciones segun el siguiente query dibujar tablas
-													//http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&lineaAccionId=69&departamento=3&accionCatalogoId=5&distrito=2
+								for(var de=0; de<departamento.length;de++){
+									for(var di=0; di<distrito.length;di++){
+										if (distrito[di].departamentoId==departamento[de].idDepartamento){
+											var accionesDistintas=[];
+											for(var x=0; x<acciones.length;x++){
+												if (!acciones[x].borrado && acciones[x].departamentoId==departamento[de].idDepartamento && (acciones[x].distritoId==distrito[di].id &&  acciones[x].departamentoId==distrito[di].departamentoId)){
+													if (accionesDistintas.indexOf(acciones[x].accionCatalogoId)<0){
+														accionesDistintas.push(acciones[x].accionCatalogoId);
+														for(var ac=0; ac<accionCatalogo.length;ac++){
+															if 	(accionCatalogo[ac].id==acciones[x].accionCatalogoId){
+																$("#contenedorReporte").append("&nbsp;  &nbsp;"+departamento[de].nombreDepartamento+"-"+distrito[di].descripcion+"</br> &nbsp;  &nbsp;  &nbsp; "+accionCatalogo[ac].nombre+"<br>");
+															}
+														}
+													}
 												}
-											}
-										}
-									}
-								}
-								
-							}
-							
-						}
-					}
-				}
-			}
-		}
+										}//fin deacciones para acciones distintas
+										accionesDistintas=[];
+									}// si es el depto del distrito
+								}//fin distrito
+							}//fin departamento
+						}//fin de todas las instancias de esa linea	
+					}//fin de for de lineas
+				}// fin de if de instancias de esa institucion
+			}//fin de for de instancias
+		}//fin de if instituciones borradas
+	}//fin de for de instituciones
 		
 
  		/*
