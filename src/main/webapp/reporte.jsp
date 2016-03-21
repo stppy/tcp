@@ -156,7 +156,14 @@ if (user != null) { %>
 						for(var la=0; la<lineaAccion.length;la++)
 						{
 							if (insLineaAccion[il].lineaAccionId==lineaAccion[la].id){
-								$("#contenedorReporte").append("<h1>"+lineaAccion[la].nombre+"</h1>");
+								var unidadDeMedida="";
+								for (var um=0;um<unidadMedida.length;um++){
+									if (lineaAccion[la].unidadMedidaId==unidadMedida[um].id){
+										unidadDeMedida=unidadMedida[um].descripcion;
+									}
+								}
+								$("#contenedorReporte").append("<h1>"+lineaAccion[la].nombre+"<small>(Meta 2016: "+numeroConComa(insLineaAccion[il].meta.toFixed(2))+" "+unidadDeMedida+")</small></h1>");
+								unidadDeMedida="";
 								var acciones = $.ajax({
 									url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccion[il].id,
 								  	type:'get',
