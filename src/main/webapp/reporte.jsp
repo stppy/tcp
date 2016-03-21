@@ -156,7 +156,7 @@ if (user != null) { %>
 						for(var la=0; la<lineaAccion.length;la++)
 						{
 							if (insLineaAccion[il].lineaAccionId==lineaAccion[la].id){
-								$("#contenedorReporte").append(lineaAccion[la].nombre+"<br>");
+								$("#contenedorReporte").append("<h1>"+lineaAccion[la].nombre+"</h1>");
 								var acciones = $.ajax({
 									url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccion[il].id,
 								  	type:'get',
@@ -164,8 +164,17 @@ if (user != null) { %>
 								  	async:false       
 								}).responseText;		
 								acciones=JSON.parse(acciones);
+								var flagDepto=0;
+								var flagDist=0;
+								var contenidoDepto="";
+								var contenidoDist="";
+								var contenidoAcciones="";
 								for(var de=0; de<departamento.length;de++){
+									 flagDepto=0;
+									contenidoDepto="<h2>"+departamento[de].nombreDepartamento+"</h2>";
 									for(var di=0; di<distrito.length;di++){
+										flagDist=0;
+										contenidoDist="<h3>"+distrito[di].descripcion+"</h3>";
 										if (distrito[di].departamentoId==departamento[de].idDepartamento){
 											var accionesDistintas=[];
 											for(var x=0; x<acciones.length;x++){
@@ -174,8 +183,17 @@ if (user != null) { %>
 														accionesDistintas.push(acciones[x].accionCatalogoId);
 														for(var ac=0; ac<accionCatalogo.length;ac++){
 															if 	(accionCatalogo[ac].id==acciones[x].accionCatalogoId){
-																$("#contenedorReporte").append("&nbsp;  &nbsp;"+departamento[de].nombreDepartamento+"-"+distrito[di].descripcion+"</br> &nbsp;  &nbsp;  &nbsp; "+accionCatalogo[ac].nombre+"<br>");
+																flagDepto++;flagDist++;
+																if(flagDepto=="1"){
+																	contenidoAcciones+=contenidoDepto;
+																}
+																if(flagDist=="1"){
+																	contenidoAcciones+=contenidoDist;
+																}
+																contenidoAcciones+="<h4>"+accionCatalogo[ac].nombre+"</h4>";
 															}
+															$("#contenedorReporte").append(contenidoAcciones);
+															contenidoAcciones="";
 														}
 													}
 												}
