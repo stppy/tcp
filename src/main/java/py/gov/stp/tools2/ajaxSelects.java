@@ -98,7 +98,8 @@ public class ajaxSelects extends HttpServlet {
     	Integer beneficiarioId = null;
     	Integer destinatarioId = null;
     	Integer accionHasProductoId = null;
-    			
+    	Integer productoObjetoGastoId = null;
+    	
     	String institucion=null;
     	String usuario=null;
     	String condition = "";
@@ -113,7 +114,6 @@ public class ajaxSelects extends HttpServlet {
     	String abrev = "";
     	String descripcion = "";
     	String db = "";
-
     	
     	
     	if (request.getParameter("usuario")!=null) usuario=request.getParameter("usuario");
@@ -163,7 +163,7 @@ public class ajaxSelects extends HttpServlet {
       	if (request.getParameter("beneficiarioId")!=null) beneficiarioId=Integer.parseInt(request.getParameter("beneficiarioId"));
       	if (request.getParameter("destinatarioId")!=null) destinatarioId=Integer.parseInt(request.getParameter("destinatarioId"));
       	if (request.getParameter("accionHasProductoId")!=null) accionHasProductoId=Integer.parseInt(request.getParameter("accionHasProductoId"));
-
+      	if (request.getParameter("productoObjetoGastoId")!=null) productoObjetoGastoId=Integer.parseInt(request.getParameter("productoObjetoGastoId"));
       	
       	
         PrintWriter out = response.getWriter();
@@ -573,6 +573,17 @@ public class ajaxSelects extends HttpServlet {
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
+        	}
+        	
+        	if (action.equals("getProductoObjetoGasto")){
+        		List objetos=null;
+        		condition = " where true";
+        		if (accionId!=null) condition += " and accion_id ='"+accionId+"'";
+        		if (productoObjetoGastoId!=null) condition += " and id ='"+productoObjetoGastoId+"'";
+           		try {objetos = SqlSelects.selectProductoObjetoGasto(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());        	
         	}
 
        }
