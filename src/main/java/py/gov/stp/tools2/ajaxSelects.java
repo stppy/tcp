@@ -68,6 +68,7 @@ public class ajaxSelects extends HttpServlet {
     	Integer mes = null;
     	Integer pais = null;
     	Integer departamento = null;
+    	Integer distrito = null;
     	Integer objetivo = null;
     	Integer estrategia = null;
     	Integer indicador = null;
@@ -130,7 +131,8 @@ public class ajaxSelects extends HttpServlet {
     	if (request.getParameter("pais")!=null) pais = Integer.parseInt(request.getParameter("pais")); else pais=1;
     	if (request.getParameter("anio")!=null) anio = Integer.parseInt(request.getParameter("anio")); else anio=0;
     	if (request.getParameter("mes")!=null) mes = Integer.parseInt(request.getParameter("mes")); else mes=0;
-    	if (request.getParameter("departamento")!=null) departamento = Integer.parseInt(request.getParameter("departamento")); else departamento=99;
+    	if (request.getParameter("departamento")!=null) departamento = Integer.parseInt(request.getParameter("departamento")); //else departamento=99;
+    	if (request.getParameter("distrito")!=null) distrito = Integer.parseInt(request.getParameter("distrito")); //else distrito=99;
     	if (request.getParameter("objetivo")!=null) objetivo = Integer.parseInt(request.getParameter("objetivo")); else objetivo=0;
     	if (request.getParameter("estrategia")!=null) estrategia = Integer.parseInt(request.getParameter("estrategia")); else estrategia=0;
     	if (request.getParameter("indicador")!=null) indicador = Integer.parseInt(request.getParameter("indicador")); else indicador=0;
@@ -484,6 +486,9 @@ public class ajaxSelects extends HttpServlet {
         		List objetos=null; 
         		condition = " where true ";
         		if (lineaAccionId!=null) condition += " and ins_linea_accion_id ='"+lineaAccionId+"'";
+        		if (departamento!=null) condition += " and depto_id ='"+departamento+"'";
+        		if (distrito!=null) condition += " and dist_id ='"+distrito+"'";
+        		if (catalogoAccionId!=null) condition += " and id_accion_catalogo ='"+catalogoAccionId+"'";
         		if (accionId!=null) condition += " and id ='"+accionId+"'";
            		try {objetos = SqlSelects.selectAccion(condition);}
         		catch (SQLException e) {e.printStackTrace();}

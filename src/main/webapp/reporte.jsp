@@ -164,6 +164,8 @@ if (user != null) { %>
 										for(var ac=0; ac<accionCatalogo.length;ac++){
 											if 	(accionCatalogo[ac].id==acciones[x].accionCatalogoId){
 												$("#contenedorReporte").append(" &nbsp;  &nbsp;  &nbsp; "+accionCatalogo[ac].nombre+"<br>");
+												// aca falta recorrer departamentos y distritos y si tiene acciones segun el siguiente query dibujar tablas
+												//http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&lineaAccionId=69&departamento=3&accionCatalogoId=5&distrito=2
 											}
 										}
 										
