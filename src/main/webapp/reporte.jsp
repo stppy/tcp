@@ -159,16 +159,17 @@ if (user != null) { %>
 								acciones=JSON.parse(acciones);
 								var accionesDistintas=[];
 								for(var x=0; x<acciones.length;x++){
-									if (accionesDistintas.indexOf(acciones[x].accionCatalogoId)<0){
-										accionesDistintas.push(acciones[x].accionCatalogoId);
-										for(var ac=0; ac<accionCatalogo.length;ac++){
-											if 	(accionCatalogo[ac].id==acciones[x].accionCatalogoId){
-												$("#contenedorReporte").append(" &nbsp;  &nbsp;  &nbsp; "+accionCatalogo[ac].nombre+"<br>");
-												// aca falta recorrer departamentos y distritos y si tiene acciones segun el siguiente query dibujar tablas
-												//http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&lineaAccionId=69&departamento=3&accionCatalogoId=5&distrito=2
+									if (!acciones[x].borrado){
+										if (accionesDistintas.indexOf(acciones[x].accionCatalogoId)<0){
+											accionesDistintas.push(acciones[x].accionCatalogoId);
+											for(var ac=0; ac<accionCatalogo.length;ac++){
+												if 	(accionCatalogo[ac].id==acciones[x].accionCatalogoId){
+													$("#contenedorReporte").append(" &nbsp;  &nbsp;  &nbsp; "+accionCatalogo[ac].nombre+"<br>");
+													// aca falta recorrer departamentos y distritos y si tiene acciones segun el siguiente query dibujar tablas
+													//http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&lineaAccionId=69&departamento=3&accionCatalogoId=5&distrito=2
+												}
 											}
 										}
-										
 									}
 								}
 								
