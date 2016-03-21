@@ -194,7 +194,7 @@ if (user != null) { %>
 																
 																if(flagDepto=="1"){
 																	contenidoAcciones+="<table>";
-																	contenidoAcciones+="<tr><td>"+contenidoDepto+"</td></tr>";
+																	contenidoAcciones+="<tr><td colspan='2'>"+contenidoDepto+"</td></tr>";
 																}
 																if(flagDist=="1"){
 																	contenidoAcciones+="<tr><td>"+contenidoDist+"</td>";
@@ -203,19 +203,17 @@ if (user != null) { %>
 																}
 																contenidoAcciones+="<td><h4>"+accionCatalogo[ac].nombre+"</h4></td></tr>";
 															}
-										 					/*
+														//	contenidoAcciones+="</table>";
+
 															$("#contenedorReporte").append(contenidoAcciones);
-															contenidoAcciones="";*/
+															contenidoAcciones="";
 														}
 													}
 												}
 										}//fin deacciones para acciones distintas
 										accionesDistintas=[];
-										$("#contenedorReporte").append(contenidoAcciones);
-										contenidoAcciones="";
 									}// si es el depto del distrito
 								}//fin distrito
-								$("#contenedorReporte").append("</table>");
 							}//fin departamento
 						}//fin de todas las instancias de esa linea	
 					}//fin de for de lineas
