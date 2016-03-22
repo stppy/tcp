@@ -590,6 +590,14 @@ public class ajaxSelects extends HttpServlet {
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());        	
         	}
+        	if (action.equals("getProgramacionPorMes")){
+        		List objetos=null;
+        		if (actividadId!=null) condition += " and actividad_id ='"+actividadId+"'";
+           		try {objetos = SqlSelects.selectProgramacionPorMes(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());        	
+        	}
 
        }
 

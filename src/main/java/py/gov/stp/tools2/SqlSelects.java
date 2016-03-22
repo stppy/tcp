@@ -1308,6 +1308,35 @@ public class SqlSelects {
 				if (conect != null) {conect.close();}
 			}
 			return objetos; 
+	  }
+	public static List<ProgramacionPorMes> selectProgramacionPorMes(String condition) throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+			 String query = " SELECT actividad_id, to_char(fecha_entrega, 'YYYY-MM') as mes, sum(cantidad) as cantidad FROM programacion where not borrado "+condition+" group by  actividad_id, mes order by actividad_id, mes";
+			 
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 List<ProgramacionPorMes> objetos = new ArrayList<ProgramacionPorMes>();
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					ProgramacionPorMes objeto = new ProgramacionPorMes();
+					objeto.setActividadId(rs.getInt("actividad_id"));
+					objeto.setCantidad(rs.getDouble("cantidad"));
+					objeto.setMes(rs.getString("mes"));
+					
+
+
+					objetos.add(objeto);
+				}
+			}
+			catch (SQLException e) {e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos; 
 	  }	
 
 }

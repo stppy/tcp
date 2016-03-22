@@ -293,6 +293,7 @@ if (user != null) { %>
 			cronogramas=JSON.parse(cronogramas);
 			var tabla="<table class='table table-striped table-bordered table-hover table-condensed'><tr><td>Nombre</td><td>U. Medida</td><td>T. Cronograma</td><td>Proporción</td><td>Peso</td><td>Acu</td><td>Ene</td><td>Feb</td><td>Mar</td><td>Abr</td><td>May</td><td>Jun</td><td>Jul</td><td>Ago</td><td>Sep</td><td>Oct</td><td>Nov</td><td>Dic</td></tr>";
 			var tipo;
+			var cronogramaPorMes=[];
 			for(var c=0; c<cronogramas.length;c++){
 				
 				var nombreUnidadMedida = "";
@@ -313,7 +314,30 @@ if (user != null) { %>
 					}
 				}
 				
-				tabla+="<tr><td>"+cronogramas[c].nombre+"</td><td>"+nombreUnidadMedida+"</td><td>"+nombreHitoTipo+"</td><td>"+cronogramas[c].proporcion+"</td><td>"+cronogramas[c].peso+"</td><td>"+getEstado(cronogramas[c].acumulable)+"</td><td>"+cronogramas[c].peso+"</td><td>"+cronogramas[c].peso+"</td><td>"+cronogramas[c].peso+"</td><td>"+cronogramas[c].peso+"</td><td>"+cronogramas[c].peso+"</td><td>"+cronogramas[c].peso+"</td><td>"+cronogramas[c].peso+"</td><td>"+cronogramas[c].peso+"</td><td>"+cronogramas[c].peso+"</td><td>"+cronogramas[c].peso+"</td><td>"+cronogramas[c].peso+"</td><td>"+cronogramas[c].peso+"</td></tr>"
+				var programacion = $.ajax({
+					url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getProgramacionPorMes&actividadId='+cronogramas[c].id,
+				  	type:'get',
+				  	dataType:'json',
+				  	async:false       
+				}).responseText;		
+				programacion=JSON.parse(programacion);
+				var meses=[];
+				for (var p=0;p<programacion.length;p++){
+					var pos=programacion[p].mes.split("-");
+					meses[parseInt(pos[1])]=programacion[p].cantidad;
+				}
+				
+				
+			
+				
+				tabla+="<tr><td>"+cronogramas[c].nombre+"</td><td>"+nombreUnidadMedida+"</td><td>"+nombreHitoTipo+"</td><td>"+cronogramas[c].proporcion+"</td><td>"+cronogramas[c].peso+"</td><td>"+getEstado(cronogramas[c].acumulable)+"</td>";
+				for (var m=0;m<12;m++){
+					if (typeof(meses[m])=="undefined"){
+						meses[m]=0;
+					}
+					tabla+="<td>"+meses[m]+"</td>";
+				}
+				tabla+="</tr>";
 			}
 			tabla+="</table>";
 			return tabla;
