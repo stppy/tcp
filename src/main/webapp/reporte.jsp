@@ -208,6 +208,22 @@ if (user != null) { %>
 		}).responseText;		
 		distrito=JSON.parse(distrito);
 		
+		var unidadMedida = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		unidadMedida = JSON.parse(unidadMedida);
+
+		var hitoTipo = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getHitoTipo',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		hitoTipo = JSON.parse(hitoTipo);
+		
 		function getDetallePresupuesto(accionId){
 			var pDa = $.ajax({
 				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionHasProducto&accionId='+accionId,
@@ -266,6 +282,49 @@ if (user != null) { %>
 			tabla+="</table>";
 			return tabla;
 			
+		}
+		function getCronograma(accionId){
+			var cronogramas = $.ajax({
+				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getCronograma&accionId='+accionId,
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+			}).responseText;		
+			cronogramas=JSON.parse(cronogramas);
+			var tabla="<table class='table table-striped table-bordered table-hover table-condensed'><tr><td>Nombre</td><td>U. Medida</td><td>T. Cronograma</td><td>Proporción</td><td>Peso</td><td>Acu</td><td>Ene</td><td>Feb</td><td>Mar</td><td>Abr</td><td>May</td><td>Jun</td><td>Jul</td><td>Ago</td><td>Sep</td><td>Oct</td><td>Nov</td><td>Dic</td></tr>";
+			var tipo;
+			for(var c=0; c<cronogramas.length;c++){
+				
+				var nombreUnidadMedida = "";
+				var nombreHitoTipo = "";
+				for(var x = 0; x < unidadMedida.length; x++)
+				{
+					if(unidadMedida[x].id == cronogramas[c].unidad_medida_id)
+					{
+						nombreUnidadMedida = unidadMedida[x].descripcion;
+					}
+				}
+				
+				for(var l = 0; l < hitoTipo.length; l++)
+				{
+					if(hitoTipo[l].id == cronogramas[c].hito_tipo_id)
+					{
+						nombreHitoTipo = hitoTipo[l].nombre;
+					}
+				}
+				
+				tabla+="<tr><td>"+cronogramas[c].nombre+"</td><td>"+nombreUnidadMedida+"</td><td>"+nombreHitoTipo+"</td><td>"+cronogramas[c].proporcion+"</td><td>"+cronogramas[c].peso+"</td><td>"+getEstado(cronogramas[c].acumulable)+"</td><td>"+cronogramas[c].peso+"</td><td>"+cronogramas[c].peso+"</td><td>"+cronogramas[c].peso+"</td><td>"+cronogramas[c].peso+"</td><td>"+cronogramas[c].peso+"</td><td>"+cronogramas[c].peso+"</td><td>"+cronogramas[c].peso+"</td><td>"+cronogramas[c].peso+"</td><td>"+cronogramas[c].peso+"</td><td>"+cronogramas[c].peso+"</td><td>"+cronogramas[c].peso+"</td><td>"+cronogramas[c].peso+"</td></tr>"
+			}
+			tabla+="</table>";
+			return tabla;
+		}
+		
+		function getEstado(estado){
+			if(estado == true){
+				return "Si";
+			}else{
+				return "No";
+			}
 		}
 		
 		
@@ -327,6 +386,7 @@ if (user != null) { %>
 																contenidoAcciones+="<tr><td>"+accionCatalogo[ac].nombre+"</td><td>"+acciones[x].peso+"</td><td>"+acciones[x].fechaInicio+"</td><td>"+acciones[x].fechaFin+"</td><td>"+acciones[x].meta1+"</td><td>"+acciones[x].meta2+"</td><td>"+acciones[x].meta3+"</td><td>"+acciones[x].meta4+"</td></tr>";
 																contenidoAcciones+="<tr><td colspan='8'>"+getDetallePresupuesto(acciones[x].id)+"</td></tr>";
 																contenidoAcciones+="<tr><td colspan='8'>"+getDetalleDestinatario(acciones[x].id)+"</td></tr>";
+																contenidoAcciones+="<tr><td colspan='8'>"+getCronograma(acciones[x].id)+"</td></tr>";
 																contenidoAcciones+='</table>';
 															}
 														//	contenidoAcciones+="</table>";
