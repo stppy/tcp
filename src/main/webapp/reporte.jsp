@@ -450,6 +450,13 @@ if (user != null) { %>
 </script>
 	
  <div class="container">
+ 	<div class="box">
+		<div class="col-md-12" style="background-color:#193A4B"> 
+			<div class="pull-left"><img src="http://rc.stp.gov.py/dist/img/logo_izquierdo.png"></div>
+			<div class="pull-right"><img src="http://rc.stp.gov.py/dist/img/logo_derecho.png"></div>
+        </div>
+        <h1 class="text-center">PROBANDO EL SISTEMA</h1>
+    </div>
 		<div class="row" id="contenedorReporte" class="col-md-12 table-responsive">
 		
         </div><!-- /.row -->          	

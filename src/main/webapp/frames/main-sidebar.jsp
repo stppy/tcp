@@ -44,12 +44,12 @@
             -->
             <li class="treeview">
               <a href="#" id="vistaGeografica">
-                <i class="fa fa-edit"></i> <span>Geografico</span>
+                <i class="fa fa-edit"></i> <span>Resumen</span>
               </a>
             </li>
             <li class="treeview">
               <a href="#" id="vistaCiudadana">
-                <i class="fa fa-edit"></i> <span>Ciudadano</span>
+                <i class="fa fa-edit"></i> <span>Reporte</span>
               </a>
               
             </li>
