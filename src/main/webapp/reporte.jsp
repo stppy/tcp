@@ -533,10 +533,22 @@ if (user != null) { %>
 <script type="text/javascript" src="bootstrap/js/bootstrap-slider.js"></script>
  
 <script>
+var institucioness = $.ajax({
+	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+  	type:'get',
+  	dataType:'json',
+  	async:false       
+}).responseText;		
+institucioness=JSON.parse(institucioness);
 var entidadCasSpr = "";
 entidadCasSpr ="<%=attributes.get("entidad") %>";
 usuarioRolCasSpr="<%=attributes.get("role_id") %>";
-$("#nombreInstitucion").html(entidadCasSpr);
+
+for(var ins=0; ins<institucioness.length;ins++){
+	if(institucioness[ins].sigla == entidadCasSpr){
+		$("#nombreInstitucion").html(institucioness[ins].nombre);
+	}
+}
 var usuariosSpr = $.ajax({
 	url:'http://spr.stp.gov.py/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
   	type:'get',
