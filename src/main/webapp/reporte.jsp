@@ -300,7 +300,7 @@ if (user != null) { %>
 				var nombreHitoTipo = "";
 				for(var x = 0; x < unidadMedida.length; x++)
 				{
-					if(unidadMedida[x].id == cronogramas[c].unidad_medida_id)
+					if(unidadMedida[x].id == cronogramas[c].unidad_medida_id && cronogramas[c].borrado != true)
 					{
 						nombreUnidadMedida = unidadMedida[x].descripcion;
 					}
@@ -308,7 +308,7 @@ if (user != null) { %>
 				
 				for(var l = 0; l < hitoTipo.length; l++)
 				{
-					if(hitoTipo[l].id == cronogramas[c].hito_tipo_id)
+					if(hitoTipo[l].id == cronogramas[c].hito_tipo_id && cronogramas[c].borrado != true)
 					{
 						nombreHitoTipo = hitoTipo[l].nombre;
 					}
@@ -324,20 +324,21 @@ if (user != null) { %>
 				var meses=[];
 				for (var p=0;p<programacion.length;p++){
 					var pos=programacion[p].mes.split("-");
-					meses[parseInt(pos[1])]=programacion[p].cantidad;
+					meses[parseInt(pos[1]-1)]=programacion[p].cantidad;
 				}
 				
 				
 			
-				
-				tabla+="<tr><td>"+cronogramas[c].nombre+"</td><td>"+nombreUnidadMedida+"</td><td>"+nombreHitoTipo+"</td><td>"+cronogramas[c].proporcion+"</td><td>"+cronogramas[c].peso+"</td><td>"+getEstado(cronogramas[c].acumulable)+"</td>";
-				for (var m=0;m<12;m++){
-					if (typeof(meses[m])=="undefined"){
-						meses[m]=0;
+				if(cronogramas[c].borrado != true){
+					tabla+="<tr><td>"+cronogramas[c].nombre+"</td><td>"+nombreUnidadMedida+"</td><td>"+nombreHitoTipo+"</td><td>"+cronogramas[c].proporcion+"</td><td>"+cronogramas[c].peso+"</td><td>"+getEstado(cronogramas[c].acumulable)+"</td>";
+					for (var m=0;m<12;m++){
+						if (typeof(meses[m])=="undefined"){
+							meses[m]=0;
+						}
+						tabla+="<td>"+meses[m]+"</td>";
 					}
-					tabla+="<td>"+meses[m]+"</td>";
-				}
-				tabla+="</tr>";
+					tabla+="</tr>";
+				}				
 			}
 			tabla+="</table>";
 			return tabla;
@@ -448,18 +449,28 @@ if (user != null) { %>
 	//window.location = "http://spr.stp.gov.py/tablero/resumenLineaAccion.jsp";
 <%//}%>
 </script>
-	
+		
  <div class="container">
- 	<div class="box">
-		<div class="col-md-12" style="background-color:#193A4B"> 
+	<div class="row">
+		<div class="col-md-1">
+  		</div>	
+		<div class="col-md-10" style="background-color:#193A4B"> 
 			<div class="pull-left"><img src="http://rc.stp.gov.py/dist/img/logo_izquierdo.png"></div>
 			<div class="pull-right"><img src="http://rc.stp.gov.py/dist/img/logo_derecho.png"></div>
-        </div>
-        <h1 class="text-center">PROBANDO EL SISTEMA</h1>
-    </div>
-		<div class="row" id="contenedorReporte" class="col-md-12 table-responsive">
-		
-        </div><!-- /.row -->          	
+	   	</div>
+		<div class="col-md-1">
+  		</div>  	   	
+	</div></br>
+	<div class="row" >
+		<div class="col-md-12 ">
+			<h1 class="text-center" id="nombreInstitucion"></h1>
+  		</div>		
+	</div>
+
+	<div class="row" >
+		<div id="contenedorReporte" class="col-md-12 table-responsive">
+  		</div>
+	</div>        	
         
  </div><!-- /.container -->
 
@@ -525,6 +536,7 @@ if (user != null) { %>
 var entidadCasSpr = "";
 entidadCasSpr ="<%=attributes.get("entidad") %>";
 usuarioRolCasSpr="<%=attributes.get("role_id") %>";
+$("#nombreInstitucion").html(entidadCasSpr);
 var usuariosSpr = $.ajax({
 	url:'http://spr.stp.gov.py/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
   	type:'get',
