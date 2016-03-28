@@ -180,8 +180,6 @@ if (user != null) { %>
 		}).responseText;		
 		accionCatalogo=JSON.parse(accionCatalogo);
 		
-		
-		
 		var departamento = $.ajax({
 			url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
 		  	type:'get',
@@ -215,6 +213,17 @@ if (user != null) { %>
 		}).responseText;
 		hitoTipo = JSON.parse(hitoTipo);
 		
+		var catalogoProducto=$.ajax({
+	        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductos',
+	          	type:'get',
+	          	dataType:'json',
+	          	async:false,
+	        }).responseText;
+		catalogoProducto=JSON.parse(catalogoProducto);
+		catalogoProducto=catalogoProducto.productos;
+
+    	
+		
 		function getDetallePresupuesto(accionId){
 			var pDa = $.ajax({
 				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionHasProducto&accionId='+accionId,
@@ -223,19 +232,21 @@ if (user != null) { %>
 			  	async:false       
 			}).responseText;		
 			pDa=JSON.parse(pDa);
-			var tabla="<table class='table table-striped table-bordered table-hover table-condensed' style='margin-bottom: 3px;'><tr><th>Producto</th><th>Proporcion</th><th>U. Medida</th><th>Clase</th><th>Cant. Física</th><th>Cant. Financiera </th></tr>";
+			var tabla="<table class='table table-striped table-bordered table-hover table-condensed' style='margin-bottom: 3px;'><tr><th>Códig</th><th>Nombre del Producto</th><th>U. Medida</th><th>Tipo</th><th>Cant. Física</th><th>Costos de la Acción </th></tr>";
 			
- 			//var nombreProducto;	
-
+			
+			
+ 			var nombreProducto;	
+			
 			for(var pa=0; pa<pDa.length;pa++){
-			/*	nombreProducto = "";	
-				for(var j = 0; j < productos.productos.length; j++){
-					if(productos.productos[j].codigoCatalogo == pDa[pa].sprProductoId){
-						nombreProducto = productos.productos[j].nombreCatalogo;
+				nombreProducto = "";	
+				for(var j = 0; j < catalogoProducto.length; j++){
+					if(catalogoProducto[j].codigoCatalogo == pDa[pa].sprProductoId){
+						nombreProducto = catalogoProducto [j].nombreCatalogo;
 					}
-				} */
+				}
 				if (!pDa[pa].borrado){
-					tabla+="<tr><td>"+pDa[pa].nivel+"-"+pDa[pa].entidad+"-"+pDa[pa].tipoPrograma+"-"+pDa[pa].programa+"-"+pDa[pa].subPrograma+"-"+pDa[pa].proyecto+"-"+pDa[pa].sprProductoId+"</td><td>"+pDa[pa].proporcion+"</td><td>"+pDa[pa].unidadMedida+"</td><td>"+pDa[pa].clase+"</td><td>"+numeroConComa(pDa[pa].cantidadFisica.toFixed(2))+"</td><td>"+numeroConComa(pDa[pa].totalAsignacion.toFixed(2))+"</td></tr>"
+					tabla+="<tr><td>"+pDa[pa].nivel+"-"+pDa[pa].entidad+"-"+pDa[pa].tipoPrograma+"-"+pDa[pa].programa+"-"+pDa[pa].subPrograma+"-"+pDa[pa].proyecto+"-"+pDa[pa].sprProductoId+"</td><td>"+nombreProducto+"</td><td>"+pDa[pa].unidadMedida+"</td><td>"+pDa[pa].clase+"</td><td>"+numeroConComa(pDa[pa].cantidadFisica.toFixed(2))+"</td><td>G. "+numeroConComa(pDa[pa].totalAsignacion.toFixed(2))+"</td></tr>"
 				}
 			}
 			tabla+="</table>";
@@ -250,7 +261,8 @@ if (user != null) { %>
 			  	async:false       
 			}).responseText;		
 			destinatarios=JSON.parse(destinatarios);
-			var tabla="<table class='table table-striped table-bordered table-hover table-condensed'style='margin-bottom: 3px;'><tr><th>Beneficiarios</th><th>Descripción</th><th>Tipo</th><th>Grupo</th></tr>";
+			var tabla="<table class='table table-striped table-bordered table-hover table-condensed'style='margin-bottom: 3px;'>"+
+			"<tr><th>Tipo</th><th>Grupo</th><th>Cantidad de Destinatarios</th><th>Descripción</th></tr>";
 			var tipo;
 			for(var des=0; des<destinatarios.length;des++){
 				tipo="";
@@ -267,7 +279,7 @@ if (user != null) { %>
 						}
 					}
 					
-					tabla+="<tr><td>"+destinatarios[des].cantidad+"</td><td>"+destinatarios[des].descripcion+"</td><td>"+tipo+"</td><td>"+grupo+"</td></tr>"
+					tabla+="<tr><td>"+tipo+"</td><td>"+grupo+"</td><td>"+destinatarios[des].cantidad+"</td><td>"+destinatarios[des].descripcion+"</td></tr>"
 				}
 			}
 			tabla+="</table>";
@@ -282,7 +294,7 @@ if (user != null) { %>
 			  	async:false       
 			}).responseText;		
 			cronogramas=JSON.parse(cronogramas);
-			var tabla="<table class='table table-striped table-bordered table-hover table-condensed'style='margin-bottom: 3px;'><tr><th>Nombre</th><th>U. Medida</th><th>T. Cronograma</th><th>Proporción</th><th>Peso</th><th>Acu</th><th>Ene</th><th>Feb</th><th>Mar</th><th>Abr</th><th>May</th><th>Jun</th><th>Jul</th><th>Ago</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dic</th></tr>";
+			var tabla="<table class='table table-striped table-bordered table-hover table-condensed'style='margin-bottom: 3px;'><tr><th>Nombre del Cronograma</th><th>U. Medida</th><th>Tipo</th><th>Acumula</th><th>Ene</th><th>Feb</th><th>Mar</th><th>Abr</th><th>May</th><th>Jun</th><th>Jul</th><th>Ago</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dic</th></tr>";
 			var tipo;
 			var cronogramaPorMes=[];
 			for(var c=0; c<cronogramas.length;c++){
@@ -321,7 +333,7 @@ if (user != null) { %>
 				
 			
 				if(cronogramas[c].borrado != true){
-					tabla+="<tr><td>"+cronogramas[c].nombre+"</td><td>"+nombreUnidadMedida+"</td><td>"+nombreHitoTipo+"</td><td>"+cronogramas[c].proporcion+"</td><td>"+cronogramas[c].peso+"</td><td>"+getEstado(cronogramas[c].acumulable)+"</td>";
+					tabla+="<tr><td>"+cronogramas[c].nombre+"</td><td>"+nombreUnidadMedida+"</td><td>"+nombreHitoTipo+"</td><td>"+getEstado(cronogramas[c].acumulable)+"</td>";
 					for (var m=0;m<12;m++){
 						if (typeof(meses[m])=="undefined"){
 							meses[m]=0;
@@ -404,11 +416,12 @@ if (user != null) { %>
 																	contenidoAcciones+="<h4>"+contenidoDist+"</h4>";
 																}
 																contenidoAcciones+='<table class="table table-striped table-bordered table-hover table-condensed" style="margin-bottom: 3px;">';
-																contenidoAcciones+='<tr><th>Acción</th><th>Peso</th><th>Fecha Ini.</th><th>Fecha Fin</th> <th>1er Trim</th><th>2do Trim</th><th>3er Trim</th><th>4to Trim</th></tr>';
+																contenidoAcciones+='<tr><th>Acción</th><th>Peso</th><th>Inicio</th><th>Fin</th> <th>1er Trim</th><th>2do Trim</th><th>3er Trim</th><th>4to Trim</th></tr>';
 																contenidoAcciones+="<tr><td>"+accionCatalogo[ac].nombre+"</td><td>"+acciones[x].peso+"</td><td>"+acciones[x].fechaInicio+"</td><td>"+acciones[x].fechaFin+"</td><td>"+acciones[x].meta1+"</td><td>"+acciones[x].meta2+"</td><td>"+acciones[x].meta3+"</td><td>"+acciones[x].meta4+"</td></tr>";
+																contenidoAcciones+="<tr><td colspan='8'>"+getCronograma(acciones[x].id)+"</td></tr>";
 																contenidoAcciones+="<tr><td colspan='8'>"+getDetallePresupuesto(acciones[x].id)+"</td></tr>";
 																contenidoAcciones+="<tr><td colspan='8'>"+getDetalleDestinatario(acciones[x].id)+"</td></tr>";
-																contenidoAcciones+="<tr><td colspan='8'>"+getCronograma(acciones[x].id)+"</td></tr>";
+																
 																contenidoAcciones+='</table>';
 															}
 														//	contenidoAcciones+="</table>";
