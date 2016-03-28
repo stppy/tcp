@@ -232,7 +232,7 @@ if (user != null) { %>
 			  	async:false       
 			}).responseText;		
 			pDa=JSON.parse(pDa);
-			var tabla="<table class='table table-striped table-bordered table-hover table-condensed' style='margin-bottom: 3px;'><tr><th>Códig</th><th>Nombre del Producto</th><th>U. Medida</th><th>Tipo</th><th>Cant. Física</th><th>Costos de la Acción </th></tr>";
+			var tabla="<table class='table table-striped table-bordered table-hover table-condensed' style='margin-bottom: 3px;'><tr><th>Código</th><th>Nombre del Producto</th><th>U. Medida</th><th>Tipo</th><th>Cant. Física</th><th>Costos de la Acción </th></tr>";
 			
 			
 			
@@ -403,8 +403,8 @@ if (user != null) { %>
 											var accionesDistintas=[];
 											for(var x=0; x<acciones.length;x++){
 												if (!acciones[x].borrado && acciones[x].departamentoId==departamento[de].idDepartamento && (acciones[x].distritoId==distrito[di].id &&  acciones[x].departamentoId==distrito[di].departamentoId)){
-													if (accionesDistintas.indexOf(acciones[x].accionCatalogoId)<0){
-														accionesDistintas.push(acciones[x].accionCatalogoId);
+												//	if (accionesDistintas.indexOf(acciones[x].accionCatalogoId)<0){
+												//		accionesDistintas.push(acciones[x].accionCatalogoId);
 														for(var ac=0; ac<accionCatalogo.length;ac++){
 															if 	(accionCatalogo[ac].id==acciones[x].accionCatalogoId){
 																flagDepto++;flagDist++;
@@ -431,7 +431,7 @@ if (user != null) { %>
 														}
 													}
 												}
-										}//fin deacciones para acciones distintas
+										//}//fin deacciones para acciones distintas
 										accionesDistintas=[];
 									}// si es el depto del distrito
 								}//fin distrito
