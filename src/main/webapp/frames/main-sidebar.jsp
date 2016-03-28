@@ -24,25 +24,25 @@
             	<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") ){%>                        
 		    	<li class="treeview">
 					<a href="#">
-		   				<i class="fa fa-dashboard"></i> <span>Plan Estratégico Institucional</span> <i class="fa fa-angle-left pull-right"></i>
+		   				<i class="fa fa-list-alt"></i> <span>Plan Estratégico Institucional</span> <i class="fa fa-angle-left pull-right"></i>
 		   			</a>
 		   			<ul class="treeview-menu" style="display: none;">
-		   				<li><a href="http://spr.stp.gov.py/entidad.jsp"><i class="fa fa-circle-o" id="linkEntidad"></i>Entidad</a></li>
-		        			<li class=""><a href="http://spr.stp.gov.py/programacion.jsp"><i class="fa fa-circle-o" id="linkEstructuraProgramatica"></i>Estructura Programática</a></li>
-		        			<li class=""><a href="http://spr.stp.gov.py/producto.jsp"><i class="fa fa-circle-o" id="linkProgramacionProducto"></i>Programación de Productos</a></li>         			
+		   				<li><a href="http://spr.stp.gov.py/entidad.jsp"><i class="fa fa-home" id="linkEntidad"></i>Entidad</a></li>
+		        			<li class=""><a href="http://spr.stp.gov.py/programacion.jsp"><i class="fa fa-sitemap" id="linkEstructuraProgramatica"></i>Estructura Programática</a></li>
+		        			<li class=""><a href="http://spr.stp.gov.py/producto.jsp"><i class="fa fa-edit" id="linkProgramacionProducto"></i>Programación de Productos</a></li>         			
 		   			</ul>
 				</li>
 			<%}%>
 			<li class="treeview">
 				<a href="#">
-    				<i class="fa fa-dashboard"></i> <span>Plan de Acción</span> <i class="fa fa-angle-left pull-right"></i>
+    				<i class="fa fa-tasks"></i> <span>Plan de Acción</span> <i class="fa fa-angle-left pull-right"></i>
     			</a>
     			<ul class="treeview-menu" style="display: none;">
-    				<li><a href="http://spr.stp.gov.py/tablero/contenedorInsLineaAccion.jsp"><i class="fa fa-circle-o"></i>Elaboración de Plan de Acción</a></li>
-         			<li class=""><a href="http://spr.stp.gov.py/tablero/reporte.jsp"><i class="fa fa-circle-o" id="linkReportePa"></i>Reporte de Plan de Acción</a></li>
-         			<li class=""><a href="http://spr.stp.gov.py/tablero/pivotPresupuesto.jsp"><i class="fa fa-circle-o" id="linkPivotPresupuesto"></i>Análisis de Productos</a></li>
-					<li class=""><a href="http://spr.stp.gov.py/tablero/pivotDestinatario.jsp"><i class="fa fa-circle-o" id="linkPivotDestinatario"></i>Análisis de Destinatarios</a></li>
-					<li class=""><a href="http://spr.stp.gov.py/tablero/pivotProgramado.jsp"><i class="fa fa-circle-o" id="linkPivotProgramacion"></i>Análisis de Programación</a></li>         			
+    				<li><a href="http://spr.stp.gov.py/tablero/contenedorInsLineaAccion.jsp"><i class="fa fa-wrench"></i>Elaboración de Plan de Acción</a></li>
+         			<li class=""><a href="http://spr.stp.gov.py/tablero/reporte.jsp"><i class="fa fa-file" id="linkReportePa"></i>Reporte de Plan de Acción</a></li>
+         			<li class=""><a href="http://spr.stp.gov.py/tablero/pivotPresupuesto.jsp"><i class="fa fa-signal" id="linkPivotPresupuesto"></i>Análisis de Productos</a></li>
+					<li class=""><a href="http://spr.stp.gov.py/tablero/pivotDestinatario.jsp"><i class="fa fa-group" id="linkPivotDestinatario"></i>Análisis de Destinatarios</a></li>
+					<li class=""><a href="http://spr.stp.gov.py/tablero/pivotProgramado.jsp"><i class="fa fa-calendar" id="linkPivotProgramacion"></i>Análisis de Programación</a></li>         			
     			</ul>
  			</li>
  			
