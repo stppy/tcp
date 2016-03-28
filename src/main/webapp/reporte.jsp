@@ -223,7 +223,7 @@ if (user != null) { %>
 			  	async:false       
 			}).responseText;		
 			pDa=JSON.parse(pDa);
-			var tabla="<table class='table table-striped table-bordered table-hover table-condensed'><tr><th>Producto</th><th>Proporcion</th><th>U. Medida</th><th>Clase</th><th>Cant. Física</th><th>Cant. Financiera </th></tr>";
+			var tabla="<table class='table table-striped table-bordered table-hover table-condensed' style='margin-bottom: 3px;'><tr><th>Producto</th><th>Proporcion</th><th>U. Medida</th><th>Clase</th><th>Cant. Física</th><th>Cant. Financiera </th></tr>";
 			
  			//var nombreProducto;	
 
@@ -250,7 +250,7 @@ if (user != null) { %>
 			  	async:false       
 			}).responseText;		
 			destinatarios=JSON.parse(destinatarios);
-			var tabla="<table class='table table-striped table-bordered table-hover table-condensed'><tr><th>Beneficiarios</th><th>Descripción</th><th>Tipo</th><th>Grupo</th></tr>";
+			var tabla="<table class='table table-striped table-bordered table-hover table-condensed'style='margin-bottom: 3px;'><tr><th>Beneficiarios</th><th>Descripción</th><th>Tipo</th><th>Grupo</th></tr>";
 			var tipo;
 			for(var des=0; des<destinatarios.length;des++){
 				tipo="";
@@ -282,7 +282,7 @@ if (user != null) { %>
 			  	async:false       
 			}).responseText;		
 			cronogramas=JSON.parse(cronogramas);
-			var tabla="<table class='table table-striped table-bordered table-hover table-condensed'><tr><th>Nombre</th><th>U. Medida</th><th>T. Cronograma</th><th>Proporción</th><th>Peso</th><th>Acu</th><th>Ene</th><th>Feb</th><th>Mar</th><th>Abr</th><th>May</th><th>Jun</th><th>Jul</th><th>Ago</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dic</th></tr>";
+			var tabla="<table class='table table-striped table-bordered table-hover table-condensed'style='margin-bottom: 3px;'><tr><th>Nombre</th><th>U. Medida</th><th>T. Cronograma</th><th>Proporción</th><th>Peso</th><th>Acu</th><th>Ene</th><th>Feb</th><th>Mar</th><th>Abr</th><th>May</th><th>Jun</th><th>Jul</th><th>Ago</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dic</th></tr>";
 			var tipo;
 			var cronogramaPorMes=[];
 			for(var c=0; c<cronogramas.length;c++){
@@ -403,7 +403,7 @@ if (user != null) { %>
 																if(flagDist=="1"){
 																	contenidoAcciones+="<h4>"+contenidoDist+"</h4>";
 																}
-																contenidoAcciones+='<table class="table table-striped table-bordered table-hover table-condensed">';
+																contenidoAcciones+='<table class="table table-striped table-bordered table-hover table-condensed" style="margin-bottom: 3px;">';
 																contenidoAcciones+='<tr><th>Acción</th><th>Peso</th><th>Fecha Ini.</th><th>Fecha Fin</th> <th>1er Trim</th><th>2do Trim</th><th>3er Trim</th><th>4to Trim</th></tr>';
 																contenidoAcciones+="<tr><td>"+accionCatalogo[ac].nombre+"</td><td>"+acciones[x].peso+"</td><td>"+acciones[x].fechaInicio+"</td><td>"+acciones[x].fechaFin+"</td><td>"+acciones[x].meta1+"</td><td>"+acciones[x].meta2+"</td><td>"+acciones[x].meta3+"</td><td>"+acciones[x].meta4+"</td></tr>";
 																contenidoAcciones+="<tr><td colspan='8'>"+getDetallePresupuesto(acciones[x].id)+"</td></tr>";
