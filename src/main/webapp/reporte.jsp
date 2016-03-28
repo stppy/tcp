@@ -50,6 +50,9 @@
 		#R, #G, #B {
 			width: 300px;
 		}
+		th{
+			font-weight: bold;
+		}
 		@media print {
 			h1{
 	    		font-size: 18px;
@@ -84,9 +87,19 @@
 if (user != null) { %>
 
 <script>
+
+	var entidadCasSpr = "";
+	entidadCasSpr ="<%=attributes.get("entidad") %>";
+	usuarioRolCasSpr="<%=attributes.get("role_id") %>";
+
+	
 <%//if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0")){%>
  	$(document).ready(function(){
  		
+ 		
+ 	
+ 		
+ 		 		
  		function numeroConComa(x) {
 			return x.toString().replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 		}
@@ -105,29 +118,7 @@ if (user != null) { %>
 			    return 1;
 			  return 0;
 			}
-		
-/*     	var productos;
-    	$.ajax({
-        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductos',
-          	type:'get',
-          	crossDomain: 'true',
-          	dataType:'jsonp',
-            jsonp: 'callback',
-            jsonpCallback: 'jsonpCallbackProducto',
-          	async:false,
-          	success: function( data, textStatus, jqXHR) {
-          		if(data.success == true){
-          			jsonpCallbackProducto(data);
-          		}
-          	},
-          	error: function( data, textStatus, jqXHR) {
 
-          	}
-        });
-    	
-    	function jsonpCallbackProducto(data){
- 	    	productos = data;
- 	    } */
     	    		
 		var unidadMedida = $.ajax({
 			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
@@ -232,7 +223,7 @@ if (user != null) { %>
 			  	async:false       
 			}).responseText;		
 			pDa=JSON.parse(pDa);
-			var tabla="<table class='table table-striped table-bordered table-hover table-condensed'><tr><td>Producto</td><td>Proporcion</td><td>U. Medida</td><td>Clase</td><td>Cant. Física</td><td>Cant. Financiera / Presupuesto</td></tr>";
+			var tabla="<table class='table table-striped table-bordered table-hover table-condensed'><tr><th>Producto</th><th>Proporcion</th><th>U. Medida</th><th>Clase</th><th>Cant. Física</th><th>Cant. Financiera </th></tr>";
 			
  			//var nombreProducto;	
 
@@ -244,7 +235,7 @@ if (user != null) { %>
 					}
 				} */
 				if (!pDa[pa].borrado){
-					tabla+="<tr><td>"+pDa[pa].nivel+"-"+pDa[pa].entidad+"-"+pDa[pa].tipoPrograma+"-"+pDa[pa].programa+"-"+pDa[pa].subPrograma+"-"+pDa[pa].proyecto+"-"+pDa[pa].sprProductoId+"</td><td>"+pDa[pa].proporcion+"</td><td>"+pDa[pa].unidadMedida+"</td><td>"+pDa[pa].clase+"</td><td>"+pDa[pa].cantidadFisica+"</td><td>"+pDa[pa].totalAsignacion+"/"+pDa[pa].cantidadFinanciera+"</td></tr>"
+					tabla+="<tr><td>"+pDa[pa].nivel+"-"+pDa[pa].entidad+"-"+pDa[pa].tipoPrograma+"-"+pDa[pa].programa+"-"+pDa[pa].subPrograma+"-"+pDa[pa].proyecto+"-"+pDa[pa].sprProductoId+"</td><td>"+pDa[pa].proporcion+"</td><td>"+pDa[pa].unidadMedida+"</td><td>"+pDa[pa].clase+"</td><td>"+numeroConComa(pDa[pa].cantidadFisica.toFixed(2))+"</td><td>"+numeroConComa(pDa[pa].totalAsignacion.toFixed(2))+"</td></tr>"
 				}
 			}
 			tabla+="</table>";
@@ -259,7 +250,7 @@ if (user != null) { %>
 			  	async:false       
 			}).responseText;		
 			destinatarios=JSON.parse(destinatarios);
-			var tabla="<table class='table table-striped table-bordered table-hover table-condensed'><tr><td>Beneficiarios</td><td>Descripción</td><td>Tipo</td><td>Grupo</td></tr>";
+			var tabla="<table class='table table-striped table-bordered table-hover table-condensed'><tr><th>Beneficiarios</th><th>Descripción</th><th>Tipo</th><th>Grupo</th></tr>";
 			var tipo;
 			for(var des=0; des<destinatarios.length;des++){
 				tipo="";
@@ -291,7 +282,7 @@ if (user != null) { %>
 			  	async:false       
 			}).responseText;		
 			cronogramas=JSON.parse(cronogramas);
-			var tabla="<table class='table table-striped table-bordered table-hover table-condensed'><tr><td>Nombre</td><td>U. Medida</td><td>T. Cronograma</td><td>Proporción</td><td>Peso</td><td>Acu</td><td>Ene</td><td>Feb</td><td>Mar</td><td>Abr</td><td>May</td><td>Jun</td><td>Jul</td><td>Ago</td><td>Sep</td><td>Oct</td><td>Nov</td><td>Dic</td></tr>";
+			var tabla="<table class='table table-striped table-bordered table-hover table-condensed'><tr><th>Nombre</th><th>U. Medida</th><th>T. Cronograma</th><th>Proporción</th><th>Peso</th><th>Acu</th><th>Ene</th><th>Feb</th><th>Mar</th><th>Abr</th><th>May</th><th>Jun</th><th>Jul</th><th>Ago</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dic</th></tr>";
 			var tipo;
 			var cronogramaPorMes=[];
 			for(var c=0; c<cronogramas.length;c++){
@@ -353,13 +344,18 @@ if (user != null) { %>
 		}
 		
 		
-		           
+		var contenidoInstitucion="";
+		var flagInst=0;
 		for(var i=0; i<instituciones.length;i++)
 		{
 			if (!instituciones[i].borrado){
 				for(var il=0; il<insLineaAccion.length;il++)
 				{
 					if (insLineaAccion[il].periodoId=="2016" && !insLineaAccion[il].borrado && insLineaAccion[il].institucionId==instituciones[i].id){
+						flagInst++;
+						if(flagInst=="1"){
+							$("#contenedorReporte").append('<h1 class="text-center" ><u>'+instituciones[i].nombre+'</u></h1>');
+						}
 						
 						for(var la=0; la<lineaAccion.length;la++)
 						{
@@ -370,7 +366,7 @@ if (user != null) { %>
 										unidadDeMedida=unidadMedida[um].descripcion;
 									}
 								}
-								$("#contenedorReporte").append("<h1>"+lineaAccion[la].nombre+"<small>(Meta 2016: "+numeroConComa(insLineaAccion[il].meta.toFixed(2))+" "+unidadDeMedida+")</small></h1>");
+								$("#contenedorReporte").append("<h1><div class='pull-left'>"+lineaAccion[la].nombre+"</div><div class='pull-right'><small>(Meta 2016: "+numeroConComa(insLineaAccion[il].meta.toFixed(2))+" "+unidadDeMedida+")</small></div></h1>");
 								unidadDeMedida="";
 								var acciones = $.ajax({
 									url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccion[il].id,
@@ -381,6 +377,7 @@ if (user != null) { %>
 								acciones=JSON.parse(acciones);
 								var flagDepto=0;
 								var flagDist=0;
+								
 								var contenidoDepto="";
 								var contenidoDist="";
 								var contenidoAcciones="";
@@ -407,7 +404,7 @@ if (user != null) { %>
 																	contenidoAcciones+="<h4>"+contenidoDist+"</h4>";
 																}
 																contenidoAcciones+='<table class="table table-striped table-bordered table-hover table-condensed">';
-																contenidoAcciones+='<tr><td>Acción</td><td>Peso</td><td>Fecha Ini.</td><td>Fecha Fin</td> <td>1er Trim</td><td>2do Trim</td><td>3er Trim</td><td>4to Trim</td></tr>';
+																contenidoAcciones+='<tr><th>Acción</th><th>Peso</th><th>Fecha Ini.</th><th>Fecha Fin</th> <th>1er Trim</th><th>2do Trim</th><th>3er Trim</th><th>4to Trim</th></tr>';
 																contenidoAcciones+="<tr><td>"+accionCatalogo[ac].nombre+"</td><td>"+acciones[x].peso+"</td><td>"+acciones[x].fechaInicio+"</td><td>"+acciones[x].fechaFin+"</td><td>"+acciones[x].meta1+"</td><td>"+acciones[x].meta2+"</td><td>"+acciones[x].meta3+"</td><td>"+acciones[x].meta4+"</td></tr>";
 																contenidoAcciones+="<tr><td colspan='8'>"+getDetallePresupuesto(acciones[x].id)+"</td></tr>";
 																contenidoAcciones+="<tr><td colspan='8'>"+getDetalleDestinatario(acciones[x].id)+"</td></tr>";
@@ -431,6 +428,7 @@ if (user != null) { %>
 				}// fin de if de instancias de esa institucion
 			}//fin de for de instancias
 		}//fin de if instituciones borradas
+	flagInst=0;
 	}//fin de for de instituciones
 		
 
@@ -452,20 +450,12 @@ if (user != null) { %>
 		
  <div class="container">
 	<div class="row">
-		<div class="col-md-1">
-  		</div>	
-		<div class="col-md-10" style="background-color:#193A4B"> 
-			<div class="pull-left"><img src="http://rc.stp.gov.py/dist/img/logo_izquierdo.png"></div>
-			<div class="pull-right"><img src="http://rc.stp.gov.py/dist/img/logo_derecho.png"></div>
+		<div class="col-md-12" style="padding-top:20px"> 
+			<div class="pull-left img-responsive col-md-4"><img src="http://spr.stp.gov.py/tablero/dist/img/logo_stp_nuevo_header.png"></div>
+			<div class="pull-right img-responsive col-md-4"><img src="http://spr.stp.gov.py/tablero/dist/img/logo_gob_nac_header.png"></div>
 	   	</div>
-		<div class="col-md-1">
-  		</div>  	   	
 	</div></br>
-	<div class="row" >
-		<div class="col-md-12 ">
-			<h1 class="text-center" id="nombreInstitucion"></h1>
-  		</div>		
-	</div>
+	
 
 	<div class="row" >
 		<div id="contenedorReporte" class="col-md-12 table-responsive">
@@ -533,30 +523,15 @@ if (user != null) { %>
 <script type="text/javascript" src="bootstrap/js/bootstrap-slider.js"></script>
  
 <script>
-var institucioness = $.ajax({
-	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
-  	type:'get',
-  	dataType:'json',
-  	async:false       
-}).responseText;		
-institucioness=JSON.parse(institucioness);
-var entidadCasSpr = "";
-entidadCasSpr ="<%=attributes.get("entidad") %>";
-usuarioRolCasSpr="<%=attributes.get("role_id") %>";
-
-for(var ins=0; ins<institucioness.length;ins++){
-	if(institucioness[ins].sigla == entidadCasSpr){
-		$("#nombreInstitucion").html(institucioness[ins].nombre);
-	}
-}
 var usuariosSpr = $.ajax({
-	url:'http://spr.stp.gov.py/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
-  	type:'get',
-  	dataType:'json',
-  	async:false       
-}).responseText;
-usuariosSpr = JSON.parse(usuariosSpr);
-usuariosSpr = usuariosSpr.usuarios;
+		url:'http://spr.stp.gov.py/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	usuariosSpr = JSON.parse(usuariosSpr);
+	usuariosSpr = usuariosSpr.usuarios;
+
 </script>
   </body>
 </html>
