@@ -366,7 +366,7 @@ if (user != null) { %>
 										unidadDeMedida=unidadMedida[um].descripcion;
 									}
 								}
-								$("#contenedorReporte").append("<h1><div class='pull-left'>"+lineaAccion[la].nombre+"</div><div class='pull-right'><small>(Meta 2016: "+numeroConComa(insLineaAccion[il].meta.toFixed(2))+" "+unidadDeMedida+")</small></div></h1>");
+								$("#contenedorReporte").append("<div class='row col-md-12'><h1><div class='pull-left col-md-8'>"+lineaAccion[la].nombre+"</div><div class='pull-right col-md-4'><small>(Meta 2016: "+numeroConComa(insLineaAccion[il].meta.toFixed(2))+" "+unidadDeMedida+")</small></div></h1></div>");
 								unidadDeMedida="";
 								var acciones = $.ajax({
 									url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccion[il].id,
