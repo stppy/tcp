@@ -120,6 +120,40 @@ public class SqlSelects {
 		return objetos; 
 		}
 	
+	public static List<AccionCatalogoUM> selectAccionCatalogoUM(String condition) throws SQLException{
+		Connection conect=ConnectionConfiguration.conectar();
+		String query = " select accion_catalogo.*, unidad_medida.descripcion as nombreUnidadMedida from accion_catalogo inner join unidad_medida on unidad_medida.id=accion_catalogo.id_unidad_medida "+condition+" ORDER BY nombre";
+
+		Statement statement = null;
+		ResultSet rs=null;
+		List<AccionCatalogoUM> objetos = new ArrayList<AccionCatalogoUM>();
+
+		try {
+			statement = conect.createStatement();
+			rs=statement.executeQuery(query);
+			while(rs.next()){
+				AccionCatalogoUM objeto = new AccionCatalogoUM();
+		
+				objeto.setId(rs.getInt("id"));
+				objeto.setNombre(rs.getString("nombre"));
+				objeto.setDescripcion(rs.getString("descripcion"));
+				objeto.setIdUnidadMedida(rs.getInt("id_unidad_medida"));
+				objeto.setVersion(rs.getInt("version"));
+				objeto.setBorrado(rs.getBoolean("borrado"));
+				objeto.setNombreUnidadMedida(rs.getString("nombreUnidadMedida"));
+				
+
+				objetos.add(objeto);
+			}
+		}
+		catch (SQLException e) {e.printStackTrace();}
+		finally{
+			if (statement != null) {statement.close();}
+			if (conect != null) {conect.close();}
+		}
+		return objetos; 
+		}
+	
 	public static List<Cronograma> selectCronograma(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
 		String query = " select * from actividad "+condition;

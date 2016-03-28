@@ -173,7 +173,7 @@ if (user != null) { %>
 		lineaAccion=JSON.parse(lineaAccion);
 		
 		var accionCatalogo = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo',
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogoUM',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -366,7 +366,7 @@ if (user != null) { %>
 					if (insLineaAccion[il].periodoId=="2016" && !insLineaAccion[il].borrado && insLineaAccion[il].institucionId==instituciones[i].id){
 						flagInst++;
 						if(flagInst=="1"){
-							$("#contenedorReporte").append('<h1 class="text-center" ><u>'+instituciones[i].nombre+'</u></h1>');
+							$("#contenedorReporte").append('<h1 class="text-center" ><strong>INSTITUTCIÓN:</strong> <u>'+instituciones[i].nombre+'</u></h1>');
 						}
 						
 						for(var la=0; la<lineaAccion.length;la++)
@@ -378,7 +378,7 @@ if (user != null) { %>
 										unidadDeMedida=unidadMedida[um].descripcion;
 									}
 								}
-								$("#contenedorReporte").append("<div class='row col-md-12'><h1><div class='pull-left col-md-8'>"+lineaAccion[la].nombre+"</div><div class='pull-right col-md-4'><small>(Meta 2016: "+numeroConComa(insLineaAccion[il].meta.toFixed(2))+" "+unidadDeMedida+")</small></div></h1></div>");
+								$("#contenedorReporte").append("<h1><strong>LÍNEA DE ACCIÓN:</strong> "+lineaAccion[la].nombre+"<div class='pull-right col-md-12'><small><strong>Meta 2016:</strong> "+numeroConComa(insLineaAccion[il].meta.toFixed(2))+" "+unidadDeMedida+"</small></div></h1><br>");
 								unidadDeMedida="";
 								var acciones = $.ajax({
 									url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccion[il].id,
@@ -395,10 +395,10 @@ if (user != null) { %>
 								var contenidoAcciones="";
 								for(var de=0; de<departamento.length;de++){
 									flagDepto=0;
-									contenidoDepto="<h2>"+departamento[de].nombreDepartamento+"</h2>";
+									contenidoDepto="<h3><strong>DEPARTAMENTO:</strong> "+departamento[de].nombreDepartamento+"</h2>";
 									for(var di=0; di<distrito.length;di++){
 										flagDist=0;
-										contenidoDist="<h3>"+distrito[di].descripcion+"</h3>";
+										contenidoDist="<h4><strong>DISTRITO:</strong> "+distrito[di].descripcion+"</h3>";
 										if (distrito[di].departamentoId==departamento[de].idDepartamento){
 											var accionesDistintas=[];
 											for(var x=0; x<acciones.length;x++){
@@ -410,14 +410,15 @@ if (user != null) { %>
 																flagDepto++;flagDist++;
 																
 																if(flagDepto=="1"){
-																	contenidoAcciones+="<h3>"+contenidoDepto+"</h3>";
+																	contenidoAcciones+=contenidoDepto;
 																}
 																if(flagDist=="1"){
-																	contenidoAcciones+="<h4>"+contenidoDist+"</h4>";
+																	contenidoAcciones+=contenidoDist;
 																}
 																contenidoAcciones+='<table class="table table-striped table-bordered table-hover table-condensed" style="margin-bottom: 3px;">';
-																contenidoAcciones+='<tr><th>Acción</th><th>Peso</th><th>Inicio</th><th>Fin</th> <th>1er Trim</th><th>2do Trim</th><th>3er Trim</th><th>4to Trim</th></tr>';
-																contenidoAcciones+="<tr><td>"+accionCatalogo[ac].nombre+"</td><td>"+acciones[x].peso+"</td><td>"+acciones[x].fechaInicio+"</td><td>"+acciones[x].fechaFin+"</td><td>"+acciones[x].meta1+"</td><td>"+acciones[x].meta2+"</td><td>"+acciones[x].meta3+"</td><td>"+acciones[x].meta4+"</td></tr>";
+																contenidoAcciones+='<tr><th>Acción</th><th>U. Medida</th><th>Inicio</th><th>Fin</th> <th>1er Trim</th><th>2do Trim</th><th>3er Trim</th><th>4to Trim</th></tr>';
+																//contenidoAcciones+="<tr><td>"+accionCatalogo[ac].nombre+"</td><td>"+acciones[x].peso+"</td><td>"+acciones[x].fechaInicio+"</td><td>"+acciones[x].fechaFin+"</td><td>"+acciones[x].meta1+"</td><td>"+acciones[x].meta2+"</td><td>"+acciones[x].meta3+"</td><td>"+acciones[x].meta4+"</td></tr>";
+																contenidoAcciones+="<tr><td>"+accionCatalogo[ac].nombre+"</td><td>"+accionCatalogo[ac].nombreUnidadMedida+"</td><td>"+acciones[x].fechaInicio+"</td><td>"+acciones[x].fechaFin+"</td><td>"+acciones[x].meta1+"</td><td>"+acciones[x].meta2+"</td><td>"+acciones[x].meta3+"</td><td>"+acciones[x].meta4+"</td></tr>";
 																contenidoAcciones+="<tr><td colspan='8'>"+getCronograma(acciones[x].id)+"</td></tr>";
 																contenidoAcciones+="<tr><td colspan='8'>"+getDetallePresupuesto(acciones[x].id)+"</td></tr>";
 																contenidoAcciones+="<tr><td colspan='8'>"+getDetalleDestinatario(acciones[x].id)+"</td></tr>";
@@ -472,6 +473,9 @@ if (user != null) { %>
 
 	<div class="row" >
 		<div id="contenedorReporte" class="col-md-12 table-responsive">
+				<div class="col-md-12 text-center" style="padding-top:20px">
+					<h1><strong>Plan de Acción  del Área Social</strong></h1>
+				</div>
   		</div>
 	</div>        	
         
