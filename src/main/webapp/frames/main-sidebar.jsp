@@ -21,27 +21,48 @@
           <ul class="sidebar-menu">
             <li class="header">Tablero</li>
             
+            	<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") ){%>                        
+		    	<li class="treeview">
+					<a href="#">
+		   				<i class="fa fa-dashboard"></i> <span>Plan Estratégico Institucional</span> <i class="fa fa-angle-left pull-right"></i>
+		   			</a>
+		   			<ul class="treeview-menu" style="display: none;">
+		   				<li><a href="http://spr.stp.gov.py/entidad.jsp"><i class="fa fa-circle-o" id="linkEntidad"></i>Entidad</a></li>
+		        			<li class=""><a href="http://spr.stp.gov.py/programacion.jsp"><i class="fa fa-circle-o" id="linkEstructuraProgramatica"></i>Estructura Programática</a></li>
+		        			<li class=""><a href="http://spr.stp.gov.py/producto.jsp"><i class="fa fa-circle-o" id="linkProgramacionProducto"></i>Programación de Productos</a></li>         			
+		   			</ul>
+				</li>
+			<%}%>
+			<li class="treeview">
+				<a href="#">
+    				<i class="fa fa-dashboard"></i> <span>Plan de Acción</span> <i class="fa fa-angle-left pull-right"></i>
+    			</a>
+    			<ul class="treeview-menu" style="display: none;">
+    				<li><a href="http://spr.stp.gov.py/tablero/contenedorInsLineaAccion.jsp"><i class="fa fa-circle-o"></i>Elaboración de Plan de Acción</a></li>
+         			<li class=""><a href="http://spr.stp.gov.py/tablero/reporte.jsp"><i class="fa fa-circle-o" id="linkReportePa"></i>Reporte de Plan de Acción</a></li>
+         			<li class=""><a href="http://spr.stp.gov.py/tablero/pivotPresupuesto.jsp"><i class="fa fa-circle-o" id="linkPivotPresupuesto"></i>Análisis de Productos</a></li>
+					<li class=""><a href="http://spr.stp.gov.py/tablero/pivotDestinatario.jsp"><i class="fa fa-circle-o" id="linkPivotDestinatario"></i>Análisis de Destinatarios</a></li>
+					<li class=""><a href="http://spr.stp.gov.py/tablero/pivotProgramado.jsp"><i class="fa fa-circle-o" id="linkPivotProgramacion"></i>Análisis de Programación</a></li>         			
+    			</ul>
+ 			</li>
+ 			
+ 			  <li class="treeview">
+				<a href="#">
+    				<i class="fa fa-desktop"></i> <span>Reporte Ciudadano</span> <i class="fa fa-angle-left pull-right"></i>
+    			</a>
+ 			</li>  		
+ 			<li class="header">LABELS</li>
+            <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Documentación</span></a></li>
+            <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Diccionario de Datos</span></a></li>
+            <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Preguntas Frecuentes</span></a></li>
+            <!-- 
             <li class="treeview">
              <a href=".#" id="programarPlan">
                 <i class="fa fa-files-o"></i><span>Programar Plan de Accion</span>
               </a>
               
             </li>
-             <!--
-            <li class="treeview">
-             <a href=".#" id="vistaInstitucional">
-                <i class="fa fa-files-o"></i><span>Institucional</span>
-              </a>
-               
-               
-            </li>
-             <li class="treeview">
-             <a href=".#" id="vistaDepartamental">
-                <i class="fa fa-files-o"></i><span>Departamental</span>
-              </a>
-              
-            </li>
-            -->
+         
             <li class="treeview">
               <a href="#" id="vistaGeografica">
                 <i class="fa fa-edit"></i> <span>Resumen</span>
@@ -53,13 +74,18 @@
               </a>
               
             </li>
-            
-            <li class="header">LABELS</li>
-            <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Documentación</span></a></li>
-            <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Diccionario de Datos</span></a></li>
-            <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Preguntas Frecuentes</span></a></li>
-                        
-            
+             
+ 			
+            <li class="treeview">
+				<a href="#">
+    				<i class="fa fa-dashboard"></i> <span>Documentación</span> <i class="fa fa-angle-left pull-right"></i>
+    			</a>
+    			<ul class="treeview-menu" style="display: none;">
+    			</ul>
+ 			</li> 	
+ 			-->
+          			
+ 			
           </ul>
         </section>
         <!-- /.sidebar -->
