@@ -71,8 +71,8 @@
 			}
 			td{
 	    		font-size: 8px;
-	    		
 			}
+			
 		}
     </style>
     
@@ -449,7 +449,7 @@ if (user != null) { %>
 </script>
 		
  <div class="container">
-	<div class="row">
+	<div id="encabezado" class="row">
 		<div class="col-md-12" style="padding-top:20px"> 
 			<div class="pull-left img-responsive col-md-4"><img src="http://spr.stp.gov.py/tablero/dist/img/logo_stp_nuevo_header.png"></div>
 			<div class="pull-right img-responsive col-md-4"><img src="http://spr.stp.gov.py/tablero/dist/img/logo_gob_nac_header.png"></div>
