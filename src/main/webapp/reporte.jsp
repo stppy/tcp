@@ -69,6 +69,11 @@
 	    		margin-bottom: 5px;
 				margin-top: 5px;
 			}
+			h4{
+	    		font-size: 9px;
+	    		margin-bottom: 5px;
+				margin-top: 5px;
+			}
 			td{
 	    		font-size: 8px;
 			}
@@ -395,10 +400,10 @@ if (user != null) { %>
 								var contenidoAcciones="";
 								for(var de=0; de<departamento.length;de++){
 									flagDepto=0;
-									contenidoDepto="<h3><strong>DEPARTAMENTO:</strong> "+departamento[de].nombreDepartamento+"</h2>";
+									contenidoDepto="<h3><strong>DEPARTAMENTO:</strong> "+departamento[de].nombreDepartamento+"</h3>";
 									for(var di=0; di<distrito.length;di++){
 										flagDist=0;
-										contenidoDist="<h4><strong>DISTRITO:</strong> "+distrito[di].descripcion+"</h3>";
+										contenidoDist="<h4><strong>DISTRITO:</strong> "+distrito[di].descripcion+"</h4>";
 										if (distrito[di].departamentoId==departamento[de].idDepartamento){
 											var accionesDistintas=[];
 											for(var x=0; x<acciones.length;x++){
@@ -473,8 +478,8 @@ if (user != null) { %>
 
 	<div class="row" >
 		<div id="contenedorReporte" class="col-md-12 table-responsive">
-				<div class="col-md-12 text-center" style="padding-top:20px">
-					<h1><strong>Plan de Acción  del Área Social</strong></h1>
+				<div class="col-md-12 text-center" style="padding-top:20px;font-size:40px">
+					<h1><strong><u>PAI-01: Plan de Acción  del Área Social - 2016</u></strong></h1>
 				</div>
   		</div>
 	</div>        	
@@ -540,6 +545,8 @@ if (user != null) { %>
 <script type="text/javascript" src="bootstrap/js/bootstrap-slider.js"></script>
  
 <script>
+window.print();
+
 var usuariosSpr = $.ajax({
 		url:'http://spr.stp.gov.py/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
 	  	type:'get',
