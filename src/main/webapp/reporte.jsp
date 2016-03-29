@@ -479,7 +479,7 @@ if (user != null) { %>
 	<div class="row" >
 		<div id="contenedorReporte" class="col-md-12 table-responsive">
 				<div class="col-md-12 text-center" style="padding-top:20px;font-size:40px">
-					<h1><strong><u>PAI-01: Plan de Acción  del Área Social - 2016</u></strong></h1>
+					<h1><strong><u>SPR-PA-01: Plan de Acción  del Área Social - 2016</u></strong></h1>
 				</div>
   		</div>
 	</div>        	
