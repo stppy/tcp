@@ -523,6 +523,16 @@ public class ajaxSelects extends HttpServlet {
         		out.println(json.toString());
         	}
         	
+        	if (action.equals("getAccionCatalogoUM")){
+        		List objetos=null; 
+        		condition = " where true ";
+        		if (catalogoAccionId!=null) condition += " and id ='"+catalogoAccionId+"'";
+           		try {objetos = SqlSelects.selectAccionCatalogoUM(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());
+        	}
+        	
         	if (action.equals("getCronograma")){
         		List objetos=null; 
         		condition = " where true ";
