@@ -5920,36 +5920,36 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 $("body").on("change", "#productoObjetoGasto",function(event){
 	//var departamentoId = $(this).attr("parametro");
 	var productoObjetoGastoId = $("#productoObjetoGasto option:selected").val();
-	
-	var webServicesDatosProducto = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getProductoObjetoGasto&productoObjetoGastoId='+productoObjetoGastoId,
-	  	type:'get',
-	  	dataType:'json',
-	  	async:false,
-	  	error: function(data,status,er)
-        {
-        alert(data + ' - ' + status  + ' - ' + er );
-        }
-	}).responseText;
-	webServicesDatosProducto = JSON.parse(webServicesDatosProducto);
-	
-	var webServicesObjetoGastoCosto = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getObjetoGastoCosto&nivelId='+webServicesDatosProducto[0].nivelId+'&entidadId='+webServicesDatosProducto[0].entidadId+'&tiprogramaId='+webServicesDatosProducto[0].tiprogramaId+'&programaId='+webServicesDatosProducto[0].programaId+'&subprogramaId='+webServicesDatosProducto[0].subprogramaId+'&proyectoId='+webServicesDatosProducto[0].proyectoId+'&productoId='+webServicesDatosProducto[0].productoId+'&accionId='+webServicesDatosProducto[0].accionId,
-	  	type:'get',
-	  	dataType:'json',
-	  	async:false       
-	}).responseText;
-	webServicesObjetoGastoCosto = JSON.parse(webServicesObjetoGastoCosto);
-	
-	var optionObjetoGastoCosto="";
-	
-	for(var o = 0; o < webServicesObjetoGastoCosto.length; o++){
-		optionObjetoGastoCosto+='<option value="'+webServicesObjetoGastoCosto[o].id+'" >'+webServicesObjetoGastoCosto[o].codigoObjetoGasto+'</option>';
+	if (productoObjetoGastoId != undefined){
+		var webServicesDatosProducto = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getProductoObjetoGasto&productoObjetoGastoId='+productoObjetoGastoId,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false,
+		  	error: function(data,status,er)
+	        {
+	        alert(data + ' - ' + status  + ' - ' + er );
+	        }
+		}).responseText;
+		webServicesDatosProducto = JSON.parse(webServicesDatosProducto);
+		
+		var webServicesObjetoGastoCosto = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getObjetoGastoCosto&nivelId='+webServicesDatosProducto[0].nivelId+'&entidadId='+webServicesDatosProducto[0].entidadId+'&tiprogramaId='+webServicesDatosProducto[0].tiprogramaId+'&programaId='+webServicesDatosProducto[0].programaId+'&subprogramaId='+webServicesDatosProducto[0].subprogramaId+'&proyectoId='+webServicesDatosProducto[0].proyectoId+'&productoId='+webServicesDatosProducto[0].productoId+'&accionId='+webServicesDatosProducto[0].accionId,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		webServicesObjetoGastoCosto = JSON.parse(webServicesObjetoGastoCosto);
+		
+		var optionObjetoGastoCosto="";
+		
+		for(var o = 0; o < webServicesObjetoGastoCosto.length; o++){
+			optionObjetoGastoCosto+='<option value="'+webServicesObjetoGastoCosto[o].id+'" >'+webServicesObjetoGastoCosto[o].codigoObjetoGasto+'</option>';
+		}
+		
+		$("#objetoGastoCosto").html("");
+		$("#objetoGastoCosto").append(optionObjetoGastoCosto);
 	}
-	
-	$("#objetoGastoCosto").html("");
-	$("#objetoGastoCosto").append(optionObjetoGastoCosto);
-	
 });
 
 
