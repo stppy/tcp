@@ -118,11 +118,11 @@ textarea { text-transform: uppercase; }
 		  <%@ include file="/frames/mainheader.jsp" %>
       </header>
       <!-- Left side column. contains the logo and sidebar -->
-      <%if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0")){%>
+      <%-- <%if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0")){%> --%>
 	      <aside class="main-sidebar">
 	  			 <%@ include file="/frames/main-sidebar.jsp"%>
 	      </aside>
-	  <% } %> 
+ <%-- 	   <% } %>  --%>
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
