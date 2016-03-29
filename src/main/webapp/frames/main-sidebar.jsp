@@ -38,7 +38,9 @@
     				<i class="fa fa-tasks"></i> <span>Plan de Acción</span> <i class="fa fa-angle-left pull-right"></i>
     			</a>
     			<ul class="treeview-menu" style="display: none;">
+    			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") ){%>                        
     				<li><a href="http://spr.stp.gov.py/tablero/contenedorInsLineaAccion.jsp"><i class="fa fa-wrench"></i>Elaboración de Plan de Acción</a></li>
+    			<%}%>
          			<li class=""><a href="http://spr.stp.gov.py/tablero/reporte.jsp"><i class="fa fa-file" id="linkReportePa"></i>Reporte de Plan de Acción</a></li>
          			<li class=""><a href="http://spr.stp.gov.py/tablero/pivotPresupuesto.jsp"><i class="fa fa-signal" id="linkPivotPresupuesto"></i>Análisis de Productos</a></li>
 					<li class=""><a href="http://spr.stp.gov.py/tablero/pivotDestinatario.jsp"><i class="fa fa-group" id="linkPivotDestinatario"></i>Análisis de Destinatarios</a></li>
