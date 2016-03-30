@@ -24,7 +24,7 @@
             	<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") ){%>                        
 		    	<li class="treeview">
 					<a href="#">
-		   				<i class="fa fa-list-alt"></i> <span>Plan Estratégico Institucional</span> <i class="fa fa-angle-left pull-right"></i>
+		   				<i class="fa fa-list-alt"></i> <span>Plan Operativo Institucional</span> <i class="fa fa-angle-left pull-right"></i>
 		   			</a>
 		   			<ul class="treeview-menu" style="display: none;">
 		   				<li><a href="http://spr.stp.gov.py/entidad.jsp"><i class="fa fa-home" id="linkEntidad"></i>Entidad</a></li>

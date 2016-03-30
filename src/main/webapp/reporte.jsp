@@ -90,7 +90,7 @@
 <% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%>
 <% Map attributes = user.getAttributes(); 
 if (user != null) { %>
-
+<iframe height="0" width="0" style="visibility:hidden;display:none" src="http://spr.stp.gov.py/documentacion.jsp"></iframe>
 <script>
 
 	var entidadCasSpr = "";
@@ -226,7 +226,8 @@ if (user != null) { %>
 	        }).responseText;
 		catalogoProducto=JSON.parse(catalogoProducto);
 		catalogoProducto=catalogoProducto.productos;
-
+		
+		
     	
 		
 		function getDetallePresupuesto(accionId){
