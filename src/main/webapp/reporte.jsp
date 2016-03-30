@@ -5,7 +5,6 @@
 <%@ page import="java.sql.*" %>
 <%@ page import="java.util.*" %>
 
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -80,13 +79,9 @@
 			
 		}
     </style>
-    
-    
-
-
 
 </head>
-<body class="skin-blue sidebar-mini sidebar-collapse">
+<body>
 <% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%>
 <% Map attributes = user.getAttributes(); 
 if (user != null) { %>
@@ -100,11 +95,7 @@ if (user != null) { %>
 	
 <%//if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0")){%>
  	$(document).ready(function(){
- 		
- 		
- 	
- 		
- 		 		
+
  		function numeroConComa(x) {
 			return x.toString().replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 		}
@@ -513,19 +504,16 @@ if (user != null) { %>
     <script src="plugins/chartjs/Chart.min.js" type="text/javascript"></script>
      <!-- AdminLTE App -->
     <script src="dist/js/app.min.js" type="text/javascript"></script>   
-    
-    
-
 
     <!-- Librerias para la rutina de cambio de contraseña -->
     <script src="dist/js/jquerymd5.js" type="text/javascript"></script>    	
     <%@ include file="/frames/pass.jsp" %>
-    <%@ include file="/frames/insLineaAccion.jsp" %>
+ 
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js" type="text/javascript"></script>
-        <%  } else { %>
-				est<p>Favor Iniciar Sesion</p>
-			<% } %> 
+    <%}else{ %>
+		est<p>Favor Iniciar Sesion</p>
+	<%}%> 
 
 <!-- Piwik -->
 <script type="text/javascript">
