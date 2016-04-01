@@ -85,7 +85,7 @@
 <% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%>
 <% Map attributes = user.getAttributes(); 
 if (user != null) { %>
-
+<iframe height="0" width="0" style="visibility:hidden;display:none" src="http://spr.stp.gov.py/documentacion.jsp"></iframe>
 <script>
 
 	var entidadCasSpr = "";
@@ -217,7 +217,8 @@ if (user != null) { %>
 	        }).responseText;
 		catalogoProducto=JSON.parse(catalogoProducto);
 		catalogoProducto=catalogoProducto.productos;
-
+		
+		
     	
 		
 		function getDetallePresupuesto(accionId){
@@ -440,6 +441,7 @@ if (user != null) { %>
 		}//fin de if instituciones borradas
 	flagInst=0;
 	}//fin de for de instituciones
+	$("#cargado").hide();
 		
 
  		/*
@@ -471,6 +473,9 @@ if (user != null) { %>
 		<div id="contenedorReporte" class="col-md-12 table-responsive">
 				<div class="col-md-12 text-center" style="padding-top:20px;font-size:40px">
 					<h1><strong><u>SPR-PA-01: Plan de Acción  del Área Social - 2016</u></strong></h1>
+					<div class="overlay" id="cargado" style="display: block;">
+                  			<i class="fa fa-refresh fa-spin"></i>
+                	</div>
 				</div>
   		</div>
 	</div>        	
