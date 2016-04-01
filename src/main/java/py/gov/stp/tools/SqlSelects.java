@@ -29,6 +29,7 @@ import objetos.LineaAccionDepartamento;
 import objetos.LineaAccionDistrito;
 import objetos.MetasDistEntLinea;
 import py.gov.stp.objetosV2.AccionHasProducto;
+import py.gov.stp.objetosV2.ProductoObjetoGasto;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -1010,7 +1011,51 @@ public class SqlSelects {
 			}
 			return objetos;
 	  }	
+	
+    public static List<ProductoObjetoGasto> selectObjetoGastoCosto(String condicion)throws SQLException{
+    	Connection conect=ConnectionConfiguration.conectarSpr();
 
+    	String query = " select distinct objeto_gasto from asignacion_presi "+condicion+" and anho = 2016 and version = 100";
+
+    	Statement statement = null;
+    	ResultSet rs=null;
+    	List<ProductoObjetoGasto> objetos = new ArrayList<ProductoObjetoGasto>();
+
+    	try {
+	    	statement = conect.createStatement();
+	    	rs=statement.executeQuery(query);
+
+	    	while(rs.next()){
+	    		
+	    		ProductoObjetoGasto objeto = new ProductoObjetoGasto();
+//	    			objeto.setId(rs.getInt("fila"));
+//					objeto.setNivelId(rs.getInt("nivel"));
+//					objeto.setEntidadId(rs.getInt("entidad"));
+//					objeto.setTiprogramaId(rs.getInt("tipo"));
+//					objeto.setProgramaId(rs.getInt("programa"));
+//					objeto.setSubprogramaId(rs.getInt("subprograma"));
+//					objeto.setProyectoId(rs.getInt("proyecto"));
+//					objeto.setProductoId(rs.getInt("producto"));
+//					objeto.setDepartamento(rs.getInt("departamento"));
+					objeto.setCodigoObjetoGasto(rs.getInt("objeto_gasto"));
+//					objeto.setVersion(rs.getInt("version"));
+//					objeto.setFuenteFinanciamiento(rs.getInt("fuente_financiamiento"));
+//		    		objeto.setOrganismoFinanciador(rs.getInt("organismo_financiador"));	    
+//		    		objeto.setPais(rs.getInt("pais"));
+//		    		objeto.setObservacion(rs.getString("observacion"));
+//		    		objeto.setAnho(rs.getInt("anho"));
+
+					objetos.add(objeto);
+		    	}
+	    	}
+	    	catch (SQLException e) {e.printStackTrace();}
+	    	finally{
+	
+		    	if (statement != null) {statement.close();}
+		    	if (conect != null) {conect.close();}
+	    	}
+	    	return objetos;
+    	}
 //    public static List<ProyectoSNIP> selectProyectoSnip(String condition) throws SQLException{
 //     	 Connection conect=ConnectionConfiguration.conectar();
 //  		 String query = " select * from proyecto_snip "+condition;
