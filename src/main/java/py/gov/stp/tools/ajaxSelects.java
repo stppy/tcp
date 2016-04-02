@@ -426,7 +426,6 @@ public class ajaxSelects extends HttpServlet {
         		if (subprograma != null) condicion += " and subprograma = "+subprograma;
         		if (proyecto != null) condicion += " and proyecto = "+proyecto;
         		if (producto != null) condicion += " and producto = "+producto;
-        		condicion += " and anho = 2016 and version= 100";
 
         		try {objetos = SqlSelects.selectObjetoGastoCosto(condicion);}
     			catch (SQLException e) {e.printStackTrace();}

@@ -1015,7 +1015,7 @@ public class SqlSelects {
     public static List<ProductoObjetoGasto> selectObjetoGastoCosto(String condicion)throws SQLException{
     	Connection conect=ConnectionConfiguration.conectarSpr();
 
-    	String query = " select distinct objeto_gasto from asignacion_presi "+condicion+" and anho = 2016 and version = 100";
+    	String query = " select distinct objeto_gasto from asignacion_presi "+condicion+" and anho = 2016 and version = 150";
 
     	Statement statement = null;
     	ResultSet rs=null;
@@ -1028,23 +1028,7 @@ public class SqlSelects {
 	    	while(rs.next()){
 	    		
 	    		ProductoObjetoGasto objeto = new ProductoObjetoGasto();
-//	    			objeto.setId(rs.getInt("fila"));
-//					objeto.setNivelId(rs.getInt("nivel"));
-//					objeto.setEntidadId(rs.getInt("entidad"));
-//					objeto.setTiprogramaId(rs.getInt("tipo"));
-//					objeto.setProgramaId(rs.getInt("programa"));
-//					objeto.setSubprogramaId(rs.getInt("subprograma"));
-//					objeto.setProyectoId(rs.getInt("proyecto"));
-//					objeto.setProductoId(rs.getInt("producto"));
-//					objeto.setDepartamento(rs.getInt("departamento"));
 					objeto.setCodigoObjetoGasto(rs.getInt("objeto_gasto"));
-//					objeto.setVersion(rs.getInt("version"));
-//					objeto.setFuenteFinanciamiento(rs.getInt("fuente_financiamiento"));
-//		    		objeto.setOrganismoFinanciador(rs.getInt("organismo_financiador"));	    
-//		    		objeto.setPais(rs.getInt("pais"));
-//		    		objeto.setObservacion(rs.getString("observacion"));
-//		    		objeto.setAnho(rs.getInt("anho"));
-
 					objetos.add(objeto);
 		    	}
 	    	}

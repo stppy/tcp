@@ -5836,18 +5836,19 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'              							</div>'+
 									'              						<div class="box-body">'+
 									
-									'										<div class="table-responsive">'+
-									'											<table class="table table-hover">'+
-									'												<tbody>'+
-									'			      									<form class="form-horizontal" role="form">'+
+									'									<div class="table-responsive">'+
+									'										<table class="table table-hover">'+
+									'											<tbody>'+
+									'		      									<form class="form-horizontal" role="form" method="post" enctype="multipart/form-data">'+
 									'													<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" placeholder="Ingrese Nombre" /></td><td><label for="urlEvidencia">Url</label><input type="url" id="urlEvidencia" class="form-control" placeholder="Ingrese Url" /></td></tr>'+
 									'													<tr><td colspan="2"><label for="descripcionEvidencia">Descripción</label><input type="text" id="descripcionEvidencia" class="form-control" placeholder="Ingrese Descripción" /></td></tr>'+
-									'													<input type="hidden" id="wsIdEvidencia" value="1" /><input type="hidden" id="versionEvidencia" value="3"/><input type="hidden" id="avanceIdEvidencia" value="'+avanceId+'"/>'+		
-									'			      									</form>	'+												
-									'												</tbody>'+
-									'											</table>'+
-									'				      					</div>'+
-								
+/* 									'													<tr><td colspan="2"><label for="documentoEvidencia">Adjuntar Documento</label><input type="file" id="documentoEvidencia" class="" name="documentoEvidencia" size="50" /></td><td><label for="adjuntarDocumentoEvidencia"> </label><input type="submit" id="adjuntarDocumentoEvidencia" name="adjuntarDocumentoEvidencia" class="btn btn-success btn-sm adjuntarDocumentoEvidencia" value="Adjuntar" parametros='+avanceId+' /></td></tr>'+ */
+									'													<input type="hidden" id="wsIdEvidencia" value="1" /><input type="hidden" id="versionEvidencia" value="3"/><input type="hidden" id="avanceIdEvidencia" value="'+avanceId+'"/>'+
+									'		      									</form>	'+
+									'											</tbody>'+
+									'										</table>'+
+									'			      					</div>'+
+									
 									'				      				 </div>'+//fin box body
 									'									 <div class="modal-footer">'+ 
 									'					        			<button type="button" class="btn btn-success btn-sm guardarEvidencia" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'>Guardar Evidencia</button>'+ 
@@ -5915,6 +5916,10 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 
 });	
 
+$("body").on("click", ".adjuntarDocumentoEvidencia",function(event){
+	var parametros = $(this).attr("parametros");
+	alert("adjunta");
+});
 
 
 $("body").on("change", "#productoObjetoGasto",function(event){
@@ -5934,7 +5939,7 @@ $("body").on("change", "#productoObjetoGasto",function(event){
 		webServicesDatosProducto = JSON.parse(webServicesDatosProducto);
 		
 		var webServicesObjetoGastoCosto = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getObjetoGastoCosto&nivelId='+webServicesDatosProducto[0].nivelId+'&entidadId='+webServicesDatosProducto[0].entidadId+'&tiprogramaId='+webServicesDatosProducto[0].tiprogramaId+'&programaId='+webServicesDatosProducto[0].programaId+'&subprogramaId='+webServicesDatosProducto[0].subprogramaId+'&proyectoId='+webServicesDatosProducto[0].proyectoId+'&productoId='+webServicesDatosProducto[0].productoId+'&accionId='+webServicesDatosProducto[0].accionId,
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getObjetoGastoCosto&nivel='+webServicesDatosProducto[0].nivelId+'&entidad='+webServicesDatosProducto[0].entidadId+'&tiprograma='+webServicesDatosProducto[0].tiprogramaId+'&programa='+webServicesDatosProducto[0].programaId+'&subprograma='+webServicesDatosProducto[0].subprogramaId+'&proyecto='+webServicesDatosProducto[0].proyectoId+'&producto='+webServicesDatosProducto[0].productoId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -5943,13 +5948,17 @@ $("body").on("change", "#productoObjetoGasto",function(event){
 		
 		var optionObjetoGastoCosto="";
 		
-		for(var o = 0; o < webServicesObjetoGastoCosto.length; o++){
-			optionObjetoGastoCosto+='<option value="'+webServicesObjetoGastoCosto[o].id+'" >'+webServicesObjetoGastoCosto[o].codigoObjetoGasto+'</option>';
+		for(var o = 0; o < webServicesObjetoGastoCosto.producto.length; o++){
+			optionObjetoGastoCosto+='<option value="'+webServicesObjetoGastoCosto.producto[o].codigoObjetoGasto+'" >'+webServicesObjetoGastoCosto.producto[o].codigoObjetoGasto+'</option>';
 		}
 		
 		$("#objetoGastoCosto").html("");
 		$("#objetoGastoCosto").append(optionObjetoGastoCosto);
 	}
+	
+	$("#objetoGastoCosto").html("");
+	$("#objetoGastoCosto").append(optionObjetoGastoCosto);
+	
 });
 
 
@@ -6798,10 +6807,13 @@ $("body").on("click", ".consultaEditarEvidencia",function(event){
 						'					<table class="table table-hover">'+
 						'						<tbody>'+
 						'			      			<form class="form-horizontal" role="form">'+
-						'							<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" value="'+webServicesEvidencia[0].nombre+'" /></td><td><label for="urlEvidencia">Url</label><input type="url" id="urlEvidencia" class="form-control" value="'+webServicesEvidencia[0].url+'" /></td></tr>'+
-						'							<tr><td colspan="2"><label for="descripcionEvidencia">Descripción</label><input type="text" id="descripcionEvidencia" class="form-control" value="'+webServicesEvidencia[0].descripcion+'" /></td></tr>'+
-						'							<input type="hidden" id="wsIdEvidencia" value='+webServicesEvidencia[0].wsId+' /><input type="hidden" id="versionEvidencia" value='+webServicesEvidencia[0].version+' /><input type="hidden" id="avanceIdEvidencia" value='+webServicesEvidencia[0].avanceId+' />'+		
+						'								<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" value="'+webServicesEvidencia[0].nombre+'" /></td><td><label for="urlEvidencia">Url</label><input type="url" id="urlEvidencia" class="form-control" value="'+webServicesEvidencia[0].url+'" /></td></tr>'+
+						'								<tr><td colspan="2"><label for="descripcionEvidencia">Descripción</label><input type="text" id="descripcionEvidencia" class="form-control" value="'+webServicesEvidencia[0].descripcion+'" /></td></tr>'+
+						'								<input type="hidden" id="wsIdEvidencia" value='+webServicesEvidencia[0].wsId+' /><input type="hidden" id="versionEvidencia" value='+webServicesEvidencia[0].version+' /><input type="hidden" id="avanceIdEvidencia" value='+webServicesEvidencia[0].avanceId+' />'+		
 						'			      			</form>	'+												
+/* 						'							<form action="UploadServlet" method="post" enctype="multipart/form-data">'+ 
+						'								<tr><td><label for="documentoEvidencia">Adjuntar Documento</label><input type="file" id="documentoEvidencia" name="documentoEvidencia" size="50"  value='+webServicesEvidencia[0].wsId+'/></td></tr>'+
+ 						'							</form>	'+	 */
 						'						</tbody>'+
 						'					</table>'+
 						'				</div>'+
