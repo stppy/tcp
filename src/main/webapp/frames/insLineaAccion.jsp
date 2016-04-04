@@ -5842,7 +5842,8 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'		      									<form class="form-horizontal" role="form" method="post" enctype="multipart/form-data">'+
 									'													<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" placeholder="Ingrese Nombre" /></td><td><label for="urlEvidencia">Url</label><input type="url" id="urlEvidencia" class="form-control" placeholder="Ingrese Url" /></td></tr>'+
 									'													<tr><td colspan="2"><label for="descripcionEvidencia">Descripción</label><input type="text" id="descripcionEvidencia" class="form-control" placeholder="Ingrese Descripción" /></td></tr>'+
-/* 									'													<tr><td colspan="2"><label for="documentoEvidencia">Adjuntar Documento</label><input type="file" id="documentoEvidencia" class="" name="documentoEvidencia" size="50" /></td><td><label for="adjuntarDocumentoEvidencia"> </label><input type="submit" id="adjuntarDocumentoEvidencia" name="adjuntarDocumentoEvidencia" class="btn btn-success btn-sm adjuntarDocumentoEvidencia" value="Adjuntar" parametros='+avanceId+' /></td></tr>'+ */
+/* 									'													<tr><td colspan="2"><label for="documentoEvidencia">Adjuntar Documento</label><input type="file" id="documentoEvidencia" name="documentoEvidencia" /><div id="progress" class="progress">'+
+        							'														<div class="bar" style="width: 0%;"></div></div></td></tr>'+ */
 									'													<input type="hidden" id="wsIdEvidencia" value="1" /><input type="hidden" id="versionEvidencia" value="3"/><input type="hidden" id="avanceIdEvidencia" value="'+avanceId+'"/>'+
 									'		      									</form>	'+
 									'											</tbody>'+
@@ -5915,12 +5916,6 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	
 
 });	
-
-$("body").on("click", ".adjuntarDocumentoEvidencia",function(event){
-	var parametros = $(this).attr("parametros");
-	alert("adjunta");
-});
-
 
 $("body").on("change", "#productoObjetoGasto",function(event){
 	//var departamentoId = $(this).attr("parametro");
@@ -6567,6 +6562,36 @@ $("body").on("click", ".editarAvanceCosto",function(event){
   
 });
 
+/*$('#documentoEvidencia').fileupload({
+	 
+    dataType: 'json',
+
+    done: function (e, data) {
+        $("tr:has(td)").remove();
+        /* $.each(data.result, function (index, file) {
+
+            $("#uploaded-files").append(
+                    $('<tr/>')
+                    .append($('<td/>').text(file.fileName))
+                    .append($('<td/>').text(file.fileSize))
+                    .append($('<td/>').text(file.fileType))
+                    .append($('<td/>').html("<a href='upload?f="+index+"'>Click</a>"))
+                    .append($('<td/>').text("@"+file.twitter))
+
+                    )//end $("#uploaded-files").append()
+        });  
+    },
+
+    progressall: function (e, data) {
+        var progress = parseInt(data.loaded / data.total * 100, 10);
+        $('#progress .bar').css(
+            'width',
+            progress + '%'
+        );
+    },
+
+})*/
+
 $("body").on("click", ".guardarEvidencia",function(event){
 	var parametros = $(this).attr("parametros");
     var idParsed = parametros.split("-");                                                            
@@ -6585,12 +6610,28 @@ $("body").on("click", ".guardarEvidencia",function(event){
 	var descripcion = $("#descripcionEvidencia").val();
 	var wsId = $("#wsIdEvidencia").val();
 	var version = $("#versionEvidencia").val();
+	//var documentoEvidencia = document.getElementById("documentoEvidencia").files[0];
+    
+    /* var formdata = new FormData();
+    formdata.append("documentoEvidencia", documentoEvidencia);
+    var xhr = new XMLHttpRequest();       
+    xhr.open("POST","/fileUploadTester/FileUploader", false);
+    xhr.send(formdata);
+    xhr.onload = function(e) {
+        if (this.status == 200) {
+           alert(this.responseText);
+        }else{
+        	alert("no se pudo cargar el archivo. Intentelo nuevamente");
+        }
+    };        */             
+  
 	//var avanceId = $("#avanceIdEvidencia").val(); No utilizo esta variable xq ya viene en el parse pero lo ideal seria obtener del formulario
 
 	//Vaciar los inputs
 	$("#nombreEvidencia").val("");
 	$("#urlEvidencia").val("");
 	$("#descripcionEvidencia").val("");
+	//$("#documentoEvidencia").val("");
 
 	
 	var objeto = new Object();
@@ -6601,7 +6642,7 @@ $("body").on("click", ".guardarEvidencia",function(event){
 	objeto.wsId = wsId;
 	objeto.version = version;
 	objeto.avanceId = avanceId;
-
+	//objeto.documentoEvidencia = documentoEvidencia;
 	
   	var info = JSON.stringify(objeto);
     $.ajax({
