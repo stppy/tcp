@@ -517,6 +517,7 @@ if (user != null) { %>
 								 	</thead>
 								 	<tbody id="cuerpoInsLineaAccion">
 								 	
+								 	
 								 	</tbody>
 								 </table> 
 	            			</div>
@@ -530,7 +531,15 @@ if (user != null) { %>
 			   		</div>
 				</div>
           	</div><!-- /.row -->
-          	
+			<!-- link de descarga para las constancias -->
+			<div class="well" align="right">
+				<h4>Descargar Constancia :</h4> 
+				<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160401.pdf" download="Constancia">
+					<button type="button"  class="btn btn-primary">
+						<span class="glyphicon glyphicon-download-alt"></span> Descargar
+					</button>
+				</a>
+			</div><!-- /fin div de link constancias -->
           	<div class="row">
 	        	<div class="col-md-12">
 	         		<div class="box collapsed-box" >
