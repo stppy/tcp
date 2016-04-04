@@ -12,9 +12,15 @@ public class ProductoObjetoGasto {
     protected int proyectoId;
     protected int productoId;
     protected String productoConcat;
+    protected boolean borrado=false;
     protected int version;
-	protected boolean borrado=false;
-	
+    protected int codigoObjetoGasto;
+    protected int departamento;
+    protected int FuenteFinanciamiento;
+	protected int OrganismoFinanciador;	    
+	protected int pais;
+	protected String observacion;
+	protected int anho;
 	
 	public int getId() {
 		return id;
@@ -87,6 +93,48 @@ public class ProductoObjetoGasto {
 	}
 	public void setVersion(int version) {
 		this.version = version;
+	}
+	public int getCodigoObjetoGasto() {
+		return codigoObjetoGasto;
+	}
+	public void setCodigoObjetoGasto(int codigoObjetoGasto) {
+		this.codigoObjetoGasto = codigoObjetoGasto;
+	}
+	public int getDepartamento() {
+		return departamento;
+	}
+	public void setDepartamento(int departamento) {
+		this.departamento = departamento;
+	}
+	public int getFuenteFinanciamiento() {
+		return FuenteFinanciamiento;
+	}
+	public void setFuenteFinanciamiento(int fuenteFinanciamiento) {
+		FuenteFinanciamiento = fuenteFinanciamiento;
+	}
+	public int getOrganismoFinanciador() {
+		return OrganismoFinanciador;
+	}
+	public void setOrganismoFinanciador(int organismoFinanciador) {
+		OrganismoFinanciador = organismoFinanciador;
+	}
+	public int getPais() {
+		return pais;
+	}
+	public void setPais(int pais) {
+		this.pais = pais;
+	}
+	public String getObservacion() {
+		return observacion;
+	}
+	public void setObservacion(String observacion) {
+		this.observacion = observacion;
+	}
+	public int getAnho() {
+		return anho;
+	}
+	public void setAnho(int anho) {
+		this.anho = anho;
 	}
 
 }

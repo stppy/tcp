@@ -464,7 +464,7 @@ public class SqlSelects {
 				objeto.setLaUmDescp(rs.getString("la_um_descp")); 
 				objeto.setIlaId(rs.getInt("ila_id"));;
 				objeto.setPeriodo(rs.getInt("periodo"));
-				objeto.setIlaMeta(rs.getInt("ila_meta"));
+				objeto.setIlaMeta(rs.getDouble("ila_meta"));
 				objeto.setAccionPeso(rs.getInt("accion_peso"));
 				objeto.setAccionFechaIni(rs.getString("accion_fecha_ini")); 
 				objeto.setAccionFechaFin(rs.getString("accion_fecha_fin"));
@@ -486,7 +486,8 @@ public class SqlSelects {
 				objetos.add(objeto);
 			}
 		}
-		catch (SQLException e) {e.printStackTrace();}
+		catch (SQLException e) {
+			e.printStackTrace();}
 		finally{
 			if (statement != null) {statement.close();}
 			if (conect != null) {conect.close();}
@@ -526,6 +527,7 @@ public class SqlSelects {
 				objeto.setM3(rs.getString("m3")); 
 				objeto.setM4(rs.getString("m4")); 
 				objeto.setDeptoNombre(rs.getString("depto_nombre")); 
+				objeto.setDistNombre(rs.getString("dist_nombre")); 
 				objeto.setIdAccionCatalogo(rs.getString("id_accion_catalogo"));
 				objeto.setAcNombre(rs.getString("ac_nombre"));
 				objeto.setAcUmId(rs.getString("ac_um_id"));

@@ -1,29 +1,13 @@
 package py.gov.stp.tools;
 
-
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
- 
-
-
-
-
-import javax.naming.Context;
-import javax.naming.InitialContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
- 
-
-import javax.xml.datatype.DatatypeConfigurationException;
 
 import py.gov.stp.tools.SqlSelects;
 
@@ -429,9 +413,28 @@ public class ajaxSelects extends HttpServlet {
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos);
         		out.println(json.toString());
-        	}  
+        	}
         	
-       }
+            if (action.equals("getObjetoGastoCosto")){
+        		List objetos=null;
+        		String condicion = "where true ";
+        		
+        		if (nivel != null) condicion += "and nivel = "+nivel;
+        		if (entidad != null) condicion += " and entidad = "+entidad;
+//        		if (tipoPresupuesto != null) condicion += " and tipo = "+tipoPresupuesto;
+        		if (programa != null) condicion += " and programa = "+programa;
+        		if (subprograma != null) condicion += " and subprograma = "+subprograma;
+        		if (proyecto != null) condicion += " and proyecto = "+proyecto;
+        		if (producto != null) condicion += " and producto = "+producto;
+
+        		try {objetos = SqlSelects.selectObjetoGastoCosto(condicion);}
+    			catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		myObj.addProperty("success", true);
+        		myObj.add("producto", json);
+                out.println(myObj.toString());
+            }
+        }
        out.close();
         
     }
