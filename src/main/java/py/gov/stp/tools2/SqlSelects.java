@@ -527,6 +527,7 @@ public class SqlSelects {
 				objeto.setM3(rs.getString("m3")); 
 				objeto.setM4(rs.getString("m4")); 
 				objeto.setDeptoNombre(rs.getString("depto_nombre")); 
+				objeto.setDistNombre(rs.getString("dist_nombre")); 
 				objeto.setIdAccionCatalogo(rs.getString("id_accion_catalogo"));
 				objeto.setAcNombre(rs.getString("ac_nombre"));
 				objeto.setAcUmId(rs.getString("ac_um_id"));
