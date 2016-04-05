@@ -533,7 +533,7 @@ if (user != null) { %>
           	</div><!-- /.row -->
 			<!-- link para acceder a la pagina de descarga de las constancias -->
 			<div class="well" align="right">
-				<a href="http://spr.stp.gov.py/tablero/descargasConstancias.jsp" download="Constancia">
+				<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160401.pdf" download="Constancia">
 					<button type="button" class="btn btn-primary">
 						<span class="glyphicon glyphicon-download-alt"></span> Descargar Constancia PA1
 					</button>
