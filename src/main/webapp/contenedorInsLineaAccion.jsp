@@ -531,12 +531,11 @@ if (user != null) { %>
 			   		</div>
 				</div>
           	</div><!-- /.row -->
-			<!-- link de descarga para las constancias -->
+			<!-- link para acceder a la pagina de descarga de las constancias -->
 			<div class="well" align="right">
-				<h4>Descargar Constancia :</h4> 
-				<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160401.pdf" download="Constancia">
-					<button type="button"  class="btn btn-primary">
-						<span class="glyphicon glyphicon-download-alt"></span> Descargar
+				<a href="http://spr.stp.gov.py/tablero/descargasConstancias.jsp" download="Constancia">
+					<button type="button" class="btn btn-primary">
+						<span class="glyphicon glyphicon-download-alt"></span> Descargar Constancia PA1
 					</button>
 				</a>
 			</div><!-- /fin div de link constancias -->
@@ -569,7 +568,7 @@ if (user != null) { %>
 	             		</div>
 			   		</div>
 				</div>
-          	</div><!-- /.row -->
+          	</div><!-- /.row -->|
           	
 	    	<div class="row">
 	        	<div class="col-md-12">
