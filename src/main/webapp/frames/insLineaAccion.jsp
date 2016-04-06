@@ -3662,7 +3662,7 @@ $("body").on("click", ".borrarAccion",function(event){
 			    		$("#unidadMedida-formulario").val(mostrarUnidadMedida);
 			    		
 				    	$.ajax({
-				         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getAsignacionPresiVersion&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subPrograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto,
+				         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getAsignacionPresiVersion&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto,
 				          	type:'get',
 				          	crossDomain: 'true',
 				          	dataType:'jsonp',
@@ -5399,7 +5399,7 @@ $("body").on("click", ".agregarAvance",function(event){
 							
 							'								<div class="table-responsive">'+
 							'									<table class="table table-hover table-bordered">'+
-							'										<thead><tr class="active"><th>Justificación</th><th>cantidad</th><th>Fecha Entrega</th><th>Cantidad Beneficiarios</th><th>Acciones</th></tr>'+
+							'										<thead><tr class="active"><th>Justificación</th><th>cantidad</th><th>Fecha Entrega</th><th>Cantidad Beneficiarios</th><th>Administrar</th></tr>'+
 							'										<tbody id="listaAvances">'+
 							'										</tbody>'+
 							'									</table>'+

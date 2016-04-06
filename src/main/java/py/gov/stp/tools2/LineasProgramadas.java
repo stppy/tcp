@@ -26,6 +26,19 @@ public class LineasProgramadas {
 	protected String crono_tipo_nombre;
 	protected String cant_prog; 
 	protected String fecha_entrega;
+	protected int ins_id;
+	protected int la_id;
+	protected int la_tipo_id;
+	protected int la_estrategia_id;
+	protected int la_um_id;
+	protected int ila_id;
+	protected int accion_id;
+	protected int depto_id;
+	protected int dist_id;
+	protected int ac_um_id;
+	protected int crono_id;
+	protected int crono_tipo_id;
+	
 	public String getSigla() {
 		return sigla;
 	}
@@ -176,7 +189,77 @@ public class LineasProgramadas {
 	public void setFecha_entrega(String fecha_entrega) {
 		this.fecha_entrega = fecha_entrega;
 	}
+	public int getIns_id() {
+		return ins_id;
+	}
+	public void setIns_id(int ins_id) {
+		this.ins_id = ins_id;
+	}
+	public int getLa_id() {
+		return la_id;
+	}
+	public void setLa_id(int la_id) {
+		this.la_id = la_id;
+	}
+	public int getLa_tipo_id() {
+		return la_tipo_id;
+	}
+	public void setLa_tipo_id(int la_tipo_id) {
+		this.la_tipo_id = la_tipo_id;
+	}
+	public int getLa_estrategia_id() {
+		return la_estrategia_id;
+	}
+	public void setLa_estrategia_id(int la_estrategia_id) {
+		this.la_estrategia_id = la_estrategia_id;
+	}
+	public int getLa_um_id() {
+		return la_um_id;
+	}
+	public void setLa_um_id(int la_um_id) {
+		this.la_um_id = la_um_id;
+	}
+	public int getIla_id() {
+		return ila_id;
+	}
+	public void setIla_id(int ila_id) {
+		this.ila_id = ila_id;
+	}
+	public int getAccion_id() {
+		return accion_id;
+	}
+	public void setAccion_id(int accion_id) {
+		this.accion_id = accion_id;
+	}
+	public int getDepto_id() {
+		return depto_id;
+	}
+	public void setDepto_id(int depto_id) {
+		this.depto_id = depto_id;
+	}
+	public int getDist_id() {
+		return dist_id;
+	}
+	public void setDist_id(int dist_id) {
+		this.dist_id = dist_id;
+	}
+	public int getAc_um_id() {
+		return ac_um_id;
+	}
+	public void setAc_um_id(int ac_um_id) {
+		this.ac_um_id = ac_um_id;
+	}
+	public int getCrono_id() {
+		return crono_id;
+	}
+	public void setCrono_id(int crono_id) {
+		this.crono_id = crono_id;
+	}
+	public int getCrono_tipo_id() {
+		return crono_tipo_id;
+	}
+	public void setCrono_tipo_id(int crono_tipo_id) {
+		this.crono_tipo_id = crono_tipo_id;
+	}	
 	
-	
-
 }

@@ -429,6 +429,18 @@ public class SqlSelects {
 				objeto.setCrono_tipo_nombre(rs.getString("crono_tipo_nombre"));
 				objeto.setCant_prog(rs.getString("cant_prog")); 
 				objeto.setFecha_entrega(rs.getString("fecha_entrega"));
+				objeto.setIns_id(rs.getInt("ins_id"));
+				objeto.setLa_id(rs.getInt("la_id"));
+				objeto.setLa_tipo_id(rs.getInt("la_tipo_id"));
+				objeto.setLa_estrategia_id(rs.getInt("la_estrategia_id"));
+				objeto.setLa_um_id(rs.getInt("la_um_id"));
+				objeto.setIla_id(rs.getInt("ila_id"));	
+				objeto.setAccion_id(rs.getInt("accion_id"));
+				objeto.setDepto_id(rs.getInt("depto_id"));
+				objeto.setDist_id(rs.getInt("dist_id"));
+				objeto.setAc_um_id(rs.getInt("ac_um_id"));
+				objeto.setCrono_id(rs.getInt("crono_id"));
+				objeto.setCrono_tipo_id(rs.getInt("crono_tipo_id"));			
 
 				objetos.add(objeto);
 			}
