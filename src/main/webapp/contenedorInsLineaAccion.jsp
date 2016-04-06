@@ -524,21 +524,24 @@ if (user != null) { %>
 	            			
 	            		</div>
 	             		<div class="box-footer" style="height:auto; overflow: auto; display: block;">
-	             			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1")){%>
-	             				<button type="submit" class="btn btn-primary nuevaInsLineaAccion">Agregar Línea de Acción</button>
-	             			<%}%>
+	             			<div class="col-md-6" align="left">
+		             			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1")){%>
+		             				<button type="submit" class="btn btn-primary nuevaInsLineaAccion">Agregar Línea de Acción</button>
+		             			<%}%>
+	             			</div>
+	             			<!-- link para acceder a la pagina de descarga de las constancias -->
+							<div class="col-md-6" align="right">
+								<a href="http://spr.stp.gov.py/tablero/descargasConstancias.jsp">
+									<button type="button" class="btn btn-primary">
+										<span class="glyphicon glyphicon-download-alt"></span> Descargar Constancias
+									</button>
+								</a>
+							</div><!-- /fin div de link constancias -->
 	             		</div>
 			   		</div>
 				</div>
           	</div><!-- /.row -->
-			<!-- link para acceder a la pagina de descarga de las constancias -->
-			<div class="well" align="right">
-				<a href="http://spr.stp.gov.py/tablero/descargasConstancias.jsp">
-					<button type="button" class="btn btn-primary">
-						<span class="glyphicon glyphicon-download-alt"></span> Descargar Constancias
-					</button>
-				</a>
-			</div><!-- /fin div de link constancias -->
+			
           	<div class="row">
 	        	<div class="col-md-12">
 	         		<div class="box collapsed-box" >
@@ -568,7 +571,7 @@ if (user != null) { %>
 	             		</div>
 			   		</div>
 				</div>
-          	</div><!-- /.row -->|
+          	</div><!-- /.row -->
           	
 	    	<div class="row">
 	        	<div class="col-md-12">

@@ -22,7 +22,28 @@
 <% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%>
 <% Map attributes = user.getAttributes(); 
 if (user != null) { %>
-
+<script>
+<%if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>
+ 	$(document).ready(function(){
+ 		var entidadCas = "";
+		entidadCas ="<%=attributes.get("entidad") %>";
+		usuarioRolCas="<%=attributes.get("role_id") %>";
+		var usuarios = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		usuarios = JSON.parse(usuarios);
+		usuarios = usuarios.usuarios;
+		
+		$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
+		$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
+		
+<%}else{%>
+	window.location = "http://spr.stp.gov.py/tablero/resumenLineaAccion.jsp";
+<%}%>
+</script>
 	<div class="wrapper">
 
 		<header class="main-header">
@@ -57,8 +78,8 @@ if (user != null) { %>
 						<div class="box-body collapse" id="demo1">
 							  <div class="list-group" >
 								<!-- <a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160404.pdf" download="Constancia" class="list-group-item glyphicon glyphicon-download-alt"> Descargar</a> -->
-								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160401.pdf" download="Constancia" class="list-group-item glyphicon glyphicon-download-alt"> 01-ABRIL-2016</a>
-								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160404.pdf" download="Constancia" class="list-group-item glyphicon glyphicon-download-alt"> 04-ABRIL-2016</a>
+								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160401.pdf" download="Constancia_20160401" class="list-group-item glyphicon glyphicon-download-alt"> 01-ABRIL-2016</a>
+								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160404.pdf" download="Constancia_20160404" class="list-group-item glyphicon glyphicon-download-alt"> 04-ABRIL-2016</a>
 							  </div>
 						</div><!-- /.fin-box-body -->
 					</div><!-- /.fin_box -->
@@ -82,7 +103,7 @@ if (user != null) { %>
 						</div><!-- /.fin-box-bod -->
 					</div><!-- /.fin_box -->
 					
-					<!-- Contenedor de constancias para el PA3 -->
+					 <!-- Contenedor de constancias para el PA3-->
 					<div class="box box-primary">
 						<div class="box-header with-border"><!-- Cabecera del box con titulo y botones para expandir -->
 							<h3 class="box-title">Descargar Constancia PA 3</h3>
@@ -95,14 +116,14 @@ if (user != null) { %>
 						<div class="box-body collapse" id="demo3">
 							  <div class="list-group" >
 								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160401.pdf" class="noDescargar list-group-item disabled glyphicon glyphicon-download-alt" onclick="return false;"> Descargar</a>
-								<!-- <a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160401.pdf" download="Constancia" class="list-group-item glyphicon glyphicon-download-alt"> Mes : Febrero - Descargar</a>
-								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160401.pdf" download="Constancia" class="list-group-item glyphicon glyphicon-download-alt"> Mes : Marzo - Descargar</a> -->
+								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160401.pdf" download="Constancia" class="list-group-item glyphicon glyphicon-download-alt"> Mes : Febrero - Descargar</a>
+								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160401.pdf" download="Constancia" class="list-group-item glyphicon glyphicon-download-alt"> Mes : Marzo - Descargar</a>
 							  </div>
 						</div><!-- /.fin-box-bod -->
 					</div><!-- /.fin_box -->
 					
 				<script>/* Scrip para cambiar de icono el boton de collapse */
-				$(document).ready(function(){
+				 $(document).ready(function(){
 					 $("#demo1").on("hide.bs.collapse", function(){
 					   $(".btn").html('<span class="glyphicon glyphicon-collapse-down"></span> ');
 					 });
