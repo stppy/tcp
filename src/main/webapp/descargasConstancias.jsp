@@ -54,11 +54,11 @@ if (user != null) { %>
 								</button>	
 							</div>
 						</div><!-- /.fin-box-header -->
-						<div class="box-body collapse" id="demo1">
+						<div class="box-body collapse in" id="demo1">
 							  <div class="list-group" >
-								<!-- <a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160404.pdf" download="Constancia" class="list-group-item glyphicon glyphicon-download-alt"> Descargar</a> -->
-								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160401.pdf" download="Constancia" class="list-group-item glyphicon glyphicon-download-alt"> 01-ABRIL-2016</a>
-								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160404.pdf" download="Constancia" class="list-group-item glyphicon glyphicon-download-alt"> 04-ABRIL-2016</a>
+								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160401.pdf" download="Constancia_20160401" class="list-group-item glyphicon glyphicon-download-alt"> 01-ABRIL-2016</a>
+								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160404.pdf" download="Constancia_20160404" class="list-group-item glyphicon glyphicon-download-alt"> 04-ABRIL-2016</a>
+								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160405.pdf" download="Constancia_20160405" class="list-group-item glyphicon glyphicon-download-alt"> 05-ABRIL-2016</a>
 							  </div>
 						</div><!-- /.fin-box-body -->
 					</div><!-- /.fin_box -->
