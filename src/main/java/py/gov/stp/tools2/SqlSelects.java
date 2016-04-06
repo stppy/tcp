@@ -544,7 +544,7 @@ public class SqlSelects {
 				objeto.setAcNombre(rs.getString("ac_nombre"));
 				objeto.setAcUmId(rs.getString("ac_um_id"));
 				objeto.setAcUmDescp(rs.getString("ac_um_descp"));	
-				objeto.setProporcion(rs.getString("proporcion"));
+				objeto.setProporcion(rs.getInt("proporcion"));
 				objeto.setSprNivelId(rs.getString("spr_nivel_id"));
 				objeto.setSprEntidadId(rs.getString("spr_entidad_id"));
 				objeto.setSprTipProgramaId(rs.getString("spr_tiprograma_id"));
