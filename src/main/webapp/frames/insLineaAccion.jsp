@@ -5937,6 +5937,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
  									'													<tr><td colspan="2"><label for="documentoEvidencia">Adjuntar Documento</label><input type="file" id="documentoEvidencia" name="documentoEvidencia" /><div id="progress" class="progress">'+
         							'														<div class="bar" style="width: 0%;"></div></div></td></tr>'+ 
 									'													<input type="hidden" id="wsIdEvidencia" value="1" /><input type="hidden" id="versionEvidencia" value="3"/><input type="hidden" id="avanceIdEvidencia" value="'+avanceId+'"/>'+
+									'													<input type="hidden" id="urlDocEvidencia" />'+
 									'		      									</form>	'+
 									'											</tbody>'+
 									'										</table>'+
@@ -6698,9 +6699,9 @@ $("body").on("click", ".guardarEvidencia",function(event){
 	var avanceId = idParsed[6];
 	
 	var docEvidenciaFile = document.getElementById("documentoEvidencia").files[0];
-    var urlDocumento;
-		    var formdata = new FormData();
-		    formdata.append('documentoEvidencia', docEvidenciaFile);
+    
+    var formdata = new FormData();
+    formdata.append('documentoEvidencia', docEvidenciaFile);
     
      $.ajax({
 	         type: "POST",
@@ -6710,12 +6711,13 @@ $("body").on("click", ".guardarEvidencia",function(event){
 	         processData: false,  // tell jQuery not to process the data
 	         contentType: false,   // tell jQuery not to set contentType
 	         success: function(data){
-	               $("#urlEvidencia").val(data);
+	               $("#urlDocEvidencia").val(data);
 	           }
 	     }); 
 
 	var nombre = $("#nombreEvidencia").val();
 	var url = $("#urlEvidencia").val();
+	var urlDocumento = $("#urlDocEvidencia").val();
 	var descripcion = $("#descripcionEvidencia").val();
 	var wsId = $("#wsIdEvidencia").val();
 	var version = $("#versionEvidencia").val();
@@ -6726,6 +6728,7 @@ $("body").on("click", ".guardarEvidencia",function(event){
 	//Vaciar los inputs
 	$("#nombreEvidencia").val("");
 	$("#urlEvidencia").val("");
+	$("#urlDocEvidencia").val("");
 	$("#descripcionEvidencia").val("");
 	$("#documentoEvidencia").val("");
 
@@ -6769,7 +6772,7 @@ $("body").on("click", ".guardarEvidencia",function(event){
         				cuerpoEvidencia += '<tr><td><del>'+webServicesEvidencia[d].nombre+'</del></td><td><del>'+webServicesEvidencia[d].descripcion+'</del></td><td><del>'+webServicesEvidencia[d].url+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
         				<% }%>
         			}else{ 
-        				cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[d].nombre+'</td><td>'+webServicesEvidencia[d].descripcion+'</td><td><a href="'+webServicesEvidencia[d].url+'" download="">Descargar Archivo</a></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+        				cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[d].nombre+'</td><td>'+webServicesEvidencia[d].descripcion+'</td><td>'+webServicesEvidencia[d].url+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
         			}	
         		}
         		
@@ -6946,11 +6949,12 @@ $("body").on("click", ".consultaEditarEvidencia",function(event){
 						'			      			<form class="form-horizontal" role="form">'+
 						'								<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" value="'+webServicesEvidencia[0].nombre+'" /></td><td><label for="urlEvidencia">Url</label><input type="url" id="urlEvidencia" class="form-control" value="'+webServicesEvidencia[0].url+'" /></td></tr>'+
 						'								<tr><td colspan="2"><label for="descripcionEvidencia">Descripción</label><input type="text" id="descripcionEvidencia" class="form-control" value="'+webServicesEvidencia[0].descripcion+'" /></td></tr>'+
-						'								<input type="hidden" id="wsIdEvidencia" value='+webServicesEvidencia[0].wsId+' /><input type="hidden" id="versionEvidencia" value='+webServicesEvidencia[0].version+' /><input type="hidden" id="avanceIdEvidencia" value='+webServicesEvidencia[0].avanceId+' />'+		
+						'								<input type="hidden" id="wsIdEvidencia" value='+webServicesEvidencia[0].wsId+' /><input type="hidden" id="versionEvidencia" value='+webServicesEvidencia[0].version+' /><input type="hidden" id="avanceIdEvidencia" value='+webServicesEvidencia[0].avanceId+' />'+
+						'								<input type="hidden" id="urlDocEvidencia" value='+webServicesEvidencia[0].urlDocumento+' />'+														
 						'			      			</form>	'+												
-/* 						'							<form action="UploadServlet" method="post" enctype="multipart/form-data">'+ 
-						'								<tr><td><label for="documentoEvidencia">Adjuntar Documento</label><input type="file" id="documentoEvidencia" name="documentoEvidencia" size="50"  value='+webServicesEvidencia[0].wsId+'/></td></tr>'+
- 						'							</form>	'+	 */
+						'							<form method="post" enctype="multipart/form-data">'+ 
+						'								<tr><td><label for="documentoEvidencia">Adjuntar Documento</label><input type="file" id="documentoEvidencia" name="documentoEvidencia" size="50" value='+webServicesEvidencia[0].urlDocumento+'/></td></tr>'+
+ 						'							</form>	'+	 
 						'						</tbody>'+
 						'					</table>'+
 						'				</div>'+
@@ -6975,9 +6979,27 @@ $("body").on("click", ".editarEvidencia",function(event){
 	
 	//Las siguentes variables se utiliza en esta funcion para redibujar el modal anterior
 	var evidenciaId = idParsed[0];
+	
+	var docEvidenciaFile = document.getElementById("documentoEvidencia").files[0];
+    
+    var formdata = new FormData();
+    formdata.append('documentoEvidencia', docEvidenciaFile);
+    
+     $.ajax({
+	         type: "POST",
+	         url: "/tablero/UploadServlet", /* contextPath + servletPath, */
+	         data: formdata, /* + $('#custIdList').val(), */
+	         async: false,
+	         processData: false,  // tell jQuery not to process the data
+	         contentType: false,   // tell jQuery not to set contentType
+	         success: function(data){
+	               $("#urlEvidencia").val(data);
+	           }
+	     }); 
 
 	var nombre = $("#nombreEvidencia").val();
 	var url = $("#urlEvidencia").val();
+	var urlDocumento = $("#urlDocEvidencia").val();
 	var descripcion = $("#descripcionEvidencia").val();
 	var wsId = $("#wsIdEvidencia").val();
 	var version = $("#versionEvidencia").val();
@@ -6986,7 +7008,9 @@ $("body").on("click", ".editarEvidencia",function(event){
 	//Vaciar los inputs
 	$("#nombreEvidencia").val("");
 	$("#urlEvidencia").val("");
+	$("#urlDocEvidencia").val("");
 	$("#descripcionEvidencia").val("");
+	$("#documentoEvidencia").val("");
 
 	
 	var objeto = new Object();
