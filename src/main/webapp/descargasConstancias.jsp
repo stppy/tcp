@@ -12,17 +12,80 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- Bootstrap 3.3.2 JS -->
     <script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-	<!-- Bootstrap 3.3.2 CSS -->
+    <!--<script src="bootstrap/js/jquery.min.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>-->
+	<!-- Bootstrap CSS -->
 	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	
+	<!-- jvectormap -->
+    <script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js" type="text/javascript"></script>
+    <script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js" type="text/javascript"></script>
 	
+	<style>
+	  /* Icono cuando el contenido colapsado esta visto */
+	  .btn1:after {
+	    font-family: "Glyphicons Halflings";
+	    content: "\e114";
+	    float: right;
+	    margin-left: 15px;
+	  }
+	  /* Icono cuando el contenido colapsado esta oculto */
+	  .btn1.collapsed:after {
+	    content: "\e080";
+	  }
+	  /* Icono cuando el contenido colapsado esta visto */
+	  .btn2:after {
+	    font-family: "Glyphicons Halflings";
+	    content: "\e114";
+	    float: right;
+	    margin-left: 15px;
+	  }
+	  /* Icono cuando el contenido colapsado esta oculto */
+	  .btn2.collapsed:after {
+	    content: "\e080";
+	  }
+	  /* Icono cuando el contenido colapsado esta visto */
+	  .btn3:after {
+	    font-family: "Glyphicons Halflings";
+	    content: "\e114";
+	    float: right;
+	    margin-left: 15px;
+	  }
+	  /* Icono cuando el contenido colapsado esta oculto */
+	  .btn3.collapsed:after {
+	    content: "\e080";
+	  }
+	</style>
+
+
 </head>
 <body class="skin-blue sidebar-mini sidebar-collapse">
 
 <% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%>
 <% Map attributes = user.getAttributes(); 
 if (user != null) { %>
-
+<script>
+<%if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>
+ 	$(document).ready(function(){
+ 		var entidadCas = "";
+		entidadCas ="<%=attributes.get("entidad") %>";
+		usuarioRolCas="<%=attributes.get("role_id") %>";
+		var usuarios = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		usuarios = JSON.parse(usuarios);
+		usuarios = usuarios.usuarios;
+		
+		$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
+		$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
+	});
+<%}else{%>
+	window.location = "http://spr.stp.gov.py/tablero/resumenLineaAccion.jsp";
+<%}%>
+</script>
 	<div class="wrapper">
 
 		<header class="main-header">
@@ -48,17 +111,21 @@ if (user != null) { %>
 					<div class="box box-primary">
 						<div class="box-header with-border"><!-- Cabecera del box con titulo y botones para expandir -->
 							<h3 class="box-title">Descargar Constancia PA 1</h3>
-							<div class="box-tools pull-right"> 
-								<button type="button" class="btn" data-toggle="collapse" data-target="#demo1">
-									<span class="glyphicon glyphicon-collapse-down"></span>
-								</button>	
+							<div class="box-tools pull-right">
+								<button type="button" class="btn btn1 btn-box-tool collapsed" data-toggle="collapse" data-target="#demo1">
+								</button>
+								<!--<button type="button" class="btn1 btn-box-tool btn " data-toggle="collapse"  data-target="#demo1">
+									<i class="fa fa-plus" ></i>
+								</button>	-->
 							</div>
 						</div><!-- /.fin-box-header -->
-						<div class="box-body collapse" id="demo1">
+						<div id="demo1" class="box-body collapse" >
 							  <div class="list-group" >
-								<!-- <a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160404.pdf" download="Constancia" class="list-group-item glyphicon glyphicon-download-alt"> Descargar</a> -->
-								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160401.pdf" download="Constancia" class="list-group-item glyphicon glyphicon-download-alt"> 01-ABRIL-2016</a>
-								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160404.pdf" download="Constancia" class="list-group-item glyphicon glyphicon-download-alt"> 04-ABRIL-2016</a>
+
+								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160401.pdf" download="Constancia_20160401" class="list-group-item glyphicon glyphicon-download-alt"> 01-ABRIL-2016</a>
+								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160404.pdf" download="Constancia_20160404" class="list-group-item glyphicon glyphicon-download-alt"> 04-ABRIL-2016</a>
+								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160405.pdf" download="Constancia_20160405" class="list-group-item glyphicon glyphicon-download-alt"> 05-ABRIL-2016</a>
+
 							  </div>
 						</div><!-- /.fin-box-body -->
 					</div><!-- /.fin_box -->
@@ -68,62 +135,62 @@ if (user != null) { %>
 						<div class="box-header with-border"><!-- Cabecera del box con titulo y botones para expandir -->
 							<h3 class="box-title">Descargar Constancia PA 2</h3>
 							<div class="box-tools pull-right"> 
-								<button type="button" class="btn" data-toggle="collapse" data-target="#demo2">
-									<span class="glyphicon glyphicon-collapse-down"></span>
-								</button>	
+								<button type="button" class="btn btn2 btn-box-tool collapsed" data-toggle="collapse" data-target="#demo2">
+								</button>
+								<!--<button type="button" class="btn btn-box-tool btn2 " data-toggle="collapse"  data-target="#demo2">
+									<i class="fa fa-plus" ></i>
+								</button>-->	
 							</div>
 						</div><!-- /.fin-box-header -->
 						<div class="box-body collapse" id="demo2">
-							  <div class="list-group" >
-								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160401.pdf" class="noDescargar list-group-item disabled glyphicon glyphicon-download-alt" onclick="return false;"> Descargar</a>
-								<!-- <a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160401.pdf" download="Constancia" class="list-group-item glyphicon glyphicon-download-alt"> Mes : Febrero - Descargar</a>
-								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160401.pdf" download="Constancia" class="list-group-item glyphicon glyphicon-download-alt"> Mes : Marzo - Descargar</a> -->
-							  </div>
-						</div><!-- /.fin-box-bod -->
-					</div><!-- /.fin_box -->
-					
-					<!-- Contenedor de constancias para el PA3 -->
+						  	<div class="list-group" >
+							<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160401.pdf" class="noDescargar list-group-item disabled glyphicon glyphicon-download-alt" onclick="return false;"> Descargar</a>
+							<!-- <a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160401.pdf" download="Constancia" class="list-group-item glyphicon glyphicon-download-alt"> Mes : Febrero - Descargar</a>
+						  </div>-->
+							</div><!--/.fin-box-bod -->
+						</div><!-- /.fin_box -->
+					</div>
+					<!-- Contenedor de constancias para el PA3-->
 					<div class="box box-primary">
 						<div class="box-header with-border"><!-- Cabecera del box con titulo y botones para expandir -->
 							<h3 class="box-title">Descargar Constancia PA 3</h3>
 							<div class="box-tools pull-right"> 
-								<button type="button" class="btn" data-toggle="collapse" data-target="#demo3">
-									<span class="glyphicon glyphicon-collapse-down"></span>
-								</button>	
+								<button type="button" class="btn btn3 btn-box-tool collapsed" data-toggle="collapse" data-target="#demo3">
+								</button>
+								<!--<button type="button" class="btn btn-box-tool btn3" data-toggle="collapse"  data-target="#demo3">
+									<i class="fa fa-plus" ></i>
+								</button>-->	
 							</div>
 						</div><!-- /.fin-box-header -->
 						<div class="box-body collapse" id="demo3">
 							  <div class="list-group" >
 								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160401.pdf" class="noDescargar list-group-item disabled glyphicon glyphicon-download-alt" onclick="return false;"> Descargar</a>
 								<!-- <a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160401.pdf" download="Constancia" class="list-group-item glyphicon glyphicon-download-alt"> Mes : Febrero - Descargar</a>
-								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160401.pdf" download="Constancia" class="list-group-item glyphicon glyphicon-download-alt"> Mes : Marzo - Descargar</a> -->
-							  </div>
-						</div><!-- /.fin-box-bod -->
-					</div><!-- /.fin_box -->
-					
+							  </div>-->
+								</div><!--/.fin-box-bod -->
+						</div><!-- /.fin_box -->
+					</div>
 				<script>/* Scrip para cambiar de icono el boton de collapse */
-				$(document).ready(function(){
-					 $("#demo1").on("hide.bs.collapse", function(){
-					   $(".btn").html('<span class="glyphicon glyphicon-collapse-down"></span> ');
+				 /*$(document).ready(function(){
+					$("#demo1").on("hide.bs.collapse", function(){
+					   	$(".btn1").html('<i class="fa fa-plus""></i>');
 					 });
-					 $("#demo1").on("show.bs.collapse", function(){
-					   $(".btn").html('<span class="glyphicon glyphicon-collapse-up"></span> ');
+					$("#demo1").on("show.bs.collapse", function(){
+					   	$(".btn1").html('<i class="fa fa-minus""></i>');
 					 });
-					$("#demo2").on("hide.bs.collapse", function(){
-						$(".btn").html('<span class="glyphicon glyphicon-collapse-down"></span> ');
-					});
+				 	$("#demo2").on("hide.bs.collapse", function(){
+						$(".btn2").html('<i class="fa fa-plus" "></i> ');
+						});
 					$("#demo2").on("show.bs.collapse", function(){
-						$(".btn").html('<span class="glyphicon glyphicon-collapse-up"></span> ');
+						$(".btn2").html('<i class="fa fa-minus""></i> ');
 					});
 					$("#demo3").on("hide.bs.collapse", function(){
-						$(".btn").html('<span class="glyphicon glyphicon-collapse-down"></span> ');
-					});
+						$(".btn3").html('<i class="fa fa-plus""></i> ');
+						});
 					$("#demo3").on("show.bs.collapse", function(){
-						$(".btn").html('<span class="glyphicon glyphicon-collapse-up"></span> ');
+						$(".btn3").html('<i class="fa fa-minus""></i> ');
 					});
-
-				});
-				
+				});*/
 				</script>
 			</section>
 		</div><!-- fin content-wrapper -->
@@ -153,7 +220,7 @@ if (user != null) { %>
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js" type="text/javascript"></script>
         <%  } else { %>
-				est<p>Favor Iniciar Sesion</p>
+			<p>Favor Iniciar Sesion</p>
 			<% } %> 
 
 	<!-- Piwik -->
