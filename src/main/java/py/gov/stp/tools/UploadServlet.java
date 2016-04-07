@@ -3,10 +3,12 @@ package py.gov.stp.tools;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,7 +35,7 @@ public class UploadServlet extends HttpServlet {
         protected void doPost(HttpServletRequest request,
                 HttpServletResponse response) throws ServletException, IOException {
             // obtiene el path absoluto de la aplicación
-            String appPath = request.getServletContext().getRealPath("");
+            String appPath = "/usr/share/tomcat";
             // construye el path del directorio para guardar el archivo subido
             String savePath = appPath + File.separator + SAVE_DIR;
              
@@ -46,14 +48,20 @@ public class UploadServlet extends HttpServlet {
             Part file = request.getPart("documentoEvidencia");
             String fileName = getFilename(file);
             //InputStream filecontent = file.getInputStream();
+            Calendar calendar = Calendar.getInstance();
+            java.util.Date now = calendar.getTime();
+            java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(now.getTime());
             
-               
-            file.write(savePath + File.separator + fileName);
-                        
             
+//            Date fecha = new Date();
+//            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+//            String fechaStr = sdf.format((fecha)).toString();
+            
+            file.write(savePath + File.separator +currentTimestamp.toString()+"_"+ fileName);
+                                    
             response.setContentType("text/plain");
         	response.setCharacterEncoding("UTF-8");        
-        	response.getWriter().write("/tablero/uploads" + File.separator + fileName);
+        	response.getWriter().write(savePath + File.separator +currentTimestamp.toString()+"_"+fileName);
         }
      
     	private static String getFilename(Part part) {
