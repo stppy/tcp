@@ -929,6 +929,7 @@ public class SqlSelects {
 					objeto.setVersion(rs.getInt("version"));
 					objeto.setBorrado(rs.getBoolean("borrado"));
 					objeto.setAvanceId(rs.getInt("avance_id"));
+					objeto.setUrlDocumento(rs.getString("url_documento"));
 					
 					objetos.add(objeto);
 				}
