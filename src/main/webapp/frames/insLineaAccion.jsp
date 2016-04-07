@@ -5934,8 +5934,8 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'		      									<form class="form-horizontal" role="form" method="post" enctype="multipart/form-data">'+
 									'													<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" placeholder="Ingrese Nombre" /></td><td><label for="urlEvidencia">Url</label><input type="url" id="urlEvidencia" class="form-control" placeholder="Ingrese Url" /></td></tr>'+
 									'													<tr><td colspan="2"><label for="descripcionEvidencia">Descripción</label><input type="text" id="descripcionEvidencia" class="form-control" placeholder="Ingrese Descripción" /></td></tr>'+
-/* 									'													<tr><td colspan="2"><label for="documentoEvidencia">Adjuntar Documento</label><input type="file" id="documentoEvidencia" name="documentoEvidencia" /><div id="progress" class="progress">'+
-        							'														<div class="bar" style="width: 0%;"></div></div></td></tr>'+ */
+ 									'													<tr><td colspan="2"><label for="documentoEvidencia">Adjuntar Documento</label><input type="file" id="documentoEvidencia" name="documentoEvidencia" /><div id="progress" class="progress">'+
+        							'														<div class="bar" style="width: 0%;"></div></div></td></tr>'+ 
 									'													<input type="hidden" id="wsIdEvidencia" value="1" /><input type="hidden" id="versionEvidencia" value="3"/><input type="hidden" id="avanceIdEvidencia" value="'+avanceId+'"/>'+
 									'		      									</form>	'+
 									'											</tbody>'+
@@ -6696,26 +6696,31 @@ $("body").on("click", ".guardarEvidencia",function(event){
 	var accionId = idParsed[4];
 	var actividadId = idParsed[5];
 	var avanceId = idParsed[6];
+	
+	var docEvidenciaFile = document.getElementById("documentoEvidencia").files[0];
+    var urlDocumento;
+		    var formdata = new FormData();
+		    formdata.append('documentoEvidencia', docEvidenciaFile);
+    
+     $.ajax({
+	         type: "POST",
+	         url: "/tablero/UploadServlet", /* contextPath + servletPath, */
+	         data: formdata, /* + $('#custIdList').val(), */
+	         async: false,
+	         processData: false,  // tell jQuery not to process the data
+	         contentType: false,   // tell jQuery not to set contentType
+	         success: function(data){
+	               alert(data);
+	               $("#urlEvidencia").val(data);
+	           }
+	     }); 
 
 	var nombre = $("#nombreEvidencia").val();
 	var url = $("#urlEvidencia").val();
 	var descripcion = $("#descripcionEvidencia").val();
 	var wsId = $("#wsIdEvidencia").val();
 	var version = $("#versionEvidencia").val();
-	//var documentoEvidencia = document.getElementById("documentoEvidencia").files[0];
-    
-    /* var formdata = new FormData();
-    formdata.append("documentoEvidencia", documentoEvidencia);
-    var xhr = new XMLHttpRequest();       
-    xhr.open("POST","/fileUploadTester/FileUploader", false);
-    xhr.send(formdata);
-    xhr.onload = function(e) {
-        if (this.status == 200) {
-           alert(this.responseText);
-        }else{
-        	alert("no se pudo cargar el archivo. Intentelo nuevamente");
-        }
-    };        */             
+        
   
 	//var avanceId = $("#avanceIdEvidencia").val(); No utilizo esta variable xq ya viene en el parse pero lo ideal seria obtener del formulario
 
@@ -6723,7 +6728,7 @@ $("body").on("click", ".guardarEvidencia",function(event){
 	$("#nombreEvidencia").val("");
 	$("#urlEvidencia").val("");
 	$("#descripcionEvidencia").val("");
-	//$("#documentoEvidencia").val("");
+	$("#documentoEvidencia").val("");
 
 	
 	var objeto = new Object();
@@ -8299,6 +8304,262 @@ $("body").on("click", ".borrarDestinatarioAccion",function(event){
         	}
 	 });
 	
+});
+
+$("body").on("click", ".avanceCualitativo",function(event){
+	var parametros = $(this).attr("parametros");
+	var idParsed = parametros.split("-"); 
+    var insLineaAccionId = idParsed[0];
+    var lineaAccionId = idParsed[1];
+    var institucionId = idParsed[2];
+    var periodoId = idParsed[3];
+	
+    if ( $("#modalAvanceCualitativo").length )
+	{
+		$("#modalAvanceCualitativo").remove();
+	}
+
+	var lineaAccion = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	lineaAccion = JSON.parse(lineaAccion);
+
+	for(i = 0;i<lineaAccion.length; i++)
+	{
+		if(lineaAccion[i].id == lineaAccionId)
+		{
+			var nombreLineaAccion = lineaAccion[i].nombre;
+		}
+	}
+	
+	var catalogoAccion = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	catalogoAccion = JSON.parse(catalogoAccion);
+	var optionCatalogoAccion = "";
+
+	for(l = 0; l < catalogoAccion.length; l++)
+	{
+		optionCatalogoAccion+='<option value="'+catalogoAccion[l].id+'" parametro="'+catalogoAccion[l].id+'">'+catalogoAccion[l].nombre+'</option>';
+	}
+	
+	var institucion = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	institucion = JSON.parse(institucion);
+
+	for(m = 0;m<institucion.length; m++)
+	{
+		if(institucion[m].id == institucionId)
+		{
+			var nombreInstitucion = institucion[m].sigla;
+		}
+	}
+	
+	var periodo = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	periodo = JSON.parse(periodo);
+
+	for(p = 0;p<periodo.length; p++)
+	{
+		if(periodo[p].id == periodoId)
+		{
+			var nombrePeriodo = periodo[p].nombre;
+		}
+	}
+	
+	var unidadMedida = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	unidadMedida = JSON.parse(unidadMedida);
+	var optionUnidadMedida;
+	for(var u = 0; u < unidadMedida.length; u++)
+	{
+		optionUnidadMedida+='<option value="'+unidadMedida[u].id+'" parametro="'+unidadMedida[u].id+'">'+unidadMedida[u].descripcion+'</option>';
+	}
+	
+	var departamentos = $.ajax({
+    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
+      	type:'get',
+      	dataType:'json',
+      	async:false       
+    }).responseText;
+	departamentos = JSON.parse(departamentos);
+	
+	var optionDepartamentos = "";
+	for(i = 0;i<departamentos.length; i++){
+		optionDepartamentos+='<option value="'+departamentos[i].idDepartamento+'" parametro="'+departamentos[i].idDepartamento+'">'+departamentos[i].nombreDepartamento+'</option>';
+	}
+	
+	var distritos = $.ajax({
+    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito',
+      	type:'get',
+      	dataType:'json',
+      	async:false       
+    }).responseText;
+	distritos = JSON.parse(distritos);
+	
+	var accion = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccionId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	accion = JSON.parse(accion);
+	
+	var nombreDepartamento;
+	var nombreDistrito;
+	var nombreAccionCatalogo;
+	var cuerpoAccion = "";
+
+	var optionAcciones = "";
+
+	for(var a = 0; a < accion.length; a++)
+	{
+				
+		for(var f = 0; f < catalogoAccion.length; f++)
+		{
+			if(accion[a].accionCatalogoId == catalogoAccion[f].id){
+				nombreAccionCatalogo = catalogoAccion[f].nombre;
+				}
+		}			
+		
+		for(var d = 0; d < departamentos.length; d++)
+		{
+			if(accion[a].departamentoId == departamentos[d].idDepartamento){
+				nombreDepartamento = departamentos[d].nombreDepartamento;
+				//cuerpoAccion +="<td class='text-center'>"+nombreDepartamento+"</td>";
+				}
+		}
+		
+
+		for(var e = 0; e < distritos.length; e++)
+		{
+			if(accion[a].distritoId == distritos[e].id && accion[a].departamentoId == distritos[e].departamentoId){
+				nombreDistrito = distritos[e].descripcion;
+
+			}
+		}
+
+		var nombreUnidadMedidaAccion = "";
+		for(var j = 0; j < catalogoAccion.length; j++){
+			if(accion[a].accionCatalogoId == catalogoAccion[j].id){
+				nombreUnidadMedidaAccion = "";
+				for(i = 0; i < unidadMedida.length; i++){
+					
+					if (catalogoAccion[j].idUnidadMedida == unidadMedida[i].id ){
+						nombreUnidadMedidaAccion =  unidadMedida[i].descripcion;
+					}
+				}
+			}	
+		}
+		
+		optionAcciones+='<option value="'+accion[a].id+'" >'+nombreAccionCatalogo+'-'+nombreDepartamento+'-'+nombreDistrito+'-'+accion[a].fechaInicio+'-'+accion[a].fechaFin+'-'+nombreUnidadMedidaAccion+'-'+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+'-'+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+'-'+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+'-'+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+'</option>';
+
+	}
+	
+	
+			
+	var cuerpoModalAvanceCualitativo = "";
+
+	cuerpoModalAvanceCualitativo =	'<div class="modal fade" id="modalAvanceCualitativo" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="myLargeModalLabel">'+
+						'	<div class="modal-dialog modal-lg" style="width:90%">'+
+						'		<div class="modal-content" >'+
+						'			<div class="modal-header">'+
+						'		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+						'		        <h4 class="modal-title">Registrar Avance Cualitativo de '+nombreLineaAccion+' ('+nombreInstitucion+') - '+nombrePeriodo+'</h4>'+ 
+						'			</div>'+
+						'		    <div class="modal-body" id="accionCuerpo" >';
+						
+	<% if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>		
+	
+	
+	cuerpoModalAvanceCualitativo +='		      	<div class="row">'+ 
+						'		      		<div class="col-md-12">'+
+						'						<div class="box box-warning">'+
+						'		                	<div class="box-header with-border">'+
+						'		                  		<h3 class="box-title">Avance Trimestral Cualitativo del Plan de Acción</h3>'+
+						'               			</div>'+//fin box-heder
+						'               			<div class="box-body">'+
+						
+						'								<form role="form">'+
+						'									<div class="table-responsive">'+
+						'										<table class="table table-hover">'+
+						'											<tbody>'+
+						'												<tr><td colspan="2"><div class="form-group"><label for="nombreAvanceCualitativo">Acciones</label><select id="nombreAvanceCualitativo" class="form-control">'+optionAcciones+'</select></div></td></tr>'+
+						'												<tr><td><div class="form-group"><label for="gestionesRealizadasAvanceCualitativo">Gestiones Realizadas</label><input type="text" id="gestionesRealizadasAvanceCualitativo" class="form-control"/> </div></td><td><div class="form-group"><label for="logrosAlcanzadosAvanceCualitativo">Principales Logros Alcanzados</label><input type="text" id="logrosAlcanzadosAvanceCualitativo" class="form-control"/></div></td></tr>'+
+						'												<tr><td><div class="form-group"><label for="leccionesAprendidasAvanceCualitativo">Dificultades y Lecciones aprendidas</label><input type="text" id="leccionesAprendidasAvanceCualitativo" class="form-control" /></div></td><td><div class="form-group"><label for="objetivosAvanceCualitativo">Objetivos del Siguiente Trimestre</label><input type="text" id="objetivosAvanceCualitativo" class="form-control"/></div></td></tr>'+							
+						'											</tbody>'+							           
+						'										</table>'+
+						'									</div>'+							
+						'								</form>'
+										
+						'               			</div>'+//fin box-body
+						'							<div class="modal-footer">'+
+						'								<button type="button" class="btn btn-success btn-sm guardarAvanceCualitatitvo" parametros = '+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'>Guardar Acción</button>'+
+						'							</div>'+
+						'                		</div>'+	
+						'                	</div>'+
+						'                </div>';											
+	<%}%>	
+	
+	cuerpoModalAvanceCualitativo +='	<div class="row">'+ 
+						'		      		<div class="col-md-12">'+
+						'						<div class="box box-warning">'+
+						'		                	<div class="box-header with-border">'+
+						'		                  		<h3 class="box-title">Avance Cualitativos Precargadas</h3>'+
+						'               			</div>'+//fin box-heder
+						'               			<div class="box-body" id="cuerpoTablaAvanceCualitativo">'+
+
+				
+						'               			</div>'+//fin box-body
+						'                		</div>'+	
+						'                	</div>'+
+						'                </div>'+
+						
+
+						'		    </div>'+
+						'			<div class="modal-footer">'+
+				      	'			</div>'+														
+						'		</div>'+ 
+						'	</div>'+
+						'</div>';
+						
+	$("#programacion").append(cuerpoModalAvanceCualitativo);
+	$('#cuerpoTablaAvanceCualitativo').html("");
+
+	var tablaAccion ='     			<div class="table-responsive">'+
+	'	                				<table class="table table-hover table-bordered" id="dataTablesAvanceCualitativo">'+
+	'	                					<thead>'+
+	'	                						<tr class="active"><th rowspan="2" class="text-center">Acción</th><th rowspan="2" class="text-center">Depto</th><th rowspan="2" class="text-center">Distrito</th><th rowspan="2" class="text-center">FechaInicio</th><th rowspan="2" class="text-center">FechaFin</th><th rowspan="2" class="text-center">Unidad Medida</th><th colspan="4" class="text-center">Metas</th><th rowspan="2" class="text-center" style="min-width:160px">Administrar Acción</th></tr>'+
+	'	                						<tr class="active"><th class="text-center">1er Trimestre</th><th class="text-center">2do Trimestre</th><th class="text-center">3er Trimestre</th><th class="text-center">4to Trimestre</th></tr>'+
+	'	                					</thead>'+
+	'	                						<tbody id="tablaAvanceCualitativo">'+
+	'	                						</tbody>'+
+	'	                				</table>'+
+	'	                			</div>';
+	$('#cuerpoTablaAvanceCualitativo').append(tablaAccion);
+	
+	//$('#tablaAccionesPrecargadas').append(cuerpoAccion);
+	$('#modalAvanceCualitativo').modal('show');
+	//$("#dataTablesAcciones").DataTable();
+
 });
 
 

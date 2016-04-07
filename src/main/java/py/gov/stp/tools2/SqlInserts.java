@@ -363,29 +363,82 @@ public class SqlInserts {
 	} catch (SQLException e) {e.printStackTrace();}
 		
 }
-	public static boolean insertEvidencia(Evidencia evidencia){
-	try {
-		Connection conn=ConnectionConfiguration.conectar();
-	   	
-		String query = " insert into evidencia (nombre,descripcion,url,ws_id,version,avance_id)"
-	+ " values (?, ?, ?, ?, ?, ?)";
+	public static int insertEvidencia(Evidencia evidencia){
+		try {
+			Connection conn=ConnectionConfiguration.conectar();
+		   	
+			String query = " insert into evidencia (nombre,descripcion,url,ws_id,version,avance_id)"
+		+ " values (?, ?, ?, ?, ?, ?)";
+			
+			PreparedStatement insert = conn.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
+			
+			insert.setString (1, evidencia.getNombre());
+			insert.setString (2, evidencia.getDescripcion());
+			insert.setString (3, evidencia.getUrl());
+			insert.setInt (4, evidencia.getWsId());
+			insert.setInt (5, evidencia.getVersion());
+			insert.setInt (6, evidencia.getAvanceId());
+								
+			insert.execute();
+			   
+			/*try (ResultSet generatedKeys = insert.getGeneratedKeys()) {
+	            if (generatedKeys.next()) {
+	                evidencia.setId(generatedKeys.getInt(1));
+	            }
+	            else {
+	            	return -1;
+	            }
+	        }*/
+			
+			conn.close();
+			return 1;
+		} catch (SQLException e) {e.printStackTrace(); return -1;}
+			
+	}
+	public static boolean insertEvidenciaHasDocumento(EvidenciaHasDocumento evidenciaHasDocumento){
 		
-		PreparedStatement insert = conn.prepareStatement(query);
+		try {
+			Connection conn=ConnectionConfiguration.conectar();		  		
+			
+			String query = " insert into evidencia_has_documento (evidencia_id, documento_id)"
+						 	+ " values (?, ?)";
+			
+			PreparedStatement insert = conn.prepareStatement(query);
+			
+			insert.setInt (1, evidenciaHasDocumento.getEvidenciaId());
+			insert.setInt (2, evidenciaHasDocumento.getDocumentoId());				
+								
+			insert.execute();
+			   
+			conn.close();
+			return true;
+		} catch (SQLException e) {e.printStackTrace(); return false;}
 		
-		insert.setString (1, evidencia.getNombre());
-		insert.setString (2, evidencia.getDescripcion());
-		insert.setString (3, evidencia.getUrl());
-		insert.setInt (4, evidencia.getWsId());
-		insert.setInt (5, evidencia.getVersion());
-		insert.setInt (6, evidencia.getAvanceId());
-							
-		insert.execute();
-		   
-		conn.close();
-		return true;
-	} catch (SQLException e) {e.printStackTrace(); return false;}
-		
-}
+	}	
+	public static boolean insertDocumento(Documento documento){
+		try {
+			Connection conn=ConnectionConfiguration.conectar();		  		
+			
+			
+			String query = " insert into documento (nombre, descripcion, url)"
+						    + " values (?, ?, ?)";
+			
+			PreparedStatement insert = conn.prepareStatement(query);	
+			
+			insert.setString (1, documento.getNombre());
+			insert.setString (2, documento.getDescripcion());
+			insert.setString (3, documento.getUrl());			
+								
+			insert.execute();			
+			   
+			conn.close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace(); 
+			return false;
+		}
+			
+	}
 	public static void insertAccionHasEtiqueta(AccionHasEtiqueta accionHasEtiqueta){
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
