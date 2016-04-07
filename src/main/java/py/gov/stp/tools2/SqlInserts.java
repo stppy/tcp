@@ -367,8 +367,8 @@ public class SqlInserts {
 		try {
 			Connection conn=ConnectionConfiguration.conectar();
 		   	
-			String query = " insert into evidencia (nombre,descripcion,url,ws_id,version,avance_id)"
-		+ " values (?, ?, ?, ?, ?, ?)";
+			String query = " insert into evidencia (nombre,descripcion,url,ws_id,version,avance_id, url_documento)"
+		+ " values (?, ?, ?, ?, ?, ?, ?)";
 			
 			PreparedStatement insert = conn.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
 			
@@ -378,6 +378,7 @@ public class SqlInserts {
 			insert.setInt (4, evidencia.getWsId());
 			insert.setInt (5, evidencia.getVersion());
 			insert.setInt (6, evidencia.getAvanceId());
+			insert.setString (7, evidencia.getUrlDocumento());
 								
 			insert.execute();
 			   

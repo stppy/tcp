@@ -61,7 +61,7 @@ public class UploadServlet extends HttpServlet {
 //            String fechaStr = sdf.format((fecha)).toString();
             
             file.write(savePath + File.separator +currentTimestamp.toString()+"_"+ fileName);
-                                    
+
             response.setContentType("text/plain");
         	response.setCharacterEncoding("UTF-8");        
         	response.getWriter().write(savePath + File.separator +currentTimestamp.toString()+"_"+fileName);
