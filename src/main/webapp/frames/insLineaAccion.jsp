@@ -8428,51 +8428,28 @@ $("body").on("click", ".avanceCualitativo",function(event){
 	var cuerpoAccion = "";
 
 	var optionAcciones = "";
+	var lineasDeAccion= [];
 
 	for(var a = 0; a < accion.length; a++)
-	{
-				
-		for(var f = 0; f < catalogoAccion.length; f++)
-		{
-			if(accion[a].accionCatalogoId == catalogoAccion[f].id){
-				nombreAccionCatalogo = catalogoAccion[f].nombre;
-				}
-		}			
-		
-		for(var d = 0; d < departamentos.length; d++)
-		{
-			if(accion[a].departamentoId == departamentos[d].idDepartamento){
-				nombreDepartamento = departamentos[d].nombreDepartamento;
-				//cuerpoAccion +="<td class='text-center'>"+nombreDepartamento+"</td>";
-				}
-		}
-		
-
-		for(var e = 0; e < distritos.length; e++)
-		{
-			if(accion[a].distritoId == distritos[e].id && accion[a].departamentoId == distritos[e].departamentoId){
-				nombreDistrito = distritos[e].descripcion;
-
+	{		
+		if(accion[a].borrado != true){
+			if (lineasDeAccion.indexOf(accion[a].accionCatalogoId)<0){
+				lineasDeAccion.push(accion[a].accionCatalogoId);
 			}
 		}
-
-		var nombreUnidadMedidaAccion = "";
-		for(var j = 0; j < catalogoAccion.length; j++){
-			if(accion[a].accionCatalogoId == catalogoAccion[j].id){
-				nombreUnidadMedidaAccion = "";
-				for(i = 0; i < unidadMedida.length; i++){
-					
-					if (catalogoAccion[j].idUnidadMedida == unidadMedida[i].id ){
-						nombreUnidadMedidaAccion =  unidadMedida[i].descripcion;
-					}
-				}
-			}	
-		}
-		
-		optionAcciones+='<option value="'+accion[a].id+'" >'+nombreAccionCatalogo+'-'+nombreDepartamento+'-'+nombreDistrito+'-'+accion[a].fechaInicio+'-'+accion[a].fechaFin+'-'+nombreUnidadMedidaAccion+'-'+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+'-'+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+'-'+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+'-'+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+'</option>';
-
 	}
 	
+	for(var z = 0; z < lineasDeAccion.length; z++)
+	{
+				
+		for(var g = 0; g < catalogoAccion.length; g++)
+		{
+			if(lineasDeAccion[z] == catalogoAccion[g].id){
+				optionAcciones+='<option value="'+catalogoAccion[g].id+'" >'+catalogoAccion[g].nombre+'</option>';
+				}
+		}		
+		
+	}
 	
 			
 	var cuerpoModalAvanceCualitativo = "";
@@ -8502,8 +8479,8 @@ $("body").on("click", ".avanceCualitativo",function(event){
 						'										<table class="table table-hover">'+
 						'											<tbody>'+
 						'												<tr><td colspan="2"><div class="form-group"><label for="nombreAvanceCualitativo">Acciones</label><select id="nombreAvanceCualitativo" class="form-control">'+optionAcciones+'</select></div></td></tr>'+
-						'												<tr><td><div class="form-group"><label for="gestionesRealizadasAvanceCualitativo">Gestiones Realizadas</label><input type="text" id="gestionesRealizadasAvanceCualitativo" class="form-control"/> </div></td><td><div class="form-group"><label for="logrosAlcanzadosAvanceCualitativo">Principales Logros Alcanzados</label><input type="text" id="logrosAlcanzadosAvanceCualitativo" class="form-control"/></div></td></tr>'+
-						'												<tr><td><div class="form-group"><label for="leccionesAprendidasAvanceCualitativo">Dificultades y Lecciones aprendidas</label><input type="text" id="leccionesAprendidasAvanceCualitativo" class="form-control" /></div></td><td><div class="form-group"><label for="objetivosAvanceCualitativo">Objetivos del Siguiente Trimestre</label><input type="text" id="objetivosAvanceCualitativo" class="form-control"/></div></td></tr>'+							
+						'												<tr><td><div class="form-group"><label for="gestionesRealizadasAvanceCualitativo">Gestiones Realizadas</label><textarea class="form-control" rows="" placeholder="" id="gestionesRealizadasAvanceCualitativo"></textarea></div></td><td><div class="form-group"><label for="logrosAlcanzadosAvanceCualitativo">Principales Logros Alcanzados</label><textarea class="form-control" rows="" placeholder="" id="logrosAlcanzadosAvanceCualitativo"></textarea></div></td></tr>'+
+						'												<tr><td><div class="form-group"><label for="leccionesAprendidasAvanceCualitativo">Dificultades y Lecciones aprendidas</label><textarea class="form-control" rows="" placeholder="" id="leccionesAprendidasAvanceCualitativo"></textarea></div></td><td><div class="form-group"><label for="objetivosAvanceCualitativo">Objetivos del Siguiente Trimestre</label><textarea class="form-control" rows="" placeholder="" id="objetivosAvanceCualitativo"></textarea></div></td></tr>'+							
 						'											</tbody>'+							           
 						'										</table>'+
 						'									</div>'+							

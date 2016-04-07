@@ -3,6 +3,8 @@ package py.gov.stp.tools;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -32,6 +34,7 @@ public class UploadServlet extends HttpServlet {
         @Override
         protected void doPost(HttpServletRequest request,
                 HttpServletResponse response) throws ServletException, IOException {
+        		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy hh:mm:ss");
             // obtiene el path absoluto de la aplicación
             String appPath = request.getServletContext().getRealPath("");
             // construye el path del directorio para guardar el archivo subido
@@ -48,12 +51,11 @@ public class UploadServlet extends HttpServlet {
             //InputStream filecontent = file.getInputStream();
             
                
-            file.write(savePath + File.separator + fileName);
-                        
-            
+            file.write(savePath + File.separator + fileName + sdf.format(new Date()));
+                                    
             response.setContentType("text/plain");
         	response.setCharacterEncoding("UTF-8");        
-        	response.getWriter().write("/tablero/uploads" + File.separator + fileName);
+        	response.getWriter().write("/tablero/uploads" + File.separator + fileName + sdf.format(new Date()));
         }
      
     	private static String getFilename(Part part) {
