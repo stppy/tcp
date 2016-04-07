@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -34,6 +35,7 @@ public class UploadServlet extends HttpServlet {
         @Override
         protected void doPost(HttpServletRequest request,
                 HttpServletResponse response) throws ServletException, IOException {
+        		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy hh:mm:ss");
             // obtiene el path absoluto de la aplicación
             String appPath = "/usr/share/tomcat";
             // construye el path del directorio para guardar el archivo subido
@@ -52,6 +54,7 @@ public class UploadServlet extends HttpServlet {
             java.util.Date now = calendar.getTime();
             java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(now.getTime());
             
+
             
 //            Date fecha = new Date();
 //            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
