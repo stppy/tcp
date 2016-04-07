@@ -182,7 +182,7 @@
 	    datos.institucionId = institucionId;
 	    datos.periodoId = periodoId;
 	    datos.meta = meta;
-	    datos.version = version;		
+	    datos.version = version;
 
 				 
 		$.ajax({
@@ -5583,9 +5583,9 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 			<%}%>
 		}else{
 			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>
-				cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[j].nombre+'</td><td>'+webServicesEvidencia[j].descripcion+'</td><td>'+webServicesEvidencia[j].url+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+				cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[j].nombre+'</td><td>'+webServicesEvidencia[j].descripcion+'</td><td><a href="'+webServicesEvidencia[j].url+'" download="" >Descargar Archivo</a></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-trash"></span></button></td></tr>';
 			<%} if (attributes.get("role_id").toString().equals("3")){%>
-				cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[j].nombre+'</td><td>'+webServicesEvidencia[j].descripcion+'</td><td>'+webServicesEvidencia[j].url+'</td><td class="text-center"></td></tr>';
+				cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[j].nombre+'</td><td>'+webServicesEvidencia[j].descripcion+'</td><td><a href="'+webServicesEvidencia[j].url+'" download="">Descargar Archivo</a></td><td class="text-center"></td></tr>';
 			<%}%>
 		}
 	}
@@ -6710,7 +6710,6 @@ $("body").on("click", ".guardarEvidencia",function(event){
 	         processData: false,  // tell jQuery not to process the data
 	         contentType: false,   // tell jQuery not to set contentType
 	         success: function(data){
-	               alert(data);
 	               $("#urlEvidencia").val(data);
 	           }
 	     }); 
@@ -6757,10 +6756,10 @@ $("body").on("click", ".guardarEvidencia",function(event){
         			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getEvidencia&avanceId='+avanceId,
         		  	type:'get',
         		  	dataType:'json',
-        		  	async:false       
+        		  	async:false            
         		}).responseText;
         		webServicesEvidencia = JSON.parse(webServicesEvidencia);
-        		
+        		 
         		var cuerpoEvidencia = "";
         		for(var d = 0; d < webServicesEvidencia.length; d++)
         		{
@@ -6769,8 +6768,8 @@ $("body").on("click", ".guardarEvidencia",function(event){
         				<% if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("2")){%>
         				cuerpoEvidencia += '<tr><td><del>'+webServicesEvidencia[d].nombre+'</del></td><td><del>'+webServicesEvidencia[d].descripcion+'</del></td><td><del>'+webServicesEvidencia[d].url+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
         				<% }%>
-        			}else{
-        				cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[d].nombre+'</td><td>'+webServicesEvidencia[d].descripcion+'</td><td>'+webServicesEvidencia[d].url+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+        			}else{ 
+        				cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[d].nombre+'</td><td>'+webServicesEvidencia[d].descripcion+'</td><td><a href="'+webServicesEvidencia[d].url+'" download="">Descargar Archivo</a></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
         			}	
         		}
         		

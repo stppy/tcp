@@ -53,7 +53,7 @@ public class UploadServlet extends HttpServlet {
             
             response.setContentType("text/plain");
         	response.setCharacterEncoding("UTF-8");        
-        	response.getWriter().write(savePath + File.separator + fileName);
+        	response.getWriter().write("/tablero/uploads" + File.separator + fileName);
         }
      
     	private static String getFilename(Part part) {
