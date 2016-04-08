@@ -5,11 +5,6 @@
 	id="WebApp_ID" version="2.5">
 	<display-name>Tab BackEnd</display-name>
 
-	<context-param>
-		<description>Ubicacion donde se guarda los uploads</description>
-		<param-name>file-upload</param-name>
-		<param-value>/home/desarrollo</param-value>
-	</context-param>
 	<!-- Filter to handle logout requests sent directly by the CAS server -->
 	<filter>
 		<filter-name>CAS Single Sign Out Filter</filter-name>
@@ -112,13 +107,12 @@
 
 
 
-	<servlet>
-		<description>ajaxSelects</description>
-		<display-name>ajaxSelects</display-name>
-		<servlet-name>ajaxSelects</servlet-name>
-		<servlet-class>py.gov.stp.tools.ajaxSelects</servlet-class>
-
-   </servlet>
+  <servlet>
+	<description>ajaxSelects</description>
+	<display-name>ajaxSelects</display-name>
+	<servlet-name>ajaxSelects</servlet-name>
+	<servlet-class>py.gov.stp.tools.ajaxSelects</servlet-class>
+  </servlet>
   <servlet>
     <description>ajaxSelects2</description>
     <display-name>ajaxSelects2</display-name>
@@ -193,5 +187,19 @@
     <servlet-name>UploadServlet</servlet-name>
     <url-pattern>/UploadServlet</url-pattern>
   </servlet-mapping>
- 
+  <servlet>
+    <description>Sirve para descargar archivos del servidor</description>
+    <display-name>DownloadServlet</display-name>
+    <servlet-name>DownloadServlet</servlet-name>
+    <servlet-class>py.gov.stp.tools.DownloadServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DownloadServlet</servlet-name>
+    <url-pattern>/DownloadServlet</url-pattern>
+  </servlet-mapping>   
+  <!-- <context-param> 
+    <description>Ubicación donde se almacenan los archivos subidos</description> 
+    <param-name>file-upload</param-name> 
+    <param-value>/usr/share/tomcat/uploads/</param-value> 
+  </context-param> -->
 </web-app>
