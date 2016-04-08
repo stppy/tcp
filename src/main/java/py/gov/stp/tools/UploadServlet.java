@@ -34,8 +34,7 @@ public class UploadServlet extends HttpServlet {
         
         @Override
         protected void doPost(HttpServletRequest request,
-                HttpServletResponse response) throws ServletException, IOException {
-        		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy hh:mm:ss");
+                HttpServletResponse response) throws ServletException, IOException {        		
             // obtiene el path absoluto de la aplicación
             String appPath = "/usr/share/tomcat";
             // construye el path del directorio para guardar el archivo subido
@@ -50,22 +49,22 @@ public class UploadServlet extends HttpServlet {
             Part file = request.getPart("documentoEvidencia");
             String fileName = getFilename(file);
             //InputStream filecontent = file.getInputStream();
-            Calendar calendar = Calendar.getInstance();
-            java.util.Date now = calendar.getTime();
-            java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(now.getTime());
+//            Calendar calendar = Calendar.getInstance();
+//            java.util.Date now = calendar.getTime();
+//            java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(now.getTime());
             
-
+            //Ajustado la Fecha de la subida de archivos de Evidencia a dd_MM_yyyy_HH_mm_ss
             
-//            Date fecha = new Date();
-//            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-//            String fechaStr = sdf.format((fecha)).toString();
+            Date fecha = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd_MM_yyyy_HH_mm_ss_SSS");
+            String fechaStr = (String)sdf.format((fecha));
             
-            file.write(savePath + File.separator +currentTimestamp.toString()+"_"+ fileName);
+            file.write(savePath + File.separator + fechaStr +"_"+ fileName);
 
             response.setContentType("text/plain");
         	response.setCharacterEncoding("UTF-8");        
         	
-        	if(fileName != null) response.getWriter().write(savePath + File.separator +currentTimestamp.toString()+"_"+fileName);
+        	if(fileName != null) response.getWriter().write(savePath + File.separator + fechaStr +"_"+ fileName);
         	else
         		response.getWriter().write("");
         }
