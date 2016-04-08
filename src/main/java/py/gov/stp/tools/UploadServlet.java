@@ -48,23 +48,26 @@ public class UploadServlet extends HttpServlet {
             
             Part file = request.getPart("documentoEvidencia");
             String fileName = getFilename(file);
-            //InputStream filecontent = file.getInputStream();
-//            Calendar calendar = Calendar.getInstance();
-//            java.util.Date now = calendar.getTime();
-//            java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(now.getTime());
             
-            //Ajustado la Fecha de la subida de archivos de Evidencia a dd_MM_yyyy_HH_mm_ss
+            
+            //extrae la extension y el nombre de archivo por separado
+            int dot = fileName.lastIndexOf(".");
+            String fileNameExt = fileName.substring(dot);
+            fileName = fileName.substring(0, dot);            
+            
+            //remplaza cualquier caracter del tipo espacio, puntos y otros por guión bajo.
+            fileName = fileName.replaceAll("\\W","_");                        
             
             Date fecha = new Date();
-            SimpleDateFormat sdf = new SimpleDateFormat("dd_MM_yyyy_HH_mm_ss_SSS");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss_SSS");	
             String fechaStr = (String)sdf.format((fecha));
             
-            file.write(savePath + File.separator + fechaStr +"_"+ fileName);
+            file.write(savePath + File.separator + fechaStr +"_"+ fileName + fileNameExt);
 
             response.setContentType("text/plain");
         	response.setCharacterEncoding("UTF-8");        
         	
-        	if(fileName != null) response.getWriter().write(savePath + File.separator + fechaStr +"_"+ fileName);
+        	if(fileName != null) response.getWriter().write(savePath + File.separator + fechaStr +"_"+ fileName + fileNameExt);
         	else
         		response.getWriter().write("");
         }
