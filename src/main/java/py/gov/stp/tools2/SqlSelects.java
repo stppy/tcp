@@ -243,7 +243,7 @@ public class SqlSelects {
 				objeto.setJustificacion(rs.getString("justificacion"));
 				objeto.setCantidad(rs.getDouble("cantidad"));
 				objeto.setFechaEntrega(rs.getString("fecha_entrega"));
-				objeto.setCantidadBeneficiarios(rs.getInt("cantidad_beneficiarios"));
+				//objeto.setCantidadBeneficiarios(rs.getInt("cantidad_beneficiarios"));
 				objeto.setActividadId(rs.getInt("actividad_id"));
 				objeto.setVersion(rs.getInt("version"));
 				objeto.setBorrado(rs.getBoolean("borrado"));

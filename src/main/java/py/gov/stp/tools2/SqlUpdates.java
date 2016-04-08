@@ -1101,7 +1101,7 @@ public static boolean borradoHito(Hito objeto){
 		 if(objeto.getJustificacion()!=null)					query+= "justificacion='"+objeto.getJustificacion()+"'";
 		 if(objeto.getCantidad()!=0)							query+= ", cantidad='"+objeto.getCantidad()+"'";
 		 if(objeto.getFechaEntrega()!=null)						query+= ", fecha_entrega='"+objeto.getFechaEntrega()+"'";
-		 if(objeto.getCantidadBeneficiarios()!=0)				query+= ", cantidad_beneficiarios='"+objeto.getCantidadBeneficiarios()+"'";	
+//		 if(objeto.getCantidadBeneficiarios()!=0)				query+= ", cantidad_beneficiarios='"+objeto.getCantidadBeneficiarios()+"'";	
 		 if(objeto.getActividadId()!=0)							query+= ", actividad_id='"+objeto.getActividadId()+"'";
 		 if(objeto.getVersion()!=0)								query+= ", version='"+objeto.getVersion()+"'";
 

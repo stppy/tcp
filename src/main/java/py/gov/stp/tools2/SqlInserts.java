@@ -697,8 +697,8 @@ public class SqlInserts {
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into avance (justificacion,cantidad,fecha_entrega,cantidad_beneficiarios,actividad_id,version)"
-	+ " values (?, ?, ?, ?, ?, ?)";
+		String query = " insert into avance (justificacion,cantidad,fecha_entrega,actividad_id,version)"
+	+ " values (?, ?, ?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
@@ -710,7 +710,7 @@ public class SqlInserts {
 		insert.setString (1, avance.getJustificacion());
 		insert.setDouble (2, avance.getCantidad());
 		insert.setDate (3, sqlStart); 
-		insert.setInt (4, avance.getCantidadBeneficiarios());
+		//insert.setInt (4, avance.getCantidadBeneficiarios());
 		insert.setInt (5, avance.getActividadId());
 		insert.setInt (6, avance.getVersion());
 		
