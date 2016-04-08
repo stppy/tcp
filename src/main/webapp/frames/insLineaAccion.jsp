@@ -7019,7 +7019,7 @@ $("body").on("click", ".editarEvidencia",function(event){
 	objeto.id = evidenciaId;
 	objeto.nombre = nombre;
 	objeto.url = url;
-	if (urlDocumento != null) objeto.urlDocumento = urlDocumento;
+	if (urlDocumento != null && urlDocumento != "") objeto.urlDocumento = urlDocumento;
 	objeto.descripcion = descripcion;
 	objeto.wsId = wsId;
 	objeto.version = version;

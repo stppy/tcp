@@ -64,7 +64,10 @@ public class UploadServlet extends HttpServlet {
 
             response.setContentType("text/plain");
         	response.setCharacterEncoding("UTF-8");        
-        	response.getWriter().write(savePath + File.separator +currentTimestamp.toString()+"_"+fileName);
+        	
+        	if(fileName != null) response.getWriter().write(savePath + File.separator +currentTimestamp.toString()+"_"+fileName);
+        	else
+        		response.getWriter().write("");
         }
      
     	private static String getFilename(Part part) {
