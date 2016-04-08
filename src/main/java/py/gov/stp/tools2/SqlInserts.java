@@ -822,5 +822,31 @@ public class SqlInserts {
 		} catch (SQLException e) {e.printStackTrace(); return false;}
 		
 	}	
+	
+	public static boolean insertAvanceCualitativo(AvanceCualitativo avanceCualitativo)throws ParseException{
+		try {
+			Connection conn=ConnectionConfiguration.conectar();
+
+			String query = " insert into avance_cualitativo (accion_catalogo_id, ins_linea_accion_id, trimestre_id, gestiones_realizadas, principales_logros_alcanzados, dificultades_lecciones_aprendidas, objetivos_del_siguiente_trimestre)"
+		+ " values (?, ?, ?, ?, ?, ?, ?)";
+			
+			PreparedStatement insert = conn.prepareStatement(query);
+			
+			insert.setInt (1, avanceCualitativo.getAccionCatalogoId());
+			insert.setInt (2, avanceCualitativo.getInsLineaAccionId());
+			insert.setInt (3, avanceCualitativo.getTrimestreId());
+			insert.setString (4, avanceCualitativo.getGestionesRealizadas());
+			insert.setString (5, avanceCualitativo.getPrincipalesLogrosAlcanzados());
+			insert.setString (6, avanceCualitativo.getDificultadesLeccionesAprendidas());
+			insert.setString (7, avanceCualitativo.getObjetivosTrimestre());
+			
+			insert.execute();
+			   
+			conn.close();
+			return true;
+		} catch (SQLException e) {e.printStackTrace(); return false;}
+		
+	}	
+	
 		
 }

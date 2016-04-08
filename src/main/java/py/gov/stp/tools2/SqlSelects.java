@@ -1386,6 +1386,69 @@ public class SqlSelects {
 				if (conect != null) {conect.close();}
 			}
 			return objetos; 
+	  }
+	
+	public static List<Trimestre> selectTrimestre(String condition) throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+			 String query = " SELECT * from trimestre "+condition;
+			 
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 List<Trimestre> objetos = new ArrayList<Trimestre>();
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					Trimestre objeto = new Trimestre();
+					objeto.setId(rs.getInt("id"));
+					objeto.setNumero(rs.getInt("nro"));
+					objeto.setAnho(rs.getString("anho"));
+					objeto.setDescripcion(rs.getString("descripcion"));
+					
+					objetos.add(objeto);
+				}
+			}
+			catch (SQLException e) {e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos; 
+	  }	
+	
+	public static List<AvanceCualitativo> selectAvanceCualitativo(String condition) throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+			 String query = " SELECT * from avance_cualitativo "+condition;
+			 
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 List<AvanceCualitativo> objetos = new ArrayList<AvanceCualitativo>();
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					AvanceCualitativo objeto = new AvanceCualitativo();
+					objeto.setId(rs.getInt("id"));
+					objeto.setAccionCatalogoId(rs.getInt("accion_catalogo_id"));
+					objeto.setInsLineaAccionId(rs.getInt("ins_linea_accion_id"));
+					objeto.setTrimestreId(rs.getInt("trimestre_id"));
+					objeto.setGestionesRealizadas(rs.getString("gestiones_realizadas"));
+					objeto.setPrincipalesLogrosAlcanzados(rs.getString("principales_logros_alcanzados"));
+					objeto.setDificultadesLeccionesAprendidas(rs.getString("dificultades_lecciones_aprendidas"));
+					objeto.setObjetivosTrimestre(rs.getString("objetivos_del_siguiente_trimestre"));
+					objeto.setBorrado(rs.getBoolean("borrado"));
+					
+					objetos.add(objeto);
+				}
+			}
+			catch (SQLException e) {e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos; 
 	  }	
 
 }
