@@ -5583,9 +5583,9 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 			<%}%>
 		}else{
 			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>
-				cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[j].nombre+'</td><td>'+webServicesEvidencia[j].descripcion+'</td><td><a href="'+webServicesEvidencia[j].url+'" download="" >Descargar Archivo</a></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+				cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[j].nombre+'</td><td>'+webServicesEvidencia[j].descripcion+'</td><td>"'+webServicesEvidencia[j].url+'"</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-trash"></span></button></td></tr>';
 			<%} if (attributes.get("role_id").toString().equals("3")){%>
-				cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[j].nombre+'</td><td>'+webServicesEvidencia[j].descripcion+'</td><td><a href="'+webServicesEvidencia[j].url+'" download="">Descargar Archivo</a></td><td class="text-center"></td></tr>';
+				cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[j].nombre+'</td><td>'+webServicesEvidencia[j].descripcion+'</td><td>"'+webServicesEvidencia[j].url+'"</td><td class="text-center"></td></tr>';
 			<%}%>
 		}
 	}
@@ -6737,6 +6737,7 @@ $("body").on("click", ".guardarEvidencia",function(event){
 	
 	objeto.nombre = nombre;
 	objeto.url = url;
+	objeto.urlDocumento = urlDocumento;
 	objeto.descripcion = descripcion;
 	objeto.wsId = wsId;
 	objeto.version = version;
@@ -6950,7 +6951,7 @@ $("body").on("click", ".consultaEditarEvidencia",function(event){
 						'								<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" value="'+webServicesEvidencia[0].nombre+'" /></td><td><label for="urlEvidencia">Url</label><input type="url" id="urlEvidencia" class="form-control" value="'+webServicesEvidencia[0].url+'" /></td></tr>'+
 						'								<tr><td colspan="2"><label for="descripcionEvidencia">Descripción</label><input type="text" id="descripcionEvidencia" class="form-control" value="'+webServicesEvidencia[0].descripcion+'" /></td></tr>'+
 						'								<input type="hidden" id="wsIdEvidencia" value='+webServicesEvidencia[0].wsId+' /><input type="hidden" id="versionEvidencia" value='+webServicesEvidencia[0].version+' /><input type="hidden" id="avanceIdEvidencia" value='+webServicesEvidencia[0].avanceId+' />'+
-						'								<input type="hidden" id="urlDocEvidencia" value='+webServicesEvidencia[0].urlDocumento+' />'+														
+						'								<input type="hidden" id="urlDocEvidencia" />'+														
 						'			      			</form>	'+												
 						'							<form method="post" enctype="multipart/form-data">'+ 
 						'								<tr><td><label for="documentoEvidencia">Adjuntar Documento</label><input type="file" id="documentoEvidencia" name="documentoEvidencia" size="50" value='+webServicesEvidencia[0].urlDocumento+'/></td></tr>'+
@@ -6993,7 +6994,7 @@ $("body").on("click", ".editarEvidencia",function(event){
 	         processData: false,  // tell jQuery not to process the data
 	         contentType: false,   // tell jQuery not to set contentType
 	         success: function(data){
-	               $("#urlEvidencia").val(data);
+	               $("#urlDocEvidencia").val(data);
 	           }
 	     }); 
 
@@ -7018,6 +7019,7 @@ $("body").on("click", ".editarEvidencia",function(event){
 	objeto.id = evidenciaId;
 	objeto.nombre = nombre;
 	objeto.url = url;
+	if (urlDocumento != null) objeto.urlDocumento = urlDocumento;
 	objeto.descripcion = descripcion;
 	objeto.wsId = wsId;
 	objeto.version = version;
