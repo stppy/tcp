@@ -490,5 +490,25 @@ public class ajaxInserts  extends HttpServlet {
     	}
        } 
         
+        if (accion!=null && accion!=""){
+    	if (accion.equals("insAvanceCualitativo")){
+    		AvanceCualitativo objeto = new AvanceCualitativo();
+    		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+            String json = "";
+            if(br != null){ json = br.readLine();}
+            //Gson gsonInsert = new Gson();
+            Gson gsonInsert = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();            
+            objeto=gsonInsert.fromJson(json, AvanceCualitativo.class);
+			try {
+				boolean status = SqlInserts.insertAvanceCualitativo(objeto);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
+       }
+        
     }
 }
