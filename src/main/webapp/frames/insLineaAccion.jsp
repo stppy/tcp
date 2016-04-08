@@ -5937,7 +5937,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
  									'													<tr><td colspan="2"><label for="documentoEvidencia">Adjuntar Documento</label><input type="file" id="documentoEvidencia" name="documentoEvidencia" /><div id="progress" class="progress">'+
         							'														<div class="bar" style="width: 0%;"></div></div></td></tr>'+ 
 									'													<input type="hidden" id="wsIdEvidencia" value="1" /><input type="hidden" id="versionEvidencia" value="3"/><input type="hidden" id="avanceIdEvidencia" value="'+avanceId+'"/>'+
-									'													<input type="hidden" id="urlDocEvidencia" />'+
+									'													<input type="hidden" id="urlDocEvidencia" value="" />'+
 									'		      									</form>	'+
 									'											</tbody>'+
 									'										</table>'+
@@ -6700,24 +6700,27 @@ $("body").on("click", ".guardarEvidencia",function(event){
 	
 	var docEvidenciaFile = document.getElementById("documentoEvidencia").files[0];
     
-    var formdata = new FormData();
-    formdata.append('documentoEvidencia', docEvidenciaFile);
-    
-     $.ajax({
-	         type: "POST",
-	         url: "/tablero/UploadServlet", /* contextPath + servletPath, */
-	         data: formdata, /* + $('#custIdList').val(), */
-	         async: false,
-	         processData: false,  // tell jQuery not to process the data
-	         contentType: false,   // tell jQuery not to set contentType
-	         success: function(data){
-	               $("#urlDocEvidencia").val(data);
-	           }
-	     }); 
+	if (docEvidenciaFile != undefined){
+	    var formdata = new FormData();
+	    formdata.append('documentoEvidencia', docEvidenciaFile);
+	    
+	     $.ajax({
+		         type: "POST",
+		         url: "/tablero/UploadServlet", /* contextPath + servletPath, */
+		         data: formdata, /* + $('#custIdList').val(), */
+		         async: false,
+		         processData: false,  // tell jQuery not to process the data
+		         contentType: false,   // tell jQuery not to set contentType
+		         success: function(data){
+		               $("#urlDocEvidencia").val(data);
+		           }
+		     });
+	}
 
 	var nombre = $("#nombreEvidencia").val();
 	var url = $("#urlEvidencia").val();
-	var urlDocumento = $("#urlDocEvidencia").val();
+	var urlDocumento; 
+		if (docEvidenciaFile != undefined) urlDocumento = $("#urlDocEvidencia").val();
 	var descripcion = $("#descripcionEvidencia").val();
 	var wsId = $("#wsIdEvidencia").val();
 	var version = $("#versionEvidencia").val();
@@ -6951,7 +6954,7 @@ $("body").on("click", ".consultaEditarEvidencia",function(event){
 						'								<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" value="'+webServicesEvidencia[0].nombre+'" /></td><td><label for="urlEvidencia">Url</label><input type="url" id="urlEvidencia" class="form-control" value="'+webServicesEvidencia[0].url+'" /></td></tr>'+
 						'								<tr><td colspan="2"><label for="descripcionEvidencia">Descripción</label><input type="text" id="descripcionEvidencia" class="form-control" value="'+webServicesEvidencia[0].descripcion+'" /></td></tr>'+
 						'								<input type="hidden" id="wsIdEvidencia" value='+webServicesEvidencia[0].wsId+' /><input type="hidden" id="versionEvidencia" value='+webServicesEvidencia[0].version+' /><input type="hidden" id="avanceIdEvidencia" value='+webServicesEvidencia[0].avanceId+' />'+
-						'								<input type="hidden" id="urlDocEvidencia" />'+														
+						'								<input type="hidden" id="urlDocEvidencia" value="" />'+														
 						'			      			</form>	'+												
 						'							<form method="post" enctype="multipart/form-data">'+ 
 						'								<tr><td><label for="documentoEvidencia">Adjuntar Documento</label><input type="file" id="documentoEvidencia" name="documentoEvidencia" size="50" value='+webServicesEvidencia[0].urlDocumento+'/></td></tr>'+
@@ -6983,24 +6986,27 @@ $("body").on("click", ".editarEvidencia",function(event){
 	
 	var docEvidenciaFile = document.getElementById("documentoEvidencia").files[0];
     
-    var formdata = new FormData();
-    formdata.append('documentoEvidencia', docEvidenciaFile);
-    
-     $.ajax({
-	         type: "POST",
-	         url: "/tablero/UploadServlet", /* contextPath + servletPath, */
-	         data: formdata, /* + $('#custIdList').val(), */
-	         async: false,
-	         processData: false,  // tell jQuery not to process the data
-	         contentType: false,   // tell jQuery not to set contentType
-	         success: function(data){
-	               $("#urlDocEvidencia").val(data);
-	           }
-	     }); 
-
+	if (docEvidenciaFile != undefined){
+	    var formdata = new FormData();
+	    formdata.append('documentoEvidencia', docEvidenciaFile);
+	    
+	     $.ajax({
+		         type: "POST",
+		         url: "/tablero/UploadServlet", /* contextPath + servletPath, */
+		         data: formdata, /* + $('#custIdList').val(), */
+		         async: false,
+		         processData: false,  // tell jQuery not to process the data
+		         contentType: false,   // tell jQuery not to set contentType
+		         success: function(data){
+		               $("#urlDocEvidencia").val(data);
+		           }
+		     }); 
+	}
+	     
 	var nombre = $("#nombreEvidencia").val();
 	var url = $("#urlEvidencia").val();
-	var urlDocumento = $("#urlDocEvidencia").val();
+	var urlDocumento; 
+		if (docEvidenciaFile != undefined) urlDocumento = $("#urlDocEvidencia").val();
 	var descripcion = $("#descripcionEvidencia").val();
 	var wsId = $("#wsIdEvidencia").val();
 	var version = $("#versionEvidencia").val();
