@@ -1,6 +1,7 @@
 package py.gov.stp.tools2;
 import py.gov.stp.objetosV2.*;
 
+import java.io.File;
 import java.sql.Connection;
 
 import py.gov.stp.tools2.ConnectionConfiguration;
@@ -930,7 +931,8 @@ public class SqlSelects {
 					objeto.setVersion(rs.getInt("version"));
 					objeto.setBorrado(rs.getBoolean("borrado"));
 					objeto.setAvanceId(rs.getInt("avance_id"));
-					objeto.setUrlDocumento(rs.getString("url_documento"));
+					// se envia solo el nombre del archivo de url_documento
+					objeto.setUrlDocumento(getFileName(rs.getString("url_documento")));
 					
 					objetos.add(objeto);
 				}
@@ -941,7 +943,15 @@ public class SqlSelects {
 				if (conect != null) {conect.close();}
 			}
 			return objetos; 
-	  }	
+	  }
+	public static String getFileName (String fullPath){
+		String fileName = null;
+		if (fullPath != null){
+			int index = fullPath.lastIndexOf(File.separator);
+			fileName = fullPath.substring(index + 1);
+		}
+		return fileName;
+	}
 	public static List<WsTipo> selectWsTipo() throws SQLException{
 	   	 Connection conect=ConnectionConfiguration.conectar();
 			 String query = " select * from ws_tipo";

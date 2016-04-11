@@ -21,32 +21,24 @@ import javax.servlet.http.Part;
 @MultipartConfig(maxFileSize=1024*1024*15,      // 15MB
 				 maxRequestSize=1024*1024*50)   // 50MB		
 public class UploadServlet extends HttpServlet {	                
-		private static final long serialVersionUID = 1L;
-		
-		/**
-         * Nombre del directorio donde se subirán los archivos, relativo al 
-         * directorio de la aplicación web.
-         */
-        private static final String SAVE_DIR = "uploads";
+		private static final long serialVersionUID = 1L;		       
          
         /**
          * Gestiona la subida de archivos
-         */
-        
+         */        
         @Override
         protected void doPost(HttpServletRequest request,
                 HttpServletResponse response) throws ServletException, IOException {        		
-            // obtiene el path absoluto de la aplicación
-            String appPath = "/usr/share/tomcat";
-            // construye el path del directorio para guardar el archivo subido
-            String savePath = appPath + File.separator + SAVE_DIR;
+            //obtiene el path relativo de subida de archivos de la aplicación
+            String savePath = getServletContext().getInitParameter("file-upload"); 
              
-            // creates the save directory if it does not exists
+            // crea la carpeta donde se guardaran los archivos si no existe
             File fileSaveDir = new File(savePath);
             if (!fileSaveDir.exists()) {
                 fileSaveDir.mkdir();
             }
             
+            //Obtiene el archivo desde la petición
             Part file = request.getPart("documentoEvidencia");
             String fileName = getFilename(file);
             

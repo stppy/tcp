@@ -20,8 +20,8 @@ public class DownloadServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
 		 // lee el archivo del path absoluto
-		String filePath = request.getParameter("urlDocumento");
-//	    String filePath = "/usr/share/tomcat/uploads/ips_marzo.pdf";
+//	    String filePath = getServletContext().getInitParameter("file-upload") + request.getParameter("urlDocumento");
+	    String filePath = getServletContext().getInitParameter("file-upload") + File.separator + request.getParameter("urlDocumento");
 	    File downloadFile = new File(filePath);
 	    FileInputStream inStream = new FileInputStream(downloadFile);
 	     

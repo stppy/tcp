@@ -5791,7 +5791,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'												<tbody>'+
 									'			      									<form class="form-horizontal" role="form">'+
 									'													<tr><td><label for="tipoBeneficiario">Tipo</label><select id="beneficiarioTipo" class="form-control">'+optionBeneficiarioTipo+'</select></td><td><label for="grupoBeneficiario">Grupo</label><select id="grupoBeneficiario" class="form-control"></select></td></tr>'+
-									'													<tr><td><label for="cantidadBeneficiario">Cantidad</label><input type="number" id="cantidadBeneficiario" class="form-control" placeholder="Ingrese una Cantidad" /></td><td><label for="descripcionBeneficiario">Descripción</label><input type="text" id="descripcionBeneficiario" class="form-control" placeholder="Ingrese Objeto una Descripción" /></td></tr>'+																		
+									'													<tr><td><label for="cantidadBeneficiario">Cantidad</label><input type="number" id="cantidadBeneficiario" class="form-control" placeholder="Ingrese una Cantidad" /></td><td><label for="descripcionBeneficiario">Descripción</label><input type="text" id="descripcionBeneficiario" class="form-control" placeholder="Ingrese Objeto una Descripción" /></td></tr>'+
 									'													<input type="hidden" id="avanceIdBeneficiario" value="'+avanceId+'"/>'+		
 									'			      									</form>	'+				
 									'												</tbody>'+
@@ -5959,7 +5959,11 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'													<tr><td colspan="2"><label for="descripcionEvidencia">Descripción</label><input type="text" id="descripcionEvidencia" class="form-control" placeholder="Ingrese Descripción" /></td></tr>'+
  									'													<tr><td><label for="documentoEvidencia">Adjuntar Documento</label><input type="file" id="documentoEvidencia" name="documentoEvidencia" /><div id="progress" class="progress">'+
         							'														<div  class="bar" style="width: 0%;"></div></div></td></tr>'+
-									'													<input type="hidden" id="wsIdEvidencia" value="1" /><input type="hidden" id="versionEvidencia" value="3"/><input type="hidden" id="avanceIdEvidencia" value="'+avanceId+'"/>'+
+        							/* '													<tr><td><label>Ingresar localización de la evidencia:</label></td></tr>'+
+        							'												    <tr><td colspan="2"><input id="geoloc1" type="text" value="" size="20" /></td></tr>'+	
+									'													<tr><td><input id="geolat" type="text" value="" size="20" /></td></tr>'+
+									'													<tr><td><input id="geolng" type="text" value="" size="20" /></td></tr>'+ */									
+        							'													<input type="hidden" id="wsIdEvidencia" value="1" /><input type="hidden" id="versionEvidencia" value="3"/><input type="hidden" id="avanceIdEvidencia" value="'+avanceId+'"/>'+
 									'													<input type="hidden" id="urlDocEvidencia" value="" />'+
 									'		      									</form>	'+
 									'											</tbody>'+
@@ -6032,6 +6036,23 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	
 
 });	
+
+
+/* $('#geoloc1').leafletLocationPicker({
+		locationSep: ' - '
+	})
+	.on('show', function(e) {
+		$(this).siblings('em').text('click on map for insert the location');
+	})
+	.on('hide', function(e) {
+		$(this).siblings('em').text('');
+	}) 
+	.on('changeLocation', function(e) {
+		$(this)
+		.siblings('#geolat').val( e.latlng.lat )
+		.siblings('#geolng').val( e.latlng.lng );	
+	}); */
+
 
 $("body").on("change", "#productoObjetoGasto",function(event){
 	//var departamentoId = $(this).attr("parametro");
@@ -6954,6 +6975,10 @@ $("body").on("click", ".consultaEditarEvidencia",function(event){
 						'			      			<form class="form-horizontal" role="form">'+
 						'								<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" value="'+webServicesEvidencia[0].nombre+'" /></td><td><label for="urlEvidencia">Url</label><input type="url" id="urlEvidencia" class="form-control" value="'+webServicesEvidencia[0].url+'" /></td></tr>'+
 						'								<tr><td colspan="2"><label for="descripcionEvidencia">Descripción</label><input type="text" id="descripcionEvidencia" class="form-control" value="'+webServicesEvidencia[0].descripcion+'" /></td></tr>'+
+						/* '								<tr><td><label>Ingresar localización de la evidencia:</label></td></tr>'+
+						'								<tr><td><input id="geoloc1" type="text" value="" size="20" /></td></tr>'+	
+						'								<tr><td><input id="geolat" type="text" value="" size="20" /></td></tr>'+
+						'								<tr><td><input id="geolng" type="text" value="" size="20" /></td></tr>'+						 */
 						'								<input type="hidden" id="wsIdEvidencia" value='+webServicesEvidencia[0].wsId+' /><input type="hidden" id="versionEvidencia" value='+webServicesEvidencia[0].version+' /><input type="hidden" id="avanceIdEvidencia" value='+webServicesEvidencia[0].avanceId+' />'+
 						'								<input type="hidden" id="urlDocEvidencia" value="" />'+														
 						'			      			</form>	'+												
@@ -8700,4 +8725,4 @@ function listaAvanceCualitativo(insLineaAccionId){
 }
 
 
-</script>	
+</script>
