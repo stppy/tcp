@@ -5945,7 +5945,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'													<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" placeholder="Ingrese Nombre" /></td><td><label for="urlEvidencia">Url</label><input type="url" id="urlEvidencia" class="form-control" placeholder="Ingrese Url" /></td></tr>'+
 									'													<tr><td colspan="2"><label for="descripcionEvidencia">Descripción</label><input type="text" id="descripcionEvidencia" class="form-control" placeholder="Ingrese Descripción" /></td></tr>'+
  									'													<tr><td><label for="documentoEvidencia">Adjuntar Documento</label><input type="file" id="documentoEvidencia" name="documentoEvidencia" /><div id="progress" class="progress">'+
-        							'														<div class="bar" style="width: 0%;"></div></div></td><td><div class="form-group"><label for="adjuntarArchivoExistenteEvidencia">Seleccionar Archivo Existente</label><select id="adjuntarArchivoExistenteEvidencia" class="form-control">'+optionArchivoExistente+'</select></div></td></tr>'+
+        							'														<div  class="bar" style="width: 0%;"></div></div></td></tr>'+
 									'													<input type="hidden" id="wsIdEvidencia" value="1" /><input type="hidden" id="versionEvidencia" value="3"/><input type="hidden" id="avanceIdEvidencia" value="'+avanceId+'"/>'+
 									'													<input type="hidden" id="urlDocEvidencia" value="" />'+
 									'		      									</form>	'+
@@ -8614,7 +8614,7 @@ $("body").on("click", ".guardarAvanceCualitatitvo",function(event){
         //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
         error: function(data,status,er) {
         	}
-	 });
+	 });adjuntarArchivoExistenteEvidencia
 
     
 });	
