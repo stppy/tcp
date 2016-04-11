@@ -29,6 +29,7 @@ import objetos.LineaAccionDepartamento;
 import objetos.LineaAccionDistrito;
 import objetos.MetasDistEntLinea;
 import py.gov.stp.objetosV2.AccionHasProducto;
+import py.gov.stp.objetosV2.ProductoObjetoGasto;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -1010,7 +1011,35 @@ public class SqlSelects {
 			}
 			return objetos;
 	  }	
+	
+    public static List<ProductoObjetoGasto> selectObjetoGastoCosto(String condicion)throws SQLException{
+    	Connection conect=ConnectionConfiguration.conectarSpr();
 
+    	String query = " select distinct objeto_gasto from asignacion_presi "+condicion+" and anho = 2016 and version = 150";
+
+    	Statement statement = null;
+    	ResultSet rs=null;
+    	List<ProductoObjetoGasto> objetos = new ArrayList<ProductoObjetoGasto>();
+
+    	try {
+	    	statement = conect.createStatement();
+	    	rs=statement.executeQuery(query);
+
+	    	while(rs.next()){
+	    		
+	    		ProductoObjetoGasto objeto = new ProductoObjetoGasto();
+					objeto.setCodigoObjetoGasto(rs.getInt("objeto_gasto"));
+					objetos.add(objeto);
+		    	}
+	    	}
+	    	catch (SQLException e) {e.printStackTrace();}
+	    	finally{
+	
+		    	if (statement != null) {statement.close();}
+		    	if (conect != null) {conect.close();}
+	    	}
+	    	return objetos;
+    	}
 //    public static List<ProyectoSNIP> selectProyectoSnip(String condition) throws SQLException{
 //     	 Connection conect=ConnectionConfiguration.conectar();
 //  		 String query = " select * from proyecto_snip "+condition;

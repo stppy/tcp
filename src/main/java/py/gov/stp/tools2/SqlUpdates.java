@@ -563,6 +563,7 @@ public static boolean borradoHito(Hito objeto){
 					 if(objeto.getDescripcion()!=null)			query+= ", descripcion='"+objeto.getDescripcion()+"'";
 					 if(objeto.getWsId()!=0)					query+= ", ws_id="+objeto.getWsId()+"";
 					 if(objeto.getUrl()!=null)					query+= ", url='"+objeto.getUrl()+"'";
+					 if(objeto.getUrlDocumento()!=null)			query+= ", url_documento='"+objeto.getUrlDocumento()+"'";
 					 if(objeto.getVersion()!=0l)				query+= ", version="+objeto.getVersion()+"";
 
 					 //if(objeto.isBorrado()!=false)			query+= "borrado=\""+objeto.isBorrado()+"\"";	
@@ -1101,7 +1102,7 @@ public static boolean borradoHito(Hito objeto){
 		 if(objeto.getJustificacion()!=null)					query+= "justificacion='"+objeto.getJustificacion()+"'";
 		 if(objeto.getCantidad()!=0)							query+= ", cantidad='"+objeto.getCantidad()+"'";
 		 if(objeto.getFechaEntrega()!=null)						query+= ", fecha_entrega='"+objeto.getFechaEntrega()+"'";
-		 if(objeto.getCantidadBeneficiarios()!=0)				query+= ", cantidad_beneficiarios='"+objeto.getCantidadBeneficiarios()+"'";	
+//		 if(objeto.getCantidadBeneficiarios()!=0)				query+= ", cantidad_beneficiarios='"+objeto.getCantidadBeneficiarios()+"'";	
 		 if(objeto.getActividadId()!=0)							query+= ", actividad_id='"+objeto.getActividadId()+"'";
 		 if(objeto.getVersion()!=0)								query+= ", version='"+objeto.getVersion()+"'";
 

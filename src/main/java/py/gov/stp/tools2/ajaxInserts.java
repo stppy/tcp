@@ -177,18 +177,47 @@ public class ajaxInserts  extends HttpServlet {
     	}
        }
         if (accion!=null && accion!=""){
-    	if (accion.equals("insEvidencia")){
-    		Evidencia productoObj = new Evidencia();
-    		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
-            String json = "";
-            if(br != null){ json = br.readLine();}
-            Gson gsonInsert = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-            productoObj=gsonInsert.fromJson(json, Evidencia.class);
-			boolean status = SqlInserts.insertEvidencia(productoObj);
-    		myObj.addProperty("success", status);
-    		out.println(myObj.toString());
-    	}
-       }
+	    	if (accion.equals("insEvidencia")){
+	    		Evidencia productoObj = new Evidencia();
+	    		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+	            String json = "";
+	            if(br != null){ json = br.readLine();}
+	            Gson gsonInsert = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+	            productoObj=gsonInsert.fromJson(json, Evidencia.class);
+				int idEvidencia = SqlInserts.insertEvidencia(productoObj);			
+	    		if (idEvidencia >= 0){ 
+	    			myObj.addProperty("success", true);
+	    			myObj.addProperty("idEvidencia",idEvidencia);
+	    		} else {
+	    			myObj.addProperty("success", false);
+	    		}	    		
+	    		out.println(myObj.toString());
+	    	}
+        }
+        if (accion!=null && accion!=""){
+        	if (accion.equals("insEvidenciaHasDocumento")){
+        		EvidenciaHasDocumento objeto = new EvidenciaHasDocumento();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                objeto=gsonInsert.fromJson(json, EvidenciaHasDocumento.class);
+    			SqlInserts.insertEvidenciaHasDocumento(objeto);
+        	}
+        }
+        if (accion!=null && accion!=""){
+        	if (accion.equals("insDocumento")){
+        		Documento objeto = new Documento();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+                objeto=gsonInsert.fromJson(json, Documento.class);
+    			boolean status = SqlInserts.insertDocumento(objeto);			
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	}
+        }
         if (accion!=null && accion!=""){
     	if (accion.equals("insGeoPoligono")){
     		GeoPoligono productoObj = new GeoPoligono();
@@ -460,6 +489,26 @@ public class ajaxInserts  extends HttpServlet {
     		out.println(myObj.toString());
     	}
        } 
+        
+        if (accion!=null && accion!=""){
+    	if (accion.equals("insAvanceCualitativo")){
+    		AvanceCualitativo objeto = new AvanceCualitativo();
+    		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+            String json = "";
+            if(br != null){ json = br.readLine();}
+            //Gson gsonInsert = new Gson();
+            Gson gsonInsert = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();            
+            objeto=gsonInsert.fromJson(json, AvanceCualitativo.class);
+			try {
+				boolean status = SqlInserts.insertAvanceCualitativo(objeto);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
+       }
         
     }
 }

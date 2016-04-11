@@ -363,29 +363,83 @@ public class SqlInserts {
 	} catch (SQLException e) {e.printStackTrace();}
 		
 }
-	public static boolean insertEvidencia(Evidencia evidencia){
-	try {
-		Connection conn=ConnectionConfiguration.conectar();
-	   	
-		String query = " insert into evidencia (nombre,descripcion,url,ws_id,version,avance_id)"
-	+ " values (?, ?, ?, ?, ?, ?)";
+	public static int insertEvidencia(Evidencia evidencia){
+		try {
+			Connection conn=ConnectionConfiguration.conectar();
+		   	
+			String query = " insert into evidencia (nombre,descripcion,url,ws_id,version,avance_id, url_documento)"
+		+ " values (?, ?, ?, ?, ?, ?, ?)";
+			
+			PreparedStatement insert = conn.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
+			
+			insert.setString (1, evidencia.getNombre());
+			insert.setString (2, evidencia.getDescripcion());
+			insert.setString (3, evidencia.getUrl());
+			insert.setInt (4, evidencia.getWsId());
+			insert.setInt (5, evidencia.getVersion());
+			insert.setInt (6, evidencia.getAvanceId());
+			insert.setString (7, evidencia.getUrlDocumento());
+								
+			insert.execute();
+			   
+			/*try (ResultSet generatedKeys = insert.getGeneratedKeys()) {
+	            if (generatedKeys.next()) {
+	                evidencia.setId(generatedKeys.getInt(1));
+	            }
+	            else {
+	            	return -1;
+	            }
+	        }*/
+			
+			conn.close();
+			return 1;
+		} catch (SQLException e) {e.printStackTrace(); return -1;}
+			
+	}
+	public static boolean insertEvidenciaHasDocumento(EvidenciaHasDocumento evidenciaHasDocumento){
 		
-		PreparedStatement insert = conn.prepareStatement(query);
+		try {
+			Connection conn=ConnectionConfiguration.conectar();		  		
+			
+			String query = " insert into evidencia_has_documento (evidencia_id, documento_id)"
+						 	+ " values (?, ?)";
+			
+			PreparedStatement insert = conn.prepareStatement(query);
+			
+			insert.setInt (1, evidenciaHasDocumento.getEvidenciaId());
+			insert.setInt (2, evidenciaHasDocumento.getDocumentoId());				
+								
+			insert.execute();
+			   
+			conn.close();
+			return true;
+		} catch (SQLException e) {e.printStackTrace(); return false;}
 		
-		insert.setString (1, evidencia.getNombre());
-		insert.setString (2, evidencia.getDescripcion());
-		insert.setString (3, evidencia.getUrl());
-		insert.setInt (4, evidencia.getWsId());
-		insert.setInt (5, evidencia.getVersion());
-		insert.setInt (6, evidencia.getAvanceId());
-							
-		insert.execute();
-		   
-		conn.close();
-		return true;
-	} catch (SQLException e) {e.printStackTrace(); return false;}
-		
-}
+	}	
+	public static boolean insertDocumento(Documento documento){
+		try {
+			Connection conn=ConnectionConfiguration.conectar();		  		
+			
+			
+			String query = " insert into documento (nombre, descripcion, url)"
+						    + " values (?, ?, ?)";
+			
+			PreparedStatement insert = conn.prepareStatement(query);	
+			
+			insert.setString (1, documento.getNombre());
+			insert.setString (2, documento.getDescripcion());
+			insert.setString (3, documento.getUrl());			
+								
+			insert.execute();			
+			   
+			conn.close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace(); 
+			return false;
+		}
+			
+	}
 	public static void insertAccionHasEtiqueta(AccionHasEtiqueta accionHasEtiqueta){
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
@@ -697,8 +751,8 @@ public class SqlInserts {
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into avance (justificacion,cantidad,fecha_entrega,cantidad_beneficiarios,actividad_id,version)"
-	+ " values (?, ?, ?, ?, ?, ?)";
+		String query = " insert into avance (justificacion,cantidad,fecha_entrega,actividad_id,version)"
+	+ " values (?, ?, ?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
@@ -710,7 +764,7 @@ public class SqlInserts {
 		insert.setString (1, avance.getJustificacion());
 		insert.setDouble (2, avance.getCantidad());
 		insert.setDate (3, sqlStart); 
-		insert.setInt (4, avance.getCantidadBeneficiarios());
+		//insert.setInt (4, avance.getCantidadBeneficiarios());
 		insert.setInt (5, avance.getActividadId());
 		insert.setInt (6, avance.getVersion());
 		
@@ -726,7 +780,7 @@ public class SqlInserts {
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into avance_costo (monto,codigo_contratacionl,objeto_gasto,avance_id)"
+		String query = " insert into avance_costo (monto,codigo_contratacionl,objeto_gasto,avance_id, producto_concat)"
 	+ " values (?, ?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
@@ -768,5 +822,31 @@ public class SqlInserts {
 		} catch (SQLException e) {e.printStackTrace(); return false;}
 		
 	}	
+	
+	public static boolean insertAvanceCualitativo(AvanceCualitativo avanceCualitativo)throws ParseException{
+		try {
+			Connection conn=ConnectionConfiguration.conectar();
+
+			String query = " insert into avance_cualitativo (accion_catalogo_id, ins_linea_accion_id, trimestre_id, gestiones_realizadas, principales_logros_alcanzados, dificultades_lecciones_aprendidas, objetivos_del_siguiente_trimestre)"
+		+ " values (?, ?, ?, ?, ?, ?, ?)";
+			
+			PreparedStatement insert = conn.prepareStatement(query);
+			
+			insert.setInt (1, avanceCualitativo.getAccionCatalogoId());
+			insert.setInt (2, avanceCualitativo.getInsLineaAccionId());
+			insert.setInt (3, avanceCualitativo.getTrimestreId());
+			insert.setString (4, avanceCualitativo.getGestionesRealizadas());
+			insert.setString (5, avanceCualitativo.getPrincipalesLogrosAlcanzados());
+			insert.setString (6, avanceCualitativo.getDificultadesLeccionesAprendidas());
+			insert.setString (7, avanceCualitativo.getObjetivosTrimestre());
+			
+			insert.execute();
+			   
+			conn.close();
+			return true;
+		} catch (SQLException e) {e.printStackTrace(); return false;}
+		
+	}	
+	
 		
 }

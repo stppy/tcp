@@ -29,7 +29,7 @@ public class LineaAccionPresupuesto {
 	public String acNombre;
 	public String acUmId;
 	public String acUmDescp;
-	public String proporcion;
+	public int proporcion;
 	public String sprNivelId;
 	public String sprEntidadId;
 	public String sprTipProgramaId;
@@ -195,10 +195,10 @@ public class LineaAccionPresupuesto {
 	public void setAcUmDescp(String acUmDescp) {
 		this.acUmDescp = acUmDescp;
 	}
-	public String getProporcion() {
+	public int getProporcion() {
 		return proporcion;
 	}
-	public void setProporcion(String proporcion) {
+	public void setProporcion(int proporcion) {
 		this.proporcion = proporcion;
 	}
 	public String getSprNivelId() {

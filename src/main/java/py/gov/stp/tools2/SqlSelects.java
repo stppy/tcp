@@ -243,7 +243,7 @@ public class SqlSelects {
 				objeto.setJustificacion(rs.getString("justificacion"));
 				objeto.setCantidad(rs.getDouble("cantidad"));
 				objeto.setFechaEntrega(rs.getString("fecha_entrega"));
-				objeto.setCantidadBeneficiarios(rs.getInt("cantidad_beneficiarios"));
+				//objeto.setCantidadBeneficiarios(rs.getInt("cantidad_beneficiarios"));
 				objeto.setActividadId(rs.getInt("actividad_id"));
 				objeto.setVersion(rs.getInt("version"));
 				objeto.setBorrado(rs.getBoolean("borrado"));
@@ -429,6 +429,18 @@ public class SqlSelects {
 				objeto.setCrono_tipo_nombre(rs.getString("crono_tipo_nombre"));
 				objeto.setCant_prog(rs.getString("cant_prog")); 
 				objeto.setFecha_entrega(rs.getString("fecha_entrega"));
+				objeto.setIns_id(rs.getInt("ins_id"));
+				objeto.setLa_id(rs.getInt("la_id"));
+				objeto.setLa_tipo_id(rs.getInt("la_tipo_id"));
+				objeto.setLa_estrategia_id(rs.getInt("la_estrategia_id"));
+				objeto.setLa_um_id(rs.getInt("la_um_id"));
+				objeto.setIla_id(rs.getInt("ila_id"));	
+				objeto.setAccion_id(rs.getInt("accion_id"));
+				objeto.setDepto_id(rs.getInt("depto_id"));
+				objeto.setDist_id(rs.getInt("dist_id"));
+				objeto.setAc_um_id(rs.getInt("ac_um_id"));
+				objeto.setCrono_id(rs.getInt("crono_id"));
+				objeto.setCrono_tipo_id(rs.getInt("crono_tipo_id"));
 
 				objetos.add(objeto);
 			}
@@ -527,11 +539,12 @@ public class SqlSelects {
 				objeto.setM3(rs.getString("m3")); 
 				objeto.setM4(rs.getString("m4")); 
 				objeto.setDeptoNombre(rs.getString("depto_nombre")); 
+				objeto.setDistNombre(rs.getString("dist_nombre")); 
 				objeto.setIdAccionCatalogo(rs.getString("id_accion_catalogo"));
 				objeto.setAcNombre(rs.getString("ac_nombre"));
 				objeto.setAcUmId(rs.getString("ac_um_id"));
 				objeto.setAcUmDescp(rs.getString("ac_um_descp"));	
-				objeto.setProporcion(rs.getString("proporcion"));
+				objeto.setProporcion(rs.getInt("proporcion"));
 				objeto.setSprNivelId(rs.getString("spr_nivel_id"));
 				objeto.setSprEntidadId(rs.getString("spr_entidad_id"));
 				objeto.setSprTipProgramaId(rs.getString("spr_tiprograma_id"));
@@ -916,6 +929,7 @@ public class SqlSelects {
 					objeto.setVersion(rs.getInt("version"));
 					objeto.setBorrado(rs.getBoolean("borrado"));
 					objeto.setAvanceId(rs.getInt("avance_id"));
+					objeto.setUrlDocumento(rs.getString("url_documento"));
 					
 					objetos.add(objeto);
 				}
@@ -1363,6 +1377,69 @@ public class SqlSelects {
 					
 
 
+					objetos.add(objeto);
+				}
+			}
+			catch (SQLException e) {e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos; 
+	  }
+	
+	public static List<Trimestre> selectTrimestre(String condition) throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+			 String query = " SELECT * from trimestre "+condition;
+			 
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 List<Trimestre> objetos = new ArrayList<Trimestre>();
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					Trimestre objeto = new Trimestre();
+					objeto.setId(rs.getInt("id"));
+					objeto.setNumero(rs.getInt("nro"));
+					objeto.setAnho(rs.getString("anho"));
+					objeto.setDescripcion(rs.getString("descripcion"));
+					
+					objetos.add(objeto);
+				}
+			}
+			catch (SQLException e) {e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos; 
+	  }	
+	
+	public static List<AvanceCualitativo> selectAvanceCualitativo(String condition) throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+			 String query = " SELECT * from avance_cualitativo "+condition;
+			 
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 List<AvanceCualitativo> objetos = new ArrayList<AvanceCualitativo>();
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					AvanceCualitativo objeto = new AvanceCualitativo();
+					objeto.setId(rs.getInt("id"));
+					objeto.setAccionCatalogoId(rs.getInt("accion_catalogo_id"));
+					objeto.setInsLineaAccionId(rs.getInt("ins_linea_accion_id"));
+					objeto.setTrimestreId(rs.getInt("trimestre_id"));
+					objeto.setGestionesRealizadas(rs.getString("gestiones_realizadas"));
+					objeto.setPrincipalesLogrosAlcanzados(rs.getString("principales_logros_alcanzados"));
+					objeto.setDificultadesLeccionesAprendidas(rs.getString("dificultades_lecciones_aprendidas"));
+					objeto.setObjetivosTrimestre(rs.getString("objetivos_del_siguiente_trimestre"));
+					objeto.setBorrado(rs.getBoolean("borrado"));
+					
 					objetos.add(objeto);
 				}
 			}

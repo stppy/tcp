@@ -100,6 +100,8 @@ public class ajaxSelects extends HttpServlet {
     	Integer destinatarioId = null;
     	Integer accionHasProductoId = null;
     	Integer productoObjetoGastoId = null;
+    	Integer trimestreId = null;
+
     	
     	String institucion=null;
     	String usuario=null;
@@ -166,7 +168,7 @@ public class ajaxSelects extends HttpServlet {
       	if (request.getParameter("destinatarioId")!=null) destinatarioId=Integer.parseInt(request.getParameter("destinatarioId"));
       	if (request.getParameter("accionHasProductoId")!=null) accionHasProductoId=Integer.parseInt(request.getParameter("accionHasProductoId"));
       	if (request.getParameter("productoObjetoGastoId")!=null) productoObjetoGastoId=Integer.parseInt(request.getParameter("productoObjetoGastoId"));
-      	
+      	if (request.getParameter("trimestreId")!=null) trimestreId=Integer.parseInt(request.getParameter("trimestreId"));      	
       	
         PrintWriter out = response.getWriter();
         response.setContentType("text/html");
@@ -371,7 +373,7 @@ public class ajaxSelects extends HttpServlet {
         		List objetos=null; 
         		condition = " where true ";
         		String condition2=" where true ";
-        		if (!userRoleId.equals("0") && !userRoleId.equals("1")){ 
+        		if (!userRoleId.equals("0") && !userRoleId.equals("1") && !userRoleId.equals("2")){ 
         			condition2 += " and entidad_id="+userEntidadId+" and nivel_id="+userNivelId;
         			if ( !userUnrId.equals("0") ){
         				condition2+= " and unidad_responsable_id="+userUnrId;
@@ -389,7 +391,7 @@ public class ajaxSelects extends HttpServlet {
         		List objetos=null; 
         		condition = " where true ";
         		String condition2=" where true ";
-        		if (!userRoleId.equals("0") && !userRoleId.equals("1")){ 
+        		if (!userRoleId.equals("0") && !userRoleId.equals("1") && !userRoleId.equals("2")){ 
         			condition2 += " and entidad_id="+userEntidadId+" and nivel_id="+userNivelId;
         			if ( !userUnrId.equals("0") ){
         				condition2+= " and unidad_responsable_id="+userUnrId;
@@ -407,7 +409,7 @@ public class ajaxSelects extends HttpServlet {
         		List objetos=null; 
         		condition = " where true ";
         		String condition2=" where true ";
-        		if (!userRoleId.equals("0") && !userRoleId.equals("1")){ 
+        		if (!userRoleId.equals("0") && !userRoleId.equals("1") && !userRoleId.equals("2")){ 
         			condition2 += " and entidad_id="+userEntidadId+" and nivel_id="+userNivelId;
         			if ( !userUnrId.equals("0") ){
         				condition2+= " and unidad_responsable_id="+userUnrId;
@@ -428,7 +430,7 @@ public class ajaxSelects extends HttpServlet {
         		
         		condition = " where true ";
         		String condition2=" where true ";
-        		if (!userRoleId.equals("0") && !userRoleId.equals("1")){ 
+        		if (!userRoleId.equals("0") && !userRoleId.equals("1") && !userRoleId.equals("2")){ 
         			condition2 += " and entidad_id="+userEntidadId+" and nivel_id="+userNivelId;
         			if ( !userUnrId.equals("0") ){
         				condition2+= " and unidad_responsable_id="+userUnrId;
@@ -446,7 +448,7 @@ public class ajaxSelects extends HttpServlet {
         		List objetos=null;
         		condition = " where true ";
         		String condition2="";
-        		if (!userRoleId.equals("0") && !userRoleId.equals("1")){ 
+        		if (!userRoleId.equals("0") && !userRoleId.equals("1") && !userRoleId.equals("2")){ 
         			condition2 += " and entidad_id="+userEntidadId+" and nivel_id="+userNivelId;
         			if ( !userUnrId.equals("0") ){
         				condition2+= " and unidad_responsable_id="+userUnrId;
@@ -604,6 +606,23 @@ public class ajaxSelects extends HttpServlet {
         		List objetos=null;
         		if (actividadId!=null) condition += " and actividad_id ='"+actividadId+"'";
            		try {objetos = SqlSelects.selectProgramacionPorMes(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());        	
+        	}
+        	if (action.equals("getTrimestre")){
+        		List objetos=null;
+        		condition = " where true";
+        		if (trimestreId!=null) condition += " and id ='"+trimestreId+"'";
+           		try {objetos = SqlSelects.selectTrimestre(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());        	
+        	}
+        	if (action.equals("getAvanceCualitativo")){
+        		List objetos=null;
+        		condition = " where true";
+           		try {objetos = SqlSelects.selectAvanceCualitativo(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());        	
