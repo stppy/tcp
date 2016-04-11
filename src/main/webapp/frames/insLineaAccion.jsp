@@ -6671,7 +6671,7 @@ $("body").on("click", ".guardarEvidencia",function(event){
 	
 	var docEvidenciaFile = document.getElementById("documentoEvidencia").files[0];
     
-	if (docEvidenciaFile != undefined){
+	if (docEvidenciaFile != null){
 	    var formdata = new FormData();
 	    formdata.append('documentoEvidencia', docEvidenciaFile);
 	    
@@ -6957,7 +6957,7 @@ $("body").on("click", ".editarEvidencia",function(event){
 	
 	var docEvidenciaFile = document.getElementById("documentoEvidencia").files[0];
     
-	if (docEvidenciaFile != undefined){
+	if (docEvidenciaFile != null){
 	    var formdata = new FormData();
 	    formdata.append('documentoEvidencia', docEvidenciaFile);
 	    
