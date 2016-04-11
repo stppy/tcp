@@ -387,6 +387,24 @@ public class ajaxSelects extends HttpServlet {
         		out.println(json.toString());
         	}
         	
+        	if (action.equals("getPivotAvance")){
+        		List objetos=null; 
+        		condition = " where true ";
+        		String condition2=" where true ";
+        		if (!userRoleId.equals("0") && !userRoleId.equals("1") && !userRoleId.equals("2")){ 
+        		condition2 += " and entidad_id="+userEntidadId+" and nivel_id="+userNivelId;
+        		if ( !userUnrId.equals("0") ){
+        		condition2+= " and unidad_responsable_id="+userUnrId;
+        		}
+        		};
+        		condition += " and ins_id IN (select id from institucion "+condition2+") ";
+        		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
+        		try {objetos = SqlSelects.selectPivotAvance(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());
+        		}
+        	
         	if (action.equals("getLineaAccionDestinatarios")){
         		List objetos=null; 
         		condition = " where true ";
