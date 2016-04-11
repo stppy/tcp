@@ -182,7 +182,7 @@
 	    datos.institucionId = institucionId;
 	    datos.periodoId = periodoId;
 	    datos.meta = meta;
-	    datos.version = version;
+	    datos.version = version;		
 
 				 
 		$.ajax({
@@ -5581,13 +5581,13 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 		if(webServicesEvidencia[j].borrado == true)
 		{
 			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") ){%>
-				cuerpoEvidencia += '<tr><td><del>'+webServicesEvidencia[j].nombre+'</del></td><td><del>'+webServicesEvidencia[j].descripcion+'</del></td><td><del>'+webServicesEvidencia[j].url+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+				cuerpoEvidencia += '<tr><td><del>'+webServicesEvidencia[j].nombre+'</del></td><td><del>'+webServicesEvidencia[j].descripcion+'</del></td><td><del>'+webServicesEvidencia[j].url+'</del></td><td></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-trash"></span></button></td></tr>';
 			<%}%>
 		}else{
 			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>
-				cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[j].nombre+'</td><td>'+webServicesEvidencia[j].descripcion+'</td><td><a href="'+webServicesEvidencia[j].url+'" download="" >Descargar Archivo</a></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+				cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[j].nombre+'</td><td>'+webServicesEvidencia[j].descripcion+'</td><td>'+webServicesEvidencia[j].url+'</td><td><a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+webServicesEvidencia[j].urlDocumento+'" Download >Descargar Archivo</a></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-trash"></span></button></td></tr>';
 			<%} if (attributes.get("role_id").toString().equals("3")){%>
-				cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[j].nombre+'</td><td>'+webServicesEvidencia[j].descripcion+'</td><td><a href="'+webServicesEvidencia[j].url+'" download="">Descargar Archivo</a></td><td class="text-center"></td></tr>';
+				cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[j].nombre+'</td><td>'+webServicesEvidencia[j].descripcion+'</td><td>'+webServicesEvidencia[j].url+'</td><td><a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+webServicesEvidencia[j].urlDocumento+'" Download >Descargar Archivo</a></td><td class="text-center"></td></tr>';
 			<%}%>
 		}
 	}
@@ -5937,9 +5937,9 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'													<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" placeholder="Ingrese Nombre" /></td><td><label for="urlEvidencia">Url</label><input type="url" id="urlEvidencia" class="form-control" placeholder="Ingrese Url" /></td></tr>'+
 									'													<tr><td colspan="2"><label for="descripcionEvidencia">Descripción</label><input type="text" id="descripcionEvidencia" class="form-control" placeholder="Ingrese Descripción" /></td></tr>'+
  									'													<tr><td colspan="2"><label for="documentoEvidencia">Adjuntar Documento</label><input type="file" id="documentoEvidencia" name="documentoEvidencia" /><div id="progress" class="progress">'+
-        							'														<div class="bar" style="width: 0%;"></div></div></td></tr>'+ 
+        							'														<div class="bar" style="width: 0%;"></div></div></td></tr>'+
 									'													<input type="hidden" id="wsIdEvidencia" value="1" /><input type="hidden" id="versionEvidencia" value="3"/><input type="hidden" id="avanceIdEvidencia" value="'+avanceId+'"/>'+
-									'													<input type="hidden" id="urlDocEvidencia" />'+
+									'													<input type="hidden" id="urlDocEvidencia" value="" />'+
 									'		      									</form>	'+
 									'											</tbody>'+
 									'										</table>'+
@@ -5967,7 +5967,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'										<div class="table-responsive">'+
 									'											<table class="table table-hover table-bordered" id="dataTableEvidencia">'+
 									'												<thead>'+
-									'													<tr class="active"><th>Nombre</th><th>Descripción</th><th>Url</th><th class="text-center">Administrar</th></tr>'+
+									'													<tr class="active"><th>Nombre</th><th>Descripción</th><th>Url</th><th>Evidencia</th><th class="text-center">Administrar</th></tr>'+
 									'												</thead>'+
 									'												<tbody  id="listaEvidencia">'+
 									
@@ -6203,7 +6203,7 @@ $("body").on("click", ".editarAvance",function(event){
 	objeto.justificacion = justificacion;
 	objeto.cantidad = cantidad;
 	objeto.fechaEntrega = fechaEntrega;
-	objeto.cantidadBeneficiarios = cantidadBeneficiarios;
+	//objeto.cantidadBeneficiarios = cantidadBeneficiarios;
 	objeto.actividadId = webServicesAvance[0].actividadId;
 	objeto.version = webServicesAvance[0].version;//No obtenemos este valor del formulario sino del webservices entonces si por ahi agregamos la funcionalidad de que el usuario cambien la version debemos de obtener este dato del formulario y ya no del webservice
 	objeto.id = avanceId;
@@ -6657,35 +6657,6 @@ $("body").on("click", ".editarAvanceCosto",function(event){
   
 });
 
-/*$('#documentoEvidencia').fileupload({
-	 
-    dataType: 'json',
-
-    done: function (e, data) {
-        $("tr:has(td)").remove();
-        /* $.each(data.result, function (index, file) {
-
-            $("#uploaded-files").append(
-                    $('<tr/>')
-                    .append($('<td/>').text(file.fileName))
-                    .append($('<td/>').text(file.fileSize))
-                    .append($('<td/>').text(file.fileType))
-                    .append($('<td/>').html("<a href='upload?f="+index+"'>Click</a>"))
-                    .append($('<td/>').text("@"+file.twitter))
-
-                    )//end $("#uploaded-files").append()
-        });  
-    },
-
-    progressall: function (e, data) {
-        var progress = parseInt(data.loaded / data.total * 100, 10);
-        $('#progress .bar').css(
-            'width',
-            progress + '%'
-        );
-    },
-
-})*/
 
 $("body").on("click", ".guardarEvidencia",function(event){
 	var parametros = $(this).attr("parametros");
@@ -6702,28 +6673,30 @@ $("body").on("click", ".guardarEvidencia",function(event){
 	
 	var docEvidenciaFile = document.getElementById("documentoEvidencia").files[0];
     
-    var formdata = new FormData();
-    formdata.append('documentoEvidencia', docEvidenciaFile);
-    
-     $.ajax({
-	         type: "POST",
-	         url: "/tablero/UploadServlet", /* contextPath + servletPath, */
-	         data: formdata, /* + $('#custIdList').val(), */
-	         async: false,
-	         processData: false,  // tell jQuery not to process the data
-	         contentType: false,   // tell jQuery not to set contentType
-	         success: function(data){
-	               $("#urlDocEvidencia").val(data);
-	           }
-	     }); 
+	if (docEvidenciaFile != undefined){
+	    var formdata = new FormData();
+	    formdata.append('documentoEvidencia', docEvidenciaFile);
+	    
+	     $.ajax({
+		         type: "POST",
+		         url: "/tablero/UploadServlet", /* contextPath + servletPath, */
+		         data: formdata, /* + $('#custIdList').val(), */
+		         async: false,
+		         processData: false,  // tell jQuery not to process the data
+		         contentType: false,   // tell jQuery not to set contentType
+		         success: function(data){
+		               $("#urlDocEvidencia").val(data);
+		           }
+		     });
+	}
 
 	var nombre = $("#nombreEvidencia").val();
 	var url = $("#urlEvidencia").val();
-	var urlDocumento = $("#urlDocEvidencia").val();
+	var urlDocumento; 
+		if (docEvidenciaFile != undefined) urlDocumento = $("#urlDocEvidencia").val();
 	var descripcion = $("#descripcionEvidencia").val();
 	var wsId = $("#wsIdEvidencia").val();
 	var version = $("#versionEvidencia").val();
-        
   
 	//var avanceId = $("#avanceIdEvidencia").val(); No utilizo esta variable xq ya viene en el parse pero lo ideal seria obtener del formulario
 
@@ -6739,6 +6712,7 @@ $("body").on("click", ".guardarEvidencia",function(event){
 	
 	objeto.nombre = nombre;
 	objeto.url = url;
+	objeto.urlDocumento = urlDocumento;
 	objeto.descripcion = descripcion;
 	objeto.wsId = wsId;
 	objeto.version = version;
@@ -6761,7 +6735,7 @@ $("body").on("click", ".guardarEvidencia",function(event){
         			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getEvidencia&avanceId='+avanceId,
         		  	type:'get',
         		  	dataType:'json',
-        		  	async:false            
+        		  	async:false       
         		}).responseText;
         		webServicesEvidencia = JSON.parse(webServicesEvidencia);
         		 
@@ -6771,10 +6745,10 @@ $("body").on("click", ".guardarEvidencia",function(event){
         			if(webServicesEvidencia[d].borrado == true)
         			{
         				<% if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("2")){%>
-        				cuerpoEvidencia += '<tr><td><del>'+webServicesEvidencia[d].nombre+'</del></td><td><del>'+webServicesEvidencia[d].descripcion+'</del></td><td><del>'+webServicesEvidencia[d].url+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+        				cuerpoEvidencia += '<tr><td><del>'+webServicesEvidencia[d].nombre+'</del></td><td><del>'+webServicesEvidencia[d].descripcion+'</del></td><td><del>'+webServicesEvidencia[d].url+'</del></td><td></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
         				<% }%>
         			}else{ 
-        				cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[d].nombre+'</td><td>'+webServicesEvidencia[d].descripcion+'</td><td>'+webServicesEvidencia[d].url+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+        				cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[d].nombre+'</td><td>'+webServicesEvidencia[d].descripcion+'</td><td>'+webServicesEvidencia[d].url+'</td><td><a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+webServicesEvidencia[d].urlDocumento+'" Download >Descargar Archivo</a></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
         			}	
         		}
         		
@@ -6952,11 +6926,11 @@ $("body").on("click", ".consultaEditarEvidencia",function(event){
 						'								<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" value="'+webServicesEvidencia[0].nombre+'" /></td><td><label for="urlEvidencia">Url</label><input type="url" id="urlEvidencia" class="form-control" value="'+webServicesEvidencia[0].url+'" /></td></tr>'+
 						'								<tr><td colspan="2"><label for="descripcionEvidencia">Descripción</label><input type="text" id="descripcionEvidencia" class="form-control" value="'+webServicesEvidencia[0].descripcion+'" /></td></tr>'+
 						'								<input type="hidden" id="wsIdEvidencia" value='+webServicesEvidencia[0].wsId+' /><input type="hidden" id="versionEvidencia" value='+webServicesEvidencia[0].version+' /><input type="hidden" id="avanceIdEvidencia" value='+webServicesEvidencia[0].avanceId+' />'+
-						'								<input type="hidden" id="urlDocEvidencia" value='+webServicesEvidencia[0].urlDocumento+' />'+														
+						'								<input type="hidden" id="urlDocEvidencia" value="" />'+														
 						'			      			</form>	'+												
 						'							<form method="post" enctype="multipart/form-data">'+ 
-						'								<tr><td><label for="documentoEvidencia">Adjuntar Documento</label><input type="file" id="documentoEvidencia" name="documentoEvidencia" size="50" value='+webServicesEvidencia[0].urlDocumento+'/></td></tr>'+
- 						'							</form>	'+	 
+						'								<tr><td><label for="documentoEvidencia">Adjuntar Documento</label><input type="file" id="documentoEvidencia" name="documentoEvidencia" size="50" /></td></tr>'+
+ 						'							</form>	'+
 						'						</tbody>'+
 						'					</table>'+
 						'				</div>'+
@@ -6984,24 +6958,27 @@ $("body").on("click", ".editarEvidencia",function(event){
 	
 	var docEvidenciaFile = document.getElementById("documentoEvidencia").files[0];
     
-    var formdata = new FormData();
-    formdata.append('documentoEvidencia', docEvidenciaFile);
-    
-     $.ajax({
-	         type: "POST",
-	         url: "/tablero/UploadServlet", /* contextPath + servletPath, */
-	         data: formdata, /* + $('#custIdList').val(), */
-	         async: false,
-	         processData: false,  // tell jQuery not to process the data
-	         contentType: false,   // tell jQuery not to set contentType
-	         success: function(data){
-	               $("#urlEvidencia").val(data);
-	           }
-	     }); 
-
+	if (docEvidenciaFile != undefined){
+	    var formdata = new FormData();
+	    formdata.append('documentoEvidencia', docEvidenciaFile);
+	    
+	     $.ajax({
+		         type: "POST",
+		         url: "/tablero/UploadServlet", /* contextPath + servletPath, */
+		         data: formdata, /* + $('#custIdList').val(), */
+		         async: false,
+		         processData: false,  // tell jQuery not to process the data
+		         contentType: false,   // tell jQuery not to set contentType
+		         success: function(data){
+		               $("#urlDocEvidencia").val(data);
+		           }
+		     }); 
+	}
+	     
 	var nombre = $("#nombreEvidencia").val();
 	var url = $("#urlEvidencia").val();
-	var urlDocumento = $("#urlDocEvidencia").val();
+	var urlDocumento; 
+		if (docEvidenciaFile != undefined) urlDocumento = $("#urlDocEvidencia").val();
 	var descripcion = $("#descripcionEvidencia").val();
 	var wsId = $("#wsIdEvidencia").val();
 	var version = $("#versionEvidencia").val();
@@ -7020,6 +6997,7 @@ $("body").on("click", ".editarEvidencia",function(event){
 	objeto.id = evidenciaId;
 	objeto.nombre = nombre;
 	objeto.url = url;
+	if (urlDocumento != null && urlDocumento != "") objeto.urlDocumento = urlDocumento;
 	objeto.descripcion = descripcion;
 	objeto.wsId = wsId;
 	objeto.version = version;
@@ -8338,6 +8316,7 @@ $("body").on("click", ".avanceCualitativo",function(event){
     var lineaAccionId = idParsed[1];
     var institucionId = idParsed[2];
     var periodoId = idParsed[3];
+    var optionTrimestre;
 	
     if ( $("#modalAvanceCualitativo").length )
 	{
@@ -8448,6 +8427,14 @@ $("body").on("click", ".avanceCualitativo",function(event){
 	}).responseText;
 	accion = JSON.parse(accion);
 	
+	var trimestre = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getTrimestre',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	trimestre = JSON.parse(trimestre);
+	
 	var nombreDepartamento;
 	var nombreDistrito;
 	var nombreAccionCatalogo;
@@ -8477,6 +8464,11 @@ $("body").on("click", ".avanceCualitativo",function(event){
 		
 	}
 	
+	for(var t = 0; t < trimestre.length; t++)
+	{
+		optionTrimestre+='<option value="'+trimestre[t].id+'" >'+trimestre[t].descripcion+' '+trimestre[t].anho+'</option>';
+	}	
+	
 			
 	var cuerpoModalAvanceCualitativo = "";
 
@@ -8504,17 +8496,20 @@ $("body").on("click", ".avanceCualitativo",function(event){
 						'									<div class="table-responsive">'+
 						'										<table class="table table-hover">'+
 						'											<tbody>'+
-						'												<tr><td colspan="2"><div class="form-group"><label for="nombreAvanceCualitativo">Acciones</label><select id="nombreAvanceCualitativo" class="form-control">'+optionAcciones+'</select></div></td></tr>'+
-						'												<tr><td><div class="form-group"><label for="gestionesRealizadasAvanceCualitativo">Gestiones Realizadas</label><textarea class="form-control" rows="" placeholder="" id="gestionesRealizadasAvanceCualitativo"></textarea></div></td><td><div class="form-group"><label for="logrosAlcanzadosAvanceCualitativo">Principales Logros Alcanzados</label><textarea class="form-control" rows="" placeholder="" id="logrosAlcanzadosAvanceCualitativo"></textarea></div></td></tr>'+
-						'												<tr><td><div class="form-group"><label for="leccionesAprendidasAvanceCualitativo">Dificultades y Lecciones aprendidas</label><textarea class="form-control" rows="" placeholder="" id="leccionesAprendidasAvanceCualitativo"></textarea></div></td><td><div class="form-group"><label for="objetivosAvanceCualitativo">Objetivos del Siguiente Trimestre</label><textarea class="form-control" rows="" placeholder="" id="objetivosAvanceCualitativo"></textarea></div></td></tr>'+							
+						'												<tr><td><div class="form-group"><label for="nombreAvanceCualitativo">Acciones</label><select id="nombreAvanceCualitativo" class="form-control">'+optionAcciones+'</select></div></td></tr>'+
+						'												<tr><td><div class="form-group"><label for="trimestreAvanceCualitativo">Trimestre</label><select id="trimestreAvanceCualitativo" class="form-control">'+optionTrimestre+'</select></div></td></tr>'+
+						'												<tr><td><div class="form-group"><label for="gestionesRealizadasAvanceCualitativo">Gestiones Realizadas</label><textarea class="form-control" rows="" placeholder="" id="gestionesRealizadasAvanceCualitativo"></textarea></div></td></tr>'+
+						' 												<tr><td><div class="form-group"><label for="logrosAlcanzadosAvanceCualitativo">Principales Logros Alcanzados</label><textarea class="form-control" rows="" placeholder="" id="logrosAlcanzadosAvanceCualitativo"></textarea></div></td></tr>'+	
+						'												<tr><td><div class="form-group"><label for="leccionesAprendidasAvanceCualitativo">Dificultades y Lecciones aprendidas</label><textarea class="form-control" rows="" placeholder="" id="leccionesAprendidasAvanceCualitativo"></textarea></div></td></tr>'+
+						' 												<tr><td><div class="form-group"><label for="objetivosAvanceCualitativo">Objetivos del Siguiente Trimestre</label><textarea class="form-control" rows="" placeholder="" id="objetivosAvanceCualitativo"></textarea></div></td></tr>'+
 						'											</tbody>'+							           
 						'										</table>'+
 						'									</div>'+							
-						'								</form>'
+						'								</form>'+
 										
 						'               			</div>'+//fin box-body
 						'							<div class="modal-footer">'+
-						'								<button type="button" class="btn btn-success btn-sm guardarAvanceCualitatitvo" parametros = '+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'>Guardar Acción</button>'+
+						'								<button type="button" class="btn btn-success btn-sm guardarAvanceCualitatitvo" parametros = '+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'>Guardar Avance Cualitativo</button>'+
 						'							</div>'+
 						'                		</div>'+	
 						'                	</div>'+
@@ -8549,20 +8544,119 @@ $("body").on("click", ".avanceCualitativo",function(event){
 	var tablaAccion ='     			<div class="table-responsive">'+
 	'	                				<table class="table table-hover table-bordered" id="dataTablesAvanceCualitativo">'+
 	'	                					<thead>'+
-	'	                						<tr class="active"><th rowspan="2" class="text-center">Acción</th><th rowspan="2" class="text-center">Depto</th><th rowspan="2" class="text-center">Distrito</th><th rowspan="2" class="text-center">FechaInicio</th><th rowspan="2" class="text-center">FechaFin</th><th rowspan="2" class="text-center">Unidad Medida</th><th colspan="4" class="text-center">Metas</th><th rowspan="2" class="text-center" style="min-width:160px">Administrar Acción</th></tr>'+
-	'	                						<tr class="active"><th class="text-center">1er Trimestre</th><th class="text-center">2do Trimestre</th><th class="text-center">3er Trimestre</th><th class="text-center">4to Trimestre</th></tr>'+
+	'	                						<tr class="active"><th class="text-center">Accion</th><th class="text-center">Trimestre</th><th class="text-center">Año</th><th class="text-center">Gestiones Realizadas</th><th class="text-center">Principales Logros Alcanzados</th><th class="text-center">Dificultades Lecciones Aprendidas</th><th class="text-center">Objetivos del Trimestre</th></tr>'+
 	'	                					</thead>'+
 	'	                						<tbody id="tablaAvanceCualitativo">'+
 	'	                						</tbody>'+
 	'	                				</table>'+
 	'	                			</div>';
 	$('#cuerpoTablaAvanceCualitativo').append(tablaAccion);
-	
+	listaAvanceCualitativo();	
 	//$('#tablaAccionesPrecargadas').append(cuerpoAccion);
 	$('#modalAvanceCualitativo').modal('show');
-	//$("#dataTablesAcciones").DataTable();
+	$("#dataTablesAvanceCualitativo").DataTable();
 
 });
+
+$("body").on("click", ".guardarAvanceCualitatitvo",function(event){
+	var codigoRegistro = $(this).attr("parametros");
+    var idParsed = codigoRegistro.split("-"); 
+    var insLineaAccionId = idParsed[0];
+    var lineaAccionId = idParsed[1];
+	
+	var nombre = $("#nombreAvanceCualitativo option:selected").val();
+	var trimestre = $("#trimestreAvanceCualitativo option:selected").val();
+	var gestionesRealizadas = document.getElementById("gestionesRealizadasAvanceCualitativo").value;
+	var logrosAlcanzados = document.getElementById("logrosAlcanzadosAvanceCualitativo").value;
+	var leccionesAprendidas = document.getElementById("leccionesAprendidasAvanceCualitativo").value;
+	var objetivos = document.getElementById("objetivosAvanceCualitativo").value;
+	
+	$("#gestionesRealizadasAvanceCualitativo").val("");
+	$("#logrosAlcanzadosAvanceCualitativo").val("");
+	$("#leccionesAprendidasAvanceCualitativo").val("");
+	$("#objetivosAvanceCualitativo").val("");
+
+	var datos = new Object();
+    
+    datos.accionCatalogoId = nombre;
+    datos.trimestreId = trimestre; 
+    datos.insLineaAccionId = insLineaAccionId;
+    datos.gestionesRealizadas = gestionesRealizadas;
+    datos.principalesLogrosAlcanzados = logrosAlcanzados;
+    datos.dificultadesLeccionesAprendidas = leccionesAprendidas;
+    datos.objetivosTrimestre = objetivos;
+
+
+  	var info = JSON.stringify(datos);
+    $.ajax({
+        url: "ajaxInserts2?accion=insAvanceCualitativo",
+        type: 'POST',
+        dataType: 'json',
+        data: info,
+        contentType: 'application/json',
+        mimeType: 'application/json',
+        success: function (data) {
+        	if(data.success == true){
+        		listaAvanceCualitativo();
+        	}
+        },
+        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
+        error: function(data,status,er) {
+        	}
+	 });
+
+    
+});	
+
+function listaAvanceCualitativo(){
+	
+	var tablaAvanceCualitativo;
+	var avanceCualitativo = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCualitativo',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	avanceCualitativo = JSON.parse(avanceCualitativo);
+	
+	for(a = 0;a < avanceCualitativo.length; a++){
+		
+		var accionCatalogo = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+avanceCualitativo[a].accionCatalogoId,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		accionCatalogo = JSON.parse(accionCatalogo);
+		
+		var trimestre = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getTrimestre&trimestreId='+avanceCualitativo[a].trimestreId,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		trimestre = JSON.parse(trimestre);
+
+		if(avanceCualitativo[a].borrado == true){
+			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>
+				tablaAvanceCualitativo+='<tr><td>'+accionCatalogo[0].nombre+'</del></td><td><del>'+trimestre[0].descripcion+'</del></td><td><del>'+trimestre[0].anho+'</del></td><td><del>'+avanceCualitativo[a].gestionesRealizadas+'</del></td><td><del>'+avanceCualitativo[a].principalesLogrosAlcanzados+'</del></td><td><del>'+avanceCualitativo[a].dificultadesLeccionesAprendidas+'</del></td><td><del>'+avanceCualitativo[a].objetivosTrimestre+'</del></td></tr>';
+				
+			<%}%>
+		}else{
+			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>
+				tablaAvanceCualitativo+='<tr><td>'+accionCatalogo[0].nombre+'</td><td>'+trimestre[0].descripcion+'</td><td>'+trimestre[0].anho+'</td><td>'+avanceCualitativo[a].gestionesRealizadas+'</td><td>'+avanceCualitativo[a].principalesLogrosAlcanzados+'</td><td>'+avanceCualitativo[a].dificultadesLeccionesAprendidas+'</td><td>'+avanceCualitativo[a].objetivosTrimestre+'</td></tr>';	
+			<%} if (attributes.get("role_id").toString().equals("3")){%>
+				tablaAvanceCualitativo+='<tr><td>'+accionCatalogo[0].nombre+'</td><td>'+trimestre[0].descripcion+'</td><td>'+trimestre[0].anho+'</td><td>'+avanceCualitativo[a].gestionesRealizadas+'</td><td>'+avanceCualitativo[a].principalesLogrosAlcanzados+'</td><td>'+avanceCualitativo[a].dificultadesLeccionesAprendidas+'</td><td>'+avanceCualitativo[a].objetivosTrimestre+'</td></tr>';	
+			<%}%>
+		}
+
+	
+	}
+	$('#tablaAvanceCualitativo').html("");
+	$('#tablaAvanceCualitativo').append(tablaAvanceCualitativo);
+
+	
+}
 
 
 </script>	

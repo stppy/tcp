@@ -18,7 +18,8 @@ import javax.servlet.http.Part;
 /**
  * Servlet implementation class UploadServlet
  */
-@MultipartConfig
+@MultipartConfig(maxFileSize=1024*1024*15,      // 15MB
+				 maxRequestSize=1024*1024*50)   // 50MB		
 public class UploadServlet extends HttpServlet {	                
 		private static final long serialVersionUID = 1L;
 		
@@ -34,8 +35,7 @@ public class UploadServlet extends HttpServlet {
         
         @Override
         protected void doPost(HttpServletRequest request,
-                HttpServletResponse response) throws ServletException, IOException {
-        		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy hh:mm:ss");
+                HttpServletResponse response) throws ServletException, IOException {        		
             // obtiene el path absoluto de la aplicación
             String appPath = "/usr/share/tomcat";
             // construye el path del directorio para guardar el archivo subido
@@ -49,22 +49,28 @@ public class UploadServlet extends HttpServlet {
             
             Part file = request.getPart("documentoEvidencia");
             String fileName = getFilename(file);
-            //InputStream filecontent = file.getInputStream();
-            Calendar calendar = Calendar.getInstance();
-            java.util.Date now = calendar.getTime();
-            java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(now.getTime());
             
-
             
-//            Date fecha = new Date();
-//            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-//            String fechaStr = sdf.format((fecha)).toString();
+            //extrae la extension y el nombre de archivo por separado
+            int dot = fileName.lastIndexOf(".");
+            String fileNameExt = fileName.substring(dot);
+            fileName = fileName.substring(0, dot);            
             
-            file.write(savePath + File.separator +currentTimestamp.toString()+"_"+ fileName);
+            //remplaza cualquier caracter del tipo espacio, puntos y otros por guión bajo.
+            fileName = fileName.replaceAll("\\W","_");                        
+            
+            Date fecha = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss_SSS");	
+            String fechaStr = (String)sdf.format((fecha));
+            
+            file.write(savePath + File.separator + fechaStr +"_"+ fileName + fileNameExt);
 
             response.setContentType("text/plain");
         	response.setCharacterEncoding("UTF-8");        
-        	response.getWriter().write(savePath + File.separator +currentTimestamp.toString()+"_"+fileName);
+        	
+        	if(fileName != null) response.getWriter().write(savePath + File.separator + fechaStr +"_"+ fileName + fileNameExt);
+        	else
+        		response.getWriter().write("");
         }
      
     	private static String getFilename(Part part) {

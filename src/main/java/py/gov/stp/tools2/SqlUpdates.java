@@ -563,6 +563,7 @@ public static boolean borradoHito(Hito objeto){
 					 if(objeto.getDescripcion()!=null)			query+= ", descripcion='"+objeto.getDescripcion()+"'";
 					 if(objeto.getWsId()!=0)					query+= ", ws_id="+objeto.getWsId()+"";
 					 if(objeto.getUrl()!=null)					query+= ", url='"+objeto.getUrl()+"'";
+					 if(objeto.getUrlDocumento()!=null)			query+= ", url_documento='"+objeto.getUrlDocumento()+"'";
 					 if(objeto.getVersion()!=0l)				query+= ", version="+objeto.getVersion()+"";
 
 					 //if(objeto.isBorrado()!=false)			query+= "borrado=\""+objeto.isBorrado()+"\"";	
