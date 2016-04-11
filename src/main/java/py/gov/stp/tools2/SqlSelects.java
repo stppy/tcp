@@ -326,6 +326,7 @@ public class SqlSelects {
 				objeto.setObjetoGasto(rs.getInt("objeto_gasto"));
 				objeto.setAvanceId(rs.getInt("avance_id"));	
 				objeto.setBorrado(rs.getBoolean("borrado"));
+				objeto.setProductoConcat(rs.getString("producto_concat"));
 
 				objetos.add(objeto);
 			}

@@ -1,3 +1,6 @@
+
+
+
 <script>
 <%
 	if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0")|| attributes.get("role_id").toString().equals("2")){%>
@@ -5575,6 +5578,14 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	}).responseText;
 	webServicesEvidencia = JSON.parse(webServicesEvidencia);
 	
+	var optionArchivoExistente="";
+	optionArchivoExistente += '<option value="" >Seleccione una Opción</option>';
+
+
+	for(var p = 0; p < webServicesEvidencia.length; p++){
+		optionArchivoExistente += '<option value="'+webServicesEvidencia[p].urlDocumento+'" >'+webServicesEvidencia[p].urlDocumento+'</option>';
+	}
+		
 	var cuerpoEvidencia = "";
 	for(var j = 0; j < webServicesEvidencia.length; j++)
 	{
@@ -5585,11 +5596,21 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 			<%}%>
 		}else{
 			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>
-				cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[j].nombre+'</td><td>'+webServicesEvidencia[j].descripcion+'</td><td>'+webServicesEvidencia[j].url+'</td><td><a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+webServicesEvidencia[j].urlDocumento+'" Download >Descargar Archivo</a></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+				cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[j].nombre+'</td><td>'+webServicesEvidencia[j].descripcion+'</td><td>'+webServicesEvidencia[j].url+'</td><td>';
+					if (webServicesEvidencia[j].urlDocumento) {
+						cuerpoEvidencia += '<a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+webServicesEvidencia[j].urlDocumento+'" Download >Descargar Archivo</a>'+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+					} else {
+						cuerpoEvidencia += '</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-trash"></span></button></td></tr>';	
+					}					
 			<%} if (attributes.get("role_id").toString().equals("3")){%>
-				cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[j].nombre+'</td><td>'+webServicesEvidencia[j].descripcion+'</td><td>'+webServicesEvidencia[j].url+'</td><td><a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+webServicesEvidencia[j].urlDocumento+'" Download >Descargar Archivo</a></td><td class="text-center"></td></tr>';
+				cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[j].nombre+'</td><td>'+webServicesEvidencia[j].descripcion+'</td><td>'+webServicesEvidencia[j].url+'</td><td>';								
+				if (webServicesEvidencia[j].urlDocumento) {
+					cuerpoEvidencia += '<a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+webServicesEvidencia[j].urlDocumento+'" Download="'+webServicesEvidencia[j].nombre+'" >Descargar Archivo</a>' + '</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+				}else{
+					cuerpoEvidencia += '</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+				}
 			<%}%>
-		}
+		}		
 	}
 	
 	var webServicesAvanceCosto = $.ajax({
@@ -5606,13 +5627,13 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 		if(webServicesAvanceCosto[d].borrado == true)
 		{
 			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") ){%>
-				cuerpoAvanceCosto += '<tr><td><del>'+webServicesAvanceCosto[d].monto+'</del></td><td><del>'+webServicesAvanceCosto[d].codigoContratacion+'</del></td><td><del>'+webServicesAvanceCosto[d].objetoGasto+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarCosto" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCosto" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+				cuerpoAvanceCosto += '<tr><td><del>'+webServicesAvanceCosto[d].productoConcat+'</del></td><td><del>'+webServicesAvanceCosto[d].objetoGasto+'</del></td><td><del>'+webServicesAvanceCosto[d].monto+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarCosto" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCosto" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
 			<%}%>	
 		}else{
 			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>
-				cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].monto+'</td><td>'+webServicesAvanceCosto[d].codigoContratacion+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarCosto" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCosto" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+				cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].productoConcat+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td>'+webServicesAvanceCosto[d].monto+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarCosto" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCosto" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
 			<%} if (attributes.get("role_id").toString().equals("3")){%>
-				cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].monto+'</td><td>'+webServicesAvanceCosto[d].codigoContratacion+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td class="text-center"></td></tr>';
+				cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].productoConcat+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td>'+webServicesAvanceCosto[d].monto+'</td><td class="text-center"></td></tr>';
 			<%}%>
 		}
 	}
@@ -5886,7 +5907,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'										<div class="table-responsive">'+
 									'											<table class="table table-hover table-bordered" id="dataTableAvanceCosto">'+
 									'												<thead>'+
-									'													<tr class="active"><th>Monto</th><th>Cod.Contratación</th><th>ObjetoGasto</th><th class="text-center">Administrar</th></tr>'+
+									'													<tr class="active"><th>Producto</th><th>ObjetoGasto</th><th>Monto</th><th class="text-center">Administrar</th></tr>'+
 									'												</thead>'+
 									'												<tbody id="listaCosto">'+
 									'												</tbody>'+
@@ -5936,8 +5957,8 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'		      									<form class="form-horizontal" role="form" method="post" enctype="multipart/form-data">'+
 									'													<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" placeholder="Ingrese Nombre" /></td><td><label for="urlEvidencia">Url</label><input type="url" id="urlEvidencia" class="form-control" placeholder="Ingrese Url" /></td></tr>'+
 									'													<tr><td colspan="2"><label for="descripcionEvidencia">Descripción</label><input type="text" id="descripcionEvidencia" class="form-control" placeholder="Ingrese Descripción" /></td></tr>'+
- 									'													<tr><td colspan="2"><label for="documentoEvidencia">Adjuntar Documento</label><input type="file" id="documentoEvidencia" name="documentoEvidencia" /><div id="progress" class="progress">'+
-        							'														<div class="bar" style="width: 0%;"></div></div></td></tr>'+
+ 									'													<tr><td><label for="documentoEvidencia">Adjuntar Documento</label><input type="file" id="documentoEvidencia" name="documentoEvidencia" /><div id="progress" class="progress">'+
+        							'														<div  class="bar" style="width: 0%;"></div></div></td></tr>'+
 									'													<input type="hidden" id="wsIdEvidencia" value="1" /><input type="hidden" id="versionEvidencia" value="3"/><input type="hidden" id="avanceIdEvidencia" value="'+avanceId+'"/>'+
 									'													<input type="hidden" id="urlDocEvidencia" value="" />'+
 									'		      									</form>	'+
@@ -6365,18 +6386,21 @@ $("body").on("click", ".guardarCosto",function(event){
 	var codigoContratacion = $("#codigoContratacionalCosto").val();
 	var objetoGasto = $("#objetoGastoCosto").val();
 	var avanceId = $("#avanceIdCosto").val();
+	var productoConcat = $("#productoObjetoGasto option:selected").text();
 
 	//Vaciar los inputs
 	$("#codigoContratacionalCosto").val("");
 	$("#objetoGastoCosto").val("");
 	$("#montoCosto").val("");
-
+	$("#productoObjetoGasto").val("");
+	
 	var objeto = new Object();
 	
 	objeto.monto = monto;
 	objeto.codigoContratacion = codigoContratacion;
 	objeto.objetoGasto = objetoGasto;
 	objeto.avanceId = avanceId;
+	objeto.productoConcat = productoConcat;
 
   	var info = JSON.stringify(objeto);
     $.ajax({
@@ -6404,10 +6428,10 @@ $("body").on("click", ".guardarCosto",function(event){
         			if(webServicesAvanceCosto[d].borrado == true)
         			{
         				<% if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("2")){%>
-        				cuerpoAvanceCosto += '<tr><td><del>'+webServicesAvanceCosto[d].monto+'</del></td><td><del>'+webServicesAvanceCosto[d].codigoContratacion+'</del></td><td><del>'+webServicesAvanceCosto[d].objetoGasto+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarCosto" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCosto" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+        				cuerpoAvanceCosto += '<tr><td><del>'+webServicesAvanceCosto[d].productoConcat+'</del></td><td><del>'+webServicesAvanceCosto[d].objetoGasto+'</del></td><td><del>'+webServicesAvanceCosto[d].monto+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarCosto" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCosto" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
         				<% }%>
         			}else{
-        				cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].monto+'</td><td>'+webServicesAvanceCosto[d].codigoContratacion+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarCosto" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCosto" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+        				cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].productoConcat+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td>'+webServicesAvanceCosto[d].monto+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarCosto" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCosto" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
         			}
         		}
         		
@@ -6582,8 +6606,8 @@ $("body").on("click", ".consultaEditarCosto",function(event){
 						'						<table class="table table-hover">'+
 						'							<tbody>'+
 						'								<form class="form-horizontal" role="form">'+
-						'									<tr><td><label for="codigoContratacionalCosto">Cod. Contrato</label><input type="text" id="codigoContratacionalCosto" class="form-control" value='+webServicesAvanceCosto[0].codigoContratacion+' /></td><td><label for="objetoGastoCosto">Objeto Gasto</label><input type="number" id="objetoGastoCosto" class="form-control" value='+webServicesAvanceCosto[0].objetoGasto+' /></td></tr>'+									
-						'									<tr><td colspan="2"><label for="montoCosto">Monto</label><input type="number" id="montoCosto" class="form-control" value='+webServicesAvanceCosto[0].monto+'  /></td></tr>'+
+						'									<tr><td><label for="ProductoObjetoGasto">Producto Objeto Gasto</label><input type="text" id="ProductoObjetoGasto" class="form-control" value='+webServicesAvanceCosto[0].productoConcat+' disabled="disabled" /></td><td><label for="objetoGastoCosto">Objeto Gasto</label><input type="number" id="objetoGastoCosto" class="form-control" value='+webServicesAvanceCosto[0].objetoGasto+' disabled="disabled" /></td></tr>'+
+						'									<tr><td><label for="codigoContratacionalCosto">Cod. Contrato</label><input type="text" id="codigoContratacionalCosto" class="form-control" value='+webServicesAvanceCosto[0].codigoContratacion+' /></td><td colspan="2"><label for="montoCosto">Monto</label><input type="number" id="montoCosto" class="form-control" value='+webServicesAvanceCosto[0].monto+'  /></td></tr>'+									
 						'									<input type="hidden" id="avanceIdCosto" value="'+webServicesAvanceCosto[0].avanceId+'"/>'+		
 						'								</form>	'+												
 						'  							</tbody>'+
@@ -6624,8 +6648,7 @@ $("body").on("click", ".editarAvanceCosto",function(event){
 	var codigoContratacion = $("#codigoContratacionalCosto").val();
 	var objetoGasto = $("#objetoGastoCosto").val();
 	var avanceId = $("#avanceIdCosto").val();
-
-
+	var productoConcat = $("#productoObjetoGasto option:selected").text();
 	
     var objeto = new Object();
     objeto.id = costoId;
@@ -6633,7 +6656,8 @@ $("body").on("click", ".editarAvanceCosto",function(event){
     objeto.codigoContratacion = codigoContratacion;
     objeto.objetoGasto = objetoGasto;
     objeto.avanceId = avanceId;
-  
+    objeto.productoConcat = productoConcat;
+    
   	var info = JSON.stringify(objeto);
     $.ajax({
         url: "ajaxUpdate2?accion=actAvanceCosto",
@@ -6745,10 +6769,15 @@ $("body").on("click", ".guardarEvidencia",function(event){
         			if(webServicesEvidencia[d].borrado == true)
         			{
         				<% if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("2")){%>
-        				cuerpoEvidencia += '<tr><td><del>'+webServicesEvidencia[d].nombre+'</del></td><td><del>'+webServicesEvidencia[d].descripcion+'</del></td><td><del>'+webServicesEvidencia[d].url+'</del></td><td></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+        					cuerpoEvidencia += '<tr><td><del>'+webServicesEvidencia[d].nombre+'</del></td><td><del>'+webServicesEvidencia[d].descripcion+'</del></td><td><del>'+webServicesEvidencia[d].url+'</del></td><td></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
         				<% }%>
         			}else{ 
-        				cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[d].nombre+'</td><td>'+webServicesEvidencia[d].descripcion+'</td><td>'+webServicesEvidencia[d].url+'</td><td><a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+webServicesEvidencia[d].urlDocumento+'" Download >Descargar Archivo</a></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+        				cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[d].nombre+'</td><td>'+webServicesEvidencia[d].descripcion+'</td><td>'+webServicesEvidencia[d].url+'</td><td>';
+	        				if (webServicesEvidencia[d].urlDocumento) {
+								cuerpoEvidencia += '<a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+webServicesEvidencia[d].urlDocumento+'" Download >Descargar Archivo</a>'+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';	        					
+	        				} else {
+	        					cuerpoEvidencia += '</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+	        				}
         			}	
         		}
         		
@@ -8551,7 +8580,7 @@ $("body").on("click", ".avanceCualitativo",function(event){
 	'	                				</table>'+
 	'	                			</div>';
 	$('#cuerpoTablaAvanceCualitativo').append(tablaAccion);
-	listaAvanceCualitativo();	
+	listaAvanceCualitativo(insLineaAccionId);	
 	//$('#tablaAccionesPrecargadas').append(cuerpoAccion);
 	$('#modalAvanceCualitativo').modal('show');
 	$("#dataTablesAvanceCualitativo").DataTable();
@@ -8597,7 +8626,7 @@ $("body").on("click", ".guardarAvanceCualitatitvo",function(event){
         mimeType: 'application/json',
         success: function (data) {
         	if(data.success == true){
-        		listaAvanceCualitativo();
+        		listaAvanceCualitativo(insLineaAccionId);
         	}
         },
         //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
@@ -8608,11 +8637,11 @@ $("body").on("click", ".guardarAvanceCualitatitvo",function(event){
     
 });	
 
-function listaAvanceCualitativo(){
+function listaAvanceCualitativo(insLineaAccionId){
 	
 	var tablaAvanceCualitativo;
 	var avanceCualitativo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCualitativo',
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCualitativo&insLineaAccionId='+insLineaAccionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -8639,7 +8668,7 @@ function listaAvanceCualitativo(){
 
 		if(avanceCualitativo[a].borrado == true){
 			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>
-				tablaAvanceCualitativo+='<tr><td>'+accionCatalogo[0].nombre+'</del></td><td><del>'+trimestre[0].descripcion+'</del></td><td><del>'+trimestre[0].anho+'</del></td><td><del>'+avanceCualitativo[a].gestionesRealizadas+'</del></td><td><del>'+avanceCualitativo[a].principalesLogrosAlcanzados+'</del></td><td><del>'+avanceCualitativo[a].dificultadesLeccionesAprendidas+'</del></td><td><del>'+avanceCualitativo[a].objetivosTrimestre+'</del></td></tr>';
+				tablaAvanceCualitativo+='<tr><td><del>'+accionCatalogo[0].nombre+'</del></td><td><del>'+trimestre[0].descripcion+'</del></td><td><del>'+trimestre[0].anho+'</del></td><td><del>'+avanceCualitativo[a].gestionesRealizadas+'</del></td><td><del>'+avanceCualitativo[a].principalesLogrosAlcanzados+'</del></td><td><del>'+avanceCualitativo[a].dificultadesLeccionesAprendidas+'</del></td><td><del>'+avanceCualitativo[a].objetivosTrimestre+'</del></td></tr>';
 				
 			<%}%>
 		}else{
@@ -8652,9 +8681,21 @@ function listaAvanceCualitativo(){
 
 	
 	}
+	$('#cuerpoTablaAvanceCualitativo').html("");
+
+	var tablaAccion ='     			<div class="table-responsive">'+
+	'	                				<table class="table table-hover table-bordered" id="dataTablesAvanceCualitativo">'+
+	'	                					<thead>'+
+	'	                						<tr class="active"><th class="text-center">Accion</th><th class="text-center">Trimestre</th><th class="text-center">Año</th><th class="text-center">Gestiones Realizadas</th><th class="text-center">Principales Logros Alcanzados</th><th class="text-center">Dificultades Lecciones Aprendidas</th><th class="text-center">Objetivos del Trimestre</th></tr>'+
+	'	                					</thead>'+
+	'	                						<tbody id="tablaAvanceCualitativo">'+
+	'	                						</tbody>'+
+	'	                				</table>'+
+	'	                			</div>';
+	$('#cuerpoTablaAvanceCualitativo').append(tablaAccion);
 	$('#tablaAvanceCualitativo').html("");
 	$('#tablaAvanceCualitativo').append(tablaAvanceCualitativo);
-
+	$("#dataTablesAvanceCualitativo").DataTable();
 	
 }
 
