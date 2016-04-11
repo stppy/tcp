@@ -6,6 +6,7 @@ protected int id;
 protected double monto;
 protected String codigoContratacion;
 protected int objetoGasto;
+protected String productoConcat;
 protected int avanceId;
 protected boolean borrado;
 
@@ -61,6 +62,20 @@ public int getObjetoGasto() {
 
 public void setObjetoGasto(int objetoGasto) {
 	this.objetoGasto = objetoGasto;
+}
+
+
+
+
+public String getProductoConcat() {
+	return productoConcat;
+}
+
+
+
+
+public void setProductoConcat(String productoConcat) {
+	this.productoConcat = productoConcat;
 }
 
 
