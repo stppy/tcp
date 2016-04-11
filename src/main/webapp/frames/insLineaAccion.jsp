@@ -5958,7 +5958,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'													<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" placeholder="Ingrese Nombre" /></td><td><label for="urlEvidencia">Url</label><input type="url" id="urlEvidencia" class="form-control" placeholder="Ingrese Url" /></td></tr>'+
 									'													<tr><td colspan="2"><label for="descripcionEvidencia">Descripción</label><input type="text" id="descripcionEvidencia" class="form-control" placeholder="Ingrese Descripción" /></td></tr>'+
  									'													<tr><td><label for="documentoEvidencia">Adjuntar Documento</label><input type="file" id="documentoEvidencia" name="documentoEvidencia" /><div id="progress" class="progress">'+
-        							'														<div class="bar" style="width: 0%;"></div></div></td><td><div class="form-group"><label for="adjuntarArchivoExistenteEvidencia">Seleccionar Archivo Existente</label><select id="adjuntarArchivoExistenteEvidencia" class="form-control">'+optionArchivoExistente+'</select></div></td></tr>'+
+        							'														<div  class="bar" style="width: 0%;"></div></div></td></tr>'+
 									'													<input type="hidden" id="wsIdEvidencia" value="1" /><input type="hidden" id="versionEvidencia" value="3"/><input type="hidden" id="avanceIdEvidencia" value="'+avanceId+'"/>'+
 									'													<input type="hidden" id="urlDocEvidencia" value="" />'+
 									'		      									</form>	'+
@@ -8580,7 +8580,7 @@ $("body").on("click", ".avanceCualitativo",function(event){
 	'	                				</table>'+
 	'	                			</div>';
 	$('#cuerpoTablaAvanceCualitativo').append(tablaAccion);
-	listaAvanceCualitativo();	
+	listaAvanceCualitativo(insLineaAccionId);	
 	//$('#tablaAccionesPrecargadas').append(cuerpoAccion);
 	$('#modalAvanceCualitativo').modal('show');
 	$("#dataTablesAvanceCualitativo").DataTable();
@@ -8626,7 +8626,7 @@ $("body").on("click", ".guardarAvanceCualitatitvo",function(event){
         mimeType: 'application/json',
         success: function (data) {
         	if(data.success == true){
-        		listaAvanceCualitativo();
+        		listaAvanceCualitativo(insLineaAccionId);
         	}
         },
         //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
@@ -8637,11 +8637,11 @@ $("body").on("click", ".guardarAvanceCualitatitvo",function(event){
     
 });	
 
-function listaAvanceCualitativo(){
+function listaAvanceCualitativo(insLineaAccionId){
 	
 	var tablaAvanceCualitativo;
 	var avanceCualitativo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCualitativo',
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCualitativo&insLineaAccionId='+insLineaAccionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -8681,9 +8681,21 @@ function listaAvanceCualitativo(){
 
 	
 	}
+	$('#cuerpoTablaAvanceCualitativo').html("");
+
+	var tablaAccion ='     			<div class="table-responsive">'+
+	'	                				<table class="table table-hover table-bordered" id="dataTablesAvanceCualitativo">'+
+	'	                					<thead>'+
+	'	                						<tr class="active"><th class="text-center">Accion</th><th class="text-center">Trimestre</th><th class="text-center">Año</th><th class="text-center">Gestiones Realizadas</th><th class="text-center">Principales Logros Alcanzados</th><th class="text-center">Dificultades Lecciones Aprendidas</th><th class="text-center">Objetivos del Trimestre</th></tr>'+
+	'	                					</thead>'+
+	'	                						<tbody id="tablaAvanceCualitativo">'+
+	'	                						</tbody>'+
+	'	                				</table>'+
+	'	                			</div>';
+	$('#cuerpoTablaAvanceCualitativo').append(tablaAccion);
 	$('#tablaAvanceCualitativo').html("");
 	$('#tablaAvanceCualitativo').append(tablaAvanceCualitativo);
-
+	$("#dataTablesAvanceCualitativo").DataTable();
 	
 }
 

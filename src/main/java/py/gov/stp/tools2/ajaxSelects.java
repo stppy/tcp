@@ -622,6 +622,7 @@ public class ajaxSelects extends HttpServlet {
         	if (action.equals("getAvanceCualitativo")){
         		List objetos=null;
         		condition = " where true";
+        		if (insLineaAccionId!=null) condition += " and ins_linea_accion_id ='"+insLineaAccionId+"'";
            		try {objetos = SqlSelects.selectAvanceCualitativo(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
