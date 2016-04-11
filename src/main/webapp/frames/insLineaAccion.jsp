@@ -8562,7 +8562,7 @@ $("body").on("click", ".avanceCualitativo",function(event){
 	'	                				</table>'+
 	'	                			</div>';
 	$('#cuerpoTablaAvanceCualitativo').append(tablaAccion);
-	listaAvanceCualitativo();	
+	listaAvanceCualitativo(insLineaAccionId);	
 	//$('#tablaAccionesPrecargadas').append(cuerpoAccion);
 	$('#modalAvanceCualitativo').modal('show');
 	$("#dataTablesAvanceCualitativo").DataTable();
@@ -8608,22 +8608,22 @@ $("body").on("click", ".guardarAvanceCualitatitvo",function(event){
         mimeType: 'application/json',
         success: function (data) {
         	if(data.success == true){
-        		listaAvanceCualitativo();
+        		listaAvanceCualitativo(insLineaAccionId);
         	}
         },
         //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
         error: function(data,status,er) {
         	}
-	 });adjuntarArchivoExistenteEvidencia
+	 });
 
     
 });	
 
-function listaAvanceCualitativo(){
+function listaAvanceCualitativo(insLineaAccionId){
 	
 	var tablaAvanceCualitativo;
 	var avanceCualitativo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCualitativo',
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCualitativo&insLineaAccionId='+insLineaAccionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -8663,9 +8663,21 @@ function listaAvanceCualitativo(){
 
 	
 	}
+	$('#cuerpoTablaAvanceCualitativo').html("");
+
+	var tablaAccion ='     			<div class="table-responsive">'+
+	'	                				<table class="table table-hover table-bordered" id="dataTablesAvanceCualitativo">'+
+	'	                					<thead>'+
+	'	                						<tr class="active"><th class="text-center">Accion</th><th class="text-center">Trimestre</th><th class="text-center">Año</th><th class="text-center">Gestiones Realizadas</th><th class="text-center">Principales Logros Alcanzados</th><th class="text-center">Dificultades Lecciones Aprendidas</th><th class="text-center">Objetivos del Trimestre</th></tr>'+
+	'	                					</thead>'+
+	'	                						<tbody id="tablaAvanceCualitativo">'+
+	'	                						</tbody>'+
+	'	                				</table>'+
+	'	                			</div>';
+	$('#cuerpoTablaAvanceCualitativo').append(tablaAccion);
 	$('#tablaAvanceCualitativo').html("");
 	$('#tablaAvanceCualitativo').append(tablaAvanceCualitativo);
-
+	$("#dataTablesAvanceCualitativo").DataTable();
 	
 }
 
