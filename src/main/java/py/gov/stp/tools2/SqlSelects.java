@@ -225,6 +225,53 @@ public class SqlSelects {
 		return objetos; 
 		}
 	
+	public static List<LineasAccionAvance> selectPivotAvance(String condition) throws SQLException{
+		Connection conect=ConnectionConfiguration.conectar();
+		String query = " select * from linea_accion_avance "+condition;
+
+		Statement statement = null;
+		ResultSet rs=null;
+		List<LineasAccionAvance> objetos = new ArrayList<LineasAccionAvance>();
+
+		try {
+		statement = conect.createStatement();
+		rs=statement.executeQuery(query);
+		while(rs.next()){
+		LineasAccionAvance objeto = new LineasAccionAvance();
+
+		objeto.setCronoId(rs.getInt("crono_id"));
+		objeto.setCronoNombre(rs.getString("crono_nombre"));
+		objeto.setCronoDescripcion(rs.getString("crono_descp"));
+		objeto.setCronoProporcion(rs.getString("crono_prop"));
+		objeto.setCronoPeso(rs.getInt("crono_peso"));
+		objeto.setCronoVersion(rs.getInt("crono_ver"));
+		objeto.setCronoBorrado(rs.getBoolean("crono_borr"));
+		objeto.setCronoUnidadMedida(rs.getString("crono_um_id"));
+		objeto.setCronoTipoId(rs.getInt("crono_tipo_id"));
+		objeto.setAvanceJustificacion(rs.getString("avance_justificacion"));
+		objeto.setAvanceCantidad(rs.getInt("avance_cantidad"));
+		objeto.setAvanceFechaEntrega(rs.getString("avance_fecha_entrega"));
+		objeto.setAvanceCantidadBeneficiarios(rs.getInt("avance_cantidad_beneficiarios"));
+		objeto.setAvanceVersion(rs.getInt("avance_version"));
+		objeto.setAvanceBorrado(rs.getBoolean("avance_borrado"));
+		objeto.setAvanceCostoId(rs.getInt("avance_costo_id"));
+		objeto.setAvanceCostoMonto(rs.getInt("avance_costo_monto"));
+		objeto.setAvanceCostoCodigoContratancional(rs.getInt("avance_costo_codigo_contratacional"));
+		objeto.setAvanceCostoGasto(rs.getString("avance_costo_objeto_gasto"));
+		objeto.setAvanceCostoVersion(rs.getInt("avance_costo_version"));
+		objeto.setAvanceCostoBorrado(rs.getBoolean("avance_costo_borrado"));
+		objetos.add(objeto);
+		}
+		}
+		catch (SQLException e) {e.printStackTrace();}
+		finally{
+		if (statement != null) {statement.close();}
+		if (conect != null) {conect.close();}
+		}
+		return objetos; 
+		}
+
+	
 	public static List<Avance> selectAvance(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
 		String query = " select * from avance "+condition;
