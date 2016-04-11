@@ -765,8 +765,8 @@ public class SqlInserts {
 		insert.setDouble (2, avance.getCantidad());
 		insert.setDate (3, sqlStart); 
 		//insert.setInt (4, avance.getCantidadBeneficiarios());
-		insert.setInt (5, avance.getActividadId());
-		insert.setInt (6, avance.getVersion());
+		insert.setInt (4, avance.getActividadId());
+		insert.setInt (5, avance.getVersion());
 		
 		insert.execute();
 		   
