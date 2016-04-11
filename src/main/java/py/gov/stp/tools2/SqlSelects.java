@@ -440,7 +440,7 @@ public class SqlSelects {
 				objeto.setDist_id(rs.getInt("dist_id"));
 				objeto.setAc_um_id(rs.getInt("ac_um_id"));
 				objeto.setCrono_id(rs.getInt("crono_id"));
-				objeto.setCrono_tipo_id(rs.getInt("crono_tipo_id"));			
+				objeto.setCrono_tipo_id(rs.getInt("crono_tipo_id"));
 
 				objetos.add(objeto);
 			}
@@ -929,6 +929,7 @@ public class SqlSelects {
 					objeto.setVersion(rs.getInt("version"));
 					objeto.setBorrado(rs.getBoolean("borrado"));
 					objeto.setAvanceId(rs.getInt("avance_id"));
+					objeto.setUrlDocumento(rs.getString("url_documento"));
 					
 					objetos.add(objeto);
 				}

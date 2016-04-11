@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
-  <display-name>Tab BackEnd</display-name>
-	<!-- Filter to handle logout requests sent directly by the CAS server -->  
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+	<display-name>Tab BackEnd</display-name>
+
+	<context-param>
+		<description>Ubicacion donde se guarda los uploads</description>
+		<param-name>file-upload</param-name>
+		<param-value>/home/desarrollo</param-value>
+	</context-param>
+	<!-- Filter to handle logout requests sent directly by the CAS server -->
 	<filter>
 		<filter-name>CAS Single Sign Out Filter</filter-name>
 		<filter-class>org.jasig.cas.client.session.SingleSignOutFilter</filter-class>
@@ -15,24 +24,23 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	<listener>
-		<listener-class>org.jasig.cas.client.session.SingleSignOutHttpSessionListener
-		</listener-class>
-	</listener> 
+		<listener-class>org.jasig.cas.client.session.SingleSignOutHttpSessionListener</listener-class>
+	</listener>
 	<!-- charset filter -->
 	<filter>
-    <filter-name>Character Encoding Filter</filter-name>
-    <filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
-    <init-param>
-      <param-name>encoding</param-name>
-      <param-value>UTF-8</param-value>
-    </init-param>
-  </filter>
-  <filter-mapping>
-    <filter-name>Character Encoding Filter</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
-	
-	
+		<filter-name>Character Encoding Filter</filter-name>
+		<filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>Character Encoding Filter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+
 	<!-- paginas protegidas -->
 	<filter>
 		<filter-name>CAS Authentication Filter</filter-name>
@@ -50,10 +58,10 @@
 	<filter-mapping>
 		<filter-name>CAS Authentication Filter</filter-name>
 		<url-pattern>/*</url-pattern>
-	</filter-mapping> 
- 
- 	<!-- validacion de ticket-->
- 	<filter>
+	</filter-mapping>
+
+	<!-- validacion de ticket -->
+	<filter>
 		<filter-name>CAS Validation Filter</filter-name>
 		<filter-class>org.jasig.cas.client.validation.Cas30ProxyReceivingTicketValidationFilter</filter-class>
 		<init-param>
@@ -68,9 +76,9 @@
 	<filter-mapping>
 		<filter-name>CAS Validation Filter</filter-name>
 		<url-pattern>*</url-pattern>
-	</filter-mapping> 
-	
-	<!--  filtro de cas en todos los request --> 
+	</filter-mapping>
+
+	<!-- filtro de cas en todos los request -->
 	<filter>
 		<filter-name>CAS HttpServletRequest Wrapper Filter</filter-name>
 		<filter-class>org.jasig.cas.client.util.HttpServletRequestWrapperFilter</filter-class>
@@ -78,39 +86,39 @@
 	<filter-mapping>
 		<filter-name>CAS HttpServletRequest Wrapper Filter</filter-name>
 		<url-pattern>*</url-pattern>
-	</filter-mapping> 
+	</filter-mapping>
 
-     <welcome-file-list>
-    	<welcome-file>contenedorInsLineaAccion.jsp</welcome-file>
-  	</welcome-file-list>
-  	
-  	<servlet>
-         <servlet-name>jsp</servlet-name>
-         <servlet-class>org.apache.jasper.servlet.JspServlet</servlet-class>
-         <init-param>
-             <param-name>fork</param-name>
-             <param-value>false</param-value>
-         </init-param>
-         <init-param>
-             <param-name>xpoweredBy</param-name>
-             <param-value>false</param-value>
-        </init-param>
-           <init-param>
-            <param-name>mappedfile</param-name>
-             <param-value>false</param-value>
-        </init-param>
-        <load-on-startup>3</load-on-startup>
-     </servlet>
-  
-  	
+	<welcome-file-list>
+		<welcome-file>contenedorInsLineaAccion.jsp</welcome-file>
+	</welcome-file-list>
 
-  <servlet>
-    <description>ajaxSelects</description>
-    <display-name>ajaxSelects</display-name>
-    <servlet-name>ajaxSelects</servlet-name>
-    <servlet-class>py.gov.stp.tools.ajaxSelects</servlet-class>
+	<servlet>
+		<servlet-name>jsp</servlet-name>
+		<servlet-class>org.apache.jasper.servlet.JspServlet</servlet-class>
+		<init-param>
+			<param-name>fork</param-name>
+			<param-value>false</param-value>
+		</init-param>
+		<init-param>
+			<param-name>xpoweredBy</param-name>
+			<param-value>false</param-value>
+		</init-param>
+		<init-param>
+			<param-name>mappedfile</param-name>
+			<param-value>false</param-value>
+		</init-param>
+		<load-on-startup>3</load-on-startup>
+	</servlet>
 
-  </servlet>
+
+
+	<servlet>
+		<description>ajaxSelects</description>
+		<display-name>ajaxSelects</display-name>
+		<servlet-name>ajaxSelects</servlet-name>
+		<servlet-class>py.gov.stp.tools.ajaxSelects</servlet-class>
+
+   </servlet>
   <servlet>
     <description>ajaxSelects2</description>
     <display-name>ajaxSelects2</display-name>
@@ -174,6 +182,16 @@
   <servlet-mapping>
     <servlet-name>ajaxDelete</servlet-name>
     <url-pattern>/ajaxDelete</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description>Sirve para almacenar archivos en el servidor</description>
+    <display-name>UploadServlet</display-name>
+    <servlet-name>UploadServlet</servlet-name>
+    <servlet-class>py.gov.stp.tools.UploadServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UploadServlet</servlet-name>
+    <url-pattern>/UploadServlet</url-pattern>
   </servlet-mapping>
  
 </web-app>

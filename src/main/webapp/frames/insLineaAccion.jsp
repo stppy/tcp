@@ -182,7 +182,7 @@
 	    datos.institucionId = institucionId;
 	    datos.periodoId = periodoId;
 	    datos.meta = meta;
-	    datos.version = version;		
+	    datos.version = version;
 
 				 
 		$.ajax({
@@ -5585,9 +5585,9 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 			<%}%>
 		}else{
 			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>
-				cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[j].nombre+'</td><td>'+webServicesEvidencia[j].descripcion+'</td><td>'+webServicesEvidencia[j].url+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+				cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[j].nombre+'</td><td>'+webServicesEvidencia[j].descripcion+'</td><td><a href="'+webServicesEvidencia[j].url+'" download="" >Descargar Archivo</a></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-trash"></span></button></td></tr>';
 			<%} if (attributes.get("role_id").toString().equals("3")){%>
-				cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[j].nombre+'</td><td>'+webServicesEvidencia[j].descripcion+'</td><td>'+webServicesEvidencia[j].url+'</td><td class="text-center"></td></tr>';
+				cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[j].nombre+'</td><td>'+webServicesEvidencia[j].descripcion+'</td><td><a href="'+webServicesEvidencia[j].url+'" download="">Descargar Archivo</a></td><td class="text-center"></td></tr>';
 			<%}%>
 		}
 	}
@@ -5936,9 +5936,10 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'		      									<form class="form-horizontal" role="form" method="post" enctype="multipart/form-data">'+
 									'													<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" placeholder="Ingrese Nombre" /></td><td><label for="urlEvidencia">Url</label><input type="url" id="urlEvidencia" class="form-control" placeholder="Ingrese Url" /></td></tr>'+
 									'													<tr><td colspan="2"><label for="descripcionEvidencia">Descripción</label><input type="text" id="descripcionEvidencia" class="form-control" placeholder="Ingrese Descripción" /></td></tr>'+
-/* 									'													<tr><td colspan="2"><label for="documentoEvidencia">Adjuntar Documento</label><input type="file" id="documentoEvidencia" name="documentoEvidencia" /><div id="progress" class="progress">'+
-        							'														<div class="bar" style="width: 0%;"></div></div></td></tr>'+ */
+ 									'													<tr><td colspan="2"><label for="documentoEvidencia">Adjuntar Documento</label><input type="file" id="documentoEvidencia" name="documentoEvidencia" /><div id="progress" class="progress">'+
+        							'														<div class="bar" style="width: 0%;"></div></div></td></tr>'+ 
 									'													<input type="hidden" id="wsIdEvidencia" value="1" /><input type="hidden" id="versionEvidencia" value="3"/><input type="hidden" id="avanceIdEvidencia" value="'+avanceId+'"/>'+
+									'													<input type="hidden" id="urlDocEvidencia" />'+
 									'		      									</form>	'+
 									'											</tbody>'+
 									'										</table>'+
@@ -6698,34 +6699,40 @@ $("body").on("click", ".guardarEvidencia",function(event){
 	var accionId = idParsed[4];
 	var actividadId = idParsed[5];
 	var avanceId = idParsed[6];
+	
+	var docEvidenciaFile = document.getElementById("documentoEvidencia").files[0];
+    
+    var formdata = new FormData();
+    formdata.append('documentoEvidencia', docEvidenciaFile);
+    
+     $.ajax({
+	         type: "POST",
+	         url: "/tablero/UploadServlet", /* contextPath + servletPath, */
+	         data: formdata, /* + $('#custIdList').val(), */
+	         async: false,
+	         processData: false,  // tell jQuery not to process the data
+	         contentType: false,   // tell jQuery not to set contentType
+	         success: function(data){
+	               $("#urlDocEvidencia").val(data);
+	           }
+	     }); 
 
 	var nombre = $("#nombreEvidencia").val();
 	var url = $("#urlEvidencia").val();
+	var urlDocumento = $("#urlDocEvidencia").val();
 	var descripcion = $("#descripcionEvidencia").val();
 	var wsId = $("#wsIdEvidencia").val();
 	var version = $("#versionEvidencia").val();
-	//var documentoEvidencia = document.getElementById("documentoEvidencia").files[0];
-    
-    /* var formdata = new FormData();
-    formdata.append("documentoEvidencia", documentoEvidencia);
-    var xhr = new XMLHttpRequest();       
-    xhr.open("POST","/fileUploadTester/FileUploader", false);
-    xhr.send(formdata);
-    xhr.onload = function(e) {
-        if (this.status == 200) {
-           alert(this.responseText);
-        }else{
-        	alert("no se pudo cargar el archivo. Intentelo nuevamente");
-        }
-    };        */             
+        
   
 	//var avanceId = $("#avanceIdEvidencia").val(); No utilizo esta variable xq ya viene en el parse pero lo ideal seria obtener del formulario
 
 	//Vaciar los inputs
 	$("#nombreEvidencia").val("");
 	$("#urlEvidencia").val("");
+	$("#urlDocEvidencia").val("");
 	$("#descripcionEvidencia").val("");
-	//$("#documentoEvidencia").val("");
+	$("#documentoEvidencia").val("");
 
 	
 	var objeto = new Object();
@@ -6754,10 +6761,10 @@ $("body").on("click", ".guardarEvidencia",function(event){
         			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getEvidencia&avanceId='+avanceId,
         		  	type:'get',
         		  	dataType:'json',
-        		  	async:false       
+        		  	async:false            
         		}).responseText;
         		webServicesEvidencia = JSON.parse(webServicesEvidencia);
-        		
+        		 
         		var cuerpoEvidencia = "";
         		for(var d = 0; d < webServicesEvidencia.length; d++)
         		{
@@ -6766,7 +6773,7 @@ $("body").on("click", ".guardarEvidencia",function(event){
         				<% if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("2")){%>
         				cuerpoEvidencia += '<tr><td><del>'+webServicesEvidencia[d].nombre+'</del></td><td><del>'+webServicesEvidencia[d].descripcion+'</del></td><td><del>'+webServicesEvidencia[d].url+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
         				<% }%>
-        			}else{
+        			}else{ 
         				cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[d].nombre+'</td><td>'+webServicesEvidencia[d].descripcion+'</td><td>'+webServicesEvidencia[d].url+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
         			}	
         		}
@@ -6944,11 +6951,12 @@ $("body").on("click", ".consultaEditarEvidencia",function(event){
 						'			      			<form class="form-horizontal" role="form">'+
 						'								<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" value="'+webServicesEvidencia[0].nombre+'" /></td><td><label for="urlEvidencia">Url</label><input type="url" id="urlEvidencia" class="form-control" value="'+webServicesEvidencia[0].url+'" /></td></tr>'+
 						'								<tr><td colspan="2"><label for="descripcionEvidencia">Descripción</label><input type="text" id="descripcionEvidencia" class="form-control" value="'+webServicesEvidencia[0].descripcion+'" /></td></tr>'+
-						'								<input type="hidden" id="wsIdEvidencia" value='+webServicesEvidencia[0].wsId+' /><input type="hidden" id="versionEvidencia" value='+webServicesEvidencia[0].version+' /><input type="hidden" id="avanceIdEvidencia" value='+webServicesEvidencia[0].avanceId+' />'+		
+						'								<input type="hidden" id="wsIdEvidencia" value='+webServicesEvidencia[0].wsId+' /><input type="hidden" id="versionEvidencia" value='+webServicesEvidencia[0].version+' /><input type="hidden" id="avanceIdEvidencia" value='+webServicesEvidencia[0].avanceId+' />'+
+						'								<input type="hidden" id="urlDocEvidencia" value='+webServicesEvidencia[0].urlDocumento+' />'+														
 						'			      			</form>	'+												
-/* 						'							<form action="UploadServlet" method="post" enctype="multipart/form-data">'+ 
-						'								<tr><td><label for="documentoEvidencia">Adjuntar Documento</label><input type="file" id="documentoEvidencia" name="documentoEvidencia" size="50"  value='+webServicesEvidencia[0].wsId+'/></td></tr>'+
- 						'							</form>	'+	 */
+						'							<form method="post" enctype="multipart/form-data">'+ 
+						'								<tr><td><label for="documentoEvidencia">Adjuntar Documento</label><input type="file" id="documentoEvidencia" name="documentoEvidencia" size="50" value='+webServicesEvidencia[0].urlDocumento+'/></td></tr>'+
+ 						'							</form>	'+	 
 						'						</tbody>'+
 						'					</table>'+
 						'				</div>'+
@@ -6973,9 +6981,27 @@ $("body").on("click", ".editarEvidencia",function(event){
 	
 	//Las siguentes variables se utiliza en esta funcion para redibujar el modal anterior
 	var evidenciaId = idParsed[0];
+	
+	var docEvidenciaFile = document.getElementById("documentoEvidencia").files[0];
+    
+    var formdata = new FormData();
+    formdata.append('documentoEvidencia', docEvidenciaFile);
+    
+     $.ajax({
+	         type: "POST",
+	         url: "/tablero/UploadServlet", /* contextPath + servletPath, */
+	         data: formdata, /* + $('#custIdList').val(), */
+	         async: false,
+	         processData: false,  // tell jQuery not to process the data
+	         contentType: false,   // tell jQuery not to set contentType
+	         success: function(data){
+	               $("#urlEvidencia").val(data);
+	           }
+	     }); 
 
 	var nombre = $("#nombreEvidencia").val();
 	var url = $("#urlEvidencia").val();
+	var urlDocumento = $("#urlDocEvidencia").val();
 	var descripcion = $("#descripcionEvidencia").val();
 	var wsId = $("#wsIdEvidencia").val();
 	var version = $("#versionEvidencia").val();
@@ -6984,7 +7010,9 @@ $("body").on("click", ".editarEvidencia",function(event){
 	//Vaciar los inputs
 	$("#nombreEvidencia").val("");
 	$("#urlEvidencia").val("");
+	$("#urlDocEvidencia").val("");
 	$("#descripcionEvidencia").val("");
+	$("#documentoEvidencia").val("");
 
 	
 	var objeto = new Object();
@@ -8301,6 +8329,239 @@ $("body").on("click", ".borrarDestinatarioAccion",function(event){
         	}
 	 });
 	
+});
+
+$("body").on("click", ".avanceCualitativo",function(event){
+	var parametros = $(this).attr("parametros");
+	var idParsed = parametros.split("-"); 
+    var insLineaAccionId = idParsed[0];
+    var lineaAccionId = idParsed[1];
+    var institucionId = idParsed[2];
+    var periodoId = idParsed[3];
+	
+    if ( $("#modalAvanceCualitativo").length )
+	{
+		$("#modalAvanceCualitativo").remove();
+	}
+
+	var lineaAccion = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	lineaAccion = JSON.parse(lineaAccion);
+
+	for(i = 0;i<lineaAccion.length; i++)
+	{
+		if(lineaAccion[i].id == lineaAccionId)
+		{
+			var nombreLineaAccion = lineaAccion[i].nombre;
+		}
+	}
+	
+	var catalogoAccion = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	catalogoAccion = JSON.parse(catalogoAccion);
+	var optionCatalogoAccion = "";
+
+	for(l = 0; l < catalogoAccion.length; l++)
+	{
+		optionCatalogoAccion+='<option value="'+catalogoAccion[l].id+'" parametro="'+catalogoAccion[l].id+'">'+catalogoAccion[l].nombre+'</option>';
+	}
+	
+	var institucion = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	institucion = JSON.parse(institucion);
+
+	for(m = 0;m<institucion.length; m++)
+	{
+		if(institucion[m].id == institucionId)
+		{
+			var nombreInstitucion = institucion[m].sigla;
+		}
+	}
+	
+	var periodo = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	periodo = JSON.parse(periodo);
+
+	for(p = 0;p<periodo.length; p++)
+	{
+		if(periodo[p].id == periodoId)
+		{
+			var nombrePeriodo = periodo[p].nombre;
+		}
+	}
+	
+	var unidadMedida = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	unidadMedida = JSON.parse(unidadMedida);
+	var optionUnidadMedida;
+	for(var u = 0; u < unidadMedida.length; u++)
+	{
+		optionUnidadMedida+='<option value="'+unidadMedida[u].id+'" parametro="'+unidadMedida[u].id+'">'+unidadMedida[u].descripcion+'</option>';
+	}
+	
+	var departamentos = $.ajax({
+    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
+      	type:'get',
+      	dataType:'json',
+      	async:false       
+    }).responseText;
+	departamentos = JSON.parse(departamentos);
+	
+	var optionDepartamentos = "";
+	for(i = 0;i<departamentos.length; i++){
+		optionDepartamentos+='<option value="'+departamentos[i].idDepartamento+'" parametro="'+departamentos[i].idDepartamento+'">'+departamentos[i].nombreDepartamento+'</option>';
+	}
+	
+	var distritos = $.ajax({
+    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito',
+      	type:'get',
+      	dataType:'json',
+      	async:false       
+    }).responseText;
+	distritos = JSON.parse(distritos);
+	
+	var accion = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccionId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	accion = JSON.parse(accion);
+	
+	var nombreDepartamento;
+	var nombreDistrito;
+	var nombreAccionCatalogo;
+	var cuerpoAccion = "";
+
+	var optionAcciones = "";
+	var lineasDeAccion= [];
+
+	for(var a = 0; a < accion.length; a++)
+	{		
+		if(accion[a].borrado != true){
+			if (lineasDeAccion.indexOf(accion[a].accionCatalogoId)<0){
+				lineasDeAccion.push(accion[a].accionCatalogoId);
+			}
+		}
+	}
+	
+	for(var z = 0; z < lineasDeAccion.length; z++)
+	{
+				
+		for(var g = 0; g < catalogoAccion.length; g++)
+		{
+			if(lineasDeAccion[z] == catalogoAccion[g].id){
+				optionAcciones+='<option value="'+catalogoAccion[g].id+'" >'+catalogoAccion[g].nombre+'</option>';
+				}
+		}		
+		
+	}
+	
+			
+	var cuerpoModalAvanceCualitativo = "";
+
+	cuerpoModalAvanceCualitativo =	'<div class="modal fade" id="modalAvanceCualitativo" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="myLargeModalLabel">'+
+						'	<div class="modal-dialog modal-lg" style="width:90%">'+
+						'		<div class="modal-content" >'+
+						'			<div class="modal-header">'+
+						'		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+						'		        <h4 class="modal-title">Registrar Avance Cualitativo de '+nombreLineaAccion+' ('+nombreInstitucion+') - '+nombrePeriodo+'</h4>'+ 
+						'			</div>'+
+						'		    <div class="modal-body" id="accionCuerpo" >';
+						
+	<% if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>		
+	
+	
+	cuerpoModalAvanceCualitativo +='		      	<div class="row">'+ 
+						'		      		<div class="col-md-12">'+
+						'						<div class="box box-warning">'+
+						'		                	<div class="box-header with-border">'+
+						'		                  		<h3 class="box-title">Avance Trimestral Cualitativo del Plan de Acción</h3>'+
+						'               			</div>'+//fin box-heder
+						'               			<div class="box-body">'+
+						
+						'								<form role="form">'+
+						'									<div class="table-responsive">'+
+						'										<table class="table table-hover">'+
+						'											<tbody>'+
+						'												<tr><td colspan="2"><div class="form-group"><label for="nombreAvanceCualitativo">Acciones</label><select id="nombreAvanceCualitativo" class="form-control">'+optionAcciones+'</select></div></td></tr>'+
+						'												<tr><td><div class="form-group"><label for="gestionesRealizadasAvanceCualitativo">Gestiones Realizadas</label><textarea class="form-control" rows="" placeholder="" id="gestionesRealizadasAvanceCualitativo"></textarea></div></td><td><div class="form-group"><label for="logrosAlcanzadosAvanceCualitativo">Principales Logros Alcanzados</label><textarea class="form-control" rows="" placeholder="" id="logrosAlcanzadosAvanceCualitativo"></textarea></div></td></tr>'+
+						'												<tr><td><div class="form-group"><label for="leccionesAprendidasAvanceCualitativo">Dificultades y Lecciones aprendidas</label><textarea class="form-control" rows="" placeholder="" id="leccionesAprendidasAvanceCualitativo"></textarea></div></td><td><div class="form-group"><label for="objetivosAvanceCualitativo">Objetivos del Siguiente Trimestre</label><textarea class="form-control" rows="" placeholder="" id="objetivosAvanceCualitativo"></textarea></div></td></tr>'+							
+						'											</tbody>'+							           
+						'										</table>'+
+						'									</div>'+							
+						'								</form>'
+										
+						'               			</div>'+//fin box-body
+						'							<div class="modal-footer">'+
+						'								<button type="button" class="btn btn-success btn-sm guardarAvanceCualitatitvo" parametros = '+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'>Guardar Acción</button>'+
+						'							</div>'+
+						'                		</div>'+	
+						'                	</div>'+
+						'                </div>';											
+	<%}%>	
+	
+	cuerpoModalAvanceCualitativo +='	<div class="row">'+ 
+						'		      		<div class="col-md-12">'+
+						'						<div class="box box-warning">'+
+						'		                	<div class="box-header with-border">'+
+						'		                  		<h3 class="box-title">Avance Cualitativos Precargadas</h3>'+
+						'               			</div>'+//fin box-heder
+						'               			<div class="box-body" id="cuerpoTablaAvanceCualitativo">'+
+
+				
+						'               			</div>'+//fin box-body
+						'                		</div>'+	
+						'                	</div>'+
+						'                </div>'+
+						
+
+						'		    </div>'+
+						'			<div class="modal-footer">'+
+				      	'			</div>'+														
+						'		</div>'+ 
+						'	</div>'+
+						'</div>';
+						
+	$("#programacion").append(cuerpoModalAvanceCualitativo);
+	$('#cuerpoTablaAvanceCualitativo').html("");
+
+	var tablaAccion ='     			<div class="table-responsive">'+
+	'	                				<table class="table table-hover table-bordered" id="dataTablesAvanceCualitativo">'+
+	'	                					<thead>'+
+	'	                						<tr class="active"><th rowspan="2" class="text-center">Acción</th><th rowspan="2" class="text-center">Depto</th><th rowspan="2" class="text-center">Distrito</th><th rowspan="2" class="text-center">FechaInicio</th><th rowspan="2" class="text-center">FechaFin</th><th rowspan="2" class="text-center">Unidad Medida</th><th colspan="4" class="text-center">Metas</th><th rowspan="2" class="text-center" style="min-width:160px">Administrar Acción</th></tr>'+
+	'	                						<tr class="active"><th class="text-center">1er Trimestre</th><th class="text-center">2do Trimestre</th><th class="text-center">3er Trimestre</th><th class="text-center">4to Trimestre</th></tr>'+
+	'	                					</thead>'+
+	'	                						<tbody id="tablaAvanceCualitativo">'+
+	'	                						</tbody>'+
+	'	                				</table>'+
+	'	                			</div>';
+	$('#cuerpoTablaAvanceCualitativo').append(tablaAccion);
+	
+	//$('#tablaAccionesPrecargadas').append(cuerpoAccion);
+	$('#modalAvanceCualitativo').modal('show');
+	//$("#dataTablesAcciones").DataTable();
+
 });
 
 
