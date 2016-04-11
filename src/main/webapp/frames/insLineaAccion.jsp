@@ -6365,18 +6365,21 @@ $("body").on("click", ".guardarCosto",function(event){
 	var codigoContratacion = $("#codigoContratacionalCosto").val();
 	var objetoGasto = $("#objetoGastoCosto").val();
 	var avanceId = $("#avanceIdCosto").val();
+	var productoConcat = $("#productoObjetoGasto option:selected").text();
 
 	//Vaciar los inputs
 	$("#codigoContratacionalCosto").val("");
 	$("#objetoGastoCosto").val("");
 	$("#montoCosto").val("");
-
+	$("#productoObjetoGasto").val("");
+	
 	var objeto = new Object();
 	
 	objeto.monto = monto;
 	objeto.codigoContratacion = codigoContratacion;
 	objeto.objetoGasto = objetoGasto;
 	objeto.avanceId = avanceId;
+	objeto.productoConcat = productoConcat;
 
   	var info = JSON.stringify(objeto);
     $.ajax({
@@ -6582,8 +6585,8 @@ $("body").on("click", ".consultaEditarCosto",function(event){
 						'						<table class="table table-hover">'+
 						'							<tbody>'+
 						'								<form class="form-horizontal" role="form">'+
-						'									<tr><td><label for="codigoContratacionalCosto">Cod. Contrato</label><input type="text" id="codigoContratacionalCosto" class="form-control" value='+webServicesAvanceCosto[0].codigoContratacion+' /></td><td><label for="objetoGastoCosto">Objeto Gasto</label><input type="number" id="objetoGastoCosto" class="form-control" value='+webServicesAvanceCosto[0].objetoGasto+' /></td></tr>'+									
-						'									<tr><td colspan="2"><label for="montoCosto">Monto</label><input type="number" id="montoCosto" class="form-control" value='+webServicesAvanceCosto[0].monto+'  /></td></tr>'+
+						'									<tr><td><label for="ProductoObjetoGasto">Producto Objeto Gasto</label><input type="text" id="ProductoObjetoGasto" class="form-control" value='+webServicesAvanceCosto[0].productoConcat+' disabled="disabled" /></td><td><label for="objetoGastoCosto">Objeto Gasto</label><input type="number" id="objetoGastoCosto" class="form-control" value='+webServicesAvanceCosto[0].objetoGasto+' disabled="disabled" /></td></tr>'+
+						'									<tr><td><label for="codigoContratacionalCosto">Cod. Contrato</label><input type="text" id="codigoContratacionalCosto" class="form-control" value='+webServicesAvanceCosto[0].codigoContratacion+' /></td><td colspan="2"><label for="montoCosto">Monto</label><input type="number" id="montoCosto" class="form-control" value='+webServicesAvanceCosto[0].monto+'  /></td></tr>'+									
 						'									<input type="hidden" id="avanceIdCosto" value="'+webServicesAvanceCosto[0].avanceId+'"/>'+		
 						'								</form>	'+												
 						'  							</tbody>'+
@@ -6624,8 +6627,7 @@ $("body").on("click", ".editarAvanceCosto",function(event){
 	var codigoContratacion = $("#codigoContratacionalCosto").val();
 	var objetoGasto = $("#objetoGastoCosto").val();
 	var avanceId = $("#avanceIdCosto").val();
-
-
+	var productoConcat = $("#productoObjetoGasto option:selected").text();
 	
     var objeto = new Object();
     objeto.id = costoId;
@@ -6633,7 +6635,8 @@ $("body").on("click", ".editarAvanceCosto",function(event){
     objeto.codigoContratacion = codigoContratacion;
     objeto.objetoGasto = objetoGasto;
     objeto.avanceId = avanceId;
-  
+    objeto.productoConcat = productoConcat;
+    
   	var info = JSON.stringify(objeto);
     $.ajax({
         url: "ajaxUpdate2?accion=actAvanceCosto",

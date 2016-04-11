@@ -781,14 +781,16 @@ public class SqlInserts {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
 		String query = " insert into avance_costo (monto,codigo_contratacionl,objeto_gasto,avance_id, producto_concat)"
-	+ " values (?, ?, ?, ?)";
+	+ " values (?, ?, ?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
+		
 		
 		insert.setDouble (1, costo.getMonto());
 		insert.setString (2, costo.getCodigoContratacion());
 		insert.setInt (3, costo.getObjetoGasto());
 		insert.setInt (4, costo.getAvanceId());
+		insert.setString(5, costo.getProductoConcat());
 		
 		insert.execute();
 		   
