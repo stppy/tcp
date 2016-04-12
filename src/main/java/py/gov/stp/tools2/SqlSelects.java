@@ -228,7 +228,7 @@ public class SqlSelects {
 	
 	public static List<LineasAccionAvance> selectPivotAvance(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select * from linea_accion_avance "+condition;
+		String query = " select * from v_linea_accion_avance "+condition;
 
 		Statement statement = null;
 		ResultSet rs=null;
@@ -240,6 +240,28 @@ public class SqlSelects {
 		while(rs.next()){
 		LineasAccionAvance objeto = new LineasAccionAvance();
 
+		objeto.setInstitucionId(rs.getInt("ins_id"));
+		objeto.setInstitucionSigla(rs.getString("ins_sigla"));
+		objeto.setInstitucionVersion(rs.getInt("ins_ver"));
+		objeto.setInstitucionBorrado(rs.getBoolean("ins_borr"));
+		objeto.setInsLineaAccionId(rs.getInt("ila_id"));
+		objeto.setInsLineaAccionPeriodoId(rs.getInt("periodo"));
+		objeto.setInsLineaAccionMeta(rs.getInt("ila_meta"));
+		objeto.setInsLineaAccionVersion(rs.getInt("ila_ver"));
+		objeto.setInsLineaAccionBorrado(rs.getBoolean("ila_bor"));
+		objeto.setAccionId(rs.getInt("accion_id"));
+		objeto.setAccionCosto(rs.getInt("accion_costo"));
+		objeto.setAccionPeso(rs.getInt("accion_peso"));
+		objeto.setAccionFechaIni(rs.getString("accion_fecha_ini"));
+		objeto.setAccionFechaFin(rs.getString("accion_fecha_fin"));
+		objeto.setAccionVersion(rs.getInt("accion_ver"));
+		objeto.setAccionBorrado(rs.getBoolean("accion_bor"));
+		objeto.setAccionM1(rs.getInt("m1"));
+		objeto.setAccionM2(rs.getInt("m2"));
+		objeto.setAccionM3(rs.getInt("m3"));
+		objeto.setAccionM4(rs.getInt("m4"));
+		objeto.setAccionDeptoId(rs.getInt("depto_id"));
+		objeto.setAccionDistId(rs.getInt("dist_id"));
 		objeto.setCronoId(rs.getInt("crono_id"));
 		objeto.setCronoNombre(rs.getString("crono_nombre"));
 		objeto.setCronoDescripcion(rs.getString("crono_descp"));
@@ -249,6 +271,10 @@ public class SqlSelects {
 		objeto.setCronoBorrado(rs.getBoolean("crono_borr"));
 		objeto.setCronoUnidadMedida(rs.getString("crono_um_id"));
 		objeto.setCronoTipoId(rs.getInt("crono_tipo_id"));
+		objeto.setCronoTipoNombre(rs.getString("crono_tipo_nombre"));
+		objeto.setCronoTipoDescr(rs.getString("crono_tipo_descripcion"));
+		objeto.setCronoTipoVersion(rs.getInt("crono_tipo_version"));
+		objeto.setCronoTipoBorrado(rs.getBoolean("crono_tipo_borrado"));
 		objeto.setAvanceJustificacion(rs.getString("avance_justificacion"));
 		objeto.setAvanceCantidad(rs.getInt("avance_cantidad"));
 		objeto.setAvanceFechaEntrega(rs.getString("avance_fecha_entrega"));
@@ -256,19 +282,20 @@ public class SqlSelects {
 		objeto.setAvanceVersion(rs.getInt("avance_version"));
 		objeto.setAvanceBorrado(rs.getBoolean("avance_borrado"));
 		objeto.setAvanceCostoId(rs.getInt("avance_costo_id"));
-		objeto.setAvanceCostoMonto(rs.getInt("avance_costo_monto"));
-		objeto.setAvanceCostoCodigoContratancional(rs.getInt("avance_costo_codigo_contratacional"));
+		objeto.setAvanceCostoMonto(rs.getDouble("avance_costo_monto"));
+		objeto.setAvanceCostoCodigoContratancional(rs.getString("avance_costo_codigo_contratacional"));
 		objeto.setAvanceCostoGasto(rs.getString("avance_costo_objeto_gasto"));
 		objeto.setAvanceCostoVersion(rs.getInt("avance_costo_version"));
 		objeto.setAvanceCostoBorrado(rs.getBoolean("avance_costo_borrado"));
+		
 		objetos.add(objeto);
 		}
 		}
 		catch (SQLException e) {e.printStackTrace();}
 		finally{
-		if (statement != null) {statement.close();}
-		if (conect != null) {conect.close();}
-		}
+			if (statement != null) {statement.close();}
+			if (conect != null) {conect.close();}
+			}
 		return objetos; 
 		}
 

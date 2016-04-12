@@ -45,6 +45,7 @@
          			<li class=""><a href="http://spr.stp.gov.py/tablero/pivotPresupuesto.jsp"><i class="fa fa-signal" id="linkPivotPresupuesto"></i>Análisis de Productos</a></li>
 					<li class=""><a href="http://spr.stp.gov.py/tablero/pivotDestinatario.jsp"><i class="fa fa-group" id="linkPivotDestinatario"></i>Análisis de Destinatarios</a></li>
 					<li class=""><a href="http://spr.stp.gov.py/tablero/pivotProgramado.jsp"><i class="fa fa-calendar" id="linkPivotProgramacion"></i>Análisis de Programación</a></li>
+					<li class=""><a href="http://spr.stp.gov.py/tablero/pivotAvance.jsp"><i class="fa fa-line-chart" id="linkPivotAvances"></i>Análisis de Avances</a></li>
 					<li class=""><a href="http://spr.stp.gov.py/tablero/resumenLineaAccion.jsp"><i class="fa fa-dashboard" id="linkResumenLineaAccion"></i>Tablero de Control</a></li>
 					<li class=""><a href="http://spr.stp.gov.py/tablero/descargasConstancias.jsp"><i class="fa fa-cloud-download" id="linkDescargasConstancias"></i>Descargar Constancias</a></li>          			
     			</ul>
