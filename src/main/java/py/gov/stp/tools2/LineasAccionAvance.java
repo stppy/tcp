@@ -4,19 +4,16 @@ public class LineasAccionAvance {
 	protected int institucionId;
 	protected String institucionSigla;
 	protected int institucionVersion;
-	protected boolean institucionBorrado;
 	protected int insLineaAccionId;
 	protected int insLineaAccionPeriodoId;
 	protected int insLineaAccionMeta;
 	protected int insLineaAccionVersion;
-	protected boolean insLineaAccionBorrado;
 	protected int accionId;
 	protected int accionCosto;
 	protected int accionPeso;
 	protected String accionFechaIni;
 	protected String accionFechaFin;
 	protected int accionVersion;
-	protected boolean accionBorrado;
 	protected int accionM1;
 	protected int accionM2;
 	protected int accionM3;
@@ -29,25 +26,21 @@ public class LineasAccionAvance {
 	protected String cronoProporcion;
 	protected int cronoPeso;
 	protected int cronoVersion;
-	protected boolean cronoBorrado;
 	protected String cronoUnidadMedida;
 	protected int cronoTipoId;
 	protected String cronoTipoNombre;
 	protected String cronoTipoDescr;
 	protected int cronoTipoVersion;
-	protected boolean cronoTipoBorrado;
 	protected String avanceJustificacion;
 	protected int avanceCantidad;
 	protected String avanceFechaEntrega;
 	protected int avanceCantidadBeneficiarios;
 	protected int avanceVersion;
-	protected boolean avanceBorrado;
 	protected int avanceCostoId;
 	protected Double avanceCostoMonto;
 	protected String avanceCostoCodigoContratancional;
 	protected String avanceCostoGasto;
 	protected int avanceCostoVersion;
-	protected boolean avanceCostoBorrado;
 	public int getInstitucionId() {
 		return institucionId;
 	}
@@ -65,12 +58,6 @@ public class LineasAccionAvance {
 	}
 	public void setInstitucionVersion(int institucionVersion) {
 		this.institucionVersion = institucionVersion;
-	}
-	public boolean isInstitucionBorrado() {
-		return institucionBorrado;
-	}
-	public void setInstitucionBorrado(boolean institucionBorrado) {
-		this.institucionBorrado = institucionBorrado;
 	}
 	public int getInsLineaAccionId() {
 		return insLineaAccionId;
@@ -96,12 +83,7 @@ public class LineasAccionAvance {
 	public void setInsLineaAccionVersion(int insLineaAccionVersion) {
 		this.insLineaAccionVersion = insLineaAccionVersion;
 	}
-	public boolean isInsLineaAccionBorrado() {
-		return insLineaAccionBorrado;
-	}
-	public void setInsLineaAccionBorrado(boolean insLineaAccionBorrado) {
-		this.insLineaAccionBorrado = insLineaAccionBorrado;
-	}
+	
 	public int getAccionId() {
 		return accionId;
 	}
@@ -137,12 +119,6 @@ public class LineasAccionAvance {
 	}
 	public void setAccionVersion(int accionVersion) {
 		this.accionVersion = accionVersion;
-	}
-	public boolean isAccionBorrado() {
-		return accionBorrado;
-	}
-	public void setAccionBorrado(boolean accionBorrado) {
-		this.accionBorrado = accionBorrado;
 	}
 	public int getAccionM1() {
 		return accionM1;
@@ -216,12 +192,6 @@ public class LineasAccionAvance {
 	public void setCronoVersion(int cronoVersion) {
 		this.cronoVersion = cronoVersion;
 	}
-	public boolean isCronoBorrado() {
-		return cronoBorrado;
-	}
-	public void setCronoBorrado(boolean cronoBorrado) {
-		this.cronoBorrado = cronoBorrado;
-	}
 	public String getCronoUnidadMedida() {
 		return cronoUnidadMedida;
 	}
@@ -251,12 +221,6 @@ public class LineasAccionAvance {
 	}
 	public void setCronoTipoVersion(int cronoTipoVersion) {
 		this.cronoTipoVersion = cronoTipoVersion;
-	}
-	public boolean isCronoTipoBorrado() {
-		return cronoTipoBorrado;
-	}
-	public void setCronoTipoBorrado(boolean cronoTipoBorrado) {
-		this.cronoTipoBorrado = cronoTipoBorrado;
 	}
 	public String getAvanceJustificacion() {
 		return avanceJustificacion;
@@ -288,12 +252,6 @@ public class LineasAccionAvance {
 	public void setAvanceVersion(int avanceVersion) {
 		this.avanceVersion = avanceVersion;
 	}
-	public boolean isAvanceBorrado() {
-		return avanceBorrado;
-	}
-	public void setAvanceBorrado(boolean avanceBorrado) {
-		this.avanceBorrado = avanceBorrado;
-	}
 	public int getAvanceCostoId() {
 		return avanceCostoId;
 	}
@@ -324,15 +282,5 @@ public class LineasAccionAvance {
 	}
 	public void setAvanceCostoVersion(int avanceCostoVersion) {
 		this.avanceCostoVersion = avanceCostoVersion;
-	}
-	public boolean isAvanceCostoBorrado() {
-		return avanceCostoBorrado;
-	}
-	public void setAvanceCostoBorrado(boolean avanceCostoBorrado) {
-		this.avanceCostoBorrado = avanceCostoBorrado;
-	}
-
-	
-	
-	
+	}	
 }
