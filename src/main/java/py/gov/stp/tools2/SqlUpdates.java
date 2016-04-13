@@ -1201,4 +1201,24 @@ public static boolean borradoHito(Hito objeto){
 		  } catch (SQLException e) {e.printStackTrace(); return false;}
 	}
 	
+	public static boolean updateAvanceCualitativo(AvanceCualitativo objeto){
+	  	 Connection conect=ConnectionConfiguration.conectar();
+	  	 Statement statement = null;
+	  	 
+		 String													query = "update avance_cualitativo set ";
+		 if(objeto.getAccionCatalogoId() !=0)					query+= "accion_catalogo_id='"+objeto.getAccionCatalogoId()+"'";
+		 if(objeto.getTrimestreId()!=0)							query+= ", trimestre_id='"+objeto.getTrimestreId()+"'";
+		 if(objeto.getGestionesRealizadas()!=null)				query+= ", gestiones_realizadas='"+objeto.getGestionesRealizadas()+"'";
+		 if(objeto.getPrincipalesLogrosAlcanzados()!=null)		query+= ", principales_logros_alcanzados='"+objeto.getPrincipalesLogrosAlcanzados()+"'";
+		 if(objeto.getDificultadesLeccionesAprendidas()!=null)	query+= ", dificultades_lecciones_aprendidas='"+objeto.getDificultadesLeccionesAprendidas()+"'";
+		 if(objeto.getObjetivosTrimestre()!=null)				query+= ", objetivos_del_siguiente_trimestre='"+objeto.getObjetivosTrimestre()+"'";
+
+		 query+=" where id ="+objeto.getId(); 	
+		 try {
+			statement=conect.createStatement();
+			statement.execute(query);
+		    conect.close();
+		    return true;
+		 }catch (SQLException e) {e.printStackTrace(); return false;}
+	}
 }
