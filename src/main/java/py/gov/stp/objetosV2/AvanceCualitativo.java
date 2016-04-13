@@ -66,9 +66,8 @@ public class AvanceCualitativo {
 	public int getId() {
 		return id;
 	}
-	
-	
-	
-	
+	public void changeBorrado(){
+		this.borrado=!borrado;
+	}	
 
 }
