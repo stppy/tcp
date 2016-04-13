@@ -15,7 +15,17 @@
 
 	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="bootstrap/css/bootstrapslider.css" rel="stylesheet">	
-	<script src="plugins/jquery-bootstrap-modal-steps.js"></script>
+	<script src="plugins/jquery-bootstrap-modal-steps.js"></script>	
+	
+	<!-- jQuery 2.1.3  -->
+    <!-- >script src="plugins/jQuery/jQuery-2.1.3.min.js"></script-->
+    
+    <!-- leaflet css -->
+    <link rel="stylesheet" href="plugins/mapa/leaflet.css" />
+    <script src="plugins/mapa/leaflet.js"></script>
+    <!-- leaflet location picker css -->
+    <link href="plugins/mapa/leaflet-locationpicker.css" rel="stylesheet">
+    <script src="plugins/mapa/leaflet-locationpicker.js"></script>   
 	
 	
     <style type="text/css">
@@ -627,9 +637,9 @@ if (user != null) { %>
 
     </div><!-- ./wrapper -->
 
-    <!-- jQuery 2.1.3 
-    <script src="plugins/jQuery/jQuery-2.1.3.min.js"></script> -->
-    <!-- Bootstrap 3.3.2 JS -->
+    <!-- jQuery 2.1.3 -->
+    <!-- script src="plugins/jQuery/jQuery-2.1.3.min.js"></script-->        
+	<!-- Bootstrap 3.3.2 JS -->
     <script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
     <!-- DATA TABES SCRIPT -->
     <script src="plugins/datatables/jquery.dataTables.js" type="text/javascript"></script>
@@ -652,7 +662,7 @@ if (user != null) { %>
     <!-- ChartJS 1.0.1 -->
     <script src="plugins/chartjs/Chart.min.js" type="text/javascript"></script>
      <!-- AdminLTE App -->
-    <script src="dist/js/app.min.js" type="text/javascript"></script>   
+    <script src="dist/js/app.min.js" type="text/javascript"></script>       
     
     
 
@@ -686,7 +696,7 @@ if (user != null) { %>
 <script type="text/javascript" src="bootstrap/js/bootstrap-slider.js"></script>
  
 <script>
-var entidadCasSpr = "";
+<%-- var entidadCasSpr = "";
 entidadCasSpr ="<%=attributes.get("entidad") %>";
 usuarioRolCasSpr="<%=attributes.get("role_id") %>";
 var usuariosSpr = $.ajax({
@@ -696,7 +706,7 @@ var usuariosSpr = $.ajax({
   	async:false       
 }).responseText;
 usuariosSpr = JSON.parse(usuariosSpr);
-usuariosSpr = usuariosSpr.usuarios;
+usuariosSpr = usuariosSpr.usuarios; --%>
 </script>
   </body>
 </html>

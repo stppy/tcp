@@ -5959,10 +5959,10 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'													<tr><td colspan="2"><label for="descripcionEvidencia">Descripción</label><input type="text" id="descripcionEvidencia" class="form-control" placeholder="Ingrese Descripción" /></td></tr>'+
  									'													<tr><td><label for="documentoEvidencia">Adjuntar Documento</label><input type="file" id="documentoEvidencia" name="documentoEvidencia" /><div id="progress" class="progress">'+
         							'														<div  class="bar" style="width: 0%;"></div></div></td></tr>'+
-        							/* '													<tr><td><label>Ingresar localización de la evidencia:</label></td></tr>'+
-        							'												    <tr><td colspan="2"><input id="geoloc1" type="text" value="" size="20" /></td></tr>'+	
+        							'													<tr><tdcolspan="2"><label>Ingresar localización de la evidencia:</label></td></tr>'+
+        							'												    <tr><td><input id="geoloc" type="text" value="" size="20" /></td></tr>'+	
 									'													<tr><td><input id="geolat" type="text" value="" size="20" /></td></tr>'+
-									'													<tr><td><input id="geolng" type="text" value="" size="20" /></td></tr>'+ */									
+									'													<tr><td><input id="geolng" type="text" value="" size="20" /></td></tr>'+ 								
         							'													<input type="hidden" id="wsIdEvidencia" value="1" /><input type="hidden" id="versionEvidencia" value="3"/><input type="hidden" id="avanceIdEvidencia" value="'+avanceId+'"/>'+
 									'													<input type="hidden" id="urlDocEvidencia" value="" />'+
 									'		      									</form>	'+
@@ -6038,20 +6038,15 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 });	
 
 
-/* $('#geoloc1').leafletLocationPicker({
+$(document).ready(function(){
+	$('#geoloc').leafletLocationPicker({
 		locationSep: ' - '
-	})
-	.on('show', function(e) {
-		$(this).siblings('em').text('click on map for insert the location');
-	})
-	.on('hide', function(e) {
-		$(this).siblings('em').text('');
-	}) 
-	.on('changeLocation', function(e) {
-		$(this)
-		.siblings('#geolat').val( e.latlng.lat )
-		.siblings('#geolng').val( e.latlng.lng );	
-	}); */
+		}).on('changeLocation', function(e) {
+			if (e.latlng.lat != null) $('#geolat').val( e.latlng.lat );
+			if (e.latlng.lng != null) $('#geolng').val( e.latlng.lng );	
+	});
+});
+
 
 
 $("body").on("change", "#productoObjetoGasto",function(event){
@@ -6740,6 +6735,8 @@ $("body").on("click", ".guardarEvidencia",function(event){
 	var urlDocumento; 
 		if (docEvidenciaFile != undefined) urlDocumento = $("#urlDocEvidencia").val();
 	var descripcion = $("#descripcionEvidencia").val();
+	var latitud = $("#geolat").val();
+	var longitud = $("#geolong").val();
 	var wsId = $("#wsIdEvidencia").val();
 	var version = $("#versionEvidencia").val();
   
@@ -6748,8 +6745,10 @@ $("body").on("click", ".guardarEvidencia",function(event){
 	//Vaciar los inputs
 	$("#nombreEvidencia").val("");
 	$("#urlEvidencia").val("");
-	$("#urlDocEvidencia").val("");
+	$("#urlDocEvidencia").val("");	
 	$("#descripcionEvidencia").val("");
+	$("#geolat").val("");
+	$("#geolong").val("");
 	$("#documentoEvidencia").val("");
 
 	
@@ -6757,8 +6756,10 @@ $("body").on("click", ".guardarEvidencia",function(event){
 	
 	objeto.nombre = nombre;
 	objeto.url = url;
-	objeto.urlDocumento = urlDocumento;
+	objeto.urlDocumento = urlDocumento;	
 	objeto.descripcion = descripcion;
+	objeto.latitud = latitud;
+	objeto.longitud = longitud;
 	objeto.wsId = wsId;
 	objeto.version = version;
 	objeto.avanceId = avanceId;
@@ -6975,10 +6976,10 @@ $("body").on("click", ".consultaEditarEvidencia",function(event){
 						'			      			<form class="form-horizontal" role="form">'+
 						'								<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" value="'+webServicesEvidencia[0].nombre+'" /></td><td><label for="urlEvidencia">Url</label><input type="url" id="urlEvidencia" class="form-control" value="'+webServicesEvidencia[0].url+'" /></td></tr>'+
 						'								<tr><td colspan="2"><label for="descripcionEvidencia">Descripción</label><input type="text" id="descripcionEvidencia" class="form-control" value="'+webServicesEvidencia[0].descripcion+'" /></td></tr>'+
-						/* '								<tr><td><label>Ingresar localización de la evidencia:</label></td></tr>'+
-						'								<tr><td><input id="geoloc1" type="text" value="" size="20" /></td></tr>'+	
+						'								<tr><td colspan="2"><label>Ingresar localización de la evidencia:</label></td></tr>'+
+						'								<tr><td><input id="geoloc" type="text" value="" size="20" /></td></tr>'+	
 						'								<tr><td><input id="geolat" type="text" value="" size="20" /></td></tr>'+
-						'								<tr><td><input id="geolng" type="text" value="" size="20" /></td></tr>'+						 */
+						'								<tr><td><input id="geolng" type="text" value="" size="20" /></td></tr>'+
 						'								<input type="hidden" id="wsIdEvidencia" value='+webServicesEvidencia[0].wsId+' /><input type="hidden" id="versionEvidencia" value='+webServicesEvidencia[0].version+' /><input type="hidden" id="avanceIdEvidencia" value='+webServicesEvidencia[0].avanceId+' />'+
 						'								<input type="hidden" id="urlDocEvidencia" value="" />'+														
 						'			      			</form>	'+												
