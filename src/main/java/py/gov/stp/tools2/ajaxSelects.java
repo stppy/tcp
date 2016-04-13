@@ -373,7 +373,7 @@ public class ajaxSelects extends HttpServlet {
         		List objetos=null; 
         		condition = " where true ";
         		String condition2=" where true ";
-        		if (!userRoleId.equals("0") && !userRoleId.equals("1") && !userRoleId.equals("2")){ 
+        		if (!userRoleId.equals("0") && !userRoleId.equals("1") /*&& !userRoleId.equals("2")*/){ 
         			condition2 += " and entidad_id="+userEntidadId+" and nivel_id="+userNivelId;
         			if ( !userUnrId.equals("0") ){
         				condition2+= " and unidad_responsable_id="+userUnrId;

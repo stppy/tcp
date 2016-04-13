@@ -461,7 +461,7 @@ public class SqlSelects {
 	
 	public static List<LineasProgramadas> selectPivotLineasProgramadas(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select * from linea_accion_programado "+condition;
+		String query = " select * from linea_accion_programado2 "+condition;
 
 		Statement statement = null;
 		ResultSet rs=null;
@@ -473,44 +473,48 @@ public class SqlSelects {
 			while(rs.next()){
 				LineasProgramadas objeto = new LineasProgramadas();
 		
-				objeto.setSigla(rs.getString("sigla"));
-				objeto.setLa_nombre(rs.getString("la_nombre"));
-				objeto.setLa_um_descp(rs.getString("la_um_descp"));
-				objeto.setPeriodo(rs.getString("periodo"));
-				objeto.setIla_meta(rs.getString("ila_meta"));
-				objeto.setAccion_peso(rs.getString("accion_peso"));
-				objeto.setAccion_fecha_ini(rs.getString("accion_fecha_ini")); 
-				objeto.setAccion_fecha_fin(rs.getString("accion_fecha_fin"));
-				objeto.setM1(rs.getString("m1"));
-				objeto.setM2(rs.getString("m2"));
-				objeto.setM3(rs.getString("m3")); 
-				objeto.setM4(rs.getString("m4")); 
-				objeto.setDepto_nombre(rs.getString("depto_nombre")); 
-				objeto.setDist_nombre(rs.getString("dist_nombre")); 
-				objeto.setAc_nombre(rs.getString("ac_nombre"));
-				objeto.setAc_um_descp(rs.getString("ac_um_descp")); 
-				objeto.setCrono_nombre(rs.getString("crono_nombre")); 
-				objeto.setCrono_descp(rs.getString("crono_descp")); 
-				objeto.setCrono_prop(rs.getString("crono_prop")); 
-				objeto.setCrono_peso(rs.getString("crono_peso")); 
-				objeto.setCrono_um_id(rs.getString("crono_um_id"));
-				objeto.setCrono_um_nombre(rs.getString("crono_um_nombre"));
-				objeto.setCrono_tipo_nombre(rs.getString("crono_tipo_nombre"));
-				objeto.setCant_prog(rs.getString("cant_prog")); 
-				objeto.setFecha_entrega(rs.getString("fecha_entrega"));
 				objeto.setIns_id(rs.getInt("ins_id"));
+				objeto.setInstitucion(rs.getString("institucion"));
+				objeto.setIns_orden(rs.getInt("ins_orden"));
 				objeto.setLa_id(rs.getInt("la_id"));
+				objeto.setLa_orden(rs.getInt("la_orden"));
+				objeto.setLa_nombre(rs.getString("la_nombre"));
 				objeto.setLa_tipo_id(rs.getInt("la_tipo_id"));
 				objeto.setLa_estrategia_id(rs.getInt("la_estrategia_id"));
 				objeto.setLa_um_id(rs.getInt("la_um_id"));
-				objeto.setIla_id(rs.getInt("ila_id"));	
+				objeto.setLa_um_descp(rs.getString("la_um_descp"));
+				objeto.setIla_id(rs.getInt("ila_id"));
+				objeto.setPeriodo(rs.getInt("periodo"));
+				objeto.setIla_meta(rs.getDouble("ila_meta"));
 				objeto.setAccion_id(rs.getInt("accion_id"));
+				objeto.setAccion_peso(rs.getInt("accion_peso"));
+				objeto.setAccion_fecha_ini(rs.getString("accion_fecha_ini")); 
+				objeto.setAccion_fecha_fin(rs.getString("accion_fecha_fin"));
+				objeto.setM1(rs.getDouble("m1"));
+				objeto.setM2(rs.getDouble("m2"));
+				objeto.setM3(rs.getDouble("m3")); 
+				objeto.setM4(rs.getDouble("m4")); 
 				objeto.setDepto_id(rs.getInt("depto_id"));
+				objeto.setDepto_nombre(rs.getString("depto_nombre"));
 				objeto.setDist_id(rs.getInt("dist_id"));
+				objeto.setDist_nombre(rs.getString("dist_nombre")); 
+				objeto.setId_accion_catalogo(rs.getInt("id_accion_catalogo"));
+				objeto.setAc_nombre(rs.getString("ac_nombre"));
 				objeto.setAc_um_id(rs.getInt("ac_um_id"));
+				objeto.setAc_um_descp(rs.getString("ac_um_descp"));
 				objeto.setCrono_id(rs.getInt("crono_id"));
+				objeto.setCrono_nombre(rs.getString("crono_nombre")); 
+				objeto.setCrono_descp(rs.getString("crono_descp")); 
+				objeto.setCrono_prop(rs.getDouble("crono_prop")); 
+				objeto.setCrono_peso(rs.getDouble("crono_peso")); 
+				objeto.setCrono_um_id(rs.getInt("crono_um_id"));
 				objeto.setCrono_tipo_id(rs.getInt("crono_tipo_id"));
-
+				objeto.setAcumula(rs.getBoolean("acumula"));
+				objeto.setCrono_tipo_nombre(rs.getString("crono_tipo_nombre"));
+				objeto.setCant_prog(rs.getDouble("cant_prog")); 
+				objeto.setFecha_entrega(rs.getString("fecha_entrega"));
+				objeto.setCrono_um_descp(rs.getString("crono_um_descp"));
+				
 				objetos.add(objeto);
 			}
 		}
