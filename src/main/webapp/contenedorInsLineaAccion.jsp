@@ -696,7 +696,7 @@ if (user != null) { %>
 <script type="text/javascript" src="bootstrap/js/bootstrap-slider.js"></script>
  
 <script>
-<%-- var entidadCasSpr = "";
+var entidadCasSpr = "";
 entidadCasSpr ="<%=attributes.get("entidad") %>";
 usuarioRolCasSpr="<%=attributes.get("role_id") %>";
 var usuariosSpr = $.ajax({
@@ -706,7 +706,7 @@ var usuariosSpr = $.ajax({
   	async:false       
 }).responseText;
 usuariosSpr = JSON.parse(usuariosSpr);
-usuariosSpr = usuariosSpr.usuarios; --%>
+usuariosSpr = usuariosSpr.usuarios;
 </script>
   </body>
 </html>
