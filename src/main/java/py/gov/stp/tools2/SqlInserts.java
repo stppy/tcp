@@ -379,6 +379,8 @@ public class SqlInserts {
 			insert.setInt (5, evidencia.getVersion());
 			insert.setInt (6, evidencia.getAvanceId());
 			insert.setString (7, evidencia.getUrlDocumento());
+//			insert.setDouble (8, evidencia.getLatitud());
+//			insert.setDouble (9, evidencia.getLongitud());
 								
 			insert.execute();
 			   

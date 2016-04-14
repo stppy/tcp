@@ -8,15 +8,15 @@
 
 <!DOCTYPE html>
 <html>
-  <head>
-  <!--  ISO-8859-1 -->
-  <%@ include file="/frames/head.jsp" %>
-<!--   <script src="frames/entidad.js" type="text/javascript"></script> -->
+ <head>
+  	<!--  ISO-8859-1 -->
+  	<%@ include file="/frames/head.jsp" %>
+	<!--   <script src="frames/entidad.js" type="text/javascript"></script> -->
 
 
 
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-        <title>Pivot Table - Plan de Acción</title>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title>Pivot Table - Avance</title>
         <link rel="stylesheet" type="text/css" href="tablero_files/pivot.css">
         <script type="text/javascript" src="tablero_files/d3.js"></script>
         <script type="text/javascript" src="tablero_files/jsapi"></script>
@@ -48,7 +48,7 @@
 if (user != null) { %>
 
 <script>
-	$(do	var entidadCas = "";
+	$(do 	var entidadCas = "";
 	entidadCas ="<%=attributes.get("entidad") %>";
 	usuarioRolCas="<%=attributes.get("role_id") %>";
 	var usuarios = $.ajax({
@@ -140,7 +140,7 @@ textarea { text-transform: uppercase; }
 	          <div class="box" height="1000px">
 	            <div class="box-header with-border" height="1000px">
 	              <h3 class="box-title" id="tituloTipoPrograma">
-	                Avance
+	                Costo Avance
 	              </h3> 
 	              <div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
 	              </div>

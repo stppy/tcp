@@ -19,13 +19,13 @@ public class DownloadServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
-		 // lee el archivo del path absoluto
-		String filePath = request.getParameter("urlDocumento");
-//	    String filePath = "/usr/share/tomcat/uploads/ips_marzo.pdf";
+		
+		// lee el archivo del path absoluto
+	    String filePath = getServletContext().getInitParameter("file-upload") + File.separator + request.getParameter("urlDocumento");
 	    File downloadFile = new File(filePath);
 	    FileInputStream inStream = new FileInputStream(downloadFile);
 	     
-//	    // if you want to use a relative path to context root:
+	    // if you want to use a relative path to context root:
 //	    String relativePath = getServletContext().getRealPath("");
 //	    System.out.println("relativePath = " + relativePath);
 	     
