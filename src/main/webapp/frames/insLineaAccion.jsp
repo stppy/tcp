@@ -5988,13 +5988,13 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'													<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" placeholder="Ingrese Nombre" /></td><td><label for="urlEvidencia">Url</label><input type="url" id="urlEvidencia" class="form-control" pattern="https?://.+" placeholder="Ingrese Url" /></td></tr>'+
 									'													<tr><td colspan="2"><label for="descripcionEvidencia">Descripción</label><input type="text" id="descripcionEvidencia" class="form-control" placeholder="Ingrese Descripción" /></td></tr>'+																		
         							'														<div  class="bar" style="width: 0%;"></div></div></td></tr>'+
-        							/* '													<tr><td colspan="2"><label>Ingresar localización de la evidencia:</label></td></tr>'+
-        							'													<tr><td colspan="2"><label for="latLongEvidencia">Latitud , Longitud: </label>'+
-        							'															<input id="geoloc" class="form-control" type="text" value="" size="20" /></td></tr>'+	
+        							'													<tr><td colspan="2"><label>Ingresar localización de la evidencia:</label></td></tr>'+
+        							/* '													<tr><td><label for="latLongEvidencia">Latitud , Longitud: </label>'+
+        							'															<input id="geoloc" class="form-control" type="text" value="" size="20" /></td></tr>'+ */	
         							'													<tr><td><label for="latEvidencia">Latitud: </label>'+
-        							'															<input id="geolat" class="form-control" type="text" value="" size="20" /></td>'+
+        							'															<input id="geolat" class="form-control" type="numeric" value="" size="20" /></td>'+
         							'														<td><label for="longEvidencia">Longitud: </label>'+
-        							'															<input id="geolng" class="form-control" type="text" value="" size="20" /></td></tr>'+ */
+        							'															<input id="geolng" class="form-control" type="numeric" value="" size="20" /></td></tr>'+
         							'													<tr><td><label for="documentoEvidencia">Adjuntar Documento</label><input type="file" id="documentoEvidencia" name="documentoEvidencia" /><div id="progress" class="progress">'+
         							'													<input type="hidden" id="wsIdEvidencia" value="1" /><input type="hidden" id="versionEvidencia" value="3"/><input type="hidden" id="avanceIdEvidencia" value="'+avanceId+'"/>'+
 									'													<input type="hidden" id="urlDocEvidencia" value="" />'+																							
@@ -6079,8 +6079,8 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 			if (e.latlng.lat != null) $('#geolat').val( e.latlng.lat );
 			if (e.latlng.lng != null) $('#geolng').val( e.latlng.lng );	
 	});
-});
- */
+}); */
+
 
 
 $("body").on("change", "#productoObjetoGasto",function(event){
@@ -6798,7 +6798,7 @@ $("body").on("click", ".editarAvanceCosto",function(event){
 		if (docEvidenciaFile != undefined) urlDocumento = $("#urlDocEvidencia").val();
 	var descripcion = $("#descripcionEvidencia").val();
 	var latitud = $("#geolat").val();
-	var longitud = $("#geolong").val();
+	var longitud = $("#geolng").val();
 	var wsId = $("#wsIdEvidencia").val();
 	var version = $("#versionEvidencia").val();
   
@@ -6810,7 +6810,7 @@ $("body").on("click", ".editarAvanceCosto",function(event){
 	$("#urlDocEvidencia").val("");	
 	$("#descripcionEvidencia").val("");
 	$("#geolat").val("");
-	$("#geolong").val("");
+	$("#geolng").val("");
 	$("#documentoEvidencia").val("");
 
 	
@@ -6820,8 +6820,8 @@ $("body").on("click", ".editarAvanceCosto",function(event){
 	objeto.url = url;
 	objeto.urlDocumento = urlDocumento;	
 	objeto.descripcion = descripcion;
-	objeto.latitud = latitud;
-	objeto.longitud = longitud;
+	if (latitud != "") objeto.latitud = latitud; else objeto.latitud = 0.0;// 0.0 por defecto porque es Double
+	if (longitud != "") objeto.longitud = longitud; else objeto.longitud = 0.0;// 0.0 por defecto porque es Double
 	objeto.wsId = wsId;
 	objeto.version = version;
 	objeto.avanceId = avanceId;
@@ -7062,18 +7062,18 @@ $("body").on("click", ".consultaEditarEvidencia",function(event){
 						'			      			<form class="form-horizontal" role="form">'+
 						'								<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" value="'+webServicesEvidencia[0].nombre+'" /></td><td><label for="urlEvidencia">Url</label><input type="url" id="urlEvidencia" class="form-control" value="'+webServicesEvidencia[0].url+'" /></td></tr>'+
 						'								<tr><td colspan="2"><label for="descripcionEvidencia">Descripción</label><input type="text" id="descripcionEvidencia" class="form-control" value="'+webServicesEvidencia[0].descripcion+'" /></td></tr>'+
-						/* '								<tr><td colspan="2"><label>Ingresar localización de la evidencia:</label></td></tr>'+
-						'								<tr><td colspan="2"><label for="latLongEvidencia">Latitud , Longitud: </label>'+
-						'										<input id="geoloc" class="form-control" type="text" value="" size="20" /></td></tr>'+	
+						'								<tr><td colspan="2"><label>Localización de la evidencia:</label></td></tr>'+
+						/* '								<tr><td><label for="latLongEvidencia">Latitud , Longitud: </label>'+
+						'										<input id="geoloc" class="form-control" type="text" value="" size="20" /></td></tr>'+ */	
 						'								<tr><td><label for="latEvidencia">Latitud: </label>'+
-						'										<input id="geolat" class="form-control" type="text" value="" size="20" /></td>'+
+						'										<input id="geolat" class="form-control" type="numeric" value="'+webServicesEvidencia[0].latitud+'" size="20" /></td>'+
 						'									<td><label for="longEvidencia">Longitud: </label>'+
-						'										<input id="geolng" class="form-control" type="text" value="" size="20" /></td></tr>'+ */
-						'								<input type="hidden" id="wsIdEvidencia" value='+webServicesEvidencia[0].wsId+' /><input type="hidden" id="versionEvidencia" value='+webServicesEvidencia[0].version+' /><input type="hidden" id="avanceIdEvidencia" value='+webServicesEvidencia[0].avanceId+' />'+
+						'										<input id="geolng" class="form-control" type="numeric" value="'+webServicesEvidencia[0].longitud+'" size="20" /></td></tr>'+ 
+						'								<input type="hidden" id="wsIdEvidencia" value="'+webServicesEvidencia[0].wsId+'" /><input type="hidden" id="versionEvidencia" value="'+webServicesEvidencia[0].version+'" /><input type="hidden" id="avanceIdEvidencia" value="'+webServicesEvidencia[0].avanceId+'" />'+
 						'								<input type="hidden" id="urlDocEvidencia" value="" />'+														
 						'			      			</form>	'+												
 						'							<form method="post" enctype="multipart/form-data">'+ 
-						'								<tr><td><label for="documentoEvidencia">Adjuntar Documento</label><input type="file" id="documentoEvidencia" name="documentoEvidencia" size="50" /></td></tr>'+
+						'								<tr><td colspan="2"><label for="documentoEvidencia">Adjuntar Documento</label><input type="file" id="documentoEvidencia" name="documentoEvidencia" size="50" /></td></tr>'+
  						'							</form>	'+
 						'						</tbody>'+
 						'					</table>'+
@@ -7127,6 +7127,8 @@ $("body").on("click", ".editarEvidencia",function(event){
 	var wsId = $("#wsIdEvidencia").val();
 	var version = $("#versionEvidencia").val();
 	var avanceId = $("#avanceIdEvidencia").val();
+	var latitud = $("#geolat").val();
+	var longitud = $("#geolng").val();
 
 	//Vaciar los inputs
 	$("#nombreEvidencia").val("");
@@ -7134,6 +7136,8 @@ $("body").on("click", ".editarEvidencia",function(event){
 	$("#urlDocEvidencia").val("");
 	$("#descripcionEvidencia").val("");
 	$("#documentoEvidencia").val("");
+	$("#geolat").val("");
+	$("#geolng").val("");
 
 	
 	var objeto = new Object();
@@ -7146,6 +7150,8 @@ $("body").on("click", ".editarEvidencia",function(event){
 	objeto.wsId = wsId;
 	objeto.version = version;
 	objeto.avanceId = avanceId;
+	if (latitud != "") objeto.latitud = latitud; else objeto.latitud = 0.0;// 0.0 por defecto porque es Double
+	if (longitud != "") objeto.longitud = longitud; else objeto.longitud = 0.0;// 0.0 por defecto porque es Double
 
 	
   	var info = JSON.stringify(objeto);
