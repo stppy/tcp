@@ -5847,7 +5847,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'		                    					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>'+
 									'		                  					</div>'+
 									'              							</div>'+
-									'              						<div class="box-body">'+	
+									'              						<div class="box-body" id="cuerpoTablaBeneficiario">'+	
 									'										<div class="table-responsive">'+
 									'											<table class="table table-hover table-bordered" id="dataTableBeneficiario">'+
 									'												<thead>'+
@@ -7274,8 +7274,24 @@ $("body").on("click", ".guardarBeneficiario",function(event){
         			}        			
         		}
         		
+        		var contenidoTabla;
+        		
+        		contenidoTabla = '<div class="table-responsive">'+
+				'				 	<table class="table table-hover table-bordered" id="dataTableBeneficiario">'+
+				'						<thead>'+
+				'							<tr class="active"><th>Tipo</th><th>Grupo</th><th>Descripción</th><th>Cantidad</th><th class="text-center">Administrar</th></tr>'+
+				'						</thead>'+
+				'						<tbody id="listaBeneficiario">'+
+				'						</tbody>'+
+				'					</table>'+
+				'				 </div>';
+				
+				
+        		$("#cuerpoTablaBeneficiario").html("");
+        		$("#cuerpoTablaBeneficiario").html(contenidoTabla);   
         		$("#listaBeneficiario").html("");
-        		$("#listaBeneficiario").html(cuerpoBeneficiario);        		
+        		$("#listaBeneficiario").html(cuerpoBeneficiario);  
+        		$("#dataTableBeneficiario").DataTable();
         	}else{
   		
         	}
