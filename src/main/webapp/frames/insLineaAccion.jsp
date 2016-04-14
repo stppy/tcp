@@ -9196,7 +9196,7 @@ function imprimirAvance(indice){
 	/* , trimestreDesc, trimestreAnho, gestionesRealizadas, principalesLogrosAlcanzados,
 		dificultadesLeccionesAprendidas, objetivosTrimestre */
 	<%-- <%@include file="impresiones.jsp"%> --%>
-	 
+	$("#contenedorImpresion").show();
 	$("#impresionInstitucion").text($("#nombreInstitucion").val());
 	$("#impresionAccionesTrimestre").text($("#avance"+indice+" #avanceNombreAccion").text());
 	$("#impresionTrimestreAño").text($("#avance"+indice+" #avanceDescTrimestre").text()+' '+$("#avance"+indice+" #avanceAnhoTrimestre").text());
@@ -9213,10 +9213,21 @@ function imprimirAvance(indice){
 	        return true;
 	    }
 	};
-    doc.fromHTML($('#paraImpresiones').html(), 15, 35, {
+	
+	margins = {
+			  top: 50,
+			  bottom: 20,
+			  left: 15,
+			  width: 20
+			 };
+	
+    doc.fromHTML($('#paraImpresiones').html(), 15, 40, {
         'width': 300,
-        'elementHandlers': specialElementHandlers
-    });
+        'elementHandlers': specialElementHandlers,
+        'pagesplit': true,
+        
+        
+    },margins);
     
     
     var logo_stp = new Image();
@@ -9229,10 +9240,11 @@ function imprimirAvance(indice){
     	doc.addImage(logo_stp , 'png', 25, 15);
     	logo_gob.onload = function(){
         	doc.addImage(logo_gob , 'png', 180, 15);
-        	doc.text(35, 25, "Avance Cualitativo");
+        	doc.text(35, 25, "");
         	doc.save('AvanceCualitativo.pdf');
         };
     };
+    $("#contenedorImpresion").hide();
 }
 </script>	
 
@@ -9243,20 +9255,27 @@ function imprimirAvance(indice){
 				<div class="pull-right img-responsive col-md-4"><img src="http://spr.stp.gov.py/tablero/dist/img/logo_gob_nac_header.png"></div>
 		   	</div>
 		</div> -->
+		<br>
 		<div class="row" >
-			<div id="contenedorImpresion" class="table-responsive">
+			<div id="contenedorImpresion" class="table-responsive" style="display:none">
 				<div class="text-center" >
-					<table id="content2" class="pdfTable" style="font-size: 8px">
-						<tr><td>Avance Cualitativo</td><td></td></tr>
-						<tr><th >Institucion</th><td id="impresionInstitucion"></td></tr>
-						<tr><th scope="row">Acciones</th><td id="impresionAccionesTrimestre"></td></tr>
-						<tr><th scope="row">Trimestre</th><td id="impresionTrimestreAño"></td></tr>
-						<tr><th scope="row">Gestiones Realizadas</th><td id="impresionGestionesRealizadas"></td></tr>
-						<tr><th scope="row">Principales Logros Alcanzados</th><td id="impresionLogrosAlcanzados"></td></tr>
-						<tr><th scope="row">Dificultades y Lecciones aprendidas</th><td id="impresionLeccionesAprendidas"></td></tr>
-						<tr><th scope="row">Objetivos del Siguiente Trimestre</th><td id="impresionSiguienteTrimestre"></td></tr>
-					</table>
+					
+						<h1 class="text-center"><u>SPR-PA-03: Informe Cualitativo de Avance Trimestral<u></h1>
+						<p><strong>Institución</strong> <span id="impresionInstitucion"></span></p>
+						<p><strong>Acción </strong><span id="impresionAccionesTrimestre"></span></p>
+						<p><strong>Periodo </strong><span id="impresionTrimestreAño"></span></p>
+						<strong>Gestiones Realizadas </strong><p id="impresionGestionesRealizadas"></p>
+						<strong>Principales Logros Alcanzados </strong><p id="impresionLogrosAlcanzados"></p>
+						<strong>Dificultades y Lecciones aprendidas </strong><p id="impresionLeccionesAprendidas"></p>
+						<strong>Objetivos del Siguiente Trimestre </strong><p id="impresionSiguienteTrimestre"></p>
+						
+						
+						
+					
 				</div>
 	  		</div>
 		</div>        	
 	</div>
+	<script>
+	$("contenedorImpresion").hide();
+	</script>
