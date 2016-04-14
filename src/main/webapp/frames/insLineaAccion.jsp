@@ -5592,23 +5592,23 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 		if(webServicesEvidencia[j].borrado == true)
 		{
 			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") ){%>
-				cuerpoEvidencia += '<tr><td><del>'+webServicesEvidencia[j].nombre+'</del></td><td><del>'+webServicesEvidencia[j].descripcion+'</del></td><td><del>'+webServicesEvidencia[j].url+'</del></td><td></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+				cuerpoEvidencia += '<tr><td data-toggle="tooltip" data-placement="top" title="'+webServicesEvidencia[j].descripcion+'" ><del>'+webServicesEvidencia[j].nombre+'</del></td><td><del>'+webServicesEvidencia[j].url+'</del></td><td></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-trash"></span></button></td></tr>';
 			<%}%>
 		}else{
 			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>
-				cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[j].nombre+'</td><td>'+webServicesEvidencia[j].descripcion+'</td><td>'+webServicesEvidencia[j].url+'</td><td>';
+				cuerpoEvidencia += '<tr><td data-toggle="tooltip" data-placement="top" title="'+webServicesEvidencia[j].descripcion+'" >'+webServicesEvidencia[j].nombre+'</td><td><a href="'+webServicesEvidencia[j].url+'" target="_blank">'+webServicesEvidencia[j].url+'</a></td><td class="text-center">';
 					if (webServicesEvidencia[j].urlDocumento) {
-						cuerpoEvidencia += '<a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+webServicesEvidencia[j].urlDocumento+'" Download >Descargar Archivo</a>'+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+						cuerpoEvidencia += '<a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+webServicesEvidencia[j].urlDocumento+'" Download ><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Descargar" ><span class="fa fa-download"></span></button></a>'+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-trash"></span></button></td></tr>';
 					} else {
 						cuerpoEvidencia += '</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-trash"></span></button></td></tr>';	
 					}					
 			<%} if (attributes.get("role_id").toString().equals("3")){%>
-				cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[j].nombre+'</td><td>'+webServicesEvidencia[j].descripcion+'</td><td>'+webServicesEvidencia[j].url+'</td><td>';								
-				if (webServicesEvidencia[j].urlDocumento) {
-					cuerpoEvidencia += '<a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+webServicesEvidencia[j].urlDocumento+'" Download="'+webServicesEvidencia[j].nombre+'" >Descargar Archivo</a>' + '</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-trash"></span></button></td></tr>';
-				}else{
-					cuerpoEvidencia += '</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-trash"></span></button></td></tr>';
-				}
+				cuerpoEvidencia += '<tr><td data-toggle="tooltip" data-placement="top" title="'+webServicesEvidencia[j].descripcion+'">'+webServicesEvidencia[j].nombre+'</td><td><a href="'+webServicesEvidencia[j].url+'" target="_blank">'+webServicesEvidencia[j].url+'</a></td><td class="text-center">';								
+					if (webServicesEvidencia[j].urlDocumento) {
+						cuerpoEvidencia += '<a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+webServicesEvidencia[j].urlDocumento+'" Download="'+webServicesEvidencia[j].nombre+'" ><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Descargar" ><span class="fa fa-download"></span></button></a>' + '</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+					}else{
+						cuerpoEvidencia += '</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+					}
 			<%}%>
 		}		
 	}
@@ -5954,17 +5954,20 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'									<div class="table-responsive">'+
 									'										<table class="table table-hover">'+
 									'											<tbody>'+
-									'		      									<form class="form-horizontal" role="form" method="post" enctype="multipart/form-data">'+
-									'													<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" placeholder="Ingrese Nombre" /></td><td><label for="urlEvidencia">Url</label><input type="url" id="urlEvidencia" class="form-control" placeholder="Ingrese Url" /></td></tr>'+
-									'													<tr><td colspan="2"><label for="descripcionEvidencia">Descripción</label><input type="text" id="descripcionEvidencia" class="form-control" placeholder="Ingrese Descripción" /></td></tr>'+
- 									'													<tr><td><label for="documentoEvidencia">Adjuntar Documento</label><input type="file" id="documentoEvidencia" name="documentoEvidencia" /><div id="progress" class="progress">'+
+									'		      									<form id="formEvidencia" class="form-horizontal" role="form">'+
+									'													<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" placeholder="Ingrese Nombre" /></td><td><label for="urlEvidencia">Url</label><input type="url" id="urlEvidencia" class="form-control" pattern="https?://.+" placeholder="Ingrese Url" /></td></tr>'+
+									'													<tr><td colspan="2"><label for="descripcionEvidencia">Descripción</label><input type="text" id="descripcionEvidencia" class="form-control" placeholder="Ingrese Descripción" /></td></tr>'+																		
         							'														<div  class="bar" style="width: 0%;"></div></div></td></tr>'+
-        							'													<tr><tdcolspan="2"><label>Ingresar localización de la evidencia:</label></td></tr>'+
-        							'												    <tr><td><input id="geoloc" type="text" value="" size="20" /></td></tr>'+	
-									'													<tr><td><input id="geolat" type="text" value="" size="20" /></td></tr>'+
-									'													<tr><td><input id="geolng" type="text" value="" size="20" /></td></tr>'+ 								
+        							/* '													<tr><td colspan="2"><label>Ingresar localización de la evidencia:</label></td></tr>'+
+        							'													<tr><td colspan="2"><label for="latLongEvidencia">Latitud , Longitud: </label>'+
+        							'															<input id="geoloc" class="form-control" type="text" value="" size="20" /></td></tr>'+	
+        							'													<tr><td><label for="latEvidencia">Latitud: </label>'+
+        							'															<input id="geolat" class="form-control" type="text" value="" size="20" /></td>'+
+        							'														<td><label for="longEvidencia">Longitud: </label>'+
+        							'															<input id="geolng" class="form-control" type="text" value="" size="20" /></td></tr>'+ */
+        							'													<tr><td><label for="documentoEvidencia">Adjuntar Documento</label><input type="file" id="documentoEvidencia" name="documentoEvidencia" /><div id="progress" class="progress">'+
         							'													<input type="hidden" id="wsIdEvidencia" value="1" /><input type="hidden" id="versionEvidencia" value="3"/><input type="hidden" id="avanceIdEvidencia" value="'+avanceId+'"/>'+
-									'													<input type="hidden" id="urlDocEvidencia" value="" />'+
+									'													<input type="hidden" id="urlDocEvidencia" value="" />'+																							
 									'		      									</form>	'+
 									'											</tbody>'+
 									'										</table>'+
@@ -5972,7 +5975,8 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									
 									'				      				 </div>'+//fin box body
 									'									 <div class="modal-footer">'+ 
-									'					        			<button type="button" class="btn btn-success btn-sm guardarEvidencia" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'>Guardar Evidencia</button>'+ 
+									'					        			<button type="submit" class="btn btn-success btn-sm guardarEvidencia" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'>Guardar Evidencia</button>'+ 
+									/*'									 	<input type="submit" id="submitEvidencia" class="btn btn-success btn-sm" form="formEvidencia" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' value="Guardar Evidencia">'+*/ 
 									'									 </div>'+									
 									'				      			 	</div>'+
 									'				      			</div>'+							
@@ -5992,7 +5996,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'										<div class="table-responsive">'+
 									'											<table class="table table-hover table-bordered" id="dataTableEvidencia">'+
 									'												<thead>'+
-									'													<tr class="active"><th>Nombre</th><th>Descripción</th><th>Url</th><th>Evidencia</th><th class="text-center">Administrar</th></tr>'+
+									'													<tr class="active"><th>Nombre</th><th>Url</th><th class="text-center">Evidencia</th><th class="text-center">Administrar</th></tr>'+
 									'												</thead>'+
 									'												<tbody  id="listaEvidencia">'+
 									
@@ -6038,7 +6042,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 });	
 
 
-$(document).ready(function(){
+/* $(document).ready(function(){
 	$('#geoloc').leafletLocationPicker({
 		locationSep: ' - '
 		}).on('changeLocation', function(e) {
@@ -6046,7 +6050,7 @@ $(document).ready(function(){
 			if (e.latlng.lng != null) $('#geolng').val( e.latlng.lng );	
 	});
 });
-
+ */
 
 
 $("body").on("change", "#productoObjetoGasto",function(event){
@@ -6698,7 +6702,15 @@ $("body").on("click", ".editarAvanceCosto",function(event){
 });
 
 
-$("body").on("click", ".guardarEvidencia",function(event){
+ $("body").on("click", ".guardarEvidencia",function(event){
+	/* event.preventDefault(); //evita que realice el submit */
+	/* event.preventDefault();
+	
+	/* if (!$('#formEvidencia')[1].checkValidity()){
+		alert("Favor introduzca una dirección url valida. Ej: http://www.google.com");
+		return false;
+	} */
+	
 	var parametros = $(this).attr("parametros");
     var idParsed = parametros.split("-");                                                            
 	
@@ -6791,12 +6803,12 @@ $("body").on("click", ".guardarEvidencia",function(event){
         			if(webServicesEvidencia[d].borrado == true)
         			{
         				<% if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("2")){%>
-        					cuerpoEvidencia += '<tr><td><del>'+webServicesEvidencia[d].nombre+'</del></td><td><del>'+webServicesEvidencia[d].descripcion+'</del></td><td><del>'+webServicesEvidencia[d].url+'</del></td><td></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+        					cuerpoEvidencia += '<tr><td data-toggle="tooltip" data-placement="top" title="'+webServicesEvidencia[d].descripcion+'"><del>'+webServicesEvidencia[d].nombre+'</del></td><td><del>'+webServicesEvidencia[d].url+'</del></td><td></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
         				<% }%>
         			}else{ 
-        				cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[d].nombre+'</td><td>'+webServicesEvidencia[d].descripcion+'</td><td>'+webServicesEvidencia[d].url+'</td><td>';
+        				cuerpoEvidencia += '<tr><td data-toggle="tooltip" data-placement="top" title="'+webServicesEvidencia[d].descripcion+'">'+webServicesEvidencia[d].nombre+'</td><td><a href="'+webServicesEvidencia[d].url+'" target="_blank">'+webServicesEvidencia[d].url+'</a></td><td class="text-center">';
 	        				if (webServicesEvidencia[d].urlDocumento) {
-								cuerpoEvidencia += '<a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+webServicesEvidencia[d].urlDocumento+'" Download >Descargar Archivo</a>'+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';	        					
+								cuerpoEvidencia += '<a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+webServicesEvidencia[d].urlDocumento+'" Download ><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Descargar" ><span class="fa fa-download"></span></button></a>'+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';	        					
 	        				} else {
 	        					cuerpoEvidencia += '</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
 	        				}
@@ -6815,8 +6827,7 @@ $("body").on("click", ".guardarEvidencia",function(event){
         error: function(data,status,er) {
         	
         	}
-	 });
-	
+	 });	
 });
 
 $("body").on("click", ".consultaBorrarEvidencia",function(event){
@@ -6976,10 +6987,13 @@ $("body").on("click", ".consultaEditarEvidencia",function(event){
 						'			      			<form class="form-horizontal" role="form">'+
 						'								<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" value="'+webServicesEvidencia[0].nombre+'" /></td><td><label for="urlEvidencia">Url</label><input type="url" id="urlEvidencia" class="form-control" value="'+webServicesEvidencia[0].url+'" /></td></tr>'+
 						'								<tr><td colspan="2"><label for="descripcionEvidencia">Descripción</label><input type="text" id="descripcionEvidencia" class="form-control" value="'+webServicesEvidencia[0].descripcion+'" /></td></tr>'+
-						'								<tr><td colspan="2"><label>Ingresar localización de la evidencia:</label></td></tr>'+
-						'								<tr><td><input id="geoloc" type="text" value="" size="20" /></td></tr>'+	
-						'								<tr><td><input id="geolat" type="text" value="" size="20" /></td></tr>'+
-						'								<tr><td><input id="geolng" type="text" value="" size="20" /></td></tr>'+
+						/* '								<tr><td colspan="2"><label>Ingresar localización de la evidencia:</label></td></tr>'+
+						'								<tr><td colspan="2"><label for="latLongEvidencia">Latitud , Longitud: </label>'+
+						'										<input id="geoloc" class="form-control" type="text" value="" size="20" /></td></tr>'+	
+						'								<tr><td><label for="latEvidencia">Latitud: </label>'+
+						'										<input id="geolat" class="form-control" type="text" value="" size="20" /></td>'+
+						'									<td><label for="longEvidencia">Longitud: </label>'+
+						'										<input id="geolng" class="form-control" type="text" value="" size="20" /></td></tr>'+ */
 						'								<input type="hidden" id="wsIdEvidencia" value='+webServicesEvidencia[0].wsId+' /><input type="hidden" id="versionEvidencia" value='+webServicesEvidencia[0].version+' /><input type="hidden" id="avanceIdEvidencia" value='+webServicesEvidencia[0].avanceId+' />'+
 						'								<input type="hidden" id="urlDocEvidencia" value="" />'+														
 						'			      			</form>	'+												
@@ -8377,6 +8391,10 @@ $("body").on("click", ".avanceCualitativo",function(event){
 	{
 		$("#modalAvanceCualitativo").remove();
 	}
+    if ( $("#modalEditarAvanceCualitativo").length )
+	{
+		$("#modalEditarAvanceCualitativo").remove();
+	}
 
 	var lineaAccion = $.ajax({
 		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
@@ -8592,7 +8610,7 @@ $("body").on("click", ".avanceCualitativo",function(event){
 						'		</div>'+ 
 						'	</div>'+
 						'</div>';
-						
+					
 	$("#programacion").append(cuerpoModalAvanceCualitativo);
 	$('#cuerpoTablaAvanceCualitativo').html("");
 
@@ -8606,7 +8624,7 @@ $("body").on("click", ".avanceCualitativo",function(event){
 	'	                				</table>'+
 	'	                			</div>';
 	$('#cuerpoTablaAvanceCualitativo').append(tablaAccion);
-	listaAvanceCualitativo(insLineaAccionId);	
+	listaAvanceCualitativo(insLineaAccionId,lineaAccionId,institucionId,periodoId);	
 	//$('#tablaAccionesPrecargadas').append(cuerpoAccion);
 	$('#modalAvanceCualitativo').modal('show');
 	$("#dataTablesAvanceCualitativo").DataTable();
@@ -8618,6 +8636,8 @@ $("body").on("click", ".guardarAvanceCualitatitvo",function(event){
     var idParsed = codigoRegistro.split("-"); 
     var insLineaAccionId = idParsed[0];
     var lineaAccionId = idParsed[1];
+    var institucionId = idParsed[2];
+    var periodoId = idParsed[3];
 	
 	var nombre = $("#nombreAvanceCualitativo option:selected").val();
 	var trimestre = $("#trimestreAvanceCualitativo option:selected").val();
@@ -8652,7 +8672,7 @@ $("body").on("click", ".guardarAvanceCualitatitvo",function(event){
         mimeType: 'application/json',
         success: function (data) {
         	if(data.success == true){
-        		listaAvanceCualitativo(insLineaAccionId);
+        		listaAvanceCualitativo(insLineaAccionId,lineaAccionId,institucionId,periodoId);
         	}
         },
         //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
@@ -8663,7 +8683,7 @@ $("body").on("click", ".guardarAvanceCualitatitvo",function(event){
     
 });	
 
-function listaAvanceCualitativo(insLineaAccionId){
+function listaAvanceCualitativo(insLineaAccionId,lineaAccionId,institucionId,periodoId){
 	
 	var tablaAvanceCualitativo;
 	var avanceCualitativo = $.ajax({
@@ -8694,14 +8714,14 @@ function listaAvanceCualitativo(insLineaAccionId){
 
 		if(avanceCualitativo[a].borrado == true){
 			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>
-				tablaAvanceCualitativo+='<tr><td><del>'+accionCatalogo[0].nombre+'</del></td><td><del>'+trimestre[0].descripcion+'</del></td><td><del>'+trimestre[0].anho+'</del></td><td><del>'+avanceCualitativo[a].gestionesRealizadas+'</del></td><td><del>'+avanceCualitativo[a].principalesLogrosAlcanzados+'</del></td><td><del>'+avanceCualitativo[a].dificultadesLeccionesAprendidas+'</del></td><td><del>'+avanceCualitativo[a].objetivosTrimestre+'</del></td></tr>';
+				tablaAvanceCualitativo+='<tr><td><del>'+accionCatalogo[0].nombre+'</del></td><td><del>'+trimestre[0].descripcion+'</del></td><td><del>'+trimestre[0].anho+'</del></td><td><del>'+avanceCualitativo[a].gestionesRealizadas+'</del></td><td><del>'+avanceCualitativo[a].principalesLogrosAlcanzados+'</del></td><td><del>'+avanceCualitativo[a].dificultadesLeccionesAprendidas+'</del></td><td><del>'+avanceCualitativo[a].objetivosTrimestre+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarAvanceCualitativo" data-toggle="tooltip" data-placement="top" title="Editar Avance Cualitativo" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+avanceCualitativo[a].id+'><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarAvanceCualitativo" data-toggle="tooltip" data-placement="top" title="Borrar Avance Cualitativo" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+avanceCualitativo[a].id+'><span class="glyphicon glyphicon-trash"></span></button></td></tr>';
 				
 			<%}%>
 		}else{
 			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>
-				tablaAvanceCualitativo+='<tr><td>'+accionCatalogo[0].nombre+'</td><td>'+trimestre[0].descripcion+'</td><td>'+trimestre[0].anho+'</td><td>'+avanceCualitativo[a].gestionesRealizadas+'</td><td>'+avanceCualitativo[a].principalesLogrosAlcanzados+'</td><td>'+avanceCualitativo[a].dificultadesLeccionesAprendidas+'</td><td>'+avanceCualitativo[a].objetivosTrimestre+'</td></tr>';	
+				tablaAvanceCualitativo+='<tr><td>'+accionCatalogo[0].nombre+'</td><td>'+trimestre[0].descripcion+'</td><td>'+trimestre[0].anho+'</td><td>'+avanceCualitativo[a].gestionesRealizadas+'</td><td>'+avanceCualitativo[a].principalesLogrosAlcanzados+'</td><td>'+avanceCualitativo[a].dificultadesLeccionesAprendidas+'</td><td>'+avanceCualitativo[a].objetivosTrimestre+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarAvanceCualitativo" data-toggle="tooltip" data-placement="top" title="Editar Avance Cualitativo" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+avanceCualitativo[a].id+'><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarAvanceCualitativo" data-toggle="tooltip" data-placement="top" title="Borrar Avance Cualitativo" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+avanceCualitativo[a].id+'><span class="glyphicon glyphicon-trash"></span></button></td></tr>';	
 			<%} if (attributes.get("role_id").toString().equals("3")){%>
-				tablaAvanceCualitativo+='<tr><td>'+accionCatalogo[0].nombre+'</td><td>'+trimestre[0].descripcion+'</td><td>'+trimestre[0].anho+'</td><td>'+avanceCualitativo[a].gestionesRealizadas+'</td><td>'+avanceCualitativo[a].principalesLogrosAlcanzados+'</td><td>'+avanceCualitativo[a].dificultadesLeccionesAprendidas+'</td><td>'+avanceCualitativo[a].objetivosTrimestre+'</td></tr>';	
+				tablaAvanceCualitativo+='<tr><td>'+accionCatalogo[0].nombre+'</td><td>'+trimestre[0].descripcion+'</td><td>'+trimestre[0].anho+'</td><td>'+avanceCualitativo[a].gestionesRealizadas+'</td><td>'+avanceCualitativo[a].principalesLogrosAlcanzados+'</td><td>'+avanceCualitativo[a].dificultadesLeccionesAprendidas+'</td><td>'+avanceCualitativo[a].objetivosTrimestre+'</td><td class="text-center"></td></tr>';	
 			<%}%>
 		}
 
@@ -8712,7 +8732,7 @@ function listaAvanceCualitativo(insLineaAccionId){
 	var tablaAccion ='     			<div class="table-responsive">'+
 	'	                				<table class="table table-hover table-bordered" id="dataTablesAvanceCualitativo">'+
 	'	                					<thead>'+
-	'	                						<tr class="active"><th class="text-center">Accion</th><th class="text-center">Trimestre</th><th class="text-center">Año</th><th class="text-center">Gestiones Realizadas</th><th class="text-center">Principales Logros Alcanzados</th><th class="text-center">Dificultades Lecciones Aprendidas</th><th class="text-center">Objetivos del Trimestre</th></tr>'+
+	'	                						<tr class="active"><th class="text-center">Accion</th><th class="text-center">Trimestre</th><th class="text-center">Año</th><th class="text-center">Gestiones Realizadas</th><th class="text-center">Principales Logros Alcanzados</th><th class="text-center">Dificultades Lecciones Aprendidas</th><th class="text-center">Objetivos del Trimestre</th><th class="text-center">Administrar</th></tr>'+
 	'	                					</thead>'+
 	'	                						<tbody id="tablaAvanceCualitativo">'+
 	'	                						</tbody>'+
@@ -8724,6 +8744,187 @@ function listaAvanceCualitativo(insLineaAccionId){
 	$("#dataTablesAvanceCualitativo").DataTable();
 	
 }
+
+$("body").on("click", ".consultaEditarAvanceCualitativo",function(event){
+	
+	var parametros = $(this).attr("parametros");
+	var idParsed = parametros.split("-"); 
+    var insLineaAccionId = idParsed[0];
+    var lineaAccionId = idParsed[1];
+    var institucionId = idParsed[2];
+    var periodoId = idParsed[3];
+    var avanceCualitativoId = idParsed[4];// es el id de la tabla avance_cualitativo 
+	
+	if ( $("#modalAvanceCualitativo").length )
+	{
+		$("#modalAvanceCualitativo").remove();
+	}	
+	
+	if ( $("#modalEditarAvanceCualitativo").length )
+	{
+		$("#modalEditarAvanceCualitativo").remove();
+	}	
+    
+	var accion = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccionId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	accion = JSON.parse(accion);
+	
+	var catalogoAccion = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	catalogoAccion = JSON.parse(catalogoAccion);
+	
+	var trimestre = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getTrimestre',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	trimestre = JSON.parse(trimestre);
+	
+	var avanceCualitativo = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCualitativo&idAvanceCualitativo='+avanceCualitativoId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	avanceCualitativo = JSON.parse(avanceCualitativo);
+	
+	var optionAcciones = "";
+	var optionTrimestre = "";
+	var lineasDeAccion= [];
+
+	for(var a = 0; a < accion.length; a++)
+	{		
+		if(accion[a].borrado != true){
+			if (lineasDeAccion.indexOf(accion[a].accionCatalogoId)<0){
+				lineasDeAccion.push(accion[a].accionCatalogoId);
+			}
+		}
+	}
+	
+	for(var z = 0; z < lineasDeAccion.length; z++)
+	{
+				
+		for(var g = 0; g < catalogoAccion.length; g++)
+		{
+			if(lineasDeAccion[z] == catalogoAccion[g].id){
+				if(lineasDeAccion[z] == avanceCualitativo[0].accionCatalogoId){
+					optionAcciones+='<option value="'+catalogoAccion[g].id+'" selected>'+catalogoAccion[g].nombre+'</option>';
+				}else{
+					optionAcciones+='<option value="'+catalogoAccion[g].id+'" >'+catalogoAccion[g].nombre+'</option>';
+				}
+			}
+		}		
+		
+	}
+	
+	for(var t = 0; t < trimestre.length; t++)
+	{
+		if(trimestre[t].id == avanceCualitativo[0].trimestreId){
+			optionTrimestre+='<option value="'+trimestre[t].id+'" selected>'+trimestre[t].descripcion+' '+trimestre[t].anho+'</option>';
+		}else{
+			optionTrimestre+='<option value="'+trimestre[t].id+'" >'+trimestre[t].descripcion+' '+trimestre[t].anho+'</option>';
+		}
+	}	
+	
+						
+	var contenido = "";
+
+	contenido +=		'<div class="modal fade" id="modalEditarAvanceCualitativo" data-backdrop="static" data-keyboard="false" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">'+
+						'	<div class="modal-dialog modal-lg">'+
+						'		<div class="modal-content" >'+
+						'			<div class="modal-header">'+
+						'		        <button type="button" class="close avanceCualitativo"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+' aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+						'		        <h4 class="modal-title" >Editar Avance Cualitativo</h4>'+
+						'			</div>'+
+						'		    <div class="modal-body" id="cuerpoModalAvanceCualitativo">'+
+										
+						'				<form role="form">'+
+						'					<div class="table-responsive">'+
+						'						<table class="table table-hover">'+
+						'							<tbody>'+
+						'								<tr><td><div class="form-group"><label for="nombreAvanceCualitativo">Acciones</label><select id="nombreAvanceCualitativo" class="form-control">'+optionAcciones+'</select></div></td></tr>'+
+						'								<tr><td><div class="form-group"><label for="trimestreAvanceCualitativo">Trimestre</label><select id="trimestreAvanceCualitativo" class="form-control">'+optionTrimestre+'</select></div></td></tr>'+
+						'								<tr><td><div class="form-group"><label for="gestionesRealizadasAvanceCualitativo">Gestiones Realizadas</label><textarea class="form-control" rows="" id="gestionesRealizadasAvanceCualitativo">'+avanceCualitativo[0].gestionesRealizadas+'</textarea></div></td></tr>'+
+						' 								<tr><td><div class="form-group"><label for="logrosAlcanzadosAvanceCualitativo">Principales Logros Alcanzados</label><textarea class="form-control" rows="" id="logrosAlcanzadosAvanceCualitativo">'+avanceCualitativo[0].principalesLogrosAlcanzados+'</textarea></div></td></tr>'+	
+						'								<tr><td><div class="form-group"><label for="leccionesAprendidasAvanceCualitativo">Dificultades y Lecciones aprendidas</label><textarea class="form-control" rows="" id="leccionesAprendidasAvanceCualitativo">'+avanceCualitativo[0].dificultadesLeccionesAprendidas+'</textarea></div></td></tr>'+
+						' 								<tr><td><div class="form-group"><label for="objetivosAvanceCualitativo">Objetivos del Siguiente Trimestre</label><textarea class="form-control" rows="" id="objetivosAvanceCualitativo">'+avanceCualitativo[0].objetivosTrimestre+'</textarea></div></td></tr>'+
+						'							</tbody>'+							           
+						'						</table>'+
+						'					</div>'+							
+						'				</form>'+	
+						
+						'		    </div>'+
+						'			<div class="modal-footer">'+
+						' 				<button type="button" class="btn btn-success btn-sm editarAvanceCualitativo" id="botonGuardarAvanceCualitativo" parametros='+avanceCualitativo[0].id+'>Guardar Cambios</button>'+
+						' 				<button type="button" class="btn btn-success btn-sm avanceCualitativo" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+' >Cerrar</button>'+						
+						'			</div>'+
+						'		</div>'+ 
+						'	</div>'+
+						'</div>';								
+						
+	$("#programacion").append(contenido);
+	$('#modalEditarAvanceCualitativo').modal('show');
+	
+});
+
+$("body").on("click", ".editarAvanceCualitativo",function(event){
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-");                                                            
+	var avanceCualitativoId = idParsed[0];
+	//Las siguentes variables se utiliza en esta funcion para redibujar el modal anterior
+
+	var accionCatalogo = $("#nombreAvanceCualitativo option:selected").val();
+	var trimestre = $("#trimestreAvanceCualitativo option:selected").val();
+	var gestionesRealizadas = $("#gestionesRealizadasAvanceCualitativo").val();
+	var logrosAlcanzados = $("#logrosAlcanzadosAvanceCualitativo").val();
+	var dificultades = $("#leccionesAprendidasAvanceCualitativo").val();
+	var objetivos = $("#objetivosAvanceCualitativo").val();
+
+	
+	var objeto = new Object();
+	
+	objeto.id = avanceCualitativoId;
+	objeto.accionCatalogoId = accionCatalogo;
+	objeto.trimestreId = trimestre;
+	objeto.gestionesRealizadas = gestionesRealizadas;
+	objeto.principalesLogrosAlcanzados = logrosAlcanzados;
+	objeto.dificultadesLeccionesAprendidas = dificultades;
+	objeto.objetivosTrimestre = objetivos;
+
+	
+   	var info = JSON.stringify(objeto);
+    $.ajax({
+        url: "ajaxUpdate2?accion=actAvanceCualitativo",
+        type: 'POST',
+        dataType: 'json',
+        data: info,
+        contentType: 'application/json',
+        mimeType: 'application/json',
+        success: function (data) {
+        	if(data.success == true)
+        	{
+        		$("#botonGuardarAvanceCualitativo").remove();
+            	$("#cuerpoModalAvanceCualitativo").html("");
+            	$("#cuerpoModalAvanceCualitativo").html("<h3 class='text-center'>Ud ha actualizado exitosamente!!</h3>");        		
+        	}
+        	
+        	},
+        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
+        error: function(data,status,er) {
+        	
+        	}
+	 }); 
+	
+});
 
 
 </script>

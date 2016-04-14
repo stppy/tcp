@@ -101,7 +101,7 @@ public class ajaxSelects extends HttpServlet {
     	Integer accionHasProductoId = null;
     	Integer productoObjetoGastoId = null;
     	Integer trimestreId = null;
-
+    	Integer idAvanceCualitativo = null;
     	
     	String institucion=null;
     	String usuario=null;
@@ -169,6 +169,8 @@ public class ajaxSelects extends HttpServlet {
       	if (request.getParameter("accionHasProductoId")!=null) accionHasProductoId=Integer.parseInt(request.getParameter("accionHasProductoId"));
       	if (request.getParameter("productoObjetoGastoId")!=null) productoObjetoGastoId=Integer.parseInt(request.getParameter("productoObjetoGastoId"));
       	if (request.getParameter("trimestreId")!=null) trimestreId=Integer.parseInt(request.getParameter("trimestreId"));      	
+      	if (request.getParameter("idAvanceCualitativo")!=null) idAvanceCualitativo=Integer.parseInt(request.getParameter("idAvanceCualitativo"));      	
+
       	
         PrintWriter out = response.getWriter();
         response.setContentType("text/html");
@@ -391,11 +393,11 @@ public class ajaxSelects extends HttpServlet {
         		List objetos=null; 
         		condition = " where true ";
         		String condition2=" where true ";
-        		if (!userRoleId.equals("0") && !userRoleId.equals("1") && !userRoleId.equals("2")){ 
-        		condition2 += " and entidad_id="+userEntidadId+" and nivel_id="+userNivelId;
-        		if ( !userUnrId.equals("0") ){
-        		condition2+= " and unidad_responsable_id="+userUnrId;
-        		}
+        		if (!userRoleId.equals("0") && !userRoleId.equals("1")){ 
+        			condition2 += " and entidad_id="+userEntidadId+" and nivel_id="+userNivelId;
+	        		if ( !userUnrId.equals("0") ){
+	        			condition2+= " and unidad_responsable_id="+userUnrId;
+	        		}
         		};
         		condition += " and ins_id IN (select id from institucion "+condition2+") ";
         		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
@@ -641,6 +643,8 @@ public class ajaxSelects extends HttpServlet {
         		List objetos=null;
         		condition = " where true";
         		if (insLineaAccionId!=null) condition += " and ins_linea_accion_id ='"+insLineaAccionId+"'";
+        		if (idAvanceCualitativo!=null) condition += " and id ='"+idAvanceCualitativo+"'";
+
            		try {objetos = SqlSelects.selectAvanceCualitativo(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
