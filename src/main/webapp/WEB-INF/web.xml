@@ -84,7 +84,7 @@
 	</filter-mapping>
 
 	<welcome-file-list>
-		<welcome-file>contenedorInsLineaAccion.jsp</welcome-file>
+		<welcome-file>resumenLineaAccion.jsp</welcome-file>
 	</welcome-file-list>
 
 	<servlet>
