@@ -5622,13 +5622,13 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 		if(webServicesEvidencia[j].borrado == true)
 		{
 			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") ){%>
-				cuerpoEvidencia += '<tr><td><del>'+webServicesEvidencia[j].nombre+'</del></td><td><del>'+webServicesEvidencia[j].descripcion+'</del></td><td><del>'+webServicesEvidencia[j].url+'</del></td><td></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+				cuerpoEvidencia += '<tr><td data-toggle="tooltip" data-placement="top" title="'+webServicesEvidencia[j].descripcion+'" ><del>'+webServicesEvidencia[j].nombre+'</del></td><td><del>'+webServicesEvidencia[j].url+'</del></td><td></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-trash"></span></button></td></tr>';
 			<%}%>
 		}else{
 			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>
-				cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[j].nombre+'</td><td>'+webServicesEvidencia[j].descripcion+'</td><td>'+webServicesEvidencia[j].url+'</td><td>';
+				cuerpoEvidencia += '<tr><td data-toggle="tooltip" data-placement="top" title="'+webServicesEvidencia[j].descripcion+'" >'+webServicesEvidencia[j].nombre+'</td><td><a href="'+webServicesEvidencia[j].url+'" target="_blank">'+webServicesEvidencia[j].url+'</a></td><td class="text-center">';
 					if (webServicesEvidencia[j].urlDocumento) {
-						cuerpoEvidencia += '<a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+webServicesEvidencia[j].urlDocumento+'" Download >Descargar Archivo</a>'+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+						cuerpoEvidencia += '<a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+webServicesEvidencia[j].urlDocumento+'" Download ><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Descargar" ><span class="fa fa-download"></span></button></a>'+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-trash"></span></button></td></tr>';
 					} else {
 						cuerpoEvidencia += '</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-trash"></span></button></td></tr>';	
 					}					
@@ -5984,17 +5984,20 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'									<div class="table-responsive">'+
 									'										<table class="table table-hover">'+
 									'											<tbody>'+
-									'		      									<form class="form-horizontal" role="form" method="post" enctype="multipart/form-data">'+
-									'													<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" placeholder="Ingrese Nombre" /></td><td><label for="urlEvidencia">Url</label><input type="url" id="urlEvidencia" class="form-control" placeholder="Ingrese Url" /></td></tr>'+
-									'													<tr><td colspan="2"><label for="descripcionEvidencia">Descripción</label><input type="text" id="descripcionEvidencia" class="form-control" placeholder="Ingrese Descripción" /></td></tr>'+
- 									'													<tr><td><label for="documentoEvidencia">Adjuntar Documento</label><input type="file" id="documentoEvidencia" name="documentoEvidencia" /><div id="progress" class="progress">'+
+									'		      									<form id="formEvidencia" class="form-horizontal" role="form">'+
+									'													<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" placeholder="Ingrese Nombre" /></td><td><label for="urlEvidencia">Url</label><input type="url" id="urlEvidencia" class="form-control" pattern="https?://.+" placeholder="Ingrese Url" /></td></tr>'+
+									'													<tr><td colspan="2"><label for="descripcionEvidencia">Descripción</label><input type="text" id="descripcionEvidencia" class="form-control" placeholder="Ingrese Descripción" /></td></tr>'+																		
         							'														<div  class="bar" style="width: 0%;"></div></div></td></tr>'+
-        							/* '													<tr><td><label>Ingresar localización de la evidencia:</label></td></tr>'+
-        							'												    <tr><td colspan="2"><input id="geoloc1" type="text" value="" size="20" /></td></tr>'+	
-									'													<tr><td><input id="geolat" type="text" value="" size="20" /></td></tr>'+
-									'													<tr><td><input id="geolng" type="text" value="" size="20" /></td></tr>'+ */									
+        							/* '													<tr><td colspan="2"><label>Ingresar localización de la evidencia:</label></td></tr>'+
+        							'													<tr><td colspan="2"><label for="latLongEvidencia">Latitud , Longitud: </label>'+
+        							'															<input id="geoloc" class="form-control" type="text" value="" size="20" /></td></tr>'+	
+        							'													<tr><td><label for="latEvidencia">Latitud: </label>'+
+        							'															<input id="geolat" class="form-control" type="text" value="" size="20" /></td>'+
+        							'														<td><label for="longEvidencia">Longitud: </label>'+
+        							'															<input id="geolng" class="form-control" type="text" value="" size="20" /></td></tr>'+ */
+        							'													<tr><td><label for="documentoEvidencia">Adjuntar Documento</label><input type="file" id="documentoEvidencia" name="documentoEvidencia" /><div id="progress" class="progress">'+
         							'													<input type="hidden" id="wsIdEvidencia" value="1" /><input type="hidden" id="versionEvidencia" value="3"/><input type="hidden" id="avanceIdEvidencia" value="'+avanceId+'"/>'+
-									'													<input type="hidden" id="urlDocEvidencia" value="" />'+
+									'													<input type="hidden" id="urlDocEvidencia" value="" />'+																							
 									'		      									</form>	'+
 									'											</tbody>'+
 									'										</table>'+
@@ -6002,7 +6005,8 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									
 									'				      				 </div>'+//fin box body
 									'									 <div class="modal-footer">'+ 
-									'					        			<button type="button" class="btn btn-success btn-sm guardarEvidencia" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'>Guardar Evidencia</button>'+ 
+									'					        			<button type="submit" class="btn btn-success btn-sm guardarEvidencia" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'>Guardar Evidencia</button>'+ 
+									/*'									 	<input type="submit" id="submitEvidencia" class="btn btn-success btn-sm" form="formEvidencia" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' value="Guardar Evidencia">'+*/ 
 									'									 </div>'+									
 									'				      			 	</div>'+
 									'				      			</div>'+							
@@ -6022,7 +6026,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'										<div class="table-responsive">'+
 									'											<table class="table table-hover table-bordered" id="dataTableEvidencia">'+
 									'												<thead>'+
-									'													<tr class="active"><th>Nombre</th><th>Descripción</th><th>Url</th><th>Evidencia</th><th class="text-center">Administrar</th></tr>'+
+									'													<tr class="active"><th>Nombre</th><th>Url</th><th class="text-center">Evidencia</th><th class="text-center">Administrar</th></tr>'+
 									'												</thead>'+
 									'												<tbody  id="listaEvidencia">'+
 									
@@ -6068,20 +6072,15 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 });	
 
 
-/* $('#geoloc1').leafletLocationPicker({
+/* $(document).ready(function(){
+	$('#geoloc').leafletLocationPicker({
 		locationSep: ' - '
-	})
-	.on('show', function(e) {
-		$(this).siblings('em').text('click on map for insert the location');
-	})
-	.on('hide', function(e) {
-		$(this).siblings('em').text('');
-	}) 
-	.on('changeLocation', function(e) {
-		$(this)
-		.siblings('#geolat').val( e.latlng.lat )
-		.siblings('#geolng').val( e.latlng.lng );	
-	}); */
+		}).on('changeLocation', function(e) {
+			if (e.latlng.lat != null) $('#geolat').val( e.latlng.lat );
+			if (e.latlng.lng != null) $('#geolng').val( e.latlng.lng );	
+	});
+});
+ */
 
 
 $("body").on("change", "#productoObjetoGasto",function(event){
@@ -6738,7 +6737,15 @@ $("body").on("click", ".editarAvanceCosto",function(event){
 });
 
 
-$("body").on("click", ".guardarEvidencia",function(event){
+ $("body").on("click", ".guardarEvidencia",function(event){
+	/* event.preventDefault(); //evita que realice el submit */
+	/* event.preventDefault();
+	
+	/* if (!$('#formEvidencia')[1].checkValidity()){
+		alert("Favor introduzca una dirección url valida. Ej: http://www.google.com");
+		return false;
+	} */
+	
 	var parametros = $(this).attr("parametros");
     var idParsed = parametros.split("-");                                                            
 	
@@ -6775,6 +6782,8 @@ $("body").on("click", ".guardarEvidencia",function(event){
 	var urlDocumento; 
 		if (docEvidenciaFile != undefined) urlDocumento = $("#urlDocEvidencia").val();
 	var descripcion = $("#descripcionEvidencia").val();
+	var latitud = $("#geolat").val();
+	var longitud = $("#geolong").val();
 	var wsId = $("#wsIdEvidencia").val();
 	var version = $("#versionEvidencia").val();
   
@@ -6783,8 +6792,10 @@ $("body").on("click", ".guardarEvidencia",function(event){
 	//Vaciar los inputs
 	$("#nombreEvidencia").val("");
 	$("#urlEvidencia").val("");
-	$("#urlDocEvidencia").val("");
+	$("#urlDocEvidencia").val("");	
 	$("#descripcionEvidencia").val("");
+	$("#geolat").val("");
+	$("#geolong").val("");
 	$("#documentoEvidencia").val("");
 
 	
@@ -6792,8 +6803,10 @@ $("body").on("click", ".guardarEvidencia",function(event){
 	
 	objeto.nombre = nombre;
 	objeto.url = url;
-	objeto.urlDocumento = urlDocumento;
+	objeto.urlDocumento = urlDocumento;	
 	objeto.descripcion = descripcion;
+	objeto.latitud = latitud;
+	objeto.longitud = longitud;
 	objeto.wsId = wsId;
 	objeto.version = version;
 	objeto.avanceId = avanceId;
@@ -6824,8 +6837,8 @@ $("body").on("click", ".guardarEvidencia",function(event){
         		{
         			if(webServicesEvidencia[d].borrado == true)
         			{
-        				<% if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0")){%>
-        					cuerpoEvidencia += '<tr><td><del>'+webServicesEvidencia[d].nombre+'</del></td><td><del>'+webServicesEvidencia[d].descripcion+'</del></td><td><del>'+webServicesEvidencia[d].url+'</del></td><td></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+        				<% if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("2")){%>
+        					cuerpoEvidencia += '<tr><td data-toggle="tooltip" data-placement="top" title="'+webServicesEvidencia[d].descripcion+'"><del>'+webServicesEvidencia[d].nombre+'</del></td><td><del>'+webServicesEvidencia[d].url+'</del></td><td></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
         				<% }%>
         			}else{  				
        					<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>
@@ -6858,8 +6871,7 @@ $("body").on("click", ".guardarEvidencia",function(event){
         error: function(data,status,er) {
         	
         	}
-	 });
-	
+	 });	
 });
 
 $("body").on("click", ".consultaBorrarEvidencia",function(event){
@@ -7019,10 +7031,13 @@ $("body").on("click", ".consultaEditarEvidencia",function(event){
 						'			      			<form class="form-horizontal" role="form">'+
 						'								<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" value="'+webServicesEvidencia[0].nombre+'" /></td><td><label for="urlEvidencia">Url</label><input type="url" id="urlEvidencia" class="form-control" value="'+webServicesEvidencia[0].url+'" /></td></tr>'+
 						'								<tr><td colspan="2"><label for="descripcionEvidencia">Descripción</label><input type="text" id="descripcionEvidencia" class="form-control" value="'+webServicesEvidencia[0].descripcion+'" /></td></tr>'+
-						/* '								<tr><td><label>Ingresar localización de la evidencia:</label></td></tr>'+
-						'								<tr><td><input id="geoloc1" type="text" value="" size="20" /></td></tr>'+	
-						'								<tr><td><input id="geolat" type="text" value="" size="20" /></td></tr>'+
-						'								<tr><td><input id="geolng" type="text" value="" size="20" /></td></tr>'+						 */
+						/* '								<tr><td colspan="2"><label>Ingresar localización de la evidencia:</label></td></tr>'+
+						'								<tr><td colspan="2"><label for="latLongEvidencia">Latitud , Longitud: </label>'+
+						'										<input id="geoloc" class="form-control" type="text" value="" size="20" /></td></tr>'+	
+						'								<tr><td><label for="latEvidencia">Latitud: </label>'+
+						'										<input id="geolat" class="form-control" type="text" value="" size="20" /></td>'+
+						'									<td><label for="longEvidencia">Longitud: </label>'+
+						'										<input id="geolng" class="form-control" type="text" value="" size="20" /></td></tr>'+ */
 						'								<input type="hidden" id="wsIdEvidencia" value='+webServicesEvidencia[0].wsId+' /><input type="hidden" id="versionEvidencia" value='+webServicesEvidencia[0].version+' /><input type="hidden" id="avanceIdEvidencia" value='+webServicesEvidencia[0].avanceId+' />'+
 						'								<input type="hidden" id="urlDocEvidencia" value="" />'+														
 						'			      			</form>	'+												
