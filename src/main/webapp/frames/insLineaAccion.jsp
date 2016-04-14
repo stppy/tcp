@@ -8395,6 +8395,10 @@ $("body").on("click", ".avanceCualitativo",function(event){
 	{
 		$("#modalEditarAvanceCualitativo").remove();
 	}
+	if ( $("#modalBorrarAvanceCualitativo").length )
+	{
+		$("#modalBorrarAvanceCualitativo").remove();
+	}	
 
 	var lineaAccion = $.ajax({
 		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
@@ -8764,7 +8768,11 @@ $("body").on("click", ".consultaEditarAvanceCualitativo",function(event){
 	{
 		$("#modalEditarAvanceCualitativo").remove();
 	}	
-    
+	if ( $("#modalBorrarAvanceCualitativo").length )
+	{
+		$("#modalBorrarAvanceCualitativo").remove();
+	}	
+	
 	var accion = $.ajax({
 		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccionId,
 	  	type:'get',
@@ -8926,5 +8934,125 @@ $("body").on("click", ".editarAvanceCualitativo",function(event){
 	
 });
 
+$("body").on("click", ".consultaBorrarAvanceCualitativo",function(event){
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-");                                                            
+	
+	//Las siguentes variables se utiliza en esta funcion para redibujar el modal anterior
+	var insLineaAccionId = idParsed[0];
+	var lineaAccionId = idParsed[1];
+	var institucionId = idParsed[2];
+	var periodoId = idParsed[3];
+	var avanceCualitativoId = idParsed[4];
+
+	if ( $("#modalAvanceCualitativo").length )
+	{
+		$("#modalAvanceCualitativo").remove();
+	}	
+	
+	if ( $("#modalEditarAvanceCualitativo").length )
+	{
+		$("#modalEditarAvanceCualitativo").remove();
+	}	
+	if ( $("#modalBorrarAvanceCualitativo").length )
+	{
+		$("#modalBorrarAvanceCualitativo").remove();
+	}	
+	
+	var webServiceAvanceCualitativo = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCualitativo&idAvanceCualitativo='+avanceCualitativoId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	webServiceAvanceCualitativo = JSON.parse(webServiceAvanceCualitativo);
+	
+	var contenido = "";
+
+	contenido =			'<div class="modal fade" id="modalBorrarAvanceCualitativo"  data-backdrop="static" data-keyboard="false" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">'+
+						'	<div class="modal-dialog modal-lg">'+
+						'		<div class="modal-content" >'+
+						'			<div class="modal-header">'+
+						'		        <button type="button" class="close avanceCualitativo"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+' ><span aria-hidden="true">&times;</span></button>'+
+						'		        <h4 class="modal-title" >Borrar - Restaurar Avance Cualitativo</h4>'+
+						'			</div>'+
+						'		    <div class="modal-body">'+
+						'				<div id="mensajeBorradoAvanceCualitativo"></div>'+
+						'		    </div>'+
+						'			<div class="modal-footer" id="agregarBotonBorradoAvanceCualitativo">'+
+						'			</div>'+
+						'		</div>'+ 
+						'	</div>'+
+						'</div>';
+						
+		$("#programacion").append(contenido);
+		
+		if(webServiceAvanceCualitativo[0].borrado == true){
+			$("#mensajeBorradoAvanceCualitativo").html("");
+			$("#mensajeBorradoAvanceCualitativo").append('<h3 class="text-center">Ud. esta seguro que desea RESTABLACER este registro</h3>');
+			$("#agregarBotonBorradoAvanceCualitativo").html("");
+			$("#agregarBotonBorradoAvanceCualitativo").append('<button type="button" class="btn btn-success btn-sm borrarAvanceCualitativo" id="botonRestaurarAvanceCualitativo" parametros='+avanceCualitativoId+'-r>Restaurar Avance Cualitativo</button>');
+			$("#agregarBotonBorradoAvanceCualitativo").append('<button type="button" class="btn btn-success btn-sm avanceCualitativo" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'>Cerrar</button>');
+		}else{
+			$("#mensajeBorradoAvanceCualitativo").html("");
+			$("#mensajeBorradoAvanceCualitativo").append('<h3 class="text-center">Ud. esta seguro que desea BORRAR este registro</h3');
+			$("#agregarBotonBorradoAvanceCualitativo").html("");
+			$("#agregarBotonBorradoAvanceCualitativo").append('<button type="button" class="btn btn-danger btn-sm borrarAvanceCualitativo" id="botonBorradoAvanceCualitativo" parametros='+avanceCualitativoId+'-b>Borrar Avance Cualitativo</button>');
+			$("#agregarBotonBorradoAvanceCualitativo").append('<button type="button" class="btn btn-success btn-sm avanceCualitativo" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'>Cerrar</button>');
+		}
+		
+		$('#modalBorrarAvanceCualitativo').modal('show');
+			
+});
+
+$("body").on("click", ".borrarAvanceCualitativo",function(event){	
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-"); 
+    var avanceCualitativoId = idParsed[0];
+    var estado = idParsed[1];
+    
+	var webServiceAvanceCualitativo = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCualitativo&idAvanceCualitativo='+avanceCualitativoId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	webServiceAvanceCualitativo = JSON.parse(webServiceAvanceCualitativo);
+    
+    var objeto = new Object();
+    objeto.id = avanceCualitativoId;
+    objeto.borrado= webServiceAvanceCualitativo[0].borrado;
+
+    
+  	var info = JSON.stringify(objeto);
+    $.ajax({
+        url: "ajaxUpdate2?accion=borradoAvanceCualitativo",
+        type: 'POST',
+        dataType: 'json',
+        data: info,
+        contentType: 'application/json',
+        mimeType: 'application/json',
+        success: function (data) {
+        	
+        	if(data.success == true){
+            	if(estado == "b"){
+	        		$("#botonBorradoAvanceCualitativo").remove();
+	            	$("#mensajeBorradoAvanceCualitativo").html("");
+	            	$("#mensajeBorradoAvanceCualitativo").html("<h3 class='text-center'>BORRADO EXITOSAMENTE!!</h3>");
+	            }else{
+	        		$("#botonRestaurarAvanceCualitativo").remove();
+	            	$("#mensajeBorradoAvanceCualitativo").html("");
+	            	$("#mensajeBorradoAvanceCualitativo").html("<h3 class='text-center'>RESTAURADO EXITOSAMENTE!!</h3>");
+	        	}
+        	}
+
+        },
+
+        error: function(data,status,er) {
+        	
+        	}
+	 });
+	
+});
 
 </script>

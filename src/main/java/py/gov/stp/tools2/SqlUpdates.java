@@ -1223,4 +1223,20 @@ public static boolean borradoHito(Hito objeto){
 		    return true;
 		 }catch (SQLException e) {e.printStackTrace(); return false;}
 	}
+	
+	public static boolean borradoAvanceCualitativo(AvanceCualitativo objeto){
+	  	 Connection conect=ConnectionConfiguration.conectar();
+	  	 Statement statement = null;
+	  	 objeto.changeBorrado();
+	  	 
+	  	 String query = "update avance_cualitativo set borrado='"+objeto.isBorrado()+"'";	
+				 
+		 query+=" where id ="+objeto.getId(); 
+		 try {
+			statement=conect.createStatement();
+			statement.execute(query);
+		    conect.close();
+		    return true;
+		  } catch (SQLException e) {e.printStackTrace(); return false;}
+	}
 }
