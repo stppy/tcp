@@ -8506,7 +8506,8 @@ $("body").on("click", ".avanceCualitativo",function(event){
 						'		<div class="modal-content" >'+
 						'			<div class="modal-header">'+
 						'		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
-						'		        <h4 class="modal-title">Registrar Avance Cualitativo de '+nombreLineaAccion+' ('+nombreInstitucion+') - '+nombrePeriodo+'</h4>'+ 
+						'		        <h4 class="modal-title">Registrar Avance Cualitativo de '+nombreLineaAccion+' ('+nombreInstitucion+') - '+nombrePeriodo+'</h4>'+
+						'				<input type="hidden" id="nombreInstitucion" value="'+nombreInstitucion+'"/>'+
 						'			</div>'+
 						'		    <div class="modal-body" id="accionCuerpo" >';
 						
@@ -8573,7 +8574,7 @@ $("body").on("click", ".avanceCualitativo",function(event){
 	var tablaAccion ='     			<div class="table-responsive">'+
 	'	                				<table class="table table-hover table-bordered" id="dataTablesAvanceCualitativo">'+
 	'	                					<thead>'+
-	'	                						<tr class="active"><th class="text-center">Accion</th><th class="text-center">Trimestre</th><th class="text-center">Año</th><th class="text-center">Gestiones Realizadas</th><th class="text-center">Principales Logros Alcanzados</th><th class="text-center">Dificultades Lecciones Aprendidas</th><th class="text-center">Objetivos del Trimestre</th></tr>'+
+	'	                						<tr class="active"><th class="text-center">Accion</th><th class="text-center">Trimestre</th><th class="text-center">Año</th><th class="text-center">Gestiones Realizadas</th><th class="text-center">Principales Logros Alcanzados</th><th class="text-center">Dificultades Lecciones Aprendidas</th><th class="text-center">Objetivos del Trimestre</th><th class="text-center">Administrar</th></tr>'+
 	'	                					</thead>'+
 	'	                						<tbody id="tablaAvanceCualitativo">'+
 	'	                						</tbody>'+
@@ -8668,14 +8669,53 @@ function listaAvanceCualitativo(insLineaAccionId){
 
 		if(avanceCualitativo[a].borrado == true){
 			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>
-				tablaAvanceCualitativo+='<tr><td><del>'+accionCatalogo[0].nombre+'</del></td><td><del>'+trimestre[0].descripcion+'</del></td><td><del>'+trimestre[0].anho+'</del></td><td><del>'+avanceCualitativo[a].gestionesRealizadas+'</del></td><td><del>'+avanceCualitativo[a].principalesLogrosAlcanzados+'</del></td><td><del>'+avanceCualitativo[a].dificultadesLeccionesAprendidas+'</del></td><td><del>'+avanceCualitativo[a].objetivosTrimestre+'</del></td></tr>';
+				tablaAvanceCualitativo+='<tr id="avance'+a+'">'+
+										'	<td id="avanceNombreAccion"><del>'+accionCatalogo[0].nombre+'</del></td>'+
+										'	<td id="avanceDescTrimestre"><del>'+trimestre[0].descripcion+'</del></td>'+
+										'	<td id="avanceAnhoTrimestre"><del>'+trimestre[0].anho+'</del></td>'+
+										'	<td id="avanceGestionesRealizadas"><del>'+avanceCualitativo[a].gestionesRealizadas+'</del></td>'+
+										'	<td id="avancePrincipalesLogrosAlcanzados"><del>'+avanceCualitativo[a].principalesLogrosAlcanzados+'</del></td>'+
+										'	<td id="avanceDificultadesLeccionesAprendidas"><del>'+avanceCualitativo[a].dificultadesLeccionesAprendidas+'</del></td>'+
+										'	<td id="avanceObjetivosTrimestre"><del>'+avanceCualitativo[a].objetivosTrimestre+'</del></td>'+
+										'	<td><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Descargar"'+
+										'			onclick=imprimirAvance('+a+');>'+
+										'			<span class="glyphicon glyphicon-download-alt"></span>'+
+										'		</button>'+
+										'	</td>'+
+										'</tr>';
 				
 			<%}%>
 		}else{
 			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>
-				tablaAvanceCualitativo+='<tr><td>'+accionCatalogo[0].nombre+'</td><td>'+trimestre[0].descripcion+'</td><td>'+trimestre[0].anho+'</td><td>'+avanceCualitativo[a].gestionesRealizadas+'</td><td>'+avanceCualitativo[a].principalesLogrosAlcanzados+'</td><td>'+avanceCualitativo[a].dificultadesLeccionesAprendidas+'</td><td>'+avanceCualitativo[a].objetivosTrimestre+'</td></tr>';	
+			tablaAvanceCualitativo+='<tr id="avance'+a+'">'+
+									'	<td id="avanceNombreAccion">'+accionCatalogo[0].nombre+'</td>'+
+									'	<td id="avanceDescTrimestre">'+trimestre[0].descripcion+'</td>'+
+									'	<td id="avanceAnhoTrimestre">'+trimestre[0].anho+'</td>'+
+									'	<td id="avanceGestionesRealizadas">'+avanceCualitativo[a].gestionesRealizadas+'</td>'+
+									'	<td id="avancePrincipalesLogrosAlcanzados">'+avanceCualitativo[a].principalesLogrosAlcanzados+'</td>'+
+									'	<td id="avanceDificultadesLeccionesAprendidas">'+avanceCualitativo[a].dificultadesLeccionesAprendidas+'</td>'+
+									'	<td id="avanceObjetivosTrimestre">'+avanceCualitativo[a].objetivosTrimestre+'</td>'+
+									'	<td><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Descargar"'+
+									'			onclick=imprimirAvance('+a+');>'+
+									'			<span class="glyphicon glyphicon-download-alt"></span>'+
+									'		</button>'+
+									'	</td>'+
+									'</tr>';	
 			<%} if (attributes.get("role_id").toString().equals("3")){%>
-				tablaAvanceCualitativo+='<tr><td>'+accionCatalogo[0].nombre+'</td><td>'+trimestre[0].descripcion+'</td><td>'+trimestre[0].anho+'</td><td>'+avanceCualitativo[a].gestionesRealizadas+'</td><td>'+avanceCualitativo[a].principalesLogrosAlcanzados+'</td><td>'+avanceCualitativo[a].dificultadesLeccionesAprendidas+'</td><td>'+avanceCualitativo[a].objetivosTrimestre+'</td></tr>';	
+			tablaAvanceCualitativo+='<tr id="avance'+a+'">'+
+									'	<td id="avanceNombreAccion">'+accionCatalogo[0].nombre+'</td>'+
+									'	<td id="avanceDescTrimestre">'+trimestre[0].descripcion+'</td>'+
+									'	<td id="avanceAnhoTrimestre">'+trimestre[0].anho+'</td>'+
+									'	<td id="avanceGestionesRealizadas">'+avanceCualitativo[a].gestionesRealizadas+'</td>'+
+									'	<td id="avancePrincipalesLogrosAlcanzados">'+avanceCualitativo[a].principalesLogrosAlcanzados+'</td>'+
+									'	<td id="avanceDificultadesLeccionesAprendidas">'+avanceCualitativo[a].dificultadesLeccionesAprendidas+'</td>'+
+									'	<td id="avanceObjetivosTrimestre">'+avanceCualitativo[a].objetivosTrimestre+'</td>'+
+									'	<td><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Descargar"'+
+									'			onclick=imprimirAvance('+a+');>'+
+									'			<span class="glyphicon glyphicon-download-alt"></span>'+
+									'		</button>'+
+									'	</td>'+
+									'</tr>';	
 			<%}%>
 		}
 
@@ -8686,7 +8726,7 @@ function listaAvanceCualitativo(insLineaAccionId){
 	var tablaAccion ='     			<div class="table-responsive">'+
 	'	                				<table class="table table-hover table-bordered" id="dataTablesAvanceCualitativo">'+
 	'	                					<thead>'+
-	'	                						<tr class="active"><th class="text-center">Accion</th><th class="text-center">Trimestre</th><th class="text-center">Año</th><th class="text-center">Gestiones Realizadas</th><th class="text-center">Principales Logros Alcanzados</th><th class="text-center">Dificultades Lecciones Aprendidas</th><th class="text-center">Objetivos del Trimestre</th></tr>'+
+	'	                						<tr class="active"><th class="text-center">Accion</th><th class="text-center">Trimestre</th><th class="text-center">Año</th><th class="text-center">Gestiones Realizadas</th><th class="text-center">Principales Logros Alcanzados</th><th class="text-center">Dificultades Lecciones Aprendidas</th><th class="text-center">Objetivos del Trimestre</th><th>Administrar</th></tr>'+
 	'	                					</thead>'+
 	'	                						<tbody id="tablaAvanceCualitativo">'+
 	'	                						</tbody>'+
@@ -8699,5 +8739,72 @@ function listaAvanceCualitativo(insLineaAccionId){
 	
 }
 
-
+function imprimirAvance(indice){
+	/* , trimestreDesc, trimestreAnho, gestionesRealizadas, principalesLogrosAlcanzados,
+		dificultadesLeccionesAprendidas, objetivosTrimestre */
+	<%-- <%@include file="impresiones.jsp"%> --%>
+	 
+	$("#impresionInstitucion").text($("#nombreInstitucion").val());
+	$("#impresionAccionesTrimestre").text($("#avance"+indice+" #avanceNombreAccion").text());
+	$("#impresionTrimestreAño").text($("#avance"+indice+" #avanceDescTrimestre").text()+' '+$("#avance"+indice+" #avanceAnhoTrimestre").text());
+	$("#impresionGestionesRealizadas").text($("#avance"+indice+" #avanceGestionesRealizadas").text());
+	$("#impresionLogrosAlcanzados").text($("#avance"+indice+" #avancePrincipalesLogrosAlcanzados").text());
+	$("#impresionLeccionesAprendidas").text($("#avance"+indice+" #avanceDificultadesLeccionesAprendidas").text());
+	$("#impresionSiguienteTrimestre").text($("#avance"+indice+" #avanceObjetivosTrimestre").text());
+	
+	
+	var doc = new jsPDF('l', 'mm', [297, 210]);
+	    
+	var specialElementHandlers = {
+	    '#dataTablesAvanceCualitativo': function (element, renderer) {
+	        return true;
+	    }
+	};
+    doc.fromHTML($('#paraImpresiones').html(), 15, 35, {
+        'width': 300,
+        'elementHandlers': specialElementHandlers
+    });
+    
+    
+    var logo_stp = new Image();
+    logo_stp.src = 'dist/img/logo_stp_nuevo_header.png';
+    
+    var logo_gob = new Image();
+    logo_gob.src = 'dist/img/logo_gob_nac_header.png';
+    
+    logo_stp.onload = function(){
+    	doc.addImage(logo_stp , 'png', 25, 15);
+    	logo_gob.onload = function(){
+        	doc.addImage(logo_gob , 'png', 180, 15);
+        	doc.text(35, 25, "Avance Cualitativo");
+        	doc.save('AvanceCualitativo.pdf');
+        };
+    };
+}
 </script>	
+
+ 	<div id="paraImpresiones" class="container">
+		<!-- <div class="row">
+			<div class="col-md-12" style="padding-top:20px"> 
+				<div class="pull-left img-responsive col-md-4"><img src="http://spr.stp.gov.py/tablero/dist/img/logo_stp_nuevo_header.png"></div>
+				<div class="pull-right img-responsive col-md-4"><img src="http://spr.stp.gov.py/tablero/dist/img/logo_gob_nac_header.png"></div>
+		   	</div>
+		</div> -->
+		<div class="row" >
+			<div id="contenedorImpresion" class="table-responsive">
+				<div class="text-center" >
+					<table id="content2" class="pdfTable" style="font-size: 8px">
+						<tr><td>Avance Cualitativo</td><td></td></tr>
+						<tr><th >Institucion</th><td id="impresionInstitucion"></td></tr>
+						<tr><th scope="row">Acciones</th><td id="impresionAccionesTrimestre"></td></tr>
+						<tr><th scope="row">Trimestre</th><td id="impresionTrimestreAño"></td></tr>
+						<tr><th scope="row">Gestiones Realizadas</th><td id="impresionGestionesRealizadas"></td></tr>
+						<tr><th scope="row">Principales Logros Alcanzados</th><td id="impresionLogrosAlcanzados"></td></tr>
+						<tr><th scope="row">Dificultades y Lecciones aprendidas</th><td id="impresionLeccionesAprendidas"></td></tr>
+						<tr><th scope="row">Objetivos del Siguiente Trimestre</th><td id="impresionSiguienteTrimestre"></td></tr>
+					</table>
+				</div>
+	  		</div>
+		</div>        	
+	</div>
+
