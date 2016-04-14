@@ -5,12 +5,14 @@ public class Evidencia {
 	protected String nombre;
 	protected String descripcion;
 	protected String url;
-	protected int wsId;
+	protected int wsId;	
 	protected int version;
 	protected boolean borrado;
 	protected int avanceId;
 	protected String urlDocumento;
-
+//	protected Double latitud;
+//	protected Double longitud;
+	
 	
 	public int getId() {
 		return id;
@@ -68,5 +70,17 @@ public class Evidencia {
 	}
 	public void setUrlDocumento(String urlDocumento) {
 		this.urlDocumento = urlDocumento;
-	}	
+	}		
+//	public Double getLatitud() {
+//		return latitud;
+//	}
+//	public void setLatitud(Double latitud) {
+//		this.latitud = latitud;
+//	}
+//	public Double getLongitud() {
+//		return longitud;
+//	}
+//	public void setLongitud(Double longitud) {
+//		this.longitud = longitud;
+//	}
 }

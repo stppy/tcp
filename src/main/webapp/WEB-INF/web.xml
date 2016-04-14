@@ -84,7 +84,7 @@
 	</filter-mapping>
 
 	<welcome-file-list>
-		<welcome-file>contenedorInsLineaAccion.jsp</welcome-file>
+		<welcome-file>resumenLineaAccion.jsp</welcome-file>
 	</welcome-file-list>
 
 	<servlet>
@@ -197,9 +197,9 @@
     <servlet-name>DownloadServlet</servlet-name>
     <url-pattern>/DownloadServlet</url-pattern>
   </servlet-mapping>   
-  <!-- <context-param> 
+  <context-param> 
     <description>Ubicación donde se almacenan los archivos subidos</description> 
     <param-name>file-upload</param-name> 
-    <param-value>/usr/share/tomcat/uploads/</param-value> 
-  </context-param> -->
+    <param-value>/usr/share/tomcat/uploads</param-value> 
+  </context-param> 
 </web-app>
