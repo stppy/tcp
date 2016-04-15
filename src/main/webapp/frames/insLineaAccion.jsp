@@ -9229,7 +9229,8 @@ function imprimirAvance(indice){
 	
 	
 	var doc = new jsPDF('p', 'mm', "a4");
-	    
+	var pageHeight = 297;
+	
 	var specialElementHandlers = {
 	    '#dataTablesAvanceCualitativo': function (element, renderer) {
 	        return true;
