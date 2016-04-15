@@ -4,123 +4,127 @@ import java.util.Date;
 
 public class LineaAccionPresupuesto {
 
-	public String insId;
-	public String sigla;
-	public String laId;
-	public String laNombre;
-	public String laTipoId;
-	public String laEstrategiaId;
-	public String laUmId;
-	public String laUmDescp;
-	public String ilaId;
-	public String periodo;
-	public String ilaMeta;
-	public String accionId;
-	public String accionPeso;
-	public String accionFechaIni;
-	public String accionFechaFin;
-	public String m1;
-	public String m2;
-	public String m3;
-	public String m4;
-	public String deptoNombre;
-	public String distNombre;
-	public String idAccionCatalogo;
-	public String acNombre;
-	public String acUmId;
-	public String acUmDescp;
-	public int proporcion;
-	public String sprNivelId;
-	public String sprEntidadId;
-	public String sprTipProgramaId;
-	public String sprProgramaId;
-	public String sprSubProgramaId;
-	public String sprProyectoId;
-	public String sprProductoId;
-	public String uMedida;
-	public String cantFisica;
-	public String clase;
-	public String prodAsigFInanciera;
-	public String accionCosto;
-	public String sprAño;
-	public String sprVersion;
-	
-	public String getInsId() {
+	protected int insId;
+	protected String institucion;
+	protected int laId;
+	protected String lineaAccion;
+	protected int laEstId;
+	protected int laTipoId;
+	protected int laUmId;
+	protected String laUnidadMedida;
+	protected int ilaId;
+	protected int Periodo;
+	protected double laMeta;
+	protected int accionId;
+	protected int accionPeso;
+	protected String accionFechaIni;
+	protected String accionFechaFin;
+	protected double  accMeta1;
+	protected double  accMeta2;
+	protected double  accMeta3;
+	protected double  accMeta4;
+	protected int deptoId;
+	protected String departamento;
+	protected int distId;
+	protected String distrito;
+	protected int acatId;
+	protected String accion;
+	protected int acatUmId;
+	protected String accionUnidadMedida;
+	protected int proporcion;
+	protected String niv;
+	protected String ent;
+	protected String tp;
+	protected String pro;
+	protected String sub;
+	protected String pry;
+	protected String prod;
+	protected int prodId;
+	protected String prodNombre;
+	protected String uMedida;
+	protected String cantFisica;
+	protected String prodTipo;
+	protected String prodAsigFInanciera;
+	protected String accionCosto;
+	protected String sprAño;
+	protected String sprVersion;
+	protected String productoConcat;
+	public int getInsId() {
 		return insId;
 	}
-	public void setInsId(String insId) {
+	public void setInsId(int insId) {
 		this.insId = insId;
 	}
-	public String getSigla() {
-		return sigla;
+	public String getInstitucion() {
+		return institucion;
 	}
-	public void setSigla(String sigla) {
-		this.sigla = sigla;
+	public void setInstitucion(String institucion) {
+		this.institucion = institucion;
 	}
-	public String getLaId() {
+	public int getLaId() {
 		return laId;
 	}
-	public void setLaId(String laId) {
+	public void setLaId(int laId) {
 		this.laId = laId;
 	}
-	public String getLaNombre() {
-		return laNombre;
+	public String getLineaAccion() {
+		return lineaAccion;
 	}
-	public void setLaNombre(String laNombre) {
-		this.laNombre = laNombre;
+	public void setLineaAccion(String lineaAccion) {
+		this.lineaAccion = lineaAccion;
 	}
-	public String getLaTipoId() {
+	public int getLaEstId() {
+		return laEstId;
+	}
+	public void setLaEstId(int laEstId) {
+		this.laEstId = laEstId;
+	}
+	public int getLaTipoId() {
 		return laTipoId;
 	}
-	public void setLaTipoId(String laTipoId) {
+	public void setLaTipoId(int laTipoId) {
 		this.laTipoId = laTipoId;
 	}
-	public String getLaEstrategiaId() {
-		return laEstrategiaId;
-	}
-	public void setLaEstrategiaId(String laEstrategiaId) {
-		this.laEstrategiaId = laEstrategiaId;
-	}
-	public String getLaUmId() {
+	public int getLaUmId() {
 		return laUmId;
 	}
-	public void setLaUmId(String laUmId) {
+	public void setLaUmId(int laUmId) {
 		this.laUmId = laUmId;
 	}
-	public String getLaUmDescp() {
-		return laUmDescp;
+	public String getLaUnidadMedida() {
+		return laUnidadMedida;
 	}
-	public void setLaUmDescp(String laUmDescp) {
-		this.laUmDescp = laUmDescp;
+	public void setLaUnidadMedida(String laUnidadMedida) {
+		this.laUnidadMedida = laUnidadMedida;
 	}
-	public String getIlaId() {
+	public int getIlaId() {
 		return ilaId;
 	}
-	public void setIlaId(String ilaId) {
+	public void setIlaId(int ilaId) {
 		this.ilaId = ilaId;
 	}
-	public String getPeriodo() {
-		return periodo;
+	public int getPeriodo() {
+		return Periodo;
 	}
-	public void setPeriodo(String periodo) {
-		this.periodo = periodo;
+	public void setPeriodo(int periodo) {
+		Periodo = periodo;
 	}
-	public String getIlaMeta() {
-		return ilaMeta;
+	public double getLaMeta() {
+		return laMeta;
 	}
-	public void setIlaMeta(String ilaMeta) {
-		this.ilaMeta = ilaMeta;
+	public void setLaMeta(double laMeta) {
+		this.laMeta = laMeta;
 	}
-	public String getAccionId() {
+	public int getAccionId() {
 		return accionId;
 	}
-	public void setAccionId(String accionId) {
+	public void setAccionId(int accionId) {
 		this.accionId = accionId;
 	}
-	public String getAccionPeso() {
+	public int getAccionPeso() {
 		return accionPeso;
 	}
-	public void setAccionPeso(String accionPeso) {
+	public void setAccionPeso(int accionPeso) {
 		this.accionPeso = accionPeso;
 	}
 	public String getAccionFechaIni() {
@@ -135,65 +139,77 @@ public class LineaAccionPresupuesto {
 	public void setAccionFechaFin(String accionFechaFin) {
 		this.accionFechaFin = accionFechaFin;
 	}
-	public String getM1() {
-		return m1;
+	public double getAccMeta1() {
+		return accMeta1;
 	}
-	public void setM1(String m1) {
-		this.m1 = m1;
+	public void setAccMeta1(double accMeta1) {
+		this.accMeta1 = accMeta1;
 	}
-	public String getM2() {
-		return m2;
+	public double getAccMeta2() {
+		return accMeta2;
 	}
-	public void setM2(String m2) {
-		this.m2 = m2;
+	public void setAccMeta2(double accMeta2) {
+		this.accMeta2 = accMeta2;
 	}
-	public String getM3() {
-		return m3;
+	public double getAccMeta3() {
+		return accMeta3;
 	}
-	public void setM3(String m3) {
-		this.m3 = m3;
+	public void setAccMeta3(double accMeta3) {
+		this.accMeta3 = accMeta3;
 	}
-	public String getM4() {
-		return m4;
+	public double getAccMeta4() {
+		return accMeta4;
 	}
-	public void setM4(String m4) {
-		this.m4 = m4;
+	public void setAccMeta4(double accMeta4) {
+		this.accMeta4 = accMeta4;
 	}
-	public String getDeptoNombre() {
-		return deptoNombre;
+	public int getDeptoId() {
+		return deptoId;
 	}
-	public void setDeptoNombre(String deptoNombre) {
-		this.deptoNombre = deptoNombre;
+	public void setDeptoId(int deptoId) {
+		this.deptoId = deptoId;
 	}
-	public String getDistNombre() {
-		return distNombre;
+	public String getDepartamento() {
+		return departamento;
 	}
-	public void setDistNombre(String distNombre) {
-		this.distNombre = distNombre;
+	public void setDepartamento(String departamento) {
+		this.departamento = departamento;
 	}
-	public String getIdAccionCatalogo() {
-		return idAccionCatalogo;
+	public int getDistId() {
+		return distId;
 	}
-	public void setIdAccionCatalogo(String idAccionCatalogo) {
-		this.idAccionCatalogo = idAccionCatalogo;
+	public void setDistId(int distId) {
+		this.distId = distId;
 	}
-	public String getAcNombre() {
-		return acNombre;
+	public String getDistrito() {
+		return distrito;
 	}
-	public void setAcNombre(String acNombre) {
-		this.acNombre = acNombre;
+	public void setDistrito(String distrito) {
+		this.distrito = distrito;
 	}
-	public String getAcUmId() {
-		return acUmId;
+	public int getAcatId() {
+		return acatId;
 	}
-	public void setAcUmId(String acUmId) {
-		this.acUmId = acUmId;
+	public void setAcatId(int acatId) {
+		this.acatId = acatId;
 	}
-	public String getAcUmDescp() {
-		return acUmDescp;
+	public String getAccion() {
+		return accion;
 	}
-	public void setAcUmDescp(String acUmDescp) {
-		this.acUmDescp = acUmDescp;
+	public void setAccion(String accion) {
+		this.accion = accion;
+	}
+	public int getAcatUmId() {
+		return acatUmId;
+	}
+	public void setAcatUmId(int acatUmId) {
+		this.acatUmId = acatUmId;
+	}
+	public String getAccionUnidadMedida() {
+		return accionUnidadMedida;
+	}
+	public void setAccionUnidadMedida(String accionUnidadMedida) {
+		this.accionUnidadMedida = accionUnidadMedida;
 	}
 	public int getProporcion() {
 		return proporcion;
@@ -201,47 +217,59 @@ public class LineaAccionPresupuesto {
 	public void setProporcion(int proporcion) {
 		this.proporcion = proporcion;
 	}
-	public String getSprNivelId() {
-		return sprNivelId;
+	public String getNiv() {
+		return niv;
 	}
-	public void setSprNivelId(String sprNivelId) {
-		this.sprNivelId = sprNivelId;
+	public void setNiv(String niv) {
+		this.niv = niv;
 	}
-	public String getSprEntidadId() {
-		return sprEntidadId;
+	public String getEnt() {
+		return ent;
 	}
-	public void setSprEntidadId(String sprEntidadId) {
-		this.sprEntidadId = sprEntidadId;
+	public void setEnt(String ent) {
+		this.ent = ent;
 	}
-	public String getSprTipProgramaId() {
-		return sprTipProgramaId;
+	public String getTp() {
+		return tp;
 	}
-	public void setSprTipProgramaId(String sprTipProgramaId) {
-		this.sprTipProgramaId = sprTipProgramaId;
+	public void setTp(String tp) {
+		this.tp = tp;
 	}
-	public String getSprProgramaId() {
-		return sprProgramaId;
+	public String getPro() {
+		return pro;
 	}
-	public void setSprProgramaId(String sprProgramaId) {
-		this.sprProgramaId = sprProgramaId;
+	public void setPro(String pro) {
+		this.pro = pro;
 	}
-	public String getSprSubProgramaId() {
-		return sprSubProgramaId;
+	public String getSub() {
+		return sub;
 	}
-	public void setSprSubProgramaId(String sprSubProgramaId) {
-		this.sprSubProgramaId = sprSubProgramaId;
+	public void setSub(String sub) {
+		this.sub = sub;
 	}
-	public String getSprProyectoId() {
-		return sprProyectoId;
+	public String getPry() {
+		return pry;
 	}
-	public void setSprProyectoId(String sprProyectoId) {
-		this.sprProyectoId = sprProyectoId;
+	public void setPry(String pry) {
+		this.pry = pry;
 	}
-	public String getSprProductoId() {
-		return sprProductoId;
+	public String getProd() {
+		return prod;
 	}
-	public void setSprProductoId(String sprProductoId) {
-		this.sprProductoId = sprProductoId;
+	public void setProd(String prod) {
+		this.prod = prod;
+	}
+	public int getProdId() {
+		return prodId;
+	}
+	public void setProdId(int prodId) {
+		this.prodId = prodId;
+	}
+	public String getProdNombre() {
+		return prodNombre;
+	}
+	public void setProdNombre(String prodNombre) {
+		this.prodNombre = prodNombre;
 	}
 	public String getuMedida() {
 		return uMedida;
@@ -255,11 +283,11 @@ public class LineaAccionPresupuesto {
 	public void setCantFisica(String cantFisica) {
 		this.cantFisica = cantFisica;
 	}
-	public String getClase() {
-		return clase;
+	public String getProdTipo() {
+		return prodTipo;
 	}
-	public void setClase(String clase) {
-		this.clase = clase;
+	public void setProdTipo(String prodTipo) {
+		this.prodTipo = prodTipo;
 	}
 	public String getProdAsigFInanciera() {
 		return prodAsigFInanciera;
@@ -285,5 +313,15 @@ public class LineaAccionPresupuesto {
 	public void setSprVersion(String sprVersion) {
 		this.sprVersion = sprVersion;
 	}
+	public String getProductoConcat() {
+		return productoConcat;
+	}
+	public void setProductoConcat(String productoConcat) {
+		this.productoConcat = productoConcat;
+	}
+	
+	
+	
+	
 	
 }

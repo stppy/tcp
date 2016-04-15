@@ -16,7 +16,7 @@
 
 
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-        <title>Pivot Table - Avance</title>
+        <title>Pivot Table - Evidencia Avance</title>
         <link rel="stylesheet" type="text/css" href="tablero_files/pivot.css">
         <script type="text/javascript" src="tablero_files/d3.js"></script>
         <script type="text/javascript" src="tablero_files/jsapi"></script>
@@ -140,7 +140,7 @@ textarea { text-transform: uppercase; }
 	          <div class="box" height="1000px">
 	            <div class="box-header with-border" height="1000px">
 	              <h3 class="box-title" id="tituloTipoPrograma">
-	                Avance
+	               Evidencias de Avance
 	              </h3> 
 	              <div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
 	              </div>
@@ -162,7 +162,7 @@ textarea { text-transform: uppercase; }
                 var derivers = $.pivotUtilities.derivers;
 
 				
-                $.getJSON("http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPivotAvance", function(mps) {
+                $.getJSON("http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPivotEvidenciaAvance", function(mps) {
                 	$("#output").pivotUI(mps, {
                         renderers: $.extend(
                             $.pivotUtilities.renderers, 

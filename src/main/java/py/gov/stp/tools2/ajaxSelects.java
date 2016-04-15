@@ -370,12 +370,12 @@ public class ajaxSelects extends HttpServlet {
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
         	}
-        	
+////////////Privot programado        	
         	if (action.equals("getPivotLineasProgramadas")){
         		List objetos=null; 
         		condition = " where true ";
         		String condition2=" where true ";
-        		if (!userRoleId.equals("0") && !userRoleId.equals("1") /*&& !userRoleId.equals("2")*/){ 
+        		if (!userRoleId.equals("0") && !userRoleId.equals("1")){ 
         			condition2 += " and entidad_id="+userEntidadId+" and nivel_id="+userNivelId;
         			if ( !userUnrId.equals("0") ){
         				condition2+= " and unidad_responsable_id="+userUnrId;
@@ -388,7 +388,61 @@ public class ajaxSelects extends HttpServlet {
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
         	}
-        	
+////////////Pivot Costo Avance
+        	if (action.equals("getPivotCostoAvance")){
+        		List objetos=null; 
+        		condition = " where true ";
+        		String condition2=" where true ";
+        		if (!userRoleId.equals("0") && !userRoleId.equals("1")){ 
+        			condition2 += " and entidad_id="+userEntidadId+" and nivel_id="+userNivelId;
+	        		if ( !userUnrId.equals("0") ){
+	        			condition2+= " and unidad_responsable_id="+userUnrId;
+	        		}
+        		};
+        		condition += " and ins_id IN (select id from institucion "+condition2+") ";
+        		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
+        		try {objetos = SqlSelects.selectPivotCostoAvance(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());
+        		}
+/////////////Pivot Beneficiario Avance
+        	if (action.equals("getPivotBeneficiarioAvance")){
+        		List objetos=null; 
+        		condition = " where true ";
+        		String condition2=" where true ";
+        		if (!userRoleId.equals("0") && !userRoleId.equals("1")){ 
+        			condition2 += " and entidad_id="+userEntidadId+" and nivel_id="+userNivelId;
+	        		if ( !userUnrId.equals("0") ){
+	        			condition2+= " and unidad_responsable_id="+userUnrId;
+	        		}
+        		};
+        		condition += " and ins_id IN (select id from institucion "+condition2+") ";
+        		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
+        		try {objetos = SqlSelects.selectPivotBeneficiarioAvance(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());
+        		}
+////////////Pivot Evidencia Avance        	
+        	if (action.equals("getPivotEvidenciaAvance")){
+        		List objetos=null; 
+        		condition = " where true ";
+        		String condition2=" where true ";
+        		if (!userRoleId.equals("0") && !userRoleId.equals("1")){ 
+        			condition2 += " and entidad_id="+userEntidadId+" and nivel_id="+userNivelId;
+	        		if ( !userUnrId.equals("0") ){
+	        			condition2+= " and unidad_responsable_id="+userUnrId;
+	        		}
+        		};
+        		condition += " and ins_id IN (select id from institucion "+condition2+") ";
+        		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
+        		try {objetos = SqlSelects.selectPivotEvidenciaAvance(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());
+        		}
+////////////Pivot Avance        	
         	if (action.equals("getPivotAvance")){
         		List objetos=null; 
         		condition = " where true ";
@@ -406,12 +460,12 @@ public class ajaxSelects extends HttpServlet {
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
         		}
-        	
+////////////Pivot Destinatarios 
         	if (action.equals("getLineaAccionDestinatarios")){
         		List objetos=null; 
         		condition = " where true ";
         		String condition2=" where true ";
-        		if (!userRoleId.equals("0") && !userRoleId.equals("1") && !userRoleId.equals("2")){ 
+        		if (!userRoleId.equals("0") && !userRoleId.equals("1") ){ 
         			condition2 += " and entidad_id="+userEntidadId+" and nivel_id="+userNivelId;
         			if ( !userUnrId.equals("0") ){
         				condition2+= " and unidad_responsable_id="+userUnrId;
@@ -424,12 +478,12 @@ public class ajaxSelects extends HttpServlet {
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
         	}
-        	
+////////////Pivot Presupuesto   
         	if (action.equals("getPivotLineaAccionPresupuesto")){
         		List objetos=null; 
         		condition = " where true ";
         		String condition2=" where true ";
-        		if (!userRoleId.equals("0") && !userRoleId.equals("1") && !userRoleId.equals("2")){ 
+        		if (!userRoleId.equals("0") && !userRoleId.equals("1")){ 
         			condition2 += " and entidad_id="+userEntidadId+" and nivel_id="+userNivelId;
         			if ( !userUnrId.equals("0") ){
         				condition2+= " and unidad_responsable_id="+userUnrId;
