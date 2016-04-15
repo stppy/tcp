@@ -9238,36 +9238,32 @@ function imprimirAvance(indice){
 	};
 	
 	margins = {
-			  top: 50,
+			  top: 20,
 			  bottom: 20,
 			  left: 15,
 			  width: 20
 			 };
 	
-	var cabecera = '<!DOCTYPE html>'+
-				   '<html>'+
-				   '<body>'+
-				   '<header>'+
-				   		//'<img src="http://spr.stp.gov.py/tablero/dist/img/logo_stp_nuevo_header.png">'+
-				   		//'<img src="http://spr.stp.gov.py/tablero/dist/img/logo_gob_nac_header.png">'+
+	var cabecera = '<header>'+				   		
+						'<div style="text-align:left"><img src="http://spr.stp.gov.py/tablero/dist/img/logo_stp_gob.png" height="25" width="180"></div>'+										
 				   '</header>';				   				  
 	
-	var cuerpo =   $('#paraImpresiones').html();
-	
-				 
+	var cuerpo =  $("#paraImpresiones").html();
+					 
 	var pie =  	   '<footer>'+
 						'<div style="text-align:right;">Página <span class="pageCounter"></span>/<span class="totalPages"></span></div>'+			
-			 	   '</footer>'+
-			 	   '</body>'+
-				   '</html>';
+			 	   '</footer>';
 		 	  			 	  	
     var pageHeight= doc.internal.pageSize.height;
-    doc.fromHTML(cuerpo,
+    doc.fromHTML(cabecera + cuerpo,
     			 margins.left,
     			 margins.top,
     			 {'width': 185,
 				    'elementHandlers': specialElementHandlers,
-				    'pagesplit': true,                
+				    'pagesplit': true                
+    			 },
+    			 function (dispose) {
+    				 doc.save('AvanceCualitativo.pdf');
     			 },
     			 margins
     );
@@ -9275,7 +9271,7 @@ function imprimirAvance(indice){
     //doc.text(35, 25, "");
 	//doc.save('AvanceCualitativo.pdf'); 
     
-    var logo_stp = new Image();
+    /* var logo_stp = new Image();
     logo_stp.src = 'dist/img/logo_stp_nuevo_header.png';
     
     var logo_gob = new Image();
@@ -9288,7 +9284,7 @@ function imprimirAvance(indice){
         	doc.text(35, 25, "");
         	doc.save('AvanceCualitativo.pdf');
         };
-    };  
+    };   */
     $("#contenedorImpresion").hide();
 }
 </script>	
@@ -9300,7 +9296,7 @@ function imprimirAvance(indice){
 				<div class="pull-right img-responsive col-md-4"><img src="http://spr.stp.gov.py/tablero/dist/img/logo_gob_nac_header.png"></div>
 		   	</div>
 		</div-->
-		<br>
+		<br/>
 		<div class="row" >
 			<div id="contenedorImpresion" class="table-responsive" style="display:none">
 				<div class="text-center" >
