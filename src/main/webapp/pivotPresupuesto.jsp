@@ -140,7 +140,7 @@ textarea { text-transform: uppercase; }
 	          <div class="box" height="1000px">
 	            <div class="box-header with-border" height="1000px">
 	              <h3 class="box-title" id="tituloTipoPrograma">
-	                Acciones Programadas
+	                Analisis Presupuesto
 	              </h3> 
 	              <div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
 	              </div>

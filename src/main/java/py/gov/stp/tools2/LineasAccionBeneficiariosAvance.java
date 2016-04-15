@@ -1,49 +1,59 @@
 package py.gov.stp.tools2;
 
-public class LineasProgramadas {
-	
+public class LineasAccionBeneficiariosAvance {
 	protected int insId;
 	protected String institucion;
-	protected int insOrden;
+	//protected int insVersion; 
 	protected int laId;
-	protected int laOrden;
 	protected String lineaAccion;
 	protected int laEstId;
 	protected int laTipoId;
 	protected int laUmId;
-	protected String laUnidadMedida;
+	protected String laUnidadMedida; 
+	//protected int laVer;
 	protected int ilaId;
 	protected int Periodo;
 	protected double laMeta;
+	//protected int ilaVersion;
 	protected int accionId;
 	protected int accionPeso;
-	protected String accionFechaIni;
-	protected String accionFechaFin;
-	protected double  accMeta1;
-	protected double  accMeta2;
-	protected double  accMeta3;
-	protected double  accMeta4;
-	protected int deptoId;
-	protected String departamento;
-	protected int distId;
-	protected String distrito; 
 	protected int acatId;
 	protected String accion;
 	protected int acatUmId;
 	protected String accionUnidadMedida;
+	protected String accionFechaIni;
+	protected String accionFechaFin;
+	protected int deptoId;
+	protected String departamento;
+	protected int distId;
+	protected String distrito;
+	protected double  accMeta1;
+	protected double  accMeta2;
+	protected double  accMeta3;
+	protected double  accMeta4;
+	//protected int acVer;
+	//protected int accionVersion;
 	protected int cronoId;
 	protected String cronograma;
 	protected String cronoDescripcion;
 	protected double cronoProporcion;
 	protected double cronoPeso;
+	//protected int cronoVersion;
 	protected int cronoUmId;
 	protected String cronoUnidadMedida;
 	protected int cronoTipoId;
-	protected boolean acumula;
 	protected String cronoTipoNombre;
-	protected int progId; 
-	protected String fechaEntrega;
-	protected double cantidadProg;
+	protected boolean acumula;
+	protected int avanceId;
+	protected String avanceFecha;
+	protected double avanceCantidad;
+	protected String avanceJustificacion;
+	
+	protected int destId;
+	protected String tipoDest;
+	protected String grupoDest;
+	protected int destCant;
+	protected String destDescp;
 	
 	
 	public int getInsId() {
@@ -58,23 +68,11 @@ public class LineasProgramadas {
 	public void setInstitucion(String institucion) {
 		this.institucion = institucion;
 	}
-	public int getInsOrden() {
-		return insOrden;
-	}
-	public void setInsOrden(int insOrden) {
-		this.insOrden = insOrden;
-	}
 	public int getLaId() {
 		return laId;
 	}
 	public void setLaId(int laId) {
 		this.laId = laId;
-	}
-	public int getLaOrden() {
-		return laOrden;
-	}
-	public void setLaOrden(int laOrden) {
-		this.laOrden = laOrden;
 	}
 	public String getLineaAccion() {
 		return lineaAccion;
@@ -136,6 +134,30 @@ public class LineasProgramadas {
 	public void setAccionPeso(int accionPeso) {
 		this.accionPeso = accionPeso;
 	}
+	public int getAcatId() {
+		return acatId;
+	}
+	public void setAcatId(int acatId) {
+		this.acatId = acatId;
+	}
+	public String getAccion() {
+		return accion;
+	}
+	public void setAccion(String accion) {
+		this.accion = accion;
+	}
+	public int getAcatUmId() {
+		return acatUmId;
+	}
+	public void setAcatUmId(int acatUmId) {
+		this.acatUmId = acatUmId;
+	}
+	public String getAccionUnidadMedida() {
+		return accionUnidadMedida;
+	}
+	public void setAccionUnidadMedida(String accionUnidadMedida) {
+		this.accionUnidadMedida = accionUnidadMedida;
+	}
 	public String getAccionFechaIni() {
 		return accionFechaIni;
 	}
@@ -147,30 +169,6 @@ public class LineasProgramadas {
 	}
 	public void setAccionFechaFin(String accionFechaFin) {
 		this.accionFechaFin = accionFechaFin;
-	}
-	public double getAccMeta1() {
-		return accMeta1;
-	}
-	public void setAccMeta1(double accMeta1) {
-		this.accMeta1 = accMeta1;
-	}
-	public double getAccMeta2() {
-		return accMeta2;
-	}
-	public void setAccMeta2(double accMeta2) {
-		this.accMeta2 = accMeta2;
-	}
-	public double getAccMeta3() {
-		return accMeta3;
-	}
-	public void setAccMeta3(double accMeta3) {
-		this.accMeta3 = accMeta3;
-	}
-	public double getAccMeta4() {
-		return accMeta4;
-	}
-	public void setAccMeta4(double accMeta4) {
-		this.accMeta4 = accMeta4;
 	}
 	public int getDeptoId() {
 		return deptoId;
@@ -196,29 +194,29 @@ public class LineasProgramadas {
 	public void setDistrito(String distrito) {
 		this.distrito = distrito;
 	}
-	public int getAcatId() {
-		return acatId;
+	public double getAccMeta1() {
+		return accMeta1;
 	}
-	public void setAcatId(int acatId) {
-		this.acatId = acatId;
+	public void setAccMeta1(double accMeta1) {
+		this.accMeta1 = accMeta1;
 	}
-	public String getAccion() {
-		return accion;
+	public double getAccMeta2() {
+		return accMeta2;
 	}
-	public void setAccion(String accion) {
-		this.accion = accion;
+	public void setAccMeta2(double accMeta2) {
+		this.accMeta2 = accMeta2;
 	}
-	public int getAcatUmId() {
-		return acatUmId;
+	public double getAccMeta3() {
+		return accMeta3;
 	}
-	public void setAcatUmId(int acatUmId) {
-		this.acatUmId = acatUmId;
+	public void setAccMeta3(double accMeta3) {
+		this.accMeta3 = accMeta3;
 	}
-	public String getAccionUnidadMedida() {
-		return accionUnidadMedida;
+	public double getAccMeta4() {
+		return accMeta4;
 	}
-	public void setAccionUnidadMedida(String accionUnidadMedida) {
-		this.accionUnidadMedida = accionUnidadMedida;
+	public void setAccMeta4(double accMeta4) {
+		this.accMeta4 = accMeta4;
 	}
 	public int getCronoId() {
 		return cronoId;
@@ -268,39 +266,72 @@ public class LineasProgramadas {
 	public void setCronoTipoId(int cronoTipoId) {
 		this.cronoTipoId = cronoTipoId;
 	}
-	public boolean isAcumula() {
-		return acumula;
-	}
-	public void setAcumula(boolean acumula) {
-		this.acumula = acumula;
-	}
 	public String getCronoTipoNombre() {
 		return cronoTipoNombre;
 	}
 	public void setCronoTipoNombre(String cronoTipoNombre) {
 		this.cronoTipoNombre = cronoTipoNombre;
 	}
-	public int getProgId() {
-		return progId;
+	public boolean isAcumula() {
+		return acumula;
 	}
-	public void setProgId(int progId) {
-		this.progId = progId;
+	public void setAcumula(boolean acumula) {
+		this.acumula = acumula;
 	}
-	public String getFechaEntrega() {
-		return fechaEntrega;
+	public int getAvanceId() {
+		return avanceId;
 	}
-	public void setFechaEntrega(String fechaEntrega) {
-		this.fechaEntrega = fechaEntrega;
+	public void setAvanceId(int avanceId) {
+		this.avanceId = avanceId;
 	}
-	public double getCantidadProg() {
-		return cantidadProg;
+	public String getAvanceFecha() {
+		return avanceFecha;
 	}
-	public void setCantidadProg(double cantidadProg) {
-		this.cantidadProg = cantidadProg;
+	public void setAvanceFecha(String avanceFecha) {
+		this.avanceFecha = avanceFecha;
 	}
-	
-	
-	
+	public double getAvanceCantidad() {
+		return avanceCantidad;
+	}
+	public void setAvanceCantidad(double avanceCantidad) {
+		this.avanceCantidad = avanceCantidad;
+	}
+	public String getAvanceJustificacion() {
+		return avanceJustificacion;
+	}
+	public void setAvanceJustificacion(String avanceJustificacion) {
+		this.avanceJustificacion = avanceJustificacion;
+	}
+	public int getDestId() {
+		return destId;
+	}
+	public void setDestId(int destId) {
+		this.destId = destId;
+	}
+	public String getTipoDest() {
+		return tipoDest;
+	}
+	public void setTipoDest(String tipoDest) {
+		this.tipoDest = tipoDest;
+	}
+	public String getGrupoDest() {
+		return grupoDest;
+	}
+	public void setGrupoDest(String grupoDest) {
+		this.grupoDest = grupoDest;
+	}
+	public int getDestCant() {
+		return destCant;
+	}
+	public void setDestCant(int destCant) {
+		this.destCant = destCant;
+	}
+	public String getDestDescp() {
+		return destDescp;
+	}
+	public void setDestDescp(String destDescp) {
+		this.destDescp = destDescp;
+	}
 	
 	
 	

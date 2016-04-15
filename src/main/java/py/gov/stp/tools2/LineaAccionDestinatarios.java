@@ -23,12 +23,15 @@ public class LineaAccionDestinatarios {
 	public String m2;
 	public String m3;
 	public String m4;
-	public String deptoNombre;
-	public String distNombre;
+	public int deptoId;
+	public String departamento;
+	public int distId;
+	public String distrito;
 	public String idAccionCatalogo;
 	public String acNombre;
 	public String acUmId;
 	public String acUmDescp;
+	//ingresar ids de destinatarios
 	public String tipoDestNombre;
 	public String grupoDestNombre;
 	public String cantDest;
@@ -149,17 +152,29 @@ public class LineaAccionDestinatarios {
 	public void setM4(String m4) {
 		this.m4 = m4;
 	}
-	public String getDeptoNombre() {
-		return deptoNombre;
+	public int getDeptoId() {
+		return deptoId;
 	}
-	public void setDeptoNombre(String deptoNombre) {
-		this.deptoNombre = deptoNombre;
+	public void setDeptoId(int deptoId) {
+		this.deptoId = deptoId;
 	}
-	public String getDistNombre() {
-		return distNombre;
+	public String getDepartamento() {
+		return departamento;
 	}
-	public void setDistNombre(String distNombre) {
-		this.distNombre = distNombre;
+	public void setDepartamento(String departamento) {
+		this.departamento = departamento;
+	}
+	public int getDistId() {
+		return distId;
+	}
+	public void setDistId(int distId) {
+		this.distId = distId;
+	}
+	public String getDistrito() {
+		return distrito;
+	}
+	public void setDistrito(String distrito) {
+		this.distrito = distrito;
 	}
 	public String getIdAccionCatalogo() {
 		return idAccionCatalogo;
