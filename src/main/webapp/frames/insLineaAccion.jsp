@@ -9228,7 +9228,7 @@ function imprimirAvance(indice){
 	$("#impresionSiguienteTrimestre").text($("#avance"+indice+" #avanceObjetivosTrimestre").text());
 	
 	
-	var doc = new jsPDF('landscape', 'mm', [297, 210]);
+	var doc = new jsPDF('p', 'mm', "a4");
 	    
 	var specialElementHandlers = {
 	    '#dataTablesAvanceCualitativo': function (element, renderer) {
@@ -9260,11 +9260,11 @@ function imprimirAvance(indice){
 			 	   '</body>'+
 				   '</html>';
 		 	  			 	  	
-	
+    var pageHeight= doc.internal.pageSize.height;
     doc.fromHTML(cuerpo,
     			 margins.left,
     			 margins.top,
-    			 {'width': 250,
+    			 {'width': 185,
 				    'elementHandlers': specialElementHandlers,
 				    'pagesplit': true,                
     			 },
@@ -9281,9 +9281,9 @@ function imprimirAvance(indice){
     logo_gob.src = 'dist/img/logo_gob_nac_header.png';
     
     logo_stp.onload = function(){
-    	doc.addImage(logo_stp , 'png', 25, 15);
+    	doc.addImage(logo_stp , 'png', 10, 15);
     	logo_gob.onload = function(){
-        	doc.addImage(logo_gob , 'png', 180, 15);
+        	doc.addImage(logo_gob , 'png', 130, 15);
         	doc.text(35, 25, "");
         	doc.save('AvanceCualitativo.pdf');
         };
