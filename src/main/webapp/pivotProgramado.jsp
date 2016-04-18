@@ -48,7 +48,8 @@
 if (user != null) { %>
 
 <script>
-	$(do	var entidadCas = "";
+$( document ).ready(function() {
+	var entidadCas = "";
 	entidadCas ="<%=attributes.get("entidad") %>";
 	usuarioRolCas="<%=attributes.get("role_id") %>";
 	var usuarios = $.ajax({
@@ -63,7 +64,7 @@ if (user != null) { %>
 	$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
 	$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
 		var i=parseInt(0);
-		var datosNiveles = $.ajax({
+		/* var datosNiveles = $.ajax({
 	        url:'http://spr.stp.gov.py/ajaxSelects?accion=getNiveles&nivel='+usuarios[0].nivel_id,
 	        type:'get',
 	        dataType:'json',
@@ -84,9 +85,7 @@ if (user != null) { %>
 	     for (i=0;i<datosEntidad.length;i++){
 	    	 if (datosEntidad[i].nivel==usuarios[0].nivel_id && datosEntidad[i].entidad==usuarios[0].entidad_id)
 	    		 break;
-	     }
-
-	     
+	     } */
 	});
 	     </script>
  <!-- Piwik -->
