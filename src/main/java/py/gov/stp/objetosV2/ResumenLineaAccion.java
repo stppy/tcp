@@ -1,8 +1,6 @@
 package py.gov.stp.objetosV2;
 
-import py.gov.stp.tools2.LineaAccionDestinatario;
-
-public class ResumenLineaAccion extends LineaAccionDestinatario{
+public class ResumenLineaAccion {
 	
 	protected int 	  institucionId;
     protected String  institucionSigla;
