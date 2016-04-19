@@ -166,7 +166,11 @@ textarea { text-transform: uppercase; }
    <script type="text/javascript">
 		$( document ).ready(function() {
 			function numeroConComa(x) {
-				return x.toString().replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+				if (isNaN(x)){
+					return 0;
+				}else{
+					return x.toString().replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+				}
 			}
 			
 			function orden(a,b) {             
@@ -238,11 +242,11 @@ textarea { text-transform: uppercase; }
 						  if (/* instituciones[m].id==lineasProgramadas[n].institucionId && */ lineasProgramadas[n].lineaAccionEstratagiaId==estrategia){
 							  if (flagIns == 0){
 								  
-									tempInstituciones = '<tr><td colspan="7"><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td></tr>'+
+									tempInstituciones = '<tr><td colspan="12"><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td></tr>'+
 														'<tr>'+
 														  	'<th rowspan="3">Línea de Acción</th>'+
 														  	'<th rowspan="3">Unidad de Medida</th>'+
-														  	'<th colspan="5">Plan de Acción 2016</th><th colspan="3">Ejecución a la Fecha</th></tr>'+
+														  	'<th colspan="5">Plan de Acción 2016</th><th colspan="5">Ejecución a la Fecha</th></tr>'+
 														  	'<tr><th colspan="3">Meta</th>'+
 														  	'<th rowspan="2">Destinatarios</th>'+
 														  	'<th rowspan="2">Inversión</th>'+
@@ -252,7 +256,7 @@ textarea { text-transform: uppercase; }
 														  	'<tr><th>Aprobada</th>'+
 														  	'<th>Programada</th>'+
 														  	'<th>% Programado</th>'+
-														  	'<tr><th>Prevista</th>'+
+														  	'<th>Prevista</th>'+
 														  	'<th>Lograda</th>'+
 														  	'<th>%</th>'+
 														  '</tr>';
@@ -260,7 +264,7 @@ textarea { text-transform: uppercase; }
 							  }
 							  clase="";
 							  flagIns++;
-							  if ((lineasProgramadas[n].cantidadProgramada/lineasProgramadas[n].insLineaAccionMeta)*100>=90){
+							  if ((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=90){
 								  clase="bg-green-active color-palette"; 
 							  }else{
 								  clase="bg-red-active color-palette";
@@ -269,16 +273,23 @@ textarea { text-transform: uppercase; }
 							  tempInstLineas += '<tr>'+
 							  '<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
 							  '<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
-							  '<td>'+numeroConComa(lineasProgramadas[n].insLineaAccionMeta)+'</td>'+
-							  '<td>'+numeroConComa(lineasProgramadas[n].cantidadProgramada)+'</td>'+
-							  '<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadProgramada/lineasProgramadas[n].insLineaAccionMeta)*100).toFixed(2))+'</td>'+
+							  '<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
+							  '<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>'+
+							  '<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
 							  '<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>'+
-							  '<td>'+numeroConComa(lineasProgramadas[n].costoAc)+'</td>'+
-							  '</tr>'+
-							  '<tr><td>'+numeroConComa(lineasProgramadas[n].insLineaAccionMeta)+'</td>'+
-							  '<td>'+numeroConComa(lineasProgramadas[n].cantidadProgramada)+'</td>'+
-							  '<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadProgramada/lineasProgramadas[n].insLineaAccionMeta)*100).toFixed(2))+'</td>'+
-							  '<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>'+
+							  '<td>'+numeroConComa(lineasProgramadas[n].inversionEstimada)+'</td>'+
+							  '<td>'+numeroConComa(lineasProgramadas[n].cantidadHoy)+'</td>'+
+							  '<td>'+numeroConComa(lineasProgramadas[n].cantidadAvance)+'</td>';
+							  
+							  clase="";
+							  if ((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100>=90){
+								  clase="bg-green-active color-palette"; 
+							  }else{
+								  clase="bg-red-active color-palette";
+							  }
+							  
+							  tempInstLineas += '<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100).toFixed(2))+'</td>'+
+							  '<td>'+numeroConComa(lineasProgramadas[n].cantDestinatarioReal)+'</td>'+
 							  '<td>'+numeroConComa(lineasProgramadas[n].costoAc)+'</td>'+
 							  '</tr>';
 						  }
