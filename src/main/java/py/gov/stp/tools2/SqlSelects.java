@@ -1793,7 +1793,35 @@ public class SqlSelects {
 	
 	public static List<LineaAccionProgramacion> selectResumenLineasAccionProgramacion(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select * from resumen_linea_accion "+condition;
+		String query = " select ins_linea_accion_base.institucion_sigla,"
+						+ "		ins_linea_accion_base.linea_tipo as tipo_estrategia_id,"
+						+ "		ins_linea_accion_base.linea_accion_nombre,"
+						+ "		ins_linea_accion_base.linea_um_nombre,"
+						+ "		ins_linea_accion_base.periodo,"
+						+ "		ins_linea_accion_base.meta as meta_comprometida,"
+						+ "		ins_linea_accion_programacion_anho.cantidad_anho as programado_anho,"
+						+ "		ins_linea_accion_programacion_hoy.cantidad_hoy as programado_hoy,"
+						+ "		ins_linea_accion_destinatarios.cant_dest as destinatarios_estimados,"
+						+ "		ins_linea_accion_costo_estimado.inversion_estimada,"
+						+ "		ins_linea_accion_avance.cantidad as avance_real,"
+						+ "		ins_linea_accion_destinatario_real.beneficiarios_real as destinatarios_real,"
+						+ "		ins_linea_accion_costo.costo as inversion_real"
+						+ "from ins_linea_accion_base"
+						+ "left join ins_linea_accion_avance on "
+						+ "			 ins_linea_accion_avance.ins_linea_accion_id=ins_linea_accion_base.ins_linea_accion_id"
+						+ "left join ins_linea_accion_destinatarios on "
+						+ "			 ins_linea_accion_destinatarios.ila_id=ins_linea_accion_base.ins_linea_accion_id"
+						+ "left join ins_linea_accion_programacion_hoy on "
+						+ "			 ins_linea_accion_programacion_hoy.ins_linea_accion_id =ins_linea_accion_base.ins_linea_accion_id"
+						+ "left join ins_linea_accion_programacion_anho on "
+						+ "			 ins_linea_accion_programacion_anho.ins_linea_accion_id = ins_linea_accion_base.ins_linea_accion_id"
+						+ "left join ins_linea_accion_costo on "
+						+ "			 ins_linea_accion_costo.ins_linea_accion_id=ins_linea_accion_base.ins_linea_accion_id"
+						+ "left join ins_linea_accion_costo_estimado on "
+						+ "			 ins_linea_accion_costo_estimado.ins_linea_accion_id=ins_linea_accion_base.ins_linea_accion_id"
+						+ "left join ins_linea_accion_destinatario_real on "
+						+ "			 ins_linea_accion_destinatario_real.ins_linea_accion_id=ins_linea_accion_base.ins_linea_accion_id"
+						+ "where periodo=2016"+condition+ "order by institucion_orden, la_orden ";
 
 		Statement statement = null;
 		ResultSet rs=null;
@@ -1805,27 +1833,19 @@ public class SqlSelects {
 			while(rs.next()){
 				LineaAccionProgramacion objeto = new LineaAccionProgramacion();
 		
-				objeto.setInstitucionId(rs.getInt("ins_id"));
-			    objeto.setInstitucionSigla(rs.getString("sigla"));
-			    objeto.setLineaAccionId(rs.getInt("la_id"));
-			    objeto.setLineaAccionNombre(rs.getString("la_nombre"));
-			    objeto.setLineaAccionTipoId(rs.getInt("la_tipo_id"));
-			    objeto.setLineaAccionEstratagiaId(rs.getInt("la_estrategia_id"));
-			    objeto.setLineaAccionUnidadMedidaId(rs.getInt("la_um_id"));
-			    objeto.setLineaAccionUnidadMedidaNombre(rs.getString("la_um_descp"));
-			    objeto.setInsLineaAccionId(rs.getInt("ila_id"));
-			    objeto.setInsLineaAccionPeriodoId(rs.getInt("periodo"));
-			    objeto.setInsLineaAccionMeta(rs.getDouble("ila_meta"));
-			    objeto.setCantidadProgramada(rs.getDouble("cant_prog"));
-			    objeto.setInsOrden(rs.getInt("ins_orden"));
-			    objeto.setLineaAccionOrden(rs.getInt("la_orden"));
-			    objeto.setCantDest(rs.getDouble("cant_dest"));
-			    objeto.setCostoAc(rs.getDouble("costo_ac"));
-
-			    
-				objeto.setCantidadAnho(rs.getDouble("costo_ac"));
-				objeto.setCantidadHoy(rs.getDouble("costo_ac"));
-			    objeto.setCantidadAvance(rs.getDouble("costo_ac"));
+			    objeto.setInstitucionSigla(rs.getString("ins_linea_accion_base.institucion_sigla"));
+			    objeto.setLineaAccionEstratagiaId(rs.getInt("tipo_estrategia_id"));
+			    objeto.setLineaAccionNombre(rs.getString("ins_linea_accion_base.linea_accion_nombre"));
+			    objeto.setLineaAccionUnidadMedidaNombre(rs.getString("ins_linea_accion_base.linea_um_nombre"));
+			    objeto.setInsLineaAccionPeriodoId(rs.getInt("ins_linea_accion_base.periodo"));
+			    objeto.setMeta(rs.getInt("meta_comprometida"));
+			    objeto.setCantidadAnho(rs.getInt("programado_anho"));
+			    objeto.setCantidadHoy(rs.getInt("programado_hoy"));
+			    objeto.setCantDest(rs.getDouble("destinatarios_estimados"));
+			    objeto.setInversionEstimada(rs.getDouble("ins_linea_accion_costo_estimado.inversion_estimada"));
+			    objeto.setCantidadAvance(rs.getDouble("avance_real"));
+			    objeto.setCantDestinatarioReal(rs.getBigDecimal("destinatarios_real"));
+			    objeto.setCostoAc(rs.getInt("inversion_real"));
 				objetos.add(objeto);
 			}
 		}

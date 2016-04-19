@@ -704,13 +704,13 @@ public class ajaxSelects extends HttpServlet {
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());        	
         	}
+        	
         	if (action.equals("getResumenLineasAccionProgramacion")){
         		List objetos=null; 
 
         		if (institucionId!=null) condition += " and id ='"+institucionId+"'";
         		
-        		condition = " where true ";
-        		String condition2=" where true ";
+        		String condition2="";
         		if (!userRoleId.equals("0") && !userRoleId.equals("1") && !userRoleId.equals("2")){ 
         			condition2 += " and entidad_id="+userEntidadId+" and nivel_id="+userNivelId;
         			if ( !userUnrId.equals("0") ){
