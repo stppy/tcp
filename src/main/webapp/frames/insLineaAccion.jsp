@@ -4210,7 +4210,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		}).responseText;
 		unidadMedida = JSON.parse(unidadMedida);
 		
-		
+		   
 		var optionUnidadMedida;
 		for(var u = 0; u < unidadMedida.length; u++)
 		{

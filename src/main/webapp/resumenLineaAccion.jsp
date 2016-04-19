@@ -257,6 +257,16 @@ textarea { text-transform: uppercase; }
 						}
 					  if (flagIns>0){
 						  tablaInstituciones+=tempInstituciones+tempInstLineas;
+						  
+						  tempInstLineas += '<tr>'+
+						  '<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
+						  '<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
+						  '<td>'+numeroConComa(lineasProgramadas[n].insLineaAccionMeta)+'</td>'+
+						  '<td>'+numeroConComa(lineasProgramadas[n].cantidadProgramada)+'</td>'+
+						  '<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadProgramada/lineasProgramadas[n].insLineaAccionMeta)*100).toFixed(2))+'</td>'+
+						  '<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>'+
+						  '<td>'+numeroConComa(lineasProgramadas[n].costoAc)+'</td>'+
+						  '</tr>';
 					  }
 					  tempInstituciones="";tempInstLineas="";flagIns=0;
 				}

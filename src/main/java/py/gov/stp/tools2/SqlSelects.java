@@ -772,19 +772,19 @@ public class SqlSelects {
 		return objetos; 
 		}
 	
-	public static List<LineaAccionDestinatarios> selectLineaAccionDestinatarios(String condition) throws SQLException{
+	public static List<LineaAccionDestinatario> selectLineaAccionDestinatarios(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
 		String query = " select * from linea_accion_destinatarios "+condition;
 
 		Statement statement = null;
 		ResultSet rs=null;
-		List<LineaAccionDestinatarios> objetos = new ArrayList<LineaAccionDestinatarios>();
+		List<LineaAccionDestinatario> objetos = new ArrayList<LineaAccionDestinatario>();
 
 		try {
 			statement = conect.createStatement();
 			rs=statement.executeQuery(query);
 			while(rs.next()){
-				LineaAccionDestinatarios objeto = new LineaAccionDestinatarios();
+				LineaAccionDestinatario objeto = new LineaAccionDestinatario();
 		
 				objeto.setSigla(rs.getString("sigla"));
 				objeto.setLaId(rs.getInt("la_id"));
@@ -927,8 +927,8 @@ public class SqlSelects {
 			    objeto.setCantidadProgramada(rs.getDouble("cant_prog"));
 			    objeto.setInsOrden(rs.getInt("ins_orden"));
 			    objeto.setLineaAccionOrden(rs.getInt("la_orden"));
-			    objeto.setCant_dest(rs.getDouble("cant_dest"));
-			    objeto.setCosto_ac(rs.getDouble("costo_ac"));
+			    objeto.setCantDest(rs.getDouble("cant_dest"));
+			    objeto.setCostoAc(rs.getDouble("costo_ac"));
 
 				objetos.add(objeto);
 			}
