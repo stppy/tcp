@@ -223,42 +223,42 @@ textarea { text-transform: uppercase; }
 			
 
 			function renderAccion(estrategia){
-				
-				
-				var tablaInstituciones="";
-				var tempInstituciones="";
-				var tempInstLineas="";
-				var flagIns=0;
-							  var clase=""; 
-			for(var m=0; m<instituciones.length;m++)
+			
+			var tablaInstituciones="";
+			var tempInstituciones="";
+			var tempInstLineas="";
+			var flagIns=0;
+			var clase="";
+			
+				for(var m=0; m<instituciones.length;m++)
 				{
-				tempInstituciones = '<tr><td colspan="7"><strong>'+instituciones[m].sigla+'</strong></td></tr>';
-				  for(var n=0; n<lineasProgramadas.length;n++)
-					{
-					  if (instituciones[m].id==lineasProgramadas[n].institucionId && lineasProgramadas[n].lineaAccionEstratagiaId==estrategia){
-						  clase="";
-						  flagIns++;
-						  if ((lineasProgramadas[n].cantidadProgramada/lineasProgramadas[n].insLineaAccionMeta)*100>=90){
-							  clase="bg-green-active color-palette"; 
-						  }else{
-							  clase="bg-red-active color-palette";
+					tempInstituciones = '<tr><td colspan="7"><strong>'+instituciones[m].sigla+'</strong></td></tr>';
+					  for(var n=0; n<lineasProgramadas.length;n++)
+						{
+						  if (instituciones[m].id==lineasProgramadas[n].institucionId && lineasProgramadas[n].lineaAccionEstratagiaId==estrategia){
+							  clase="";
+							  flagIns++;
+							  if ((lineasProgramadas[n].cantidadProgramada/lineasProgramadas[n].insLineaAccionMeta)*100>=90){
+								  clase="bg-green-active color-palette"; 
+							  }else{
+								  clase="bg-red-active color-palette";
+							  }
+							  
+							  tempInstLineas += '<tr>'+
+							  '<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
+							  '<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
+							  '<td>'+numeroConComa(lineasProgramadas[n].insLineaAccionMeta)+'</td>'+
+							  '<td>'+numeroConComa(lineasProgramadas[n].cantidadProgramada)+'</td>'+
+							  '<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadProgramada/lineasProgramadas[n].insLineaAccionMeta)*100).toFixed(2))+'</td>'+
+							  '<td>'+numeroConComa(lineasProgramadas[n].cant_dest)+'</td>'+
+							  '<td>'+numeroConComa(lineasProgramadas[n].costo_ac)+'</td>'+
+							  '</tr>';
 						  }
-						  
-						  tempInstLineas += '<tr>'+
-						  '<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
-						  '<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
-						  '<td>'+numeroConComa(lineasProgramadas[n].insLineaAccionMeta)+'</td>'+
-						  '<td>'+numeroConComa(lineasProgramadas[n].cantidadProgramada)+'</td>'+
-						  '<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadProgramada/lineasProgramadas[n].insLineaAccionMeta)*100).toFixed(2))+'</td>'+
-						  '<td>'+numeroConComa(lineasProgramadas[n].cant_dest)+'</td>'+
-						  '<td>'+numeroConComa(lineasProgramadas[n].costo_ac)+'</td>'+
-						  '</tr>';
+						}
+					  if (flagIns>0){
+						  tablaInstituciones+=tempInstituciones+tempInstLineas;
 					  }
-					}
-				  if (flagIns>0){
-					  tablaInstituciones+=tempInstituciones+tempInstLineas;
-				  }
-				  tempInstituciones="";tempInstLineas="";flagIns=0;
+					  tempInstituciones="";tempInstLineas="";flagIns=0;
 				}
 
 			 return tablaInstituciones;

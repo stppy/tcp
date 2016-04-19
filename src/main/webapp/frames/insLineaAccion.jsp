@@ -9292,7 +9292,7 @@ function imprimirAvance(indice){
 				   '</header>';				   				  
 	
 	var cuerpo =  $("#paraImpresiones").html();
-					 
+					  
 	var pie =  	   '<footer>'+
 						'<div style="text-align:right;">Página <span class="pageCounter"></span>/<span class="totalPages"></span></div>'+			
 			 	   '</footer>';
