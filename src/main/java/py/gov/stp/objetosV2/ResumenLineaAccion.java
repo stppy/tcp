@@ -1,26 +1,30 @@
 package py.gov.stp.objetosV2;
 
+import java.math.BigInteger;
+
 public class ResumenLineaAccion {
 	
-	protected int 	  institucionId;
-    protected String  institucionSigla;
-    protected int 	  insOrden;
-    protected int     lineaAccionId;
-    protected String  lineaAccionNombre;
-    protected int 	  lineaAccionTipoId;
-    protected int 	  lineaAccionEstratagiaId;
-    protected int 	  lineaAccionUnidadMedidaId;
-    protected String  lineaAccionUnidadMedidaNombre;
-    protected int 	  lineaAccionOrden;
-    protected boolean lineaAccionAcu;
-    protected int 	  insLineaAccionId;
-    protected int 	  insLineaAccionPeriodoId;
-    protected double  insLineaAccionMeta;
-    protected double  cantidadProgramada;
-    protected double  cantDestinatario;
-    protected double  costoAc; 
-    protected int 	  periodo;
-    protected double  meta;
+	protected int 	  	  institucionId;
+    protected String  	  institucionSigla;
+    protected int 	  	  insOrden;
+    protected int     	  lineaAccionId;
+    protected String  	  lineaAccionNombre;
+    protected int 	  	  lineaAccionTipoId;
+    protected int 	  	  lineaAccionEstratagiaId;
+    protected int 	  	  lineaAccionUnidadMedidaId;
+    protected String  	  lineaAccionUnidadMedidaNombre;
+    protected int 	  	  lineaAccionOrden;
+    protected boolean 	  lineaAccionAcu;
+    protected int 	  	  insLineaAccionId;
+    protected int 	  	  insLineaAccionPeriodoId;
+    protected double  	  insLineaAccionMeta;
+    protected double  	  cantidadProgramada;
+    protected double  	  cantDestinatario;
+    protected BigInteger  cantDestinatarioReal;
+    protected double  	  inversionEstimada;
+    protected double  	  costoAc; 
+    protected int 	  	  periodo;
+    protected double  	  meta;
     
 	public int getInstitucionId() {
 		return institucionId;
@@ -136,6 +140,18 @@ public class ResumenLineaAccion {
 	}
 	public void setMeta(double meta) {
 		this.meta = meta;
+	}
+	public BigInteger getCantDestinatarioReal() {
+		return cantDestinatarioReal;
+	}
+	public void setCantDestinatarioReal(BigInteger cantDestinatarioReal) {
+		this.cantDestinatarioReal = cantDestinatarioReal;
+	}
+	public double getInversionEstimada() {
+		return inversionEstimada;
+	}
+	public void setInversionEstimada(double inversionEstimada) {
+		this.inversionEstimada = inversionEstimada;
 	}
     
     
