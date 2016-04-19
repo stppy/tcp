@@ -8,15 +8,15 @@
 
 <!DOCTYPE html>
 <html>
-  <head>
-	<!--  ISO-8859-1 -->
-	<%@ include file="/frames/head.jsp" %>
-<!--   <script src="frames/entidad.js" type="text/javascript"></script> -->
+ <head>
+  	<!--  ISO-8859-1 -->
+  	<%@ include file="/frames/head.jsp" %>
+	<!--   <script src="frames/entidad.js" type="text/javascript"></script> -->
 
 
 
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-        <title>Pivot Table - Plan de Acción</title>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title>Pivot Table - Evidencia Avance</title>
         <link rel="stylesheet" type="text/css" href="tablero_files/pivot.css">
         <script type="text/javascript" src="tablero_files/d3.js"></script>
         <script type="text/javascript" src="tablero_files/jsapi"></script>
@@ -48,48 +48,48 @@
 if (user != null) { %>
 
 <script>
- 	$( document ).ready(function() {
-		/* $(do ()	{ */
-		var entidadCas = "";
-		entidadCas ="<%=attributes.get("entidad") %>";
-		usuarioRolCas="<%=attributes.get("role_id") %>";
-		var usuarios = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
-		  	type:'get',
-		  	dataType:'json',
-		  	async:false       
-		}).responseText;
-		usuarios = JSON.parse(usuarios);
-		usuarios = usuarios.usuarios;
-		
-		$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
-		$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
-			var i=parseInt(0);
-			/* var datosNiveles = $.ajax({
-		        url:'http://spr.stp.gov.py/ajaxSelects?accion=getNiveles&nivel='+usuarios[0].nivel_id,
-		        type:'get',
-		        dataType:'json',
-		        async:false       
-		      }).responseText;
-		      datosNiveles = JSON.parse(datosNiveles);
-		      datosNiveles.niveles;
-		      
-		     var datosEntidad = $.ajax({
-		          url:'http://spr.stp.gov.py/ajaxSelects?accion=getEntidad&nivel='+usuarios[0].nivel_id+'&entidad='+usuarios[0].entidad_id,
-		          type:'get',
-		          dataType:'json',
-		          async:false       
-		        }).responseText;
-		        datosEntidad = JSON.parse(datosEntidad);
-		        datosEntidad=datosEntidad.entidades;
-		        
-		     for (i=0;i<datosEntidad.length;i++){
-		    	 if (datosEntidad[i].nivel==usuarios[0].nivel_id && datosEntidad[i].entidad==usuarios[0].entidad_id)
-		    		 break;
-		     }  */ 
+
+$( document ).ready(function() { 
+	var entidadCas = "";
+	entidadCas ="<%=attributes.get("entidad") %>";
+	usuarioRolCas="<%=attributes.get("role_id") %>";
+	var usuarios = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	usuarios = JSON.parse(usuarios);
+	usuarios = usuarios.usuarios;
 	
-		     
-		});
+	$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
+	$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
+		var i=parseInt(0);
+		 /* var datosNiveles = $.ajax({
+	        url:'http://spr.stp.gov.py/ajaxSelects?accion=getNiveles&nivel='+usuarios[0].nivel_id,
+	        type:'get',
+	        dataType:'json',
+	        async:false       
+	      }).responseText;
+	      datosNiveles = JSON.parse(datosNiveles);
+	      datosNiveles.niveles;
+	      
+	     var datosEntidad = $.ajax({
+	          url:'http://spr.stp.gov.py/ajaxSelects?accion=getEntidad&nivel='+usuarios[0].nivel_id+'&entidad='+usuarios[0].entidad_id,
+	          type:'get',
+	          dataType:'json',
+	          async:false       
+	        }).responseText;
+	        datosEntidad = JSON.parse(datosEntidad);
+	        datosEntidad=datosEntidad.entidades;
+	        
+	     for (i=0;i<datosEntidad.length;i++){
+	    	 if (datosEntidad[i].nivel==usuarios[0].nivel_id && datosEntidad[i].entidad==usuarios[0].entidad_id)
+	    		 break;
+	     } */
+
+	     
+	});
 	     </script>
  <!-- Piwik -->
 <script type="text/javascript">
@@ -142,7 +142,7 @@ textarea { text-transform: uppercase; }
 	          <div class="box" height="1000px">
 	            <div class="box-header with-border" height="1000px">
 	              <h3 class="box-title" id="tituloTipoPrograma">
-	                Analisis Presupuesto
+	               Evidencias de Avance
 	              </h3> 
 	              <div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
 	              </div>
@@ -164,7 +164,7 @@ textarea { text-transform: uppercase; }
                 var derivers = $.pivotUtilities.derivers;
 
 				
-                $.getJSON("http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPivotLineaAccionPresupuesto", function(mps) {
+                $.getJSON("http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPivotEvidenciaAvance", function(mps) {
                 	$("#output").pivotUI(mps, {
                         renderers: $.extend(
                             $.pivotUtilities.renderers, 

@@ -9271,8 +9271,9 @@ function imprimirAvance(indice){
 	$("#impresionSiguienteTrimestre").text($("#avance"+indice+" #avanceObjetivosTrimestre").text());
 	
 	
-	var doc = new jsPDF('l', 'mm', [297, 210]);
-	    
+	var doc = new jsPDF('p', 'mm', "a4");
+	var pageHeight = 297;
+	
 	var specialElementHandlers = {
 	    '#dataTablesAvanceCualitativo': function (element, renderer) {
 	        return true;
@@ -9280,52 +9281,70 @@ function imprimirAvance(indice){
 	};
 	
 	margins = {
-			  top: 50,
+			  top: 20,
 			  bottom: 20,
 			  left: 15,
 			  width: 20
 			 };
 	
-    doc.fromHTML($('#paraImpresiones').html(), 15, 40, {
-        'width': 300,
-        'elementHandlers': specialElementHandlers,
-        'pagesplit': true,
-        
-        
-    },margins);
+	var cabecera = '<header>'+				   		
+						'<div style="text-align:left"><img src="http://spr.stp.gov.py/tablero/dist/img/logo_stp_gob.png" height="25" width="180"></div>'+										
+				   '</header>';				   				  
+	
+	var cuerpo =  $("#paraImpresiones").html();
+					 
+	var pie =  	   '<footer>'+
+						'<div style="text-align:right;">Página <span class="pageCounter"></span>/<span class="totalPages"></span></div>'+			
+			 	   '</footer>';
+		 	  			 	  	
+    var pageHeight= doc.internal.pageSize.height;
+    doc.fromHTML(cabecera + cuerpo,
+    			 margins.left,
+    			 margins.top,
+    			 {'width': 185,
+				    'elementHandlers': specialElementHandlers,
+				    'pagesplit': true                
+    			 },
+    			 function (dispose) {
+    				 doc.save('AvanceCualitativo.pdf');
+    			 },
+    			 margins
+    );
     
+    //doc.text(35, 25, "");
+	//doc.save('AvanceCualitativo.pdf'); 
     
-    var logo_stp = new Image();
+    /* var logo_stp = new Image();
     logo_stp.src = 'dist/img/logo_stp_nuevo_header.png';
     
     var logo_gob = new Image();
     logo_gob.src = 'dist/img/logo_gob_nac_header.png';
     
     logo_stp.onload = function(){
-    	doc.addImage(logo_stp , 'png', 25, 15);
+    	doc.addImage(logo_stp , 'png', 10, 15);
     	logo_gob.onload = function(){
-        	doc.addImage(logo_gob , 'png', 180, 15);
+        	doc.addImage(logo_gob , 'png', 130, 15);
         	doc.text(35, 25, "");
         	doc.save('AvanceCualitativo.pdf');
         };
-    };
+    };   */
     $("#contenedorImpresion").hide();
 }
 </script>	
 
  	<div id="paraImpresiones" class="container">
-		<!-- <div class="row">
+		<!-- div class="row">
 			<div class="col-md-12" style="padding-top:20px"> 
 				<div class="pull-left img-responsive col-md-4"><img src="http://spr.stp.gov.py/tablero/dist/img/logo_stp_nuevo_header.png"></div>
 				<div class="pull-right img-responsive col-md-4"><img src="http://spr.stp.gov.py/tablero/dist/img/logo_gob_nac_header.png"></div>
 		   	</div>
-		</div> -->
-		<br>
+		</div-->
+		<br/>
 		<div class="row" >
 			<div id="contenedorImpresion" class="table-responsive" style="display:none">
 				<div class="text-center" >
 					
-						<h1 class="text-center"><u>SPR-PA-03: Informe Cualitativo de Avance Trimestral<u></h1>
+						<h1 class="text-center"><u>SPR-PA-03: Informe Cualitativo de Avance Trimestral</u></h1>
 						<p><strong>Institución</strong> <span id="impresionInstitucion"></span></p>
 						<p><strong>Acción </strong><span id="impresionAccionesTrimestre"></span></p>
 						<p><strong>Periodo </strong><span id="impresionTrimestreAño"></span></p>
@@ -9334,12 +9353,10 @@ function imprimirAvance(indice){
 						<strong>Dificultades y Lecciones aprendidas </strong><p id="impresionLeccionesAprendidas"></p>
 						<strong>Objetivos del Siguiente Trimestre </strong><p id="impresionSiguienteTrimestre"></p>
 						
-						
-						
 					
 				</div>
 	  		</div>
-		</div>        	
+		</div>       	
 	</div>
 	<script>
 	$("contenedorImpresion").hide();
