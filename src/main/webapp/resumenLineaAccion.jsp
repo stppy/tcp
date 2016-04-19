@@ -166,7 +166,7 @@ textarea { text-transform: uppercase; }
    <script type="text/javascript">
 		$( document ).ready(function() {
 			function numeroConComa(x) {
-				if (isNaN(x)){
+				if (isNaN(x) || x == "Infinity"){
 					return 0;
 				}else{
 					return x.toString().replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -244,28 +244,31 @@ textarea { text-transform: uppercase; }
 								  
 									tempInstituciones = '<tr><td colspan="12"><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td></tr>'+
 														'<tr>'+
-														  	'<th rowspan="3">Línea de Acción</th>'+
-														  	'<th rowspan="3">Unidad de Medida</th>'+
-														  	'<th colspan="5">Plan de Acción 2016</th><th colspan="5">Ejecución a la Fecha</th></tr>'+
-														  	'<tr><th colspan="3">Meta</th>'+
-														  	'<th rowspan="2">Destinatarios</th>'+
-														  	'<th rowspan="2">Inversión</th>'+
-														  	'<th colspan="3">Meta</th>'+
-														  	'<th rowspan="2">Destinatarios</th>'+
-														  	'<th rowspan="2">Inversión</th></tr>'+
-														  	'<tr><th>Aprobada</th>'+
-														  	'<th>Programada</th>'+
-														  	'<th>% Programado</th>'+
-														  	'<th>Prevista</th>'+
-														  	'<th>Lograda</th>'+
-														  	'<th>%</th>'+
-														  '</tr>';
+														  	'<th rowspan="3" class="text-center" style="vertical-align: middle;">Línea de Acción</th>'+
+														  	'<th rowspan="3" class="text-center" style="vertical-align: middle;">Unidad de Medida</th>'+
+														  	'<th colspan="5" class="text-center">Plan de Acción 2016</th>'+
+														  	'<th colspan="5" class="text-center">Ejecución a la Fecha</th></tr>'+
+														'<tr><th colspan="3" class="text-center">Meta</th>'+
+														  	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Destinatarios</th>'+
+														  	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Inversión (en millones G.)</th>'+
+														  	'<th colspan="3" class="text-center">Meta</th>'+
+														  	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Destinatarios</th>'+
+														  	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Inversión (en millones G.)</th></tr>'+
+														'<tr><th class="text-center">Aprobada</th>'+
+														  	'<th class="text-center">Programada</th>'+
+														  	'<th class="text-center">%</th>'+
+														  	'<th class="text-center">Prevista</th>'+
+														  	'<th class="text-center">Lograda</th>'+
+														  	'<th class="text-center">%</th>'+
+													    '</tr>';
 														  
 							  }
 							  clase="";
 							  flagIns++;
-							  if ((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=90){
+							  if ((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=90 && lineasProgramadas[n].meta != 0){
 								  clase="bg-green-active color-palette"; 
+							  }else if((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=70 && lineasProgramadas[n].meta != 0){
+								  clase="bg-yellow-active color-palette"; 
 							  }else{
 								  clase="bg-red-active color-palette";
 							  }
@@ -277,20 +280,25 @@ textarea { text-transform: uppercase; }
 							  '<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>'+
 							  '<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
 							  '<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>'+
-							  '<td>'+numeroConComa(lineasProgramadas[n].inversionEstimada)+'</td>'+
+							  '<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
 							  '<td>'+numeroConComa(lineasProgramadas[n].cantidadHoy)+'</td>'+
 							  '<td>'+numeroConComa(lineasProgramadas[n].cantidadAvance)+'</td>';
 							  
-							  clase="";
-							  if ((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100>=90){
-								  clase="bg-green-active color-palette"; 
-							  }else{
-								  clase="bg-red-active color-palette";
+							  if (clase!="bg-red-active color-palette"){
+								  clase="";
+								  if ((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100>=90 && lineasProgramadas[n].cantidadHoy != 0){
+									  clase="bg-green-active color-palette"; 
+								  }else if((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100>=70 && lineasProgramadas[n].cantidadHoy != 0){
+									  clase="bg-yellow-active color-palette"; 
+								  }else{
+									  clase="bg-red-active color-palette";
+								  }
 							  }
+							  
 							  
 							  tempInstLineas += '<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100).toFixed(2))+'</td>'+
 							  '<td>'+numeroConComa(lineasProgramadas[n].cantDestinatarioReal)+'</td>'+
-							  '<td>'+numeroConComa(lineasProgramadas[n].costoAc)+'</td>'+
+							  '<td>'+numeroConComa((lineasProgramadas[n].costoAc/1000000).toFixed(2))+'</td>'+
 							  '</tr>';
 						  }
 						}
