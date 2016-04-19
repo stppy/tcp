@@ -4,7 +4,7 @@ public class LineaAccionAvance extends ResumenLineaAccion{
 	
 	protected double cantidadAvance;
 	
-	public double getCantidad() {
+	public double getCantidadAvance() {
 		return cantidadAvance;
 	}
 	public void setCantidadAvance(double cantidadAvance) {

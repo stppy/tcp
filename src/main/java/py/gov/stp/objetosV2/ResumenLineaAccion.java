@@ -3,7 +3,7 @@ package py.gov.stp.objetosV2;
 import java.math.BigInteger;
 
 public class ResumenLineaAccion {
-	
+
 	protected int 	  	  institucionId;
     protected String  	  institucionSigla;
     protected int 	  	  insOrden;
