@@ -1,5 +1,6 @@
 package py.gov.stp.objetosV2;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 
 public class ResumenLineaAccion {
@@ -20,7 +21,7 @@ public class ResumenLineaAccion {
     protected double  	  insLineaAccionMeta;
     protected double  	  cantidadProgramada;
     protected double  	  cantDest;
-    protected BigInteger  cantDestinatarioReal;
+    protected BigDecimal  cantDestinatarioReal;
     protected double  	  inversionEstimada;
     protected double  	  costoAc; 
     protected int 	  	  periodo;
@@ -141,10 +142,10 @@ public class ResumenLineaAccion {
 	public void setMeta(double meta) {
 		this.meta = meta;
 	}
-	public BigInteger getCantDestinatarioReal() {
+	public BigDecimal getCantDestinatarioReal() {
 		return cantDestinatarioReal;
 	}
-	public void setCantDestinatarioReal(BigInteger cantDestinatarioReal) {
+	public void setCantDestinatarioReal(BigDecimal cantDestinatarioReal) {
 		this.cantDestinatarioReal = cantDestinatarioReal;
 	}
 	public double getInversionEstimada() {
