@@ -1806,22 +1806,22 @@ public class SqlSelects {
 						+ "		ins_linea_accion_avance.cantidad as avance_real,"
 						+ "		ins_linea_accion_destinatario_real.beneficiarios_real as destinatarios_real,"
 						+ "		ins_linea_accion_costo.costo as inversion_real"
-						+ "from ins_linea_accion_base"
-						+ "left join ins_linea_accion_avance on "
+						+ " from ins_linea_accion_base"
+						+ " left join ins_linea_accion_avance on "
 						+ "			 ins_linea_accion_avance.ins_linea_accion_id=ins_linea_accion_base.ins_linea_accion_id"
-						+ "left join ins_linea_accion_destinatarios on "
+						+ " left join ins_linea_accion_destinatarios on "
 						+ "			 ins_linea_accion_destinatarios.ila_id=ins_linea_accion_base.ins_linea_accion_id"
-						+ "left join ins_linea_accion_programacion_hoy on "
+						+ " left join ins_linea_accion_programacion_hoy on "
 						+ "			 ins_linea_accion_programacion_hoy.ins_linea_accion_id =ins_linea_accion_base.ins_linea_accion_id"
-						+ "left join ins_linea_accion_programacion_anho on "
+						+ " left join ins_linea_accion_programacion_anho on "
 						+ "			 ins_linea_accion_programacion_anho.ins_linea_accion_id = ins_linea_accion_base.ins_linea_accion_id"
-						+ "left join ins_linea_accion_costo on "
+						+ " left join ins_linea_accion_costo on "
 						+ "			 ins_linea_accion_costo.ins_linea_accion_id=ins_linea_accion_base.ins_linea_accion_id"
-						+ "left join ins_linea_accion_costo_estimado on "
+						+ " left join ins_linea_accion_costo_estimado on "
 						+ "			 ins_linea_accion_costo_estimado.ins_linea_accion_id=ins_linea_accion_base.ins_linea_accion_id"
-						+ "left join ins_linea_accion_destinatario_real on "
+						+ " left join ins_linea_accion_destinatario_real on "
 						+ "			 ins_linea_accion_destinatario_real.ins_linea_accion_id=ins_linea_accion_base.ins_linea_accion_id"
-						+ "where periodo=2016"+condition+ "order by institucion_orden, la_orden ";
+						+ " where periodo=2016"+condition+ " order by institucion_orden, la_orden ";
 
 		Statement statement = null;
 		ResultSet rs=null;
@@ -1833,19 +1833,19 @@ public class SqlSelects {
 			while(rs.next()){
 				LineaAccionProgramacion objeto = new LineaAccionProgramacion();
 		
-			    objeto.setInstitucionSigla(rs.getString("ins_linea_accion_base.institucion_sigla"));
+			    objeto.setInstitucionSigla(rs.getString("institucion_sigla"));
 			    objeto.setLineaAccionEstratagiaId(rs.getInt("tipo_estrategia_id"));
-			    objeto.setLineaAccionNombre(rs.getString("ins_linea_accion_base.linea_accion_nombre"));
-			    objeto.setLineaAccionUnidadMedidaNombre(rs.getString("ins_linea_accion_base.linea_um_nombre"));
-			    objeto.setInsLineaAccionPeriodoId(rs.getInt("ins_linea_accion_base.periodo"));
+			    objeto.setLineaAccionNombre(rs.getString("linea_accion_nombre"));
+			    objeto.setLineaAccionUnidadMedidaNombre(rs.getString("linea_um_nombre"));
+			    objeto.setInsLineaAccionPeriodoId(rs.getInt("periodo"));
 			    objeto.setMeta(rs.getInt("meta_comprometida"));
 			    objeto.setCantidadAnho(rs.getInt("programado_anho"));
 			    objeto.setCantidadHoy(rs.getInt("programado_hoy"));
 			    objeto.setCantDest(rs.getDouble("destinatarios_estimados"));
-			    objeto.setInversionEstimada(rs.getDouble("ins_linea_accion_costo_estimado.inversion_estimada"));
+			    objeto.setInversionEstimada(rs.getDouble("inversion_estimada"));
 			    objeto.setCantidadAvance(rs.getDouble("avance_real"));
 			    objeto.setCantDestinatarioReal(rs.getBigDecimal("destinatarios_real"));
-			    objeto.setCostoAc(rs.getInt("inversion_real"));
+			    objeto.setCostoAc(rs.getDouble("inversion_real"));
 				objetos.add(objeto);
 			}
 		}
