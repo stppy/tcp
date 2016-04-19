@@ -10,6 +10,7 @@ public class Beneficiario {
 	protected int cantidad;
 	protected int avanceId;
 	protected int grupoId;
+	
 	public int getId() {
 		return id;
 	}
