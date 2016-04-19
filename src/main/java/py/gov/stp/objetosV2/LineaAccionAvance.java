@@ -9,6 +9,7 @@ public class LineaAccionAvance extends ResumenLineaAccion{
 	}
 	public void setCantidadAvance(double cantidadAvance) {
 		this.cantidadAvance = cantidadAvance;
+
 	}
 	
 }
