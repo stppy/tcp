@@ -3,28 +3,7 @@ package py.gov.stp.objetosV2;
 import java.math.BigInteger;
 
 public class ResumenLineaAccion {
-	
-<<<<<<< HEAD
-	protected int 	  institucionId;
-    protected String  institucionSigla;
-    protected int 	  insOrden;
-    protected int     lineaAccionId;
-    protected String  lineaAccionNombre;
-    protected int 	  lineaAccionTipoId;
-    protected int 	  lineaAccionEstratagiaId;
-    protected int 	  lineaAccionUnidadMedidaId;
-    protected String  lineaAccionUnidadMedidaNombre;
-    protected int 	  lineaAccionOrden;
-    protected boolean lineaAccionAcu;
-    protected int 	  insLineaAccionId;
-    protected int 	  insLineaAccionPeriodoId;
-    protected double  insLineaAccionMeta;
-    protected double  cantidadProgramada;
-    protected double  cantDest;
-    protected double  costoAc; 
-    protected int 	  periodo;
-    protected double  meta;
-=======
+
 	protected int 	  	  institucionId;
     protected String  	  institucionSigla;
     protected int 	  	  insOrden;
@@ -40,13 +19,12 @@ public class ResumenLineaAccion {
     protected int 	  	  insLineaAccionPeriodoId;
     protected double  	  insLineaAccionMeta;
     protected double  	  cantidadProgramada;
-    protected double  	  cantDestinatario;
+    protected double  	  cantDest;
     protected BigInteger  cantDestinatarioReal;
     protected double  	  inversionEstimada;
     protected double  	  costoAc; 
     protected int 	  	  periodo;
     protected double  	  meta;
->>>>>>> 53fc95165f25b948977535c18098c24056b2c49a
     
 	public int getInstitucionId() {
 		return institucionId;
