@@ -927,7 +927,7 @@ public class SqlSelects {
 			    objeto.setCantidadProgramada(rs.getDouble("cant_prog"));
 			    objeto.setInsOrden(rs.getInt("ins_orden"));
 			    objeto.setLineaAccionOrden(rs.getInt("la_orden"));
-			    objeto.setCantDestinatario(rs.getDouble("cant_dest"));
+			    objeto.setCantDest(rs.getDouble("cant_dest"));
 			    objeto.setCostoAc(rs.getDouble("costo_ac"));
 
 				objetos.add(objeto);
@@ -1789,5 +1789,51 @@ public class SqlSelects {
 			}
 			return objetos; 
 	  }	
+	
+	
+	public static List<LineaAccionProgramacion> selectResumenLineasAccionProgramacion(String condition) throws SQLException{
+		Connection conect=ConnectionConfiguration.conectar();
+		String query = " select * from resumen_linea_accion "+condition;
 
+		Statement statement = null;
+		ResultSet rs=null;
+		List<LineaAccionProgramacion> objetos = new ArrayList<LineaAccionProgramacion>();
+
+		try {
+			statement = conect.createStatement();
+			rs=statement.executeQuery(query);
+			while(rs.next()){
+				LineaAccionProgramacion objeto = new LineaAccionProgramacion();
+		
+				objeto.setInstitucionId(rs.getInt("ins_id"));
+			    objeto.setInstitucionSigla(rs.getString("sigla"));
+			    objeto.setLineaAccionId(rs.getInt("la_id"));
+			    objeto.setLineaAccionNombre(rs.getString("la_nombre"));
+			    objeto.setLineaAccionTipoId(rs.getInt("la_tipo_id"));
+			    objeto.setLineaAccionEstratagiaId(rs.getInt("la_estrategia_id"));
+			    objeto.setLineaAccionUnidadMedidaId(rs.getInt("la_um_id"));
+			    objeto.setLineaAccionUnidadMedidaNombre(rs.getString("la_um_descp"));
+			    objeto.setInsLineaAccionId(rs.getInt("ila_id"));
+			    objeto.setInsLineaAccionPeriodoId(rs.getInt("periodo"));
+			    objeto.setInsLineaAccionMeta(rs.getDouble("ila_meta"));
+			    objeto.setCantidadProgramada(rs.getDouble("cant_prog"));
+			    objeto.setInsOrden(rs.getInt("ins_orden"));
+			    objeto.setLineaAccionOrden(rs.getInt("la_orden"));
+			    objeto.setCantDest(rs.getDouble("cant_dest"));
+			    objeto.setCostoAc(rs.getDouble("costo_ac"));
+
+			    
+				objeto.setCantidadAnho(rs.getDouble("costo_ac"));
+				objeto.setCantidadHoy(rs.getDouble("costo_ac"));
+			    objeto.setCantidadAvance(rs.getDouble("costo_ac"));
+				objetos.add(objeto);
+			}
+		}
+		catch (SQLException e) {e.printStackTrace();}
+		finally{
+			if (statement != null) {statement.close();}
+			if (conect != null) {conect.close();}
+		}
+		return objetos; 
+	}
 }

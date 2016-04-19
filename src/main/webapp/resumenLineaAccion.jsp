@@ -250,8 +250,8 @@ textarea { text-transform: uppercase; }
 							  '<td>'+numeroConComa(lineasProgramadas[n].insLineaAccionMeta)+'</td>'+
 							  '<td>'+numeroConComa(lineasProgramadas[n].cantidadProgramada)+'</td>'+
 							  '<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadProgramada/lineasProgramadas[n].insLineaAccionMeta)*100).toFixed(2))+'</td>'+
-							  '<td>'+numeroConComa(lineasProgramadas[n].cant_dest)+'</td>'+
-							  '<td>'+numeroConComa(lineasProgramadas[n].costo_ac)+'</td>'+
+							  '<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>'+
+							  '<td>'+numeroConComa(lineasProgramadas[n].costoAc)+'</td>'+
 							  '</tr>';
 						  }
 						}
@@ -264,7 +264,7 @@ textarea { text-transform: uppercase; }
 						  '<td>'+numeroConComa(lineasProgramadas[n].insLineaAccionMeta)+'</td>'+
 						  '<td>'+numeroConComa(lineasProgramadas[n].cantidadProgramada)+'</td>'+
 						  '<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadProgramada/lineasProgramadas[n].insLineaAccionMeta)*100).toFixed(2))+'</td>'+
-						  '<td>'+numeroConComa(lineasProgramadas[n].cantDestinatario)+'</td>'+
+						  '<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>'+
 						  '<td>'+numeroConComa(lineasProgramadas[n].costoAc)+'</td>'+
 						  '</tr>';
 					  }
