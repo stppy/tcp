@@ -1204,22 +1204,37 @@ public static boolean borradoHito(Hito objeto){
 	}
 	
 	public static boolean updateAvanceCualitativo(AvanceCualitativo objeto){
-	  	 Connection conect=ConnectionConfiguration.conectar();
-	  	 Statement statement = null;
-	  	 
-		 String													query = "update avance_cualitativo set ";
-		 if(objeto.getAccionCatalogoId() !=0)					query+= "accion_catalogo_id='"+objeto.getAccionCatalogoId()+"'";
-		 if(objeto.getTrimestreId()!=0)							query+= ", trimestre_id='"+objeto.getTrimestreId()+"'";
-		 if(objeto.getGestionesRealizadas()!=null)				query+= ", gestiones_realizadas='"+objeto.getGestionesRealizadas()+"'";
-		 if(objeto.getPrincipalesLogrosAlcanzados()!=null)		query+= ", principales_logros_alcanzados='"+objeto.getPrincipalesLogrosAlcanzados()+"'";
-		 if(objeto.getDificultadesLeccionesAprendidas()!=null)	query+= ", dificultades_lecciones_aprendidas='"+objeto.getDificultadesLeccionesAprendidas()+"'";
-		 if(objeto.getObjetivosTrimestre()!=null)				query+= ", objetivos_del_siguiente_trimestre='"+objeto.getObjetivosTrimestre()+"'";
+		 try {			 
+			 
+		  	 Connection conect=ConnectionConfiguration.conectar();
+				String query = "update avance_cualitativo set ";
+				PreparedStatement update =null;
+							 
+				 if(objeto.getAccionCatalogoId() !=0)					query+= "accion_catalogo_id= ?";
+				 if(objeto.getTrimestreId()!=0)							query+= ", trimestre_id= ?";
+				 if(objeto.getGestionesRealizadas()!=null)				query+= ", gestiones_realizadas= ?";
+				 if(objeto.getPrincipalesLogrosAlcanzados()!=null)		query+= ", principales_logros_alcanzados= ?";
+				 if(objeto.getDificultadesLeccionesAprendidas()!=null)	query+= ", dificultades_lecciones_aprendidas= ?";
+				 if(objeto.getObjetivosTrimestre()!=null)				query+= ", objetivos_del_siguiente_trimestre= ?";
+				 
+				
+				 //query = query.substring(0, query.length()-2);
+				 query+=" where id = ?";
+				 
+				 int cantCampos =0;
+				 update = conect.prepareStatement(query);
+				 if (objeto.getAccionCatalogoId() !=0)					{ 	cantCampos++;update.setInt (cantCampos, objeto.getAccionCatalogoId());}
+				 if (objeto.getTrimestreId()!=0) 	 					{	cantCampos++;update.setInt (cantCampos, objeto.getTrimestreId());}
+				 if (objeto.getGestionesRealizadas()!=null) 	 		{	cantCampos++;update.setString (cantCampos, objeto.getGestionesRealizadas());}
+				 if (objeto.getPrincipalesLogrosAlcanzados()!=null)  	{	cantCampos++;update.setString (cantCampos, objeto.getPrincipalesLogrosAlcanzados());}
+				 if (objeto.getDificultadesLeccionesAprendidas()!=null) {	cantCampos++;update.setString (cantCampos, objeto.getDificultadesLeccionesAprendidas());}
+				 if (objeto.getObjetivosTrimestre()!=null) 				{	cantCampos++;update.setString (cantCampos, objeto.getObjetivosTrimestre());}
 
-		 query+=" where id ="+objeto.getId(); 	
-		 try {
-			statement=conect.createStatement();
-			statement.execute(query);
-		    conect.close();
+				 cantCampos++;
+				 update.setInt    (cantCampos , objeto.getId());
+
+				update.execute();
+				conect.close();
 		    return true;
 		 }catch (SQLException e) {e.printStackTrace(); return false;}
 	}

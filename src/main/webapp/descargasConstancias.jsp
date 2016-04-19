@@ -20,44 +20,6 @@
 	<!-- jvectormap -->
     <script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js" type="text/javascript"></script>
     <script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js" type="text/javascript"></script>
-	
-	<style>
-	  /* Icono cuando el contenido colapsado esta visto */
-	  .btn1:after {
-	    font-family: "Glyphicons Halflings";
-	    content: "\e114";
-	    float: right;
-	    margin-left: 15px;
-	  }
-	  /* Icono cuando el contenido colapsado esta oculto */
-	  .btn1.collapsed:after {
-	    content: "\e080";
-	  }
-	  /* Icono cuando el contenido colapsado esta visto */
-	  .btn2:after {
-	    font-family: "Glyphicons Halflings";
-	    content: "\e114";
-	    float: right;
-	    margin-left: 15px;
-	  }
-	  /* Icono cuando el contenido colapsado esta oculto */
-	  .btn2.collapsed:after {
-	    content: "\e080";
-	  }
-	  /* Icono cuando el contenido colapsado esta visto */
-	  .btn3:after {
-	    font-family: "Glyphicons Halflings";
-	    content: "\e114";
-	    float: right;
-	    margin-left: 15px;
-	  }
-	  /* Icono cuando el contenido colapsado esta oculto */
-	  .btn3.collapsed:after {
-	    content: "\e080";
-	  }
-	</style>
-
-
 </head>
 <body class="skin-blue sidebar-mini sidebar-collapse">
 
@@ -109,14 +71,12 @@ if (user != null) { %>
 			<section class="content" id="programacion">
 				<!-- Contenedor de constancias para el PA1 -->
 					<div class="box box-primary">
-						<div class="box-header with-border"><!-- Cabecera del box con titulo y botones para expandir -->
-							<h3 class="box-title">Descargar Constancia PA 1</h3>
+						<div class="box-header with-border collapsed" data-toggle="collapse" data-target="#demo1"><!-- Cabecera del box con titulo y botones para expandir -->
+							<h3 class="box-title ">Descargar Constancia PA 1</h3>
 							<div class="box-tools pull-right">
-								<button type="button" class="btn btn1 btn-box-tool collapsed" data-toggle="collapse" data-target="#demo1">
-								</button>
-								<!--<button type="button" class="btn1 btn-box-tool btn " data-toggle="collapse"  data-target="#demo1">
+								<button type="button" class="btn1 btn-box-tool btn collapsed" data-toggle="collapse"  data-target="#demo1">
 									<i class="fa fa-plus" ></i>
-								</button>	-->
+								</button>
 							</div>
 						</div><!-- /.fin-box-header -->
 						<div id="demo1" class="box-body collapse" >
@@ -138,14 +98,12 @@ if (user != null) { %>
 					
 					<!-- Contenedor de constancias para el PA2 -->
 					<div class="box box-primary">
-						<div class="box-header with-border"><!-- Cabecera del box con titulo y botones para expandir -->
-							<h3 class="box-title">Descargar Constancia PA 2</h3>
+						<div class="box-header with-border collapsed" data-toggle="collapse" data-target="#demo2"><!-- Cabecera del box con titulo y botones para expandir -->
+							<h3 class="box-title" >Descargar Constancia PA 2</h3>
 							<div class="box-tools pull-right"> 
-								<button type="button" class="btn btn2 btn-box-tool collapsed" data-toggle="collapse" data-target="#demo2">
-								</button>
-								<!--<button type="button" class="btn btn-box-tool btn2 " data-toggle="collapse"  data-target="#demo2">
+								<button type="button" class="btn btn-box-tool btn2 collapsed" data-toggle="collapse"  data-target="#demo2">
 									<i class="fa fa-plus" ></i>
-								</button>-->	
+								</button>	
 							</div>
 						</div><!-- /.fin-box-header -->
 						<div class="box-body collapse" id="demo2">
@@ -159,26 +117,24 @@ if (user != null) { %>
 					</div>
 					<!-- Contenedor de constancias para el PA3-->
 					<div class="box box-primary">
-						<div class="box-header with-border"><!-- Cabecera del box con titulo y botones para expandir -->
+						<div class="box-header with-border collapsed" data-toggle="collapse" data-target="#demo3"><!-- Cabecera del box con titulo y botones para expandir -->
 							<h3 class="box-title">Descargar Constancia PA 3</h3>
 							<div class="box-tools pull-right"> 
-								<button type="button" class="btn btn3 btn-box-tool collapsed" data-toggle="collapse" data-target="#demo3">
-								</button>
-								<!--<button type="button" class="btn btn-box-tool btn3" data-toggle="collapse"  data-target="#demo3">
+								<button type="button" class="btn btn-box-tool btn3 collapsed" data-toggle="collapse"  data-target="#demo3">
 									<i class="fa fa-plus" ></i>
-								</button>-->	
+								</button>	
 							</div>
 						</div><!-- /.fin-box-header -->
 						<div class="box-body collapse" id="demo3">
 							  <div class="list-group" >
 								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA3_20160415.pdf" download="Constancia_PA3_20160415" class="list-group-item glyphicon glyphicon-download-alt"> 15-ABRIL-2016</a> 
 								<!-- <a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160401.pdf" download="Constancia" class="list-group-item glyphicon glyphicon-download-alt"> Mes : Febrero - Descargar</a>
-							  </div>-->
+							  	</div>-->
 								</div><!--/.fin-box-bod -->
 						</div><!-- /.fin_box -->
 					</div>
 				<script>/* Scrip para cambiar de icono el boton de collapse */
-				 /*$(document).ready(function(){
+				 $(document).ready(function(){
 					$("#demo1").on("hide.bs.collapse", function(){
 					   	$(".btn1").html('<i class="fa fa-plus""></i>');
 					 });
@@ -197,7 +153,7 @@ if (user != null) { %>
 					$("#demo3").on("show.bs.collapse", function(){
 						$(".btn3").html('<i class="fa fa-minus""></i> ');
 					});
-				});*/
+				});
 				</script>
 			</section>
 		</div><!-- fin content-wrapper -->
