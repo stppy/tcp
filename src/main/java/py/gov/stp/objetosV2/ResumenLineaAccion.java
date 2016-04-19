@@ -19,7 +19,7 @@ public class ResumenLineaAccion extends LineaAccionDestinatario{
     protected int 	  insLineaAccionPeriodoId;
     protected double  insLineaAccionMeta;
     protected double  cantidadProgramada;
-    protected double  cantDest;
+    protected double  cantDestinatario;
     protected double  costoAc; 
     protected int 	  periodo;
     protected double  meta;
@@ -109,11 +109,11 @@ public class ResumenLineaAccion extends LineaAccionDestinatario{
 	public void setLineaAccionOrden(int lineaAccionOrden) {
 		this.lineaAccionOrden = lineaAccionOrden;
 	}
-	public double getCantDest() {
-		return cantDest;
+	public double getCantDestinatario() {
+		return cantDestinatario;
 	}
-	public void setCantDest(double cantDest) {
-		this.cantDest = cantDest;
+	public void setCantDestinatario(double cantDestinatario) {
+		this.cantDestinatario = cantDestinatario;
 	}
 	public double getCostoAc() {
 		return costoAc;

@@ -927,7 +927,7 @@ public class SqlSelects {
 			    objeto.setCantidadProgramada(rs.getDouble("cant_prog"));
 			    objeto.setInsOrden(rs.getInt("ins_orden"));
 			    objeto.setLineaAccionOrden(rs.getInt("la_orden"));
-			    objeto.setCantDest(rs.getDouble("cant_dest"));
+			    objeto.setCantDestinatario(rs.getDouble("cant_dest"));
 			    objeto.setCostoAc(rs.getDouble("costo_ac"));
 
 				objetos.add(objeto);
