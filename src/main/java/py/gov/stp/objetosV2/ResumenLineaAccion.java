@@ -1,23 +1,32 @@
 package py.gov.stp.objetosV2;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 public class ResumenLineaAccion {
-	
-	protected int institucionId;
-    protected String institucionSigla;
-    protected int lineaAccionId;
-    protected String lineaAccionNombre;
-    protected int lineaAccionTipoId;
-    protected int lineaAccionEstratagiaId;
-    protected int lineaAccionUnidadMedidaId;
-    protected String lineaAccionUnidadMedidaNombre;
-    protected int insLineaAccionId;
-    protected int insLineaAccionPeriodoId;
-    protected double insLineaAccionMeta;
-    protected double cantidadProgramada;
-    protected int insOrden;
-    protected int lineaAccionOrden;
-    protected double cant_dest;
-    protected double costo_ac;
+
+	protected int 	  	  institucionId;
+    protected String  	  institucionSigla;
+    protected int 	  	  insOrden;
+    protected int     	  lineaAccionId;
+    protected String  	  lineaAccionNombre;
+    protected int 	  	  lineaAccionTipoId;
+    protected int 	  	  lineaAccionEstratagiaId;
+    protected int 	  	  lineaAccionUnidadMedidaId;
+    protected String  	  lineaAccionUnidadMedidaNombre;
+    protected int 	  	  lineaAccionOrden;
+    protected boolean 	  lineaAccionAcu;
+    protected int 	  	  insLineaAccionId;
+    protected int 	  	  insLineaAccionPeriodoId;
+    protected double  	  insLineaAccionMeta;
+    protected double  	  cantidadProgramada;
+    protected double  	  cantDest;
+    protected BigDecimal  cantDestinatarioReal;
+    protected double  	  inversionEstimada;
+    protected double  	  costoAc; 
+    protected int 	  	  periodo;
+    protected double  	  meta;
+    
 	public int getInstitucionId() {
 		return institucionId;
 	}
@@ -103,17 +112,47 @@ public class ResumenLineaAccion {
 	public void setLineaAccionOrden(int lineaAccionOrden) {
 		this.lineaAccionOrden = lineaAccionOrden;
 	}
-	public double getCant_dest() {
-		return cant_dest;
+	public double getCantDest() {
+		return cantDest;
 	}
-	public void setCant_dest(double cant_dest) {
-		this.cant_dest = cant_dest;
+	public void setCantDest(double cantDest) {
+		this.cantDest = cantDest;
 	}
-	public double getCosto_ac() {
-		return costo_ac;
+	public double getCostoAc() {
+		return costoAc;
 	}
-	public void setCosto_ac(double costo_ac) {
-		this.costo_ac = costo_ac;
+	public void setCostoAc(double costoAc) {
+		this.costoAc = costoAc;
+	}
+	public boolean isLineaAccionAcu() {
+		return lineaAccionAcu;
+	}
+	public void setLineaAccionAcu(boolean lineaAccionAcu) {
+		this.lineaAccionAcu = lineaAccionAcu;
+	}
+	public int getPeriodo() {
+		return periodo;
+	}
+	public void setPeriodo(int periodo) {
+		this.periodo = periodo;
+	}
+	public double getMeta() {
+		return meta;
+	}
+	public void setMeta(double meta) {
+		this.meta = meta;
+	}
+	public BigDecimal getCantDestinatarioReal() {
+		return cantDestinatarioReal;
+	}
+	public void setCantDestinatarioReal(BigDecimal cantDestinatarioReal) {
+		this.cantDestinatarioReal = cantDestinatarioReal;
+	}
+	public double getInversionEstimada() {
+		return inversionEstimada;
+	}
+	public void setInversionEstimada(double inversionEstimada) {
+		this.inversionEstimada = inversionEstimada;
 	}
     
     
