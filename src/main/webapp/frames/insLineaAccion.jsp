@@ -3046,8 +3046,9 @@ $("body").on("click", ".borrarAccion",function(event){
 		      	{
 		        	if(datosEntidades.entidades[x].entidad === parseInt(rutaEntidad2)) 
 		        	{
-		        		document.getElementById('entidad-formulario').setAttribute("entidad",rutaEntidad2 );
+		        		document.getElementById('entidad-formulario').setAttribute("entidad",rutaEntidad2 );		        		
 		        		var mostrarEntidad = datosEntidades.entidades[x].nombreEntidad;
+		        		document.getElementById('entidad-formulario').setAttribute("entidadDescripcion",mostrarEntidad );
 		          		var nt=document.createTextNode(mostrarEntidad);
 		          		var nparrafo=document.getElementById('tituloFormulario');
 		          		//nparrafo.innerHTML="";
@@ -3146,6 +3147,7 @@ $("body").on("click", ".borrarAccion",function(event){
 						        	{
 						        		document.getElementById('entidad-formulario').setAttribute("entidad",rutaEntidad2 );
 						        		var mostrarEntidad = datosEntidades.entidades[x].nombreEntidad;
+						        		document.getElementById('entidad-formulario').setAttribute("entidadDescripcion",rutaEntidad2 );
 						        		var nt=document.createElement('small');
 						          		var ntText=document.createTextNode(mostrarEntidad);
 						          		nt.appendChild(ntText);
@@ -9214,11 +9216,143 @@ $("body").on("click", ".borrarAvanceCualitativo",function(event){
 	
 });
 
+//Imprime todos los avances de una institución
+function imprimirAvancesInstitucion(){
+	
+	var doc = new jsPDF('p', 'mm', "a4");
+	var pageHeight = 297;
+	
+	var specialElementHandlers = {
+	    '#dataTablesAvanceCualitativo': function (element, renderer) {
+	        return true;
+	    }
+	};
+	
+	margins = {
+			  top: 20,
+			  bottom: 20,
+			  left: 15,
+			  width: 20
+			  };
+	
+	var cabecera = '<header>'+				   		
+						'<div style="text-align:left"><img src="http://spr.stp.gov.py/tablero/dist/img/logo_stp_gob.png" height="20" width="180"></div>'+										
+				   '</header>';	
+		
+	var cuerpoHTML = "";
+	
+	var periodoActual = 2016;
+	var entidad = "<%=attributes.get("entidad") %>";
+	
+	var insLineasAccion = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion&periodoId='+periodoActual,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	insLineasAccion = JSON.parse(insLineasAccion);
+		
+	var trimestres = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getTrimestre',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	trimestres = JSON.parse(trimestres);
+	
+	cuerpoHTML += '<br><h1 class="text-center"><u>SPR-PA-03: Informe de Avance Cualitativo por Institución para el Periodo '+periodoActual+'</u></h1>';
+			
+	//recorre cada linea de acción no borrada del periodo actual
+	for(la = 0; la < insLineasAccion.length; la++){		
+		
+		if (insLineasAccion[la].borrado == false ){
+			var accionCatalogoPorLineaAccion = $.ajax({ //total de acciones catalogo por linea acción
+				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogoPorLineaAccion&insLineaAccionId='+insLineasAccion[la].lineaAccionId,
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+			}).responseText;
+			accionCatalogoPorLineaAccion = JSON.parse(accionCatalogoPorLineaAccion);
+											
+			var avance = $.ajax({ //total de avances por linea acción
+				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCualitativo&insLineaAccionId='+insLineasAccion[la].lineaAccionId,
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+			}).responseText;
+			avance = JSON.parse(avance);		
+			
+			var avanceNB = []; //avances no borrados
+			for ( x=0 ; x < avance.length; x++){
+				if (avance[x].borrado==false){
+					avanceNB.push(avance[x]);
+				}
+			}
+			
+			// Por cada acción catalogo se obtienen sus avances y genera el código HTML correspondiente.			
+			for (ac = 0; ac < accionCatalogoPorLineaAccion.length; ac++){									
+				for (a = 0; a < avanceNB.length; a++){				
+					
+					if (accionCatalogoPorLineaAccion[ac].accionCatalogoId == avanceNB[a].accionCatalogoId){						
+						
+						var indice = avanceNB[a].accionCatalogoId;					
+						var trimestreAvanc = "";
+						
+						for (t = 0; t < trimestres.lenght; t++){
+							if (avanceNB[a].trimestreId == trimestres[t].id){
+									trimestreAvanc = trimestres[t].descripcion; 
+							}
+						}
+						
+						$("#paraImpresiones").show();					
+						
+						$("#impresionInstitucion").text(entidad);
+						$("#impresionAccionesTrimestre").text(accionCatalogoPorLineaAccion[ac].nombreAccionCatalogo);
+						$("#impresionTrimestreAño").text(trimestreAvanc+' '+periodoActual);
+						$("#impresionGestionesRealizadas").text(avanceNB[a].gestionesRealizadas);
+						$("#impresionLogrosAlcanzados").text(avanceNB[a].principalesLogroAlcanzados);
+						$("#impresionLeccionesAprendidas").text(avanceNB[a].dificultadesLeccionesAprendidas);
+						$("#impresionSiguienteTrimestre").text(avanceNB[a].objetivosTrimestre);																
+						
+						cuerpoHTML += $("#paraImpresiones").html();
+						
+						$("#paraImpresiones").hide();
+					}
+					
+				}			
+				
+			}
+		}
+
+	}	
+	
+	var pie =	'<footer>'+
+					'<div style="text-align:right;">Página <span class="pageCounter"></span>/<span class="totalPages"></span></div>'+			
+				'</footer>';
+				   				  
+			 	  			 	  	
+    var pageHeight= doc.internal.pageSize.height;
+    doc.fromHTML(cabecera + cuerpoHTML,
+    			 margins.left,
+    			 margins.top,
+    			 {'width': 185,
+				    'elementHandlers': specialElementHandlers,
+				    'pagesplit': true                
+    			 },
+    			 function (dispose) {
+    				 doc.save('Avances_Cualitativos_por_Institución.pdf');
+    			 },
+    			 margins
+    );
+            
+}
+
+
 function imprimirAvance(indice){
 	/* , trimestreDesc, trimestreAnho, gestionesRealizadas, principalesLogrosAlcanzados,
 		dificultadesLeccionesAprendidas, objetivosTrimestre */
 	<%-- <%@include file="impresiones.jsp"%> --%>
-	$("#contenedorImpresion").show();
+	$("#paraImpresiones").show();
 	$("#impresionInstitucion").text($("#nombreInstitucion").val());
 	$("#impresionAccionesTrimestre").text($("#avance"+indice+" #avanceNombreAccion").text());
 	$("#impresionTrimestreAño").text($("#avance"+indice+" #avanceDescTrimestre").text()+' '+$("#avance"+indice+" #avanceAnhoTrimestre").text());
@@ -9263,7 +9397,7 @@ function imprimirAvance(indice){
 				    'pagesplit': true                
     			 },
     			 function (dispose) {
-    				 doc.save('AvanceCualitativo.pdf');
+    				 doc.save('Avance_cualitativo.pdf');
     			 },
     			 margins
     );
@@ -9285,7 +9419,7 @@ function imprimirAvance(indice){
         	doc.save('AvanceCualitativo.pdf');
         };
     };   */
-    $("#contenedorImpresion").hide();
+    $("#paraImpresiones").hide();
 }
 </script>	
 
@@ -9301,7 +9435,7 @@ function imprimirAvance(indice){
 			<div id="contenedorImpresion" class="table-responsive" style="display:none">
 				<div class="text-center" >
 					
-						<h1 class="text-center"><u>SPR-PA-03: Informe Cualitativo de Avance Trimestral</u></h1>
+						<h3 class="text-center"><u>SPR-PA-03: Informe Cualitativo de Avance Trimestral</u></h3>
 						<p><strong>Institución</strong> <span id="impresionInstitucion"></span></p>
 						<p><strong>Acción </strong><span id="impresionAccionesTrimestre"></span></p>
 						<p><strong>Periodo </strong><span id="impresionTrimestreAño"></span></p>
@@ -9316,5 +9450,5 @@ function imprimirAvance(indice){
 		</div>       	
 	</div>
 	<script>
-	$("contenedorImpresion").hide();
+	$("paraImpresiones").hide();
 	</script>
