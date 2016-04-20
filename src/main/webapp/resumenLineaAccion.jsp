@@ -205,7 +205,7 @@ textarea { text-transform: uppercase; }
 			  	async:false       
 			}).responseText;
 			unidadMedida = JSON.parse(unidadMedida);
-			
+			*/		
 			var instituciones = $.ajax({
 				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
 			  	type:'get',
@@ -213,7 +213,7 @@ textarea { text-transform: uppercase; }
 			  	async:false       
 			}).responseText;		
 			instituciones=JSON.parse(instituciones);
-			instituciones=instituciones.sort(orden); */
+			instituciones=instituciones.sort(orden); 
 			
 			
 			var lineasProgramadas = $.ajax({
@@ -234,12 +234,12 @@ textarea { text-transform: uppercase; }
 			var flagIns=0;
 			var clase="";
 			
-/* 				for(var m=0; m<instituciones.length;m++)
-				{ */
+ 				for(var m=0; m<instituciones.length;m++)
+				{ 
 					//tempInstituciones = '<tr><td colspan="7"><strong>'+instituciones[m].sigla+'</strong></td></tr>';
 					  for(var n=0; n<lineasProgramadas.length;n++)
 						{
-						  if (/* instituciones[m].id==lineasProgramadas[n].institucionId && */ lineasProgramadas[n].lineaAccionEstratagiaId==estrategia){
+						  if ( instituciones[m].id==lineasProgramadas[n].institucionId &&  lineasProgramadas[n].lineaAccionEstratagiaId==estrategia){
 							  if (flagIns == 0){
 								  
 									tempInstituciones = '<tr><td colspan="12"><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td></tr>'+
@@ -261,10 +261,10 @@ textarea { text-transform: uppercase; }
 														  	'<th class="text-center">Lograda</th>'+
 														  	'<th class="text-center">%</th>'+
 													    '</tr>';
-														  
+									flagIns++;						  
 							  }
 							  clase="";
-							  flagIns++;
+							  
 							  if ((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=90 && lineasProgramadas[n].meta != 0){
 								  clase="bg-green-active color-palette"; 
 							  }else if((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=70 && lineasProgramadas[n].meta != 0){
@@ -308,7 +308,7 @@ textarea { text-transform: uppercase; }
 						  
 					  }
 					  tempInstituciones="";tempInstLineas="";flagIns=0;
-				//}
+				}
 
 			 return tablaInstituciones;
 			}

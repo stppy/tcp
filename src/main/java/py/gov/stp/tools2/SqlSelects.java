@@ -1794,7 +1794,7 @@ public class SqlSelects {
 	public static List<LineaAccionProgramacion> selectResumenLineasAccionProgramacion(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
 		String query = " select ins_linea_accion_base.institucion_sigla,"
-						+ "		ins_linea_accion_base.linea_tipo as tipo_estrategia_id,"
+						+ "		ins_linea_accion_base.estrategia_id as tipo_estrategia_id,"
 						+ "		ins_linea_accion_base.linea_accion_nombre,"
 						+ "		ins_linea_accion_base.linea_um_nombre,"
 						+ "		ins_linea_accion_base.periodo,"
