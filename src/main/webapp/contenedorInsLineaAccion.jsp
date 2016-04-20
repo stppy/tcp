@@ -540,14 +540,17 @@ if (user != null) { %>
 		             				<button type="submit" class="btn btn-primary nuevaInsLineaAccion">Agregar Línea de Acción</button>
 		             			<%}%>
 	             			</div>
-	             			<!-- link para acceder a la pagina de descarga de las constancias -->
-							<div class="col-md-6" align="right">
-								<a href="http://spr.stp.gov.py/tablero/descargasConstancias.jsp">
+	             			<!-- link para acceder a la pagina de descarga de los avances y constancias -->
+							<div class="col-md-6" align="right">								
+								<button type="button" class="btn btn-primary" onclick=imprimirAvancesInstitucion(); >
+									<span class="glyphicon glyphicon-download-alt"></span> Descargar Avances
+								</button>															
+								<!-- <a href="http://spr.stp.gov.py/tablero/descargasConstancias.jsp">									
 									<button type="button" class="btn btn-primary">
 										<span class="glyphicon glyphicon-download-alt"></span> Descargar Constancias
 									</button>
-								</a>
-							</div><!-- /fin div de link constancias -->
+								</a> -->
+							</div><!--fin div de link de avances y constancias -->
 	             		</div>
 			   		</div>
 				</div>

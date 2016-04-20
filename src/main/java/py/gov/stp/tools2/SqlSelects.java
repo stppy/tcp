@@ -1117,6 +1117,37 @@ public class SqlSelects {
 		return objetos; 
 		}
 	
+	public static List<AccionPorLineaAccion> selectAccionCatalogoPorLineaAccion(String condition) throws SQLException{
+		Connection conect=ConnectionConfiguration.conectar();
+		String query = " SELECT DISTINCT id_accion_catalogo , ac.nombre  " +
+				       " FROM accion AS a " +
+				       " INNER JOIN accion_catalogo AS ac " +
+				       " ON	ac.id = a.id_accion_catalogo" + condition;
+
+		Statement statement = null;
+		ResultSet rs=null;
+		List<AccionPorLineaAccion> objetos = new ArrayList<AccionPorLineaAccion>();
+
+		try {
+			statement = conect.createStatement();
+			rs=statement.executeQuery(query);
+			while(rs.next()){
+				AccionPorLineaAccion objeto = new AccionPorLineaAccion();
+								
+				objeto.setAccionCatalogoId(rs.getInt("id_accion_catalogo"));
+				objeto.setNombreAccionCatalogo(rs.getString("nombre")); 				
+
+				objetos.add(objeto);
+			}
+		}
+		catch (SQLException e) {e.printStackTrace();}
+		finally{
+			if (statement != null) {statement.close();}
+			if (conect != null) {conect.close();}
+		}
+		return objetos; 
+		}	 
+	
 	public static List<AccionHasProducto> selectAccionHasProducto(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
 		String query = " select * from accion_has_producto"+condition;

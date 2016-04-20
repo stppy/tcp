@@ -117,6 +117,7 @@ public class ajaxSelects extends HttpServlet {
     	String abrev = "";
     	String descripcion = "";
     	String db = "";
+    	//Boolean borrado=null;
     	
     	
     	if (request.getParameter("usuario")!=null) usuario=request.getParameter("usuario");
@@ -169,7 +170,8 @@ public class ajaxSelects extends HttpServlet {
       	if (request.getParameter("accionHasProductoId")!=null) accionHasProductoId=Integer.parseInt(request.getParameter("accionHasProductoId"));
       	if (request.getParameter("productoObjetoGastoId")!=null) productoObjetoGastoId=Integer.parseInt(request.getParameter("productoObjetoGastoId"));
       	if (request.getParameter("trimestreId")!=null) trimestreId=Integer.parseInt(request.getParameter("trimestreId"));      	
-      	if (request.getParameter("idAvanceCualitativo")!=null) idAvanceCualitativo=Integer.parseInt(request.getParameter("idAvanceCualitativo"));      	
+      	if (request.getParameter("idAvanceCualitativo")!=null) idAvanceCualitativo=Integer.parseInt(request.getParameter("idAvanceCualitativo")); 
+      	//if (request.getParameter("borrado")!=null) borrado=Boolean.parseBoolean(request.getParameter("borrado")); 
 
       	
         PrintWriter out = response.getWriter();
@@ -365,6 +367,7 @@ public class ajaxSelects extends HttpServlet {
         		if (!userUnrId.equals("0")){ condition2+= " and unidad_responsable_id="+userUnrId;}
         		condition += " and institucion_id IN (select id from institucion "+condition2+") ";
         		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
+        		if (periodoId!=null) condition += " and periodo_id ='"+periodoId+"'";        		
            		try {objetos = SqlSelects.selectInsLineaAccion(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
@@ -608,6 +611,17 @@ public class ajaxSelects extends HttpServlet {
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
         	}
+        	if (action.equals("getAccionCatalogoPorLineaAccion")){
+        		List objetos=null; 
+        		condition = " where true";
+        		if (insLineaAccionId!=null) condition += " and a.ins_linea_accion_id ='"+insLineaAccionId+"'";        		
+           		try {objetos = SqlSelects.selectAccionCatalogoPorLineaAccion(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());
+        	}
+        	
+        	
         	
         	if (action.equals("getCronograma")){
         		List objetos=null; 
@@ -697,8 +711,7 @@ public class ajaxSelects extends HttpServlet {
         		List objetos=null;
         		condition = " where true";
         		if (insLineaAccionId!=null) condition += " and ins_linea_accion_id ='"+insLineaAccionId+"'";
-        		if (idAvanceCualitativo!=null) condition += " and id ='"+idAvanceCualitativo+"'";
-
+        		if (idAvanceCualitativo!=null) condition += " and id ='"+idAvanceCualitativo+"'";        		
            		try {objetos = SqlSelects.selectAvanceCualitativo(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
