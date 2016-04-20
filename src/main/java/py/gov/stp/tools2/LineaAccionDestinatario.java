@@ -1,41 +1,39 @@
 package py.gov.stp.tools2;
 
-import java.util.Date;
+public class LineaAccionDestinatario {
 
-public class LineaAccionDestinatarios {
-
-	public int insId;
-	public String sigla;
-	public int laId;
-	public String laNombre;
-	public int laTipoId;
-	public int laEstrategiaId;
-	public int laUmId;
-	public String laUmDescp;
-	public int ilaId;
-	public int periodo;
-	public double ilaMeta;
-	public int accionId;
-	public int accionPeso;
-	public String accionFechaIni;
-	public String accionFechaFin;
-	public String m1;
-	public String m2;
-	public String m3;
-	public String m4;
-	public int deptoId;
-	public String departamento;
-	public int distId;
-	public String distrito;
-	public String idAccionCatalogo;
-	public String acNombre;
-	public String acUmId;
-	public String acUmDescp;
+	public int 		insId;
+	public String 	sigla;
+	public int 		laId;
+	public String 	laNombre;
+	public int 		laTipoId;
+	public int 		laEstrategiaId;
+	public int 		laUmId;
+	public String 	laUmDescp;
+	public int 		ilaId;
+	public int 		periodo;
+	public double 	ilaMeta;
+	public int 		accionId;
+	public int 		accionPeso;
+	public String 	accionFechaIni;
+	public String 	accionFechaFin;
+	public String 	m1;
+	public String 	m2;
+	public String 	m3;
+	public String 	m4;
+	public int 		deptoId;
+	public String 	departamento;
+	public int 		distId;
+	public String 	distrito;
+	public String 	idAccionCatalogo;
+	public String 	acNombre;
+	public String 	acUmId;
+	public String 	acUmDescp;
 	//ingresar ids de destinatarios
-	public String tipoDestNombre;
-	public String grupoDestNombre;
-	public String cantDest;
-	public String descDest;
+	public String 	tipoDestNombre;
+	public String 	grupoDestNombre;
+	public String 	cantDest;
+	public String 	descDest;
 	
 	
 	public int getInsId() {
