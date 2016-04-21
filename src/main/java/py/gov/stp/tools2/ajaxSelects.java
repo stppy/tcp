@@ -89,6 +89,7 @@ public class ajaxSelects extends HttpServlet {
     	Integer periodoId = null;
     	Integer beneficiarioTipoId = null;
     	Integer beneficiarioGrupoId = null;
+    	Integer departamentoId = null;// nueva columna
     	
     	Integer cronogramaId=null;
     	Integer programacionId = null;
@@ -750,6 +751,7 @@ public class ajaxSelects extends HttpServlet {
         	if (action.equals("getResumenLineasAccionProgramacionInstitucion")){
         		List objetos=null; 
         		if (institucionId!=null) condition += " and ins_linea_accion_base.institucion_id ='"+institucionId+"'";
+        		if (departamentoId!=null) condition += " and ins_linea_accion_base_dd.depto_id='"+departamentoId+"'";
            		try {objetos = SqlSelects.selectResumenLineasAccionProgramacionInstitucion(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
