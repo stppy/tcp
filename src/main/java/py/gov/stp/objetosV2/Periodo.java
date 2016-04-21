@@ -5,8 +5,8 @@ public class Periodo {
 	protected int id;
 	protected String nombre;
 	protected String descripcion;
-	protected String fechaInicio;
-	protected String fechaFin;
+	protected Date fechaInicio;
+	protected Date fechaFin;
 	protected boolean borrado=false;
 	
 	public int getId() {
@@ -27,16 +27,16 @@ public class Periodo {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-	public String getFechaInicio() {
+	public Date getFechaInicio() {
 		return fechaInicio;
 	}
-	public void setFechaInicio(String fechaInicio) {
+	public void setFechaInicio(Date fechaInicio) {
 		this.fechaInicio = fechaInicio;
 	}
-	public String getFechaFin() {
+	public Date getFechaFin() {
 		return fechaFin;
 	}
-	public void setFechaFin(String fechaFin) {
+	public void setFechaFin(Date fechaFin) {
 		this.fechaFin = fechaFin;
 	}
 	public boolean isBorrado() {

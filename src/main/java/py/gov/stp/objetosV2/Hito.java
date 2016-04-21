@@ -6,7 +6,7 @@ public class Hito {
 	protected String nombre;
 	protected String descripcion;
 	protected double cantidad;
-	protected String fechaEntrega;
+	protected Date fechaEntrega;
 	protected int hitoTipoId;
 	protected int accionId;
 	protected int evidenciaId;
@@ -38,10 +38,10 @@ public class Hito {
 	public void setCantidad(double cantidad) {
 		this.cantidad = cantidad;
 	}
-	public String getFechaEntrega() {
+	public Date getFechaEntrega() {
 		return fechaEntrega;
 	}
-	public void setFechaEntrega(String fechaEntrega) {
+	public void setFechaEntrega(Date fechaEntrega) {
 		this.fechaEntrega = fechaEntrega;
 	}
 	public int getHitoTipoId() {
