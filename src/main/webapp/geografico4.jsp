@@ -283,25 +283,94 @@ tbody {
 				    }).responseText;
 					departamento=JSON.parse(departamento);
 					
-
-					var miJson = [{"deptoId":0,"avance":209.625},{"deptoId":1,"avance":147.744},{"deptoId":2,"avance":306.329},{"deptoId":3,"avance":133.33},{"deptoId":4,"avance":113.206},{"deptoId":5,"avance":255.096},{"deptoId":6,"avance":114.329202},{"deptoId":7,"avance":205.177},{"deptoId":8,"avance":70.125},{"deptoId":9,"avance":126.392},{"deptoId":10,"avance":258.829},{"deptoId":11,"avance":894.662},{"deptoId":12,"avance":55.467},{"deptoId":13,"avance":71.989},{"deptoId":14,"avance":113.275},{"deptoId":15,"avance":76.102},{"deptoId":16,"avance":47.362},{"deptoId":17,"avance":37.776},{"deptoId":199,"avance":130.993}];
- 					/*var desPaisDeptojson = $.ajax({
- 						url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDesempPaisPorDepto',
-				      	type:'get',
-				      	dataType:'json',
-				      	crossDomain:true,
-				      	async:false       
-				    }).responseText;*/
-					var desPaisDepto=miJson;//JSON.parse(desPaisDeptojson);
-					
-					var desPaisDistjson = $.ajax({
-				    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDesempPaisPorDist',
+					var institucion = $.ajax({
+				    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
 				      	type:'get',
 				      	dataType:'json',
 				      	crossDomain:true,
 				      	async:false       
 				    }).responseText;
-					var desPaisDist=JSON.parse(desPaisDistjson);
+					institucion=JSON.parse(institucion);
+					
+					var desPaisDepto= [];
+					for(var i=0;i<departamento.length;i++){						
+						//var miJson = [{"deptoId":0,"avance":209.625},{"deptoId":1,"avance":147.744},{"deptoId":2,"avance":306.329},{"deptoId":3,"avance":133.33},{"deptoId":4,"avance":113.206},{"deptoId":5,"avance":255.096},{"deptoId":6,"avance":114.329202},{"deptoId":7,"avance":205.177},{"deptoId":8,"avance":70.125},{"deptoId":9,"avance":126.392},{"deptoId":10,"avance":258.829},{"deptoId":11,"avance":894.662},{"deptoId":12,"avance":55.467},{"deptoId":13,"avance":71.989},{"deptoId":14,"avance":113.275},{"deptoId":15,"avance":76.102},{"deptoId":16,"avance":47.362},{"deptoId":17,"avance":37.776},{"deptoId":199,"avance":130.993}];
+						
+						var acum = 0,cont = 0;
+						var promedio = 0;
+						
+	 					var desPaisDeptojson = $.ajax({
+	 						url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionDepto&departamento='+departamento[i].idDepartamento,
+					      	type:'get',
+					      	dataType:'json',
+					      	crossDomain:true,
+					      	async:false       
+					    }).responseText;
+						var desPaisDeptoAux=JSON.parse(desPaisDeptojson);
+						
+						for (d = 0; d < desPaisDeptoAux.length; d++){	
+							if (desPaisDeptoAux[d].cantidadHoy == 0 && desPaisDeptoAux[d].cantidadAvance > 0){
+								acum += 100;
+								cont++;
+							} else if (desPaisDeptoAux[d].cantidadHoy > 0 && desPaisDeptoAux[d].cantidadAvance == 0){
+								acum += 0;
+								cont++;
+							} else if (desPaisDeptoAux[d].cantidadHoy == 0 && desPaisDeptoAux[d].cantidadAvance == 0){
+								acum += 0;
+							} else {
+								acum += desPaisDeptoAux[d].cantidadAvance / desPaisDeptoAux[d].cantidadHoy * 100;								
+								cont++;
+							}						
+						}
+						
+						promedio = acum / cont;
+						
+						desPaisDepto.push(promedio);
+						
+					}
+					
+					var desPaisInst= [];
+					for(var i=0;i<institucion.length;i++){		
+					
+					var acum = 0,cont = 0;
+					var promedio = 0;
+					
+ 					var desPaisInstjson = $.ajax({
+ 						url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstitucion&institucionId='+institucion[i].id,
+				      	type:'get',
+				      	dataType:'json',
+				      	crossDomain:true,
+				      	async:false       
+				    }).responseText;
+					var desPaisInstAux=JSON.parse(desPaisInstjson);
+					
+					for (d = 0; d < desPaisInstAux.length; d++){	
+						if (desPaisInstAux[d].cantidadHoy == 0 && desPaisInstAux[d].cantidadAvance > 0){
+							acum += 100;
+							cont++;
+						} else if (desPaisInstAux[d].cantidadHoy > 0 && desPaisInstAux[d].cantidadAvance == 0){
+							acum += 0;
+							cont++;
+						} else if (desPaisInstAux[d].cantidadHoy == 0 && desPaisInstAux[d].cantidadAvance == 0){
+							acum += 0;
+						} else {
+							acum += desPaisInstAux[d].cantidadAvance / desPaisInstAux[d].cantidadHoy * 100;								
+							cont++;
+						}						
+					}
+					
+					var objeto = new Object();
+
+					//if(cont != 0){
+						promedio = acum / cont;
+					//}
+					objeto.institucionId = institucion[i].id;
+					objeto.promedio = promedio;
+					desPaisInst.push(objeto);
+					
+					}
+					
+					
 					
  					var desPaisDistInstjson = $.ajax({
 				    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDesempPaisPorDistInst',
@@ -438,7 +507,7 @@ tbody {
 						}else{ //d
 							var color="";var depemInst;var countInst;var despTotInst;
 							for (var i = 0; i< entidades.length;i++){
-								countInst=0;
+								/* countInst=0;
 								depemInst=0.0;
 								despTotInst=0.0;
 								for(var j=0;j < desPaisDistInst.length;j++){
@@ -447,7 +516,13 @@ tbody {
 										countInst++;
 									}
 								}
-								despTotInst=depemInst/countInst;
+								despTotInst=depemInst/countInst; */
+								//despToInst=null;
+								for (var c = 0 ; c<desPaisInst.length;c++){
+									if(desPaisInst[c].institucionId==entidades[i].institucion_id)
+										despTotInst=desPaisInst[i].promedio;
+								}
+								
 								color=getColorDesemp2(despTotInst);
 								if (!isNaN(despTotInst)) $("#tablaInstituciones").append('<tr><td class="col-md-3"><a tipo="filtroPorEntidad" institucion_id='+entidades[i].institucion_id+'  >'+entidades[i].institucion+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotInst).toFixed(2)+'%</p></div></div></td></tr>');
 							}
@@ -618,7 +693,7 @@ tbody {
 						//se define una funcion de estilo para la capa de GEOJSON para cada departamento
 						function style(feature) {
 							return {
-								 fillColor: getColor(desPaisDepto[parseInt(feature.properties.dpto)].avance),
+								 fillColor: getColor(desPaisDepto[parseInt(feature.properties.dpto)]),
 						        weight: 2,
 						        opacity: 0.6,
 						        color: 'white',
@@ -1059,15 +1134,15 @@ $("body").on("click", "#tablaInstituciones",function(event){
 	
 	
 	var institucion_id=event.target.attributes.institucion_id.value;
-	var depto_id=event.target.attributes.depto_id.value;
+/* 	var depto_id=event.target.attributes.depto_id.value;
 	var dist_id="";
 	if (event.target.attributes.hasOwnProperty("dist_id")){
 		dist_id=event.target.attributes.dist_id.value;
-	}
-	if (depto_id==""){
+	} */
+	if (institucion_id==""){
 		alert("Favor seleccionar previamente Departamento en el mapa");
 	}else{
-		renderLineaAccion(depto_id, institucion_id, dist_id);
+		alert(institucion_id);
 	}
 	
 	
