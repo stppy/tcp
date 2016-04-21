@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -1367,11 +1369,17 @@ public static boolean borradoHito(Hito objeto){
 	}
 	
 	
-	public static boolean updateProgramacion(Programacion objeto){
+	public static boolean updateProgramacion(Programacion objeto) throws ParseException{
 		try {             
 			Connection conect=ConnectionConfiguration.conectar();
 			String query = "update programacion set ";
 			PreparedStatement update =null;
+			
+			String startDate = objeto.getFechaEntrega();
+			SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+			java.util.Date date = sdf1.parse(startDate);
+			java.sql.Date sqlStartDate = new java.sql.Date(date.getTime());
+
 
 			if(objeto.getFechaEntrega()!=null)	  query+= "fecha_entrega= ?";
 			if(objeto.getCantidad()!=0)           query+= ", cantidad= ?";
@@ -1381,7 +1389,7 @@ public static boolean borradoHito(Hito objeto){
 
 			int cantCampos =0;
 			update = conect.prepareStatement(query);
-			if (objeto.getFechaEntrega()!=null)   {    cantCampos++;update.setString(cantCampos, objeto.getFechaEntrega());}
+			if (objeto.getFechaEntrega()!=null)   {    cantCampos++;update.setDate(cantCampos, sqlStartDate);}
 			if (objeto.getCantidad()!=0)          {    cantCampos++;update.setDouble(cantCampos, objeto.getCantidad());}
 			
 				

@@ -7822,7 +7822,9 @@ $("body").on("click", ".editarHito",function(event){
             	$("#cuerpoModalEditarHito").html("");
             	$("#cuerpoModalEditarHito").html("<h3 class='text-center'>Ud ha actualizado exitosamente!!</h3>");        		
         	}else{
-  		
+        		$("#botonGuardarHito").remove();
+            	$("#cuerpoModalEditarHito").html("");
+            	$("#cuerpoModalEditarHito").html("<h3 class='text-center'>Error!!</h3>");
         	}
         	
         	},
