@@ -1146,7 +1146,7 @@ public class SqlSelects {
 			if (conect != null) {conect.close();}
 		}
 		return objetos; 
-		}	 
+		}	
 	
 	public static List<AccionHasProducto> selectAccionHasProducto(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
@@ -1825,34 +1825,36 @@ public class SqlSelects {
 	public static List<LineaAccionProgramacion> selectResumenLineasAccionProgramacion(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
 		String query = " select ins_linea_accion_base.institucion_sigla,"
-						+ "		ins_linea_accion_base.estrategia_id as tipo_estrategia_id,"
-						+ "		ins_linea_accion_base.linea_accion_nombre,"
-						+ "		ins_linea_accion_base.linea_um_nombre,"
-						+ "		ins_linea_accion_base.periodo,"
-						+ "		ins_linea_accion_base.meta as meta_comprometida,"
-						+ "		ins_linea_accion_programacion_anho.cantidad_anho as programado_anho,"
-						+ "		ins_linea_accion_programacion_hoy.cantidad_hoy as programado_hoy,"
-						+ "		ins_linea_accion_destinatarios.cant_dest as destinatarios_estimados,"
-						+ "		ins_linea_accion_costo_estimado.inversion_estimada,"
-						+ "		ins_linea_accion_avance.cantidad as avance_real,"
-						+ "		ins_linea_accion_destinatario_real.beneficiarios_real as destinatarios_real,"
-						+ "		ins_linea_accion_costo.costo as inversion_real"
-						+ " from ins_linea_accion_base"
-						+ " left join ins_linea_accion_avance on "
-						+ "			 ins_linea_accion_avance.ins_linea_accion_id=ins_linea_accion_base.ins_linea_accion_id"
-						+ " left join ins_linea_accion_destinatarios on "
-						+ "			 ins_linea_accion_destinatarios.ila_id=ins_linea_accion_base.ins_linea_accion_id"
-						+ " left join ins_linea_accion_programacion_hoy on "
-						+ "			 ins_linea_accion_programacion_hoy.ins_linea_accion_id =ins_linea_accion_base.ins_linea_accion_id"
-						+ " left join ins_linea_accion_programacion_anho on "
-						+ "			 ins_linea_accion_programacion_anho.ins_linea_accion_id = ins_linea_accion_base.ins_linea_accion_id"
-						+ " left join ins_linea_accion_costo on "
-						+ "			 ins_linea_accion_costo.ins_linea_accion_id=ins_linea_accion_base.ins_linea_accion_id"
-						+ " left join ins_linea_accion_costo_estimado on "
-						+ "			 ins_linea_accion_costo_estimado.ins_linea_accion_id=ins_linea_accion_base.ins_linea_accion_id"
-						+ " left join ins_linea_accion_destinatario_real on "
-						+ "			 ins_linea_accion_destinatario_real.ins_linea_accion_id=ins_linea_accion_base.ins_linea_accion_id"
-						+ " where periodo=2016"+condition+ " order by institucion_orden, la_orden ";
+                        +"ins_linea_accion_base.institucion_id,"
+                        +"ins_linea_accion_base.linea_accion_id,"
+                    + "        ins_linea_accion_base.linea_estrategia as tipo_estrategia_id,"
+                    + "        ins_linea_accion_base.linea_accion_nombre,"
+                    + "        ins_linea_accion_base.linea_um_nombre,"
+                    + "        ins_linea_accion_base.periodo,"
+                    + "        ins_linea_accion_base.meta as meta_comprometida,"
+                    + "        ins_linea_accion_programacion_anho.cantidad_anho as programado_anho,"
+                    + "        ins_linea_accion_programacion_hoy.cantidad_hoy as programado_hoy,"
+                    + "        ins_linea_accion_destinatarios.cant_dest as destinatarios_estimados,"
+                    + "        ins_linea_accion_costo_estimado.inversion_estimada,"
+                    + "        ins_linea_accion_avance.cantidad as avance_real,"
+                    + "        ins_linea_accion_destinatario_real.beneficiarios_real as destinatarios_real,"
+                    + "        ins_linea_accion_costo.costo as inversion_real"
+                    + " from ins_linea_accion_base"
+                    + " left join ins_linea_accion_avance on "
+                    + "             ins_linea_accion_avance.ins_linea_accion_id=ins_linea_accion_base.ins_linea_accion_id"
+                    + " left join ins_linea_accion_destinatarios on "
+                    + "             ins_linea_accion_destinatarios.ila_id=ins_linea_accion_base.ins_linea_accion_id"
+                    + " left join ins_linea_accion_programacion_hoy on "
+                    + "             ins_linea_accion_programacion_hoy.ins_linea_accion_id =ins_linea_accion_base.ins_linea_accion_id"
+                    + " left join ins_linea_accion_programacion_anho on "
+                    + "             ins_linea_accion_programacion_anho.ins_linea_accion_id = ins_linea_accion_base.ins_linea_accion_id"
+                    + " left join ins_linea_accion_costo on "
+                    + "             ins_linea_accion_costo.ins_linea_accion_id=ins_linea_accion_base.ins_linea_accion_id"
+                    + " left join ins_linea_accion_costo_estimado on "
+                    + "             ins_linea_accion_costo_estimado.ins_linea_accion_id=ins_linea_accion_base.ins_linea_accion_id"
+                    + " left join ins_linea_accion_destinatario_real on "
+                    + "             ins_linea_accion_destinatario_real.ins_linea_accion_id=ins_linea_accion_base.ins_linea_accion_id"
+                    + " where periodo=2016 order by institucion_orden, la_orden ";
 
 		Statement statement = null;
 		ResultSet rs=null;

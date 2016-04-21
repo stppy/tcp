@@ -37,6 +37,7 @@
 				<a href="#">
     				<i class="fa fa-tasks"></i> <span>Plan de Acción</span> <i class="fa fa-angle-left pull-right"></i>
     			</a>
+    			
     			<ul class="treeview-menu" style="display: none;">
     			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>                        
     				<li><a href="http://spr.stp.gov.py/tablero/contenedorInsLineaAccion.jsp"><i class="fa fa-wrench"></i>Elaboración de Plan de Acción</a></li>
@@ -53,13 +54,18 @@
 					<li class=""><a href="http://spr.stp.gov.py/tablero/descargasConstancias.jsp"><i class="fa fa-cloud-download" id="linkDescargasConstancias"></i>Descargar Constancias</a></li>
 					<!-- li class=""><a href="javascript:imprimirAvancesInstitucion()"><i class="fa fa-cloud-download" id="linkGeneracionAvancesPorInstitucionPDF"></i>Descargar Avances Cualitativos de la Institución</a></li-->          			
     			</ul>
- 			</li>
+   			</li>
+    			<!-- <li class="treeview">
+    				<a href="http://spr.stp.gov.py/tablero/geografico4.jsp">
+    					<i class="fa fa-globe"></i> <span>Geográfico</span> <i class="fa fa-angle-left pull-right"></i>
+    				</a>
+    			</li> -->
  			
- 			  <li class="treeview">
+ 			<li class="treeview">
 				<a href="#">
     				<i class="fa fa-desktop"></i> <span>Reporte Ciudadano</span> <i class="fa fa-angle-left pull-right"></i>
     			</a>
- 			</li>  		
+			</li>  		
  			<li class="header">LABELS</li>
             <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Documentación</span></a></li>
             <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Diccionario de Datos</span></a></li>
