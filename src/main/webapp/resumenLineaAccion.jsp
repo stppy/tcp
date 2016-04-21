@@ -242,7 +242,7 @@ textarea { text-transform: uppercase; }
 						  if ( instituciones[m].id==lineasProgramadas[n].institucionId &&  lineasProgramadas[n].lineaAccionEstratagiaId==estrategia){
 							  if (flagIns == 0){
 								  
-									tempInstituciones = '<tr><td colspan="12"><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td></tr>'+
+									tempInstituciones = '<thead><tr><td colspan="12"><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td></tr>'+
 														'<tr>'+
 														  	'<th rowspan="3" class="text-center" style="vertical-align: middle;">Línea de Acción</th>'+
 														  	'<th rowspan="3" class="text-center" style="vertical-align: middle;">Unidad de Medida</th>'+
@@ -260,7 +260,7 @@ textarea { text-transform: uppercase; }
 														  	'<th class="text-center">Prevista</th>'+
 														  	'<th class="text-center">Lograda</th>'+
 														  	'<th class="text-center">%</th>'+
-													    '</tr>';
+													    '</tr></thead><tbody>';
 									flagIns++;						  
 							  }
 							  clase="";
@@ -331,11 +331,11 @@ textarea { text-transform: uppercase; }
 				              '</div>'+
 				            '</div>'+
 				            '<div class="box-body" >'+
-				            
-				          '<table class="table table-striped table-bordered table-hover tablaLineasPorInstitucion">'+
-				          
-				          lineasDeEstrategia+
-				  			'</table>'+
+				            	'<div class="table-responsive">'+
+				          			'<table class="table table-striped table-bordered table-hover tablaLineasPorInstitucion">'+
+				          	 			lineasDeEstrategia+
+				  					'</tbody></table>'+
+				  				'</div>'+
 				            '</div>'+
 						   '</div>'+
 						   '</div>'+
@@ -354,9 +354,6 @@ textarea { text-transform: uppercase; }
 			
 			
 			renderLineasEstrategicas(); 
-			
-			
-			
 
 		})
         </script>

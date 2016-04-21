@@ -26,6 +26,8 @@ public class ResumenLineaAccion {
     protected double  	  costoAc; 
     protected int 	  	  periodo;
     protected double  	  meta;
+    protected int  	 	  departamentoId;
+
     
 	public int getInstitucionId() {
 		return institucionId;
@@ -153,6 +155,12 @@ public class ResumenLineaAccion {
 	}
 	public void setInversionEstimada(double inversionEstimada) {
 		this.inversionEstimada = inversionEstimada;
+	}
+	public int getDepartamentoId() {
+		return departamentoId;
+	}
+	public void setDepartamentoId(int departamentoId) {
+		this.departamentoId = departamentoId;
 	}
     
     

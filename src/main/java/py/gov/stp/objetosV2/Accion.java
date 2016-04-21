@@ -16,9 +16,21 @@ public class Accion {
 	protected int departamentoId;
 	protected int distritoId;
 	protected int accionCatalogoId;
-	protected boolean borrado;
+	protected boolean borrado=true;
 	
 	
+	public boolean isBorrado() {
+		return borrado;
+	}
+
+
+
+	public void setBorrado(boolean borrado) {
+		this.borrado = borrado;
+	}
+
+
+
 	public int getId() {
 		return id;
 	}
@@ -186,19 +198,7 @@ public class Accion {
 	}
 
 
-
-	public boolean isBorrado() {
-		return borrado;
-	}
-
-
-
-	public void setBorrado(boolean borrado) {
-		this.borrado = borrado;
-	}
-
-
-
+	
 	public void changeBorrado(){
 		this.borrado=!borrado;
 
