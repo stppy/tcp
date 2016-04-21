@@ -651,12 +651,15 @@ tbody {
 
 						    layer.setStyle({
 						        weight: 4,
-						        fillOpacity: 1
+						        color: '#666',
+						        dashArray: '',
+						        fillOpacity: 0.7
 						    });
 
 						    if (!L.Browser.ie && !L.Browser.opera) {
 						        layer.bringToFront();
 						    }
+						    info.update(layer.feature.properties);
 						}
 						function highlightFeature2(e) {
 						    var layer = e.target;
@@ -670,6 +673,7 @@ tbody {
 						    if (!L.Browser.ie && !L.Browser.opera) {
 						        layer.bringToFront();
 						    }
+						    info2.update(layer.feature.properties);
 						}
 
 						function compareGenerico(a,b) {       
@@ -695,9 +699,9 @@ tbody {
 							return {
 								 fillColor: getColor(desPaisDepto[parseInt(feature.properties.dpto)]),
 						        weight: 2,
-						        opacity: 0.6,
+						        //opacity: 0.6,
 						        color: 'white',
-						        dashArray: '3',
+						        dashArray: '2',
 						        fillOpacity: 0.6
 						    };						    
 						}
@@ -706,9 +710,9 @@ tbody {
 							return {
 								 fillColor: getColor(getClave2(desPaisDist,parseInt(feature.properties.dpto), parseInt(feature.properties.distrito))),
 						        weight: 2,
-						        opacity: 1,
+						        //opacity: 0.6,
 						        color: 'white',
-						        dashArray: '3',
+						        dashArray: '2',
 						        fillOpacity: 1
 						    };						    
 						}
@@ -719,8 +723,8 @@ tbody {
 							    layer.setStyle({
 							        weight: 5,
 							        color: '#333',
-							        dashArray: '',
-							        fillOpacity: 0.7
+							        dashArray: '2',
+							        fillOpacity: 1
 							    });
 						
 							    if (!L.Browser.ie && !L.Browser.opera) {
@@ -735,7 +739,7 @@ tbody {
 						    if (typeof distLayer == "undefined"){//reset por departamento
 								depto.resetStyle(e.target);
 								//depto.eachLayer(function(l){depto.resetStyle(l);});
-								info.update();
+								info.update()
 						    } 
 						    
 						}
@@ -745,9 +749,9 @@ tbody {
 							if (typeof distLayer != "undefined") { //Highlight mouseHover por distritos						
 						    layer.setStyle({
 						        weight: 5,
-						        color: '#545454',
-						        dashArray: '',
-						        fillOpacity: 0.7
+						        color: '#333',
+						        dashArray: '2',
+						        fillOpacity: 1
 						    });
 
 						    if (!L.Browser.ie && !L.Browser.opera) {

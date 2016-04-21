@@ -1146,7 +1146,7 @@ public class SqlSelects {
 			if (conect != null) {conect.close();}
 		}
 		return objetos; 
-		}	 
+		}	
 	
 	public static List<AccionHasProducto> selectAccionHasProducto(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
@@ -1825,6 +1825,7 @@ public class SqlSelects {
 	public static List<LineaAccionProgramacion> selectResumenLineasAccionProgramacion(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
 		String query = " select ins_linea_accion_base.institucion_sigla,"
+
 						+"ins_linea_accion_base.institucion_id,"
 						+"ins_linea_accion_base.linea_accion_id,"
 						
