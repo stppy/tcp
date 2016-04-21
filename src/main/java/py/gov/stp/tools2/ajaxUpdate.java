@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader; 
 import java.io.PrintWriter;
+import java.text.ParseException;
 import java.util.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -779,9 +780,15 @@ public class ajaxUpdate extends HttpServlet {
                 //Gson gsonInsert = new Gson();
                 Gson gsonInsert = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
                 objeto=gsonInsert.fromJson(json, Programacion.class);
-                boolean status = SqlUpdates.updateProgramacion(objeto);
-        		myObj.addProperty("success", status);
-        		out.println(myObj.toString());
+                boolean status;
+				try {
+					status = SqlUpdates.updateProgramacion(objeto);
+	        		myObj.addProperty("success", status); 
+	        		out.println(myObj.toString());
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
         	} 
         	if (accion.equals("actBorradoProgramacion")){
         		Programacion objeto = new Programacion();
