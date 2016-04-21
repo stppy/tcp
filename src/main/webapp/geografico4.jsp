@@ -251,8 +251,13 @@ tbody {
 
 					var i=parseInt(0);
 					
+					
 					function numeroConComa(x) {
-						return x.toString().replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+						if (isNaN(x) || x == "Infinity"){
+							return 0;
+						}else{
+							return x.toString().replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+						}
 					}
 					
 					var entidades = $.ajax({
@@ -977,36 +982,33 @@ tbody {
 	              </div>
 	            </div>
 	            <div class="box-body table-responsive" style="scroll-x:hidden;scroll-y:auto;">
-	            
-	            
-	              <table id="lineasPorEntidad" class="table table-striped ">
-              <thead>
-                <tr style="background-color: white;">
-                  <th>
-
-                  	Líneas de Acción por Institución
-                  </th>
-                  
-                  <th></th>
-                  <th></th>
-                  <th colspan="4" class="text-center cell-bordered2">A la fecha</th>
-                 
-                </tr>
-                <tr style="background-color: white;">
-                  
-                  <th></th>
-                  <th>Unidad de Medida</th>
-                  <th >Planificación 2015</th>
-                  <th class="cell-bordered2">Planificación</th>
-                  <th >Ejecución</th>
-                  <th>Desempeño (%)</th>
-                  <th> Inversión Estimada (Millones de G.)</th>
-                </tr>
-              </thead>
-              <tbody id="cuerpoTabla">
-               
-              </tbody>
-            </table>
+            
+					<div class="table-responsive">
+						<table class="table table-striped table-bordered table-hover tablaLineasPorInstitucion">
+							<thead>
+								<tr><th colspan="12"><strong id="nombreInstitucionTabla"></strong></th></tr>
+								<tr><th rowspan="3" class="text-center" style="vertical-align: middle;">Línea de Acción</th>
+								<th rowspan="3" class="text-center" style="vertical-align: middle;">Unidad de Medida</th>
+								<th colspan="5" class="text-center">Plan de Acción 2016</th>
+								<th colspan="5" class="text-center">Ejecución a la Fecha</th></tr>
+								<tr><th colspan="3" class="text-center">Meta</th>
+								<th rowspan="2" class="text-center" style="vertical-align: middle;">Destinatarios</th>
+							  	<th rowspan="2" class="text-center" style="vertical-align: middle;">Inversión (en millones G.)</th>
+							  	<th colspan="3" class="text-center">Meta</th>
+							  	<th rowspan="2" class="text-center" style="vertical-align: middle;">Destinatarios</th>
+							  	<th rowspan="2" class="text-center" style="vertical-align: middle;">Inversión (en millones G.)</th></tr>
+								<tr><th class="text-center">Aprobada</th>
+							  	<th class="text-center">Programada</th>
+							  	<th class="text-center">%</th>
+							  	<th class="text-center">Prevista</th>
+							  	<th class="text-center">Lograda</th>
+							  	<th class="text-center">%</th>
+								</tr></thead>
+							<tbody id="cuerpoTableroLineaAccion">
+							</tbody>
+						
+						</table>
+					</div>
 
 	            </div>
 			   </div>
@@ -1132,12 +1134,75 @@ $("body").on("click", "#cierreEtiquetaDistrito",function(event){
 });
 
 
+function renderTableroLineaAccion(institucionId){
+	
+	var tablaInstituciones="";
+	var tempInstituciones="";
+	var tempInstLineas="";
+	var flagIns=0;
+	var clase="";
+	
+	var lineasProgramadas = $.ajax({
+    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstitucion&institucionId='+institucionId,
+      	type:'get',
+      	dataType:'json',
+      	crossDomain:true,
+      	async:false       
+    }).responseText;
+	lineasProgramadas=JSON.parse(lineasProgramadas);
+	
 
+	for(var n=0; n<lineasProgramadas.length;n++)
+	{
+		clase="";
+		
+		if ((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=90 && lineasProgramadas[n].meta != 0){
+		 clase="bg-green-active color-palette"; 
+		}else if((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=70 && lineasProgramadas[n].meta != 0){
+		 clase="bg-yellow-active color-palette"; 
+		}else{
+		 clase="bg-red-active color-palette";
+		}
+		
+		tempInstLineas += '<tr>'+
+		'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
+		'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
+		'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
+		'<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>'+
+		'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
+		'<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>'+
+		'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
+		'<td>'+numeroConComa(lineasProgramadas[n].cantidadHoy)+'</td>'+
+		'<td>'+numeroConComa(lineasProgramadas[n].cantidadAvance)+'</td>';
+		
+		if (clase!="bg-red-active color-palette"){
+		 clase="";
+		 if ((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100>=90 && lineasProgramadas[n].cantidadHoy != 0){
+		  clase="bg-green-active color-palette"; 
+		 }else if((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100>=70 && lineasProgramadas[n].cantidadHoy != 0){
+		  clase="bg-yellow-active color-palette"; 
+		 }else{
+		  clase="bg-red-active color-palette";
+		 }
+		}
+		
+		
+		tempInstLineas += '<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100).toFixed(2))+'</td>'+
+		'<td>'+numeroConComa(lineasProgramadas[n].cantDestinatarioReal)+'</td>'+
+		'<td>'+numeroConComa((lineasProgramadas[n].costoAc/1000000).toFixed(2))+'</td>'+
+		'</tr>';
+	}
+
+	 return tempInstLineas;
+	}
+		
 
 $("body").on("click", "#tablaInstituciones",function(event){
 	
 	
 	var institucion_id=event.target.attributes.institucion_id.value;
+	var nombreInstituciones="";
+
 /* 	var depto_id=event.target.attributes.depto_id.value;
 	var dist_id="";
 	if (event.target.attributes.hasOwnProperty("dist_id")){
@@ -1146,7 +1211,15 @@ $("body").on("click", "#tablaInstituciones",function(event){
 	if (institucion_id==""){
 		alert("Favor seleccionar previamente Departamento en el mapa");
 	}else{
-		alert(institucion_id);
+		for(var x = 0; x < entidades.length; x++){
+			if(entidades[x].institucion_id == institucion_id){
+				nombreInstituciones = entidades[x].institucion;
+			}
+		}
+		$("#nombreInstitucionTabla").html(nombreInstituciones);
+		var a = renderTableroLineaAccion(institucion_id);
+		$("#cuerpoTableroLineaAccion").html(a);
+
 	}
 	
 	
