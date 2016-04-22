@@ -266,15 +266,10 @@ public class ajaxUpdate extends HttpServlet {
                 Gson gsonInsert = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
                 objeto=gsonInsert.fromJson(json, Periodo.class);
                 boolean status;
-				try {
-					status = SqlUpdates.updatePeriodo(objeto);
-					myObj.addProperty("success", status);
-	        		out.println(myObj.toString());
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-        		
+				status = SqlUpdates.updatePeriodo(objeto);
+				myObj.addProperty("success", status);
+	        	out.println(myObj.toString());
+				        		
         	} 
         	if (accion.equals("borradoPeriodo")){
         		Periodo objeto = new Periodo();
@@ -318,15 +313,10 @@ public class ajaxUpdate extends HttpServlet {
                 Gson gsonInsert = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
                 objeto=gsonInsert.fromJson(json, Hito.class);
                 boolean status;
-				try {
-					status = SqlUpdates.updateHito(objeto);
-					myObj.addProperty("success", status);
-	        		out.println(myObj.toString());
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-        		
+				status = SqlUpdates.updateHito(objeto);
+				myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+				
         	} 
         	if (accion.equals("borradoHito")){
         		Hito objeto = new Hito();
