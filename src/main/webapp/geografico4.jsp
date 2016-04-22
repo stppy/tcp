@@ -515,7 +515,7 @@ tbody {
 									} */
 									//despTotDeptoInst=depemDeptoInst/countDeptoInst;
 									color=getColorDesemp2(lineaAccionDepartamento[0]);
-									$("#tablaInstituciones").append('<tr><td class="col-md-3"><a tipo="filtroPorEntidad" institucion_id='+entidades[i].institucion_id+' depto_id='+e.target.feature.properties.dpto+' >'+entidades[i].institucion+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(lineaAccionDepartamento[0]).toFixed(0)+'%"><p class="text-left">'+parseFloat(lineaAccionDepartamento[0]).toFixed(2)+'%</p></div></div></td></tr>');
+									if (lineaAccionDepartamento[0] != 0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><a tipo="filtroPorEntidad" institucion_id='+entidades[i].institucion_id+' depto_id='+e.target.feature.properties.dpto+' >'+entidades[i].institucion+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(lineaAccionDepartamento[0]).toFixed(0)+'%"><p class="text-left">'+parseFloat(lineaAccionDepartamento[0]).toFixed(2)+'%</p></div></div></td></tr>');
 								}
 							}
 						}else{ //d
@@ -538,7 +538,7 @@ tbody {
 								}
 								
 								color=getColorDesemp2(despTotInst);
-								if (!isNaN(despTotInst)) $("#tablaInstituciones").append('<tr><td class="col-md-3"><a tipo="filtroPorEntidad" institucion_id='+entidades[i].institucion_id+'  >'+entidades[i].institucion+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotInst).toFixed(2)+'%</p></div></div></td></tr>');
+								if (despTotInst != 0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><a tipo="filtroPorEntidad" institucion_id='+entidades[i].institucion_id+'  >'+entidades[i].institucion+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotInst).toFixed(2)+'%</p></div></div></td></tr>');
 							}
 						}
 					}
@@ -1143,7 +1143,7 @@ $("body").on("click", "#cierreEtiquetaDistrito",function(event){
 });
 
 
-function renderTableroLineaAccion(institucionId){
+function renderTableroLineaAccion(institucionId,deptoId,distId){
 	
 	var tablaInstituciones="";
 	var tempInstituciones="";
@@ -1151,17 +1151,13 @@ function renderTableroLineaAccion(institucionId){
 	var flagIns=0;
 	var clase="";
 	
-/*  	var lineasProgramadas = $.ajax({
-    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstitucion&institucionId='+institucionId,
-      	type:'get',
-      	dataType:'json',
-      	crossDomain:true,
-      	async:false       
-    }).responseText;
-	lineasProgramadas=JSON.parse(lineasProgramadas); */
-	
+	var condicion="";
+	if(institucionId!=null)condicion= "&institucionId="+institucionId;
+	if(deptoId!=null)condicion+= "&departamentoId="+deptoId;
+	if(distId!=null)condicion+= "&distritoId="+distId;
+
 	var lineasProgramadas = $.ajax({
-    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacion2&institucionId='+institucionId,
+    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacion2'+condicion,
       	type:'get',
       	dataType:'json',
       	crossDomain:true,
@@ -1220,12 +1216,16 @@ $("body").on("click", "#tablaInstituciones",function(event){
 	
 	var institucion_id=event.target.attributes.institucion_id.value;
 	var nombreInstituciones="";
-
-/* 	var depto_id=event.target.attributes.depto_id.value;
 	var dist_id="";
+ 	var depto_id="";
+	
 	if (event.target.attributes.hasOwnProperty("dist_id")){
 		dist_id=event.target.attributes.dist_id.value;
-	} */
+	}
+	if (event.target.attributes.hasOwnProperty("depto_id")){
+	 	depto_id=event.target.attributes.depto_id.value;
+	}
+	
 	if (institucion_id==""){
 		alert("Favor seleccionar previamente Departamento en el mapa");
 	}else{
@@ -1235,8 +1235,20 @@ $("body").on("click", "#tablaInstituciones",function(event){
 			}
 		}
 		$("#nombreInstitucionTabla").html(nombreInstituciones);
-		var a = renderTableroLineaAccion(institucion_id);
-		$("#cuerpoTableroLineaAccion").html(a);
+		if(institucion_id != ""){
+			var a = renderTableroLineaAccion(institucion_id);
+			$("#cuerpoTableroLineaAccion").html(a);
+		}		
+		if(institucion_id != "" && depto_id != ""){
+			var a = renderTableroLineaAccion(institucion_id,depto_id);
+			$("#cuerpoTableroLineaAccion").html(a);
+		}
+		if(institucion_id != "" && depto_id != "" && dist_id != ""){
+			var a = renderTableroLineaAccion(institucion_id,depto_id,dist_id);
+			$("#cuerpoTableroLineaAccion").html(a);
+		}
+		
+
 
 	}
 	
