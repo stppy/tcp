@@ -167,6 +167,8 @@ public class SqlInserts {
 	+ " values (?, ?, ?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
+
+		
 		
 		//insert.setInt (1, insLineaAccion.getId());
 		insert.setString (1, periodo.getNombre());
@@ -748,7 +750,7 @@ public class SqlInserts {
 	} catch (SQLException e) {e.printStackTrace(); return false;}
 	
 }	
-	
+////////////////////////////////////////////////////
 	public static boolean insertAvance(Avance avance) throws ParseException{
 	try {
 		Connection conn=ConnectionConfiguration.conectar();

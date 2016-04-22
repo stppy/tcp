@@ -300,20 +300,12 @@ public class SqlUpdates {
 	}		
 	
 
-	public static boolean updatePeriodo(Periodo objeto) throws ParseException{
+	public static boolean updatePeriodo(Periodo objeto){
 	  	try {             
 				Connection conect=ConnectionConfiguration.conectar();
 				String	query = "update periodo set ";
 				PreparedStatement update =null;
 
-				String startDate = objeto.getFechaInicio();
-				SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-				java.util.Date date1 = sdf1.parse(startDate);
-				java.sql.Date sqlStartDate = new java.sql.Date(date1.getTime());
-				String endDate = objeto.getFechaFin();
-				SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
-				java.util.Date date2 = sdf2.parse(endDate);
-				java.sql.Date sqlEndDate = new java.sql.Date(date2.getTime());
 				
 				if(objeto.getNombre()!=null)	      		query+= "nombre= ?";
 				if(objeto.getDescripcion()!=null)			query+= ", descripcion= ?";
@@ -326,8 +318,8 @@ public class SqlUpdates {
 				update = conect.prepareStatement(query);
 				if (objeto.getNombre()!=null)  				{    cantCampos++;update.setString (cantCampos, objeto.getNombre());}
 				if (objeto.getDescripcion()!=null)			{    cantCampos++;update.setString (cantCampos, objeto.getDescripcion());}
-				if (objeto.getFechaInicio()!=null)			{    cantCampos++;update.setDate (cantCampos, sqlStartDate);}
-				if (objeto.getFechaFin()!=null)				{    cantCampos++;update.setDate (cantCampos, sqlEndDate);}
+				if (objeto.getFechaInicio()!=null)			{    cantCampos++;update.setDate (cantCampos, objeto.getFechaInicio());}
+				if (objeto.getFechaFin()!=null)				{    cantCampos++;update.setDate (cantCampos, objeto.getFechaFin());}
 					
 		            cantCampos++;
 		            update.setInt    (cantCampos , objeto.getId());
@@ -396,17 +388,12 @@ public class SqlUpdates {
 			} catch (SQLException e) {e.printStackTrace(); return false;}
 	}			
 	
-	public static boolean updateHito(Hito objeto) throws ParseException{
+	public static boolean updateHito(Hito objeto){
 	  	try {             
 				Connection conect=ConnectionConfiguration.conectar();
 				String	query = "update hito set ";
 				PreparedStatement update =null;
 
-				String startDate = objeto.getFechaEntrega();
-				SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-				java.util.Date date = sdf1.parse(startDate);
-				java.sql.Date sqlStartDate = new java.sql.Date(date.getTime());
-				
 				if(objeto.getNombre()!=null)	      		query+= "nombre= ?";
 				if(objeto.getDescripcion()!=null)	    	query+= ", descripcion= ?";
 				if(objeto.getCantidad()!=0)					query+= ", cantidad= ?";
@@ -424,7 +411,7 @@ public class SqlUpdates {
 				if (objeto.getNombre()!=null)  				{    cantCampos++;update.setString (cantCampos, objeto.getNombre());}
 				if (objeto.getDescripcion()!=null)	   		{    cantCampos++;update.setString (cantCampos, objeto.getDescripcion());}
 				if (objeto.getCantidad()!=0)				{    cantCampos++;update.setDouble (cantCampos, objeto.getCantidad());}
-				if (objeto.getFechaEntrega()!=null)			{    cantCampos++;update.setDate(cantCampos, sqlStartDate);}
+				if (objeto.getFechaEntrega()!=null)			{    cantCampos++;update.setDate(cantCampos, objeto.getFechaEntrega());}
 				if (objeto.getHitoTipoId()!=0)				{    cantCampos++;update.setInt (cantCampos, objeto.getHitoTipoId());}
 				if (objeto.getAccionId()!=0)				{    cantCampos++;update.setInt (cantCampos, objeto.getAccionId());}
 				if (objeto.getEvidenciaId()!=0)				{    cantCampos++;update.setInt (cantCampos, objeto.getEvidenciaId());}
@@ -1345,7 +1332,7 @@ public static boolean borradoHito(Hito objeto){
 		 }catch (SQLException e) {e.printStackTrace(); return false;}
 	}
 	
-/////////////////////////////////////////////////////////////////////////	
+
 	public static boolean actAvance(Avance objeto) throws ParseException{
 		try {             
 			Connection conect=ConnectionConfiguration.conectar();
