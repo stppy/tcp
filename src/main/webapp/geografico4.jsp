@@ -227,7 +227,7 @@ tbody {
 					
 				
 					<script>
-					
+					var totalDesempenhoDeptoDis=[];
 					var pocentajeColor1 = parseInt(70);
 					var pocentajeColor2 = parseInt(90);
 					
@@ -488,6 +488,27 @@ tbody {
 						    }).responseText;
 							lineaAccionDepartamento=JSON.parse(lineaAccionDepartamento); */
 							
+							distritos = $.ajax({
+					    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito&departamento='+e.target.feature.properties.dpto,
+					      	type:'get',
+					      	dataType:'json',
+					      	crossDomain:true,
+					      	async:false       
+					    	}).responseText;
+							distritos=JSON.parse(distritos);
+							
+							for(var d = 0; d < distritos.length; d++){
+								var despenhoDeptoDist = $.ajax({
+							    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist&departamentoId='+e.target.feature.properties.dpto+'&distritoId='+distritos[d].id,
+							      	type:'get',
+							      	dataType:'json',
+							      	crossDomain:true,
+							      	async:false       
+							    }).responseText;
+								despenhoDeptoDist=JSON.parse(despenhoDeptoDist);
+								totalDesempenhoDeptoDis.push(despenhoDeptoDist[0]);
+							}
+							
 							
 								tipoInstituciones="departamento";
 								array=lineaAccionDepartamento;
@@ -722,7 +743,7 @@ tbody {
 						//se define una funcion de estilo para la capa de GEOJSON para cada distrito 
 						function style2(feature) {
 							return {
-								 fillColor: getColor(getClave2(desPaisDist,parseInt(feature.properties.dpto), parseInt(feature.properties.distrito))),
+								 fillColor: getColor(getClave2(totalDesempenhoDeptoDis,parseInt(feature.properties.dpto), parseInt(feature.properties.distrito))),
 						        weight: 2,
 						        //opacity: 0.6,
 						        color: 'white',
