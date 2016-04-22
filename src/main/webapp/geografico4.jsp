@@ -375,7 +375,14 @@ tbody {
 					
 					}
 					
-					
+					var desPaisDistjson = $.ajax({
+				    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist3',
+				      	type:'get',
+				      	dataType:'json',
+				      	crossDomain:true,
+				      	async:false       
+				    }).responseText;
+					var desPaisDist=JSON.parse(desPaisDistInstjson);					
 					
  					var desPaisDistInstjson = $.ajax({
 				    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDesempPaisPorDistInst',
@@ -722,7 +729,7 @@ tbody {
 						//se define una funcion de estilo para la capa de GEOJSON para cada distrito 
 						function style2(feature) {
 							return {
-								 fillColor: getColor(getClave2(desPaisDist,parseInt(feature.properties.dpto), parseInt(feature.properties.distrito))),
+								fillColor: getColor(getClave2(desPaisDist,parseInt(feature.properties.dpto), parseInt(feature.properties.distrito))),
 						        weight: 2,
 						        //opacity: 0.6,
 						        color: 'white',

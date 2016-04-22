@@ -19,6 +19,7 @@ import java.sql.SQLException;
 
 
 
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.servlet.ServletException;
@@ -32,6 +33,7 @@ import javax.xml.datatype.DatatypeConfigurationException;
 
 import org.jasig.cas.client.authentication.AttributePrincipal;
 
+import py.gov.stp.objetosV2.DesempDistrito;
 import py.gov.stp.objetosV2.LineaAccionProgramacion;
 import py.gov.stp.objetosV2.ResumenLineaAccion;
 import py.gov.stp.tools2.SqlSelects;
@@ -826,6 +828,76 @@ public class ajaxSelects extends HttpServlet {
                 JsonElement json = new Gson().toJsonTree(desempenhoPais);
                 out.println(json.toString());
             } 
+        	if (action.equals("getResumenLineasAccionProgramacionInstDptoDist3")){
+        		List<LineaAccionProgramacion> objetos=null;
+        		ArrayList<DesempDistrito> desempenhoDepto= new  ArrayList<DesempDistrito>();;                
+                //ArrayList<Object> desempenhoPais= new ArrayList<Object>();
+                //if (institucionId!=null) condition += " and ins_linea_accion_base_dd.institucion_id='"+institucionId+"'";
+                //if (departamentoId!=null) condition += " and ins_linea_accion_base_dd.depto_id='"+departamentoId+"'";                
+                try {                	
+                	double acum=0, promedio=0;
+                	int cont=0;
+                	objetos = SqlSelects.selectResumenLineasAccionProgramacionInstDptoDist3(condition);
+                                	             	
+                			acum=0; promedio=0; cont=0; 
+                			int distritoAct = 0;
+                			int departamentoAct = 0;
+    						for (int i = 0; i < objetos.size(); i += 1) {   
+    							if (departamentoAct == objetos.get(i).getDepartamentoId()){
+	    							if (distritoAct == objetos.get(i).getDistritoId()){	    							
+										if (objetos.get(i).getCantidadHoy() == 0 && objetos.get(i).getCantidadAvance() > 0) {	
+											acum += 100;
+											cont+=1;
+										} else if (objetos.get(i).getCantidadHoy() > 0 && objetos.get(i).getCantidadAvance() == 0) {
+											acum += 0;
+											cont+=1;
+										} else if (objetos.get(i).getCantidadHoy() == 0	&& objetos.get(i).getCantidadAvance() == 0) {
+											acum += 0;
+										} else {
+											acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
+											cont+=1;
+										}
+	    							} else {	    								
+										distritoAct = objetos.get(i).getDistritoId();
+			    						if(cont != 0){
+			    							promedio = acum / cont;
+			    						}    							
+			    						DesempDistrito desempDist = new DesempDistrito();
+			    						desempDist.setClave1(objetos.get(i).getDepartamentoId());
+			    						desempDist.setClave2(objetos.get(i).getDistritoId());
+			    						desempDist.setValor(promedio);
+			    						desempenhoDepto.add(desempDist);
+	    							}
+    							} else {
+    								departamentoAct = objetos.get(i).getDepartamentoId();
+    							}
+    						}
+    						    					
+//                	}else{
+//						for (int i = 0; i < objetos.size(); i += 1) {
+//							if (objetos.get(i).getCantidadHoy() == 0 && objetos.get(i).getCantidadAvance() > 0) {	
+//								acum += 100;
+//								cont+=1;
+//							} else if (objetos.get(i).getCantidadHoy() > 0 && objetos.get(i).getCantidadAvance() == 0) {
+//								acum += 0;
+//								cont+=1;
+//							} else if (objetos.get(i).getCantidadHoy() == 0	&& objetos.get(i).getCantidadAvance() == 0) {
+//								acum += 0;
+//							} else {
+//								acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
+//								cont+=1;
+//							}
+//						}
+//						if(cont != 0){
+//							promedio = acum / cont;
+//						}
+//						desempenhoPais.add(promedio);
+//                	}
+				}catch (SQLException e) {e.printStackTrace();}
+                JsonElement json = new Gson().toJsonTree(desempenhoDepto);
+                out.println(json.toString());
+            } 
+        	
         	if (action.equals("getResumenLineasAccionProgramacion2")){
         		List objetos=null; 
                 if (institucionId!=null) condition += " and ins_linea_accion_base_dd.institucion_id='"+institucionId+"'";
