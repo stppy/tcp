@@ -16,6 +16,9 @@ import java.sql.SQLException;
 
 
 
+
+
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.servlet.ServletException;
@@ -29,6 +32,8 @@ import javax.xml.datatype.DatatypeConfigurationException;
 
 import org.jasig.cas.client.authentication.AttributePrincipal;
 
+import py.gov.stp.objetosV2.LineaAccionProgramacion;
+import py.gov.stp.objetosV2.ResumenLineaAccion;
 import py.gov.stp.tools2.SqlSelects;
 
 import com.google.gson.Gson;
@@ -174,6 +179,8 @@ public class ajaxSelects extends HttpServlet {
       	if (request.getParameter("trimestreId")!=null) trimestreId=Integer.parseInt(request.getParameter("trimestreId"));      	
       	if (request.getParameter("idAvanceCualitativo")!=null) idAvanceCualitativo=Integer.parseInt(request.getParameter("idAvanceCualitativo")); 
       	//if (request.getParameter("borrado")!=null) borrado=Boolean.parseBoolean(request.getParameter("borrado")); 
+      	if (request.getParameter("departamentoId")!=null) departamentoId=Integer.parseInt(request.getParameter("departamentoId")); 
+
 
       	
         PrintWriter out = response.getWriter();
@@ -759,18 +766,77 @@ public class ajaxSelects extends HttpServlet {
         		out.println(json.toString());
         	}
         	if (action.equals("getResumenLineasAccionProgramacionInstDptoDist")){
-                List objetos=null; 
+                List<LineaAccionProgramacion> objetos=null;
+                ArrayList<Object> desempenhoPais= new ArrayList<Object>();
                 if (institucionId!=null) condition += " and ins_linea_accion_base_dd.institucion_id='"+institucionId+"'";
                 if (departamentoId!=null) condition += " and ins_linea_accion_base_dd.depto_id='"+departamentoId+"'";
                 if (distritoId!=null) condition += " and ins_linea_accion_base_dd.dist_id='"+distritoId+"'";
-                   try {objetos = SqlSelects.selectResumenLineasAccionProgramacionInstDptoDist(condition);}
-                catch (SQLException e) {e.printStackTrace();}
-                JsonElement json = new Gson().toJsonTree(objetos );
+                try {                	
+                	double acum=0, promedio=0;
+                	int cont=0;
+                	objetos = SqlSelects.selectResumenLineasAccionProgramacionInstDptoDist(condition);
+                
+                	if(institucionId==null && departamentoId==null && distritoId==null){
+                		for (int x = 0; x < 18; x += 1) {
+                			acum=0; promedio=0; cont=0;
+    						for (int i = 0; i < objetos.size(); i += 1) {
+    							
+    							if(x == objetos.get(i).getDepartamentoId()){
+
+    								if (objetos.get(i).getCantidadHoy() == 0 && objetos.get(i).getCantidadAvance() > 0) {	
+    									acum += 100;
+    									cont+=1;
+    								} else if (objetos.get(i).getCantidadHoy() > 0 && objetos.get(i).getCantidadAvance() == 0) {
+    									acum += 0;
+    									cont+=1;
+    								} else if (objetos.get(i).getCantidadHoy() == 0	&& objetos.get(i).getCantidadAvance() == 0) {
+    									acum += 0;
+    								} else {
+    									acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
+    									cont+=1;
+    								}
+    							}
+    						}
+    						if(cont != 0){
+    							promedio = acum / cont;
+    						}
+    						desempenhoPais.add(promedio);
+    					}//fin deparmento
+                	}else{
+						for (int i = 0; i < objetos.size(); i += 1) {
+							if (objetos.get(i).getCantidadHoy() == 0 && objetos.get(i).getCantidadAvance() > 0) {	
+								acum += 100;
+								cont+=1;
+							} else if (objetos.get(i).getCantidadHoy() > 0 && objetos.get(i).getCantidadAvance() == 0) {
+								acum += 0;
+								cont+=1;
+							} else if (objetos.get(i).getCantidadHoy() == 0	&& objetos.get(i).getCantidadAvance() == 0) {
+								acum += 0;
+							} else {
+								acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
+								cont+=1;
+							}
+						}
+						if(cont != 0){
+							promedio = acum / cont;
+						}
+						desempenhoPais.add(promedio);
+                	}
+				}catch (SQLException e) {e.printStackTrace();}
+                JsonElement json = new Gson().toJsonTree(desempenhoPais);
                 out.println(json.toString());
-            }       	
-
+            } 
+        	if (action.equals("getResumenLineasAccionProgramacion2")){
+        		List objetos=null; 
+                if (institucionId!=null) condition += " and ins_linea_accion_base_dd.institucion_id='"+institucionId+"'";
+                if (departamentoId!=null) condition += " and ins_linea_accion_base_dd.depto_id='"+departamentoId+"'";
+                if (distritoId!=null) condition += " and ins_linea_accion_base_dd.dist_id='"+distritoId+"'";
+           		try {objetos = SqlSelects.selectResumenLineasAccionProgramacionInstDptoDist2(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());
+        	}
        }
-
        out.close();
         
     }

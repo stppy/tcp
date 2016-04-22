@@ -44,7 +44,67 @@
     <!--  <script src="jquery-1.11.2.min" type="text/javascript"></script> -->
 </head>
 <body class="skin-blue sidebar-mini">
-<% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%>
+<% AttributePrincipal user = (AttributePrincipal) request.getU        	if (action.equals("getResumenLineasAccionProgramacionInstDptoDist")){
+    List<LineaAccionProgramacion> objetos=null;
+    ArrayList<Object> desempenhoPais= new ArrayList<Object>();
+    if (institucionId!=null) condition += " and ins_linea_accion_base_dd.institucion_id='"+institucionId+"'";
+    if (departamentoId!=null) condition += " and ins_linea_accion_base_dd.depto_id='"+departamentoId+"'";
+    if (distritoId!=null) condition += " and ins_linea_accion_base_dd.dist_id='"+distritoId+"'";
+    try {                	
+    	double acum=0, promedio=0;
+    	int cont=0;
+    	objetos = SqlSelects.selectResumenLineasAccionProgramacionInstDptoDist(condition);
+    
+    	if(institucionId==null && departamentoId==null && distritoId==null){
+    		for (int x = 0; x < 18; x += 1) {
+    			acum=0; promedio=0; cont=0;
+				for (int i = 0; i < objetos.size(); i += 1) {
+					
+					if(x == objetos.get(i).getDepartamentoId()){
+
+						if (objetos.get(i).getCantidadHoy() == 0 && objetos.get(i).getCantidadAvance() > 0) {	
+							acum += 100;
+							cont+=1;
+						} else if (objetos.get(i).getCantidadHoy() > 0 && objetos.get(i).getCantidadAvance() == 0) {
+							acum += 0;
+							cont+=1;
+						} else if (objetos.get(i).getCantidadHoy() == 0	&& objetos.get(i).getCantidadAvance() == 0) {
+							acum += 0;
+						} else {
+							acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
+							cont+=1;
+						}
+					}
+				}
+				if(cont != 0){
+					promedio = acum / cont;
+				}
+				desempenhoPais.add(promedio);
+			}//fin deparmento
+    	}else{
+			for (int i = 0; i < objetos.size(); i += 1) {
+				if (objetos.get(i).getCantidadHoy() == 0 && objetos.get(i).getCantidadAvance() > 0) {	
+					acum += 100;
+					cont+=1;
+				} else if (objetos.get(i).getCantidadHoy() > 0 && objetos.get(i).getCantidadAvance() == 0) {
+					acum += 0;
+					cont+=1;
+				} else if (objetos.get(i).getCantidadHoy() == 0	&& objetos.get(i).getCantidadAvance() == 0) {
+					acum += 0;
+				} else {
+					acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
+					cont+=1;
+				}
+			}
+			if(cont != 0){
+				promedio = acum / cont;
+			}
+			desempenhoPais.add(promedio);
+    	}
+	}catch (SQLException e) {e.printStackTrace();}
+    JsonElement json = new Gson().toJsonTree(desempenhoPais);
+    out.println(json.toString());
+}  serPrincipal();%>
 <% Map attributes = user.getAttributes(); 
 if (user != null) { %>
 

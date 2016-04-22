@@ -2102,6 +2102,89 @@ public class SqlSelects {
 				objeto.setCantDestinatarioReal(rs
 						.getBigDecimal("destinatarios_real"));
 				objeto.setCostoAc(rs.getDouble("inversion_real"));
+				
+				
+				objetos.add(objeto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				statement.close();
+			}
+			if (conect != null) {
+				conect.close();
+			}
+		}
+		return objetos;
+	}
+	
+	public static List<LineaAccionProgramacion> selectResumenLineasAccionProgramacionInstDptoDist2(String condition) throws SQLException {
+		Connection conect = ConnectionConfiguration.conectar();
+		String query = "select "
+				+ "ins_linea_accion_base_dd.institucion_sigla,"
+				+ "ins_linea_accion_base_dd.institucion_id,"
+				+ "ins_linea_accion_base_dd.linea_tipo as tipo_estrategia_id,"
+				+ "ins_linea_accion_base_dd.linea_accion_nombre, "
+				+ "ins_linea_accion_base_dd.linea_um_nombre,"
+				+ "ins_linea_accion_base_dd.periodo,"
+				+ "ins_linea_accion_base_dd.meta as meta_comprometida,"
+				+ "ins_linea_accion_base_dd.depto_id as depto_id,"
+				+ "ins_linea_accion_base_dd.dist_id as dist_id,"
+				+ "ins_linea_accion_programacion_anho_dd.cantidad_anho as programado_anho,"
+				+ "ins_linea_accion_programacion_hoy_dd.cantidad_hoy as programado_hoy,"
+				+ "ins_linea_accion_destinatarios_dd.cant_dest as destinatarios_estimados,"
+				+ "ins_linea_accion_costo_estimado_dd.inversion_estimada,"
+				+ "ins_linea_accion_avance_dd.cantidad as avance_real,"
+				+ "ins_linea_accion_destinatario_real_dd.beneficiarios_real as destinatarios_real,"
+				+ "ins_linea_accion_costo_dd.costo as inversion_real"
+				+ " from ins_linea_accion_base_dd"
+				+ " left join ins_linea_accion_avance_dd on"
+				+ " ins_linea_accion_avance_dd.ins_linea_accion_id=ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_avance_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_avance_dd.dist_id=ins_linea_accion_base_dd.dist_id"
+				+ " left join ins_linea_accion_destinatarios_dd on"
+				+ " ins_linea_accion_destinatarios_dd.ila_id=ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_destinatarios_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_destinatarios_dd.dist_id=ins_linea_accion_base_dd.dist_id"
+				+ " left join ins_linea_accion_programacion_hoy_dd on "
+				+ " ins_linea_accion_programacion_hoy_dd.ins_linea_accion_id =ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_programacion_hoy_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_programacion_hoy_dd.dist_id=ins_linea_accion_base_dd.dist_id"
+				+ " left join ins_linea_accion_programacion_anho_dd on "
+				+ " ins_linea_accion_programacion_anho_dd.ins_linea_accion_id = ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_programacion_anho_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_programacion_anho_dd.dist_id=ins_linea_accion_base_dd.dist_id"
+				+ " left join ins_linea_accion_costo_dd on "
+				+ " ins_linea_accion_costo_dd.ins_linea_accion_id=ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_costo_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_costo_dd.dist_id=ins_linea_accion_base_dd.dist_id"
+				+ " left join ins_linea_accion_costo_estimado_dd on "
+				+ " ins_linea_accion_costo_estimado_dd.ins_linea_accion_id=ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_costo_estimado_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_costo_estimado_dd.dist_id=ins_linea_accion_base_dd.dist_id"
+				+ " left join ins_linea_accion_destinatario_real_dd on "
+				+ " ins_linea_accion_destinatario_real_dd.ins_linea_accion_id=ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_destinatario_real_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_destinatario_real_dd.dist_id=ins_linea_accion_base_dd.dist_id"
+				+ " where periodo=2016 " + condition;
+		Statement statement = null;
+		ResultSet rs = null;
+		List<LineaAccionProgramacion> objetos = new ArrayList<LineaAccionProgramacion>();
+
+		try {
+			statement = conect.createStatement();
+			rs = statement.executeQuery(query);
+			while (rs.next()) {
+				LineaAccionProgramacion objeto = new LineaAccionProgramacion();
+
+				objeto.setInstitucionSigla(rs.getString("institucion_sigla"));
+				objeto.setInstitucionId(rs.getInt("institucion_id"));
+				objeto.setLineaAccionEstratagiaId(rs
+						.getInt("tipo_estrategia_id"));
+				objeto.setLineaAccionNombre(rs.getString("linea_accion_nombre"));
+				objeto.setLineaAccionUnidadMedidaNombre(rs
+						.getString("linea_um_nombre"));
+				objeto.setInsLineaAccionPeriodoId(rs.getInt("periodo"));
+				objeto.setMeta(rs.getInt("meta_comprometida"));
+				objeto.setDepartamentoId(rs.getInt("depto_id"));
+				objeto.setDistritoId(rs.getInt("dist_id"));
+				objeto.setCantidadAnho(rs.getInt("programado_anho"));
+				objeto.setCantidadHoy(rs.getInt("programado_hoy"));
+				objeto.setCantDest(rs.getDouble("destinatarios_estimados"));
+				objeto.setInversionEstimada(rs.getDouble("inversion_estimada"));
+				objeto.setCantidadAvance(rs.getDouble("avance_real"));
+				objeto.setCantDestinatarioReal(rs
+						.getBigDecimal("destinatarios_real"));
+				objeto.setCostoAc(rs.getDouble("inversion_real"));
+				
+				
 				objetos.add(objeto);
 			}
 		} catch (SQLException e) {
