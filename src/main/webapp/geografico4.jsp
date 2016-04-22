@@ -515,7 +515,7 @@ tbody {
 									} */
 									//despTotDeptoInst=depemDeptoInst/countDeptoInst;
 									color=getColorDesemp2(lineaAccionDepartamento[0]);
-									$("#tablaInstituciones").append('<tr><td class="col-md-3"><a tipo="filtroPorEntidad" institucion_id='+entidades[i].institucion_id+' depto_id='+e.target.feature.properties.dpto+' >'+entidades[i].institucion+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(lineaAccionDepartamento[0]).toFixed(0)+'%"><p class="text-left">'+parseFloat(lineaAccionDepartamento[0]).toFixed(2)+'%</p></div></div></td></tr>');
+									if (lineaAccionDepartamento[0] !=0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><a tipo="filtroPorEntidad" institucion_id='+entidades[i].institucion_id+' depto_id='+e.target.feature.properties.dpto+' >'+entidades[i].institucion+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(lineaAccionDepartamento[0]).toFixed(0)+'%"><p class="text-left">'+parseFloat(lineaAccionDepartamento[0]).toFixed(2)+'%</p></div></div></td></tr>');
 								}
 							}
 						}else{ //d
@@ -538,7 +538,7 @@ tbody {
 								}
 								
 								color=getColorDesemp2(despTotInst);
-								if (!isNaN(despTotInst)) $("#tablaInstituciones").append('<tr><td class="col-md-3"><a tipo="filtroPorEntidad" institucion_id='+entidades[i].institucion_id+'  >'+entidades[i].institucion+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotInst).toFixed(2)+'%</p></div></div></td></tr>');
+								if (despTotInst !=0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><a tipo="filtroPorEntidad" institucion_id='+entidades[i].institucion_id+'  >'+entidades[i].institucion+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotInst).toFixed(2)+'%</p></div></div></td></tr>');
 							}
 						}
 					}
