@@ -110,6 +110,7 @@ if (user != null) { %>
 						  	<div class="list-group" >
 						  	<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA2_20160411.pdf" download="Constancia_PA2_20160411" class="list-group-item glyphicon glyphicon-download-alt"> 11-ABRIL-2016</a>
 							<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA2_20160415.pdf" download="Constancia_PA2_20160415" class="list-group-item glyphicon glyphicon-download-alt"> 15-ABRIL-2016</a>
+							<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA2_20160421.pdf" download="Constancia_PA2_20160421" class="list-group-item glyphicon glyphicon-download-alt"> 21-ABRIL-2016</a>
 							<!-- <a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160401.pdf" download="Constancia" class="list-group-item glyphicon disabled glyphicon-download-alt" onclick="return false;"> Mes : Febrero - Descargar</a>
 						  </div>-->
 							</div><!--/.fin-box-bod -->
@@ -128,7 +129,10 @@ if (user != null) { %>
 						<div class="box-body collapse" id="demo3">
 							  <div class="list-group" >
 								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA3_20160415.pdf" download="Constancia_PA3_20160415" class="list-group-item glyphicon glyphicon-download-alt"> 15-ABRIL-2016</a> 
-								<!-- <a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160401.pdf" download="Constancia" class="list-group-item glyphicon glyphicon-download-alt"> Mes : Febrero - Descargar</a>
+								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA3_20160418.pdf" download="Constancia_PA3_20160418" class="list-group-item glyphicon glyphicon-download-alt"> 18-ABRIL-2016</a>
+								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA3_20160419.pdf" download="Constancia_PA3_20160419" class="list-group-item glyphicon glyphicon-download-alt"> 19-ABRIL-2016</a>
+                                <a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA3_20160421.pdf" download="Constancia_PA3_20160421" class="list-group-item glyphicon glyphicon-download-alt"> 21-ABRIL-2016</a>
+							  	<!-- <a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160401.pdf" download="Constancia" class="list-group-item glyphicon glyphicon-download-alt"> Mes : Febrero - Descargar</a>
 							  	</div>-->
 								</div><!--/.fin-box-bod -->
 						</div><!-- /.fin_box -->
