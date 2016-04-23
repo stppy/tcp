@@ -19,13 +19,16 @@ public class SqlHelper {
 		 Connection con = null;
 	        Statement st = null;
 	        ResultSet rs = null;
-	        try {Class.forName("com.mysql.jdbc.Driver");}
+	        //try {Class.forName("com.mysql.jdbc.Driver");}
+	        try {Class.forName("org.postgresql.Driver");}
 	        catch (ClassNotFoundException e) {e.printStackTrace();}
 	        String url = "";
-	        String user = "root";
+	        //String user = "root";
+	        String user = "postgres";
 	        String password = "t3R3R3.ol";
 
-	        try {con = DriverManager.getConnection("jdbc:mysql://mysql01.stp.gov.py/spr", "root", "t3R3R3.ol");}
+	        //try {con = DriverManager.getConnection("jdbc:mysql://mysql01.stp.gov.py/spr", "root", "t3R3R3.ol");}
+	        try {con = DriverManager.getConnection("jdbc:postgresql://pg01.stp.gov.py/spr", "postgres", "t3R3R3.ol");}
 	        catch (SQLException ex) {
 	            Logger lgr = Logger.getLogger(SqlHelper.class.getName());
 	            lgr.log(Level.SEVERE, ex.getMessage(), ex);
