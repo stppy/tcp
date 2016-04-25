@@ -957,7 +957,7 @@ public class ajaxSelects extends HttpServlet {
                 try {                	
                 	double acum=0, promedio=0;
                 	int cont=0;
-                	objetos = SqlSelects.selectResumenLineasAccionProgramacionInstDptoDist3(condition);
+                	objetos = SqlSelects.selectResumenLineasAccionProgramacionInstDptoDist4(condition);
                                 	             	
         			acum=0; promedio=0; cont=0; 
         			int distritoAct = 0;

@@ -1187,8 +1187,8 @@ function renderTableroLineaAccion(institucionId,deptoId,distId){
 	
 	var condicion="";
 	var linea_accion_id="";
-	var cont; 
-	var acum;
+	var cont, contEjecucion; 
+	var acum, acumEjecucionPrevista, acumEjecucionLograda;
 	var promedio;
 	if(institucionId!=null)condicion= "&institucionId="+institucionId;
 	if(deptoId!=null)condicion+= "&departamentoId="+deptoId;
@@ -1204,22 +1204,26 @@ function renderTableroLineaAccion(institucionId,deptoId,distId){
 	lineasProgramadas=JSON.parse(lineasProgramadas);
 	
 	linea_accion_id=lineasProgramadas[0].insLineaAccionId;
-	cont=0; 
-	acum=0;
+	cont=0, contEjecucion=0; 
+	acum=0, acumEjecucionPrevista=0, acumEjecucionLograda=0;
 	promedio=0;
 	for(var n=0; n<lineasProgramadas.length;n++){		
 		if(lineasProgramadas[n].insLineaAccionId==linea_accion_id){
-			if (lineasProgramadas[n].cantidadHoy == 0 && lineasProgramadas[n].cantidadAvance > 0) {	
+			contEjecucion++;
+			acumEjecucionPrevista=acumEjecucionPrevista + lineasProgramadas[n].cantidadHoy ;
+			acumEjecucionLograda=acumEjecucionLograda + lineasProgramadas[n].cantidadAvance;
+			
+			if ((lineasProgramadas[n].cantidadHoy == 0 || lineasProgramadas[n].cantidadHoy==null ) && lineasProgramadas[n].cantidadAvance > 0) {	
 				acum = acum + 100;
-				cont= cont +1;
-			} else if (lineasProgramadas[n].cantidadHoy > 0 && lineasProgramadas[n].cantidadAvance == 0) {
+				cont= cont +1;				
+			} else if (lineasProgramadas[n].cantidadHoy > 0 && (lineasProgramadas[n].cantidadAvance == 0 || lineasProgramadas[n].cantidadAvance == null)) {
 				acum = acum + 0;
-				cont= cont +1;
-			} else if (lineasProgramadas[n].cantidadHoy == 0	&& lineasProgramadas[n].cantidadAvance == 0) {
-				acum = acum + 0;
+				cont= cont +1;				
+			} else if ((lineasProgramadas[n].cantidadHoy == 0 || lineasProgramadas[n].cantidadHoy == null)	&& (lineasProgramadas[n].cantidadAvance == 0 || lineasProgramadas[n].cantidadAvance == null )) {
+				acum = acum + 0;				
 			} else {
 				acum =acum + ((lineasProgramadas[n].cantidadAvance / lineasProgramadas[n].cantidadHoy) * 100);
-				cont= cont +1;
+				cont= cont +1;				
 			}			
 		}else{			
 			if(cont != 0){
@@ -1244,8 +1248,8 @@ function renderTableroLineaAccion(institucionId,deptoId,distId){
 			'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100).toFixed(2))+'</td>'+
 			'<td>'+numeroConComa(lineasProgramadas[n-1].cantDest)+'</td>'+
 			'<td>'+numeroConComa((lineasProgramadas[n-1].inversionEstimada/1000000).toFixed(2))+'</td>'+
-			'<td>'+numeroConComa(lineasProgramadas[n-1].cantidadHoy)+'</td>'+
-			'<td>'+numeroConComa(lineasProgramadas[n-1].cantidadAvance)+'</td>';
+			'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
+			'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
 			
 			clase="";			
 			if (promedio>=90){
@@ -1262,8 +1266,8 @@ function renderTableroLineaAccion(institucionId,deptoId,distId){
 			'</tr>';
 			
 			//mostrar grilla n-1
-			cont=0; 
-			acum=0;
+			cont=0, contEjecucion=0; 
+			acum=0, acumEjecucionPrevista=0, acumEjecucionLograda=0;
 			promedio=0;
 			linea_accion_id=lineasProgramadas[n].insLineaAccionId;
 			n=n-1;
@@ -1291,8 +1295,8 @@ function renderTableroLineaAccion(institucionId,deptoId,distId){
 			'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
 			'<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>'+
 			'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
-			'<td>'+numeroConComa(lineasProgramadas[n].cantidadHoy)+'</td>'+
-			'<td>'+numeroConComa(lineasProgramadas[n].cantidadAvance)+'</td>';
+			'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
+			'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
 			
 			clase="";			
 			if (promedio>=90){
