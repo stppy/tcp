@@ -524,7 +524,7 @@ tbody {
 
 						function style(feature) {
 							return {
-								 fillColor: getColor(desPaisDepto[parseInt(feature.properties.dpto)].valor),
+								fillColor: getColor(desPaisDepto[parseInt(feature.properties.dpto)].valor),
 						        weight: 2,
 						        opacity: 0.6,
 						        color: 'white',
