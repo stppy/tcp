@@ -2122,6 +2122,7 @@ public class SqlSelects {
 	public static List<LineaAccionProgramacion> selectResumenLineasAccionProgramacionInstDptoDist2(String condition) throws SQLException {
 		Connection conect = ConnectionConfiguration.conectar();
 		String query = "select "
+				+"ins_linea_accion_base_dd.ins_linea_accion_id,"
 				+ "ins_linea_accion_base_dd.institucion_sigla,"
 				+ "ins_linea_accion_base_dd.institucion_id,"
 				+ "ins_linea_accion_base_dd.linea_tipo as tipo_estrategia_id,"
@@ -2153,7 +2154,7 @@ public class SqlSelects {
 				+ " ins_linea_accion_costo_estimado_dd.ins_linea_accion_id=ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_costo_estimado_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_costo_estimado_dd.dist_id=ins_linea_accion_base_dd.dist_id"
 				+ " left join ins_linea_accion_destinatario_real_dd on "
 				+ " ins_linea_accion_destinatario_real_dd.ins_linea_accion_id=ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_destinatario_real_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_destinatario_real_dd.dist_id=ins_linea_accion_base_dd.dist_id"
-				+ " where periodo=2016 " + condition;
+				+ " where periodo=2016 " + condition +" order by ins_linea_accion_base_dd.ins_linea_accion_id";
 		Statement statement = null;
 		ResultSet rs = null;
 		List<LineaAccionProgramacion> objetos = new ArrayList<LineaAccionProgramacion>();
@@ -2163,7 +2164,8 @@ public class SqlSelects {
 			rs = statement.executeQuery(query);
 			while (rs.next()) {
 				LineaAccionProgramacion objeto = new LineaAccionProgramacion();
-
+				
+				objeto.setInsLineaAccionId(rs.getInt("ins_linea_accion_id"));
 				objeto.setInstitucionSigla(rs.getString("institucion_sigla"));
 				objeto.setInstitucionId(rs.getInt("institucion_id"));
 				objeto.setLineaAccionEstratagiaId(rs

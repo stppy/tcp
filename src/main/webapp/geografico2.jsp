@@ -434,6 +434,7 @@ tbody {
 						      	async:false       
 						    }).responseText;
 							var metasDistEntLinea=JSON.parse(metasDistEntLineajson);
+							
 							var desemp=0.0;
 							var color="";
 							var porHejeClassRow="";
