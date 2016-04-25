@@ -2,19 +2,19 @@ package py.gov.stp.objetosV2;
 
 public class LineaAccionProgramacion extends LineaAccionAvance {
 	
-	protected double cantidadAnho;
-	protected double cantidadHoy;
+	protected Double cantidadAnho;
+	protected Double cantidadHoy;
 	
-	public double getCantidadAnho() {
+	public Double getCantidadAnho() {
 		return cantidadAnho;
 	}
-	public void setCantidadAnho(double cantidadAnho) {
+	public void setCantidadAnho(Double cantidadAnho) {
 		this.cantidadAnho = cantidadAnho;
 	}
-	public double getCantidadHoy() {
+	public Double getCantidadHoy() {
 		return cantidadHoy;
 	}
-	public void setCantidadHoy(double cantidadHoy) {
+	public void setCantidadHoy(Double cantidadHoy) {
 		this.cantidadHoy = cantidadHoy;
 	}
 

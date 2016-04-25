@@ -525,7 +525,7 @@ tbody {
 
 						function style(feature) {
 							return {
-								 fillColor: getColor(desPaisDepto[parseInt(feature.properties.dpto)].valor),
+								fillColor: getColor(desPaisDepto[parseInt(feature.properties.dpto)].valor),
 						        weight: 2,
 						        opacity: 0.6,
 						        color: 'white',
@@ -535,7 +535,7 @@ tbody {
 						}
 						function style2(feature) {
 							return {
-								 fillColor: getColor(getClave2(desPaisDist,parseInt(feature.properties.dpto), parseInt(feature.properties.distrito))),
+								fillColor: getColor(getClave2(desPaisDist,parseInt(feature.properties.dpto), parseInt(feature.properties.distrito))),
 						        weight: 2,
 						        opacity: 1,
 						        color: 'white',

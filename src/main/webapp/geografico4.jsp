@@ -375,16 +375,23 @@ tbody {
 					
 					}
 					
-					
-					
- 					var desPaisDistInstjson = $.ajax({
-				    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDesempPaisPorDistInst',
+					var desPaisDistjson = $.ajax({
+				    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist3',
 				      	type:'get',
 				      	dataType:'json',
 				      	crossDomain:true,
 				      	async:false       
 				    }).responseText;
-					var desPaisDistInst=JSON.parse(desPaisDistInstjson);
+					var desPaisDist=JSON.parse(desPaisDistjson);					
+					
+ 				 	var desPaisDistInstjson = $.ajax({
+				    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist4',
+				      	type:'get',
+				      	dataType:'json',
+				      	crossDomain:true,
+				      	async:false       
+				    }).responseText;
+					var desPaisDistInst=JSON.parse(desPaisDistInstjson); 
 				    
 
 					
@@ -455,7 +462,8 @@ tbody {
 					function renderEntidades(e){
 						var array=[];var tipoInstituciones="";
 						$("#tablaInstituciones").html("");
-											
+						$("#cuerpoTableroLineaAccion").html("");
+						$("#nombreInstitucionTabla").html("");
 						if (typeof e != 'undefined'){
 							if (e.target.feature.properties.hasOwnProperty("distrito")){
 								tipoInstituciones="distrito";
@@ -514,6 +522,8 @@ tbody {
 								array=lineaAccionDepartamento;
 								$("#tabla-derecho").html("");
 								$("#tabla-derecho").append('Instituciones en '+e.target.feature.properties.dpto_desc);
+								$("#cuerpoTableroLineaAccion").html("");
+								$("#nombreInstitucionTabla").html("");
 								var color="";var depemDeptoInst;var countDeptoInst;var despTotDeptoInst;
 								for (var i = 0; i< entidades.length;i++){
 									
@@ -543,7 +553,7 @@ tbody {
 						}else{ //d
 							var color="";var depemInst;var countInst;var despTotInst;
 							for (var i = 0; i< entidades.length;i++){
-								 countInst=0;
+								/*  countInst=0;
 								depemInst=0.0;
 								despTotInst=0.0;
 								for(var j=0;j < desPaisDistInst.length;j++){
@@ -552,7 +562,7 @@ tbody {
 										countInst++;
 									}
 								}
-								despTotInst=depemInst/countInst;
+								despTotInst=depemInst/countInst; */
 								//despToInst=null;
 								for (var c = 0 ; c<desPaisInst.length;c++){
 									if(desPaisInst[c].institucionId==entidades[i].institucion_id)
@@ -745,7 +755,8 @@ tbody {
 						//se define una funcion de estilo para la capa de GEOJSON para cada distrito 
 						function style2(feature) {
 							return {
-								 fillColor: getColor(getClave2(totalDesempenhoDeptoDis,parseInt(feature.properties.dpto), parseInt(feature.properties.distrito))),
+								fillColor: getColor(getClave2(desPaisDist,parseInt(feature.properties.dpto), parseInt(feature.properties.distrito))),
+								//fillColor: getColor(getClave2(totalDesempenhoDeptoDis,parseInt(feature.properties.dpto), parseInt(feature.properties.distrito))),
 						        weight: 2,
 						        //opacity: 0.6,
 						        color: 'white',
