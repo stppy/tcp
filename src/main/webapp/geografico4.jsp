@@ -384,14 +384,14 @@ tbody {
 				    }).responseText;
 					var desPaisDist=JSON.parse(desPaisDistInstjson);					
 					
- 					var desPaisDistInstjson = $.ajax({
+ 				/* 	var desPaisDistInstjson = $.ajax({
 				    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDesempPaisPorDistInst',
 				      	type:'get',
 				      	dataType:'json',
 				      	crossDomain:true,
 				      	async:false       
 				    }).responseText;
-					var desPaisDistInst=JSON.parse(desPaisDistInstjson);
+					var desPaisDistInst=JSON.parse(desPaisDistInstjson); */
 				    
 
 					
