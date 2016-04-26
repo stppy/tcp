@@ -2199,5 +2199,64 @@ public class SqlSelects {
 		}
 		return objetos;
 	}
+	public static List<Rol> selectRoles(String condition) throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectarSpr();
+			 String query = " select * from role " + condition;
+			 
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 List<Rol> objetos = new ArrayList<Rol>();
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					Rol objeto = new Rol();
+					objeto.setRolId(rs.getInt("id"));
+					objeto.setNombre(rs.getString("nombre"));
+
+					objetos.add(objeto);
+				}
+			}
+			catch (SQLException e) {e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos; 
+	  }
+	public static List<UnidadResponsable> selectUnidadResponsable(String condition) throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectarSpr();
+			 String query = " select * from unidad_responsable " + condition;
+			 
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 List<UnidadResponsable> objetos = new ArrayList<UnidadResponsable>();
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					UnidadResponsable objeto = new UnidadResponsable();
+					objeto.setId(rs.getInt("id"));
+					objeto.setNombre(rs.getString("nombre"));
+					objeto.setDescripcion(rs.getString("descripcion"));
+					objeto.setAbrev(rs.getString("abrev"));
+					objeto.setNumeroFila(rs.getInt("numero_fila"));
+					objeto.setEntidadId(rs.getInt("entidad_id"));
+					objeto.setNivelId(rs.getInt("entidad_nivel_id"));
+					objeto.setUnidadJerarquica(rs.getInt("unidad_jerarquica_id"));
+					objeto.setAnho(rs.getString("anho"));
+					
+					objetos.add(objeto);
+				}
+			}
+			catch (SQLException e) {e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos; 
+	  }
 	
 }
