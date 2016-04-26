@@ -2,12 +2,12 @@ package py.gov.stp.objetosV2;
 
 public class LineaAccionAvance extends ResumenLineaAccion{
 	
-	protected double cantidadAvance;
+	protected Double cantidadAvance;
 	
-	public double getCantidadAvance() {
+	public Double getCantidadAvance() {
 		return cantidadAvance;
 	}
-	public void setCantidadAvance(double cantidadAvance) {
+	public void setCantidadAvance(Double cantidadAvance) {
 		this.cantidadAvance = cantidadAvance;
 	}
 	
