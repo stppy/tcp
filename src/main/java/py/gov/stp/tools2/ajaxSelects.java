@@ -21,6 +21,7 @@ import java.sql.SQLException;
 
 
 
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.servlet.ServletException;
@@ -777,7 +778,7 @@ public class ajaxSelects extends HttpServlet {
         	}
         	if (action.equals("getResumenLineasAccionProgramacionInstDptoDist")){
                 List<LineaAccionProgramacion> objetos=null;
-                ArrayList<Object> desempenhoPais= new ArrayList<Object>();
+                ArrayList<Object> desempenhoDpto= new ArrayList<Object>();
                 if (institucionId!=null) condition += " and ins_linea_accion_base_dd.institucion_id='"+institucionId+"'";
                 if (departamentoId!=null) condition += " and ins_linea_accion_base_dd.depto_id='"+departamentoId+"'";
                 if (distritoId!=null) condition += " and ins_linea_accion_base_dd.dist_id='"+distritoId+"'";
@@ -810,7 +811,7 @@ public class ajaxSelects extends HttpServlet {
     						if(cont != 0){
     							promedio = acum / cont;
     						}
-    						desempenhoPais.add(promedio);
+    						desempenhoDpto.add(promedio);
     					}//fin deparmento
                 	}else{
 						for (int i = 0; i < objetos.size(); i += 1) {
@@ -830,16 +831,18 @@ public class ajaxSelects extends HttpServlet {
 						if(cont != 0){
 							promedio = acum / cont;
 						}
-						desempenhoPais.add(promedio);
+						desempenhoDpto.add(promedio);
                 	}
 				}catch (SQLException e) {e.printStackTrace();}
-                JsonElement json = new Gson().toJsonTree(desempenhoPais);
+                JsonElement json = new Gson().toJsonTree(desempenhoDpto);
                 out.println(json.toString());
             } 
         	
         	if (action.equals("getResumenLineasAccionProgramacionInstDptoDist3")){
         		List<LineaAccionProgramacion> objetos=null;
-        		ArrayList<DesempDistrito> desempenhoDepto= new  ArrayList<DesempDistrito>();                            
+        		ArrayList<DesempDistrito> desempenhoDist= new  ArrayList<DesempDistrito>();              		
+	            if (departamentoId!=null) condition += " and ins_linea_accion_base_dd.depto_id='"+departamentoId+"'";
+	            if (distritoId!=null) condition += " and ins_linea_accion_base_dd.dist_id='"+distritoId+"'";
                 try {                	
                 	double acum=0, promedio=0;
                 	int cont=0;
@@ -883,7 +886,7 @@ public class ajaxSelects extends HttpServlet {
 			    						desempDist.setClave1(departamentoAct);
 			    						desempDist.setClave2(distritoAct);
 			    						desempDist.setValor(promedio);
-			    						desempenhoDepto.add(desempDist);
+			    						desempenhoDist.add(desempDist);
 		    						}
     							} else {//si la condición no se cumple realiza el corte por distritos.
     								
@@ -895,7 +898,7 @@ public class ajaxSelects extends HttpServlet {
 		    						desempDist.setClave1(departamentoAct);
 		    						desempDist.setClave2(distritoAct);
 		    						desempDist.setValor(promedio);
-		    						desempenhoDepto.add(desempDist);
+		    						desempenhoDist.add(desempDist);
 		    						
 		    						//cera de vuelta para el distrito que realizó el corte.
 		    						departamentoAct = objetos.get(i).getDepartamentoId();
@@ -927,7 +930,7 @@ public class ajaxSelects extends HttpServlet {
 			    						desempDist.setClave1(departamentoAct);
 			    						desempDist.setClave2(distritoAct);
 			    						desempDist.setValor(promedio);
-			    						desempenhoDepto.add(desempDist);
+			    						desempenhoDist.add(desempDist);
 		    						}
     							}	    							
 							} else {
@@ -939,7 +942,7 @@ public class ajaxSelects extends HttpServlet {
 	    						desempDist.setClave1(departamentoAct);
 	    						desempDist.setClave2(distritoAct);
 	    						desempDist.setValor(promedio);
-	    						desempenhoDepto.add(desempDist);
+	    						desempenhoDist.add(desempDist);
 	    						
 	    						//cera de vuelta para el departamento que realizó el corte.
 	    						departamentoAct = objetos.get(i).getDepartamentoId();
@@ -951,13 +954,16 @@ public class ajaxSelects extends HttpServlet {
 							
 						}                			
 				}catch (SQLException e) {e.printStackTrace();}
-                JsonElement json = new Gson().toJsonTree(desempenhoDepto);
+                JsonElement json = new Gson().toJsonTree(desempenhoDist);
                 out.println(json.toString());
             } 
         	
         	if (action.equals("getResumenLineasAccionProgramacionInstDptoDist4")){
-        		List<LineaAccionProgramacion> objetos;
-        		ArrayList<DesempDistritoInst> desempenhoDepto= new  ArrayList<DesempDistritoInst>();                            
+        		List<LineaAccionProgramacion> objetos = new ArrayList<LineaAccionProgramacion>();
+        		ArrayList<DesempDistritoInst> desempenhoInstDist= new  ArrayList<DesempDistritoInst>();
+	    		if (institucionId!=null) condition += " and ins_linea_accion_base_dd.institucion_id='"+institucionId+"'";
+	            if (departamentoId!=null) condition += " and ins_linea_accion_base_dd.depto_id='"+departamentoId+"'";
+	            if (distritoId!=null) condition += " and ins_linea_accion_base_dd.dist_id='"+distritoId+"'";
                 try {                	
                 	double acum=0, promedio=0;
                 	int cont=0;
@@ -986,15 +992,15 @@ public class ajaxSelects extends HttpServlet {
 	    								y acumulación para el distrito actual.*/
 										if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && objetos.get(i).getCantidadAvance() > 0) {	
 											acum += 100;
-											cont+=1;
+											cont++;
 										} else if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
 											acum += 0;
-											cont+=1;
+											cont++;
 										} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
 											acum += 0;
 										} else {
 											acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
-											cont+=1;
+											cont++;
 										}
 										
 										//Si es el último elemento, realiza el promedio y almacena el desemp. en el array.
@@ -1007,7 +1013,7 @@ public class ajaxSelects extends HttpServlet {
 			    							desempDistInst.setClave2(distritoAct);
 			    							desempDistInst.setClave3(institucionAct);
 			    							desempDistInst.setValor(promedio);
-				    						desempenhoDepto.add(desempDistInst);
+				    						desempenhoInstDist.add(desempDistInst);
 			    						}
 	    							} else {//si la condición no se cumple realiza el corte por distritos.
 	    								
@@ -1020,7 +1026,7 @@ public class ajaxSelects extends HttpServlet {
 			    						desempDistInst.setClave2(distritoAct);
 			    						desempDistInst.setClave3(institucionAct);
 			    						desempDistInst.setValor(promedio);
-			    						desempenhoDepto.add(desempDistInst);
+			    						desempenhoInstDist.add(desempDistInst);
 			    						
 			    						//cera de vuelta para el distrito que realizó el corte.
 			    						departamentoAct = objetos.get(i).getDepartamentoId();
@@ -1032,15 +1038,15 @@ public class ajaxSelects extends HttpServlet {
 			    						//realiza el proceso de obtención del desempeño para el distrito que realizo el corte.				    					
 			    						if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && objetos.get(i).getCantidadAvance() > 0) {	
 											acum += 100;
-											cont+=1;
+											cont++;
 										} else if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
 											acum += 0;
-											cont+=1;
+											cont++;
 										} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
 											acum += 0;
 										} else {
 											acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
-											cont+=1;
+											cont++;
 										}
 			    						
 			    						//Si es el último elemento, realiza el promedio y almacena el desemp. en el array.
@@ -1053,7 +1059,7 @@ public class ajaxSelects extends HttpServlet {
 			    							desempDistInst.setClave2(distritoAct);
 			    							desempDistInst.setClave3(institucionAct);
 			    							desempDistInst.setValor(promedio);
-				    						desempenhoDepto.add(desempDistInst);
+				    						desempenhoInstDist.add(desempDistInst);
 			    						}
 	    							}	    							
 								} else {
@@ -1066,7 +1072,7 @@ public class ajaxSelects extends HttpServlet {
 		    						desempDistInst.setClave2(distritoAct);
 		    						desempDistInst.setClave3(institucionAct);
 		    						desempDistInst.setValor(promedio);
-		    						desempenhoDepto.add(desempDistInst);
+		    						desempenhoInstDist.add(desempDistInst);
 		    						
 		    						//cera de vuelta para el departamento que realizó el corte.
 		    						departamentoAct = objetos.get(i).getDepartamentoId();
@@ -1086,7 +1092,7 @@ public class ajaxSelects extends HttpServlet {
 	    						desempDistInst.setClave2(distritoAct);
 	    						desempDistInst.setClave3(institucionAct);
 	    						desempDistInst.setValor(promedio);
-	    						desempenhoDepto.add(desempDistInst);
+	    						desempenhoInstDist.add(desempDistInst);
 	    						
 	    						//cera de vuelta para el departamento que realizó el corte.
 	    						institucionAct = objetos.get(i).getInstitucionId();
@@ -1099,7 +1105,7 @@ public class ajaxSelects extends HttpServlet {
 							
 						}                			
 				}catch (SQLException e) {e.printStackTrace();}
-                JsonElement json = new Gson().toJsonTree(desempenhoDepto);
+                JsonElement json = new Gson().toJsonTree(desempenhoInstDist);
                 out.println(json.toString());
             }
         	
