@@ -297,9 +297,9 @@ textarea { text-transform: uppercase; }
 							  if (desempEjeHoy!="-"){
 								  if (clase!="bg-red-active color-palette" && clase!="" ){
 									  clase="";
-									  if (parseInt(desempEjeHoy)>=90 && lineasProgramadas[n].cantidadHoy != 0){
+									  if (parseInt((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100)>=90 && lineasProgramadas[n].cantidadHoy != 0){
 										  clase="bg-green-active color-palette"; 
-									  }else if(parseInt(desempEjeHoy)>=70 && lineasProgramadas[n].cantidadHoy != 0){
+									  }else if(parseInt((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100)>=70 && lineasProgramadas[n].cantidadHoy != 0){
 										  clase="bg-yellow-active color-palette"; 
 									  }else{
 										  clase="bg-red-active color-palette";

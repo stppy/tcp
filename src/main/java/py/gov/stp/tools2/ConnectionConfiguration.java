@@ -18,7 +18,7 @@ public class ConnectionConfiguration {
     public static final String PASSWORD = "cybiraconsulting";
  
     public static Connection getConnection() {
-        Connection connection = null;
+    /*    Connection connection = null;
         try {
             Class.forName("com.postgres.jdbc.Driver");
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
@@ -26,7 +26,22 @@ public class ConnectionConfiguration {
             e.printStackTrace();
         }
  
-        return connection;
+        return connection;*/
+    	 Connection con = null; 
+	        Statement st = null;
+	        ResultSet rs = null;
+	        try {Class.forName("org.postgresql.Driver");}
+	        catch (ClassNotFoundException e) {e.printStackTrace();}
+	        String url = "";
+	        String user = "postgres";
+	        String password = "t3R3R3.ol";
+
+	        try {con = DriverManager.getConnection("jdbc:postgresql://pg01.stp.gov.py/tablero2015v3?useUnicode=true&characterEncoding=UTF-8&user=postgres&password=t3R3R3.ol");}
+	        catch (SQLException ex) {
+	            Logger lgr = Logger.getLogger(SqlHelper.class.getName());
+	            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+	        } 
+	        return con;
     }
     public static Connection conectar(){
 		 Connection con = null; 
