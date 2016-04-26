@@ -1187,7 +1187,7 @@ function renderTableroLineaAccion(institucionId,deptoId,distId){
 	
 	var condicion="";
 	var linea_accion_id="";
-	var cont, contEjecucion; 
+	var cont, contEjecucion, destinatarios, inversion; 
 	var acum, acumEjecucionPrevista, acumEjecucionLograda;
 	var promedio;
 	if(institucionId!=null)condicion= "&institucionId="+institucionId;
@@ -1204,14 +1204,16 @@ function renderTableroLineaAccion(institucionId,deptoId,distId){
 	lineasProgramadas=JSON.parse(lineasProgramadas);
 	
 	linea_accion_id=lineasProgramadas[0].insLineaAccionId;
-	cont=0, contEjecucion=0; 
+	cont=0, contEjecucion=0, destinatarios=0; inversion=0; 
 	acum=0, acumEjecucionPrevista=0, acumEjecucionLograda=0;
 	promedio=0;
 	for(var n=0; n<lineasProgramadas.length;n++){		
-		if(lineasProgramadas[n].insLineaAccionId==linea_accion_id){
+		if(lineasProgramadas[n].insLineaAccionId==linea_accion_id){			
 			contEjecucion++;
-			acumEjecucionPrevista=acumEjecucionPrevista + lineasProgramadas[n].cantidadHoy ;
-			acumEjecucionLograda=acumEjecucionLograda + lineasProgramadas[n].cantidadAvance;
+			if (lineasProgramadas[n].cantidadHoy!=null) acumEjecucionPrevista=acumEjecucionPrevista + lineasProgramadas[n].cantidadHoy;
+			if (lineasProgramadas[n].cantidadAvance!=null) acumEjecucionLograda=acumEjecucionLograda + lineasProgramadas[n].cantidadAvance;
+			if (lineasProgramadas[n].cantDestinatarioReal!=null) destinatarios= destinatarios + lineasProgramadas[n].cantDestinatarioReal;
+			if (lineasProgramadas[n].costoAc!=null) inversion= inversion + lineasProgramadas[n].costoAc;
 			
 			if ((lineasProgramadas[n].cantidadHoy == 0 || lineasProgramadas[n].cantidadHoy==null ) && lineasProgramadas[n].cantidadAvance > 0) {	
 				acum = acum + 100;
@@ -1261,8 +1263,8 @@ function renderTableroLineaAccion(institucionId,deptoId,distId){
 			}
 			
 			tempInstLineas += '<td class="'+clase+'">'+numeroConComa((promedio).toFixed(2))+'</td>'+
-			'<td>'+numeroConComa(lineasProgramadas[n-1].cantDestinatarioReal)+'</td>'+
-			'<td>'+numeroConComa((lineasProgramadas[n-1].costoAc/1000000).toFixed(2))+'</td>'+
+			'<td>'+numeroConComa(destinatarios.toFixed(2))+'</td>'+
+			'<td>'+numeroConComa((inversion/1000000).toFixed(2))+'</td>'+
 			'</tr>';
 			
 			//mostrar grilla n-1
@@ -1277,7 +1279,7 @@ function renderTableroLineaAccion(institucionId,deptoId,distId){
 				promedio = acum / cont;
 			}else{
 				promedio = 0;
-			}			
+			}
 			
 			clase="";			
 			if ((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=90){
@@ -1318,12 +1320,13 @@ function renderTableroLineaAccion(institucionId,deptoId,distId){
 }	
 
 $("body").on("click", "#tablaInstituciones",function(event){
-	
-	
+		
 	var institucion_id=event.target.attributes.institucion_id.value;
 	var nombreInstituciones="";
 	var dist_id="";
- 	var depto_id="";
+	var depto_id="";
+	//var dist_id=event.target.attributes.depto_id.nodeValue;
+ 	//var depto_id=event.target.attributes.dist_id.nodeValue;
 	
 	if (event.target.attributes.hasOwnProperty("dist_id")){
 		dist_id=event.target.attributes.dist_id.value;
@@ -1341,21 +1344,20 @@ $("body").on("click", "#tablaInstituciones",function(event){
 			}
 		}
 		$("#nombreInstitucionTabla").html(nombreInstituciones);
-		if(institucion_id != ""){
-			var a = renderTableroLineaAccion(institucion_id);
-			$("#cuerpoTableroLineaAccion").html(a);
-		}		
-		if(institucion_id != "" && depto_id != ""){
-			var a = renderTableroLineaAccion(institucion_id,depto_id);
-			$("#cuerpoTableroLineaAccion").html(a);
-		}
 		if(institucion_id != "" && depto_id != "" && dist_id != ""){
 			var a = renderTableroLineaAccion(institucion_id,depto_id,dist_id);
 			$("#cuerpoTableroLineaAccion").html(a);
+		}else{
+			if(institucion_id != "" && depto_id != ""){
+				var a = renderTableroLineaAccion(institucion_id,depto_id);
+				$("#cuerpoTableroLineaAccion").html(a);
+			}else{
+				if(institucion_id != ""){
+					var a = renderTableroLineaAccion(institucion_id);
+					$("#cuerpoTableroLineaAccion").html(a);
+				}	
+			}			
 		}
-		
-
-
 	}
 	
 	
