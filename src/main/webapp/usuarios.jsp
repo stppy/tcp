@@ -501,15 +501,68 @@ if (user != null) { %>
 				$("#mensajeBorradoUsuario").html("");
 				$("#mensajeBorradoUsuario").append('<h3 class="text-center">Ud. esta seguro que desea RESTABLACER<strong> '+usuarios[0].correo+'</strong></h3>');
 				$("#agregarBotonBorradoUsuario").html("");
-				$("#agregarBotonBorradoUsuario").append('<button type="button" class="btn btn-success btn-sm borrarUsuario" id="botonRestaurarAccion" parametros='+usuarioId+'-r>Restaurar Acción</button>');
+				$("#agregarBotonBorradoUsuario").append('<button type="button" class="btn btn-success btn-sm borrarUsuario" id="botonRestaurarUsuario" parametros='+usuarioId+'-r>Restaurar Acción</button>');
 			}else{
 				$("#mensajeBorradoUsuario").html("");
 				$("#mensajeBorradoUsuario").append('<h3 class="text-center">Ud. esta seguro que desea BORRAR<strong> '+usuarios[0].correo+'</strong></h3');
 				$("#agregarBotonBorradoUsuario").html("");
-				$("#agregarBotonBorradoUsuario").append('<button type="button" class="btn btn-danger btn-sm borrarUsuario" id="botonBorradoAccion" parametros='+usuarioId+'-b>Borrar Acción</button>');
+				$("#agregarBotonBorradoUsuario").append('<button type="button" class="btn btn-danger btn-sm borrarUsuario" id="botonBorradoUsuario" parametros='+usuarioId+'-b>Borrar Acción</button>');
 			}
 			
 			$('#modalBorrarUsuario').modal('show');
+	});
+	
+	$("body").on("click", ".borrarUsuario",function(event){	
+		var parametros = $(this).attr("parametros");
+	    var idParsed = parametros.split("-"); 
+	    var usuarioId = idParsed[0];
+	    var estado = idParsed[1];
+	    
+		var usuarios = $.ajax({
+			url:'http://spr.stp.gov.py/ajaxSelects?accion=getUsuarios&usuarioId='+usuarioId,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		usuarios = JSON.parse(usuarios);
+		usuarios = usuarios.usuarios;
+	    
+	    var objeto = new Object();
+	    objeto.id = usuarioId;
+	    objeto.borrado= usuarios[0].borrado;
+
+	    
+	  	var info = JSON.stringify(objeto);
+	    $.ajax({
+	        url: "http://spr.stp.gov.py/ajaxUpdate?accion=actBorradoUsuario",
+	        type: 'POST',
+	        dataType: 'json',
+	        data: info,
+	        contentType: 'application/json',
+	        mimeType: 'application/json',
+	        success: function (data) {
+	        	
+	        	if(data.success == true){
+	            	if(estado == "b"){
+	            		$("#botonBorradoUsuario").remove();
+		            	$("#mensajeBorradoUsuario").html("");
+		            	$("#mensajeBorradoUsuario").html("<h3 class='text-center'>BORRADO EXITOSAMENTE!!</h3>");
+		            	renderUsuarios();
+		            }else{
+		        		$("#botonRestaurarUsuario").remove();
+		            	$("#mensajeBorradoUsuario").html("");
+		            	$("#mensajeBorradoUsuario").html("<h3 class='text-center'>RESTAURADO EXITOSAMENTE!!</h3>");
+		            	renderUsuarios();
+		        	}
+	        	}
+
+	        },
+
+	        error: function(data,status,er) {
+	        	
+	        	}
+		 });
+		
 	});
 	
 	$("body").on("click", ".cerrarActualizar",function(event){
