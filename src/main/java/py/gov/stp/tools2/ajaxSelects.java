@@ -21,6 +21,7 @@ import java.sql.SQLException;
 
 
 
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.servlet.ServletException;
@@ -835,7 +836,9 @@ public class ajaxSelects extends HttpServlet {
         	
         	if (action.equals("getResumenLineasAccionProgramacionInstDptoDist3")){
         		List<LineaAccionProgramacion> objetos=null;
-        		ArrayList<DesempDistrito> desempenhoDepto= new  ArrayList<DesempDistrito>();                            
+        		ArrayList<DesempDistrito> desempenhoDepto= new  ArrayList<DesempDistrito>();              		
+	            if (departamentoId!=null) condition += " and ins_linea_accion_base_dd.depto_id='"+departamentoId+"'";
+	            if (distritoId!=null) condition += " and ins_linea_accion_base_dd.dist_id='"+distritoId+"'";
                 try {                	
                 	double acum=0, promedio=0;
                 	int cont=0;
@@ -952,8 +955,11 @@ public class ajaxSelects extends HttpServlet {
             } 
         	
         	if (action.equals("getResumenLineasAccionProgramacionInstDptoDist4")){
-        		List<LineaAccionProgramacion> objetos;
-        		ArrayList<DesempDistritoInst> desempenhoDepto= new  ArrayList<DesempDistritoInst>();                            
+        		List<LineaAccionProgramacion> objetos = new ArrayList<LineaAccionProgramacion>();
+        		ArrayList<DesempDistritoInst> desempenhoDepto= new  ArrayList<DesempDistritoInst>();
+	    		if (institucionId!=null) condition += " and ins_linea_accion_base_dd.institucion_id='"+institucionId+"'";
+	            if (departamentoId!=null) condition += " and ins_linea_accion_base_dd.depto_id='"+departamentoId+"'";
+	            if (distritoId!=null) condition += " and ins_linea_accion_base_dd.dist_id='"+distritoId+"'";
                 try {                	
                 	double acum=0, promedio=0;
                 	int cont=0;
@@ -982,15 +988,15 @@ public class ajaxSelects extends HttpServlet {
 	    								y acumulación para el distrito actual.*/
 										if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && objetos.get(i).getCantidadAvance() > 0) {	
 											acum += 100;
-											cont+=1;
+											cont++;
 										} else if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
 											acum += 0;
-											cont+=1;
+											cont++;
 										} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
 											acum += 0;
 										} else {
 											acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
-											cont+=1;
+											cont++;
 										}
 										
 										//Si es el último elemento, realiza el promedio y almacena el desemp. en el array.
@@ -1028,15 +1034,15 @@ public class ajaxSelects extends HttpServlet {
 			    						//realiza el proceso de obtención del desempeño para el distrito que realizo el corte.				    					
 			    						if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && objetos.get(i).getCantidadAvance() > 0) {	
 											acum += 100;
-											cont+=1;
+											cont++;
 										} else if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
 											acum += 0;
-											cont+=1;
+											cont++;
 										} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
 											acum += 0;
 										} else {
 											acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
-											cont+=1;
+											cont++;
 										}
 			    						
 			    						//Si es el último elemento, realiza el promedio y almacena el desemp. en el array.

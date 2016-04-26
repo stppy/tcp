@@ -2124,19 +2124,18 @@ public class SqlSelects {
 		Connection conect = ConnectionConfiguration.conectar();
 		String query = "select "
 				+ "ins_linea_accion_base_dd.institucion_sigla,"
-				+ "ins_linea_accion_base_dd.institucion_id as institucion_id,"
-				+ "ins_linea_accion_base_dd.linea_tipo as tipo_estrategia_id,"
+				+ "ins_linea_accion_base_dd.institucion_id as institucion_id,"				
+				+ "ins_linea_accion_programacion_hoy_dd.cantidad_hoy as programado_hoy,"
+				+ "ins_linea_accion_avance_dd.cantidad as avance_real,"
 				+ "ins_linea_accion_base_dd.linea_accion_nombre, "
 				+ "ins_linea_accion_base_dd.linea_um_nombre,"
 				+ "ins_linea_accion_base_dd.periodo,"
 				+ "ins_linea_accion_base_dd.meta as meta_comprometida,"
 				+ "ins_linea_accion_base_dd.depto_id as depto_id,"
 				+ "ins_linea_accion_base_dd.dist_id as dist_id,"
-				+ "ins_linea_accion_programacion_anho_dd.cantidad_anho as programado_anho,"
-				+ "ins_linea_accion_programacion_hoy_dd.cantidad_hoy as programado_hoy,"
+				+ "ins_linea_accion_programacion_anho_dd.cantidad_anho as programado_anho,"				
 				+ "ins_linea_accion_destinatarios_dd.cant_dest as destinatarios_estimados,"
-				+ "ins_linea_accion_costo_estimado_dd.inversion_estimada,"
-				+ "ins_linea_accion_avance_dd.cantidad as avance_real,"
+				+ "ins_linea_accion_costo_estimado_dd.inversion_estimada,"				
 				+ "ins_linea_accion_destinatario_real_dd.beneficiarios_real as destinatarios_real,"
 				+ "ins_linea_accion_costo_dd.costo as inversion_real"
 				+ " from ins_linea_accion_base_dd"
@@ -2154,7 +2153,7 @@ public class SqlSelects {
 				+ " ins_linea_accion_costo_estimado_dd.ins_linea_accion_id=ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_costo_estimado_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_costo_estimado_dd.dist_id=ins_linea_accion_base_dd.dist_id"
 				+ " left join ins_linea_accion_destinatario_real_dd on "
 				+ " ins_linea_accion_destinatario_real_dd.ins_linea_accion_id=ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_destinatario_real_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_destinatario_real_dd.dist_id=ins_linea_accion_base_dd.dist_id"
-				+ " where periodo=2016 " + condition+ " order by depto_id, dist_id, institucion_id";
+				+ " where periodo=2016 " + condition+ " order by depto_id, dist_id";
 		Statement statement = null;
 		ResultSet rs = null;
 		List<LineaAccionProgramacion> objetos = new ArrayList<LineaAccionProgramacion>();
@@ -2167,8 +2166,8 @@ public class SqlSelects {
 
 				objeto.setInstitucionSigla(rs.getString("institucion_sigla"));
 				objeto.setInstitucionId(rs.getInt("institucion_id"));
-				objeto.setLineaAccionEstratagiaId(rs
-						.getInt("tipo_estrategia_id"));
+				objeto.setCantidadHoy(rs.getDouble("programado_hoy"));			
+				objeto.setCantidadAvance(rs.getDouble("avance_real"));
 				objeto.setLineaAccionNombre(rs.getString("linea_accion_nombre"));
 				objeto.setLineaAccionUnidadMedidaNombre(rs
 						.getString("linea_um_nombre"));
@@ -2176,11 +2175,9 @@ public class SqlSelects {
 				objeto.setMeta(rs.getInt("meta_comprometida"));
 				objeto.setDepartamentoId(rs.getInt("depto_id"));
 				objeto.setDistritoId(rs.getInt("dist_id"));
-				objeto.setCantidadAnho(rs.getDouble("programado_anho"));
-				objeto.setCantidadHoy(rs.getDouble("programado_hoy"));
+				objeto.setCantidadAnho(rs.getDouble("programado_anho"));				
 				objeto.setCantDest(rs.getDouble("destinatarios_estimados"));
-				objeto.setInversionEstimada(rs.getDouble("inversion_estimada"));
-				objeto.setCantidadAvance(rs.getDouble("avance_real"));
+				objeto.setInversionEstimada(rs.getDouble("inversion_estimada"));				
 				objeto.setCantDestinatarioReal(rs
 						.getBigDecimal("destinatarios_real"));
 				objeto.setCostoAc(rs.getDouble("inversion_real"));
@@ -2206,19 +2203,18 @@ public class SqlSelects {
 		Connection conect = ConnectionConfiguration.conectar();
 		String query = "select "
 				+ "ins_linea_accion_base_dd.institucion_sigla,"
-				+ "ins_linea_accion_base_dd.institucion_id as institucion_id,"
-				+ "ins_linea_accion_base_dd.linea_tipo as tipo_estrategia_id,"
+				+ "ins_linea_accion_base_dd.institucion_id as institucion_id,"								
+				+ "ins_linea_accion_programacion_hoy_dd.cantidad_hoy as programado_hoy,"
+				+ "ins_linea_accion_avance_dd.cantidad as avance_real,"
 				+ "ins_linea_accion_base_dd.linea_accion_nombre, "
 				+ "ins_linea_accion_base_dd.linea_um_nombre,"
 				+ "ins_linea_accion_base_dd.periodo,"
 				+ "ins_linea_accion_base_dd.meta as meta_comprometida,"
 				+ "ins_linea_accion_base_dd.depto_id as depto_id,"
 				+ "ins_linea_accion_base_dd.dist_id as dist_id,"
-				+ "ins_linea_accion_programacion_anho_dd.cantidad_anho as programado_anho,"
-				+ "ins_linea_accion_programacion_hoy_dd.cantidad_hoy as programado_hoy,"
+				+ "ins_linea_accion_programacion_anho_dd.cantidad_anho as programado_anho,"				
 				+ "ins_linea_accion_destinatarios_dd.cant_dest as destinatarios_estimados,"
-				+ "ins_linea_accion_costo_estimado_dd.inversion_estimada,"
-				+ "ins_linea_accion_avance_dd.cantidad as avance_real,"
+				+ "ins_linea_accion_costo_estimado_dd.inversion_estimada,"				
 				+ "ins_linea_accion_destinatario_real_dd.beneficiarios_real as destinatarios_real,"
 				+ "ins_linea_accion_costo_dd.costo as inversion_real"
 				+ " from ins_linea_accion_base_dd"
@@ -2249,8 +2245,8 @@ public class SqlSelects {
 
 				objeto.setInstitucionSigla(rs.getString("institucion_sigla"));
 				objeto.setInstitucionId(rs.getInt("institucion_id"));
-				objeto.setLineaAccionEstratagiaId(rs
-						.getInt("tipo_estrategia_id"));
+				objeto.setCantidadHoy(rs.getDouble("programado_hoy"));
+				objeto.setCantidadAvance(rs.getDouble("avance_real"));
 				objeto.setLineaAccionNombre(rs.getString("linea_accion_nombre"));
 				objeto.setLineaAccionUnidadMedidaNombre(rs
 						.getString("linea_um_nombre"));
@@ -2258,11 +2254,9 @@ public class SqlSelects {
 				objeto.setMeta(rs.getInt("meta_comprometida"));
 				objeto.setDepartamentoId(rs.getInt("depto_id"));
 				objeto.setDistritoId(rs.getInt("dist_id"));
-				objeto.setCantidadAnho(rs.getDouble("programado_anho"));
-				objeto.setCantidadHoy(rs.getDouble("programado_hoy"));
+				objeto.setCantidadAnho(rs.getDouble("programado_anho"));				
 				objeto.setCantDest(rs.getDouble("destinatarios_estimados"));
-				objeto.setInversionEstimada(rs.getDouble("inversion_estimada"));
-				objeto.setCantidadAvance(rs.getDouble("avance_real"));
+				objeto.setInversionEstimada(rs.getDouble("inversion_estimada"));				
 				objeto.setCantDestinatarioReal(rs
 						.getBigDecimal("destinatarios_real"));
 				objeto.setCostoAc(rs.getDouble("inversion_real"));
