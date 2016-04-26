@@ -225,7 +225,7 @@ if (user != null) { %>
 			'											<tbody>'+
 			'												<tr><td><div class="form-group"><label for="nivelUsuario">Nivel</label><input type="text" class="form-control" id="nivelUsuario" list="listaNiveles" placeholder="Nivel" /></div></td><td><div class="form-group"><label for="entidadUsuario">Entidad</label><input type="text" class="form-control" id="entidadUsuario" list="listaEntidades" /></div></td></tr>'+
 			'												<tr><td><div class="form-group"><label for="correoUsuario">Correo</label><input type="text" class="form-control" id="correoUsuario" value="" placeholder="Ingrese Correo del Usuario"></div></td><td><div class="form-group"><label for="contrasenaUsuario">Contraseña</label><input type="password" class="form-control" id="contrasenaUsuario" placeholder="Ingrese una Contraseña" /></div></td></tr>'+
-			'												<tr><td><div class="form-group"><label for="unidadResponsableUsuario">U. Responsable</label><input type="text" class="form-control" id="unidadResponsableUsuario" list="listaResponsable" /></div></td><td><div class="form-group"><label for="NombreUsuario">Nombre</label><input type="text" class="form-control" id="nombreUsuarioFormulario" placeholder="Ingrese Nombre del Usuario" /></div></td></tr>'+
+			'												<tr><td><div class="form-group"><label for="unidadResponsableUsuario">U. Responsable</label><select id="unidadResponsableUsuario" class="form-control"></select></div></td><td><div class="form-group"><label for="NombreUsuario">Nombre</label><input type="text" class="form-control" id="nombreUsuarioFormulario" placeholder="Ingrese Nombre del Usuario" /></div></td></tr>'+
 			'												<tr><td><label for="documentoUsuario">Adjuntar Documento</label><input type="file" id="documentoUsuario" name="documentoUsuario" /><input type="hidden" id="urlDocUsuario" name="urlDocUsuario" value="" /></td><td><div class="form-group"><label for="rolIdUsuario">Rol Id</label><select id="rolIdUsuario" class="form-control">'+optionRoles+'</select></div></td></tr>'+
 			'											</tbody>'+							           
 			'										</table>'+
@@ -337,7 +337,7 @@ if (user != null) { %>
 			    	}).responseText;
 			    	unidadResponsable = JSON.parse(unidadResponsable);
 			    	
-			        var datalistNiveles = document.createElement('datalist');
+/* 			        var datalistNiveles = document.createElement('datalist');
 			        datalistNiveles.setAttribute('id','listaResponsable');
 			        datalistNiveles.setAttribute('size','90'); 
 			        var ubicacionDatalistNiveles = document.getElementById('formulario');
@@ -349,8 +349,14 @@ if (user != null) { %>
 			          	option.setAttribute('value',unidadResponsable[v].id);
 			          	option.setAttribute('label',unidadResponsable[v].nombre);
 			          	datalistNiveles.appendChild(option);      
-			      	} 
-			    	
+			      	}  */
+			      	
+			      	$("#unidadResponsableUsuario").html(""); 
+			      	var optionUnidadRes="";
+					for(var r = 0; r < unidadResponsable.length; r++){
+						optionUnidadRes += '<option value="'+unidadResponsable[r].id+'" >'+unidadResponsable[r].nombre+'</option>';
+					}
+			    	$("#unidadResponsableUsuario").append(optionUnidadRes);
 			     }  
 			    
 			}//fin combo
@@ -386,7 +392,7 @@ if (user != null) { %>
 			var nivelId = $("#nivelUsuario").val();
 			var entidadId = $("#entidadUsuario").val();
 			var correo = $("#correoUsuario").val();
-			var contrasena = $("#contrasenaUsuario").val();
+			var contrasena = $.md5($("#contrasenaUsuario").val());
 			var unidadResponsable = $("#unidadResponsableUsuario").val();
 			var nombre = $("#nombreUsuarioFormulario").val(); 
 			var urlDocumento; 
@@ -497,7 +503,6 @@ if (user != null) { %>
 	            		</div><!-- /.header -->
 	                	<div class="box-body" id="cuerpoUsuario">
 
-	                  hola
 		                </div><!-- /.box-body -->
 	              </div><!-- /.box -->
 	            </div><!-- /.col -->
