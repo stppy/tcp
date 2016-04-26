@@ -113,6 +113,9 @@ public class ajaxSelects extends HttpServlet {
     	Integer productoObjetoGastoId = null;
     	Integer trimestreId = null;
     	Integer idAvanceCualitativo = null;
+    	Integer rolId = null;
+    	Integer nivelId = null;
+    	Integer entidadId = null;
     	
     	String institucion=null;
     	String usuario=null;
@@ -185,8 +188,9 @@ public class ajaxSelects extends HttpServlet {
       	//if (request.getParameter("borrado")!=null) borrado=Boolean.parseBoolean(request.getParameter("borrado")); 
       	if (request.getParameter("departamentoId")!=null) departamentoId=Integer.parseInt(request.getParameter("departamentoId")); 
       	if (request.getParameter("distritoId")!=null) distritoId=Integer.parseInt(request.getParameter("distritoId")); 
-
-
+      	if (request.getParameter("rolId")!=null) rolId=Integer.parseInt(request.getParameter("rolId")); 
+      	if (request.getParameter("nivelId")!=null) nivelId=Integer.parseInt(request.getParameter("nivelId"));
+      	if (request.getParameter("entidadId")!=null) entidadId=Integer.parseInt(request.getParameter("entidadId")); 
 
       	
         PrintWriter out = response.getWriter();
@@ -1108,6 +1112,25 @@ public class ajaxSelects extends HttpServlet {
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
+        	}
+        	if (action.equals("getRol")){
+        		List objetos=null;
+        		condition = " where true";
+        		if (rolId!=null) condition += " and id ='"+rolId+"'";
+           		try {objetos = SqlSelects.selectRoles(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());        	
+        	}
+        	if (action.equals("getUnidadResponsable")){
+        		List objetos=null;
+        		condition = " where true";
+        		if (nivelId!=null) condition += " and entidad_nivel_id ='"+nivelId+"'";
+        		if (entidadId!=null) condition += " and entidad_id ='"+entidadId+"'";
+           		try {objetos = SqlSelects.selectUnidadResponsable(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());        	
         	}
        }
        out.close();
