@@ -122,24 +122,38 @@ if (user != null) { %>
 			usuarios = JSON.parse(usuarios);
 			usuarios = usuarios.usuarios;
 			
-			for(var q = 0; q < usuarios.length; q++){
-				//cuerpoTabla += '<tr><td>'+usuarios[q].entidad+'</td><td>'+usuarios[q].nombre+'</td><td>'+usuarios[q].correo+'</td><td>'+usuarios[q].rol_id+'</td><td><a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+usuarios[q].url+'" Download="Nota_usuario_'+usuarios[q].nombre+'" >Descargar Archivo</a></td><td class="text-center"><button type="button" class="btn btn-default btn-sm registrosInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Editar Usuario" ><span class="glyphicon glyphicon-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Borrar Usuario"><span class="glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-default btn-sm agregarUsuario" data-toggle="tooltip" data-placement="top" title="Agregar Usuario"><span class="glyphicon glyphicon-user"></span></button></td></tr>';
+			var roles = $.ajax({
+				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getRol',
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+			}).responseText;
+			roles = JSON.parse(roles);
 			
+			var rolId;
+			for(var q = 0; q < usuarios.length; q++){
+				
+				rolId = "";
+				for(var r = 0; r < roles.length; r++){
+					if(usuarios[q].rol_id == roles[r].rolId){
+						rolId = roles[r].nombre;
+					}
+				}
 				if(usuarios[q].borrado == true)
 				{
 					<%if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") ){%>
-						cuerpoTabla += '<tr><td>'+usuarios[q].entidad+'</td><td>'+usuarios[q].nombre+'</td><td>'+usuarios[q].correo+'</td><td>'+usuarios[q].rol_id+'</td><td><a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+usuarios[q].url+'" Download="Nota_usuario_'+usuarios[q].nombre+'" >Descargar Archivo</a></td><td class="text-center"><button type="button" class="btn btn-default btn-sm registrosInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Editar Usuario" ><span class="glyphicon glyphicon-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Borrar Usuario"><span class="glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-default btn-sm agregarUsuario" data-toggle="tooltip" data-placement="top" title="Agregar Usuario"><span class="glyphicon glyphicon-user"></span></button></td></tr>';
+						cuerpoTabla += '<tr><td><del>'+usuarios[q].entidad+'</del></td><td><del>'+usuarios[q].nombre+'</del></td><td><del>'+usuarios[q].correo+'</del></td><td><del>'+rolId+'</del></td><td><a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+usuarios[q].url+'" Download="Nota_usuario_'+usuarios[q].nombre+'" >Descargar Archivo</a></td><td class="text-center"><button type="button" class="btn btn-default btn-sm registrosInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Editar Usuario" ><span class="glyphicon glyphicon-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Borrar Usuario"><span class="glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-default btn-sm agregarUsuario" data-toggle="tooltip" data-placement="top" title="Agregar Usuario"><span class="glyphicon glyphicon-user"></span></button></td></tr>';
 					<%}%>
 				}else{
 					<%if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>
-						cuerpoTabla += '<tr><td>'+usuarios[q].entidad+'</td><td>'+usuarios[q].nombre+'</td><td>'+usuarios[q].correo+'</td><td>'+usuarios[q].rol_id+'</td><td>';
+						cuerpoTabla += '<tr><td>'+usuarios[q].entidad+'</td><td>'+usuarios[q].nombre+'</td><td>'+usuarios[q].correo+'</td><td>'+rolId+'</td><td>';
 							if (usuarios[q].url) {
 								cuerpoTabla += '<a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+usuarios[q].url+'" Download="Nota_usuario_'+usuarios[q].nombre+'"><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Descargar" ><span class="fa fa-download"></span></button></a></td><td class="text-center"><button type="button" class="btn btn-default btn-sm registrosInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Editar Usuario" ><span class="glyphicon glyphicon-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Borrar Usuario"><span class="glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-default btn-sm agregarUsuario" data-toggle="tooltip" data-placement="top" title="Agregar Usuario"><span class="glyphicon glyphicon-user"></span></button></td></tr>';
 							} else {
 								cuerpoTabla += '</td><td class="text-center"><button type="button" class="btn btn-default btn-sm registrosInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Editar Usuario" ><span class="glyphicon glyphicon-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Borrar Usuario"><span class="glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-default btn-sm agregarUsuario" data-toggle="tooltip" data-placement="top" title="Agregar Usuario"><span class="glyphicon glyphicon-user"></span></button></td></tr>';	
 							}					
 					<%} if (attributes.get("role_id").toString().equals("3")){%>
-						cuerpoTabla += '<tr><td>'+usuarios[q].entidad+'</td><td>'+usuarios[q].nombre+'</td><td>'+usuarios[q].correo+'</td><td>'+usuarios[q].rol_id+'</td><td>';								
+						cuerpoTabla += '<tr><td>'+usuarios[q].entidad+'</td><td>'+usuarios[q].nombre+'</td><td>'+usuarios[q].correo+'</td><td>'+rolId+'</td><td>';								
 						if (usuarios[q].url) {
 							cuerpoTabla += '<a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+usuarios[q].url+'" Download="Nota_usuario_'+usuarios[q].nombre+'" >Descargar Archivo</a>' + '</td><td class="text-center"></td></tr>';
 						}else{
