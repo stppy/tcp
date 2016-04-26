@@ -142,22 +142,28 @@ if (user != null) { %>
 				if(usuarios[q].borrado == true)
 				{
 					<%if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") ){%>
-						cuerpoTabla += '<tr><td><del>'+usuarios[q].entidad+'</del></td><td><del>'+usuarios[q].nombre+'</del></td><td><del>'+usuarios[q].correo+'</del></td><td><del>'+rolId+'</del></td><td><a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+usuarios[q].url+'" Download="Nota_usuario_'+usuarios[q].nombre+'" >Descargar Archivo</a></td><td class="text-center"><button type="button" class="btn btn-default btn-sm registrosInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Editar Usuario" ><span class="glyphicon glyphicon-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Borrar Usuario"><span class="glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-default btn-sm agregarUsuario" data-toggle="tooltip" data-placement="top" title="Agregar Usuario"><span class="glyphicon glyphicon-user"></span></button></td></tr>';
+						cuerpoTabla += '<tr><td><del>'+usuarios[q].entidad+'</del></td>';
+						if(usuarios[q].url){
+							cuerpoTabla += '<td><del><a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+usuarios[q].url+'" Download="Nota_usuario_'+usuarios[q].nombre+'" >'+usuarios[q].nombre+'</a></del></td><td><del>'+usuarios[q].correo+'</del></td><td><del>'+rolId+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm registrosInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Editar Usuario" ><span class="glyphicon glyphicon-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Borrar Usuario"><span class="glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-default btn-sm agregarUsuario" data-toggle="tooltip" data-placement="top" title="Agregar Usuario"><span class="glyphicon glyphicon-user"></span></button></td></tr>';
+						}else{
+							cuerpoTabla += '<td><del>'+usuarios[q].nombre+'</del></td><td><del>'+usuarios[q].correo+'</del></td><td><del>'+rolId+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm registrosInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Editar Usuario" ><span class="glyphicon glyphicon-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Borrar Usuario"><span class="glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-default btn-sm agregarUsuario" data-toggle="tooltip" data-placement="top" title="Agregar Usuario"><span class="glyphicon glyphicon-user"></span></button></td></tr>';
+						}
 					<%}%>
 				}else{
 					<%if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>
-						cuerpoTabla += '<tr><td>'+usuarios[q].entidad+'</td><td>'+usuarios[q].nombre+'</td><td>'+usuarios[q].correo+'</td><td>'+rolId+'</td><td>';
+						cuerpoTabla += '<tr><td>'+usuarios[q].entidad+'</td>';
+						
 							if (usuarios[q].url) {
-								cuerpoTabla += '<a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+usuarios[q].url+'" Download="Nota_usuario_'+usuarios[q].nombre+'"><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Descargar" ><span class="fa fa-download"></span></button></a></td><td class="text-center"><button type="button" class="btn btn-default btn-sm registrosInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Editar Usuario" ><span class="glyphicon glyphicon-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Borrar Usuario"><span class="glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-default btn-sm agregarUsuario" data-toggle="tooltip" data-placement="top" title="Agregar Usuario"><span class="glyphicon glyphicon-user"></span></button></td></tr>';
+								cuerpoTabla += '<td><a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+usuarios[q].url+'" Download="Nota_usuario_'+usuarios[q].nombre+'" >'+usuarios[q].nombre+'</a></td><td>'+usuarios[q].correo+'</td><td>'+rolId+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm registrosInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Editar Usuario" ><span class="glyphicon glyphicon-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Borrar Usuario"><span class="glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-default btn-sm agregarUsuario" data-toggle="tooltip" data-placement="top" title="Agregar Usuario"><span class="glyphicon glyphicon-user"></span></button></td></tr>';
 							} else {
-								cuerpoTabla += '</td><td class="text-center"><button type="button" class="btn btn-default btn-sm registrosInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Editar Usuario" ><span class="glyphicon glyphicon-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Borrar Usuario"><span class="glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-default btn-sm agregarUsuario" data-toggle="tooltip" data-placement="top" title="Agregar Usuario"><span class="glyphicon glyphicon-user"></span></button></td></tr>';	
+								cuerpoTabla += '<td>'+ usuarios[q].nombre+'</td><td>'+usuarios[q].correo+'</td><td>'+rolId+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm registrosInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Editar Usuario" ><span class="glyphicon glyphicon-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Borrar Usuario"><span class="glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-default btn-sm agregarUsuario" data-toggle="tooltip" data-placement="top" title="Agregar Usuario"><span class="glyphicon glyphicon-user"></span></button></td></tr>';	
 							}					
 					<%} if (attributes.get("role_id").toString().equals("3")){%>
-						cuerpoTabla += '<tr><td>'+usuarios[q].entidad+'</td><td>'+usuarios[q].nombre+'</td><td>'+usuarios[q].correo+'</td><td>'+rolId+'</td><td>';								
+						cuerpoTabla += '<tr><td>'+usuarios[q].entidad+'</td>';
 						if (usuarios[q].url) {
-							cuerpoTabla += '<a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+usuarios[q].url+'" Download="Nota_usuario_'+usuarios[q].nombre+'" >Descargar Archivo</a>' + '</td><td class="text-center"></td></tr>';
+							cuerpoTabla += '<td><a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+usuarios[q].url+'" Download="Nota_usuario_'+usuarios[q].nombre+'" >'+usuarios[q].nombre+'</a></td><td>'+usuarios[q].correo+'</td><td>'+rolId+'</td><td class="text-center"></td></tr>';
 						}else{
-							cuerpoTabla += '</td><td class="text-center"></td></tr>';
+							cuerpoTabla += '<td>'+usuarios[q].nombre+'</td><td>'+usuarios[q].correo+'</td><td>'+rolId+'</td><td class="text-center"></td></tr>';
 						}
 					<%}%>
 				}	
@@ -171,7 +177,7 @@ if (user != null) { %>
 			var tablaUsuarios ='<div class="table-responsive">'+
 			'	              	<table class="table table-hover table-bordered" id="dataTablesUsuarios">'+
 			'	                	<thead>'+
-			'	                		<tr class="active"><th class="text-center">Entidad</th><th class="text-center">Nombre</th><th class="text-center">Correo</th><th class="text-center">Rol_Id</th><th>Descargar</th><th class="text-center">Administrar</th></tr>'+
+			'	                		<tr class="active"><th class="text-center">Entidad</th><th class="text-center">Nombre</th><th class="text-center">Correo</th><th class="text-center">Rol_Id</th><th class="text-center">Administrar</th></tr>'+
 			'	                	</thead>'+
 			'	                	<tbody id="tablaUsuariosPrecargados">'+
 			'	                	</tbody>'+
