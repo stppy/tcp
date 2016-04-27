@@ -16,7 +16,7 @@ public class Accion {
 	protected int departamentoId;
 	protected int distritoId;
 	protected int accionCatalogoId;
-	protected boolean borrado=true;
+	protected boolean borrado;
 	
 	
 	public boolean isBorrado() {

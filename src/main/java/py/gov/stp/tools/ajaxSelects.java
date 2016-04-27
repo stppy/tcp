@@ -56,6 +56,7 @@ public class ajaxSelects extends HttpServlet {
     	Integer institucion_id=null;
     	Integer accion_id=null;
     	Integer linea_accion_id=null;
+    	Integer usuarioId = null;
     	
     	String institucion=null;
     	String usuario=null;
@@ -106,6 +107,8 @@ public class ajaxSelects extends HttpServlet {
       	if (request.getParameter("accion_id")!=null) accion_id=Integer.parseInt(request.getParameter("accion_id")); else accion_id=0;
       	if (request.getParameter("linea_accion_id")!=null) linea_accion_id=Integer.parseInt(request.getParameter("linea_accion_id")); else linea_accion_id=0;
       	if (request.getParameter("hito_id")!=null) hito_id=Integer.parseInt(request.getParameter("hito_id")); else hito_id=0;
+      	if (request.getParameter("usuarioId")!=null) usuarioId=Integer.parseInt(request.getParameter("usuarioId"));
+
     	
         PrintWriter out = response.getWriter();
         response.setContentType("text/html");
@@ -296,8 +299,10 @@ public class ajaxSelects extends HttpServlet {
         	}
         	if (action.equals("getUsuarios")){
         		List objetos=null;
-        		if (usuario!=null) condition = " where correo ='"+usuario+"'";
-				try {objetos = SqlSelects.selectUsuario(condition);}
+        		condition = "where true ";
+        		if (usuario!=null) condition += " and correo ='"+usuario+"'";
+        		if (usuarioId!=null) condition += " and id ='"+usuarioId+"'";
+        		try {objetos = SqlSelects.selectUsuario(condition);}
 				catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		myObj.addProperty("success", true);
