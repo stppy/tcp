@@ -4675,7 +4675,7 @@ $("body").on("click", ".actualizarCronograma", function(event){
     var unidadMedidaCronograma =  $("#selectorUnidadMedidaCronograma option:selected").val();
     var tipoCronograma = $("#selectorHitoTipoIdCronograma option:selected").val();
     var proporcionCronograma = $("#proporcionCronograma").val();
-    var pesoCronograma = $("#versionCronograma").val();
+    var pesoCronograma = $("#pesoCronograma").val();
     var acumulable = $("#acumulableCronograma").val();
 
     
