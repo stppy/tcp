@@ -6868,7 +6868,7 @@ $("body").on("click", ".editarAvanceCosto",function(event){
 	
   	var info = JSON.stringify(objeto);
     $.ajax({
-        url: "http://spr.stp.gov.py/ajaxSelects?accion=getUsuarios",
+    	url: "ajaxInserts2?accion=insEvidencia",
         type: 'POST',
         dataType: 'json',
         data: info,
