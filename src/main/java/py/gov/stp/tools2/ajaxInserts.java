@@ -510,5 +510,6 @@ public class ajaxInserts  extends HttpServlet {
     	}
        }
         
+        
     }
 }
