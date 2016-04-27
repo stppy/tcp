@@ -1178,7 +1178,7 @@ $("body").on("click", "#cierreEtiquetaDistrito",function(event){
 
 
 function renderTableroLineaAccion(institucionId,deptoId,distId){
-	
+	$("#cuerpoTableroLineaAccion").html("");
 	var tablaInstituciones="";
 	var tempInstituciones="";
 	var tempInstLineas="";
