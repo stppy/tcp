@@ -13,9 +13,29 @@ public class Usuario {
 	protected int nivel_id=0;
 	protected int rol_id=0;
 	protected String urlimagen="";	
+	protected int unidadResponsable;
+	protected String url;
+	protected boolean borrado;
+
 	
-	
-	
+	public int getUnidadResponsable() {
+		return unidadResponsable;
+	}
+	public void setUnidadResponsable(int unidadResponsable) {
+		this.unidadResponsable = unidadResponsable;
+	}
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	public boolean isBorrado() {
+		return borrado;
+	}
+	public void setBorrado(boolean borrado) {
+		this.borrado = borrado;
+	}	
 	public int getId() {
 		return id;
 	}
@@ -79,6 +99,10 @@ public class Usuario {
 	public void setUrlimagen(String urlimagen) {
 		this.urlimagen = urlimagen;
 	}
+	public void changeBorrado(){
+		this.borrado=!borrado;
+
+		}
 	
 	
 }
