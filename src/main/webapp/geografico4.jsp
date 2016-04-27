@@ -1178,7 +1178,7 @@ $("body").on("click", "#cierreEtiquetaDistrito",function(event){
 
 
 function renderTableroLineaAccion(institucionId,deptoId,distId){
-	
+	$("#cuerpoTableroLineaAccion").html("");
 	var tablaInstituciones="";
 	var tempInstituciones="";
 	var tempInstLineas="";
@@ -1232,40 +1232,77 @@ function renderTableroLineaAccion(institucionId,deptoId,distId){
 				promedio = acum / cont;
 			}else{
 				promedio = 0;
-			}			
+			}	
 			
-			clase="";			
-			if ((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100>=90){
-			 clase="bg-green-active color-palette"; 
-			}else if((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100>=70){
-			 clase="bg-yellow-active color-palette"; 
+			if(institucionId!=null && deptoId==null && distId==null){
+				clase="";			
+				if ((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100>=90){
+				 clase="bg-green-active color-palette"; 
+				}else if((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100>=70){
+				 clase="bg-yellow-active color-palette"; 
+				}else{
+				 clase="bg-red-active color-palette";
+				}
+				
+				tempInstLineas += '<tr>'+
+				'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n-1].lineaAccionNombre+'</a></td>'+
+				'<td>'+lineasProgramadas[n-1].lineaAccionUnidadMedidaNombre+'</td>'+
+				'<td>'+numeroConComa(lineasProgramadas[n-1].meta)+'</td>'+
+				'<td>'+numeroConComa(lineasProgramadas[n-1].cantidadAnho)+'</td>'+
+				'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100).toFixed(2))+'</td>'+
+				'<td>'+numeroConComa(lineasProgramadas[n-1].cantDest)+'</td>'+
+				'<td>'+numeroConComa((lineasProgramadas[n-1].inversionEstimada/1000000).toFixed(2))+'</td>'+
+				'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
+				'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
+				
+				clase="";			
+				if (promedio>=90){
+				 clase="bg-green-active color-palette"; 
+				}else if(promedio>=70){
+				 clase="bg-yellow-active color-palette"; 
+				}else{
+				 clase="bg-red-active color-palette";
+				}
+				
+				tempInstLineas += '<td class="'+clase+'">'+numeroConComa((promedio).toFixed(2))+'</td>'+
+				'<td>'+numeroConComa(destinatarios.toFixed(2))+'</td>'+
+				'<td>'+numeroConComa((inversion/1000000).toFixed(2))+'</td>'+
+				'</tr>';
 			}else{
-			 clase="bg-red-active color-palette";
+				clase="";			
+				if ((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100>=90){
+				 clase="bg-green-active color-palette"; 
+				}else if((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100>=70){
+				 clase="bg-yellow-active color-palette"; 
+				}else{
+				 clase="bg-red-active color-palette";
+				}
+				
+				tempInstLineas += '<tr>'+
+				'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n-1].lineaAccionNombre+'</a></td>'+
+				'<td>'+lineasProgramadas[n-1].lineaAccionUnidadMedidaNombre+'</td>'+
+				'<td>'+numeroConComa(lineasProgramadas[n-1].meta)+'</td>'+
+				'<td></td>'+
+				'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100).toFixed(2))+'</td>'+
+				'<td></td>'+
+				'<td>'+numeroConComa((lineasProgramadas[n-1].inversionEstimada/1000000).toFixed(2))+'</td>'+
+				'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
+				'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
+				
+				clase="";			
+				if (promedio>=90){
+				 clase="bg-green-active color-palette"; 
+				}else if(promedio>=70){
+				 clase="bg-yellow-active color-palette"; 
+				}else{
+				 clase="bg-red-active color-palette";
+				}
+				
+				tempInstLineas += '<td class="'+clase+'">'+numeroConComa((promedio).toFixed(2))+'</td>'+
+				'<td>'+numeroConComa(destinatarios.toFixed(2))+'</td>'+
+				'<td>'+numeroConComa((inversion/1000000).toFixed(2))+'</td>'+
+				'</tr>';
 			}			
-			tempInstLineas += '<tr>'+
-			'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n-1].lineaAccionNombre+'</a></td>'+
-			'<td>'+lineasProgramadas[n-1].lineaAccionUnidadMedidaNombre+'</td>'+
-			'<td>'+numeroConComa(lineasProgramadas[n-1].meta)+'</td>'+
-			'<td>'+numeroConComa(lineasProgramadas[n-1].cantidadAnho)+'</td>'+
-			'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100).toFixed(2))+'</td>'+
-			'<td>'+numeroConComa(lineasProgramadas[n-1].cantDest)+'</td>'+
-			'<td>'+numeroConComa((lineasProgramadas[n-1].inversionEstimada/1000000).toFixed(2))+'</td>'+
-			'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
-			'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
-			
-			clase="";			
-			if (promedio>=90){
-			 clase="bg-green-active color-palette"; 
-			}else if(promedio>=70){
-			 clase="bg-yellow-active color-palette"; 
-			}else{
-			 clase="bg-red-active color-palette";
-			}
-			
-			tempInstLineas += '<td class="'+clase+'">'+numeroConComa((promedio).toFixed(2))+'</td>'+
-			'<td>'+numeroConComa(destinatarios.toFixed(2))+'</td>'+
-			'<td>'+numeroConComa((inversion/1000000).toFixed(2))+'</td>'+
-			'</tr>';
 			
 			//mostrar grilla n-1
 			cont=0, contEjecucion=0; 
@@ -1281,39 +1318,75 @@ function renderTableroLineaAccion(institucionId,deptoId,distId){
 				promedio = 0;
 			}
 			
-			clase="";			
-			if ((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=90){
-			 clase="bg-green-active color-palette"; 
-			}else if((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=70){
-			 clase="bg-yellow-active color-palette"; 
+			if(institucionId!=null && deptoId==null && distId==null){
+				clase="";			
+				if ((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100>=90){
+				 clase="bg-green-active color-palette"; 
+				}else if((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100>=70){
+				 clase="bg-yellow-active color-palette"; 
+				}else{
+				 clase="bg-red-active color-palette";
+				}
+				
+				tempInstLineas += '<tr>'+
+				'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n-1].lineaAccionNombre+'</a></td>'+
+				'<td>'+lineasProgramadas[n-1].lineaAccionUnidadMedidaNombre+'</td>'+
+				'<td>'+numeroConComa(lineasProgramadas[n-1].meta)+'</td>'+
+				'<td>'+numeroConComa(lineasProgramadas[n-1].cantidadAnho)+'</td>'+
+				'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100).toFixed(2))+'</td>'+
+				'<td>'+numeroConComa(lineasProgramadas[n-1].cantDest)+'</td>'+
+				'<td>'+numeroConComa((lineasProgramadas[n-1].inversionEstimada/1000000).toFixed(2))+'</td>'+
+				'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
+				'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
+				
+				clase="";			
+				if (promedio>=90){
+				 clase="bg-green-active color-palette"; 
+				}else if(promedio>=70){
+				 clase="bg-yellow-active color-palette"; 
+				}else{
+				 clase="bg-red-active color-palette";
+				}
+				
+				tempInstLineas += '<td class="'+clase+'">'+numeroConComa((promedio).toFixed(2))+'</td>'+
+				'<td>'+numeroConComa(destinatarios.toFixed(2))+'</td>'+
+				'<td>'+numeroConComa((inversion/1000000).toFixed(2))+'</td>'+
+				'</tr>';
 			}else{
-			 clase="bg-red-active color-palette";
+				clase="";			
+				if ((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100>=90){
+				 clase="bg-green-active color-palette"; 
+				}else if((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100>=70){
+				 clase="bg-yellow-active color-palette"; 
+				}else{
+				 clase="bg-red-active color-palette";
+				}
+				
+				tempInstLineas += '<tr>'+
+				'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n-1].lineaAccionNombre+'</a></td>'+
+				'<td>'+lineasProgramadas[n-1].lineaAccionUnidadMedidaNombre+'</td>'+
+				'<td>'+numeroConComa(lineasProgramadas[n-1].meta)+'</td>'+
+				'<td></td>'+
+				'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100).toFixed(2))+'</td>'+
+				'<td></td>'+
+				'<td>'+numeroConComa((lineasProgramadas[n-1].inversionEstimada/1000000).toFixed(2))+'</td>'+
+				'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
+				'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
+				
+				clase="";			
+				if (promedio>=90){
+				 clase="bg-green-active color-palette"; 
+				}else if(promedio>=70){
+				 clase="bg-yellow-active color-palette"; 
+				}else{
+				 clase="bg-red-active color-palette";
+				}
+				
+				tempInstLineas += '<td class="'+clase+'">'+numeroConComa((promedio).toFixed(2))+'</td>'+
+				'<td>'+numeroConComa(destinatarios.toFixed(2))+'</td>'+
+				'<td>'+numeroConComa((inversion/1000000).toFixed(2))+'</td>'+
+				'</tr>';
 			}			
-			tempInstLineas += '<tr>'+
-			'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
-			'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
-			'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
-			'<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>'+
-			'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
-			'<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>'+
-			'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
-			'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
-			'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
-			
-			clase="";			
-			if (promedio>=90){
-			 clase="bg-green-active color-palette"; 
-			}else if(promedio>=70){
-			 clase="bg-yellow-active color-palette"; 
-			}else{
-			 clase="bg-red-active color-palette";
-			}
-			
-			tempInstLineas += '<td class="'+clase+'">'+numeroConComa((promedio).toFixed(2))+'</td>'+
-			'<td>'+numeroConComa(lineasProgramadas[n].cantDestinatarioReal)+'</td>'+
-			'<td>'+numeroConComa((lineasProgramadas[n].costoAc/1000000).toFixed(2))+'</td>'+
-			'</tr>';
-			
 		} 
 	}
 	return tempInstLineas;
