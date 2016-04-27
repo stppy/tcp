@@ -230,7 +230,7 @@ public class SqlUpdates {
 			} catch (SQLException e) {e.printStackTrace(); return false;}
 		}
 	
-	public static boolean borradoInsLineaAccion(InsLineaAccion objeto){
+	/*public static boolean borradoInsLineaAccion(InsLineaAccion objeto){
 			
 		try {
 			Connection conect=ConnectionConfiguration.conectar();
@@ -246,8 +246,8 @@ public class SqlUpdates {
 			    conect.close();
 			    return true;
 			} catch (SQLException e) {e.printStackTrace(); return false;}
-	}
-	/*public static boolean borradoInsLineaAccion(InsLineaAccion objeto){
+	}*/
+	public static boolean borradoInsLineaAccion(InsLineaAccion objeto){
 	  	 Connection conect=ConnectionConfiguration.conectar();
 	  	 Statement statement = null;
 		  	objeto.changeBorrado();
@@ -261,7 +261,7 @@ public class SqlUpdates {
 			    conect.close();
 			    return true;
 			} catch (SQLException e) {e.printStackTrace(); return false;}
-	}	*/	
+	}	
 
 
 	public static boolean updateInstitucion(Institucion objeto){
