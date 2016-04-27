@@ -543,7 +543,7 @@ tbody {
 						}else{ //d
 							var color="";var depemInst;var countInst;var despTotInst;
 							for (var i = 0; i< entidades.length;i++){
-								 countInst=0;
+								/*countInst=0;
 								depemInst=0.0;
 								despTotInst=0.0;
 								for(var j=0;j < desPaisDistInst.length;j++){
@@ -553,7 +553,7 @@ tbody {
 									}
 								}
 								despTotInst=depemInst/countInst;
-								//despToInst=null;
+								//despToInst=null;*/
 								for (var c = 0 ; c<desPaisInst.length;c++){
 									if(desPaisInst[c].institucionId==entidades[i].institucion_id)
 										despTotInst=desPaisInst[i].promedio;
