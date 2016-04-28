@@ -9424,7 +9424,7 @@ function imprimirAvance(indice){
 			 };
 	
 	var cabecera = '<header>'+				   		
-						'<div style="text-align:left"><img src="http://spr.stp.gov.py/tablero/dist/img/logo_stp_gob.png" height="25" width="180"></div>'+										
+						'<div style="text-align:left"><img src="http://spr.stp.gov.py/tablero/dist/img/logo_stp_gob.png" height="20" width="180"></div>'+										
 				   '</header>';				   				  
 	
 	var cuerpo =  $("#paraImpresiones").html();
