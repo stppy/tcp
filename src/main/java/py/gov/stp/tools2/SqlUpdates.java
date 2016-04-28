@@ -1269,6 +1269,8 @@ public static boolean borradoHito(Hito objeto){
 			if(objeto.getPeso()!=0)      			query+= ", peso= ?";
 			if(objeto.getUnidad_medida_id()!=0)   	query+= ", unidad_medida_id= ?";
 			if(objeto.getHito_tipo_id()!=0)         query+= ", hito_tipo_id= ?";
+													query+= ", acumulable= ?";
+
 
 			query+=" where id = ?";
 
@@ -1280,6 +1282,8 @@ public static boolean borradoHito(Hito objeto){
 			if (objeto.getPeso()!=0)      			{    cantCampos++;update.setDouble (cantCampos, objeto.getPeso());}
 			if (objeto.getUnidad_medida_id()!=0)  	{    cantCampos++;update.setInt (cantCampos, objeto.getUnidad_medida_id());}
 			if (objeto.getHito_tipo_id()!=0)        {    cantCampos++;update.setInt (cantCampos, objeto.getHito_tipo_id());}
+														 cantCampos++;update.setBoolean (cantCampos, objeto.isAcumulable());
+
 				
 	             cantCampos++;
 	             update.setInt    (cantCampos , objeto.getId());

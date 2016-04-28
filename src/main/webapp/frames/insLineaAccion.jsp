@@ -4675,7 +4675,7 @@ $("body").on("click", ".actualizarCronograma", function(event){
     var unidadMedidaCronograma =  $("#selectorUnidadMedidaCronograma option:selected").val();
     var tipoCronograma = $("#selectorHitoTipoIdCronograma option:selected").val();
     var proporcionCronograma = $("#proporcionCronograma").val();
-    var pesoCronograma = $("#versionCronograma").val();
+    var pesoCronograma = $("#pesoCronograma").val();
     var acumulable = $("#acumulableCronograma").val();
 
     
@@ -6868,7 +6868,7 @@ $("body").on("click", ".editarAvanceCosto",function(event){
 	
   	var info = JSON.stringify(objeto);
     $.ajax({
-        url: "http://spr.stp.gov.py/ajaxSelects?accion=getUsuarios",
+    	url: "ajaxInserts2?accion=insEvidencia",
         type: 'POST',
         dataType: 'json',
         data: info,
@@ -9424,7 +9424,7 @@ function imprimirAvance(indice){
 			 };
 	
 	var cabecera = '<header>'+				   		
-						'<div style="text-align:left"><img src="http://spr.stp.gov.py/tablero/dist/img/logo_stp_gob.png" height="25" width="180"></div>'+										
+						'<div style="text-align:left"><img src="http://spr.stp.gov.py/tablero/dist/img/logo_stp_gob.png" height="20" width="180"></div>'+										
 				   '</header>';				   				  
 	
 	var cuerpo =  $("#paraImpresiones").html();

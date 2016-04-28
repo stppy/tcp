@@ -1321,22 +1321,22 @@ function renderTableroLineaAccion(institucionId,deptoId,distId){
 			
 			if(institucionId!=null && deptoId==null && distId==null){
 				clase="";			
-				if ((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100>=90){
+				if ((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=90){
 				 clase="bg-green-active color-palette"; 
-				}else if((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100>=70){
+				}else if((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=70){
 				 clase="bg-yellow-active color-palette"; 
 				}else{
 				 clase="bg-red-active color-palette";
 				}
 				
 				tempInstLineas += '<tr>'+
-				'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n-1].lineaAccionNombre+'</a></td>'+
-				'<td>'+lineasProgramadas[n-1].lineaAccionUnidadMedidaNombre+'</td>'+
-				'<td>'+numeroConComa(lineasProgramadas[n-1].meta)+'</td>'+
-				'<td>'+numeroConComa(lineasProgramadas[n-1].cantidadAnho)+'</td>'+
-				'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100).toFixed(2))+'</td>'+
-				'<td>'+numeroConComa(lineasProgramadas[n-1].cantDest)+'</td>'+
-				'<td>'+numeroConComa((lineasProgramadas[n-1].inversionEstimada/1000000).toFixed(2))+'</td>'+
+				'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
+				'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
+				'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
+				'<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>'+
+				'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
+				'<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>'+
+				'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
 				'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
 				'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
 				
@@ -1355,22 +1355,22 @@ function renderTableroLineaAccion(institucionId,deptoId,distId){
 				'</tr>';
 			}else{
 				clase="";			
-				if ((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100>=90){
+				if ((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=90){
 				 clase="bg-green-active color-palette"; 
-				}else if((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100>=70){
+				}else if((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=70){
 				 clase="bg-yellow-active color-palette"; 
 				}else{
 				 clase="bg-red-active color-palette";
 				}
 				
 				tempInstLineas += '<tr>'+
-				'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n-1].lineaAccionNombre+'</a></td>'+
-				'<td>'+lineasProgramadas[n-1].lineaAccionUnidadMedidaNombre+'</td>'+
-				'<td>'+numeroConComa(lineasProgramadas[n-1].meta)+'</td>'+
+				'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
+				'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
+				'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
 				'<td></td>'+
-				'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100).toFixed(2))+'</td>'+
+				'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
 				'<td></td>'+
-				'<td>'+numeroConComa((lineasProgramadas[n-1].inversionEstimada/1000000).toFixed(2))+'</td>'+
+				'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
 				'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
 				'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
 				
