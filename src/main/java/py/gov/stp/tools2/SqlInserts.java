@@ -137,7 +137,7 @@ public class SqlInserts {
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into institucion (nombre,descripcion,sigla,nivel_id,entidad_id,unidad_jerarquica_id,unidad_responsable_id,orden,borrado)"
+		String query = " insert into institucion (nombre,descripcion,sigla,nivel_id,entidad_id,unidad_jerarquica_id,unidad_responsable_id,orden,borrado,abrev,base_legal,mision,vision,diagnostico,ruc,anho,fecha_creacion,politica)"
 	+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
@@ -151,8 +151,15 @@ public class SqlInserts {
 		insert.setInt (7, institucion.getUnidadResponsableId());
 		insert.setInt (8, institucion.getOrden());
 		insert.setBoolean (9, institucion.isBorrado());
-		
-		
+		insert.setString (10, institucion.getAbrev());
+		insert.setString (11, institucion.getBaseLegal());
+		insert.setString (12, institucion.getMision());
+		insert.setString (13, institucion.getVision());
+		insert.setString (14, institucion.getDiagnostico());
+		insert.setString (15, institucion.getRuc());
+		insert.setInt (16, institucion.getAnho());
+		insert.setDate (17, (Date) institucion.getFechaCreacion());
+		insert.setString (18, institucion.getPolitica());
 		insert.execute();
 		   
 		conn.close();

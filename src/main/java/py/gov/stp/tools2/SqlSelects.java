@@ -965,7 +965,15 @@ public class SqlSelects {
 				objeto.setUnidadResponsableId(rs.getInt("unidad_responsable_id"));
 				objeto.setOrden(rs.getInt("orden"));
 				objeto.setBorrado(rs.getBoolean("borrado"));
-
+				objeto.setAbrev(rs.getString("abrev"));
+				objeto.setBaseLegal(rs.getString("base_legal"));
+				objeto.setMision(rs.getString("mision"));
+				objeto.setVision(rs.getString("vision"));
+				objeto.setDiagnostico(rs.getString("diagnostico"));
+				objeto.setRuc(rs.getString("ruc"));
+				objeto.setAnho(rs.getInt("anho"));
+				objeto.setFechaCreacion(rs.getDate("fecha_creacion"));
+				objeto.setPolitica(rs.getString("politica"));
 				objetos.add(objeto);
 			}
 		}
