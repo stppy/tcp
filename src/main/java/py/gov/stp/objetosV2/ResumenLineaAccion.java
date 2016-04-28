@@ -27,6 +27,7 @@ public class ResumenLineaAccion {
     protected int 	  	  periodo;
     protected double  	  meta;
     protected int  	 	  departamentoId;
+    protected int  	 	  distritoId;
 
     
 	public int getInstitucionId() {
@@ -162,7 +163,14 @@ public class ResumenLineaAccion {
 	public void setDepartamentoId(int departamentoId) {
 		this.departamentoId = departamentoId;
 	}
+	public int getDistritoId() {
+		return distritoId;
+	}
+	public void setDistritoId(int distritoId) {
+		this.distritoId = distritoId;
+	}
     
+	
     
 
 }

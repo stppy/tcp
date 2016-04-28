@@ -227,7 +227,7 @@ tbody {
 					
 				
 					<script>
-					
+					var totalDesempenhoDeptoDis=[];
 					var pocentajeColor1 = parseInt(70);
 					var pocentajeColor2 = parseInt(90);
 					
@@ -297,23 +297,23 @@ tbody {
 				    }).responseText;
 					institucion=JSON.parse(institucion);
 					
-					var desPaisDepto= [];
-					for(var i=0;i<departamento.length;i++){						
+					//var desPaisDepto= [];
+					//for(var i=0;i<departamento.length;i++){						
 						//var miJson = [{"deptoId":0,"avance":209.625},{"deptoId":1,"avance":147.744},{"deptoId":2,"avance":306.329},{"deptoId":3,"avance":133.33},{"deptoId":4,"avance":113.206},{"deptoId":5,"avance":255.096},{"deptoId":6,"avance":114.329202},{"deptoId":7,"avance":205.177},{"deptoId":8,"avance":70.125},{"deptoId":9,"avance":126.392},{"deptoId":10,"avance":258.829},{"deptoId":11,"avance":894.662},{"deptoId":12,"avance":55.467},{"deptoId":13,"avance":71.989},{"deptoId":14,"avance":113.275},{"deptoId":15,"avance":76.102},{"deptoId":16,"avance":47.362},{"deptoId":17,"avance":37.776},{"deptoId":199,"avance":130.993}];
 						
-						var acum = 0,cont = 0;
-						var promedio = 0;
+						/* var acum = 0,cont = 0;
+						var promedio = 0; */
 						
 	 					var desPaisDeptojson = $.ajax({
-	 						url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionDepto&departamento='+departamento[i].idDepartamento,
+	 						url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist',
 					      	type:'get',
 					      	dataType:'json',
 					      	crossDomain:true,
 					      	async:false       
 					    }).responseText;
-						var desPaisDeptoAux=JSON.parse(desPaisDeptojson);
+						var desPaisDepto=JSON.parse(desPaisDeptojson);
 						
-						for (d = 0; d < desPaisDeptoAux.length; d++){	
+						/* for (d = 0; d < desPaisDeptoAux.length; d++){	
 							if (desPaisDeptoAux[d].cantidadHoy == 0 && desPaisDeptoAux[d].cantidadAvance > 0){
 								acum += 100;
 								cont++;
@@ -328,63 +328,70 @@ tbody {
 							}						
 						}
 						
-						promedio = acum / cont;
+						promedio = acum / cont; */
 						
-						desPaisDepto.push(promedio);
+						//desPaisDepto.push(desPaisDeptoAux);
 						
-					}
+					//}
 					
 					var desPaisInst= [];
 					for(var i=0;i<institucion.length;i++){		
 					
-					var acum = 0,cont = 0;
-					var promedio = 0;
+						//var acum = 0,cont = 0;
+						//var promedio = 0;
 					
- 					var desPaisInstjson = $.ajax({
- 						url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstitucion&institucionId='+institucion[i].id,
-				      	type:'get',
-				      	dataType:'json',
-				      	crossDomain:true,
-				      	async:false       
-				    }).responseText;
-					var desPaisInstAux=JSON.parse(desPaisInstjson);
+	 					var desPaisInstjson = $.ajax({
+	 						url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist&institucionId='+institucion[i].id,
+					      	type:'get',
+					      	dataType:'json',
+					      	crossDomain:true,
+					      	async:false       
+					    }).responseText;
+						var desPaisInstAux=JSON.parse(desPaisInstjson);
 					
-					for (d = 0; d < desPaisInstAux.length; d++){	
-						if (desPaisInstAux[d].cantidadHoy == 0 && desPaisInstAux[d].cantidadAvance > 0){
-							acum += 100;
-							cont++;
-						} else if (desPaisInstAux[d].cantidadHoy > 0 && desPaisInstAux[d].cantidadAvance == 0){
-							acum += 0;
-							cont++;
-						} else if (desPaisInstAux[d].cantidadHoy == 0 && desPaisInstAux[d].cantidadAvance == 0){
-							acum += 0;
-						} else {
-							acum += desPaisInstAux[d].cantidadAvance / desPaisInstAux[d].cantidadHoy * 100;								
-							cont++;
-						}						
-					}
+						/* for (d = 0; d < desPaisInstAux.length; d++){	
+							if (desPaisInstAux[d].cantidadHoy == 0 && desPaisInstAux[d].cantidadAvance > 0){
+								acum += 100;
+								cont++;
+							} else if (desPaisInstAux[d].cantidadHoy > 0 && desPaisInstAux[d].cantidadAvance == 0){
+								acum += 0;
+								cont++;
+							} else if (desPaisInstAux[d].cantidadHoy == 0 && desPaisInstAux[d].cantidadAvance == 0){
+								acum += 0;
+							} else {
+								acum += desPaisInstAux[d].cantidadAvance / desPaisInstAux[d].cantidadHoy * 100;								
+								cont++;
+							}						
+						}*/
 					
-					var objeto = new Object();
+						var objeto = new Object(); 
 
-					//if(cont != 0){
-						promedio = acum / cont;
-					//}
-					objeto.institucionId = institucion[i].id;
-					objeto.promedio = promedio;
-					desPaisInst.push(objeto);
+						if(desPaisInstAux[0] == 0){
+							promedio = 0/0;
+						}
+						objeto.institucionId = institucion[i].id;
+						objeto.promedio = desPaisInstAux[0];
+						desPaisInst.push(objeto);
 					
 					}
 					
-					
-					
- 					var desPaisDistInstjson = $.ajax({
-				    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDesempPaisPorDistInst',
+					var desPaisDistjson = $.ajax({
+				    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist3',
 				      	type:'get',
 				      	dataType:'json',
 				      	crossDomain:true,
 				      	async:false       
 				    }).responseText;
-					var desPaisDistInst=JSON.parse(desPaisDistInstjson);
+					var desPaisDist=JSON.parse(desPaisDistjson);					
+					
+ 				 	var desPaisDistInstjson = $.ajax({
+				    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist4',
+				      	type:'get',
+				      	dataType:'json',
+				      	crossDomain:true,
+				      	async:false       
+				    }).responseText;
+					var desPaisDistInst=JSON.parse(desPaisDistInstjson); 
 				    
 
 					
@@ -455,7 +462,8 @@ tbody {
 					function renderEntidades(e){
 						var array=[];var tipoInstituciones="";
 						$("#tablaInstituciones").html("");
-											
+						$("#cuerpoTableroLineaAccion").html("");
+						$("#nombreInstitucionTabla").html("");
 						if (typeof e != 'undefined'){
 							if (e.target.feature.properties.hasOwnProperty("distrito")){
 								tipoInstituciones="distrito";
@@ -479,23 +487,55 @@ tbody {
 								}
 							}else{
 								
-								var lineaAccionDepartamento = $.ajax({
+/* 								var lineaAccionDepartamento = $.ajax({
 						    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getLineasAccionDepartamento',
 						      	type:'get',
 						      	dataType:'json',
 						      	crossDomain:true,
 						      	async:false       
 						    }).responseText;
-							lineaAccionDepartamento=JSON.parse(lineaAccionDepartamento);
-								
-								
+							lineaAccionDepartamento=JSON.parse(lineaAccionDepartamento); */
+							
+							distritos = $.ajax({
+					    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito&departamento='+e.target.feature.properties.dpto,
+					      	type:'get',
+					      	dataType:'json',
+					      	crossDomain:true,
+					      	async:false       
+					    	}).responseText;
+							distritos=JSON.parse(distritos);
+							
+							for(var d = 0; d < distritos.length; d++){
+								var despenhoDeptoDist = $.ajax({
+							    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist&departamentoId='+e.target.feature.properties.dpto+'&distritoId='+distritos[d].id,
+							      	type:'get',
+							      	dataType:'json',
+							      	crossDomain:true,
+							      	async:false       
+							    }).responseText;
+								despenhoDeptoDist=JSON.parse(despenhoDeptoDist);
+								totalDesempenhoDeptoDis.push(despenhoDeptoDist[0]);
+							}
+							
+							
 								tipoInstituciones="departamento";
 								array=lineaAccionDepartamento;
 								$("#tabla-derecho").html("");
 								$("#tabla-derecho").append('Instituciones en '+e.target.feature.properties.dpto_desc);
+								$("#cuerpoTableroLineaAccion").html("");
+								$("#nombreInstitucionTabla").html("");
 								var color="";var depemDeptoInst;var countDeptoInst;var despTotDeptoInst;
 								for (var i = 0; i< entidades.length;i++){
-									countDeptoInst=0;
+									
+									var lineaAccionDepartamento = $.ajax({
+								    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist&departamentoId='+e.target.feature.properties.dpto+'&institucionId='+entidades[i].institucion_id,
+								      	type:'get',
+								      	dataType:'json',
+								      	crossDomain:true,
+								      	async:false       
+								    }).responseText;
+									lineaAccionDepartamento=JSON.parse(lineaAccionDepartamento);
+/* 									countDeptoInst=0;
 									depemDeptoInst=0.0;
 									despTotDeptoInst=0.0;
 									for(var j=0;j < desPaisDistInst.length;j++){
@@ -503,16 +543,17 @@ tbody {
 											depemDeptoInst+=desPaisDistInst[j].valor;
 											countDeptoInst++;
 										}
-									}
-									despTotDeptoInst=depemDeptoInst/countDeptoInst;
-									color=getColorDesemp2(despTotDeptoInst);
-									if (!isNaN(despTotDeptoInst)) $("#tablaInstituciones").append('<tr><td class="col-md-3"><a tipo="filtroPorEntidad" institucion_id='+entidades[i].institucion_id+' depto_id='+e.target.feature.properties.dpto+' >'+entidades[i].institucion+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotDeptoInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotDeptoInst).toFixed(2)+'%</p></div></div></td></tr>');
+									} */
+									//despTotDeptoInst=depemDeptoInst/countDeptoInst;
+									color=getColorDesemp2(lineaAccionDepartamento[0]);
+									if (lineaAccionDepartamento[0] !=0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><a tipo="filtroPorEntidad" institucion_id='+entidades[i].institucion_id+' depto_id='+e.target.feature.properties.dpto+' >'+entidades[i].institucion+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(lineaAccionDepartamento[0]).toFixed(0)+'%"><p class="text-left">'+parseFloat(lineaAccionDepartamento[0]).toFixed(2)+'%</p></div></div></td></tr>');
+
 								}
 							}
 						}else{ //d
 							var color="";var depemInst;var countInst;var despTotInst;
 							for (var i = 0; i< entidades.length;i++){
-								/* countInst=0;
+								/*  countInst=0;
 								depemInst=0.0;
 								despTotInst=0.0;
 								for(var j=0;j < desPaisDistInst.length;j++){
@@ -529,7 +570,8 @@ tbody {
 								}
 								
 								color=getColorDesemp2(despTotInst);
-								if (!isNaN(despTotInst)) $("#tablaInstituciones").append('<tr><td class="col-md-3"><a tipo="filtroPorEntidad" institucion_id='+entidades[i].institucion_id+'  >'+entidades[i].institucion+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotInst).toFixed(2)+'%</p></div></div></td></tr>');
+								if (despTotInst !=0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><a tipo="filtroPorEntidad" institucion_id='+entidades[i].institucion_id+'  >'+entidades[i].institucion+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotInst).toFixed(2)+'%</p></div></div></td></tr>');
+
 							}
 						}
 					}
@@ -713,7 +755,8 @@ tbody {
 						//se define una funcion de estilo para la capa de GEOJSON para cada distrito 
 						function style2(feature) {
 							return {
-								 fillColor: getColor(getClave2(desPaisDist,parseInt(feature.properties.dpto), parseInt(feature.properties.distrito))),
+								fillColor: getColor(getClave2(desPaisDist,parseInt(feature.properties.dpto), parseInt(feature.properties.distrito))),
+								//fillColor: getColor(getClave2(totalDesempenhoDeptoDis,parseInt(feature.properties.dpto), parseInt(feature.properties.distrito))),
 						        weight: 2,
 						        //opacity: 0.6,
 						        color: 'white',
@@ -1134,7 +1177,7 @@ $("body").on("click", "#cierreEtiquetaDistrito",function(event){
 });
 
 
-function renderTableroLineaAccion(institucionId){
+function renderTableroLineaAccion(institucionId,deptoId,distId){
 	
 	var tablaInstituciones="";
 	var tempInstituciones="";
@@ -1142,8 +1185,17 @@ function renderTableroLineaAccion(institucionId){
 	var flagIns=0;
 	var clase="";
 	
+	var condicion="";
+	var linea_accion_id="";
+	var cont, contEjecucion; 
+	var acum, acumEjecucionPrevista, acumEjecucionLograda;
+	var promedio;
+	if(institucionId!=null)condicion= "&institucionId="+institucionId;
+	if(deptoId!=null)condicion+= "&departamentoId="+deptoId;
+	if(distId!=null)condicion+= "&distritoId="+distId;
+
 	var lineasProgramadas = $.ajax({
-    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstitucion&institucionId='+institucionId,
+    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacion2'+condicion,
       	type:'get',
       	dataType:'json',
       	crossDomain:true,
@@ -1151,63 +1203,135 @@ function renderTableroLineaAccion(institucionId){
     }).responseText;
 	lineasProgramadas=JSON.parse(lineasProgramadas);
 	
-
-	for(var n=0; n<lineasProgramadas.length;n++)
-	{
-		clase="";
-		
-		if ((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=90 && lineasProgramadas[n].meta != 0){
-		 clase="bg-green-active color-palette"; 
-		}else if((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=70 && lineasProgramadas[n].meta != 0){
-		 clase="bg-yellow-active color-palette"; 
-		}else{
-		 clase="bg-red-active color-palette";
+	linea_accion_id=lineasProgramadas[0].insLineaAccionId;
+	cont=0, contEjecucion=0; 
+	acum=0, acumEjecucionPrevista=0, acumEjecucionLograda=0;
+	promedio=0;
+	for(var n=0; n<lineasProgramadas.length;n++){		
+		if(lineasProgramadas[n].insLineaAccionId==linea_accion_id){
+			contEjecucion++;
+			acumEjecucionPrevista=acumEjecucionPrevista + lineasProgramadas[n].cantidadHoy ;
+			acumEjecucionLograda=acumEjecucionLograda + lineasProgramadas[n].cantidadAvance;
+			
+			if ((lineasProgramadas[n].cantidadHoy == 0 || lineasProgramadas[n].cantidadHoy==null ) && lineasProgramadas[n].cantidadAvance > 0) {	
+				acum = acum + 100;
+				cont= cont +1;				
+			} else if (lineasProgramadas[n].cantidadHoy > 0 && (lineasProgramadas[n].cantidadAvance == 0 || lineasProgramadas[n].cantidadAvance == null)) {
+				acum = acum + 0;
+				cont= cont +1;				
+			} else if ((lineasProgramadas[n].cantidadHoy == 0 || lineasProgramadas[n].cantidadHoy == null)	&& (lineasProgramadas[n].cantidadAvance == 0 || lineasProgramadas[n].cantidadAvance == null )) {
+				acum = acum + 0;				
+			} else {
+				acum =acum + ((lineasProgramadas[n].cantidadAvance / lineasProgramadas[n].cantidadHoy) * 100);
+				cont= cont +1;				
+			}			
+		}else{			
+			if(cont != 0){
+				promedio = acum / cont;
+			}else{
+				promedio = 0;
+			}			
+			
+			clase="";			
+			if ((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100>=90){
+			 clase="bg-green-active color-palette"; 
+			}else if((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100>=70){
+			 clase="bg-yellow-active color-palette"; 
+			}else{
+			 clase="bg-red-active color-palette";
+			}			
+			tempInstLineas += '<tr>'+
+			'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n-1].lineaAccionNombre+'</a></td>'+
+			'<td>'+lineasProgramadas[n-1].lineaAccionUnidadMedidaNombre+'</td>'+
+			'<td>'+numeroConComa(lineasProgramadas[n-1].meta)+'</td>'+
+			'<td>'+numeroConComa(lineasProgramadas[n-1].cantidadAnho)+'</td>'+
+			'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100).toFixed(2))+'</td>'+
+			'<td>'+numeroConComa(lineasProgramadas[n-1].cantDest)+'</td>'+
+			'<td>'+numeroConComa((lineasProgramadas[n-1].inversionEstimada/1000000).toFixed(2))+'</td>'+
+			'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
+			'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
+			
+			clase="";			
+			if (promedio>=90){
+			 clase="bg-green-active color-palette"; 
+			}else if(promedio>=70){
+			 clase="bg-yellow-active color-palette"; 
+			}else{
+			 clase="bg-red-active color-palette";
+			}
+			
+			tempInstLineas += '<td class="'+clase+'">'+numeroConComa((promedio).toFixed(2))+'</td>'+
+			'<td>'+numeroConComa(lineasProgramadas[n-1].cantDestinatarioReal)+'</td>'+
+			'<td>'+numeroConComa((lineasProgramadas[n-1].costoAc/1000000).toFixed(2))+'</td>'+
+			'</tr>';
+			
+			//mostrar grilla n-1
+			cont=0, contEjecucion=0; 
+			acum=0, acumEjecucionPrevista=0, acumEjecucionLograda=0;
+			promedio=0;
+			linea_accion_id=lineasProgramadas[n].insLineaAccionId;
+			n=n-1;
 		}
-		
-		tempInstLineas += '<tr>'+
-		'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
-		'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
-		'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
-		'<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>'+
-		'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
-		'<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>'+
-		'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
-		'<td>'+numeroConComa(lineasProgramadas[n].cantidadHoy)+'</td>'+
-		'<td>'+numeroConComa(lineasProgramadas[n].cantidadAvance)+'</td>';
-		
-		if (clase!="bg-red-active color-palette"){
-		 clase="";
-		 if ((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100>=90 && lineasProgramadas[n].cantidadHoy != 0){
-		  clase="bg-green-active color-palette"; 
-		 }else if((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100>=70 && lineasProgramadas[n].cantidadHoy != 0){
-		  clase="bg-yellow-active color-palette"; 
-		 }else{
-		  clase="bg-red-active color-palette";
-		 }
-		}
-		
-		
-		tempInstLineas += '<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100).toFixed(2))+'</td>'+
-		'<td>'+numeroConComa(lineasProgramadas[n].cantDestinatarioReal)+'</td>'+
-		'<td>'+numeroConComa((lineasProgramadas[n].costoAc/1000000).toFixed(2))+'</td>'+
-		'</tr>';
+		if(n==lineasProgramadas.length-1){
+			if(cont != 0){
+				promedio = acum / cont;
+			}else{
+				promedio = 0;
+			}			
+			
+			clase="";			
+			if ((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=90){
+			 clase="bg-green-active color-palette"; 
+			}else if((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=70){
+			 clase="bg-yellow-active color-palette"; 
+			}else{
+			 clase="bg-red-active color-palette";
+			}			
+			tempInstLineas += '<tr>'+
+			'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
+			'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
+			'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
+			'<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>'+
+			'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
+			'<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>'+
+			'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
+			'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
+			'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
+			
+			clase="";			
+			if (promedio>=90){
+			 clase="bg-green-active color-palette"; 
+			}else if(promedio>=70){
+			 clase="bg-yellow-active color-palette"; 
+			}else{
+			 clase="bg-red-active color-palette";
+			}
+			
+			tempInstLineas += '<td class="'+clase+'">'+numeroConComa((promedio).toFixed(2))+'</td>'+
+			'<td>'+numeroConComa(lineasProgramadas[n].cantDestinatarioReal)+'</td>'+
+			'<td>'+numeroConComa((lineasProgramadas[n].costoAc/1000000).toFixed(2))+'</td>'+
+			'</tr>';
+			
+		} 
 	}
-
-	 return tempInstLineas;
-	}
-		
+	return tempInstLineas;
+}	
 
 $("body").on("click", "#tablaInstituciones",function(event){
 	
 	
 	var institucion_id=event.target.attributes.institucion_id.value;
 	var nombreInstituciones="";
-
-/* 	var depto_id=event.target.attributes.depto_id.value;
 	var dist_id="";
+ 	var depto_id="";
+	
 	if (event.target.attributes.hasOwnProperty("dist_id")){
 		dist_id=event.target.attributes.dist_id.value;
-	} */
+	}
+	if (event.target.attributes.hasOwnProperty("depto_id")){
+	 	depto_id=event.target.attributes.depto_id.value;
+	}
+	
 	if (institucion_id==""){
 		alert("Favor seleccionar previamente Departamento en el mapa");
 	}else{
@@ -1217,8 +1341,20 @@ $("body").on("click", "#tablaInstituciones",function(event){
 			}
 		}
 		$("#nombreInstitucionTabla").html(nombreInstituciones);
-		var a = renderTableroLineaAccion(institucion_id);
-		$("#cuerpoTableroLineaAccion").html(a);
+		if(institucion_id != ""){
+			var a = renderTableroLineaAccion(institucion_id);
+			$("#cuerpoTableroLineaAccion").html(a);
+		}		
+		if(institucion_id != "" && depto_id != ""){
+			var a = renderTableroLineaAccion(institucion_id,depto_id);
+			$("#cuerpoTableroLineaAccion").html(a);
+		}
+		if(institucion_id != "" && depto_id != "" && dist_id != ""){
+			var a = renderTableroLineaAccion(institucion_id,depto_id,dist_id);
+			$("#cuerpoTableroLineaAccion").html(a);
+		}
+		
+
 
 	}
 	
