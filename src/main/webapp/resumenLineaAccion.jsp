@@ -367,7 +367,7 @@ textarea { text-transform: uppercase; }
 			
 			
 			renderLineasEstrategicas(); 
-
+			window.open('http://spr.stp.gov.py/','_blank');
 		})
         </script>
           
