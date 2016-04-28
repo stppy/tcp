@@ -260,14 +260,14 @@ tbody {
 						}
 					}
 					
-					var entidades = $.ajax({
+					/* var entidades = $.ajax({
 				    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getEntidades',
 				      	type:'get',
 				      	dataType:'json',
 				      	crossDomain:true,
 				      	async:false       
 				    }).responseText;
-					entidades=JSON.parse(entidades);
+					entidades=JSON.parse(entidades); */
 					
 					
   					var lineaAccionDepartamento = $.ajax({
@@ -288,14 +288,14 @@ tbody {
 				    }).responseText;
 					departamento=JSON.parse(departamento);
 					
-					var institucion = $.ajax({
+					var instituciones = $.ajax({
 				    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
 				      	type:'get',
 				      	dataType:'json',
 				      	crossDomain:true,
 				      	async:false       
 				    }).responseText;
-					institucion=JSON.parse(institucion);
+					instituciones=JSON.parse(instituciones);
 					
 					//var desPaisDepto= [];
 					//for(var i=0;i<departamento.length;i++){						
@@ -335,13 +335,13 @@ tbody {
 					//}
 					
 					var desPaisInst= [];
-					for(var i=0;i<institucion.length;i++){		
+					for(var i=0;i<instituciones.length;i++){		
 					
 						//var acum = 0,cont = 0;
 						//var promedio = 0;
 					
 	 					var desPaisInstjson = $.ajax({
-	 						url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist&institucionId='+institucion[i].id,
+	 						url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist&institucionId='+instituciones[i].id,
 					      	type:'get',
 					      	dataType:'json',
 					      	crossDomain:true,
@@ -369,7 +369,7 @@ tbody {
 						if(desPaisInstAux[0] == 0){
 							promedio = 0/0;
 						}
-						objeto.institucionId = institucion[i].id;
+						objeto.institucionId = instituciones[i].id;
 						objeto.promedio = desPaisInstAux[0];
 						desPaisInst.push(objeto);
 					
@@ -477,11 +477,11 @@ tbody {
 									  '</div>'+
 									'</div>');
 								var color="";
-								for (var i = 0; i< entidades.length;i++){
+								for (var i = 0; i< instituciones.length;i++){
 									for(var j=0;j < desPaisDistInst.length;j++){
-										if ((desPaisDistInst[j].clave3==entidades[i].institucion_id) && (desPaisDistInst[j].clave1==e.target.feature.properties.dpto) && (desPaisDistInst[j].clave2 == e.target.feature.properties.distrito)){
+										if ((desPaisDistInst[j].clave3==instituciones[i].id) && (desPaisDistInst[j].clave1==e.target.feature.properties.dpto) && (desPaisDistInst[j].clave2 == e.target.feature.properties.distrito)){
 											color=getColorDesemp2(desPaisDistInst[j].valor);
-											$("#tablaInstituciones").append('<tr><td class="col-md-3"><a tipo="filtroPorEntidad" institucion_id='+entidades[i].institucion_id+' depto_id='+e.target.feature.properties.dpto+' dist_id='+e.target.feature.properties.distrito+' >'+entidades[i].institucion+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(desPaisDistInst[j].valor).toFixed(0)+'%"><p class="text-left">'+parseFloat(desPaisDistInst[j].valor).toFixed(2)+'%</p></div></div></td></tr>');
+											$("#tablaInstituciones").append('<tr><td class="col-md-3"><a tipo="filtroPorEntidad" institucion_id='+instituciones[i].id+' depto_id='+e.target.feature.properties.dpto+' dist_id='+e.target.feature.properties.distrito+' >'+instituciones[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(desPaisDistInst[j].valor).toFixed(0)+'%"><p class="text-left">'+parseFloat(desPaisDistInst[j].valor).toFixed(2)+'%</p></div></div></td></tr>');
 										}
 									}
 								}
@@ -525,10 +525,10 @@ tbody {
 								$("#cuerpoTableroLineaAccion").html("");
 								$("#nombreInstitucionTabla").html("");
 								var color="";var depemDeptoInst;var countDeptoInst;var despTotDeptoInst;
-								for (var i = 0; i< entidades.length;i++){
+								for (var i = 0; i< instituciones.length;i++){
 									
 									var lineaAccionDepartamento = $.ajax({
-								    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist&departamentoId='+e.target.feature.properties.dpto+'&institucionId='+entidades[i].institucion_id,
+								    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist&departamentoId='+e.target.feature.properties.dpto+'&institucionId='+instituciones[i].id,
 								      	type:'get',
 								      	dataType:'json',
 								      	crossDomain:true,
@@ -539,25 +539,25 @@ tbody {
 									depemDeptoInst=0.0;
 									despTotDeptoInst=0.0;
 									for(var j=0;j < desPaisDistInst.length;j++){
-										if ((desPaisDistInst[j].clave3==entidades[i].institucion_id) && (desPaisDistInst[j].clave1==e.target.feature.properties.dpto)){
+										if ((desPaisDistInst[j].clave3==instituciones[i].id) && (desPaisDistInst[j].clave1==e.target.feature.properties.dpto)){
 											depemDeptoInst+=desPaisDistInst[j].valor;
 											countDeptoInst++;
 										}
 									} */
 									//despTotDeptoInst=depemDeptoInst/countDeptoInst;
 									color=getColorDesemp2(lineaAccionDepartamento[0]);
-									if (lineaAccionDepartamento[0] !=0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><a tipo="filtroPorEntidad" institucion_id='+entidades[i].institucion_id+' depto_id='+e.target.feature.properties.dpto+' >'+entidades[i].institucion+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(lineaAccionDepartamento[0]).toFixed(0)+'%"><p class="text-left">'+parseFloat(lineaAccionDepartamento[0]).toFixed(2)+'%</p></div></div></td></tr>');
+									if (lineaAccionDepartamento[0] !=0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><a tipo="filtroPorEntidad" institucion_id='+instituciones[i].id+' depto_id='+e.target.feature.properties.dpto+' >'+instituciones[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(lineaAccionDepartamento[0]).toFixed(0)+'%"><p class="text-left">'+parseFloat(lineaAccionDepartamento[0]).toFixed(2)+'%</p></div></div></td></tr>');
 
 								}
 							}
 						}else{ //d
 							var color="";var depemInst;var countInst;var despTotInst;
-							for (var i = 0; i< entidades.length;i++){
+							for (var i = 0; i< instituciones.length;i++){
 								/*  countInst=0;
 								depemInst=0.0;
 								despTotInst=0.0;
 								for(var j=0;j < desPaisDistInst.length;j++){
-									if ((desPaisDistInst[j].clave3==entidades[i].institucion_id) ){
+									if ((desPaisDistInst[j].clave3==instituciones[i].id) ){
 										depemInst+=desPaisDistInst[j].valor;
 										countInst++;
 									}
@@ -565,12 +565,12 @@ tbody {
 								despTotInst=depemInst/countInst; */
 								//despToInst=null;
 								for (var c = 0 ; c<desPaisInst.length;c++){
-									if(desPaisInst[c].institucionId==entidades[i].institucion_id)
+									if(desPaisInst[c].institucionId==instituciones[i].id)
 										despTotInst=desPaisInst[i].promedio;
 								}
 								
 								color=getColorDesemp2(despTotInst);
-								if (despTotInst !=0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><a tipo="filtroPorEntidad" institucion_id='+entidades[i].institucion_id+'  >'+entidades[i].institucion+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotInst).toFixed(2)+'%</p></div></div></td></tr>');
+								if (despTotInst !=0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><a tipo="filtroPorEntidad" institucion_id='+instituciones[i].id+'  >'+instituciones[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotInst).toFixed(2)+'%</p></div></div></td></tr>');
 
 							}
 						}
@@ -1178,7 +1178,7 @@ $("body").on("click", "#cierreEtiquetaDistrito",function(event){
 
 
 function renderTableroLineaAccion(institucionId,deptoId,distId){
-	
+	$("#cuerpoTableroLineaAccion").html("");
 	var tablaInstituciones="";
 	var tempInstituciones="";
 	var tempInstLineas="";
@@ -1187,7 +1187,7 @@ function renderTableroLineaAccion(institucionId,deptoId,distId){
 	
 	var condicion="";
 	var linea_accion_id="";
-	var cont, contEjecucion; 
+	var cont, contEjecucion, destinatarios, inversion; 
 	var acum, acumEjecucionPrevista, acumEjecucionLograda;
 	var promedio;
 	if(institucionId!=null)condicion= "&institucionId="+institucionId;
@@ -1204,14 +1204,16 @@ function renderTableroLineaAccion(institucionId,deptoId,distId){
 	lineasProgramadas=JSON.parse(lineasProgramadas);
 	
 	linea_accion_id=lineasProgramadas[0].insLineaAccionId;
-	cont=0, contEjecucion=0; 
+	cont=0, contEjecucion=0, destinatarios=0; inversion=0; 
 	acum=0, acumEjecucionPrevista=0, acumEjecucionLograda=0;
 	promedio=0;
 	for(var n=0; n<lineasProgramadas.length;n++){		
-		if(lineasProgramadas[n].insLineaAccionId==linea_accion_id){
+		if(lineasProgramadas[n].insLineaAccionId==linea_accion_id){			
 			contEjecucion++;
-			acumEjecucionPrevista=acumEjecucionPrevista + lineasProgramadas[n].cantidadHoy ;
-			acumEjecucionLograda=acumEjecucionLograda + lineasProgramadas[n].cantidadAvance;
+			if (lineasProgramadas[n].cantidadHoy!=null) acumEjecucionPrevista=acumEjecucionPrevista + lineasProgramadas[n].cantidadHoy;
+			if (lineasProgramadas[n].cantidadAvance!=null) acumEjecucionLograda=acumEjecucionLograda + lineasProgramadas[n].cantidadAvance;
+			if (lineasProgramadas[n].cantDestinatarioReal!=null) destinatarios= destinatarios + lineasProgramadas[n].cantDestinatarioReal;
+			if (lineasProgramadas[n].costoAc!=null) inversion= inversion + lineasProgramadas[n].costoAc;
 			
 			if ((lineasProgramadas[n].cantidadHoy == 0 || lineasProgramadas[n].cantidadHoy==null ) && lineasProgramadas[n].cantidadAvance > 0) {	
 				acum = acum + 100;
@@ -1230,40 +1232,77 @@ function renderTableroLineaAccion(institucionId,deptoId,distId){
 				promedio = acum / cont;
 			}else{
 				promedio = 0;
-			}			
+			}	
 			
-			clase="";			
-			if ((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100>=90){
-			 clase="bg-green-active color-palette"; 
-			}else if((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100>=70){
-			 clase="bg-yellow-active color-palette"; 
+			if(institucionId!=null && deptoId==null && distId==null){
+				clase="";			
+				if ((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100>=90){
+				 clase="bg-green-active color-palette"; 
+				}else if((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100>=70){
+				 clase="bg-yellow-active color-palette"; 
+				}else{
+				 clase="bg-red-active color-palette";
+				}
+				
+				tempInstLineas += '<tr>'+
+				'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n-1].lineaAccionNombre+'</a></td>'+
+				'<td>'+lineasProgramadas[n-1].lineaAccionUnidadMedidaNombre+'</td>'+
+				'<td>'+numeroConComa(lineasProgramadas[n-1].meta)+'</td>'+
+				'<td>'+numeroConComa(lineasProgramadas[n-1].cantidadAnho)+'</td>'+
+				'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100).toFixed(2))+'</td>'+
+				'<td>'+numeroConComa(lineasProgramadas[n-1].cantDest)+'</td>'+
+				'<td>'+numeroConComa((lineasProgramadas[n-1].inversionEstimada/1000000).toFixed(2))+'</td>'+
+				'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
+				'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
+				
+				clase="";			
+				if (promedio>=90){
+				 clase="bg-green-active color-palette"; 
+				}else if(promedio>=70){
+				 clase="bg-yellow-active color-palette"; 
+				}else{
+				 clase="bg-red-active color-palette";
+				}
+				
+				tempInstLineas += '<td class="'+clase+'">'+numeroConComa((promedio).toFixed(2))+'</td>'+
+				'<td>'+numeroConComa(destinatarios.toFixed(2))+'</td>'+
+				'<td>'+numeroConComa((inversion/1000000).toFixed(2))+'</td>'+
+				'</tr>';
 			}else{
-			 clase="bg-red-active color-palette";
+				clase="";			
+				if ((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100>=90){
+				 clase="bg-green-active color-palette"; 
+				}else if((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100>=70){
+				 clase="bg-yellow-active color-palette"; 
+				}else{
+				 clase="bg-red-active color-palette";
+				}
+				
+				tempInstLineas += '<tr>'+
+				'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n-1].lineaAccionNombre+'</a></td>'+
+				'<td>'+lineasProgramadas[n-1].lineaAccionUnidadMedidaNombre+'</td>'+
+				'<td>'+numeroConComa(lineasProgramadas[n-1].meta)+'</td>'+
+				'<td></td>'+
+				'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100).toFixed(2))+'</td>'+
+				'<td></td>'+
+				'<td>'+numeroConComa((lineasProgramadas[n-1].inversionEstimada/1000000).toFixed(2))+'</td>'+
+				'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
+				'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
+				
+				clase="";			
+				if (promedio>=90){
+				 clase="bg-green-active color-palette"; 
+				}else if(promedio>=70){
+				 clase="bg-yellow-active color-palette"; 
+				}else{
+				 clase="bg-red-active color-palette";
+				}
+				
+				tempInstLineas += '<td class="'+clase+'">'+numeroConComa((promedio).toFixed(2))+'</td>'+
+				'<td>'+numeroConComa(destinatarios.toFixed(2))+'</td>'+
+				'<td>'+numeroConComa((inversion/1000000).toFixed(2))+'</td>'+
+				'</tr>';
 			}			
-			tempInstLineas += '<tr>'+
-			'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n-1].lineaAccionNombre+'</a></td>'+
-			'<td>'+lineasProgramadas[n-1].lineaAccionUnidadMedidaNombre+'</td>'+
-			'<td>'+numeroConComa(lineasProgramadas[n-1].meta)+'</td>'+
-			'<td>'+numeroConComa(lineasProgramadas[n-1].cantidadAnho)+'</td>'+
-			'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100).toFixed(2))+'</td>'+
-			'<td>'+numeroConComa(lineasProgramadas[n-1].cantDest)+'</td>'+
-			'<td>'+numeroConComa((lineasProgramadas[n-1].inversionEstimada/1000000).toFixed(2))+'</td>'+
-			'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
-			'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
-			
-			clase="";			
-			if (promedio>=90){
-			 clase="bg-green-active color-palette"; 
-			}else if(promedio>=70){
-			 clase="bg-yellow-active color-palette"; 
-			}else{
-			 clase="bg-red-active color-palette";
-			}
-			
-			tempInstLineas += '<td class="'+clase+'">'+numeroConComa((promedio).toFixed(2))+'</td>'+
-			'<td>'+numeroConComa(lineasProgramadas[n-1].cantDestinatarioReal)+'</td>'+
-			'<td>'+numeroConComa((lineasProgramadas[n-1].costoAc/1000000).toFixed(2))+'</td>'+
-			'</tr>';
 			
 			//mostrar grilla n-1
 			cont=0, contEjecucion=0; 
@@ -1277,53 +1316,90 @@ function renderTableroLineaAccion(institucionId,deptoId,distId){
 				promedio = acum / cont;
 			}else{
 				promedio = 0;
-			}			
-			
-			clase="";			
-			if ((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=90){
-			 clase="bg-green-active color-palette"; 
-			}else if((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=70){
-			 clase="bg-yellow-active color-palette"; 
-			}else{
-			 clase="bg-red-active color-palette";
-			}			
-			tempInstLineas += '<tr>'+
-			'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
-			'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
-			'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
-			'<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>'+
-			'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
-			'<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>'+
-			'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
-			'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
-			'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
-			
-			clase="";			
-			if (promedio>=90){
-			 clase="bg-green-active color-palette"; 
-			}else if(promedio>=70){
-			 clase="bg-yellow-active color-palette"; 
-			}else{
-			 clase="bg-red-active color-palette";
 			}
 			
-			tempInstLineas += '<td class="'+clase+'">'+numeroConComa((promedio).toFixed(2))+'</td>'+
-			'<td>'+numeroConComa(lineasProgramadas[n].cantDestinatarioReal)+'</td>'+
-			'<td>'+numeroConComa((lineasProgramadas[n].costoAc/1000000).toFixed(2))+'</td>'+
-			'</tr>';
-			
+			if(institucionId!=null && deptoId==null && distId==null){
+				clase="";			
+				if ((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=90){
+				 clase="bg-green-active color-palette"; 
+				}else if((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=70){
+				 clase="bg-yellow-active color-palette"; 
+				}else{
+				 clase="bg-red-active color-palette";
+				}
+				
+				tempInstLineas += '<tr>'+
+				'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
+				'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
+				'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
+				'<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>'+
+				'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
+				'<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>'+
+				'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
+				'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
+				'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
+				
+				clase="";			
+				if (promedio>=90){
+				 clase="bg-green-active color-palette"; 
+				}else if(promedio>=70){
+				 clase="bg-yellow-active color-palette"; 
+				}else{
+				 clase="bg-red-active color-palette";
+				}
+				
+				tempInstLineas += '<td class="'+clase+'">'+numeroConComa((promedio).toFixed(2))+'</td>'+
+				'<td>'+numeroConComa(destinatarios.toFixed(2))+'</td>'+
+				'<td>'+numeroConComa((inversion/1000000).toFixed(2))+'</td>'+
+				'</tr>';
+			}else{
+				clase="";			
+				if ((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=90){
+				 clase="bg-green-active color-palette"; 
+				}else if((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=70){
+				 clase="bg-yellow-active color-palette"; 
+				}else{
+				 clase="bg-red-active color-palette";
+				}
+				
+				tempInstLineas += '<tr>'+
+				'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
+				'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
+				'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
+				'<td></td>'+
+				'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
+				'<td></td>'+
+				'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
+				'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
+				'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
+				
+				clase="";			
+				if (promedio>=90){
+				 clase="bg-green-active color-palette"; 
+				}else if(promedio>=70){
+				 clase="bg-yellow-active color-palette"; 
+				}else{
+				 clase="bg-red-active color-palette";
+				}
+				
+				tempInstLineas += '<td class="'+clase+'">'+numeroConComa((promedio).toFixed(2))+'</td>'+
+				'<td>'+numeroConComa(destinatarios.toFixed(2))+'</td>'+
+				'<td>'+numeroConComa((inversion/1000000).toFixed(2))+'</td>'+
+				'</tr>';
+			}			
 		} 
 	}
 	return tempInstLineas;
 }	
 
 $("body").on("click", "#tablaInstituciones",function(event){
-	
-	
+		
 	var institucion_id=event.target.attributes.institucion_id.value;
 	var nombreInstituciones="";
 	var dist_id="";
- 	var depto_id="";
+	var depto_id="";
+	//var dist_id=event.target.attributes.depto_id.nodeValue;
+ 	//var depto_id=event.target.attributes.dist_id.nodeValue;
 	
 	if (event.target.attributes.hasOwnProperty("dist_id")){
 		dist_id=event.target.attributes.dist_id.value;
@@ -1335,27 +1411,26 @@ $("body").on("click", "#tablaInstituciones",function(event){
 	if (institucion_id==""){
 		alert("Favor seleccionar previamente Departamento en el mapa");
 	}else{
-		for(var x = 0; x < entidades.length; x++){
-			if(entidades[x].institucion_id == institucion_id){
-				nombreInstituciones = entidades[x].institucion;
+		for(var x = 0; x < instituciones.length; x++){
+			if(instituciones[x].id == institucion_id){
+				nombreInstituciones = instituciones[x].sigla;
 			}
 		}
 		$("#nombreInstitucionTabla").html(nombreInstituciones);
-		if(institucion_id != ""){
-			var a = renderTableroLineaAccion(institucion_id);
-			$("#cuerpoTableroLineaAccion").html(a);
-		}		
-		if(institucion_id != "" && depto_id != ""){
-			var a = renderTableroLineaAccion(institucion_id,depto_id);
-			$("#cuerpoTableroLineaAccion").html(a);
-		}
 		if(institucion_id != "" && depto_id != "" && dist_id != ""){
 			var a = renderTableroLineaAccion(institucion_id,depto_id,dist_id);
 			$("#cuerpoTableroLineaAccion").html(a);
+		}else{
+			if(institucion_id != "" && depto_id != ""){
+				var a = renderTableroLineaAccion(institucion_id,depto_id);
+				$("#cuerpoTableroLineaAccion").html(a);
+			}else{
+				if(institucion_id != ""){
+					var a = renderTableroLineaAccion(institucion_id);
+					$("#cuerpoTableroLineaAccion").html(a);
+				}	
+			}			
 		}
-		
-
-
 	}
 	
 	

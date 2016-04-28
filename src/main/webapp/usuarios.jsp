@@ -122,42 +122,59 @@ if (user != null) { %>
 			usuarios = JSON.parse(usuarios);
 			usuarios = usuarios.usuarios;
 			
-			for(var q = 0; q < usuarios.length; q++){
-				//cuerpoTabla += '<tr><td>'+usuarios[q].entidad+'</td><td>'+usuarios[q].nombre+'</td><td>'+usuarios[q].correo+'</td><td>'+usuarios[q].rol_id+'</td><td><a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+usuarios[q].url+'" Download="Nota_usuario_'+usuarios[q].nombre+'" >Descargar Archivo</a></td><td class="text-center"><button type="button" class="btn btn-default btn-sm registrosInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Editar Usuario" ><span class="glyphicon glyphicon-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Borrar Usuario"><span class="glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-default btn-sm agregarUsuario" data-toggle="tooltip" data-placement="top" title="Agregar Usuario"><span class="glyphicon glyphicon-user"></span></button></td></tr>';
+			var roles = $.ajax({
+				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getRol',
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+			}).responseText;
+			roles = JSON.parse(roles);
 			
+			var rolId;
+			for(var q = 0; q < usuarios.length; q++){
+				
+				rolId = "";
+				for(var r = 0; r < roles.length; r++){
+					if(usuarios[q].rol_id == roles[r].rolId){
+						rolId = roles[r].nombre;
+					}
+				}
 				if(usuarios[q].borrado == true)
 				{
 					<%if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") ){%>
-						cuerpoTabla += '<tr><td>'+usuarios[q].entidad+'</td><td>'+usuarios[q].nombre+'</td><td>'+usuarios[q].correo+'</td><td>'+usuarios[q].rol_id+'</td><td><a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+usuarios[q].url+'" Download="Nota_usuario_'+usuarios[q].nombre+'" >Descargar Archivo</a></td><td class="text-center"><button type="button" class="btn btn-default btn-sm registrosInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Editar Usuario" ><span class="glyphicon glyphicon-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Borrar Usuario"><span class="glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-default btn-sm agregarUsuario" data-toggle="tooltip" data-placement="top" title="Agregar Usuario"><span class="glyphicon glyphicon-user"></span></button></td></tr>';
+						cuerpoTabla += '<tr><td><del>'+usuarios[q].entidad+'</del></td>';
+						if(usuarios[q].url){
+							cuerpoTabla += '<td><del><a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+usuarios[q].url+'" Download="Nota_usuario_'+usuarios[q].nombre+'" >'+usuarios[q].nombre+'</a></del></td><td><del>'+usuarios[q].correo+'</del></td><td><del>'+rolId+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm registrosInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Editar Usuario" ><span class="glyphicon glyphicon-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarUsuario" data-toggle="tooltip" data-placement="top" title="Borrar Usuario" parametros="'+usuarios[q].id+'"><span class="glyphicon glyphicon-trash"></span></button></td></tr>';
+						}else{
+							cuerpoTabla += '<td><del>'+usuarios[q].nombre+'</del></td><td><del>'+usuarios[q].correo+'</del></td><td><del>'+rolId+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm registrosInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Editar Usuario" ><span class="glyphicon glyphicon-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarUsuario" data-toggle="tooltip" data-placement="top" title="Borrar Usuario" parametros="'+usuarios[q].id+'"><span class="glyphicon glyphicon-trash"></span></button></td></tr>';
+						}
 					<%}%>
 				}else{
 					<%if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>
-						cuerpoTabla += '<tr><td>'+usuarios[q].entidad+'</td><td>'+usuarios[q].nombre+'</td><td>'+usuarios[q].correo+'</td><td>'+usuarios[q].rol_id+'</td><td>';
+						cuerpoTabla += '<tr><td>'+usuarios[q].entidad+'</td>';
+						
 							if (usuarios[q].url) {
-								cuerpoTabla += '<a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+usuarios[q].url+'" Download="Nota_usuario_'+usuarios[q].nombre+'"><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Descargar" ><span class="fa fa-download"></span></button></a></td><td class="text-center"><button type="button" class="btn btn-default btn-sm registrosInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Editar Usuario" ><span class="glyphicon glyphicon-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Borrar Usuario"><span class="glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-default btn-sm agregarUsuario" data-toggle="tooltip" data-placement="top" title="Agregar Usuario"><span class="glyphicon glyphicon-user"></span></button></td></tr>';
+								cuerpoTabla += '<td><a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+usuarios[q].url+'" Download="Nota_usuario_'+usuarios[q].nombre+'" >'+usuarios[q].nombre+'</a></td><td>'+usuarios[q].correo+'</td><td>'+rolId+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm registrosInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Editar Usuario" ><span class="glyphicon glyphicon-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarUsuario" data-toggle="tooltip" data-placement="top" title="Borrar Usuario" parametros="'+usuarios[q].id+'"><span class="glyphicon glyphicon-trash"></span></button></td></tr>';
 							} else {
-								cuerpoTabla += '</td><td class="text-center"><button type="button" class="btn btn-default btn-sm registrosInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Editar Usuario" ><span class="glyphicon glyphicon-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Borrar Usuario"><span class="glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-default btn-sm agregarUsuario" data-toggle="tooltip" data-placement="top" title="Agregar Usuario"><span class="glyphicon glyphicon-user"></span></button></td></tr>';	
+								cuerpoTabla += '<td>'+ usuarios[q].nombre+'</td><td>'+usuarios[q].correo+'</td><td>'+rolId+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm registrosInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Editar Usuario" ><span class="glyphicon glyphicon-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarUsuario" data-toggle="tooltip" data-placement="top" title="Borrar Usuario" parametros="'+usuarios[q].id+'"><span class="glyphicon glyphicon-trash"></span></button></td></tr>';	
 							}					
 					<%} if (attributes.get("role_id").toString().equals("3")){%>
-						cuerpoTabla += '<tr><td>'+usuarios[q].entidad+'</td><td>'+usuarios[q].nombre+'</td><td>'+usuarios[q].correo+'</td><td>'+usuarios[q].rol_id+'</td><td>';								
+						cuerpoTabla += '<tr><td>'+usuarios[q].entidad+'</td>';
 						if (usuarios[q].url) {
-							cuerpoTabla += '<a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+usuarios[q].url+'" Download="Nota_usuario_'+usuarios[q].nombre+'" >Descargar Archivo</a>' + '</td><td class="text-center"></td></tr>';
+							cuerpoTabla += '<td><a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+usuarios[q].url+'" Download="Nota_usuario_'+usuarios[q].nombre+'" >'+usuarios[q].nombre+'</a></td><td>'+usuarios[q].correo+'</td><td>'+rolId+'</td><td class="text-center"></td></tr>';
 						}else{
-							cuerpoTabla += '</td><td class="text-center"></td></tr>';
+							cuerpoTabla += '<td>'+usuarios[q].nombre+'</td><td>'+usuarios[q].correo+'</td><td>'+rolId+'</td><td class="text-center"></td></tr>';
 						}
 					<%}%>
 				}	
 			}
 			
 			
-			
-			
-			
-			
 			var tablaUsuarios ='<div class="table-responsive">'+
 			'	              	<table class="table table-hover table-bordered" id="dataTablesUsuarios">'+
 			'	                	<thead>'+
-			'	                		<tr class="active"><th class="text-center">Entidad</th><th class="text-center">Nombre</th><th class="text-center">Correo</th><th class="text-center">Rol_Id</th><th>Descargar</th><th class="text-center">Administrar</th></tr>'+
+			'	                		<tr class="active"><th class="text-center" colspan="3">Agregar Nuevo Usuario</th><th class="text-center"></th><th class="text-center"><button type="button" class="btn btn-default btn-sm agregarUsuario" data-toggle="tooltip" data-placement="top" title="Agregar Usuario"><span class="glyphicon glyphicon-user"></span></button></th></tr>'+
+			'	                		<tr class="active"><th class="text-center">Entidad</th><th class="text-center">Nombre</th><th class="text-center">Correo</th><th class="text-center">Rol_Id</th><th class="text-center">Administrar</th></tr>'+
 			'	                	</thead>'+
 			'	                	<tbody id="tablaUsuariosPrecargados">'+
 			'	                	</tbody>'+
@@ -193,10 +210,6 @@ if (user != null) { %>
 				optionRoles += '<option value="'+roles[r].rolId+'" >'+roles[r].nombre+'</option>';
 				
 			}
-	
-/* 			var parametros = $(this).attr("parametros");
-		    var idParsed = parametros.split("-");    
-		    var insLineaAccionId = idParsed[0]; */
 			
 			var cuerpoModalUsuario = "";
 
@@ -336,21 +349,7 @@ if (user != null) { %>
 			          	async:false
 			    	}).responseText;
 			    	unidadResponsable = JSON.parse(unidadResponsable);
-			    	
-/* 			        var datalistNiveles = document.createElement('datalist');
-			        datalistNiveles.setAttribute('id','listaResponsable');
-			        datalistNiveles.setAttribute('size','90'); 
-			        var ubicacionDatalistNiveles = document.getElementById('formulario');
-			        ubicacionDatalistNiveles.appendChild(datalistNiveles);
-			
-			        for(var v = 0; v < unidadResponsable.length ; v++) 
-			        {    
-			        	var option = document.createElement('option');
-			          	option.setAttribute('value',unidadResponsable[v].id);
-			          	option.setAttribute('label',unidadResponsable[v].nombre);
-			          	datalistNiveles.appendChild(option);      
-			      	}  */
-			      	
+			    				      	
 			      	$("#unidadResponsableUsuario").html(""); 
 			      	var optionUnidadRes="";
 					for(var r = 0; r < unidadResponsable.length; r++){
@@ -460,6 +459,117 @@ if (user != null) { %>
 			 });	
 		});
 		
+	$("body").on("click", ".consultaBorrarUsuario",function(event){
+		var parametros = $(this).attr("parametros");
+	    var idParsed = parametros.split("-"); 
+	    var usuarioId = idParsed[0];
+	    
+		if ( $("#modalBorrarUsuario").length )
+		{
+			$("#modalBorrarUsuario").remove();
+		}		
+		
+		var usuarios = $.ajax({
+			url:'http://spr.stp.gov.py/ajaxSelects?accion=getUsuarios&usuarioId='+usuarioId,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		usuarios = JSON.parse(usuarios);
+		usuarios = usuarios.usuarios;
+   		
+		var contenido = "";
+
+		contenido =			'<div class="modal fade" id="modalBorrarUsuario"  data-backdrop="static" data-keyboard="false" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">'+
+							'	<div class="modal-dialog modal-lg">'+
+							'		<div class="modal-content" >'+
+							'			<div class="modal-header">'+
+							'		        <button type="button" class="close cerrarActualizar" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+							'		        <h4 class="modal-title" >Borrar - Restaurar Usuario</h4>'+
+							'			</div>'+
+							'		    <div class="modal-body">'+
+							'			<div id="mensajeBorradoUsuario"></div>'+
+							'		    </div>'+
+							'			<div class="modal-footer" id="agregarBotonBorradoUsuario">'+
+							'			</div>'+
+							'		</div>'+ 
+							'	</div>'+
+							'</div>';
+							
+			$("body").append(contenido);
+			
+			if(usuarios[0].borrado == true){
+				$("#mensajeBorradoUsuario").html("");
+				$("#mensajeBorradoUsuario").append('<h3 class="text-center">Ud. esta seguro que desea RESTABLACER<strong> '+usuarios[0].correo+'</strong></h3>');
+				$("#agregarBotonBorradoUsuario").html("");
+				$("#agregarBotonBorradoUsuario").append('<button type="button" class="btn btn-success btn-sm borrarUsuario" id="botonRestaurarUsuario" parametros='+usuarioId+'-r>Restaurar Acción</button>');
+			}else{
+				$("#mensajeBorradoUsuario").html("");
+				$("#mensajeBorradoUsuario").append('<h3 class="text-center">Ud. esta seguro que desea BORRAR<strong> '+usuarios[0].correo+'</strong></h3');
+				$("#agregarBotonBorradoUsuario").html("");
+				$("#agregarBotonBorradoUsuario").append('<button type="button" class="btn btn-danger btn-sm borrarUsuario" id="botonBorradoUsuario" parametros='+usuarioId+'-b>Borrar Acción</button>');
+			}
+			
+			$('#modalBorrarUsuario').modal('show');
+	});
+	
+	$("body").on("click", ".borrarUsuario",function(event){	
+		var parametros = $(this).attr("parametros");
+	    var idParsed = parametros.split("-"); 
+	    var usuarioId = idParsed[0];
+	    var estado = idParsed[1];
+	    
+		var usuarios = $.ajax({
+			url:'http://spr.stp.gov.py/ajaxSelects?accion=getUsuarios&usuarioId='+usuarioId,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		usuarios = JSON.parse(usuarios);
+		usuarios = usuarios.usuarios;
+	    
+	    var objeto = new Object();
+	    objeto.id = usuarioId;
+	    objeto.borrado= usuarios[0].borrado;
+
+	    
+	  	var info = JSON.stringify(objeto);
+	    $.ajax({
+	        url: "http://spr.stp.gov.py/ajaxUpdate?accion=actBorradoUsuario",
+	        type: 'POST',
+	        dataType: 'json',
+	        data: info,
+	        contentType: 'application/json',
+	        mimeType: 'application/json',
+	        success: function (data) {
+	        	
+	        	if(data.success == true){
+	            	if(estado == "b"){
+	            		$("#botonBorradoUsuario").remove();
+		            	$("#mensajeBorradoUsuario").html("");
+		            	$("#mensajeBorradoUsuario").html("<h3 class='text-center'>BORRADO EXITOSAMENTE!!</h3>");
+		            	renderUsuarios();
+		            }else{
+		        		$("#botonRestaurarUsuario").remove();
+		            	$("#mensajeBorradoUsuario").html("");
+		            	$("#mensajeBorradoUsuario").html("<h3 class='text-center'>RESTAURADO EXITOSAMENTE!!</h3>");
+		            	renderUsuarios();
+		        	}
+	        	}
+
+	        },
+
+	        error: function(data,status,er) {
+	        	
+	        	}
+		 });
+		
+	});
+	
+	$("body").on("click", ".cerrarActualizar",function(event){
+
+		renderUsuarios();
+	});
 		
 	});
 <%}else{%>
@@ -566,7 +676,7 @@ if (user != null) { %>
      
         <%  } else { %>
 				est<p>Favor Iniciar Sesion</p>
-			<%  } %>
+			<%} %>
 	
 
 <!-- Piwik -->
