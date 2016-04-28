@@ -9,19 +9,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-
-
-
-
-
-
-
-
-
-
-
-
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.servlet.ServletException;
@@ -79,7 +66,7 @@ public class ajaxSelects extends HttpServlet {
     	Integer pais = null;
     	Integer departamento = null;
     	Integer distrito = null;
-    	Integer objetivo = null;
+    	Integer objetivo = null; 
     	Integer estrategia = null;
     	Integer indicador = null;
     	Integer tipoDestinatario = null;

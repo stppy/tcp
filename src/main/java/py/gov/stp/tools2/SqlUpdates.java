@@ -1490,6 +1490,7 @@ public static boolean borradoHito(Hito objeto){
 	        return true;
 	     }catch (SQLException e) {e.printStackTrace(); return false;}
 	}
+	
 	public static boolean borradoAccionDestinatario(AccionDestinatario objeto){
 	  	 Connection conect=ConnectionConfiguration.conectar();
 	  	 Statement statement = null;
