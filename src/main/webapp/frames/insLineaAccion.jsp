@@ -9312,7 +9312,7 @@ function imprimirAvancesInstitucion(){
 		
 		if (insLineasAccion[la].borrado == false ){
 			var accionCatalogoPorLineaAccion = $.ajax({ //total de acciones catalogo por linea acción
-				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogoPorLineaAccion&insLineaAccionId='+insLineasAccion[la].lineaAccionId,
+				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogoPorLineaAccion&insLineaAccionId='+insLineasAccion[la].id,
 			  	type:'get',
 			  	dataType:'json',
 			  	async:false       
@@ -9320,7 +9320,7 @@ function imprimirAvancesInstitucion(){
 			accionCatalogoPorLineaAccion = JSON.parse(accionCatalogoPorLineaAccion);
 											
 			var avance = $.ajax({ //total de avances por linea acción
-				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCualitativo&insLineaAccionId='+insLineasAccion[la].lineaAccionId,
+				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCualitativo&insLineaAccionId='+insLineasAccion[la].id,
 			  	type:'get',
 			  	dataType:'json',
 			  	async:false       
@@ -9343,7 +9343,7 @@ function imprimirAvancesInstitucion(){
 						var indice = avanceNB[a].accionCatalogoId;					
 						var trimestreAvanc = "";
 						
-						for (t = 0; t < trimestres.lenght; t++){
+						for (t = 0; t < trimestres.length; t++){
 							if (avanceNB[a].trimestreId == trimestres[t].id){
 									trimestreAvanc = trimestres[t].descripcion; 
 							}
