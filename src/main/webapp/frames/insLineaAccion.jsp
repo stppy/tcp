@@ -9284,10 +9284,9 @@ function imprimirAvancesInstitucion(){
 						'<div style="text-align:left"><img src="http://spr.stp.gov.py/tablero/dist/img/logo_stp_gob.png" height="20" width="180"></div>'+										
 				   '</header>';	
 		
-	var cuerpoHTML = "";
+	var cuerpoHTML = "";	
 	
-	var periodoActual = 2016;
-	var entidad = "<%=attributes.get("entidad") %>";
+	var periodoActual = 2016;	
 	
 	var insLineasAccion = $.ajax({
 		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion&periodoId='+periodoActual,
@@ -9305,14 +9304,30 @@ function imprimirAvancesInstitucion(){
 	}).responseText;
 	trimestres = JSON.parse(trimestres);
 	
+	var instituciones = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	instituciones = JSON.parse(instituciones);
+	
+	var institucionAct = '';	
+	
+	for(i = 0; i < instituciones.length; i++){
+		if (instituciones[i].id == insLineasAccion[0].institucionId){
+			institucionAct = instituciones[i].sigla;
+		}
+	}
+	
 	cuerpoHTML += '<br><h1 class="text-center"><u>SPR-PA-03: Informe de Avance Cualitativo por Institución para el Periodo '+periodoActual+'</u></h1>';
-			
+	
 	//recorre cada linea de acción no borrada del periodo actual
 	for(la = 0; la < insLineasAccion.length; la++){		
 		
 		if (insLineasAccion[la].borrado == false ){
 			var accionCatalogoPorLineaAccion = $.ajax({ //total de acciones catalogo por linea acción
-				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogoPorLineaAccion&insLineaAccionId='+insLineasAccion[la].lineaAccionId,
+				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogoPorLineaAccion&insLineaAccionId='+insLineasAccion[la].id,
 			  	type:'get',
 			  	dataType:'json',
 			  	async:false       
@@ -9320,7 +9335,7 @@ function imprimirAvancesInstitucion(){
 			accionCatalogoPorLineaAccion = JSON.parse(accionCatalogoPorLineaAccion);
 											
 			var avance = $.ajax({ //total de avances por linea acción
-				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCualitativo&insLineaAccionId='+insLineasAccion[la].lineaAccionId,
+				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCualitativo&insLineaAccionId='+insLineasAccion[la].id,
 			  	type:'get',
 			  	dataType:'json',
 			  	async:false       
@@ -9343,7 +9358,7 @@ function imprimirAvancesInstitucion(){
 						var indice = avanceNB[a].accionCatalogoId;					
 						var trimestreAvanc = "";
 						
-						for (t = 0; t < trimestres.lenght; t++){
+						for (t = 0; t < trimestres.length; t++){
 							if (avanceNB[a].trimestreId == trimestres[t].id){
 									trimestreAvanc = trimestres[t].descripcion; 
 							}
@@ -9351,7 +9366,7 @@ function imprimirAvancesInstitucion(){
 						
 						$("#paraImpresiones").show();					
 						
-						$("#impresionInstitucion").text(entidad);
+						$("#impresionInstitucion").text(institucionAct);
 						$("#impresionAccionesTrimestre").text(accionCatalogoPorLineaAccion[ac].nombreAccionCatalogo);
 						$("#impresionTrimestreAño").text(trimestreAvanc+' '+periodoActual);
 						$("#impresionGestionesRealizadas").text(avanceNB[a].gestionesRealizadas);
