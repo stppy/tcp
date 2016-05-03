@@ -90,6 +90,7 @@ if (user != null) { %>
 								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160411.pdf" download="Constancia_PA1_20160411" class="list-group-item glyphicon glyphicon-download-alt"> 11-ABRIL-2016</a>
 								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160414.pdf" download="Constancia_PA1_20160414" class="list-group-item glyphicon glyphicon-download-alt"> 14-ABRIL-2016</a>
 								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160415.pdf" download="Constancia_PA1_20160415" class="list-group-item glyphicon glyphicon-download-alt"> 15-ABRIL-2016</a>
+								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160502.pdf" download="Constancia_PA1_20160502" class="list-group-item glyphicon glyphicon-download-alt"> 02-MAYO-2016</a>
 							</div>
 						</div><!-- /.fin-box-body -->
 					</div><!-- /.fin_box -->
