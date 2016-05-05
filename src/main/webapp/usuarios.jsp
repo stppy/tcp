@@ -144,9 +144,9 @@ if (user != null) { %>
 					<%if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") ){%>
 						cuerpoTabla += '<tr><td><del>'+usuarios[q].entidad+'</del></td>';
 						if(usuarios[q].url){
-							cuerpoTabla += '<td><del><a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+usuarios[q].url+'" Download="Nota_usuario_'+usuarios[q].nombre+'" >'+usuarios[q].nombre+'</a></del></td><td><del>'+usuarios[q].correo+'</del></td><td><del>'+rolId+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm registrosInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Editar Usuario" ><span class="glyphicon glyphicon-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarUsuario" data-toggle="tooltip" data-placement="top" title="Borrar Usuario" parametros="'+usuarios[q].id+'"><span class="glyphicon glyphicon-trash"></span></button></td></tr>';
+							cuerpoTabla += '<td><del><a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+usuarios[q].url+'" Download="Nota_usuario_'+usuarios[q].nombre+'" >'+usuarios[q].nombre+'</a></del></td><td><del>'+usuarios[q].correo+'</del></td><td><del>'+rolId+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarUsuario" data-toggle="tooltip" data-placement="top" title="Editar Usuario" parametros="'+usuarios[q].id+'"><span class="glyphicon glyphicon-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarUsuario" data-toggle="tooltip" data-placement="top" title="Borrar Usuario" parametros="'+usuarios[q].id+'"><span class="glyphicon glyphicon-trash"></span></button></td></tr>';
 						}else{
-							cuerpoTabla += '<td><del>'+usuarios[q].nombre+'</del></td><td><del>'+usuarios[q].correo+'</del></td><td><del>'+rolId+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm registrosInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Editar Usuario" ><span class="glyphicon glyphicon-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarUsuario" data-toggle="tooltip" data-placement="top" title="Borrar Usuario" parametros="'+usuarios[q].id+'"><span class="glyphicon glyphicon-trash"></span></button></td></tr>';
+							cuerpoTabla += '<td><del>'+usuarios[q].nombre+'</del></td><td><del>'+usuarios[q].correo+'</del></td><td><del>'+rolId+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarUsuario" data-toggle="tooltip" data-placement="top" title="Editar Usuario" parametros="'+usuarios[q].id+'" ><span class="glyphicon glyphicon-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarUsuario" data-toggle="tooltip" data-placement="top" title="Borrar Usuario" parametros="'+usuarios[q].id+'"><span class="glyphicon glyphicon-trash"></span></button></td></tr>';
 						}
 					<%}%>
 				}else{
@@ -154,9 +154,9 @@ if (user != null) { %>
 						cuerpoTabla += '<tr><td>'+usuarios[q].entidad+'</td>';
 						
 							if (usuarios[q].url) {
-								cuerpoTabla += '<td><a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+usuarios[q].url+'" Download="Nota_usuario_'+usuarios[q].nombre+'" >'+usuarios[q].nombre+'</a></td><td>'+usuarios[q].correo+'</td><td>'+rolId+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm registrosInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Editar Usuario" ><span class="glyphicon glyphicon-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarUsuario" data-toggle="tooltip" data-placement="top" title="Borrar Usuario" parametros="'+usuarios[q].id+'"><span class="glyphicon glyphicon-trash"></span></button></td></tr>';
+								cuerpoTabla += '<td><a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+usuarios[q].url+'" Download="Nota_usuario_'+usuarios[q].nombre+'" >'+usuarios[q].nombre+'</a></td><td>'+usuarios[q].correo+'</td><td>'+rolId+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarUsuario" data-toggle="tooltip" data-placement="top" title="Editar Usuario" parametros="'+usuarios[q].id+'" ><span class="glyphicon glyphicon-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarUsuario" data-toggle="tooltip" data-placement="top" title="Borrar Usuario" parametros="'+usuarios[q].id+'"><span class="glyphicon glyphicon-trash"></span></button></td></tr>';
 							} else {
-								cuerpoTabla += '<td>'+ usuarios[q].nombre+'</td><td>'+usuarios[q].correo+'</td><td>'+rolId+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm registrosInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Editar Usuario" ><span class="glyphicon glyphicon-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarUsuario" data-toggle="tooltip" data-placement="top" title="Borrar Usuario" parametros="'+usuarios[q].id+'"><span class="glyphicon glyphicon-trash"></span></button></td></tr>';	
+								cuerpoTabla += '<td>'+ usuarios[q].nombre+'</td><td>'+usuarios[q].correo+'</td><td>'+rolId+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarUsuario" data-toggle="tooltip" data-placement="top" title="Editar Usuario" parametros="'+usuarios[q].id+'" ><span class="glyphicon glyphicon-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarUsuario" data-toggle="tooltip" data-placement="top" title="Borrar Usuario" parametros="'+usuarios[q].id+'"><span class="glyphicon glyphicon-trash"></span></button></td></tr>';	
 							}					
 					<%} if (attributes.get("role_id").toString().equals("3")){%>
 						cuerpoTabla += '<tr><td>'+usuarios[q].entidad+'</td>';
@@ -484,7 +484,7 @@ if (user != null) { %>
 							'	<div class="modal-dialog modal-lg">'+
 							'		<div class="modal-content" >'+
 							'			<div class="modal-header">'+
-							'		        <button type="button" class="close cerrarActualizar" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+							'		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
 							'		        <h4 class="modal-title" >Borrar - Restaurar Usuario</h4>'+
 							'			</div>'+
 							'		    <div class="modal-body">'+
@@ -566,10 +566,315 @@ if (user != null) { %>
 		
 	});
 	
-	$("body").on("click", ".cerrarActualizar",function(event){
+	$("body").on("click", ".consultaEditarUsuario",function(event){
+		
+		if ( $("#modalEditarUsuario").length )
+		{
+			$("#modalEditarUsuario").remove();
+		}	
+		var parametros = $(this).attr("parametros");
+	    var idParsed = parametros.split("-"); 
+	    var usuarioId = idParsed[0];		
+		
+		var usuarios = $.ajax({
+			url:'http://spr.stp.gov.py/ajaxSelects?accion=getUsuarios&usuarioId='+usuarioId,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		usuarios = JSON.parse(usuarios);
+		usuarios = usuarios.usuarios;
+	    
+	    
+		var roles = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getRol',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		roles = JSON.parse(roles);
+		
+		optionRoles = "";
+		for(var r = 0; r < roles.length; r++){
+			if(roles[r].rolId == usuarios[0].rol_id){
+				optionRoles += '<option value="'+roles[r].rolId+'" selected>'+roles[r].nombre+'</option>';
+			}else{
+				optionRoles += '<option value="'+roles[r].rolId+'" >'+roles[r].nombre+'</option>';
+			}
+		}
+		
+		var cuerpoModalUsuario = "";
+
+	    cuerpoModalUsuario =	'<div class="modal fade" id="modalEditarUsuario" tabindex="-1" aria-labelledby="myLargeModalLabel">'+
+		'	<div class="modal-dialog modal-lg" style="width:90%">'+
+		'		<div class="modal-content" >'+
+		'			<div class="modal-header">'+
+		'		        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>'+
+		'		        <h4 class="modal-title">Editar Usuario</h4>'+   
+		'			</div>'+
+		'		    <div class="modal-body" id="accionCuerpo" >'+
+		
+		'		      	<div class="row">'+ 
+		'		      		<div class="col-md-12">'+
+		'						<div class="box box-warning">'+
+		'		                	<div class="box-header with-border">'+
+		'		                  		<h3 class="box-title"></h3>'+
+		'	                  			<div class="box-tools pull-right">'+
+		'		                  		</div>'+
+		'               			</div>'+//fin box-heder
+		'               			<div class="box-body" id="cuerpoModalUsuario">'+
+		
+		'								<div id="mensajeBorradoUsuario"></div>'+
+		'								<form role="form" id="formulario">'+
+		'									<div class="table-responsive">'+
+		'										<table class="table table-hover">'+
+		'											<tbody>'+
+		'												<tr><td><div class="form-group"><label for="nivelUsuario">Nivel</label><input type="text" class="form-control" id="nivelUsuario" list="listaNiveles" placeholder="Nivel" value="'+usuarios[0].nivel_id+'" /></div></td><td><div class="form-group"><label for="entidadUsuario">Entidad</label><input type="text" class="form-control" id="entidadUsuario" list="listaEntidades" value="'+usuarios[0].entidad_id+'"/></div></td></tr>'+
+		'												<tr><td><div class="form-group"><label for="correoUsuario">Correo</label><input type="text" class="form-control" id="correoUsuario" placeholder="Ingrese Correo del Usuario" value="'+usuarios[0].correo+'"  ></div></td><td><div class="form-group"><label for="contrasenaUsuario">Contraseña</label><input type="password" class="form-control" id="contrasenaUsuario" placeholder="Ingrese una Contraseña" value="'+usuarios[0].passwd+'" /></div></td></tr>'+
+		'												<tr><td><div class="form-group"><label for="unidadResponsableUsuario">U. Responsable</label><select id="unidadResponsableUsuario" class="form-control"></select></div></td><td><div class="form-group"><label for="NombreUsuario">Nombre</label><input type="text" class="form-control" id="nombreUsuarioFormulario" placeholder="Ingrese Nombre del Usuario" value="'+usuarios[0].nombre+'" /></div></td></tr>'+
+		'												<tr><td><label for="documentoUsuario">Adjuntar Documento</label><input type="file" id="documentoUsuario" name="documentoUsuario" /><input type="hidden" id="urlDocUsuario" name="urlDocUsuario" value="" /></td><td><div class="form-group"><label for="rolIdUsuario">Rol Id</label><select id="rolIdUsuario" class="form-control">'+optionRoles+'</select></div></td></tr>'+
+		'											</tbody>'+							           
+		'										</table>'+
+		'									</div>'+
+		'								</form>'+
+		'               			</div>'+//fin box-body
+		'							<div class="modal-footer">'+
+		'								<button type="button" class="btn btn-success btn-sm guardarCambiosUsuario" id="botonGuardarUsuario" parametros="'+usuarios[0].id+'">Guardar Cambios</button>'+
+		'							</div>'+
+		'                		</div>'+	
+		'                	</div>'+
+		'                </div>'+											
+
+		'		    </div>'+
+
+		'		</div>'+ 
+		'	</div>'+
+		'</div>'; 
+
+		$("body").append(cuerpoModalUsuario);
+    	var nivelId = document.getElementById('nivelUsuario').value;
+    	var entidadId = document.getElementById('entidadUsuario').value;
+
+    	var unidadResponsable = $.ajax({
+         	 url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadResponsable&nivelId='+nivelId+'&entidadId='+entidadId,
+          	type:'get',
+          	dataType:'json',
+          	async:false
+    	}).responseText;
+    	unidadResponsable = JSON.parse(unidadResponsable);
+      	var optionUnidadRes="";
+		for(var r = 0; r < unidadResponsable.length; r++){
+			if(unidadResponsable[r].id == usuarios[0].unidadResponsable){
+				optionUnidadRes += '<option value="'+unidadResponsable[r].id+'" selected >'+unidadResponsable[r].nombre+'</option>';
+			}else{
+				optionUnidadRes += '<option value="'+unidadResponsable[r].id+'" >'+unidadResponsable[r].nombre+'</option>';
+			}
+		}
+    	$("#unidadResponsableUsuario").append(optionUnidadRes);
+    	
+		$("#modalEditarUsuario").modal('show');
+		
+		function Combo(){
+
+		    this.nivelFocus = function(){
+			//if( $("#listaNiveles").length ) {
+				$("#listaNiveles").remove();
+				$('#nivelUsuario').val('');
+				$("#listaEntidades").remove();
+				$('#entidadUsuario').val('');
+				$("#listaResponsable").remove();
+				$('#unidadResponsableUsuario').val('');
+			//}
+			
+		   	  var listaDatalist=document.getElementsByTagName('datalist');
+		      var datosNiveles = $.ajax({
+		          url:'http://spr.stp.gov.py/ajaxSelects?accion=getNiveles',
+		          type:'get',
+		          dataType:'json',	
+		          async:false       
+		        }).responseText;   
+		        datosNiveles = JSON.parse(datosNiveles);
+		        
+				
+		        if(listaDatalist.length === 0 )
+		        {
+			        var datalistNiveles = document.createElement('datalist');
+			        datalistNiveles.setAttribute('id','listaNiveles');
+			        datalistNiveles.setAttribute('size','5'); 
+			        var ubicacionDatalistNiveles = document.getElementById('formulario');
+			        ubicacionDatalistNiveles.appendChild(datalistNiveles);
+			
+			        for(var i = 0; i < datosNiveles.niveles.length ; i++) 
+			        {    
+			        	var option = document.createElement('option');
+			          	option.setAttribute('value',datosNiveles.niveles[i].nivel);
+			          	option.setAttribute('label',datosNiveles.niveles[i].nombreNivel);
+			          	datalistNiveles.appendChild(option);      
+			      	} 
+		        }
+		    } 
+
+		    this.entidadFocus = function(){ 
+		    	
+				if ( $("#listaEntidades").length ) {
+					$("#listaEntidades").remove();
+					$('#entidadUsuario').val('');
+					$("#listaResponsable").remove();
+					$('#unidadResponsableUsuario').val('');
+				}
+		    	var linkNivel = document.getElementById('nivelUsuario').value;
+		    	var datosEntidades = $.ajax({
+		         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getEntidades&nivel='+linkNivel,
+		          	type:'get',
+		          	dataType:'json',
+		          	async:false
+		    	}).responseText;
+		    	datosEntidades = JSON.parse(datosEntidades);
+		    	
+		        var datalistNiveles = document.createElement('datalist');
+		        datalistNiveles.setAttribute('id','listaEntidades');
+		        datalistNiveles.setAttribute('size','5'); 
+		        var ubicacionDatalistNiveles = document.getElementById('formulario');
+		        ubicacionDatalistNiveles.appendChild(datalistNiveles);
+		
+		        for(var i = 0; i < datosEntidades.entidades.length ; i++) 
+		        {    
+		        	var option = document.createElement('option');
+		          	option.setAttribute('value',datosEntidades.entidades[i].entidad);
+		          	option.setAttribute('label',datosEntidades.entidades[i].nombreEntidad);
+		          	datalistNiveles.appendChild(option);      
+		      	} 
+		    	
+		     } 
+		    this.unidadResponsableFocus = function(){ 
+		    	
+				if ($("#listaResponsable").length ) {
+					$("#listaResponsable").remove();
+					$('#unidadResponsableUsuario').val('');
+				}
+		    	var linkNivel = document.getElementById('nivelUsuario').value;
+		    	var linkEntidad = document.getElementById('entidadUsuario').value;
+
+		    	var unidadResponsable = $.ajax({
+		         	 url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadResponsable&nivelId='+linkNivel+'&entidadId='+linkEntidad,
+		          	type:'get',
+		          	dataType:'json',
+		          	async:false
+		    	}).responseText;
+		    	unidadResponsable = JSON.parse(unidadResponsable);
+		    				      	
+		      	$("#unidadResponsableUsuario").html(""); 
+		      	var optionUnidadRes="";
+				for(var r = 0; r < unidadResponsable.length; r++){
+					optionUnidadRes += '<option value="'+unidadResponsable[r].id+'" >'+unidadResponsable[r].nombre+'</option>';
+				}
+		    	$("#unidadResponsableUsuario").append(optionUnidadRes);
+		     }  
+		    
+		}//fin combo
+		
+		  var eje1 = new Combo();
+		  document.getElementById('nivelUsuario').addEventListener('focus',eje1.nivelFocus,false);
+		  document.getElementById('entidadUsuario').addEventListener('focus',eje1.entidadFocus,false);
+		  document.getElementById('unidadResponsableUsuario').addEventListener('focus',eje1.unidadResponsableFocus,false); 			
+
+	});
+	
+	$("body").on("click", ".guardarCambiosUsuario",function(event){	
+		
+		var docUsuarioFile = document.getElementById("documentoUsuario").files[0];
+	    
+		if (docUsuarioFile != null){
+		    var formdata = new FormData();
+		    formdata.append('documentoEvidencia', docUsuarioFile);
+		    
+		     $.ajax({
+			         type: "POST",
+			         url: "/tablero/UploadServlet", /* contextPath + servletPath, */
+			         data: formdata, /* + $('#custIdList').val(), */
+			         async: false,
+			         processData: false,  // tell jQuery not to process the data
+			         contentType: false,   // tell jQuery not to set contentType
+			         success: function(data){
+			               $("#urlDocUsuario").val(data);
+			           }
+			     });
+		}
+		
+		var parametros = $(this).attr("parametros");
+	    var idParsed = parametros.split("-"); 
+	    var usuarioId = idParsed[0];
+		var nivelId = $("#nivelUsuario").val();
+		var entidadId = $("#entidadUsuario").val();
+		var correo = $("#correoUsuario").val();
+		var contrasena = $.md5($("#contrasenaUsuario").val());
+		var unidadResponsable = $("#unidadResponsableUsuario").val();
+		var nombre = $("#nombreUsuarioFormulario").val(); 
+		var urlDocumento; 
+			if (docUsuarioFile != undefined) urlDocumento = $("#urlDocUsuario").val();
+			
+		var rolId = $("#rolIdUsuario").val();
+		
+		var usuarios = $.ajax({
+			url:'http://spr.stp.gov.py/ajaxSelects?accion=getUsuarios&usuarioId='+usuarioId,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		usuarios = JSON.parse(usuarios);
+		usuarios = usuarios.usuarios;
+		
+    	var nombreEntidad = $.ajax({
+        	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getEntidades&entidadId='+entidadId+'&nivel='+nivelId,
+         	type:'get',
+         	dataType:'json',
+         	async:false
+   		}).responseText;
+   		nombreEntidad = JSON.parse(nombreEntidad);
+		
+	    var objeto = new Object();
+	    objeto.id = usuarioId;
+	    objeto.nivel_id = nivelId;
+	    objeto.entidad_id = entidadId; 
+	    objeto.correo = correo;  
+	    objeto.passwd = contrasena;  
+	    objeto.unidadResponsable = unidadResponsable;  
+	    objeto.nombre = nombre;  
+	    objeto.rol_id = rolId; 
+	    objeto.url = urlDocumento;
+		objeto.entidad = nombreEntidad.entidades[0].abrevEntidad;
+
+	    
+	  	var info = JSON.stringify(objeto);
+	    $.ajax({
+	        url: "http://spr.stp.gov.py/ajaxUpdate?accion=actUsuario",
+	        type: 'POST',
+	        dataType: 'json',
+	        data: info,
+	        contentType: 'application/json',
+	        mimeType: 'application/json',
+	        success: function (data) {
+	        	
+	        	if(data.success == true){
+	            		$("#botonGuardarUsuario").remove();
+		            	$("#cuerpoModalUsuario").html("");
+		            	$("#cuerpoModalUsuario").html("<h3 class='text-center'>ACTUALIZADO EXITOSAMENTE!!</h3>");
+		            	renderUsuarios();
+	        	}
+
+	        },
+
+	        error: function(data,status,er) {
+	        	
+	        	}
+		 });
+		
+	});
+	
+/*	$("body").on("click", ".cerrarActualizar",function(event){
 
 		renderUsuarios();
-	});
+	});*/
 		
 	});
 <%}else{%>

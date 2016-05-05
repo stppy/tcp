@@ -10,6 +10,8 @@ protected int entidadId;
 protected int nivelId;
 protected int unidadJerarquica;
 protected String anho;
+protected int unidadResponsable;
+
 public int getId() {
 	return id;
 }
@@ -63,6 +65,12 @@ public String getAnho() {
 }
 public void setAnho(String anho) {
 	this.anho = anho;
+}
+public int getUnidadResponsable() {
+	return unidadResponsable;
+}
+public void setUnidadResponsable(int unidadResponsable) {
+	this.unidadResponsable = unidadResponsable;
 }
 
 
