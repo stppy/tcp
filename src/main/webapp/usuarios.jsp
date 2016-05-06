@@ -630,7 +630,7 @@ if (user != null) { %>
 		'										<table class="table table-hover">'+
 		'											<tbody>'+
 		'												<tr><td><div class="form-group"><label for="nivelUsuario">Nivel</label><input type="text" class="form-control" id="nivelUsuario" list="listaNiveles" placeholder="Nivel" value="'+usuarios[0].nivel_id+'" /></div></td><td><div class="form-group"><label for="entidadUsuario">Entidad</label><input type="text" class="form-control" id="entidadUsuario" list="listaEntidades" value="'+usuarios[0].entidad_id+'"/></div></td></tr>'+
-		'												<tr><td><div class="form-group"><label for="correoUsuario">Correo</label><input type="text" class="form-control" id="correoUsuario" placeholder="Ingrese Correo del Usuario" value="'+usuarios[0].correo+'"  ></div></td><td><div class="form-group"><label for="contrasenaUsuario">Contraseña</label><input type="password" class="form-control" id="contrasenaUsuario" placeholder="Ingrese una Contraseña" value="'+usuarios[0].passwd+'" /></div></td></tr>'+
+		'												<tr><td><div class="form-group"><label for="correoUsuario">Correo</label><input type="text" class="form-control" id="correoUsuario" placeholder="Ingrese Correo del Usuario" value="'+usuarios[0].correo+'"  ></div></td><td><div class="form-group"><label for="contrasenaUsuario">Contraseña</label><input type="password" class="form-control" id="contrasenaUsuario" placeholder="Ingrese una Contraseña" value="" /></div></td></tr>'+
 		'												<tr><td><div class="form-group"><label for="unidadResponsableUsuario">U. Responsable</label><select id="unidadResponsableUsuario" class="form-control"></select></div></td><td><div class="form-group"><label for="NombreUsuario">Nombre</label><input type="text" class="form-control" id="nombreUsuarioFormulario" placeholder="Ingrese Nombre del Usuario" value="'+usuarios[0].nombre+'" /></div></td></tr>'+
 		'												<tr><td><label for="documentoUsuario">Adjuntar Documento</label><input type="file" id="documentoUsuario" name="documentoUsuario" /><input type="hidden" id="urlDocUsuario" name="urlDocUsuario" value="" /></td><td><div class="form-group"><label for="rolIdUsuario">Rol Id</label><select id="rolIdUsuario" class="form-control">'+optionRoles+'</select></div></td></tr>'+
 		'											</tbody>'+							           
@@ -807,7 +807,8 @@ if (user != null) { %>
 		var nivelId = $("#nivelUsuario").val();
 		var entidadId = $("#entidadUsuario").val();
 		var correo = $("#correoUsuario").val();
-		var contrasena = $.md5($("#contrasenaUsuario").val());
+		var contrasena = "";
+		if ($("#contrasenaUsuario").val()!="") contrasena = $.md5($("#contrasenaUsuario").val());
 		var unidadResponsable = $("#unidadResponsableUsuario").val();
 		var nombre = $("#nombreUsuarioFormulario").val(); 
 		var urlDocumento; 
