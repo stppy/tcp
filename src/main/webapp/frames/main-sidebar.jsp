@@ -27,7 +27,7 @@
 		   				<i class="fa fa-list-alt"></i> <span>Plan Operativo Institucional</span> <i class="fa fa-angle-left pull-right"></i>
 		   			</a>
 		   			<ul class="treeview-menu" style="display: none;">
-		   				<li><a href="http://spr.stp.gov.py/entidad.jsp"><i class="fa fa-home" id="linkEntidad"></i>Entidad</a></li>
+		   				<li><a href="http://spr.stp.gov.py/entidad.jsp"><i class="fa fa-home" id="linkEntidad"></i>Perfil Institucional</a></li>
 		        			<li class=""><a href="http://spr.stp.gov.py/programacion.jsp"><i class="fa fa-sitemap" id="linkEstructuraProgramatica"></i>Estructura Programática</a></li>
 		        			<li class=""><a href="http://spr.stp.gov.py/producto.jsp"><i class="fa fa-edit" id="linkProgramacionProducto"></i>Programación de Productos</a></li>         			
 		   			</ul>
@@ -66,10 +66,17 @@
     				<i class="fa fa-desktop"></i> <span>Reporte Ciudadano</span> <i class="fa fa-angle-left pull-right"></i>
     			</a>
 			</li>  		
- 			<li class="header">LABELS</li>
-            <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Documentación</span></a></li>
-            <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Diccionario de Datos</span></a></li>
-            <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Preguntas Frecuentes</span></a></li>
+ 			<li class="header">MÁS INFO</li>
+            	<li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Documentación</span></a></li>
+            	<li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Diccionario de Datos</span></a></li>
+            	<li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Preguntas Frecuentes</span></a></li>
+            <% if (attributes.get("role_id").toString().equals("0") ){%>	
+           	 <li class="header">ADMINISTRAR</li>
+            	<li><a href="/indicadores.jsp"><i class="glyphicon glyphicon-info-sign text-red"></i> <span>Indicadores</span></a></li>
+            	<li><a href="/objetivo.jsp"><i class="glyphicon glyphicon-flag text-yellow"></i> <span>Objetivos</span></a></li>
+            	<li><a href="#"><i class="glyphicon glyphicon-flag text-green"></i> <span>Objetivos Sugeridos</span></a></li>
+            	<li><a href="/tablero/usuarios.jsp"><i class="glyphicon glyphicon-user text-aqua"></i> <span>Usuarios</span></a></li>
+           	<%}%>
             <!-- 
             <li class="treeview">
              <a href=".#" id="programarPlan">

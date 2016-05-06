@@ -182,7 +182,7 @@ public class SqlUpdates {
 					    return true;
 			} catch (SQLException e) {e.printStackTrace(); return false;}			
 		}	
-	
+
 	public static boolean borradoLineaAccion(LineaAccion objeto){
 	  	 Connection conect=ConnectionConfiguration.conectar();
 	  	 Statement statement = null;
@@ -229,6 +229,24 @@ public class SqlUpdates {
 				    return true;
 			} catch (SQLException e) {e.printStackTrace(); return false;}
 		}
+	
+	/*public static boolean borradoInsLineaAccion(InsLineaAccion objeto){
+			
+		try {
+			Connection conect=ConnectionConfiguration.conectar();
+			 String query = "update ins_linea_accion set borrado= ? ";	
+				
+			PreparedStatement update = null;
+		  	objeto.changeBorrado();
+	  	 
+			 
+			 query+=" where id = ? "; 
+			 
+				update.execute(query);
+			    conect.close();
+			    return true;
+			} catch (SQLException e) {e.printStackTrace(); return false;}
+	}*/
 	public static boolean borradoInsLineaAccion(InsLineaAccion objeto){
 	  	 Connection conect=ConnectionConfiguration.conectar();
 	  	 Statement statement = null;
@@ -243,7 +261,7 @@ public class SqlUpdates {
 			    conect.close();
 			    return true;
 			} catch (SQLException e) {e.printStackTrace(); return false;}
-	}		
+	}	
 
 
 	public static boolean updateInstitucion(Institucion objeto){

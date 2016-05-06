@@ -552,6 +552,7 @@ tbody {
 							}
 						}else{ //d
 							var color="";var depemInst;var countInst;var despTotInst;
+
 							for (var i = 0; i< instituciones.length;i++){
 								/*  countInst=0;
 								depemInst=0.0;
