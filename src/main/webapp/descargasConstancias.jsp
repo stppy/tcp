@@ -113,6 +113,8 @@ if (user != null) { %>
 								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA2_20160422.pdf" download="Constancia_PA2_20160422" class="list-group-item glyphicon glyphicon-download-alt"> 22-ABRIL-2016</a>
 								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA2_20160426.pdf" download="Constancia_PA2_20160426" class="list-group-item glyphicon glyphicon-download-alt"> 26-ABRIL-2016</a>
 								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA2_20160429.pdf" download="Constancia_PA2_20160429" class="list-group-item glyphicon glyphicon-download-alt"> 29-ABRIL-2016</a>
+								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA2_20160511.pdf" download="Constancia_PA2_20160511" class="list-group-item glyphicon glyphicon-download-alt"> 29-ABRIL-2016</a>
+								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA2_20160516.pdf" download="Constancia_PA2_20160516" class="list-group-item glyphicon glyphicon-download-alt"> 29-ABRIL-2016</a>
 							</div>
 						</div>
 					</div>
