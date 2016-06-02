@@ -807,7 +807,7 @@ if (user != null) { %>
 		var nivelId = $("#nivelUsuario").val();
 		var entidadId = $("#entidadUsuario").val();
 		var correo = $("#correoUsuario").val();
-		var contrasena = "";
+		var contrasena = null;
 		if ($("#contrasenaUsuario").val()!="") contrasena = $.md5($("#contrasenaUsuario").val());
 		var unidadResponsable = $("#unidadResponsableUsuario").val();
 		var nombre = $("#nombreUsuarioFormulario").val(); 
