@@ -21,7 +21,7 @@
           <ul class="sidebar-menu">
             <li class="header">Tablero</li>
             
-            	<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2") || attributes.get("role_id").toString().equals("3")){%>                        
+            	<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2") || attributes.get("role_id_tablero").toString().equals("3")){%>                        
 		    	<li class="treeview">
 					<a href="#">
 		   				<i class="fa fa-list-alt"></i> <span>Plan Operativo Institucional</span> <i class="fa fa-angle-left pull-right"></i>
@@ -39,7 +39,7 @@
     			</a>
     			
     			<ul class="treeview-menu" style="display: none;">
-    			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>                        
+    			<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>                        
     				<li><a href="http://spr.stp.gov.py/tablero/contenedorInsLineaAccion.jsp"><i class="fa fa-wrench"></i>Elaboración de Plan de Acción</a></li>
     			<%}%>
          			<li class=""><a href="http://spr.stp.gov.py/tablero/reporte.jsp"><i class="fa fa-file" id="linkReportePa"></i>Reporte de Plan de Acción</a></li>
@@ -70,7 +70,7 @@
             	<li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Documentación</span></a></li>
             	<li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Diccionario de Datos</span></a></li>
             	<li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Preguntas Frecuentes</span></a></li>
-            <% if (attributes.get("role_id").toString().equals("0") ){%>	
+            <% if (attributes.get("role_id_tablero").toString().equals("0") ){%>	 
            	 <li class="header">ADMINISTRAR</li>
             	<li><a href="/indicadores.jsp"><i class="glyphicon glyphicon-info-sign text-red"></i> <span>Indicadores</span></a></li>
             	<li><a href="/objetivo.jsp"><i class="glyphicon glyphicon-flag text-yellow"></i> <span>Objetivos</span></a></li>

@@ -46,7 +46,7 @@ public class ajaxSelects extends HttpServlet {
     	String userNivelId = attributes.get("nivel_id").toString();
     	String userEntidadId = attributes.get("entidad_id").toString();
     	String userUnrId = attributes.get("unr_id").toString();
-    	String userRoleId = attributes.get("role_id").toString();
+    	String userRoleId = attributes.get("role_id_tablero").toString();
     	
     	String action = request.getParameter("action");
     	String accion = request.getParameter("accion");

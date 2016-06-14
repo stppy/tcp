@@ -74,7 +74,7 @@ public class SqlSelects {
 				objeto.setEntidad(rs.getString("entidad"));
 				objeto.setEntidad_id(rs.getInt("entidad_id"));
 				objeto.setNivel_id(rs.getInt("nivel_id"));
-				objeto.setRol_id(rs.getInt("role_id"));
+				objeto.setRol_id_tablero(rs.getInt("role_id_tablero"));
 				objeto.setUnidadResponsable(rs.getInt("unr_id"));
 				objeto.setUrl(rs.getString("url"));
 				objeto.setBorrado(rs.getBoolean("borrado"));

@@ -91,6 +91,7 @@ if (user != null) { %>
 								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160414.pdf" download="Constancia_PA1_20160414" class="list-group-item glyphicon glyphicon-download-alt"> 14-ABRIL-2016</a>
 								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160415.pdf" download="Constancia_PA1_20160415" class="list-group-item glyphicon glyphicon-download-alt"> 15-ABRIL-2016</a>
 								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160502.pdf" download="Constancia_PA1_20160502" class="list-group-item glyphicon glyphicon-download-alt"> 02-MAYO-2016</a>
+								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA1_20160520.pdf" download="Constancia_PA1_20160520" class="list-group-item glyphicon glyphicon-download-alt"> 20-MAYO-2016</a>
 							</div>
 						</div><!-- /.fin-box-body -->
 					</div><!-- /.fin_box -->
@@ -113,6 +114,11 @@ if (user != null) { %>
 								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA2_20160422.pdf" download="Constancia_PA2_20160422" class="list-group-item glyphicon glyphicon-download-alt"> 22-ABRIL-2016</a>
 								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA2_20160426.pdf" download="Constancia_PA2_20160426" class="list-group-item glyphicon glyphicon-download-alt"> 26-ABRIL-2016</a>
 								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA2_20160429.pdf" download="Constancia_PA2_20160429" class="list-group-item glyphicon glyphicon-download-alt"> 29-ABRIL-2016</a>
+								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA2_20160511.pdf" download="Constancia_PA2_20160511" class="list-group-item glyphicon glyphicon-download-alt"> 11-MAYO-2016</a>
+								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA2_20160516.pdf" download="Constancia_PA2_20160516" class="list-group-item glyphicon glyphicon-download-alt"> 16-MAYO-2016</a>
+								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA2_20160518.pdf" download="Constancia_PA2_20160518" class="list-group-item glyphicon glyphicon-download-alt"> 18-MAYO-2016</a>
+								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA2_20160520.pdf" download="Constancia_PA2_20160520" class="list-group-item glyphicon glyphicon-download-alt"> 20-MAYO-2016</a>
+								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA2_20160525.pdf" download="Constancia_PA2_20160525" class="list-group-item glyphicon glyphicon-download-alt"> 25-MAYO-2016</a>
 							</div>
 						</div>
 					</div>
@@ -133,6 +139,9 @@ if (user != null) { %>
 								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA3_20160419.pdf" download="Constancia_PA3_20160419" class="list-group-item glyphicon glyphicon-download-alt"> 19-ABRIL-2016</a>
                                 <a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA3_20160421.pdf" download="Constancia_PA3_20160421" class="list-group-item glyphicon glyphicon-download-alt"> 21-ABRIL-2016</a>
 							  	<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA3_20160422.pdf" download="Constancia_PA3_20160422" class="list-group-item glyphicon glyphicon-download-alt"> 22-ABRIL-2016</a>
+							  	<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA3_20160503.pdf" download="Constancia_PA3_20160503" class="list-group-item glyphicon glyphicon-download-alt"> 03-MAYO-2016</a>
+							  	<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA3_20160520.pdf" download="Constancia_PA3_20160520" class="list-group-item glyphicon glyphicon-download-alt"> 20-MAYO-2016</a>
+								<a href="http://spr.stp.gov.py/tablero/descargas/Constancia_PA3_20160523.pdf" download="Constancia_PA3_20160523" class="list-group-item glyphicon glyphicon-download-alt"> 23-MAYO-2016</a>
 							</div>
 						</div>
 					</div>
