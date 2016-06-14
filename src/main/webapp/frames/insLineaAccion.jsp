@@ -4204,6 +4204,30 @@ $("body").on("click", ".borrarAccion",function(event){
 	    var accionId = idParsed[4];
 	    var accionCatalogoId = idParsed[5];
 				
+		var insLineaAccion = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion&insLineaAccionId='+insLineaAccionId,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;		
+		insLineaAccion=JSON.parse(insLineaAccion);
+		
+		var institucion = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion&institucionId='+insLineaAccion[0].institucionId,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		institucion = JSON.parse(institucion);
+		
+		var lineaAccion = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId='+lineaAccionId,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		lineaAccion = JSON.parse(lineaAccion);
+		
 		var unidadMedida = $.ajax({
 			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
 		  	type:'get',
@@ -4261,6 +4285,39 @@ $("body").on("click", ".borrarAccion",function(event){
 		}).responseText;
 		accionCatalogo = JSON.parse(accionCatalogo);
 		
+		var departamentos = $.ajax({
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
+	      	type:'get',
+	      	dataType:'json',
+	      	async:false       
+	    }).responseText;
+		departamentos = JSON.parse(departamentos);
+		
+		var distritos = $.ajax({
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito',
+	      	type:'get',
+	      	dataType:'json',
+	      	async:false       
+	    }).responseText;
+		distritos = JSON.parse(distritos);
+		
+		var nombreDepartamento = "";
+		var nombreDistrito = "";
+		
+		for(var d = 0; d < departamentos.length; d++)
+		{
+			if(accion[0].departamentoId == departamentos[d].idDepartamento){
+				nombreDepartamento = departamentos[d].nombreDepartamento;
+			}
+		}
+		
+
+		for(var e = 0; e < distritos.length; e++)
+		{
+			if(accion[0].distritoId == distritos[e].id && accion[0].departamentoId == distritos[e].departamentoId){
+				nombreDistrito = distritos[e].descripcion;
+			}
+		}
 				
 		
 		var cuerpoActividad = "";
@@ -4311,7 +4368,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		'		<div class="modal-content" >'+
 		'			<div class="modal-header">'+
 		'		        <button type="button" class="close agregarAccion" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'  aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
-		'		        <h4 class="modal-title">'+accionCatalogo[0].nombre+'</h4>'+   
+		'		        <h4 class="modal-title">'+accionCatalogo[0].nombre+' de '+lineaAccion[0].nombre+' ('+institucion[0].sigla+') año '+insLineaAccion[0].periodoId+'</h4>'+   
 		'			</div>'+
 		'		    <div class="modal-body" id="accionCuerpo" >'+
 		
@@ -4334,6 +4391,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		'									<div class="table-responsive">'+
 		'										<table class="table table-hover">'+
 		'											<tbody>'+
+		'												<tr><td><div class="form-group"><label for="departamentoActividad">Departamento</label><input type="text" class="form-control" id="departamentoActividad" value="'+nombreDepartamento+'" disabled /></div></td><td><div class="form-group"><label for="distritoActividad">Distrito</label><input type="text" id="distritoActividad" value="'+nombreDistrito+'" class="form-control" disabled> </div></td></tr>'+
 		'												<tr><td><div class="form-group"><label for="nombreActividad">Cronograma</label><input type="text" class="form-control" id="nombreActividad" value="" placeholder="Ingrese Nombre del Cronograma"><input type="hidden" class="form-control" id="insLineaAccionId" value="'+insLineaAccionId+'"></div></td><td><div class="form-group"><label for="descripcionActividad">Descripción</label><input type="text" id="descripcionActividad" value="" class="form-control"> </div></td></tr>'+
 		'												<tr><td><div class="form-group"><label for="unidadMedidaIdActividad">Unidad de Medida</label><select id="unidadMedidaIdActividad" class="form-control" placeholder="Ingrese Unidad Medida Id">'+optionUnidadMedida+'</div></td><td><div class="form-group"><label for="hitoTipoIdActividad">Tipo de Cronograma</label>'+
 		'												<select id="hitoTipoIdActividad" class="form-control" placeholder="Ingrese Tipo de Cronograma">'+optionTipoHito+'</select></div></td></tr>'+
@@ -4982,6 +5040,40 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	}).responseText;
 	periodo = JSON.parse(periodo);
 	
+	var departamentos = $.ajax({
+    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
+      	type:'get',
+      	dataType:'json',
+      	async:false       
+    }).responseText;
+	departamentos = JSON.parse(departamentos);
+	
+	var distritos = $.ajax({
+    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito',
+      	type:'get',
+      	dataType:'json',
+      	async:false       
+    }).responseText;
+	distritos = JSON.parse(distritos);
+	
+	var nombreDepartamento = "";
+	var nombreDistrito = "";
+	
+	for(var d = 0; d < departamentos.length; d++)
+	{
+		if(accion[0].departamentoId == departamentos[d].idDepartamento){
+			nombreDepartamento = departamentos[d].nombreDepartamento;
+		}
+	}
+	
+
+	for(var e = 0; e < distritos.length; e++)
+	{
+		if(accion[0].distritoId == distritos[e].id && accion[0].departamentoId == distritos[e].departamentoId){
+			nombreDistrito = distritos[e].descripcion;
+		}
+	}
+	
 	var nombreUnidadMedida="";
 	for(var f = 0; f < unidadMedida.length; f++ )
 	{
@@ -5056,6 +5148,7 @@ $("body").on("click", ".agregarProgramacion",function(event){
 							'									<table class="table table-hover">'+
 							'										<tbody>'+
 							'			      							<form class="form-horizontal" role="form">'+
+							'											<tr><td><div class="form-group"><label for="departamentoActividad">Departamento</label><input type="text" class="form-control" id="departamentoActividad" value="'+nombreDepartamento+'" disabled /></div></td><td><div class="form-group"><label for="distritoActividad">Distrito</label><input type="text" id="distritoActividad" value="'+nombreDistrito+'" class="form-control" disabled> </div></td></tr>'+
 							'											<tr><td><label for="accionProgramacion">Accion</label><input type="text" id="accionProgramacion" value="'+accionCatalogo[0].nombre+'" class="form-control" disabled /></td><td><label for="unidadMedidaProgramacion">U. Medida</label><input type="text" id="unidadMedidaProgramacion" class="form-control" value="'+nombreUnidadMedida+'" disabled /></td></tr>'+
 							'											<tr><td><label for="cronogramaProgramacion">Cronograma</label><input type="text" id="cronogramaProgramacion" value="'+cronogramas[0].nombre+'" class="form-control" disabled /><input type="hidden" id="cronogramaIdProgramacion" value="'+cronogramas[0].id+'" /></td><td><label for="tipoCronogramaProgramacion">Tipo Cronograma</label><input type="text" id="tipoCronogramaProgramacion" class="form-control" value="'+nombreHitoTipo+'" disabled /></td></tr>'+														
 							'											<tr><td><label for="cantidadProgramacion">Cantidad</label><input type="text" id="cantidadProgramacion" value="" class="form-control" placeholder="Ingres Cantidad" /></td><td><label for="fechaEntregaProgramacion">Fecha Entrega</label><input type="date" id="fechaEntregaProgramacion" class="form-control" /></td></tr>'+
@@ -5277,6 +5370,22 @@ $("body").on("click", ".agregarAvance",function(event){
     
     var fechaActual = (f.getFullYear() + "-" + mes + "-" + dia);
     
+	var insLineaAccion = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion&insLineaAccionId='+insLineaAccionId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;		
+	insLineaAccion=JSON.parse(insLineaAccion);
+	
+	var institucion = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion&institucionId='+insLineaAccion[0].institucionId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	institucion = JSON.parse(institucion);
+    
 	var programacionWebService = $.ajax({
 		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getProgramacion&actividadId='+actividadId,
 	  	type:'get',
@@ -5332,6 +5441,40 @@ $("body").on("click", ".agregarAvance",function(event){
 	  	async:false       
 	}).responseText;
 	unidadMedida = JSON.parse(unidadMedida);
+	
+	var departamentos = $.ajax({
+    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
+      	type:'get',
+      	dataType:'json',
+      	async:false       
+    }).responseText;
+	departamentos = JSON.parse(departamentos);
+	
+	var distritos = $.ajax({
+    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito',
+      	type:'get',
+      	dataType:'json',
+      	async:false       
+    }).responseText;
+	distritos = JSON.parse(distritos);
+	
+	var nombreDepartamento = "";
+	var nombreDistrito = "";
+	
+	for(var d = 0; d < departamentos.length; d++)
+	{
+		if(accion[0].departamentoId == departamentos[d].idDepartamento){
+			nombreDepartamento = departamentos[d].nombreDepartamento;
+		}
+	}
+	
+
+	for(var e = 0; e < distritos.length; e++)
+	{
+		if(accion[0].distritoId == distritos[e].id && accion[0].departamentoId == distritos[e].departamentoId){
+			nombreDistrito = distritos[e].descripcion;
+		}
+	}
 
 	var nombreUnidadMedidaHitoProgramado="";
 	for(var g = 0; g < unidadMedida.length; g++ )
@@ -5396,7 +5539,7 @@ $("body").on("click", ".agregarAvance",function(event){
 							'		<div class="modal-content" >'+
 							'			<div class="modal-header">'+
 							'		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="agregarActividad" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'" >&times;</span></button>'+
-							'		        <h4 class="modal-title">Avance ('+actividades[0].nombre+' - '+nombreUnidadMedida+')</h4>'+ 
+							'		        <h4 class="modal-title">Avance ('+actividades[0].nombre+' - '+nombreUnidadMedida+')  de '+lineaAccion[0].nombre+' ('+institucion[0].sigla+') año '+insLineaAccion[0].periodoId+'</h4>'+ 
 							'			</div>'+
 							'		    <div class="modal-body">'+
 							
@@ -5419,6 +5562,7 @@ $("body").on("click", ".agregarAvance",function(event){
 							'									<table class="table table-hover">'+
 							'										<tbody>'+
 							'			      							<form class="form-horizontal" role="form">'+
+							'											<tr><td><div class="form-group"><label for="departamentoActividad">Departamento</label><input type="text" class="form-control" id="departamentoActividad" value="'+nombreDepartamento+'" disabled /></div></td><td><div class="form-group"><label for="distritoActividad">Distrito</label><input type="text" id="distritoActividad" value="'+nombreDistrito+'" class="form-control" disabled> </div></td></tr>'+
 							'											<tr><td><label for="justificacionAvance">Justificación</label><input type="text" id="justificacionAvance" value="" class="form-control" placeholder="Ingrese Justificación" /></td>'+
 							'												<td><label for="cantidadAvance">Cantidad</label><input type="number" id="cantidadAvance" class="form-control" value="" placeholder="Ingrese Cantidad" /></td>'+
 							'											</tr>'+
@@ -5630,6 +5774,71 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	var accionId = idParsed[4];
 	var actividadId = idParsed[5];
 	var avanceId = idParsed[6];//es el id de la tabla avance
+	
+	var insLineaAccion = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion&insLineaAccionId='+insLineaAccionId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;		
+	insLineaAccion=JSON.parse(insLineaAccion);
+	
+	var institucion = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion&institucionId='+insLineaAccion[0].institucionId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	institucion = JSON.parse(institucion);
+	
+	var lineaAccion = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId='+lineaAccionId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	lineaAccion = JSON.parse(lineaAccion);
+	
+	var accion = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&accionId='+accionId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	accion = JSON.parse(accion);
+	
+	var accionCatalogo = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[0].accionCatalogoId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	accionCatalogo = JSON.parse(accionCatalogo);
+	
+	var actividades = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getCronograma&cronogramaId='+actividadId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	actividades = JSON.parse(actividades);
+	
+	var unidadMedida = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	unidadMedida = JSON.parse(unidadMedida);
+	
+	var nombreUnidadMedida = "";
+	for(var u = 0; u < unidadMedida.length; u++)
+	{
+		if(unidadMedida[u].id == actividades[0].unidad_medida_id)
+		{
+			nombreUnidadMedida = unidadMedida[u].descripcion;
+		}
+	}
 
 	var webServicesAvance = $.ajax({
 		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvance&avanceId='+avanceId,
@@ -5783,7 +5992,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'		<div class="modal-content" >'+
 									'			<div class="modal-header">'+
 									'		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="agregarAvance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'>&times;</span></button>'+
-									'		        <h4 class="modal-title">Administrador</h4>'+ 
+									'		        <h4 class="modal-title">Avance ('+actividades[0].nombre+' - '+nombreUnidadMedida+' / '+webServicesAvance[0].fechaEntrega+')  de '+lineaAccion[0].nombre+' ('+institucion[0].sigla+') año '+insLineaAccion[0].periodoId+'</h4>'+ 
 									'			</div>'+
 									'		    <div class="modal-body">'+
 									
@@ -7976,6 +8185,46 @@ $("body").on("click", ".modalDestinatario",function(event){
 	{
 		$("#modalBorrarDestinatarioAccion").remove();
 	}		
+	var insLineaAccion = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion&insLineaAccionId='+insLineaAccionId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;		
+	insLineaAccion=JSON.parse(insLineaAccion);
+	
+	var institucion = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion&institucionId='+insLineaAccion[0].institucionId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	institucion = JSON.parse(institucion);
+	
+	var lineaAccion = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId='+lineaAccionId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	lineaAccion = JSON.parse(lineaAccion);
+	
+	var accion = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&accionId='+accionId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	accion = JSON.parse(accion);
+	
+	var accionCatalogo = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[0].accionCatalogoId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	accionCatalogo = JSON.parse(accionCatalogo);
+	
 	var webServicesBeneficiarioTipo = $.ajax({
 		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioTipo',
 	  	type:'get',
@@ -8039,6 +8288,7 @@ $("body").on("click", ".modalDestinatario",function(event){
 						'		<div class="modal-content" >'+
 						'			<div class="modal-header">'+
 						'		        <button type="button" class="close agregarAccion" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+' data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+						'		        <h4 class="modal-title">'+accionCatalogo[0].nombre+' de '+lineaAccion[0].nombre+' ('+institucion[0].sigla+') año '+insLineaAccion[0].periodoId+'</h4>'+   
 						'			</div>'+
 						'		    <div class="modal-body">'+
 						
