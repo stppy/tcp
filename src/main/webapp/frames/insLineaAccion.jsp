@@ -7707,7 +7707,7 @@ $("body").on("change", "#fechaInicioAccion",function(event){
 
 });
 $("body").on("change", "#proporcionActividad",function(event){
-	var proporcion = parseInt($("#proporcionActividad").val());
+	var proporcion = parseFloat($("#proporcionActividad").val());
 	
 		if(proporcion < 0 || proporcion > 1){
 			$("#proporcionActividad").val("");
@@ -7718,7 +7718,7 @@ $("body").on("change", "#proporcionActividad",function(event){
 });
 
 $("body").on("change", "#pesoActividad",function(event){
-	var peso = parseInt($("#pesoActividad").val());
+	var peso = parseFloat($("#pesoActividad").val());
 		
 		if(peso < 0 || peso > 1){
 			$("#pesoActividad").val("");
