@@ -477,8 +477,6 @@ if (user != null) { %>
 
 		}
 		
-		
-		
 	});
 <%}else{%>
 	window.location = "http://spr.stp.gov.py/tablero/resumenLineaAccion.jsp";
