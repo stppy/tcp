@@ -6075,8 +6075,8 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'											<table class="table table-hover">'+
 									'												<tbody>'+
 									'			      									<form class="form-horizontal" role="form">'+
-									'													<tr><td><label for="tipoBeneficiario">Tipo</label><select id="beneficiarioTipo" class="form-control">'+optionBeneficiarioTipo+'</select></td><td><label for="grupoBeneficiario">Grupo</label><select id="grupoBeneficiario" class="form-control"></select></td></tr>'+
-									'													<tr><td><label for="cantidadBeneficiario">Cantidad</label><input type="number" id="cantidadBeneficiario" class="form-control" placeholder="Ingrese una Cantidad" /></td><td><label for="descripcionBeneficiario">Descripción</label><input type="text" id="descripcionBeneficiario" class="form-control" placeholder="Ingrese Objeto una Descripción" /></td></tr>'+
+									'													<tr><td><label for="tipoBeneficiario">Tipo</label><select id="beneficiarioTipo" class="form-control" required>'+optionBeneficiarioTipo+'</select></td><td><label for="grupoBeneficiario">Grupo</label><select id="grupoBeneficiario" class="form-control" required></select></td></tr>'+
+									'													<tr><td><label for="cantidadBeneficiario">Cantidad</label><input type="number" id="cantidadBeneficiario" class="form-control" placeholder="Ingrese una Cantidad" required /></td><td><label for="descripcionBeneficiario">Descripción</label><input type="text" id="descripcionBeneficiario" class="form-control" placeholder="Ingrese Objeto una Descripción" /></td></tr>'+
 									'													<input type="hidden" id="avanceIdBeneficiario" value="'+avanceId+'"/>'+		
 									'			      									</form>	'+				
 									'												</tbody>'+
@@ -6159,10 +6159,10 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'												<tbody>'+
 									'			      									<form class="form-horizontal" role="form">'+
 									'													<tr><td><label for="productoObjetoGasto">Producto</label><select id="productoObjetoGasto" class="form-control">'+optionProductoObjetoGasto+'</select></td>'+
-									'														<td><label for="objetoGastoCosto">Objeto Gasto</label><select id="objetoGastoCosto" class="form-control"></select></td>'+
+									'														<td><label for="objetoGastoCosto">Objeto Gasto</label><select id="objetoGastoCosto" class="form-control" required></select></td>'+
 									'													</tr>'+	
 									'													<tr><td colspan="2"><label for="codigoContratacionalCosto">Cod. Contratación</label><input type="text" id="codigoContratacionalCosto" class="form-control" placeholder="Ingrese Codigo Contratación" /></td></tr>'+									
-									'													<tr><td colspan="2"><label for="montoCosto">Monto</label><input type="number" id="montoCosto" class="form-control" placeholder="Ingrese Monto" /></td></tr>'+
+									'													<tr><td colspan="2"><label for="montoCosto">Monto</label><input type="number" id="montoCosto" class="form-control" placeholder="Ingrese Monto" required /></td></tr>'+
 									'													<input type="hidden" id="avanceIdCosto" value="'+avanceId+'"/>'+	
 									'			      									</form>	'+												
 									'												</tbody>'+
@@ -6932,7 +6932,7 @@ $("body").on("click", ".consultaEditarCosto",function(event){
 						'							<tbody>'+
 						'								<form class="form-horizontal" role="form">'+
 						'									<tr><td><label for="ProductoObjetoGasto">Producto Objeto Gasto</label><input type="text" id="ProductoObjetoGasto" class="form-control" value='+webServicesAvanceCosto[0].productoConcat+' disabled="disabled" /></td><td><label for="objetoGastoCosto">Objeto Gasto</label><input type="number" id="objetoGastoCosto" class="form-control" value='+webServicesAvanceCosto[0].objetoGasto+' disabled="disabled" /></td></tr>'+
-						'									<tr><td><label for="codigoContratacionalCosto">Cod. Contrato</label><input type="text" id="codigoContratacionalCosto" class="form-control" value='+webServicesAvanceCosto[0].codigoContratacion+' /></td><td colspan="2"><label for="montoCosto">Monto</label><input type="number" id="montoCosto" class="form-control" value='+webServicesAvanceCosto[0].monto+'  /></td></tr>'+									
+						'									<tr><td><label for="codigoContratacionalCosto">Cod. Contrato</label><input type="text" id="codigoContratacionalCosto" class="form-control" value='+webServicesAvanceCosto[0].codigoContratacion+' /></td><td colspan="2"><label for="montoCosto">Monto</label><input type="number" id="montoCosto" class="form-control" value='+webServicesAvanceCosto[0].monto+'  required/></td></tr>'+									
 						'									<input type="hidden" id="avanceIdCosto" value="'+webServicesAvanceCosto[0].avanceId+'"/>'+		
 						'								</form>	'+												
 						'  							</tbody>'+
@@ -7746,8 +7746,8 @@ $("body").on("click", ".consultaEditarBeneficiario",function(event){
 						'					<table class="table table-hover">'+
 						'						<tbody>'+
 						'			      			<form class="form-horizontal" role="form">'+
-						'							<tr><td><label for="tipoBeneficiario">Tipo</label><select id="beneficiarioTipo" class="form-control">'+optionBeneficiarioTipo+'</select></td><td><label for="grupoBeneficiario">Grupo</label><select id="grupoBeneficiario" class="form-control">'+optionBeneficiarioGrupo+'</select></td></tr>'+
-						'							<tr><td><label for="cantidadBeneficiario">Cantidad</label><input type="number" id="cantidadBeneficiario" class="form-control" value='+webServicesBeneficiario[0].cantidad+' /></td><td><label for="descripcionBeneficiario">Descripción</label><input type="text" id="descripcionBeneficiario" class="form-control" value="'+webServicesBeneficiario[0].descripcion+'" /></td></tr>'+																		
+						'							<tr><td><label for="tipoBeneficiario">Tipo</label><select id="beneficiarioTipo" class="form-control" required>'+optionBeneficiarioTipo+'</select></td><td><label for="grupoBeneficiario">Grupo</label><select id="grupoBeneficiario" class="form-control" required>'+optionBeneficiarioGrupo+'</select></td></tr>'+
+						'							<tr><td><label for="cantidadBeneficiario">Cantidad</label><input type="number" id="cantidadBeneficiario" class="form-control" value='+webServicesBeneficiario[0].cantidad+' required /></td><td><label for="descripcionBeneficiario">Descripción</label><input type="text" id="descripcionBeneficiario" class="form-control" value="'+webServicesBeneficiario[0].descripcion+'" /></td></tr>'+																		
 						'							<input type="hidden" id="avanceIdBeneficiario" value="'+avanceId+'"/>'+		
 						'			      			</form>	'+				
 						'						</tbody>'+
