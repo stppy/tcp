@@ -1836,7 +1836,7 @@
 							'			      					    <div class="form-group col-md-3">'+
 							'						  						<label for="totalFinanciero-formulario">Primer Trimestre</label>'+
 							'				      						<div class="input-group input-group-sm">'+						      			
-							'								    				<input type="text" name="primerTrimestre" id="primerTrimestre-formulario" value="0" class="form-control" required>'+
+							'								    				<input type="number" name="primerTrimestre" id="primerTrimestre-formulario" value="0" class="form-control" required>'+
 							'													<input type="hidden" class="form-control" id="versionAccion" value="3">'+//Aqui estan los input hidden que en este formulario son 3
 							'													<input type="hidden" class="form-control" id="costoAccion" value="99">'+
 							'													<input type="hidden" class="form-control" id="pesoAccion" value="1">'+
@@ -1848,21 +1848,21 @@
 							'				     					<div class="form-group col-md-3">'+
 							'							  					<label for="totalFinanciero-formulario">Segundo Trimestre</label>'+
 							'					      					<div class="input-group input-group-sm">'+
-							'			  					    			<input type="text" name="segundoTrimestre" id="segundoTrimestre-formulario" value="0" class="form-control" required>'+
+							'			  					    			<input type="number" name="segundoTrimestre" id="segundoTrimestre-formulario" value="0" class="form-control" required>'+
 							'					      					</div>'+
 							'								    		</div>'+
 															    		
 							'				     					<div class="form-group col-md-3">'+
 							'							  					<label for="totalFinanciero-formulario">Tercer Trimestre</label>'+
 							'					      					<div class="input-group input-group-sm">'+
-							'			  					    			<input type="text" name="tercerTrimestre" id="tercerTrimestre-formulario" value="0" class="form-control" required>'+
+							'			  					    			<input type="number" name="tercerTrimestre" id="tercerTrimestre-formulario" value="0" class="form-control" required>'+
 							'					      					</div>'+
 							'								    		</div>'+
 														    		
 							'			      					    <div class="form-group col-md-3">'+
 							'						  					<label for="totalFinanciero-formulario">Cuarto Trimestre</label>'+
 							'				      						<div class="input-group input-group-sm">'+
-							'								    				<input type="text" name="cuartoTrimestre" id="cuartoTrimestre-formulario" value="0" class="form-control" required>'+
+							'								    				<input type="number" name="cuartoTrimestre" id="cuartoTrimestre-formulario" value="0" class="form-control" required>'+
 							'				      						</div>'+
 							'							    		</div>'+
 							'			  						</div>'+							
@@ -2095,7 +2095,7 @@
 							'			      					    <div class="form-group col-md-3">'+
 							'						  						<label for="totalFinanciero-formulario">Primer Trimestre</label>'+
 							'				      						<div class="input-group input-group-sm">'+						      			
-							'								    				<input type="text" name="primerTrimestre" id="primerTrimestre-formulario" value='+accion[0].meta1+' class="form-control" required>'+
+							'								    				<input type="number" name="primerTrimestre" id="primerTrimestre-formulario" value='+accion[0].meta1+' class="form-control" required>'+
 							'													<input type="hidden" class="form-control" id="versionAccion" value="3">'+//Aqui estan los input hidden que en este formulario son 3
 							'													<input type="hidden" class="form-control" id="costoAccion" value="99">'+
 							'													<input type="hidden" class="form-control" id="pesoAccion" value="1">'+
@@ -2108,21 +2108,21 @@
 							'				     					<div class="form-group col-md-3">'+
 							'							  					<label for="totalFinanciero-formulario">Segundo Trimestre</label>'+
 							'					      					<div class="input-group input-group-sm">'+
-							'			  					    			<input type="text" name="segundoTrimestre" id="segundoTrimestre-formulario" value='+accion[0].meta2+' class="form-control" required>'+
+							'			  					    			<input type="number" name="segundoTrimestre" id="segundoTrimestre-formulario" value='+accion[0].meta2+' class="form-control" required>'+
 							'					      					</div>'+
 							'								    		</div>'+
 															    		
 							'				     					<div class="form-group col-md-3">'+
 							'							  					<label for="totalFinanciero-formulario">Tercer Trimestre</label>'+
 							'					      					<div class="input-group input-group-sm">'+
-							'			  					    			<input type="text" name="tercerTrimestre" id="tercerTrimestre-formulario" value='+accion[0].meta3+' class="form-control" required>'+
+							'			  					    			<input type="number" name="tercerTrimestre" id="tercerTrimestre-formulario" value='+accion[0].meta3+' class="form-control" required>'+
 							'					      					</div>'+
 							'								    		</div>'+
 														    		
 							'			      					    <div class="form-group col-md-3">'+
 							'						  					<label for="totalFinanciero-formulario">Cuarto Trimestre</label>'+
 							'				      						<div class="input-group input-group-sm">'+
-							'								    				<input type="text" name="cuartoTrimestre" id="cuartoTrimestre-formulario" value='+accion[0].meta4+' class="form-control" required>'+
+							'								    				<input type="number" name="cuartoTrimestre" id="cuartoTrimestre-formulario" value='+accion[0].meta4+' class="form-control" required>'+
 							'				      						</div>'+
 							'							    		</div>'+
 							'			  						</div>'+							
@@ -2935,7 +2935,7 @@ $("body").on("click", ".borrarAccion",function(event){
 						  			'		    	<div class="form-group col-md-3">'+
 							      	'					<div class="input-group input-group-md">'+
 							      	'						<span class="input-group-addon">Gs</span>'+
-				      				'	    				<input type="text" name="total" id="total-formulario" value="" class="form-control">'+
+				      				'	    				<input type="number" name="total" id="total-formulario" value="" class="form-control" required>'+
 				      				'	                    <div class="input-group-btn">'+
 					      			'		                	<button type="submit" class="btn btn-success guardarComboProducto" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'><span class="glyphicon glyphicon-plus"></span></button>'+
 					      			'		                </div>'+	      					    				
@@ -4408,7 +4408,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		'												<tr><td><div class="form-group"><label for="nombreActividad">Cronograma</label><input type="text" class="form-control" id="nombreActividad" value="" placeholder="Ingrese Nombre del Cronograma" required><input type="hidden" class="form-control" id="insLineaAccionId" value="'+insLineaAccionId+'"></div></td><td><div class="form-group"><label for="descripcionActividad">Descripción</label><input type="text" id="descripcionActividad" value="" class="form-control"> </div></td></tr>'+
 		'												<tr><td><div class="form-group"><label for="unidadMedidaIdActividad">Unidad de Medida</label><select id="unidadMedidaIdActividad" class="form-control" placeholder="Ingrese Unidad Medida Id">'+optionUnidadMedida+'</div></td><td><div class="form-group"><label for="hitoTipoIdActividad">Tipo de Cronograma</label>'+
 		'												<select id="hitoTipoIdActividad" class="form-control" placeholder="Ingrese Tipo de Cronograma">'+optionTipoHito+'</select></div></td></tr>'+
-		'												<tr><td><div class="form-group"><label for="proporcionActividad">Proporción</label><input type="text" class="form-control" id="proporcionActividad" value="1" required /></div></div></td><td><div class="form-group"><label for="pesoActividad">Peso</label><input type="text" class="form-control" id="pesoActividad" value="1" required/></div></td></tr>'+
+		'												<tr><td><div class="form-group"><label for="proporcionActividad">Proporción</label><input type="number" class="form-control" id="proporcionActividad" value="1" required /></div></div></td><td><div class="form-group"><label for="pesoActividad">Peso</label><input type="number" class="form-control" id="pesoActividad" value="1" required/></div></td></tr>'+
 		'												<tr><td><div class="form-group"><label for="acumulableActividad">Acumulable</label><select id="acumulableActividad" class="form-control" placeholder="Ingrese Tipo Acumulable">'+optionAcumulable+'</select></div></td></tr>'+
 		'											</tbody>'+							           
 		'										</table>'+
@@ -4574,7 +4574,7 @@ $("body").on("click", ".editarCronograma", function(event){
 						'			      							<form class="form-horizontal" role="form">'+
 						'												<tr><td><label for="nombreCronograma">Nombre</label><input type="text" id="nombreCronograma" value="'+actividades[0].nombre+'" class="form-control" required /></td><td><label for="descripcionCronograma">Descripcion</label><input type="text" id="descripcionCronograma" class="form-control" value="'+actividades[0].descripcion+'"  /></td></tr>'+
 						'												<tr><td><div class="form-group"><label for="unidadMedidaIdCronograma">Unidad de Medida</label><select id="selectorUnidadMedidaCronograma" class="form-control">'+optionUnidadMedida+'</select></div></td><td><div class="form-group"><label for="hitoTipoIdCronograma">Tipo Cronograma</label><select id="selectorHitoTipoIdCronograma" class="form-control">"'+optionTipoHito+'"</select></div></td></tr>'+
-						'												<tr><td><label for="proporcionCronograma">Proporción</label><input type="text" id="proporcionCronograma" value='+actividades[0].proporcion+' class="form-control" required /></td><td><label for="pesoCronograma">Peso</label><input type="text" id="pesoCronograma" class="form-control" value='+actividades[0].peso+' required /></td></tr>'+
+						'												<tr><td><label for="proporcionCronograma">Proporción</label><input type="number" id="proporcionCronograma" value='+actividades[0].proporcion+' class="form-control" required /></td><td><label for="pesoCronograma">Peso</label><input type="number" id="pesoCronograma" class="form-control" value='+actividades[0].peso+' required /></td></tr>'+
 						'												<tr><td><div class="form-group"><label for="acumulableCronograma">Acumulable</label><select id="acumulableCronograma" class="form-control" placeholder="Ingrese Tipo Acumulable">'+optionAcumulable+'</select></div></td><td></td></tr>'+
 						
 						'			      							</form>	'+												
@@ -5164,7 +5164,7 @@ $("body").on("click", ".agregarProgramacion",function(event){
 							'											<tr><td><div class="form-group"><label for="departamentoActividad">Departamento</label><input type="text" class="form-control" id="departamentoActividad" value="'+nombreDepartamento+'" disabled /></div></td><td><div class="form-group"><label for="distritoActividad">Distrito</label><input type="text" id="distritoActividad" value="'+nombreDistrito+'" class="form-control" disabled> </div></td></tr>'+
 							'											<tr><td><label for="accionProgramacion">Accion</label><input type="text" id="accionProgramacion" value="'+accionCatalogo[0].nombre+'" class="form-control" disabled /></td><td><label for="unidadMedidaProgramacion">U. Medida</label><input type="text" id="unidadMedidaProgramacion" class="form-control" value="'+nombreUnidadMedida+'" disabled /></td></tr>'+
 							'											<tr><td><label for="cronogramaProgramacion">Cronograma</label><input type="text" id="cronogramaProgramacion" value="'+cronogramas[0].nombre+'" class="form-control" disabled /><input type="hidden" id="cronogramaIdProgramacion" value="'+cronogramas[0].id+'" /></td><td><label for="tipoCronogramaProgramacion">Tipo Cronograma</label><input type="text" id="tipoCronogramaProgramacion" class="form-control" value="'+nombreHitoTipo+'" disabled /></td></tr>'+														
-							'											<tr><td><label for="cantidadProgramacion">Cantidad</label><input type="text" id="cantidadProgramacion" value="" class="form-control" placeholder="Ingres Cantidad" required /></td><td><label for="fechaEntregaProgramacion">Fecha Entrega</label><input type="date" id="fechaEntregaProgramacion" class="form-control" required/></td></tr>'+
+							'											<tr><td><label for="cantidadProgramacion">Cantidad</label><input type="number" id="cantidadProgramacion" value="" class="form-control" placeholder="Ingres Cantidad" required /></td><td><label for="fechaEntregaProgramacion">Fecha Entrega</label><input type="date" id="fechaEntregaProgramacion" class="form-control" required/></td></tr>'+
 							'											<input type="hidden" id="versionProgramacion" value="3" /><input type="hidden" id="actividadIdProgramacion" value="'+cronogramaId+'" />'+		
 							'			      							</form>	'+												
 							'										</tbody>'+
