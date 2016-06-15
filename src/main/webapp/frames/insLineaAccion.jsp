@@ -7922,8 +7922,7 @@ $("body").on("change", "#fechaInicioAccion",function(event){
 
 });
 $("body").on("change", "#proporcionActividad",function(event){
-	var proporcion = 
-($("#proporcionActividad").val());
+	var proporcion = parseFloat($("#proporcionActividad").val());
 	
 		if(proporcion < 0 || proporcion > 1){
 			$("#proporcionActividad").val("");
