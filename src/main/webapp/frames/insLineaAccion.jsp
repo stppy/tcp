@@ -2866,114 +2866,138 @@ $("body").on("click", ".borrarAccion",function(event){
 		
 		var modalProductos = "";
 
-		modalProductos =	 '<div class="modal fade" role="dialog" id="modalVincularProductos" data-backdrop="static" data-keyboard="false">'+ 
-							    '<div class="modal-dialog modal-lg" style="width:90%">'+ 
-							    
-							      '<div class="modal-content">'+ 
-							        '<div class="modal-header">'+ 
-							          '<button type="button" class="close agregarAccion" data-dismiss="modal" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'>&times;</button>'+ 
-							          '<h4 class="modal-title">Vincular Producto con '+catalogoAccion[0].nombre+' de '+lineaAccion[0].nombre+' ('+institucion[0].sigla+') año '+insLineaAccion[0].periodoId+'</h4>'+ 
-							        '</div>'+ 
-							        '<div class="modal-body">'+ 				        
-
-						      		'	<div class="table-responsive">'+
-						            '    <table class="table table-striped table-bordered  table-hover">'+
-						            '    	<tr>'+
-						            '    		<th colspan="6" class="text-center" data-toggle="tooltip" data-placement="top" title="Nivel,Entidad,Tipo,Programa,SubPrograma,Proyecto">Cod. Pres.</th>'+
-						            '   		<th>Cod. Prod</th>'+						            
-						            '   		<th>NombreProducto</th>'+
-						            '    		<th>Cantidad</th>'+
-						            '    		<th>U. Medida</th>'+
-						            '    		<th>Tipo</th>'+
-						            '    		<th>Asig. Financiera</th>'+
-						            '    		<th>Costo de la Acción</th>'+
-						            '    		<th>Administrar</th>'+
-						            '    	</tr>'+
-						            '    <tbody class="table-body-producto" id="TablaAccionHasProductos">'+
-						            '    </tbody>'+
-						            '   </table>'+
-						            '    </div>'+
-					                
-									' 	<br>'+
-									'  	<br>'+
-									<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>		
-
-					   				'	<div id="tituloFormulario"></div>'+
-					      			'		<form class="form-horizontal" role="form" id="formulario" method="post" action="/ajaxUpdate">'+
-					      			'			<input type="hidden" name="accion" value="actEntidad">'+
-					      			'			<input type="hidden" name="anho" value="" id="anhoProducto-formulario">'+
-					      			'			<input type="hidden" name="version" value="" id="versionProducto-formulario">'+
-									'			<div class="row">'+
-						      		'				<div class="form-group col-md-1">'+
-						      		'					<input type="text" name="nivel" id="nivel-formulario" value="" class="form-control" disabled>'+
-						      		'				</div>'+
-						      		'				<div class="form-group col-md-1">'+
-						  			'					<input type="text" name="entidad" id="entidad-formulario" value="" class="form-control" disabled>'+
-						  			'				</div>'+
-						      		'			    <div class="form-group col-md-1">'+
-						      		'			    	<input type="text" name="tipoPrograma" id="tipoPrograma-formulario" placeholder="Tipo Programa" list="listaf3c2" class="form-control">'+
-						      		'			    </div>'+
-						      		'			    <div class="form-group col-md-1">'+
-						      		'			    	<input type="text" name="programa" id="programa-formulario" placeholder="Programa" list="listaf4c2" class="form-control">'+
-						      		'			    </div>'+
-						      		'			    <div class="form-group col-md-1">'+
-						      		'			    	<input type="text" name="subPrograma" id="subPrograma-formulario" placeholder="SubPrograma" list="listaf5c2" class="form-control">'+
-						      		'			    </div>'+
-						      		'			    <div class="form-group col-md-2">'+
-						      		'			    	<input type="text" name="proyecto" id="proyecto-formulario" placeholder="Proyecto" list="listaf6c2" class="form-control">'+
-						      		'			    </div>'+
-						  			'		    	<div class="form-group col-md-2">'+
-						  			'		    		<input type="text" name="producto" id="producto-formulario" placeholder="Producto" list="listaf7c2" class="form-control">'+
-						      		'			  	</div>'+
-						  			'		    	<div class="form-group col-md-3">'+
-							      	'					<div class="input-group input-group-md">'+
-							      	'						<span class="input-group-addon">Gs</span>'+
-				      				'	    				<input type="text" name="total" id="total-formulario" value="" class="form-control">'+
-				      				'	                    <div class="input-group-btn">'+
-					      			'		                	<button type="submit" class="btn btn-success guardarComboProducto" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'><span class="glyphicon glyphicon-plus"></span></button>'+
-					      			'		                </div>'+	      					    				
-				      				'	    			</div>'+
-						  			'		    	</div>'+
-						  			'		    </div>'+
-					      			'		</form>	'+
-					      					
-					      			'			<div class="row">'+
-						      		'			    <div class="form-group col-md-3">'+
-						      		'			  		<label for="totalFisico-formulario">Cantidad</label>'+
-					      			'		    		<input type="text" name="totalFisico" id="totalFisico-formulario" value="" class="form-control" disabled>'+
-					      			'		    	</div>'+
-						      		'			    <div class="form-group col-md-3">'+
-					      			'		  			<label for="unidadMedida-formulario">U. Medida</label>'+
-				      				'	    			<input type="text" name="totalFisico" id="unidadMedida-formulario" value="" class="form-control" disabled>'+
-				      				'	    		</div>'+
-						      		'			    <div class="form-group col-md-3">'+
-				      				'	  				<label for="clase-formulario">Tipo</label>'+
-			      					'    				<input type="text" name="totalFisico" id="clase-formulario" value="" class="form-control" disabled>'+
-			      					'    			</div>'+
-						      		'			    <div class="form-group col-md-3">'+
-			      					'  					<label for="totalFinanciero-formulario">Asig. Financiera</label>'+
-								    '  					<div class="input-group input-group-sm">'+
-								    '  						<span class="input-group-addon">Gs</span>'+
-					      			'		    			<input type="text" name="totalFinanciero" id="totalFinanciero-formulario" value="" class="form-control" disabled>'+
-								    ' 					</div>'+
-				      				'	    		</div>'+ 					    				
-				      				'	    	</div>'+
-				      				<% }%>		
-
-							        
-							        '</div>'+ 
-							        '<div class="modal-footer">'+ 
-							          '<button type="button" class="btn btn-default agregarAccion" data-dismiss="modal" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'>Cerrar</button>'+ 
-							        '</div>'+ 
-							      '</div>'+ 
-							      
-							    '</div>'+ 
-							  '</div>';
+		modalProductos ='<div class="modal fade" role="dialog" id="modalVincularProductos" data-backdrop="static" data-keyboard="false">'+ 
+					    '	<div class="modal-dialog modal-lg" style="width:90%">'+
+					    '		<div class="modal-content">'+ 
+						'			<div class="modal-header">'+ 
+						'				<button type="button" class="close agregarAccion" data-dismiss="modal" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'>&times;</button>'+ 
+						'				<h4 class="modal-title">Vincular Producto con '+catalogoAccion[0].nombre+' de '+lineaAccion[0].nombre+' ('+institucion[0].sigla+') año '+insLineaAccion[0].periodoId+'</h4>'+ 
+						'			</div>'+ 
+						'			<div class="modal-body">'+
+						'		      	<div class="row">'+ 
+						'		      		<div class="col-md-12">'+
+						'						<div class="box box-warning">'+
+						'		                	<div class="box-header with-border">'+
+						'		                  		<h3 class="box-title">Acciones Vinculadas a Productos</h3>'+
+						'							</div>'+
+						'               			<div class="box-body">'+
+						'								<div id="tablaListaVinculacionProducto">'+
+						'								</div>'+
+						'							</div>'+
+						'						</div>'+
+						'					</div>'+
+						'				</div>'+
+						' 				<br>'+
+						'				<br>'+
+						<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>		
+						'				<div class="row">'+ 
+						'		      		<div class="col-md-12">'+
+						'						<div class="box box-warning">'+
+						'		                	<div class="box-header with-border">'+
+						'		                  		<h3 class="box-title">Vincular Acciones a Productos</h3>'+
+						'							</div>'+
+						'               			<div class="box-body">'+
+						'								<div id="tituloFormulario"></div>'+
+		      			'									<form class="form-horizontal" role="form" id="formulario" method="post" action="/ajaxUpdate">'+
+		      			'										<input type="hidden" name="accion" value="actEntidad">'+
+		      			'										<input type="hidden" name="anho" value="" id="anhoProducto-formulario">'+
+		      			'										<input type="hidden" name="version" value="" id="versionProducto-formulario">'+
+						'										<div class="row">'+
+			      		'											<div class="form-group col-md-1">'+
+			      		'												<input type="text" name="nivel" id="nivel-formulario" value="" class="form-control" disabled>'+
+			      		'											</div>'+
+			      		'											<div class="form-group col-md-1">'+
+			  			'												<input type="text" name="entidad" id="entidad-formulario" value="" class="form-control" disabled>'+
+			  			'											</div>'+
+			      		'				    						<div class="form-group col-md-1">'+
+			      		'			    								<input type="text" name="tipoPrograma" id="tipoPrograma-formulario" placeholder="Tipo Programa" list="listaf3c2" class="form-control">'+
+			      		'			    							</div>'+
+			      		'			    							<div class="form-group col-md-1">'+
+			      		'			    								<input type="text" name="programa" id="programa-formulario" placeholder="Programa" list="listaf4c2" class="form-control">'+
+			      		'			    							</div>'+
+			      		'			    							<div class="form-group col-md-1">'+
+			      		'			    								<input type="text" name="subPrograma" id="subPrograma-formulario" placeholder="SubPrograma" list="listaf5c2" class="form-control">'+
+			      		'			    							</div>'+
+			      		'				    						<div class="form-group col-md-2">'+
+			      		'				    							<input type="text" name="proyecto" id="proyecto-formulario" placeholder="Proyecto" list="listaf6c2" class="form-control">'+
+			      		'				   							</div>'+
+			  			'		    								<div class="form-group col-md-2">'+
+			  			'		    									<input type="text" name="producto" id="producto-formulario" placeholder="Producto" list="listaf7c2" class="form-control">'+
+			      		'										  	</div>'+
+			  			'		    								<div class="form-group col-md-3">'+
+				      	'												<div class="input-group input-group-md">'+
+				      	'													<span class="input-group-addon">Gs</span>'+
+	      				'	    											<input type="text" name="total" id="total-formulario" value="" class="form-control">'+
+	      				'	               								    <div class="input-group-btn">'+
+		      			'		                								<button type="submit" class="btn btn-success guardarComboProducto" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'><span class="glyphicon glyphicon-plus"></span></button>'+
+		      			'		                							</div>'+	      					    				
+	      				'		    									</div>'+
+			  			'			    							</div>'+
+			  			'			    						</div>'+
+		      			'									</form>	'+
+		      				
+		      			'									<div class="row">'+
+			      		'				    					<div class="form-group col-md-3">'+
+			      		'				  							<label for="totalFisico-formulario">Cantidad</label>'+
+		      			'		    								<input type="text" name="totalFisico" id="totalFisico-formulario" value="" class="form-control" disabled>'+
+		      			'		    							</div>'+
+			      		'			   		 					<div class="form-group col-md-3">'+
+		      			'		  									<label for="unidadMedida-formulario">U. Medida</label>'+
+	      				'	    									<input type="text" name="totalFisico" id="unidadMedida-formulario" value="" class="form-control" disabled>'+
+	      				'	    								</div>'+
+			      		'				    					<div class="form-group col-md-3">'+
+	      				'		  									<label for="clase-formulario">Tipo</label>'+
+      					'    										<input type="text" name="totalFisico" id="clase-formulario" value="" class="form-control" disabled>'+
+      					'    									</div>'+
+			      		'			    						<div class="form-group col-md-3">'+
+      					'  											<label for="totalFinanciero-formulario">Asig. Financiera</label>'+
+					    '  											<div class="input-group input-group-sm">'+
+					    '  												<span class="input-group-addon">Gs</span>'+
+		      			'		    									<input type="text" name="totalFinanciero" id="totalFinanciero-formulario" value="" class="form-control" disabled>'+
+					    ' 											</div>'+
+	      				'	    								</div>'+ 					    				
+	      				'		    						</div>'+
+	      				'							</div>'+//fin box body
+						'						</div>'+//fin box
+						'					</div>'+//fin col md
+						'				</div>'+//fin row		
+	      				<% }%>
+	      				'		</div>'+ //fin modal body
+				        '			<div class="modal-footer">'+ 
+				        '				<button type="button" class="btn btn-default agregarAccion" data-dismiss="modal" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'>Cerrar</button>'+ 
+				        '			</div>'+ //fin modal footer
+				      	'		</div>'+ //fin modal content
+				    	'	</div>'+ //fin modal dialog
+				  		'</div>';//fin modal fade
 
 		$("body").append(modalProductos);
-		cargarTablaAccionHasProducto(accionId,insLineaAccionId,lineaAccionId,institucionId,periodoId);
+		//cargarTablaAccionHasProducto(accionId,insLineaAccionId,lineaAccionId,institucionId,periodoId);
+		
+		$("#tablaListaVinculacionProducto").html("");
+		var tablaVinculacionProducto =  '<div class="table-responsive">'+
+								        '	<table class="table table-striped table-bordered  table-hover" id="dataTablesVinculacionProducto">'+
+								        '		<thead>'+
+								        '    		<tr>'+
+								        '    			<th colspan="6" class="text-center" data-toggle="tooltip" data-placement="top" title="Nivel,Entidad,Tipo,Programa,SubPrograma,Proyecto">Cod. Pres.</th>'+
+								        '   			<th>Cod. Prod</th>'+						            
+								        '   			<th>NombreProducto</th>'+
+								        '    			<th>Cantidad</th>'+
+								        '    			<th>U. Medida</th>'+
+								        '    			<th>Tipo</th>'+
+								        '    			<th>Asig. Financiera</th>'+
+								        '    			<th>Costo de la Acción</th>'+
+								        '    			<th>Administrar</th>'+
+								        '    		</tr>'+
+								        '		</thead>'+
+								        '    	<tbody class="table-body-producto" id="TablaAccionHasProductos">'+
+								        '		</tbody>'+
+								        '   </table>'+
+								        '</div>';
+								        
+        $('#tablaListaVinculacionProducto').append(tablaVinculacionProducto);
+		$('#TablaAccionHasProductos').append(cargarTablaAccionHasProducto(accionId,insLineaAccionId,lineaAccionId,institucionId,periodoId));	        
 		$("#modalVincularProductos").modal('show');
-
+		$("#dataTablesVinculacionProducto").DataTable();
 		
 		function Combo(){
 			

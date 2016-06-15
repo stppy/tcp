@@ -559,7 +559,7 @@ if (user != null) { %>
 	              			<h2 class="box-title text-center">Líneas de Acción 2016</h2>
 	              			<div class="box-tools pull-right"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button></div>
 	            		</div>
-	            		<div class="box-body" id="cuerpoInsLineaAccion">
+	            		<div class="box-body" id="cuerpoInsLineaAccion" style="height:auto; overflow: auto; display: block;">
 	            			
 	            		</div>
 	             		<div class="box-footer" style="height:auto; overflow: auto; display: block;">
