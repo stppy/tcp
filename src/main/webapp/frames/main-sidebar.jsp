@@ -71,6 +71,7 @@
             	<li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Documentación</span></a></li>
             	<li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Diccionario de Datos</span></a></li>
             	<li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Preguntas Frecuentes</span></a></li>
+            	<li><a href="documentacion.jsp"><i class="fa fa-circle-o text-green"></i> <span>Acerca de Tablero de Control</span></a></li>
             <% if (attributes.get("role_id_tablero").toString().equals("0") ){%>	 
            	 <li class="header">ADMINISTRAR</li>
             	<li><a href="/indicadores.jsp"><i class="glyphicon glyphicon-info-sign text-red"></i> <span>Indicadores</span></a></li>
