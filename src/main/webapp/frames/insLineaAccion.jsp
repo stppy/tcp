@@ -5211,16 +5211,8 @@ $("body").on("click", ".agregarProgramacion",function(event){
 							'		                    		</button>'+
 							'		                  		</div>'+
 							'               			</div>'+//fin box-heder
-							'               			<div class="box-body">'+	 
-							
-							'								<div class="table-responsive">'+
-							'									<table class="table table-hover table-bordered">'+
-							'										<thead><tr class="active"><th>Cantidad</th><th>FechaEntrega</th><th>Versión</th><th>Cronograma</th><th>Unidad Medida</th><th class="text-center">Administrar</th></tr>'+
-							'										<tbody id="listaActividades">'+
-							'										</tbody>'+
-							'									</table>'+
-							'								</div>';
-					
+							'               			<div class="box-body" id="tablaListaProgramacionHito1">'+
+														//cuerpo del dataTable de ProgramacionHito1
 							'               			</div>'+//fin box-body
 							'                		</div>'+	
 							'                	</div>'+
@@ -5235,8 +5227,20 @@ $("body").on("click", ".agregarProgramacion",function(event){
 							'</div>';					  
 
 	$("body").append(modalProgramacion);
+	$("#tablaListaProgramacionHito1").html("");
+	
+	var tablaProgramacionHito1 ='	<div class="table-responsive">'+
+	'									<table class="table table-hover table-bordered" id="dataTablesProgramacionHito1">'+
+	'										<thead><tr class="active"><th>Cantidad</th><th>FechaEntrega</th><th>Versión</th><th>Cronograma</th><th>Unidad Medida</th><th class="text-center">Administrar</th></tr>'+
+	'										<tbody id="listaActividades">'+
+	'										</tbody>'+
+	'									</table>'+
+	'								</div>';
+	
+	$("#tablaListaProgramacionHito1").append(tablaProgramacionHito1);
 	$("#listaActividades").append(cuerpoActividades);
 	$("#modalProgramacion").modal('show');
+	$("#dataTablesProgramacionHito1").DataTable();
 });	
 
 $("body").on("click", ".guardarProgramacion",function(event){
@@ -5622,16 +5626,8 @@ $("body").on("click", ".agregarAvance",function(event){
 							'	                  			<div class="box-tools pull-right">'+
 							'		                  		</div>'+
 							'               			</div>'+//fin box-heder
-							'               			<div class="box-body">'+	 
-							
-							'								<div class="table-responsive">'+
-							'									<table class="table table-hover table-bordered">'+
-							'										<thead><tr class="active"><th>Cantidad</th><th>FechaEntrega</th><th>Unidad Medida</th></tr>'+
-							'										<tbody id="listaActividades">'+
-							'										</tbody>'+
-							'									</table>'+
-							'								</div>'+
-					
+							'               			<div class="box-body" id="tablaListaProgramacionHito2">'+	 
+															//cuerpo de dataTable de programacion hito 2
 							'               			</div>'+//fin box-body
 							'                		</div>'+	
 							'                	</div>'+
@@ -5643,17 +5639,8 @@ $("body").on("click", ".agregarAvance",function(event){
 							'	                  			<div class="box-tools pull-right">'+
 							'		                  		</div>'+
 							'               			</div>'+//fin box-heder
-							'               			<div class="box-body">'+
-							
-							'								<div class="table-responsive">'+
-							'									<table class="table table-hover table-bordered">'+
-							'										<thead><tr class="active"><th>Justificación</th><th>cantidad</th><th>Fecha Entrega</th><th>Administrar</th></tr>'+
-							'										<tbody id="listaAvances">'+
-							'										</tbody>'+
-							'									</table>'+
-							'								</div>'+
-							
-					
+							'               			<div class="box-body" id="tablaListaAvanceBox">'+
+															//cuerpo de dataTable de lista de Avances
 							'               			</div>'+//fin box-body
 							'                		</div>'+	
 							'                	</div>'+
@@ -5669,12 +5656,36 @@ $("body").on("click", ".agregarAvance",function(event){
 							'</div>';					  
 
 	$("body").append(modalAvance);
-	$("#listaActividades").html("");
-	$("#listaActividades").html(cuerpoActividades);
-	$("#listaAvances").html("");
-	$("#listaAvances").html(cuerpoAvance);
-	$("#modalAvance").modal('show');		
-
+	$("#tablaListaAvanceBox").html("");
+	
+	var tablaListaAvance ='<div class="table-responsive">'+
+		'							<table class="table table-hover table-bordered" id="dataTablesListaAvance">'+
+		'								<thead><tr class="active"><th>Justificación</th><th>cantidad</th><th>Fecha Entrega</th><th>Administrar</th></tr>'+
+		'								<tbody id="listaAvances">'+
+		'								</tbody>'+
+		'							</table>'+
+		'						</div>';
+	
+	$("#tablaListaAvanceBox").append(tablaListaAvance);
+	$("#listaAvances").append(cuerpoAvance);
+	$("#tablaListaProgramacionHito2").html("");
+	
+	var tablaProgramacionHito2 ='<div class="table-responsive">'+
+	'								<table class="table table-hover table-bordered" id="dataTablesProgramacionHito2">'+
+	'									<thead><tr class="active"><th>Cantidad</th><th>FechaEntrega</th><th>Unidad Medida</th></tr>'+
+	'									<tbody id="listaActividades">'+
+	'									</tbody>'+
+	'								</table>'+
+	'							</div>';
+	
+	$("#tablaListaProgramacionHito2").append(tablaProgramacionHito2);
+	$("#listaActividades").append(cuerpoActividades);
+	$("#modalAvance").modal('show');
+	$("#dataTablesListaAvance").DataTable();
+	$("#dataTablesProgramacionHito2").DataTable();
+	
+	
+	
 });	
 
 $("body").on("click", ".guardarAvance",function(event){
@@ -6041,7 +6052,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'               			<div class="box-body">'+
 									
 									'								<div class="table-responsive">'+
-									'									<table class="table table-hover table-bordered">'+
+									'									<table class="table table-hover table-bordered" id="dataTableAvance">'+
 									'										<thead>'+
 									'											<tr class="active"><th>Justificación</th><th>Cantidad</th><th>FechaEntrega</th><th class="text-center">Administrar</th></tr>'+
 									' 										</thead>'+
@@ -6344,6 +6355,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	$("#dataTableEvidencia").DataTable();
 	$("#dataTableAvanceCosto").DataTable();
 	$("#dataTableBeneficiario").DataTable();
+	$("#dataTableAvance").DataTable();
 	
 	
 
@@ -8413,6 +8425,7 @@ $("body").on("click", ".modalDestinatario",function(event){
 	$('#tipoDestinatarioAccion > option[value="1"]').attr('selected', 'selected');
 	$('#modalDestinatario').modal('show');
 	$('#tipoDestinatarioAccion').change();
+	$("#dataTableDestinatarioAccion").DataTable();
 
 
 	
