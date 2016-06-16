@@ -70,11 +70,11 @@ contenido =     '<div class="col-md-12">'+
 				'						</div>'+	
 				'						<div class="form-group">'+
 				'							<label for="meta">Meta</label>'+
-				'							<input type="number" id="metaInsLineaAccion" class="form-control" name="meta" placeholder="Ingrese Meta">'+
+				'							<input type="number" id="metaInsLineaAccion" class="form-control" name="meta" placeholder="Ingrese Meta" required>'+
 				'						</div>'+
 				'						<div class="form-group">'+
 				'							<label for="version">Versión</label>'+
-				'							<input type="number" id="versionInsLineaAccion" class="form-control" name="version" placeholder="Ingrese Versión">'+
+				'							<input type="number" id="versionInsLineaAccion" class="form-control" name="version" placeholder="Ingrese Versión" required>'+
 				'						</div>'+				
 				'					</form>'+			
 				'		</div>'+
