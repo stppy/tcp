@@ -482,10 +482,10 @@ public static boolean borradoHito(Hito objeto){
 			if(objeto.getFechaInicio() != null)		 	query+= ", fecha_inicio= ?";
 			if(objeto.getFechaFin() != null)    		query+= ", fecha_fin= ?";
 			if(objeto.getVersion() != 0)				query+= ", version= ?";
-			if(objeto.getMeta1() !=0)					query+= ", meta1= ?";
-			if(objeto.getMeta2() !=0)					query+= ", meta2= ?";
-			if(objeto.getMeta3() !=0)					query+= ", meta3= ?";
-			if(objeto.getMeta4() !=0)					query+= ", meta4= ?";
+			/*if(objeto.getMeta1() !=0)*/				query+= ", meta1= ?";
+			/*if(objeto.getMeta2() !=0)*/				query+= ", meta2= ?";
+			/*if(objeto.getMeta3() !=0)*/				query+= ", meta3= ?";
+			/*if(objeto.getMeta4() !=0)*/				query+= ", meta4= ?";
 			if(objeto.getInsLineaAccionId() != 0)		query+= ", ins_linea_accion_id= ?";
 			if(objeto.getDepartamentoId() != 0)	   	 	query+= ", depto_id= ?";
 			if(objeto.getDistritoId() != 0)				query+= ", dist_id= ?";
@@ -500,10 +500,10 @@ public static boolean borradoHito(Hito objeto){
 			if (objeto.getFechaInicio() != null)		{    cantCampos++;update.setDate (cantCampos, sqlStartDate);}
 			if (objeto.getFechaFin() != null)	    	{    cantCampos++;update.setDate (cantCampos, sqlEndDate);}
 			if (objeto.getVersion() != 0)	    		{    cantCampos++;update.setInt (cantCampos, objeto.getVersion());}
-			if (objeto.getMeta1() != 0)	    			{    cantCampos++;update.setDouble (cantCampos, objeto.getMeta1());}
-			if (objeto.getMeta2() != 0)	    			{    cantCampos++;update.setDouble (cantCampos, objeto.getMeta2());}
-			if (objeto.getMeta3() != 0)	    			{    cantCampos++;update.setDouble (cantCampos, objeto.getMeta3());}
-			if (objeto.getMeta4() != 0)	    			{    cantCampos++;update.setDouble (cantCampos, objeto.getMeta4());}
+			/*if (objeto.getMeta1() != 0)*/	    		{    cantCampos++;update.setDouble (cantCampos, objeto.getMeta1());}
+			/*if (objeto.getMeta2() != 0)*/	    		{    cantCampos++;update.setDouble (cantCampos, objeto.getMeta2());}
+			/*if (objeto.getMeta3() != 0)*/	    		{    cantCampos++;update.setDouble (cantCampos, objeto.getMeta3());}
+			/*if (objeto.getMeta4() != 0)*/	    		{    cantCampos++;update.setDouble (cantCampos, objeto.getMeta4());}
 			if (objeto.getInsLineaAccionId() != 0)		{    cantCampos++;update.setInt (cantCampos, objeto.getInsLineaAccionId());}
 			if (objeto.getDepartamentoId() != 0)		{    cantCampos++;update.setInt (cantCampos, objeto.getDepartamentoId());}
 			if (objeto.getDistritoId() != 0)			{    cantCampos++;update.setInt (cantCampos, objeto.getDistritoId());}
