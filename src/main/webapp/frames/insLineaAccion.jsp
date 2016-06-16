@@ -87,7 +87,7 @@
 							'		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
 							'		        <h4 class="modal-title">Registrar Línea de Acción por Institución</h4>'+
 							'			</div>'+
-							'		    <div class="modal-body" >'+
+							'		    <div class="modal-body" id="cuerpoModalInsLineaAccion" >'+
 									    
 							'				<form role="form" id="formularioInsLineaAccion">'+
 							'					<div class="form-group">'+
@@ -109,11 +109,11 @@
 							'					</div>'+
 							'					<div class="form-group">'+
 							'						<label for="meta">Meta</label>'+
-							'						<input type="number" id="metaInsLineaAccion" class="form-control" name="meta" placeholder="Ingrese Meta">'+
+							'						<input type="number" id="metaInsLineaAccion" class="form-control" name="meta" placeholder="Ingrese Meta" required>'+
 							'					</div>'+
 							'					<div class="form-group">'+
 							'						<label for="version">Versión</label>'+
-							'						<input type="number" id="versionInsLineaAccion" class="form-control" name="version" placeholder="Ingrese Versión">'+
+							'						<input type="number" id="versionInsLineaAccion" class="form-control" name="version" placeholder="Ingrese Versión" required>'+
 							'					</div>'+				
 							'				</form>'+			  
 							
@@ -122,10 +122,11 @@
 							'	</div>'+
 							'</div>';
 							
-			$("#programacion").append(contenido);
+			$("#programacion").append(contenido);			
 			$("#unidadMedidaInsLineaAccion")
-			$("#insLineaAccion").find("#formularioInsLineaAccion").append('<div class="form-group" id="guardarInsLineaAccionBoton"><button type="submit" class="btn btn-success" id="guardarInsLineaAccion" data-dismiss="modal">Guardar</button></div>');
+			$("#insLineaAccion").find("#formularioInsLineaAccion").append('<div class="form-group" id="guardarInsLineaAccionBoton"><button type="button" class="btn btn-success" id="guardarInsLineaAccion" >Guardar</button></div>');
 			$('#insLineaAccion').modal('show');
+			
 
 	});
 	
@@ -168,11 +169,11 @@
 	});
 	
 	$("body").on("click", "#guardarInsLineaAccion",function(event){		
-		//event.stopPropagation();
-		//event.preventDefault(); 
+		event.stopPropagation();
+		event.preventDefault(); 
 		$("#actualizarInsLineaAccionBoton").remove();
 		$("#guardarInsLineaAccionBoton").remove();
-		$("#insLineaAccion").find("#formularioInsLineaAccion").append('<div class="form-group" id="guardarInsLineaAccionBoton"><button type="submit" class="btn btn-success" id="guardarInsLineaAccion">Guardar</button></div>');
+		$("#insLineaAccion").find("#formularioInsLineaAccion").append('<div class="form-group" id="guardarInsLineaAccionBoton"><button type="button" class="btn btn-success" id="guardarInsLineaAccion">Guardar</button></div>');
 		var accion = "insInsLineaAccion";
 		var lineaAccionId = $("#nombreLineaAccionInsLineaAccion option:selected").val();
 		var institucionId = $("#nombreInstitucionInsLineaAccion option:selected").val();
@@ -185,9 +186,9 @@
 	    datos.institucionId = institucionId;
 	    datos.periodoId = periodoId;
 	    datos.meta = meta;
-	    datos.version = version;		
-
-				 
+	    datos.version = version;
+	    
+	   				 
 		$.ajax({
 		        url: "http://spr.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
 		        type: 'POST',
@@ -245,6 +246,8 @@
 		        		}).responseText;
 		        		unidadMedida = JSON.parse(unidadMedida);
 
+		        		$('#cuerpoModalInsLineaAccion').html('');
+		        		$("#cuerpoModalInsLineaAccion").append('<p class="text-center">La Línea de Acción se ha insertado con Exito</p>');
 		        		
 		        		renderInsLineaAccion();
 		        		
@@ -664,11 +667,11 @@
 							'					</div>'+
 							'					<div class="form-group">'+
 							'						<label for="meta">Meta</label>'+
-							'						<input type="number" id="metaInsLineaAccion" class="form-control" name="meta" placeholder="Ingrese Meta">'+
+							'						<input type="number" id="metaInsLineaAccion" class="form-control" name="meta" placeholder="Ingrese Meta" required>'+
 							'					</div>'+
 							'					<div class="form-group">'+
 							'						<label for="version">Versión</label>'+
-							'						<input type="number" id="versionInsLineaAccion" class="form-control" name="version" placeholder="Ingrese Versión">'+
+							'						<input type="number" id="versionInsLineaAccion" class="form-control" name="version" placeholder="Ingrese Versión" required>'+
 							'					</div>'+				
 							'				</form>'+			  
 							
@@ -1825,7 +1828,7 @@
 							'											<tbody>'+
 							'												<tr><td><div class="form-group"><label for="nombreAccion">Acción</label><select id="selectorCatalogoAccion" class="form-control">'+optionCatalogoAccion+'</select><input type="hidden" class="form-control" id="insLineaAccionId" value="'+insLineaAccionId+'"></div></td><td><div class="form-group"><label for="umedida">U. medida</label><input type="text" id="unidadMedidaAccion" value="" class="form-control" disabled> </div></td></tr>'+
 							'												<tr><td><div class="form-group"><label for="departamento">Departamento</label><select id="selectorDepartamento" name="departamento" class="form-control">'+optionDepartamentos+'</select></div></td><td><div class="form-group"><label for="distrito">Distrito</label><select name="departamento" class="form-control" id="distritosDepartamento"></select></div></td></tr>'+
-							'												<tr><td><div class="form-group"><label for="fechaInicioAccion">Fecha Inicio</label><input type="date" id="fechaInicioAccion" class="form-control" value="'+fechaActual+'" /></div></td><td><div class="form-group"><label for="fechaFinAccion">Fecha Fin</label><input type="date" id="fechaFinAccion" class="form-control" /></div></td></tr>'+							
+							'												<tr><td><div class="form-group"><label for="fechaInicioAccion">Fecha Inicio</label><input type="date" id="fechaInicioAccion" class="form-control" value="'+fechaActual+'" required /></div></td><td><div class="form-group"><label for="fechaFinAccion">Fecha Fin</label><input type="date" id="fechaFinAccion" class="form-control" required /></div></td></tr>'+							
 							'											</tbody>'+							           
 							'										</table>'+
 							'									</div>'+
@@ -1833,7 +1836,7 @@
 							'			      					    <div class="form-group col-md-3">'+
 							'						  						<label for="totalFinanciero-formulario">Primer Trimestre</label>'+
 							'				      						<div class="input-group input-group-sm">'+						      			
-							'								    				<input type="text" name="primerTrimestre" id="primerTrimestre-formulario" value="0" class="form-control">'+
+							'								    				<input type="number" name="primerTrimestre" id="primerTrimestre-formulario" value="0" class="form-control" required>'+
 							'													<input type="hidden" class="form-control" id="versionAccion" value="3">'+//Aqui estan los input hidden que en este formulario son 3
 							'													<input type="hidden" class="form-control" id="costoAccion" value="99">'+
 							'													<input type="hidden" class="form-control" id="pesoAccion" value="1">'+
@@ -1845,21 +1848,21 @@
 							'				     					<div class="form-group col-md-3">'+
 							'							  					<label for="totalFinanciero-formulario">Segundo Trimestre</label>'+
 							'					      					<div class="input-group input-group-sm">'+
-							'			  					    			<input type="text" name="segundoTrimestre" id="segundoTrimestre-formulario" value="0" class="form-control">'+
+							'			  					    			<input type="number" name="segundoTrimestre" id="segundoTrimestre-formulario" value="0" class="form-control" required>'+
 							'					      					</div>'+
 							'								    		</div>'+
 															    		
 							'				     					<div class="form-group col-md-3">'+
 							'							  					<label for="totalFinanciero-formulario">Tercer Trimestre</label>'+
 							'					      					<div class="input-group input-group-sm">'+
-							'			  					    			<input type="text" name="tercerTrimestre" id="tercerTrimestre-formulario" value="0" class="form-control">'+
+							'			  					    			<input type="number" name="tercerTrimestre" id="tercerTrimestre-formulario" value="0" class="form-control" required>'+
 							'					      					</div>'+
 							'								    		</div>'+
 														    		
 							'			      					    <div class="form-group col-md-3">'+
 							'						  					<label for="totalFinanciero-formulario">Cuarto Trimestre</label>'+
 							'				      						<div class="input-group input-group-sm">'+
-							'								    				<input type="text" name="cuartoTrimestre" id="cuartoTrimestre-formulario" value="0" class="form-control">'+
+							'								    				<input type="number" name="cuartoTrimestre" id="cuartoTrimestre-formulario" value="0" class="form-control" required>'+
 							'				      						</div>'+
 							'							    		</div>'+
 							'			  						</div>'+							
@@ -2083,7 +2086,7 @@
 							'											<tbody>'+																																																																																					
 							'												<tr><td><div class="form-group"><label for="nombreAccion">Acción</label><select id="selectorCatalogoAccion" name="catalogoAccion"class="form-control">'+optionCatalogoAccion+'</select><input type="hidden" class="form-control" id="insLineaAccionId" value="'+insLineaAccionId+'"></div></td><td><div class="form-group"><label for="umedida">U. medida</label><input type="text" id="unidadMedidaAccion" class="form-control" disabled></div></td></tr>'+
 							'												<tr><td><div class="form-group"><label for="departamento">Departamento</label><select id="selectorDepartamento" name="departamento" class="form-control">'+optionDepartamentos+'</select></div></td><td><div class="form-group"><label for="distrito">Distrito</label><select class="form-control" id="distritosDepartamento">'+optionDistritos+'</select></div></td></tr>'+
-							'												<tr><td><div class="form-group"><label for="fechaInicio">Fecha Inicio</label><input type="date"  id="fechaInicio" value='+accion[0].fechaInicio+' class="form-control"></div></td><td><div class="form-group"><label for="fichaFin">Fecha Fin</label><input type="date"  id="fechaFin" value='+accion[0].fechaFin+' class="form-control"></div></td></tr>'+
+							'												<tr><td><div class="form-group"><label for="fechaInicio">Fecha Inicio</label><input type="date"  id="fechaInicio" value='+accion[0].fechaInicio+' class="form-control" required></div></td><td><div class="form-group"><label for="fichaFin">Fecha Fin</label><input type="date"  id="fechaFin" value='+accion[0].fechaFin+' class="form-control" required></div></td></tr>'+
 
 							'											</tbody>'+							           
 							'										</table>'+
@@ -2092,7 +2095,7 @@
 							'			      					    <div class="form-group col-md-3">'+
 							'						  						<label for="totalFinanciero-formulario">Primer Trimestre</label>'+
 							'				      						<div class="input-group input-group-sm">'+						      			
-							'								    				<input type="text" name="primerTrimestre" id="primerTrimestre-formulario" value='+accion[0].meta1+' class="form-control">'+
+							'								    				<input type="number" name="primerTrimestre" id="primerTrimestre-formulario" value='+accion[0].meta1+' class="form-control" required>'+
 							'													<input type="hidden" class="form-control" id="versionAccion" value="3">'+//Aqui estan los input hidden que en este formulario son 3
 							'													<input type="hidden" class="form-control" id="costoAccion" value="99">'+
 							'													<input type="hidden" class="form-control" id="pesoAccion" value="1">'+
@@ -2105,21 +2108,21 @@
 							'				     					<div class="form-group col-md-3">'+
 							'							  					<label for="totalFinanciero-formulario">Segundo Trimestre</label>'+
 							'					      					<div class="input-group input-group-sm">'+
-							'			  					    			<input type="text" name="segundoTrimestre" id="segundoTrimestre-formulario" value='+accion[0].meta2+' class="form-control">'+
+							'			  					    			<input type="number" name="segundoTrimestre" id="segundoTrimestre-formulario" value='+accion[0].meta2+' class="form-control" required>'+
 							'					      					</div>'+
 							'								    		</div>'+
 															    		
 							'				     					<div class="form-group col-md-3">'+
 							'							  					<label for="totalFinanciero-formulario">Tercer Trimestre</label>'+
 							'					      					<div class="input-group input-group-sm">'+
-							'			  					    			<input type="text" name="tercerTrimestre" id="tercerTrimestre-formulario" value='+accion[0].meta3+' class="form-control">'+
+							'			  					    			<input type="number" name="tercerTrimestre" id="tercerTrimestre-formulario" value='+accion[0].meta3+' class="form-control" required>'+
 							'					      					</div>'+
 							'								    		</div>'+
 														    		
 							'			      					    <div class="form-group col-md-3">'+
 							'						  					<label for="totalFinanciero-formulario">Cuarto Trimestre</label>'+
 							'				      						<div class="input-group input-group-sm">'+
-							'								    				<input type="text" name="cuartoTrimestre" id="cuartoTrimestre-formulario" value='+accion[0].meta4+' class="form-control">'+
+							'								    				<input type="number" name="cuartoTrimestre" id="cuartoTrimestre-formulario" value='+accion[0].meta4+' class="form-control" required>'+
 							'				      						</div>'+
 							'							    		</div>'+
 							'			  						</div>'+							
@@ -2210,8 +2213,8 @@ $("body").on("click", ".actualizarAccion",function(event){
     $("#tercerTrimestre-formulario").val('');
     $("#cuartoTrimestre-formulario").val('');
     $("#unidadMedidaAccion").val('');
-    $('.cuerpoEdicionAccion').html('');
-    $(".cuerpoEdicionAccion").html('<h3 class="text-center">La Acción ha sido modificada</h3>');
+    //$('.cuerpoEdicionAccion').html('');
+    //$(".cuerpoEdicionAccion").html('<h3 class="text-center">La Acción ha sido modificada</h3>');
     $("#botonActualizarAccion").remove();
     
     
@@ -2246,10 +2249,14 @@ $("body").on("click", ".actualizarAccion",function(event){
         mimeType: 'application/json',
         success: function (data) {
         	//actualizarTablaAcciones(insLineaAccionId);
+        	$('.cuerpoEdicionAccion').html('');
+            $(".cuerpoEdicionAccion").html('<h3 class="text-center">La Acción ha sido modificada</h3>');
         	},
 
         error: function(data,status,er) {
         	//actualizarTablaAcciones(insLineaAccionId);
+        	$('.cuerpoEdicionAccion').html('');
+            $(".cuerpoEdicionAccion").html('<h3 class="text-center">Error al actualizar registro. La Acción no ha sido modificada</h3>');
         	}
 	 });
  
@@ -2928,7 +2935,7 @@ $("body").on("click", ".borrarAccion",function(event){
 						  			'		    	<div class="form-group col-md-3">'+
 							      	'					<div class="input-group input-group-md">'+
 							      	'						<span class="input-group-addon">Gs</span>'+
-				      				'	    				<input type="text" name="total" id="total-formulario" value="" class="form-control">'+
+				      				'	    				<input type="number" name="total" id="total-formulario" value="" class="form-control" required>'+
 				      				'	                    <div class="input-group-btn">'+
 					      			'		                	<button type="submit" class="btn btn-success guardarComboProducto" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'><span class="glyphicon glyphicon-plus"></span></button>'+
 					      			'		                </div>'+	      					    				
@@ -2971,9 +2978,33 @@ $("body").on("click", ".borrarAccion",function(event){
 							  '</div>';
 
 		$("body").append(modalProductos);
-		cargarTablaAccionHasProducto(accionId,insLineaAccionId,lineaAccionId,institucionId,periodoId);
+		//cargarTablaAccionHasProducto(accionId,insLineaAccionId,lineaAccionId,institucionId,periodoId);
+		
+		$("#tablaListaVinculacionProducto").html("");
+		var tablaVinculacionProducto =  '<div class="table-responsive">'+
+								        '	<table class="table table-striped table-bordered  table-hover" id="dataTablesVinculacionProducto">'+
+								        '		<thead>'+
+								        '    		<tr>'+
+								        '    			<th colspan="6" class="text-center" data-toggle="tooltip" data-placement="top" title="Nivel,Entidad,Tipo,Programa,SubPrograma,Proyecto">Cod. Pres.</th>'+
+								        '   			<th>Cod. Prod</th>'+						            
+								        '   			<th>NombreProducto</th>'+
+								        '    			<th>Cantidad</th>'+
+								        '    			<th>U. Medida</th>'+
+								        '    			<th>Tipo</th>'+
+								        '    			<th>Asig. Financiera</th>'+
+								        '    			<th>Costo de la Acción</th>'+
+								        '    			<th>Administrar</th>'+
+								        '    		</tr>'+
+								        '		</thead>'+
+								        '    	<tbody class="table-body-producto" id="TablaAccionHasProductos">'+
+								        '		</tbody>'+
+								        '   </table>'+
+								        '</div>';
+								        
+        $('#tablaListaVinculacionProducto').append(tablaVinculacionProducto);
+		$('#TablaAccionHasProductos').append(cargarTablaAccionHasProducto(accionId,insLineaAccionId,lineaAccionId,institucionId,periodoId));	        
 		$("#modalVincularProductos").modal('show');
-
+		$("#dataTablesVinculacionProducto").DataTable();
 		
 		function Combo(){
 			
@@ -4398,10 +4429,10 @@ $("body").on("click", ".borrarAccion",function(event){
 		'										<table class="table table-hover">'+
 		'											<tbody>'+
 		'												<tr><td><div class="form-group"><label for="departamentoActividad">Departamento</label><input type="text" class="form-control" id="departamentoActividad" value="'+nombreDepartamento+'" disabled /></div></td><td><div class="form-group"><label for="distritoActividad">Distrito</label><input type="text" id="distritoActividad" value="'+nombreDistrito+'" class="form-control" disabled> </div></td></tr>'+
-		'												<tr><td><div class="form-group"><label for="nombreActividad">Cronograma</label><input type="text" class="form-control" id="nombreActividad" value="" placeholder="Ingrese Nombre del Cronograma"><input type="hidden" class="form-control" id="insLineaAccionId" value="'+insLineaAccionId+'"></div></td><td><div class="form-group"><label for="descripcionActividad">Descripción</label><input type="text" id="descripcionActividad" value="" class="form-control"> </div></td></tr>'+
+		'												<tr><td><div class="form-group"><label for="nombreActividad">Cronograma</label><input type="text" class="form-control" id="nombreActividad" value="" placeholder="Ingrese Nombre del Cronograma" required><input type="hidden" class="form-control" id="insLineaAccionId" value="'+insLineaAccionId+'"></div></td><td><div class="form-group"><label for="descripcionActividad">Descripción</label><input type="text" id="descripcionActividad" value="" class="form-control"> </div></td></tr>'+
 		'												<tr><td><div class="form-group"><label for="unidadMedidaIdActividad">Unidad de Medida</label><select id="unidadMedidaIdActividad" class="form-control" placeholder="Ingrese Unidad Medida Id">'+optionUnidadMedida+'</div></td><td><div class="form-group"><label for="hitoTipoIdActividad">Tipo de Cronograma</label>'+
 		'												<select id="hitoTipoIdActividad" class="form-control" placeholder="Ingrese Tipo de Cronograma">'+optionTipoHito+'</select></div></td></tr>'+
-		'												<tr><td><div class="form-group"><label for="proporcionActividad">Proporción</label><input type="text" class="form-control" id="proporcionActividad" value="1" required /></div></div></td><td><div class="form-group"><label for="pesoActividad">Peso</label><input type="text" class="form-control" id="pesoActividad" value="1" required/></div></td></tr>'+
+		'												<tr><td><div class="form-group"><label for="proporcionActividad">Proporción</label><input type="number" class="form-control" id="proporcionActividad" value="1" required /></div></div></td><td><div class="form-group"><label for="pesoActividad">Peso</label><input type="number" class="form-control" id="pesoActividad" value="1" required/></div></td></tr>'+
 		'												<tr><td><div class="form-group"><label for="acumulableActividad">Acumulable</label><select id="acumulableActividad" class="form-control" placeholder="Ingrese Tipo Acumulable">'+optionAcumulable+'</select></div></td></tr>'+
 		'											</tbody>'+							           
 		'										</table>'+
@@ -4565,9 +4596,9 @@ $("body").on("click", ".editarCronograma", function(event){
 						'									<table class="table table-hover">'+
 						'										<tbody>'+
 						'			      							<form class="form-horizontal" role="form">'+
-						'												<tr><td><label for="nombreCronograma">Nombre</label><input type="text" id="nombreCronograma" value="'+actividades[0].nombre+'" class="form-control" /></td><td><label for="descripcionCronograma">Descripcion</label><input type="text" id="descripcionCronograma" class="form-control" value="'+actividades[0].descripcion+'"  /></td></tr>'+
+						'												<tr><td><label for="nombreCronograma">Nombre</label><input type="text" id="nombreCronograma" value="'+actividades[0].nombre+'" class="form-control" required /></td><td><label for="descripcionCronograma">Descripcion</label><input type="text" id="descripcionCronograma" class="form-control" value="'+actividades[0].descripcion+'"  /></td></tr>'+
 						'												<tr><td><div class="form-group"><label for="unidadMedidaIdCronograma">Unidad de Medida</label><select id="selectorUnidadMedidaCronograma" class="form-control">'+optionUnidadMedida+'</select></div></td><td><div class="form-group"><label for="hitoTipoIdCronograma">Tipo Cronograma</label><select id="selectorHitoTipoIdCronograma" class="form-control">"'+optionTipoHito+'"</select></div></td></tr>'+
-						'												<tr><td><label for="proporcionCronograma">Proporción</label><input type="text" id="proporcionCronograma" value='+actividades[0].proporcion+' class="form-control" /></td><td><label for="pesoCronograma">Peso</label><input type="text" id="pesoCronograma" class="form-control" value='+actividades[0].peso+'  /></td></tr>'+
+						'												<tr><td><label for="proporcionCronograma">Proporción</label><input type="number" id="proporcionCronograma" value='+actividades[0].proporcion+' class="form-control" required /></td><td><label for="pesoCronograma">Peso</label><input type="number" id="pesoCronograma" class="form-control" value='+actividades[0].peso+' required /></td></tr>'+
 						'												<tr><td><div class="form-group"><label for="acumulableCronograma">Acumulable</label><select id="acumulableCronograma" class="form-control" placeholder="Ingrese Tipo Acumulable">'+optionAcumulable+'</select></div></td><td></td></tr>'+
 						
 						'			      							</form>	'+												
@@ -5157,7 +5188,7 @@ $("body").on("click", ".agregarProgramacion",function(event){
 							'											<tr><td><div class="form-group"><label for="departamentoActividad">Departamento</label><input type="text" class="form-control" id="departamentoActividad" value="'+nombreDepartamento+'" disabled /></div></td><td><div class="form-group"><label for="distritoActividad">Distrito</label><input type="text" id="distritoActividad" value="'+nombreDistrito+'" class="form-control" disabled> </div></td></tr>'+
 							'											<tr><td><label for="accionProgramacion">Accion</label><input type="text" id="accionProgramacion" value="'+accionCatalogo[0].nombre+'" class="form-control" disabled /></td><td><label for="unidadMedidaProgramacion">U. Medida</label><input type="text" id="unidadMedidaProgramacion" class="form-control" value="'+nombreUnidadMedida+'" disabled /></td></tr>'+
 							'											<tr><td><label for="cronogramaProgramacion">Cronograma</label><input type="text" id="cronogramaProgramacion" value="'+cronogramas[0].nombre+'" class="form-control" disabled /><input type="hidden" id="cronogramaIdProgramacion" value="'+cronogramas[0].id+'" /></td><td><label for="tipoCronogramaProgramacion">Tipo Cronograma</label><input type="text" id="tipoCronogramaProgramacion" class="form-control" value="'+nombreHitoTipo+'" disabled /></td></tr>'+														
-							'											<tr><td><label for="cantidadProgramacion">Cantidad</label><input type="text" id="cantidadProgramacion" value="" class="form-control" placeholder="Ingres Cantidad" /></td><td><label for="fechaEntregaProgramacion">Fecha Entrega</label><input type="date" id="fechaEntregaProgramacion" class="form-control" /></td></tr>'+
+							'											<tr><td><label for="cantidadProgramacion">Cantidad</label><input type="number" id="cantidadProgramacion" value="" class="form-control" placeholder="Ingres Cantidad" required /></td><td><label for="fechaEntregaProgramacion">Fecha Entrega</label><input type="date" id="fechaEntregaProgramacion" class="form-control" required/></td></tr>'+
 							'											<input type="hidden" id="versionProgramacion" value="3" /><input type="hidden" id="actividadIdProgramacion" value="'+cronogramaId+'" />'+		
 							'			      							</form>	'+												
 							'										</tbody>'+
@@ -5187,16 +5218,8 @@ $("body").on("click", ".agregarProgramacion",function(event){
 							'		                    		</button>'+
 							'		                  		</div>'+
 							'               			</div>'+//fin box-heder
-							'               			<div class="box-body">'+	 
-							
-							'								<div class="table-responsive">'+
-							'									<table class="table table-hover table-bordered">'+
-							'										<thead><tr class="active"><th>Cantidad</th><th>FechaEntrega</th><th>Versión</th><th>Cronograma</th><th>Unidad Medida</th><th class="text-center">Administrar</th></tr>'+
-							'										<tbody id="listaActividades">'+
-							'										</tbody>'+
-							'									</table>'+
-							'								</div>';
-					
+							'               			<div class="box-body" id="tablaListaProgramacionHito1">'+
+														//cuerpo del dataTable de ProgramacionHito1
 							'               			</div>'+//fin box-body
 							'                		</div>'+	
 							'                	</div>'+
@@ -5211,8 +5234,20 @@ $("body").on("click", ".agregarProgramacion",function(event){
 							'</div>';					  
 
 	$("body").append(modalProgramacion);
+	$("#tablaListaProgramacionHito1").html("");
+	
+	var tablaProgramacionHito1 ='	<div class="table-responsive">'+
+	'									<table class="table table-hover table-bordered" id="dataTablesProgramacionHito1">'+
+	'										<thead><tr class="active"><th>Cantidad</th><th>FechaEntrega</th><th>Versión</th><th>Cronograma</th><th>Unidad Medida</th><th class="text-center">Administrar</th></tr>'+
+	'										<tbody id="listaActividades">'+
+	'										</tbody>'+
+	'									</table>'+
+	'								</div>';
+	
+	$("#tablaListaProgramacionHito1").append(tablaProgramacionHito1);
 	$("#listaActividades").append(cuerpoActividades);
 	$("#modalProgramacion").modal('show');
+	$("#dataTablesProgramacionHito1").DataTable();
 });	
 
 $("body").on("click", ".guardarProgramacion",function(event){
@@ -5569,10 +5604,10 @@ $("body").on("click", ".agregarAvance",function(event){
 							'										<tbody>'+
 							'			      							<form class="form-horizontal" role="form">'+
 							'											<tr><td><div class="form-group"><label for="departamentoActividad">Departamento</label><input type="text" class="form-control" id="departamentoActividad" value="'+nombreDepartamento+'" disabled /></div></td><td><div class="form-group"><label for="distritoActividad">Distrito</label><input type="text" id="distritoActividad" value="'+nombreDistrito+'" class="form-control" disabled> </div></td></tr>'+
-							'											<tr><td><label for="justificacionAvance">Justificación</label><input type="text" id="justificacionAvance" value="" class="form-control" placeholder="Ingrese Justificación" /></td>'+
-							'												<td><label for="cantidadAvance">Cantidad</label><input type="number" id="cantidadAvance" class="form-control" value="" placeholder="Ingrese Cantidad" /></td>'+
+							'											<tr><td><label for="justificacionAvance">Justificación</label><input type="text" id="justificacionAvance" value="" class="form-control" placeholder="Ingrese Justificación" required /></td>'+
+							'												<td><label for="cantidadAvance">Cantidad</label><input type="number" id="cantidadAvance" class="form-control" value="" placeholder="Ingrese Cantidad" required/></td>'+
 							'											</tr>'+
-							'											<tr><td><label for="fechaEntregaAvance">Fecha Entrega</label><input type="date" id="fechaEntregaAvance" value="'+fechaActual+'" class="form-control"  /></td></tr>'+														
+							'											<tr><td><label for="fechaEntregaAvance">Fecha Entrega</label><input type="date" id="fechaEntregaAvance" value="'+fechaActual+'" class="form-control" required /></td></tr>'+														
 							'											<input type="hidden" id="versionAvance" value="3" />'+		
 							'			      							</form>	'+												
 							'										</tbody>'+
@@ -5598,16 +5633,8 @@ $("body").on("click", ".agregarAvance",function(event){
 							'	                  			<div class="box-tools pull-right">'+
 							'		                  		</div>'+
 							'               			</div>'+//fin box-heder
-							'               			<div class="box-body">'+	 
-							
-							'								<div class="table-responsive">'+
-							'									<table class="table table-hover table-bordered">'+
-							'										<thead><tr class="active"><th>Cantidad</th><th>FechaEntrega</th><th>Unidad Medida</th></tr>'+
-							'										<tbody id="listaActividades">'+
-							'										</tbody>'+
-							'									</table>'+
-							'								</div>'+
-					
+							'               			<div class="box-body" id="tablaListaProgramacionHito2">'+	 
+															//cuerpo de dataTable de programacion hito 2
 							'               			</div>'+//fin box-body
 							'                		</div>'+	
 							'                	</div>'+
@@ -5619,17 +5646,8 @@ $("body").on("click", ".agregarAvance",function(event){
 							'	                  			<div class="box-tools pull-right">'+
 							'		                  		</div>'+
 							'               			</div>'+//fin box-heder
-							'               			<div class="box-body">'+
-							
-							'								<div class="table-responsive">'+
-							'									<table class="table table-hover table-bordered">'+
-							'										<thead><tr class="active"><th>Justificación</th><th>cantidad</th><th>Fecha Entrega</th><th>Administrar</th></tr>'+
-							'										<tbody id="listaAvances">'+
-							'										</tbody>'+
-							'									</table>'+
-							'								</div>'+
-							
-					
+							'               			<div class="box-body" id="tablaListaAvanceBox">'+
+															//cuerpo de dataTable de lista de Avances
 							'               			</div>'+//fin box-body
 							'                		</div>'+	
 							'                	</div>'+
@@ -5645,12 +5663,36 @@ $("body").on("click", ".agregarAvance",function(event){
 							'</div>';					  
 
 	$("body").append(modalAvance);
-	$("#listaActividades").html("");
-	$("#listaActividades").html(cuerpoActividades);
-	$("#listaAvances").html("");
-	$("#listaAvances").html(cuerpoAvance);
-	$("#modalAvance").modal('show');		
-
+	$("#tablaListaAvanceBox").html("");
+	
+	var tablaListaAvance ='<div class="table-responsive">'+
+		'							<table class="table table-hover table-bordered" id="dataTablesListaAvance">'+
+		'								<thead><tr class="active"><th>Justificación</th><th>cantidad</th><th>Fecha Entrega</th><th>Administrar</th></tr>'+
+		'								<tbody id="listaAvances">'+
+		'								</tbody>'+
+		'							</table>'+
+		'						</div>';
+	
+	$("#tablaListaAvanceBox").append(tablaListaAvance);
+	$("#listaAvances").append(cuerpoAvance);
+	$("#tablaListaProgramacionHito2").html("");
+	
+	var tablaProgramacionHito2 ='<div class="table-responsive">'+
+	'								<table class="table table-hover table-bordered" id="dataTablesProgramacionHito2">'+
+	'									<thead><tr class="active"><th>Cantidad</th><th>FechaEntrega</th><th>Unidad Medida</th></tr>'+
+	'									<tbody id="listaActividades">'+
+	'									</tbody>'+
+	'								</table>'+
+	'							</div>';
+	
+	$("#tablaListaProgramacionHito2").append(tablaProgramacionHito2);
+	$("#listaActividades").append(cuerpoActividades);
+	$("#modalAvance").modal('show');
+	$("#dataTablesListaAvance").DataTable();
+	$("#dataTablesProgramacionHito2").DataTable();
+	
+	
+	
 });	
 
 $("body").on("click", ".guardarAvance",function(event){
@@ -6017,7 +6059,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'               			<div class="box-body">'+
 									
 									'								<div class="table-responsive">'+
-									'									<table class="table table-hover table-bordered">'+
+									'									<table class="table table-hover table-bordered" id="dataTableAvance">'+
 									'										<thead>'+
 									'											<tr class="active"><th>Justificación</th><th>Cantidad</th><th>FechaEntrega</th><th class="text-center">Administrar</th></tr>'+
 									' 										</thead>'+
@@ -6074,8 +6116,8 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'											<table class="table table-hover">'+
 									'												<tbody>'+
 									'			      									<form class="form-horizontal" role="form">'+
-									'													<tr><td><label for="tipoBeneficiario">Tipo</label><select id="beneficiarioTipo" class="form-control">'+optionBeneficiarioTipo+'</select></td><td><label for="grupoBeneficiario">Grupo</label><select id="grupoBeneficiario" class="form-control"></select></td></tr>'+
-									'													<tr><td><label for="cantidadBeneficiario">Cantidad</label><input type="number" id="cantidadBeneficiario" class="form-control" placeholder="Ingrese una Cantidad" /></td><td><label for="descripcionBeneficiario">Descripción</label><input type="text" id="descripcionBeneficiario" class="form-control" placeholder="Ingrese Objeto una Descripción" /></td></tr>'+
+									'													<tr><td><label for="tipoBeneficiario">Tipo</label><select id="beneficiarioTipo" class="form-control" required>'+optionBeneficiarioTipo+'</select></td><td><label for="grupoBeneficiario">Grupo</label><select id="grupoBeneficiario" class="form-control" required></select></td></tr>'+
+									'													<tr><td><label for="cantidadBeneficiario">Cantidad</label><input type="number" id="cantidadBeneficiario" class="form-control" placeholder="Ingrese una Cantidad" required /></td><td><label for="descripcionBeneficiario">Descripción</label><input type="text" id="descripcionBeneficiario" class="form-control" placeholder="Ingrese Objeto una Descripción" /></td></tr>'+
 									'													<input type="hidden" id="avanceIdBeneficiario" value="'+avanceId+'"/>'+		
 									'			      									</form>	'+				
 									'												</tbody>'+
@@ -6158,10 +6200,10 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'												<tbody>'+
 									'			      									<form class="form-horizontal" role="form">'+
 									'													<tr><td><label for="productoObjetoGasto">Producto</label><select id="productoObjetoGasto" class="form-control">'+optionProductoObjetoGasto+'</select></td>'+
-									'														<td><label for="objetoGastoCosto">Objeto Gasto</label><select id="objetoGastoCosto" class="form-control"></select></td>'+
+									'														<td><label for="objetoGastoCosto">Objeto Gasto</label><select id="objetoGastoCosto" class="form-control" required></select></td>'+
 									'													</tr>'+	
 									'													<tr><td colspan="2"><label for="codigoContratacionalCosto">Cod. Contratación</label><input type="text" id="codigoContratacionalCosto" class="form-control" placeholder="Ingrese Codigo Contratación" /></td></tr>'+									
-									'													<tr><td colspan="2"><label for="montoCosto">Monto</label><input type="number" id="montoCosto" class="form-control" placeholder="Ingrese Monto" /></td></tr>'+
+									'													<tr><td colspan="2"><label for="montoCosto">Monto</label><input type="number" id="montoCosto" class="form-control" placeholder="Ingrese Monto" required /></td></tr>'+
 									'													<input type="hidden" id="avanceIdCosto" value="'+avanceId+'"/>'+	
 									'			      									</form>	'+												
 									'												</tbody>'+
@@ -6239,7 +6281,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'										<table class="table table-hover">'+
 									'											<tbody>'+
 									'		      									<form id="formEvidencia" class="form-horizontal" role="form">'+
-									'													<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" placeholder="Ingrese Nombre" /></td><td><label for="urlEvidencia">Url</label><input type="url" id="urlEvidencia" class="form-control" pattern="https?://.+" placeholder="Ingrese Url" /></td></tr>'+
+									'													<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" placeholder="Ingrese Nombre" required /></td><td><label for="urlEvidencia">Url</label><input type="url" id="urlEvidencia" class="form-control" pattern="https?://.+" placeholder="Ingrese Url" required/></td></tr>'+
 									'													<tr><td colspan="2"><label for="descripcionEvidencia">Descripción</label><input type="text" id="descripcionEvidencia" class="form-control" placeholder="Ingrese Descripción" /></td></tr>'+																		
         							'														<div  class="bar" style="width: 0%;"></div></div></td></tr>'+
         							'													<tr><td colspan="2"><label>Ingresar localización de la evidencia:</label></td></tr>'+
@@ -6320,6 +6362,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	$("#dataTableEvidencia").DataTable();
 	$("#dataTableAvanceCosto").DataTable();
 	$("#dataTableBeneficiario").DataTable();
+	$("#dataTableAvance").DataTable();
 	
 	
 
@@ -6460,9 +6503,9 @@ $("body").on("click", ".consultaEditarAvance",function(event){
 
 						'			      			<form class="form-horizontal" role="form">'+
 
-						'							<tr><td><label for="justificacionAvance">Justificación</label><input type="text" id="justificacionAvance" value="'+webServicesAvance[0].justificacion+'" class="form-control" /></td><td><label for="cantidadAvance">Cantidad</label><input type="number" id="cantidadAvance" class="form-control" value='+webServicesAvance[0].cantidad+' /></td></tr>'+
+						'							<tr><td><label for="justificacionAvance">Justificación</label><input type="text" id="justificacionAvance" value="'+webServicesAvance[0].justificacion+'" class="form-control" required /></td><td><label for="cantidadAvance">Cantidad</label><input type="number" id="cantidadAvance" class="form-control" value='+webServicesAvance[0].cantidad+' required/></td></tr>'+
 
-						'							<tr><td><label for="fechaEntregaAvance">Fecha Entrega</label><input type="date" id="fechaEntregaAvance" value='+webServicesAvance[0].fechaEntrega+' class="form-control"  /></td></tr>'+														
+						'							<tr><td><label for="fechaEntregaAvance">Fecha Entrega</label><input type="date" id="fechaEntregaAvance" value='+webServicesAvance[0].fechaEntrega+' class="form-control" required /></td></tr>'+														
 
 						'							<input type="hidden" id="versionAvance" value="3" /><input type="hidden" id="actividadIdAvance" value='+avanceId+' />'+		
 
@@ -6931,7 +6974,7 @@ $("body").on("click", ".consultaEditarCosto",function(event){
 						'							<tbody>'+
 						'								<form class="form-horizontal" role="form">'+
 						'									<tr><td><label for="ProductoObjetoGasto">Producto Objeto Gasto</label><input type="text" id="ProductoObjetoGasto" class="form-control" value='+webServicesAvanceCosto[0].productoConcat+' disabled="disabled" /></td><td><label for="objetoGastoCosto">Objeto Gasto</label><input type="number" id="objetoGastoCosto" class="form-control" value='+webServicesAvanceCosto[0].objetoGasto+' disabled="disabled" /></td></tr>'+
-						'									<tr><td><label for="codigoContratacionalCosto">Cod. Contrato</label><input type="text" id="codigoContratacionalCosto" class="form-control" value='+webServicesAvanceCosto[0].codigoContratacion+' /></td><td colspan="2"><label for="montoCosto">Monto</label><input type="number" id="montoCosto" class="form-control" value='+webServicesAvanceCosto[0].monto+'  /></td></tr>'+									
+						'									<tr><td><label for="codigoContratacionalCosto">Cod. Contrato</label><input type="text" id="codigoContratacionalCosto" class="form-control" value='+webServicesAvanceCosto[0].codigoContratacion+' /></td><td colspan="2"><label for="montoCosto">Monto</label><input type="number" id="montoCosto" class="form-control" value='+webServicesAvanceCosto[0].monto+'  required/></td></tr>'+									
 						'									<input type="hidden" id="avanceIdCosto" value="'+webServicesAvanceCosto[0].avanceId+'"/>'+		
 						'								</form>	'+												
 						'  							</tbody>'+
@@ -7314,7 +7357,7 @@ $("body").on("click", ".consultaEditarEvidencia",function(event){
 						'					<table class="table table-hover">'+
 						'						<tbody>'+
 						'			      			<form class="form-horizontal" role="form">'+
-						'								<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" value="'+webServicesEvidencia[0].nombre+'" /></td><td><label for="urlEvidencia">Url</label><input type="url" id="urlEvidencia" class="form-control" value="'+webServicesEvidencia[0].url+'" /></td></tr>'+
+						'								<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" value="'+webServicesEvidencia[0].nombre+'" required/></td><td><label for="urlEvidencia">Url</label><input type="url" id="urlEvidencia" class="form-control" value="'+webServicesEvidencia[0].url+'" required/></td></tr>'+
 						'								<tr><td colspan="2"><label for="descripcionEvidencia">Descripción</label><input type="text" id="descripcionEvidencia" class="form-control" value="'+webServicesEvidencia[0].descripcion+'" /></td></tr>'+
 						'								<tr><td colspan="2"><label>Localización de la evidencia:</label></td></tr>'+
 						/* '								<tr><td><label for="latLongEvidencia">Latitud , Longitud: </label>'+
@@ -7745,8 +7788,8 @@ $("body").on("click", ".consultaEditarBeneficiario",function(event){
 						'					<table class="table table-hover">'+
 						'						<tbody>'+
 						'			      			<form class="form-horizontal" role="form">'+
-						'							<tr><td><label for="tipoBeneficiario">Tipo</label><select id="beneficiarioTipo" class="form-control">'+optionBeneficiarioTipo+'</select></td><td><label for="grupoBeneficiario">Grupo</label><select id="grupoBeneficiario" class="form-control">'+optionBeneficiarioGrupo+'</select></td></tr>'+
-						'							<tr><td><label for="cantidadBeneficiario">Cantidad</label><input type="number" id="cantidadBeneficiario" class="form-control" value='+webServicesBeneficiario[0].cantidad+' /></td><td><label for="descripcionBeneficiario">Descripción</label><input type="text" id="descripcionBeneficiario" class="form-control" value="'+webServicesBeneficiario[0].descripcion+'" /></td></tr>'+																		
+						'							<tr><td><label for="tipoBeneficiario">Tipo</label><select id="beneficiarioTipo" class="form-control" required>'+optionBeneficiarioTipo+'</select></td><td><label for="grupoBeneficiario">Grupo</label><select id="grupoBeneficiario" class="form-control" required>'+optionBeneficiarioGrupo+'</select></td></tr>'+
+						'							<tr><td><label for="cantidadBeneficiario">Cantidad</label><input type="number" id="cantidadBeneficiario" class="form-control" value='+webServicesBeneficiario[0].cantidad+' required /></td><td><label for="descripcionBeneficiario">Descripción</label><input type="text" id="descripcionBeneficiario" class="form-control" value="'+webServicesBeneficiario[0].descripcion+'" /></td></tr>'+																		
 						'							<input type="hidden" id="avanceIdBeneficiario" value="'+avanceId+'"/>'+		
 						'			      			</form>	'+				
 						'						</tbody>'+
@@ -7985,7 +8028,7 @@ $("body").on("click", ".consultaEditarHito",function(event){
 						'					<table class="table table-hover">'+
 						'						<tbody>'+
 						'			      			<form class="form-horizontal" role="form">'+
-						'							<tr><td><label for="cantidadHito">Cantidad</label><input type="number" id="cantidadHito" class="form-control" value='+programacionWebService[0].cantidad+' /></td><td><label for="fechaHito">Fecha Entrega</label><input type="date" id="fechaHito" class="form-control" value='+programacionWebService[0].fechaEntrega+' /></td></tr>'+																		
+						'							<tr><td><label for="cantidadHito">Cantidad</label><input type="number" id="cantidadHito" class="form-control" value='+programacionWebService[0].cantidad+' required/></td><td><label for="fechaHito">Fecha Entrega</label><input type="date" id="fechaHito" class="form-control" value='+programacionWebService[0].fechaEntrega+' required/></td></tr>'+																		
 						'							<input type="hidden" id="programacionIdHito" value="'+programacionWebService[0].id+'"/>'+		
 						'			      			</form>	'+				
 						'						</tbody>'+
@@ -8331,7 +8374,7 @@ $("body").on("click", ".modalDestinatario",function(event){
 						'												<tbody>'+
 						'			      									<form class="form-horizontal" role="form">'+
 						'													<tr><td><label for="tipoDestinatarioAccion">Tipo</label><select id="tipoDestinatarioAccion" class="form-control">'+optionBeneficiarioTipo+'</select></td><td><label for="grupoDestinatarioAccion">Grupo</label><select id="grupoDestinatarioAccion" class="form-control"></select></td></tr>'+
-						'													<tr><td><label for="cantidadDestinatarioAccion">Cantidad</label><input type="number" id="cantidadDestinatarioAccion" class="form-control" placeholder="Ingrese una Cantidad" /></td><td><label for="descripcionDestinatarioAccion">Descripción</label><input type="text" id="descripcionDestinatarioAccion" class="form-control" placeholder="Ingrese Objeto una Descripción" /></td></tr>'+																		
+						'													<tr><td><label for="cantidadDestinatarioAccion">Cantidad</label><input type="number" id="cantidadDestinatarioAccion" class="form-control" placeholder="Ingrese una Cantidad" required /></td><td><label for="descripcionDestinatarioAccion">Descripción</label><input type="text" id="descripcionDestinatarioAccion" class="form-control" placeholder="Ingrese Objeto una Descripción" /></td></tr>'+																		
 						'			      									</form>	'+				
 						'												</tbody>'+
 						'											</table>'+
@@ -8389,6 +8432,7 @@ $("body").on("click", ".modalDestinatario",function(event){
 	$('#tipoDestinatarioAccion > option[value="1"]').attr('selected', 'selected');
 	$('#modalDestinatario').modal('show');
 	$('#tipoDestinatarioAccion').change();
+	$("#dataTableDestinatarioAccion").DataTable();
 
 
 	
@@ -8575,7 +8619,7 @@ $("body").on("click", ".consultaEditarDestinatario",function(event){
 						'						<tbody>'+
 						'			      			<form class="form-horizontal" role="form">'+
 						'							<tr><td><label for="tipoDestinatarioAccion">Tipo</label><select id="tipoDestinatarioAccion" class="form-control">'+optionBeneficiarioTipo+'</select></td><td><label for="grupoDestinatarioAccion">Grupo</label><select id="grupoDestinatarioAccion" class="form-control">'+optionBeneficiarioGrupo+'</select></td></tr>'+
-						'							<tr><td><label for="cantidadDestinatarioAccion">Cantidad</label><input type="number" id="cantidadDestinatarioAccion" class="form-control" value='+webServicesDestinatarioAccion[0].cantidad+' /></td><td><label for="descripcionDestinatarioAccion">Descripción</label><input type="text" id="descripcionDestinatarioAccion" class="form-control" value="'+webServicesDestinatarioAccion[0].descripcion+'" /></td></tr>'+																		
+						'							<tr><td><label for="cantidadDestinatarioAccion">Cantidad</label><input type="number" id="cantidadDestinatarioAccion" class="form-control" value='+webServicesDestinatarioAccion[0].cantidad+' required /></td><td><label for="descripcionDestinatarioAccion">Descripción</label><input type="text" id="descripcionDestinatarioAccion" class="form-control" value="'+webServicesDestinatarioAccion[0].descripcion+'" /></td></tr>'+																		
 						'			      			</form>	'+				
 						'						</tbody>'+
 						'					</table>'+
@@ -8979,10 +9023,10 @@ $("body").on("click", ".avanceCualitativo",function(event){
 						'											<tbody>'+
 						'												<tr><td><div class="form-group"><label for="nombreAvanceCualitativo">Acciones</label><select id="nombreAvanceCualitativo" class="form-control">'+optionAcciones+'</select></div></td></tr>'+
 						'												<tr><td><div class="form-group"><label for="trimestreAvanceCualitativo">Trimestre</label><select id="trimestreAvanceCualitativo" class="form-control">'+optionTrimestre+'</select></div></td></tr>'+
-						'												<tr><td><div class="form-group"><label for="gestionesRealizadasAvanceCualitativo">Gestiones Realizadas</label><textarea class="form-control" rows="" placeholder="" id="gestionesRealizadasAvanceCualitativo"></textarea></div></td></tr>'+
-						' 												<tr><td><div class="form-group"><label for="logrosAlcanzadosAvanceCualitativo">Principales Logros Alcanzados</label><textarea class="form-control" rows="" placeholder="" id="logrosAlcanzadosAvanceCualitativo"></textarea></div></td></tr>'+	
-						'												<tr><td><div class="form-group"><label for="leccionesAprendidasAvanceCualitativo">Dificultades y Lecciones aprendidas</label><textarea class="form-control" rows="" placeholder="" id="leccionesAprendidasAvanceCualitativo"></textarea></div></td></tr>'+
-						' 												<tr><td><div class="form-group"><label for="objetivosAvanceCualitativo">Objetivos del Siguiente Trimestre</label><textarea class="form-control" rows="" placeholder="" id="objetivosAvanceCualitativo"></textarea></div></td></tr>'+
+						'												<tr><td><div class="form-group"><label for="gestionesRealizadasAvanceCualitativo">Gestiones Realizadas</label><textarea class="form-control" rows="" placeholder="" id="gestionesRealizadasAvanceCualitativo" required></textarea></div></td></tr>'+
+						' 												<tr><td><div class="form-group"><label for="logrosAlcanzadosAvanceCualitativo">Principales Logros Alcanzados</label><textarea class="form-control" rows="" placeholder="" id="logrosAlcanzadosAvanceCualitativo" required></textarea></div></td></tr>'+	
+						'												<tr><td><div class="form-group"><label for="leccionesAprendidasAvanceCualitativo">Dificultades y Lecciones aprendidas</label><textarea class="form-control" rows="" placeholder="" id="leccionesAprendidasAvanceCualitativo" required></textarea></div></td></tr>'+
+						' 												<tr><td><div class="form-group"><label for="objetivosAvanceCualitativo">Objetivos del Siguiente Trimestre</label><textarea class="form-control" rows="" placeholder="" id="objetivosAvanceCualitativo" required></textarea></div></td></tr>'+
 						'											</tbody>'+							           
 						'										</table>'+
 						'									</div>'+							
@@ -9319,10 +9363,10 @@ $("body").on("click", ".consultaEditarAvanceCualitativo",function(event){
 						'							<tbody>'+
 						'								<tr><td><div class="form-group"><label for="nombreAvanceCualitativo">Acciones</label><select id="nombreAvanceCualitativo" class="form-control">'+optionAcciones+'</select></div></td></tr>'+
 						'								<tr><td><div class="form-group"><label for="trimestreAvanceCualitativo">Trimestre</label><select id="trimestreAvanceCualitativo" class="form-control">'+optionTrimestre+'</select></div></td></tr>'+
-						'								<tr><td><div class="form-group"><label for="gestionesRealizadasAvanceCualitativo">Gestiones Realizadas</label><textarea class="form-control" rows="" id="gestionesRealizadasAvanceCualitativo">'+avanceCualitativo[0].gestionesRealizadas+'</textarea></div></td></tr>'+
-						' 								<tr><td><div class="form-group"><label for="logrosAlcanzadosAvanceCualitativo">Principales Logros Alcanzados</label><textarea class="form-control" rows="" id="logrosAlcanzadosAvanceCualitativo">'+avanceCualitativo[0].principalesLogrosAlcanzados+'</textarea></div></td></tr>'+	
-						'								<tr><td><div class="form-group"><label for="leccionesAprendidasAvanceCualitativo">Dificultades y Lecciones aprendidas</label><textarea class="form-control" rows="" id="leccionesAprendidasAvanceCualitativo">'+avanceCualitativo[0].dificultadesLeccionesAprendidas+'</textarea></div></td></tr>'+
-						' 								<tr><td><div class="form-group"><label for="objetivosAvanceCualitativo">Objetivos del Siguiente Trimestre</label><textarea class="form-control" rows="" id="objetivosAvanceCualitativo">'+avanceCualitativo[0].objetivosTrimestre+'</textarea></div></td></tr>'+
+						'								<tr><td><div class="form-group"><label for="gestionesRealizadasAvanceCualitativo">Gestiones Realizadas</label><textarea class="form-control" rows="" id="gestionesRealizadasAvanceCualitativo" required>'+avanceCualitativo[0].gestionesRealizadas+'</textarea></div></td></tr>'+
+						' 								<tr><td><div class="form-group"><label for="logrosAlcanzadosAvanceCualitativo">Principales Logros Alcanzados</label><textarea class="form-control" rows="" id="logrosAlcanzadosAvanceCualitativo" required>'+avanceCualitativo[0].principalesLogrosAlcanzados+'</textarea></div></td></tr>'+	
+						'								<tr><td><div class="form-group"><label for="leccionesAprendidasAvanceCualitativo">Dificultades y Lecciones aprendidas</label><textarea class="form-control" rows="" id="leccionesAprendidasAvanceCualitativo" required>'+avanceCualitativo[0].dificultadesLeccionesAprendidas+'</textarea></div></td></tr>'+
+						' 								<tr><td><div class="form-group"><label for="objetivosAvanceCualitativo">Objetivos del Siguiente Trimestre</label><textarea class="form-control" rows="" id="objetivosAvanceCualitativo" required>'+avanceCualitativo[0].objetivosTrimestre+'</textarea></div></td></tr>'+
 						'							</tbody>'+							           
 						'						</table>'+
 						'					</div>'+							

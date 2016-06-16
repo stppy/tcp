@@ -67,7 +67,7 @@
           </div>
           <div class="navbar-custom-menu">
           	<div style="padding-top:5px">.</div>
-          	<input id="ex12c" type="text"/>
+          	<!-- <input id="ex12c" type="text"/> -->
            </div>
 
         </nav>
