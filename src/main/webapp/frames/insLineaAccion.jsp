@@ -1828,7 +1828,7 @@
 							'											<tbody>'+
 							'												<tr><td><div class="form-group"><label for="nombreAccion">Acción</label><select id="selectorCatalogoAccion" class="form-control">'+optionCatalogoAccion+'</select><input type="hidden" class="form-control" id="insLineaAccionId" value="'+insLineaAccionId+'"></div></td><td><div class="form-group"><label for="umedida">U. medida</label><input type="text" id="unidadMedidaAccion" value="" class="form-control" disabled> </div></td></tr>'+
 							'												<tr><td><div class="form-group"><label for="departamento">Departamento</label><select id="selectorDepartamento" name="departamento" class="form-control">'+optionDepartamentos+'</select></div></td><td><div class="form-group"><label for="distrito">Distrito</label><select name="departamento" class="form-control" id="distritosDepartamento"></select></div></td></tr>'+
-							'												<tr><td><div class="form-group"><label for="fechaInicioAccion">Fecha Inicio</label><input type="date" id="fechaInicioAccion" class="form-control" value="'+fechaActual+'" required /></div></td><td><div class="form-group"><label for="fechaFinAccion">Fecha Fin</label><input type="date" id="fechaFinAccion" class="form-control" required /></div></td></tr>'+							
+							'												<tr><td><div class="form-group"><label for="fechaInicioAccion">Fecha Inicio</label><input type="date" id="fechaInicioAccion" class="form-control" value="'+fechaActual+'" required /></div></td><td><div class="form-group"><label for="fechaFinAccion">Fecha Fin</label><input type="date" id="fechaFinAccion" class="form-control" onblur="validarFecha()" required /></div></td></tr>'+							
 							'											</tbody>'+							           
 							'										</table>'+
 							'									</div>'+
@@ -2086,7 +2086,7 @@
 							'											<tbody>'+																																																																																					
 							'												<tr><td><div class="form-group"><label for="nombreAccion">Acción</label><select id="selectorCatalogoAccion" name="catalogoAccion"class="form-control">'+optionCatalogoAccion+'</select><input type="hidden" class="form-control" id="insLineaAccionId" value="'+insLineaAccionId+'"></div></td><td><div class="form-group"><label for="umedida">U. medida</label><input type="text" id="unidadMedidaAccion" class="form-control" disabled></div></td></tr>'+
 							'												<tr><td><div class="form-group"><label for="departamento">Departamento</label><select id="selectorDepartamento" name="departamento" class="form-control">'+optionDepartamentos+'</select></div></td><td><div class="form-group"><label for="distrito">Distrito</label><select class="form-control" id="distritosDepartamento">'+optionDistritos+'</select></div></td></tr>'+
-							'												<tr><td><div class="form-group"><label for="fechaInicio">Fecha Inicio</label><input type="date"  id="fechaInicio" value='+accion[0].fechaInicio+' class="form-control" required></div></td><td><div class="form-group"><label for="fichaFin">Fecha Fin</label><input type="date"  id="fechaFin" value='+accion[0].fechaFin+' class="form-control" required></div></td></tr>'+
+							'												<tr><td><div class="form-group"><label for="fechaInicio">Fecha Inicio</label><input type="date"  id="fechaInicio" value='+accion[0].fechaInicio+' class="form-control" required></div></td><td><div class="form-group"><label for="fichaFin">Fecha Fin</label><input type="date"  id="fechaFin" value='+accion[0].fechaFin+' class="form-control" onblur="validarFecha(true)" required></div></td></tr>'+
 
 							'											</tbody>'+							           
 							'										</table>'+
@@ -7937,21 +7937,27 @@ $("body").on("click", ".consultaBorrarInsLineaAccion",function(event){
 	
 });
 
-$("body").on("change", "#fechaFinAccion",function(event){
-	var fechaInicio = $("#fechaInicioAccion").val();
-	var fechaFin = $("#fechaFinAccion").val();
+//$("body").on("onblur", "#fechaFinAccion",function(event){
+function validarFecha(edit){
+	if(edit==true){
+		var fechaInicio = $("#fechaInicio").val();
+		var fechaFin = $("#fechaFin").val();
+	}else{
+		var fechaInicio = $("#fechaInicioAccion").val();
+		var fechaFin = $("#fechaFinAccion").val();
+	}
 	
-	if(fechaInicio != ""){
+	
+	if(fechaInicio != "" && fechaFin != ""){
 		if(fechaFin < fechaInicio){
 			$("#fechaFinAccion").val("");
 			alert("Fecha Fin no puede ser menor a Fecha Inicio");
 		}
-	}else{
-		$("#fechaFinAccion").val("");
-		alert("Primero debe seleccionar Fecha Incio");
+	}else{		
+			alert("La fecha de inicio y fin no pueden quedar en blanco");			
 	}
 
-});
+};
 $("body").on("change", "#fechaInicioAccion",function(event){
 	var fechaInicio = $("#fechaInicioAccion").val();
 	var fechaFin = $("#fechaFinAccion").val();
