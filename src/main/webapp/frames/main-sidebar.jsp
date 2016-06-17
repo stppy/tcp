@@ -51,7 +51,7 @@
 					<li class=""><a href="http://spr.stp.gov.py/tablero/pivotEvidenciaAvance.jsp"><i class="fa fa-area-chart" id="linkPivotEvidenciasAvances"></i>Análisis de Evidencias de Avances</a></li>
 					<li class=""><a href="http://spr.stp.gov.py/tablero/pivotAvance.jsp"><i class="fa fa-line-chart" id="linkPivotAvances"></i>Análisis de Avances</a></li>
 					<li class=""><a href="http://spr.stp.gov.py/tablero/resumenLineaAccion.jsp"><i class="fa fa-dashboard" id="linkResumenLineaAccion"></i>Tablero de Control</a></li>
-					<li class=""><a href="http://spr.stp.gov.py/tablero/descargasConstancias.jsp"><i class="fa fa-cloud-download" id="linkDescargasConstancias"></i>Descargar Constancias</a></li>
+					<li class=""><a href="http://spr.stp.gov.py/tablero/descargarDocumentos.jsp"><i class="fa fa-cloud-download" id="linkDescargasConstancias"></i>Descargar Constancias</a></li>
 					<li class=""><a href="https://nube.stp.gov.py/index.php/s/a6JRumfONc48ynV" target="_blank"><i class="fa fa-user" id="linkFichaSocial"></i>Ficha Social</a></li>
 					<!-- li class=""><a href="javascript:imprimirAvancesInstitucion()"><i class="fa fa-cloud-download" id="linkGeneracionAvancesPorInstitucionPDF"></i>Descargar Avances Cualitativos de la Institución</a></li-->          			
     			</ul>

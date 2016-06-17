@@ -27,11 +27,11 @@
 <% Map attributes = user.getAttributes(); 
 if (user != null) { %>
 <script>
-<%if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2") || attributes.get("role_id").toString().equals("3")){%>
+<%if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2") || attributes.get("role_id_tablero").toString().equals("3")){%>
  	$(document).ready(function(){
  		var entidadCas = "";
 		entidadCas ="<%=attributes.get("entidad") %>";
-		usuarioRolCas="<%=attributes.get("role_id") %>";
+		usuarioRolCas="<%=attributes.get("role_id_tablero") %>";
 		var usuarios = $.ajax({
 			url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
 		  	type:'get',
@@ -43,6 +43,7 @@ if (user != null) { %>
 		
 		$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
 		$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
+		
 	});
 <%}else{%>
 	window.location = "http://spr.stp.gov.py/tablero/resumenLineaAccion.jsp";
@@ -68,7 +69,7 @@ if (user != null) { %>
 	          </h1>
 	        </section>
 			<!-- Main content -->
-			<section class="content" id="programacion">
+			<section class="content" id="contenedorDocumentos">
 				<!-- Contenedor de constancias para el PA1 -->
 					<div class="box box-primary">
 						<div class="box-header with-border collapsed" data-toggle="collapse" data-target="#demo1"><!-- Cabecera del box con titulo y botones para expandir -->
@@ -147,7 +148,7 @@ if (user != null) { %>
 					</div>
 					
 				<script>/* Scrip para cambiar de icono el boton de collapse */
-				 $(document).ready(function(){
+ 				 $(document).ready(function(){
 					$("#demo1").on("hide.bs.collapse", function(){
 					   	$(".btn1").html('<i class="fa fa-plus""></i>');
 					 });
@@ -166,7 +167,8 @@ if (user != null) { %>
 					$("#demo3").on("show.bs.collapse", function(){
 						$(".btn3").html('<i class="fa fa-minus""></i> ');
 					});
-				});
+					
+				}); 
 				</script>
 			</section>
 		</div><!-- fin content-wrapper -->
@@ -192,8 +194,8 @@ if (user != null) { %>
     <!-- Librerias para la rutina de cambio de contraseña -->
     <script src="dist/js/jquerymd5.js" type="text/javascript"></script>    	
     <%@ include file="/frames/pass.jsp" %>
-    <%@ include file="/frames/insLineaAccion.jsp" %>
-    <!-- AdminLTE for demo purposes -->
+<%--     <%@ include file="/frames/insLineaAccion.jsp" %>
+ --%>    <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js" type="text/javascript"></script>
         <%  } else { %>
 			<p>Favor Iniciar Sesion</p>
@@ -219,7 +221,7 @@ if (user != null) { %>
 	<script>
 		var entidadCasSpr = "";
 		entidadCasSpr ="<%=attributes.get("entidad") %>";
-		usuarioRolCasSpr="<%=attributes.get("role_id") %>";
+		usuarioRolCasSpr="<%=attributes.get("role_id_tablero") %>";
 		var usuariosSpr = $.ajax({
 			url:'http://spr.stp.gov.py/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
 		  	type:'get',
