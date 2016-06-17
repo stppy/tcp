@@ -7944,6 +7944,7 @@ function validarFecha(edit){
 	if(fechaInicio != "" && fechaFin != ""){
 		if(fechaFin < fechaInicio){
 			$("#fechaFinAccion").val("");
+			$("#fechaFin").val("");
 			alert("Fecha Fin no puede ser menor a Fecha Inicio");
 		}
 	}else{		
