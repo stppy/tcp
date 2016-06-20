@@ -285,9 +285,13 @@ textarea { text-transform: uppercase; }
 							  '<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
 							  '<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
 							  '<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>'+
-							  '<td class="'+clase+'">'+desempProgAnho+'</td>'+
-							  '<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>'+
-							  '<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
+							  '<td class="'+clase+'">'+desempProgAnho+'</td>';
+							  if(lineasProgramadas[n].tipoCronogramaId==1){
+								  tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>';
+							  }else{
+								  tempInstLineas += '<td> - </td>';
+							  }
+							  tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
 							  '<td>'+numeroConComa(lineasProgramadas[n].cantidadHoy)+'</td>'+
 							  '<td>'+numeroConComa(lineasProgramadas[n].cantidadAvance)+'</td>';
 							  
@@ -309,9 +313,13 @@ textarea { text-transform: uppercase; }
 								  clase="";
 							  }
 							  
-							  tempInstLineas += '<td class="'+clase+'">'+desempEjeHoy+'</td>'+
-							  '<td>'+numeroConComa(lineasProgramadas[n].cantDestinatarioReal)+'</td>'+
-							  '<td>'+numeroConComa((lineasProgramadas[n].costoAc/1000000).toFixed(2))+'</td>'+
+							  tempInstLineas += '<td class="'+clase+'">'+desempEjeHoy+'</td>';
+							  if(lineasProgramadas[n].tipoCronogramaRealId==1){
+								  tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDestinatarioReal)+'</td>';
+							  }else{
+								  tempInstLineas += '<td> - </td>';
+							  }
+							  tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].costoAc/1000000).toFixed(2))+'</td>'+
 							  '</tr>';
 						  }
 						}
