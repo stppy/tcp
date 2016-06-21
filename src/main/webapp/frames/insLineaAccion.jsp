@@ -109,7 +109,7 @@
 							'					</div>'+
 							'					<div class="form-group">'+
 							'						<label for="meta">Meta</label>'+
-							'						<input type="number" id="metaInsLineaAccion" class="form-control" name="meta" placeholder="Ingrese Meta" required>'+
+							'						<input type="number" id="metaInsLineaAccion" class="form-control" name="meta" placeholder="Ingrese Meta" required >'+
 							'					</div>'+
 							'					<div class="form-group">'+
 							'						<label for="version">Versión</label>'+
@@ -129,7 +129,7 @@
 			
 
 	});
-	
+		
 	$("body").on("change", "#nombreLineaAccionInsLineaAccion",function(event){
 		//var departamentoId = $(this).attr("parametro");
 		var catalogoLineaAccionId = $("#nombreLineaAccionInsLineaAccion option:selected").val();
@@ -168,7 +168,7 @@
 		
 	});
 	
-	$("body").on("click", "#guardarInsLineaAccion",function(event){		
+	$("body").on("click", "#guardarInsLineaAccion",function(event){
 		event.stopPropagation();
 		event.preventDefault(); 
 		$("#actualizarInsLineaAccionBoton").remove();
@@ -2934,24 +2934,24 @@ $("body").on("click", ".borrarAccion",function(event){
 			  			'												<input type="text" name="entidad" id="entidad-formulario" value="" class="form-control" disabled>'+
 			  			'											</div>'+
 			      		'				    						<div class="form-group col-md-1">'+
-			      		'			    								<input type="text" name="tipoPrograma" id="tipoPrograma-formulario" placeholder="Tipo Programa" list="listaf3c2" class="form-control">'+
+			      		'			    								<input type="text" name="tipoPrograma" id="tipoPrograma-formulario" placeholder="Tipo Programa" list="listaf3c2" class="form-control" required>'+
 			      		'			    							</div>'+
 			      		'			    							<div class="form-group col-md-1">'+
-			      		'			    								<input type="text" name="programa" id="programa-formulario" placeholder="Programa" list="listaf4c2" class="form-control">'+
+			      		'			    								<input type="text" name="programa" id="programa-formulario" placeholder="Programa" list="listaf4c2" class="form-control" required>'+
 			      		'			    							</div>'+
 			      		'			    							<div class="form-group col-md-1">'+
-			      		'			    								<input type="text" name="subPrograma" id="subPrograma-formulario" placeholder="SubPrograma" list="listaf5c2" class="form-control">'+
+			      		'			    								<input type="text" name="subPrograma" id="subPrograma-formulario" placeholder="SubPrograma" list="listaf5c2" class="form-control" required>'+
 			      		'			    							</div>'+
 			      		'				    						<div class="form-group col-md-2">'+
-			      		'				    							<input type="text" name="proyecto" id="proyecto-formulario" placeholder="Proyecto" list="listaf6c2" class="form-control">'+
+			      		'				    							<input type="text" name="proyecto" id="proyecto-formulario" placeholder="Proyecto" list="listaf6c2" class="form-control" required>'+
 			      		'				   							</div>'+
 			  			'		    								<div class="form-group col-md-2">'+
-			  			'		    									<input type="text" name="producto" id="producto-formulario" placeholder="Producto" list="listaf7c2" class="form-control">'+
+			  			'		    									<input type="text" name="producto" id="producto-formulario" placeholder="Producto" list="listaf7c2" class="form-control" required>'+
 			      		'										  	</div>'+
 			  			'		    								<div class="form-group col-md-3">'+
 				      	'												<div class="input-group input-group-md">'+
 				      	'													<span class="input-group-addon">Gs</span>'+
-	      				'	    											<input type="text" name="total" id="total-formulario" value="" class="form-control">'+
+	      				'	    											<input type="number" name="total" id="total-formulario" value="" class="form-control" required>'+
 	      				'	               								    <div class="input-group-btn">'+
 		      			'		                								<button type="submit" class="btn btn-success guardarComboProducto" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'><span class="glyphicon glyphicon-plus"></span></button>'+
 		      			'		                							</div>'+	      					    				
