@@ -5279,7 +5279,7 @@ $("body").on("click", ".agregarProgramacion",function(event){
 							'											<tr><td><div class="form-group"><label for="departamentoActividad">Departamento</label><input type="text" class="form-control" id="departamentoActividad" value="'+nombreDepartamento+'" disabled /></div></td><td><div class="form-group"><label for="distritoActividad">Distrito</label><input type="text" id="distritoActividad" value="'+nombreDistrito+'" class="form-control" disabled> </div></td></tr>'+
 							'											<tr><td><label for="accionProgramacion">Accion</label><input type="text" id="accionProgramacion" value="'+accionCatalogo[0].nombre+'" class="form-control" disabled /></td><td><label for="unidadMedidaProgramacion">U. Medida</label><input type="text" id="unidadMedidaProgramacion" class="form-control" value="'+nombreUnidadMedida+'" disabled /></td></tr>'+
 							'											<tr><td><label for="cronogramaProgramacion">Cronograma</label><input type="text" id="cronogramaProgramacion" value="'+cronogramas[0].nombre+'" class="form-control" disabled /><input type="hidden" id="cronogramaIdProgramacion" value="'+cronogramas[0].id+'" /></td><td><label for="tipoCronogramaProgramacion">Tipo Cronograma</label><input type="text" id="tipoCronogramaProgramacion" class="form-control" value="'+nombreHitoTipo+'" disabled /></td></tr>'+														
-							'											<tr><td><label for="cantidadProgramacion">Cantidad</label><input type="number" id="cantidadProgramacion" value="" class="form-control" placeholder="Ingres Cantidad" required /></td><td><label for="fechaEntregaProgramacion">Fecha Entrega</label><input type="date" id="fechaEntregaProgramacion" class="form-control" required/></td></tr>'+
+							'											<tr><td><label for="cantidadProgramacion">Cantidad</label><input type="number" id="cantidadProgramacion" value="" class="form-control" placeholder="Ingres Cantidad" onblur="validarHito(false)" required /></td><td><label for="fechaEntregaProgramacion">Fecha Entrega</label><input type="date" id="fechaEntregaProgramacion" class="form-control" onblur="validarHito(false)" required/></td></tr>'+
 							'											<input type="hidden" id="versionProgramacion" value="3" /><input type="hidden" id="actividadIdProgramacion" value="'+cronogramaId+'" />'+		
 							'			      							</form>	'+												
 							'										</tbody>'+
@@ -5341,7 +5341,55 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	$("#dataTablesProgramacionHito1").DataTable();
 });	
 
+function validarHito(edit){
+	var validacion=true;
+	
+	if (edit==true){
+		if (document.getElementById("cantidadHito").validity.valueMissing == true) {	    
+	    	$("#cantidadHito").css("border","1px solid red");
+	    	$("#cantidadHito").attr("placeholder", "El campo es requerido");
+	    	validacion=false;
+	    }else{
+	    	if (document.getElementById("cantidadHito").validity.valueMissing == false) {
+	    		$("#cantidadHito").css("border","1px solid green");		    	
+	    	}	    	
+	    }
+		if (document.getElementById("fechaHito").validity.valueMissing == true) {	    
+	    	$("#fechaHito").css("border","1px solid red");
+	    	$("#fechaHito").attr("placeholder", "El campo es requerido");
+	    	validacion=false;
+	    }else{
+	    	if (document.getElementById("fechaHito").validity.valueMissing == false) {
+	    		$("#fechaHito").css("border","1px solid green");		    	
+	    	}	    	
+	    }					
+	}else{
+		if (document.getElementById("cantidadProgramacion").validity.valueMissing == true) {	    
+	    	$("#cantidadProgramacion").css("border","1px solid red");
+	    	$("#cantidadProgramacion").attr("placeholder", "El campo es requerido");
+	    	validacion=false;
+	    }else{
+	    	if (document.getElementById("cantidadProgramacion").validity.valueMissing == false) {
+	    		$("#cantidadProgramacion").css("border","1px solid green");		    	
+	    	}	    	
+	    }
+		if (document.getElementById("fechaEntregaProgramacion").validity.valueMissing == true) {	    
+	    	$("#fechaEntregaProgramacion").css("border","1px solid red");
+	    	$("#fechaEntregaProgramacion").attr("placeholder", "El campo es requerido");
+	    	validacion=false;
+	    }else{
+	    	if (document.getElementById("fechaEntregaProgramacion").validity.valueMissing == false) {
+	    		$("#fechaEntregaProgramacion").css("border","1px solid green");		    	
+	    	}	    	
+	    }					
+	}	
+    
+	return validacion;
+}
+
 $("body").on("click", ".guardarProgramacion",function(event){
+	if(validarHito(false)==true){
+		
 	var parametros = $(this).attr("parametros");
     var idParsed = parametros.split("-");                                                            
 	
@@ -5448,7 +5496,7 @@ $("body").on("click", ".guardarProgramacion",function(event){
         	
         	}
 	 });
-
+	}
 });	
 
 $("body").on("click", ".agregarAvance",function(event){
@@ -8231,7 +8279,7 @@ $("body").on("click", ".consultaEditarHito",function(event){
 						'					<table class="table table-hover">'+
 						'						<tbody>'+
 						'			      			<form class="form-horizontal" role="form">'+
-						'							<tr><td><label for="cantidadHito">Cantidad</label><input type="number" id="cantidadHito" class="form-control" value='+programacionWebService[0].cantidad+' required/></td><td><label for="fechaHito">Fecha Entrega</label><input type="date" id="fechaHito" class="form-control" value='+programacionWebService[0].fechaEntrega+' required/></td></tr>'+																		
+						'							<tr><td><label for="cantidadHito">Cantidad</label><input type="number" id="cantidadHito" class="form-control" value='+programacionWebService[0].cantidad+' onblur="validarHito(true)" required/></td><td><label for="fechaHito">Fecha Entrega</label><input type="date" id="fechaHito" class="form-control" value='+programacionWebService[0].fechaEntrega+' onblur="validarHito(true)" required/></td></tr>'+																		
 						'							<input type="hidden" id="programacionIdHito" value="'+programacionWebService[0].id+'"/>'+		
 						'			      			</form>	'+				
 						'						</tbody>'+
@@ -8252,6 +8300,8 @@ $("body").on("click", ".consultaEditarHito",function(event){
 
 });
 $("body").on("click", ".editarHito",function(event){
+	if (validarHito(true)==true){
+		
 	var parametros = $(this).attr("parametros");
     var idParsed = parametros.split("-");                                                            
 	
@@ -8294,7 +8344,7 @@ $("body").on("click", ".editarHito",function(event){
         	
         	}
 	 });
-	
+	}
 });
 
 $("body").on("click", ".consultaBorrarHito",function(event){
