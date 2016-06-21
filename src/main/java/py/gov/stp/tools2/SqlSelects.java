@@ -1837,9 +1837,15 @@ public class SqlSelects {
 						+ "		ins_linea_accion_programacion_anho.cantidad_anho as programado_anho,"
 						+ "		ins_linea_accion_programacion_hoy.cantidad_hoy as programado_hoy,"
 						+ "		ins_linea_accion_destinatarios.cant_dest as destinatarios_estimados,"
+						
+						+ "		ins_linea_accion_destinatarios.tipo_cronograma_id as tipo_cronograma_estimado,"
+						
 						+ "		ins_linea_accion_costo_estimado.inversion_estimada,"
 						+ "		ins_linea_accion_avance.cantidad as avance_real,"
 						+ "		ins_linea_accion_destinatario_real.beneficiarios_real as destinatarios_real,"
+						
+						+ "		ins_linea_accion_destinatario_real.tipo_conograma_real_id as tipo_cronograma_real,"
+						
 						+ "		ins_linea_accion_costo.costo as inversion_real"
 						+ " from ins_linea_accion_base"
 						+ " left join ins_linea_accion_avance on "
@@ -1880,9 +1886,11 @@ public class SqlSelects {
 			    objeto.setCantidadAnho(rs.getDouble("programado_anho"));
 			    objeto.setCantidadHoy(rs.getDouble("programado_hoy"));
 			    objeto.setCantDest(rs.getDouble("destinatarios_estimados"));
+			    objeto.setTipoCronogramaId(rs.getInt("tipo_cronograma_estimado"));
 			    objeto.setInversionEstimada(rs.getDouble("inversion_estimada"));
 			    objeto.setCantidadAvance(rs.getDouble("avance_real"));
 			    objeto.setCantDestinatarioReal(rs.getBigDecimal("destinatarios_real"));
+			    objeto.setTipoCronogramaRealId(rs.getInt("tipo_cronograma_real"));
 			    objeto.setCostoAc(rs.getDouble("inversion_real"));
 				objetos.add(objeto);
 			}
