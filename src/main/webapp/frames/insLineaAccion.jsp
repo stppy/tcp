@@ -1855,7 +1855,7 @@
 							'											<tbody>'+
 							'												<tr><td><div class="form-group"><label for="nombreAccion">Acción</label><select id="selectorCatalogoAccion" class="form-control">'+optionCatalogoAccion+'</select><input type="hidden" class="form-control" id="insLineaAccionId" value="'+insLineaAccionId+'"></div></td><td><div class="form-group"><label for="umedida">U. medida</label><input type="text" id="unidadMedidaAccion" value="" class="form-control" disabled> </div></td></tr>'+
 							'												<tr><td><div class="form-group"><label for="departamento">Departamento</label><select id="selectorDepartamento" name="departamento" class="form-control">'+optionDepartamentos+'</select></div></td><td><div class="form-group"><label for="distrito">Distrito</label><select name="departamento" class="form-control" id="distritosDepartamento"></select></div></td></tr>'+
-							'												<tr><td><div class="form-group"><label for="fechaInicioAccion">Fecha Inicio</label><input type="date" id="fechaInicioAccion" class="form-control" value="'+fechaActual+'" required /></div></td><td><div class="form-group"><label for="fechaFinAccion">Fecha Fin</label><input type="date" id="fechaFinAccion" class="form-control" onblur="validarFecha()" required /></div></td></tr>'+							
+							'												<tr><td><div class="form-group"><label for="fechaInicioAccion">Fecha Inicio</label><input type="date" id="fechaInicioAccion" class="form-control" value="'+fechaActual+'"onblur="validarAccion()" required /></div></td><td><div class="form-group"><label for="fechaFinAccion">Fecha Fin</label><input type="date" id="fechaFinAccion" class="form-control" onblur="validarAccion(false,true)" required /></div></td></tr>'+							
 							'											</tbody>'+							           
 							'										</table>'+
 							'									</div>'+
@@ -1863,7 +1863,7 @@
 							'			      					    <div class="form-group col-md-3">'+
 							'						  						<label for="totalFinanciero-formulario">Primer Trimestre</label>'+
 							'				      						<div class="input-group input-group-sm">'+						      			
-							'								    				<input type="number" name="primerTrimestre" id="primerTrimestre-formulario" value="0" class="form-control" required>'+
+							'								    				<input type="number" name="primerTrimestre" id="primerTrimestre-formulario" value="0" class="form-control" onblur="validarAccion()" required>'+
 							'													<input type="hidden" class="form-control" id="versionAccion" value="3">'+//Aqui estan los input hidden que en este formulario son 3
 							'													<input type="hidden" class="form-control" id="costoAccion" value="99">'+
 							'													<input type="hidden" class="form-control" id="pesoAccion" value="1">'+
@@ -1875,21 +1875,21 @@
 							'				     					<div class="form-group col-md-3">'+
 							'							  					<label for="totalFinanciero-formulario">Segundo Trimestre</label>'+
 							'					      					<div class="input-group input-group-sm">'+
-							'			  					    			<input type="number" name="segundoTrimestre" id="segundoTrimestre-formulario" value="0" class="form-control" required>'+
+							'			  					    			<input type="number" name="segundoTrimestre" id="segundoTrimestre-formulario" value="0" class="form-control" onblur="validarAccion()" required>'+
 							'					      					</div>'+
 							'								    		</div>'+
 															    		
 							'				     					<div class="form-group col-md-3">'+
 							'							  					<label for="totalFinanciero-formulario">Tercer Trimestre</label>'+
 							'					      					<div class="input-group input-group-sm">'+
-							'			  					    			<input type="number" name="tercerTrimestre" id="tercerTrimestre-formulario" value="0" class="form-control" required>'+
+							'			  					    			<input type="number" name="tercerTrimestre" id="tercerTrimestre-formulario" value="0" class="form-control" onblur="validarAccion()" required>'+
 							'					      					</div>'+
 							'								    		</div>'+
 														    		
 							'			      					    <div class="form-group col-md-3">'+
 							'						  					<label for="totalFinanciero-formulario">Cuarto Trimestre</label>'+
 							'				      						<div class="input-group input-group-sm">'+
-							'								    				<input type="number" name="cuartoTrimestre" id="cuartoTrimestre-formulario" value="0" class="form-control" required>'+
+							'								    				<input type="number" name="cuartoTrimestre" id="cuartoTrimestre-formulario" value="0" class="form-control" onblur="validarAccion()" required>'+
 							'				      						</div>'+
 							'							    		</div>'+
 							'			  						</div>'+							
@@ -1897,7 +1897,7 @@
 											
 							'               			</div>'+//fin box-body
 							'							<div class="modal-footer">'+
-							'								<button type="button" class="btn btn-success btn-sm guardarAccion" parametros = '+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'>Guardar Acción</button>'+
+							'								<button type="button" class="btn btn-success btn-sm guardarAccion" parametros = '+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+' onclick="validarAccion()">Guardar Acción</button>'+
 							'							</div>'+
 							'                		</div>'+	
 							'                	</div>'+
@@ -2113,7 +2113,7 @@
 							'											<tbody>'+																																																																																					
 							'												<tr><td><div class="form-group"><label for="nombreAccion">Acción</label><select id="selectorCatalogoAccion" name="catalogoAccion"class="form-control">'+optionCatalogoAccion+'</select><input type="hidden" class="form-control" id="insLineaAccionId" value="'+insLineaAccionId+'"></div></td><td><div class="form-group"><label for="umedida">U. medida</label><input type="text" id="unidadMedidaAccion" class="form-control" disabled></div></td></tr>'+
 							'												<tr><td><div class="form-group"><label for="departamento">Departamento</label><select id="selectorDepartamento" name="departamento" class="form-control">'+optionDepartamentos+'</select></div></td><td><div class="form-group"><label for="distrito">Distrito</label><select class="form-control" id="distritosDepartamento">'+optionDistritos+'</select></div></td></tr>'+
-							'												<tr><td><div class="form-group"><label for="fechaInicio">Fecha Inicio</label><input type="date"  id="fechaInicio" value='+accion[0].fechaInicio+' class="form-control" required></div></td><td><div class="form-group"><label for="fichaFin">Fecha Fin</label><input type="date"  id="fechaFin" value='+accion[0].fechaFin+' class="form-control" onblur="validarFecha(true)" required></div></td></tr>'+
+							'												<tr><td><div class="form-group"><label for="fechaInicio">Fecha Inicio</label><input type="date"  id="fechaInicio" value='+accion[0].fechaInicio+' class="form-control" onblur="validarAccion(true)" required></div></td><td><div class="form-group"><label for="fichaFin">Fecha Fin</label><input type="date"  id="fechaFin" value='+accion[0].fechaFin+' class="form-control" onblur="validarAccion(true,true)" required></div></td></tr>'+
 
 							'											</tbody>'+							           
 							'										</table>'+
@@ -2122,7 +2122,7 @@
 							'			      					    <div class="form-group col-md-3">'+
 							'						  						<label for="totalFinanciero-formulario">Primer Trimestre</label>'+
 							'				      						<div class="input-group input-group-sm">'+						      			
-							'								    				<input type="number" name="primerTrimestre" id="primerTrimestre-formulario" value='+accion[0].meta1+' class="form-control" required>'+
+							'								    				<input type="number" name="primerTrimestre" id="primerTrimestre-formulario" value='+accion[0].meta1+' class="form-control" onblur="validarAccion(true)" required>'+
 							'													<input type="hidden" class="form-control" id="versionAccion" value="3">'+//Aqui estan los input hidden que en este formulario son 3
 							'													<input type="hidden" class="form-control" id="costoAccion" value="99">'+
 							'													<input type="hidden" class="form-control" id="pesoAccion" value="1">'+
@@ -2135,21 +2135,21 @@
 							'				     					<div class="form-group col-md-3">'+
 							'							  					<label for="totalFinanciero-formulario">Segundo Trimestre</label>'+
 							'					      					<div class="input-group input-group-sm">'+
-							'			  					    			<input type="number" name="segundoTrimestre" id="segundoTrimestre-formulario" value='+accion[0].meta2+' class="form-control" required>'+
+							'			  					    			<input type="number" name="segundoTrimestre" id="segundoTrimestre-formulario" value='+accion[0].meta2+' class="form-control" onblur="validarAccion(true)" required>'+
 							'					      					</div>'+
 							'								    		</div>'+
 															    		
 							'				     					<div class="form-group col-md-3">'+
 							'							  					<label for="totalFinanciero-formulario">Tercer Trimestre</label>'+
 							'					      					<div class="input-group input-group-sm">'+
-							'			  					    			<input type="number" name="tercerTrimestre" id="tercerTrimestre-formulario" value='+accion[0].meta3+' class="form-control" required>'+
+							'			  					    			<input type="number" name="tercerTrimestre" id="tercerTrimestre-formulario" value='+accion[0].meta3+' class="form-control" onblur="validarAccion(true)" required>'+
 							'					      					</div>'+
 							'								    		</div>'+
 														    		
 							'			      					    <div class="form-group col-md-3">'+
 							'						  					<label for="totalFinanciero-formulario">Cuarto Trimestre</label>'+
 							'				      						<div class="input-group input-group-sm">'+
-							'								    				<input type="number" name="cuartoTrimestre" id="cuartoTrimestre-formulario" value='+accion[0].meta4+' class="form-control" required>'+
+							'								    				<input type="number" name="cuartoTrimestre" id="cuartoTrimestre-formulario" value='+accion[0].meta4+' class="form-control" onblur="validarAccion(true)" required>'+
 							'				      						</div>'+
 							'							    		</div>'+
 							'			  						</div>'+							
@@ -2157,7 +2157,7 @@
 											
 							'               			</div>'+//fin box-body
 							'							<div class="modal-footer">'+
-							'								<button type="button" class="btn btn-success btn-sm actualizarAccion" id="botonActualizarAccion" parametros='+id+'-'+accionCatalogoId+'-'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+' >Actualizar Acción</button>'+
+							'								<button type="button" class="btn btn-success btn-sm actualizarAccion" id="botonActualizarAccion" parametros='+id+'-'+accionCatalogoId+'-'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+' onclick="validarAccion()" >Actualizar Acción</button>'+
 							'								<button type="button" class="btn btn-success btn-sm agregarAccion" data-dismiss="modal" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+' >Cerrar</button>'+
 
 							'							</div>'+
@@ -2191,6 +2191,10 @@
 	
 //actualizar Acción
 $("body").on("click", ".actualizarAccion",function(event){
+	if(validarAccion()==true){
+		
+	
+	
 	if ( $("#insLineaAccion").length )
 	{
 		$("#insLineaAccion").remove();
@@ -2288,7 +2292,7 @@ $("body").on("click", ".actualizarAccion",function(event){
 	 });
  
     
-  
+	} 
 });
 
 //consulta para borrar accion
@@ -4075,6 +4079,8 @@ $("body").on("click", ".borrarAccion",function(event){
 	});
 
 	$("body").on("click", ".guardarAccion",function(event){
+		if(validarAccion()==true){			
+		
 		var codigoRegistro = $(this).attr("parametros");
 	    var idParsed = codigoRegistro.split("-"); 
 	    var insLineaAccionId = idParsed[0];
@@ -4129,7 +4135,7 @@ $("body").on("click", ".borrarAccion",function(event){
 	        	}
 		 });
 
-	    
+		}   
 	});	
 	
 	function actualizarTablaAcciones(insLineaAccionId,lineaAccionId,institucionId,periodoId){
@@ -4499,10 +4505,10 @@ $("body").on("click", ".borrarAccion",function(event){
 		'										<table class="table table-hover">'+
 		'											<tbody>'+
 		'												<tr><td><div class="form-group"><label for="departamentoActividad">Departamento</label><input type="text" class="form-control" id="departamentoActividad" value="'+nombreDepartamento+'" disabled /></div></td><td><div class="form-group"><label for="distritoActividad">Distrito</label><input type="text" id="distritoActividad" value="'+nombreDistrito+'" class="form-control" disabled> </div></td></tr>'+
-		'												<tr><td><div class="form-group"><label for="nombreActividad">Cronograma</label><input type="text" class="form-control" id="nombreActividad" value="" placeholder="Ingrese Nombre del Cronograma" required><input type="hidden" class="form-control" id="insLineaAccionId" value="'+insLineaAccionId+'"></div></td><td><div class="form-group"><label for="descripcionActividad">Descripción</label><input type="text" id="descripcionActividad" value="" class="form-control"> </div></td></tr>'+
+		'												<tr><td><div class="form-group"><label for="nombreActividad">Cronograma</label><input type="text" class="form-control" id="nombreActividad" value="" placeholder="Ingrese Nombre del Cronograma" onblur="validarCronograma()" required><input type="hidden" class="form-control" id="insLineaAccionId" value="'+insLineaAccionId+'"></div></td><td><div class="form-group"><label for="descripcionActividad">Descripción</label><input type="text" id="descripcionActividad" value="" class="form-control"> </div></td></tr>'+
 		'												<tr><td><div class="form-group"><label for="unidadMedidaIdActividad">Unidad de Medida</label><select id="unidadMedidaIdActividad" class="form-control" placeholder="Ingrese Unidad Medida Id">'+optionUnidadMedida+'</div></td><td><div class="form-group"><label for="hitoTipoIdActividad">Tipo de Cronograma</label>'+
 		'												<select id="hitoTipoIdActividad" class="form-control" placeholder="Ingrese Tipo de Cronograma">'+optionTipoHito+'</select></div></td></tr>'+
-		'												<tr><td><div class="form-group"><label for="proporcionActividad">Proporción</label><input type="number" class="form-control" id="proporcionActividad" value="1" required /></div></div></td><td><div class="form-group"><label for="pesoActividad">Peso</label><input type="number" class="form-control" id="pesoActividad" value="1" required/></div></td></tr>'+
+		'												<tr><td><div class="form-group"><label for="proporcionActividad">Proporción</label><input type="number" class="form-control" id="proporcionActividad" value="1" onblur="validarCronograma()" required /></div></div></td><td><div class="form-group"><label for="pesoActividad">Peso</label><input type="number" class="form-control" id="pesoActividad" value="1" onblur="validarCronograma()" required/></div></td></tr>'+
 		'												<tr><td><div class="form-group"><label for="acumulableActividad">Acumulable</label><select id="acumulableActividad" class="form-control" placeholder="Ingrese Tipo Acumulable">'+optionAcumulable+'</select></div></td></tr>'+
 		'											</tbody>'+							           
 		'										</table>'+
@@ -4511,7 +4517,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		'								</form>'+
 		'               			</div>'+//fin box-body
 		'							<div class="modal-footer">'+
-		'								<button type="button" class="btn btn-success btn-sm guardarActividad" parametros = '+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'>Guardar Cronograma</button>'+
+		'								<button type="button" class="btn btn-success btn-sm guardarActividad" parametros = '+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+' onclick="validarCronograma()">Guardar Cronograma</button>'+
 		'							</div>'+
 		'                		</div>'+	
 		'                	</div>'+
@@ -4580,8 +4586,71 @@ $("body").on("click", ".borrarAccion",function(event){
 		}else{
 			return acu = "No";
 		}
-	}
+	}	
 	
+	function validarCronograma(edit){
+		var validacion=true;
+		
+		if (edit==true){
+			if (document.getElementById("nombreCronograma").validity.valueMissing == true) {	    
+		    	$("#nombreCronograma").css("border","1px solid red");
+		    	$("#nombreCronograma").attr("placeholder", "El campo es requerido");
+		    	validacion=false;
+		    }else{
+		    	if (document.getElementById("nombreCronograma").validity.valueMissing == false) {
+		    		$("#nombreCronograma").css("border","1px solid green");		    	
+		    	}	    	
+		    }
+			if (document.getElementById("proporcionCronograma").validity.valueMissing == true) {	    
+		    	$("#proporcionCronograma").css("border","1px solid red");
+		    	$("#proporcionCronograma").attr("placeholder", "El campo es requerido");
+		    	validacion=false;
+		    }else{
+		    	if (document.getElementById("proporcionCronograma").validity.valueMissing == false) {
+		    		$("#proporcionCronograma").css("border","1px solid green");		    	
+		    	}	    	
+		    }
+			if (document.getElementById("pesoCronograma").validity.valueMissing == true) {	    
+		    	$("#pesoCronograma").css("border","1px solid red");
+		    	$("#pesoCronograma").attr("placeholder", "El campo es requerido");
+		    	validacion=false;
+		    }else{
+		    	if (document.getElementById("pesoCronograma").validity.valueMissing == false) {
+		    		$("#pesoCronograma").css("border","1px solid green");		    	
+		    	}	    	
+		    }			
+		}else{
+			if (document.getElementById("nombreActividad").validity.valueMissing == true) {	    
+		    	$("#nombreActividad").css("border","1px solid red");
+		    	$("#nombreActividad").attr("placeholder", "El campo es requerido");
+		    	validacion=false;
+		    }else{
+		    	if (document.getElementById("nombreActividad").validity.valueMissing == false) {
+		    		$("#nombreActividad").css("border","1px solid green");		    	
+		    	}	    	
+		    }
+			if (document.getElementById("proporcionActividad").validity.valueMissing == true) {	    
+		    	$("#proporcionActividad").css("border","1px solid red");
+		    	$("#proporcionActividad").attr("placeholder", "El campo es requerido");
+		    	validacion=false;
+		    }else{
+		    	if (document.getElementById("proporcionActividad").validity.valueMissing == false) {
+		    		$("#proporcionActividad").css("border","1px solid green");		    	
+		    	}	    	
+		    }
+			if (document.getElementById("pesoActividad").validity.valueMissing == true) {	    
+		    	$("#pesoActividad").css("border","1px solid red");
+		    	$("#pesoActividad").attr("placeholder", "El campo es requerido");
+		    	validacion=false;
+		    }else{
+		    	if (document.getElementById("pesoActividad").validity.valueMissing == false) {
+		    		$("#pesoActividad").css("border","1px solid green");		    	
+		    	}	    	
+		    }			
+		}	
+	    
+		return validacion;
+	}
 	
 $("body").on("click", ".editarCronograma", function(event){
 	var parametros = $(this).attr("parametros");
@@ -4666,9 +4735,9 @@ $("body").on("click", ".editarCronograma", function(event){
 						'									<table class="table table-hover">'+
 						'										<tbody>'+
 						'			      							<form class="form-horizontal" role="form">'+
-						'												<tr><td><label for="nombreCronograma">Nombre</label><input type="text" id="nombreCronograma" value="'+actividades[0].nombre+'" class="form-control" required /></td><td><label for="descripcionCronograma">Descripcion</label><input type="text" id="descripcionCronograma" class="form-control" value="'+actividades[0].descripcion+'"  /></td></tr>'+
+						'												<tr><td><label for="nombreCronograma">Nombre</label><input type="text" id="nombreCronograma" value="'+actividades[0].nombre+'" class="form-control" onblur="validarCronograma(true)" required /></td><td><label for="descripcionCronograma">Descripcion</label><input type="text" id="descripcionCronograma" class="form-control" value="'+actividades[0].descripcion+'"  /></td></tr>'+
 						'												<tr><td><div class="form-group"><label for="unidadMedidaIdCronograma">Unidad de Medida</label><select id="selectorUnidadMedidaCronograma" class="form-control">'+optionUnidadMedida+'</select></div></td><td><div class="form-group"><label for="hitoTipoIdCronograma">Tipo Cronograma</label><select id="selectorHitoTipoIdCronograma" class="form-control">"'+optionTipoHito+'"</select></div></td></tr>'+
-						'												<tr><td><label for="proporcionCronograma">Proporción</label><input type="number" id="proporcionCronograma" value='+actividades[0].proporcion+' class="form-control" required /></td><td><label for="pesoCronograma">Peso</label><input type="number" id="pesoCronograma" class="form-control" value='+actividades[0].peso+' required /></td></tr>'+
+						'												<tr><td><label for="proporcionCronograma">Proporción</label><input type="number" id="proporcionCronograma" value='+actividades[0].proporcion+' class="form-control" onblur="validarCronograma(true)" required /></td><td><label for="pesoCronograma">Peso</label><input type="number" id="pesoCronograma" class="form-control" value='+actividades[0].peso+' onblur="validarCronograma(true)" required /></td></tr>'+
 						'												<tr><td><div class="form-group"><label for="acumulableCronograma">Acumulable</label><select id="acumulableCronograma" class="form-control" placeholder="Ingrese Tipo Acumulable">'+optionAcumulable+'</select></div></td><td></td></tr>'+
 						
 						'			      							</form>	'+												
@@ -4678,7 +4747,7 @@ $("body").on("click", ".editarCronograma", function(event){
 												
 						'		    </div>'+//fin modal-body
 						'			<div class="modal-footer">'+					
-						'				<button type="button" class="btn btn-success btn-sm actualizarCronograma" id="botonGuardarCronograma" parametros ='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+cronogramaId+'>Actualizar Cronograma</button>'+
+						'				<button type="button" class="btn btn-success btn-sm actualizarCronograma" id="botonGuardarCronograma" parametros ='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+cronogramaId+' onclick="validarCronograma(true)">Actualizar Cronograma</button>'+
 						'				<button type="button" class="btn btn-success btn-sm agregarActividad" parametros ='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'>Cerrar</button>'+
 						
 						'			</div>'+
@@ -4821,7 +4890,8 @@ $("body").on("click", ".borrarCronograma",function(event){
 });
 
 $("body").on("click", ".actualizarCronograma", function(event){
-	
+	if (validarCronograma(true)==true){
+		 
 	var parametros = $(this).attr("parametros");
     var idParsed = parametros.split("-");    
     var insLineaAccionId = idParsed[0];
@@ -4886,11 +4956,12 @@ $("body").on("click", ".actualizarCronograma", function(event){
         error: function(data,status,er) {
         	}
 	 });
- 
+	}
 });
 	
 	
 $("body").on("click", ".guardarActividad",function(event){
+		if (validarCronograma()==true){			
 		
 		var parametros = $(this).attr("parametros");
 	    var idParsed = parametros.split("-");                                                            
@@ -4941,7 +5012,7 @@ $("body").on("click", ".guardarActividad",function(event){
 	        	actualizarTablaActividades(accion_id,insLineaAccionId,lineaAccionId,institucionId,periodoId);
 	        	}
 		 });
-		
+		}	
 });	
 
 function actualizarTablaActividades(accion_id,insLineaAccionId,lineaAccionId,institucionId,periodoId){
@@ -8007,8 +8078,112 @@ $("body").on("click", ".consultaBorrarInsLineaAccion",function(event){
 	
 });
 
-//$("body").on("onblur", "#fechaFinAccion",function(event){
-function validarFecha(edit){
+function validarAccion(edit,fecha){
+		
+	var validacion=true;	
+	
+	if(edit==true){
+		var fechaInicio = $("#fechaInicio").val();
+		var fechaFin = $("#fechaFin").val();
+		
+		if (document.getElementById("fechaInicio").validity.valueMissing == true) {	    
+	    	$("#fechaInicio").css("border","1px solid red");
+	    	$("#fechaInicio").attr("placeholder", "El campo es requerido");
+	    	validacion=false;
+	    }else{
+	    	if (document.getElementById("fechaInicio").validity.valueMissing == false) {
+	    		$("#fechaInicio").css("border","1px solid green");		    	
+	    	}	    	
+	    }
+		if (document.getElementById("fechaFin").validity.valueMissing == true) {	    
+	    	$("#fechaFin").css("border","1px solid red");
+	    	$("#fechaFin").attr("placeholder", "El campo es requerido");
+	    	validacion=false;
+	    }else{
+	    	if (document.getElementById("fechaFin").validity.valueMissing == false) {
+	    		$("#fechaFin").css("border","1px solid green");		    	
+	    	}	    	
+	    }
+		
+	}else{
+		var fechaInicio = $("#fechaInicioAccion").val();
+		var fechaFin = $("#fechaFinAccion").val();
+		
+		if (document.getElementById("fechaInicioAccion").validity.valueMissing == true) {	    
+	    	$("#fechaInicioAccion").css("border","1px solid red");
+	    	$("#fechaInicioAccion").attr("placeholder", "El campo es requerido");
+	    	validacion=false;
+	    }else{
+	    	if (document.getElementById("fechaInicioAccion").validity.valueMissing == false) {
+	    		$("#fechaInicioAccion").css("border","1px solid green");		    	
+	    	}	    	
+	    }
+		if (document.getElementById("fechaFinAccion").validity.valueMissing == true) {	    
+	    	$("#fechaFinAccion").css("border","1px solid red");
+	    	$("#fechaFinAccion").attr("placeholder", "El campo es requerido");
+	    	validacion=false;
+	    }else{
+	    	if (document.getElementById("fechaFinAccion").validity.valueMissing == false) {
+	    		$("#fechaFinAccion").css("border","1px solid green");		    	
+	    	}	    	
+	    }
+	}
+	
+	if(fechaInicio != "" && fechaFin != "" && fecha==true){
+		if(fechaFin < fechaInicio){
+			$("#fechaFinAccion").val("");
+			$("#fechaFin").val("");
+			alert("Fecha Fin no puede ser menor a Fecha Inicio");			
+			validacion=false;
+			if (edit==true){
+				$("#fechaFin").css("border","1px solid red");
+			}else{
+				$("#fechaFinAccion").css("border","1px solid red");
+			}
+		}
+	}	
+    
+	if (document.getElementById("primerTrimestre-formulario").validity.valueMissing == true) {	    
+    	$("#primerTrimestre-formulario").css("border","1px solid red");
+    	$("#primerTrimestre-formulario").attr("placeholder", "El campo es requerido");
+    	validacion=false;
+    }else{
+    	if (document.getElementById("primerTrimestre-formulario").validity.valueMissing == false) {
+    		$("#primerTrimestre-formulario").css("border","1px solid green");		    	
+    	}	    	
+    }
+	if (document.getElementById("segundoTrimestre-formulario").validity.valueMissing == true) {	    
+    	$("#segundoTrimestre-formulario").css("border","1px solid red");
+    	$("#segundoTrimestre-formulario").attr("placeholder", "El campo es requerido");
+    	validacion=false;
+    }else{
+    	if (document.getElementById("segundoTrimestre-formulario").validity.valueMissing == false) {
+    		$("#segundoTrimestre-formulario").css("border","1px solid green");		    	
+    	}	    	
+    }
+	if (document.getElementById("tercerTrimestre-formulario").validity.valueMissing == true) {	    
+    	$("#tercerTrimestre-formulario").css("border","1px solid red");
+    	$("#tercerTrimestre-formulario").attr("placeholder", "El campo es requerido");
+    	validacion=false;
+    }else{
+    	if (document.getElementById("tercerTrimestre-formulario").validity.valueMissing == false) {
+    		$("#tercerTrimestre-formulario").css("border","1px solid green");		    	
+    	}	    	
+    }
+	if (document.getElementById("cuartoTrimestre-formulario").validity.valueMissing == true) {	    
+    	$("#cuartoTrimestre-formulario").css("border","1px solid red");
+    	$("#cuartoTrimestre-formulario").attr("placeholder", "El campo es requerido");
+    	validacion=false;
+    }else{
+    	if (document.getElementById("cuartoTrimestre-formulario").validity.valueMissing == false) {
+    		$("#cuartoTrimestre-formulario").css("border","1px solid green");		    	
+    	}	    	
+    }
+	
+	return validacion;
+}
+
+/*function validarFecha(edit){
 	if(edit==true){
 		var fechaInicio = $("#fechaInicio").val();
 		var fechaFin = $("#fechaFin").val();
@@ -8028,7 +8203,8 @@ function validarFecha(edit){
 			alert("La fecha de inicio y fin no pueden quedar en blanco");			
 	}
 
-};
+};*/
+
 $("body").on("change", "#fechaInicioAccion",function(event){
 	var fechaInicio = $("#fechaInicioAccion").val();
 	var fechaFin = $("#fechaFinAccion").val();
