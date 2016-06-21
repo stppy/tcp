@@ -2658,92 +2658,93 @@ $("body").on("click", ".borrarAccion",function(event){
 	});
 	
 	$("body").on("click", ".guardarComboProducto",function(event){
-		event.stopPropagation();
-		event.preventDefault();
-		
-		var parametros = $(this).attr("parametros");
-    	var idParsed = parametros.split("-");
-	    var insLineaAccionId = idParsed[0];
-	    var lineaAccionId = idParsed[1];
-	    var institucionId = idParsed[2];
-	    var periodoId = idParsed[3];
-		var accionId = idParsed[4];
-
-		
-		
-    	var nivel = document.getElementById("nivel-formulario").value;
-      	var entidad = document.getElementById("entidad-formulario").value;;
-	    var tipoPrograma = document.getElementById("tipoPrograma-formulario").value;
-	    var programa = document.getElementById('programa-formulario').value;
-	    var subPrograma = document.getElementById('subPrograma-formulario').value;
-	    var proyecto = document.getElementById('proyecto-formulario').value; 
-	    var producto = document.getElementById('producto-formulario').value; 
-	    var anho = document.getElementById('anhoProducto-formulario').value; 
-	    var version = document.getElementById('versionProducto-formulario').value; 
-	    var totalFisico = document.getElementById('totalFisico-formulario').value; 
-	    var unidadMedida = document.getElementById('unidadMedida-formulario').value; 
-	    var clase = document.getElementById('clase-formulario').value; 
-	    var totalFinanciero = document.getElementById('totalFinanciero-formulario').value; 
-	    var totalAsignacion = document.getElementById('total-formulario').value; 
-	    
-	    
-	    if(totalFisico == ""){
-	    	totalFisico = 0;	    	
-	    }
-    	$('#tipoPrograma-formulario').val('');
-		$('#programa-formulario').val('');
-		$('#subPrograma-formulario').val('');
-		$('#proyecto-formulario').val('');
-		$('#producto-formulario').val('');
-		$('#totalFisico-formulario').val('');
-		$('#unidadMedida-formulario').val('');
-		$('#clase-formulario').val('');
-		$('#totalFinanciero-formulario').val('');
-		$('#anhoProducto-formulario').val('');
-		$('#versionProducto-formulario').val('');
-		$('#total-formulario').val('');
-
-	    var datos = new Object();
-	    
-	    datos.nivel = nivel;
-	    datos.entidad = entidad;
-	    datos.tipoPrograma = tipoPrograma;
-	    datos.programa = programa;
-	    datos.subPrograma = subPrograma;
-	    datos.proyecto = proyecto;
-	    datos.sprProductoId = producto;
-	    datos.accionId = accionId;
-	    datos.anho = anho;
-	    datos.version = version;
-	    datos.unidadMedida = unidadMedida;
-	    datos.cantidadFisica = totalFisico;
-	    datos.clase = clase;
-	    datos.cantidadFinanciera = totalFinanciero;
-	    datos.totalAsignacion = totalAsignacion;
-
-
-	  	var info = JSON.stringify(datos);
-	    $.ajax({
-	        url: "ajaxInserts?accion=insAccionHasProducto",
-	        type: 'POST',
-	        dataType: 'json',
-	        data: info,
-	        contentType: 'application/json',
-	        mimeType: 'application/json',
-	        success: function (data) {
-	        	
-	        	if(data.success = true){
+		if(validarProductoPresupuesto()==true){
+			event.stopPropagation();
+			event.preventDefault();
+			
+			var parametros = $(this).attr("parametros");
+	    	var idParsed = parametros.split("-");
+		    var insLineaAccionId = idParsed[0];
+		    var lineaAccionId = idParsed[1];
+		    var institucionId = idParsed[2];
+		    var periodoId = idParsed[3];
+			var accionId = idParsed[4];
+	
+			
+			
+	    	var nivel = document.getElementById("nivel-formulario").value;
+	      	var entidad = document.getElementById("entidad-formulario").value;;
+		    var tipoPrograma = document.getElementById("tipoPrograma-formulario").value;
+		    var programa = document.getElementById('programa-formulario').value;
+		    var subPrograma = document.getElementById('subPrograma-formulario').value;
+		    var proyecto = document.getElementById('proyecto-formulario').value; 
+		    var producto = document.getElementById('producto-formulario').value; 
+		    var anho = document.getElementById('anhoProducto-formulario').value; 
+		    var version = document.getElementById('versionProducto-formulario').value; 
+		    var totalFisico = document.getElementById('totalFisico-formulario').value; 
+		    var unidadMedida = document.getElementById('unidadMedida-formulario').value; 
+		    var clase = document.getElementById('clase-formulario').value; 
+		    var totalFinanciero = document.getElementById('totalFinanciero-formulario').value; 
+		    var totalAsignacion = document.getElementById('total-formulario').value; 
+		    
+		    
+		    if(totalFisico == ""){
+		    	totalFisico = 0;	    	
+		    }
+	    	$('#tipoPrograma-formulario').val('');
+			$('#programa-formulario').val('');
+			$('#subPrograma-formulario').val('');
+			$('#proyecto-formulario').val('');
+			$('#producto-formulario').val('');
+			$('#totalFisico-formulario').val('');
+			$('#unidadMedida-formulario').val('');
+			$('#clase-formulario').val('');
+			$('#totalFinanciero-formulario').val('');
+			$('#anhoProducto-formulario').val('');
+			$('#versionProducto-formulario').val('');
+			$('#total-formulario').val('');
+	
+		    var datos = new Object();
+		    
+		    datos.nivel = nivel;
+		    datos.entidad = entidad;
+		    datos.tipoPrograma = tipoPrograma;
+		    datos.programa = programa;
+		    datos.subPrograma = subPrograma;
+		    datos.proyecto = proyecto;
+		    datos.sprProductoId = producto;
+		    datos.accionId = accionId;
+		    datos.anho = anho;
+		    datos.version = version;
+		    datos.unidadMedida = unidadMedida;
+		    datos.cantidadFisica = totalFisico;
+		    datos.clase = clase;
+		    datos.cantidadFinanciera = totalFinanciero;
+		    datos.totalAsignacion = totalAsignacion;
+	
+	
+		  	var info = JSON.stringify(datos);
+		    $.ajax({
+		        url: "ajaxInserts?accion=insAccionHasProducto",
+		        type: 'POST',
+		        dataType: 'json',
+		        data: info,
+		        contentType: 'application/json',
+		        mimeType: 'application/json',
+		        success: function (data) {
+		        	
+		        	if(data.success = true){
+			        	cargarTablaAccionHasProducto(accionId,insLineaAccionId,lineaAccionId,institucionId,periodoId);
+		        	}else{
+		        		cargarTablaAccionHasProducto(accionId,insLineaAccionId,lineaAccionId,institucionId,periodoId);
+		        	}
+	
+		        	},
+		        error: function(data,status,er) {
 		        	cargarTablaAccionHasProducto(accionId,insLineaAccionId,lineaAccionId,institucionId,periodoId);
-	        	}else{
-	        		cargarTablaAccionHasProducto(accionId,insLineaAccionId,lineaAccionId,institucionId,periodoId);
-	        	}
-
-	        	},
-	        error: function(data,status,er) {
-	        	cargarTablaAccionHasProducto(accionId,insLineaAccionId,lineaAccionId,institucionId,periodoId);
-	        	}
-		 });
-
+		        	}
+			 });
+		}
 		
 	});
 	
@@ -2961,19 +2962,19 @@ $("body").on("click", ".borrarAccion",function(event){
 			  			'												<input type="text" name="entidad" id="entidad-formulario" value="" class="form-control" disabled>'+
 			  			'											</div>'+
 			      		'				    						<div class="form-group col-md-1">'+
-			      		'			    								<input type="text" name="tipoPrograma" id="tipoPrograma-formulario" placeholder="Tipo Programa" list="listaf3c2" class="form-control" required>'+
+			      		'			    								<input type="text" name="tipoPrograma" id="tipoPrograma-formulario" placeholder="Tipo Programa" list="listaf3c2" class="form-control" onblur="validarProductoPresupuesto()" required>'+
 			      		'			    							</div>'+
 			      		'			    							<div class="form-group col-md-1">'+
-			      		'			    								<input type="text" name="programa" id="programa-formulario" placeholder="Programa" list="listaf4c2" class="form-control" required>'+
+			      		'			    								<input type="text" name="programa" id="programa-formulario" placeholder="Programa" list="listaf4c2" class="form-control" onblur="validarProductoPresupuesto()" required>'+
 			      		'			    							</div>'+
 			      		'			    							<div class="form-group col-md-1">'+
-			      		'			    								<input type="text" name="subPrograma" id="subPrograma-formulario" placeholder="SubPrograma" list="listaf5c2" class="form-control" required>'+
+			      		'			    								<input type="text" name="subPrograma" id="subPrograma-formulario" placeholder="SubPrograma" list="listaf5c2" class="form-control" onblur="validarProductoPresupuesto()" required>'+
 			      		'			    							</div>'+
 			      		'				    						<div class="form-group col-md-2">'+
-			      		'				    							<input type="text" name="proyecto" id="proyecto-formulario" placeholder="Proyecto" list="listaf6c2" class="form-control" required>'+
+			      		'				    							<input type="text" name="proyecto" id="proyecto-formulario" placeholder="Proyecto" list="listaf6c2" class="form-control" onblur="validarProductoPresupuesto()" required>'+
 			      		'				   							</div>'+
 			  			'		    								<div class="form-group col-md-2">'+
-			  			'		    									<input type="text" name="producto" id="producto-formulario" placeholder="Producto" list="listaf7c2" class="form-control" required>'+
+			  			'		    									<input type="text" name="producto" id="producto-formulario" placeholder="Producto" list="listaf7c2" class="form-control" onblur="validarProductoPresupuesto()" required>'+
 			      		'										  	</div>'+
 			  			'		    								<div class="form-group col-md-3">'+
 				      	'												<div class="input-group input-group-md">'+
@@ -3910,7 +3911,56 @@ $("body").on("click", ".borrarAccion",function(event){
 		  document.getElementById('producto-formulario').addEventListener('change',eje1.producto,false); 
 		
 	});
-	
+	function validarProductoPresupuesto() {	    
+		var validacion=true;		
+			
+	    if (document.getElementById("tipoPrograma-formulario").validity.valueMissing == true) {	    
+	    	$("#tipoPrograma-formulario").css("border","1px solid red");
+	    	$("#tipoPrograma-formulario").attr("placeholder", "El campo es requerido");
+	    	validacion=false;
+	    }else{
+	    	if (document.getElementById("tipoPrograma-formulario").validity.valueMissing == false) {
+	    		$("#tipoPrograma-formulario").css("border","1px solid green");		    	
+	    	}	    	
+	    }
+		if (document.getElementById("programa-formulario").validity.valueMissing == true) {	    
+	    	$("#programa-formulario").css("border","1px solid red");
+	    	$("#programa-formulario").attr("placeholder", "El campo es requerido");
+	    	validacion=false;
+	    }else{
+	    	if (document.getElementById("programa-formulario").validity.valueMissing == false) {
+	    		$("#programa-formulario").css("border","1px solid green");		    	
+	    	}	    	
+	    }
+		if (document.getElementById("subPrograma-formulario").validity.valueMissing == true) {	    
+	    	$("#subPrograma-formulario").css("border","1px solid red");
+	    	$("#subPrograma-formulario").attr("placeholder", "El campo es requerido");
+	    	validacion=false;
+	    }else{
+	    	if (document.getElementById("subPrograma-formulario").validity.valueMissing == false) {
+	    		$("#subPrograma-formulario").css("border","1px solid green");		    	
+	    	}	    	
+	    }
+	    if (document.getElementById("proyecto-formulario").validity.valueMissing == true) {	    
+	    	$("#proyecto-formulario").css("border","1px solid red");
+	    	$("#proyecto-formulario").attr("placeholder", "El campo es requerido");
+	    	validacion=false;
+	    }else{
+	    	if (document.getElementById("proyecto-formulario").validity.valueMissing == false) {
+	    		$("#proyecto-formulario").css("border","1px solid green");		    	
+	    	}	    	
+	    }
+	    if (document.getElementById("producto-formulario").validity.valueMissing == true) {	    
+	    	$("#producto-formulario").css("border","1px solid red");
+	    	$("#producto-formulario").attr("placeholder", "El campo es requerido");
+	    	validacion=false;
+	    }else{
+	    	if (document.getElementById("producto-formulario").validity.valueMissing == false) {
+	    		$("#producto-formulario").css("border","1px solid green");		    	
+	    	}	    	
+	    }
+		return validacion;
+	}
 	$("body").on("click", ".consultaBorrarVinculacionProducto",function(event){
 		var parametros = $(this).attr("parametros");
 	    var idParsed = parametros.split("-");                                                            
@@ -8401,7 +8451,7 @@ $("body").on("click", ".modalDestinatario",function(event){
 						'												<tbody>'+
 						'			      									<form class="form-horizontal" role="form">'+
 						'													<tr><td><label for="tipoDestinatarioAccion">Tipo</label><select id="tipoDestinatarioAccion" class="form-control">'+optionBeneficiarioTipo+'</select></td><td><label for="grupoDestinatarioAccion">Grupo</label><select id="grupoDestinatarioAccion" class="form-control"></select></td></tr>'+
-						'													<tr><td><label for="cantidadDestinatarioAccion">Cantidad</label><input type="number" id="cantidadDestinatarioAccion" class="form-control" placeholder="Ingrese una Cantidad" required /></td><td><label for="descripcionDestinatarioAccion">Descripción</label><input type="text" id="descripcionDestinatarioAccion" class="form-control" placeholder="Ingrese Objeto una Descripción" /></td></tr>'+																		
+						'													<tr><td><label for="cantidadDestinatarioAccion">Cantidad</label><input type="number" id="cantidadDestinatarioAccion" class="form-control" placeholder="Ingrese una Cantidad" onblur="validarDestinatario()" required/></td><td><label for="descripcionDestinatarioAccion">Descripción</label><input type="text" id="descripcionDestinatarioAccion" class="form-control" placeholder="Ingrese Objeto una Descripción"/></td></tr>'+
 						'			      									</form>	'+				
 						'												</tbody>'+
 						'											</table>'+
@@ -8409,7 +8459,7 @@ $("body").on("click", ".modalDestinatario",function(event){
 						
 						'				      				 </div>'+//fin box body
 						'									 <div class="modal-footer">'+ 
-						'					        			<button type="button" class="btn btn-success btn-sm guardarAccionBeneficiario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+' >Guardar Beneficiario</button>'+ 
+						'					        			<button type="button" class="btn btn-success btn-sm guardarAccionBeneficiario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+' onclick="validarDestinatario()">Guardar Beneficiario</button>'+ 
 						'									 </div>'+									
 						'				      			 	</div>'+
 						'				      			</div>'+							
@@ -8460,120 +8510,132 @@ $("body").on("click", ".modalDestinatario",function(event){
 	$('#modalDestinatario').modal('show');
 	$('#tipoDestinatarioAccion').change();
 	$("#dataTableDestinatarioAccion").DataTable();
-
-
-	
 });
+
+function validarDestinatario() {    
+	var validacion=true;		
+		
+    if (document.getElementById("cantidadDestinatarioAccion").validity.valueMissing == true) {	    
+    	$("#cantidadDestinatarioAccion").css("border","1px solid red");
+    	$("#cantidadDestinatarioAccion").attr("placeholder", "El campo es requerido");
+    	validacion=false;
+    }else{
+    	if (document.getElementById("cantidadDestinatarioAccion").validity.valueMissing == false) {
+    		$("#cantidadDestinatarioAccion").css("border","1px solid green");		    	
+    	}	    	
+    }
+	return validacion;
+}
 
 $("body").on("click", ".guardarAccionBeneficiario",function(event){
-	var parametros = $(this).attr("parametros");
-    var idParsed = parametros.split("-"); 
-    var insLineaAccionId = idParsed[0];
-    var lineaAccionId = idParsed[1];
-    var institucionId = idParsed[2];
-    var periodoId = idParsed[3];  
-    var accionId = idParsed[4];
-    var accionCatalogoId = idParsed[5];  
-    
-    var descripcion = $("#descripcionDestinatarioAccion").val();
-	var tipo = $("#tipoDestinatarioAccion").val();
-	var grupo = $("#grupoDestinatarioAccion").val();
-	var cantidad = $("#cantidadDestinatarioAccion").val();
-	var cuerpoDestinatarioAccion ="";
-		
-	var datos = new Object();
-    
-    datos.descripcion = descripcion;
-    datos.beneficiarioTipoId = tipo;
-    datos.beneficiarioGrupoId = grupo;
-    datos.cantidad = cantidad;
-    datos.accionId = accionId;
-
- 	var info = JSON.stringify(datos);
-    $.ajax({
-        url: "ajaxInserts2?accion=insAccionDestinatario",
-        type: 'POST',
-        dataType: 'json',
-        data: info,
-        contentType: 'application/json',
-        mimeType: 'application/json',
-        success: function (data) {
-        	if(data.success == true){
-        	    $("#descripcionDestinatarioAccion").val('');
-        		$("#tipoDestinatarioAccion").val('');
-        		$("#grupoDestinatarioAccion").val('');
-        		$("#cantidadDestinatarioAccion").val('');
-        		
-        		var webServicesBeneficiarioTipo = $.ajax({
-        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioTipo',
-        		  	type:'get',
-        		  	dataType:'json',
-        		  	async:false       
-        		}).responseText;
-        		webServicesBeneficiarioTipo = JSON.parse(webServicesBeneficiarioTipo);
-        		
-        		var optionBeneficiarioTipo;
-        		
-        		for(var z = 0; z < webServicesBeneficiarioTipo.length; z++){
-        			optionBeneficiarioTipo+='<option value="'+webServicesBeneficiarioTipo[z].id+'" >'+webServicesBeneficiarioTipo[z].nombre+'</option>';
-        		}
-        		
-        		var webServicesBeneficiarioAccion = $.ajax({
-        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionDestinatario&accionId='+accionId,
-        		  	type:'get',
-        		  	dataType:'json',
-        		  	async:false       
-        		}).responseText;
-        		webServicesBeneficiarioAccion = JSON.parse(webServicesBeneficiarioAccion);
-        		
-        		var cuerpoBeneficiario = "";
-        		for(var a = 0; a < webServicesBeneficiarioAccion.length; a++)
-        		{
-        			var webServicesBeneficiarioTipo = $.ajax({
-        				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioTipo&beneficiarioTipoId='+webServicesBeneficiarioAccion[a].beneficiarioTipoId,
-        			  	type:'get',
-        			  	dataType:'json',
-        			  	async:false       
-        			}).responseText;
-        			webServicesBeneficiarioTipo = JSON.parse(webServicesBeneficiarioTipo);
-        			
-        			var webServicesBeneficiarioGrupo = $.ajax({
-        				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioGrupoId='+webServicesBeneficiarioAccion[a].beneficiarioGrupoId,
-        			  	type:'get',
-        			  	dataType:'json',
-        			  	async:false       
-        			}).responseText;
-        			webServicesBeneficiarioGrupo = JSON.parse(webServicesBeneficiarioGrupo);
-        			      			
-        			if(webServicesBeneficiarioAccion[a].borrado == true)
-        			{
-        				<% if (attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("0")){%>
-        					cuerpoDestinatarioAccion += '<tr><td><del>'+webServicesBeneficiarioTipo[0].nombre+'</del></td><td><del>'+webServicesBeneficiarioGrupo[0].nombre+'</del></td><td><del>'+webServicesBeneficiarioAccion[a].descripcion+'</del></td><td><del>'+webServicesBeneficiarioAccion[a].cantidad+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarDestinatario" data-toggle="tooltip" data-placement="top" title="Editar Destinatario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarDestinatarioAccion" data-toggle="tooltip" data-placement="top" title="Borrar Destinatario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-trash"></span></button></td></tr>';
-        				<% }%>
-        			}else{
-        				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-        						cuerpoDestinatarioAccion += '<tr><td>'+webServicesBeneficiarioTipo[0].nombre+'</td><td>'+webServicesBeneficiarioGrupo[0].nombre+'</td><td>'+webServicesBeneficiarioAccion[a].descripcion+'</td><td>'+webServicesBeneficiarioAccion[a].cantidad+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarDestinatario" data-toggle="tooltip" data-placement="top" title="Editar Destinatario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarDestinatarioAccion" data-toggle="tooltip" data-placement="top" title="Borrar Destinatario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-trash"></span></button></td></tr>';
-        				<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-        						cuerpoDestinatarioAccion += '<tr><td>'+webServicesBeneficiarioTipo[0].nombre+'</td><td>'+webServicesBeneficiarioGrupo[0].nombre+'</td><td>'+webServicesBeneficiarioAccion[a].descripcion+'</td><td>'+webServicesBeneficiarioAccion[a].cantidad+'</td><td class="text-center"></td></tr>';
-        				<%}%>
-        			}        			
-        			
-        		}
-        		
-        		$("#listaDestinatarioAccion").html("");
-        		$("#listaDestinatarioAccion").html(cuerpoDestinatarioAccion);
-        		
-        	}else{
-        		alert("ERROR");        		
-        	}
-        	},
-        	
-        error: function(data,status,er) {
-        	alert("Destinatario Insertado");
-        	}
-	 });
+	if(validarDestinatario()==true){
+		var parametros = $(this).attr("parametros");
+	    var idParsed = parametros.split("-"); 
+	    var insLineaAccionId = idParsed[0];
+	    var lineaAccionId = idParsed[1];
+	    var institucionId = idParsed[2];
+	    var periodoId = idParsed[3];  
+	    var accionId = idParsed[4];
+	    var accionCatalogoId = idParsed[5];  
+	    
+	    var descripcion = $("#descripcionDestinatarioAccion").val();
+		var tipo = $("#tipoDestinatarioAccion").val();
+		var grupo = $("#grupoDestinatarioAccion").val();
+		var cantidad = $("#cantidadDestinatarioAccion").val();
+		var cuerpoDestinatarioAccion ="";
+			
+		var datos = new Object();
+	    
+	    datos.descripcion = descripcion;
+	    datos.beneficiarioTipoId = tipo;
+	    datos.beneficiarioGrupoId = grupo;
+	    datos.cantidad = cantidad;
+	    datos.accionId = accionId;
 	
-});
+	 	var info = JSON.stringify(datos);
+	    $.ajax({
+	        url: "ajaxInserts2?accion=insAccionDestinatario",
+	        type: 'POST',
+	        dataType: 'json',
+	        data: info,
+	        contentType: 'application/json',
+	        mimeType: 'application/json',
+	        success: function (data) {
+	        	if(data.success == true){
+	        	    $("#descripcionDestinatarioAccion").val('');
+	        		$("#tipoDestinatarioAccion").val('');
+	        		$("#grupoDestinatarioAccion").val('');
+	        		$("#cantidadDestinatarioAccion").val('');
+	        		
+	        		var webServicesBeneficiarioTipo = $.ajax({
+	        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioTipo',
+	        		  	type:'get',
+	        		  	dataType:'json',
+	        		  	async:false       
+	        		}).responseText;
+	        		webServicesBeneficiarioTipo = JSON.parse(webServicesBeneficiarioTipo);
+	        		
+	        		var optionBeneficiarioTipo;
+	        		
+	        		for(var z = 0; z < webServicesBeneficiarioTipo.length; z++){
+	        			optionBeneficiarioTipo+='<option value="'+webServicesBeneficiarioTipo[z].id+'" >'+webServicesBeneficiarioTipo[z].nombre+'</option>';
+	        		}
+	        		
+	        		var webServicesBeneficiarioAccion = $.ajax({
+	        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionDestinatario&accionId='+accionId,
+	        		  	type:'get',
+	        		  	dataType:'json',
+	        		  	async:false       
+	        		}).responseText;
+	        		webServicesBeneficiarioAccion = JSON.parse(webServicesBeneficiarioAccion);
+	        		
+	        		var cuerpoBeneficiario = "";
+	        		for(var a = 0; a < webServicesBeneficiarioAccion.length; a++)
+	        		{
+	        			var webServicesBeneficiarioTipo = $.ajax({
+	        				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioTipo&beneficiarioTipoId='+webServicesBeneficiarioAccion[a].beneficiarioTipoId,
+	        			  	type:'get',
+	        			  	dataType:'json',
+	        			  	async:false       
+	        			}).responseText;
+	        			webServicesBeneficiarioTipo = JSON.parse(webServicesBeneficiarioTipo);
+	        			
+	        			var webServicesBeneficiarioGrupo = $.ajax({
+	        				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioGrupoId='+webServicesBeneficiarioAccion[a].beneficiarioGrupoId,
+	        			  	type:'get',
+	        			  	dataType:'json',
+	        			  	async:false       
+	        			}).responseText;
+	        			webServicesBeneficiarioGrupo = JSON.parse(webServicesBeneficiarioGrupo);
+	        			      			
+	        			if(webServicesBeneficiarioAccion[a].borrado == true)
+	        			{
+	        				<% if (attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("0")){%>
+	        					cuerpoDestinatarioAccion += '<tr><td><del>'+webServicesBeneficiarioTipo[0].nombre+'</del></td><td><del>'+webServicesBeneficiarioGrupo[0].nombre+'</del></td><td><del>'+webServicesBeneficiarioAccion[a].descripcion+'</del></td><td><del>'+webServicesBeneficiarioAccion[a].cantidad+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarDestinatario" data-toggle="tooltip" data-placement="top" title="Editar Destinatario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarDestinatarioAccion" data-toggle="tooltip" data-placement="top" title="Borrar Destinatario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+	        				<% }%>
+	        			}else{
+	        				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
+	        						cuerpoDestinatarioAccion += '<tr><td>'+webServicesBeneficiarioTipo[0].nombre+'</td><td>'+webServicesBeneficiarioGrupo[0].nombre+'</td><td>'+webServicesBeneficiarioAccion[a].descripcion+'</td><td>'+webServicesBeneficiarioAccion[a].cantidad+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarDestinatario" data-toggle="tooltip" data-placement="top" title="Editar Destinatario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarDestinatarioAccion" data-toggle="tooltip" data-placement="top" title="Borrar Destinatario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+	        				<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
+	        						cuerpoDestinatarioAccion += '<tr><td>'+webServicesBeneficiarioTipo[0].nombre+'</td><td>'+webServicesBeneficiarioGrupo[0].nombre+'</td><td>'+webServicesBeneficiarioAccion[a].descripcion+'</td><td>'+webServicesBeneficiarioAccion[a].cantidad+'</td><td class="text-center"></td></tr>';
+	        				<%}%>
+	        			}        			
+	        			
+	        		}
+	        		
+	        		$("#listaDestinatarioAccion").html("");
+	        		$("#listaDestinatarioAccion").html(cuerpoDestinatarioAccion);
+	        		
+	        	}else{
+	        		alert("ERROR");        		
+	        	}
+	        	},
+	        	error: function(data,status,er) {
+	        		alert("Destinatario Insertado");
+	        	}
+			});
+		}
+	});
 
 $("body").on("click", ".consultaEditarDestinatario",function(event){
 	var parametros = $(this).attr("parametros");
@@ -8646,7 +8708,7 @@ $("body").on("click", ".consultaEditarDestinatario",function(event){
 						'						<tbody>'+
 						'			      			<form class="form-horizontal" role="form">'+
 						'							<tr><td><label for="tipoDestinatarioAccion">Tipo</label><select id="tipoDestinatarioAccion" class="form-control">'+optionBeneficiarioTipo+'</select></td><td><label for="grupoDestinatarioAccion">Grupo</label><select id="grupoDestinatarioAccion" class="form-control">'+optionBeneficiarioGrupo+'</select></td></tr>'+
-						'							<tr><td><label for="cantidadDestinatarioAccion">Cantidad</label><input type="number" id="cantidadDestinatarioAccion" class="form-control" value='+webServicesDestinatarioAccion[0].cantidad+' required /></td><td><label for="descripcionDestinatarioAccion">Descripción</label><input type="text" id="descripcionDestinatarioAccion" class="form-control" value="'+webServicesDestinatarioAccion[0].descripcion+'" /></td></tr>'+																		
+						'							<tr><td><label for="cantidadDestinatarioAccion">Cantidad</label><input type="number" id="cantidadDestinatarioAccion" class="form-control" value='+webServicesDestinatarioAccion[0].cantidad+' onblur="validarDestinatario()" required/></td><td><label for="descripcionDestinatarioAccion">Descripción</label><input type="text" id="descripcionDestinatarioAccion" class="form-control" value="'+webServicesDestinatarioAccion[0].descripcion+'" /></td></tr>'+																		
 						'			      			</form>	'+				
 						'						</tbody>'+
 						'					</table>'+
@@ -8654,7 +8716,7 @@ $("body").on("click", ".consultaEditarDestinatario",function(event){
 						
 						'		    </div>'+
 						'			<div class="modal-footer">'+
-						' 				<button type="button" class="btn btn-success btn-sm editarDestinatarioAccion" id="botonGuardarDestinatarioAccion" parametros='+destinatarioId+'>Guardar Cambios</button>'+
+						' 				<button type="button" class="btn btn-success btn-sm editarDestinatarioAccion" id="botonGuardarDestinatarioAccion" parametros='+destinatarioId+' onclick="validarDestinatario()"> Guardar Cambios</button>'+
 						' 				<button type="button" class="btn btn-success btn-sm modalDestinatario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+' >Cerrar</button>'+						
 						'			</div>'+
 						'		</div>'+ 
@@ -8669,6 +8731,7 @@ $("body").on("click", ".consultaEditarDestinatario",function(event){
 	$('#tipoDestinatarioAccion').change();
 
 });
+
 
 $("body").on("change", "#tipoDestinatarioAccion",function(event){
 	//var departamentoId = $(this).attr("parametro");
@@ -8694,49 +8757,51 @@ $("body").on("change", "#tipoDestinatarioAccion",function(event){
 });
 
 $("body").on("click", ".editarDestinatarioAccion",function(event){
-	var parametros = $(this).attr("parametros");
-    var idParsed = parametros.split("-");                                                            
+	if(validarDestinatario()==true){
+		
+		var parametros = $(this).attr("parametros");
+	    var idParsed = parametros.split("-");                                                            
+		
+		//Las siguentes variables se utiliza en esta funcion para redibujar el modal anterior
+		var destinatarioId = idParsed[0];// es el id de la tabla accion_destinatario
 	
-	//Las siguentes variables se utiliza en esta funcion para redibujar el modal anterior
-	var destinatarioId = idParsed[0];// es el id de la tabla accion_destinatario
-
-	var tipo = $("#tipoDestinatarioAccion").val();
-	var grupo = $("#grupoDestinatarioAccion").val();
-	var cantidad = $("#cantidadDestinatarioAccion").val();
-	var descripcion = $("#descripcionDestinatarioAccion").val();
-
+		var tipo = $("#tipoDestinatarioAccion").val();
+		var grupo = $("#grupoDestinatarioAccion").val();
+		var cantidad = $("#cantidadDestinatarioAccion").val();
+		var descripcion = $("#descripcionDestinatarioAccion").val();
 	
-	var objeto = new Object();
-	
-	objeto.id = destinatarioId;
-	objeto.beneficiarioTipoId = tipo;
-	objeto.beneficiarioGrupoId = grupo;
-	objeto.cantidad = cantidad;
-	objeto.descripcion = descripcion;
-	
-  	var info = JSON.stringify(objeto);
-    $.ajax({
-        url: "ajaxUpdate2?accion=actAccionDestinatario",
-        type: 'POST',
-        dataType: 'json',
-        data: info,
-        contentType: 'application/json',
-        mimeType: 'application/json',
-        success: function (data) {
-        	if(data.success == true)
-        	{
-        		$("#botonGuardarDestinatarioAccion").remove();
-            	$("#cuerpoModalEditarDestinatarios").html("");
-            	$("#cuerpoModalEditarDestinatarios").html("<h3 class='text-center'>Ud ha actualizado exitosamente!!</h3>");        		
-        	}
-        	
-        	},
-        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
-        error: function(data,status,er) {
-        	
-        	}
-	 });
-	
+		
+		var objeto = new Object();
+		
+		objeto.id = destinatarioId;
+		objeto.beneficiarioTipoId = tipo;
+		objeto.beneficiarioGrupoId = grupo;
+		objeto.cantidad = cantidad;
+		objeto.descripcion = descripcion;
+		
+	  	var info = JSON.stringify(objeto);
+	    $.ajax({
+	        url: "ajaxUpdate2?accion=actAccionDestinatario",
+	        type: 'POST',
+	        dataType: 'json',
+	        data: info,
+	        contentType: 'application/json',
+	        mimeType: 'application/json',
+	        success: function (data) {
+	        	if(data.success == true)
+	        	{
+	        		$("#botonGuardarDestinatarioAccion").remove();
+	            	$("#cuerpoModalEditarDestinatarios").html("");
+	            	$("#cuerpoModalEditarDestinatarios").html("<h3 class='text-center'>Ud ha actualizado exitosamente!!</h3>");        		
+	        	}
+	        	
+	        	},
+	        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
+	        error: function(data,status,er) {
+	        	
+	        	}
+		 });
+	}
 });
 
 $("body").on("click", ".consultaBorrarDestinatarioAccion",function(event){
