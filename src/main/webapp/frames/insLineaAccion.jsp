@@ -6430,10 +6430,10 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'												<tbody>'+
 									'			      									<form class="form-horizontal" role="form">'+
 									'													<tr><td><label for="productoObjetoGasto">Producto</label><select id="productoObjetoGasto" class="form-control">'+optionProductoObjetoGasto+'</select></td>'+
-									'														<td><label for="objetoGastoCosto">Objeto Gasto</label><select id="objetoGastoCosto" class="form-control" required></select></td>'+
+									'														<td><label for="objetoGastoCosto">Objeto Gasto</label><select id="objetoGastoCosto" class="form-control" onblur="validarCosto()" required></select></td>'+
 									'													</tr>'+	
 									'													<tr><td colspan="2"><label for="codigoContratacionalCosto">Cod. Contratación</label><input type="text" id="codigoContratacionalCosto" class="form-control" placeholder="Ingrese Codigo Contratación" /></td></tr>'+									
-									'													<tr><td colspan="2"><label for="montoCosto">Monto</label><input type="number" id="montoCosto" class="form-control" placeholder="Ingrese Monto" required /></td></tr>'+
+									'													<tr><td colspan="2"><label for="montoCosto">Monto</label><input type="number" id="montoCosto" class="form-control" placeholder="Ingrese Monto" onblur="validarMonto()" required /></td></tr>'+
 									'													<input type="hidden" id="avanceIdCosto" value="'+avanceId+'"/>'+	
 									'			      									</form>	'+												
 									'												</tbody>'+
@@ -6598,6 +6598,29 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 
 });	
 
+function validarCosto(){
+	var validacion=true;
+	if (document.getElementById("objetoGastoCosto").validity.valueMissing == true) {	    
+    	$("#objetoGastoCosto").css("border","1px solid red");
+    	$("#objetoGastoCosto").attr("placeholder", "El campo es requerido");
+    	validacion=false;
+    }else{
+    	if (document.getElementById("objetoGastoCosto").validity.valueMissing == false) {
+    		$("#objetoGastoCosto").css("border","1px solid green");		    	
+    	}	    	
+    }
+	if (document.getElementById("montoCosto").validity.valueMissing == true) {	    
+    	$("#montoCosto").css("border","1px solid red");
+    	$("#montoCosto").attr("placeholder", "El campo es requerido");
+    	validacion=false;
+    }else{
+    	if (document.getElementById("montoCosto").validity.valueMissing == false) {
+    		$("#montoCosto").css("border","1px solid green");		    	
+    	}	    	
+    }
+	return validacion;
+	
+}
 
 /* $(document).ready(function(){
 	$('#geoloc').leafletLocationPicker({
@@ -6962,6 +6985,8 @@ $("body").on("click", ".borrarAvance",function(event){
 });
 
 $("body").on("click", ".guardarCosto",function(event){
+	if(validarCosto()==true){
+	
 	var parametros = $(this).attr("parametros");
     var idParsed = parametros.split("-");                                                            
 	
@@ -7059,7 +7084,7 @@ $("body").on("click", ".guardarCosto",function(event){
         	
         	}
 	 });
-	
+	}
 });	
 
 $("body").on("click", ".consultaBorrarCosto",function(event){
@@ -7218,7 +7243,7 @@ $("body").on("click", ".consultaEditarCosto",function(event){
 						'							<tbody>'+
 						'								<form class="form-horizontal" role="form">'+
 						'									<tr><td><label for="ProductoObjetoGasto">Producto Objeto Gasto</label><input type="text" id="ProductoObjetoGasto" class="form-control" value='+webServicesAvanceCosto[0].productoConcat+' disabled="disabled" /></td><td><label for="objetoGastoCosto">Objeto Gasto</label><input type="number" id="objetoGastoCosto" class="form-control" value='+webServicesAvanceCosto[0].objetoGasto+' disabled="disabled" /></td></tr>'+
-						'									<tr><td><label for="codigoContratacionalCosto">Cod. Contrato</label><input type="text" id="codigoContratacionalCosto" class="form-control" value='+webServicesAvanceCosto[0].codigoContratacion+' /></td><td colspan="2"><label for="montoCosto">Monto</label><input type="number" id="montoCosto" class="form-control" value='+webServicesAvanceCosto[0].monto+'  required/></td></tr>'+									
+						'									<tr><td><label for="codigoContratacionalCosto">Cod. Contrato</label><input type="text" id="codigoContratacionalCosto" class="form-control" value='+webServicesAvanceCosto[0].codigoContratacion+' /></td><td colspan="2"><label for="montoCosto">Monto</label><input type="number" id="montoCosto" class="form-control" value='+webServicesAvanceCosto[0].monto+' onblur="validarCosto()" required/></td></tr>'+									
 						'									<input type="hidden" id="avanceIdCosto" value="'+webServicesAvanceCosto[0].avanceId+'"/>'+		
 						'								</form>	'+												
 						'  							</tbody>'+
@@ -7241,6 +7266,8 @@ $("body").on("click", ".consultaEditarCosto",function(event){
 
 
 $("body").on("click", ".editarAvanceCosto",function(event){
+	if(validarCosto()==true){
+		
 	var parametros = $(this).attr("parametros");
     var idParsed = parametros.split("-");                                                            
 	
@@ -7289,7 +7316,7 @@ $("body").on("click", ".editarAvanceCosto",function(event){
         	
         	}
 	 });
-  
+	} 
 });
 
 
