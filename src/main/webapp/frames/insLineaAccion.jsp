@@ -109,11 +109,11 @@
 							'					</div>'+
 							'					<div class="form-group">'+
 							'						<label for="meta">Meta</label>'+
-							'						<input type="number" id="metaInsLineaAccion" class="form-control" name="meta" placeholder="Ingrese Meta" required >'+
+							'						<input type="number" id="metaInsLineaAccion" class="form-control" name="meta" placeholder="Ingrese Meta" onblur="validarCampos()" required >'+
 							'					</div>'+
 							'					<div class="form-group">'+
 							'						<label for="version">Versión</label>'+
-							'						<input type="number" id="versionInsLineaAccion" class="form-control" name="version" placeholder="Ingrese Versión" required>'+
+							'						<input type="number" id="versionInsLineaAccion" class="form-control" name="version" placeholder="Ingrese Versión" onblur="validarCampos()" required>'+
 							'					</div>'+				
 							'				</form>'+			  
 							
@@ -129,6 +129,30 @@
 			
 
 	});
+	
+	function validarCampos() {	    
+		var validacion=true;		
+			
+	    if (document.getElementById("metaInsLineaAccion").validity.valueMissing == true) {	    
+	    	$("#metaInsLineaAccion").css("border","1px solid red");
+	    	$("#metaInsLineaAccion").attr("placeholder", "El campo es requerido");
+	    	validacion=false;
+	    }else{
+	    	if (document.getElementById("metaInsLineaAccion").validity.valueMissing == false) {
+	    		$("#metaInsLineaAccion").css("border","1px solid green");		    	
+	    	}	    	
+	    }
+		if (document.getElementById("versionInsLineaAccion").validity.valueMissing == true) {	    
+	    	$("#versionInsLineaAccion").css("border","1px solid red");
+	    	$("#versionInsLineaAccion").attr("placeholder", "El campo es requerido");
+	    	validacion=false;
+	    }else{
+	    	if (document.getElementById("metaInsLineaAccion").validity.valueMissing == false) {
+	    		$("#versionInsLineaAccion").css("border","1px solid green");		    	
+	    	}	    	
+	    }
+		return validacion;
+	}
 		
 	$("body").on("change", "#nombreLineaAccionInsLineaAccion",function(event){
 		//var departamentoId = $(this).attr("parametro");
@@ -169,6 +193,8 @@
 	});
 	
 	$("body").on("click", "#guardarInsLineaAccion",function(event){
+		if (validarCampos()==true){
+				
 		event.stopPropagation();
 		event.preventDefault(); 
 		$("#actualizarInsLineaAccionBoton").remove();
@@ -569,7 +595,7 @@
 		
 		
 		
-			
+		}	
 	});
 	
 	
@@ -667,11 +693,11 @@
 							'					</div>'+
 							'					<div class="form-group">'+
 							'						<label for="meta">Meta</label>'+
-							'						<input type="number" id="metaInsLineaAccion" class="form-control" name="meta" placeholder="Ingrese Meta" required>'+
+							'						<input type="number" id="metaInsLineaAccion" class="form-control" name="meta" placeholder="Ingrese Meta" onblur="validarCampos()" required>'+
 							'					</div>'+
 							'					<div class="form-group">'+
 							'						<label for="version">Versión</label>'+
-							'						<input type="number" id="versionInsLineaAccion" class="form-control" name="version" placeholder="Ingrese Versión" required>'+
+							'						<input type="number" id="versionInsLineaAccion" class="form-control" name="version" placeholder="Ingrese Versión" onblur="validarCampos()" required>'+
 							'					</div>'+				
 							'				</form>'+			  
 							
@@ -684,7 +710,7 @@
 		$("#actualizarInsLineaAccionBoton").remove();
 		$("#guardarInsLineaAccionBoton").remove();
 		$('#insLineaAccion').modal('show');
-		$("#insLineaAccion").find("#formularioInsLineaAccion").append('<div class="form-group" id="actualizarInsLineaAccionBoton"><button type="button" class="btn btn-success" id="actualizarInsLineaAccion">Actualizar</button></div>');
+		$("#insLineaAccion").find("#formularioInsLineaAccion").append('<div class="form-group" id="actualizarInsLineaAccionBoton"><button type="button" class="btn btn-success" id="actualizarInsLineaAccion" onclick="validarCampos()">Actualizar</button></div>');
 		$("#idInsLineaAccion").val(id);
 		
 		var lineaAccion = $.ajax({
@@ -741,7 +767,8 @@
 	});
 	
 	
-	$("body").on("click", "#actualizarInsLineaAccion",function(event){		
+	$("body").on("click", "#actualizarInsLineaAccion",function(event){
+		if (validarCampos()==true){
 		var accion = "actInsLineaAccion";
 		var id = $("#idInsLineaAccion").val();
 		var lineaAccionId= $("#nombreLineaAccionInsLineaAccion").val();
@@ -1139,7 +1166,7 @@
 		 });	
 		
 	
-		
+		}
 	});	
 	
 	$("body").on("click", ".iconoBorradoInsLineaAccion",function(event){
