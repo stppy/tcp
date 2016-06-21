@@ -4455,10 +4455,10 @@ $("body").on("click", ".borrarAccion",function(event){
 		'										<table class="table table-hover">'+
 		'											<tbody>'+
 		'												<tr><td><div class="form-group"><label for="departamentoActividad">Departamento</label><input type="text" class="form-control" id="departamentoActividad" value="'+nombreDepartamento+'" disabled /></div></td><td><div class="form-group"><label for="distritoActividad">Distrito</label><input type="text" id="distritoActividad" value="'+nombreDistrito+'" class="form-control" disabled> </div></td></tr>'+
-		'												<tr><td><div class="form-group"><label for="nombreActividad">Cronograma</label><input type="text" class="form-control" id="nombreActividad" value="" placeholder="Ingrese Nombre del Cronograma" required><input type="hidden" class="form-control" id="insLineaAccionId" value="'+insLineaAccionId+'"></div></td><td><div class="form-group"><label for="descripcionActividad">Descripción</label><input type="text" id="descripcionActividad" value="" class="form-control"> </div></td></tr>'+
+		'												<tr><td><div class="form-group"><label for="nombreActividad">Cronograma</label><input type="text" class="form-control" id="nombreActividad" value="" placeholder="Ingrese Nombre del Cronograma" onblur="validarCronograma()" required><input type="hidden" class="form-control" id="insLineaAccionId" value="'+insLineaAccionId+'"></div></td><td><div class="form-group"><label for="descripcionActividad">Descripción</label><input type="text" id="descripcionActividad" value="" class="form-control"> </div></td></tr>'+
 		'												<tr><td><div class="form-group"><label for="unidadMedidaIdActividad">Unidad de Medida</label><select id="unidadMedidaIdActividad" class="form-control" placeholder="Ingrese Unidad Medida Id">'+optionUnidadMedida+'</div></td><td><div class="form-group"><label for="hitoTipoIdActividad">Tipo de Cronograma</label>'+
 		'												<select id="hitoTipoIdActividad" class="form-control" placeholder="Ingrese Tipo de Cronograma">'+optionTipoHito+'</select></div></td></tr>'+
-		'												<tr><td><div class="form-group"><label for="proporcionActividad">Proporción</label><input type="number" class="form-control" id="proporcionActividad" value="1" required /></div></div></td><td><div class="form-group"><label for="pesoActividad">Peso</label><input type="number" class="form-control" id="pesoActividad" value="1" required/></div></td></tr>'+
+		'												<tr><td><div class="form-group"><label for="proporcionActividad">Proporción</label><input type="number" class="form-control" id="proporcionActividad" value="1" onblur="validarCronograma()" required /></div></div></td><td><div class="form-group"><label for="pesoActividad">Peso</label><input type="number" class="form-control" id="pesoActividad" value="1" onblur="validarCronograma()" required/></div></td></tr>'+
 		'												<tr><td><div class="form-group"><label for="acumulableActividad">Acumulable</label><select id="acumulableActividad" class="form-control" placeholder="Ingrese Tipo Acumulable">'+optionAcumulable+'</select></div></td></tr>'+
 		'											</tbody>'+							           
 		'										</table>'+
@@ -4467,7 +4467,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		'								</form>'+
 		'               			</div>'+//fin box-body
 		'							<div class="modal-footer">'+
-		'								<button type="button" class="btn btn-success btn-sm guardarActividad" parametros = '+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'>Guardar Cronograma</button>'+
+		'								<button type="button" class="btn btn-success btn-sm guardarActividad" parametros = '+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+' onclick="validarCronograma()">Guardar Cronograma</button>'+
 		'							</div>'+
 		'                		</div>'+	
 		'                	</div>'+
@@ -4537,6 +4537,70 @@ $("body").on("click", ".borrarAccion",function(event){
 			return acu = "No";
 		}
 	}	
+	
+	function validarCronograma(edit){
+		var validacion=true;
+		
+		if (edit==true){
+			if (document.getElementById("nombreCronograma").validity.valueMissing == true) {	    
+		    	$("#nombreCronograma").css("border","1px solid red");
+		    	$("#nombreCronograma").attr("placeholder", "El campo es requerido");
+		    	validacion=false;
+		    }else{
+		    	if (document.getElementById("nombreCronograma").validity.valueMissing == false) {
+		    		$("#nombreCronograma").css("border","1px solid green");		    	
+		    	}	    	
+		    }
+			if (document.getElementById("proporcionCronograma").validity.valueMissing == true) {	    
+		    	$("#proporcionCronograma").css("border","1px solid red");
+		    	$("#proporcionCronograma").attr("placeholder", "El campo es requerido");
+		    	validacion=false;
+		    }else{
+		    	if (document.getElementById("proporcionCronograma").validity.valueMissing == false) {
+		    		$("#proporcionCronograma").css("border","1px solid green");		    	
+		    	}	    	
+		    }
+			if (document.getElementById("pesoCronograma").validity.valueMissing == true) {	    
+		    	$("#pesoCronograma").css("border","1px solid red");
+		    	$("#pesoCronograma").attr("placeholder", "El campo es requerido");
+		    	validacion=false;
+		    }else{
+		    	if (document.getElementById("pesoCronograma").validity.valueMissing == false) {
+		    		$("#pesoCronograma").css("border","1px solid green");		    	
+		    	}	    	
+		    }			
+		}else{
+			if (document.getElementById("nombreActividad").validity.valueMissing == true) {	    
+		    	$("#nombreActividad").css("border","1px solid red");
+		    	$("#nombreActividad").attr("placeholder", "El campo es requerido");
+		    	validacion=false;
+		    }else{
+		    	if (document.getElementById("nombreActividad").validity.valueMissing == false) {
+		    		$("#nombreActividad").css("border","1px solid green");		    	
+		    	}	    	
+		    }
+			if (document.getElementById("proporcionActividad").validity.valueMissing == true) {	    
+		    	$("#proporcionActividad").css("border","1px solid red");
+		    	$("#proporcionActividad").attr("placeholder", "El campo es requerido");
+		    	validacion=false;
+		    }else{
+		    	if (document.getElementById("proporcionActividad").validity.valueMissing == false) {
+		    		$("#proporcionActividad").css("border","1px solid green");		    	
+		    	}	    	
+		    }
+			if (document.getElementById("pesoActividad").validity.valueMissing == true) {	    
+		    	$("#pesoActividad").css("border","1px solid red");
+		    	$("#pesoActividad").attr("placeholder", "El campo es requerido");
+		    	validacion=false;
+		    }else{
+		    	if (document.getElementById("pesoActividad").validity.valueMissing == false) {
+		    		$("#pesoActividad").css("border","1px solid green");		    	
+		    	}	    	
+		    }			
+		}	
+	    
+		return validacion;
+	}
 	
 $("body").on("click", ".editarCronograma", function(event){
 	var parametros = $(this).attr("parametros");
@@ -4621,9 +4685,9 @@ $("body").on("click", ".editarCronograma", function(event){
 						'									<table class="table table-hover">'+
 						'										<tbody>'+
 						'			      							<form class="form-horizontal" role="form">'+
-						'												<tr><td><label for="nombreCronograma">Nombre</label><input type="text" id="nombreCronograma" value="'+actividades[0].nombre+'" class="form-control" required /></td><td><label for="descripcionCronograma">Descripcion</label><input type="text" id="descripcionCronograma" class="form-control" value="'+actividades[0].descripcion+'"  /></td></tr>'+
+						'												<tr><td><label for="nombreCronograma">Nombre</label><input type="text" id="nombreCronograma" value="'+actividades[0].nombre+'" class="form-control" onblur="validarCronograma(true)" required /></td><td><label for="descripcionCronograma">Descripcion</label><input type="text" id="descripcionCronograma" class="form-control" value="'+actividades[0].descripcion+'"  /></td></tr>'+
 						'												<tr><td><div class="form-group"><label for="unidadMedidaIdCronograma">Unidad de Medida</label><select id="selectorUnidadMedidaCronograma" class="form-control">'+optionUnidadMedida+'</select></div></td><td><div class="form-group"><label for="hitoTipoIdCronograma">Tipo Cronograma</label><select id="selectorHitoTipoIdCronograma" class="form-control">"'+optionTipoHito+'"</select></div></td></tr>'+
-						'												<tr><td><label for="proporcionCronograma">Proporción</label><input type="number" id="proporcionCronograma" value='+actividades[0].proporcion+' class="form-control" required /></td><td><label for="pesoCronograma">Peso</label><input type="number" id="pesoCronograma" class="form-control" value='+actividades[0].peso+' required /></td></tr>'+
+						'												<tr><td><label for="proporcionCronograma">Proporción</label><input type="number" id="proporcionCronograma" value='+actividades[0].proporcion+' class="form-control" onblur="validarCronograma(true)" required /></td><td><label for="pesoCronograma">Peso</label><input type="number" id="pesoCronograma" class="form-control" value='+actividades[0].peso+' onblur="validarCronograma(true)" required /></td></tr>'+
 						'												<tr><td><div class="form-group"><label for="acumulableCronograma">Acumulable</label><select id="acumulableCronograma" class="form-control" placeholder="Ingrese Tipo Acumulable">'+optionAcumulable+'</select></div></td><td></td></tr>'+
 						
 						'			      							</form>	'+												
@@ -4633,7 +4697,7 @@ $("body").on("click", ".editarCronograma", function(event){
 												
 						'		    </div>'+//fin modal-body
 						'			<div class="modal-footer">'+					
-						'				<button type="button" class="btn btn-success btn-sm actualizarCronograma" id="botonGuardarCronograma" parametros ='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+cronogramaId+'>Actualizar Cronograma</button>'+
+						'				<button type="button" class="btn btn-success btn-sm actualizarCronograma" id="botonGuardarCronograma" parametros ='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+cronogramaId+' onclick="validarCronograma(true)">Actualizar Cronograma</button>'+
 						'				<button type="button" class="btn btn-success btn-sm agregarActividad" parametros ='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'>Cerrar</button>'+
 						
 						'			</div>'+
@@ -4776,7 +4840,8 @@ $("body").on("click", ".borrarCronograma",function(event){
 });
 
 $("body").on("click", ".actualizarCronograma", function(event){
-	
+	if (validarCronograma(true)==true){
+		 
 	var parametros = $(this).attr("parametros");
     var idParsed = parametros.split("-");    
     var insLineaAccionId = idParsed[0];
@@ -4841,11 +4906,12 @@ $("body").on("click", ".actualizarCronograma", function(event){
         error: function(data,status,er) {
         	}
 	 });
- 
+	}
 });
 	
 	
 $("body").on("click", ".guardarActividad",function(event){
+		if (validarCronograma()==true){			
 		
 		var parametros = $(this).attr("parametros");
 	    var idParsed = parametros.split("-");                                                            
@@ -4896,7 +4962,7 @@ $("body").on("click", ".guardarActividad",function(event){
 	        	actualizarTablaActividades(accion_id,insLineaAccionId,lineaAccionId,institucionId,periodoId);
 	        	}
 		 });
-		
+		}	
 });	
 
 function actualizarTablaActividades(accion_id,insLineaAccionId,lineaAccionId,institucionId,periodoId){
