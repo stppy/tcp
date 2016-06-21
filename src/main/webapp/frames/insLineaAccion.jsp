@@ -3963,6 +3963,15 @@ $("body").on("click", ".borrarAccion",function(event){
 	    		$("#producto-formulario").css("border","1px solid green");		    	
 	    	}	    	
 	    }
+	    if (document.getElementById("total-formulario").validity.valueMissing == true) {	    
+	    	$("#total-formulario").css("border","1px solid red");
+	    	$("#total-formulario").attr("placeholder", "El campo es requerido");
+	    	validacion=false;
+	    }else{
+	    	if (document.getElementById("total-formulario").validity.valueMissing == false) {
+	    		$("#total-formulario").css("border","1px solid green");		    	
+	    	}	    	
+	    }
 		return validacion;
 	}
 	$("body").on("click", ".consultaBorrarVinculacionProducto",function(event){
@@ -6306,7 +6315,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'												<tbody>'+
 									'			      									<form class="form-horizontal" role="form">'+
 									'													<tr><td><label for="tipoBeneficiario">Tipo</label><select id="beneficiarioTipo" class="form-control" required>'+optionBeneficiarioTipo+'</select></td><td><label for="grupoBeneficiario">Grupo</label><select id="grupoBeneficiario" class="form-control" required></select></td></tr>'+
-									'													<tr><td><label for="cantidadBeneficiario">Cantidad</label><input type="number" id="cantidadBeneficiario" class="form-control" placeholder="Ingrese una Cantidad" required /></td><td><label for="descripcionBeneficiario">Descripción</label><input type="text" id="descripcionBeneficiario" class="form-control" placeholder="Ingrese Objeto una Descripción" /></td></tr>'+
+									'													<tr><td><label for="cantidadBeneficiario">Cantidad</label><input type="number" id="cantidadBeneficiario" class="form-control" placeholder="Ingrese una Cantidad" onblur="validarBeneficiarios()" required /></td><td><label for="descripcionBeneficiario">Descripción</label><input type="text" id="descripcionBeneficiario" class="form-control" placeholder="Ingrese Objeto una Descripción" /></td></tr>'+
 									'													<input type="hidden" id="avanceIdBeneficiario" value="'+avanceId+'"/>'+		
 									'			      									</form>	'+				
 									'												</tbody>'+
@@ -6567,6 +6576,19 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	});
 }); */
 
+function validarBeneficiarios(){
+	var validacion=true;
+	if (document.getElementById("cantidadBeneficiario").validity.valueMissing == true) {	    
+    	$("#cantidadBeneficiario").css("border","1px solid red");
+    	$("#cantidadBeneficiario").attr("placeholder", "El campo es requerido");
+    	validacion=false;
+    }else{
+    	if (document.getElementById("cantidadBeneficiario").validity.valueMissing == false) {
+    		$("#cantidadBeneficiario").css("border","1px solid green");		    	
+    	}	    	
+    }
+	return validacion;
+}
 
 
 $("body").on("change", "#productoObjetoGasto",function(event){
@@ -7668,6 +7690,8 @@ $("body").on("click", ".editarEvidencia",function(event){
 });
 
 $("body").on("click", ".guardarBeneficiario",function(event){
+	if (validarBeneficiarios()==true){
+		
 	var parametros = $(this).attr("parametros");
     var idParsed = parametros.split("-");                                                            
 	
@@ -7788,7 +7812,7 @@ $("body").on("click", ".guardarBeneficiario",function(event){
         	
         	}
 	 });
-	
+	}
 });	
 
 $("body").on("click", ".consultaBorrarBeneficiario",function(event){
@@ -7978,7 +8002,7 @@ $("body").on("click", ".consultaEditarBeneficiario",function(event){
 						'						<tbody>'+
 						'			      			<form class="form-horizontal" role="form">'+
 						'							<tr><td><label for="tipoBeneficiario">Tipo</label><select id="beneficiarioTipo" class="form-control" required>'+optionBeneficiarioTipo+'</select></td><td><label for="grupoBeneficiario">Grupo</label><select id="grupoBeneficiario" class="form-control" required>'+optionBeneficiarioGrupo+'</select></td></tr>'+
-						'							<tr><td><label for="cantidadBeneficiario">Cantidad</label><input type="number" id="cantidadBeneficiario" class="form-control" value='+webServicesBeneficiario[0].cantidad+' required /></td><td><label for="descripcionBeneficiario">Descripción</label><input type="text" id="descripcionBeneficiario" class="form-control" value="'+webServicesBeneficiario[0].descripcion+'" /></td></tr>'+																		
+						'							<tr><td><label for="cantidadBeneficiario">Cantidad</label><input type="number" id="cantidadBeneficiario" class="form-control" value='+webServicesBeneficiario[0].cantidad+' onblur="validarBeneficiarios()" required /></td><td><label for="descripcionBeneficiario">Descripción</label><input type="text" id="descripcionBeneficiario" class="form-control" value="'+webServicesBeneficiario[0].descripcion+'" /></td></tr>'+																		
 						'							<input type="hidden" id="avanceIdBeneficiario" value="'+avanceId+'"/>'+		
 						'			      			</form>	'+				
 						'						</tbody>'+
@@ -8003,6 +8027,8 @@ $("body").on("click", ".consultaEditarBeneficiario",function(event){
 });
 
 $("body").on("click", ".editarBeneficiario",function(event){
+	if(validarBeneficiarios()==true){
+		
 	var parametros = $(this).attr("parametros");
     var idParsed = parametros.split("-");                                                            
 	
@@ -8047,7 +8073,7 @@ $("body").on("click", ".editarBeneficiario",function(event){
         	
         	}
 	 });
-	
+	}	
 });
 
 $("body").on("click", ".consultaBorrarInsLineaAccion",function(event){
