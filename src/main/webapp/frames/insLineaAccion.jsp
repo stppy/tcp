@@ -6511,7 +6511,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'										<table class="table table-hover">'+
 									'											<tbody>'+
 									'		      									<form id="formEvidencia" class="form-horizontal" role="form">'+
-									'													<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" placeholder="Ingrese Nombre" required /></td><td><label for="urlEvidencia">Url</label><input type="url" id="urlEvidencia" class="form-control" pattern="https?://.+" placeholder="Ingrese Url" required/></td></tr>'+
+									'													<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" placeholder="Ingrese Nombre" onblur="validarEvidencia()" required /></td><td><label for="urlEvidencia">Url</label><input type="url" id="urlEvidencia" class="form-control" pattern="https?://.+" placeholder="Ingrese Url" onblur="validarEvidencia()" required/></td></tr>'+
 									'													<tr><td colspan="2"><label for="descripcionEvidencia">Descripción</label><input type="text" id="descripcionEvidencia" class="form-control" placeholder="Ingrese Descripción" /></td></tr>'+																		
         							'														<div  class="bar" style="width: 0%;"></div></div></td></tr>'+
         							'													<tr><td colspan="2"><label>Ingresar localización de la evidencia:</label></td></tr>'+
@@ -7328,6 +7328,7 @@ $("body").on("click", ".editarAvanceCosto",function(event){
 		alert("Favor introduzca una dirección url valida. Ej: http://www.google.com");
 		return false;
 	} */
+	if(validarEvidencia()==true){
 	
 	var parametros = $(this).attr("parametros");
     var idParsed = parametros.split("-");                                                            
@@ -7470,7 +7471,8 @@ $("body").on("click", ".editarAvanceCosto",function(event){
         error: function(data,status,er) {
         	
         	}
-	 });	
+	 });
+ }
 });
 
 $("body").on("click", ".consultaBorrarEvidencia",function(event){
@@ -7628,7 +7630,7 @@ $("body").on("click", ".consultaEditarEvidencia",function(event){
 						'					<table class="table table-hover">'+
 						'						<tbody>'+
 						'			      			<form class="form-horizontal" role="form">'+
-						'								<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" value="'+webServicesEvidencia[0].nombre+'" required/></td><td><label for="urlEvidencia">Url</label><input type="url" id="urlEvidencia" class="form-control" value="'+webServicesEvidencia[0].url+'" required/></td></tr>'+
+						'								<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" value="'+webServicesEvidencia[0].nombre+'" onblur="validarEvidencia()" required/></td><td><label for="urlEvidencia">Url</label><input type="url" id="urlEvidencia" class="form-control" value="'+webServicesEvidencia[0].url+'" onblur="validarEvidencia()" required/></td></tr>'+
 						'								<tr><td colspan="2"><label for="descripcionEvidencia">Descripción</label><input type="text" id="descripcionEvidencia" class="form-control" value="'+webServicesEvidencia[0].descripcion+'" /></td></tr>'+
 						'								<tr><td colspan="2"><label>Localización de la evidencia:</label></td></tr>'+
 						/* '								<tr><td><label for="latLongEvidencia">Latitud , Longitud: </label>'+
@@ -7661,7 +7663,32 @@ $("body").on("click", ".consultaEditarEvidencia",function(event){
 
 });
 
+function validarEvidencia(){
+	var validacion=true;
+	if (document.getElementById("nombreEvidencia").validity.valueMissing == true) {	    
+    	$("#nombreEvidencia").css("border","1px solid red");
+    	$("#nombreEvidencia").attr("placeholder", "El campo es requerido");
+    	validacion=false;
+    }else{
+    	if (document.getElementById("nombreEvidencia").validity.valueMissing == false) {
+    		$("#nombreEvidencia").css("border","1px solid green");		    	
+    	}	    	
+    }
+	if (document.getElementById("urlEvidencia").validity.valueMissing == true) {	    
+    	$("#urlEvidencia").css("border","1px solid red");
+    	$("#urlEvidencia").attr("placeholder", "El campo es requerido");
+    	validacion=false;
+    }else{
+    	if (document.getElementById("urlEvidencia").validity.valueMissing == false) {
+    		$("#urlEvidencia").css("border","1px solid green");		    	
+    	}	    	
+    }
+	return validacion;	
+}
+
 $("body").on("click", ".editarEvidencia",function(event){
+	if(validarEvidencia()==true){
+		
 	var parametros = $(this).attr("parametros");
     var idParsed = parametros.split("-");                                                            
 	
@@ -7746,7 +7773,7 @@ $("body").on("click", ".editarEvidencia",function(event){
         	
         	}
 	 });
-	
+	}	
 });
 
 $("body").on("click", ".guardarBeneficiario",function(event){
