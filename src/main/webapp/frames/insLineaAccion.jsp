@@ -5802,10 +5802,10 @@ $("body").on("click", ".agregarAvance",function(event){
 							'										<tbody>'+
 							'			      							<form class="form-horizontal" role="form">'+
 							'											<tr><td><div class="form-group"><label for="departamentoActividad">Departamento</label><input type="text" class="form-control" id="departamentoActividad" value="'+nombreDepartamento+'" disabled /></div></td><td><div class="form-group"><label for="distritoActividad">Distrito</label><input type="text" id="distritoActividad" value="'+nombreDistrito+'" class="form-control" disabled> </div></td></tr>'+
-							'											<tr><td><label for="justificacionAvance">Justificación</label><input type="text" id="justificacionAvance" value="" class="form-control" placeholder="Ingrese Justificación" required /></td>'+
-							'												<td><label for="cantidadAvance">Cantidad</label><input type="number" id="cantidadAvance" class="form-control" value="" placeholder="Ingrese Cantidad" required/></td>'+
+							'											<tr><td><label for="justificacionAvance">Justificación</label><input type="text" id="justificacionAvance" value="" class="form-control" placeholder="Ingrese Justificación" onblur="validarAvance()" required/></td>'+
+							'												<td><label for="cantidadAvance">Cantidad</label><input type="number" id="cantidadAvance" class="form-control" value="" placeholder="Ingrese Cantidad" onblur="validarAvance()" required/></td>'+
 							'											</tr>'+
-							'											<tr><td><label for="fechaEntregaAvance">Fecha Entrega</label><input type="date" id="fechaEntregaAvance" value="'+fechaActual+'" class="form-control" required /></td></tr>'+														
+							'											<tr><td><label for="fechaEntregaAvance">Fecha Entrega</label><input type="date" id="fechaEntregaAvance" value="'+fechaActual+'" class="form-control" onblur="validarAvance()" required/></td></tr>'+														
 							'											<input type="hidden" id="versionAvance" value="3" />'+		
 							'			      							</form>	'+												
 							'										</tbody>'+
@@ -5892,81 +5892,113 @@ $("body").on("click", ".agregarAvance",function(event){
 	
 	
 });	
-
+function validarAvance() {	    
+	var validacion=true;		
+		
+    if (document.getElementById("justificacionAvance").validity.valueMissing == true) {	    
+    	$("#justificacionAvance").css("border","1px solid red");
+    	$("#justificacionAvance").attr("placeholder", "El campo es requerido");
+    	validacion=false;
+    }else{
+    	if (document.getElementById("justificacionAvance").validity.valueMissing == false) {
+    		$("#justificacionAvance").css("border","1px solid green");		    	
+    	}	    	
+    }
+	if (document.getElementById("cantidadAvance").validity.valueMissing == true) {	    
+    	$("#cantidadAvance").css("border","1px solid red");
+    	$("#cantidadAvance").attr("placeholder", "El campo es requerido");
+    	validacion=false;
+    }else{
+    	if (document.getElementById("cantidadAvance").validity.valueMissing == false) {
+    		$("#cantidadAvance").css("border","1px solid green");		    	
+    	}	    	
+    }
+	if (document.getElementById("fechaEntregaAvance").validity.valueMissing == true) {	    
+    	$("#fechaEntregaAvance").css("border","1px solid red");
+    	$("#fechaEntregaAvance").attr("placeholder", "El campo es requerido");
+    	validacion=false;
+    }else{
+    	if (document.getElementById("fechaEntregaAvance").validity.valueMissing == false) {
+    		$("#fechaEntregaAvance").css("border","1px solid green");		    	
+    	}	    	
+    }
+	return validacion;
+}
 $("body").on("click", ".guardarAvance",function(event){
-	var parametros = $(this).attr("parametros");
-    var idParsed = parametros.split("-");                                                            
+	if(validarAvance()==true){
+		var parametros = $(this).attr("parametros");
+	    var idParsed = parametros.split("-");                                                            
+		
+		//Las siguentes 4 variables se utiliza en esta funcion para redibujar el modal anterior
+		var insLineaAccionId = idParsed[0];
+		var lineaAccionId = idParsed[1];
+		var institucionId = idParsed[2];
+		var periodoId = idParsed[3];
+		var accionId = idParsed[4];
+		var actividadId = idParsed[5];//es el id de la tabla actidad
+		
+		var justificacion = $("#justificacionAvance").val();
+		var cantidad = $("#cantidadAvance").val();
+		var fechaEntrega = $("#fechaEntregaAvance").val();
+		//var cantidadBeneficiarios = $("#cantidadBeneficiariosAvance").val();
+		var version = $("#versionAvance").val();
 	
-	//Las siguentes 4 variables se utiliza en esta funcion para redibujar el modal anterior
-	var insLineaAccionId = idParsed[0];
-	var lineaAccionId = idParsed[1];
-	var institucionId = idParsed[2];
-	var periodoId = idParsed[3];
-	var accionId = idParsed[4];
-	var actividadId = idParsed[5];//es el id de la tabla actidad
 	
-	var justificacion = $("#justificacionAvance").val();
-	var cantidad = $("#cantidadAvance").val();
-	var fechaEntrega = $("#fechaEntregaAvance").val();
-	//var cantidadBeneficiarios = $("#cantidadBeneficiariosAvance").val();
-	var version = $("#versionAvance").val();
-
-
-	//Vaciar los inputs
-	$("#justificacionAvance").val("");
-	$("#cantidadAvance").val("");
-	//$("#fechaEntregaAvance").val("");
-	//$("#cantidadBeneficiariosAvance").val("");
+		//Vaciar los inputs
+		$("#justificacionAvance").val("");
+		$("#cantidadAvance").val("");
+		//$("#fechaEntregaAvance").val("");
+		//$("#cantidadBeneficiariosAvance").val("");
+		
+		var objeto = new Object();
+		
+		objeto.justificacion = justificacion;
+		objeto.cantidad = cantidad;
+		objeto.fechaEntrega = fechaEntrega;
+		//objeto.cantidadBeneficiarios = cantidadBeneficiarios;
+		objeto.actividadId = actividadId;
+		objeto.version = version;
 	
-	var objeto = new Object();
-	
-	objeto.justificacion = justificacion;
-	objeto.cantidad = cantidad;
-	objeto.fechaEntrega = fechaEntrega;
-	//objeto.cantidadBeneficiarios = cantidadBeneficiarios;
-	objeto.actividadId = actividadId;
-	objeto.version = version;
-
-	
-  	var info = JSON.stringify(objeto);
-    $.ajax({
-        url: "ajaxInserts2?accion=insAvance",
-        type: 'POST',
-        dataType: 'json',
-        data: info,
-        contentType: 'application/json',
-        mimeType: 'application/json',
-        success: function (data) {
-        	if(data.success == true)
-        	{
-        		var webServicesAvance = $.ajax({
-        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvance&actividadId='+actividadId,
-        		  	type:'get',
-        		  	dataType:'json',
-        		  	async:false       
-        		}).responseText;
-        		webServicesAvance = JSON.parse(webServicesAvance);
-        		
-        		var cuerpoAvance = "";
-        		for(var d = 0; d < webServicesAvance.length; d++)
-        		{
-        			cuerpoAvance += '<tr><td>'+webServicesAvance[d].justificacion+'</td><td>'+webServicesAvance[d].cantidad+'</td><td>'+webServicesAvance[d].fechaEntrega+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm agregarModalAdministrador" data-toggle="tooltip" data-placement="top" title="Administrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+webServicesAvance[d].id+'><span class="fa fa-gear"></span></button></td></tr>';
-        		}
-        		
-        		$("#listaAvances").html("");
-        		$("#listaAvances").html(cuerpoAvance);
-        		
-        	}else{
-        		alert("ERROR");        		
-        	}
-        	
-        	},
-        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
-        error: function(data,status,er) {
-        	
-        	}
-	 });
-	
+		
+	  	var info = JSON.stringify(objeto);
+	    $.ajax({
+	        url: "ajaxInserts2?accion=insAvance",
+	        type: 'POST',
+	        dataType: 'json',
+	        data: info,
+	        contentType: 'application/json',
+	        mimeType: 'application/json',
+	        success: function (data) {
+	        	if(data.success == true)
+	        	{
+	        		var webServicesAvance = $.ajax({
+	        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvance&actividadId='+actividadId,
+	        		  	type:'get',
+	        		  	dataType:'json',
+	        		  	async:false       
+	        		}).responseText;
+	        		webServicesAvance = JSON.parse(webServicesAvance);
+	        		
+	        		var cuerpoAvance = "";
+	        		for(var d = 0; d < webServicesAvance.length; d++)
+	        		{
+	        			cuerpoAvance += '<tr><td>'+webServicesAvance[d].justificacion+'</td><td>'+webServicesAvance[d].cantidad+'</td><td>'+webServicesAvance[d].fechaEntrega+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm agregarModalAdministrador" data-toggle="tooltip" data-placement="top" title="Administrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+webServicesAvance[d].id+'><span class="fa fa-gear"></span></button></td></tr>';
+	        		}
+	        		
+	        		$("#listaAvances").html("");
+	        		$("#listaAvances").html(cuerpoAvance);
+	        		
+	        	}else{
+	        		alert("ERROR");        		
+	        	}
+	        	
+	        	},
+	        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
+	        error: function(data,status,er) {
+	        	
+	        	}
+		 });
+	}
 });	
 
 $("body").on("click", ".agregarModalAdministrador",function(event){
@@ -6714,9 +6746,9 @@ $("body").on("click", ".consultaEditarAvance",function(event){
 
 						'			      			<form class="form-horizontal" role="form">'+
 
-						'							<tr><td><label for="justificacionAvance">Justificación</label><input type="text" id="justificacionAvance" value="'+webServicesAvance[0].justificacion+'" class="form-control" required /></td><td><label for="cantidadAvance">Cantidad</label><input type="number" id="cantidadAvance" class="form-control" value='+webServicesAvance[0].cantidad+' required/></td></tr>'+
+						'							<tr><td><label for="justificacionAvance">Justificación</label><input type="text" id="justificacionAvance" value="'+webServicesAvance[0].justificacion+'" class="form-control" onblur="validarAvance()" required /></td><td><label for="cantidadAvance">Cantidad</label><input type="number" id="cantidadAvance" class="form-control" value='+webServicesAvance[0].cantidad+' onblur="validarAvance()" required/></td></tr>'+
 
-						'							<tr><td><label for="fechaEntregaAvance">Fecha Entrega</label><input type="date" id="fechaEntregaAvance" value='+webServicesAvance[0].fechaEntrega+' class="form-control" required /></td></tr>'+														
+						'							<tr><td><label for="fechaEntregaAvance">Fecha Entrega</label><input type="date" id="fechaEntregaAvance" value='+webServicesAvance[0].fechaEntrega+' class="form-control" onblur="validarAvance()" required /></td></tr>'+														
 
 						'							<input type="hidden" id="versionAvance" value="3" /><input type="hidden" id="actividadIdAvance" value='+avanceId+' />'+		
 
@@ -6753,67 +6785,68 @@ $("body").on("click", ".consultaEditarAvance",function(event){
  });
  
 $("body").on("click", ".editarAvance",function(event){	
-	var parametros = $(this).attr("parametros");
-    var idParsed = parametros.split("-"); 
-    var avanceId = idParsed[0];
-    
-	var justificacion = $("#justificacionAvance").val();
-	var cantidad = $("#cantidadAvance").val();
-	var fechaEntrega = $("#fechaEntregaAvance").val();
-	//var cantidadBeneficiarios = $("#cantidadBeneficiariosAvance").val();
-
-
-	//Vaciar los inputs
-	$("#justificacionAvance").val("");
-	$("#cantidadAvance").val("");
-	$("#fechaEntregaAvance").val("");
-	//$("#cantidadBeneficiariosAvance").val("");
-    
-   	var webServicesAvance = $.ajax({
-   		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvance&avanceId='+avanceId,
-   	  	type:'get',
-   	  	dataType:'json',
-   	  	async:false       
-   	}).responseText;
-   	webServicesAvance = JSON.parse(webServicesAvance); 
-    
-	var objeto = new Object();
+	if(validarAvance()==true){
+		var parametros = $(this).attr("parametros");
+	    var idParsed = parametros.split("-"); 
+	    var avanceId = idParsed[0];
+	    
+		var justificacion = $("#justificacionAvance").val();
+		var cantidad = $("#cantidadAvance").val();
+		var fechaEntrega = $("#fechaEntregaAvance").val();
+		//var cantidadBeneficiarios = $("#cantidadBeneficiariosAvance").val();
 	
-	objeto.justificacion = justificacion;
-	objeto.cantidad = cantidad;
-	objeto.fechaEntrega = fechaEntrega;
-	//objeto.cantidadBeneficiarios = cantidadBeneficiarios;
-	objeto.actividadId = webServicesAvance[0].actividadId;
-	objeto.version = webServicesAvance[0].version;//No obtenemos este valor del formulario sino del webservices entonces si por ahi agregamos la funcionalidad de que el usuario cambien la version debemos de obtener este dato del formulario y ya no del webservice
-	objeto.id = avanceId;
-
 	
-  	var info = JSON.stringify(objeto);
-    $.ajax({
-        url: "ajaxUpdate2?accion=actAvance",
-        type: 'POST',
-        dataType: 'json',
-        data: info,
-        contentType: 'application/json',
-        mimeType: 'application/json',
-        success: function (data) {
-        	if(data.success == true)
-        	{
-				$("#cuerpoModalEditarAvance").html("");
-				$("#cuerpoModalEditarAvance").append("<h3 class='text-center'>Ud ha actualizado exitosamente los cambios!!</h3>");
-				$("#botonGuardarAvance").remove("");
-
-        	}else{
-        		alert("ERROR");
-        	}
-        	
-        	},
-        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
-        error: function(data,status,er) {
-        	
-        	}
-	 });
+		//Vaciar los inputs
+		$("#justificacionAvance").val("");
+		$("#cantidadAvance").val("");
+		$("#fechaEntregaAvance").val("");
+		//$("#cantidadBeneficiariosAvance").val("");
+	    
+	   	var webServicesAvance = $.ajax({
+	   		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvance&avanceId='+avanceId,
+	   	  	type:'get',
+	   	  	dataType:'json',
+	   	  	async:false       
+	   	}).responseText;
+	   	webServicesAvance = JSON.parse(webServicesAvance); 
+	    
+		var objeto = new Object();
+		
+		objeto.justificacion = justificacion;
+		objeto.cantidad = cantidad;
+		objeto.fechaEntrega = fechaEntrega;
+		//objeto.cantidadBeneficiarios = cantidadBeneficiarios;
+		objeto.actividadId = webServicesAvance[0].actividadId;
+		objeto.version = webServicesAvance[0].version;//No obtenemos este valor del formulario sino del webservices entonces si por ahi agregamos la funcionalidad de que el usuario cambien la version debemos de obtener este dato del formulario y ya no del webservice
+		objeto.id = avanceId;
 	
+		
+	  	var info = JSON.stringify(objeto);
+	    $.ajax({
+	        url: "ajaxUpdate2?accion=actAvance",
+	        type: 'POST',
+	        dataType: 'json',
+	        data: info,
+	        contentType: 'application/json',
+	        mimeType: 'application/json',
+	        success: function (data) {
+	        	if(data.success == true)
+	        	{
+					$("#cuerpoModalEditarAvance").html("");
+					$("#cuerpoModalEditarAvance").append("<h3 class='text-center'>Ud ha actualizado exitosamente los cambios!!</h3>");
+					$("#botonGuardarAvance").remove("");
+	
+	        	}else{
+	        		alert("ERROR");
+	        	}
+	        	
+	        	},
+	        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
+	        error: function(data,status,er) {
+	        	
+	        	}
+		 });
+	}
 });
 
 $("body").on("click", ".consultaBorrarAvance",function(event){
