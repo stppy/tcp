@@ -109,11 +109,11 @@
 							'					</div>'+
 							'					<div class="form-group">'+
 							'						<label for="meta">Meta</label>'+
-							'						<input type="number" id="metaInsLineaAccion" class="form-control" name="meta" placeholder="Ingrese Meta" onblur="validarCampos()" required >'+
+							'						<input type="number" id="metaInsLineaAccion" class="form-control" name="meta" placeholder="Ingrese Meta" required >'+
 							'					</div>'+
 							'					<div class="form-group">'+
 							'						<label for="version">Versión</label>'+
-							'						<input type="number" id="versionInsLineaAccion" class="form-control" name="version" placeholder="Ingrese Versión" onblur="validarCampos()" required>'+
+							'						<input type="number" id="versionInsLineaAccion" class="form-control" name="version" placeholder="Ingrese Versión" required>'+
 							'					</div>'+				
 							'				</form>'+			  
 							
@@ -124,31 +124,31 @@
 							
 			$("#programacion").append(contenido);			
 			$("#unidadMedidaInsLineaAccion")
-			$("#insLineaAccion").find("#formularioInsLineaAccion").append('<div class="form-group" id="guardarInsLineaAccionBoton"><button type="button" class="btn btn-success" id="guardarInsLineaAccion" >Guardar</button></div>');
+			$("#insLineaAccion").find("#formularioInsLineaAccion").append('<div class="form-group" id="guardarInsLineaAccionBoton"><button type="submit" class="btn btn-success" id="guardarInsLineaAccion" >Guardar</button></div>');
 			$('#insLineaAccion').modal('show');
 			
 
 	});
 	
-	function validarCampos() {	    
+	function validarInsLineaAccion() {	    
 		var validacion=true;		
 			
 	    if (document.getElementById("metaInsLineaAccion").validity.valueMissing == true) {	    
-	    	$("#metaInsLineaAccion").css("border","1px solid red");
-	    	$("#metaInsLineaAccion").attr("placeholder", "El campo es requerido");
+	    	/*$("#metaInsLineaAccion").css("border","1px solid red !important");
+	    	 //$("#metaInsLineaAccion").attr("placeholder", "El campo es requerido"); */
 	    	validacion=false;
 	    }else{
 	    	if (document.getElementById("metaInsLineaAccion").validity.valueMissing == false) {
-	    		$("#metaInsLineaAccion").css("border","1px solid green");		    	
+	    		//$("#metaInsLineaAccion").css("border","1px solid #BDBDBD");		    	
 	    	}	    	
 	    }
 		if (document.getElementById("versionInsLineaAccion").validity.valueMissing == true) {	    
-	    	$("#versionInsLineaAccion").css("border","1px solid red");
-	    	$("#versionInsLineaAccion").attr("placeholder", "El campo es requerido");
+	    	/* $("#versionInsLineaAccion").css("border","1px solid red !important");
+	    	//$("#versionInsLineaAccion").attr("placeholder", "El campo es requerido"); */
 	    	validacion=false;
 	    }else{
 	    	if (document.getElementById("metaInsLineaAccion").validity.valueMissing == false) {
-	    		$("#versionInsLineaAccion").css("border","1px solid green");		    	
+	    		//$("#versionInsLineaAccion").css("border","1px solid #BDBDBD");		    	
 	    	}	    	
 	    }
 		return validacion;
@@ -193,13 +193,13 @@
 	});
 	
 	$("body").on("click", "#guardarInsLineaAccion",function(event){
-		if (validarCampos()==true){
+		if (validarInsLineaAccion()==true){
 				
 		event.stopPropagation();
 		event.preventDefault(); 
 		$("#actualizarInsLineaAccionBoton").remove();
 		$("#guardarInsLineaAccionBoton").remove();
-		$("#insLineaAccion").find("#formularioInsLineaAccion").append('<div class="form-group" id="guardarInsLineaAccionBoton"><button type="button" class="btn btn-success" id="guardarInsLineaAccion">Guardar</button></div>');
+		$("#insLineaAccion").find("#formularioInsLineaAccion").append('<div class="form-group" id="guardarInsLineaAccionBoton"><button type="submit" class="btn btn-success" id="guardarInsLineaAccion">Guardar</button></div>');
 		var accion = "insInsLineaAccion";
 		var lineaAccionId = $("#nombreLineaAccionInsLineaAccion option:selected").val();
 		var institucionId = $("#nombreInstitucionInsLineaAccion option:selected").val();
@@ -738,11 +738,11 @@
 							'					</div>'+
 							'					<div class="form-group">'+
 							'						<label for="meta">Meta</label>'+
-							'						<input type="number" id="metaInsLineaAccion" class="form-control" name="meta" placeholder="Ingrese Meta" onblur="validarCampos()" required>'+
+							'						<input type="number" id="metaInsLineaAccion" class="form-control" name="meta" placeholder="Ingrese Meta" required>'+
 							'					</div>'+
 							'					<div class="form-group">'+
 							'						<label for="version">Versión</label>'+
-							'						<input type="number" id="versionInsLineaAccion" class="form-control" name="version" placeholder="Ingrese Versión" onblur="validarCampos()" required>'+
+							'						<input type="number" id="versionInsLineaAccion" class="form-control" name="version" placeholder="Ingrese Versión" required>'+
 							'					</div>'+				
 							'				</form>'+			  
 							
@@ -755,7 +755,7 @@
 		$("#actualizarInsLineaAccionBoton").remove();
 		$("#guardarInsLineaAccionBoton").remove();
 		$('#insLineaAccion').modal('show');
-		$("#insLineaAccion").find("#formularioInsLineaAccion").append('<div class="form-group" id="actualizarInsLineaAccionBoton"><button type="button" class="btn btn-success" id="actualizarInsLineaAccion" onclick="validarCampos()">Actualizar</button></div>');
+		$("#insLineaAccion").find("#formularioInsLineaAccion").append('<div class="form-group" id="actualizarInsLineaAccionBoton"><button type="submit" class="btn btn-success" id="actualizarInsLineaAccion">Actualizar</button></div>');
 		$("#idInsLineaAccion").val(id);
 		
 		var lineaAccion = $.ajax({
@@ -812,8 +812,11 @@
 	});
 	
 	
-	$("body").on("click", "#actualizarInsLineaAccion",function(event){
-		if (validarCampos()==true){
+	$("body").on("click", "#actualizarInsLineaAccion",function(event){		
+		if (validarInsLineaAccion()==true){
+			event.stopPropagation();
+			event.preventDefault(); 
+
 		var accion = "actInsLineaAccion";
 		var id = $("#idInsLineaAccion").val();
 		var lineaAccionId= $("#nombreLineaAccionInsLineaAccion").val();
@@ -1966,10 +1969,12 @@
 							'			</div>'+
 							'		    <div class="modal-body" id="accionCuerpo" >';
 							
+							
 		<% if (attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>		
 		
 		
-		cuerpoModalAccion +='		      	<div class="row">'+ 
+		cuerpoModalAccion +='		      	<div class="row">'+
+							'				 <form role="form">'+
 							'		      		<div class="col-md-12">'+
 							'						<div class="box box-warning">'+
 							'		                	<div class="box-header with-border">'+
@@ -1982,14 +1987,12 @@
 							'		                  		</div>'+
 							'               			</div>'+//fin box-heder
 							'               			<div class="box-body">'+
-							
-							'								<form role="form">'+
 							'									<div class="table-responsive">'+
 							'										<table class="table table-hover">'+
 							'											<tbody>'+
 							'												<tr><td><div class="form-group"><label for="nombreAccion">Acción</label><select id="selectorCatalogoAccion" class="form-control">'+optionCatalogoAccion+'</select><input type="hidden" class="form-control" id="insLineaAccionId" value="'+insLineaAccionId+'"></div></td><td><div class="form-group"><label for="umedida">U. medida</label><input type="text" id="unidadMedidaAccion" value="" class="form-control" disabled> </div></td></tr>'+
 							'												<tr><td><div class="form-group"><label for="departamento">Departamento</label><select id="selectorDepartamento" name="departamento" class="form-control">'+optionDepartamentos+'</select></div></td><td><div class="form-group"><label for="distrito">Distrito</label><select name="departamento" class="form-control" id="distritosDepartamento"></select></div></td></tr>'+
-							'												<tr><td><div class="form-group"><label for="fechaInicioAccion">Fecha Inicio</label><input type="date" id="fechaInicioAccion" class="form-control" value="'+fechaActual+'"onblur="validarAccion()" required /></div></td><td><div class="form-group"><label for="fechaFinAccion">Fecha Fin</label><input type="date" id="fechaFinAccion" class="form-control" onblur="validarAccion(false,true)" required /></div></td></tr>'+							
+							'												<tr><td><div class="form-group"><label for="fechaInicioAccion">Fecha Inicio</label><input type="date" id="fechaInicioAccion" class="form-control" value="'+fechaActual+'" required /></div></td><td><div class="form-group"><label for="fechaFinAccion">Fecha Fin</label><input type="date" id="fechaFinAccion" class="form-control" required /></div></td></tr>'+							
 							'											</tbody>'+							           
 							'										</table>'+
 							'									</div>'+
@@ -1997,45 +2000,40 @@
 							'			      					    <div class="form-group col-md-3">'+
 							'						  						<label for="totalFinanciero-formulario">Primer Trimestre</label>'+
 							'				      						<div class="input-group input-group-sm">'+						      			
-							'								    				<input type="number" name="primerTrimestre" id="primerTrimestre-formulario" value="0" class="form-control" onblur="validarAccion()" required>'+
+							'								    				<input type="number" name="primerTrimestre" id="primerTrimestre-formulario" value="0" class="form-control" required>'+
 							'													<input type="hidden" class="form-control" id="versionAccion" value="3">'+//Aqui estan los input hidden que en este formulario son 3
 							'													<input type="hidden" class="form-control" id="costoAccion" value="99">'+
 							'													<input type="hidden" class="form-control" id="pesoAccion" value="1">'+
-							
-							
 							'				      						</div>'+
 							'			  					    	</div>'+
-										  					    		
 							'				     					<div class="form-group col-md-3">'+
 							'							  					<label for="totalFinanciero-formulario">Segundo Trimestre</label>'+
 							'					      					<div class="input-group input-group-sm">'+
-							'			  					    			<input type="number" name="segundoTrimestre" id="segundoTrimestre-formulario" value="0" class="form-control" onblur="validarAccion()" required>'+
+							'			  					    			<input type="number" name="segundoTrimestre" id="segundoTrimestre-formulario" value="0" class="form-control" required>'+
 							'					      					</div>'+
 							'								    		</div>'+
-															    		
 							'				     					<div class="form-group col-md-3">'+
 							'							  					<label for="totalFinanciero-formulario">Tercer Trimestre</label>'+
 							'					      					<div class="input-group input-group-sm">'+
-							'			  					    			<input type="number" name="tercerTrimestre" id="tercerTrimestre-formulario" value="0" class="form-control" onblur="validarAccion()" required>'+
+							'			  					    			<input type="number" name="tercerTrimestre" id="tercerTrimestre-formulario" value="0" class="form-control" required>'+
 							'					      					</div>'+
 							'								    		</div>'+
-														    		
 							'			      					    <div class="form-group col-md-3">'+
 							'						  					<label for="totalFinanciero-formulario">Cuarto Trimestre</label>'+
 							'				      						<div class="input-group input-group-sm">'+
-							'								    				<input type="number" name="cuartoTrimestre" id="cuartoTrimestre-formulario" value="0" class="form-control" onblur="validarAccion()" required>'+
+							'								    				<input type="number" name="cuartoTrimestre" id="cuartoTrimestre-formulario" value="0" class="form-control" required>'+
 							'				      						</div>'+
 							'							    		</div>'+
-							'			  						</div>'+							
-							'								</form>'+
-											
+							'			  						</div>'+				
 							'               			</div>'+//fin box-body
 							'							<div class="modal-footer">'+
-							'								<button type="button" class="btn btn-success btn-sm guardarAccion" parametros = '+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+' onclick="validarAccion()">Guardar Acción</button>'+
+							'								<button type="submit" class="btn btn-success btn-sm guardarAccion" parametros = '+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'>Guardar Acción</button>'+
 							'							</div>'+
 							'                		</div>'+	
-							'                	</div>'+
-							'                </div>';											
+							'                	</div>'+				
+							'				  </form>'+
+							'                </div>';										
+							
 		<%}%>	
 		
 		cuerpoModalAccion +='		      	<div class="row">'+ 
@@ -2227,7 +2225,8 @@
 							'		    <div class="modal-body" id="accionCuerpo" >'+
 							
 							
-							'		      	<div class="row">'+ 
+							'		      	<div class="row">'+
+							'				 <form role="form">'+
 							'		      		<div class="col-md-12">'+
 							'						<div class="box box-warning">'+
 							'		                	<div class="box-header with-border">'+
@@ -2240,14 +2239,12 @@
 							'		                  		</div>'+
 							'               			</div>'+//fin box-heder
 							'               			<div class="box-body cuerpoEdicionAccion" >'+
-							
-							'								<form role="form">'+
 							'									<div class="table-responsive">'+
 							'										<table class="table table-hover">'+
 							'											<tbody>'+																																																																																					
 							'												<tr><td><div class="form-group"><label for="nombreAccion">Acción</label><select id="selectorCatalogoAccion" name="catalogoAccion"class="form-control">'+optionCatalogoAccion+'</select><input type="hidden" class="form-control" id="insLineaAccionId" value="'+insLineaAccionId+'"></div></td><td><div class="form-group"><label for="umedida">U. medida</label><input type="text" id="unidadMedidaAccion" class="form-control" disabled></div></td></tr>'+
 							'												<tr><td><div class="form-group"><label for="departamento">Departamento</label><select id="selectorDepartamento" name="departamento" class="form-control">'+optionDepartamentos+'</select></div></td><td><div class="form-group"><label for="distrito">Distrito</label><select class="form-control" id="distritosDepartamento">'+optionDistritos+'</select></div></td></tr>'+
-							'												<tr><td><div class="form-group"><label for="fechaInicio">Fecha Inicio</label><input type="date"  id="fechaInicio" value='+accion[0].fechaInicio+' class="form-control" onblur="validarAccion(true)" required></div></td><td><div class="form-group"><label for="fichaFin">Fecha Fin</label><input type="date"  id="fechaFin" value='+accion[0].fechaFin+' class="form-control" onblur="validarAccion(true,true)" required></div></td></tr>'+
+							'												<tr><td><div class="form-group"><label for="fechaInicio">Fecha Inicio</label><input type="date"  id="fechaInicio" value='+accion[0].fechaInicio+' class="form-control" required></div></td><td><div class="form-group"><label for="fichaFin">Fecha Fin</label><input type="date"  id="fechaFin" value='+accion[0].fechaFin+' class="form-control" required></div></td></tr>'+
 
 							'											</tbody>'+							           
 							'										</table>'+
@@ -2256,7 +2253,7 @@
 							'			      					    <div class="form-group col-md-3">'+
 							'						  						<label for="totalFinanciero-formulario">Primer Trimestre</label>'+
 							'				      						<div class="input-group input-group-sm">'+						      			
-							'								    				<input type="number" name="primerTrimestre" id="primerTrimestre-formulario" value='+accion[0].meta1+' class="form-control" onblur="validarAccion(true)" required>'+
+							'								    				<input type="number" name="primerTrimestre" id="primerTrimestre-formulario" value='+accion[0].meta1+' class="form-control" required>'+
 							'													<input type="hidden" class="form-control" id="versionAccion" value="3">'+//Aqui estan los input hidden que en este formulario son 3
 							'													<input type="hidden" class="form-control" id="costoAccion" value="99">'+
 							'													<input type="hidden" class="form-control" id="pesoAccion" value="1">'+
@@ -2269,34 +2266,33 @@
 							'				     					<div class="form-group col-md-3">'+
 							'							  					<label for="totalFinanciero-formulario">Segundo Trimestre</label>'+
 							'					      					<div class="input-group input-group-sm">'+
-							'			  					    			<input type="number" name="segundoTrimestre" id="segundoTrimestre-formulario" value='+accion[0].meta2+' class="form-control" onblur="validarAccion(true)" required>'+
+							'			  					    			<input type="number" name="segundoTrimestre" id="segundoTrimestre-formulario" value='+accion[0].meta2+' class="form-control" required>'+
 							'					      					</div>'+
 							'								    		</div>'+
 															    		
 							'				     					<div class="form-group col-md-3">'+
 							'							  					<label for="totalFinanciero-formulario">Tercer Trimestre</label>'+
 							'					      					<div class="input-group input-group-sm">'+
-							'			  					    			<input type="number" name="tercerTrimestre" id="tercerTrimestre-formulario" value='+accion[0].meta3+' class="form-control" onblur="validarAccion(true)" required>'+
+							'			  					    			<input type="number" name="tercerTrimestre" id="tercerTrimestre-formulario" value='+accion[0].meta3+' class="form-control" required>'+
 							'					      					</div>'+
 							'								    		</div>'+
 														    		
 							'			      					    <div class="form-group col-md-3">'+
 							'						  					<label for="totalFinanciero-formulario">Cuarto Trimestre</label>'+
 							'				      						<div class="input-group input-group-sm">'+
-							'								    				<input type="number" name="cuartoTrimestre" id="cuartoTrimestre-formulario" value='+accion[0].meta4+' class="form-control" onblur="validarAccion(true)" required>'+
+							'								    				<input type="number" name="cuartoTrimestre" id="cuartoTrimestre-formulario" value='+accion[0].meta4+' class="form-control" required>'+
 							'				      						</div>'+
 							'							    		</div>'+
-							'			  						</div>'+							
-							'								</form>'+
-											
+							'			  						</div>'+				
 							'               			</div>'+//fin box-body
 							'							<div class="modal-footer">'+
-							'								<button type="button" class="btn btn-success btn-sm actualizarAccion" id="botonActualizarAccion" parametros='+id+'-'+accionCatalogoId+'-'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+' onclick="validarAccion()" >Actualizar Acción</button>'+
+							'								<button type="submit" class="btn btn-success btn-sm actualizarAccion" id="botonActualizarAccion" parametros='+id+'-'+accionCatalogoId+'-'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+' >Actualizar Acción</button>'+
 							'								<button type="button" class="btn btn-success btn-sm agregarAccion" data-dismiss="modal" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+' >Cerrar</button>'+
 
 							'							</div>'+
 							'                		</div>'+	
 							'                	</div>'+
+							'                 </form>'+
 							'                </div>'+											
 											
 
@@ -2325,9 +2321,9 @@
 	
 //actualizar Acción
 $("body").on("click", ".actualizarAccion",function(event){
-	if(validarAccion()==true){
-		
-	
+	if(validarAccion(true,true)==true){
+		event.stopPropagation();
+		event.preventDefault(); 
 	
 	if ( $("#insLineaAccion").length )
 	{
@@ -2806,9 +2802,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		    var lineaAccionId = idParsed[1];
 		    var institucionId = idParsed[2];
 		    var periodoId = idParsed[3];
-			var accionId = idParsed[4];
-	
-			
+			var accionId = idParsed[4];		
 			
 	    	var nivel = document.getElementById("nivel-formulario").value;
 	      	var entidad = document.getElementById("entidad-formulario").value;;
@@ -3100,19 +3094,19 @@ $("body").on("click", ".borrarAccion",function(event){
 			  			'												<input type="text" name="entidad" id="entidad-formulario" value="" class="form-control" disabled>'+
 			  			'											</div>'+
 			      		'				    						<div class="form-group col-md-1">'+
-			      		'			    								<input type="text" name="tipoPrograma" id="tipoPrograma-formulario" placeholder="Tipo Programa" list="listaf3c2" class="form-control" onblur="validarProductoPresupuesto()" required>'+
+			      		'			    								<input type="text" name="tipoPrograma" id="tipoPrograma-formulario" placeholder="Tipo Programa" list="listaf3c2" class="form-control"  required>'+
 			      		'			    							</div>'+
 			      		'			    							<div class="form-group col-md-1">'+
-			      		'			    								<input type="text" name="programa" id="programa-formulario" placeholder="Programa" list="listaf4c2" class="form-control" onblur="validarProductoPresupuesto()" required>'+
+			      		'			    								<input type="text" name="programa" id="programa-formulario" placeholder="Programa" list="listaf4c2" class="form-control" required>'+
 			      		'			    							</div>'+
 			      		'			    							<div class="form-group col-md-1">'+
-			      		'			    								<input type="text" name="subPrograma" id="subPrograma-formulario" placeholder="SubPrograma" list="listaf5c2" class="form-control" onblur="validarProductoPresupuesto()" required>'+
+			      		'			    								<input type="text" name="subPrograma" id="subPrograma-formulario" placeholder="SubPrograma" list="listaf5c2" class="form-control" required>'+
 			      		'			    							</div>'+
 			      		'				    						<div class="form-group col-md-2">'+
-			      		'				    							<input type="text" name="proyecto" id="proyecto-formulario" placeholder="Proyecto" list="listaf6c2" class="form-control" onblur="validarProductoPresupuesto()" required>'+
+			      		'				    							<input type="text" name="proyecto" id="proyecto-formulario" placeholder="Proyecto" list="listaf6c2" class="form-control" required>'+
 			      		'				   							</div>'+
 			  			'		    								<div class="form-group col-md-2">'+
-			  			'		    									<input type="text" name="producto" id="producto-formulario" placeholder="Producto" list="listaf7c2" class="form-control" onblur="validarProductoPresupuesto()" required>'+
+			  			'		    									<input type="text" name="producto" id="producto-formulario" placeholder="Producto" list="listaf7c2" class="form-control" required>'+
 			      		'										  	</div>'+
 			  			'		    								<div class="form-group col-md-3">'+
 				      	'												<div class="input-group input-group-md">'+
@@ -4053,57 +4047,57 @@ $("body").on("click", ".borrarAccion",function(event){
 		var validacion=true;		
 			
 	    if (document.getElementById("tipoPrograma-formulario").validity.valueMissing == true) {	    
-	    	$("#tipoPrograma-formulario").css("border","1px solid red");
-	    	$("#tipoPrograma-formulario").attr("placeholder", "El campo es requerido");
+	    	/* $("#tipoPrograma-formulario").css("border","1px solid red");
+	    	$("#tipoPrograma-formulario").attr("placeholder", "El campo es requerido"); */
 	    	validacion=false;
 	    }else{
 	    	if (document.getElementById("tipoPrograma-formulario").validity.valueMissing == false) {
-	    		$("#tipoPrograma-formulario").css("border","1px solid green");		    	
+	    		/* $("#tipoPrograma-formulario").css("border","1px solid green"); */		    	
 	    	}	    	
 	    }
 		if (document.getElementById("programa-formulario").validity.valueMissing == true) {	    
-	    	$("#programa-formulario").css("border","1px solid red");
-	    	$("#programa-formulario").attr("placeholder", "El campo es requerido");
+	    	/* $("#programa-formulario").css("border","1px solid red");
+	    	$("#programa-formulario").attr("placeholder", "El campo es requerido"); */
 	    	validacion=false;
 	    }else{
 	    	if (document.getElementById("programa-formulario").validity.valueMissing == false) {
-	    		$("#programa-formulario").css("border","1px solid green");		    	
+	    		/* $("#programa-formulario").css("border","1px solid green"); */		    	
 	    	}	    	
 	    }
 		if (document.getElementById("subPrograma-formulario").validity.valueMissing == true) {	    
-	    	$("#subPrograma-formulario").css("border","1px solid red");
-	    	$("#subPrograma-formulario").attr("placeholder", "El campo es requerido");
+	    	/* $("#subPrograma-formulario").css("border","1px solid red");
+	    	$("#subPrograma-formulario").attr("placeholder", "El campo es requerido"); */
 	    	validacion=false;
 	    }else{
 	    	if (document.getElementById("subPrograma-formulario").validity.valueMissing == false) {
-	    		$("#subPrograma-formulario").css("border","1px solid green");		    	
+	    		/* $("#subPrograma-formulario").css("border","1px solid green"); */		    	
 	    	}	    	
 	    }
 	    if (document.getElementById("proyecto-formulario").validity.valueMissing == true) {	    
-	    	$("#proyecto-formulario").css("border","1px solid red");
-	    	$("#proyecto-formulario").attr("placeholder", "El campo es requerido");
+	    	/* $("#proyecto-formulario").css("border","1px solid red");
+	    	$("#proyecto-formulario").attr("placeholder", "El campo es requerido"); */
 	    	validacion=false;
 	    }else{
 	    	if (document.getElementById("proyecto-formulario").validity.valueMissing == false) {
-	    		$("#proyecto-formulario").css("border","1px solid green");		    	
+	    		/* $("#proyecto-formulario").css("border","1px solid green"); */		    	
 	    	}	    	
 	    }
 	    if (document.getElementById("producto-formulario").validity.valueMissing == true) {	    
-	    	$("#producto-formulario").css("border","1px solid red");
-	    	$("#producto-formulario").attr("placeholder", "El campo es requerido");
+	    	/* $("#producto-formulario").css("border","1px solid red");
+	    	$("#producto-formulario").attr("placeholder", "El campo es requerido"); */
 	    	validacion=false;
 	    }else{
 	    	if (document.getElementById("producto-formulario").validity.valueMissing == false) {
-	    		$("#producto-formulario").css("border","1px solid green");		    	
+	    		/* $("#producto-formulario").css("border","1px solid green"); */		    	
 	    	}	    	
 	    }
 	    if (document.getElementById("total-formulario").validity.valueMissing == true) {	    
-	    	$("#total-formulario").css("border","1px solid red");
-	    	$("#total-formulario").attr("placeholder", "El campo es requerido");
+	    	/* $("#total-formulario").css("border","1px solid red");
+	    	$("#total-formulario").attr("placeholder", "El campo es requerido"); */
 	    	validacion=false;
 	    }else{
 	    	if (document.getElementById("total-formulario").validity.valueMissing == false) {
-	    		$("#total-formulario").css("border","1px solid green");		    	
+	    		/* $("#total-formulario").css("border","1px solid green"); */		    	
 	    	}	    	
 	    }
 		return validacion;
@@ -4222,8 +4216,11 @@ $("body").on("click", ".borrarAccion",function(event){
 	});
 
 	$("body").on("click", ".guardarAccion",function(event){
-		if(validarAccion()==true){			
-		
+		if(validarAccion(false,true)==true){			
+			event.stopPropagation();
+			event.preventDefault(); 
+
+			
 		var codigoRegistro = $(this).attr("parametros");
 	    var idParsed = codigoRegistro.split("-"); 
 	    var insLineaAccionId = idParsed[0];
@@ -4629,7 +4626,8 @@ $("body").on("click", ".borrarAccion",function(event){
 		'		    <div class="modal-body" id="accionCuerpo" >'+
 		
 		<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>		
-		'		      	<div class="row">'+ 
+		'		      	<div class="row">'+
+		'								<form role="form">'+
 		'		      		<div class="col-md-12">'+
 		'						<div class="box box-warning">'+
 		'		                	<div class="box-header with-border">'+
@@ -4643,27 +4641,28 @@ $("body").on("click", ".borrarAccion",function(event){
 		'               			</div>'+//fin box-heder
 		'               			<div class="box-body">'+
 		
-		'								<form role="form">'+
+		
 		'									<div class="table-responsive">'+
 		'										<table class="table table-hover">'+
 		'											<tbody>'+
 		'												<tr><td><div class="form-group"><label for="departamentoActividad">Departamento</label><input type="text" class="form-control" id="departamentoActividad" value="'+nombreDepartamento+'" disabled /></div></td><td><div class="form-group"><label for="distritoActividad">Distrito</label><input type="text" id="distritoActividad" value="'+nombreDistrito+'" class="form-control" disabled> </div></td></tr>'+
-		'												<tr><td><div class="form-group"><label for="nombreActividad">Cronograma</label><input type="text" class="form-control" id="nombreActividad" value="" placeholder="Ingrese Nombre del Cronograma" onblur="validarCronograma()" required><input type="hidden" class="form-control" id="insLineaAccionId" value="'+insLineaAccionId+'"></div></td><td><div class="form-group"><label for="descripcionActividad">Descripción</label><input type="text" id="descripcionActividad" value="" class="form-control"> </div></td></tr>'+
+		'												<tr><td><div class="form-group"><label for="nombreActividad">Cronograma</label><input type="text" class="form-control" id="nombreActividad" value="" placeholder="Ingrese Nombre del Cronograma" required><input type="hidden" class="form-control" id="insLineaAccionId" value="'+insLineaAccionId+'"></div></td><td><div class="form-group"><label for="descripcionActividad">Descripción</label><input type="text" id="descripcionActividad" value="" class="form-control"> </div></td></tr>'+
 		'												<tr><td><div class="form-group"><label for="unidadMedidaIdActividad">Unidad de Medida</label><select id="unidadMedidaIdActividad" class="form-control" placeholder="Ingrese Unidad Medida Id">'+optionUnidadMedida+'</div></td><td><div class="form-group"><label for="hitoTipoIdActividad">Tipo de Cronograma</label>'+
 		'												<select id="hitoTipoIdActividad" class="form-control" placeholder="Ingrese Tipo de Cronograma">'+optionTipoHito+'</select></div></td></tr>'+
-		'												<tr><td><div class="form-group"><label for="proporcionActividad">Proporción</label><input type="number" class="form-control" id="proporcionActividad" value="1" onblur="validarCronograma()" required /></div></div></td><td><div class="form-group"><label for="pesoActividad">Peso</label><input type="number" class="form-control" id="pesoActividad" value="1" onblur="validarCronograma()" required/></div></td></tr>'+
+		'												<tr><td><div class="form-group"><label for="proporcionActividad">Proporción</label><input type="number" class="form-control" id="proporcionActividad" value="1" required /></div></div></td><td><div class="form-group"><label for="pesoActividad">Peso</label><input type="number" class="form-control" id="pesoActividad" value="1" required/></div></td></tr>'+
 		'												<tr><td><div class="form-group"><label for="acumulableActividad">Acumulable</label><select id="acumulableActividad" class="form-control" placeholder="Ingrese Tipo Acumulable">'+optionAcumulable+'</select></div></td></tr>'+
 		'											</tbody>'+							           
 		'										</table>'+
 		'									</div>'+
 		'								<input type="hidden" id="versionActividad" class="form-control" placeholder="Ingrese Versión" value="3"/><input type="hidden" id="accionIdActividad" class="form-control" placeholder="Ingrese Accion Id" value="'+accionId+'" />'+
-		'								</form>'+
+		
 		'               			</div>'+//fin box-body
 		'							<div class="modal-footer">'+
-		'								<button type="button" class="btn btn-success btn-sm guardarActividad" parametros = '+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+' onclick="validarCronograma()">Guardar Cronograma</button>'+
+		'								<button type="submit" class="btn btn-success btn-sm guardarActividad" parametros = '+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'>Guardar Cronograma</button>'+
 		'							</div>'+
 		'                		</div>'+	
 		'                	</div>'+
+		'					</form>'+
 		'                </div>'+											
 		
 		<% } %>		
@@ -4736,58 +4735,58 @@ $("body").on("click", ".borrarAccion",function(event){
 		
 		if (edit==true){
 			if (document.getElementById("nombreCronograma").validity.valueMissing == true) {	    
-		    	$("#nombreCronograma").css("border","1px solid red");
-		    	$("#nombreCronograma").attr("placeholder", "El campo es requerido");
+		    	/* $("#nombreCronograma").css("border","1px solid red");
+		    	$("#nombreCronograma").attr("placeholder", "El campo es requerido"); */
 		    	validacion=false;
 		    }else{
 		    	if (document.getElementById("nombreCronograma").validity.valueMissing == false) {
-		    		$("#nombreCronograma").css("border","1px solid green");		    	
+		    		/* $("#nombreCronograma").css("border","1px solid green");		    	 */
 		    	}	    	
 		    }
 			if (document.getElementById("proporcionCronograma").validity.valueMissing == true) {	    
-		    	$("#proporcionCronograma").css("border","1px solid red");
-		    	$("#proporcionCronograma").attr("placeholder", "El campo es requerido");
+		    	/* $("#proporcionCronograma").css("border","1px solid red");
+		    	$("#proporcionCronograma").attr("placeholder", "El campo es requerido"); */
 		    	validacion=false;
 		    }else{
 		    	if (document.getElementById("proporcionCronograma").validity.valueMissing == false) {
-		    		$("#proporcionCronograma").css("border","1px solid green");		    	
+		    		/* $("#proporcionCronograma").css("border","1px solid green"); */		    	
 		    	}	    	
 		    }
 			if (document.getElementById("pesoCronograma").validity.valueMissing == true) {	    
-		    	$("#pesoCronograma").css("border","1px solid red");
-		    	$("#pesoCronograma").attr("placeholder", "El campo es requerido");
+		    	/* $("#pesoCronograma").css("border","1px solid red");
+		    	$("#pesoCronograma").attr("placeholder", "El campo es requerido"); */
 		    	validacion=false;
 		    }else{
 		    	if (document.getElementById("pesoCronograma").validity.valueMissing == false) {
-		    		$("#pesoCronograma").css("border","1px solid green");		    	
+		    		/* $("#pesoCronograma").css("border","1px solid green"); */		    	
 		    	}	    	
 		    }			
 		}else{
 			if (document.getElementById("nombreActividad").validity.valueMissing == true) {	    
-		    	$("#nombreActividad").css("border","1px solid red");
-		    	$("#nombreActividad").attr("placeholder", "El campo es requerido");
+		    	/* $("#nombreActividad").css("border","1px solid red");
+		    	$("#nombreActividad").attr("placeholder", "El campo es requerido"); */
 		    	validacion=false;
 		    }else{
 		    	if (document.getElementById("nombreActividad").validity.valueMissing == false) {
-		    		$("#nombreActividad").css("border","1px solid green");		    	
+		    		/* $("#nombreActividad").css("border","1px solid green"); */		    	
 		    	}	    	
 		    }
 			if (document.getElementById("proporcionActividad").validity.valueMissing == true) {	    
-		    	$("#proporcionActividad").css("border","1px solid red");
-		    	$("#proporcionActividad").attr("placeholder", "El campo es requerido");
+		    	/* $("#proporcionActividad").css("border","1px solid red");
+		    	$("#proporcionActividad").attr("placeholder", "El campo es requerido"); */
 		    	validacion=false;
 		    }else{
 		    	if (document.getElementById("proporcionActividad").validity.valueMissing == false) {
-		    		$("#proporcionActividad").css("border","1px solid green");		    	
+		    		/* $("#proporcionActividad").css("border","1px solid green"); */		    	
 		    	}	    	
 		    }
 			if (document.getElementById("pesoActividad").validity.valueMissing == true) {	    
-		    	$("#pesoActividad").css("border","1px solid red");
-		    	$("#pesoActividad").attr("placeholder", "El campo es requerido");
+		    	/* $("#pesoActividad").css("border","1px solid red");
+		    	$("#pesoActividad").attr("placeholder", "El campo es requerido"); */
 		    	validacion=false;
 		    }else{
 		    	if (document.getElementById("pesoActividad").validity.valueMissing == false) {
-		    		$("#pesoActividad").css("border","1px solid green");		    	
+		    		/* $("#pesoActividad").css("border","1px solid green"); */		    	
 		    	}	    	
 		    }			
 		}	
@@ -4859,6 +4858,7 @@ $("body").on("click", ".editarCronograma", function(event){
 	
 	var cuerpoModalEditarCronograma = "";
 	cuerpoModalEditarCronograma =	'<div class="modal fade" id="modalEditarCronograma" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="myLargeModalLabel">'+
+						'			      	<form class="form-horizontal" role="form">'+
 						'	<div class="modal-dialog modal-lg" style="width:90%">'+
 						'		<div class="modal-content" >'+
 						'			<div class="modal-header">'+
@@ -4872,30 +4872,29 @@ $("body").on("click", ".editarCronograma", function(event){
 						'		                    		</button>'+
 						'		                  		</div>'+
 						'               			</div>'+//fin box-header
-						'		    <div class="modal-body" id="cuerpoModalEditarCronograma">'+
-
+						'		    <div class="modal-body" id="cuerpoModalEditarCronograma">'+								
 						'								<div class="table-responsive">'+
 						'									<table class="table table-hover">'+
 						'										<tbody>'+
 						'			      							<form class="form-horizontal" role="form">'+
-						'												<tr><td><label for="nombreCronograma">Nombre</label><input type="text" id="nombreCronograma" value="'+actividades[0].nombre+'" class="form-control" onblur="validarCronograma(true)" required /></td><td><label for="descripcionCronograma">Descripcion</label><input type="text" id="descripcionCronograma" class="form-control" value="'+actividades[0].descripcion+'"  /></td></tr>'+
+						'												<tr><td><label for="nombreCronograma">Nombre</label><input type="text" id="nombreCronograma" value="'+actividades[0].nombre+'" class="form-control" required /></td><td><label for="descripcionCronograma">Descripcion</label><input type="text" id="descripcionCronograma" class="form-control" value="'+actividades[0].descripcion+'"  /></td></tr>'+
 						'												<tr><td><div class="form-group"><label for="unidadMedidaIdCronograma">Unidad de Medida</label><select id="selectorUnidadMedidaCronograma" class="form-control">'+optionUnidadMedida+'</select></div></td><td><div class="form-group"><label for="hitoTipoIdCronograma">Tipo Cronograma</label><select id="selectorHitoTipoIdCronograma" class="form-control">"'+optionTipoHito+'"</select></div></td></tr>'+
-						'												<tr><td><label for="proporcionCronograma">Proporción</label><input type="number" id="proporcionCronograma" value='+actividades[0].proporcion+' class="form-control" onblur="validarCronograma(true)" required /></td><td><label for="pesoCronograma">Peso</label><input type="number" id="pesoCronograma" class="form-control" value='+actividades[0].peso+' onblur="validarCronograma(true)" required /></td></tr>'+
+						'												<tr><td><label for="proporcionCronograma">Proporción</label><input type="number" id="proporcionCronograma" value='+actividades[0].proporcion+' class="form-control" required /></td><td><label for="pesoCronograma">Peso</label><input type="number" id="pesoCronograma" class="form-control" value='+actividades[0].peso+' required /></td></tr>'+
 						'												<tr><td><div class="form-group"><label for="acumulableCronograma">Acumulable</label><select id="acumulableCronograma" class="form-control" placeholder="Ingrese Tipo Acumulable">'+optionAcumulable+'</select></div></td><td></td></tr>'+
-						
-						'			      							</form>	'+												
+																								
 						'										</tbody>'+
 						'									</table>'+
 						'				      			</div>'+
 												
 						'		    </div>'+//fin modal-body
 						'			<div class="modal-footer">'+					
-						'				<button type="button" class="btn btn-success btn-sm actualizarCronograma" id="botonGuardarCronograma" parametros ='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+cronogramaId+' onclick="validarCronograma(true)">Actualizar Cronograma</button>'+
+						'				<button type="submit" class="btn btn-success btn-sm actualizarCronograma" id="botonGuardarCronograma" parametros ='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+cronogramaId+'>Actualizar Cronograma</button>'+
 						'				<button type="button" class="btn btn-success btn-sm agregarActividad" parametros ='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'>Cerrar</button>'+
 						
 						'			</div>'+
 						'		</div>'+ 
 						'	</div>'+
+						'			      							</form>	'+
 						'</div>';
 						
 		$("#programacion").append(cuerpoModalEditarCronograma);
@@ -5034,6 +5033,9 @@ $("body").on("click", ".borrarCronograma",function(event){
 
 $("body").on("click", ".actualizarCronograma", function(event){
 	if (validarCronograma(true)==true){
+		event.stopPropagation();
+		event.preventDefault(); 
+
 		 
 	var parametros = $(this).attr("parametros");
     var idParsed = parametros.split("-");    
@@ -5104,7 +5106,9 @@ $("body").on("click", ".actualizarCronograma", function(event){
 	
 	
 $("body").on("click", ".guardarActividad",function(event){
-		if (validarCronograma()==true){			
+		if (validarCronograma()==true){	
+			event.stopPropagation();
+			event.preventDefault(); 
 		
 		var parametros = $(this).attr("parametros");
 	    var idParsed = parametros.split("-");                                                            
@@ -5452,6 +5456,7 @@ $("body").on("click", ".agregarProgramacion",function(event){
 							
 							<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>		
 							'		      	<div class="row">'+ 
+							'  		      	 <form role="form">'+
 							'		      		<div class="col-md-12">'+
 							'						<div class="box box-warning">'+
 							'		                	<div class="box-header with-border">'+
@@ -5472,7 +5477,7 @@ $("body").on("click", ".agregarProgramacion",function(event){
 							'											<tr><td><div class="form-group"><label for="departamentoActividad">Departamento</label><input type="text" class="form-control" id="departamentoActividad" value="'+nombreDepartamento+'" disabled /></div></td><td><div class="form-group"><label for="distritoActividad">Distrito</label><input type="text" id="distritoActividad" value="'+nombreDistrito+'" class="form-control" disabled> </div></td></tr>'+
 							'											<tr><td><label for="accionProgramacion">Accion</label><input type="text" id="accionProgramacion" value="'+accionCatalogo[0].nombre+'" class="form-control" disabled /></td><td><label for="unidadMedidaProgramacion">U. Medida</label><input type="text" id="unidadMedidaProgramacion" class="form-control" value="'+nombreUnidadMedida+'" disabled /></td></tr>'+
 							'											<tr><td><label for="cronogramaProgramacion">Cronograma</label><input type="text" id="cronogramaProgramacion" value="'+cronogramas[0].nombre+'" class="form-control" disabled /><input type="hidden" id="cronogramaIdProgramacion" value="'+cronogramas[0].id+'" /></td><td><label for="tipoCronogramaProgramacion">Tipo Cronograma</label><input type="text" id="tipoCronogramaProgramacion" class="form-control" value="'+nombreHitoTipo+'" disabled /></td></tr>'+														
-							'											<tr><td><label for="cantidadProgramacion">Cantidad</label><input type="number" id="cantidadProgramacion" value="" class="form-control" placeholder="Ingres Cantidad" onblur="validarHito(false)" required /></td><td><label for="fechaEntregaProgramacion">Fecha Entrega</label><input type="date" id="fechaEntregaProgramacion" class="form-control" onblur="validarHito(false)" required/></td></tr>'+
+							'											<tr><td><label for="cantidadProgramacion">Cantidad</label><input type="number" id="cantidadProgramacion" value="" class="form-control" placeholder="Ingres Cantidad" required /></td><td><label for="fechaEntregaProgramacion">Fecha Entrega</label><input type="date" id="fechaEntregaProgramacion" class="form-control" required/></td></tr>'+
 							'											<input type="hidden" id="versionProgramacion" value="3" /><input type="hidden" id="actividadIdProgramacion" value="'+cronogramaId+'" />'+		
 							'			      							</form>	'+												
 							'										</tbody>'+
@@ -5481,11 +5486,12 @@ $("body").on("click", ".agregarProgramacion",function(event){
 							
 							'               			</div>'+//fin box-body
 							'							<div class="modal-footer">'+ 
-							'					        	<button type="button" class="btn btn-success guardarProgramacion" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'" >Guardar</button>'+ 
+							'					        	<button type="submit" class="btn btn-success guardarProgramacion" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'" >Guardar</button>'+ 
 							'					          	<button type="button" class="btn btn-success agregarActividad" data-dismiss="modal" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'">Cerrar</button>'+ 
 							'							</div>'+
 							'                		</div>'+	
 							'                	</div>'+
+							'                	</form>'+
 							'                </div>'+											
 											
 							<% }%>		
@@ -5539,40 +5545,40 @@ function validarHito(edit){
 	
 	if (edit==true){
 		if (document.getElementById("cantidadHito").validity.valueMissing == true) {	    
-	    	$("#cantidadHito").css("border","1px solid red");
-	    	$("#cantidadHito").attr("placeholder", "El campo es requerido");
+	    	/* $("#cantidadHito").css("border","1px solid red");
+	    	$("#cantidadHito").attr("placeholder", "El campo es requerido"); */
 	    	validacion=false;
 	    }else{
 	    	if (document.getElementById("cantidadHito").validity.valueMissing == false) {
-	    		$("#cantidadHito").css("border","1px solid green");		    	
+	    		/* $("#cantidadHito").css("border","1px solid green"); */		    	
 	    	}	    	
 	    }
 		if (document.getElementById("fechaHito").validity.valueMissing == true) {	    
-	    	$("#fechaHito").css("border","1px solid red");
-	    	$("#fechaHito").attr("placeholder", "El campo es requerido");
+	    	/* $("#fechaHito").css("border","1px solid red");
+	    	$("#fechaHito").attr("placeholder", "El campo es requerido"); */
 	    	validacion=false;
 	    }else{
 	    	if (document.getElementById("fechaHito").validity.valueMissing == false) {
-	    		$("#fechaHito").css("border","1px solid green");		    	
+	    		/* $("#fechaHito").css("border","1px solid green"); */		    	
 	    	}	    	
 	    }					
 	}else{
 		if (document.getElementById("cantidadProgramacion").validity.valueMissing == true) {	    
-	    	$("#cantidadProgramacion").css("border","1px solid red");
-	    	$("#cantidadProgramacion").attr("placeholder", "El campo es requerido");
+	    	/* $("#cantidadProgramacion").css("border","1px solid red");
+	    	$("#cantidadProgramacion").attr("placeholder", "El campo es requerido"); */
 	    	validacion=false;
 	    }else{
 	    	if (document.getElementById("cantidadProgramacion").validity.valueMissing == false) {
-	    		$("#cantidadProgramacion").css("border","1px solid green");		    	
+	    		/* $("#cantidadProgramacion").css("border","1px solid green"); */		    	
 	    	}	    	
 	    }
 		if (document.getElementById("fechaEntregaProgramacion").validity.valueMissing == true) {	    
-	    	$("#fechaEntregaProgramacion").css("border","1px solid red");
-	    	$("#fechaEntregaProgramacion").attr("placeholder", "El campo es requerido");
+	    	/* $("#fechaEntregaProgramacion").css("border","1px solid red");
+	    	$("#fechaEntregaProgramacion").attr("placeholder", "El campo es requerido"); */
 	    	validacion=false;
 	    }else{
 	    	if (document.getElementById("fechaEntregaProgramacion").validity.valueMissing == false) {
-	    		$("#fechaEntregaProgramacion").css("border","1px solid green");		    	
+	    		/* $("#fechaEntregaProgramacion").css("border","1px solid green"); */		    	
 	    	}	    	
 	    }					
 	}	
@@ -5582,6 +5588,9 @@ function validarHito(edit){
 
 $("body").on("click", ".guardarProgramacion",function(event){
 	if(validarHito(false)==true){
+		event.stopPropagation();
+		event.preventDefault(); 
+
 		
 	var parametros = $(this).attr("parametros");
     var idParsed = parametros.split("-");                                                            
@@ -5918,6 +5927,7 @@ $("body").on("click", ".agregarAvance",function(event){
 							
 							<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
 							'		      	<div class="row">'+ 
+							'		      	<form role="form">'+
 							'		      		<div class="col-md-12">'+
 							'						<div class="box box-warning">'+
 							'		                	<div class="box-header with-border">'+
@@ -5936,10 +5946,10 @@ $("body").on("click", ".agregarAvance",function(event){
 							'										<tbody>'+
 							'			      							<form class="form-horizontal" role="form">'+
 							'											<tr><td><div class="form-group"><label for="departamentoActividad">Departamento</label><input type="text" class="form-control" id="departamentoActividad" value="'+nombreDepartamento+'" disabled /></div></td><td><div class="form-group"><label for="distritoActividad">Distrito</label><input type="text" id="distritoActividad" value="'+nombreDistrito+'" class="form-control" disabled> </div></td></tr>'+
-							'											<tr><td><label for="justificacionAvance">Justificación</label><input type="text" id="justificacionAvance" value="" class="form-control" placeholder="Ingrese Justificación" onblur="validarAvance()" required/></td>'+
-							'												<td><label for="cantidadAvance">Cantidad</label><input type="number" id="cantidadAvance" class="form-control" value="" placeholder="Ingrese Cantidad" onblur="validarAvance()" required/></td>'+
+							'											<tr><td><label for="justificacionAvance">Justificación</label><input type="text" id="justificacionAvance" value="" class="form-control" placeholder="Ingrese Justificación" required/></td>'+
+							'												<td><label for="cantidadAvance">Cantidad</label><input type="number" id="cantidadAvance" class="form-control" value="" placeholder="Ingrese Cantidad" required/></td>'+
 							'											</tr>'+
-							'											<tr><td><label for="fechaEntregaAvance">Fecha Entrega</label><input type="date" id="fechaEntregaAvance" value="'+fechaActual+'" class="form-control" onblur="validarAvance()" required/></td></tr>'+														
+							'											<tr><td><label for="fechaEntregaAvance">Fecha Entrega</label><input type="date" id="fechaEntregaAvance" value="'+fechaActual+'" class="form-control" required/></td></tr>'+														
 							'											<input type="hidden" id="versionAvance" value="3" />'+		
 							'			      							</form>	'+												
 							'										</tbody>'+
@@ -5948,10 +5958,11 @@ $("body").on("click", ".agregarAvance",function(event){
 							
 							'               			</div>'+//fin box-body
 							'							<div class="modal-footer">'+ 
-							'					        	<button type="button" class="btn btn-success guardarAvance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'>Guardar Avance</button>'+ 
+							'					        	<button type="submit" class="btn btn-success guardarAvance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'>Guardar Avance</button>'+ 
 							'							</div>'+
 							'                		</div>'+	
 							'                	</div>'+
+							'                 </form>'+
 							'                </div>'+											
 											
 							<% }%>
@@ -6030,36 +6041,39 @@ function validarAvance() {
 	var validacion=true;		
 		
     if (document.getElementById("justificacionAvance").validity.valueMissing == true) {	    
-    	$("#justificacionAvance").css("border","1px solid red");
-    	$("#justificacionAvance").attr("placeholder", "El campo es requerido");
+    	/* $("#justificacionAvance").css("border","1px solid red");
+    	$("#justificacionAvance").attr("placeholder", "El campo es requerido"); */
     	validacion=false;
     }else{
     	if (document.getElementById("justificacionAvance").validity.valueMissing == false) {
-    		$("#justificacionAvance").css("border","1px solid green");		    	
+    		/* $("#justificacionAvance").css("border","1px solid green"); */		    	
     	}	    	
     }
 	if (document.getElementById("cantidadAvance").validity.valueMissing == true) {	    
-    	$("#cantidadAvance").css("border","1px solid red");
-    	$("#cantidadAvance").attr("placeholder", "El campo es requerido");
+    	/* $("#cantidadAvance").css("border","1px solid red");
+    	$("#cantidadAvance").attr("placeholder", "El campo es requerido"); */
     	validacion=false;
     }else{
     	if (document.getElementById("cantidadAvance").validity.valueMissing == false) {
-    		$("#cantidadAvance").css("border","1px solid green");		    	
+    		/* $("#cantidadAvance").css("border","1px solid green"); */		    	
     	}	    	
     }
 	if (document.getElementById("fechaEntregaAvance").validity.valueMissing == true) {	    
-    	$("#fechaEntregaAvance").css("border","1px solid red");
-    	$("#fechaEntregaAvance").attr("placeholder", "El campo es requerido");
+    	/* $("#fechaEntregaAvance").css("border","1px solid red");
+    	$("#fechaEntregaAvance").attr("placeholder", "El campo es requerido"); */
     	validacion=false;
     }else{
     	if (document.getElementById("fechaEntregaAvance").validity.valueMissing == false) {
-    		$("#fechaEntregaAvance").css("border","1px solid green");		    	
+    		/* $("#fechaEntregaAvance").css("border","1px solid green"); */		    	
     	}	    	
     }
 	return validacion;
 }
 $("body").on("click", ".guardarAvance",function(event){
 	if(validarAvance()==true){
+		event.stopPropagation();
+		event.preventDefault(); 
+
 		var parametros = $(this).attr("parametros");
 	    var idParsed = parametros.split("-");                                                            
 		
@@ -6466,6 +6480,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>	
 
 									'		      					<div class="col-md-12">'+
+									'		      					<form role="form">'+
 									'									<div class="box box-default box-solid">'+
 									'		                				<div class="box-header with-border">'+
 									'		                  					<h3 class="box-title">Agregar Beneficiarios</h3>'+
@@ -6481,7 +6496,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'												<tbody>'+
 									'			      									<form class="form-horizontal" role="form">'+
 									'													<tr><td><label for="tipoBeneficiario">Tipo</label><select id="beneficiarioTipo" class="form-control" required>'+optionBeneficiarioTipo+'</select></td><td><label for="grupoBeneficiario">Grupo</label><select id="grupoBeneficiario" class="form-control" required></select></td></tr>'+
-									'													<tr><td><label for="cantidadBeneficiario">Cantidad</label><input type="number" id="cantidadBeneficiario" class="form-control" placeholder="Ingrese una Cantidad" onblur="validarBeneficiarios()" required /></td><td><label for="descripcionBeneficiario">Descripción</label><input type="text" id="descripcionBeneficiario" class="form-control" placeholder="Ingrese Objeto una Descripción" /></td></tr>'+
+									'													<tr><td><label for="cantidadBeneficiario">Cantidad</label><input type="number" id="cantidadBeneficiario" class="form-control" placeholder="Ingrese una Cantidad" required /></td><td><label for="descripcionBeneficiario">Descripción</label><input type="text" id="descripcionBeneficiario" class="form-control" placeholder="Ingrese Objeto una Descripción" /></td></tr>'+
 									'													<input type="hidden" id="avanceIdBeneficiario" value="'+avanceId+'"/>'+		
 									'			      									</form>	'+				
 									'												</tbody>'+
@@ -6490,9 +6505,10 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									
 									'				      				 </div>'+//fin box body
 									'									 <div class="modal-footer">'+ 
-									'					        			<button type="button" class="btn btn-success btn-sm guardarBeneficiario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' >Guardar Beneficiario</button>'+ 
+									'					        			<button type="submit" class="btn btn-success btn-sm guardarBeneficiario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' >Guardar Beneficiario</button>'+ 
 									'									 </div>'+									
 									'				      			 	</div>'+
+									'				      			 	</form'+
 									'				      			</div>'+							
 
 									<% }%>	
@@ -6549,6 +6565,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>	
 
 									'		      					<div class="col-md-12">'+
+									'			      									<form class="form-horizontal" role="form">'+
 									'									<div class="box box-default box-solid">'+
 									'		                				<div class="box-header with-border">'+
 									'		                  					<h3 class="box-title">Agregar Costos</h3>'+
@@ -6561,13 +6578,12 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									
 									'										<div class="table-responsive">'+
 									'											<table class="table table-hover">'+
-									'												<tbody>'+
-									'			      									<form class="form-horizontal" role="form">'+
+									'												<tbody>'+									
 									'													<tr><td><label for="productoObjetoGasto">Producto</label><select id="productoObjetoGasto" class="form-control">'+optionProductoObjetoGasto+'</select></td>'+
-									'														<td><label for="objetoGastoCosto">Objeto Gasto</label><select id="objetoGastoCosto" class="form-control" onblur="validarCosto()" required></select></td>'+
+									'														<td><label for="objetoGastoCosto">Objeto Gasto</label><select id="objetoGastoCosto" class="form-control" required></select></td>'+
 									'													</tr>'+	
 									'													<tr><td colspan="2"><label for="codigoContratacionalCosto">Cod. Contratación</label><input type="text" id="codigoContratacionalCosto" class="form-control" placeholder="Ingrese Codigo Contratación" /></td></tr>'+									
-									'													<tr><td colspan="2"><label for="montoCosto">Monto</label><input type="number" id="montoCosto" class="form-control" placeholder="Ingrese Monto" onblur="validarMonto()" required /></td></tr>'+
+									'													<tr><td colspan="2"><label for="montoCosto">Monto</label><input type="number" id="montoCosto" class="form-control" placeholder="Ingrese Monto" required /></td></tr>'+
 									'													<input type="hidden" id="avanceIdCosto" value="'+avanceId+'"/>'+	
 									'			      									</form>	'+												
 									'												</tbody>'+
@@ -6576,9 +6592,10 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									
 									'				      				 </div>'+//fin box body
 									'									 <div class="modal-footer">'+ 
-									'					        			<button type="button" class="btn btn-success btn-sm guardarCosto" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'>Guardar Costo</button>'+ 
+									'					        			<button type="submit" class="btn btn-success btn-sm guardarCosto" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'>Guardar Costo</button>'+ 
 									'									 </div>'+									
 									'				      			 	</div>'+
+									'				      			 	</form>'+
 									'				      			</div>'+							
 
 									<% }%>	
@@ -6631,6 +6648,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>	
 
 									'		      					<div class="col-md-12">'+
+									'								 <form id="formEvidencia" class="form-horizontal" role="form">'+
 									'									<div class="box box-default box-solid">'+
 									'		                				<div class="box-header with-border">'+
 									'		                  					<h3 class="box-title">Agregar Evidencia</h3>'+
@@ -6643,9 +6661,8 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									
 									'									<div class="table-responsive">'+
 									'										<table class="table table-hover">'+
-									'											<tbody>'+
-									'		      									<form id="formEvidencia" class="form-horizontal" role="form">'+
-									'													<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" placeholder="Ingrese Nombre" onblur="validarEvidencia()" required /></td><td><label for="urlEvidencia">Url</label><input type="url" id="urlEvidencia" class="form-control" pattern="https?://.+" placeholder="Ingrese Url" onblur="validarEvidencia()" required/></td></tr>'+
+									'											<tbody>'+									
+									'													<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" placeholder="Ingrese Nombre" required /></td><td><label for="urlEvidencia">Url</label><input type="url" id="urlEvidencia" class="form-control" pattern="https?://.+" placeholder="Ingrese Url" required/></td></tr>'+
 									'													<tr><td colspan="2"><label for="descripcionEvidencia">Descripción</label><input type="text" id="descripcionEvidencia" class="form-control" placeholder="Ingrese Descripción" /></td></tr>'+																		
         							'														<div  class="bar" style="width: 0%;"></div></div></td></tr>'+
         							'													<tr><td colspan="2"><label>Ingresar localización de la evidencia:</label></td></tr>'+
@@ -6657,8 +6674,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
         							'															<input id="geolng" class="form-control" type="numeric" value="" size="20" /></td></tr>'+
         							'													<tr><td><label for="documentoEvidencia">Adjuntar Documento</label><input type="file" id="documentoEvidencia" name="documentoEvidencia" /><div id="progress" class="progress">'+
         							'													<input type="hidden" id="wsIdEvidencia" value="1" /><input type="hidden" id="versionEvidencia" value="3"/><input type="hidden" id="avanceIdEvidencia" value="'+avanceId+'"/>'+
-									'													<input type="hidden" id="urlDocEvidencia" value="" />'+																							
-									'		      									</form>	'+
+									'													<input type="hidden" id="urlDocEvidencia" value="" />'+																						
 									'											</tbody>'+
 									'										</table>'+
 									'			      					</div>'+
@@ -6669,6 +6685,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									/*'									 	<input type="submit" id="submitEvidencia" class="btn btn-success btn-sm" form="formEvidencia" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' value="Guardar Evidencia">'+*/ 
 									'									 </div>'+									
 									'				      			 	</div>'+
+									'									 </form>	'+
 									'				      			</div>'+							
 									<% }%>	
 
@@ -6735,21 +6752,21 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 function validarCosto(){
 	var validacion=true;
 	if (document.getElementById("objetoGastoCosto").validity.valueMissing == true) {	    
-    	$("#objetoGastoCosto").css("border","1px solid red");
-    	$("#objetoGastoCosto").attr("placeholder", "El campo es requerido");
+    	/* $("#objetoGastoCosto").css("border","1px solid red");
+    	$("#objetoGastoCosto").attr("placeholder", "El campo es requerido"); */
     	validacion=false;
     }else{
     	if (document.getElementById("objetoGastoCosto").validity.valueMissing == false) {
-    		$("#objetoGastoCosto").css("border","1px solid green");		    	
+    		/* $("#objetoGastoCosto").css("border","1px solid green"); */		    	
     	}	    	
     }
 	if (document.getElementById("montoCosto").validity.valueMissing == true) {	    
-    	$("#montoCosto").css("border","1px solid red");
-    	$("#montoCosto").attr("placeholder", "El campo es requerido");
+    	/* $("#montoCosto").css("border","1px solid red");
+    	$("#montoCosto").attr("placeholder", "El campo es requerido"); */
     	validacion=false;
     }else{
     	if (document.getElementById("montoCosto").validity.valueMissing == false) {
-    		$("#montoCosto").css("border","1px solid green");		    	
+    		/* $("#montoCosto").css("border","1px solid green"); */		    	
     	}	    	
     }
 	return validacion;
@@ -6768,12 +6785,12 @@ function validarCosto(){
 function validarBeneficiarios(){
 	var validacion=true;
 	if (document.getElementById("cantidadBeneficiario").validity.valueMissing == true) {	    
-    	$("#cantidadBeneficiario").css("border","1px solid red");
-    	$("#cantidadBeneficiario").attr("placeholder", "El campo es requerido");
+    	/* $("#cantidadBeneficiario").css("border","1px solid red");
+    	$("#cantidadBeneficiario").attr("placeholder", "El campo es requerido"); */
     	validacion=false;
     }else{
     	if (document.getElementById("cantidadBeneficiario").validity.valueMissing == false) {
-    		$("#cantidadBeneficiario").css("border","1px solid green");		    	
+    		/* $("#cantidadBeneficiario").css("border","1px solid green"); */		    	
     	}	    	
     }
 	return validacion;
@@ -6879,7 +6896,7 @@ $("body").on("click", ".consultaEditarAvance",function(event){
    	var contenido = "";
 
    	contenido +=		'<div class="modal fade" id="modalEditarCosto"  data-backdrop="static" data-keyboard="false" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">'+
-
+   						'	<form role="form">'+
    						'	<div class="modal-dialog modal-lg">'+
 
    						'		<div class="modal-content" >'+
@@ -6903,9 +6920,9 @@ $("body").on("click", ".consultaEditarAvance",function(event){
 
 						'			      			<form class="form-horizontal" role="form">'+
 
-						'							<tr><td><label for="justificacionAvance">Justificación</label><input type="text" id="justificacionAvance" value="'+webServicesAvance[0].justificacion+'" class="form-control" onblur="validarAvance()" required /></td><td><label for="cantidadAvance">Cantidad</label><input type="number" id="cantidadAvance" class="form-control" value='+webServicesAvance[0].cantidad+' onblur="validarAvance()" required/></td></tr>'+
+						'							<tr><td><label for="justificacionAvance">Justificación</label><input type="text" id="justificacionAvance" value="'+webServicesAvance[0].justificacion+'" class="form-control" required /></td><td><label for="cantidadAvance">Cantidad</label><input type="number" id="cantidadAvance" class="form-control" value='+webServicesAvance[0].cantidad+' required/></td></tr>'+
 
-						'							<tr><td><label for="fechaEntregaAvance">Fecha Entrega</label><input type="date" id="fechaEntregaAvance" value='+webServicesAvance[0].fechaEntrega+' class="form-control" onblur="validarAvance()" required /></td></tr>'+														
+						'							<tr><td><label for="fechaEntregaAvance">Fecha Entrega</label><input type="date" id="fechaEntregaAvance" value='+webServicesAvance[0].fechaEntrega+' class="form-control" required /></td></tr>'+														
 
 						'							<input type="hidden" id="versionAvance" value="3" /><input type="hidden" id="actividadIdAvance" value='+avanceId+' />'+		
 
@@ -6922,7 +6939,7 @@ $("body").on("click", ".consultaEditarAvance",function(event){
 
    						'			<div class="modal-footer">'+
 
-   						' 				<button type="button" class="btn btn-success btn-sm editarAvance" id="botonGuardarAvance" parametros='+avanceId+'>Guardar Cambios</button>'+
+   						' 				<button type="submit" class="btn btn-success btn-sm editarAvance" id="botonGuardarAvance" parametros='+avanceId+'>Guardar Cambios</button>'+
    						'				<button type="button" class="btn btn-success agregarModalAdministrador" data-dismiss="modal" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'>Cerrar</button>'+	
 
    						'			</div>'+
@@ -6930,7 +6947,7 @@ $("body").on("click", ".consultaEditarAvance",function(event){
    						'		</div>'+ 
 
    						'	</div>'+
-
+   						'	</form>'+
    						'</div>';
 
    						
@@ -6943,6 +6960,9 @@ $("body").on("click", ".consultaEditarAvance",function(event){
  
 $("body").on("click", ".editarAvance",function(event){	
 	if(validarAvance()==true){
+		event.stopPropagation();
+		event.preventDefault(); 
+
 		var parametros = $(this).attr("parametros");
 	    var idParsed = parametros.split("-"); 
 	    var avanceId = idParsed[0];
@@ -7120,6 +7140,8 @@ $("body").on("click", ".borrarAvance",function(event){
 
 $("body").on("click", ".guardarCosto",function(event){
 	if(validarCosto()==true){
+		event.stopPropagation();
+		event.preventDefault(); 
 	
 	var parametros = $(this).attr("parametros");
     var idParsed = parametros.split("-");                                                            
@@ -7364,6 +7386,7 @@ $("body").on("click", ".consultaEditarCosto",function(event){
 	var contenido = "";
 
 	contenido +=		'<div class="modal fade" id="modalEditarCosto"  data-backdrop="static" data-keyboard="false" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">'+
+						'	<form role="form">'+
 						'	<div class="modal-dialog modal-lg">'+
 						'		<div class="modal-content" >'+
 						'			<div class="modal-header">'+
@@ -7377,7 +7400,7 @@ $("body").on("click", ".consultaEditarCosto",function(event){
 						'							<tbody>'+
 						'								<form class="form-horizontal" role="form">'+
 						'									<tr><td><label for="ProductoObjetoGasto">Producto Objeto Gasto</label><input type="text" id="ProductoObjetoGasto" class="form-control" value='+webServicesAvanceCosto[0].productoConcat+' disabled="disabled" /></td><td><label for="objetoGastoCosto">Objeto Gasto</label><input type="number" id="objetoGastoCosto" class="form-control" value='+webServicesAvanceCosto[0].objetoGasto+' disabled="disabled" /></td></tr>'+
-						'									<tr><td><label for="codigoContratacionalCosto">Cod. Contrato</label><input type="text" id="codigoContratacionalCosto" class="form-control" value='+webServicesAvanceCosto[0].codigoContratacion+' /></td><td colspan="2"><label for="montoCosto">Monto</label><input type="number" id="montoCosto" class="form-control" value='+webServicesAvanceCosto[0].monto+' onblur="validarCosto()" required/></td></tr>'+									
+						'									<tr><td><label for="codigoContratacionalCosto">Cod. Contrato</label><input type="text" id="codigoContratacionalCosto" class="form-control" value='+webServicesAvanceCosto[0].codigoContratacion+' /></td><td colspan="2"><label for="montoCosto">Monto</label><input type="number" id="montoCosto" class="form-control" value='+webServicesAvanceCosto[0].monto+' required/></td></tr>'+									
 						'									<input type="hidden" id="avanceIdCosto" value="'+webServicesAvanceCosto[0].avanceId+'"/>'+		
 						'								</form>	'+												
 						'  							</tbody>'+
@@ -7387,10 +7410,11 @@ $("body").on("click", ".consultaEditarCosto",function(event){
 
 						'		    </div>'+
 						'			<div class="modal-footer">'+
-						' 				<button type="button" class="btn btn-success btn-sm editarAvanceCosto" id="botonGuardarAvanceCosto" parametros='+costoId+'>Guardar Cambios</button>'+
+						' 				<button type="submit" class="btn btn-success btn-sm editarAvanceCosto" id="botonGuardarAvanceCosto" parametros='+costoId+'>Guardar Cambios</button>'+
 						'			</div>'+
 						'		</div>'+ 
 						'	</div>'+
+						'	</form>'+
 						'</div>';
 						
 	$("body").append(contenido);
@@ -7401,6 +7425,8 @@ $("body").on("click", ".consultaEditarCosto",function(event){
 
 $("body").on("click", ".editarAvanceCosto",function(event){
 	if(validarCosto()==true){
+		event.stopPropagation();
+		event.preventDefault(); 
 		
 	var parametros = $(this).attr("parametros");
     var idParsed = parametros.split("-");                                                            
@@ -7463,7 +7489,10 @@ $("body").on("click", ".editarAvanceCosto",function(event){
 		return false;
 	} */
 	if(validarEvidencia()==true){
-	
+		event.stopPropagation();
+		event.preventDefault(); 
+
+		
 	var parametros = $(this).attr("parametros");
     var idParsed = parametros.split("-");                                                            
 	
@@ -7752,6 +7781,7 @@ $("body").on("click", ".consultaEditarEvidencia",function(event){
 	var contenido = "";
 
 	contenido +=		'<div class="modal fade" id="modalEditarEvidencia" data-backdrop="static" data-keyboard="false" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">'+
+						' <form class="form-horizontal" role="form">'+
 						'	<div class="modal-dialog modal-lg">'+
 						'		<div class="modal-content" >'+
 						'			<div class="modal-header">'+
@@ -7762,8 +7792,7 @@ $("body").on("click", ".consultaEditarEvidencia",function(event){
 										
 						'				<div class="table-responsive">'+
 						'					<table class="table table-hover">'+
-						'						<tbody>'+
-						'			      			<form class="form-horizontal" role="form">'+
+						'						<tbody>'+						
 						'								<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" value="'+webServicesEvidencia[0].nombre+'" onblur="validarEvidencia()" required/></td><td><label for="urlEvidencia">Url</label><input type="url" id="urlEvidencia" class="form-control" value="'+webServicesEvidencia[0].url+'" onblur="validarEvidencia()" required/></td></tr>'+
 						'								<tr><td colspan="2"><label for="descripcionEvidencia">Descripción</label><input type="text" id="descripcionEvidencia" class="form-control" value="'+webServicesEvidencia[0].descripcion+'" /></td></tr>'+
 						'								<tr><td colspan="2"><label>Localización de la evidencia:</label></td></tr>'+
@@ -7785,11 +7814,12 @@ $("body").on("click", ".consultaEditarEvidencia",function(event){
 						
 						'		    </div>'+
 						'			<div class="modal-footer">'+
-						' 				<button type="button" class="btn btn-success btn-sm editarEvidencia" id="botonGuardarEvidencia" parametros='+evidenciaId+'>Guardar Cambios</button>'+
+						' 				<button type="submit" class="btn btn-success btn-sm editarEvidencia" id="botonGuardarEvidencia" parametros='+evidenciaId+'>Guardar Cambios</button>'+
 						' 				<button type="button" class="btn btn-success btn-sm agregarModalAdministrador" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' >Cerrar</button>'+						
 						'			</div>'+
 						'		</div>'+ 
 						'	</div>'+
+						' </form>'+
 						'</div>';
 						
 	$("body").append(contenido);
@@ -7800,21 +7830,21 @@ $("body").on("click", ".consultaEditarEvidencia",function(event){
 function validarEvidencia(){
 	var validacion=true;
 	if (document.getElementById("nombreEvidencia").validity.valueMissing == true) {	    
-    	$("#nombreEvidencia").css("border","1px solid red");
-    	$("#nombreEvidencia").attr("placeholder", "El campo es requerido");
+    	/* $("#nombreEvidencia").css("border","1px solid red");
+    	$("#nombreEvidencia").attr("placeholder", "El campo es requerido"); */
     	validacion=false;
     }else{
     	if (document.getElementById("nombreEvidencia").validity.valueMissing == false) {
-    		$("#nombreEvidencia").css("border","1px solid green");		    	
+    		/* $("#nombreEvidencia").css("border","1px solid green"); */		    	
     	}	    	
     }
 	if (document.getElementById("urlEvidencia").validity.valueMissing == true) {	    
-    	$("#urlEvidencia").css("border","1px solid red");
-    	$("#urlEvidencia").attr("placeholder", "El campo es requerido");
+    	/* $("#urlEvidencia").css("border","1px solid red");
+    	$("#urlEvidencia").attr("placeholder", "El campo es requerido"); */
     	validacion=false;
     }else{
     	if (document.getElementById("urlEvidencia").validity.valueMissing == false) {
-    		$("#urlEvidencia").css("border","1px solid green");		    	
+    		/* $("#urlEvidencia").css("border","1px solid green"); */		    	
     	}	    	
     }
 	return validacion;	
@@ -7822,6 +7852,9 @@ function validarEvidencia(){
 
 $("body").on("click", ".editarEvidencia",function(event){
 	if(validarEvidencia()==true){
+		event.stopPropagation();
+		event.preventDefault(); 
+
 		
 	var parametros = $(this).attr("parametros");
     var idParsed = parametros.split("-");                                                            
@@ -7912,6 +7945,8 @@ $("body").on("click", ".editarEvidencia",function(event){
 
 $("body").on("click", ".guardarBeneficiario",function(event){
 	if (validarBeneficiarios()==true){
+		event.stopPropagation();
+		event.preventDefault(); 
 		
 	var parametros = $(this).attr("parametros");
     var idParsed = parametros.split("-");                                                            
@@ -8210,6 +8245,7 @@ $("body").on("click", ".consultaEditarBeneficiario",function(event){
 	var contenido = "";
 
 	contenido +=		'<div class="modal fade" id="modalEditarBeneficiario" data-backdrop="static" data-keyboard="false" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">'+
+						'	<form role="form">'+
 						'	<div class="modal-dialog modal-lg">'+
 						'		<div class="modal-content" >'+
 						'			<div class="modal-header">'+
@@ -8223,7 +8259,7 @@ $("body").on("click", ".consultaEditarBeneficiario",function(event){
 						'						<tbody>'+
 						'			      			<form class="form-horizontal" role="form">'+
 						'							<tr><td><label for="tipoBeneficiario">Tipo</label><select id="beneficiarioTipo" class="form-control" required>'+optionBeneficiarioTipo+'</select></td><td><label for="grupoBeneficiario">Grupo</label><select id="grupoBeneficiario" class="form-control" required>'+optionBeneficiarioGrupo+'</select></td></tr>'+
-						'							<tr><td><label for="cantidadBeneficiario">Cantidad</label><input type="number" id="cantidadBeneficiario" class="form-control" value='+webServicesBeneficiario[0].cantidad+' onblur="validarBeneficiarios()" required /></td><td><label for="descripcionBeneficiario">Descripción</label><input type="text" id="descripcionBeneficiario" class="form-control" value="'+webServicesBeneficiario[0].descripcion+'" /></td></tr>'+																		
+						'							<tr><td><label for="cantidadBeneficiario">Cantidad</label><input type="number" id="cantidadBeneficiario" class="form-control" value='+webServicesBeneficiario[0].cantidad+' required /></td><td><label for="descripcionBeneficiario">Descripción</label><input type="text" id="descripcionBeneficiario" class="form-control" value="'+webServicesBeneficiario[0].descripcion+'" /></td></tr>'+																		
 						'							<input type="hidden" id="avanceIdBeneficiario" value="'+avanceId+'"/>'+		
 						'			      			</form>	'+				
 						'						</tbody>'+
@@ -8232,11 +8268,12 @@ $("body").on("click", ".consultaEditarBeneficiario",function(event){
 						
 						'		    </div>'+
 						'			<div class="modal-footer">'+
-						' 				<button type="button" class="btn btn-success btn-sm editarBeneficiario" id="botonGuardarBeneficiario" parametros='+beneficiarioId+'>Guardar Cambios</button>'+
+						' 				<button type="submit" class="btn btn-success btn-sm editarBeneficiario" id="botonGuardarBeneficiario" parametros='+beneficiarioId+'>Guardar Cambios</button>'+
 						' 				<button type="button" class="btn btn-success btn-sm agregarModalAdministrador" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' >Cerrar</button>'+						
 						'			</div>'+
 						'		</div>'+ 
 						'	</div>'+
+						'	</form>'+
 						'</div>';
 						
 	$("body").append(contenido);
@@ -8249,7 +8286,9 @@ $("body").on("click", ".consultaEditarBeneficiario",function(event){
 
 $("body").on("click", ".editarBeneficiario",function(event){
 	if(validarBeneficiarios()==true){
-		
+		event.stopPropagation();
+		event.preventDefault(); 
+
 	var parametros = $(this).attr("parametros");
     var idParsed = parametros.split("-");                                                            
 	
@@ -8382,21 +8421,21 @@ function validarAccion(edit,fecha){
 		var fechaFin = $("#fechaFin").val();
 		
 		if (document.getElementById("fechaInicio").validity.valueMissing == true) {	    
-	    	$("#fechaInicio").css("border","1px solid red");
-	    	$("#fechaInicio").attr("placeholder", "El campo es requerido");
+	    	/* $("#fechaInicio").css("border","1px solid red");
+	    	$("#fechaInicio").attr("placeholder", "El campo es requerido"); */
 	    	validacion=false;
 	    }else{
 	    	if (document.getElementById("fechaInicio").validity.valueMissing == false) {
-	    		$("#fechaInicio").css("border","1px solid green");		    	
+	    		//$("#fechaInicio").css("border","1px solid green");		    	
 	    	}	    	
 	    }
 		if (document.getElementById("fechaFin").validity.valueMissing == true) {	    
-	    	$("#fechaFin").css("border","1px solid red");
-	    	$("#fechaFin").attr("placeholder", "El campo es requerido");
+	    	/* $("#fechaFin").css("border","1px solid red");
+	    	$("#fechaFin").attr("placeholder", "El campo es requerido"); */
 	    	validacion=false;
 	    }else{
 	    	if (document.getElementById("fechaFin").validity.valueMissing == false) {
-	    		$("#fechaFin").css("border","1px solid green");		    	
+	    		/* $("#fechaFin").css("border","1px solid green"); */		    	
 	    	}	    	
 	    }
 		
@@ -8405,21 +8444,21 @@ function validarAccion(edit,fecha){
 		var fechaFin = $("#fechaFinAccion").val();
 		
 		if (document.getElementById("fechaInicioAccion").validity.valueMissing == true) {	    
-	    	$("#fechaInicioAccion").css("border","1px solid red");
-	    	$("#fechaInicioAccion").attr("placeholder", "El campo es requerido");
+	    	/* $("#fechaInicioAccion").css("border","1px solid red");
+	    	$("#fechaInicioAccion").attr("placeholder", "El campo es requerido"); */
 	    	validacion=false;
 	    }else{
 	    	if (document.getElementById("fechaInicioAccion").validity.valueMissing == false) {
-	    		$("#fechaInicioAccion").css("border","1px solid green");		    	
+	    		/* $("#fechaInicioAccion").css("border","1px solid green"); */		    	
 	    	}	    	
 	    }
 		if (document.getElementById("fechaFinAccion").validity.valueMissing == true) {	    
-	    	$("#fechaFinAccion").css("border","1px solid red");
-	    	$("#fechaFinAccion").attr("placeholder", "El campo es requerido");
+	    	/* $("#fechaFinAccion").css("border","1px solid red");
+	    	$("#fechaFinAccion").attr("placeholder", "El campo es requerido"); */
 	    	validacion=false;
 	    }else{
 	    	if (document.getElementById("fechaFinAccion").validity.valueMissing == false) {
-	    		$("#fechaFinAccion").css("border","1px solid green");		    	
+	    		//$("#fechaFinAccion").css("border","1px solid green");		    	
 	    	}	    	
 	    }
 	}
@@ -8439,39 +8478,39 @@ function validarAccion(edit,fecha){
 	}	
     
 	if (document.getElementById("primerTrimestre-formulario").validity.valueMissing == true) {	    
-    	$("#primerTrimestre-formulario").css("border","1px solid red");
-    	$("#primerTrimestre-formulario").attr("placeholder", "El campo es requerido");
+    	/* $("#primerTrimestre-formulario").css("border","1px solid red");
+    	$("#primerTrimestre-formulario").attr("placeholder", "El campo es requerido"); */
     	validacion=false;
     }else{
     	if (document.getElementById("primerTrimestre-formulario").validity.valueMissing == false) {
-    		$("#primerTrimestre-formulario").css("border","1px solid green");		    	
+    		/* $("#primerTrimestre-formulario").css("border","1px solid green"); */		    	
     	}	    	
     }
 	if (document.getElementById("segundoTrimestre-formulario").validity.valueMissing == true) {	    
-    	$("#segundoTrimestre-formulario").css("border","1px solid red");
-    	$("#segundoTrimestre-formulario").attr("placeholder", "El campo es requerido");
+    	/* $("#segundoTrimestre-formulario").css("border","1px solid red");
+    	$("#segundoTrimestre-formulario").attr("placeholder", "El campo es requerido"); */
     	validacion=false;
     }else{
     	if (document.getElementById("segundoTrimestre-formulario").validity.valueMissing == false) {
-    		$("#segundoTrimestre-formulario").css("border","1px solid green");		    	
+    		/* $("#segundoTrimestre-formulario").css("border","1px solid green"); */		    	
     	}	    	
     }
 	if (document.getElementById("tercerTrimestre-formulario").validity.valueMissing == true) {	    
-    	$("#tercerTrimestre-formulario").css("border","1px solid red");
-    	$("#tercerTrimestre-formulario").attr("placeholder", "El campo es requerido");
+    	/* $("#tercerTrimestre-formulario").css("border","1px solid red");
+    	$("#tercerTrimestre-formulario").attr("placeholder", "El campo es requerido"); */
     	validacion=false;
     }else{
     	if (document.getElementById("tercerTrimestre-formulario").validity.valueMissing == false) {
-    		$("#tercerTrimestre-formulario").css("border","1px solid green");		    	
+    		/* $("#tercerTrimestre-formulario").css("border","1px solid green"); */		    	
     	}	    	
     }
 	if (document.getElementById("cuartoTrimestre-formulario").validity.valueMissing == true) {	    
-    	$("#cuartoTrimestre-formulario").css("border","1px solid red");
-    	$("#cuartoTrimestre-formulario").attr("placeholder", "El campo es requerido");
+    	/* $("#cuartoTrimestre-formulario").css("border","1px solid red");
+    	$("#cuartoTrimestre-formulario").attr("placeholder", "El campo es requerido"); */
     	validacion=false;
     }else{
     	if (document.getElementById("cuartoTrimestre-formulario").validity.valueMissing == false) {
-    		$("#cuartoTrimestre-formulario").css("border","1px solid green");		    	
+    		/* $("#cuartoTrimestre-formulario").css("border","1px solid green"); */		    	
     	}	    	
     }
 	
@@ -8564,6 +8603,7 @@ $("body").on("click", ".consultaEditarHito",function(event){
 	var contenido = "";
 
 	contenido +=		'<div class="modal fade" id="modalEditarHito" data-backdrop="static" data-keyboard="false" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">'+
+						'	<form role="form">'+
 						'	<div class="modal-dialog modal-lg">'+
 						'		<div class="modal-content" >'+
 						'			<div class="modal-header">'+
@@ -8576,7 +8616,7 @@ $("body").on("click", ".consultaEditarHito",function(event){
 						'					<table class="table table-hover">'+
 						'						<tbody>'+
 						'			      			<form class="form-horizontal" role="form">'+
-						'							<tr><td><label for="cantidadHito">Cantidad</label><input type="number" id="cantidadHito" class="form-control" value='+programacionWebService[0].cantidad+' onblur="validarHito(true)" required/></td><td><label for="fechaHito">Fecha Entrega</label><input type="date" id="fechaHito" class="form-control" value='+programacionWebService[0].fechaEntrega+' onblur="validarHito(true)" required/></td></tr>'+																		
+						'							<tr><td><label for="cantidadHito">Cantidad</label><input type="number" id="cantidadHito" class="form-control" value='+programacionWebService[0].cantidad+' required/></td><td><label for="fechaHito">Fecha Entrega</label><input type="date" id="fechaHito" class="form-control" value='+programacionWebService[0].fechaEntrega+' required/></td></tr>'+																		
 						'							<input type="hidden" id="programacionIdHito" value="'+programacionWebService[0].id+'"/>'+		
 						'			      			</form>	'+				
 						'						</tbody>'+
@@ -8585,11 +8625,12 @@ $("body").on("click", ".consultaEditarHito",function(event){
 						
 						'		    </div>'+
 						'			<div class="modal-footer">'+
-						' 				<button type="button" class="btn btn-success btn-sm editarHito" id="botonGuardarHito" parametros='+programacionWebService[0].id+'>Guardar Cambios</button>'+ 
+						' 				<button type="submit" class="btn btn-success btn-sm editarHito" id="botonGuardarHito" parametros='+programacionWebService[0].id+'>Guardar Cambios</button>'+ 
 						' 				<button type="button" class="btn btn-success btn-sm agregarProgramacion" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'" >Cerrar</button>'+						
 						'			</div>'+
 						'		</div>'+ 
 						'	</div>'+
+						'	</form>'+
 						'</div>';
 						
 	$("body").append(contenido);
@@ -8598,6 +8639,9 @@ $("body").on("click", ".consultaEditarHito",function(event){
 });
 $("body").on("click", ".editarHito",function(event){
 	if (validarHito(true)==true){
+		event.stopPropagation();
+		event.preventDefault(); 
+
 		
 	var parametros = $(this).attr("parametros");
     var idParsed = parametros.split("-");                                                            
@@ -8909,6 +8953,7 @@ $("body").on("click", ".modalDestinatario",function(event){
 						'               			<div class="box-body">'+
 		
 						'		      					<div class="col-md-12">'+
+						'		      					<form role="form">'+
 						'									<div class="box box-default box-solid">'+
 						'		                				<div class="box-header with-border">'+
 						'		                  					<h3 class="box-title">Agregar Destinatarios</h3>'+
@@ -8924,7 +8969,7 @@ $("body").on("click", ".modalDestinatario",function(event){
 						'												<tbody>'+
 						'			      									<form class="form-horizontal" role="form">'+
 						'													<tr><td><label for="tipoDestinatarioAccion">Tipo</label><select id="tipoDestinatarioAccion" class="form-control">'+optionBeneficiarioTipo+'</select></td><td><label for="grupoDestinatarioAccion">Grupo</label><select id="grupoDestinatarioAccion" class="form-control"></select></td></tr>'+
-						'													<tr><td><label for="cantidadDestinatarioAccion">Cantidad</label><input type="number" id="cantidadDestinatarioAccion" class="form-control" placeholder="Ingrese una Cantidad" onblur="validarDestinatario()" required/></td><td><label for="descripcionDestinatarioAccion">Descripción</label><input type="text" id="descripcionDestinatarioAccion" class="form-control" placeholder="Ingrese Objeto una Descripción"/></td></tr>'+
+						'													<tr><td><label for="cantidadDestinatarioAccion">Cantidad</label><input type="number" id="cantidadDestinatarioAccion" class="form-control" placeholder="Ingrese una Cantidad" required/></td><td><label for="descripcionDestinatarioAccion">Descripción</label><input type="text" id="descripcionDestinatarioAccion" class="form-control" placeholder="Ingrese Objeto una Descripción"/></td></tr>'+
 						'			      									</form>	'+				
 						'												</tbody>'+
 						'											</table>'+
@@ -8932,9 +8977,10 @@ $("body").on("click", ".modalDestinatario",function(event){
 						
 						'				      				 </div>'+//fin box body
 						'									 <div class="modal-footer">'+ 
-						'					        			<button type="button" class="btn btn-success btn-sm guardarAccionBeneficiario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+' onclick="validarDestinatario()">Guardar Beneficiario</button>'+ 
+						'					        			<button type="submit" class="btn btn-success btn-sm guardarAccionBeneficiario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'>Guardar Beneficiario</button>'+ 
 						'									 </div>'+									
 						'				      			 	</div>'+
+						'				      			 	</form'+
 						'				      			</div>'+							
 
 						<% }%>		
@@ -8989,12 +9035,12 @@ function validarDestinatario() {
 	var validacion=true;		
 		
     if (document.getElementById("cantidadDestinatarioAccion").validity.valueMissing == true) {	    
-    	$("#cantidadDestinatarioAccion").css("border","1px solid red");
-    	$("#cantidadDestinatarioAccion").attr("placeholder", "El campo es requerido");
+    	/* $("#cantidadDestinatarioAccion").css("border","1px solid red");
+    	$("#cantidadDestinatarioAccion").attr("placeholder", "El campo es requerido"); */
     	validacion=false;
     }else{
     	if (document.getElementById("cantidadDestinatarioAccion").validity.valueMissing == false) {
-    		$("#cantidadDestinatarioAccion").css("border","1px solid green");		    	
+    		/* $("#cantidadDestinatarioAccion").css("border","1px solid green"); */		    	
     	}	    	
     }
 	return validacion;
@@ -9002,6 +9048,9 @@ function validarDestinatario() {
 
 $("body").on("click", ".guardarAccionBeneficiario",function(event){
 	if(validarDestinatario()==true){
+		event.stopPropagation();
+		event.preventDefault(); 
+
 		var parametros = $(this).attr("parametros");
 	    var idParsed = parametros.split("-"); 
 	    var insLineaAccionId = idParsed[0];
@@ -9168,6 +9217,7 @@ $("body").on("click", ".consultaEditarDestinatario",function(event){
 	var contenido = "";
 
 	contenido +=		'<div class="modal fade" id="modalEditarDestinatario" data-backdrop="static" data-keyboard="false" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">'+
+						'	<form role="form">'+
 						'	<div class="modal-dialog modal-lg">'+
 						'		<div class="modal-content" >'+
 						'			<div class="modal-header">'+
@@ -9181,7 +9231,7 @@ $("body").on("click", ".consultaEditarDestinatario",function(event){
 						'						<tbody>'+
 						'			      			<form class="form-horizontal" role="form">'+
 						'							<tr><td><label for="tipoDestinatarioAccion">Tipo</label><select id="tipoDestinatarioAccion" class="form-control">'+optionBeneficiarioTipo+'</select></td><td><label for="grupoDestinatarioAccion">Grupo</label><select id="grupoDestinatarioAccion" class="form-control">'+optionBeneficiarioGrupo+'</select></td></tr>'+
-						'							<tr><td><label for="cantidadDestinatarioAccion">Cantidad</label><input type="number" id="cantidadDestinatarioAccion" class="form-control" value='+webServicesDestinatarioAccion[0].cantidad+' onblur="validarDestinatario()" required/></td><td><label for="descripcionDestinatarioAccion">Descripción</label><input type="text" id="descripcionDestinatarioAccion" class="form-control" value="'+webServicesDestinatarioAccion[0].descripcion+'" /></td></tr>'+																		
+						'							<tr><td><label for="cantidadDestinatarioAccion">Cantidad</label><input type="number" id="cantidadDestinatarioAccion" class="form-control" value='+webServicesDestinatarioAccion[0].cantidad+' required/></td><td><label for="descripcionDestinatarioAccion">Descripción</label><input type="text" id="descripcionDestinatarioAccion" class="form-control" value="'+webServicesDestinatarioAccion[0].descripcion+'" /></td></tr>'+																		
 						'			      			</form>	'+				
 						'						</tbody>'+
 						'					</table>'+
@@ -9189,11 +9239,12 @@ $("body").on("click", ".consultaEditarDestinatario",function(event){
 						
 						'		    </div>'+
 						'			<div class="modal-footer">'+
-						' 				<button type="button" class="btn btn-success btn-sm editarDestinatarioAccion" id="botonGuardarDestinatarioAccion" parametros='+destinatarioId+' onclick="validarDestinatario()"> Guardar Cambios</button>'+
+						' 				<button type="submit" class="btn btn-success btn-sm editarDestinatarioAccion" id="botonGuardarDestinatarioAccion" parametros='+destinatarioId+'> Guardar Cambios</button>'+
 						' 				<button type="button" class="btn btn-success btn-sm modalDestinatario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+' >Cerrar</button>'+						
 						'			</div>'+
 						'		</div>'+ 
 						'	</div>'+
+						'	</form>'+
 						'</div>';
 						
 	$("body").append(contenido);
@@ -9230,7 +9281,10 @@ $("body").on("change", "#tipoDestinatarioAccion",function(event){
 });
 
 $("body").on("click", ".editarDestinatarioAccion",function(event){
-	if(validarDestinatario()==true){
+	if(validarDestinatario(true)==true){
+		event.stopPropagation();
+		event.preventDefault(); 
+
 		
 		var parametros = $(this).attr("parametros");
 	    var idParsed = parametros.split("-");                                                            
@@ -9574,15 +9628,14 @@ $("body").on("click", ".avanceCualitativo",function(event){
 	<% if (attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>		
 	
 	
-	cuerpoModalAvanceCualitativo +='		      	<div class="row">'+ 
+	cuerpoModalAvanceCualitativo +='		      	<div class="row">'+
+						'								<form role="form">'+
 						'		      		<div class="col-md-12">'+
 						'						<div class="box box-warning">'+
 						'		                	<div class="box-header with-border">'+
 						'		                  		<h3 class="box-title">Avance Trimestral Cualitativo del Plan de Acción</h3>'+
 						'               			</div>'+//fin box-heder
 						'               			<div class="box-body">'+
-						
-						'								<form role="form">'+
 						'									<div class="table-responsive">'+
 						'										<table class="table table-hover">'+
 						'											<tbody>'+
@@ -9599,10 +9652,11 @@ $("body").on("click", ".avanceCualitativo",function(event){
 										
 						'               			</div>'+//fin box-body
 						'							<div class="modal-footer">'+
-						'								<button type="button" class="btn btn-success btn-sm guardarAvanceCualitatitvo" parametros = '+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'>Guardar Avance Cualitativo</button>'+
+						'								<button type="submit" class="btn btn-success btn-sm guardarAvanceCualitatitvo" parametros = '+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'>Guardar Avance Cualitativo</button>'+
 						'							</div>'+
 						'                		</div>'+	
 						'                	</div>'+
+						'                	</form>'+
 						'                </div>';											
 	<%}%>	
 	
@@ -9648,7 +9702,53 @@ $("body").on("click", ".avanceCualitativo",function(event){
 
 });
 
+function validarAvanceCualitativo(){
+	var validacion=true;		
+	
+    if (document.getElementById("gestionesRealizadasAvanceCualitativo").validity.valueMissing == true) {	    
+    	/* $("#justificacionAvance").css("border","1px solid red");
+    	$("#justificacionAvance").attr("placeholder", "El campo es requerido"); */
+    	validacion=false;
+    }else{
+    	if (document.getElementById("gestionesRealizadasAvanceCualitativo").validity.valueMissing == false) {
+    		/* $("#justificacionAvance").css("border","1px solid green"); */		    	
+    	}	    	
+    }
+	if (document.getElementById("logrosAlcanzadosAvanceCualitativo").validity.valueMissing == true) {	    
+    	/* $("#logrosAlcanzadosAvanceCualitativo").css("border","1px solid red");
+    	$("#logrosAlcanzadosAvanceCualitativo").attr("placeholder", "El campo es requerido"); */
+    	validacion=false;
+    }else{
+    	if (document.getElementById("logrosAlcanzadosAvanceCualitativo").validity.valueMissing == false) {
+    		/* $("#logrosAlcanzadosAvanceCualitativo").css("border","1px solid green"); */		    	
+    	}	    	
+    }
+	if (document.getElementById("leccionesAprendidasAvanceCualitativo").validity.valueMissing == true) {	    
+    	/* $("#leccionesAprendidasAvanceCualitativo").css("border","1px solid red");
+    	$("#leccionesAprendidasAvanceCualitativo").attr("placeholder", "El campo es requerido"); */
+    	validacion=false;
+    }else{
+    	if (document.getElementById("leccionesAprendidasAvanceCualitativo").validity.valueMissing == false) {
+    		/* $("#leccionesAprendidasAvanceCualitativo").css("border","1px solid green"); */		    	
+    	}	    	
+    }
+	if (document.getElementById("objetivosAvanceCualitativo").validity.valueMissing == true) {	    
+    	/* $("#leccionesAprendidasAvanceCualitativo").css("border","1px solid red");
+    	$("#leccionesAprendidasAvanceCualitativo").attr("placeholder", "El campo es requerido"); */
+    	validacion=false;
+    }else{
+    	if (document.getElementById("objetivosAvanceCualitativo").validity.valueMissing == false) {
+    		/* $("#leccionesAprendidasAvanceCualitativo").css("border","1px solid green"); */		    	
+    	}	    	
+    }
+	return validacion;
+}
+
 $("body").on("click", ".guardarAvanceCualitatitvo",function(event){
+	if (validarAvanceCualitativo()==true){
+		event.stopPropagation();
+		event.preventDefault(); 	
+	
 	var codigoRegistro = $(this).attr("parametros");
     var idParsed = codigoRegistro.split("-"); 
     var insLineaAccionId = idParsed[0];
@@ -9699,7 +9799,7 @@ $("body").on("click", ".guardarAvanceCualitatitvo",function(event){
         	}
 	 });
 
-    
+    }    
 });	
 
 function listaAvanceCualitativo(insLineaAccionId,lineaAccionId,institucionId,periodoId){
@@ -9914,6 +10014,7 @@ $("body").on("click", ".consultaEditarAvanceCualitativo",function(event){
 	var contenido = "";
 
 	contenido +=		'<div class="modal fade" id="modalEditarAvanceCualitativo" data-backdrop="static" data-keyboard="false" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">'+
+						' <form role="form">'+
 						'	<div class="modal-dialog modal-lg">'+
 						'		<div class="modal-content" >'+
 						'			<div class="modal-header">'+
@@ -9921,8 +10022,6 @@ $("body").on("click", ".consultaEditarAvanceCualitativo",function(event){
 						'		        <h4 class="modal-title" >Editar Avance Cualitativo</h4>'+
 						'			</div>'+
 						'		    <div class="modal-body" id="cuerpoModalAvanceCualitativo">'+
-										
-						'				<form role="form">'+
 						'					<div class="table-responsive">'+
 						'						<table class="table table-hover">'+
 						'							<tbody>'+
@@ -9934,16 +10033,15 @@ $("body").on("click", ".consultaEditarAvanceCualitativo",function(event){
 						' 								<tr><td><div class="form-group"><label for="objetivosAvanceCualitativo">Objetivos del Siguiente Trimestre</label><textarea class="form-control" rows="" id="objetivosAvanceCualitativo" required>'+avanceCualitativo[0].objetivosTrimestre+'</textarea></div></td></tr>'+
 						'							</tbody>'+							           
 						'						</table>'+
-						'					</div>'+							
-						'				</form>'+	
-						
+						'					</div>'+
 						'		    </div>'+
 						'			<div class="modal-footer">'+
-						' 				<button type="button" class="btn btn-success btn-sm editarAvanceCualitativo" id="botonGuardarAvanceCualitativo" parametros='+avanceCualitativo[0].id+'>Guardar Cambios</button>'+
+						' 				<button type="submit" class="btn btn-success btn-sm editarAvanceCualitativo" id="botonGuardarAvanceCualitativo" parametros='+avanceCualitativo[0].id+'>Guardar Cambios</button>'+
 						' 				<button type="button" class="btn btn-success btn-sm avanceCualitativo" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+' >Cerrar</button>'+						
 						'			</div>'+
 						'		</div>'+ 
 						'	</div>'+
+						' </form>'+	
 						'</div>';								
 						
 	$("#programacion").append(contenido);
@@ -9952,6 +10050,10 @@ $("body").on("click", ".consultaEditarAvanceCualitativo",function(event){
 });
 
 $("body").on("click", ".editarAvanceCualitativo",function(event){
+	if(validarAvanceCualitativo()==true){
+		event.stopPropagation();
+		event.preventDefault(); 
+	
 	var parametros = $(this).attr("parametros");
     var idParsed = parametros.split("-");                                                            
 	var avanceCualitativoId = idParsed[0];
@@ -10002,7 +10104,7 @@ $("body").on("click", ".editarAvanceCualitativo",function(event){
         	
         	}
 	 }); 
-	
+	}
 });
 
 $("body").on("click", ".consultaBorrarAvanceCualitativo",function(event){
