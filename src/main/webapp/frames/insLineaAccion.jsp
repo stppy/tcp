@@ -4745,8 +4745,9 @@ $("body").on("click", ".editarCronograma", function(event){
 	optionAcumulable+='<option value="false" parametro="FALSE">No</option>';
 	
 	var cuerpoModalEditarCronograma = "";
-	cuerpoModalEditarCronograma =	'<div class="modal fade" id="modalEditarCronograma" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="myLargeModalLabel">'+						
+	cuerpoModalEditarCronograma =	'<div class="modal fade" id="modalEditarCronograma" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="myLargeModalLabel">'+
 						'	<div class="modal-dialog modal-lg" style="width:90%">'+
+						'			      							<form id="formularioCronograma">'+
 						'		<div class="modal-content" >'+
 						'			<div class="modal-header">'+
 						'		        <button type="button" class="close agregarActividad"  data-dismiss="modal" aria-label="Close" parametros ='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'><span aria-hidden="true">&times;</span></button>'+
@@ -4759,17 +4760,18 @@ $("body").on("click", ".editarCronograma", function(event){
 						'		                    		</button>'+
 						'		                  		</div>'+
 						'               			</div>'+//fin box-header
-						'			      	<form class="form-horizontal" role="form" id="formularioCronograma">'+
-						'		    <div class="modal-body" id="cuerpoModalEditarCronograma">'+								
+						'		    <div class="modal-body" id="cuerpoModalEditarCronograma">'+
+
 						'								<div class="table-responsive">'+
 						'									<table class="table table-hover">'+
-						'										<tbody>'+						
-						'											<form class="form-horizontal" role="form">'+		
-						'												<tr><td><label for="nombreCronograma">Nombre</label><input type="text" id="nombreCronograma" value="'+actividades[0].nombre+'" class="form-control" required /></td><td><label for="descripcionCronograma">Descripcion</label><input type="text" id="descripcionCronograma" class="form-control" value="'+actividades[0].descripcion+'" /></td></tr>'+
+						'										<tbody>'+
+						'			      							<form class="form-horizontal" role="form">'+
+						'												<tr><td><label for="nombreCronograma">Nombre</label><input type="text" id="nombreCronograma" value="'+actividades[0].nombre+'" class="form-control" required /></td><td><label for="descripcionCronograma">Descripcion</label><input type="text" id="descripcionCronograma" class="form-control" value="'+actividades[0].descripcion+'"  /></td></tr>'+
 						'												<tr><td><div class="form-group"><label for="unidadMedidaIdCronograma">Unidad de Medida</label><select id="selectorUnidadMedidaCronograma" class="form-control">'+optionUnidadMedida+'</select></div></td><td><div class="form-group"><label for="hitoTipoIdCronograma">Tipo Cronograma</label><select id="selectorHitoTipoIdCronograma" class="form-control">"'+optionTipoHito+'"</select></div></td></tr>'+
 						'												<tr><td><label for="proporcionCronograma">Proporción</label><input type="number" id="proporcionCronograma" value='+actividades[0].proporcion+' class="form-control" required /></td><td><label for="pesoCronograma">Peso</label><input type="number" id="pesoCronograma" class="form-control" value='+actividades[0].peso+' required /></td></tr>'+
 						'												<tr><td><div class="form-group"><label for="acumulableCronograma">Acumulable</label><select id="acumulableCronograma" class="form-control" placeholder="Ingrese Tipo Acumulable">'+optionAcumulable+'</select></div></td><td></td></tr>'+
-						'											</form>'						
+						
+						'			      							</form>	'+												
 						'										</tbody>'+
 						'									</table>'+
 						'				      			</div>'+
@@ -4780,11 +4782,11 @@ $("body").on("click", ".editarCronograma", function(event){
 						'				<button type="button" class="btn btn-success btn-sm agregarActividad" parametros ='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'>Cerrar</button>'+
 						
 						'			</div>'+
-						'		</div>'+ 
+						'		</div>'+
+						'		</form'+ 
 						'	</div>'+
-						'			      							</form>	'+
 						'</div>';
-						
+												
 		$("#programacion").append(cuerpoModalEditarCronograma);
 		$('#selectorUnidadMedidaCronograma > option[value="'+actividades[0].unidad_medida_id+'"]').attr('selected', 'selected');
 		$('#selectorHitoTipoIdCronograma > option[value="'+actividades[0].hito_tipo_id+'"]').attr('selected', 'selected');
