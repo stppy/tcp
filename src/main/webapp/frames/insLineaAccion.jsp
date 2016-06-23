@@ -8469,11 +8469,19 @@ function validarAccion(edit,fecha){
 			$("#fechaFin").val("");
 			alert("Fecha Fin no puede ser menor a Fecha Inicio");			
 			validacion=false;
-			if (edit==true){
+			/* if (edit==true){
 				$("#fechaFin").css("border","1px solid red");
 			}else{
 				$("#fechaFinAccion").css("border","1px solid red");
+			} */
+		}else{
+			if(fechaFin > fechaInicio){
+				$("#fechaInicioAccion").val("");
+				$("#fechaInicio").val("");
+				alert("Fecha Inicio no puede ser menor a Fecha Fin");			
+				validacion=false;
 			}
+			
 		}
 	}	
     
@@ -8539,7 +8547,7 @@ function validarAccion(edit,fecha){
 
 };*/
 
-$("body").on("change", "#fechaInicioAccion",function(event){
+/* $("body").on("change", "#fechaInicioAccion",function(event){
 	var fechaInicio = $("#fechaInicioAccion").val();
 	var fechaFin = $("#fechaFinAccion").val();
 	
@@ -8550,7 +8558,7 @@ $("body").on("change", "#fechaInicioAccion",function(event){
 		}
 	}
 
-});
+});*/
 $("body").on("change", "#proporcionActividad",function(event){
 	var proporcion = parseFloat($("#proporcionActividad").val());
 	
