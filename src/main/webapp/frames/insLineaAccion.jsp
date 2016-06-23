@@ -8474,14 +8474,6 @@ function validarAccion(edit,fecha){
 			}else{
 				$("#fechaFinAccion").css("border","1px solid red");
 			} */
-		}else{
-			if(fechaFin > fechaInicio){
-				$("#fechaInicioAccion").val("");
-				$("#fechaInicio").val("");
-				alert("Fecha Inicio no puede ser menor a Fecha Fin");			
-				validacion=false;
-			}
-			
 		}
 	}	
     
