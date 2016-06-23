@@ -3099,25 +3099,25 @@ $("body").on("click", ".borrarAccion",function(event){
 		      			'										<input type="hidden" name="version" value="" id="versionProducto-formulario">'+
 						'										<div class="row">'+
 			      		'											<div class="form-group col-md-1">'+
-			      		'												<input type="text" name="nivel" id="nivel-formulario" value="" class="form-control" disabled>'+
+			      		'												<input type="number" name="nivel" id="nivel-formulario" value="" class="form-control" disabled>'+
 			      		'											</div>'+
 			      		'											<div class="form-group col-md-1">'+
-			  			'												<input type="text" name="entidad" id="entidad-formulario" value="" class="form-control" disabled>'+
+			  			'												<input type="number" name="entidad" id="entidad-formulario" value="" class="form-control" disabled>'+
 			  			'											</div>'+
 			      		'				    						<div class="form-group col-md-1">'+
-			      		'			    								<input type="text" name="tipoPrograma" id="tipoPrograma-formulario" placeholder="Tipo Programa" list="listaf3c2" class="form-control"  required>'+
+			      		'			    								<input type="number" name="tipoPrograma" id="tipoPrograma-formulario" placeholder="Tipo Programa" list="listaf3c2" class="form-control"  required>'+
 			      		'			    							</div>'+
 			      		'			    							<div class="form-group col-md-1">'+
-			      		'			    								<input type="text" name="programa" id="programa-formulario" placeholder="Programa" list="listaf4c2" class="form-control" required>'+
+			      		'			    								<input type="number" name="programa" id="programa-formulario" placeholder="Programa" list="listaf4c2" class="form-control" required>'+
 			      		'			    							</div>'+
 			      		'			    							<div class="form-group col-md-1">'+
-			      		'			    								<input type="text" name="subPrograma" id="subPrograma-formulario" placeholder="SubPrograma" list="listaf5c2" class="form-control" required>'+
+			      		'			    								<input type="number" name="subPrograma" id="subPrograma-formulario" placeholder="SubPrograma" list="listaf5c2" class="form-control" required>'+
 			      		'			    							</div>'+
 			      		'				    						<div class="form-group col-md-2">'+
-			      		'				    							<input type="text" name="proyecto" id="proyecto-formulario" placeholder="Proyecto" list="listaf6c2" class="form-control" required>'+
+			      		'				    							<input type="number" name="proyecto" id="proyecto-formulario" placeholder="Proyecto" list="listaf6c2" class="form-control" required>'+
 			      		'				   							</div>'+
 			  			'		    								<div class="form-group col-md-2">'+
-			  			'		    									<input type="text" name="producto" id="producto-formulario" placeholder="Producto" list="listaf7c2" class="form-control" required>'+
+			  			'		    									<input type="number" name="producto" id="producto-formulario" placeholder="Producto" list="listaf7c2" class="form-control" required>'+
 			      		'										  	</div>'+
 			  			'		    								<div class="form-group col-md-3">'+
 				      	'												<div class="input-group input-group-md">'+
