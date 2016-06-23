@@ -6376,7 +6376,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>	
 
 									'		      					<div class="col-md-12">'+
-									'			      									<form class="form-horizontal" role="form">'+
+									'			      									<form class="form-horizontal" role="form" id="formularioCosto">'+
 									'									<div class="box box-default box-solid">'+
 									'		                				<div class="box-header with-border">'+
 									'		                  					<h3 class="box-title">Agregar Costos</h3>'+
@@ -6559,30 +6559,6 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	
 
 });	
-
-function validarCosto(){
-	var validacion=true;
-	if (document.getElementById("objetoGastoCosto").validity.valueMissing == true) {	    
-    	/* $("#objetoGastoCosto").css("border","1px solid red");
-    	$("#objetoGastoCosto").attr("placeholder", "El campo es requerido"); */
-    	validacion=false;
-    }else{
-    	if (document.getElementById("objetoGastoCosto").validity.valueMissing == false) {
-    		/* $("#objetoGastoCosto").css("border","1px solid green"); */		    	
-    	}	    	
-    }
-	if (document.getElementById("montoCosto").validity.valueMissing == true) {	    
-    	/* $("#montoCosto").css("border","1px solid red");
-    	$("#montoCosto").attr("placeholder", "El campo es requerido"); */
-    	validacion=false;
-    }else{
-    	if (document.getElementById("montoCosto").validity.valueMissing == false) {
-    		/* $("#montoCosto").css("border","1px solid green"); */		    	
-    	}	    	
-    }
-	return validacion;
-	
-}
 
 /* $(document).ready(function(){
 	$('#geoloc').leafletLocationPicker({
@@ -6935,7 +6911,7 @@ $("body").on("click", ".borrarAvance",function(event){
 });
 
 $("body").on("click", ".guardarCosto",function(event){
-	if(validarCosto()==true){
+	if(validarFormulario("formularioCosto",false,false)==true){
 		event.stopPropagation();
 		event.preventDefault(); 
 	
@@ -7182,7 +7158,7 @@ $("body").on("click", ".consultaEditarCosto",function(event){
 	var contenido = "";
 
 	contenido +=		'<div class="modal fade" id="modalEditarCosto"  data-backdrop="static" data-keyboard="false" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">'+
-						'	<form role="form">'+
+						'	<form role="form" id="formularioCosto">'+
 						'	<div class="modal-dialog modal-lg">'+
 						'		<div class="modal-content" >'+
 						'			<div class="modal-header">'+
@@ -7220,7 +7196,7 @@ $("body").on("click", ".consultaEditarCosto",function(event){
 
 
 $("body").on("click", ".editarAvanceCosto",function(event){
-	if(validarCosto()==true){
+	if(validarFormulario("formularioCosto",false,false)==true){
 		event.stopPropagation();
 		event.preventDefault(); 
 		
@@ -7284,7 +7260,7 @@ $("body").on("click", ".editarAvanceCosto",function(event){
 		alert("Favor introduzca una dirección url valida. Ej: http://www.google.com");
 		return false;
 	} */
-	if(validarEvidencia()==true){
+	if(validarFormulario("formEvidencia",false,false)==true){
 		event.stopPropagation();
 		event.preventDefault(); 
 
@@ -7577,7 +7553,7 @@ $("body").on("click", ".consultaEditarEvidencia",function(event){
 	var contenido = "";
 
 	contenido +=		'<div class="modal fade" id="modalEditarEvidencia" data-backdrop="static" data-keyboard="false" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">'+
-						' <form class="form-horizontal" role="form">'+
+						' <form class="form-horizontal" role="form" id="formEvidencia">'+
 						'	<div class="modal-dialog modal-lg">'+
 						'		<div class="modal-content" >'+
 						'			<div class="modal-header">'+
@@ -7589,7 +7565,7 @@ $("body").on("click", ".consultaEditarEvidencia",function(event){
 						'				<div class="table-responsive">'+
 						'					<table class="table table-hover">'+
 						'						<tbody>'+						
-						'								<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" value="'+webServicesEvidencia[0].nombre+'" onblur="validarEvidencia()" required/></td><td><label for="urlEvidencia">Url</label><input type="url" id="urlEvidencia" class="form-control" value="'+webServicesEvidencia[0].url+'" onblur="validarEvidencia()" required/></td></tr>'+
+						'								<tr><td><label for="nombreEvidencia">Nombre</label><input type="text" id="nombreEvidencia" class="form-control" value="'+webServicesEvidencia[0].nombre+'" required/></td><td><label for="urlEvidencia">Url</label><input type="url" id="urlEvidencia" class="form-control" value="'+webServicesEvidencia[0].url+'" required/></td></tr>'+
 						'								<tr><td colspan="2"><label for="descripcionEvidencia">Descripción</label><input type="text" id="descripcionEvidencia" class="form-control" value="'+webServicesEvidencia[0].descripcion+'" /></td></tr>'+
 						'								<tr><td colspan="2"><label>Localización de la evidencia:</label></td></tr>'+
 						/* '								<tr><td><label for="latLongEvidencia">Latitud , Longitud: </label>'+
@@ -7623,31 +7599,8 @@ $("body").on("click", ".consultaEditarEvidencia",function(event){
 
 });
 
-function validarEvidencia(){
-	var validacion=true;
-	if (document.getElementById("nombreEvidencia").validity.valueMissing == true) {	    
-    	/* $("#nombreEvidencia").css("border","1px solid red");
-    	$("#nombreEvidencia").attr("placeholder", "El campo es requerido"); */
-    	validacion=false;
-    }else{
-    	if (document.getElementById("nombreEvidencia").validity.valueMissing == false) {
-    		/* $("#nombreEvidencia").css("border","1px solid green"); */		    	
-    	}	    	
-    }
-	if (document.getElementById("urlEvidencia").validity.valueMissing == true) {	    
-    	/* $("#urlEvidencia").css("border","1px solid red");
-    	$("#urlEvidencia").attr("placeholder", "El campo es requerido"); */
-    	validacion=false;
-    }else{
-    	if (document.getElementById("urlEvidencia").validity.valueMissing == false) {
-    		/* $("#urlEvidencia").css("border","1px solid green"); */		    	
-    	}	    	
-    }
-	return validacion;	
-}
-
 $("body").on("click", ".editarEvidencia",function(event){
-	if(validarEvidencia()==true){
+	if(validarFormulario("formEvidencia",false,false)==true){
 		event.stopPropagation();
 		event.preventDefault(); 
 
@@ -8208,133 +8161,6 @@ $("body").on("click", ".consultaBorrarInsLineaAccion",function(event){
 	
 });
 
-/* function validarAccion(edit,fecha){
-		
-	var validacion=true;	
-	
-	if(edit==true){
-		var fechaInicio = $("#fechaInicio").val();
-		var fechaFin = $("#fechaFin").val();
-		
-		if (document.getElementById("fechaInicio").validity.valueMissing == true) {	    
-	    	/* $("#fechaInicio").css("border","1px solid red");
-	    	$("#fechaInicio").attr("placeholder", "El campo es requerido"); 
-	    	validacion=false;
-	    }else{
-	    	if (document.getElementById("fechaInicio").validity.valueMissing == false) {
-	    		//$("#fechaInicio").css("border","1px solid green");		    	
-	    	}	    	
-	    }
-		if (document.getElementById("fechaFin").validity.valueMissing == true) {	    
-	    	/* $("#fechaFin").css("border","1px solid red");
-	    	$("#fechaFin").attr("placeholder", "El campo es requerido");
-	    	validacion=false;
-	    }else{
-	    	if (document.getElementById("fechaFin").validity.valueMissing == false) {
-	    		/* $("#fechaFin").css("border","1px solid green"); 		    	
-	    	}	    	
-	    }
-		
-	}else{
-		var fechaInicio = $("#fechaInicioAccion").val();
-		var fechaFin = $("#fechaFinAccion").val();
-		
-		if (document.getElementById("fechaInicioAccion").validity.valueMissing == true) {	    
-	    	/* $("#fechaInicioAccion").css("border","1px solid red");
-	    	$("#fechaInicioAccion").attr("placeholder", "El campo es requerido"); 
-	    	validacion=false;
-	    }else{
-	    	if (document.getElementById("fechaInicioAccion").validity.valueMissing == false) {
-	    		/* $("#fechaInicioAccion").css("border","1px solid green"); 		    	
-	    	}	    	
-	    }
-		if (document.getElementById("fechaFinAccion").validity.valueMissing == true) {	    
-	    	/* $("#fechaFinAccion").css("border","1px solid red");
-	    	$("#fechaFinAccion").attr("placeholder", "El campo es requerido"); 
-	    	validacion=false;
-	    }else{
-	    	if (document.getElementById("fechaFinAccion").validity.valueMissing == false) {
-	    		//$("#fechaFinAccion").css("border","1px solid green");		    	
-	    	}	    	
-	    }
-	}
-	
-	if(fechaInicio != "" && fechaFin != "" && fecha==true){
-		if(fechaFin < fechaInicio){
-			$("#fechaFinAccion").val("");
-			$("#fechaFin").val("");
-			alert("Fecha Fin no puede ser menor a Fecha Inicio");			
-			validacion=false;
-			/* if (edit==true){
-				$("#fechaFin").css("border","1px solid red");
-			}else{
-				$("#fechaFinAccion").css("border","1px solid red");
-			} 
-		}
-	}	
-    
-	if (document.getElementById("primerTrimestre-formulario").validity.valueMissing == true) {	    
-    	/* $("#primerTrimestre-formulario").css("border","1px solid red");
-    	$("#primerTrimestre-formulario").attr("placeholder", "El campo es requerido"); 
-    	validacion=false;
-    }else{
-    	if (document.getElementById("primerTrimestre-formulario").validity.valueMissing == false) {
-    		/* $("#primerTrimestre-formulario").css("border","1px solid green"); 		    	
-    	}	    	
-    }
-	if (document.getElementById("segundoTrimestre-formulario").validity.valueMissing == true) {	    
-    	/* $("#segundoTrimestre-formulario").css("border","1px solid red");
-    	$("#segundoTrimestre-formulario").attr("placeholder", "El campo es requerido"); 
-    	validacion=false;
-    }else{
-    	if (document.getElementById("segundoTrimestre-formulario").validity.valueMissing == false) {
-    		/* $("#segundoTrimestre-formulario").css("border","1px solid green"); 		    	
-    	}	    	
-    }
-	if (document.getElementById("tercerTrimestre-formulario").validity.valueMissing == true) {	    
-    	/* $("#tercerTrimestre-formulario").css("border","1px solid red");
-    	$("#tercerTrimestre-formulario").attr("placeholder", "El campo es requerido"); 
-    	validacion=false;
-    }else{
-    	if (document.getElementById("tercerTrimestre-formulario").validity.valueMissing == false) {
-    		/* $("#tercerTrimestre-formulario").css("border","1px solid green"); 		    	
-    	}	    	
-    }
-	if (document.getElementById("cuartoTrimestre-formulario").validity.valueMissing == true) {	    
-    	/* $("#cuartoTrimestre-formulario").css("border","1px solid red");
-    	$("#cuartoTrimestre-formulario").attr("placeholder", "El campo es requerido"); 
-    	validacion=false;
-    }else{
-    	if (document.getElementById("cuartoTrimestre-formulario").validity.valueMissing == false) {
-    		/* $("#cuartoTrimestre-formulario").css("border","1px solid green"); 		    	
-    	}	    	
-    }
-	
-	return validacion;
-}
- */
-/*function validarFecha(edit){
-	if(edit==true){
-		var fechaInicio = $("#fechaInicio").val();
-		var fechaFin = $("#fechaFin").val();
-	}else{
-		var fechaInicio = $("#fechaInicioAccion").val();
-		var fechaFin = $("#fechaFinAccion").val();
-	}
-	
-	
-	if(fechaInicio != "" && fechaFin != ""){
-		if(fechaFin < fechaInicio){
-			$("#fechaFinAccion").val("");
-			$("#fechaFin").val("");
-			alert("Fecha Fin no puede ser menor a Fecha Inicio");
-		}
-	}else{		
-			alert("La fecha de inicio y fin no pueden quedar en blanco");			
-	}
-
-};*/
-
 /* $("body").on("change", "#fechaInicioAccion",function(event){
 	var fechaInicio = $("#fechaInicioAccion").val();
 	var fechaFin = $("#fechaFinAccion").val();
@@ -8826,21 +8652,6 @@ $("body").on("click", ".modalDestinatario",function(event){
 	$('#tipoDestinatarioAccion').change();
 	$("#dataTableDestinatarioAccion").DataTable();
 });
-
-function validarDestinatario() {    
-	var validacion=true;		
-		
-    if (document.getElementById("cantidadDestinatarioAccion").validity.valueMissing == true) {	    
-    	/* $("#cantidadDestinatarioAccion").css("border","1px solid red");
-    	$("#cantidadDestinatarioAccion").attr("placeholder", "El campo es requerido"); */
-    	validacion=false;
-    }else{
-    	if (document.getElementById("cantidadDestinatarioAccion").validity.valueMissing == false) {
-    		/* $("#cantidadDestinatarioAccion").css("border","1px solid green"); */		    	
-    	}	    	
-    }
-	return validacion;
-}
 
 $("body").on("click", ".guardarAccionBeneficiario",function(event){
 	if(validarFormulario("formularioDestinatarios",false,false)==true){
