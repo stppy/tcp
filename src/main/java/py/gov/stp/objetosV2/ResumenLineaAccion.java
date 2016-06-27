@@ -28,6 +28,8 @@ public class ResumenLineaAccion {
     protected double  	  meta;
     protected int  	 	  departamentoId;
     protected int  	 	  distritoId;
+    protected int 		  tipoCronogramaId;
+    protected int		  tipoCronogramaRealId;
 
     
 	public int getInstitucionId() {
@@ -168,6 +170,18 @@ public class ResumenLineaAccion {
 	}
 	public void setDistritoId(int distritoId) {
 		this.distritoId = distritoId;
+	}
+	public int getTipoCronogramaId() {
+		return tipoCronogramaId;
+	}
+	public void setTipoCronogramaId(int tipoCronogramaId) {
+		this.tipoCronogramaId = tipoCronogramaId;
+	}
+	public int getTipoCronogramaRealId() {
+		return tipoCronogramaRealId;
+	}
+	public void setTipoCronogramaRealId(int tipoCronogramaRealId) {
+		this.tipoCronogramaRealId = tipoCronogramaRealId;
 	}
     
 	
