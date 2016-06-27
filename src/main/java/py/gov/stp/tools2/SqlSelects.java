@@ -2285,6 +2285,65 @@ public class SqlSelects {
 		return objetos;
 	}
 	
+	public static List<LineaAccionProgramacion> selectResumenLineasAccionProgramacionDptoDistInst(
+			String condition) throws SQLException {
+		Connection conect = ConnectionConfiguration.conectar();
+		String query = "select "
+				+ "ins_linea_accion_base_dd.institucion_sigla,"
+				+ "ins_linea_accion_base_dd.institucion_id as institucion_id,"
+				+ "ins_linea_accion_avance_dd.cantidad as avance_real,"
+				+ "ins_linea_accion_programacion_hoy_dd.cantidad_hoy as programado_hoy,"
+				+ "ins_linea_accion_base_dd.depto_id as depto_id,"
+				+ "ins_linea_accion_base_dd.dist_id as dist_id,"
+				+ " from ins_linea_accion_base_dd"
+				+ " left join ins_linea_accion_avance_dd on"
+				+ " ins_linea_accion_avance_dd.ins_linea_accion_id=ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_avance_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_avance_dd.dist_id=ins_linea_accion_base_dd.dist_id"
+				+ " left join ins_linea_accion_destinatarios_dd on"
+				+ " ins_linea_accion_destinatarios_dd.ila_id=ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_destinatarios_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_destinatarios_dd.dist_id=ins_linea_accion_base_dd.dist_id"
+				+ " left join ins_linea_accion_programacion_hoy_dd on "
+				+ " ins_linea_accion_programacion_hoy_dd.ins_linea_accion_id =ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_programacion_hoy_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_programacion_hoy_dd.dist_id=ins_linea_accion_base_dd.dist_id"
+				+ " left join ins_linea_accion_programacion_anho_dd on "
+				+ " ins_linea_accion_programacion_anho_dd.ins_linea_accion_id = ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_programacion_anho_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_programacion_anho_dd.dist_id=ins_linea_accion_base_dd.dist_id"
+				+ " left join ins_linea_accion_costo_dd on "
+				+ " ins_linea_accion_costo_dd.ins_linea_accion_id=ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_costo_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_costo_dd.dist_id=ins_linea_accion_base_dd.dist_id"
+				+ " left join ins_linea_accion_costo_estimado_dd on "
+				+ " ins_linea_accion_costo_estimado_dd.ins_linea_accion_id=ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_costo_estimado_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_costo_estimado_dd.dist_id=ins_linea_accion_base_dd.dist_id"
+				+ " left join ins_linea_accion_destinatario_real_dd on "
+				+ " ins_linea_accion_destinatario_real_dd.ins_linea_accion_id=ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_destinatario_real_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_destinatario_real_dd.dist_id=ins_linea_accion_base_dd.dist_id"
+				+ " where periodo=2016 " + condition+ " order by institucion_id, depto_id, dist_id";
+		Statement statement = null;
+		ResultSet rs = null;
+		List<LineaAccionProgramacion> objetos = new ArrayList<LineaAccionProgramacion>();
+
+		try {
+			statement = conect.createStatement();
+			rs = statement.executeQuery(query);
+			while (rs.next()) {
+				LineaAccionProgramacion objeto = new LineaAccionProgramacion();
+
+				objeto.setInstitucionId(rs.getInt("institucion_id"));
+				objeto.setCantidadHoy(rs.getDouble("programado_hoy"));
+				objeto.setCantidadAvance(rs.getDouble("avance_real"));
+				objeto.setInsLineaAccionPeriodoId(rs.getInt("periodo"));
+				objeto.setDepartamentoId(rs.getInt("depto_id"));
+				objeto.setDistritoId(rs.getInt("dist_id"));
+				
+				
+				objetos.add(objeto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				statement.close();
+			}
+			if (conect != null) {
+				conect.close();
+			}
+		}
+		return objetos;
+	}
+	
 	public static List<LineaAccionProgramacion> selectResumenLineasAccionProgramacionInstDptoDist2(String condition) throws SQLException {
 		Connection conect = ConnectionConfiguration.conectar();
 		String query = "select "
