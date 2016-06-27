@@ -115,6 +115,11 @@ var datosGeo=[];
 			margin-right: 8px;
 			opacity: 0.7;
 		}
+		
+		.legend p {
+			margin-top:0;
+		 	margin-bottom:0;
+		 }
 
     </style>
     
@@ -894,8 +899,8 @@ tbody {
 	    //bucle de creacion de porcentaje y generacion de una etiqueta con un cuadrado de color para cada intervalo
 		for (var i = 0; i < grades.length; i++) {
 	        this._div.innerHTML +=
-				'<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-				grades[i] + (grades[i + 1] ? ' &ndash; ' + grades[i + 1] + '%' + '<br>' : '%' + '+');
+	        	'<p><i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+	            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '%' + '</p>' : '%' + '+' + '</p>');
 		}
 		this.update()
 		return this._div;
@@ -910,8 +915,8 @@ tbody {
 	    //bucle de creacion de porcentaje y generacion de una etiqueta con un cuadrado de color para cada intervalo
 	    for (var i = 0; i < grades.length; i++) {
 	        this._div.innerHTML +=
-	            '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-	            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '%' + '<br>' : '%' + '+');
+	            '<p><i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+	            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '%' + '</p>' : '%' + '+' + '</p>');
 	    }
 	}
 	
