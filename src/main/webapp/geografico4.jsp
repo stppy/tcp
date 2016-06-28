@@ -341,7 +341,7 @@ tbody {
 					
 					var desPaisInstjson = $.ajax({
  						/* url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist&institucionId='+instituciones[i].id, */
- 						url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramaciondesempenoInstitucional',
+ 						url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionDesempenoInstitucional',
 				      	type:'get',
 				      	dataType:'json',
 				      	crossDomain:true,

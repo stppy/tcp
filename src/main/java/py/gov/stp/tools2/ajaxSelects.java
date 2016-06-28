@@ -1126,7 +1126,7 @@ public class ajaxSelects extends HttpServlet {
         		out.println(json.toString());        	
         	}
         	//obtenemos todas las instituciones en el back end y su desemeño institucional a nivel país
-        	if (action.equals("getResumenLineasAccionProgramaciondesempenoInstitucional")){
+        	if (action.equals("getResumenLineasAccionProgramacionDesempenoInstitucional")){
                 List<LineaAccionProgramacion> objetos=null;
                 List<Institucion> instituciones= null ;
                 ArrayList<Object> desempenhoDpto= new ArrayList<Object>();
