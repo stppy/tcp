@@ -115,6 +115,11 @@ var datosGeo=[];
 			margin-right: 8px;
 			opacity: 0.7;
 		}
+		
+		.legend p {
+			margin-top:0;
+		 	margin-bottom:0;
+		 }
 
     </style>
     
@@ -359,23 +364,34 @@ tbody {
 				      	async:false       
 				    }).responseText;
 					var desPaisDistInst=JSON.parse(desPaisDistInstjson); 
-						
-					var desPaisInst= [];
-					for(var i=0;i<instituciones.length;i++){
 					
+					var desPaisInstjson = $.ajax({
+ 						/* url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist&institucionId='+instituciones[i].id, */
+ 						url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramaciondesempenoInstitucional',
+				      	type:'get',
+				      	dataType:'json',
+				      	crossDomain:true,
+				      	async:false       
+				    }).responseText;
+					var desPaisInstAux=JSON.parse(desPaisInstjson);
+					
+					var desPaisInst= [];
+					
+					for(var i=0;i<instituciones.length;i++){
 						//var acum = 0,cont = 0;
 						//var promedio = 0;
 					
-	 					var desPaisInstjson = $.ajax({
+	 					/* var desPaisInstjson = $.ajax({
 	 						url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist&institucionId='+instituciones[i].id,
+	 						//url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDistInstitucion',
 					      	type:'get',
 					      	dataType:'json',
 					      	crossDomain:true,
 					      	async:false       
 					    }).responseText;
-						var desPaisInstAux=JSON.parse(desPaisInstjson);
+						var desPaisInstAux=JSON.parse(desPaisInstjson); */
 					
-						/* for (d = 0; d < desPaisInstAux.length; d++){	
+						 /* for (d = 0; d < desPaisInstAux.length; d++){	
 							if (desPaisInstAux[d].cantidadHoy == 0 && desPaisInstAux[d].cantidadAvance > 0){
 								acum += 100;
 								cont++;
@@ -388,19 +404,27 @@ tbody {
 								acum += desPaisInstAux[d].cantidadAvance / desPaisInstAux[d].cantidadHoy * 100;								
 								cont++;
 							}						
-						}*/
+						} */
 					
 						var objeto = new Object(); 
 
-						if(desPaisInstAux[0] == 0){
+						if(desPaisInstAux[i] == 0){
 							promedio = 0/0;
 						}
 						objeto.institucionId = instituciones[i].id;
-						objeto.promedio = desPaisInstAux[0];
+						objeto.promedio = desPaisInstAux[i];
 						desPaisInst.push(objeto);
 					
 					}
-					
+															
+					var desPaisDistjson = $.ajax({
+				    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist3',
+				      	type:'get',
+				      	dataType:'json',
+				      	crossDomain:true,
+				      	async:false       
+				    }).responseText;
+					var desPaisDist=JSON.parse(desPaisDistjson);
 					
 				    //Aqui estaba el ajax selects de  getResumenLineasAccionProgramacionInstDptoDist3 y getResumenLineasAccionProgramacionInstDptoDist4
 
@@ -491,7 +515,7 @@ tbody {
 									for(var j=0;j < desPaisDistInst.length;j++){
 										if ((desPaisDistInst[j].clave3==instituciones[i].id) && (desPaisDistInst[j].clave1==e.target.feature.properties.dpto) && (desPaisDistInst[j].clave2 == e.target.feature.properties.distrito)){
 											color=getColorDesemp2(desPaisDistInst[j].valor);
-											$("#tablaInstituciones").append('<tr><td class="col-md-3"><a tipo="filtroPorEntidad" institucion_id='+instituciones[i].id+' depto_id='+e.target.feature.properties.dpto+' dist_id='+e.target.feature.properties.distrito+' >'+instituciones[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(desPaisDistInst[j].valor).toFixed(0)+'%"><p class="text-left">'+parseFloat(desPaisDistInst[j].valor).toFixed(2)+'%</p></div></div></td></tr>');
+											if (desPaisDistInst[j].valor != 0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><a tipo="filtroPorEntidad" institucion_id='+instituciones[i].id+' depto_id='+e.target.feature.properties.dpto+' dist_id='+e.target.feature.properties.distrito+' >'+instituciones[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(desPaisDistInst[j].valor).toFixed(0)+'%"><p class="text-left">'+parseFloat(desPaisDistInst[j].valor).toFixed(2)+'%</p></div></div></td></tr>');
 										}
 									}
 								}
@@ -903,8 +927,8 @@ tbody {
 	    //bucle de creacion de porcentaje y generacion de una etiqueta con un cuadrado de color para cada intervalo
 		for (var i = 0; i < grades.length; i++) {
 	        this._div.innerHTML +=
-				'<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-				grades[i] + (grades[i + 1] ? ' &ndash; ' + grades[i + 1] + '%' + '<br>' : '%' + '+');
+	        	'<p><i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+	            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '%' + '</p>' : '%' + '+' + '</p>');
 		}
 		this.update()
 		return this._div;
@@ -919,8 +943,8 @@ tbody {
 	    //bucle de creacion de porcentaje y generacion de una etiqueta con un cuadrado de color para cada intervalo
 	    for (var i = 0; i < grades.length; i++) {
 	        this._div.innerHTML +=
-	            '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-	            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '%' + '<br>' : '%' + '+');
+	            '<p><i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+	            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '%' + '</p>' : '%' + '+' + '</p>');
 	    }
 	}
 	
