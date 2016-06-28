@@ -338,32 +338,6 @@ tbody {
 						//desPaisDepto.push(desPaisDeptoAux);
 						
 					//}
-					var desPaisDistjson = $.ajax({
-				    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist3',
-				      	type:'get',
-				      	dataType:'json',
-				      	crossDomain:true,
-				      	async:false       
-				    }).responseText;
-					var desPaisDist=JSON.parse(desPaisDistjson);					
-					/*
- 				 	var desPaisDistInstjson = $.ajax({
-				    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist4',
-				      	type:'get',
-				      	dataType:'json',
-				      	crossDomain:true,
-				      	async:false       
-				    }).responseText;
-					var desPaisDistInst=JSON.parse(desPaisDistInstjson); */
-					
-					var desPaisDistInstjson = $.ajax({
-				    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionDptoDistInst',
-				      	type:'get',
-				      	dataType:'json',
-				      	crossDomain:true,
-				      	async:false       
-				    }).responseText;
-					var desPaisDistInst=JSON.parse(desPaisDistInstjson); 
 					
 					var desPaisInstjson = $.ajax({
  						/* url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist&institucionId='+instituciones[i].id, */
@@ -376,8 +350,8 @@ tbody {
 					var desPaisInstAux=JSON.parse(desPaisInstjson);
 					
 					var desPaisInst= [];
+					for(var i=0;i<instituciones.length;i++){		
 					
-					for(var i=0;i<instituciones.length;i++){
 						//var acum = 0,cont = 0;
 						//var promedio = 0;
 					
@@ -426,8 +400,24 @@ tbody {
 				    }).responseText;
 					var desPaisDist=JSON.parse(desPaisDistjson);
 					
-				    //Aqui estaba el ajax selects de  getResumenLineasAccionProgramacionInstDptoDist3 y getResumenLineasAccionProgramacionInstDptoDist4
-
+				   /*var desPaisDistInstjson = $.ajax({
+				    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist4',
+				      	type:'get',
+				      	dataType:'json',
+				      	crossDomain:true,
+				      	async:false       
+				    }).responseText;
+					var desPaisDistInst=JSON.parse(desPaisDistInstjson); 
+				    
+				    /*nuevo ajax select en vez de dist4*/
+				    var desPaisDistInstjson = $.ajax({
+				    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionDptoDistInst',
+				      	type:'get',
+				      	dataType:'json',
+				      	crossDomain:true,
+				      	async:false       
+				    }).responseText;
+					var desPaisDistInst=JSON.parse(desPaisDistInstjson);
 					
 					//var totalLineaPais=[];
 					var y=0;
