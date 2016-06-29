@@ -1096,6 +1096,159 @@ public class ajaxSelects extends HttpServlet {
                 out.println(json.toString());
             }
         	
+        	
+        	if (action.equals("getResumenLineasAccionProgramacionDptoDistInst")){
+        		List<LineaAccionProgramacion> objetos = new ArrayList<LineaAccionProgramacion>();
+        		ArrayList<DesempDistritoInst> desempenhoInstDist= new  ArrayList<DesempDistritoInst>();
+	    		if (institucionId!=null) condition += " and ins_linea_accion_base_dd.institucion_id='"+institucionId+"'";
+	            if (departamentoId!=null) condition += " and ins_linea_accion_base_dd.depto_id='"+departamentoId+"'";
+	            if (distritoId!=null) condition += " and ins_linea_accion_base_dd.dist_id='"+distritoId+"'";
+                try {                	
+                	double acum=0, promedio=0;
+                	int cont=0;
+                	objetos = SqlSelects.selectResumenLineasAccionProgramacionDptoDistInst (condition);
+                                	             	
+        			acum=0; promedio=0; cont=0; 
+        			int distritoAct = 0;
+        			int departamentoAct = 0;
+        			int institucionAct = 0; 
+						for (int i = 0; i < objetos.size(); i += 1) {
+							
+							if (i==0){/*Se almacenan los valores del departamento y el distrito en variables
+								la primera vez para comenzar el proceso de corte y control.*/
+								institucionAct = objetos.get(i).getInstitucionId();
+								departamentoAct = objetos.get(i).getDepartamentoId();
+								distritoAct = objetos.get(i).getDistritoId();    									
+							}
+							
+							if (institucionAct == objetos.get(i).getInstitucionId()){//realiza el corte por institucion.
+							
+								if (departamentoAct == objetos.get(i).getDepartamentoId()){//realiza el corte por departamento.
+									
+	    							if (distritoAct == objetos.get(i).getDistritoId()){//realiza el corte por distrito.
+	    								
+	    								/*si el valor del distrito no cambia se realiza el proceso de obtención del desempeño 
+	    								y acumulación para el distrito actual.*/
+										if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && objetos.get(i).getCantidadAvance() > 0) {	
+											acum += 100;
+											cont++;
+										} else if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+											acum += 0;
+											cont++;
+										} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+											acum += 0;
+										} else {
+											acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
+											cont++;
+										}
+										
+										//Si es el último elemento, realiza el promedio y almacena el desemp. en el array.
+			    						if (i == (objetos.size()-1)){
+			    							if(cont != 0){
+				    							promedio = acum / cont;
+				    						}    							
+			    							DesempDistritoInst desempDistInst = new DesempDistritoInst();
+			    							desempDistInst.setClave1(departamentoAct);
+			    							desempDistInst.setClave2(distritoAct);
+			    							desempDistInst.setClave3(institucionAct);
+			    							desempDistInst.setValor(promedio);
+				    						desempenhoInstDist.add(desempDistInst);
+			    						}
+	    							} else {//si la condición no se cumple realiza el corte por distritos.
+	    								
+	    								//procesa los datos del distrito anterior.
+			    						if(cont != 0){
+			    							promedio = acum / cont;
+			    						}    							
+			    						DesempDistritoInst desempDistInst = new DesempDistritoInst();
+			    						desempDistInst.setClave1(departamentoAct);
+			    						desempDistInst.setClave2(distritoAct);
+			    						desempDistInst.setClave3(institucionAct);
+			    						desempDistInst.setValor(promedio);
+			    						desempenhoInstDist.add(desempDistInst);
+			    						
+			    						//cera de vuelta para el distrito que realizó el corte.
+			    						departamentoAct = objetos.get(i).getDepartamentoId();
+										distritoAct = objetos.get(i).getDistritoId();
+			    						acum=0;
+			    						promedio=0;
+			    						cont=0;
+			    						
+			    						//realiza el proceso de obtención del desempeño para el distrito que realizo el corte.				    					
+			    						if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && objetos.get(i).getCantidadAvance() > 0) {	
+											acum += 100;
+											cont++;
+										} else if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+											acum += 0;
+											cont++;
+										} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+											acum += 0;
+										} else {
+											acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
+											cont++;
+										}
+			    						
+			    						//Si es el último elemento, realiza el promedio y almacena el desemp. en el array.
+			    						if (i == (objetos.size()-1)){
+			    							if(cont != 0){
+				    							promedio = acum / cont;
+				    						}    							
+			    							desempDistInst = new DesempDistritoInst();
+			    							desempDistInst.setClave1(departamentoAct);
+			    							desempDistInst.setClave2(distritoAct);
+			    							desempDistInst.setClave3(institucionAct);
+			    							desempDistInst.setValor(promedio);
+				    						desempenhoInstDist.add(desempDistInst);
+			    						}
+	    							}	    							
+								} else {
+									//procesa los datos del distrito del departamento anterior.
+		    						if(cont != 0){
+		    							promedio = acum / cont;
+		    						}    							
+		    						DesempDistritoInst desempDistInst = new DesempDistritoInst();
+		    						desempDistInst.setClave1(departamentoAct);
+		    						desempDistInst.setClave2(distritoAct);
+		    						desempDistInst.setClave3(institucionAct);
+		    						desempDistInst.setValor(promedio);
+		    						desempenhoInstDist.add(desempDistInst);
+		    						
+		    						//cera de vuelta para el departamento que realizó el corte.
+		    						departamentoAct = objetos.get(i).getDepartamentoId();
+									distritoAct = objetos.get(i).getDistritoId();
+		    						acum=0;
+		    						promedio=0;
+		    						cont=0;
+								}
+							} else {
+								/*procesa los datos de la institucion, el distrito y del departamento anterior 
+								  cuando la institucion no es igual a la anterior.*/
+	    						if(cont != 0){
+	    							promedio = acum / cont;
+	    						}    							
+	    						DesempDistritoInst desempDistInst = new DesempDistritoInst();
+	    						desempDistInst.setClave1(departamentoAct);
+	    						desempDistInst.setClave2(distritoAct);
+	    						desempDistInst.setClave3(institucionAct);
+	    						desempDistInst.setValor(promedio);
+	    						desempenhoInstDist.add(desempDistInst);
+	    						
+	    						//cera de vuelta para el departamento que realizó el corte.
+	    						institucionAct = objetos.get(i).getInstitucionId();
+	    						departamentoAct = objetos.get(i).getDepartamentoId();
+								distritoAct = objetos.get(i).getDistritoId();								
+	    						acum=0;
+	    						promedio=0;
+	    						cont=0;
+							}
+							
+						}                			
+				}catch (SQLException e) {e.printStackTrace();}
+                JsonElement json = new Gson().toJsonTree(desempenhoInstDist);
+                out.println(json.toString());
+            }
+        	
+        	
         	if (action.equals("getResumenLineasAccionProgramacion2")){
         		List objetos=null; 
                 if (institucionId!=null) condition += " and ins_linea_accion_base_dd.institucion_id='"+institucionId+"'";
