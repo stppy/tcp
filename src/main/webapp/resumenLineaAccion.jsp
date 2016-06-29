@@ -228,6 +228,7 @@ textarea { text-transform: uppercase; }
 			lineasProgramadas = JSON.parse(lineasProgramadas);
 			lineasProgramadas=lineasProgramadas.sort(lineaAccionOrden);
 			
+			
 
 			function renderAccion(estrategia){
 			
@@ -237,11 +238,28 @@ textarea { text-transform: uppercase; }
 			var flagIns=0;
 			var clase="";
 			
+			//OBTENCION DE LA FECHA ACTUAL
+			var f = new Date();
+		    if( (f.getMonth() +1) < 10 ){
+		    	var mes =( 0 +""+ (f.getMonth() +1));
+		    }else{
+		    	var mes =f.getMonth();
+		    }
+		    
+		    if( (f.getDate()) < 10 ){
+		    	var dia =( 0 +""+ (f.getDate()));
+		    }else{
+		    	var dia = f.getDate();
+		    }
+			var fechaActual = (f.getFullYear() + "-" + mes + "-" + dia);
+			
 			  tempInstituciones = '<thead><tr>'+
 				  	'<th rowspan="3" class="text-center" style="vertical-align: middle;">Línea de Acción</th>'+
 				  	'<th rowspan="3" class="text-center" style="vertical-align: middle;">Unidad de Medida</th>'+
 				  	'<th colspan="5" class="text-center">Plan de Acción 2016</th>'+
 				  	'<th colspan="5" class="text-center">Ejecución a la Fecha</th></tr>'+
+				  	'<th colspan="5" class="text-center"><input type="date" id="fechaInicioAccion" min="2014-01-01" max="'+fechaActual+'"/></th>'+
+				  	'<th colspan="4" class="text-center"><input type="date" id="fechaInicioEjecucion" max="2016-12-31" value="'+fechaActual+'"/></th><th><input	class="btn btn-primary cambiarFiltroFecha" type="submit" value="Filtrar"></th></tr>'+ 
 				'<tr><th colspan="3" class="text-center">Meta</th>'+
 				  	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Destinatarios</th>'+
 				  	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Inversión (en millones G.)</th>'+
@@ -374,8 +392,37 @@ textarea { text-transform: uppercase; }
 			}
 			
 			
+			
 			renderLineasEstrategicas(); 
-			window.open('http://spr.stp.gov.py/','_blank');
+			
+			$("body").on("click", ".guardarRangoFechas",function(event){
+			
+				var fechaInicio = document.getElementById("fechaInicioAccion").value;
+				var fechaFin = document.getElementById("fechaFinAccion").value;
+				
+		 		var datos = new Object();
+			    
+			    datos.fechaInicio = fechaInicio;
+			    datos.fechaFin = fechaFin;
+			    
+			  	var info = JSON.stringify(datos);
+			    $.ajax({
+			        url: "ajaxInserts2?accion=insAccion",
+			        type: 'POST',
+			        dataType: 'json',
+			        data: info,
+			        contentType: 'application/json',
+			        mimeType: 'application/json',
+			        success: function (data) {
+			        	actualizarTablaAcciones(insLineaAccionId,lineaAccionId,institucionId,periodoId);
+			        	},
+			        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
+			        error: function(data,status,er) {
+			        	actualizarTablaAcciones(insLineaAccionId,lineaAccionId,institucionId,periodoId);
+			        	}
+				 });
+			});	
+			//window.open('http://spr.stp.gov.py/','_blank');
 		})
         </script>
           
