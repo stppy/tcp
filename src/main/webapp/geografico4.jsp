@@ -309,14 +309,14 @@ tbody {
 						/* var acum = 0,cont = 0;
 						var promedio = 0; */
 						
-	 					var desPaisDeptojson = $.ajax({
-	 						url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist',
-					      	type:'get',
-					      	dataType:'json',
-					      	crossDomain:true,
-					      	async:false       
-					    }).responseText;
-						var desPaisDepto=JSON.parse(desPaisDeptojson);
+ 					var desPaisDeptojson = $.ajax({
+ 						url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist',
+				      	type:'get',
+				      	dataType:'json',
+				      	crossDomain:true,
+				      	async:false       
+				    }).responseText;
+					var desPaisDepto=JSON.parse(desPaisDeptojson);
 						
 						/* for (d = 0; d < desPaisDeptoAux.length; d++){	
 							if (desPaisDeptoAux[d].cantidadHoy == 0 && desPaisDeptoAux[d].cantidadAvance > 0){
@@ -341,7 +341,7 @@ tbody {
 					
 					var desPaisInstjson = $.ajax({
  						/* url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist&institucionId='+instituciones[i].id, */
- 						url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramaciondesempenoInstitucional',
+ 						url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionDesempenoInstitucional',
 				      	type:'get',
 				      	dataType:'json',
 				      	crossDomain:true,
@@ -350,7 +350,7 @@ tbody {
 					var desPaisInstAux=JSON.parse(desPaisInstjson);
 					
 					var desPaisInst= [];
- 					for(var i=0;i<instituciones.length;i++){		
+					for(var i=0;i<instituciones.length;i++){		
 					
 						//var acum = 0,cont = 0;
 						//var promedio = 0;
@@ -398,9 +398,9 @@ tbody {
 				      	crossDomain:true,
 				      	async:false       
 				    }).responseText;
-					var desPaisDist=JSON.parse(desPaisDistjson);					
+					var desPaisDist=JSON.parse(desPaisDistjson);
 					
- 				 	var desPaisDistInstjson = $.ajax({
+				   /*var desPaisDistInstjson = $.ajax({
 				    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist4',
 				      	type:'get',
 				      	dataType:'json',
@@ -409,7 +409,15 @@ tbody {
 				    }).responseText;
 					var desPaisDistInst=JSON.parse(desPaisDistInstjson); 
 				    
-
+				    /*nuevo ajax select en vez de dist4*/
+				    var desPaisDistInstjson = $.ajax({
+				    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionDptoDistInst',
+				      	type:'get',
+				      	dataType:'json',
+				      	crossDomain:true,
+				      	async:false       
+				    }).responseText;
+					var desPaisDistInst=JSON.parse(desPaisDistInstjson);
 					
 					//var totalLineaPais=[];
 					var y=0;
@@ -503,37 +511,37 @@ tbody {
 								}
 							}else{
 								
-/* 								var lineaAccionDepartamento = $.ajax({
-						    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getLineasAccionDepartamento',
-						      	type:'get',
-						      	dataType:'json',
-						      	crossDomain:true,
-						      	async:false       
-						    }).responseText;
-							lineaAccionDepartamento=JSON.parse(lineaAccionDepartamento); */
-							
-							distritos = $.ajax({
-					    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito&departamento='+e.target.feature.properties.dpto,
-					      	type:'get',
-					      	dataType:'json',
-					      	crossDomain:true,
-					      	async:false       
-					    	}).responseText;
-							distritos=JSON.parse(distritos);
-							
-							for(var d = 0; d < distritos.length; d++){
-								var despenhoDeptoDist = $.ajax({
-							    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist&departamentoId='+e.target.feature.properties.dpto+'&distritoId='+distritos[d].id,
+	/* 								var lineaAccionDepartamento = $.ajax({
+							    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getLineasAccionDepartamento',
 							      	type:'get',
 							      	dataType:'json',
 							      	crossDomain:true,
 							      	async:false       
 							    }).responseText;
-								despenhoDeptoDist=JSON.parse(despenhoDeptoDist);
-								totalDesempenhoDeptoDis.push(despenhoDeptoDist[0]);
-							}
-							
-							
+								lineaAccionDepartamento=JSON.parse(lineaAccionDepartamento); */
+								
+								distritos = $.ajax({
+						    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito&departamento='+e.target.feature.properties.dpto,
+						      	type:'get',
+						      	dataType:'json',
+						      	crossDomain:true,
+						      	async:false       
+						    	}).responseText;
+								distritos=JSON.parse(distritos);
+								
+								for(var d = 0; d < distritos.length; d++){
+									var despenhoDeptoDist = $.ajax({
+								    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist&departamentoId='+e.target.feature.properties.dpto+'&distritoId='+distritos[d].id,
+								      	type:'get',
+								      	dataType:'json',
+								      	crossDomain:true,
+								      	async:false       
+								    }).responseText;
+									despenhoDeptoDist=JSON.parse(despenhoDeptoDist);
+									totalDesempenhoDeptoDis.push(despenhoDeptoDist[0]);
+								}
+								
+								
 								tipoInstituciones="departamento";
 								array=lineaAccionDepartamento;
 								$("#tabla-derecho").html("");
@@ -563,7 +571,6 @@ tbody {
 									//despTotDeptoInst=depemDeptoInst/countDeptoInst;
 									color=getColorDesemp2(lineaAccionDepartamento[0]);
 									if (lineaAccionDepartamento[0] !=0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><a tipo="filtroPorEntidad" institucion_id='+instituciones[i].id+' depto_id='+e.target.feature.properties.dpto+' >'+instituciones[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(lineaAccionDepartamento[0]).toFixed(0)+'%"><p class="text-left">'+parseFloat(lineaAccionDepartamento[0]).toFixed(2)+'%</p></div></div></td></tr>');
-
 								}
 							}
 						}else{ //d
@@ -591,7 +598,7 @@ tbody {
 
 							}
 						}
-					}
+					}//fin funcion "renderEntidades"
 					
 					function renderLineaAccion(depto_id, institucion_id, dist_id)
 					{
@@ -670,7 +677,7 @@ tbody {
 							
 							
 						}
-					}
+					}//fin renderLineaAccion
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 						function getColor(d) {
 						  
