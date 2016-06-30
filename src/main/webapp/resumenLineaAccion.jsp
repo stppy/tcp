@@ -259,7 +259,7 @@ textarea { text-transform: uppercase; }
 				  	'<th colspan="5" class="text-center">Plan de Acción 2016</th>'+
 				  	'<th colspan="5" class="text-center">Ejecución a la Fecha</th></tr>'+
 				  	'<th colspan="5" class="text-center"><input type="date" id="fechaInicioAccion" min="2014-01-01" max="'+fechaActual+'"/></th>'+
-				  	'<th colspan="4" class="text-center"><input type="date" id="fechaInicioEjecucion" max="2016-12-31" value="'+fechaActual+'"/></th><th><input	class="btn btn-primary cambiarFiltroFecha" type="submit" value="Filtrar"></th></tr>'+ 
+				  	'<th colspan="4" class="text-center"><input type="date" id="fechaInicioEjecucion" max="2016-12-31" value="'+fechaActual+'"/></th><th><input	class="btn btn-primary guardarRangoFechas" type="submit" value="Filtrar"></th></tr>'+ 
 				'<tr><th colspan="3" class="text-center">Meta</th>'+
 				  	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Destinatarios</th>'+
 				  	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Inversión (en millones G.)</th>'+
@@ -405,7 +405,7 @@ textarea { text-transform: uppercase; }
 			    datos.fechaInicio = fechaInicio;
 			    datos.fechaFin = fechaFin;
 			    
-			  	var info = JSON.stringify(datos);
+			  	/*var info = JSON.stringify(datos);
 			    $.ajax({
 			        url: "ajaxInserts2?accion=insAccion",
 			        type: 'POST',
@@ -420,7 +420,7 @@ textarea { text-transform: uppercase; }
 			        error: function(data,status,er) {
 			        	actualizarTablaAcciones(insLineaAccionId,lineaAccionId,institucionId,periodoId);
 			        	}
-				 });
+				 });*/
 			});	
 			//window.open('http://spr.stp.gov.py/','_blank');
 		})
