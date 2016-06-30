@@ -1,7 +1,5 @@
 package py.gov.stp.tools2;
 
-
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
@@ -17,8 +15,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
- 
-
 import javax.xml.datatype.DatatypeConfigurationException;
 
 import org.jasig.cas.client.authentication.AttributePrincipal;
@@ -767,7 +763,7 @@ public class ajaxSelects extends HttpServlet {
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
         	}
-        	/*if (action.equals("getResumenLineasAccionProgramacionInstDptoDist")){
+        	if (action.equals("getResumenLineasAccionProgramacionInstDptoDist")){
                 List<LineaAccionProgramacion> objetos=null;
                 ArrayList<Object> desempenhoDpto= new ArrayList<Object>();
                 if (institucionId!=null) condition += " and ins_linea_accion_base_dd.institucion_id='"+institucionId+"'";
@@ -825,87 +821,8 @@ public class ajaxSelects extends HttpServlet {
 				}catch (SQLException e) {e.printStackTrace();}
                 JsonElement json = new Gson().toJsonTree(desempenhoDpto);
                 out.println(json.toString());
-            } */
+            }
         	
-        	/*obtenemos los departamentos y distritos para pintar en el mapa,
-        	 * las instituciones en el back end y su desemeño institucional a nivel departamental*/
-        	if (action.equals("getResumenLineasAccionProgramacionInstDptoDist")){
-	            List<LineaAccionProgramacion> objetos=null;
-	            List<Institucion> instituciones= null ;
-	            List<Departamento> departamentos= null ;
-	            List<Distrito> distritos= null ;
-	            ArrayList<Object> desempenhoDpto= new ArrayList<Object>();
-	            condition = " where true";                
-	            try {instituciones = SqlSelects.selectInstitucion(condition);
-	            	} catch (SQLException e1) {e1.printStackTrace();}
-	            try {departamentos = SqlSelects.selectDepartamento(condition);
-	            	} catch (SQLException e1) {e1.printStackTrace();}
-	            try {distritos = SqlSelects.selectDistritos(condition);
-	            	} catch (SQLException e1) {e1.printStackTrace();}
-	              
-	            for (int s = 0; s < instituciones.size(); s += 1) {
-	              /*if (institucionId!=null) condition += " and ins_linea_accion_base_dd.institucion_id='"+institucionId+"'";
-	              if (departamentoId!=null) condition += " and ins_linea_accion_base_dd.depto_id='"+departamentoId+"'";
-	              if (distritoId!=null) condition += " and ins_linea_accion_base_dd.dist_id='"+distritoId+"'";*/
-	
-	              condition += " and ins_linea_accion_base_dd.institucion_id='"+instituciones.get(s).getId()+"'";
-	              condition += " and ins_linea_accion_base_dd.depto_id='"+departamentos.get(s).getIdDepartamento()+"'";
-	              condition += " and ins_linea_accion_base_dd.dist_id='"+distritos.get(s).getId()+"'";
-	              
-	              try {                	
-	              	double acum=0, promedio=0;
-	              	int cont=0;
-	              	objetos = SqlSelects.selectResumenLineasAccionProgramacionInstDptoDist(condition);
-	              
-	              	/*if(instituciones==null && departamentos==null && distritos==null){
-	              		for (int x = 0; x < 18; x += 1) {
-	              			acum=0; promedio=0; cont=0;
-    						for (int i = 0; i < objetos.size(); i += 1) {
-    							if(x == objetos.get(i).getDepartamentoId()){
-    								if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && objetos.get(i).getCantidadAvance() > 0) {	
-										acum += 100;
-										cont+=1;
-									} else if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
-										acum += 0;
-										cont+=1;
-									} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
-										acum += 0;
-									} else {
-										acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
-										cont+=1;
-									}
-    							}
-    						}
-    						if(cont != 0){
-    							promedio = acum / cont;
-    						}
-    						desempenhoDpto.add(promedio);
-	  					}//fin deparmento
-	              	}else{*/
-	      						for (int i = 0; i < objetos.size(); i += 1) {
-	      							if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && objetos.get(i).getCantidadAvance() > 0) {	
-	      								acum += 100;
-	      								cont+=1;
-	      							} else if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
-	      								acum += 0;
-	      								cont+=1;
-	      							} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
-	      								acum += 0;
-	      							} else {
-	      								acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
-	      								cont+=1;
-	      							}
-	      						}
-	      						if(cont != 0){
-	      							promedio = acum / cont;
-	      						}
-	      						desempenhoDpto.add(promedio);
-	              //	}
-	      				}catch (SQLException e) {e.printStackTrace();}
-	              JsonElement json = new Gson().toJsonTree(desempenhoDpto);
-	              out.println(json.toString());
-	            }
-        	}
         	
         	if (action.equals("getResumenLineasAccionProgramacionInstDptoDist3")){
         		List<LineaAccionProgramacion> objetos=null;
@@ -1406,6 +1323,51 @@ public class ajaxSelects extends HttpServlet {
                 JsonElement json = new Gson().toJsonTree(desempenhoDpto);
                 out.println(json.toString());
             } 
+        	/*obtenemos los departamentos y distritos para pintar en el mapa,
+        	 * las instituciones en el back end y su desemeño institucional a nivel departamental*/
+//        	if (action.equals("getResumenLineasAccionProgramacionInstDptoDist")){
+//	            List<LineaAccionProgramacion> objetos=null;
+//	            List<Distrito> distritos= null ;
+//	            ArrayList<Object> desempenhoDpto= new ArrayList<Object>();
+//	            condition = " where true";   
+//	              if (institucionId!=null) condition += " and ins_linea_accion_base_dd.institucion_id='"+institucionId+"'";
+//	              if (departamentoId!=null) condition += " and ins_linea_accion_base_dd.depto_id='"+departamentoId+"'";
+//	              if (distritoId!=null) condition += " and ins_linea_accion_base_dd.dist_id='"+distritoId+"'";
+//	            try {distritos= py.gov.stp.tools.SqlSelects.selectDistritos(condition);
+//	            	} catch (SQLException e1) {e1.printStackTrace();}
+//	              
+//	            for (int s = 0; s < distritos.size(); s += 1) {
+//		               condition += " OR ins_linea_accion_base_dd.dist_id='"+distritoId+"'";
+//	            }
+//	               
+//	              try {                	
+//	              	double acum=0, promedio=0;
+//	              	int cont=0;
+//	              	objetos = SqlSelects.selectResumenLineasAccionProgramacionInstDptoDist(condition);
+//
+//					for (int i = 0; i < objetos.size(); i += 1) {
+//						if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && objetos.get(i).getCantidadAvance() > 0) {	
+//							acum += 100;
+//							cont+=1;
+//						} else if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+//							acum += 0;
+//							cont+=1;
+//						} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+//							acum += 0;
+//						} else {
+//							acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
+//							cont+=1;
+//						}
+//					}
+//					if(cont != 0){
+//						promedio = acum / cont;
+//					}
+//					desempenhoDpto.add(promedio);
+//
+//	              }catch (SQLException e) {e.printStackTrace();}
+//	              JsonElement json = new Gson().toJsonTree(desempenhoDpto);
+//	              out.println(json.toString());
+//        	}
        }
        out.close();
         
