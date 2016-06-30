@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Alcides Benitez
  */
-public class crearPDF extends HttpServlet {
+public class CrearPdfServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
