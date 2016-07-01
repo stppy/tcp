@@ -1,5 +1,7 @@
 package py.gov.stp.tools2;
 
+
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
@@ -15,6 +17,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
+ 
+
 import javax.xml.datatype.DatatypeConfigurationException;
 
 import org.jasig.cas.client.authentication.AttributePrincipal;
@@ -24,7 +28,6 @@ import py.gov.stp.objetosV2.DesempDistritoInst;
 import py.gov.stp.objetosV2.Institucion;
 import py.gov.stp.objetosV2.LineaAccionProgramacion;
 import py.gov.stp.objetosV2.ResumenLineaAccion;
-import py.gov.stp.tools.Departamento;
 import py.gov.stp.tools.Distrito;
 import py.gov.stp.tools2.SqlSelects;
 
@@ -370,7 +373,7 @@ public class ajaxSelects extends HttpServlet {
         	if (action.equals("getInsLineaAccion")){
         		List objetos=null; 
         		condition = " where true ";
-        		String condition2 = " whe7re entidad_id="+userEntidadId+" and nivel_id="+userNivelId ;
+        		String condition2 = " where entidad_id="+userEntidadId+" and nivel_id="+userNivelId ;
         		if (!userUnrId.equals("0")){ condition2+= " and unidad_responsable_id="+userUnrId;}
         		condition += " and institucion_id IN (select id from institucion "+condition2+") ";
         		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
@@ -821,8 +824,7 @@ public class ajaxSelects extends HttpServlet {
 				}catch (SQLException e) {e.printStackTrace();}
                 JsonElement json = new Gson().toJsonTree(desempenhoDpto);
                 out.println(json.toString());
-            }
-        	
+            } 
         	
         	if (action.equals("getResumenLineasAccionProgramacionInstDptoDist3")){
         		List<LineaAccionProgramacion> objetos=null;
@@ -1278,11 +1280,12 @@ public class ajaxSelects extends HttpServlet {
         		out.println(json.toString());        	
         	}
         	//obtenemos todas las instituciones en el back end y su desemeño institucional a nivel país
-        	if (action.equals("getResumenLineasAccionProgramaciondesempenoInstitucional")){
+        	if (action.equals("getResumenLineasAccionProgramacionDesempenoInstitucional")){
                 List<LineaAccionProgramacion> objetos=null;
                 List<Institucion> instituciones= null ;
                 ArrayList<Object> desempenhoDpto= new ArrayList<Object>();
-                condition = " where true";                
+                //condition = " where true";
+                
                 try {
 					instituciones = SqlSelects.selectInstitucion(condition);
 				} catch (SQLException e1) {
@@ -1290,84 +1293,104 @@ public class ajaxSelects extends HttpServlet {
 				}
                 
 				for (int s = 0; s < instituciones.size(); s += 1) {
-
-	                //if (institucionId!=null) condition += " and ins_linea_accion_base_dd.institucion_id='"+institucionId+"'";
-	                 condition = " and ins_linea_accion_base_dd.institucion_id='"+instituciones.get(s).getId()+"'";
-
+	                 condition += " OR ins_linea_accion_base_dd.institucion_id='"+instituciones.get(s).getId()+"'";
+				}
 	                try {                	
-	                	double acum=0, promedio=0;
-	                	int cont=0;
+
+	                	double acum, promedio;
+	                	int cont;
 	                	objetos = SqlSelects.selectResumenLineasAccionProgramacionInstDptoDistrito(condition);
-	                
-						for (int i = 0; i < objetos.size(); i += 1) {
-							if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && objetos.get(i).getCantidadAvance() > 0) {	
-								acum += 100;
-								cont+=1;
-							} else if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
-								acum += 0;
-								cont+=1;
-							} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
-								acum += 0;
-							} else {
-								acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
-								cont+=1;
+	                	
+	                	for(int j = 0; j < instituciones.size(); j+= 1){
+		                	acum=0;
+		                	promedio=0;
+		                	cont=0;
+							for (int i = 0; i < objetos.size(); i += 1) {
+    							if(instituciones.get(j).getId() == objetos.get(i).getInstitucionId()){
+									if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && objetos.get(i).getCantidadAvance() > 0) {	
+										acum += 100;
+										cont+=1;
+									} else if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+										acum += 0;
+										cont+=1;
+									} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+										acum += 0;
+									} else {
+										acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
+										cont+=1;
+									}
+    							}
 							}
-						}
-						if(cont != 0){
-							promedio = acum / cont;
-						}
-						desempenhoDpto.add(promedio);
+							if(cont != 0){
+								promedio = acum / cont;
+							}
+							desempenhoDpto.add(promedio);
+	                	}
+
 						                	
 					}catch (SQLException e) {e.printStackTrace();}
-				}
+				
                 JsonElement json = new Gson().toJsonTree(desempenhoDpto);
                 out.println(json.toString());
             } 
-        	/*obtenemos los departamentos y distritos para pintar en el mapa,
-        	 * las instituciones en el back end y su desemeño institucional a nivel departamental*/
-//        	if (action.equals("getResumenLineasAccionProgramacionInstDptoDist")){
-//	            List<LineaAccionProgramacion> objetos=null;
-//	            List<Distrito> distritos= null ;
-//	            ArrayList<Object> desempenhoDpto= new ArrayList<Object>();
-//	            condition = " where true";   
-//	              if (institucionId!=null) condition += " and ins_linea_accion_base_dd.institucion_id='"+institucionId+"'";
-//	              if (departamentoId!=null) condition += " and ins_linea_accion_base_dd.depto_id='"+departamentoId+"'";
-//	              if (distritoId!=null) condition += " and ins_linea_accion_base_dd.dist_id='"+distritoId+"'";
-//	            try {distritos= py.gov.stp.tools.SqlSelects.selectDistritos(condition);
-//	            	} catch (SQLException e1) {e1.printStackTrace();}
-//	              
-//	            for (int s = 0; s < distritos.size(); s += 1) {
-//		               condition += " OR ins_linea_accion_base_dd.dist_id='"+distritoId+"'";
-//	            }
-//	               
-//	              try {                	
-//	              	double acum=0, promedio=0;
-//	              	int cont=0;
-//	              	objetos = SqlSelects.selectResumenLineasAccionProgramacionInstDptoDist(condition);
-//
-//					for (int i = 0; i < objetos.size(); i += 1) {
-//						if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && objetos.get(i).getCantidadAvance() > 0) {	
-//							acum += 100;
-//							cont+=1;
-//						} else if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
-//							acum += 0;
-//							cont+=1;
-//						} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
-//							acum += 0;
-//						} else {
-//							acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
-//							cont+=1;
-//						}
-//					}
-//					if(cont != 0){
-//						promedio = acum / cont;
-//					}
-//					desempenhoDpto.add(promedio);
-//
-//	              }catch (SQLException e) {e.printStackTrace();}
-//	              JsonElement json = new Gson().toJsonTree(desempenhoDpto);
-//	              out.println(json.toString());
-//        	}
+        	//obtenemos todas las instituciones en el back end y su desemeño institucional a nivel DEPARTAMENTAL
+        	if (action.equals("getResumenLineasAccionProgramacionDesempenoInstitucionalDepto")){
+                List<LineaAccionProgramacion> objetos=null;
+                List<Institucion> instituciones= null ;
+                ArrayList<Object> desempenhoDpto= new ArrayList<Object>();
+                //condition = " where true";                
+                try {
+					instituciones = SqlSelects.selectInstitucion(condition);
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+
+				for (int s = 0; s < instituciones.size(); s += 1) {
+					if(s == 0){
+						condition += " AND ins_linea_accion_base_dd.depto_id='"+departamentoId+"' AND ins_linea_accion_base_dd.institucion_id='"+instituciones.get(s).getId()+"'";
+					}else{
+						condition += " OR ins_linea_accion_base_dd.depto_id='"+departamentoId+"' AND ins_linea_accion_base_dd.institucion_id='"+instituciones.get(s).getId()+"'";
+					}
+				}
+
+	                try {                	
+
+	                	double acum, promedio;
+	                	int cont;
+	                	objetos = SqlSelects.selectResumenLineasAccionProgramacionInstitucionDepto(condition);
+	                	
+	                	for(int j = 0; j < instituciones.size(); j+= 1){
+		                	acum=0;
+		                	promedio=0;
+		                	cont=0;
+							for (int i = 0; i < objetos.size(); i += 1) {
+    							if(instituciones.get(j).getId() == objetos.get(i).getInstitucionId()){
+									if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && objetos.get(i).getCantidadAvance() > 0) {	
+										acum += 100;
+										cont+=1;
+									} else if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+										acum += 0;
+										cont+=1;
+									} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+										acum += 0;
+									} else {
+										acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
+										cont+=1;
+									}
+    							}
+							}
+							if(cont != 0){
+								promedio = acum / cont;
+							}
+							desempenhoDpto.add(promedio);
+	                	}
+
+						                	
+					}catch (SQLException e) {e.printStackTrace();}
+				
+                JsonElement json = new Gson().toJsonTree(desempenhoDpto);
+                out.println(json.toString());
+            } 
        }
        out.close();
         
