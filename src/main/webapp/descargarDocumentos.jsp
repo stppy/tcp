@@ -102,10 +102,10 @@ if (user != null) { %>
 				cajaTipoDocumento="";
 				cajaTipoDocumento +=	'<div class="row">'+
 								        '	<div class="col-md-12">'+
-								        '		<div class="box">'+
+								        '		<div class="box collapsed-box">'+
 								        '			<div class="box-header with-border">'+
 								        '				<h4 class="box-title" >'+webServicesTipoDocumento[0].nombre+'</h4>'+
-								        '				<div class="box-tools pull-right"><button class="btn btn-box-tool cargarProyectos" data-widget="collapse"><i class="fa fa-minus"></i></button></div>'+
+								        '				<div class="box-tools pull-right"><button class="btn btn-box-tool cargarProyectos" data-widget="collapse"><i class="fa fa-plus"></i></button></div>'+
 								        '			</div>'+
 								        '			<div class="box-body">';
 								        
@@ -122,11 +122,11 @@ if (user != null) { %>
 					cajaTipoDocumento +=	'				<div class="table-responsive">'+
 											'	            	<table class="table table-hover table-bordered" id="dataTablesUsuarios">'+
 											'	                	<thead>'+
-											'	                		<tr class="active"><th class="text-center">Nombre</th><th class="text-center">Fecha</th><th class="text-center">Descripción</th><th class="text-center">Descargar Documento</th></tr>'+
+											'	                		<tr class="active"><th>Descargar</th></tr>'+
 											'	                	</thead>'+
 											'	                	<tbody">';
 												
-												for(var p = 0; p < webServiceDocumento.length; p++)
+<%-- 												for(var p = 0; p < webServiceDocumento.length; p++)
 												{													
 													if(webServiceDocumento[p].borrado == true)
 													{
@@ -152,6 +152,36 @@ if (user != null) { %>
 																	cajaTipoDocumento += '<td class="text-center"><a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+webServiceDocumento[p].url+'" Download="Documento_'+webServiceDocumento[p].nombre+'" ><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Descargar Documento"><span class="fa fa-download"></span></button></a></td></tr>';
 																}else{
 																	cajaTipoDocumento += '<td class="text-center"><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="No Existe Documento" disabled="disabled"><span class="fa fa-download"></span></button></td></tr>';
+																}
+														<%}%>
+													}	
+												} --%>
+												for(var p = 0; p < webServiceDocumento.length; p++)
+												{													
+													if(webServiceDocumento[p].borrado == true)
+													{
+														<%if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
+															cajaTipoDocumento += '<tr><td><del>'+webServiceDocumento[p].nombre+'</del>';
+															if(webServiceDocumento[p].url){
+																cajaTipoDocumento += '<a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+webServiceDocumento[p].url+'" Download="Documento_'+webServiceDocumento[p].nombre+'" ><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Descargar Documento"><span class="fa fa-download"></span></button></a></td></tr>';
+															}else{
+																cajaTipoDocumento += '<button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="No Existe Documento" disabled="disabled"><span class="fa fa-download"></span></button></td></tr>';
+															}
+														<%}%>
+													}else{
+														<%if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
+																cajaTipoDocumento += '<tr><td>'+webServiceDocumento[p].nombre;
+																if (webServiceDocumento[p].url) {
+																	cajaTipoDocumento += ' <a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+webServiceDocumento[p].url+'" Download="Documento_'+webServiceDocumento[p].nombre+'" ><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Descargar Documento"><span class="fa fa-download"></span></button></a></td></tr>';
+																} else {
+																	cajaTipoDocumento += ' <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="No Existe Documento" disabled="disabled"><span class="fa fa-download"></span></button></td></tr>';
+																}					
+														<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
+																cajaTipoDocumento += '<tr><td>'+webServiceDocumento[p].nombre;
+																if (webServiceDocumento[p].url) {
+																	cajaTipoDocumento += ' <a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+webServiceDocumento[p].url+'" Download="Documento_'+webServiceDocumento[p].nombre+'" ><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Descargar Documento"><span class="fa fa-download"></span></button></a></td></tr>';
+																}else{
+																	cajaTipoDocumento += ' <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="No Existe Documento" disabled="disabled"><span class="fa fa-download"></span></button></td></tr>';
 																}
 														<%}%>
 													}	
