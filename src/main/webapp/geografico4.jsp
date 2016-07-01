@@ -115,11 +115,6 @@ var datosGeo=[];
 			margin-right: 8px;
 			opacity: 0.7;
 		}
-		
-		.legend p {
-			margin-top:0;
-		 	margin-bottom:0;
-		 }
 
     </style>
     
@@ -309,14 +304,14 @@ tbody {
 						/* var acum = 0,cont = 0;
 						var promedio = 0; */
 						
- 					var desPaisDeptojson = $.ajax({
- 						url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist',
-				      	type:'get',
-				      	dataType:'json',
-				      	crossDomain:true,
-				      	async:false       
-				    }).responseText;
-					var desPaisDepto=JSON.parse(desPaisDeptojson);
+	 					var desPaisDeptojson = $.ajax({
+	 						url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist',
+					      	type:'get',
+					      	dataType:'json',
+					      	crossDomain:true,
+					      	async:false       
+					    }).responseText;
+						var desPaisDepto=JSON.parse(desPaisDeptojson);
 						
 						/* for (d = 0; d < desPaisDeptoAux.length; d++){	
 							if (desPaisDeptoAux[d].cantidadHoy == 0 && desPaisDeptoAux[d].cantidadAvance > 0){
@@ -339,33 +334,22 @@ tbody {
 						
 					//}
 					
-					var desPaisInstjson = $.ajax({
- 						/* url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist&institucionId='+instituciones[i].id, */
- 						url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionDesempenoInstitucional',
-				      	type:'get',
-				      	dataType:'json',
-				      	crossDomain:true,
-				      	async:false       
-				    }).responseText;
-					var desPaisInstAux=JSON.parse(desPaisInstjson);
-					
 					var desPaisInst= [];
 					for(var i=0;i<instituciones.length;i++){		
 					
 						//var acum = 0,cont = 0;
 						//var promedio = 0;
 					
-	 					/* var desPaisInstjson = $.ajax({
+	 					var desPaisInstjson = $.ajax({
 	 						url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist&institucionId='+instituciones[i].id,
-	 						//url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDistInstitucion',
 					      	type:'get',
 					      	dataType:'json',
 					      	crossDomain:true,
 					      	async:false       
 					    }).responseText;
-						var desPaisInstAux=JSON.parse(desPaisInstjson); */
+						var desPaisInstAux=JSON.parse(desPaisInstjson);
 					
-						 /* for (d = 0; d < desPaisInstAux.length; d++){	
+						/* for (d = 0; d < desPaisInstAux.length; d++){	
 							if (desPaisInstAux[d].cantidadHoy == 0 && desPaisInstAux[d].cantidadAvance > 0){
 								acum += 100;
 								cont++;
@@ -378,19 +362,19 @@ tbody {
 								acum += desPaisInstAux[d].cantidadAvance / desPaisInstAux[d].cantidadHoy * 100;								
 								cont++;
 							}						
-						} */
+						}*/
 					
 						var objeto = new Object(); 
 
-						if(desPaisInstAux[i] == 0){
+						if(desPaisInstAux[0] == 0){
 							promedio = 0/0;
 						}
 						objeto.institucionId = instituciones[i].id;
-						objeto.promedio = desPaisInstAux[i];
+						objeto.promedio = desPaisInstAux[0];
 						desPaisInst.push(objeto);
 					
 					}
-															
+					
 					var desPaisDistjson = $.ajax({
 				    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist3',
 				      	type:'get',
@@ -398,9 +382,9 @@ tbody {
 				      	crossDomain:true,
 				      	async:false       
 				    }).responseText;
-					var desPaisDist=JSON.parse(desPaisDistjson);
+					var desPaisDist=JSON.parse(desPaisDistjson);					
 					
-				   /*var desPaisDistInstjson = $.ajax({
+ 				 	var desPaisDistInstjson = $.ajax({
 				    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist4',
 				      	type:'get',
 				      	dataType:'json',
@@ -409,15 +393,7 @@ tbody {
 				    }).responseText;
 					var desPaisDistInst=JSON.parse(desPaisDistInstjson); 
 				    
-				    /*nuevo ajax select en vez de dist4*/
-				    var desPaisDistInstjson = $.ajax({
-				    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionDptoDistInst',
-				      	type:'get',
-				      	dataType:'json',
-				      	crossDomain:true,
-				      	async:false       
-				    }).responseText;
-					var desPaisDistInst=JSON.parse(desPaisDistInstjson);
+
 					
 					//var totalLineaPais=[];
 					var y=0;
@@ -505,7 +481,7 @@ tbody {
 									for(var j=0;j < desPaisDistInst.length;j++){
 										if ((desPaisDistInst[j].clave3==instituciones[i].id) && (desPaisDistInst[j].clave1==e.target.feature.properties.dpto) && (desPaisDistInst[j].clave2 == e.target.feature.properties.distrito)){
 											color=getColorDesemp2(desPaisDistInst[j].valor);
-											if (desPaisDistInst[j].valor != 0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><a tipo="filtroPorEntidad" institucion_id='+instituciones[i].id+' depto_id='+e.target.feature.properties.dpto+' dist_id='+e.target.feature.properties.distrito+' >'+instituciones[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(desPaisDistInst[j].valor).toFixed(0)+'%"><p class="text-left">'+parseFloat(desPaisDistInst[j].valor).toFixed(2)+'%</p></div></div></td></tr>');
+											$("#tablaInstituciones").append('<tr><td class="col-md-3"><a tipo="filtroPorEntidad" institucion_id='+instituciones[i].id+' depto_id='+e.target.feature.properties.dpto+' dist_id='+e.target.feature.properties.distrito+' >'+instituciones[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(desPaisDistInst[j].valor).toFixed(0)+'%"><p class="text-left">'+parseFloat(desPaisDistInst[j].valor).toFixed(2)+'%</p></div></div></td></tr>');
 										}
 									}
 								}
@@ -520,7 +496,7 @@ tbody {
 						    }).responseText;
 							lineaAccionDepartamento=JSON.parse(lineaAccionDepartamento); */
 							
-						/*distritos = $.ajax({
+							distritos = $.ajax({
 					    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito&departamento='+e.target.feature.properties.dpto,
 					      	type:'get',
 					      	dataType:'json',
@@ -539,35 +515,26 @@ tbody {
 							    }).responseText;
 								despenhoDeptoDist=JSON.parse(despenhoDeptoDist);
 								totalDesempenhoDeptoDis.push(despenhoDeptoDist[0]);
-							} */
+							}
 							
 							
-								tipoInstituciones="departamento"; 
+								tipoInstituciones="departamento";
 								array=lineaAccionDepartamento;
 								$("#tabla-derecho").html("");
 								$("#tabla-derecho").append('Instituciones en '+e.target.feature.properties.dpto_desc);
 								$("#cuerpoTableroLineaAccion").html("");
 								$("#nombreInstitucionTabla").html("");
 								var color="";var depemDeptoInst;var countDeptoInst;var despTotDeptoInst;
- 								var lineaAccionDepartamento = $.ajax({
-							    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionDesempenoInstitucionalDepto&departamentoId='+e.target.feature.properties.dpto,
-							      	type:'get',
-							      	dataType:'json',
-							      	crossDomain:true,
-							      	async:false       
-							    }).responseText;
-								lineaAccionDepartamento=JSON.parse(lineaAccionDepartamento);
-								
 								for (var i = 0; i< instituciones.length;i++){
 									
-/*  									var lineaAccionDepartamento = $.ajax({
+									var lineaAccionDepartamento = $.ajax({
 								    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist&departamentoId='+e.target.feature.properties.dpto+'&institucionId='+instituciones[i].id,
 								      	type:'get',
 								      	dataType:'json',
 								      	crossDomain:true,
 								      	async:false       
 								    }).responseText;
-									lineaAccionDepartamento=JSON.parse(lineaAccionDepartamento); */
+									lineaAccionDepartamento=JSON.parse(lineaAccionDepartamento);
 /* 									countDeptoInst=0;
 									depemDeptoInst=0.0;
 									despTotDeptoInst=0.0;
@@ -578,8 +545,8 @@ tbody {
 										}
 									} */
 									//despTotDeptoInst=depemDeptoInst/countDeptoInst;
-									color=getColorDesemp2(lineaAccionDepartamento[i]);
-									if (lineaAccionDepartamento[i] !=0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><a tipo="filtroPorEntidad" institucion_id='+instituciones[i].id+' depto_id='+e.target.feature.properties.dpto+' >'+instituciones[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(lineaAccionDepartamento[i]).toFixed(0)+'%"><p class="text-left">'+parseFloat(lineaAccionDepartamento[i]).toFixed(2)+'%</p></div></div></td></tr>');
+									color=getColorDesemp2(lineaAccionDepartamento[0]);
+									if (lineaAccionDepartamento[0] !=0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><a tipo="filtroPorEntidad" institucion_id='+instituciones[i].id+' depto_id='+e.target.feature.properties.dpto+' >'+instituciones[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(lineaAccionDepartamento[0]).toFixed(0)+'%"><p class="text-left">'+parseFloat(lineaAccionDepartamento[0]).toFixed(2)+'%</p></div></div></td></tr>');
 
 								}
 							}
@@ -608,7 +575,7 @@ tbody {
 
 							}
 						}
-					}//fin funcion "renderEntidades"
+					}
 					
 					function renderLineaAccion(depto_id, institucion_id, dist_id)
 					{
@@ -687,7 +654,7 @@ tbody {
 							
 							
 						}
-					}//fin renderLineaAccion
+					}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 						function getColor(d) {
 						  
@@ -927,8 +894,8 @@ tbody {
 	    //bucle de creacion de porcentaje y generacion de una etiqueta con un cuadrado de color para cada intervalo
 		for (var i = 0; i < grades.length; i++) {
 	        this._div.innerHTML +=
-	        	'<p><i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-	            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '%' + '</p>' : '%' + '+' + '</p>');
+				'<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+				grades[i] + (grades[i + 1] ? ' &ndash; ' + grades[i + 1] + '%' + '<br>' : '%' + '+');
 		}
 		this.update()
 		return this._div;
@@ -943,8 +910,8 @@ tbody {
 	    //bucle de creacion de porcentaje y generacion de una etiqueta con un cuadrado de color para cada intervalo
 	    for (var i = 0; i < grades.length; i++) {
 	        this._div.innerHTML +=
-	            '<p><i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-	            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '%' + '</p>' : '%' + '+' + '</p>');
+	            '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+	            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '%' + '<br>' : '%' + '+');
 	    }
 	}
 	
