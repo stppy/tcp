@@ -9904,7 +9904,7 @@ function imprimirAvancesInstitucion(){
 						$("#impresionAccionesTrimestre").text(accionCatalogoPorLineaAccion[ac].nombreAccionCatalogo);
 						$("#impresionTrimestreAño").text(trimestreAvanc+' '+periodoActual);
 						$("#impresionGestionesRealizadas").text(avanceNB[a].gestionesRealizadas);
-						$("#impresionLogrosAlcanzados").text(avanceNB[a].principalesLogroAlcanzados);
+						$("#impresionLogrosAlcanzados").text(avanceNB[a].principalesLogrosAlcanzados);
 						$("#impresionLeccionesAprendidas").text(avanceNB[a].dificultadesLeccionesAprendidas);
 						$("#impresionSiguienteTrimestre").text(avanceNB[a].objetivosTrimestre);																
 						
