@@ -28,6 +28,7 @@ import py.gov.stp.objetosV2.DesempDistritoInst;
 import py.gov.stp.objetosV2.Institucion;
 import py.gov.stp.objetosV2.LineaAccionProgramacion;
 import py.gov.stp.objetosV2.ResumenLineaAccion;
+import py.gov.stp.tools.Distrito;
 import py.gov.stp.tools2.SqlSelects;
 
 import com.google.gson.Gson;
@@ -1283,7 +1284,8 @@ public class ajaxSelects extends HttpServlet {
                 List<LineaAccionProgramacion> objetos=null;
                 List<Institucion> instituciones= null ;
                 ArrayList<Object> desempenhoDpto= new ArrayList<Object>();
-                //condition = " where true";                
+                //condition = " where true";
+                
                 try {
 					instituciones = SqlSelects.selectInstitucion(condition);
 				} catch (SQLException e1) {
@@ -1298,6 +1300,64 @@ public class ajaxSelects extends HttpServlet {
 	                	double acum, promedio;
 	                	int cont;
 	                	objetos = SqlSelects.selectResumenLineasAccionProgramacionInstDptoDistrito(condition);
+	                	
+	                	for(int j = 0; j < instituciones.size(); j+= 1){
+		                	acum=0;
+		                	promedio=0;
+		                	cont=0;
+							for (int i = 0; i < objetos.size(); i += 1) {
+    							if(instituciones.get(j).getId() == objetos.get(i).getInstitucionId()){
+									if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && objetos.get(i).getCantidadAvance() > 0) {	
+										acum += 100;
+										cont+=1;
+									} else if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+										acum += 0;
+										cont+=1;
+									} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+										acum += 0;
+									} else {
+										acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
+										cont+=1;
+									}
+    							}
+							}
+							if(cont != 0){
+								promedio = acum / cont;
+							}
+							desempenhoDpto.add(promedio);
+	                	}
+
+						                	
+					}catch (SQLException e) {e.printStackTrace();}
+				
+                JsonElement json = new Gson().toJsonTree(desempenhoDpto);
+                out.println(json.toString());
+            } 
+        	//obtenemos todas las instituciones en el back end y su desemeño institucional a nivel DEPARTAMENTAL
+        	if (action.equals("getResumenLineasAccionProgramacionDesempenoInstitucionalDepto")){
+                List<LineaAccionProgramacion> objetos=null;
+                List<Institucion> instituciones= null ;
+                ArrayList<Object> desempenhoDpto= new ArrayList<Object>();
+                //condition = " where true";                
+                try {
+					instituciones = SqlSelects.selectInstitucion(condition);
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+
+				for (int s = 0; s < instituciones.size(); s += 1) {
+					if(s == 0){
+						condition += " AND ins_linea_accion_base_dd.depto_id='"+departamentoId+"' AND ins_linea_accion_base_dd.institucion_id='"+instituciones.get(s).getId()+"'";
+					}else{
+						condition += " OR ins_linea_accion_base_dd.depto_id='"+departamentoId+"' AND ins_linea_accion_base_dd.institucion_id='"+instituciones.get(s).getId()+"'";
+					}
+				}
+
+	                try {                	
+
+	                	double acum, promedio;
+	                	int cont;
+	                	objetos = SqlSelects.selectResumenLineasAccionProgramacionInstitucionDepto(condition);
 	                	
 	                	for(int j = 0; j < instituciones.size(); j+= 1){
 		                	acum=0;
