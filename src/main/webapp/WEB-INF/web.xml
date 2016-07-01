@@ -196,6 +196,16 @@
   <servlet-mapping>
     <servlet-name>DownloadServlet</servlet-name>
     <url-pattern>/DownloadServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description>Sirve para convertir HTML a PDF</description>
+    <display-name>CrearPdfServlet</display-name>
+    <servlet-name>CrearPdfServlet</servlet-name>
+    <servlet-class>py.gov.stp.tools.CrearPdfServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CrearPdfServlet</servlet-name>
+    <url-pattern>/CrearPdfServlet</url-pattern>
   </servlet-mapping>   
   <context-param> 
     <description>Ubicación donde se almacenan los archivos subidos</description> 
