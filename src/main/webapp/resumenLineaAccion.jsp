@@ -258,8 +258,8 @@ textarea { text-transform: uppercase; }
 				  	'<th rowspan="3" class="text-center" style="vertical-align: middle;">Unidad de Medida</th>'+
 				  	'<th colspan="5" class="text-center">Plan de Acción 2016</th>'+
 				  	'<th colspan="5" class="text-center">Ejecución a la Fecha</th></tr>'+
-				  	'<th colspan="5" class="text-center"><input type="date" id="fechaInicioAccion" min="2014-01-01" max="'+fechaActual+'"/></th>'+
-				  	'<th colspan="4" class="text-center"><input type="date" id="fechaInicioEjecucion" max="2016-12-31" value="'+fechaActual+'"/></th><th><input	class="btn btn-primary guardarRangoFechas" type="submit" value="Filtrar"></th></tr>'+ 
+				  //	'<th colspan="5" class="text-center"><input type="date" id="fechaInicioAccion" min="2014-01-01" max="'+fechaActual+'"/></th>'+
+				  //	'<th colspan="4" class="text-center"><input type="date" id="fechaInicioEjecucion" max="2016-12-31" value="'+fechaActual+'"/></th><th><input	class="btn btn-primary guardarRangoFechas" type="submit" value="Filtrar"></th></tr>'+ 
 				'<tr><th colspan="3" class="text-center">Meta</th>'+
 				  	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Destinatarios</th>'+
 				  	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Inversión (en millones G.)</th>'+
@@ -279,7 +279,7 @@ textarea { text-transform: uppercase; }
 					//tempInstituciones = '<tr><td colspan="7"><strong>'+instituciones[m].sigla+'</strong></td></tr>';
 					  for(var n=0; n<lineasProgramadas.length;n++)
 						{
-						  if ( instituciones[m].id==lineasProgramadas[n].institucionId &&  lineasProgramadas[n].lineaAccionEstratagiaId==estrategia){
+						  if ( instituciones[m].id==lineasProgramadas[n].institucionId &&  lineasProgramadas[n].lineaAccionEstratagiaId==estrategia ){ //&& lineasProgramadas[n].tipoCronogramaId==1 || lineasProgramadas[n].tipoCronogramaRealId==1){
 							  if (flagIns == 0){
 								  
 								  tempInstituciones += '<tr><td colspan="12"><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td></tr>';
@@ -305,6 +305,15 @@ textarea { text-transform: uppercase; }
 							  '<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>'+
 							  '<td class="'+clase+'">'+desempProgAnho+'</td>';
 							  if(lineasProgramadas[n].tipoCronogramaId==1){
+///////////////////									
+								  /*var totalDestinatario;
+									for(var j=0;j < lineasProgramadas.length;j++){
+										if ((lineasProgramadas[j].institucionId==lineasProgramadas[j].tipoCronogramaId==1) ){
+											tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>';
+											tempInstLineas+=numeroConComa(lineasProgramadas[n].cantDest);
+											
+										}
+									}*/
 								  tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>';
 							  }else{
 								  tempInstLineas += '<td> - </td>';
