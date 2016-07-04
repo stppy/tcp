@@ -228,7 +228,6 @@ textarea { text-transform: uppercase; }
 			lineasProgramadas = JSON.parse(lineasProgramadas);
 			lineasProgramadas=lineasProgramadas.sort(lineaAccionOrden);
 			
-			
 
 			function renderAccion(estrategia){
 			
@@ -239,7 +238,7 @@ textarea { text-transform: uppercase; }
 			var clase="";
 			
 			//OBTENCION DE LA FECHA ACTUAL
-			var f = new Date();
+			/*var f = new Date();
 		    if( (f.getMonth() +1) < 10 ){
 		    	var mes =( 0 +""+ (f.getMonth() +1));
 		    }else{
@@ -252,7 +251,7 @@ textarea { text-transform: uppercase; }
 		    	var dia = f.getDate();
 		    }
 			var fechaActual = (f.getFullYear() + "-" + mes + "-" + dia);
-			
+			*/
 			  tempInstituciones = '<thead><tr>'+
 				  	'<th rowspan="3" class="text-center" style="vertical-align: middle;">Línea de Acción</th>'+
 				  	'<th rowspan="3" class="text-center" style="vertical-align: middle;">Unidad de Medida</th>'+
@@ -279,7 +278,7 @@ textarea { text-transform: uppercase; }
 					//tempInstituciones = '<tr><td colspan="7"><strong>'+instituciones[m].sigla+'</strong></td></tr>';
 					  for(var n=0; n<lineasProgramadas.length;n++)
 						{
-						  if ( instituciones[m].id==lineasProgramadas[n].institucionId &&  lineasProgramadas[n].lineaAccionEstratagiaId==estrategia ){ //&& lineasProgramadas[n].tipoCronogramaId==1 || lineasProgramadas[n].tipoCronogramaRealId==1){
+						  if ( instituciones[m].id==lineasProgramadas[n].institucionId &&  lineasProgramadas[n].lineaAccionEstratagiaId==estrategia){
 							  if (flagIns == 0){
 								  
 								  tempInstituciones += '<tr><td colspan="12"><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td></tr>';
@@ -304,19 +303,10 @@ textarea { text-transform: uppercase; }
 							  '<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
 							  '<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>'+
 							  '<td class="'+clase+'">'+desempProgAnho+'</td>';
-							  if(lineasProgramadas[n].tipoCronogramaId==1){
-///////////////////									
-								  /*var totalDestinatario;
-									for(var j=0;j < lineasProgramadas.length;j++){
-										if ((lineasProgramadas[j].institucionId==lineasProgramadas[j].tipoCronogramaId==1) ){
-											tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>';
-											tempInstLineas+=numeroConComa(lineasProgramadas[n].cantDest);
-											
-										}
-									}*/
-								  tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>';
-							  }else{
+							  if(lineasProgramadas[n].cantDest==0){
 								  tempInstLineas += '<td> - </td>';
+							  }else{
+								  tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>';
 							  }
 							  tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
 							  '<td>'+numeroConComa(lineasProgramadas[n].cantidadHoy)+'</td>'+
@@ -341,10 +331,10 @@ textarea { text-transform: uppercase; }
 							  }
 							  
 							  tempInstLineas += '<td class="'+clase+'">'+desempEjeHoy+'</td>';
-							  if(lineasProgramadas[n].tipoCronogramaRealId==1){
-								  tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDestinatarioReal)+'</td>';
-							  }else{
+							  if(lineasProgramadas[n].cantDestinatarioReal==0){
 								  tempInstLineas += '<td> - </td>';
+							  }else{
+								  tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDestinatarioReal)+'</td>';
 							  }
 							  tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].costoAc/1000000).toFixed(2))+'</td>'+
 							  '</tr>';
@@ -401,10 +391,9 @@ textarea { text-transform: uppercase; }
 			}
 			
 			
-			
 			renderLineasEstrategicas(); 
 			
-			$("body").on("click", ".guardarRangoFechas",function(event){
+			/*$("body").on("click", ".guardarRangoFechas",function(event){
 			
 				var fechaInicio = document.getElementById("fechaInicioAccion").value;
 				var fechaFin = document.getElementById("fechaFinAccion").value;
@@ -430,9 +419,9 @@ textarea { text-transform: uppercase; }
 			        	actualizarTablaAcciones(insLineaAccionId,lineaAccionId,institucionId,periodoId);
 			        	}
 				 });*/
-			});	
+			//});	
 			//window.open('http://spr.stp.gov.py/','_blank');
-		})
+		});
         </script>
           
                
