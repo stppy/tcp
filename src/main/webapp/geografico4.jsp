@@ -1284,7 +1284,7 @@ function renderTableroLineaAccion(institucionId,deptoId,distId){
 				'<td>'+numeroConComa(lineasProgramadas[n-1].meta)+'</td>'+
 				'<td>'+numeroConComa(lineasProgramadas[n-1].cantidadAnho)+'</td>'+
 				'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100).toFixed(2))+'</td>'+
-				'<td>'+numeroConComa(lineasProgramadas[n-1].cantDest)+'</td>'+
+				'<td>'+numeroConComa((lineasProgramadas[n-1].cantDest).toFixed(2))+'</td>'+
 				'<td>'+numeroConComa((lineasProgramadas[n-1].inversionEstimada/1000000).toFixed(2))+'</td>'+
 				'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
 				'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
@@ -1299,7 +1299,7 @@ function renderTableroLineaAccion(institucionId,deptoId,distId){
 				}
 				
 				tempInstLineas += '<td class="'+clase+'">'+numeroConComa((promedio).toFixed(2))+'</td>'+
-				'<td>'+numeroConComa(destinatarios.toFixed(2))+'</td>'+
+				'<td>'+numeroConComa((destinatarios).toFixed(2))+'</td>'+
 				'<td>'+numeroConComa((inversion/1000000).toFixed(2))+'</td>'+
 				'</tr>';
 			}else{
@@ -1333,7 +1333,7 @@ function renderTableroLineaAccion(institucionId,deptoId,distId){
 				}
 				
 				tempInstLineas += '<td class="'+clase+'">'+numeroConComa((promedio).toFixed(2))+'</td>'+
-				'<td>'+numeroConComa(destinatarios.toFixed(2))+'</td>'+
+				'<td>'+numeroConComa((destinatarios).toFixed(2))+'</td>'+
 				'<td>'+numeroConComa((inversion/1000000).toFixed(2))+'</td>'+
 				'</tr>';
 			}			
@@ -1368,7 +1368,7 @@ function renderTableroLineaAccion(institucionId,deptoId,distId){
 				'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
 				'<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>'+
 				'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
-				'<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>'+
+				'<td>'+numeroConComa((lineasProgramadas[n].cantDest).toFixed(2))+'</td>'+
 				'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
 				'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
 				'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
