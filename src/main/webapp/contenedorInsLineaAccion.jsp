@@ -570,9 +570,9 @@ if (user != null) { %>
 	             			</div>
 	             			<!-- link para acceder a la pagina de descarga de los avances y constancias -->
 							<div class="col-md-6" align="right">								
-								<button type="button" class="btn btn-primary" onclick=imprimirAvancesInstitucion(); >
+								<!-- button type="button" class="btn btn-primary" onclick=imprimirAvancesInstitucion(); >
 									<span class="glyphicon glyphicon-download-alt"></span> Descargar Avances
-								</button>															
+								</button-->															
 								<!-- <a href="http://spr.stp.gov.py/tablero/descargasConstancias.jsp">									
 									<button type="button" class="btn btn-primary">
 										<span class="glyphicon glyphicon-download-alt"></span> Descargar Constancias

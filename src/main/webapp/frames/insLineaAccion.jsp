@@ -9409,7 +9409,7 @@ function listaAvanceCualitativo(insLineaAccionId,lineaAccionId,institucionId,per
 										'	<td id="avanceDificultadesLeccionesAprendidas"><del>'+avanceCualitativo[a].dificultadesLeccionesAprendidas+'</del></td>'+
 										'	<td id="avanceObjetivosTrimestre"><del>'+avanceCualitativo[a].objetivosTrimestre+'</del></td>'+
 										'	<td class="text-center">'+
-										'		<button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Descargar" onclick=imprimirAvance('+a+');>'+
+										'		<button type="button" class="btn btn-default btn-sm imprimirAvanceCualitativo" data-toggle="tooltip" data-placement="top" title="Descargar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+avanceCualitativo[a].id+'>'+
 										'			<span class="glyphicon glyphicon-download-alt"></span>'+
 										'		</button>'+
 										'		<button type="button" class="btn btn-default btn-sm consultaEditarAvanceCualitativo" data-toggle="tooltip" data-placement="top" title="Editar Avance Cualitativo" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+avanceCualitativo[a].id+'>'+
@@ -9433,8 +9433,7 @@ function listaAvanceCualitativo(insLineaAccionId,lineaAccionId,institucionId,per
 									'	<td id="avanceDificultadesLeccionesAprendidas">'+avanceCualitativo[a].dificultadesLeccionesAprendidas+'</td>'+
 									'	<td id="avanceObjetivosTrimestre">'+avanceCualitativo[a].objetivosTrimestre+'</td>'+
 									'	<td class="text-center">'+
-									'		<button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Descargar"'+
-									'			onclick=imprimirAvance('+a+');>'+
+									'		<button type="button" class="btn btn-default btn-sm imprimirAvanceCualitativo" data-toggle="tooltip" data-placement="top" title="Descargar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+avanceCualitativo[a].id+'>'+
 									'			<span class="glyphicon glyphicon-download-alt"></span>'+
 									'		</button>'+
 									'		<button type="button" class="btn btn-default btn-sm consultaEditarAvanceCualitativo" data-toggle="tooltip" data-placement="top" title="Editar Avance Cualitativo" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+avanceCualitativo[a].id+'>'+
@@ -9454,8 +9453,7 @@ function listaAvanceCualitativo(insLineaAccionId,lineaAccionId,institucionId,per
 									'	<td id="avancePrincipalesLogrosAlcanzados">'+avanceCualitativo[a].principalesLogrosAlcanzados+'</td>'+
 									'	<td id="avanceDificultadesLeccionesAprendidas">'+avanceCualitativo[a].dificultadesLeccionesAprendidas+'</td>'+
 									'	<td id="avanceObjetivosTrimestre">'+avanceCualitativo[a].objetivosTrimestre+'</td>'+
-									'	<td class="text-center"><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Descargar"'+
-									'			onclick=imprimirAvance('+a+');>'+
+									'	<td class="text-center"><button type="button" class="btn btn-default btn-sm imprimirAvanceCualitativo" data-toggle="tooltip" data-placement="top" title="Descargar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+avanceCualitativo[a].id+'>'+
 									'			<span class="glyphicon glyphicon-download-alt"></span>'+
 									'		</button>'+
 									'	</td>'+
@@ -9798,7 +9796,7 @@ $("body").on("click", ".borrarAvanceCualitativo",function(event){
 //Imprime todos los avances de una institución
 function imprimirAvancesInstitucion(){
 	
-	var doc = new jsPDF('p', 'mm', "a4");
+	/* var doc = new jsPDF('p', 'mm', "a4");
 	var pageHeight = 297;
 	
 	var specialElementHandlers = {
@@ -9812,11 +9810,11 @@ function imprimirAvancesInstitucion(){
 			  bottom: 20,
 			  left: 15,
 			  width: 20
-			  };
+			  }; */
 	
-	var cabecera = '<header>'+				   		
-						'<div style="text-align:left"><img src="http://spr.stp.gov.py/tablero/dist/img/logo_stp_gob.png" height="20" width="180"></div>'+										
-				   '</header>';	
+	/* var cabecera = '<div class="header">'+				   		
+						'<img id="logo" src="dist/img/logo_stp_gob.png" height="75" width="620"/>'+										
+		   		   '</div>';
 		
 	var cuerpoHTML = "";	
 	
@@ -9920,12 +9918,73 @@ function imprimirAvancesInstitucion(){
 
 	}	
 	
-	var pie =	'<footer>'+
-					'<div style="text-align:right;">Página <span class="pageCounter"></span>/<span class="totalPages"></span></div>'+			
-				'</footer>';
+	var pie =  '<div class="footer">'+
+					'<p>Página <span class="pagenumber"></span> de <span class="pagecount"></span></p>'+			
+			   '</div>';
 				   				  
-			 	  			 	  	
-    var pageHeight= doc.internal.pageSize.height;
+	
+	var todo  = cabecera;
+	todo += pie;
+	todo += cuerpoHTML; */
+				
+	//var url = 'CrearPdfServlet';
+	var nombre_institucion = $("#nombreInstitucion").val();
+	var nombre_archivo = 'Avance_cualitativo_institucional_'+ nombre_institucion +'.pdf';
+	
+	//Petición AJAX, que envía dos parámetros y recibe la respuesta con JSON        
+	
+	var xhr = new XMLHttpRequest();
+	
+	var url = 'CrearPdfServlet';
+	var params = "nombreArchivo="+nombre_archivo+"&nombreInstitucion="+nombre_institucion;
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded','charset=UTF-8');
+	xhr.overrideMimeType("text/xml; charset=UTF-8");
+	
+	xhr.responseType = 'arraybuffer';
+	xhr.onload = function () {
+	    if (this.status === 200) {
+	        var filename = "";
+	        var disposition = xhr.getResponseHeader('Content-Disposition');
+	        if (disposition && disposition.indexOf('attachment') !== -1) {
+	            var filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+	            var matches = filenameRegex.exec(disposition);
+	            if (matches != null && matches[1]) filename = matches[1].replace(/['"]/g, '');
+	        }
+	        var type = xhr.getResponseHeader('Content-Type');
+
+	        var blob = new Blob([this.response], { type: type });
+	        if (typeof window.navigator.msSaveBlob !== 'undefined') {
+	            // IE workaround for "HTML7007: One or more blob URLs were revoked by closing the blob for which they were created. These URLs will no longer resolve as the data backing the URL has been freed."
+	            window.navigator.msSaveBlob(blob, filename);
+	        } else {
+	            var URL = window.URL || window.webkitURL;
+	            var downloadUrl = URL.createObjectURL(blob);
+
+	            if (filename) {
+	                // use HTML5 a[download] attribute to specify filename
+	                var a = document.createElement("a");
+	                // safari doesn't support this yet
+	                if (typeof a.download === 'undefined') {
+	                    window.location = downloadUrl;
+	                } else {
+	                    a.href = downloadUrl;
+	                    a.download = filename;
+	                    document.body.appendChild(a);
+	                    a.click();
+	                }
+	            } else {
+	                window.location = downloadUrl;
+	            }
+
+	            setTimeout(function () { URL.revokeObjectURL(downloadUrl); }, 100); // cleanup
+	        }
+	    }
+	};
+	
+	xhr.send(params);
+	
+    /* var pageHeight= doc.internal.pageSize.height;
     doc.fromHTML(cabecera + cuerpoHTML,
     			 margins.left,
     			 margins.top,
@@ -9937,111 +9996,119 @@ function imprimirAvancesInstitucion(){
     				 doc.save('Avances_Cualitativos_por_Institución.pdf');
     			 },
     			 margins
-    );
+    ); */
             
 }
 
 
-function imprimirAvance(indice){
-	/* , trimestreDesc, trimestreAnho, gestionesRealizadas, principalesLogrosAlcanzados,
-		dificultadesLeccionesAprendidas, objetivosTrimestre */
-	<%-- <%@include file="impresiones.jsp"%> --%>
-	$("#paraImpresiones").show();
+$("body").on("click", ".imprimirAvanceCualitativo",function(event){
+	
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-");
+    var periodo = idParsed[3];
+    var avanceCualitativoId = idParsed[4];
+    //var estado = idParsed[1];
+	
+	/* $("#paraImpresiones").show();
 	$("#impresionInstitucion").text($("#nombreInstitucion").val());
 	$("#impresionAccionesTrimestre").text($("#avance"+indice+" #avanceNombreAccion").text());
 	$("#impresionTrimestreAño").text($("#avance"+indice+" #avanceDescTrimestre").text()+' '+$("#avance"+indice+" #avanceAnhoTrimestre").text());
 	$("#impresionGestionesRealizadas").text($("#avance"+indice+" #avanceGestionesRealizadas").text());
 	$("#impresionLogrosAlcanzados").text($("#avance"+indice+" #avancePrincipalesLogrosAlcanzados").text());
 	$("#impresionLeccionesAprendidas").text($("#avance"+indice+" #avanceDificultadesLeccionesAprendidas").text());
-	$("#impresionSiguienteTrimestre").text($("#avance"+indice+" #avanceObjetivosTrimestre").text());
-	
-	
-	var doc = new jsPDF('p', 'mm', "a4");
-	var pageHeight = 297;
-	
-	var specialElementHandlers = {
-	    '#dataTablesAvanceCualitativo': function (element, renderer) {
-	        return true;
-	    }
-	};
-	
-	margins = {
-			  top: 20,
-			  bottom: 20,
-			  left: 15,
-			  width: 20
-			 };
-	
-	var cabecera = '<header>'+				   		
-						'<div style="text-align:left"><img src="http://spr.stp.gov.py/tablero/dist/img/logo_stp_gob.png" height="20" width="180"></div>'+										
-				   '</header>';				   				  
+	$("#impresionSiguienteTrimestre").text($("#avance"+indice+" #avanceObjetivosTrimestre").text()); */
+		
+	var cabecera = '<div class="header">'+				   		
+						'<img id="logo" src="dist/img/logo_stp_gob.png" height="75" width="620"/>'+										
+				   '</div>';				   				  
 	
 	var cuerpo =  $("#paraImpresiones").html();
 					  
-	var pie =  	   '<footer>'+
-						'<div style="text-align:right;">Página <span class="pageCounter"></span>/<span class="totalPages"></span></div>'+			
-			 	   '</footer>';
-		 	  			 	  	
-    var pageHeight= doc.internal.pageSize.height;
-    doc.fromHTML(cabecera + cuerpo,
-    			 margins.left,
-    			 margins.top,
-    			 {'width': 185,
-				    'elementHandlers': specialElementHandlers,
-				    'pagesplit': true                
-    			 },
-    			 function (dispose) {
-    				 doc.save('Avance_cualitativo.pdf');
-    			 },
-    			 margins
-    );
+	var pie =  	   '<div class="footer">'+
+						'<p>Página <span class="pagenumber"></span> de <span class="pagecount"></span></p>'+			
+			 	   '</div>';
+		 	  			 	  
+	var todo  = cabecera;
+		todo += pie;
+		todo += cuerpo;
+		
+  			
+	//window.open('CrearPdfServlet?contenido=' + todo + '&nombreArchivo='+'Avance_cualitativo.pdf');
+		
+	var nombre_archivo = 'Avance_cualitativo.pdf';
+	var nombre_institucion = $("#nombreInstitucion").val();
+	
+	//Petición AJAX, que envía dos parámetros y recibe la respuesta con JSON    
+    //$.post(url, { contenido: todo, nombreArchivo: nombre_archivo } );  
+	
+	var xhr = new XMLHttpRequest();
+	
+	var url = 'CrearPdfServlet';
+	var params = "idAvanceCualitativo="+avanceCualitativoId+"&nombreArchivo="+nombre_archivo+"&nombreInstitucion="+nombre_institucion;
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded','charset=UTF-8');
+	xhr.overrideMimeType("text/xml; charset=UTF-8");
+	
+	xhr.responseType = 'arraybuffer';
+	xhr.onload = function () {
+	    if (this.status === 200) {
+	        var filename = "";
+	        var disposition = xhr.getResponseHeader('Content-Disposition');
+	        if (disposition && disposition.indexOf('attachment') !== -1) {
+	            var filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+	            var matches = filenameRegex.exec(disposition);
+	            if (matches != null && matches[1]) filename = matches[1].replace(/['"]/g, '');
+	        }
+	        var type = xhr.getResponseHeader('Content-Type');
+
+	        var blob = new Blob([this.response], { type: type });
+	        if (typeof window.navigator.msSaveBlob !== 'undefined') {
+	            // IE workaround for "HTML7007: One or more blob URLs were revoked by closing the blob for which they were created. These URLs will no longer resolve as the data backing the URL has been freed."
+	            window.navigator.msSaveBlob(blob, filename);
+	        } else {
+	            var URL = window.URL || window.webkitURL;
+	            var downloadUrl = URL.createObjectURL(blob);
+
+	            if (filename) {
+	                // use HTML5 a[download] attribute to specify filename
+	                var a = document.createElement("a");
+	                // safari doesn't support this yet
+	                if (typeof a.download === 'undefined') {
+	                    window.location = downloadUrl;
+	                } else {
+	                    a.href = downloadUrl;
+	                    a.download = filename;
+	                    document.body.appendChild(a);
+	                    a.click();
+	                }
+	            } else {
+	                window.location = downloadUrl;
+	            }
+
+	            setTimeout(function () { URL.revokeObjectURL(downloadUrl); }, 100); // cleanup
+	        }
+	    }
+	};
+	
+	xhr.send(params);	
+					 	   
     
-    //doc.text(35, 25, "");
-	//doc.save('AvanceCualitativo.pdf'); 
-    
-    /* var logo_stp = new Image();
-    logo_stp.src = 'dist/img/logo_stp_nuevo_header.png';
-    
-    var logo_gob = new Image();
-    logo_gob.src = 'dist/img/logo_gob_nac_header.png';
-    
-    logo_stp.onload = function(){
-    	doc.addImage(logo_stp , 'png', 10, 15);
-    	logo_gob.onload = function(){
-        	doc.addImage(logo_gob , 'png', 130, 15);
-        	doc.text(35, 25, "");
-        	doc.save('AvanceCualitativo.pdf');
-        };
-    };   */
     $("#paraImpresiones").hide();
-}
+});
+
 </script>	
 
- 	<div id="paraImpresiones" class="container">
-		<!-- div class="row">
-			<div class="col-md-12" style="padding-top:20px"> 
-				<div class="pull-left img-responsive col-md-4"><img src="http://spr.stp.gov.py/tablero/dist/img/logo_stp_nuevo_header.png"></div>
-				<div class="pull-right img-responsive col-md-4"><img src="http://spr.stp.gov.py/tablero/dist/img/logo_gob_nac_header.png"></div>
-		   	</div>
-		</div-->
-		<br/>
-		<div class="row" >
-			<div id="contenedorImpresion" class="table-responsive" style="display:none">
-				<div class="text-center" >
-					
-						<h3 class="text-center"><u>SPR-PA-03: Informe Cualitativo de Avance Trimestral</u></h3>
-						<p><strong>Institución</strong> <span id="impresionInstitucion"></span></p>
-						<p><strong>Acción </strong><span id="impresionAccionesTrimestre"></span></p>
-						<p><strong>Periodo </strong><span id="impresionTrimestreAño"></span></p>
-						<strong>Gestiones Realizadas </strong><p id="impresionGestionesRealizadas"></p>
-						<strong>Principales Logros Alcanzados </strong><p id="impresionLogrosAlcanzados"></p>
-						<strong>Dificultades y Lecciones aprendidas </strong><p id="impresionLeccionesAprendidas"></p>
-						<strong>Objetivos del Siguiente Trimestre </strong><p id="impresionSiguienteTrimestre"></p>
-						
-					
-				</div>
-	  		</div>
-		</div>       	
+ 	<div id="paraImpresiones" class="container" style="display:none">		
+		<div id="contenedorImpresion" class="content" >								
+					<h3 class="text-center"><u>SPR-PA-03: Informe Cualitativo de Avance Trimestral</u></h3>
+					<p><strong>Institución</strong> <span id="impresionInstitucion"></span></p>
+					<p><strong>Acción </strong><span id="impresionAccionesTrimestre"></span></p>
+					<p><strong>Periodo </strong><span id="impresionTrimestreAño"></span></p>
+					<strong>Gestiones Realizadas </strong><p id="impresionGestionesRealizadas"></p>
+					<strong>Principales Logros Alcanzados </strong><p id="impresionLogrosAlcanzados"></p>
+					<strong>Dificultades y Lecciones aprendidas </strong><p id="impresionLeccionesAprendidas"></p>
+					<strong>Objetivos del Siguiente Trimestre </strong><p id="impresionSiguienteTrimestre"></p>															
+  		</div>		       
 	</div>
 	<script>
 	$("paraImpresiones").hide();
