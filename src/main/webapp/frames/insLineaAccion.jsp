@@ -9938,8 +9938,7 @@ function imprimirAvancesInstitucion(){
 	var url = 'CrearPdfServlet';
 	var params = "nombreArchivo="+nombre_archivo+"&nombreInstitucion="+nombre_institucion;
 	xhr.open("POST", url, true);
-	xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded','charset=UTF-8');
-	xhr.overrideMimeType("text/xml; charset=UTF-8");
+	xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded','charset=UTF-8');	
 	
 	xhr.responseType = 'arraybuffer';
 	xhr.onload = function () {
