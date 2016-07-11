@@ -481,16 +481,19 @@ tbody {
 
 					}
 					
-					function getInstitucionesSeleccionadas(){
-						var checkSeleccionado=[];
+					function getInstitucionesSeleccionadas(){						
+						var institucionSelected="";
 						$("input[type=checkbox]:checked").each(function(){							
 							var idInstitucion=$(this).attr('id').split("-");
-						    checkSeleccionado.push(idInstitucion[1]);
-						})						
+						    //checkSeleccionado.push(idInstitucion[1]);
+						    institucionSelected+=idInstitucion[1]+","; 
+						})
+						institucionSelected=institucionSelected.substring(0,institucionSelected.length - 1);
+						return institucionSelected;
 					}			
 					
 					$("body").on("click", ".cmbInstitucion",function(event){						
-						getInstitucionesSeleccionadas();
+						var aux=getInstitucionesSeleccionadas();
 					});
 					
 					function renderEntidades(e){
@@ -1221,7 +1224,7 @@ $("body").on("click", "#cierreEtiquetaDistrito",function(event){
 });
 
 
-function renderTableroLineaAccion(institucionId,deptoId,distId){
+function renderTableroLineaAccion(institucionIdConcat,deptoId,distId){
 	$("#cuerpoTableroLineaAccion").html("");
 	var tablaInstituciones="";
 	var tempInstituciones="";
@@ -1234,7 +1237,8 @@ function renderTableroLineaAccion(institucionId,deptoId,distId){
 	var cont, contEjecucion, destinatarios, inversion; 
 	var acum, acumEjecucionPrevista, acumEjecucionLograda;
 	var promedio;
-	if(institucionId!=null)condicion= "&institucionId="+institucionId;
+	//if(institucionId!=null)condicion= "&institucionId="+institucionId;
+	if(institucionIdConcat!=null)condicion= "&institucionIdConcat="+institucionIdConcat;
 	if(deptoId!=null)condicion+= "&departamentoId="+deptoId;
 	if(distId!=null)condicion+= "&distritoId="+distId;
 
@@ -1278,7 +1282,7 @@ function renderTableroLineaAccion(institucionId,deptoId,distId){
 				promedio = 0;
 			}	
 			
-			if(institucionId!=null && deptoId==null && distId==null){
+			if(institucionIdConcat!=null && deptoId==null && distId==null){
 				clase="";			
 				if ((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100>=90){
 				 clase="bg-green-active color-palette"; 
@@ -1362,7 +1366,7 @@ function renderTableroLineaAccion(institucionId,deptoId,distId){
 				promedio = 0;
 			}
 			
-			if(institucionId!=null && deptoId==null && distId==null){
+			if(institucionIdConcat!=null && deptoId==null && distId==null){
 				clase="";			
 				if ((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=90){
 				 clase="bg-green-active color-palette"; 
@@ -1438,7 +1442,8 @@ function renderTableroLineaAccion(institucionId,deptoId,distId){
 
 $("body").on("click", ".linkInstitucion",function(event){
 		
-	var institucion_id=event.target.attributes.institucion_id.value;
+	var institucion_idConcat=getInstitucionesSeleccionadas();
+	//var institucion_id=event.target.attributes.institucion_id.value;
 	var nombreInstituciones="";
 	var dist_id="";
 	var depto_id="";
@@ -1452,25 +1457,25 @@ $("body").on("click", ".linkInstitucion",function(event){
 	 	depto_id=event.target.attributes.depto_id.value;
 	}
 	
-	if (institucion_id==""){
+	if (institucion_idConcat==""){
 		alert("Favor seleccionar previamente Departamento en el mapa");
 	}else{
-		for(var x = 0; x < instituciones.length; x++){
+		/* for(var x = 0; x < instituciones.length; x++){
 			if(instituciones[x].id == institucion_id){
 				nombreInstituciones = instituciones[x].sigla;
 			}
 		}
-		$("#nombreInstitucionTabla").html(nombreInstituciones);
-		if(institucion_id != "" && depto_id != "" && dist_id != ""){
-			var a = renderTableroLineaAccion(institucion_id,depto_id,dist_id);
+		$("#nombreInstitucionTabla").html(nombreInstituciones); */
+		if(institucion_idConcat != "" && depto_id != "" && dist_id != ""){
+			var a = renderTableroLineaAccion(institucion_idConcat,depto_id,dist_id);
 			$("#cuerpoTableroLineaAccion").html(a);
 		}else{
-			if(institucion_id != "" && depto_id != ""){
-				var a = renderTableroLineaAccion(institucion_id,depto_id);
+			if(institucion_idConcat != "" && depto_id != ""){
+				var a = renderTableroLineaAccion(institucion_idConcat,depto_id);
 				$("#cuerpoTableroLineaAccion").html(a);
 			}else{
-				if(institucion_id != ""){
-					var a = renderTableroLineaAccion(institucion_id);
+				if(institucion_idConcat != ""){
+					var a = renderTableroLineaAccion(institucion_idConcat);
 					$("#cuerpoTableroLineaAccion").html(a);
 				}	
 			}			
