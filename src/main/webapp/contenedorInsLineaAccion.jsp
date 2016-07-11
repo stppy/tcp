@@ -93,6 +93,8 @@ if (user != null) { %>
 		$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
 		$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
 		
+		$("#botonImprimirAvanceInstitucional").attr('parametros', usuarios[0].unidadResponsable);
+		
 		var insLineaAccion = $.ajax({
 			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion',
 		  	type:'get',
@@ -570,7 +572,7 @@ if (user != null) { %>
 	             			</div>
 	             			<!-- link para acceder a la pagina de descarga de los avances y constancias -->
 							<div class="col-md-6" align="right">								
-								<button type="button" class="btn btn-primary imprimirAvanceCualitativoInstitucion" parametros="<%=attributes.get("entidad") %>" >
+								<button id="botonImprimirAvanceInstitucional" type="button" class="btn btn-primary imprimirAvanceCualitativoInstitucion" >
 									<span class="glyphicon glyphicon-download-alt"></span> Descargar Avances
 								</button>															
 								<!-- <a href="http://spr.stp.gov.py/tablero/descargasConstancias.jsp">									

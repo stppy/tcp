@@ -9798,14 +9798,22 @@ $("body").on("click", ".imprimirAvanceCualitativoInstitucion",function(event){
 	
 	var parametros = $(this).attr("parametros");
     var idParsed = parametros.split("-");
-    var nombre_institucion = idParsed[0];
+    var unidadResponsableId = idParsed[0];
+    
+    var institucion = $.ajax({
+		url:'ajaxSelects2?action=getInstitucion&unidadResponsable='+unidadResponsableId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	institucion = JSON.parse(institucion);    
 	
-	var nombre_archivo = 'Avance_cualitativo_institucional_'+ nombre_institucion +'.pdf';
+	var nombre_archivo = 'Avance_cualitativo_institucional_'+ institucion[0].sigla +'.pdf';
 	
 	var xhr = new XMLHttpRequest();
 	
 	var url = 'CrearPdfServlet';
-	var params = "nombreArchivo="+nombre_archivo+"&nombreInstitucion="+nombre_institucion;
+	var params = "nombreArchivo="+nombre_archivo+"&unidadResponsableId="+unidadResponsableId;
 	xhr.open("POST", url, true);
 	xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded','charset=UTF-8');	
 	
@@ -9905,8 +9913,8 @@ $("body").on("click", ".imprimirAvanceCualitativo",function(event){
 	                    document.body.appendChild(a);
 	                    a.click();
 	                }
-	            } else {
 	                window.location = downloadUrl;
+	            } else {
 	            }
 
 	            setTimeout(function () { URL.revokeObjectURL(downloadUrl); }, 100); // cleanup

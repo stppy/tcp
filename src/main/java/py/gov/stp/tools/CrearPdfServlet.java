@@ -1,5 +1,7 @@
 package py.gov.stp.tools;
  
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.lowagie.text.DocumentException;
 
 import java.io.IOException;
@@ -20,6 +22,7 @@ import py.gov.stp.objetosV2.Accion;
 import py.gov.stp.objetosV2.AccionCatalogo;
 import py.gov.stp.objetosV2.AvanceCualitativo;
 import py.gov.stp.objetosV2.InsLineaAccion;
+import py.gov.stp.objetosV2.Institucion;
 import py.gov.stp.objetosV2.LineaAccion;
 import py.gov.stp.objetosV2.Trimestre;
 import py.gov.stp.tools2.SqlSelects;
@@ -45,7 +48,7 @@ public class CrearPdfServlet extends HttpServlet {
 		OutputStream out=response.getOutputStream();		
 	    		
 		String filename = request.getParameter("nombreArchivo");			
-		String institucion = request.getParameter("nombreInstitucion");
+		String unidadResponsableId = request.getParameter("unidadResponsableId");
 		
 	    // fuerza la descarga
 	    String headerKey = "Content-Disposition";
@@ -57,7 +60,7 @@ public class CrearPdfServlet extends HttpServlet {
         
 	    String idAvanceCualitativo = request.getParameter("idAvanceCualitativo");
         				
-    	String contenido = obtenerContenidoAvances(idAvanceCualitativo, institucion);
+    	String contenido = obtenerContenidoAvances(idAvanceCualitativo, unidadResponsableId);
         
    		String html = "<html>"+
 						"<head>"+
@@ -149,10 +152,19 @@ public class CrearPdfServlet extends HttpServlet {
     }	
     
     
-    public String obtenerContenidoAvances(String idAvanceCualitativo, String institucion) {
+    public String obtenerContenidoAvances(String idAvanceCualitativo, String unidadResponsableId) {
     
 		String contenido = "";
     	String condition = "";
+    	String institucion = "";
+    	
+		List<Institucion> inst= new ArrayList<Institucion>();
+		condition = " where true ";
+		if (unidadResponsableId!=null) condition += " and unidad_responsable_id ='"+unidadResponsableId+"'";						
+   		try {inst = SqlSelects.selectInstitucion(condition);}
+		catch (SQLException e) {e.printStackTrace();}
+   		   		
+   		institucion = inst.get(0).getNombre();
 		
     	if (idAvanceCualitativo != null) {
     		condition = " where true";                    
@@ -192,41 +204,54 @@ public class CrearPdfServlet extends HttpServlet {
     	else {
     		String periodoAct = "2016";
     		
-    		contenido += "<h1 style='text-align:center;'><u>SPR-PA-03: Informe de Avance Cualitativo por Institución para el Periodo "+periodoAct+" </u></h1>";
+    		contenido += "<h1 style='text-align:center;'><u>Informe de Avance Cualitativo por Institución - Periodo "+periodoAct+" </u></h1>";
     		
+    		//Obtiene todas las lineas de acción
     		condition = " where true and borrado is false ";
 			List<LineaAccion> lineaAccion=null; 		
 			try {lineaAccion = SqlSelects.selectLineaAccion(condition);}
 			catch (SQLException e) {e.printStackTrace();}
 			
+			//Recorre las lineas de acción
 	    	Iterator<LineaAccion> lineaAccionIterador = lineaAccion.iterator();
 			while (lineaAccionIterador.hasNext()) {
-				LineaAccion lineaAccionAux = lineaAccionIterador.next();
-				
-				contenido += "<h2 class='text-center'><u>Linea de Acción: "+ lineaAccionAux.getNombre() +" </u></h2>";
+				LineaAccion lineaAccionAux = lineaAccionIterador.next();							
     		    		 
-				condition = " where true and borrado is false and periodo_id="+ periodoAct +" ";
+				//Obtiene las acciones del periodo actual
+				condition = " where true and borrado is false and periodo_id="+ periodoAct +" and institucion_id="+inst.get(0).getId();
 				Integer lineaAccionId = lineaAccionAux.getId();
 				List<InsLineaAccion> insLineaAccion=null; 		
 				if (lineaAccionId != null) {condition += " and linea_accion_id ='"+lineaAccionId+"'";
 				try {insLineaAccion = SqlSelects.selectInsLineaAccion(condition);}
 				catch (SQLException e) {e.printStackTrace();}}
 				
+				//Recorre las acciones
 				Iterator<InsLineaAccion> insLineaAccionIterador = insLineaAccion.iterator();
 				while (insLineaAccionIterador.hasNext()) {
 					InsLineaAccion insLineaAccionAux = insLineaAccionIterador.next();
 				
+					//Obtiene los avances cualitativos de esa acción
 		    		condition = " where true and borrado is false";
 		    		Integer insLineaAccionId = insLineaAccionAux.getId();
 					List<AvanceCualitativo> avanceCualitativo=null;					
-					if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
+					if (insLineaAccionId!=null) condition += " and ins_linea_accion_id='"+insLineaAccionId+"'";
 					try {avanceCualitativo = SqlSelects.selectAvanceCualitativo(condition);}
 					catch (SQLException e) {e.printStackTrace();}					
+				
 					
+					//Recorre los avances obtenidos
 					Iterator<AvanceCualitativo> avanceCualitativoIterador = avanceCualitativo.iterator();
 					while (avanceCualitativoIterador.hasNext()) {
-						AvanceCualitativo avanceCualitativoAux = avanceCualitativoIterador.next();																																																											
+						AvanceCualitativo avanceCualitativoAux = avanceCualitativoIterador.next();	
 						
+						//Imprime la cabecera de la linea de acción solo si posee avances
+						if (avanceCualitativo != null && avanceCualitativo.get(0) == avanceCualitativoAux) {
+							contenido += "<h3 style='text-align:center;'><u>Linea de Acción: "+ lineaAccionAux.getNombre() +" </u></h3>";
+						} /*else {
+							contenido += "<div style='text-align:center;'><span>-----</span></div>";
+						} */
+						
+						//Obtiene el Catalogo de la acción del avance
 						condition = " where true ";
 						Integer catalogoAccionId = avanceCualitativoAux.getAccionCatalogoId();
 						List<AccionCatalogo> catalogo=null; 		
@@ -234,6 +259,7 @@ public class CrearPdfServlet extends HttpServlet {
 						try {catalogo = SqlSelects.selectAccionCatalogo(condition);}
 						catch (SQLException e) {e.printStackTrace();}}
 						
+						//Obtiene el trimestre del avance
 						condition = " where true ";
 						Integer trimestreId = avanceCualitativoAux.getTrimestreId();
 						List<Trimestre> trimestre=null;
@@ -243,7 +269,7 @@ public class CrearPdfServlet extends HttpServlet {
 					
 						contenido += "<div class='content'>"+				
 							
-				   							"<h3 style='text-align:center;'><u>SPR-PA-03: Informe Cualitativo de Avance Trimestral</u></h3>"+
+				   							"<!--h3 style='text-align:center;'><u>SPR-PA-03: Informe Cualitativo de Avance Trimestral</u></h3-->"+
 				   							
 				   							"<p id='impresionInstitucion'><strong>Institución: </strong><span>"+ institucion +"</span></p>"		+
 				   							"<p id='impresionAccionesTrimestre'><strong>Acción: </strong><span>"+ catalogo.get(0).getNombre() +"</span></p>"+

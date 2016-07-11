@@ -534,6 +534,7 @@ public class ajaxSelects extends HttpServlet {
         	if (action.equals("getInstitucion")){
         		List objetos=null;
         		condition = " where true ";
+        		if (unidadResponsable!=null) condition += " and unidad_responsable_id ='"+unidadResponsable+"'";
         		String condition2="";
         		if (!userRoleId.equals("0") && !userRoleId.equals("1") && !userRoleId.equals("2")){ 
         			condition2 += " and entidad_id="+userEntidadId+" and nivel_id="+userNivelId;
