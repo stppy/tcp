@@ -9795,25 +9795,22 @@ $("body").on("click", ".borrarAvanceCualitativo",function(event){
 
 //Imprime todos los avances de una institución
 $("body").on("click", ".imprimirAvanceCualitativoInstitucion",function(event){
-	
-	var parametros = $(this).attr("parametros");
-    var idParsed = parametros.split("-");
-    var unidadResponsableId = idParsed[0];
     
-    var institucion = $.ajax({
-		url:'ajaxSelects2?action=getInstitucion&unidadResponsable='+unidadResponsableId,
+    /* var institucion = $.ajax({
+		url:'ajaxSelects2?action=getInstitucion&unidadResponsable='+usr_unr_id,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
 	}).responseText;
-	institucion = JSON.parse(institucion);    
+	institucion = JSON.parse(institucion);  */   
 	
-	var nombre_archivo = 'Avance_cualitativo_institucional_'+ institucion[0].sigla +'.pdf';
+	var nombre_archivo = 'Avance_cualitativo_institucional.pdf';
 	
 	var xhr = new XMLHttpRequest();
 	
 	var url = 'CrearPdfServlet';
-	var params = "nombreArchivo="+nombre_archivo+"&unidadResponsableId="+unidadResponsableId;
+	var params = "nombreArchivo="+nombre_archivo+"&nivelId="+usr_nivel_id+"&entidadId="+usr_entidad_id+"&unidadResponsableId="+usr_unr_id;
+	
 	xhr.open("POST", url, true);
 	xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded','charset=UTF-8');	
 	
@@ -9871,15 +9868,15 @@ $("body").on("click", ".imprimirAvanceCualitativo",function(event){
     var avanceCualitativoId = idParsed[4];    		
 		
 	var nombre_archivo = 'Avance_cualitativo.pdf';
-	var nombre_institucion = $("#nombreInstitucion").val();	  
+	//var nombre_institucion = $("#nombreInstitucion").val();	  
 	
 	var xhr = new XMLHttpRequest();
 	
 	var url = 'CrearPdfServlet';
-	var params = "idAvanceCualitativo="+avanceCualitativoId+"&nombreArchivo="+nombre_archivo+"&nombreInstitucion="+nombre_institucion;
+	var params = "idAvanceCualitativo="+avanceCualitativoId+"&nombreArchivo="+nombre_archivo+"&nivelId="+usr_nivel_id+"&entidadId="+usr_entidad_id+"&unidadResponsableId="+usr_unr_id;
+	
 	xhr.open("POST", url, true);
-	xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded','charset=UTF-8');
-	xhr.overrideMimeType("text/xml; charset=UTF-8");
+	xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded','charset=UTF-8');	
 	
 	xhr.responseType = 'arraybuffer';
 	xhr.onload = function () {
@@ -9913,8 +9910,8 @@ $("body").on("click", ".imprimirAvanceCualitativo",function(event){
 	                    document.body.appendChild(a);
 	                    a.click();
 	                }
-	                window.location = downloadUrl;
 	            } else {
+	                window.location = downloadUrl;
 	            }
 
 	            setTimeout(function () { URL.revokeObjectURL(downloadUrl); }, 100); // cleanup

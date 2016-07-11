@@ -81,6 +81,11 @@ if (user != null) { %>
 		var entidadCas = "";
 		entidadCas ="<%=attributes.get("entidad") %>";
 		usuarioRolCas="<%=attributes.get("role_id_tablero") %>";
+		
+		usr_nivel_id="<%=attributes.get("nivel_id") %>";
+		usr_entidad_id="<%=attributes.get("entidad_id") %>";
+		usr_unr_id="<%=attributes.get("unr_id") %>";
+		
 		var usuarios = $.ajax({
 			url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
 		  	type:'get',
@@ -93,7 +98,7 @@ if (user != null) { %>
 		$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
 		$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
 		
-		$("#botonImprimirAvanceInstitucional").attr('parametros', usuarios[0].unidadResponsable);
+		//$("#botonImprimirAvanceInstitucional").attr('parametros', usuarios[0].nivel_id+"-"+usuarios[0].entidad_id+"-"+usuarios[0].unidadResponsable);
 		
 		var insLineaAccion = $.ajax({
 			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion',
