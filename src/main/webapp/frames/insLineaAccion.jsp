@@ -2803,7 +2803,7 @@ $("body").on("click", ".borrarAccion",function(event){
 	});
 	
 	$("body").on("click", ".guardarComboProducto",function(event){
-		if(validarFormulario("formularioProductoPresupuestario",false,false)==true){
+		if(validarFormulario("formulario",false,false)==true){
 			event.stopPropagation();
 			event.preventDefault();
 			
@@ -3093,36 +3093,36 @@ $("body").on("click", ".borrarAccion",function(event){
 						'							</div>'+
 						'               			<div class="box-body">'+
 						'								<div id="tituloFormulario"></div>'+
-		      			'									<form class="form-horizontal" role="form" id="formularioProductoPresupuestario" method="post" action="/ajaxUpdate">'+
+		      			'									<form class="form-horizontal" role="form" id="formulario" method="post" action="/ajaxUpdate">'+
 		      			'										<input type="hidden" name="accion" value="actEntidad">'+
 		      			'										<input type="hidden" name="anho" value="" id="anhoProducto-formulario">'+
 		      			'										<input type="hidden" name="version" value="" id="versionProducto-formulario">'+
 						'										<div class="row">'+
 			      		'											<div class="form-group col-md-1">'+
-			      		'												<input type="number" name="nivel" id="nivel-formulario" value="" class="form-control" disabled>'+
+			      		'												<input type="text" name="nivel" id="nivel-formulario" value="" class="form-control" disabled>'+
 			      		'											</div>'+
 			      		'											<div class="form-group col-md-1">'+
-			  			'												<input type="number" name="entidad" id="entidad-formulario" value="" class="form-control" disabled>'+
+			  			'												<input type="text" name="entidad" id="entidad-formulario" value="" class="form-control" disabled>'+
 			  			'											</div>'+
 			      		'				    						<div class="form-group col-md-1">'+
-			      		'			    								<input type="number" name="tipoPrograma" id="tipoPrograma-formulario" placeholder="Tipo Programa" list="listaf3c2" class="form-control"  required>'+
+			      		'			    								<input type="text" name="tipoPrograma" id="tipoPrograma-formulario" placeholder="Tipo Programa" list="listaf3c2" class="form-control"  required>'+
 			      		'			    							</div>'+
 			      		'			    							<div class="form-group col-md-1">'+
-			      		'			    								<input type="number" name="programa" id="programa-formulario" placeholder="Programa" list="listaf4c2" class="form-control" required>'+
+			      		'			    								<input type="text" name="programa" id="programa-formulario" placeholder="Programa" list="listaf4c2" class="form-control" required>'+
 			      		'			    							</div>'+
 			      		'			    							<div class="form-group col-md-1">'+
-			      		'			    								<input type="number" name="subPrograma" id="subPrograma-formulario" placeholder="SubPrograma" list="listaf5c2" class="form-control" required>'+
+			      		'			    								<input type="text" name="subPrograma" id="subPrograma-formulario" placeholder="SubPrograma" list="listaf5c2" class="form-control" required>'+
 			      		'			    							</div>'+
 			      		'				    						<div class="form-group col-md-2">'+
-			      		'				    							<input type="number" name="proyecto" id="proyecto-formulario" placeholder="Proyecto" list="listaf6c2" class="form-control" required>'+
+			      		'				    							<input type="text" name="proyecto" id="proyecto-formulario" placeholder="Proyecto" list="listaf6c2" class="form-control" required>'+
 			      		'				   							</div>'+
 			  			'		    								<div class="form-group col-md-2">'+
-			  			'		    									<input type="number" name="producto" id="producto-formulario" placeholder="Producto" list="listaf7c2" class="form-control" required>'+
+			  			'		    									<input type="text" name="producto" id="producto-formulario" placeholder="Producto" list="listaf7c2" class="form-control" required>'+
 			      		'										  	</div>'+
 			  			'		    								<div class="form-group col-md-3">'+
 				      	'												<div class="input-group input-group-md">'+
 				      	'													<span class="input-group-addon">Gs</span>'+
-	      				'	    											<input type="number" name="total" id="total-formulario" value="" class="form-control" required>'+
+	      				'	    											<input type="text" name="total" id="total-formulario" value="" class="form-control" required>'+
 	      				'	               								    <div class="input-group-btn">'+
 		      			'		                								<button type="submit" class="btn btn-success guardarComboProducto" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'><span class="glyphicon glyphicon-plus"></span></button>'+
 		      			'		                							</div>'+	      					    				
@@ -6144,13 +6144,13 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 		if(webServicesAvanceCosto[d].borrado == true)
 		{
 			<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
-				cuerpoAvanceCosto += '<tr><td><del>'+webServicesAvanceCosto[d].productoConcat+'</del></td><td><del>'+webServicesAvanceCosto[d].objetoGasto+'</del></td><td><del>'+webServicesAvanceCosto[d].monto+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarCosto" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCosto" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+				cuerpoAvanceCosto += '<tr><td><del>'+webServicesAvanceCosto[d].productoConcat+'</del></td><td><del>'+webServicesAvanceCosto[d].objetoGasto+'</del></td><td><del>'+numeroConComa(webServicesAvanceCosto[d].monto)+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarCosto" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCosto" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
 			<%}%>	
 		}else{
 			<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-				cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].productoConcat+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td>'+webServicesAvanceCosto[d].monto+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarCosto" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCosto" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+				cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].productoConcat+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td>'+numeroConComa(webServicesAvanceCosto[d].monto)+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarCosto" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCosto" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
 			<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-				cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].productoConcat+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td>'+webServicesAvanceCosto[d].monto+'</td><td class="text-center"></td></tr>';
+				cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].productoConcat+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td>'+numeroConComa(webServicesAvanceCosto[d].monto)+'</td><td class="text-center"></td></tr>';
 			<%}%>
 		}
 	}
@@ -9924,20 +9924,32 @@ $("body").on("click", ".imprimirAvanceCualitativo",function(event){
     $("#paraImpresiones").hide();
 });
 
-</script>	
+</script>
 
- 	<div id="paraImpresiones" class="container" style="display:none">		
-		<div id="contenedorImpresion" class="content" >								
-					<h3 class="text-center"><u>SPR-PA-03: Informe Cualitativo de Avance Trimestral</u></h3>
-					<p><strong>Institución</strong> <span id="impresionInstitucion"></span></p>
-					<p><strong>Acción </strong><span id="impresionAccionesTrimestre"></span></p>
-					<p><strong>Periodo </strong><span id="impresionTrimestreAño"></span></p>
-					<strong>Gestiones Realizadas </strong><p id="impresionGestionesRealizadas"></p>
-					<strong>Principales Logros Alcanzados </strong><p id="impresionLogrosAlcanzados"></p>
-					<strong>Dificultades y Lecciones aprendidas </strong><p id="impresionLeccionesAprendidas"></p>
-					<strong>Objetivos del Siguiente Trimestre </strong><p id="impresionSiguienteTrimestre"></p>															
-  		</div>		       
+<div id="paraImpresiones" class="container" style="display: none">
+	<div id="contenedorImpresion" class="content">
+		<h3 class="text-center">
+			<u>SPR-PA-03: Informe Cualitativo de Avance Trimestral</u>
+		</h3>
+		<p>
+			<strong>Institución</strong> <span id="impresionInstitucion"></span>
+		</p>
+		<p>
+			<strong>Acción </strong><span id="impresionAccionesTrimestre"></span>
+		</p>
+		<p>
+			<strong>Periodo </strong><span id="impresionTrimestreAño"></span>
+		</p>
+		<strong>Gestiones Realizadas </strong>
+		<p id="impresionGestionesRealizadas"></p>
+		<strong>Principales Logros Alcanzados </strong>
+		<p id="impresionLogrosAlcanzados"></p>
+		<strong>Dificultades y Lecciones aprendidas </strong>
+		<p id="impresionLeccionesAprendidas"></p>
+		<strong>Objetivos del Siguiente Trimestre </strong>
+		<p id="impresionSiguienteTrimestre"></p>
 	</div>
-	<script>
+</div>
+<script>
 	$("paraImpresiones").hide();
 	</script>
