@@ -1091,7 +1091,7 @@ tbody {
 							  	<th class="text-center">Lograda</th>
 							  	<th class="text-center">%</th>
 								</tr></thead>
-							<tbody id="cuerpoTableroLineaAccion2">
+							<tbody id="cuerpoTableroLineaAccion">
 							</tbody>
 						
 						</table>
