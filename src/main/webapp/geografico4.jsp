@@ -490,11 +490,7 @@ tbody {
 						})
 						institucionSelected=institucionSelected.substring(0,institucionSelected.length - 1);
 						return institucionSelected;
-					}			
-					
-					$("body").on("click", ".cmbInstitucion",function(event){						
-						var aux=getInstitucionesSeleccionadas();
-					});
+					}
 					
 					function renderEntidades(e){
 						var array=[];var tipoInstituciones="";
@@ -518,7 +514,7 @@ tbody {
 									for(var j=0;j < desPaisDistInst.length;j++){
 										if ((desPaisDistInst[j].clave3==instituciones[i].id) && (desPaisDistInst[j].clave1==e.target.feature.properties.dpto) && (desPaisDistInst[j].clave2 == e.target.feature.properties.distrito)){
 											color=getColorDesemp2(desPaisDistInst[j].valor);
-											if (desPaisDistInst[j].valor != 0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+instituciones[i].id+' checked="true"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+instituciones[i].id+' depto_id='+e.target.feature.properties.dpto+' dist_id='+e.target.feature.properties.distrito+' > '+instituciones[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(desPaisDistInst[j].valor).toFixed(0)+'%"><p class="text-left">'+parseFloat(desPaisDistInst[j].valor).toFixed(2)+'%</p></div></div></td></tr>');
+											if (desPaisDistInst[j].valor != 0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+instituciones[i].id+' depto_id='+e.target.feature.properties.dpto+' dist_id='+e.target.feature.properties.distrito+' checked="true"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+instituciones[i].id+' depto_id='+e.target.feature.properties.dpto+' dist_id='+e.target.feature.properties.distrito+' > '+instituciones[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(desPaisDistInst[j].valor).toFixed(0)+'%"><p class="text-left">'+parseFloat(desPaisDistInst[j].valor).toFixed(2)+'%</p></div></div></td></tr>');
 										}
 									}
 								}
@@ -592,7 +588,7 @@ tbody {
 									} */
 									//despTotDeptoInst=depemDeptoInst/countDeptoInst;
 									color=getColorDesemp2(lineaAccionDepartamento[i]);
-									if (lineaAccionDepartamento[i] !=0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+instituciones[i].id+' checked="true"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+instituciones[i].id+' depto_id='+e.target.feature.properties.dpto+' > '+instituciones[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(lineaAccionDepartamento[i]).toFixed(0)+'%"><p class="text-left">'+parseFloat(lineaAccionDepartamento[i]).toFixed(2)+'%</p></div></div></td></tr>');
+									if (lineaAccionDepartamento[i] !=0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+instituciones[i].id+' depto_id='+e.target.feature.properties.dpto+' dist_id='+e.target.feature.properties.distrito+' checked="true"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+instituciones[i].id+' depto_id='+e.target.feature.properties.dpto+' > '+instituciones[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(lineaAccionDepartamento[i]).toFixed(0)+'%"><p class="text-left">'+parseFloat(lineaAccionDepartamento[i]).toFixed(2)+'%</p></div></div></td></tr>');
 									
 								}
 							}
@@ -1230,13 +1226,18 @@ for(var x = 0; x < instituciones.length; x++){
 $("#nombreInstitucionTabla").html(nombreInstituciones);
 
 var a = "";
+var todasInstituciones="";
 for(var t = 0; t < instituciones.length; t++){
-	a += renderTableroLineaAccion2(instituciones[t].id);
+	//a += renderTableroLineaAccion2(instituciones[t].id);
+	 todasInstituciones += instituciones[t].id+",";
 }
+todasInstituciones=todasInstituciones.substring(0,todasInstituciones.length - 1);
+ 
+//var todasInstituciones=getInstitucionesSeleccionadas();
+var a=renderTableroLineaAccion2(todasInstituciones,null,null);
 $("#cuerpoTableroLineaAccion").html(a);
 
-
-function renderTableroLineaAccion2(institucionId,deptoId,distId){
+function renderTableroLineaAccion2(institucionIdConcat,deptoId,distId){
 	//$("#cuerpoTableroLineaAccion").html("");
 	var tablaInstituciones="";
 	var tempInstituciones="";
@@ -1249,7 +1250,7 @@ function renderTableroLineaAccion2(institucionId,deptoId,distId){
 	var cont, contEjecucion, destinatarios, inversion; 
 	var acum, acumEjecucionPrevista, acumEjecucionLograda;
 	var promedio;
-	if(institucionId!=null)condicion= "&institucionId="+institucionId;
+	if(institucionIdConcat!=null)condicion= "&institucionIdConcat="+institucionIdConcat;
 	if(deptoId!=null)condicion+= "&departamentoId="+deptoId;
 	if(distId!=null)condicion+= "&distritoId="+distId;
 
@@ -1273,14 +1274,19 @@ function renderTableroLineaAccion2(institucionId,deptoId,distId){
 	
 	if(lineasProgramadas.length > 0){
 		linea_accion_id=lineasProgramadas[0].insLineaAccionId;
+		institucion_id=lineasProgramadas[0].institucionId;
 		cont=0, contEjecucion=0, destinatarios=0; inversion=0; 
 		acum=0, acumEjecucionPrevista=0, acumEjecucionLograda=0;
 		promedio=0;
 	//for(var m=0; m<instituciones.length;m++)
 	//{ 
+		//tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[0].institucionSigla+'</strong></td></tr>';
 		for(var n=0; n<lineasProgramadas.length;n++){		
-			if(lineasProgramadas[n].insLineaAccionId==linea_accion_id){
+			if(lineasProgramadas[n].insLineaAccionId==linea_accion_id && lineasProgramadas[n].institucionId==institucion_id){
 			//if(instituciones[m].id==lineasProgramadas[n].institucionId && lineasProgramadas[n].insLineaAccionId==linea_accion_id){	 
+				/* if(n=0){
+					//tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[0].institucionSigla+'</strong></td></tr>';
+				} */
 				
 				contEjecucion++;
 				if (lineasProgramadas[n].cantidadHoy!=null) acumEjecucionPrevista=acumEjecucionPrevista + lineasProgramadas[n].cantidadHoy;
@@ -1307,11 +1313,11 @@ function renderTableroLineaAccion2(institucionId,deptoId,distId){
 					promedio = 0;
 				}	
 				
-				if(institucionId!=null && deptoId==null && distId==null){
-					if (flagIns == 0){
+				if(institucionIdConcat!=null && deptoId==null && distId==null){
+					//if (flagIns == 0){
 					 tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td></tr>';
-						flagIns++;
-				 	}
+					//	flagIns++;
+				 	//}
 					clase="";			
 					if ((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100>=90){
 					 clase="bg-green-active color-palette"; 
@@ -1386,7 +1392,9 @@ function renderTableroLineaAccion2(institucionId,deptoId,distId){
 				acum=0, acumEjecucionPrevista=0, acumEjecucionLograda=0;
 				promedio=0;
 				linea_accion_id=lineasProgramadas[n].insLineaAccionId;
+				institucion_id=lineasProgramadas[n].institucionId;
 				n=n-1;
+				//tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td></tr>';
 			}
 			if(n==lineasProgramadas.length-1){
 				if(cont != 0){
@@ -1395,7 +1403,7 @@ function renderTableroLineaAccion2(institucionId,deptoId,distId){
 					promedio = 0;
 				}
 				
-				if(institucionId!=null && deptoId==null && distId==null){
+				if(institucionIdConcat!=null && deptoId==null && distId==null){
 					clase="";			
 					if ((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=90){
 					 clase="bg-green-active color-palette"; 
@@ -1463,6 +1471,8 @@ function renderTableroLineaAccion2(institucionId,deptoId,distId){
 					'<td>'+numeroConComa(destinatarios.toFixed(2))+'</td>'+
 					'<td>'+numeroConComa((inversion/1000000).toFixed(2))+'</td>'+
 					'</tr>';
+					
+					//tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td></tr>';
 				}			
 			} 
 		}
@@ -1531,6 +1541,8 @@ function renderTableroLineaAccion(institucionIdConcat,deptoId,distId){
 			}	
 			
 			if(institucionIdConcat!=null && deptoId==null && distId==null){
+				
+			
 				clase="";			
 				if ((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100>=90){
 				 clase="bg-green-active color-palette"; 
@@ -1688,7 +1700,7 @@ function renderTableroLineaAccion(institucionIdConcat,deptoId,distId){
 	return tempInstLineas;
 }	
 
-$("body").on("click", ".linkInstitucion",function(event){
+$("body").on("click", ".cmbInstitucion",function(event){
 		
 	var institucion_idConcat=getInstitucionesSeleccionadas();
 	//var institucion_id=event.target.attributes.institucion_id.value;
@@ -1714,16 +1726,16 @@ $("body").on("click", ".linkInstitucion",function(event){
 			}
 		}
 		$("#nombreInstitucionTabla").html(nombreInstituciones); */
-		if(institucion_idConcat != "" && depto_id != "" && dist_id != ""){
-			var a = renderTableroLineaAccion(institucion_idConcat,depto_id,dist_id);
+		if(institucion_idConcat != "" && (depto_id !=="undefined") && (dist_id !=="undefined")){
+			var a = renderTableroLineaAccion2(institucion_idConcat,depto_id,dist_id);
 			$("#cuerpoTableroLineaAccion").html(a);
 		}else{
-			if(institucion_idConcat != "" && depto_id != ""){
-				var a = renderTableroLineaAccion(institucion_idConcat,depto_id);
+			if(institucion_idConcat != "" && (depto_id !=="undefined")){
+				var a = renderTableroLineaAccion2(institucion_idConcat,depto_id);
 				$("#cuerpoTableroLineaAccion").html(a);
 			}else{
 				if(institucion_idConcat != ""){
-					var a = renderTableroLineaAccion(institucion_idConcat);
+					var a = renderTableroLineaAccion2(institucion_idConcat);
 					$("#cuerpoTableroLineaAccion").html(a);
 				}	
 			}			
