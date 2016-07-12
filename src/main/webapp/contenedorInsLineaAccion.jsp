@@ -81,6 +81,11 @@ if (user != null) { %>
 		var entidadCas = "";
 		entidadCas ="<%=attributes.get("entidad") %>";
 		usuarioRolCas="<%=attributes.get("role_id_tablero") %>";
+		
+		usr_nivel_id="<%=attributes.get("nivel_id") %>";
+		usr_entidad_id="<%=attributes.get("entidad_id") %>";
+		usr_unr_id="<%=attributes.get("unr_id") %>";
+		
 		var usuarios = $.ajax({
 			url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
 		  	type:'get',
@@ -92,6 +97,8 @@ if (user != null) { %>
 		
 		$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
 		$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
+		
+		//$("#botonImprimirAvanceInstitucional").attr('parametros', usuarios[0].nivel_id+"-"+usuarios[0].entidad_id+"-"+usuarios[0].unidadResponsable);
 		
 		var insLineaAccion = $.ajax({
 			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion',
@@ -570,7 +577,7 @@ if (user != null) { %>
 	             			</div>
 	             			<!-- link para acceder a la pagina de descarga de los avances y constancias -->
 							<div class="col-md-6" align="right">								
-								<button type="button" class="btn btn-primary" onclick=imprimirAvancesInstitucion(); >
+								<button id="botonImprimirAvanceInstitucional" type="button" class="btn btn-primary imprimirAvanceCualitativoInstitucion" >
 									<span class="glyphicon glyphicon-download-alt"></span> Descargar Avances
 								</button>															
 								<!-- <a href="http://spr.stp.gov.py/tablero/descargasConstancias.jsp">									

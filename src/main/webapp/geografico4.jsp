@@ -480,13 +480,23 @@ tbody {
 						});
 
 					}
-
 					
+					function getInstitucionesSeleccionadas(){
+						var checkSeleccionado=[];
+						$("input[type=checkbox]:checked").each(function(){							
+							var idInstitucion=$(this).attr('id').split("-");
+						    checkSeleccionado.push(idInstitucion[1]);
+						})						
+					}			
+					
+					$("body").on("click", ".cmbInstitucion",function(event){						
+						getInstitucionesSeleccionadas();
+					});
 					
 					function renderEntidades(e){
 						var array=[];var tipoInstituciones="";
 						$("#tablaInstituciones").html("");
-						$("#cuerpoTableroLineaAccion").html("");
+						//$("#cuerpoTableroLineaAccion").html("");
 						$("#nombreInstitucionTabla").html("");
 						if (typeof e != 'undefined'){
 							if (e.target.feature.properties.hasOwnProperty("distrito")){
@@ -505,7 +515,7 @@ tbody {
 									for(var j=0;j < desPaisDistInst.length;j++){
 										if ((desPaisDistInst[j].clave3==instituciones[i].id) && (desPaisDistInst[j].clave1==e.target.feature.properties.dpto) && (desPaisDistInst[j].clave2 == e.target.feature.properties.distrito)){
 											color=getColorDesemp2(desPaisDistInst[j].valor);
-											if (desPaisDistInst[j].valor != 0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><a tipo="filtroPorEntidad" institucion_id='+instituciones[i].id+' depto_id='+e.target.feature.properties.dpto+' dist_id='+e.target.feature.properties.distrito+' >'+instituciones[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(desPaisDistInst[j].valor).toFixed(0)+'%"><p class="text-left">'+parseFloat(desPaisDistInst[j].valor).toFixed(2)+'%</p></div></div></td></tr>');
+											if (desPaisDistInst[j].valor != 0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+instituciones[i].id+' checked="true"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+instituciones[i].id+' depto_id='+e.target.feature.properties.dpto+' dist_id='+e.target.feature.properties.distrito+' > '+instituciones[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(desPaisDistInst[j].valor).toFixed(0)+'%"><p class="text-left">'+parseFloat(desPaisDistInst[j].valor).toFixed(2)+'%</p></div></div></td></tr>');
 										}
 									}
 								}
@@ -579,8 +589,8 @@ tbody {
 									} */
 									//despTotDeptoInst=depemDeptoInst/countDeptoInst;
 									color=getColorDesemp2(lineaAccionDepartamento[i]);
-									if (lineaAccionDepartamento[i] !=0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><a tipo="filtroPorEntidad" institucion_id='+instituciones[i].id+' depto_id='+e.target.feature.properties.dpto+' >'+instituciones[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(lineaAccionDepartamento[i]).toFixed(0)+'%"><p class="text-left">'+parseFloat(lineaAccionDepartamento[i]).toFixed(2)+'%</p></div></div></td></tr>');
-
+									if (lineaAccionDepartamento[i] !=0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+instituciones[i].id+' checked="true"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+instituciones[i].id+' depto_id='+e.target.feature.properties.dpto+' > '+instituciones[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(lineaAccionDepartamento[i]).toFixed(0)+'%"><p class="text-left">'+parseFloat(lineaAccionDepartamento[i]).toFixed(2)+'%</p></div></div></td></tr>');
+									
 								}
 							}
 						}else{ //d
@@ -604,7 +614,7 @@ tbody {
 								}
 								
 								color=getColorDesemp2(despTotInst);
-								if (despTotInst !=0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><a tipo="filtroPorEntidad" institucion_id='+instituciones[i].id+'  >'+instituciones[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotInst).toFixed(2)+'%</p></div></div></td></tr>');
+								if (despTotInst !=0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+instituciones[i].id+' checked="true"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+instituciones[i].id+'  > '+instituciones[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotInst).toFixed(2)+'%</p></div></div></td></tr>');
 
 							}
 						}
@@ -1210,10 +1220,9 @@ $("body").on("click", "#cierreEtiquetaDistrito",function(event){
 	
 });
 
-
 var nombreInstituciones = "";
 for(var x = 0; x < instituciones.length; x++){
-		nombreInstituciones += instituciones[x].sigla;
+	nombreInstituciones += instituciones[x].sigla;
 }
 $("#nombreInstitucionTabla").html(nombreInstituciones);
 
@@ -1221,7 +1230,7 @@ var a = "";
 for(var t = 0; t < instituciones.length; t++){
 	a += renderTableroLineaAccion2(instituciones[t].id);
 }
-$("#cuerpoTableroLineaAccion2").html(a);
+$("#cuerpoTableroLineaAccion").html(a);
 
 
 function renderTableroLineaAccion2(institucionId,deptoId,distId){
@@ -1249,14 +1258,27 @@ function renderTableroLineaAccion2(institucionId,deptoId,distId){
       	async:false       
     }).responseText;
 	lineasProgramadas=JSON.parse(lineasProgramadas);
+	/*
+	var instituciones = $.ajax({
+    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+      	type:'get',
+      	dataType:'json',
+      	crossDomain:true,
+      	async:false       
+    }).responseText;
+	instituciones=JSON.parse(instituciones);*/
 	
 	if(lineasProgramadas.length > 0){
 		linea_accion_id=lineasProgramadas[0].insLineaAccionId;
 		cont=0, contEjecucion=0, destinatarios=0; inversion=0; 
 		acum=0, acumEjecucionPrevista=0, acumEjecucionLograda=0;
 		promedio=0;
+	//for(var m=0; m<instituciones.length;m++)
+	//{ 
 		for(var n=0; n<lineasProgramadas.length;n++){		
-			if(lineasProgramadas[n].insLineaAccionId==linea_accion_id){			
+			if(lineasProgramadas[n].insLineaAccionId==linea_accion_id){
+			//if(instituciones[m].id==lineasProgramadas[n].institucionId && lineasProgramadas[n].insLineaAccionId==linea_accion_id){	 
+				
 				contEjecucion++;
 				if (lineasProgramadas[n].cantidadHoy!=null) acumEjecucionPrevista=acumEjecucionPrevista + lineasProgramadas[n].cantidadHoy;
 				if (lineasProgramadas[n].cantidadAvance!=null) acumEjecucionLograda=acumEjecucionLograda + lineasProgramadas[n].cantidadAvance;
@@ -1283,6 +1305,10 @@ function renderTableroLineaAccion2(institucionId,deptoId,distId){
 				}	
 				
 				if(institucionId!=null && deptoId==null && distId==null){
+					if (flagIns == 0){
+					 tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td></tr>';
+						flagIns++;
+				 	}
 					clase="";			
 					if ((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100>=90){
 					 clase="bg-green-active color-palette"; 
@@ -1437,6 +1463,7 @@ function renderTableroLineaAccion2(institucionId,deptoId,distId){
 				}			
 			} 
 		}
+	//}//fin for instituciones
 	}
 	return tempInstLineas;
 
@@ -1515,7 +1542,7 @@ function renderTableroLineaAccion(institucionId,deptoId,distId){
 				'<td>'+numeroConComa(lineasProgramadas[n-1].meta)+'</td>'+
 				'<td>'+numeroConComa(lineasProgramadas[n-1].cantidadAnho)+'</td>'+
 				'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100).toFixed(2))+'</td>'+
-				'<td>'+numeroConComa(lineasProgramadas[n-1].cantDest)+'</td>'+
+				'<td>'+numeroConComa((lineasProgramadas[n-1].cantDest).toFixed(2))+'</td>'+
 				'<td>'+numeroConComa((lineasProgramadas[n-1].inversionEstimada/1000000).toFixed(2))+'</td>'+
 				'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
 				'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
@@ -1530,7 +1557,7 @@ function renderTableroLineaAccion(institucionId,deptoId,distId){
 				}
 				
 				tempInstLineas += '<td class="'+clase+'">'+numeroConComa((promedio).toFixed(2))+'</td>'+
-				'<td>'+numeroConComa(destinatarios.toFixed(2))+'</td>'+
+				'<td>'+numeroConComa((destinatarios).toFixed(2))+'</td>'+
 				'<td>'+numeroConComa((inversion/1000000).toFixed(2))+'</td>'+
 				'</tr>';
 			}else{
@@ -1564,7 +1591,7 @@ function renderTableroLineaAccion(institucionId,deptoId,distId){
 				}
 				
 				tempInstLineas += '<td class="'+clase+'">'+numeroConComa((promedio).toFixed(2))+'</td>'+
-				'<td>'+numeroConComa(destinatarios.toFixed(2))+'</td>'+
+				'<td>'+numeroConComa((destinatarios).toFixed(2))+'</td>'+
 				'<td>'+numeroConComa((inversion/1000000).toFixed(2))+'</td>'+
 				'</tr>';
 			}			
@@ -1599,7 +1626,7 @@ function renderTableroLineaAccion(institucionId,deptoId,distId){
 				'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
 				'<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>'+
 				'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
-				'<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>'+
+				'<td>'+numeroConComa((lineasProgramadas[n].cantDest).toFixed(2))+'</td>'+
 				'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
 				'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
 				'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
@@ -1657,7 +1684,7 @@ function renderTableroLineaAccion(institucionId,deptoId,distId){
 	return tempInstLineas;
 }	
 
-$("body").on("click", "#tablaInstituciones",function(event){
+$("body").on("click", ".linkInstitucion",function(event){
 		
 	var institucion_id=event.target.attributes.institucion_id.value;
 	var nombreInstituciones="";
