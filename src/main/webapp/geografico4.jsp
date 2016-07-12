@@ -518,6 +518,9 @@ tbody {
 										}
 									}
 								}
+								var todasInstituciones=getInstitucionesSeleccionadas();
+								var a=renderTableroLineaAccion2(todasInstituciones,e.target.feature.properties.dpto,e.target.feature.properties.distrito);
+								$("#cuerpoTableroLineaAccion").html(a);
 							}else{
 								
 /* 								var lineaAccionDepartamento = $.ajax({
@@ -591,6 +594,9 @@ tbody {
 									if (lineaAccionDepartamento[i] !=0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+instituciones[i].id+' depto_id='+e.target.feature.properties.dpto+' dist_id='+e.target.feature.properties.distrito+' checked="true"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+instituciones[i].id+' depto_id='+e.target.feature.properties.dpto+' > '+instituciones[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(lineaAccionDepartamento[i]).toFixed(0)+'%"><p class="text-left">'+parseFloat(lineaAccionDepartamento[i]).toFixed(2)+'%</p></div></div></td></tr>');
 									
 								}
+								var todasInstituciones=getInstitucionesSeleccionadas();
+								var a=renderTableroLineaAccion2(todasInstituciones,e.target.feature.properties.dpto,null);
+								$("#cuerpoTableroLineaAccion").html(a);
 							}
 						}else{ //d
 							var color="";var depemInst;var countInst;var despTotInst;
@@ -1280,12 +1286,18 @@ function renderTableroLineaAccion2(institucionIdConcat,deptoId,distId){
 		promedio=0;
 	//for(var m=0; m<instituciones.length;m++)
 	//{ 
-		//tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[0].institucionSigla+'</strong></td></tr>';
+		tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[0].institucionSigla+'</strong></td></tr>';
 		for(var n=0; n<lineasProgramadas.length;n++){		
-			if(lineasProgramadas[n].insLineaAccionId==linea_accion_id && lineasProgramadas[n].institucionId==institucion_id){
+			if(n>0){							
+				if(lineasProgramadas[n-1].institucionId!=institucion_id){
+					tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td></tr>';
+				}
+			}
+			 
+			if(lineasProgramadas[n].insLineaAccionId==linea_accion_id){
 			//if(instituciones[m].id==lineasProgramadas[n].institucionId && lineasProgramadas[n].insLineaAccionId==linea_accion_id){	 
 				/* if(n=0){
-					//tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[0].institucionSigla+'</strong></td></tr>';
+					tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[0].institucionSigla+'</strong></td></tr>';
 				} */
 				
 				contEjecucion++;
@@ -1315,7 +1327,7 @@ function renderTableroLineaAccion2(institucionIdConcat,deptoId,distId){
 				
 				if(institucionIdConcat!=null && deptoId==null && distId==null){
 					//if (flagIns == 0){
-					 tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td></tr>';
+					 //tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td></tr>';
 					//	flagIns++;
 				 	//}
 					clase="";			
@@ -1393,7 +1405,7 @@ function renderTableroLineaAccion2(institucionIdConcat,deptoId,distId){
 				promedio=0;
 				linea_accion_id=lineasProgramadas[n].insLineaAccionId;
 				institucion_id=lineasProgramadas[n].institucionId;
-				n=n-1;
+				n=n-1;				
 				//tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td></tr>';
 			}
 			if(n==lineasProgramadas.length-1){
@@ -1475,7 +1487,7 @@ function renderTableroLineaAccion2(institucionIdConcat,deptoId,distId){
 					//tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td></tr>';
 				}			
 			} 
-		}
+		}			
 	//}//fin for instituciones
 	}
 	return tempInstLineas;
