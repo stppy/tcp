@@ -26,6 +26,8 @@
         <script type="text/javascript" src="tablero_files/gchart_renderers.js"></script>
         <script type="text/javascript" src="tablero_files/d3_renderers.js"></script>
         <script type="text/javascript" src="tablero_files/jquery.js"></script>
+        <script type="text/javascript" src="tablero_files/export_renders.js"></script>
+        
         <style>
             * {font-family: Verdana;}
             .node {
@@ -159,7 +161,8 @@ textarea { text-transform: uppercase; }
             $(function(){
             	$.noConflict();
                 var derivers = $.pivotUtilities.derivers;
-
+                var renderers = $.extend($.pivotUtilities.renderers, 
+                        $.pivotUtilities.export_renderers);
 				
                 $.getJSON("http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPivotLineasProgramadas", function(mps) {
                 	$("#output").pivotUI(mps, {
@@ -167,7 +170,8 @@ textarea { text-transform: uppercase; }
                             $.pivotUtilities.renderers, 
                             $.pivotUtilities.gchart_renderers, 
                             $.pivotUtilities.d3_renderers
-                            )/*,
+                            ),
+                            rendererName: "TSV Export"/*,
                         derivedAttributes: {
                             "Age Bin": derivers.bin("Age", 10),
                             "Gender Imbalance": function(mp) {
