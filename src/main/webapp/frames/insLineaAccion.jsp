@@ -2,12 +2,59 @@
 
 
 <script>
+
+function renderEvidencia(avanceId, parametros){
+	var webServicesEvidencia = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getEvidencia&avanceId='+avanceId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false
+	}).responseText;
+	webServicesEvidencia = JSON.parse(webServicesEvidencia);
+	
+	var cuerpoEvidencia = "";
+	
+	for(var d = 0; d < webServicesEvidencia.length; d++)
+	{   
+		var donwloadName=""; 
+		var downloadTarget='target="_blank"';
+		var botones="";
+		
+		if (webServicesEvidencia[d].urlDocumento) {
+			webServicesEvidencia[d].url='http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+webServicesEvidencia[d].urlDocumento;
+			donwloadName='Download="'+webServicesEvidencia[d].nombre+'"';
+			downloadTarget="";
+		}
+		
+		<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>
+			botones='<button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+parametros+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+parametros+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button>';
+		<%}%>
+		
+		<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") ){%>
+			if(webServicesEvidencia[d].borrado == true)
+			{
+				cuerpoEvidencia +='<tr><td data-toggle="tooltip" data-placement="top" title="'+webServicesEvidencia[d].descripcion+'" ><del><a href="'+webServicesEvidencia[d].url+'" target="_blank">'+webServicesEvidencia[d].nombre+'</a></del></td>'+
+									'<td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+parametros+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+parametros+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';	        				
+			}
+		<%}%>
+		if(webServicesEvidencia[d].borrado == false){
+			cuerpoEvidencia += '<tr>'+
+					'<td data-toggle="tooltip" data-placement="top" title="'+webServicesEvidencia[d].descripcion+'" >'+
+						'<a href="'+webServicesEvidencia[d].url+'" '+downloadTarget+'" '+donwloadName+'>'+webServicesEvidencia[d].nombre+'</a>'+
+					'</td>'+
+			    	'<td class="text-center">'+botones+'</td></tr>';	
+		}
+	}
+	
+	return cuerpoEvidencia;
+}
 <%
 	if (attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("0")|| attributes.get("role_id_tablero").toString().equals("2")){%>
 //		alert("admin");
 	<%}else{%>
 //		alert("no admin");
 	<%}%>;	
+	
 	$("body").on("click", ".nuevaInsLineaAccion",function(event){		
 		event.stopPropagation();
 		event.preventDefault();
@@ -6087,48 +6134,17 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	}).responseText;
 	webServicesAvance = JSON.parse(webServicesAvance); 
 	
-	var webServicesEvidencia = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getEvidencia&avanceId='+avanceId,
-	  	type:'get',
-	  	dataType:'json',
-	  	async:false       
-	}).responseText;
-	webServicesEvidencia = JSON.parse(webServicesEvidencia);
-	
-	var optionArchivoExistente="";
+	/*var optionArchivoExistente="";
 	optionArchivoExistente += '<option value="" >Seleccione una Opción</option>';
 
 
 	for(var p = 0; p < webServicesEvidencia.length; p++){
 		optionArchivoExistente += '<option value="'+webServicesEvidencia[p].urlDocumento+'" >'+webServicesEvidencia[p].urlDocumento+'</option>';
 	}
-		
-	var cuerpoEvidencia = "";
-	for(var j = 0; j < webServicesEvidencia.length; j++)
-	{
-		if(webServicesEvidencia[j].borrado == true)
-		{
-			<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
-				cuerpoEvidencia += '<tr><td data-toggle="tooltip" data-placement="top" title="'+webServicesEvidencia[j].descripcion+'" ><del>'+webServicesEvidencia[j].nombre+'</del></td><td><del>'+webServicesEvidencia[j].url+'</del></td><td></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-recycle"></span></button></td></tr>';
-			<%}%>
-		}else{
-			<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-				cuerpoEvidencia += '<tr><td data-toggle="tooltip" data-placement="top" title="'+webServicesEvidencia[j].descripcion+'" >'+webServicesEvidencia[j].nombre+'</td><td><a href="'+webServicesEvidencia[j].url+'" target="_blank">'+webServicesEvidencia[j].url+'</a></td><td class="text-center">';
-					if (webServicesEvidencia[j].urlDocumento) {
-						cuerpoEvidencia += '<a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+webServicesEvidencia[j].urlDocumento+'" Download ><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Descargar" ><span class="fa fa-download"></span></button></a>'+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-trash"></span></button></td></tr>';
-					} else {
-						cuerpoEvidencia += '</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[j].id+' ><span class="fa fa-trash"></span></button></td></tr>';	
-					}					
-			<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-				cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[j].nombre+'</td><td>'+webServicesEvidencia[j].descripcion+'</td><td>'+webServicesEvidencia[j].url+'</td><td>';								
-				if (webServicesEvidencia[j].urlDocumento) {
-					cuerpoEvidencia += '<a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+webServicesEvidencia[j].urlDocumento+'" Download="'+webServicesEvidencia[j].nombre+'" >Descargar Archivo</a>' + '</td><td class="text-center"></td></tr>';
-				}else{
-					cuerpoEvidencia += '</td><td class="text-center"></td></tr>';
-				}
-			<%}%>
-		}		
-	}
+	*/
+	
+	var parametrosEvidencia=insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId;
+	var cuerpoEvidencia = renderEvidencia(avanceId,parametrosEvidencia);
 	
 	var webServicesAvanceCosto = $.ajax({
 		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCosto&avanceId='+avanceId,
@@ -6516,7 +6532,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'										<div class="table-responsive">'+
 									'											<table class="table table-hover table-bordered" id="dataTableEvidencia">'+
 									'												<thead>'+
-									'													<tr class="active"><th>Nombre</th><th>Url</th><th class="text-center">Evidencia</th><th class="text-center">Administrar</th></tr>'+
+									'													<tr class="active"><th>Nombre</th><th class="text-center">Administrar</th></tr>'+
 									'												</thead>'+
 									'												<tbody  id="listaEvidencia">'+
 									
@@ -7344,54 +7360,21 @@ $("body").on("click", ".editarAvanceCosto",function(event){
         success: function (data) {
         	if(data.success == true)
         	{
-        		
-        		var webServicesEvidencia = $.ajax({
-        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getEvidencia&avanceId='+avanceId,
-        		  	type:'get',
-        		  	dataType:'json',
-        		  	async:false       
-        		}).responseText;
-        		webServicesEvidencia = JSON.parse(webServicesEvidencia);
-        		 
-        		var cuerpoEvidencia = "";
-        		for(var d = 0; d < webServicesEvidencia.length; d++)
-        		{        			
-        			if(webServicesEvidencia[d].borrado == true)
-        			{
-        				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
-        					cuerpoEvidencia += '<tr><td data-toggle="tooltip" data-placement="top" title="'+webServicesEvidencia[d].descripcion+'" ><del>'+webServicesEvidencia[d].nombre+'</del></td><td><del>'+webServicesEvidencia[d].url+'</del></td><td></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-recycle"></span></button></td></tr>';
-        				<%}%>
-        			}else{
-        				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-        					cuerpoEvidencia += '<tr><td data-toggle="tooltip" data-placement="top" title="'+webServicesEvidencia[d].descripcion+'" >'+webServicesEvidencia[d].nombre+'</td><td><a href="'+webServicesEvidencia[d].url+'" target="_blank">'+webServicesEvidencia[d].url+'</a></td><td class="text-center">';
-        						if (webServicesEvidencia[d].urlDocumento) {
-        							cuerpoEvidencia += '<a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+webServicesEvidencia[d].urlDocumento+'" Download ><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Descargar" ><span class="fa fa-download"></span></button></a>'+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
-        						} else {
-        							cuerpoEvidencia += '</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';	
-        						}					
-        				<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-        					cuerpoEvidencia += '<tr><td>'+webServicesEvidencia[d].nombre+'</td><td>'+webServicesEvidencia[d].descripcion+'</td><td>'+webServicesEvidencia[d].url+'</td><td>';								
-        					if (webServicesEvidencia[d].urlDocumento) {
-        						cuerpoEvidencia += '<a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+webServicesEvidencia[d].urlDocumento+'" Download="'+webServicesEvidencia[d].nombre+'" >Descargar Archivo</a>' + '</td><td class="text-center"></td></tr>';
-        					}else{
-        						cuerpoEvidencia += '</td><td class="text-center"></td></tr>';
-        					}
-        				<%}%>
-        			}	
-        		}
+        		var parametrosEvidencia=insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId;
+        		var cuerpoEvidencia=renderEvidencia(avanceId, parametrosEvidencia);
         		
         		var contenidoTabla;
         		
         		contenidoTabla = '<div class="table-responsive">'+
-				'				 	<table class="table table-hover table-bordered" id="dataTableEvidencia">'+
-				'						<thead>'+
-				'							<tr class="active"><th>Nombre</th><th>Url</th><th class="text-center">Evidencia</th><th class="text-center">Administrar</th></tr>'+
-				'						</thead>'+
-				'						<tbody  id="listaEvidencia">'+
-				
-				'						</tbody>'+
-				'					</table>'+
-				'				 </div>';
+        		'				 	<table class="table table-hover table-bordered" id="cuerpoEvidencia">'+
+        		'						<thead>'+
+        		'							<tr class="active"><th>Nombre</th><th class="text-center">Administrar</th></tr>'+
+        		'						</thead>'+
+        		'						<tbody  id="listaEvidencia">'+
+        		
+        		'						</tbody>'+
+        		'					</table>'+
+        		'				 </div>';
         		
         		$("#cuerpoTablaEvidencia").html("");
         		$("#cuerpoTablaEvidencia").html(contenidoTabla);
