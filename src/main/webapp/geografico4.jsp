@@ -390,7 +390,7 @@ tbody {
 						desPaisInst.push(objeto);
 					
 					}
-															
+									
 					var desPaisDistjson = $.ajax({
 				    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist3',
 				      	type:'get',
@@ -1771,7 +1771,6 @@ $("body").on("click", ".cmbInstitucion",function(event){
 
 
 $(document).ready(function(){
-
 	$("#ex12c").slider({
 		id: "slider12c",
 		min: 0,

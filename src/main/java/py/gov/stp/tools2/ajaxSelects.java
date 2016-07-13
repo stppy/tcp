@@ -1325,18 +1325,96 @@ public class ajaxSelects extends HttpServlet {
 									}
     							}
 							}
+		    						
 							if(cont != 0){
 								promedio = acum / cont;
 							}
 							desempenhoDpto.add(promedio);
-	                	}
-
-						                	
+	
+    					}
+              	
 					}catch (SQLException e) {e.printStackTrace();}
 				
                 JsonElement json = new Gson().toJsonTree(desempenhoDpto);
                 out.println(json.toString());
             } 
+//        	if (action.equals("getResumenLineasAccionProgramacionDesempenoInstitucional")){
+//                List<LineaAccionProgramacion> objetos=null;
+//                List<Institucion> instituciones= null ;
+//                ArrayList<Object> desempenhoDpto= new ArrayList<Object>();
+//                //condition = " where true";
+//                
+//                try {
+//					instituciones = SqlSelects.selectInstitucion(condition);
+//				} catch (SQLException e1) {
+//					e1.printStackTrace();
+//				}
+//                
+//				for (int s = 0; s < instituciones.size(); s += 1) {
+//	                 condition += " OR ins_linea_accion_base_dd.institucion_id='"+instituciones.get(s).getId()+"'";
+//				}
+//	                try {                	
+//
+//	                	double acum, promedio;
+//	                	int cont, instId;
+//	                	objetos = SqlSelects.selectResumenLineasAccionProgramacionInstDptoDistrito(condition);
+//	                		
+//	                		acum=0;
+//	                		promedio=0;
+//	                		cont=0;
+//		                	instId=0;
+//		                	
+//							for (int i = 0; i < objetos.size(); i += 1) {
+//								if(i == 0){
+//									instId = objetos.get(i).getInstitucionId();
+//								}
+//								
+//									if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && objetos.get(i).getCantidadAvance() > 0) {	
+//										acum += 100;
+//										cont+=1;
+//									} else if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+//										acum += 0;
+//										cont+=1;
+//									} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+//										acum += 0;
+//									} else {
+//										acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
+//										cont+=1;
+//									}
+//    							
+//	    						if (i == (objetos.size()-1)){
+//
+//									instId = objetos.get(i).getInstitucionId();
+//									if(cont != 0){
+//										promedio = acum / cont;
+//									}
+//									desempenhoDpto.add(promedio);
+//				                	acum=0;
+//				                	promedio=0;
+//				                	cont=0;
+//	    						}else{
+//	    							if(objetos.get(i+1).getInstitucionId() != instId)
+//	    							{
+//	    								if(cont != 0){
+//	    									promedio = acum / cont;
+//	    								}
+//	    								desempenhoDpto.add(promedio);
+//	    			                	acum=0;
+//	    			                	promedio=0;
+//	    			                	cont=0;
+//										instId = objetos.get(i+1).getInstitucionId();
+//
+//	    							}
+//	    						}
+//
+//
+//							}   					
+//              	
+//					}catch (SQLException e) {e.printStackTrace();}
+//				
+//                JsonElement json = new Gson().toJsonTree(desempenhoDpto);
+//                out.println(json.toString());
+//            } 
         	//obtenemos todas las instituciones en el back end y su desemeño institucional a nivel DEPARTAMENTAL
         	if (action.equals("getResumenLineasAccionProgramacionDesempenoInstitucionalDepto")){
                 List<LineaAccionProgramacion> objetos=null;
