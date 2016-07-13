@@ -9,8 +9,7 @@
 <!DOCTYPE html>
 <html>
   <head>
- 	 <%@ include file="/frames/head.jsp" %>
-
+ 	 <%@ include file="/frames/head.jsp" %>	 
 	<script type="text/javascript" src="dist/canvasjs/canvasjs.min.js" ></script>
 	<script src="dist/js/jspdf.min.js"></script>
 
@@ -28,8 +27,7 @@
     <link href="plugins/mapa/leaflet-locationpicker.css" rel="stylesheet">
     <script src="plugins/mapa/leaflet-locationpicker.js"></script>   
 	
-	
-    <style type="text/css">
+	<style type="text/css">
 		/* Example 1 custom styles */
 		#ex1Slider .slider-selection {
    			background: #BABABA;
@@ -73,7 +71,7 @@
 <% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%>
 <% Map attributes = user.getAttributes(); 
 if (user != null) { %>
-
+	<%@ include file="/frames/perfil.jsp" %>
 <script>
 <%if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
  	$(document).ready(function(){
@@ -95,8 +93,8 @@ if (user != null) { %>
 		usuarios = JSON.parse(usuarios);
 		usuarios = usuarios.usuarios;
 		
-		$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
-		$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
+		//$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
+		//$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
 		
 		//$("#botonImprimirAvanceInstitucional").attr('parametros', usuarios[0].nivel_id+"-"+usuarios[0].entidad_id+"-"+usuarios[0].unidadResponsable);
 		
