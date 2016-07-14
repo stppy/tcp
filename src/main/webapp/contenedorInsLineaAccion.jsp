@@ -181,7 +181,7 @@ if (user != null) { %>
 							<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
 								cuerpoTablaInsLineaAccion+='<tr><td>'+periodo[p].nombre+'</td>';	
 							<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-								cuerpoTablaInsLineaAccion+='<tr><td>'+periodo[p].nombre+'</td>';	
+								cuerpoTablaInsLineaAccion+='<tr><td>'+periodo[p].nombre+'</td>';    
 							<%}%>
 						}
 						bandPeriodo = 1;
@@ -473,13 +473,13 @@ if (user != null) { %>
 					<%}%>
 				}
 			}
-			
 		}
 		//Tabla de linea de accion actual
 		var tablaInsLineaAccion = 	'<div class="table-responsive">'+
 				'<table class="table table-hover" id="dataTableInsLineaAccion">'+
 					'<thead>'+
-				  		'<tr class="active"><th colspan="6">Línea de Acción por Institución</th></tr>'+
+						'<tr class="active"><th colspan="5">Línea de Acción por Institución</th>'+
+				  		'<th colspan="1" class="text-center"><p id="mostrarOcultarBorrado">Mostrar/Ocultar Registros Borrados <input type="checkbox" id="chkMostrarOcultar"></p></th></tr>'+
 				  		'<tr class="active"><th style="min-width:110px">Periodo</th><th>Institución</th><th>Línea de Acción</th><th>Meta</th><th class="text-center">U.Medida</th><th style="min-width:250px" class="text-center">Administrar Linea Acción</th></tr>'+
 				 	'</thead>'+
 				 	'<tbody id="tablaCuerpoInsLineaAccionPrecargados">'+
@@ -525,6 +525,15 @@ if (user != null) { %>
 		
 		}
 		
+		$("body").on("click", "#chkMostrarOcultar",function(event){
+			$("tr > td > del").closest("tr").toggle();
+		});
+				
+		<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
+			$("#mostrarOcultarBorrado").show();
+		<%}else{%>
+			$("#mostrarOcultarBorrado").hide();
+		<%}%>
 	});
 <%}else{%>
 	window.location = "http://spr.stp.gov.py/tablero/resumenLineaAccion.jsp";
