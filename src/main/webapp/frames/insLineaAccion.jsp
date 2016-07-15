@@ -9061,7 +9061,7 @@ $("body").on("click", ".avanceCualitativo",function(event){
 	{
 		$("#modalBorrarAvanceCualitativo").remove();
 	}	
-
+	
 	var lineaAccion = $.ajax({
 		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
 	  	type:'get',
@@ -9221,8 +9221,7 @@ $("body").on("click", ".avanceCualitativo",function(event){
 						'			</div>'+
 						'		    <div class="modal-body" id="accionCuerpo" >';
 						
-	<% if (attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>		
-	
+ 	<% if (attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>		
 	
 	cuerpoModalAvanceCualitativo +='		      	<div class="row">'+
 						'								<form role="form" id="formularioAvanceCualitativo">'+
@@ -9255,7 +9254,8 @@ $("body").on("click", ".avanceCualitativo",function(event){
 						'                	</form>'+
 						'                </div>';											
 	<%}%>	
-	
+ 	
+ //}
 	cuerpoModalAvanceCualitativo +='	<div class="row">'+ 
 						'		      		<div class="col-md-12">'+
 						'						<div class="box box-warning">'+
