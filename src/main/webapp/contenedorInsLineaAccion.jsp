@@ -524,20 +524,24 @@ if (user != null) { %>
 		$("#dataTableInsLineaAccionAnterior").DataTable();
 		
 		}
+	
+		<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
+			var ocultarBorrado= "<h5>Mostrar/Ocultar Registros Borrados <input type='checkbox' id='chkMostrarOcultar'></h5>";		
+			$('#mostrarOcultarBorrado').append(ocultarBorrado);
+		<%}%>
 		
 		$("body").on("click", "#chkMostrarOcultar",function(event){
-			$("tr > td > del").closest("tr").toggle();
-		});
-				
-		<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
-			$("#mostrarOcultarBorrado").show();
-		<%}else{%>
-			$("#mostrarOcultarBorrado").hide();
-		<%}%>
+			OcultarRegistrosBorrados();
+		});		
+		
 	});
 <%}else{%>
 	window.location = "http://spr.stp.gov.py/tablero/resumenLineaAccion.jsp";
 <%}%>
+
+	function OcultarRegistrosBorrados(){
+		$("tr > td > del").closest("tr").toggle();
+	}
 </script>
 	
     <div class="wrapper">
@@ -554,13 +558,8 @@ if (user != null) { %>
       <div class="content-wrapper">
       
         <!-- Content Header (Page header) -->
-        <section class="content-header">
-          <h1>
-            <small>
-            <!--  Titulo, donde antes estaba dashboard -->
-            </small>
-          </h1>
-         
+        <section class="content-header">          
+            	<div class="pull-right" id="mostrarOcultarBorrado"></div>
         </section>
 
         <!-- Main content -->

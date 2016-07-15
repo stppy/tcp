@@ -2100,7 +2100,10 @@ function renderEvidencia(avanceId, parametros){
 							'		      		<div class="col-md-12">'+
 							'						<div class="box box-warning">'+
 							'		                	<div class="box-header with-border">'+
-							'		                  		<h3 class="box-title">Acciones Precargadas</h3>'+
+							'		                  		<div class="row">'+
+							'									<div class="col-md-8"><h3 class="box-title">Acciones Precargadas</h3></div>'+
+							'									<div class="col-md-4"><p class="box-title" id="mostrarOcultarBorradoAccion">Mostrar/Ocultar Registros Borrados <input type="checkbox" id="chkMostrarOcultar"></p></div>'+
+							'								</div>'+	
 							'	                  			<div class="box-tools pull-right">'+
 							'				                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>'+
 							'		                    		</button>'+
@@ -2145,6 +2148,7 @@ function renderEvidencia(avanceId, parametros){
 		$("#selectorCatalogoAccion").change();
 		$("#selectorDepartamento").change();
 		$('#dataTablesAcciones').dataTable();
+		OcultarRegistrosBorrados("mostrarOcultarBorradoAccion");
 
 	});
 	
@@ -3105,7 +3109,11 @@ $("body").on("click", ".borrarAccion",function(event){
 						'		      		<div class="col-md-12">'+
 						'						<div class="box box-warning">'+
 						'		                	<div class="box-header with-border">'+
-						'		                  		<h3 class="box-title">Acciones Vinculadas a Productos</h3>'+
+						'								<div class="row">'+
+						'									<div class="col-md-9"><h3 class="box-title">Acciones Vinculadas a Productos</h3></div>'+
+						'									<div class="col-md-3"><p class="box-title" id="mostrarOcultarBorradoProductoPresupuestario">Mostrar/Ocultar Registros Borrados <input type="checkbox" id="chkMostrarOcultar"></p></div>'+
+						'								</div>'+
+
 						'							</div>'+
 						'               			<div class="box-body" id="tablaListaVinculacionProducto">'+
 						'								<div class="table-responsive">'+
@@ -3218,6 +3226,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		$('#TablaAccionHasProductos').append(cargarTablaAccionHasProducto(accionId,insLineaAccionId,lineaAccionId,institucionId,periodoId));	        
 		$("#modalVincularProductos").modal('show');
 		//$("#dataTablesVinculacionProducto").DataTable();
+		OcultarRegistrosBorrados("mostrarOcultarBorradoProductoPresupuestario");
 		
 		function Combo(){
 			
@@ -4675,7 +4684,10 @@ $("body").on("click", ".borrarAccion",function(event){
 		'		      		<div class="col-md-12">'+
 		'						<div class="box box-warning">'+
 		'		                	<div class="box-header with-border">'+
-		'		                  		<h3 class="box-title">Lista de Cronogramas</h3>'+
+		'								<div class="row">'+
+		'									<div class="col-md-8"><h3 class="box-title">Lista de Cronogramas</h3></div>'+
+		'									<div class="col-md-4"><p class="box-title" id="mostrarOcultarBorradoCronograma">Mostrar/Ocultar Registros Borrados <input type="checkbox" id="chkMostrarOcultar"></p></div>'+
+		'								</div>'+
 		'	                  			<div class="box-tools pull-right">'+
 		'				                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>'+
 		'		                    		</button>'+
@@ -4719,7 +4731,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		$('#tablaActividades').append(cuerpoActividad);
 		$("#modalActividad").modal('show');
 		$("#dataTablesActividades").DataTable();
-
+		OcultarRegistrosBorrados("mostrarOcultarBorradoCronograma");
 		
 	});
 	
@@ -5441,7 +5453,10 @@ $("body").on("click", ".agregarProgramacion",function(event){
 							'		      		<div class="col-md-12">'+
 							'						<div class="box box-warning">'+
 							'		                	<div class="box-header with-border">'+
-							'		                  		<h3 class="box-title">Hitos Programados</h3>'+
+							'								<div class="row">'+
+							'									<div class="col-md-8"><h3 class="box-title">Hitos Programados</h3></div>'+
+							'									<div class="col-md-4"><p class="box-title" id="mostrarOcultarBorradoHito">Mostrar/Ocultar Registros Borrados <input type="checkbox" id="chkMostrarOcultar"></p></div>'+
+							'								</div>'+
 							'	                  			<div class="box-tools pull-right">'+
 							'				                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>'+
 							'		                    		</button>'+
@@ -5479,6 +5494,7 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	$("#listaActividades").append(cuerpoActividades);
 	$("#modalProgramacion").modal('show');
 	$("#dataTablesProgramacionHito1").DataTable();
+	OcultarRegistrosBorrados("mostrarOcultarBorradoLineaHito");
 });	
 
 $("body").on("click", ".guardarProgramacion",function(event){
@@ -8600,7 +8616,10 @@ $("body").on("click", ".modalDestinatario",function(event){
 						'		      					<div class="col-md-12">'+
 						'									<div class="box box-default box-solid">'+
 						'		                				<div class="box-header with-border">'+
-						'		                  					<h3 class="box-title">Lista Destinatarios</h3>'+
+						'											<div class="row">'+
+						'										<div class="col-md-8"><h3 class="box-title">Lista Destinatarios</h3></div>'+
+						'										<div class="col-md-4"><p class="box-title" id="mostrarOcultarBorradoDestinatario">Mostrar/Ocultar Registros Borrados <input type="checkbox" id="chkMostrarOcultar"></p></div>'+
+						'											</div>'+
 						'	                  						<div class="box-tools pull-right">'+
 						'				                    			<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
 						'		                    					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>'+
@@ -8640,6 +8659,7 @@ $("body").on("click", ".modalDestinatario",function(event){
 	$('#modalDestinatario').modal('show');
 	$('#tipoDestinatarioAccion').change();
 	$("#dataTableDestinatarioAccion").DataTable();
+	OcultarRegistrosBorrados("mostrarOcultarBorradoDestinatario");
 });
 
 $("body").on("click", ".guardarAccionBeneficiario",function(event){
@@ -9260,7 +9280,10 @@ $("body").on("click", ".avanceCualitativo",function(event){
 						'		      		<div class="col-md-12">'+
 						'						<div class="box box-warning">'+
 						'		                	<div class="box-header with-border">'+
-						'		                  		<h3 class="box-title">Avance Cualitativos Precargadas</h3>'+
+						'		                  		<div class="row">'+
+						'									<div class="col-md-9"><h3 class="box-title">Avance Cualitativos Precargadas</h3></div>'+
+						'									<div class="col-md-3"><p class="box-title" id="mostrarOcultarBorradoAvance">Mostrar/Ocultar Registros Borrados <input type="checkbox" id="chkMostrarOcultar"></p></div>'+
+						'								</div>'+						
 						'               			</div>'+//fin box-heder
 						'               			<div class="box-body" id="cuerpoTablaAvanceCualitativo">'+
 
@@ -9278,7 +9301,7 @@ $("body").on("click", ".avanceCualitativo",function(event){
 						'	</div>'+
 						'</div>';
 					
-	$("#programacion").append(cuerpoModalAvanceCualitativo);
+	$("#programacion").append(cuerpoModalAvanceCualitativo);	
 	$('#cuerpoTablaAvanceCualitativo').html("");
 
 	var tablaAccion ='     			<div class="table-responsive">'+
@@ -9294,8 +9317,8 @@ $("body").on("click", ".avanceCualitativo",function(event){
 	listaAvanceCualitativo(insLineaAccionId,lineaAccionId,institucionId,periodoId);	
 	//$('#tablaAccionesPrecargadas').append(cuerpoAccion);
 	$('#modalAvanceCualitativo').modal('show');
-	$("#dataTablesAvanceCualitativo").DataTable();
-
+	$("#dataTablesAvanceCualitativo").DataTable();	
+	OcultarRegistrosBorrados("mostrarOcultarBorradoAvance");
 });
 
 $("body").on("click", ".guardarAvanceCualitatitvo",function(event){
