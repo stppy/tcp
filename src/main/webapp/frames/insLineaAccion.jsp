@@ -9061,14 +9061,6 @@ $("body").on("click", ".avanceCualitativo",function(event){
 	{
 		$("#modalBorrarAvanceCualitativo").remove();
 	}	
-
-	var webServicesPermisoPorModulo = $.ajax({
-		url:'http://spr.stp.gov.py/ajaxSelects?accion=getPermisosPorModulos&usuarioId='+usuarios[0].id+'&moduloId=2',
-	  	type:'get',
-	  	dataType:'json',
-	  	async:false       
-	}).responseText;
-	webServicesPermisoPorModulo = JSON.parse(webServicesPermisoPorModulo);
 	
 	var lineaAccion = $.ajax({
 		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
@@ -9230,7 +9222,6 @@ $("body").on("click", ".avanceCualitativo",function(event){
 						'		    <div class="modal-body" id="accionCuerpo" >';
 						
  	<% if (attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>		
-	//if(webServicesPermisoPorModulo[0].roleId == 0 || webServicesPermisoPorModulo[0].roleId == 1 || webServicesPermisoPorModulo[0].roleId == 2){
 	
 	cuerpoModalAvanceCualitativo +='		      	<div class="row">'+
 						'								<form role="form" id="formularioAvanceCualitativo">'+
