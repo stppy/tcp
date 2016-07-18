@@ -478,8 +478,7 @@ if (user != null) { %>
 		var tablaInsLineaAccion = 	'<div class="table-responsive">'+
 				'<table class="table table-hover" id="dataTableInsLineaAccion">'+
 					'<thead>'+
-						'<tr class="active"><th colspan="5">Línea de Acción por Institución</th>'+
-				  		'<th colspan="1" class="text-center"><p id="mostrarOcultarBorrado">Mostrar/Ocultar Registros Borrados <input type="checkbox" id="chkMostrarOcultar"></p></th></tr>'+
+				  		'<tr class="active"><th colspan="6">Línea de Acción por Institución</th></tr>'+
 				  		'<tr class="active"><th style="min-width:110px">Periodo</th><th>Institución</th><th>Línea de Acción</th><th>Meta</th><th class="text-center">U.Medida</th><th style="min-width:250px" class="text-center">Administrar Linea Acción</th></tr>'+
 				 	'</thead>'+
 				 	'<tbody id="tablaCuerpoInsLineaAccionPrecargados">'+
@@ -526,11 +525,13 @@ if (user != null) { %>
 		}
 	
 		<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
-			var ocultarBorrado= "<h5>Mostrar/Ocultar Registros Borrados <input type='checkbox' id='chkMostrarOcultar'></h5>";		
+			var ocultarBorrado= '<div class="checkbox">'+
+									'<label> <input type="checkbox" id="chkMostrarOcultar">Ocultar Registros Borrados</label>'+
+								'</div>';								
 			$('#mostrarOcultarBorrado').append(ocultarBorrado);
 		<%}%>
 		
-		$("body").on("click", "#chkMostrarOcultar",function(event){
+		$("body").on("click", "#chkMostrarOcultar",function(event){			
 			OcultarRegistrosBorrados();
 		});		
 		
@@ -538,9 +539,15 @@ if (user != null) { %>
 <%}else{%>
 	window.location = "http://spr.stp.gov.py/tablero/resumenLineaAccion.jsp";
 <%}%>
-
+	var onoff=null;
 	function OcultarRegistrosBorrados(){
-		$("tr > td > del").closest("tr").toggle();
+		
+		if($("#chkMostrarOcultar").is(':checked')){
+			onoff=false;						
+		}else{
+			onoff=true;			
+		}
+		$("tr > td > del").closest("tr").toggle(onoff);
 	}
 </script>
 	
@@ -558,9 +565,9 @@ if (user != null) { %>
       <div class="content-wrapper">
       
         <!-- Content Header (Page header) -->
-        <section class="content-header">          
-            	<div class="pull-right" id="mostrarOcultarBorrado"></div>
-        </section>
+        <section class="content-header">
+				<div class="col-sm-offset-10 col-sm-10" id="mostrarOcultarBorrado"></div>					
+			</section>
 
         <!-- Main content -->
         <section class="content" id="programacion">
