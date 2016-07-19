@@ -1915,7 +1915,7 @@ public class SqlSelects {
 						+ "			 ins_linea_accion_costo_estimado.ins_linea_accion_id=ins_linea_accion_base.ins_linea_accion_id"
 						+ " left join ins_linea_accion_destinatario_real on "
 						+ "			 ins_linea_accion_destinatario_real.ins_linea_accion_id=ins_linea_accion_base.ins_linea_accion_id"
-						+ " where periodo=2016 order by institucion_orden, la_orden ";
+						+ "  "+condition+" and periodo=2016 order by institucion_orden, la_orden ";
 
 		Statement statement = null;
 		ResultSet rs=null;
@@ -2405,8 +2405,7 @@ public class SqlSelects {
 				objeto.setCantidadHoy(rs.getDouble("programado_hoy"));
 				objeto.setCantidadAvance(rs.getDouble("avance_real"));
 				objeto.setLineaAccionNombre(rs.getString("linea_accion_nombre"));
-				objeto.setLineaAccionUnidadMedidaNombre(rs
-						.getString("linea_um_nombre"));
+				objeto.setLineaAccionUnidadMedidaNombre(rs.getString("linea_um_nombre"));
 				objeto.setInsLineaAccionPeriodoId(rs.getInt("periodo"));
 				objeto.setMeta(rs.getInt("meta_comprometida"));
 				objeto.setDepartamentoId(rs.getInt("depto_id"));
@@ -2414,8 +2413,7 @@ public class SqlSelects {
 				objeto.setCantidadAnho(rs.getDouble("programado_anho"));				
 				objeto.setCantDest(rs.getDouble("destinatarios_estimados"));
 				objeto.setInversionEstimada(rs.getDouble("inversion_estimada"));				
-				objeto.setCantDestinatarioReal(rs
-						.getBigDecimal("destinatarios_real"));
+				objeto.setCantDestinatarioReal(rs.getBigDecimal("destinatarios_real"));
 				objeto.setCostoAc(rs.getDouble("inversion_real"));
 				
 				
