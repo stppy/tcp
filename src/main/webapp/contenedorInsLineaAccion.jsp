@@ -181,7 +181,7 @@ if (user != null) { %>
 							<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
 								cuerpoTablaInsLineaAccion+='<tr><td>'+periodo[p].nombre+'</td>';	
 							<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-								cuerpoTablaInsLineaAccion+='<tr><td>'+periodo[p].nombre+'</td>';	
+								cuerpoTablaInsLineaAccion+='<tr><td>'+periodo[p].nombre+'</td>';    
 							<%}%>
 						}
 						bandPeriodo = 1;
@@ -473,7 +473,6 @@ if (user != null) { %>
 					<%}%>
 				}
 			}
-			
 		}
 		//Tabla de linea de accion actual
 		var tablaInsLineaAccion = 	'<div class="table-responsive">'+
@@ -524,11 +523,32 @@ if (user != null) { %>
 		$("#dataTableInsLineaAccionAnterior").DataTable();
 		
 		}
+	
+		<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
+			var ocultarBorrado= '<div class="checkbox">'+
+									'<label> <input type="checkbox" id="chkMostrarOcultar">Ocultar Registros Borrados</label>'+
+								'</div>';								
+			$('#mostrarOcultarBorrado').append(ocultarBorrado);
+		<%}%>
+		
+		$("body").on("click", "#chkMostrarOcultar",function(event){			
+			OcultarRegistrosBorrados();
+		});		
 		
 	});
 <%}else{%>
 	window.location = "http://spr.stp.gov.py/tablero/resumenLineaAccion.jsp";
 <%}%>
+	var onoff=null;
+	function OcultarRegistrosBorrados(){
+		
+		if($("#chkMostrarOcultar").is(':checked')){
+			onoff=false;						
+		}else{
+			onoff=true;			
+		}
+		$("tr > td > del").closest("tr").toggle(onoff);
+	}
 </script>
 	
     <div class="wrapper">
@@ -546,13 +566,8 @@ if (user != null) { %>
       
         <!-- Content Header (Page header) -->
         <section class="content-header">
-          <h1>
-            <small>
-            <!--  Titulo, donde antes estaba dashboard -->
-            </small>
-          </h1>
-         
-        </section>
+				<div class="col-sm-offset-10 col-sm-10" id="mostrarOcultarBorrado"></div>					
+			</section>
 
         <!-- Main content -->
         <section class="content" id="programacion">
