@@ -1030,7 +1030,7 @@ public class SqlSelects {
     public static List<ProductoObjetoGasto> selectObjetoGastoCosto(String condicion)throws SQLException{
     	Connection conect=ConnectionConfiguration.conectarSpr();
 
-    	String query = " select distinct objeto_gasto from asignacion_presi "+condicion+" and anho = 2016 and version = 150";
+    	String query = " select distinct objeto_gasto from asignacion_presi "+condicion+" and anho = 2016 and version = 151";
 
     	Statement statement = null;
     	ResultSet rs=null;
