@@ -3,21 +3,10 @@ package py.gov.stp.tools;
 
 
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 import java.sql.Statement;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
-
 import objetos.Entidad;
 import objetos.FactHitos;
 import objetos.Generica;
@@ -30,9 +19,6 @@ import objetos.LineaAccionDistrito;
 import objetos.MetasDistEntLinea;
 import py.gov.stp.objetosV2.AccionHasProducto;
 import py.gov.stp.objetosV2.ProductoObjetoGasto;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 
 public class SqlSelects {
@@ -185,7 +171,7 @@ public class SqlSelects {
    }
 	public static List<FactHitos> selectFactHitos2015Base(String condition) throws SQLException{
    	 Connection conect=ConnectionConfiguration.conectarBase();
-		 String query = " select * from fact_hitos "+condition +" order by accion_departamento_id ASC, accion_distrito_id ASC, accion ASC, hito_fecha_entrega ASC ";
+		 String query = " select * from ins_lin_acc_ava "+condition +" order by accion_departamento_id ASC, accion_distrito_id ASC, accion ASC, hito_fecha_entrega ASC ";
 		 
 		 Statement statement = null;
 		 ResultSet rs=null;
@@ -426,6 +412,31 @@ public class SqlSelects {
 		}
 		return objetos;
   }
+	public static String selectAccionesAvances(String condition) throws SQLException{
+    	 Connection conect=ConnectionConfiguration.conectar();    	 
+ 		 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from( "+
+ 				"	select * from ins_lin_acc_ava "+ condition +")t";
+ 		 
+ 		 Statement statement = null;
+ 		 ResultSet rs=null;
+ 		 String objetos = "";
+
+ 		try {
+ 			statement = conect.createStatement();
+ 			rs=statement.executeQuery(query);
+ 			while(rs.next()){
+ 				//ObjetivoEstrategia objeto = new ObjetivoEstrategia();
+
+ 				objetos+=rs.getString("resultado");
+ 			}
+ 		}
+ 		catch (SQLException e) {e.printStackTrace();}
+		finally{
+			if (statement != null) {statement.close();}
+			if (conect != null) {conect.close();}
+		}
+		return objetos;
+	}
 	
 	public static List<FactHitos> selectFactHitosSnpp(String condition) throws SQLException{
 	   	 Connection conect=ConnectionConfiguration.conectarSnpp();

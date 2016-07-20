@@ -1910,15 +1910,16 @@ $(document).ready(function(){
 		var tituloModal="";
 		var cuerpoModal="";
 		var footerModal="<br><br><br>";
-		var urlFactHitos="";
+		var urlAccionesAvances="";
 		var primerModal="";
-		urlFactHitos+='http://spr.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015Accion';
-		if (typeof institucion_id != "undefined") urlFactHitos+='&institucion_id='+institucion_id;
-		if (typeof linea_accion_id != "undefined") urlFactHitos+='&linea_accion_id='+linea_accion_id;
-		if (typeof idDepartamento != "undefined") urlFactHitos+='&departamento='+idDepartamento;
-		if (typeof idDistrito != "undefined") urlFactHitos+='&distrito='+idDistrito;
+		
+		url+='http://spr.stp.gov.py/tablero/ajaxSelects?action=getAccionesAvances';
+			if (typeof institucion_id != "undefined") urlAccionesAvances+='&institucion_id='+institucion_id;
+			if (typeof linea_accion_id != "undefined") urlAccionesAvances+='&linea_accion_id='+linea_accion_id;
+			if (typeof idDepartamento != "undefined") urlAccionesAvances+='&departamentoId='+idDepartamento;
+			if (typeof idDistrito != "undefined") urlAccionesAvances+='&distritoId='+idDistrito;
 		var registros = $.ajax({
-	    	url:urlFactHitos,
+	    	url:urlAccionesAvances,
 	      	type:'get',
 	      	dataType:'json',
 	      	crossDomain:true,
@@ -2286,8 +2287,7 @@ $(document).ready(function(){
 	    var departamentoId = document.getElementById('selectorDepartamento').value;
 		var fila ="";
 		for(var f = 0; f < accionHasProducto.length; f++)
-		{
-			
+		{			
 			fila += "<tr><td>"+accionHasProducto[f].nivel+"</td><td>"+accionHasProducto[f].entidad+"</td><td>"+accionHasProducto[f].tipoPrograma+"</td><td>"+accionHasProducto[f].programa+"</td><td>"+accionHasProducto[f].subPrograma+"</td><td>"+accionHasProducto[f].proyecto+"</td><td>"+accionHasProducto[f].producto+"</td><td>"+accionHasProducto[f].cantFisica+"</td><td>"+accionHasProducto[f].uMedida+"</td><td>"+accionHasProducto[f].clase+"</td><td>Gs."+accionHasProducto[f].cantFinanciera+"</td><td>Gs."+accionHasProducto[f].totalAsignacion+"</td><td><center><button type='submit' class='btn btn-success verificarDestinatarios' parametros="+accionHasProducto[f].nivel+"-"+accionHasProducto[f].entidad+"-"+accionHasProducto[f].tipoPrograma+"-"+accionHasProducto[f].programa+"-"+accionHasProducto[f].subPrograma+"-"+accionHasProducto[f].proyecto+"-"+accionHasProducto[f].producto+"-"+institucionId+"-"+lineaAccionId+"-"+idDepartamento+"-"+idDistrito+"-"+accionId+"><span class='glyphicon glyphicon-user'></span></button></center></td></tr>";
 		}
 		
@@ -2319,19 +2319,21 @@ $(document).ready(function(){
 		var idDistrito= idParsed[3];
 		var accionId = idParsed[4];
 		var modalHito = "";
-		var urlFactHitos="";
+		var urlAccionesAvances="";
 		var optionDepartamentos = "";
 		var optionDistritos = "";
-		urlFactHitos+='http://spr.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015';
-		if (typeof institucionId != "undefined"){ urlFactHitos+='&institucion_id='+institucionId;}
-		if (typeof lineaAccionId != "undefined"){ urlFactHitos+='&linea_accion_id='+lineaAccionId;}
-		if (typeof idDepartamento != "undefined"){ urlFactHitos+='&departamento='+idDepartamento;}
-		if (typeof idDistrito != "undefined"){ urlFactHitos+='&distrito='+idDistrito;}
-		if (typeof accionId != "undefined"){ urlFactHitos+='&accion_id='+accionId;}
+			
+			urlAccionesAvances+='http://spr.stp.gov.py/tablero/ajaxSelects?action=getAccionAvances';
+		
+		if (typeof institucionId != "undefined"){ urlAccionesAvances+='&institucion_id='+institucionId;}
+		if (typeof lineaAccionId != "undefined"){ urlAccionesAvances+='&linea_accion_id='+lineaAccionId;}
+		if (typeof idDepartamento != "undefined"){ urlAccionesAvances+='&departamento='+idDepartamento;}
+		if (typeof idDistrito != "undefined"){ urlAccionesAvances+='&distrito='+idDistrito;}
+		if (typeof accionId != "undefined"){ urlAccionesAvances+='&accion_id='+accionId;}
 
 		
 		var registrosHitos = $.ajax({
-	    	url:urlFactHitos,
+	    	url:urlAccionesAvances,
 	      	type:'get',
 	      	dataType:'json',
 	      	crossDomain:true,
@@ -2340,7 +2342,7 @@ $(document).ready(function(){
 		var registroHitos=JSON.parse(registrosHitos);
 		
 		var accion = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015Accion&accion_id='+accionId,
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getAccion&accion_id='+accionId,
 	      	type:'get',
 	      	dataType:'json',
 	      	crossDomain:true,

@@ -42,7 +42,9 @@ public class ajaxSelects extends HttpServlet {
     	Integer mes = null;
     	Integer pais = null;
     	Integer departamento = null;
+    	Integer departamentoId = null;
     	Integer distrito = null;
+    	Integer distritoId = null;
     	Integer objetivo = null;
     	Integer estrategia = null;
     	Integer indicador = null;
@@ -90,7 +92,9 @@ public class ajaxSelects extends HttpServlet {
     	if (request.getParameter("anio")!=null) anio = Integer.parseInt(request.getParameter("anio")); else anio=0;
     	if (request.getParameter("mes")!=null) mes = Integer.parseInt(request.getParameter("mes")); else mes=0;
     	if (request.getParameter("departamento")!=null) departamento = Integer.parseInt(request.getParameter("departamento")); else departamento=99;
+    	if (request.getParameter("departamentoId")!=null) departamentoId = Integer.parseInt(request.getParameter("departamentoId"));
     	if (request.getParameter("distrito")!=null) distrito = Integer.parseInt(request.getParameter("distrito")); else distrito=99;
+    	if (request.getParameter("distritoId")!=null) distritoId = Integer.parseInt(request.getParameter("distritoId"));
     	if (request.getParameter("objetivo")!=null) objetivo = Integer.parseInt(request.getParameter("objetivo")); else objetivo=0;
     	if (request.getParameter("estrategia")!=null) estrategia = Integer.parseInt(request.getParameter("estrategia")); else estrategia=0;
     	if (request.getParameter("indicador")!=null) indicador = Integer.parseInt(request.getParameter("indicador")); else indicador=0;
@@ -197,6 +201,21 @@ public class ajaxSelects extends HttpServlet {
 				catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos);
         		out.println(json.toString());
+        	}
+        	if (action.equals("getAccionesAvances")){
+        		String objetos=null;
+        		condition = " where true ";
+        		if (institucion!="") condition += " and institucion_sigla ='"+institucion+"'";
+        		if (institucion_id!=0) condition += " and institucion_id ='"+institucion_id+"'";
+        		if (linea_accion_id!=0) condition += " and ins_linea_accion_id ='"+linea_accion_id+"'";
+        		if (accion!="") condition += " and accion ='"+accion+"'";
+        		if (accion_id!=0) condition += " and accion_id ='"+accion_id+"'";
+        		if (distritoId!=null) condition += " and accion_dist_id ='"+distritoId+"'";
+        		if (departamentoId!=null) condition += " and accion_depto_id ='"+departamentoId+"'";        		
+        		        		
+				try {objetos = SqlSelects.selectAccionesAvances(condition);}
+				catch (SQLException e) {e.printStackTrace();}				
+        		out.println(objetos);return;
         	}
         	
         	if (action.equals("getFactHitosSnpp")){
