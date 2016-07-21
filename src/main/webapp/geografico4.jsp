@@ -1310,8 +1310,7 @@ if(deptoId!=null || distId!=null){
 		  for(var n=0; n<lineasProgramadas.length;n++)
 			{
 			  if ( instituciones[m].id==lineasProgramadas[n].institucionId ){
-				  if (flagIns == 0){
-					  
+				  if (flagIns == 0){					  
 					  tempInstituciones += '<tr><td colspan="12"><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td></tr>';
 						flagIns++;						  
 				  }
@@ -1328,8 +1327,11 @@ if(deptoId!=null || distId!=null){
 					  }
 				  }
 				  
+				  if (distId == null) distId = "";
+				  if (deptoId == null) deptoId = "";
+				  
 				  tempInstLineas += '<tr>'+
-				  '<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
+				  '<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].insLineaAccionId+'-'+deptoId+'-'+distId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
 				  '<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
 				  '<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
 				  '<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>'+
@@ -1774,11 +1776,11 @@ $(document).ready(function(){
 		var urlAccionesAvances="";
 		var primerModal="";
 		
-		url+='http://spr.stp.gov.py/tablero/ajaxSelects?action=getAccionesAvances';
+		urlAccionesAvances+='http://spr.stp.gov.py/tablero/ajaxSelects?action=getAccionesAvances';
 			if (typeof institucion_id != "undefined") urlAccionesAvances+='&institucion_id='+institucion_id;
 			if (typeof linea_accion_id != "undefined") urlAccionesAvances+='&linea_accion_id='+linea_accion_id;
-			if (typeof idDepartamento != "undefined") urlAccionesAvances+='&departamentoId='+idDepartamento;
-			if (typeof idDistrito != "undefined") urlAccionesAvances+='&distritoId='+idDistrito;
+			if (typeof idDepartamento != "undefined" && idDepartamento != "") urlAccionesAvances+='&departamentoId='+idDepartamento;
+			if (typeof idDistrito != "undefined" && idDistrito != "") urlAccionesAvances+='&distritoId='+idDistrito;
 		var registros = $.ajax({
 	    	url:urlAccionesAvances,
 	      	type:'get',
@@ -1804,13 +1806,13 @@ $(document).ready(function(){
 							      '<div class="modal-body" id="cuerpoModalAcciones" >'+
 							     		
 							     	'<div class="nav-tabs-custom">'+
-					                '<ul class="nav nav-tabs pull-right">'+
-					              	  '<li class="active"><a href="#tab_1-1" data-toggle="tab"  title="Acciones"><i class="glyphicon glyphicon-list"></i></a></li>'+
-					                  '<li><a href="#tab_3-2" data-toggle="tab" title="Evolución"><i class="glyphicon glyphicon-stats"></i></a></li>'+
-					                  '<li><a href="#tab_4-2" data-toggle="tab" title="Beneficiarios"><i class="glyphicon glyphicon-user"></i></a></li>'+
-					                  '<li><a href="#tab_5-2" data-toggle="tab" title="Ubicaciones"><i class="glyphicon glyphicon glyphicon-map-marker"></i></a></li>'+                    
-					                    
-					                '</ul>'+
+						                '<ul class="nav nav-tabs pull-right">'+
+						              	  '<li class="active"><a href="#tab_1-1" data-toggle="tab"  title="Acciones"><i class="glyphicon glyphicon-list"></i></a></li>'+
+						                  '<li><a href="#tab_3-2" data-toggle="tab" title="Evolución"><i class="glyphicon glyphicon-stats"></i></a></li>'+
+						                  '<li><a href="#tab_4-2" data-toggle="tab" title="Beneficiarios"><i class="glyphicon glyphicon-user"></i></a></li>'+
+						                  '<li><a href="#tab_5-2" data-toggle="tab" title="Ubicaciones"><i class="glyphicon glyphicon glyphicon-map-marker"></i></a></li>'+                    
+						                    
+						                '</ul>'+
 					                '<div class="tab-content">'+
 					                  '<div class="tab-pane active" id="tab_1-1"></div>'+
 					                  '<div class="tab-pane" id="tab_2-2">'+
@@ -1831,43 +1833,46 @@ $(document).ready(function(){
 							
 		$("body").append(primerModal);
 		
+		cuerpoModal ='     			<div class="table-responsive">'+
+		'	                				<table class="table table-hover table-bordered" id="dataTablesAccionesAvances">'+
+		'	                					<thead>'+
+		'	                						<tr class="active"><th>Departamento</th><th>Distrito</th><th>Acción</th><th>U. Medida</th><th>Cantidad Programado</th><!--th>Inversión Estimada (Millones de G.)</th--><th>Fecha Terminación</th><!--th>% Programado</th><th>% Ejecutado</th--><th>Editar</th><th>Borrar</th></tr>'+
+		'	                					</thead>'+
+		'	                					<tbody id="tablaAccionesAvances">';
+		
+													tituloModal='<h3><center>'+elRegistro[0].institucion_sigla+'&nbsp;&nbsp;-&nbsp;&nbsp;'+elRegistro[0].linea_accion_nombre+'</center></h3>';
+													for(var m=0; m<elRegistro.length;m++)
+													{
+															var registroFecha= elRegistro[m].avance_fecha_entrega.split("-");														
+															cuerpoModal+='<tr><td>'+elRegistro[m].accion_depto_nombre+'</td><td>'+elRegistro[m].accion_dist_nombre+'</td><td>'+elRegistro[m].accion_catalogo_nombre+'</td><td>'+elRegistro[m].accion_unidad_medida+'</td><td>'+elRegistro[m].hito_cantidad_programado+'</td><!--td>numeroConComa((elRegistro[m].accion_costo*elRegistro[m].hito_porcentaje_ejecutado/100000000).toFixed(0))</td--><td>'+registroFecha[2]+'-'+registroFecha[1]+'-'+registroFecha[0]+'</td><!--td>elRegistro[m].hito_porcentaje_programado</td--><!--td>elRegistro[m].hito_porcentaje_ejecutado</td--><td><a href="#" class="modalHitoAvances" parametros="'+institucion_id+'-'+linea_accion_id+'-'+idDepartamento+'-'+idDistrito+'-'+elRegistro[m].accion_id+'" "><span class="glyphicon glyphicon-pencil"></span></a></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';																														
+													}		
+		cuerpoModal += '	             		</tbody>'+
+		'	                				</table>'+
+		'	                			</div>';
 
-		cuerpoModal='<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">'+
+		/* cuerpoModal='<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">'+
 					'<div class="row">'+
 						'<div class="row">'+
 							'<div class="col-sm-12">'+
 								'<div class="table-responsive">'+
 									'<table id="example1" class="table table-hover" >'+
 									    '<thead>'+
-										'<tr class="active"><th>Acción</th><th>Departamento</th><th>Distrito</th><th>U. Medida</th><th>Cantidad. Programado</th><th>Inversión Estimada (Millones de G.)</th><th>Fecha Terminación</th><th>% Programado</th><th>% Ejecutado</th><th>Editar</th><th>Borrar</th></tr>'+
+											'<tr class="active">Departamento<th></th><th>Distrito</th><th>Acción</th><th>U. Medida</th><th>Cantidad. Programado</th><th>Inversión Estimada (Millones de G.)</th><th>Fecha Terminación</th><th>% Programado</th><th>% Ejecutado</th><th>Editar</th><th>Borrar</th></tr>'+
 										'</thead><tbody>';
-					var totalCantidadProgramada=0;
-					tituloModal='<h3><center>'+elRegistro[0].institucion+'&nbsp;&nbsp;-&nbsp;&nbsp;'+elRegistro[0].linea_accion+'</center></h3>';
-					for(var m=0; m<elRegistro.length;m++)
-					{
-							var registroFecha= elRegistro[m].hito_fecha_entrega.split(" ");
-							if (registroFecha[0]=="Jan" || registroFecha[0]=="ene") registroFecha[0]=1;
-							if (registroFecha[0]=="Feb" || registroFecha[0]=="feb") registroFecha[0]=2;
-							if (registroFecha[0]=="Mar" || registroFecha[0]=="mar") registroFecha[0]=3;
-							if (registroFecha[0]=="Apr" || registroFecha[0]=="abr") registroFecha[0]=4;
-							if (registroFecha[0]=="May" || registroFecha[0]=="may") registroFecha[0]=5;
-							if (registroFecha[0]=="Jun" || registroFecha[0]=="jun") registroFecha[0]=6;
-							if (registroFecha[0]=="Jul" || registroFecha[0]=="jul") registroFecha[0]=7;
-							if (registroFecha[0]=="Aug" || registroFecha[0]=="ago") registroFecha[0]=8;
-							if (registroFecha[0]=="Sep" || registroFecha[0]=="sep") registroFecha[0]=9;
-							if (registroFecha[0]=="Oct" || registroFecha[0]=="oct") registroFecha[0]=10;
-							if (registroFecha[0]=="Nov" || registroFecha[0]=="nov") registroFecha[0]=11;
-							if (registroFecha[0]=="Dec" || registroFecha[0]=="dic") registroFecha[0]=12;
-							registroFecha[1].split(",");
-							
-							cuerpoModal+='<tr><td>'+elRegistro[m].accion+'</td><td>'+elRegistro[m].accion_departamento+'</td><td>'+elRegistro[m].accion_distrito+'</td><td>'+elRegistro[m].accion_unidad_edida+'</td><td>'+elRegistro[m].hito_cantidad_programado+'</td><td>'+numeroConComa((elRegistro[m].accion_costo*elRegistro[m].hito_porcentaje_ejecutado/100000000).toFixed(0))+'</td><td>'+registroFecha[2]+'-'+registroFecha[0]+'-'+registroFecha[1][0]+'</td><td>'+elRegistro[m].hito_porcentaje_programado+'</td><td>'+elRegistro[m].hito_porcentaje_ejecutado+'</td><td><a href="#" class="modalHitoAvances" parametros="'+institucion_id+'-'+linea_accion_id+'-'+idDepartamento+'-'+idDistrito+'-'+elRegistro[m].accion_id+'" "><span class="glyphicon glyphicon-pencil"></span></a></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';
-							totalCantidadProgramada+=elRegistro[m].hito_cantidad_programado;
-					}
-					totalCantidadProgramada=parseFloat(totalCantidadProgramada).toFixed(2);
+									//var totalCantidadProgramada=0;
+									tituloModal='<h3><center>'+elRegistro[0].institucion_sigla+'&nbsp;&nbsp;-&nbsp;&nbsp;'+elRegistro[0].linea_accion_nombre+'</center></h3>';
+									for(var m=0; m<elRegistro.length;m++)
+									{
+											var registroFecha= elRegistro[m].avance_fecha_entrega.split("-");														
+											cuerpoModal+='<tr><td>'+elRegistro[m].accion_depto_id+'</td><td>'+elRegistro[m].accion_dist_id+'</td><td>'+elRegistro[m].accion_catalogo_nombre+'</td><td>'+elRegistro[m].accion_unidad_medida+'</td><!--td>elRegistro[m].hito_cantidad_programado</td--><!--td>numeroConComa((elRegistro[m].accion_costo*elRegistro[m].hito_porcentaje_ejecutado/100000000).toFixed(0))</td--><td>'+registroFecha[2]+'-'+registroFecha[1]+'-'+registroFecha[0]+'</td><!--td>elRegistro[m].hito_porcentaje_programado</td--><!--td>elRegistro[m].hito_porcentaje_ejecutado</td--><td><a href="#" class="modalHitoAvances" parametros="'+institucion_id+'-'+linea_accion_id+'-'+idDepartamento+'-'+idDistrito+'-'+elRegistro[m].accion_id+'" "><span class="glyphicon glyphicon-pencil"></span></a></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';
+											
+											//totalCantidadProgramada+=elRegistro[m].hito_cantidad_programado;
+									}
+									//totalCantidadProgramada=parseFloat(totalCantidadProgramada).toFixed(2);
 
-					cuerpoModal+='</tbody><tfoot><tr class="active"><td colspan="2">Total Cantidad Programada: </td><td colspan="8">'+totalCantidadProgramada+'</td></tr></tfoot>'+
-								 '</table>'+
-								 '</div></div></div></div></div>';
+		cuerpoModal+='</tbody><tfoot><tr class="active"><td colspan="2">Total Cantidad Programada: </td><td colspan="8">totalCantidadProgramada</td></tr></tfoot>'+
+					 '</table>'+
+					 '</div></div></div></div></div>'; */
 								 		
 		$('#myModal').find(".modal-title").html("");			
 		$('#myModal').find("#tab_1-1").html(""); 
@@ -1875,7 +1880,9 @@ $(document).ready(function(){
 		$('#myModal').find("#tab_3-2").html("");			
 		
 		$('#myModal').find(".modal-title").html(tituloModal);
-		$('#myModal').find("#tab_1-1").html(cuerpoModal);
+		$('#myModal').find("#tab_1-1").append(cuerpoModal);
+		$("#dataTablesAccionesAvances").DataTable();	
+			
 		$("#tab_3-2").append('Programación: <label id="fechaInicio"></label><input id="rango-fecha" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="1" data-slider-value="[250,450]"/><label id="fechaFin"></label>');
 		$("#tab_3-2").append('<br><br>Ejecución: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label id="fechaInicioEjecucion"></label><input id="rango-fecha-ejecucion" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="1" data-slider-value="[250,450]"/><label id="fechaFinEjecucion"></label>');
 
