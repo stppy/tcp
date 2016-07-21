@@ -734,6 +734,8 @@ public class ajaxSelects extends HttpServlet {
 
         	if (action.equals("getResumenLineasAccionProgramacion")){
         		List objetos=null; 
+        		condition = " where true";
+
 
 //        		if (institucionId!=null) condition += " and id ='"+institucionId+"'";
 //        		
@@ -746,6 +748,10 @@ public class ajaxSelects extends HttpServlet {
 //        		};
 //        		condition += " and ins_id IN (select id from institucion "+condition2+") ";
 //        		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
+        		if (institucionId!=null) condition += " and ins_linea_accion_base.institucion_id='"+institucionId+"'";
+                if (institucionIdConcat!=null) condition += " and ins_linea_accion_base.institucion_id in("+institucionIdConcat+")";
+                if (departamentoId!=null) condition += " and ins_linea_accion_base.depto_id='"+departamentoId+"'";
+                if (distritoId!=null) condition += " and ins_linea_accion_base.dist_id='"+distritoId+"'";
            		try {objetos = SqlSelects.selectResumenLineasAccionProgramacion(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
@@ -754,7 +760,10 @@ public class ajaxSelects extends HttpServlet {
         	
         	if (action.equals("getResumenLineasAccionProgramacionDepto")){
         		List objetos=null; 
+        		if (institucionId!=null) condition += " and ins_linea_accion_base_dd.institucion_id='"+institucionId+"'";
+        		if (institucionIdConcat!=null) condition += " and ins_linea_accion_base_dd.institucion_id in("+institucionIdConcat+")";
         		if (departamento!=null) condition += " and ins_linea_accion_base_dd.depto_id ='"+departamento+"'";
+        		if (distritoId!=null) condition += " and ins_linea_accion_base_dd.dist_id='"+distritoId+"'";
            		try {objetos = SqlSelects.selectResumenLineasAccionProgramacionDepto(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
@@ -1283,7 +1292,7 @@ public class ajaxSelects extends HttpServlet {
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());        	
         	}
-        	//obtenemos todas las instituciones en el back end y su desemeño institucional a nivel país
+        	//obtenemos todas las instituciones en el back end y su desempeño institucional a nivel país
         	if (action.equals("getResumenLineasAccionProgramacionDesempenoInstitucional")){
                 List<LineaAccionProgramacion> objetos=null;
                 List<Institucion> instituciones= null ;
@@ -1338,6 +1347,7 @@ public class ajaxSelects extends HttpServlet {
                 JsonElement json = new Gson().toJsonTree(desempenhoDpto);
                 out.println(json.toString());
             } 
+// Esta funcion es mejor que el de arriba por que solo una vez recorre el vector
 //        	if (action.equals("getResumenLineasAccionProgramacionDesempenoInstitucional")){
 //                List<LineaAccionProgramacion> objetos=null;
 //                List<Institucion> instituciones= null ;
@@ -1415,7 +1425,7 @@ public class ajaxSelects extends HttpServlet {
 //                JsonElement json = new Gson().toJsonTree(desempenhoDpto);
 //                out.println(json.toString());
 //            } 
-        	//obtenemos todas las instituciones en el back end y su desemeño institucional a nivel DEPARTAMENTAL
+        	//obtenemos todas las instituciones en el back end y su desempeño institucional a nivel DEPARTAMENTAL
         	if (action.equals("getResumenLineasAccionProgramacionDesempenoInstitucionalDepto")){
                 List<LineaAccionProgramacion> objetos=null;
                 List<Institucion> instituciones= null ;
@@ -1473,6 +1483,18 @@ public class ajaxSelects extends HttpServlet {
                 JsonElement json = new Gson().toJsonTree(desempenhoDpto);
                 out.println(json.toString());
             } 
+        	//Obtenemos todas las lineas a nivel departamental y distrital
+        	if (action.equals("getLineaAccionDepartamentalDistrital")){
+        		List objetos=null;
+        		//condition = " where true";
+                if (institucionIdConcat!=null) condition += " and ins_linea_accion_base_dd.institucion_id in("+institucionIdConcat+")";
+	            if (departamentoId!=null) condition += " and ins_linea_accion_base_dd.depto_id='"+departamentoId+"'";
+	            if (distritoId!=null) condition += " and ins_linea_accion_base_dd.dist_id='"+distritoId+"'";
+           		try {objetos = SqlSelects.selectResumenLineasAccionProgramacionInstDptoDist4(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());        	
+        	}
        }
        out.close();
         
