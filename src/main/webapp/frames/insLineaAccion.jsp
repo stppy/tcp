@@ -3986,7 +3986,7 @@ $("body").on("click", ".borrarAccion",function(event){
 			    		$("#unidadMedida-formulario").val(mostrarUnidadMedida);
 			    		
 				    	$.ajax({
-				         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getAsignacionPresiVersion&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto,
+				         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getAsignacionPresiVersion&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto+'&anho=2016',
 				          	type:'get',
 				          	crossDomain: 'true',
 				          	dataType:'jsonp',
@@ -6611,7 +6611,7 @@ $("body").on("change", "#productoObjetoGasto",function(event){
 		webServicesDatosProducto = JSON.parse(webServicesDatosProducto);
 		
 		var webServicesObjetoGastoCosto = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getObjetoGastoCosto&nivel='+webServicesDatosProducto[0].nivelId+'&entidad='+webServicesDatosProducto[0].entidadId+'&tiprograma='+webServicesDatosProducto[0].tiprogramaId+'&programa='+webServicesDatosProducto[0].programaId+'&subprograma='+webServicesDatosProducto[0].subprogramaId+'&proyecto='+webServicesDatosProducto[0].proyectoId+'&producto='+webServicesDatosProducto[0].productoId,
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getObjetoGastoCosto&nivel='+webServicesDatosProducto[0].nivelId+'&entidad='+webServicesDatosProducto[0].entidadId+'&tiprograma='+webServicesDatosProducto[0].tiprogramaId+'&programa='+webServicesDatosProducto[0].programaId+'&subprograma='+webServicesDatosProducto[0].subprogramaId+'&proyecto='+webServicesDatosProducto[0].proyectoId+'&producto='+webServicesDatosProducto[0].productoId+'&anho=2016',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       

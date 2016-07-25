@@ -546,6 +546,7 @@ tbody {
 								}
 								var todasInstituciones=getInstitucionesSeleccionadas();
 								var a=renderTableroLineaAccion(todasInstituciones,e.target.feature.properties.dpto,e.target.feature.properties.distrito);
+								$("#cuerpoTableroLineaAccion").html("");
 								$("#cuerpoTableroLineaAccion").html(a);
 							}else{
 								tipoInstituciones="departamento"; 
@@ -579,6 +580,7 @@ tbody {
 								}
 								var todasInstituciones=getInstitucionesSeleccionadas();
 								var a=renderTableroLineaAccion(todasInstituciones,e.target.feature.properties.dpto,null);
+								$("#cuerpoTableroLineaAccion").html("");
 								$("#cuerpoTableroLineaAccion").html(a);
 							}
 						}else{ //d
@@ -1056,34 +1058,9 @@ tbody {
 	              <div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
 	              </div>
 	            </div>
-	            <div class="box-body table-responsive" style="scroll-x:hidden;scroll-y:auto;">
+	            <div class="box-body table-responsive" style="scroll-x:hidden;scroll-y:auto;" id="cuerpoTableroLineaAccion">
             
-					<div class="table-responsive">
-						<table class="table table-striped table-bordered table-hover tablaLineasPorInstitucion">
-							<thead>
-								<!-- <tr><th colspan="12"><strong id="nombreInstitucionTabla"></strong></th></tr> -->
-								<tr><th rowspan="3" class="text-center" style="vertical-align: middle;">Línea de Acción</th>
-								<th rowspan="3" class="text-center" style="vertical-align: middle;">Unidad de Medida</th>
-								<th colspan="5" class="text-center">Plan de Acción 2016</th>
-								<th colspan="5" class="text-center">Ejecución a la Fecha</th></tr>
-								<tr><th colspan="3" class="text-center">Meta</th>
-								<th rowspan="2" class="text-center" style="vertical-align: middle;">Destinatarios</th>
-							  	<th rowspan="2" class="text-center" style="vertical-align: middle;">Inversión (en millones G.)</th>
-							  	<th colspan="3" class="text-center">Meta</th>
-							  	<th rowspan="2" class="text-center" style="vertical-align: middle;">Destinatarios</th>
-							  	<th rowspan="2" class="text-center" style="vertical-align: middle;">Inversión (en millones G.)</th></tr>
-								<tr><th class="text-center">Aprobada</th>
-							  	<th class="text-center">Programada</th>
-							  	<th class="text-center">%</th>
-							  	<th class="text-center">Prevista</th>
-							  	<th class="text-center">Lograda</th>
-							  	<th class="text-center">%</th>
-								</tr></thead>
-							<tbody id="cuerpoTableroLineaAccion">
-							</tbody>
-						
-						</table>
-					</div>
+
 
 	            </div>
 			   </div>
@@ -1207,7 +1184,7 @@ $("body").on("click", "#cierreEtiquetaDistrito",function(event){
 	renderEntidades(idDepartamento);
 	
 });
-
+/* 
 var nombreInstituciones = "";
 for(var x = 0; x < instituciones.length; x++){
 	nombreInstituciones += instituciones[x].sigla;
@@ -1222,12 +1199,252 @@ for(var t = 0; t < instituciones.length; t++){
 }
 todasInstituciones=todasInstituciones.substring(0,todasInstituciones.length - 1);
  
-//var todasInstituciones=getInstitucionesSeleccionadas();
+var todasInstituciones=getInstitucionesSeleccionadas();
 var a=renderTableroLineaAccion(todasInstituciones,null,null);
-$("#cuerpoTableroLineaAccion").html(a);
+$("#cuerpoTableroLineaAccion").html(a); */
+
+//aca tiene que estar el codigo
+
+function numeroConComa(x) {
+	if (isNaN(x)){
+		return 0;
+	}else
+		if ( x == "Infinity" || x == null){
+			return "-"
+		}else{
+			return x.toString().replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+		}
+}
+
+function orden(a,b) {             
+	  if (a.orden < b.orden)
+	    return -1;
+	  if (a.orden > b.orden)
+	    return 1;
+	  return 0;
+	}
+function lineaAccionOrden(a,b) {             
+	  if (a.lineaAccionOrden < b.lineaAccionOrden)
+	    return -1;
+	  if (a.lineaAccionOrden > b.lineaAccionOrden)
+	    return 1;
+	  return 0;
+	}
+
+		
+var instituciones = $.ajax({
+	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+  	type:'get',
+  	dataType:'json',
+  	async:false       
+}).responseText;		
+instituciones=JSON.parse(instituciones);
+instituciones=instituciones.sort(orden); 
+
+
+/* var lineasProgramadas = $.ajax({
+	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacion',
+  	type:'get',
+  	dataType:'json',
+  	async:false       
+}).responseText;
+lineasProgramadas = JSON.parse(lineasProgramadas);
+lineasProgramadas=lineasProgramadas.sort(lineaAccionOrden); */
+
 
 function renderTableroLineaAccion(institucionIdConcat,deptoId,distId){
-	//$("#cuerpoTableroLineaAccion").html("");
+var contenidoEnRowTemp="";	
+var tablaInstituciones="";
+var tempInstituciones="";
+var tempInstLineas="";
+var flagIns=0;
+var clase="";
+var condicion="";
+
+if(institucionIdConcat!=null)condicion= "&institucionIdConcat="+institucionIdConcat;
+if(deptoId!=null)condicion+= "&departamentoId="+deptoId;
+if(distId!=null)condicion+= "&distritoId="+distId;
+
+if(deptoId!=null && distId!=null){
+	var lineasProgramadas = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccionDepartamentalDistrital'+condicion,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	lineasProgramadas = JSON.parse(lineasProgramadas);
+	lineasProgramadas=lineasProgramadas.sort(lineaAccionOrden);
+}else if(deptoId!=null && distId==null){
+	var lineasProgramadas = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccionDepartamentalDistrital'+condicion,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	lineasProgramadas = JSON.parse(lineasProgramadas);
+	//lineasProgramadas=lineasProgramadas.sort(lineaAccionOrden);
+	
+	tablaInstituciones = renderPrueba(lineasProgramadas);
+	  
+	 contenidoEnRowTemp='<div class="row">'+
+     '<div class="col-md-12">'+
+      '<div class="box" height="1000px">'+
+        '<div class="box-header with-border" height="1000px">'+
+          '<h3 class="box-title" id="tituloTipoPrograma">'+
+          //lineasEstrategicas[l].nombre+
+          '</h3> '+
+          '<div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+          '</div>'+
+        '</div>'+
+        '<div class="box-body" >'+
+        	'<div class="table-responsive">'+
+      			'<table class="table table-striped table-bordered table-hover tablaLineasPorInstitucion">'+
+      				tablaInstituciones+
+					'</tbody></table>'+
+				'</div>'+
+        '</div>'+
+	   '</div>'+
+	   '</div>'+
+	   '</div>';
+	   
+	 return contenidoEnRowTemp;
+	   
+}else{
+	var lineasProgramadas = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacion'+condicion,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	lineasProgramadas = JSON.parse(lineasProgramadas);
+	lineasProgramadas=lineasProgramadas.sort(lineaAccionOrden);
+}
+
+
+  tempInstituciones = '<thead><tr>'+
+	  	'<th rowspan="3" class="text-center" style="vertical-align: middle;">Línea de Acción</th>'+
+	  	'<th rowspan="3" class="text-center" style="vertical-align: middle;">Unidad de Medida</th>'+
+	  	'<th colspan="5" class="text-center">Plan de Acción 2016</th>'+
+	  	'<th colspan="5" class="text-center">Ejecución a la Fecha</th></tr>'+
+	'<tr><th colspan="3" class="text-center">Meta</th>'+
+	  	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Destinatarios</th>'+
+	  	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Inversión (en millones G.)</th>'+
+	  	'<th colspan="3" class="text-center">Meta</th>'+
+	  	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Destinatarios</th>'+
+	  	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Inversión (en millones G.)</th></tr>'+
+	'<tr><th class="text-center">Aprobada</th>'+
+	  	'<th class="text-center">Programada</th>'+
+	  	'<th class="text-center">%</th>'+
+	  	'<th class="text-center">Prevista</th>'+
+	  	'<th class="text-center">Lograda</th>'+
+	  	'<th class="text-center">%</th>'+
+    '</tr></thead><tbody>';
+    
+		for(var m=0; m<instituciones.length;m++)
+		{ 
+		  for(var n=0; n<lineasProgramadas.length;n++)
+			{
+			  if ( instituciones[m].id==lineasProgramadas[n].institucionId ){
+				  if (flagIns == 0){
+					  
+					  tempInstituciones += '<tr><td colspan="12"><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td></tr>';
+						flagIns++;						  
+				  }
+				  clase="";
+				  var desempProgAnho=numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2));
+				  if (lineasProgramadas[n].cantidadAnho==0 && lineasProgramadas[n].meta ==0) desempProgAnho="-";
+				  if (desempProgAnho!="-"){
+					  if (parseInt(desempProgAnho)>=90 && lineasProgramadas[n].meta != 0){
+						  clase="bg-green-active color-palette"; 
+					  }else if(parseInt(desempProgAnho)>=70 && lineasProgramadas[n].meta != 0){
+						  clase="bg-yellow-active color-palette"; 
+					  }else{
+						  clase="bg-red-active color-palette";
+					  }
+				  }
+				  
+				  tempInstLineas += '<tr>'+
+				  '<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
+				  '<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
+				  '<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
+				  '<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>'+
+				  '<td class="'+clase+'">'+desempProgAnho+'</td>';
+				  if(lineasProgramadas[n].cantDest==0){
+					  tempInstLineas += '<td> - </td>';
+				  }else{
+					  tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>';
+				  }
+				  tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
+				  '<td>'+numeroConComa(lineasProgramadas[n].cantidadHoy)+'</td>'+
+				  '<td>'+numeroConComa(lineasProgramadas[n].cantidadAvance)+'</td>';
+				  
+				  
+				  var desempEjeHoy=numeroConComa(((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100).toFixed(2));
+				  if(lineasProgramadas[n].cantidadAvance==0 && lineasProgramadas[n].cantidadHoy==0) desempEjeHoy="-";
+				  if (desempEjeHoy!="-"){
+					  if (clase!="bg-red-active color-palette" && clase!="" ){
+						  clase="";
+						  if (parseInt((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100)>=90 && lineasProgramadas[n].cantidadHoy != 0){
+							  clase="bg-green-active color-palette"; 
+						  }else if(parseInt((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100)>=70 && lineasProgramadas[n].cantidadHoy != 0){
+							  clase="bg-yellow-active color-palette"; 
+						  }else{
+							  clase="bg-red-active color-palette";
+						  }
+					  }
+				  }else{
+					  clase="";
+				  }
+				  
+				  tempInstLineas += '<td class="'+clase+'">'+desempEjeHoy+'</td>';
+				  if(lineasProgramadas[n].cantDestinatarioReal==0){
+					  tempInstLineas += '<td> - </td>';
+				  }else{
+					  tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDestinatarioReal)+'</td>';
+				  }
+				  tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].costoAc/1000000).toFixed(2))+'</td>'+
+				  '</tr>';
+			  }
+			}
+
+		  if (flagIns>0){
+			  tablaInstituciones+=tempInstituciones+tempInstLineas;
+			  
+		  }
+		  tempInstituciones="";tempInstLineas="";flagIns=0;
+	}
+		tablaInstituciones+="</tbody>";
+		
+		 contenidoEnRowTemp='<div class="row">'+
+         '<div class="col-md-12">'+
+          '<div class="box" height="1000px">'+
+            '<div class="box-header with-border" height="1000px">'+
+              '<h3 class="box-title" id="tituloTipoPrograma">'+
+              //lineasEstrategicas[l].nombre+
+              '</h3> '+
+              '<div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+              '</div>'+
+            '</div>'+
+            '<div class="box-body" >'+
+            	'<div class="table-responsive">'+
+          			'<table class="table table-striped table-bordered table-hover tablaLineasPorInstitucion">'+
+          				tablaInstituciones+
+  					'</tbody></table>'+
+  				'</div>'+
+            '</div>'+
+		   '</div>'+
+		   '</div>'+
+		   '</div>';
+		   
+ return contenidoEnRowTemp;
+}
+
+
+
+
+
+
+function renderPrueba(lineasProgramadas){
 	var tablaInstituciones="";
 	var tempInstituciones="";
 	var tempInstLineas="";
@@ -1239,50 +1456,37 @@ function renderTableroLineaAccion(institucionIdConcat,deptoId,distId){
 	var cont, contEjecucion, destinatarios, inversion; 
 	var acum, acumEjecucionPrevista, acumEjecucionLograda;
 	var promedio;
-	if(institucionIdConcat!=null)condicion= "&institucionIdConcat="+institucionIdConcat;
-	if(deptoId!=null)condicion+= "&departamentoId="+deptoId;
-	if(distId!=null)condicion+= "&distritoId="+distId;
-
-	var lineasProgramadas = $.ajax({
-    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacion2'+condicion,
-      	type:'get',
-      	dataType:'json',
-      	crossDomain:true,
-      	async:false       
-    }).responseText;
-	lineasProgramadas=JSON.parse(lineasProgramadas);
-	/*
-	var instituciones = $.ajax({
-    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
-      	type:'get',
-      	dataType:'json',
-      	crossDomain:true,
-      	async:false       
-    }).responseText;
-	instituciones=JSON.parse(instituciones);*/
+	var institucionId;
+	
+	  tempInstituciones = '<thead><tr>'+
+	  	'<th rowspan="3" class="text-center" style="vertical-align: middle;">Línea de Acción</th>'+
+	  	'<th rowspan="3" class="text-center" style="vertical-align: middle;">Unidad de Medida</th>'+
+	  	'<th colspan="5" class="text-center">Plan de Acción 2016</th>'+
+	  	'<th colspan="5" class="text-center">Ejecución a la Fecha</th></tr>'+
+	'<tr><th colspan="3" class="text-center">Meta</th>'+
+	  	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Destinatarios</th>'+
+	  	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Inversión (en millones G.)</th>'+
+	  	'<th colspan="3" class="text-center">Meta</th>'+
+	  	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Destinatarios</th>'+
+	  	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Inversión (en millones G.)</th></tr>'+
+	'<tr><th class="text-center">Aprobada</th>'+
+	  	'<th class="text-center">Programada</th>'+
+	  	'<th class="text-center">%</th>'+
+	  	'<th class="text-center">Prevista</th>'+
+	  	'<th class="text-center">Lograda</th>'+
+	  	'<th class="text-center">%</th>'+
+  '</tr></thead><tbody>';
 	
 	if(lineasProgramadas.length > 0){
-		linea_accion_id=lineasProgramadas[0].insLineaAccionId;
-		institucion_id=lineasProgramadas[0].institucionId;
+		linea_accion_id=lineasProgramadas[0].lineaAccionId;
+		institucionId=lineasProgramadas[0].institucionId;
 		cont=0, contEjecucion=0, destinatarios=0; inversion=0; 
 		acum=0, acumEjecucionPrevista=0, acumEjecucionLograda=0;
 		promedio=0;
-	//for(var m=0; m<instituciones.length;m++)
-	//{ 
+		
 		tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[0].institucionSigla+'</strong></td></tr>';
 		for(var n=0; n<lineasProgramadas.length;n++){		
-			if(n>0){							
-				if(lineasProgramadas[n-1].institucionId!=institucion_id){
-					tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td></tr>';
-				}
-			}
-			 
-			if(lineasProgramadas[n].insLineaAccionId==linea_accion_id){
-			//if(instituciones[m].id==lineasProgramadas[n].institucionId && lineasProgramadas[n].insLineaAccionId==linea_accion_id){	 
-				/* if(n=0){
-					tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[0].institucionSigla+'</strong></td></tr>';
-				} */
-				
+		 
 				contEjecucion++;
 				if (lineasProgramadas[n].cantidadHoy!=null) acumEjecucionPrevista=acumEjecucionPrevista + lineasProgramadas[n].cantidadHoy;
 				if (lineasProgramadas[n].cantidadAvance!=null) acumEjecucionLograda=acumEjecucionLograda + lineasProgramadas[n].cantidadAvance;
@@ -1301,138 +1505,13 @@ function renderTableroLineaAccion(institucionIdConcat,deptoId,distId){
 					acum =acum + ((lineasProgramadas[n].cantidadAvance / lineasProgramadas[n].cantidadHoy) * 100);
 					cont= cont +1;				
 				}			
-			}else{			
-				if(cont != 0){
-					promedio = acum / cont;
-				}else{
-					promedio = 0;
-				}	
 				
-				if(institucionIdConcat!=null && deptoId==null && distId==null){
-					//if (flagIns == 0){
-					 //tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td></tr>';
-					//	flagIns++;
-				 	//}
-					clase="";			
-					if ((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100>=90){
-					 clase="bg-green-active color-palette"; 
-					}else if((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100>=70){
-					 clase="bg-yellow-active color-palette"; 
-					}else{
-					 clase="bg-red-active color-palette";
+				if (n == lineasProgramadas.length -1){
+
+					institucionId = lineasProgramadas[n].institucionId;
+					if(cont != 0){
+						promedio = acum / cont;
 					}
-					
-					tempInstLineas += '<tr>'+
-					'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n-1].lineaAccionNombre+'</a></td>'+
-					'<td>'+lineasProgramadas[n-1].lineaAccionUnidadMedidaNombre+'</td>'+
-					'<td>'+numeroConComa(lineasProgramadas[n-1].meta)+'</td>'+
-					'<td>'+numeroConComa(lineasProgramadas[n-1].cantidadAnho)+'</td>'+
-					'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100).toFixed(2))+'</td>'+
-					'<td>'+numeroConComa(lineasProgramadas[n-1].cantDest)+'</td>'+
-					'<td>'+numeroConComa((lineasProgramadas[n-1].inversionEstimada/1000000).toFixed(2))+'</td>'+
-					'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
-					'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
-					
-					clase="";			
-					if (promedio>=90){
-					 clase="bg-green-active color-palette"; 
-					}else if(promedio>=70){
-					 clase="bg-yellow-active color-palette"; 
-					}else{
-					 clase="bg-red-active color-palette";
-					}
-					
-					tempInstLineas += '<td class="'+clase+'">'+numeroConComa((promedio).toFixed(2))+'</td>'+
-					'<td>'+numeroConComa(destinatarios.toFixed(2))+'</td>'+
-					'<td>'+numeroConComa((inversion/1000000).toFixed(2))+'</td>'+
-					'</tr>';
-				}else{
-					clase="";			
-					if ((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100>=90){
-					 clase="bg-green-active color-palette"; 
-					}else if((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100>=70){
-					 clase="bg-yellow-active color-palette"; 
-					}else{
-					 clase="bg-red-active color-palette";
-					}
-					
-					tempInstLineas += '<tr>'+
-					'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n-1].lineaAccionNombre+'</a></td>'+
-					'<td>'+lineasProgramadas[n-1].lineaAccionUnidadMedidaNombre+'</td>'+
-					'<td>'+numeroConComa(lineasProgramadas[n-1].meta)+'</td>'+
-					'<td></td>'+
-					'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n-1].cantidadAnho/lineasProgramadas[n-1].meta)*100).toFixed(2))+'</td>'+
-					'<td></td>'+
-					'<td>'+numeroConComa((lineasProgramadas[n-1].inversionEstimada/1000000).toFixed(2))+'</td>'+
-					'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
-					'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
-					
-					clase="";			
-					if (promedio>=90){
-					 clase="bg-green-active color-palette"; 
-					}else if(promedio>=70){
-					 clase="bg-yellow-active color-palette"; 
-					}else{
-					 clase="bg-red-active color-palette";
-					}
-					
-					tempInstLineas += '<td class="'+clase+'">'+numeroConComa((promedio).toFixed(2))+'</td>'+
-					'<td>'+numeroConComa(destinatarios.toFixed(2))+'</td>'+
-					'<td>'+numeroConComa((inversion/1000000).toFixed(2))+'</td>'+
-					'</tr>';
-				}			
-				
-				//mostrar grilla n-1
-				cont=0, contEjecucion=0; 
-				acum=0, acumEjecucionPrevista=0, acumEjecucionLograda=0;
-				promedio=0;
-				linea_accion_id=lineasProgramadas[n].insLineaAccionId;
-				institucion_id=lineasProgramadas[n].institucionId;
-				n=n-1;				
-				//tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td></tr>';
-			}
-			if(n==lineasProgramadas.length-1){
-				if(cont != 0){
-					promedio = acum / cont;
-				}else{
-					promedio = 0;
-				}
-				
-				if(institucionIdConcat!=null && deptoId==null && distId==null){
-					clase="";			
-					if ((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=90){
-					 clase="bg-green-active color-palette"; 
-					}else if((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=70){
-					 clase="bg-yellow-active color-palette"; 
-					}else{
-					 clase="bg-red-active color-palette";
-					}
-					
-					tempInstLineas += '<tr>'+
-					'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
-					'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
-					'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
-					'<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>'+
-					'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
-					'<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>'+
-					'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
-					'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
-					'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
-					
-					clase="";			
-					if (promedio>=90){
-					 clase="bg-green-active color-palette"; 
-					}else if(promedio>=70){
-					 clase="bg-yellow-active color-palette"; 
-					}else{
-					 clase="bg-red-active color-palette";
-					}
-					
-					tempInstLineas += '<td class="'+clase+'">'+numeroConComa((promedio).toFixed(2))+'</td>'+
-					'<td>'+numeroConComa(destinatarios.toFixed(2))+'</td>'+
-					'<td>'+numeroConComa((inversion/1000000).toFixed(2))+'</td>'+
-					'</tr>';
-				}else{
 					clase="";			
 					if ((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=90){
 					 clase="bg-green-active color-palette"; 
@@ -1467,15 +1546,186 @@ function renderTableroLineaAccion(institucionIdConcat,deptoId,distId){
 					'<td>'+numeroConComa((inversion/1000000).toFixed(2))+'</td>'+
 					'</tr>';
 					
-					//tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td></tr>';
-				}			
-			} 
-		}			
-	//}//fin for instituciones
+				}else if(lineasProgramadas[n+1].institucionId != institucionId){
+					if(cont != 0){
+						promedio = acum / cont;
+					}
+					clase="";			
+					if ((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=90){
+					 clase="bg-green-active color-palette"; 
+					}else if((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=70){
+					 clase="bg-yellow-active color-palette"; 
+					}else{
+					 clase="bg-red-active color-palette";
+					}
+					
+					tempInstLineas += '<tr>'+
+					'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
+					'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
+					'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
+					'<td></td>'+
+					'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
+					'<td></td>'+
+					'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
+					'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
+					'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
+					
+					clase="";			
+					if (promedio>=90){
+					 clase="bg-green-active color-palette"; 
+					}else if(promedio>=70){
+					 clase="bg-yellow-active color-palette"; 
+					}else{
+					 clase="bg-red-active color-palette";
+					}
+					
+					tempInstLineas += '<td class="'+clase+'">'+numeroConComa((promedio).toFixed(2))+'</td>'+
+					'<td>'+numeroConComa(destinatarios.toFixed(2))+'</td>'+
+					'<td>'+numeroConComa((inversion/1000000).toFixed(2))+'</td>'+
+					'</tr>';
+					
+					cont=0, contEjecucion=0; 
+					acum=0, acumEjecucionPrevista=0, acumEjecucionLograda=0;
+					promedio=0;
+					institucionId = lineasProgramadas[n+1].institucionId;
+					tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n+1].institucionSigla+'</strong></td></tr>';
+					}
+					
+			}		
 	}
-	return tempInstLineas;
+	  tablaInstituciones+=tempInstituciones+tempInstLineas;
+
+	return tablaInstituciones;
 
 }	
+
+/* function renderTableroLineaAccion(institucionIdConcat,deptoId,distId){
+	var contenidoEnRow="";
+	var contenidoEnRowTemp="";	
+	var lineasDeEstrategia="";
+	var condicion="";
+	
+	if(institucionIdConcat!=null)condicion= "&institucionIdConcat="+institucionIdConcat;
+	if(deptoId!=null)condicion+= "&departamentoId="+deptoId;
+	if(distId!=null)condicion+= "&distritoId="+distId;
+	
+	lineasDeEstrategia=renderAccion(condicion)
+	 contenidoEnRowTemp='<div class="row">'+
+         '<div class="col-md-12">'+
+          '<div class="box" height="1000px">'+
+            '<div class="box-header with-border" height="1000px">'+
+              '<h3 class="box-title" id="tituloTipoPrograma">'+
+              //lineasEstrategicas[l].nombre+
+              '</h3> '+
+              '<div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+              '</div>'+
+            '</div>'+
+            '<div class="box-body" >'+
+            	'<div class="table-responsive">'+
+          			'<table class="table table-striped table-bordered table-hover tablaLineasPorInstitucion">'+
+          	 			lineasDeEstrategia+
+  					'</tbody></table>'+
+  				'</div>'+
+            '</div>'+
+		   '</div>'+
+		   '</div>'+
+		   '</div>';
+	if (lineasDeEstrategia.length>0){
+		contenidoEnRow+=contenidoEnRowTemp;
+		contenidoEnRowTemp=""; 
+		lineasDeEstrategia="";
+	}
+	
+		$("#cuerpoTableroLineaAccion").html(contenidoEnRow);
+	
+		
+} */
+
+
+/* var primeraVez = renderTableroLineaAccion(); 
+
+$("#cuerpoTableroLineaAccion").html(primeraVez); */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 $("body").on("click", ".cmbInstitucion",function(event){
 		
@@ -1515,14 +1765,17 @@ $("body").on("click", ".cmbInstitucion",function(event){
 		//if(institucion_idConcat != "" && (depto_id !=="undefined" || depto_id !=="") && (dist_id !=="undefined" || dist_id !=="")){
 		if(institucion_idConcat != "" && (depto_id !==null) && (dist_id !==null)){
 			var a = renderTableroLineaAccion(institucion_idConcat,depto_id,dist_id);
+			$("#cuerpoTableroLineaAccion").html("");
 			$("#cuerpoTableroLineaAccion").html(a);
 		}else{
 			if(institucion_idConcat != "" && (depto_id !==null)){
 				var a = renderTableroLineaAccion(institucion_idConcat,depto_id);
+				$("#cuerpoTableroLineaAccion").html("");
 				$("#cuerpoTableroLineaAccion").html(a);
 			}else{
 				if(institucion_idConcat != ""){
 					var a = renderTableroLineaAccion(institucion_idConcat);
+					$("#cuerpoTableroLineaAccion").html("");
 					$("#cuerpoTableroLineaAccion").html(a);
 				}	
 			}			
@@ -1904,6 +2157,25 @@ $(document).ready(function(){
 	
 	
 	renderEntidades();
+	
+	 
+	var nombreInstituciones = "";
+	for(var x = 0; x < instituciones.length; x++){
+		nombreInstituciones += instituciones[x].sigla;
+	}
+	$("#nombreInstitucionTabla").html(nombreInstituciones);
+
+	var a = "";
+	var todasInstituciones="";
+	for(var t = 0; t < instituciones.length; t++){
+		//a += renderTableroLineaAccion(instituciones[t].id);
+		 todasInstituciones += instituciones[t].id+",";
+	}
+	todasInstituciones=todasInstituciones.substring(0,todasInstituciones.length - 1);
+	 
+	var todasInstituciones=getInstitucionesSeleccionadas();
+	var a=renderTableroLineaAccion(todasInstituciones,null,null);
+	$("#cuerpoTableroLineaAccion").html(a);
 
 	function renderTodasLasLineas(){
 		
@@ -3256,7 +3528,7 @@ $(document).ready(function(){
 			    		$("#unidadMedida-formulario").val(mostrarUnidadMedida);
 			    		
 				    	$.ajax({
-				         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getAsignacionPresiVersion&nivel=12&entidad=1&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subPrograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto,
+				         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getAsignacionPresiVersion&nivel=12&entidad=1&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subPrograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto+'&anho=2016',
 				          	type:'get',
 				          	crossDomain: 'true',
 				          	dataType:'jsonp',
