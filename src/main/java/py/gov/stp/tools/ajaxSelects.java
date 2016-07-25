@@ -59,6 +59,8 @@ public class ajaxSelects extends HttpServlet {
     	Integer accion_id=null;
     	Integer linea_accion_id=null;
     	Integer usuarioId = null;
+    	Integer anho = null;
+
     	
     	String institucion=null;
     	String usuario=null;
@@ -112,6 +114,8 @@ public class ajaxSelects extends HttpServlet {
       	if (request.getParameter("linea_accion_id")!=null) linea_accion_id=Integer.parseInt(request.getParameter("linea_accion_id")); else linea_accion_id=0;
       	if (request.getParameter("hito_id")!=null) hito_id=Integer.parseInt(request.getParameter("hito_id")); else hito_id=0;
       	if (request.getParameter("usuarioId")!=null) usuarioId=Integer.parseInt(request.getParameter("usuarioId"));
+      	if (request.getParameter("anho")!=null) anho=Integer.parseInt(request.getParameter("anho"));
+
 
     	
         PrintWriter out = response.getWriter();
@@ -450,6 +454,7 @@ public class ajaxSelects extends HttpServlet {
         		if (subprograma != null) condicion += " and subprograma = "+subprograma;
         		if (proyecto != null) condicion += " and proyecto = "+proyecto;
         		if (producto != null) condicion += " and producto = "+producto;
+        		if (anho != null) condicion += " and anho = "+anho;
 
         		try {objetos = SqlSelects.selectObjetoGastoCosto(condicion);}
     			catch (SQLException e) {e.printStackTrace();}

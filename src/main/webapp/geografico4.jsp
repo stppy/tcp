@@ -2206,21 +2206,19 @@ $(document).ready(function(){
 		var idDistrito= idParsed[3];
 		var accionId = idParsed[4];
 		var modalHito = "";
-		var urlAccionesAvances="";
+		var urlFactHitos="";
 		var optionDepartamentos = "";
 		var optionDistritos = "";
-			
-			urlAccionesAvances+='http://spr.stp.gov.py/tablero/ajaxSelects?action=getAccionAvances';
-		
-		if (typeof institucionId != "undefined"){ urlAccionesAvances+='&institucion_id='+institucionId;}
-		if (typeof lineaAccionId != "undefined"){ urlAccionesAvances+='&linea_accion_id='+lineaAccionId;}
-		if (typeof idDepartamento != "undefined"){ urlAccionesAvances+='&departamento='+idDepartamento;}
-		if (typeof idDistrito != "undefined"){ urlAccionesAvances+='&distrito='+idDistrito;}
-		if (typeof accionId != "undefined"){ urlAccionesAvances+='&accion_id='+accionId;}
+		urlFactHitos+='http://spr.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015';
+		if (typeof institucionId != "undefined"){ urlFactHitos+='&institucion_id='+institucionId;}
+		if (typeof lineaAccionId != "undefined"){ urlFactHitos+='&linea_accion_id='+lineaAccionId;}
+		if (typeof idDepartamento != "undefined"){ urlFactHitos+='&departamento='+idDepartamento;}
+		if (typeof idDistrito != "undefined"){ urlFactHitos+='&distrito='+idDistrito;}
+		if (typeof accionId != "undefined"){ urlFactHitos+='&accion_id='+accionId;}
 
 		
 		var registrosHitos = $.ajax({
-	    	url:urlAccionesAvances,
+	    	url:urlFactHitos,
 	      	type:'get',
 	      	dataType:'json',
 	      	crossDomain:true,
@@ -2229,7 +2227,7 @@ $(document).ready(function(){
 		var registroHitos=JSON.parse(registrosHitos);
 		
 		var accion = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getAccion&accion_id='+accionId,
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015Accion&accion_id='+accionId,
 	      	type:'get',
 	      	dataType:'json',
 	      	crossDomain:true,
