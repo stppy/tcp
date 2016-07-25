@@ -8,11 +8,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.jsoup.Jsoup;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import py.gov.stp.objetosV2.AccionCatalogo;
@@ -56,7 +58,8 @@ public class CrearPdfServlet extends HttpServlet {
 	    response.setHeader(headerKey, headerValue);                
         				
     	String contenido = obtenerContenidoAvances(idAvanceCualitativo, nivelId, entidadId, unidadResponsableId);
-        
+    	contenido = parseSpecialCharactersInData(contenido);
+    	
    		String html = "<html>"+
 						"<head>"+
 						      "<style>"+
@@ -144,8 +147,12 @@ public class CrearPdfServlet extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Este Servlet Genera PDF Usando librería de Flying Saucer.";
-    }	
+    }
     
+    private String parseSpecialCharactersInData(String string){
+        org.jsoup.nodes.Document document = Jsoup.parse(string);
+        return document.html();
+    }    
     
     public String obtenerContenidoAvances(String idAvanceCualitativo, String nivelId, String entidadId, String unidadResponsableId) {
     
@@ -186,16 +193,23 @@ public class CrearPdfServlet extends HttpServlet {
 				try {trimestre = SqlSelects.selectTrimestre(condition);}
 				catch (SQLException e) {e.printStackTrace();}								
 				
-				if (unidadResponsableId.equals("0")){
-					//Obtiene las acciones del periodo actual
-					condition = " where true and borrado is false and periodo_id="+ periodoAct;		
-					Integer insLineaAccionId = avanceCualitativo.get(0).getInsLineaAccionId();
-					List<InsLineaAccion> insLineaAccion=null; 		
-					if (insLineaAccionId != null) condition += " and id ='"+insLineaAccionId+"'";
-					try {insLineaAccion = SqlSelects.selectInsLineaAccion(condition);}
-					catch (SQLException e) {e.printStackTrace();}
-					
-					//Obtiene la institucion de la acción y del avance
+				Integer insLineaAccionId = avanceCualitativo.get(0).getInsLineaAccionId();								
+				//Obtiene la linea de accion del periodo actual
+				condition = " where true ";							
+				List<InsLineaAccion> insLineaAccion=null; 		
+				if (insLineaAccionId != null) condition += " and id ='"+insLineaAccionId+"'";
+				try {insLineaAccion = SqlSelects.selectInsLineaAccion(condition);}
+				catch (SQLException e) {e.printStackTrace();}
+				
+				//Obtiene la linea de accion 
+				condition = " where true ";							
+				List<LineaAccion> lineaAccion=null; 		
+				if (insLineaAccionId != null) condition += " and id ='"+insLineaAccion.get(0).getLineaAccionId()+"'";
+				try {lineaAccion = SqlSelects.selectLineaAccion(condition);}
+				catch (SQLException e) {e.printStackTrace();}
+				
+				if (unidadResponsableId.equals("0")){					
+					//Obtiene la institucion de la linea de acción y del avance
 					Integer institucionId = insLineaAccion.get(0).getInstitucionId();
 					institucion= new ArrayList<Institucion>();
 					condition = " where true ";
@@ -209,6 +223,7 @@ public class CrearPdfServlet extends HttpServlet {
 	   							"<h3 style='text-align:center;'><u>SPR-PA-03: Informe Cualitativo de Avance Trimestral</u></h3>"+
 	   							
 	   							"<p id='impresionInstitucion'><strong>Institución: </strong><span>"+ institucion.get(0).getNombre() +"</span></p>"		+
+	   							"<p id='impresionLineaAccion'><strong>Linea de Acción: </strong><span>"+ lineaAccion.get(0).getNombre() +"</span></p>"  +
 	   							"<p id='impresionAccionesTrimestre'><strong>Acción: </strong><span>"+ catalogo.get(0).getNombre() +"</span></p>"+
 	   							"<p id='impresionTrimestreAño'><strong>Periodo: </strong><span>"+ trimestre.get(0).getDescripcion() + " " + trimestre.get(0).getAnho() + " </span></p>" +
 	   							"<p id='impresionGestionesRealizadas'><strong>Gestiones Realizadas: </strong><span>"+ avanceCualitativo.get(0).getGestionesRealizadas() +"</span></p>" +
@@ -297,8 +312,8 @@ public class CrearPdfServlet extends HttpServlet {
 						   							"<p id='impresionLogrosAlcanzados'><strong>Principales Logros Alcanzados: </strong><span>"+ avanceCualitativoAux.getPrincipalesLogrosAlcanzados() +"</span></p>"	+
 						   							"<p id='impresionLeccionesAprendidas'><strong>Dificultades y Lecciones aprendidas: </strong><span>"+ avanceCualitativoAux.getDificultadesLeccionesAprendidas() +"</span></p>" +
 						   							"<p id='impresionSiguienteTrimestre'><strong>Objetivos del Siguiente Trimestre: </strong><span>"+ avanceCualitativoAux.getObjetivosTrimestre() +"</span></p>"	+
-						   							
-										    	 "</div><br />";
+						   							"<p></p>"+
+										    	 "</div>";
 				    		}
 						}
 					}
