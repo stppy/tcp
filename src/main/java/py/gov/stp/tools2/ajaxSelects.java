@@ -749,7 +749,7 @@ public class ajaxSelects extends HttpServlet {
 //        		condition += " and ins_id IN (select id from institucion "+condition2+") ";
 //        		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
         		if (institucionId!=null) condition += " and ins_linea_accion_base.institucion_id='"+institucionId+"'";
-                if (institucionIdConcat!=null) condition += " and ins_linea_accion_base.institucion_id in("+institucionIdConcat+")";
+                if (institucionIdConcat!="") condition += " and ins_linea_accion_base.institucion_id in("+institucionIdConcat+")";
                 if (departamentoId!=null) condition += " and ins_linea_accion_base.depto_id='"+departamentoId+"'";
                 if (distritoId!=null) condition += " and ins_linea_accion_base.dist_id='"+distritoId+"'";
            		try {objetos = SqlSelects.selectResumenLineasAccionProgramacion(condition);}
@@ -1485,15 +1485,16 @@ public class ajaxSelects extends HttpServlet {
             } 
         	//Obtenemos todas las lineas a nivel departamental y distrital
         	if (action.equals("getLineaAccionDepartamentalDistrital")){
-        		List objetos=null;
+        		String objetos=null;
         		//condition = " where true";
-                if (institucionIdConcat!=null) condition += " and ins_linea_accion_base_dd.institucion_id in("+institucionIdConcat+")";
+                if (institucionIdConcat!="") condition += " and ins_linea_accion_base_dd.institucion_id in("+institucionIdConcat+")";
 	            if (departamentoId!=null) condition += " and ins_linea_accion_base_dd.depto_id='"+departamentoId+"'";
 	            if (distritoId!=null) condition += " and ins_linea_accion_base_dd.dist_id='"+distritoId+"'";
-           		try {objetos = SqlSelects.selectResumenLineasAccionProgramacionInstDptoDist4(condition);}
+           		try {objetos = SqlSelects.selectResumenLineasAccionProgramacionInstDptoDist99(condition);}
         		catch (SQLException e) {e.printStackTrace();}
-        		JsonElement json = new Gson().toJsonTree(objetos );
-        		out.println(json.toString());        	
+        		//JsonElement json = new Gson().toJsonTree(objetos );
+        		//out.println(json.toString()); 
+           		out.println(objetos);return;
         	}
        }
        out.close();
