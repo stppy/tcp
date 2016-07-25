@@ -171,7 +171,7 @@ public class SqlSelects {
    }
 	public static List<FactHitos> selectFactHitos2015Base(String condition) throws SQLException{
    	 Connection conect=ConnectionConfiguration.conectarBase();
-		 String query = " select * from ins_lin_acc_ava "+condition +" order by accion_departamento_id ASC, accion_distrito_id ASC, accion ASC, hito_fecha_entrega ASC ";
+		 String query = " select * from fact_hitos "+condition +" order by accion_departamento_id ASC, accion_distrito_id ASC, accion ASC, hito_fecha_entrega ASC ";
 		 
 		 Statement statement = null;
 		 ResultSet rs=null;

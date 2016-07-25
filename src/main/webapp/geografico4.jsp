@@ -1209,7 +1209,7 @@ function numeroConComa(x) {
 	if (isNaN(x)){
 		return 0;
 	}else
-		if ( x == "Infinity"){
+		if ( x == "Infinity" || x == null){
 			return "-"
 		}else{
 			return x.toString().replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -1265,7 +1265,7 @@ if(institucionIdConcat!=null)condicion= "&institucionIdConcat="+institucionIdCon
 if(deptoId!=null)condicion+= "&departamentoId="+deptoId;
 if(distId!=null)condicion+= "&distritoId="+distId;
 
-if(deptoId!=null || distId!=null){
+if(deptoId!=null && distId!=null){
 	var lineasProgramadas = $.ajax({
 		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccionDepartamentalDistrital'+condicion,
 	  	type:'get',
@@ -1274,6 +1274,41 @@ if(deptoId!=null || distId!=null){
 	}).responseText;
 	lineasProgramadas = JSON.parse(lineasProgramadas);
 	lineasProgramadas=lineasProgramadas.sort(lineaAccionOrden);
+}else if(deptoId!=null && distId==null){
+	var lineasProgramadas = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccionDepartamentalDistrital'+condicion,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	lineasProgramadas = JSON.parse(lineasProgramadas);
+	//lineasProgramadas=lineasProgramadas.sort(lineaAccionOrden);
+	
+	tablaInstituciones = renderPrueba(lineasProgramadas);
+	  
+	 contenidoEnRowTemp='<div class="row">'+
+     '<div class="col-md-12">'+
+      '<div class="box" height="1000px">'+
+        '<div class="box-header with-border" height="1000px">'+
+          '<h3 class="box-title" id="tituloTipoPrograma">'+
+          //lineasEstrategicas[l].nombre+
+          '</h3> '+
+          '<div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+          '</div>'+
+        '</div>'+
+        '<div class="box-body" >'+
+        	'<div class="table-responsive">'+
+      			'<table class="table table-striped table-bordered table-hover tablaLineasPorInstitucion">'+
+      				tablaInstituciones+
+					'</tbody></table>'+
+				'</div>'+
+        '</div>'+
+	   '</div>'+
+	   '</div>'+
+	   '</div>';
+	   
+	 return contenidoEnRowTemp;
+	   
 }else{
 	var lineasProgramadas = $.ajax({
 		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacion'+condicion,
@@ -1405,6 +1440,166 @@ if(deptoId!=null || distId!=null){
 		   
  return contenidoEnRowTemp;
 }
+
+
+
+
+
+
+function renderPrueba(lineasProgramadas){
+	var tablaInstituciones="";
+	var tempInstituciones="";
+	var tempInstLineas="";
+	var flagIns=0;
+	var clase="";
+	
+	var condicion="";
+	var linea_accion_id="";
+	var cont, contEjecucion, destinatarios, inversion; 
+	var acum, acumEjecucionPrevista, acumEjecucionLograda;
+	var promedio;
+	var institucionId;
+	
+	  tempInstituciones = '<thead><tr>'+
+	  	'<th rowspan="3" class="text-center" style="vertical-align: middle;">Línea de Acción</th>'+
+	  	'<th rowspan="3" class="text-center" style="vertical-align: middle;">Unidad de Medida</th>'+
+	  	'<th colspan="5" class="text-center">Plan de Acción 2016</th>'+
+	  	'<th colspan="5" class="text-center">Ejecución a la Fecha</th></tr>'+
+	'<tr><th colspan="3" class="text-center">Meta</th>'+
+	  	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Destinatarios</th>'+
+	  	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Inversión (en millones G.)</th>'+
+	  	'<th colspan="3" class="text-center">Meta</th>'+
+	  	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Destinatarios</th>'+
+	  	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Inversión (en millones G.)</th></tr>'+
+	'<tr><th class="text-center">Aprobada</th>'+
+	  	'<th class="text-center">Programada</th>'+
+	  	'<th class="text-center">%</th>'+
+	  	'<th class="text-center">Prevista</th>'+
+	  	'<th class="text-center">Lograda</th>'+
+	  	'<th class="text-center">%</th>'+
+  '</tr></thead><tbody>';
+	
+	if(lineasProgramadas.length > 0){
+		linea_accion_id=lineasProgramadas[0].lineaAccionId;
+		institucionId=lineasProgramadas[0].institucionId;
+		cont=0, contEjecucion=0, destinatarios=0; inversion=0; 
+		acum=0, acumEjecucionPrevista=0, acumEjecucionLograda=0;
+		promedio=0;
+		
+		tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[0].institucionSigla+'</strong></td></tr>';
+		for(var n=0; n<lineasProgramadas.length;n++){		
+		 
+				contEjecucion++;
+				if (lineasProgramadas[n].cantidadHoy!=null) acumEjecucionPrevista=acumEjecucionPrevista + lineasProgramadas[n].cantidadHoy;
+				if (lineasProgramadas[n].cantidadAvance!=null) acumEjecucionLograda=acumEjecucionLograda + lineasProgramadas[n].cantidadAvance;
+				if (lineasProgramadas[n].cantDestinatarioReal!=null) destinatarios= destinatarios + lineasProgramadas[n].cantDestinatarioReal;
+				if (lineasProgramadas[n].costoAc!=null) inversion= inversion + lineasProgramadas[n].costoAc;
+				
+				if ((lineasProgramadas[n].cantidadHoy == 0 || lineasProgramadas[n].cantidadHoy==null ) && lineasProgramadas[n].cantidadAvance > 0) {	
+					acum = acum + 100;
+					cont= cont +1;				
+				} else if (lineasProgramadas[n].cantidadHoy > 0 && (lineasProgramadas[n].cantidadAvance == 0 || lineasProgramadas[n].cantidadAvance == null)) {
+					acum = acum + 0;
+					cont= cont +1;				
+				} else if ((lineasProgramadas[n].cantidadHoy == 0 || lineasProgramadas[n].cantidadHoy == null)	&& (lineasProgramadas[n].cantidadAvance == 0 || lineasProgramadas[n].cantidadAvance == null )) {
+					acum = acum + 0;				
+				} else {
+					acum =acum + ((lineasProgramadas[n].cantidadAvance / lineasProgramadas[n].cantidadHoy) * 100);
+					cont= cont +1;				
+				}			
+				
+				if (n == lineasProgramadas.length -1){
+
+					institucionId = lineasProgramadas[n].institucionId;
+					if(cont != 0){
+						promedio = acum / cont;
+					}
+					clase="";			
+					if ((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=90){
+					 clase="bg-green-active color-palette"; 
+					}else if((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=70){
+					 clase="bg-yellow-active color-palette"; 
+					}else{
+					 clase="bg-red-active color-palette";
+					}
+					
+					tempInstLineas += '<tr>'+
+					'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
+					'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
+					'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
+					'<td></td>'+
+					'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
+					'<td></td>'+
+					'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
+					'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
+					'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
+					
+					clase="";			
+					if (promedio>=90){
+					 clase="bg-green-active color-palette"; 
+					}else if(promedio>=70){
+					 clase="bg-yellow-active color-palette"; 
+					}else{
+					 clase="bg-red-active color-palette";
+					}
+					
+					tempInstLineas += '<td class="'+clase+'">'+numeroConComa((promedio).toFixed(2))+'</td>'+
+					'<td>'+numeroConComa(destinatarios.toFixed(2))+'</td>'+
+					'<td>'+numeroConComa((inversion/1000000).toFixed(2))+'</td>'+
+					'</tr>';
+					
+				}else if(lineasProgramadas[n+1].institucionId != institucionId){
+					if(cont != 0){
+						promedio = acum / cont;
+					}
+					clase="";			
+					if ((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=90){
+					 clase="bg-green-active color-palette"; 
+					}else if((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=70){
+					 clase="bg-yellow-active color-palette"; 
+					}else{
+					 clase="bg-red-active color-palette";
+					}
+					
+					tempInstLineas += '<tr>'+
+					'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
+					'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
+					'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
+					'<td></td>'+
+					'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
+					'<td></td>'+
+					'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
+					'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
+					'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
+					
+					clase="";			
+					if (promedio>=90){
+					 clase="bg-green-active color-palette"; 
+					}else if(promedio>=70){
+					 clase="bg-yellow-active color-palette"; 
+					}else{
+					 clase="bg-red-active color-palette";
+					}
+					
+					tempInstLineas += '<td class="'+clase+'">'+numeroConComa((promedio).toFixed(2))+'</td>'+
+					'<td>'+numeroConComa(destinatarios.toFixed(2))+'</td>'+
+					'<td>'+numeroConComa((inversion/1000000).toFixed(2))+'</td>'+
+					'</tr>';
+					
+					cont=0, contEjecucion=0; 
+					acum=0, acumEjecucionPrevista=0, acumEjecucionLograda=0;
+					promedio=0;
+					institucionId = lineasProgramadas[n+1].institucionId;
+					tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n+1].institucionSigla+'</strong></td></tr>';
+					}
+					
+			}		
+	}
+	  tablaInstituciones+=tempInstituciones+tempInstLineas;
+
+	return tablaInstituciones;
+
+}	
 
 /* function renderTableroLineaAccion(institucionIdConcat,deptoId,distId){
 	var contenidoEnRow="";
@@ -3340,7 +3535,7 @@ $(document).ready(function(){
 			    		$("#unidadMedida-formulario").val(mostrarUnidadMedida);
 			    		
 				    	$.ajax({
-				         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getAsignacionPresiVersion&nivel=12&entidad=1&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subPrograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto,
+				         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getAsignacionPresiVersion&nivel=12&entidad=1&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subPrograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto+'&anho=2016',
 				          	type:'get',
 				          	crossDomain: 'true',
 				          	dataType:'jsonp',
