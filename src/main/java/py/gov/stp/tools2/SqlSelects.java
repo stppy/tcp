@@ -2434,7 +2434,7 @@ public class SqlSelects {
 		return objetos;
 	}
 	
-	public static String selectResumenLineasAccionProgramacionInstDptoDist99(String condition) throws SQLException {
+	public static String selectResumenLineasAccionProgramacionDepartamentalDistrital(String condition) throws SQLException {
 		Connection conect = ConnectionConfiguration.conectar();
  		 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from( "+
  				"select "

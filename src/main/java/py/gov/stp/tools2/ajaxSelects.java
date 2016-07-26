@@ -1483,14 +1483,14 @@ public class ajaxSelects extends HttpServlet {
                 JsonElement json = new Gson().toJsonTree(desempenhoDpto);
                 out.println(json.toString());
             } 
-        	//Obtenemos todas las lineas a nivel departamental y distrital
+        	//Obtenemos todas las lineas a nivel departamental y distrital ordenado por institución, departamento y distrito
         	if (action.equals("getLineaAccionDepartamentalDistrital")){
         		String objetos=null;
         		//condition = " where true";
                 if (institucionIdConcat!="") condition += " and ins_linea_accion_base_dd.institucion_id in("+institucionIdConcat+")";
 	            if (departamentoId!=null) condition += " and ins_linea_accion_base_dd.depto_id='"+departamentoId+"'";
 	            if (distritoId!=null) condition += " and ins_linea_accion_base_dd.dist_id='"+distritoId+"'";
-           		try {objetos = SqlSelects.selectResumenLineasAccionProgramacionInstDptoDist99(condition);}
+           		try {objetos = SqlSelects.selectResumenLineasAccionProgramacionDepartamentalDistrital(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		//JsonElement json = new Gson().toJsonTree(objetos );
         		//out.println(json.toString()); 
