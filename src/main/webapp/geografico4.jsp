@@ -255,13 +255,12 @@ tbody {
 					$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
 
 					var i=parseInt(0);
-					
-					
+								
 					function numeroConComa(x) {
 						if (isNaN(x) || x == "Infinity"){
 							return 0;
 						}else{
-							return x.toString().replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+							return x.toString().replace(".00","").replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 						}
 					}
 					
@@ -1212,7 +1211,8 @@ function numeroConComa(x) {
 		if ( x == "Infinity" || x == null){
 			return "-"
 		}else{
-			return x.toString().replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+			//return x.toString().replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+			return x.toString().replace(".00","").replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 		}
 }
 
@@ -1919,13 +1919,14 @@ $(document).ready(function(){
 		'	                						<tr class="active"><th>Departamento</th><th>Distrito</th><th>Acción</th><th>U. Medida</th><th>Cantidad Programado</th><!--th>Inversión Estimada (Millones de G.)</th--><th>Fecha Terminación</th><!--th>% Programado</th><th>% Ejecutado</th--><th>Editar</th><th>Borrar</th></tr>'+
 		'	                					</thead>'+
 		'	                					<tbody id="tablaAccionesAvances">';
-		
+												if (elRegistro != null){
 													tituloModal='<h3><center>'+elRegistro[0].institucion_sigla+'&nbsp;&nbsp;-&nbsp;&nbsp;'+elRegistro[0].linea_accion_nombre+'</center></h3>';
 													for(var m=0; m<elRegistro.length;m++)
 													{
 															var registroFecha= elRegistro[m].avance_fecha_entrega.split("-");														
 															cuerpoModal+='<tr><td>'+elRegistro[m].accion_depto_nombre+'</td><td>'+elRegistro[m].accion_dist_nombre+'</td><td>'+elRegistro[m].accion_catalogo_nombre+'</td><td>'+elRegistro[m].accion_unidad_medida+'</td><td>'+elRegistro[m].hito_cantidad_programado+'</td><!--td>numeroConComa((elRegistro[m].accion_costo*elRegistro[m].hito_porcentaje_ejecutado/100000000).toFixed(0))</td--><td>'+registroFecha[2]+'-'+registroFecha[1]+'-'+registroFecha[0]+'</td><!--td>elRegistro[m].hito_porcentaje_programado</td--><!--td>elRegistro[m].hito_porcentaje_ejecutado</td--><td><a href="#" class="modalHitoAvances" parametros="'+institucion_id+'-'+linea_accion_id+'-'+idDepartamento+'-'+idDistrito+'-'+elRegistro[m].accion_id+'" "><span class="glyphicon glyphicon-pencil"></span></a></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';																														
-													}		
+													}
+												}
 		cuerpoModal += '	             		</tbody>'+
 		'	                				</table>'+
 		'	                			</div>';
@@ -1968,7 +1969,7 @@ $(document).ready(function(){
 
 
 		//$('#myModal').find(".modal-footer").html(footerModal);
-		var urlAcumulado="";
+		/* var urlAcumulado="";
 		var urlFinal="";
 		
 		
@@ -2006,9 +2007,9 @@ $(document).ready(function(){
 		
 		lineaAccionAcumuladoMesDepto=lineaAccionAcumuladoMesDepto.sort(compare);
 		
-		dibujarLineaAccionAcumuladoMesDepto(lineaAccionAcumuladoMesDepto, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion);
+		dibujarLineaAccionAcumuladoMesDepto(lineaAccionAcumuladoMesDepto, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion); */
 		
-		 $(function () {
+		 /* $(function () {
 		       
 		        $('#example1').dataTable({
 		          "bPaginate": false,
@@ -2042,7 +2043,7 @@ $(document).ready(function(){
 		        	    }
 		        	}
 		        });
-		      });
+		      }); */
 });
 	
 	
