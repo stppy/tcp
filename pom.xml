@@ -22,51 +22,50 @@
 			<version>9.3.jdbc4-SNAPSHOT</version>
 		</dependency>
 	  	  <dependency>
-				<groupId>org.jasig.cas.client</groupId>
-				<artifactId>cas-client-core</artifactId>
-				<version>3.4.0</version>
-				<exclusions>
-					<exclusion>
-						<groupId>commons-logging</groupId>
-						<artifactId>commons-logging</artifactId>
-					</exclusion>
-				</exclusions>
+			<groupId>org.jasig.cas.client</groupId>
+			<artifactId>cas-client-core</artifactId>
+			<version>3.4.0</version>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+	<dependency>
+		<groupId>org.apache.commons</groupId>
+		<artifactId>commons-lang3</artifactId>
+		<version>3.0</version>
+	</dependency>
+	    <dependency>
+		      <groupId>junit</groupId>
+		      <artifactId>junit</artifactId>
+		      <version>3.8.1</version>
+		      <scope>test</scope>
+	    </dependency>
+	    <dependency>
+		      <groupId>com.google.code.gson</groupId>
+		      <artifactId>gson</artifactId>
+		      <version>2.3.1</version>
+		      <scope>compile</scope>
+	    </dependency>
+	    <dependency>
+		        <groupId>javax.servlet</groupId>
+		        <artifactId>javax.servlet-api</artifactId>
+		        <version>3.0.1</version>
+        		<scope>compile</scope>
+		</dependency>
+	     <dependency>
+	        <groupId>org.springframework.security</groupId>
+	        <artifactId>spring-security-web</artifactId>
+	        <version>4.0.1.RELEASE</version>
+	    </dependency>
+		    <dependency>
+			<groupId>org.jooq</groupId>
+			<artifactId>jooq-codegen-maven-example</artifactId>
+			<version>2.3.3</version>
 		</dependency>
 		<dependency>
-	<groupId>org.apache.commons</groupId>
-	<artifactId>commons-lang3</artifactId>
-	<version>3.0</version>
-</dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.google.code.gson</groupId>
-      <artifactId>gson</artifactId>
-      <version>2.3.1</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-        <groupId>javax.servlet</groupId>
-        <artifactId>javax.servlet-api</artifactId>
-        <version>3.0.1</version>
-        <scope>compile</scope>
-	</dependency>
-	
-	<dependency>
-        <groupId>org.springframework.security</groupId>
-        <artifactId>spring-security-web</artifactId>
-        <version>4.0.1.RELEASE</version>
-    </dependency>
-	    <dependency>
-		<groupId>org.jooq</groupId>
-		<artifactId>jooq-codegen-maven-example</artifactId>
-		<version>2.3.3</version>
-	</dependency>
-	<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 			<version>1.1.2</version>
@@ -86,7 +85,6 @@
 		    <artifactId>flying-saucer-pdf</artifactId>
 		    <version>9.0.4</version>
 		</dependency>
-		<!-- Jsoup: para parsear caracteres especiales en los datos antes de convertir html a pdf -->
 		<dependency>
 		    <groupId>org.jsoup</groupId>
 		    <artifactId>jsoup</artifactId>
