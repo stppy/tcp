@@ -1284,7 +1284,7 @@ if(deptoId!=null && distId!=null){
 	lineasProgramadas = JSON.parse(lineasProgramadas);
 	//lineasProgramadas=lineasProgramadas.sort(lineaAccionOrden);
 	
-	tablaInstituciones = renderNivelDepartamento(lineasProgramadas);
+	tablaInstituciones = renderNivelDepartamento(lineasProgramadas, distId, deptoId);
 	  
 	 contenidoEnRowTemp='<div class="row">'+
      '<div class="col-md-12">'+
@@ -1366,7 +1366,7 @@ if(deptoId!=null && distId!=null){
 				  if (deptoId == null) deptoId = "";
 				  
 				  tempInstLineas += '<tr>'+
-				  '<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].insLineaAccionId+'-'+deptoId+'-'+distId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
+				  '<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+'-'+distId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
 				  '<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
 				  '<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
 				  '<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>'+
@@ -1459,7 +1459,7 @@ if(deptoId!=null && distId!=null){
  return contenidoEnRowTemp;
 }
 
-function renderNivelDepartamento(lineasProgramadas){
+function renderNivelDepartamento(lineasProgramadas, distId, deptoId){
 	var tablaInstituciones="";
 	var tempInstituciones="";
 	var tempInstLineas="";
@@ -1536,8 +1536,11 @@ function renderNivelDepartamento(lineasProgramadas){
 					 clase="bg-red-active color-palette";
 					}
 					
+					if (distId == null) distId = "";
+					if (deptoId == null) deptoId = "";
+					
 					tempInstLineas += '<tr>'+
-					'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
+					'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+'-'+distId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
 					'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
 					'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
 					'<td></td>'+
@@ -1573,6 +1576,9 @@ function renderNivelDepartamento(lineasProgramadas){
 					}else{
 					 clase="bg-red-active color-palette";
 					}
+					
+					if (distId == null) distId = "";
+					if (deptoId == null) deptoId = "";
 					
 					tempInstLineas += '<tr>'+
 					'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
