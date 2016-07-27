@@ -1211,7 +1211,6 @@ function numeroConComa(x) {
 		if ( x == "Infinity" || x == null){
 			return "-"
 		}else{
-			//return x.toString().replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 			return x.toString().replace(".00","").replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 		}
 }
@@ -1274,6 +1273,11 @@ if(deptoId!=null && distId!=null){
 	}).responseText;
 	lineasProgramadas = JSON.parse(lineasProgramadas);
 	lineasProgramadas=lineasProgramadas.sort(lineaAccionOrden);
+	contenidoEnRowTemp = renderNivelDistrital(lineasProgramadas, deptoId, distId);
+	
+return contenidoEnRowTemp;
+
+
 }else if(deptoId!=null && distId==null){
 	var lineasProgramadas = $.ajax({
 		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccionDepartamentalDistrital'+condicion,
@@ -1284,7 +1288,7 @@ if(deptoId!=null && distId!=null){
 	lineasProgramadas = JSON.parse(lineasProgramadas);
 	//lineasProgramadas=lineasProgramadas.sort(lineaAccionOrden);
 	
-	tablaInstituciones = renderNivelDepartamento(lineasProgramadas, distId, deptoId);
+	tablaInstituciones = renderNivelDepartamento(lineasProgramadas, deptoId, distId);
 	  
 	 contenidoEnRowTemp='<div class="row">'+
      '<div class="col-md-12">'+
@@ -1318,28 +1322,8 @@ if(deptoId!=null && distId!=null){
 	}).responseText;
 	lineasProgramadas = JSON.parse(lineasProgramadas);
 	lineasProgramadas=lineasProgramadas.sort(lineaAccionOrden);
-}
 
-
-/*     tempInstituciones = '<thead><tr>'+
-	  	'<th rowspan="3" class="text-center" style="vertical-align: middle;">Línea de Acción</th>'+
-	  	'<th rowspan="3" class="text-center" style="vertical-align: middle;">Unidad de Medida</th>'+
-	  	'<th colspan="5" class="text-center">Plan de Acción 2016</th>'+
-	  	'<th colspan="5" class="text-center">Ejecución a la Fecha</th></tr>'+
-	'<tr><th colspan="3" class="text-center">Meta</th>'+
-	  	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Destinatarios</th>'+
-	  	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Inversión (en millones G.)</th>'+
-	  	'<th colspan="3" class="text-center">Meta</th>'+
-	  	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Destinatarios</th>'+
-	  	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Inversión (en millones G.)</th></tr>'+
-	'<tr><th class="text-center">Aprobada</th>'+
-	  	'<th class="text-center">Programada</th>'+
-	  	'<th class="text-center">%</th>'+
-	  	'<th class="text-center">Prevista</th>'+
-	  	'<th class="text-center">Lograda</th>'+
-	  	'<th class="text-center">%</th>'+
-    '</tr></thead><tbody>'; */
-    
+ 
 		for(var m=0; m<instituciones.length;m++)
 		{ 
 		  for(var n=0; n<lineasProgramadas.length;n++)
@@ -1457,9 +1441,10 @@ if(deptoId!=null && distId!=null){
 		   '</div>';
 		   
  return contenidoEnRowTemp;
+}//fin del el
 }
 
-function renderNivelDepartamento(lineasProgramadas, distId, deptoId){
+function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 	var tablaInstituciones="";
 	var tempInstituciones="";
 	var tempInstLineas="";
@@ -1473,7 +1458,7 @@ function renderNivelDepartamento(lineasProgramadas, distId, deptoId){
 	var promedio;
 	var institucionId;
 	
-	  tempInstituciones = '<thead><tr>'+
+/* 	  tempInstituciones = '<thead><tr>'+
 	  	'<th rowspan="3" class="text-center" style="vertical-align: middle;">Línea de Acción</th>'+
 	  	'<th rowspan="3" class="text-center" style="vertical-align: middle;">Unidad de Medida</th>'+
 	  	'<th colspan="5" class="text-center">Plan de Acción 2016</th>'+
@@ -1490,7 +1475,25 @@ function renderNivelDepartamento(lineasProgramadas, distId, deptoId){
 	  	'<th class="text-center">Prevista</th>'+
 	  	'<th class="text-center">Lograda</th>'+
 	  	'<th class="text-center">%</th>'+
-  '</tr></thead><tbody>';
+  '</tr></thead><tbody>'; */
+  tempInstituciones = '<thead><tr>'+
+	'<th rowspan="3" class="text-center" style="vertical-align: middle;">Línea de Acción</th>'+
+	'<th rowspan="3" class="text-center" style="vertical-align: middle;">Unidad de Medida</th>'+
+	'<th colspan="5" class="text-center">Plan de Acción 2016</th>'+
+	'<th colspan="5" class="text-center">Ejecución a la Fecha</th></tr>'+
+'<tr><th  class="text-center">Meta</th>'+
+	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Destinatarios</th>'+
+	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Inversión (en millones G.)</th>'+
+	'<th colspan="3" class="text-center">Meta</th>'+
+	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Destinatarios</th>'+
+	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Inversión (en millones G.)</th></tr>'+
+'<tr>'+
+	'<th class="text-center">Programada</th>'+
+	//'<th class="text-center">%</th>'+
+	'<th class="text-center">Prevista</th>'+
+	'<th class="text-center">Lograda</th>'+
+	'<th class="text-center">%</th>'+
+'</tr></thead><tbody>';
 	
 	if(lineasProgramadas.length > 0){
 		linea_accion_id=lineasProgramadas[0].lineaAccionId;
@@ -1542,9 +1545,9 @@ function renderNivelDepartamento(lineasProgramadas, distId, deptoId){
 					tempInstLineas += '<tr>'+
 					'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+'-'+distId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
 					'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
-					'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
+					//'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
 					'<td></td>'+
-					'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
+					//'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
 					'<td></td>'+
 					'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
 					'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
@@ -1563,8 +1566,10 @@ function renderNivelDepartamento(lineasProgramadas, distId, deptoId){
 					'<td>'+numeroConComa(destinatarios.toFixed(2))+'</td>'+
 					'<td>'+numeroConComa((inversion/1000000).toFixed(2))+'</td>'+
 					'</tr>';
-					
-				}else if(lineasProgramadas[n+1].institucionId != institucionId){
+										
+				//}else if(lineasProgramadas[n+1].institucionId != institucionId){
+				}else if(lineasProgramadas[n+1].lineaAccionId != linea_accion_id){
+
 					if(cont != 0){
 						promedio = acum / cont;
 					}
@@ -1579,37 +1584,43 @@ function renderNivelDepartamento(lineasProgramadas, distId, deptoId){
 					
 					if (distId == null) distId = "";
 					if (deptoId == null) deptoId = "";
-					
-					tempInstLineas += '<tr>'+
-					'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
-					'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
-					'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
-					'<td></td>'+
-					'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
-					'<td></td>'+
-					'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
-					'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
-					'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
-					
-					clase="";			
-					if (promedio>=90){
-					 clase="bg-green-active color-palette"; 
-					}else if(promedio>=70){
-					 clase="bg-yellow-active color-palette"; 
-					}else{
-					 clase="bg-red-active color-palette";
+
+					if(lineasProgramadas[n+1].institucionId != institucionId){
+						tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n+1].institucionSigla+'</strong></td></tr>';
+						institucionId = lineasProgramadas[n+1].institucionId;
+
 					}
-					
-					tempInstLineas += '<td class="'+clase+'">'+numeroConComa((promedio).toFixed(2))+'</td>'+
-					'<td>'+numeroConComa(destinatarios.toFixed(2))+'</td>'+
-					'<td>'+numeroConComa((inversion/1000000).toFixed(2))+'</td>'+
-					'</tr>';
-					
-					cont=0, contEjecucion=0; 
-					acum=0, acumEjecucionPrevista=0, acumEjecucionLograda=0;
-					promedio=0;
-					institucionId = lineasProgramadas[n+1].institucionId;
-					tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n+1].institucionSigla+'</strong></td></tr>';
+						tempInstLineas += '<tr>'+
+						'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+'-'+distId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
+						'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
+						//'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
+						'<td></td>'+
+						//'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
+						'<td></td>'+
+						'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
+						'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
+						'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
+						
+						clase="";			
+						if (promedio>=90){
+						 clase="bg-green-active color-palette"; 
+						}else if(promedio>=70){
+						 clase="bg-yellow-active color-palette"; 
+						}else{
+						 clase="bg-red-active color-palette";
+						}
+						
+						tempInstLineas += '<td class="'+clase+'">'+numeroConComa((promedio).toFixed(2))+'</td>'+
+						'<td>'+numeroConComa(destinatarios.toFixed(2))+'</td>'+
+						'<td>'+numeroConComa((inversion/1000000).toFixed(2))+'</td>'+
+						'</tr>';
+						
+						cont=0, contEjecucion=0; 
+						acum=0, acumEjecucionPrevista=0, acumEjecucionLograda=0;
+						promedio=0,destinatarios=0; inversion=0;
+						//institucionId = lineasProgramadas[n+1].institucionId;
+						linea_accion_id = lineasProgramadas[n+1].lineaAccionId;
+						//tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n+1].institucionSigla+'</strong></td></tr>';
 					}
 					
 			}		
@@ -1617,6 +1628,134 @@ function renderNivelDepartamento(lineasProgramadas, distId, deptoId){
 	  tablaInstituciones+=tempInstituciones+tempInstLineas;
 
 	return tablaInstituciones;
+
+}	
+
+function renderNivelDistrital(lineasProgramadas, deptoId, distId){
+	var contenidoEnRowTemp="";	
+	var tablaInstituciones="";
+	var tempInstituciones="";
+	var tempInstLineas="";
+	var flagIns=0;
+	var clase="";
+
+	for(var m=0; m<instituciones.length;m++)
+	{ 
+	  for(var n=0; n<lineasProgramadas.length;n++)
+		{
+		  if ( instituciones[m].id==lineasProgramadas[n].institucionId ){
+			  if (flagIns == 0){
+				  
+				  tempInstituciones += '<tr><td colspan="12"><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td></tr>';
+					flagIns++;						  
+			  }
+			  clase="";
+			  var desempProgAnho=numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2));
+			  if (lineasProgramadas[n].cantidadAnho==0 && lineasProgramadas[n].meta ==0) desempProgAnho="-";
+/* 			  if (desempProgAnho!="-"){
+				  if (parseInt(desempProgAnho)>=90 && lineasProgramadas[n].meta != 0){
+					  clase="bg-green-active color-palette"; 
+				  }else if(parseInt(desempProgAnho)>=70 && lineasProgramadas[n].meta != 0){
+					  clase="bg-yellow-active color-palette"; 
+				  }else{
+					  clase="bg-red-active color-palette";
+				  }
+			  } */
+			  
+			  if (deptoId == null) deptoId = "";
+			  if (distId == null) distId = "";			  
+			  
+			  tempInstLineas += '<tr>'+
+			  '<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+'-'+distId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
+			  '<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
+			 // '<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
+			  '<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>';
+			  //'<td class="'+clase+'">'+desempProgAnho+'</td>';
+			  if(lineasProgramadas[n].cantDest==0){
+				  tempInstLineas += '<td> - </td>';
+			  }else{
+				  tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>';
+			  }
+			  tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
+			  '<td>'+numeroConComa(lineasProgramadas[n].cantidadHoy)+'</td>'+
+			  '<td>'+numeroConComa(lineasProgramadas[n].cantidadAvance)+'</td>';
+			  
+			  
+			  var desempEjeHoy=numeroConComa(((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100).toFixed(2));
+			  if(lineasProgramadas[n].cantidadAvance==0 && lineasProgramadas[n].cantidadHoy==0) desempEjeHoy="-";
+			  if (desempEjeHoy!="-"){
+				  if (clase!="bg-red-active color-palette"){
+					  clase="";
+					  if (parseInt((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100)>=90 && lineasProgramadas[n].cantidadHoy != 0){
+						  clase="bg-green-active color-palette"; 
+					  }else if(parseInt((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100)>=70 && lineasProgramadas[n].cantidadHoy != 0){
+						  clase="bg-yellow-active color-palette"; 
+					  }else{
+						  clase="bg-red-active color-palette";
+					  }
+				  }
+			  }else{
+				  clase="";
+			  }
+			  
+			  tempInstLineas += '<td class="'+clase+'">'+desempEjeHoy+'</td>';
+			  if(lineasProgramadas[n].cantDestinatarioReal==0){
+				  tempInstLineas += '<td> - </td>';
+			  }else{
+				  tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDestinatarioReal)+'</td>';
+			  }
+			  tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].costoAc/1000000).toFixed(2))+'</td>'+
+			  '</tr>';
+		  }
+		}
+
+	  if (flagIns>0){
+		  tablaInstituciones+=tempInstituciones+tempInstLineas;
+	  }
+	  tempInstituciones="";tempInstLineas="";flagIns=0;
+	}
+	//tablaInstituciones+="</tbody>";
+	
+	 contenidoEnRowTemp='<div class="row">'+
+     '<div class="col-md-12">'+
+      '<div class="box" height="1000px">'+
+        '<div class="box-header with-border" height="1000px">'+
+          '<h3 class="box-title" id="tituloTipoPrograma">'+
+          //lineasEstrategicas[l].nombre+
+          '</h3> '+
+          '<div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+          '</div>'+
+        '</div>'+
+        '<div class="box-body" >'+
+        	'<div class="table-responsive">'+
+      			'<table class="table table-striped table-bordered table-hover tablaLineasPorInstitucion">'+
+      			'<thead><tr>'+
+      		  	'<th rowspan="3" class="text-center" style="vertical-align: middle;">Línea de Acción</th>'+
+      		  	'<th rowspan="3" class="text-center" style="vertical-align: middle;">Unidad de Medida</th>'+
+      		  	'<th colspan="3" class="text-center">Plan de Acción 2016</th>'+
+      		  	'<th colspan="5" class="text-center">Ejecución a la Fecha</th></tr>'+
+      		'<tr><th class="text-center">Meta</th>'+
+      		  	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Destinatarios</th>'+
+      		  	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Inversión (en millones G.)</th>'+
+      		  	'<th colspan="3" class="text-center">Meta</th>'+
+      		  	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Destinatarios</th>'+
+      		  	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Inversión (en millones G.)</th></tr>'+
+      		'<tr>'+
+      		  	'<th class="text-center">Programada</th>'+
+      		  	//'<th class="text-center">%</th>'+
+      		  	'<th class="text-center">Prevista</th>'+
+      		  	'<th class="text-center">Lograda</th>'+
+      		  	'<th class="text-center">%</th>'+
+      	    '</tr></thead><tbody>'+
+      				tablaInstituciones+
+					'</tbody></table>'+
+				'</div>'+
+        '</div>'+
+	   '</div>'+
+	   '</div>'+
+	   '</div>';
+	   
+return contenidoEnRowTemp;
 
 }	
 
