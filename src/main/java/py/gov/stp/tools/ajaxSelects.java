@@ -60,6 +60,7 @@ public class ajaxSelects extends HttpServlet {
     	Integer linea_accion_id=null;
     	Integer usuarioId = null;
     	Integer anho = null;
+    	Integer periodoId = null; 
 
     	
     	String institucion=null;
@@ -115,6 +116,7 @@ public class ajaxSelects extends HttpServlet {
       	if (request.getParameter("hito_id")!=null) hito_id=Integer.parseInt(request.getParameter("hito_id")); else hito_id=0;
       	if (request.getParameter("usuarioId")!=null) usuarioId=Integer.parseInt(request.getParameter("usuarioId"));
       	if (request.getParameter("anho")!=null) anho=Integer.parseInt(request.getParameter("anho"));
+      	if (request.getParameter("periodoId")!=null) periodoId=Integer.parseInt(request.getParameter("periodoId"));
 
 
     	
@@ -211,11 +213,12 @@ public class ajaxSelects extends HttpServlet {
         		condition = " where true ";
         		if (institucion!="") condition += " and institucion_sigla ='"+institucion+"'";
         		if (institucion_id!=0) condition += " and institucion_id ='"+institucion_id+"'";
-        		if (linea_accion_id!=0) condition += " and ins_linea_accion_id ='"+linea_accion_id+"'";
+        		if (linea_accion_id!=0) condition += " and linea_accion_id ='"+linea_accion_id+"'";
         		if (accion!="") condition += " and accion ='"+accion+"'";
         		if (accion_id!=0) condition += " and accion_id ='"+accion_id+"'";
         		if (distritoId!=null) condition += " and accion_dist_id ='"+distritoId+"'";
-        		if (departamentoId!=null) condition += " and accion_depto_id ='"+departamentoId+"'";        		
+        		if (departamentoId!=null) condition += " and accion_depto_id ='"+departamentoId+"'";
+        		if (periodoId!=null) condition += " and periodo_id ='"+periodoId+"'";
         		        		
 				try {objetos = SqlSelects.selectAccionesAvances(condition);}
 				catch (SQLException e) {e.printStackTrace();}				

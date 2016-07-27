@@ -255,13 +255,12 @@ tbody {
 					$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
 
 					var i=parseInt(0);
-					
-					
+								
 					function numeroConComa(x) {
 						if (isNaN(x) || x == "Infinity"){
 							return 0;
 						}else{
-							return x.toString().replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+							return x.toString().replace(".00","").replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 						}
 					}
 					
@@ -1212,7 +1211,7 @@ function numeroConComa(x) {
 		if ( x == "Infinity" || x == null){
 			return "-"
 		}else{
-			return x.toString().replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+			return x.toString().replace(".00","").replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 		}
 }
 
@@ -1274,7 +1273,7 @@ if(deptoId!=null && distId!=null){
 	}).responseText;
 	lineasProgramadas = JSON.parse(lineasProgramadas);
 	lineasProgramadas=lineasProgramadas.sort(lineaAccionOrden);
-	contenidoEnRowTemp = renderNivelDistrital(lineasProgramadas);
+	contenidoEnRowTemp = renderNivelDistrital(lineasProgramadas, deptoId, distId);
 	
 return contenidoEnRowTemp;
 
@@ -1289,7 +1288,7 @@ return contenidoEnRowTemp;
 	lineasProgramadas = JSON.parse(lineasProgramadas);
 	//lineasProgramadas=lineasProgramadas.sort(lineaAccionOrden);
 	
-	tablaInstituciones = renderNivelDepartamento(lineasProgramadas);
+	tablaInstituciones = renderNivelDepartamento(lineasProgramadas, deptoId, distId);
 	  
 	 contenidoEnRowTemp='<div class="row">'+
      '<div class="col-md-12">'+
@@ -1351,7 +1350,7 @@ return contenidoEnRowTemp;
 				  if (deptoId == null) deptoId = "";
 				  
 				  tempInstLineas += '<tr>'+
-				  '<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].insLineaAccionId+'-'+deptoId+'-'+distId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
+				  '<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+'-'+distId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
 				  '<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
 				  '<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
 				  '<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>'+
@@ -1445,7 +1444,7 @@ return contenidoEnRowTemp;
 }//fin del el
 }
 
-function renderNivelDepartamento(lineasProgramadas){
+function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 	var tablaInstituciones="";
 	var tempInstituciones="";
 	var tempInstLineas="";
@@ -1540,8 +1539,11 @@ function renderNivelDepartamento(lineasProgramadas){
 					 clase="bg-red-active color-palette";
 					}
 					
+					if (distId == null) distId = "";
+					if (deptoId == null) deptoId = "";
+					
 					tempInstLineas += '<tr>'+
-					'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
+					'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+'-'+distId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
 					'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
 					//'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
 					'<td></td>'+
@@ -1580,13 +1582,16 @@ function renderNivelDepartamento(lineasProgramadas){
 					 clase="bg-red-active color-palette";
 					}
 					
+					if (distId == null) distId = "";
+					if (deptoId == null) deptoId = "";
+
 					if(lineasProgramadas[n+1].institucionId != institucionId){
 						tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n+1].institucionSigla+'</strong></td></tr>';
 						institucionId = lineasProgramadas[n+1].institucionId;
 
 					}
 						tempInstLineas += '<tr>'+
-						'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
+						'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+'-'+distId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
 						'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
 						//'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
 						'<td></td>'+
@@ -1626,7 +1631,7 @@ function renderNivelDepartamento(lineasProgramadas){
 
 }	
 
-function renderNivelDistrital(lineasProgramadas){
+function renderNivelDistrital(lineasProgramadas, deptoId, distId){
 	var contenidoEnRowTemp="";	
 	var tablaInstituciones="";
 	var tempInstituciones="";
@@ -1657,8 +1662,11 @@ function renderNivelDistrital(lineasProgramadas){
 				  }
 			  } */
 			  
+			  if (deptoId == null) deptoId = "";
+			  if (distId == null) distId = "";			  
+			  
 			  tempInstLineas += '<tr>'+
-			  '<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
+			  '<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+'-'+distId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
 			  '<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
 			 // '<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
 			  '<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>';
@@ -2056,13 +2064,14 @@ $(document).ready(function(){
 		'	                						<tr class="active"><th>Departamento</th><th>Distrito</th><th>Acción</th><th>U. Medida</th><th>Cantidad Programado</th><!--th>Inversión Estimada (Millones de G.)</th--><th>Fecha Terminación</th><!--th>% Programado</th><th>% Ejecutado</th--><th>Editar</th><th>Borrar</th></tr>'+
 		'	                					</thead>'+
 		'	                					<tbody id="tablaAccionesAvances">';
-		
+												if (elRegistro != null){
 													tituloModal='<h3><center>'+elRegistro[0].institucion_sigla+'&nbsp;&nbsp;-&nbsp;&nbsp;'+elRegistro[0].linea_accion_nombre+'</center></h3>';
 													for(var m=0; m<elRegistro.length;m++)
 													{
 															var registroFecha= elRegistro[m].avance_fecha_entrega.split("-");														
 															cuerpoModal+='<tr><td>'+elRegistro[m].accion_depto_nombre+'</td><td>'+elRegistro[m].accion_dist_nombre+'</td><td>'+elRegistro[m].accion_catalogo_nombre+'</td><td>'+elRegistro[m].accion_unidad_medida+'</td><td>'+elRegistro[m].hito_cantidad_programado+'</td><!--td>numeroConComa((elRegistro[m].accion_costo*elRegistro[m].hito_porcentaje_ejecutado/100000000).toFixed(0))</td--><td>'+registroFecha[2]+'-'+registroFecha[1]+'-'+registroFecha[0]+'</td><!--td>elRegistro[m].hito_porcentaje_programado</td--><!--td>elRegistro[m].hito_porcentaje_ejecutado</td--><td><a href="#" class="modalHitoAvances" parametros="'+institucion_id+'-'+linea_accion_id+'-'+idDepartamento+'-'+idDistrito+'-'+elRegistro[m].accion_id+'" "><span class="glyphicon glyphicon-pencil"></span></a></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';																														
-													}		
+													}
+												}
 		cuerpoModal += '	             		</tbody>'+
 		'	                				</table>'+
 		'	                			</div>';
@@ -2105,7 +2114,7 @@ $(document).ready(function(){
 
 
 		//$('#myModal').find(".modal-footer").html(footerModal);
-		var urlAcumulado="";
+		/* var urlAcumulado="";
 		var urlFinal="";
 		
 		
@@ -2143,9 +2152,9 @@ $(document).ready(function(){
 		
 		lineaAccionAcumuladoMesDepto=lineaAccionAcumuladoMesDepto.sort(compare);
 		
-		dibujarLineaAccionAcumuladoMesDepto(lineaAccionAcumuladoMesDepto, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion);
+		dibujarLineaAccionAcumuladoMesDepto(lineaAccionAcumuladoMesDepto, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion); */
 		
-		 $(function () {
+		 /* $(function () {
 		       
 		        $('#example1').dataTable({
 		          "bPaginate": false,
@@ -2179,7 +2188,7 @@ $(document).ready(function(){
 		        	    }
 		        	}
 		        });
-		      });
+		      }); */
 });
 	
 	
