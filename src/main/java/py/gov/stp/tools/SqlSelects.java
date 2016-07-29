@@ -415,8 +415,8 @@ public class SqlSelects {
 	public static String selectAccionesAvances(String condition) throws SQLException{
     	 Connection conect=ConnectionConfiguration.conectar();    	 
  		 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from( "+
- 				"	select * from ins_lin_acc_ava "+ condition +")t";
- 		 
+ 				"	select * from linea_accion_acciones "+ condition +")t";
+ 		//ins_lin_acc_ava
  		 Statement statement = null;
  		 ResultSet rs=null;
  		 String objetos = "";
