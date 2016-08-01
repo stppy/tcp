@@ -2116,16 +2116,18 @@ $(document).ready(function(){
 
 
 		//$('#myModal').find(".modal-footer").html(footerModal);
-		/* var urlAcumulado="";
+		var urlAcumulado="getLineaAccionAcumuladoMes";
 		var urlFinal="";
 		
 		
-		if (typeof idDistrito != "undefined") {urlAcumulado+='getLineaAccionAcumuladoMesDistrito';urlFinal+="&distrito="+idDistrito}else{
-			if (typeof idDepartamento != "undefined") urlAcumulado+='getLineaAccionAcumuladoMesDepto';	
+		if (idDistrito != "") {
+			urlAcumulado='getLineaAccionAcumuladoMesDistrito';urlFinal+="&departamento="+idDepartamento+"&distrito="+idDistrito;
+		} else	if(idDepartamento != "") {
+			urlAcumulado='getLineaAccionAcumuladoMesDepto';urlFinal+="&departamento="+idDepartamento;			
 		}
 		
 		lineaAccionAcumuladoMesDepto = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action='+urlAcumulado+'&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id+'&departamento='+idDepartamento+urlFinal,
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action='+urlAcumulado+'&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id+urlFinal,
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -2154,9 +2156,9 @@ $(document).ready(function(){
 		
 		lineaAccionAcumuladoMesDepto=lineaAccionAcumuladoMesDepto.sort(compare);
 		
-		dibujarLineaAccionAcumuladoMesDepto(lineaAccionAcumuladoMesDepto, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion); */
+		dibujarLineaAccionAcumuladoMesDepto(lineaAccionAcumuladoMesDepto, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion);
 		
-		 /* $(function () {
+		$(function () {
 		       
 		        $('#example1').dataTable({
 		          "bPaginate": false,
@@ -2190,7 +2192,7 @@ $(document).ready(function(){
 		        	    }
 		        	}
 		        });
-		      }); */
+		      });
 });
 	
 	

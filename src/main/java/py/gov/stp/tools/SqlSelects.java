@@ -813,19 +813,19 @@ public class SqlSelects {
 		return objetos; 
 		}
 	
-	public static List<LineaAccionAcumuladoMes> selectLineaAccionAcumuladoMesDepto(String condition) throws SQLException{
+	public static List<LineaAccionAcumuladoMesDepartamento> selectLineaAccionAcumuladoMesDepto(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
 		String query = " select * from linea_accion_acumulado_mes_depto "+condition;
 
 		Statement statement = null;
 		ResultSet rs=null;
-		List<LineaAccionAcumuladoMes> objetos = new ArrayList<LineaAccionAcumuladoMes>();
+		List<LineaAccionAcumuladoMesDepartamento> objetos = new ArrayList<LineaAccionAcumuladoMesDepartamento>();
 
 		try {
 			statement = conect.createStatement();
 			rs=statement.executeQuery(query);
 			while(rs.next()){
-				LineaAccionAcumuladoMes objeto = new LineaAccionAcumuladoMes();
+				LineaAccionAcumuladoMesDepartamento objeto = new LineaAccionAcumuladoMesDepartamento();
 		
 				objeto.setLinea_accion_id(rs.getInt("linea_accion_id"));
 				objeto.setLinea_accion(rs.getString("linea_accion"));
@@ -834,7 +834,9 @@ public class SqlSelects {
 				objeto.setAccion_unidad_medida(rs.getString("accion_unidad_medida"));
 				objeto.setMes(rs.getString("mes"));
 				objeto.setCantidad_programada(rs.getDouble("cantidad_programada"));
-				objeto.setCantidad_ejecutda(rs.getDouble("cantidad_ejecutada"));
+				objeto.setCantidad_ejecutda(rs.getDouble("cantidad_ejecutada"));				
+				objeto.setDepartamento_id(rs.getInt("accion_departamento_id"));
+				objeto.setDepartamento(rs.getString("accion_depto_nombre"));				
 				objetos.add(objeto);
 			}
 		}
@@ -869,6 +871,8 @@ public class SqlSelects {
 				objeto.setCantidad_ejecutda(rs.getDouble("cantidad_ejecutada"));
 				objeto.setDistrito_id(rs.getInt("accion_distrito_id"));
 				objeto.setDepartamento_id(rs.getInt("accion_departamento_id"));
+				objeto.setDepartamento(rs.getString("accion_depto_nombre"));
+				objeto.setDistrito(rs.getString("accion_dist_nombre"));
 				objetos.add(objeto);
 			}
 		}
