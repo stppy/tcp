@@ -2001,7 +2001,14 @@ $(document).ready(function(){
 		var urlAccionesAvances="";
 		var primerModal="";
 		
-		urlAccionesAvances+='http://spr.stp.gov.py/tablero/ajaxSelects?action=getAccionesAvances';
+			if (idDepartamento == "" && idDistrito == ""){
+				urlAccionesAvances+='http://spr.stp.gov.py/tablero/ajaxSelects?action=getAccionesAvances';
+			} else if (idDepartamento != "" && idDistrito == ""){
+				urlAccionesAvances+='http://spr.stp.gov.py/tablero/ajaxSelects?action=getAccionesAvancesDepto';
+			} else {
+				urlAccionesAvances+='http://spr.stp.gov.py/tablero/ajaxSelects?action=getAccionesAvancesDistrito';
+			}
+		
 			if (typeof institucion_id != "undefined") urlAccionesAvances+='&institucion_id='+institucion_id;
 			if (typeof linea_accion_id != "undefined") urlAccionesAvances+='&linea_accion_id='+linea_accion_id;
 			if (typeof idDepartamento != "undefined" && idDepartamento != "") urlAccionesAvances+='&departamentoId='+idDepartamento;
@@ -2062,7 +2069,14 @@ $(document).ready(function(){
 		cuerpoModal ='     			<div class="table-responsive">'+
 		'	                				<table class="table table-hover table-bordered" id="dataTablesAccionesAvances">'+
 		'	                					<thead>'+
-		'	                						<tr class="active"><th>Acción</th><th>Departamento</th><th>Distrito</th><th>Cantidad Programado</th><th>Cantidad Ejecutado</th><th>U. Medida</th><!--th>Inversión Estimada (Millones de G.)</th--><th>Fecha Terminación</th><!--th>% Programado</th><th>% Ejecutado</th--><th>Editar</th><th>Borrar</th></tr>'+
+		'	                						<tr class="active"><th>Acción</th>';
+													if (idDepartamento != ""){//agrega la columna de departamento si cargado la variable
+														cuerpoModal += '<th>Departamento</th>';
+													}													
+													if (idDistrito != ""){//agrega la columna de distrito si cargado la variable
+														cuerpoModal += '<th>Distrito</th>';
+													}
+		cuerpoModal +='							<th>Cantidad Programado</th><th>Cantidad Ejecutado</th><th>U. Medida</th><!--th>Inversión Estimada (Millones de G.)</th--><th>Fecha Terminación</th><!--th>% Programado</th><th>% Ejecutado</th--><th>Editar</th><th>Borrar</th></tr>'+
 		'	                					</thead>'+
 		'	                					<tbody id="tablaAccionesAvances">';
 												if (elRegistro != null){
@@ -2072,7 +2086,12 @@ $(document).ready(function(){
 															var registroFechaTerminacion = elRegistro[m].programacion_fecha_terminacion.split("-");
 															//var registroFechaInicio = elRegistro[m].accion_fecha_inicio.split("-"); //estas fechas fueron agregadas anteriormente pero se prefiere la fecha de terminación de programación para contrastar con el chart de la linea de acción acumulado por mes.
 															//var registroFechaFin = elRegistro[m].accion_fecha_fin.split("-");
-															cuerpoModal+='<tr><td>'+elRegistro[m].accion_catalogo_nombre+'</td><td>'+elRegistro[m].accion_depto_nombre+'</td><td>'+elRegistro[m].accion_dist_nombre+'</td><td>'+elRegistro[m].cantidad_programado+'</td><td>'+elRegistro[m].cantidad_ejecutado+'</td><td>'+elRegistro[m].accion_unidad_medida+'</td><!--td>numeroConComa((elRegistro[m].accion_costo*elRegistro[m].hito_porcentaje_ejecutado/100000000).toFixed(0))</td--><td>'+registroFechaTerminacion[2]+'-'+registroFechaTerminacion[1]+'-'+registroFechaTerminacion[0]+'</td><!--td>elRegistro[m].hito_porcentaje_programado</td--><!--td>elRegistro[m].hito_porcentaje_ejecutado</td--><td><a href="#" class="modalHitoAvances" parametros="'+institucion_id+'-'+linea_accion_id+'-'+idDepartamento+'-'+idDistrito+'-'+elRegistro[m].accion_id+'" "><span class="glyphicon glyphicon-pencil"></span></a></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';																														
+															cuerpoModal+='<tr><td>'+elRegistro[m].accion_catalogo_nombre+'</td>';
+															if (idDepartamento != "") 
+																cuerpoModal += '<td>'+elRegistro[m].accion_depto_nombre+'</td>';
+															if (idDistrito != "")
+																cuerpoModal += '<td>'+elRegistro[m].accion_dist_nombre+'</td>';
+															cuerpoModal += '<td>'+elRegistro[m].cantidad_programado+'</td><td>'+elRegistro[m].cantidad_ejecutado+'</td><td>'+elRegistro[m].accion_unidad_medida+'</td><!--td>numeroConComa((elRegistro[m].accion_costo*elRegistro[m].hito_porcentaje_ejecutado/100000000).toFixed(0))</td--><td>'+registroFechaTerminacion[2]+'-'+registroFechaTerminacion[1]+'-'+registroFechaTerminacion[0]+'</td><!--td>elRegistro[m].hito_porcentaje_programado</td--><!--td>elRegistro[m].hito_porcentaje_ejecutado</td--><td><a href="#" class="modalHitoAvances" parametros="'+institucion_id+'-'+linea_accion_id+'-'+idDepartamento+'-'+idDistrito+'-'+elRegistro[m].accion_id+'" "><span class="glyphicon glyphicon-pencil"></span></a></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';																														
 													}
 												}
 		cuerpoModal += '	             		</tbody>'+

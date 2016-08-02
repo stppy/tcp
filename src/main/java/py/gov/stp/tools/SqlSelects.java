@@ -437,6 +437,56 @@ public class SqlSelects {
 		}
 		return objetos;
 	}
+	public static String selectAccionesAvancesDepto(String condition) throws SQLException{
+   	 Connection conect=ConnectionConfiguration.conectar();    	 
+		 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from( "+
+				"	select * from linea_accion_acciones_depto "+ condition +")t";
+		//ins_lin_acc_ava
+		 Statement statement = null;
+		 ResultSet rs=null;
+		 String objetos = "";
+
+		try {
+			statement = conect.createStatement();
+			rs=statement.executeQuery(query);
+			while(rs.next()){
+				//ObjetivoEstrategia objeto = new ObjetivoEstrategia();
+
+				objetos+=rs.getString("resultado");
+			}
+		}
+		catch (SQLException e) {e.printStackTrace();}
+		finally{
+			if (statement != null) {statement.close();}
+			if (conect != null) {conect.close();}
+		}
+		return objetos;
+	}
+	public static String selectAccionesAvancesDistrito(String condition) throws SQLException{
+   	 Connection conect=ConnectionConfiguration.conectar();    	 
+		 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from( "+
+				"	select * from linea_accion_acciones_distrito "+ condition +")t";
+		//ins_lin_acc_ava
+		 Statement statement = null;
+		 ResultSet rs=null;
+		 String objetos = "";
+
+		try {
+			statement = conect.createStatement();
+			rs=statement.executeQuery(query);
+			while(rs.next()){
+				//ObjetivoEstrategia objeto = new ObjetivoEstrategia();
+
+				objetos+=rs.getString("resultado");
+			}
+		}
+		catch (SQLException e) {e.printStackTrace();}
+		finally{
+			if (statement != null) {statement.close();}
+			if (conect != null) {conect.close();}
+		}
+		return objetos;
+	}
 	
 	public static List<FactHitos> selectFactHitosSnpp(String condition) throws SQLException{
 	   	 Connection conect=ConnectionConfiguration.conectarSnpp();
