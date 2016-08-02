@@ -216,11 +216,40 @@ public class ajaxSelects extends HttpServlet {
         		if (linea_accion_id!=0) condition += " and linea_accion_id ='"+linea_accion_id+"'";
         		if (accion!="") condition += " and accion ='"+accion+"'";
         		if (accion_id!=0) condition += " and accion_id ='"+accion_id+"'";
+        		if (periodoId!=null) condition += " and periodo_id ='"+periodoId+"'";
+        		        		
+				try {objetos = SqlSelects.selectAccionesAvances(condition);}
+				catch (SQLException e) {e.printStackTrace();}				
+        		out.println(objetos);return;
+        	}
+        	if (action.equals("getAccionesAvancesDepto")){
+        		String objetos=null;
+        		condition = " where true ";
+        		if (institucion!="") condition += " and institucion_sigla ='"+institucion+"'";
+        		if (institucion_id!=0) condition += " and institucion_id ='"+institucion_id+"'";
+        		if (linea_accion_id!=0) condition += " and linea_accion_id ='"+linea_accion_id+"'";
+        		if (accion!="") condition += " and accion ='"+accion+"'";
+        		if (accion_id!=0) condition += " and accion_id ='"+accion_id+"'";        		
+        		if (departamentoId!=null) condition += " and accion_departamento_id ='"+departamentoId+"'";
+        		if (periodoId!=null) condition += " and periodo_id ='"+periodoId+"'";
+        		        		
+				try {objetos = SqlSelects.selectAccionesAvancesDepto(condition);}
+				catch (SQLException e) {e.printStackTrace();}				
+        		out.println(objetos);return;
+        	}
+        	if (action.equals("getAccionesAvancesDistrito")){
+        		String objetos=null;
+        		condition = " where true ";
+        		if (institucion!="") condition += " and institucion_sigla ='"+institucion+"'";
+        		if (institucion_id!=0) condition += " and institucion_id ='"+institucion_id+"'";
+        		if (linea_accion_id!=0) condition += " and linea_accion_id ='"+linea_accion_id+"'";
+        		if (accion!="") condition += " and accion ='"+accion+"'";
+        		if (accion_id!=0) condition += " and accion_id ='"+accion_id+"'";
         		if (distritoId!=null) condition += " and accion_distrito_id ='"+distritoId+"'";
         		if (departamentoId!=null) condition += " and accion_departamento_id ='"+departamentoId+"'";
         		if (periodoId!=null) condition += " and periodo_id ='"+periodoId+"'";
         		        		
-				try {objetos = SqlSelects.selectAccionesAvances(condition);}
+				try {objetos = SqlSelects.selectAccionesAvancesDistrito(condition);}
 				catch (SQLException e) {e.printStackTrace();}				
         		out.println(objetos);return;
         	}
