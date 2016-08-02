@@ -1,6 +1,6 @@
 package py.gov.stp.tools;
 
-public class LineaAccionAcumuladoMesDistrito {
+public class LineaAccionAcumuladoMesDepartamento {
 	protected int linea_accion_id;
 	protected String linea_accion;
 	protected int institucion_id;
@@ -8,12 +8,10 @@ public class LineaAccionAcumuladoMesDistrito {
 	protected String accion_unidad_medida;
 	protected String mes;
 	protected double cantidad_programada;
-	protected double cantidad_ejecutda;
-	protected int distrito_id;
+	protected double cantidad_ejecutda;	
 	protected int departamento_id;
 	protected String departamento;
-	protected String distrito;
-	
+
 	
 	public int getLinea_accion_id() {
 		return linea_accion_id;
@@ -63,29 +61,17 @@ public class LineaAccionAcumuladoMesDistrito {
 	public void setCantidad_ejecutda(double cantidad_ejecutda) {
 		this.cantidad_ejecutda = cantidad_ejecutda;
 	}
-	public int getDistrito_id() {
-		return distrito_id;
-	}
-	public void setDistrito_id(int distrito_id) {
-		this.distrito_id = distrito_id;
-	}
-	public String getDepartamento() {
-		return departamento;
-	}
-	public void setDepartamento(String departamento) {
-		this.departamento = departamento;
-	}
-	public String getDistrito() {
-		return distrito;
-	}
-	public void setDistrito(String distrito) {
-		this.distrito = distrito;
-	}
 	public int getDepartamento_id() {
 		return departamento_id;
 	}
 	public void setDepartamento_id(int departamento_id) {
 		this.departamento_id = departamento_id;
 	}
-
+	public String getDepartamento() {
+		return departamento;
+	}
+	public void setDepartamento(String departamento) {
+		this.departamento = departamento;
+	}		
+	
 }

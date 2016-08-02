@@ -216,8 +216,8 @@ public class ajaxSelects extends HttpServlet {
         		if (linea_accion_id!=0) condition += " and linea_accion_id ='"+linea_accion_id+"'";
         		if (accion!="") condition += " and accion ='"+accion+"'";
         		if (accion_id!=0) condition += " and accion_id ='"+accion_id+"'";
-        		if (distritoId!=null) condition += " and accion_dist_id ='"+distritoId+"'";
-        		if (departamentoId!=null) condition += " and accion_depto_id ='"+departamentoId+"'";
+        		if (distritoId!=null) condition += " and accion_distrito_id ='"+distritoId+"'";
+        		if (departamentoId!=null) condition += " and accion_departamento_id ='"+departamentoId+"'";
         		if (periodoId!=null) condition += " and periodo_id ='"+periodoId+"'";
         		        		
 				try {objetos = SqlSelects.selectAccionesAvances(condition);}
