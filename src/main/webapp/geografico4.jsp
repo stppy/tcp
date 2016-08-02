@@ -2062,16 +2062,17 @@ $(document).ready(function(){
 		cuerpoModal ='     			<div class="table-responsive">'+
 		'	                				<table class="table table-hover table-bordered" id="dataTablesAccionesAvances">'+
 		'	                					<thead>'+
-		'	                						<tr class="active"><th>Acción</th><th>Departamento</th><th>Distrito</th><th>Cantidad Programado</th><th>Cantidad Ejecutado</th><th>U. Medida</th><!--th>Inversión Estimada (Millones de G.)</th--><th>Fecha Inicio</th><th>Fecha Fin</th><!--th>% Programado</th><th>% Ejecutado</th--><th>Editar</th><th>Borrar</th></tr>'+
+		'	                						<tr class="active"><th>Acción</th><th>Departamento</th><th>Distrito</th><th>Cantidad Programado</th><th>Cantidad Ejecutado</th><th>U. Medida</th><!--th>Inversión Estimada (Millones de G.)</th--><th>Fecha Terminación</th><!--th>% Programado</th><th>% Ejecutado</th--><th>Editar</th><th>Borrar</th></tr>'+
 		'	                					</thead>'+
 		'	                					<tbody id="tablaAccionesAvances">';
 												if (elRegistro != null){
 													tituloModal='<h3><center>'+elRegistro[0].institucion+'&nbsp;&nbsp;-&nbsp;&nbsp;'+elRegistro[0].linea_accion_nombre+'</center></h3>';
 													for(var m=0; m<elRegistro.length;m++)
 													{
-															var registroFechaInicio = elRegistro[m].accion_fecha_inicio.split("-");
-															var registroFechaFin = elRegistro[m].accion_fecha_fin.split("-");
-															cuerpoModal+='<tr><td>'+elRegistro[m].accion_catalogo_nombre+'</td><td>'+elRegistro[m].accion_depto_nombre+'</td><td>'+elRegistro[m].accion_dist_nombre+'</td><td>'+elRegistro[m].cantidad_programado+'</td><td>'+elRegistro[m].cantidad_ejecutado+'</td><td>'+elRegistro[m].accion_unidad_medida+'</td><!--td>numeroConComa((elRegistro[m].accion_costo*elRegistro[m].hito_porcentaje_ejecutado/100000000).toFixed(0))</td--><td>'+registroFechaInicio[2]+'-'+registroFechaInicio[1]+'-'+registroFechaInicio[0]+'</td><td>'+registroFechaFin[2]+'-'+registroFechaFin[1]+'-'+registroFechaFin[0]+'</td><!--td>elRegistro[m].hito_porcentaje_programado</td--><!--td>elRegistro[m].hito_porcentaje_ejecutado</td--><td><a href="#" class="modalHitoAvances" parametros="'+institucion_id+'-'+linea_accion_id+'-'+idDepartamento+'-'+idDistrito+'-'+elRegistro[m].accion_id+'" "><span class="glyphicon glyphicon-pencil"></span></a></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';																														
+															var registroFechaTerminacion = elRegistro[m].programacion_fecha_terminacion.split("-");
+															//var registroFechaInicio = elRegistro[m].accion_fecha_inicio.split("-"); //estas fechas fueron agregadas anteriormente pero se prefiere la fecha de terminación de programación para contrastar con el chart de la linea de acción acumulado por mes.
+															//var registroFechaFin = elRegistro[m].accion_fecha_fin.split("-");
+															cuerpoModal+='<tr><td>'+elRegistro[m].accion_catalogo_nombre+'</td><td>'+elRegistro[m].accion_depto_nombre+'</td><td>'+elRegistro[m].accion_dist_nombre+'</td><td>'+elRegistro[m].cantidad_programado+'</td><td>'+elRegistro[m].cantidad_ejecutado+'</td><td>'+elRegistro[m].accion_unidad_medida+'</td><!--td>numeroConComa((elRegistro[m].accion_costo*elRegistro[m].hito_porcentaje_ejecutado/100000000).toFixed(0))</td--><td>'+registroFechaTerminacion[2]+'-'+registroFechaTerminacion[1]+'-'+registroFechaTerminacion[0]+'</td><!--td>elRegistro[m].hito_porcentaje_programado</td--><!--td>elRegistro[m].hito_porcentaje_ejecutado</td--><td><a href="#" class="modalHitoAvances" parametros="'+institucion_id+'-'+linea_accion_id+'-'+idDepartamento+'-'+idDistrito+'-'+elRegistro[m].accion_id+'" "><span class="glyphicon glyphicon-pencil"></span></a></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';																														
 													}
 												}
 		cuerpoModal += '	             		</tbody>'+
@@ -2116,13 +2117,13 @@ $(document).ready(function(){
 
 
 		//$('#myModal').find(".modal-footer").html(footerModal);
-		var urlAcumulado="getLineaAccionAcumuladoMes";
+		var urlAcumulado="getLineaAccionAcumuladoMes";// a nivel pais
 		var urlFinal="";
 		
 		
-		if (idDistrito != "") {
+		if (idDistrito != "") {// a nivel distrito
 			urlAcumulado='getLineaAccionAcumuladoMesDistrito';urlFinal+="&departamento="+idDepartamento+"&distrito="+idDistrito;
-		} else	if(idDepartamento != "") {
+		} else	if(idDepartamento != "") { // a nivel departamento
 			urlAcumulado='getLineaAccionAcumuladoMesDepto';urlFinal+="&departamento="+idDepartamento;			
 		}
 		
