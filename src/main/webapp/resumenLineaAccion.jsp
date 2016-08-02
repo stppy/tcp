@@ -476,5 +476,8 @@ textarea { text-transform: uppercase; }
         <%  } else { %>
 				<p>Favor Iniciar Sesion</p>
 			<%  } %>
+			
+			<a href="#" data-toggle="tooltip" title="Some tooltip text!">Hover over me</a>
+			
   </body>
 </html>
