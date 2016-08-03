@@ -3,21 +3,10 @@ package py.gov.stp.tools;
 
 
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 import java.sql.Statement;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
-
 import objetos.Entidad;
 import objetos.FactHitos;
 import objetos.Generica;
@@ -30,9 +19,6 @@ import objetos.LineaAccionDistrito;
 import objetos.MetasDistEntLinea;
 import py.gov.stp.objetosV2.AccionHasProducto;
 import py.gov.stp.objetosV2.ProductoObjetoGasto;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 
 public class SqlSelects {
@@ -426,6 +412,81 @@ public class SqlSelects {
 		}
 		return objetos;
   }
+	public static String selectAccionesAvances(String condition) throws SQLException{
+    	 Connection conect=ConnectionConfiguration.conectar();    	 
+ 		 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from( "+
+ 				"	select * from linea_accion_acciones "+ condition +")t";
+ 		//ins_lin_acc_ava
+ 		 Statement statement = null;
+ 		 ResultSet rs=null;
+ 		 String objetos = "";
+
+ 		try {
+ 			statement = conect.createStatement();
+ 			rs=statement.executeQuery(query);
+ 			while(rs.next()){
+ 				//ObjetivoEstrategia objeto = new ObjetivoEstrategia();
+
+ 				objetos+=rs.getString("resultado");
+ 			}
+ 		}
+ 		catch (SQLException e) {e.printStackTrace();}
+		finally{
+			if (statement != null) {statement.close();}
+			if (conect != null) {conect.close();}
+		}
+		return objetos;
+	}
+	public static String selectAccionesAvancesDepto(String condition) throws SQLException{
+   	 Connection conect=ConnectionConfiguration.conectar();    	 
+		 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from( "+
+				"	select * from linea_accion_acciones_depto "+ condition +")t";
+		//ins_lin_acc_ava
+		 Statement statement = null;
+		 ResultSet rs=null;
+		 String objetos = "";
+
+		try {
+			statement = conect.createStatement();
+			rs=statement.executeQuery(query);
+			while(rs.next()){
+				//ObjetivoEstrategia objeto = new ObjetivoEstrategia();
+
+				objetos+=rs.getString("resultado");
+			}
+		}
+		catch (SQLException e) {e.printStackTrace();}
+		finally{
+			if (statement != null) {statement.close();}
+			if (conect != null) {conect.close();}
+		}
+		return objetos;
+	}
+	public static String selectAccionesAvancesDistrito(String condition) throws SQLException{
+   	 Connection conect=ConnectionConfiguration.conectar();    	 
+		 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from( "+
+				"	select * from linea_accion_acciones_distrito "+ condition +")t";
+		//ins_lin_acc_ava
+		 Statement statement = null;
+		 ResultSet rs=null;
+		 String objetos = "";
+
+		try {
+			statement = conect.createStatement();
+			rs=statement.executeQuery(query);
+			while(rs.next()){
+				//ObjetivoEstrategia objeto = new ObjetivoEstrategia();
+
+				objetos+=rs.getString("resultado");
+			}
+		}
+		catch (SQLException e) {e.printStackTrace();}
+		finally{
+			if (statement != null) {statement.close();}
+			if (conect != null) {conect.close();}
+		}
+		return objetos;
+	}
 	
 	public static List<FactHitos> selectFactHitosSnpp(String condition) throws SQLException{
 	   	 Connection conect=ConnectionConfiguration.conectarSnpp();
@@ -802,19 +863,19 @@ public class SqlSelects {
 		return objetos; 
 		}
 	
-	public static List<LineaAccionAcumuladoMes> selectLineaAccionAcumuladoMesDepto(String condition) throws SQLException{
+	public static List<LineaAccionAcumuladoMesDepartamento> selectLineaAccionAcumuladoMesDepto(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
 		String query = " select * from linea_accion_acumulado_mes_depto "+condition;
 
 		Statement statement = null;
 		ResultSet rs=null;
-		List<LineaAccionAcumuladoMes> objetos = new ArrayList<LineaAccionAcumuladoMes>();
+		List<LineaAccionAcumuladoMesDepartamento> objetos = new ArrayList<LineaAccionAcumuladoMesDepartamento>();
 
 		try {
 			statement = conect.createStatement();
 			rs=statement.executeQuery(query);
 			while(rs.next()){
-				LineaAccionAcumuladoMes objeto = new LineaAccionAcumuladoMes();
+				LineaAccionAcumuladoMesDepartamento objeto = new LineaAccionAcumuladoMesDepartamento();
 		
 				objeto.setLinea_accion_id(rs.getInt("linea_accion_id"));
 				objeto.setLinea_accion(rs.getString("linea_accion"));
@@ -823,7 +884,9 @@ public class SqlSelects {
 				objeto.setAccion_unidad_medida(rs.getString("accion_unidad_medida"));
 				objeto.setMes(rs.getString("mes"));
 				objeto.setCantidad_programada(rs.getDouble("cantidad_programada"));
-				objeto.setCantidad_ejecutda(rs.getDouble("cantidad_ejecutada"));
+				objeto.setCantidad_ejecutda(rs.getDouble("cantidad_ejecutada"));				
+				objeto.setDepartamento_id(rs.getInt("accion_departamento_id"));
+				objeto.setDepartamento(rs.getString("accion_depto_nombre"));				
 				objetos.add(objeto);
 			}
 		}
@@ -858,6 +921,8 @@ public class SqlSelects {
 				objeto.setCantidad_ejecutda(rs.getDouble("cantidad_ejecutada"));
 				objeto.setDistrito_id(rs.getInt("accion_distrito_id"));
 				objeto.setDepartamento_id(rs.getInt("accion_departamento_id"));
+				objeto.setDepartamento(rs.getString("accion_depto_nombre"));
+				objeto.setDistrito(rs.getString("accion_dist_nombre"));
 				objetos.add(objeto);
 			}
 		}
@@ -1019,7 +1084,7 @@ public class SqlSelects {
     public static List<ProductoObjetoGasto> selectObjetoGastoCosto(String condicion)throws SQLException{
     	Connection conect=ConnectionConfiguration.conectarSpr();
 
-    	String query = " select distinct objeto_gasto from asignacion_presi "+condicion+" and anho = 2016 and version = 151";
+    	String query = " select distinct objeto_gasto from asignacion_presi "+condicion+" and version = 151";
 
     	Statement statement = null;
     	ResultSet rs=null;

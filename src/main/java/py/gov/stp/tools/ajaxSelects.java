@@ -42,7 +42,9 @@ public class ajaxSelects extends HttpServlet {
     	Integer mes = null;
     	Integer pais = null;
     	Integer departamento = null;
+    	Integer departamentoId = null;
     	Integer distrito = null;
+    	Integer distritoId = null;
     	Integer objetivo = null;
     	Integer estrategia = null;
     	Integer indicador = null;
@@ -57,6 +59,9 @@ public class ajaxSelects extends HttpServlet {
     	Integer accion_id=null;
     	Integer linea_accion_id=null;
     	Integer usuarioId = null;
+    	Integer anho = null;
+    	Integer periodoId = null; 
+
     	
     	String institucion=null;
     	String usuario=null;
@@ -90,7 +95,9 @@ public class ajaxSelects extends HttpServlet {
     	if (request.getParameter("anio")!=null) anio = Integer.parseInt(request.getParameter("anio")); else anio=0;
     	if (request.getParameter("mes")!=null) mes = Integer.parseInt(request.getParameter("mes")); else mes=0;
     	if (request.getParameter("departamento")!=null) departamento = Integer.parseInt(request.getParameter("departamento")); else departamento=99;
+    	if (request.getParameter("departamentoId")!=null) departamentoId = Integer.parseInt(request.getParameter("departamentoId"));
     	if (request.getParameter("distrito")!=null) distrito = Integer.parseInt(request.getParameter("distrito")); else distrito=99;
+    	if (request.getParameter("distritoId")!=null) distritoId = Integer.parseInt(request.getParameter("distritoId"));
     	if (request.getParameter("objetivo")!=null) objetivo = Integer.parseInt(request.getParameter("objetivo")); else objetivo=0;
     	if (request.getParameter("estrategia")!=null) estrategia = Integer.parseInt(request.getParameter("estrategia")); else estrategia=0;
     	if (request.getParameter("indicador")!=null) indicador = Integer.parseInt(request.getParameter("indicador")); else indicador=0;
@@ -108,6 +115,9 @@ public class ajaxSelects extends HttpServlet {
       	if (request.getParameter("linea_accion_id")!=null) linea_accion_id=Integer.parseInt(request.getParameter("linea_accion_id")); else linea_accion_id=0;
       	if (request.getParameter("hito_id")!=null) hito_id=Integer.parseInt(request.getParameter("hito_id")); else hito_id=0;
       	if (request.getParameter("usuarioId")!=null) usuarioId=Integer.parseInt(request.getParameter("usuarioId"));
+      	if (request.getParameter("anho")!=null) anho=Integer.parseInt(request.getParameter("anho"));
+      	if (request.getParameter("periodoId")!=null) periodoId=Integer.parseInt(request.getParameter("periodoId"));
+
 
     	
         PrintWriter out = response.getWriter();
@@ -197,6 +207,51 @@ public class ajaxSelects extends HttpServlet {
 				catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos);
         		out.println(json.toString());
+        	}
+        	if (action.equals("getAccionesAvances")){
+        		String objetos=null;
+        		condition = " where true ";
+        		if (institucion!="") condition += " and institucion_sigla ='"+institucion+"'";
+        		if (institucion_id!=0) condition += " and institucion_id ='"+institucion_id+"'";
+        		if (linea_accion_id!=0) condition += " and linea_accion_id ='"+linea_accion_id+"'";
+        		if (accion!="") condition += " and accion ='"+accion+"'";
+        		if (accion_id!=0) condition += " and accion_id ='"+accion_id+"'";
+        		if (periodoId!=null) condition += " and periodo_id ='"+periodoId+"'";
+        		        		
+				try {objetos = SqlSelects.selectAccionesAvances(condition);}
+				catch (SQLException e) {e.printStackTrace();}				
+        		out.println(objetos);return;
+        	}
+        	if (action.equals("getAccionesAvancesDepto")){
+        		String objetos=null;
+        		condition = " where true ";
+        		if (institucion!="") condition += " and institucion_sigla ='"+institucion+"'";
+        		if (institucion_id!=0) condition += " and institucion_id ='"+institucion_id+"'";
+        		if (linea_accion_id!=0) condition += " and linea_accion_id ='"+linea_accion_id+"'";
+        		if (accion!="") condition += " and accion ='"+accion+"'";
+        		if (accion_id!=0) condition += " and accion_id ='"+accion_id+"'";        		
+        		if (departamentoId!=null) condition += " and accion_departamento_id ='"+departamentoId+"'";
+        		if (periodoId!=null) condition += " and periodo_id ='"+periodoId+"'";
+        		        		
+				try {objetos = SqlSelects.selectAccionesAvancesDepto(condition);}
+				catch (SQLException e) {e.printStackTrace();}				
+        		out.println(objetos);return;
+        	}
+        	if (action.equals("getAccionesAvancesDistrito")){
+        		String objetos=null;
+        		condition = " where true ";
+        		if (institucion!="") condition += " and institucion_sigla ='"+institucion+"'";
+        		if (institucion_id!=0) condition += " and institucion_id ='"+institucion_id+"'";
+        		if (linea_accion_id!=0) condition += " and linea_accion_id ='"+linea_accion_id+"'";
+        		if (accion!="") condition += " and accion ='"+accion+"'";
+        		if (accion_id!=0) condition += " and accion_id ='"+accion_id+"'";
+        		if (distritoId!=null) condition += " and accion_distrito_id ='"+distritoId+"'";
+        		if (departamentoId!=null) condition += " and accion_departamento_id ='"+departamentoId+"'";
+        		if (periodoId!=null) condition += " and periodo_id ='"+periodoId+"'";
+        		        		
+				try {objetos = SqlSelects.selectAccionesAvancesDistrito(condition);}
+				catch (SQLException e) {e.printStackTrace();}				
+        		out.println(objetos);return;
         	}
         	
         	if (action.equals("getFactHitosSnpp")){
@@ -431,6 +486,7 @@ public class ajaxSelects extends HttpServlet {
         		if (subprograma != null) condicion += " and subprograma = "+subprograma;
         		if (proyecto != null) condicion += " and proyecto = "+proyecto;
         		if (producto != null) condicion += " and producto = "+producto;
+        		if (anho != null) condicion += " and anho = "+anho;
 
         		try {objetos = SqlSelects.selectObjetoGastoCosto(condicion);}
     			catch (SQLException e) {e.printStackTrace();}
