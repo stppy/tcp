@@ -534,6 +534,10 @@ if (user != null) { %>
 		$("body").on("click", "#chkMostrarOcultar",function(event){			
 			OcultarRegistrosBorrados();
 		});		
+				
+		$('.pagination').on('click',function(){
+			OcultarRegistrosBorrados();
+			});
 		
 	});
 <%}else{%>
