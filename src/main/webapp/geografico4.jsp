@@ -2086,12 +2086,12 @@ $(document).ready(function(){
 															var registroFechaTerminacion = elRegistro[m].programacion_fecha_terminacion.split("-");
 															//var registroFechaInicio = elRegistro[m].accion_fecha_inicio.split("-"); //estas fechas fueron agregadas anteriormente pero se prefiere la fecha de terminación de programación para contrastar con el chart de la linea de acción acumulado por mes.
 															//var registroFechaFin = elRegistro[m].accion_fecha_fin.split("-");
-															cuerpoModal+='<tr><td>'+elRegistro[m].accion_catalogo_nombre+'</td>';
+															cuerpoModal+='<tr><td><a href="#" class="modalHitoAvances" parametros="'+institucion_id+'-'+linea_accion_id+'-'+idDepartamento+'-'+idDistrito+'-'+elRegistro[m].accion_id+'" >'+elRegistro[m].accion_catalogo_nombre+'</td>';
 															if (idDepartamento != "") 
 																cuerpoModal += '<td>'+elRegistro[m].accion_depto_nombre+'</td>';
 															if (idDistrito != "")
 																cuerpoModal += '<td>'+elRegistro[m].accion_dist_nombre+'</td>';
-															cuerpoModal += '<td>'+elRegistro[m].cantidad_programado+'</td><td>'+elRegistro[m].cantidad_ejecutado+'</td><td>'+elRegistro[m].accion_unidad_medida+'</td><!--td>numeroConComa((elRegistro[m].accion_costo*elRegistro[m].hito_porcentaje_ejecutado/100000000).toFixed(0))</td--><td>'+registroFechaTerminacion[2]+'-'+registroFechaTerminacion[1]+'-'+registroFechaTerminacion[0]+'</td><!--td>elRegistro[m].hito_porcentaje_programado</td--><!--td>elRegistro[m].hito_porcentaje_ejecutado</td--><td><a href="#" class="modalHitoAvances" parametros="'+institucion_id+'-'+linea_accion_id+'-'+idDepartamento+'-'+idDistrito+'-'+elRegistro[m].accion_id+'" "><span class="glyphicon glyphicon-pencil"></span></a></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';																														
+															cuerpoModal += '<td>'+elRegistro[m].cantidad_programado+'</td><td>'+elRegistro[m].cantidad_ejecutado+'</td><td>'+elRegistro[m].accion_unidad_medida+'</td><!--td>numeroConComa((elRegistro[m].accion_costo*elRegistro[m].hito_porcentaje_ejecutado/100000000).toFixed(0))</td--><td>'+registroFechaTerminacion[2]+'-'+registroFechaTerminacion[1]+'-'+registroFechaTerminacion[0]+'</td><!--td>elRegistro[m].hito_porcentaje_programado</td--><!--td>elRegistro[m].hito_porcentaje_ejecutado</td--><td><span class="glyphicon glyphicon-pencil"></span></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';																														
 													}
 												}
 		cuerpoModal += '	             		</tbody>'+
@@ -2538,7 +2538,7 @@ $(document).ready(function(){
 							           '<div class="table-responsive">'+
 										'<table class="table table-hover hitos">'+
 											'<tbody>'+
-												'<tr><td><div class="form-group"><label for="nombreAccion">Acción</label><input type="text" class="form-control" id="nombreAccion" value="'+accion[0].accion+'"><input type="hidden" class="form-control" id="accionId" value="'+accion[0].accion_id+'"></div></td><td><div class="form-group"><label for="umedida">U. medida</label><input type="text" class="form-control" id="umedida" value="'+accion[0].accion_unidad_edida+'"></div></td></tr>'+
+												'<tr><td><div class="form-group"><label for="nombreAccion">Acción</label><input type="text" class="form-control" id="nombreAccion" value="'+accion[0].accion+'"><input type="hidden" class="form-control" id="accionId" value="'+accion[0].accion_id+'"></div></td><td><div class="form-group"><label for="umedida">U. medida</label><input type="text" class="form-control" id="umedida" value="'+accion[0].accion_unidad_medida+'"></div></td></tr>'+
 												'<tr><td><div class="form-group"><label for="departamento">Departamento</label><select id="selectorDepartamento" name="departamento" class="form-control">'+optionDepartamentos+'</select></div></td><td><div class="form-group"><label for="distrito">Distrito</label><select name="departamento" class="form-control" id="distritosDepartamento"></select></div></td></tr>'+
 												'<tr><td colspan="2"><button type="submit" class="btn btn-success">Guardar Acción</button>&nbsp&nbsp<button type="submit" class="btn btn-success modalAgregarHito" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'">Programar Hito</button>&nbsp&nbsp<button type="submit" class="btn btn-success modalDeclararAvance" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'" >Declarar Avance</button></td></tr>'+
 											'</tbody>'+							           
@@ -2725,7 +2725,7 @@ $(document).ready(function(){
 														{
 															if(registroHitos[m].hito_porcentaje_programado > 0)
 															{
-																modalHito += '<tr><td>'+registroHitos[m].accion+'</td><td>'+registroHitos[m].accion_departamento+'</td><td>'+registroHitos[m].accion_distrito+'</td><td>'+registroHitos[m].accion_unidad_edida+'</td><td>'+registroHitos[m].hito_cantidad_programado+'</td><td>'+registroHitos[m].accion_costo+'</td><td>'+registroHitos[m].hito_fecha_entrega+'</td><td>'+registroHitos[m].hito_porcentaje_programado+'</td><td><a href="#" class="modalEditarHito" parametros="'+registroHitos[m].hito_id+'"><span class="glyphicon glyphicon-pencil"></span></a></td></tr>';
+																modalHito += '<tr><td>'+registroHitos[m].accion+'</td><td>'+registroHitos[m].accion_departamento+'</td><td>'+registroHitos[m].accion_distrito+'</td><td>'+registroHitos[m].accion_unidad_medida+'</td><td>'+registroHitos[m].hito_cantidad_programado+'</td><td>'+registroHitos[m].accion_costo+'</td><td>'+registroHitos[m].hito_fecha_entrega+'</td><!--td>registroHitos[m].hito_porcentaje_programado</td--><td><a href="#" class="modalEditarHito" parametros="'+registroHitos[m].hito_id+'"><span class="glyphicon glyphicon-pencil"></span></a></td></tr>';
 																totalCantidadProgramada+=registroHitos[m].hito_cantidad_programado;
 															}
 														}
@@ -2760,7 +2760,7 @@ $(document).ready(function(){
 											{
 												if(registroHitos[m].hito_porcentaje_ejecutado > 0)
 												{
-													modalHito += '<tr><td>'+registroHitos[m].accion+'</td><td>'+registroHitos[m].accion_departamento+'</td><td>'+registroHitos[m].accion_distrito+'</td><td>'+registroHitos[m].accion_unidad_edida+'</td><td>'+registroHitos[m].hito_cantidad_programado+'</td><td>'+registroHitos[m].accion_costo+'</td><td>'+registroHitos[m].hito_fecha_entrega+'</td><td>'+registroHitos[m].hito_porcentaje_ejecutado+'</td><td><a href="#" class="modalEditarHito" parametros="'+registroHitos[m].hito_id+'"><span class="glyphicon glyphicon-pencil"></span></a></td></tr>';
+													modalHito += '<tr><td>'+registroHitos[m].accion+'</td><td>'+registroHitos[m].accion_departamento+'</td><td>'+registroHitos[m].accion_distrito+'</td><td>'+registroHitos[m].accion_unidad_medida+'</td><td>'+registroHitos[m].hito_cantidad_programado+'</td><td>'+registroHitos[m].accion_costo+'</td><td>'+registroHitos[m].hito_fecha_entrega+'</td><td>'+registroHitos[m].hito_porcentaje_ejecutado+'</td><td><a href="#" class="modalEditarHito" parametros="'+registroHitos[m].hito_id+'"><span class="glyphicon glyphicon-pencil"></span></a></td></tr>';
 													totalCantidadProgramada+=registroHitos[m].hito_cantidad_programado;
 												}
 											}
