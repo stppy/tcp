@@ -2456,19 +2456,26 @@ $(document).ready(function(){
 		var idDistrito= idParsed[3];
 		var accionId = idParsed[4];
 		var modalHito = "";
-		var urlFactHitos="";
+		var urlHitosAvances="";
 		var optionDepartamentos = "";
 		var optionDistritos = "";
-		urlFactHitos+='http://spr.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015';
-		if (typeof institucionId != "undefined"){ urlFactHitos+='&institucion_id='+institucionId;}
-		if (typeof lineaAccionId != "undefined"){ urlFactHitos+='&linea_accion_id='+lineaAccionId;}
-		if (typeof idDepartamento != "undefined"){ urlFactHitos+='&departamento='+idDepartamento;}
-		if (typeof idDistrito != "undefined"){ urlFactHitos+='&distrito='+idDistrito;}
-		if (typeof accionId != "undefined"){ urlFactHitos+='&accion_id='+accionId;}
-
+		
+		if (idDepartamento == "" && idDistrito == ""){
+			urlHitosAvances+='http://spr.stp.gov.py/tablero/ajaxSelects?action=getHitosAvances';
+		} else if (idDepartamento != "" && idDistrito == ""){
+			urlHitosAvances+='http://spr.stp.gov.py/tablero/ajaxSelects?action=getHitosAvancesDepto';
+		} else {
+			urlHitosAvances+='http://spr.stp.gov.py/tablero/ajaxSelects?action=getHitosAvancesDistrito';
+		}
+				
+		if (typeof institucionId != "undefined"){ urlHitosAvances+='&institucion_id='+institucionId;}
+		//if (typeof lineaAccionId != "undefined"){ urlHitosAvances+='&linea_accion_id='+lineaAccionId;}
+		if (typeof idDepartamento != "undefined" && idDepartamento != "" ){ urlHitosAvances+='&departamento='+idDepartamento;}
+		if (typeof idDistrito != "undefined" && idDistrito != ""){ urlHitosAvances+='&distrito='+idDistrito;}
+		if (typeof accionId != "undefined" ){ urlHitosAvances+='&accionId='+accionId;}
 		
 		var registrosHitos = $.ajax({
-	    	url:urlFactHitos,
+	    	url:urlHitosAvances,
 	      	type:'get',
 	      	dataType:'json',
 	      	crossDomain:true,
@@ -2477,7 +2484,7 @@ $(document).ready(function(){
 		var registroHitos=JSON.parse(registrosHitos);
 		
 		var accion = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015Accion&accion_id='+accionId,
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getAccionesCatalogoUnidadMedida&accionId='+accionId,
 	      	type:'get',
 	      	dataType:'json',
 	      	crossDomain:true,
