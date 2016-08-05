@@ -2236,16 +2236,27 @@ public class SqlSelects {
 			String condition) throws SQLException {
 		Connection conect = ConnectionConfiguration.conectar();
 		String query = "select "
-				+ "ins_linea_accion_base_dd.institucion_sigla,"
-				+ "ins_linea_accion_base_dd.institucion_id,"								
-				+ "ins_linea_accion_programacion_hoy_dd.cantidad_hoy as programado_hoy,"
-				+ "ins_linea_accion_avance_dd.cantidad as avance_real"				
-				+ " from ins_linea_accion_base_dd"
-				+ " left join ins_linea_accion_avance_dd on"
-				+ " 	ins_linea_accion_avance_dd.ins_linea_accion_id=ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_avance_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_avance_dd.dist_id=ins_linea_accion_base_dd.dist_id"				
-				+ " left join ins_linea_accion_programacion_hoy_dd on "
-				+ " 	ins_linea_accion_programacion_hoy_dd.ins_linea_accion_id =ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_programacion_hoy_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_programacion_hoy_dd.dist_id=ins_linea_accion_base_dd.dist_id"
-				+ " where periodo=2016 " + condition;
+//				+ "ins_linea_accion_base_dd.institucion_sigla,"
+//				+ "ins_linea_accion_base_dd.institucion_id,"								
+//				+ "ins_linea_accion_programacion_hoy_dd.cantidad_hoy as programado_hoy,"
+//				+ "ins_linea_accion_avance_dd.cantidad as avance_real"				
+//				+ " from ins_linea_accion_base_dd"
+//				+ " left join ins_linea_accion_avance_dd on"
+//				+ " 	ins_linea_accion_avance_dd.ins_linea_accion_id=ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_avance_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_avance_dd.dist_id=ins_linea_accion_base_dd.dist_id"				
+//				+ " left join ins_linea_accion_programacion_hoy_dd on "
+//				+ " 	ins_linea_accion_programacion_hoy_dd.ins_linea_accion_id =ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_programacion_hoy_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_programacion_hoy_dd.dist_id=ins_linea_accion_base_dd.dist_id"
+//				+ " where periodo=2016 " + condition;
+		
+		+ "ins_linea_accion_base.institucion_sigla,"
+		+ "ins_linea_accion_base.institucion_id,"								
+		+ "ins_linea_accion_programacion_hoy.cantidad_hoy as programado_hoy,"
+		+ "ins_linea_accion_avance.cantidad as avance_real"				
+		+ " from ins_linea_accion_base"
+		+ " left join ins_linea_accion_avance on"
+		+ " 	ins_linea_accion_avance.ins_linea_accion_id=ins_linea_accion_base.ins_linea_accion_id"				
+		+ " left join ins_linea_accion_programacion_hoy on "
+		+ " 	ins_linea_accion_programacion_hoy.ins_linea_accion_id =ins_linea_accion_base.ins_linea_accion_id"
+		+ " where periodo=2016 " + condition;
 		Statement statement = null;
 		ResultSet rs = null;
 		List<LineaAccionProgramacion> objetos = new ArrayList<LineaAccionProgramacion>();
@@ -2707,6 +2718,7 @@ public class SqlSelects {
                  + " left join ins_linea_accion_destinatario_real_dd on "
                  + " ins_linea_accion_destinatario_real_dd.ins_linea_accion_id=ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_destinatario_real_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_destinatario_real_dd.dist_id=ins_linea_accion_base_dd.dist_id"
                  + " where periodo=2016"+ condition;
+
 		Statement statement = null;
 		ResultSet rs = null;
 		List<LineaAccionProgramacion> objetos = new ArrayList<LineaAccionProgramacion>();

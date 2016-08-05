@@ -1543,7 +1543,7 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 					if (deptoId == null) deptoId = "";
 					
 					tempInstLineas += '<tr>'+
-					'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+'-'+distId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
+					'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
 					'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
 					//'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
 					'<td></td>'+
@@ -1585,11 +1585,10 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 					if (distId == null) distId = "";
 					if (deptoId == null) deptoId = "";
 
-					if(lineasProgramadas[n+1].institucionId != institucionId){
+/* 					if(lineasProgramadas[n+1].institucionId != institucionId){
 						tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n+1].institucionSigla+'</strong></td></tr>';
 						institucionId = lineasProgramadas[n+1].institucionId;
-
-					}
+					} */
 						tempInstLineas += '<tr>'+
 						'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+'-'+distId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
 						'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
@@ -1621,6 +1620,11 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 						//institucionId = lineasProgramadas[n+1].institucionId;
 						linea_accion_id = lineasProgramadas[n+1].lineaAccionId;
 						//tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n+1].institucionSigla+'</strong></td></tr>';
+						
+						if(lineasProgramadas[n+1].institucionId != institucionId){
+							tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n+1].institucionSigla+'</strong></td></tr>';
+							institucionId = lineasProgramadas[n+1].institucionId;
+						}
 					}
 					
 			}		
