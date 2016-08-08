@@ -5637,17 +5637,18 @@ $("body").on("click", ".agregarAvance",function(event){
 	var accionId = idParsed[4];
 	var actividadId = idParsed[5];//es el id de la tabla actidad
 	
-	var dia;
-	
     var f = new Date();
     if( (f.getMonth() +1) < 10 ){
     	var mes =( 0 +""+ (f.getMonth() +1));
+    }else{
+    	var mes =f.getMonth();
     }
-    if( (f.getDate()) < 10 ){
-    	dia =( 0 +""+ (f.getDate()));
-    }
-    dia =f.getDate();
     
+    if( (f.getDate()) < 10 ){
+    	var dia =( 0 +""+ (f.getDate()));
+    }else{
+    	var dia = f.getDate();
+    }
     var fechaActual = (f.getFullYear() + "-" + mes + "-" + dia);
     
 	var insLineaAccion = $.ajax({
@@ -5847,7 +5848,7 @@ $("body").on("click", ".agregarAvance",function(event){
 							'											<tr><td><label for="justificacionAvance">Justificación</label><input type="text" id="justificacionAvance" value="" class="form-control" placeholder="Ingrese Justificación" required/></td>'+
 							'												<td><label for="cantidadAvance">Cantidad</label><input type="number" id="cantidadAvance" class="form-control" value="" placeholder="Ingrese Cantidad" required/></td>'+
 							'											</tr>'+
-							'											<tr><td><label for="fechaEntregaAvance">Fecha Entrega</label><input type="date" id="fechaEntregaAvance" value="'+fechaActual+'" class="form-control" required/></td></tr>'+														
+							'											<tr><td><label for="fechaEntregaAvance">Fecha Entrega</label><input type="date" id="fechaEntregaAvance" value="'+fechaActual+'" max="'+fechaActual+'" class="form-control" required/></td></tr>'+														
 							'											<input type="hidden" id="versionAvance" value="3" />'+		
 							'			      							</form>	'+												
 							'										</tbody>'+
