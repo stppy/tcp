@@ -1306,7 +1306,7 @@ public class ajaxSelects extends HttpServlet {
 				}
                 
 				for (int s = 0; s < instituciones.size(); s += 1) {
-	                 condition += " OR ins_linea_accion_base_dd.institucion_id='"+instituciones.get(s).getId()+"'";
+	                 condition += " OR ins_linea_accion_base.institucion_id='"+instituciones.get(s).getId()+"'";
 				}
 	                try {                	
 
