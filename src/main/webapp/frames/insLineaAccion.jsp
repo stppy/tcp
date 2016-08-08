@@ -9225,7 +9225,7 @@ $("body").on("click", ".avanceCualitativo",function(event){
 						'			</div>'+
 						'		    <div class="modal-body" id="accionCuerpo" >';
 						
- 	<% if (attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>		
+ 	<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>		
 	
 	cuerpoModalAvanceCualitativo +='		      	<div class="row">'+
 						'								<form role="form" id="formularioAvanceCualitativo">'+
