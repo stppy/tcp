@@ -220,44 +220,46 @@ public class ajaxSelects extends HttpServlet {
         		if (institucion_id!=0) condition += " and institucion_id ='"+institucion_id+"'";
         		if (linea_accion_id!=0) condition += " and linea_accion_id ='"+linea_accion_id+"'";
         		if (accion!="") condition += " and accion ='"+accion+"'";
-        		if (accion_id!=0) condition += " and accion_id ='"+accion_id+"'";
+        		if (accion_id!=0) condition += " and accion_id ='"+accion_id+"'";        		
+        		if (distritoId!=null) condition += " and accion_distrito_id ='"+distritoId+"'";
+        		if (departamentoId!=null) condition += " and accion_departamento_id ='"+departamentoId+"'";
         		if (periodoId!=null) condition += " and periodo_id ='"+periodoId+"'";
         		        		
 				try {objetos = SqlSelects.selectAccionesAvances(condition);}
 				catch (SQLException e) {e.printStackTrace();}				
         		out.println(objetos);return;
         	}
-        	if (action.equals("getAccionesAvancesDepto")){
-        		String objetos=null;
-        		condition = " where true ";
-        		if (institucion!="") condition += " and institucion_sigla ='"+institucion+"'";
-        		if (institucion_id!=0) condition += " and institucion_id ='"+institucion_id+"'";
-        		if (linea_accion_id!=0) condition += " and linea_accion_id ='"+linea_accion_id+"'";
-        		if (accion!="") condition += " and accion ='"+accion+"'";
-        		if (accion_id!=0) condition += " and accion_id ='"+accion_id+"'";        		
-        		if (departamentoId!=null) condition += " and accion_departamento_id ='"+departamentoId+"'";
-        		if (periodoId!=null) condition += " and periodo_id ='"+periodoId+"'";
-        		        		
-				try {objetos = SqlSelects.selectAccionesAvancesDepto(condition);}
-				catch (SQLException e) {e.printStackTrace();}				
-        		out.println(objetos);return;
-        	}
-        	if (action.equals("getAccionesAvancesDistrito")){
-        		String objetos=null;
-        		condition = " where true ";
-        		if (institucion!="") condition += " and institucion_sigla ='"+institucion+"'";
-        		if (institucion_id!=0) condition += " and institucion_id ='"+institucion_id+"'";
-        		if (linea_accion_id!=0) condition += " and linea_accion_id ='"+linea_accion_id+"'";
-        		if (accion!="") condition += " and accion ='"+accion+"'";
-        		if (accion_id!=0) condition += " and accion_id ='"+accion_id+"'";
-        		if (distritoId!=null) condition += " and accion_distrito_id ='"+distritoId+"'";
-        		if (departamentoId!=null) condition += " and accion_departamento_id ='"+departamentoId+"'";
-        		if (periodoId!=null) condition += " and periodo_id ='"+periodoId+"'";
-        		        		
-				try {objetos = SqlSelects.selectAccionesAvancesDistrito(condition);}
-				catch (SQLException e) {e.printStackTrace();}				
-        		out.println(objetos);return;
-        	}
+//        	if (action.equals("getAccionesAvancesDepto")){
+//        		String objetos=null;
+//        		condition = " where true ";
+//        		if (institucion!="") condition += " and institucion_sigla ='"+institucion+"'";
+//        		if (institucion_id!=0) condition += " and institucion_id ='"+institucion_id+"'";
+//        		if (linea_accion_id!=0) condition += " and linea_accion_id ='"+linea_accion_id+"'";
+//        		if (accion!="") condition += " and accion ='"+accion+"'";
+//        		if (accion_id!=0) condition += " and accion_id ='"+accion_id+"'";        		
+//        		if (departamentoId!=null) condition += " and accion_departamento_id ='"+departamentoId+"'";
+//        		if (periodoId!=null) condition += " and periodo_id ='"+periodoId+"'";
+//        		        		
+//				try {objetos = SqlSelects.selectAccionesAvancesDepto(condition);}
+//				catch (SQLException e) {e.printStackTrace();}				
+//        		out.println(objetos);return;
+//        	}
+//        	if (action.equals("getAccionesAvancesDistrito")){
+//        		String objetos=null;
+//        		condition = " where true ";
+//        		if (institucion!="") condition += " and institucion_sigla ='"+institucion+"'";
+//        		if (institucion_id!=0) condition += " and institucion_id ='"+institucion_id+"'";
+//        		if (linea_accion_id!=0) condition += " and linea_accion_id ='"+linea_accion_id+"'";
+//        		if (accion!="") condition += " and accion ='"+accion+"'";
+//        		if (accion_id!=0) condition += " and accion_id ='"+accion_id+"'";
+//        		if (distritoId!=null) condition += " and accion_distrito_id ='"+distritoId+"'";
+//        		if (departamentoId!=null) condition += " and accion_departamento_id ='"+departamentoId+"'";
+//        		if (periodoId!=null) condition += " and periodo_id ='"+periodoId+"'";
+//        		        		
+//				try {objetos = SqlSelects.selectAccionesAvancesDistrito(condition);}
+//				catch (SQLException e) {e.printStackTrace();}				
+//        		out.println(objetos);return;
+//        	}
          	if (action.equals("getAccionesCatalogoUnidadMedida")){
         		String objetos=null; 
         		condition = " where true ";        		        		        		
@@ -276,15 +278,15 @@ public class ajaxSelects extends HttpServlet {
         		if (linea_accion_id!=0) condition += " and linea_accion_id ='"+linea_accion_id+"'";
         		if (accion!="") condition += " and accion ='"+accion+"'";
         		if (accion_id!=0) condition += " and accion_id ='"+accion_id+"'";
-        		if (departamento!=99) condition += " and accion_departamento_id ='"+departamento+"'";
-        		if (distrito!=99) condition += " and accion_distrito_id ='"+distrito+"'";
-        		if (hito_id!=0) condition += " and hito_id ='"+hito_id+"'";     
+        		if (hito_id!=0) condition += " and hito_id ='"+hito_id+"'";
+        		if (distritoId!=null) condition += " and accion_distrito_id ='"+distritoId+"'";
+        		if (departamentoId!=null) condition += " and accion_departamento_id ='"+departamentoId+"'";
         		
 				try {objetos = SqlSelects.selectHitosAvances(condition);}
 				catch (SQLException e) {e.printStackTrace();}        		
 				out.println(objetos);return;         		
         	}
-        	if (action.equals("getFactHitosSnpp")){
+         	if (action.equals("getFactHitosSnpp")){
         		List objetos=null;
         		condition = " where true ";
         		if (institucion!="") condition += " and institucion ='"+institucion+"'";

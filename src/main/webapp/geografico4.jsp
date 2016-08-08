@@ -2001,13 +2001,16 @@ $(document).ready(function(){
 		var urlAccionesAvances="";
 		var primerModal="";
 		
+			urlAccionesAvances+='http://spr.stp.gov.py/tablero/ajaxSelects?action=getAccionesAvances';
+		
+			/*Esta parte realiza la función de agrupar a nivel pais, departamento o distrital.
 			if (idDepartamento == "" && idDistrito == ""){
 				urlAccionesAvances+='http://spr.stp.gov.py/tablero/ajaxSelects?action=getAccionesAvances';
-			} else if (idDepartamento != "" && idDistrito == ""){
+			}  else if (idDepartamento != "" && idDistrito == ""){
 				urlAccionesAvances+='http://spr.stp.gov.py/tablero/ajaxSelects?action=getAccionesAvancesDepto';
 			} else {
 				urlAccionesAvances+='http://spr.stp.gov.py/tablero/ajaxSelects?action=getAccionesAvancesDistrito';
-			}
+			} */
 		
 			if (typeof institucion_id != "undefined") urlAccionesAvances+='&institucion_id='+institucion_id;
 			if (typeof linea_accion_id != "undefined") urlAccionesAvances+='&linea_accion_id='+linea_accion_id;
@@ -2070,28 +2073,28 @@ $(document).ready(function(){
 		'	                				<table class="table table-hover table-bordered" id="dataTablesAccionesAvances">'+
 		'	                					<thead>'+
 		'	                						<tr class="active"><th>Acción</th>';
-													if (idDepartamento != ""){//agrega la columna de departamento si cargado la variable
+													//if (idDepartamento != ""){//agrega la columna de departamento si cargado la variable
 														cuerpoModal += '<th>Departamento</th>';
-													}													
-													if (idDistrito != ""){//agrega la columna de distrito si cargado la variable
+													//}													
+													//if (idDistrito != ""){//agrega la columna de distrito si cargado la variable
 														cuerpoModal += '<th>Distrito</th>';
-													}
-		cuerpoModal +='							<th>Cantidad Programado</th><th>Cantidad Ejecutado</th><th>U. Medida</th><!--th>Inversión Estimada (Millones de G.)</th--><th>Fecha Terminación</th><!--th>% Programado</th><th>% Ejecutado</th--><th>Editar</th><th>Borrar</th></tr>'+
+													//} 
+		cuerpoModal +='							<th>Cantidad Programado</th><th>Cantidad Ejecutado</th><th>U. Medida</th><!--th>Inversión Estimada (Millones de G.)</th--><th>Fecha Inicio</th><th>Fecha Fin</th><!--th>% Programado</th><th>% Ejecutado</th--><th>Editar</th><th>Borrar</th></tr>'+
 		'	                					</thead>'+
 		'	                					<tbody id="tablaAccionesAvances">';
 												if (elRegistro != null){
 													tituloModal='<h3><center>'+elRegistro[0].institucion+'&nbsp;&nbsp;-&nbsp;&nbsp;'+elRegistro[0].linea_accion_nombre+'</center></h3>';
 													for(var m=0; m<elRegistro.length;m++)
 													{
-															var registroFechaTerminacion = elRegistro[m].programacion_fecha_terminacion.split("-");
-															//var registroFechaInicio = elRegistro[m].accion_fecha_inicio.split("-"); //estas fechas fueron agregadas anteriormente pero se prefiere la fecha de terminación de programación para contrastar con el chart de la linea de acción acumulado por mes.
-															//var registroFechaFin = elRegistro[m].accion_fecha_fin.split("-");
+															//var registroFechaTerminacion = elRegistro[m].programacion_fecha_terminacion.split("-");
+															var registroFechaInicio = elRegistro[m].accion_fecha_inicio.split("-"); //estas fechas fueron agregadas anteriormente pero se prefiere la fecha de terminación de programación para contrastar con el chart de la linea de acción acumulado por mes.
+															var registroFechaFin = elRegistro[m].accion_fecha_fin.split("-");
 															cuerpoModal+='<tr><td><a href="#" class="modalHitoAvances" parametros="'+institucion_id+'-'+linea_accion_id+'-'+idDepartamento+'-'+idDistrito+'-'+elRegistro[m].accion_id+'" >'+elRegistro[m].accion_catalogo_nombre+'</td>';
-															if (idDepartamento != "") 
+															//if (idDepartamento != "") 
 																cuerpoModal += '<td>'+elRegistro[m].accion_depto_nombre+'</td>';
-															if (idDistrito != "")
+															//if (idDistrito != "")
 																cuerpoModal += '<td>'+elRegistro[m].accion_dist_nombre+'</td>';
-															cuerpoModal += '<td>'+elRegistro[m].cantidad_programado+'</td><td>'+elRegistro[m].cantidad_ejecutado+'</td><td>'+elRegistro[m].accion_unidad_medida+'</td><!--td>numeroConComa((elRegistro[m].accion_costo*elRegistro[m].hito_porcentaje_ejecutado/100000000).toFixed(0))</td--><td>'+registroFechaTerminacion[2]+'-'+registroFechaTerminacion[1]+'-'+registroFechaTerminacion[0]+'</td><!--td>elRegistro[m].hito_porcentaje_programado</td--><!--td>elRegistro[m].hito_porcentaje_ejecutado</td--><td><span class="glyphicon glyphicon-pencil"></span></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';																														
+															cuerpoModal += '<td>'+elRegistro[m].cantidad_programado+'</td><td>'+elRegistro[m].cantidad_ejecutado+'</td><td>'+elRegistro[m].accion_unidad_medida+'</td><!--td>numeroConComa((elRegistro[m].accion_costo*elRegistro[m].hito_porcentaje_ejecutado/100000000).toFixed(0))</td--><td>'+registroFechaInicio[2]+'-'+registroFechaInicio[1]+'-'+registroFechaInicio[0]+'</td><td>'+registroFechaFin[2]+'-'+registroFechaFin[1]+'-'+registroFechaFin[0]+'</td><!--td>elRegistro[m].hito_porcentaje_programado</td--><!--td>elRegistro[m].hito_porcentaje_ejecutado</td--><td><span class="glyphicon glyphicon-pencil"></span></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';																														
 													}
 												}
 		cuerpoModal += '	             		</tbody>'+
@@ -2425,7 +2428,7 @@ $(document).ready(function(){
 		var fila ="";
 		for(var f = 0; f < accionHasProducto.length; f++)
 		{			
-			fila += "<tr><td>"+accionHasProducto[f].nivel+"</td><td>"+accionHasProducto[f].entidad+"</td><td>"+accionHasProducto[f].tipoPrograma+"</td><td>"+accionHasProducto[f].programa+"</td><td>"+accionHasProducto[f].subPrograma+"</td><td>"+accionHasProducto[f].proyecto+"</td><td>"+accionHasProducto[f].producto+"</td><td>"+accionHasProducto[f].cantFisica+"</td><td>"+accionHasProducto[f].uMedida+"</td><td>"+accionHasProducto[f].clase+"</td><td>Gs."+accionHasProducto[f].cantFinanciera+"</td><td>Gs."+accionHasProducto[f].totalAsignacion+"</td><td><center><button type='submit' class='btn btn-success verificarDestinatarios' parametros="+accionHasProducto[f].nivel+"-"+accionHasProducto[f].entidad+"-"+accionHasProducto[f].tipoPrograma+"-"+accionHasProducto[f].programa+"-"+accionHasProducto[f].subPrograma+"-"+accionHasProducto[f].proyecto+"-"+accionHasProducto[f].producto+"-"+institucionId+"-"+lineaAccionId+"-"+idDepartamento+"-"+idDistrito+"-"+accionId+"><span class='glyphicon glyphicon-user'></span></button></center></td></tr>";
+			fila += "<tr><td>"+accionHasProducto[f].nivel+"</td><td>"+accionHasProducto[f].entidad+"</td><td>"+accionHasProducto[f].tipoPrograma+"</td><td>"+accionHasProducto[f].programa+"</td><td>"+accionHasProducto[f].subPrograma+"</td><td>"+accionHasProducto[f].proyecto+"</td><td>"+accionHasProducto[f].sprProductoId+"</td><td>"+accionHasProducto[f].cantidadFisica+"</td><td>"+accionHasProducto[f].unidadMedida+"</td><td>"+accionHasProducto[f].clase+"</td><td>Gs."+accionHasProducto[f].cantidadFinanciera+"</td><td>Gs."+accionHasProducto[f].totalAsignacion+"</td><td><center><button type='submit' class='btn btn-success verificarDestinatarios' parametros="+accionHasProducto[f].nivel+"-"+accionHasProducto[f].entidad+"-"+accionHasProducto[f].tipoPrograma+"-"+accionHasProducto[f].programa+"-"+accionHasProducto[f].subPrograma+"-"+accionHasProducto[f].proyecto+"-"+accionHasProducto[f].sprProductoId+"-"+institucionId+"-"+lineaAccionId+"-"+idDepartamento+"-"+idDistrito+"-"+accionId+"><span class='glyphicon glyphicon-user'></span></button></center></td></tr>";
 		}
 		
 		$("#TablaAccionHasProductos").append(fila);
@@ -2460,13 +2463,15 @@ $(document).ready(function(){
 		var optionDepartamentos = "";
 		var optionDistritos = "";
 		
-		if (idDepartamento == "" && idDistrito == ""){
+		urlHitosAvances+='http://spr.stp.gov.py/tablero/ajaxSelects?action=getHitosAvances';
+		
+		/*if (idDepartamento == "" && idDistrito == ""){
 			urlHitosAvances+='http://spr.stp.gov.py/tablero/ajaxSelects?action=getHitosAvances';
 		} else if (idDepartamento != "" && idDistrito == ""){
 			urlHitosAvances+='http://spr.stp.gov.py/tablero/ajaxSelects?action=getHitosAvancesDepto';
 		} else {
 			urlHitosAvances+='http://spr.stp.gov.py/tablero/ajaxSelects?action=getHitosAvancesDistrito';
-		}
+		}*/
 				
 		if (typeof institucionId != "undefined"){ urlHitosAvances+='&institucion_id='+institucionId;}
 		//if (typeof lineaAccionId != "undefined"){ urlHitosAvances+='&linea_accion_id='+lineaAccionId;}
@@ -3558,7 +3563,7 @@ $(document).ready(function(){
 			    var totalFinanciero;  
 			    
 		    	$.ajax({
-		         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductos&producto='+linkProducto,
+		         	url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductos&producto='+linkProducto,
 		          	type:'get',
 		          	crossDomain: 'true',
 		          	dataType:'jsonp',
