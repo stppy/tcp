@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
 import java.sql.SQLException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -57,6 +58,7 @@ public class ajaxSelects extends HttpServlet {
     	
     	Integer institucion_id=null;
     	Integer accion_id=null;
+    	Integer accionId=null;
     	Integer linea_accion_id=null;
     	Integer usuarioId = null;
     	Integer anho = null;
@@ -65,6 +67,7 @@ public class ajaxSelects extends HttpServlet {
     	
     	String institucion=null;
     	String usuario=null;
+    	String catalogoAccion=null;
     	String condition = "";
     	String mision = "";
     	String nombre = "";
@@ -112,11 +115,13 @@ public class ajaxSelects extends HttpServlet {
       	
       	if (request.getParameter("institucion_id")!=null) institucion_id=Integer.parseInt(request.getParameter("institucion_id")); else institucion_id=0;
       	if (request.getParameter("accion_id")!=null) accion_id=Integer.parseInt(request.getParameter("accion_id")); else accion_id=0;
+      	if (request.getParameter("accionId")!=null) accionId=Integer.parseInt(request.getParameter("accionId"));
       	if (request.getParameter("linea_accion_id")!=null) linea_accion_id=Integer.parseInt(request.getParameter("linea_accion_id")); else linea_accion_id=0;
       	if (request.getParameter("hito_id")!=null) hito_id=Integer.parseInt(request.getParameter("hito_id")); else hito_id=0;
       	if (request.getParameter("usuarioId")!=null) usuarioId=Integer.parseInt(request.getParameter("usuarioId"));
       	if (request.getParameter("anho")!=null) anho=Integer.parseInt(request.getParameter("anho"));
       	if (request.getParameter("periodoId")!=null) periodoId=Integer.parseInt(request.getParameter("periodoId"));
+      	if (request.getParameter("catalogoAccion")!=null) catalogoAccion = request.getParameter("catalogoAccion");
 
 
     	
@@ -215,46 +220,73 @@ public class ajaxSelects extends HttpServlet {
         		if (institucion_id!=0) condition += " and institucion_id ='"+institucion_id+"'";
         		if (linea_accion_id!=0) condition += " and linea_accion_id ='"+linea_accion_id+"'";
         		if (accion!="") condition += " and accion ='"+accion+"'";
-        		if (accion_id!=0) condition += " and accion_id ='"+accion_id+"'";
+        		if (accion_id!=0) condition += " and accion_id ='"+accion_id+"'";        		
+        		if (distritoId!=null) condition += " and accion_distrito_id ='"+distritoId+"'";
+        		if (departamentoId!=null) condition += " and accion_departamento_id ='"+departamentoId+"'";
         		if (periodoId!=null) condition += " and periodo_id ='"+periodoId+"'";
         		        		
 				try {objetos = SqlSelects.selectAccionesAvances(condition);}
 				catch (SQLException e) {e.printStackTrace();}				
         		out.println(objetos);return;
         	}
-        	if (action.equals("getAccionesAvancesDepto")){
-        		String objetos=null;
-        		condition = " where true ";
-        		if (institucion!="") condition += " and institucion_sigla ='"+institucion+"'";
-        		if (institucion_id!=0) condition += " and institucion_id ='"+institucion_id+"'";
-        		if (linea_accion_id!=0) condition += " and linea_accion_id ='"+linea_accion_id+"'";
-        		if (accion!="") condition += " and accion ='"+accion+"'";
-        		if (accion_id!=0) condition += " and accion_id ='"+accion_id+"'";        		
-        		if (departamentoId!=null) condition += " and accion_departamento_id ='"+departamentoId+"'";
-        		if (periodoId!=null) condition += " and periodo_id ='"+periodoId+"'";
-        		        		
-				try {objetos = SqlSelects.selectAccionesAvancesDepto(condition);}
+//        	if (action.equals("getAccionesAvancesDepto")){
+//        		String objetos=null;
+//        		condition = " where true ";
+//        		if (institucion!="") condition += " and institucion_sigla ='"+institucion+"'";
+//        		if (institucion_id!=0) condition += " and institucion_id ='"+institucion_id+"'";
+//        		if (linea_accion_id!=0) condition += " and linea_accion_id ='"+linea_accion_id+"'";
+//        		if (accion!="") condition += " and accion ='"+accion+"'";
+//        		if (accion_id!=0) condition += " and accion_id ='"+accion_id+"'";        		
+//        		if (departamentoId!=null) condition += " and accion_departamento_id ='"+departamentoId+"'";
+//        		if (periodoId!=null) condition += " and periodo_id ='"+periodoId+"'";
+//        		        		
+//				try {objetos = SqlSelects.selectAccionesAvancesDepto(condition);}
+//				catch (SQLException e) {e.printStackTrace();}				
+//        		out.println(objetos);return;
+//        	}
+//        	if (action.equals("getAccionesAvancesDistrito")){
+//        		String objetos=null;
+//        		condition = " where true ";
+//        		if (institucion!="") condition += " and institucion_sigla ='"+institucion+"'";
+//        		if (institucion_id!=0) condition += " and institucion_id ='"+institucion_id+"'";
+//        		if (linea_accion_id!=0) condition += " and linea_accion_id ='"+linea_accion_id+"'";
+//        		if (accion!="") condition += " and accion ='"+accion+"'";
+//        		if (accion_id!=0) condition += " and accion_id ='"+accion_id+"'";
+//        		if (distritoId!=null) condition += " and accion_distrito_id ='"+distritoId+"'";
+//        		if (departamentoId!=null) condition += " and accion_departamento_id ='"+departamentoId+"'";
+//        		if (periodoId!=null) condition += " and periodo_id ='"+periodoId+"'";
+//        		        		
+//				try {objetos = SqlSelects.selectAccionesAvancesDistrito(condition);}
+//				catch (SQLException e) {e.printStackTrace();}				
+//        		out.println(objetos);return;
+//        	}
+         	if (action.equals("getAccionesCatalogoUnidadMedida")){
+        		String objetos=null; 
+        		condition = " where true ";        		        		        		
+        		if (accionId!=null) condition += " and accion_id ='"+accionId+"'";
+        		if (catalogoAccion!=null) condition += " and accion_catalogo ='"+catalogoAccion+"'";        		
+           		           		
+           		try {objetos = SqlSelects.selectAccionesCatalogoUnidadMedida(condition);}
 				catch (SQLException e) {e.printStackTrace();}				
-        		out.println(objetos);return;
+        		out.println(objetos);return;        	
         	}
-        	if (action.equals("getAccionesAvancesDistrito")){
+         	if (action.equals("getHitosAvances")){
         		String objetos=null;
-        		condition = " where true ";
-        		if (institucion!="") condition += " and institucion_sigla ='"+institucion+"'";
+        		condition = " where hito_fecha_entrega > '2015-12-31' and hito_fecha_entrega < '2017-01-01'";
+        		if (institucion!="") condition += " and institucion ='"+institucion+"'";
         		if (institucion_id!=0) condition += " and institucion_id ='"+institucion_id+"'";
         		if (linea_accion_id!=0) condition += " and linea_accion_id ='"+linea_accion_id+"'";
         		if (accion!="") condition += " and accion ='"+accion+"'";
         		if (accion_id!=0) condition += " and accion_id ='"+accion_id+"'";
+        		if (hito_id!=0) condition += " and hito_id ='"+hito_id+"'";
         		if (distritoId!=null) condition += " and accion_distrito_id ='"+distritoId+"'";
         		if (departamentoId!=null) condition += " and accion_departamento_id ='"+departamentoId+"'";
-        		if (periodoId!=null) condition += " and periodo_id ='"+periodoId+"'";
-        		        		
-				try {objetos = SqlSelects.selectAccionesAvancesDistrito(condition);}
-				catch (SQLException e) {e.printStackTrace();}				
-        		out.println(objetos);return;
+        		
+				try {objetos = SqlSelects.selectHitosAvances(condition);}
+				catch (SQLException e) {e.printStackTrace();}        		
+				out.println(objetos);return;         		
         	}
-        	
-        	if (action.equals("getFactHitosSnpp")){
+         	if (action.equals("getFactHitosSnpp")){
         		List objetos=null;
         		condition = " where true ";
         		if (institucion!="") condition += " and institucion ='"+institucion+"'";
@@ -262,14 +294,12 @@ public class ajaxSelects extends HttpServlet {
         		if (linea_accion_id!=0) condition += " and linea_accion_id ='"+linea_accion_id+"'";
         		if (accion!="") condition += " and accion ='"+accion+"'";
         		if (accion_id!=0) condition += " and accion_id ='"+accion_id+"'";
-        		
-        		
+        		        		
 				try {objetos = SqlSelects.selectFactHitosSnpp(condition);}
 				catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos);
         		out.println(json.toString());
-        	}
-        	
+        	}        	
         	if (action.equals("getFactHitos2015")){
         		List objetos=null;
         		condition = " where hito_fecha_entrega > '2014-12-31' and hito_fecha_entrega < '2016-01-01'";
