@@ -2809,25 +2809,28 @@ $(document).ready(function(){
 		
 		$("body").append(modalHito);
 		
-		$('#selectorDepartamento > option[value="'+idDepartamento+'"]').attr('selected', 'selected');
-		
-		//var departamentoId = $("#selectorDepartamento option:selected").val();
-		var distritos = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito&departamento='+idDepartamento,
-	      	type:'get',
-	      	dataType:'json',
-	      	async:false       
-	    }).responseText;
-		distritos = JSON.parse(distritos);
-		optionDistritos="";
-		for(k = 0;k<distritos.length; k++){
-			
-			optionDistritos+='<option value="'+distritos[k].id+'">'+distritos[k].descripcion+'</option>';
+		if (idDepartamento != ""){
+        	$('#selectorDepartamento > option[value="'+idDepartamento+'"]').attr('selected', 'selected');
 		}
-		$("#distritosDepartamento").html("");
-		$("#distritosDepartamento").append(optionDistritos);
-		
-		$('#distritosDepartamento > option[value="'+idDistrito+'"]').attr('selected', 'selected');
+				
+		if (idDepartamento != ""){			
+			//var departamentoId = $("#selectorDepartamento option:selected").val();
+			var distritos = $.ajax({
+		    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito&departamento='+idDepartamento,
+		      	type:'get',
+		      	dataType:'json',
+		      	async:false       
+		    }).responseText;
+			distritos = JSON.parse(distritos);
+			optionDistritos="";
+			for(k = 0;k<distritos.length; k++){				
+				optionDistritos+='<option value="'+distritos[k].id+'">'+distritos[k].descripcion+'</option>';
+			}
+			$("#distritosDepartamento").html("");
+			$("#distritosDepartamento").append(optionDistritos);
+			
+			$('#distritosDepartamento > option[value="'+idDistrito+'"]').attr('selected', 'selected');
+		}
 		$("#myModal2").modal('show');
 		
 		$("body").on("change", "#selectorDepartamento",function(event){
