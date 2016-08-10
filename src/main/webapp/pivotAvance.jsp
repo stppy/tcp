@@ -227,7 +227,7 @@ textarea { text-transform: uppercase; }
                             '        </div>'+
                             '   </div>'+
                             '</li>';
-                            flowContent+='<li class="time-label">'+
+                            flowContent+='<li name="'+avances[i].avanceFecha+'" class="time-label">'+
                                '<span class="bg-red">'+
                                avances[i].avanceFecha+
                                '</span>'+
@@ -236,7 +236,7 @@ textarea { text-transform: uppercase; }
                             '    <i class="fa fa-envelope bg-blue"></i>'+
                             '    <div class="timeline-item">'+
                             '        <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>'+
-                            '        <h3 class="timeline-header"><a href="#">'+avances[i].lineaAccion+'</a> </h3>'+
+                            '        <h3 class="timeline-header"><a name="'+i+'" href="#">'+avances[i].lineaAccion+'</a> </h3>'+
                             '        <div class="timeline-body">'+
                             avances[i].institucion+' ha realizado '+avances[i].accion+' alcanzando '+avances[i].avanceCantidad+' '+avances[i].cronoUnidadMedida+' en el distrito '+avances[i].distrito+' del departamento de '+avances[i].departamento;
             		
