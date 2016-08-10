@@ -487,7 +487,50 @@ public class SqlSelects {
 		}
 		return objetos;
 	}
-	
+	public static String selectAccionesCatalogoUnidadMedida(String condition) throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();    	 
+			 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from( "+
+					" SELECT * FROM accion_accion_catalogo_unidad_medida " + condition + ")t";			
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 String objetos = "";
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					objetos+=rs.getString("resultado");
+				}
+			}
+			catch (SQLException e) {e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos;
+		}	
+	public static String selectHitosAvances(String condition) throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();    	 
+			 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from( "+
+					"SELECT * FROM hitos_avances "+ condition +")t";			
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 String objetos = "";
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					objetos+=rs.getString("resultado");
+				}
+			}
+			catch (SQLException e) {e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos;
+	}
 	public static List<FactHitos> selectFactHitosSnpp(String condition) throws SQLException{
 	   	 Connection conect=ConnectionConfiguration.conectarSnpp();
 			 String query = " select * from snpp "+condition;
