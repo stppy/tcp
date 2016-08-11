@@ -2089,10 +2089,16 @@ $(document).ready(function(){
 												if (elRegistro != null){
 													tituloModal='<h3><center>'+elRegistro[0].institucion+'&nbsp;&nbsp;-&nbsp;&nbsp;'+elRegistro[0].linea_accion_nombre+'</center></h3>';
 													for(var m=0; m<elRegistro.length;m++)
-													{
+													{															
+															var registroFechaInicio = "";
+															var registroFechaFin = "";
+															
+															if (elRegistro[m].accion_fecha_inicio != null) 
+																registroFechaInicio = elRegistro[m].accion_fecha_inicio.split("-"); 
+															if (elRegistro[m].accion_fecha_fin != null)
+																registroFechaFin = elRegistro[m].accion_fecha_fin.split("-");
 															//var registroFechaTerminacion = elRegistro[m].programacion_fecha_terminacion.split("-");
-															var registroFechaInicio = elRegistro[m].accion_fecha_inicio.split("-"); //estas fechas fueron agregadas anteriormente pero se prefiere la fecha de terminación de programación para contrastar con el chart de la linea de acción acumulado por mes.
-															var registroFechaFin = elRegistro[m].accion_fecha_fin.split("-");
+															
 															cuerpoModal+='<tr><td><a href="#" class="modalHitoAvances" parametros="'+institucion_id+'-'+linea_accion_id+'-'+idDepartamento+'-'+idDistrito+'-'+elRegistro[m].accion_id+'" >'+elRegistro[m].accion_catalogo_nombre+'</td>';
 															//if (idDepartamento != "") 
 																cuerpoModal += '<td>'+elRegistro[m].accion_depto_nombre+'</td>';
