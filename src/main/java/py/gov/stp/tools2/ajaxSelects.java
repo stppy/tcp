@@ -46,6 +46,7 @@ public class ajaxSelects extends HttpServlet {
   
     	AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();
     	Map attributes = user.getAttributes(); 
+    	String userCorreo = user.getName(); 
     	String userNivelId = attributes.get("nivel_id").toString();
     	String userEntidadId = attributes.get("entidad_id").toString();
     	String userUnrId = attributes.get("unr_id").toString();
@@ -123,7 +124,9 @@ public class ajaxSelects extends HttpServlet {
     	String abrev = "";
     	String descripcion = "";
     	String db = "";
-    	String institucionIdConcat = "";    	
+    	String institucionIdConcat = "";
+    	String insLineaAccionIdConcat = "";    	
+
     	//Boolean borrado=null;
     	
     	
@@ -186,7 +189,8 @@ public class ajaxSelects extends HttpServlet {
       	if (request.getParameter("nivelId")!=null) nivelId=Integer.parseInt(request.getParameter("nivelId"));
       	if (request.getParameter("entidadId")!=null) entidadId=Integer.parseInt(request.getParameter("entidadId")); 
       	if (request.getParameter("institucionIdConcat")!=null) institucionIdConcat=request.getParameter("institucionIdConcat");      	
-      	
+      	if (request.getParameter("insLineaAccionIdConcat")!=null) insLineaAccionIdConcat=request.getParameter("insLineaAccionIdConcat");      	
+
       	
         PrintWriter out = response.getWriter();
         response.setContentType("text/html");
@@ -1507,6 +1511,22 @@ public class ajaxSelects extends HttpServlet {
         		//JsonElement json = new Gson().toJsonTree(objetos );
         		//out.println(json.toString()); 
            		out.println(objetos);return;
+        	}
+        	if (action.equals("getUsuarioLineaAccion")){
+        		String objetos=null;
+        		condition = " where true ";
+        		if (userCorreo!=null) condition += " and usuario_correo ='"+userCorreo+"'";
+           		try {objetos = SqlSelects.selectUsuarioLineaAccion(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		out.println(objetos);return;        	
+        	}
+        	if (action.equals("getInsLineaAccionHasEtiqueta")){
+        		String objetos=null;
+        		condition = " where true ";
+        		if (insLineaAccionIdConcat!=null) condition += " and ins_linea_accion_id in("+insLineaAccionIdConcat+")";
+           		try {objetos = SqlSelects.selectInsLineaAccionHasEtiqueta(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		out.println(objetos);return;        	
         	}
        }
        out.close();
