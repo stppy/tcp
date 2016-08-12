@@ -2735,8 +2735,8 @@ $(document).ready(function(){
 							        			'</div>'+
 							      			'</div>'+
 							      			'<div class="box-body hitosProgramado">'+//cuerpo del body    			
-							      				'<div class="table-responsive">'+
-													'<table class="table table-hover hitos">'+
+							      				'<div class="table-responsive">'+							      				
+													'<table class="table table-hover table-bordered" id="dataTablesHitos">'+
 														'<thead>'+
 															'<tr class="active"><th>Acción</th><th>Departamento</th><th>Distrito</th><th>U. Medida</th><th>Cantidad. Programado</th><th>Costo Total</th><th>Fecha Terminación</th><th>% Programado</th><th>Editar</th></tr>'+
 														'</thead>'+
@@ -2747,7 +2747,7 @@ $(document).ready(function(){
 														{
 															if(registroHitos[m].hito_porcentaje_programado > 0)
 															{
-																modalHito += '<tr><td>'+registroHitos[m].accion+'</td><td>'+registroHitos[m].accion_departamento+'</td><td>'+registroHitos[m].accion_distrito+'</td><td>'+registroHitos[m].accion_unidad_medida+'</td><td>'+registroHitos[m].hito_cantidad_programado+'</td><td>'+registroHitos[m].accion_costo+'</td><td>'+registroHitos[m].hito_fecha_entrega+'</td><!--td>registroHitos[m].hito_porcentaje_programado</td--><td><a href="#" class="modalEditarHito" parametros="'+registroHitos[m].hito_id+'"><span class="glyphicon glyphicon-pencil"></span></a></td></tr>';
+																modalHito += '<tr><td>'+registroHitos[m].accion_catalogo_nombre+'</td><td>'+registroHitos[m].accion_departamento+'</td><td>'+registroHitos[m].accion_distrito+'</td><td>'+registroHitos[m].accion_unidad_medida+'</td><td>'+registroHitos[m].hito_cantidad_programado+'</td><td>'+registroHitos[m].accion_costo+'</td><td>'+registroHitos[m].hito_fecha_entrega+'</td><td>'+registroHitos[m].hito_porcentaje_programado+'</td><td><a href="#" class="modalEditarHito" parametros="'+registroHitos[m].hito_id+'"><span class="glyphicon glyphicon-pencil"></span></a></td></tr>';
 																totalCantidadProgramada+=registroHitos[m].hito_cantidad_programado;
 															}
 														}
@@ -2771,7 +2771,7 @@ $(document).ready(function(){
 						      			'</div>'+
 						      			'<div class="box-body">'+ 
 					      				'<div class="table-responsive">'+
-										'<table class="table table-hover hitos">'+
+										'<table class="table table-hover table-bordered" id="dataTablesAvances">'+
 											'<thead>'+
 												'<tr class="active"><th>Acción</th><th>Departamento</th><th>Distrito</th><th>U. Medida</th><th>Cantidad. Programado</th><th>Costo Total</th><th>Fecha Terminación</th><th>% Ejecutado</th><th>Editar</th></tr>'+
 											'</thead>'+
@@ -2782,7 +2782,7 @@ $(document).ready(function(){
 											{
 												if(registroHitos[m].hito_porcentaje_ejecutado > 0)
 												{
-													modalHito += '<tr><td>'+registroHitos[m].accion+'</td><td>'+registroHitos[m].accion_departamento+'</td><td>'+registroHitos[m].accion_distrito+'</td><td>'+registroHitos[m].accion_unidad_medida+'</td><td>'+registroHitos[m].hito_cantidad_programado+'</td><td>'+registroHitos[m].accion_costo+'</td><td>'+registroHitos[m].hito_fecha_entrega+'</td><td>'+registroHitos[m].hito_porcentaje_ejecutado+'</td><td><a href="#" class="modalEditarHito" parametros="'+registroHitos[m].hito_id+'"><span class="glyphicon glyphicon-pencil"></span></a></td></tr>';
+													modalHito += '<tr><td>'+registroHitos[m].accion_catalogo_nombre+'</td><td>'+registroHitos[m].accion_departamento+'</td><td>'+registroHitos[m].accion_distrito+'</td><td>'+registroHitos[m].accion_unidad_medida+'</td><td>'+registroHitos[m].hito_cantidad_programado+'</td><td>'+registroHitos[m].accion_costo+'</td><td>'+registroHitos[m].hito_fecha_entrega+'</td><td>'+registroHitos[m].hito_porcentaje_ejecutado+'</td><td><a href="#" class="modalEditarHito" parametros="'+registroHitos[m].hito_id+'"><span class="glyphicon glyphicon-pencil"></span></a></td></tr>';
 													totalCantidadProgramada+=registroHitos[m].hito_cantidad_programado;
 												}
 											}
@@ -2810,10 +2810,9 @@ $(document).ready(function(){
          '</div>'+//fin modal-dialog
          '</div>';//fon myModal2
 
-
-
+         
+		$("body").append(modalHito);         		
 		
-		$("body").append(modalHito);
 		
 		if (idDepartamento != ""){
         	$('#selectorDepartamento > option[value="'+idDepartamento+'"]').attr('selected', 'selected');
@@ -2837,7 +2836,10 @@ $(document).ready(function(){
 			
 			$('#distritosDepartamento > option[value="'+idDistrito+'"]').attr('selected', 'selected');
 		}
-		$("#myModal2").modal('show');
+		$("#myModal2").modal('show');		
+		
+		$("#dataTablesHitos").DataTable();
+		$("#dataTablesAvances").DataTable();
 		
 		$("body").on("change", "#selectorDepartamento",function(event){
 			//var departamentoId = $(this).attr("parametro");
