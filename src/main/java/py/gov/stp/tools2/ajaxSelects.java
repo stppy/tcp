@@ -77,7 +77,7 @@ public class ajaxSelects extends HttpServlet {
     	Integer snipAutorizado = null;
     	Integer funcional = null;
     	Integer catalogoDestinatario = null;
-    	Integer catalogoAccionId = null;
+    	Integer catalogoAccionId = null;    	
     	
     	Integer institucion_id=null;
     	Integer accion_id=null;
@@ -109,6 +109,7 @@ public class ajaxSelects extends HttpServlet {
     	Integer entidadId = null;
     	
     	String institucion=null;
+    	String catalogoAccion = null;
     	String usuario=null;
     	String condition = "";
     	String mision = "";
@@ -122,7 +123,7 @@ public class ajaxSelects extends HttpServlet {
     	String abrev = "";
     	String descripcion = "";
     	String db = "";
-    	String institucionIdConcat = "";
+    	String institucionIdConcat = "";    	
     	//Boolean borrado=null;
     	
     	
@@ -163,6 +164,7 @@ public class ajaxSelects extends HttpServlet {
       	if (request.getParameter("linea_accion_id")!=null) linea_accion_id=Integer.parseInt(request.getParameter("linea_accion_id")); else linea_accion_id=0;
       	if (request.getParameter("lineaAccionId")!=null) lineaAccionId=Integer.parseInt(request.getParameter("lineaAccionId"));
       	if (request.getParameter("catalogoAccionId")!=null) catalogoAccionId=Integer.parseInt(request.getParameter("catalogoAccionId"));
+      	if (request.getParameter("catalogoAccion")!=null) catalogoAccion=request.getParameter("catalogoAccion"); 
       	if (request.getParameter("cronogramaId")!=null) cronogramaId=Integer.parseInt(request.getParameter("cronogramaId"));
       	if (request.getParameter("programacionId")!=null) programacionId=Integer.parseInt(request.getParameter("programacionId"));
       	if (request.getParameter("avanceId")!=null) avanceId=Integer.parseInt(request.getParameter("avanceId"));
@@ -596,7 +598,17 @@ public class ajaxSelects extends HttpServlet {
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
-        	}         
+        	}
+        	if (action.equals("getAccionesCatalogoUnidadMedida")){
+        		List objetos=null; 
+        		condition = " where true ";        		        		        		
+        		if (accionId!=null) condition += " and accion_id ='"+accionId+"'";
+        		if (catalogoAccion!=null) condition += " and accion ='"+catalogoAccion+"'";        		
+           		try {objetos = SqlSelects.selectAccion(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());
+        	}
         	if (action.equals("getSprProducto")){
         		List objetos=null; 
            		try {objetos = SqlSelects.selectSprProducto();}
@@ -1306,7 +1318,7 @@ public class ajaxSelects extends HttpServlet {
 				}
                 
 				for (int s = 0; s < instituciones.size(); s += 1) {
-	                 condition += " OR ins_linea_accion_base_dd.institucion_id='"+instituciones.get(s).getId()+"'";
+	                 condition += " OR ins_linea_accion_base.institucion_id='"+instituciones.get(s).getId()+"'";
 				}
 	                try {                	
 
