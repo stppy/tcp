@@ -48,6 +48,8 @@ function renderEvidencia(avanceId, parametros){
 	
 	return cuerpoEvidencia;
 }
+
+
 <%
 	if (attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("0")|| attributes.get("role_id_tablero").toString().equals("2")){%>
 //		alert("admin");
@@ -1801,7 +1803,7 @@ function renderEvidencia(avanceId, parametros){
 			$("#modalConsultaBorrarInsLineaAccion").remove();
 		}
 	});	
-	
+			
 	$("body").on("click", ".agregarAccion",function(event){
 		var parametros = $(this).attr("parametros");
 		var idParsed = parametros.split("-"); 
@@ -1955,66 +1957,77 @@ function renderEvidencia(avanceId, parametros){
 		}).responseText;
 		accion = JSON.parse(accion);
 		
-		var nombreDepartamento;
-		var nombreDistrito;
-		var nombreAccionCatalogo;
 		var cuerpoAccion = "";
-
-		for(var a = 0; a < accion.length; a++)
-		{	
-			var suMetas = 0 ;
-			suMetas = accion[a].meta1 + accion[a].meta2 + accion[a].meta3 + accion[a].meta4; 
+		renderAccion();		
+		
+		function renderAccion(){
 			
-			for(var f = 0; f < catalogoAccion.length; f++)
-			{
-				if(accion[a].accionCatalogoId == catalogoAccion[f].id){
-					nombreAccionCatalogo = catalogoAccion[f].nombre;
+			var nombreDepartamento;
+			var nombreDistrito;
+			var nombreAccionCatalogo;
+			
+
+			for(var a = 0; a < accion.length; a++)
+			{	
+				if(onoff==true && accion[a].borrado == true){
+					a=a+1;				
+				}else{
+					var suMetas = 0 ;
+					suMetas = accion[a].meta1 + accion[a].meta2 + accion[a].meta3 + accion[a].meta4; 
+					
+					for(var f = 0; f < catalogoAccion.length; f++)
+					{
+						if(accion[a].accionCatalogoId == catalogoAccion[f].id){
+							nombreAccionCatalogo = catalogoAccion[f].nombre;
+							}
+					}			
+					
+					for(var d = 0; d < departamentos.length; d++)
+					{
+						if(accion[a].departamentoId == departamentos[d].idDepartamento){
+							nombreDepartamento = departamentos[d].nombreDepartamento;
+							//cuerpoAccion +="<td class='text-center'>"+nombreDepartamento+"</td>";
+							}
 					}
-			}			
-			
-			for(var d = 0; d < departamentos.length; d++)
-			{
-				if(accion[a].departamentoId == departamentos[d].idDepartamento){
-					nombreDepartamento = departamentos[d].nombreDepartamento;
-					//cuerpoAccion +="<td class='text-center'>"+nombreDepartamento+"</td>";
-					}
-			}
-			
+					
 
-			for(var e = 0; e < distritos.length; e++)
-			{
-				if(accion[a].distritoId == distritos[e].id && accion[a].departamentoId == distritos[e].departamentoId){
-					nombreDistrito = distritos[e].descripcion;
+					for(var e = 0; e < distritos.length; e++)
+					{
+						if(accion[a].distritoId == distritos[e].id && accion[a].departamentoId == distritos[e].departamentoId){
+							nombreDistrito = distritos[e].descripcion;
 
-				}
-			}
-
-			var nombreUnidadMedidaAccion = "";
-			for(var j = 0; j < catalogoAccion.length; j++){
-				if(accion[a].accionCatalogoId == catalogoAccion[j].id){
-					nombreUnidadMedidaAccion = "";
-					for(i = 0; i < unidadMedida.length; i++){
-						
-						if (catalogoAccion[j].idUnidadMedida == unidadMedida[i].id ){
-							nombreUnidadMedidaAccion =  unidadMedida[i].descripcion;
 						}
 					}
-				}	
-			}
-					
-			if(accion[a].borrado == true){
-				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
-					cuerpoAccion +="<tr><td class='text-center'><del>"+nombreAccionCatalogo+"</del></td><td class='text-center'><del>"+nombreDepartamento+"</del></td><td class='text-center'><del>"+nombreDistrito+"</del></td><td class='text-center'><del>"+accion[a].fechaInicio+"</del></td><td class='text-center'><del>"+accion[a].fechaFin+"</del></td><td class='text-center'><del>"+nombreUnidadMedidaAccion+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(suMetas).toFixed(2))+"</del></td><td class='text-center'><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Restaurar Acción'><span class='fa fa-recycle'></span></button></td></tr>";
-				<%}%>
-			}else{
-				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-					cuerpoAccion +="<tr><td class='text-center'>"+nombreAccionCatalogo+"</td><td class='text-center'>"+nombreDepartamento+"</td><td class='text-center'>"+nombreDistrito+"</td><td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+nombreUnidadMedidaAccion+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(suMetas).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm modalVincularProducto' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos Presupuestarios' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"><span>Gs</span></button><button type='button' class='btn btn-default btn-sm agregarActividad' title='Agregar Cronograma' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" ><span class='glyphicon glyphicon-time'></span></button><button type='button' class='btn btn-default btn-sm editarAccion' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button><button type='button' class='btn btn-default btn-sm modalDestinatario'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Agregar Destinatario'><span class='glyphicon glyphicon-user'></span></button></td></tr>";
-				<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-					cuerpoAccion +="<tr><td class='text-center'>"+nombreAccionCatalogo+"</td><td class='text-center'>"+nombreDepartamento+"</td><td class='text-center'>"+nombreDistrito+"</td><td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+nombreUnidadMedidaAccion+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(suMetas).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm modalVincularProducto' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos Presupuestarios' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"><span>Gs</span></button><button type='button' class='btn btn-default btn-sm agregarActividad' title='Agregar Cronograma' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" ><span class='glyphicon glyphicon-time'></span></button><button type='button' class='btn btn-default btn-sm modalDestinatario'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Agregar Destinatario'><span class='glyphicon glyphicon-user'></span></button></td></tr>";
-				<%}%>
-			}
 
+					var nombreUnidadMedidaAccion = "";
+					for(var j = 0; j < catalogoAccion.length; j++){
+						if(accion[a].accionCatalogoId == catalogoAccion[j].id){
+							nombreUnidadMedidaAccion = "";
+							for(i = 0; i < unidadMedida.length; i++){
+								
+								if (catalogoAccion[j].idUnidadMedida == unidadMedida[i].id ){
+									nombreUnidadMedidaAccion =  unidadMedida[i].descripcion;
+								}
+							}
+						}	
+					}
+							
+					if(accion[a].borrado == true){
+						<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
+							cuerpoAccion +="<tr><td class='text-center'><del>"+nombreAccionCatalogo+"</del></td><td class='text-center'><del>"+nombreDepartamento+"</del></td><td class='text-center'><del>"+nombreDistrito+"</del></td><td class='text-center'><del>"+accion[a].fechaInicio+"</del></td><td class='text-center'><del>"+accion[a].fechaFin+"</del></td><td class='text-center'><del>"+nombreUnidadMedidaAccion+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(suMetas).toFixed(2))+"</del></td><td class='text-center'><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Restaurar Acción'><span class='fa fa-recycle'></span></button></td></tr>";
+						<%}%>
+					}else{
+						<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
+							cuerpoAccion +="<tr><td class='text-center'>"+nombreAccionCatalogo+"</td><td class='text-center'>"+nombreDepartamento+"</td><td class='text-center'>"+nombreDistrito+"</td><td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+nombreUnidadMedidaAccion+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(suMetas).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm modalVincularProducto' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos Presupuestarios' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"><span>Gs</span></button><button type='button' class='btn btn-default btn-sm agregarActividad' title='Agregar Cronograma' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" ><span class='glyphicon glyphicon-time'></span></button><button type='button' class='btn btn-default btn-sm editarAccion' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button><button type='button' class='btn btn-default btn-sm modalDestinatario'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Agregar Destinatario'><span class='glyphicon glyphicon-user'></span></button></td></tr>";
+						<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
+							cuerpoAccion +="<tr><td class='text-center'>"+nombreAccionCatalogo+"</td><td class='text-center'>"+nombreDepartamento+"</td><td class='text-center'>"+nombreDistrito+"</td><td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+nombreUnidadMedidaAccion+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(suMetas).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm modalVincularProducto' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos Presupuestarios' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"><span>Gs</span></button><button type='button' class='btn btn-default btn-sm agregarActividad' title='Agregar Cronograma' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" ><span class='glyphicon glyphicon-time'></span></button><button type='button' class='btn btn-default btn-sm modalDestinatario'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Agregar Destinatario'><span class='glyphicon glyphicon-user'></span></button></td></tr>";
+						<%}%>
+					}
+				}
+			}
 		}
+		
+		
 		
 		
 				
@@ -2144,8 +2157,7 @@ function renderEvidencia(avanceId, parametros){
 		$('#modalAccion').modal('show');
 		$("#selectorCatalogoAccion").change();
 		$("#selectorDepartamento").change();
-		$('#dataTablesAcciones').dataTable();
-		OcultarRegistrosBorrados();
+		$('#dataTablesAcciones').dataTable();		
 
 	});
 	
@@ -3017,8 +3029,7 @@ $("body").on("click", ".borrarAccion",function(event){
 
     		}
     		
-    		$("#TablaAccionHasProductos").append(fila);
-    		OcultarRegistrosBorrados();
+    		$("#TablaAccionHasProductos").append(fila);    		
     	}
     	
 		
@@ -3219,8 +3230,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		$('#TablaAccionHasProductos').append(cargarTablaAccionHasProducto(accionId,insLineaAccionId,lineaAccionId,institucionId,periodoId));	        
 		$("#modalVincularProductos").modal('show');
 		//$("#dataTablesVinculacionProducto").DataTable();
-		//OcultarRegistrosBorrados();
-		
+				
 		function Combo(){
 			
 			var usuarios = $.ajax({
@@ -4581,38 +4591,41 @@ $("body").on("click", ".borrarAccion",function(event){
 		var cuerpoActividad = "";
 		
 		for(var u = 0; u < actividades.length; u++)
-		{
-			var nombreUnidadMedida = "";
-			var nombreHitoTipo = "";
-			for(var x = 0; x < unidadMedida.length; x++)
-			{
-				if(unidadMedida[x].id == actividades[u].unidad_medida_id)
-				{
-					nombreUnidadMedida = unidadMedida[x].descripcion;
-				}
-			}
-			
-			for(var l = 0; l < hitoTipo.length; l++)
-			{
-				if(hitoTipo[l].id == actividades[u].hito_tipo_id)
-				{
-					nombreHitoTipo = hitoTipo[l].nombre;
-				}
-			}
-		
-			if(actividades[u].borrado == false)
-			{
-				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-					cuerpoActividad+='<tr><td>'+actividades[u].nombre+'</td><td>'+actividades[u].descripcion+'</td><td>'+nombreUnidadMedida+'</td><td>'+nombreHitoTipo+'</td><td>'+actividades[u].proporcion+'</td><td>'+actividades[u].peso+'</td><td>'+acumulable(actividades[u].acumulable)+'</td><td><button type="button" class="btn btn-default btn-sm editarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+' data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm agregarProgramacion" data-toggle="tooltip" data-placement="top" title="Agregar Hito" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-time" ></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
-				<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-					cuerpoActividad+='<tr><td>'+actividades[u].nombre+'</td><td>'+actividades[u].descripcion+'</td><td>'+nombreUnidadMedida+'</td><td>'+nombreHitoTipo+'</td><td>'+actividades[u].proporcion+'</td><td>'+actividades[u].peso+'</td><td>'+acumulable(actividades[u].acumulable)+'</td><td><button type="button" class="btn btn-default btn-sm agregarProgramacion" data-toggle="tooltip" data-placement="top" title="Agregar Hito" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-time" ></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
-				<%}%>
+		{	
+			if(onoff==true && actividades[u].borrado == true){
+				u=u+1;
 			}else{
-				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
-					cuerpoActividad+='<tr><td><del>'+actividades[u].nombre+'</del></td><td><del>'+actividades[u].descripcion+'</del></td><td><del>'+nombreUnidadMedida+'</del></td><td><del>'+nombreHitoTipo+'</del></td><td><del>'+actividades[u].proporcion+'</del></td><td><del>'+actividades[u].peso+'</del></td><td><del>'+acumulable(actividades[u].acumulable)+'</del></td><td><button type="button" class="btn btn-default btn-sm editarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+' data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm agregarProgramacion" data-toggle="tooltip" data-placement="top" title="Agregar Hito" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-time" ></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
-				<%}%>		
-			}
+				var nombreUnidadMedida = "";
+				var nombreHitoTipo = "";
+				for(var x = 0; x < unidadMedida.length; x++)
+				{
+					if(unidadMedida[x].id == actividades[u].unidad_medida_id)
+					{
+						nombreUnidadMedida = unidadMedida[x].descripcion;
+					}
+				}
+				
+				for(var l = 0; l < hitoTipo.length; l++)
+				{
+					if(hitoTipo[l].id == actividades[u].hito_tipo_id)
+					{
+						nombreHitoTipo = hitoTipo[l].nombre;
+					}
+				}
 			
+				if(actividades[u].borrado == false)
+				{
+					<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
+						cuerpoActividad+='<tr><td>'+actividades[u].nombre+'</td><td>'+actividades[u].descripcion+'</td><td>'+nombreUnidadMedida+'</td><td>'+nombreHitoTipo+'</td><td>'+actividades[u].proporcion+'</td><td>'+actividades[u].peso+'</td><td>'+acumulable(actividades[u].acumulable)+'</td><td><button type="button" class="btn btn-default btn-sm editarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+' data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm agregarProgramacion" data-toggle="tooltip" data-placement="top" title="Agregar Hito" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-time" ></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
+					<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
+						cuerpoActividad+='<tr><td>'+actividades[u].nombre+'</td><td>'+actividades[u].descripcion+'</td><td>'+nombreUnidadMedida+'</td><td>'+nombreHitoTipo+'</td><td>'+actividades[u].proporcion+'</td><td>'+actividades[u].peso+'</td><td>'+acumulable(actividades[u].acumulable)+'</td><td><button type="button" class="btn btn-default btn-sm agregarProgramacion" data-toggle="tooltip" data-placement="top" title="Agregar Hito" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-time" ></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
+					<%}%>
+				}else{
+					<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
+						cuerpoActividad+='<tr><td><del>'+actividades[u].nombre+'</del></td><td><del>'+actividades[u].descripcion+'</del></td><td><del>'+nombreUnidadMedida+'</del></td><td><del>'+nombreHitoTipo+'</del></td><td><del>'+actividades[u].proporcion+'</del></td><td><del>'+actividades[u].peso+'</del></td><td><del>'+acumulable(actividades[u].acumulable)+'</del></td><td><button type="button" class="btn btn-default btn-sm editarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+' data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm agregarProgramacion" data-toggle="tooltip" data-placement="top" title="Agregar Hito" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-time" ></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
+					<%}%>		
+				}	
+			}	
 		}
 		
 		
@@ -4721,8 +4734,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		$('#tablaActividades').append(cuerpoActividad);
 		$("#modalActividad").modal('show');
 		$("#dataTablesActividades").DataTable();
-		OcultarRegistrosBorrados();
-		
+				
 	});
 	
 	function acumulable(dato){
@@ -5481,7 +5493,7 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	$("#listaActividades").append(cuerpoActividades);
 	$("#modalProgramacion").modal('show');
 	$("#dataTablesProgramacionHito1").DataTable();
-	OcultarRegistrosBorrados();
+	
 });	
 
 $("body").on("click", ".guardarProgramacion",function(event){
@@ -5932,8 +5944,7 @@ $("body").on("click", ".agregarAvance",function(event){
 	$("#modalAvance").modal('show');
 	$("#dataTablesListaAvance").DataTable();
 	$("#dataTablesProgramacionHito2").DataTable();
-	OcultarRegistrosBorrados();
-	
+		
 	
 });
 
@@ -6581,7 +6592,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	$("#dataTableAvanceCosto").DataTable();
 	$("#dataTableBeneficiario").DataTable();
 	$("#dataTableAvance").DataTable();
-	OcultarRegistrosBorrados();
+	
 	
 
 });	
@@ -8508,35 +8519,39 @@ $("body").on("click", ".modalDestinatario",function(event){
 	var cuerpoBeneficiario = "";
 	for(var a = 0; a < webServicesBeneficiarioAccion.length; a++)
 	{
-		var webServicesBeneficiarioTipo = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioTipo&beneficiarioTipoId='+webServicesBeneficiarioAccion[a].beneficiarioTipoId,
-		  	type:'get',
-		  	dataType:'json',
-		  	async:false       
-		}).responseText;
-		webServicesBeneficiarioTipo = JSON.parse(webServicesBeneficiarioTipo);
 		
-		var webServicesBeneficiarioGrupo = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioGrupoId='+webServicesBeneficiarioAccion[a].beneficiarioGrupoId,
-		  	type:'get',
-		  	dataType:'json',
-		  	async:false       
-		}).responseText;
-		webServicesBeneficiarioGrupo = JSON.parse(webServicesBeneficiarioGrupo);
-		
-		if(webServicesBeneficiarioAccion[a].borrado == true)
-		{
-			<% if (attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("0")){%>
-				cuerpoDestinatarioAccion += '<tr><td><del>'+webServicesBeneficiarioTipo[0].nombre+'</del></td><td><del>'+webServicesBeneficiarioGrupo[0].nombre+'</del></td><td><del>'+webServicesBeneficiarioAccion[a].descripcion+'</del></td><td><del>'+numeroConComa(webServicesBeneficiarioAccion[a].cantidad)+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaBorrarDestinatarioAccion" data-toggle="tooltip" data-placement="top" title="Restaurar Destinatario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-recycle"></span></button></td></tr>';
-			<% }%>
+		if(onoff==true && webServicesBeneficiarioAccion[a].borrado == true){
+			a=a+1;
 		}else{
-			<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-					cuerpoDestinatarioAccion += '<tr><td>'+webServicesBeneficiarioTipo[0].nombre+'</td><td>'+webServicesBeneficiarioGrupo[0].nombre+'</td><td>'+webServicesBeneficiarioAccion[a].descripcion+'</td><td>'+numeroConComa(webServicesBeneficiarioAccion[a].cantidad)+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarDestinatario" data-toggle="tooltip" data-placement="top" title="Editar Destinatario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarDestinatarioAccion" data-toggle="tooltip" data-placement="top" title="Borrar Destinatario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-trash"></span></button></td></tr>';
-			<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-					cuerpoDestinatarioAccion += '<tr><td>'+webServicesBeneficiarioTipo[0].nombre+'</td><td>'+webServicesBeneficiarioGrupo[0].nombre+'</td><td>'+webServicesBeneficiarioAccion[a].descripcion+'</td><td>'+numeroConComa(webServicesBeneficiarioAccion[a].cantidad)+'</td><td class="text-center"></td></tr>';
-			<%}%>
+			var webServicesBeneficiarioTipo = $.ajax({
+				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioTipo&beneficiarioTipoId='+webServicesBeneficiarioAccion[a].beneficiarioTipoId,
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+			}).responseText;
+			webServicesBeneficiarioTipo = JSON.parse(webServicesBeneficiarioTipo);
+			
+			var webServicesBeneficiarioGrupo = $.ajax({
+				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioGrupoId='+webServicesBeneficiarioAccion[a].beneficiarioGrupoId,
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+			}).responseText;
+			webServicesBeneficiarioGrupo = JSON.parse(webServicesBeneficiarioGrupo);
+			
+			if(webServicesBeneficiarioAccion[a].borrado == true)
+			{
+				<% if (attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("0")){%>
+					cuerpoDestinatarioAccion += '<tr><td><del>'+webServicesBeneficiarioTipo[0].nombre+'</del></td><td><del>'+webServicesBeneficiarioGrupo[0].nombre+'</del></td><td><del>'+webServicesBeneficiarioAccion[a].descripcion+'</del></td><td><del>'+numeroConComa(webServicesBeneficiarioAccion[a].cantidad)+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaBorrarDestinatarioAccion" data-toggle="tooltip" data-placement="top" title="Restaurar Destinatario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-recycle"></span></button></td></tr>';
+				<% }%>
+			}else{
+				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
+						cuerpoDestinatarioAccion += '<tr><td>'+webServicesBeneficiarioTipo[0].nombre+'</td><td>'+webServicesBeneficiarioGrupo[0].nombre+'</td><td>'+webServicesBeneficiarioAccion[a].descripcion+'</td><td>'+numeroConComa(webServicesBeneficiarioAccion[a].cantidad)+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarDestinatario" data-toggle="tooltip" data-placement="top" title="Editar Destinatario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarDestinatarioAccion" data-toggle="tooltip" data-placement="top" title="Borrar Destinatario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'-'+webServicesBeneficiarioAccion[a].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+				<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
+						cuerpoDestinatarioAccion += '<tr><td>'+webServicesBeneficiarioTipo[0].nombre+'</td><td>'+webServicesBeneficiarioGrupo[0].nombre+'</td><td>'+webServicesBeneficiarioAccion[a].descripcion+'</td><td>'+numeroConComa(webServicesBeneficiarioAccion[a].cantidad)+'</td><td class="text-center"></td></tr>';
+				<%}%>
+			}		
 		}
-
 	}
 			
 	var cuerpoModalDestinatario = "";
@@ -8644,7 +8659,7 @@ $("body").on("click", ".modalDestinatario",function(event){
 	$('#modalDestinatario').modal('show');
 	$('#tipoDestinatarioAccion').change();
 	$("#dataTableDestinatarioAccion").DataTable();
-	OcultarRegistrosBorrados();
+	
 });
 
 $("body").on("click", ".guardarAccionBeneficiario",function(event){
@@ -9300,7 +9315,7 @@ $("body").on("click", ".avanceCualitativo",function(event){
 	//$('#tablaAccionesPrecargadas').append(cuerpoAccion);
 	$('#modalAvanceCualitativo').modal('show');
 	$("#dataTablesAvanceCualitativo").DataTable();	
-	OcultarRegistrosBorrados();
+	
 });
 
 $("body").on("click", ".guardarAvanceCualitatitvo",function(event){
