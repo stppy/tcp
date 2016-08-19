@@ -161,6 +161,14 @@ if (user != null) { %>
 		}).responseText;
 		insLineaAccionHasEtiqueta = JSON.parse(insLineaAccionHasEtiqueta);
 		
+		var usuarioEtiqueta = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUsuarioEtiqueta',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		usuarioEtiqueta = JSON.parse(usuarioEtiqueta);
+		
 		renderInsLineaAccion();
 		
 	function renderInsLineaAccion(){
@@ -189,325 +197,331 @@ if (user != null) { %>
 		 	bandInstitucion = 0;
 		 	bandPeriodo = 0;
 		 	
-			for(var t = 0; t < insLineaAccionHasEtiqueta.length; t++)
+			for(var l = 0; l < usuarioEtiqueta.length; l++)
 			{
-				if(insLineaAccionHasEtiqueta[t].ins_linea_accion_id == insLineaAccion[w].lineaAccionId && insLineaAccionHasEtiqueta[t].etiqueta_id == 1)
+				if(usuarioEtiqueta[l].etiqueta_id == 1)
 				{
-					for(var d=0; d<usuarioLineaAccion.length;d++)
+					for(var t = 0; t < insLineaAccionHasEtiqueta.length; t++)
 					{
-						if(usuarioLineaAccion[d].lineaAccionId == insLineaAccion[w].lineaAccionId)
+						if(insLineaAccionHasEtiqueta[t].ins_linea_accion_id == insLineaAccion[w].lineaAccionId && insLineaAccionHasEtiqueta[t].etiqueta_id == 1)
 						{
-							if(insLineaAccion[w].periodoId == "2016")
-						 	{		 		
-								for(p = 0;p<periodo.length; p++)
+							for(var d=0; d<usuarioLineaAccion.length;d++)
+							{
+								if(usuarioLineaAccion[d].lineaAccionId == insLineaAccion[w].lineaAccionId)
 								{
-									if(insLineaAccion[w].periodoId == periodo[p].id)
-									{
-										if(insLineaAccion[w].borrado == true){
-											<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
-												cuerpoTablaInsLineaAccion+='<tr><td><del>'+periodo[p].nombre+'</del></td>';
-											<%}%>
-										}else{
-											<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-												cuerpoTablaInsLineaAccion+='<tr><td>'+periodo[p].nombre+'</td>';	
-											<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-												cuerpoTablaInsLineaAccion+='<tr><td>'+periodo[p].nombre+'</td>';    
-											<%}%>
-										}
-										bandPeriodo = 1;
-									}
-								}
-								
-								if(bandPeriodo == 0)
-								{
-									cuerpoTablaInsLineaAccion+='<td>'+insLineaAccion[w].periodoId+'</td>';
-								} 
-								for(m = 0;m<institucion.length; m++){
-									if(insLineaAccion[w].institucionId == institucion[m].id)
-									{
-										if(insLineaAccion[w].borrado == true){
-											<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
-												cuerpoTablaInsLineaAccion+='<td><del>'+institucion[m].sigla+'</del></td>';
-											<%}%>
-										}else{
-											<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-												cuerpoTablaInsLineaAccion+='<td>'+institucion[m].sigla+'</td>';
-											<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-												cuerpoTablaInsLineaAccion+='<td>'+institucion[m].sigla+'</td>';
-											<%}%>
-										}
-										bandInstitucion = 1;
-									}
-								}
-								
-								if(bandInstitucion == 0)
-								{
-									cuerpoTablaInsLineaAccion+='<td>'+insLineaAccion[w].institucionId+'</td>';
-								}
-								
-								for(i = 0;i<lineaAccion.length; i++){				
-									if(insLineaAccion[w].lineaAccionId == lineaAccion[i].id)
-									{
-										if(insLineaAccion[w].borrado == true){
-											<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
-											cuerpoTablaInsLineaAccion+='<td><del>'+lineaAccion[i].nombre+'</del></td>';
-											<%}%>
-										}else{
-											<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-												cuerpoTablaInsLineaAccion+='<td>'+lineaAccion[i].nombre+'</td>';	
-											<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-												cuerpoTablaInsLineaAccion+='<td>'+lineaAccion[i].nombre+'</td>';	
-											<%}%>
-										}
-										bandLineaAccion = 1;
-									}
-								}
-											
-								if(bandLineaAccion == 0)
-								{
-									cuerpoTablaInsLineaAccion+='<td>'+insLineaAccion[w].lineaAccionId+'</td>';
-								}
-														
-								var codigoUnidadMedida;
-								var nombreUnidadMedida;
-								for(h = 0;h<lineaAccion.length; h++){				
-									if(insLineaAccion[w].lineaAccionId == lineaAccion[h].id)
-									{
-										codigoUnidadMedida=lineaAccion[h].unidadMedidaId;
-										
-										for(var k = 0; k < unidadMedida.length; k++)
+									if(insLineaAccion[w].periodoId == "2016")
+								 	{		 		
+										for(p = 0;p<periodo.length; p++)
 										{
-											if(codigoUnidadMedida == unidadMedida[k].id)
+											if(insLineaAccion[w].periodoId == periodo[p].id)
 											{
-												nombreUnidadMedida = unidadMedida[k].descripcion;
+												if(insLineaAccion[w].borrado == true){
+													<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
+														cuerpoTablaInsLineaAccion+='<tr><td><del>'+periodo[p].nombre+'</del></td>';
+													<%}%>
+												}else{
+													<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
+														cuerpoTablaInsLineaAccion+='<tr><td>'+periodo[p].nombre+'</td>';	
+													<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
+														cuerpoTablaInsLineaAccion+='<tr><td>'+periodo[p].nombre+'</td>';    
+													<%}%>
+												}
+												bandPeriodo = 1;
 											}
 										}
+										
+										if(bandPeriodo == 0)
+										{
+											cuerpoTablaInsLineaAccion+='<td>'+insLineaAccion[w].periodoId+'</td>';
+										} 
+										for(m = 0;m<institucion.length; m++){
+											if(insLineaAccion[w].institucionId == institucion[m].id)
+											{
+												if(insLineaAccion[w].borrado == true){
+													<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
+														cuerpoTablaInsLineaAccion+='<td><del>'+institucion[m].sigla+'</del></td>';
+													<%}%>
+												}else{
+													<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
+														cuerpoTablaInsLineaAccion+='<td>'+institucion[m].sigla+'</td>';
+													<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
+														cuerpoTablaInsLineaAccion+='<td>'+institucion[m].sigla+'</td>';
+													<%}%>
+												}
+												bandInstitucion = 1;
+											}
+										}
+										
+										if(bandInstitucion == 0)
+										{
+											cuerpoTablaInsLineaAccion+='<td>'+insLineaAccion[w].institucionId+'</td>';
+										}
+										
+										for(i = 0;i<lineaAccion.length; i++){				
+											if(insLineaAccion[w].lineaAccionId == lineaAccion[i].id)
+											{
+												if(insLineaAccion[w].borrado == true){
+													<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
+													cuerpoTablaInsLineaAccion+='<td><del>'+lineaAccion[i].nombre+'</del></td>';
+													<%}%>
+												}else{
+													<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
+														cuerpoTablaInsLineaAccion+='<td>'+lineaAccion[i].nombre+'</td>';	
+													<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
+														cuerpoTablaInsLineaAccion+='<td>'+lineaAccion[i].nombre+'</td>';	
+													<%}%>
+												}
+												bandLineaAccion = 1;
+											}
+										}
+													
+										if(bandLineaAccion == 0)
+										{
+											cuerpoTablaInsLineaAccion+='<td>'+insLineaAccion[w].lineaAccionId+'</td>';
+										}
+																
+										var codigoUnidadMedida;
+										var nombreUnidadMedida;
+										for(h = 0;h<lineaAccion.length; h++){				
+											if(insLineaAccion[w].lineaAccionId == lineaAccion[h].id)
+											{
+												codigoUnidadMedida=lineaAccion[h].unidadMedidaId;
+												
+												for(var k = 0; k < unidadMedida.length; k++)
+												{
+													if(codigoUnidadMedida == unidadMedida[k].id)
+													{
+														nombreUnidadMedida = unidadMedida[k].descripcion;
+													}
+												}
+											}
+										}
+										
+										if(insLineaAccion[w].borrado == true){
+											<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
+						 						cuerpoTablaInsLineaAccion+='<td><del>'+numeroConComa(parseFloat(insLineaAccion[w].meta))+'</del></td><td class="text-center"><del>'+nombreUnidadMedida+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaBorrarInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Borrar Acción" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+'><span class="glyphicon glyphicon-refresh"></span></button></td></tr>';	 						
+						 						<%}%>	
+											}else{
+											<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
+						 						cuerpoTablaInsLineaAccion+='<td>'+numeroConComa(parseFloat(insLineaAccion[w].meta))+'</td><td class="text-center">'+nombreUnidadMedida+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm registrosInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Editar Línea de Acción" codigoRegistroInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'-'+insLineaAccion[w].meta+'-'+insLineaAccion[w].version+'><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Borrar Línea de Acción" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+'><span class="glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-default btn-sm  agregarAccion" data-toggle="tooltip" data-placement="top" title="Agregar Acción" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-list-alt"></span></button><button type="button" class="btn btn-default btn-sm avanceCualitativo" data-toggle="tooltip" data-placement="top" title="Avance Cualitativo" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-tasks"></span></button></td></tr>';
+											<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
+												cuerpoTablaInsLineaAccion+='<td>'+numeroConComa(parseFloat(insLineaAccion[w].meta))+'</td><td class="text-center">'+nombreUnidadMedida+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm  agregarAccion" data-toggle="tooltip" data-placement="top" title="Agregar Acción" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-list-alt"></span></button><button type="button" class="btn btn-default btn-sm avanceCualitativo" data-toggle="tooltip" data-placement="top" title="Avance Cualitativo" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-tasks"></span></button></td></tr>';
+											<%}%>
+										}
 									}
-								}
-								
-								if(insLineaAccion[w].borrado == true){
-									<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
-				 						cuerpoTablaInsLineaAccion+='<td><del>'+numeroConComa(parseFloat(insLineaAccion[w].meta))+'</del></td><td class="text-center"><del>'+nombreUnidadMedida+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaBorrarInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Borrar Acción" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+'><span class="glyphicon glyphicon-refresh"></span></button></td></tr>';	 						
-				 						<%}%>	
-									}else{
-									<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-				 						cuerpoTablaInsLineaAccion+='<td>'+numeroConComa(parseFloat(insLineaAccion[w].meta))+'</td><td class="text-center">'+nombreUnidadMedida+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm registrosInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Editar Línea de Acción" codigoRegistroInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'-'+insLineaAccion[w].meta+'-'+insLineaAccion[w].version+'><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Borrar Línea de Acción" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+'><span class="glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-default btn-sm  agregarAccion" data-toggle="tooltip" data-placement="top" title="Agregar Acción" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-list-alt"></span></button><button type="button" class="btn btn-default btn-sm avanceCualitativo" data-toggle="tooltip" data-placement="top" title="Avance Cualitativo" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-tasks"></span></button></td></tr>';
-									<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-										cuerpoTablaInsLineaAccion+='<td>'+numeroConComa(parseFloat(insLineaAccion[w].meta))+'</td><td class="text-center">'+nombreUnidadMedida+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm  agregarAccion" data-toggle="tooltip" data-placement="top" title="Agregar Acción" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-list-alt"></span></button><button type="button" class="btn btn-default btn-sm avanceCualitativo" data-toggle="tooltip" data-placement="top" title="Avance Cualitativo" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-tasks"></span></button></td></tr>';
-									<%}%>
+									
+								 	//Periodo posterior		 	
+								 	 if(insLineaAccion[w].periodoId > 2016)
+								 	{		 		
+										for(p = 0;p<periodo.length; p++)
+										{
+											if(insLineaAccion[w].periodoId == periodo[p].id)
+											{
+												if(insLineaAccion[w].borrado == true){
+													<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
+													cuerpoInsLineaAccionPosterior+='<tr><td><del>'+periodo[p].nombre+'</del></td>';
+													<%}%>
+												}else{
+													<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
+														cuerpoInsLineaAccionPosterior+='<tr><td>'+periodo[p].nombre+'</td>';
+													<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
+														cuerpoInsLineaAccionPosterior+='<tr><td>'+periodo[p].nombre+'</td>';
+													<%}%>
+												}
+												bandPeriodo = 1;
+											}
+										}
+										
+										if(bandPeriodo == 0)
+										{
+											cuerpoInsLineaAccionPosterior+='<td>'+insLineaAccion[w].periodoId+'</td>';
+										}
+									
+										for(m = 0;m<institucion.length; m++){
+											if(insLineaAccion[w].institucionId == institucion[m].id)
+											{
+												if(insLineaAccion[w].borrado == true){
+													<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
+														cuerpoInsLineaAccionPosterior+='<td><del>'+institucion[m].sigla+'</del></td>';
+													<%}%>
+												}else{
+													<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
+														cuerpoInsLineaAccionPosterior+='<td>'+institucion[m].sigla+'</td>';
+													<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
+														cuerpoInsLineaAccionPosterior+='<td>'+institucion[m].sigla+'</td>';
+													<%}%>
+												}
+												bandInstitucion = 1;
+											}
+										}
+										
+										if(bandInstitucion == 0)
+										{
+											cuerpoInsLineaAccionPosterior+='<td>'+insLineaAccion[w].institucionId+'</td>';
+										}
+										
+										for(i = 0;i<lineaAccion.length; i++){				
+											if(insLineaAccion[w].lineaAccionId == lineaAccion[i].id)
+											{
+												if(insLineaAccion[w].borrado == true){
+													<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
+														cuerpoInsLineaAccionPosterior+='<td><del>'+lineaAccion[i].nombre+'</del></td>';
+													<%}%>
+												}else{
+													<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
+														cuerpoInsLineaAccionPosterior+='<td>'+lineaAccion[i].nombre+'</td>';	
+													<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
+														cuerpoInsLineaAccionPosterior+='<td>'+lineaAccion[i].nombre+'</td>';	
+													<%}%>
+												}
+												bandLineaAccion = 1;
+											}
+										}
+													
+										if(bandLineaAccion == 0)
+										{
+											cuerpoInsLineaAccionPosterior+='<td>'+insLineaAccion[w].lineaAccionId+'</td>';
+										}
+																
+										var codigoUnidadMedida;
+										var nombreUnidadMedida;
+										for(h = 0;h<lineaAccion.length; h++){				
+											if(insLineaAccion[w].lineaAccionId == lineaAccion[h].id)
+											{
+												codigoUnidadMedida=lineaAccion[h].unidadMedidaId;
+												
+												for(var k = 0; k < unidadMedida.length; k++)
+												{
+													if(codigoUnidadMedida == unidadMedida[k].id)
+													{
+														nombreUnidadMedida = unidadMedida[k].descripcion;
+													}
+												}
+											}
+										}
+										
+										if(insLineaAccion[w].borrado == true){
+											<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
+						 						cuerpoInsLineaAccionPosterior+='<td><del>'+insLineaAccion[w].meta+'</del></td><td class="text-center"><del>'+nombreUnidadMedida+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm registrosInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Editar Línea de Acción" codigoRegistroInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'-'+insLineaAccion[w].meta+'-'+insLineaAccion[w].version+'><span class="glyphicon glyphicon-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Borrar Línea de Acción" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+'><span class="glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-default btn-sm agregarAccion" data-toggle="tooltip" data-placement="top" title="Agregar Acción" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-list-alt"></span></button><button type="button" class="btn btn-default btn-sm avanceCualitativo" data-toggle="tooltip" data-placement="top" title="Avance Cualitativo" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-tasks"></span></button></td></tr>'; 
+											<%}%>
+										}else{
+											<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
+						 						cuerpoInsLineaAccionPosterior+='<td>'+insLineaAccion[w].meta+'</td><td class="text-center">'+nombreUnidadMedida+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm registrosInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Editar Línea de Acción" codigoRegistroInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'-'+insLineaAccion[w].meta+'-'+insLineaAccion[w].version+'><span class="glyphicon glyphicon-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Borrar Línea de Acción" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+'><span class="glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-default btn-sm agregarAccion" data-toggle="tooltip" data-placement="top" title="Agregar Acción" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-list-alt"></span></button><button type="button" class="btn btn-default btn-sm avanceCualitativo" data-toggle="tooltip" data-placement="top" title="Avance Cualitativo" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-tasks"></span></button></td></tr>';
+											<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
+												cuerpoInsLineaAccionPosterior+='<td>'+insLineaAccion[w].meta+'</td><td class="text-center">'+nombreUnidadMedida+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm agregarAccion" data-toggle="tooltip" data-placement="top" title="Agregar Acción" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-list-alt"></span></button><button type="button" class="btn btn-default btn-sm avanceCualitativo" data-toggle="tooltip" data-placement="top" title="Avance Cualitativo" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-tasks"></span></button></td></tr>';
+											<%}%>
+										}
+									}
+								 	
+								 	//periodo anterior
+								 	if(insLineaAccion[w].periodoId < 2016)
+								 	{		 		
+										for(p = 0;p<periodo.length; p++)
+										{
+											if(insLineaAccion[w].periodoId == periodo[p].id)
+											{
+												if(insLineaAccion[w].borrado == true){
+													<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
+														cuerpoInsLineaAccionAnterior+='<tr><td><del>'+periodo[p].nombre+'</del></td>';
+													<%}%>
+												}else{
+													<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
+														cuerpoInsLineaAccionAnterior+='<tr><td>'+periodo[p].nombre+'</td>';
+													<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
+														cuerpoInsLineaAccionAnterior+='<tr><td>'+periodo[p].nombre+'</td>';
+													<%}%>
+												}
+												bandPeriodo = 1;
+											}
+										}
+										
+										if(bandPeriodo == 0)
+										{
+											cuerpoInsLineaAccionAnterior+='<td>'+insLineaAccion[w].periodoId+'</td>';
+										}
+									
+										for(m = 0;m<institucion.length; m++){
+											if(insLineaAccion[w].institucionId == institucion[m].id)
+											{
+												if(insLineaAccion[w].borrado == true){
+													<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
+														cuerpoInsLineaAccionAnterior+='<td><del>'+institucion[m].sigla+'</del></td>';
+													<%}%>
+												}else{
+													<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
+														cuerpoInsLineaAccionAnterior+='<td>'+institucion[m].sigla+'</td>';
+													<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
+														cuerpoInsLineaAccionAnterior+='<td>'+institucion[m].sigla+'</td>';
+													<%}%>
+												}
+												bandInstitucion = 1;
+											}
+										}
+										
+										if(bandInstitucion == 0)
+										{
+											cuerpoInsLineaAccionAnterior+='<td>'+insLineaAccion[w].institucionId+'</td>';
+										}
+										
+										for(i = 0;i<lineaAccion.length; i++){				
+											if(insLineaAccion[w].lineaAccionId == lineaAccion[i].id)
+											{
+												if(insLineaAccion[w].borrado == true){
+													<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
+														cuerpoInsLineaAccionAnterior+='<td><del>'+lineaAccion[i].nombre+'</del></td>';
+													<%}%>
+												}else{
+													<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
+														cuerpoInsLineaAccionAnterior+='<td>'+lineaAccion[i].nombre+'</td>';
+													<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
+														cuerpoInsLineaAccionAnterior+='<td>'+lineaAccion[i].nombre+'</td>';
+													<%}%>
+												}
+												bandLineaAccion = 1;
+											}
+										}
+													
+										if(bandLineaAccion == 0)
+										{
+											cuerpoInsLineaAccionAnterior+='<td>'+insLineaAccion[w].lineaAccionId+'</td>';
+										}
+																
+										var codigoUnidadMedida;
+										var nombreUnidadMedida;
+										for(h = 0;h<lineaAccion.length; h++){				
+											if(insLineaAccion[w].lineaAccionId == lineaAccion[h].id)
+											{
+												codigoUnidadMedida=lineaAccion[h].unidadMedidaId;
+												
+												for(var k = 0; k < unidadMedida.length; k++)
+												{
+													if(codigoUnidadMedida == unidadMedida[k].id)
+													{
+														nombreUnidadMedida = unidadMedida[k].descripcion;
+													}
+												}
+											}
+										}
+										
+										if(insLineaAccion[w].borrado == true){
+											<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
+						 						cuerpoInsLineaAccionAnterior+='<td><del>'+insLineaAccion[w].meta+'</del></td><td class="text-center"><del>'+nombreUnidadMedida+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm registrosInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Editar Línea de Acción" codigoRegistroInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'-'+insLineaAccion[w].meta+'-'+insLineaAccion[w].version+'><span class="glyphicon glyphicon-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Borrar Línea de Acción" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+'><span class="glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-default btn-sm agregarAccion" data-toggle="tooltip" data-placement="top" title="Agregar Acción" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-list-alt"></span></button><button type="button" class="btn btn-default btn-sm avanceCualitativo" data-toggle="tooltip" data-placement="top" title="Avance Cualitativo" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-tasks"></span></button></td></tr>';
+											<%}%>
+										}else{
+											<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
+						 						cuerpoInsLineaAccionAnterior+='<td>'+insLineaAccion[w].meta+'</td><td class="text-center">'+nombreUnidadMedida+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm registrosInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Editar Línea de Acción" codigoRegistroInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'-'+insLineaAccion[w].meta+'-'+insLineaAccion[w].version+'><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Borrar Línea de Acción" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+'><span class="glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-default btn-sm agregarAccion" data-toggle="tooltip" data-placement="top" title="Agregar Acción" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-list-alt"></span></button><button type="button" class="btn btn-default btn-sm avanceCualitativo" data-toggle="tooltip" data-placement="top" title="Avance Cualitativo" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-tasks"></span></button></td></tr>';
+											<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
+												cuerpoInsLineaAccionAnterior+='<td>'+insLineaAccion[w].meta+'</td><td class="text-center">'+nombreUnidadMedida+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm agregarAccion" data-toggle="tooltip" data-placement="top" title="Agregar Acción" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-list-alt"></span></button><button type="button" class="btn btn-default btn-sm avanceCualitativo" data-toggle="tooltip" data-placement="top" title="Avance Cualitativo" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-tasks"></span></button></td></tr>';
+											<%}%>
+										}
+									}//fin if(insLineaAccion[w].periodoId == "2016")
+									
 								}
 							}
-							
-						 	//Periodo posterior		 	
-						 	 if(insLineaAccion[w].periodoId > 2016)
-						 	{		 		
-								for(p = 0;p<periodo.length; p++)
-								{
-									if(insLineaAccion[w].periodoId == periodo[p].id)
-									{
-										if(insLineaAccion[w].borrado == true){
-											<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
-											cuerpoInsLineaAccionPosterior+='<tr><td><del>'+periodo[p].nombre+'</del></td>';
-											<%}%>
-										}else{
-											<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-												cuerpoInsLineaAccionPosterior+='<tr><td>'+periodo[p].nombre+'</td>';
-											<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-												cuerpoInsLineaAccionPosterior+='<tr><td>'+periodo[p].nombre+'</td>';
-											<%}%>
-										}
-										bandPeriodo = 1;
-									}
-								}
-								
-								if(bandPeriodo == 0)
-								{
-									cuerpoInsLineaAccionPosterior+='<td>'+insLineaAccion[w].periodoId+'</td>';
-								}
-							
-								for(m = 0;m<institucion.length; m++){
-									if(insLineaAccion[w].institucionId == institucion[m].id)
-									{
-										if(insLineaAccion[w].borrado == true){
-											<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
-												cuerpoInsLineaAccionPosterior+='<td><del>'+institucion[m].sigla+'</del></td>';
-											<%}%>
-										}else{
-											<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-												cuerpoInsLineaAccionPosterior+='<td>'+institucion[m].sigla+'</td>';
-											<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-												cuerpoInsLineaAccionPosterior+='<td>'+institucion[m].sigla+'</td>';
-											<%}%>
-										}
-										bandInstitucion = 1;
-									}
-								}
-								
-								if(bandInstitucion == 0)
-								{
-									cuerpoInsLineaAccionPosterior+='<td>'+insLineaAccion[w].institucionId+'</td>';
-								}
-								
-								for(i = 0;i<lineaAccion.length; i++){				
-									if(insLineaAccion[w].lineaAccionId == lineaAccion[i].id)
-									{
-										if(insLineaAccion[w].borrado == true){
-											<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
-												cuerpoInsLineaAccionPosterior+='<td><del>'+lineaAccion[i].nombre+'</del></td>';
-											<%}%>
-										}else{
-											<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-												cuerpoInsLineaAccionPosterior+='<td>'+lineaAccion[i].nombre+'</td>';	
-											<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-												cuerpoInsLineaAccionPosterior+='<td>'+lineaAccion[i].nombre+'</td>';	
-											<%}%>
-										}
-										bandLineaAccion = 1;
-									}
-								}
-											
-								if(bandLineaAccion == 0)
-								{
-									cuerpoInsLineaAccionPosterior+='<td>'+insLineaAccion[w].lineaAccionId+'</td>';
-								}
-														
-								var codigoUnidadMedida;
-								var nombreUnidadMedida;
-								for(h = 0;h<lineaAccion.length; h++){				
-									if(insLineaAccion[w].lineaAccionId == lineaAccion[h].id)
-									{
-										codigoUnidadMedida=lineaAccion[h].unidadMedidaId;
-										
-										for(var k = 0; k < unidadMedida.length; k++)
-										{
-											if(codigoUnidadMedida == unidadMedida[k].id)
-											{
-												nombreUnidadMedida = unidadMedida[k].descripcion;
-											}
-										}
-									}
-								}
-								
-								if(insLineaAccion[w].borrado == true){
-									<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
-				 						cuerpoInsLineaAccionPosterior+='<td><del>'+insLineaAccion[w].meta+'</del></td><td class="text-center"><del>'+nombreUnidadMedida+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm registrosInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Editar Línea de Acción" codigoRegistroInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'-'+insLineaAccion[w].meta+'-'+insLineaAccion[w].version+'><span class="glyphicon glyphicon-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Borrar Línea de Acción" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+'><span class="glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-default btn-sm agregarAccion" data-toggle="tooltip" data-placement="top" title="Agregar Acción" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-list-alt"></span></button><button type="button" class="btn btn-default btn-sm avanceCualitativo" data-toggle="tooltip" data-placement="top" title="Avance Cualitativo" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-tasks"></span></button></td></tr>'; 
-									<%}%>
-								}else{
-									<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-				 						cuerpoInsLineaAccionPosterior+='<td>'+insLineaAccion[w].meta+'</td><td class="text-center">'+nombreUnidadMedida+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm registrosInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Editar Línea de Acción" codigoRegistroInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'-'+insLineaAccion[w].meta+'-'+insLineaAccion[w].version+'><span class="glyphicon glyphicon-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Borrar Línea de Acción" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+'><span class="glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-default btn-sm agregarAccion" data-toggle="tooltip" data-placement="top" title="Agregar Acción" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-list-alt"></span></button><button type="button" class="btn btn-default btn-sm avanceCualitativo" data-toggle="tooltip" data-placement="top" title="Avance Cualitativo" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-tasks"></span></button></td></tr>';
-									<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-										cuerpoInsLineaAccionPosterior+='<td>'+insLineaAccion[w].meta+'</td><td class="text-center">'+nombreUnidadMedida+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm agregarAccion" data-toggle="tooltip" data-placement="top" title="Agregar Acción" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-list-alt"></span></button><button type="button" class="btn btn-default btn-sm avanceCualitativo" data-toggle="tooltip" data-placement="top" title="Avance Cualitativo" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-tasks"></span></button></td></tr>';
-									<%}%>
-								}
-							}
-						 	
-						 	//periodo anterior
-						 	if(insLineaAccion[w].periodoId < 2016)
-						 	{		 		
-								for(p = 0;p<periodo.length; p++)
-								{
-									if(insLineaAccion[w].periodoId == periodo[p].id)
-									{
-										if(insLineaAccion[w].borrado == true){
-											<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
-												cuerpoInsLineaAccionAnterior+='<tr><td><del>'+periodo[p].nombre+'</del></td>';
-											<%}%>
-										}else{
-											<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-												cuerpoInsLineaAccionAnterior+='<tr><td>'+periodo[p].nombre+'</td>';
-											<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-												cuerpoInsLineaAccionAnterior+='<tr><td>'+periodo[p].nombre+'</td>';
-											<%}%>
-										}
-										bandPeriodo = 1;
-									}
-								}
-								
-								if(bandPeriodo == 0)
-								{
-									cuerpoInsLineaAccionAnterior+='<td>'+insLineaAccion[w].periodoId+'</td>';
-								}
-							
-								for(m = 0;m<institucion.length; m++){
-									if(insLineaAccion[w].institucionId == institucion[m].id)
-									{
-										if(insLineaAccion[w].borrado == true){
-											<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
-												cuerpoInsLineaAccionAnterior+='<td><del>'+institucion[m].sigla+'</del></td>';
-											<%}%>
-										}else{
-											<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-												cuerpoInsLineaAccionAnterior+='<td>'+institucion[m].sigla+'</td>';
-											<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-												cuerpoInsLineaAccionAnterior+='<td>'+institucion[m].sigla+'</td>';
-											<%}%>
-										}
-										bandInstitucion = 1;
-									}
-								}
-								
-								if(bandInstitucion == 0)
-								{
-									cuerpoInsLineaAccionAnterior+='<td>'+insLineaAccion[w].institucionId+'</td>';
-								}
-								
-								for(i = 0;i<lineaAccion.length; i++){				
-									if(insLineaAccion[w].lineaAccionId == lineaAccion[i].id)
-									{
-										if(insLineaAccion[w].borrado == true){
-											<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
-												cuerpoInsLineaAccionAnterior+='<td><del>'+lineaAccion[i].nombre+'</del></td>';
-											<%}%>
-										}else{
-											<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-												cuerpoInsLineaAccionAnterior+='<td>'+lineaAccion[i].nombre+'</td>';
-											<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-												cuerpoInsLineaAccionAnterior+='<td>'+lineaAccion[i].nombre+'</td>';
-											<%}%>
-										}
-										bandLineaAccion = 1;
-									}
-								}
-											
-								if(bandLineaAccion == 0)
-								{
-									cuerpoInsLineaAccionAnterior+='<td>'+insLineaAccion[w].lineaAccionId+'</td>';
-								}
-														
-								var codigoUnidadMedida;
-								var nombreUnidadMedida;
-								for(h = 0;h<lineaAccion.length; h++){				
-									if(insLineaAccion[w].lineaAccionId == lineaAccion[h].id)
-									{
-										codigoUnidadMedida=lineaAccion[h].unidadMedidaId;
-										
-										for(var k = 0; k < unidadMedida.length; k++)
-										{
-											if(codigoUnidadMedida == unidadMedida[k].id)
-											{
-												nombreUnidadMedida = unidadMedida[k].descripcion;
-											}
-										}
-									}
-								}
-								
-								if(insLineaAccion[w].borrado == true){
-									<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
-				 						cuerpoInsLineaAccionAnterior+='<td><del>'+insLineaAccion[w].meta+'</del></td><td class="text-center"><del>'+nombreUnidadMedida+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm registrosInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Editar Línea de Acción" codigoRegistroInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'-'+insLineaAccion[w].meta+'-'+insLineaAccion[w].version+'><span class="glyphicon glyphicon-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Borrar Línea de Acción" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+'><span class="glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-default btn-sm agregarAccion" data-toggle="tooltip" data-placement="top" title="Agregar Acción" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-list-alt"></span></button><button type="button" class="btn btn-default btn-sm avanceCualitativo" data-toggle="tooltip" data-placement="top" title="Avance Cualitativo" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-tasks"></span></button></td></tr>';
-									<%}%>
-								}else{
-									<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-				 						cuerpoInsLineaAccionAnterior+='<td>'+insLineaAccion[w].meta+'</td><td class="text-center">'+nombreUnidadMedida+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm registrosInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Editar Línea de Acción" codigoRegistroInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'-'+insLineaAccion[w].meta+'-'+insLineaAccion[w].version+'><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Borrar Línea de Acción" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+'><span class="glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-default btn-sm agregarAccion" data-toggle="tooltip" data-placement="top" title="Agregar Acción" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-list-alt"></span></button><button type="button" class="btn btn-default btn-sm avanceCualitativo" data-toggle="tooltip" data-placement="top" title="Avance Cualitativo" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-tasks"></span></button></td></tr>';
-									<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-										cuerpoInsLineaAccionAnterior+='<td>'+insLineaAccion[w].meta+'</td><td class="text-center">'+nombreUnidadMedida+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm agregarAccion" data-toggle="tooltip" data-placement="top" title="Agregar Acción" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-list-alt"></span></button><button type="button" class="btn btn-default btn-sm avanceCualitativo" data-toggle="tooltip" data-placement="top" title="Avance Cualitativo" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-tasks"></span></button></td></tr>';
-									<%}%>
-								}
-							}//fin if(insLineaAccion[w].periodoId == "2016")
-							
 						}
-					}
+					}//fin ---
 				}
-			}//fin 
+			}//fin etiqueta usuario
 		 	
 		}
 		//Tabla de linea de accion actual

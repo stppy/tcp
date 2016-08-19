@@ -1528,6 +1528,15 @@ public class ajaxSelects extends HttpServlet {
         		catch (SQLException e) {e.printStackTrace();}
         		out.println(objetos);return;        	
         	}
+        	//Información de las etiquetas que el usuario logueado puede visualizar o tiene acceso
+        	if (action.equals("getUsuarioEtiqueta")){
+        		String objetos=null;
+        		condition = " where true ";
+        		if (userCorreo!=null) condition += " and usuario_correo ='"+userCorreo+"'";
+           		try {objetos = SqlSelects.selectUsuarioEtiqueta(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		out.println(objetos);return;        	
+        	}
        }
        out.close();
         
