@@ -15,34 +15,38 @@ function renderEvidencia(avanceId, parametros){
 	var cuerpoEvidencia = "";
 	
 	for(var d = 0; d < webServicesEvidencia.length; d++)
-	{   
-		var donwloadName=""; 
-		var downloadTarget='target="_blank"';
-		var botones="";
-		
-		if (webServicesEvidencia[d].urlDocumento) {
-			webServicesEvidencia[d].url='http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+webServicesEvidencia[d].urlDocumento;
-			donwloadName='Download="'+webServicesEvidencia[d].nombre+'"';
-			downloadTarget="";
-		}
-		
-		<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>
-			botones='<button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+parametros+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+parametros+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button>';
-		<%}%>
-		
-		<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") ){%>
-			if(webServicesEvidencia[d].borrado == true)
-			{
-				cuerpoEvidencia +='<tr><td data-toggle="tooltip" data-placement="top" title="'+webServicesEvidencia[d].descripcion+'" ><del><a href="'+webServicesEvidencia[d].url+'" target="_blank">'+webServicesEvidencia[d].nombre+'</a></del></td>'+
-									'<td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+parametros+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+parametros+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';	        				
+	{
+		if(onoff==true && webServicesEvidencia[d].borrado == true){
+			// pasa a la siguiente fila en el for ++
+		}else{
+			var donwloadName=""; 
+			var downloadTarget='target="_blank"';
+			var botones="";
+			
+			if (webServicesEvidencia[d].urlDocumento) {
+				webServicesEvidencia[d].url='http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+webServicesEvidencia[d].urlDocumento;
+				donwloadName='Download="'+webServicesEvidencia[d].nombre+'"';
+				downloadTarget="";
 			}
-		<%}%>
-		if(webServicesEvidencia[d].borrado == false){
-			cuerpoEvidencia += '<tr>'+
-					'<td data-toggle="tooltip" data-placement="top" title="'+webServicesEvidencia[d].descripcion+'" >'+
-						'<a href="'+webServicesEvidencia[d].url+'" '+downloadTarget+'" '+donwloadName+'>'+webServicesEvidencia[d].nombre+'</a>'+
-					'</td>'+
-			    	'<td class="text-center">'+botones+'</td></tr>';	
+			
+			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>
+				botones='<button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+parametros+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+parametros+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button>';
+			<%}%>
+			
+			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") ){%>
+				if(webServicesEvidencia[d].borrado == true)
+				{
+					cuerpoEvidencia +='<tr><td data-toggle="tooltip" data-placement="top" title="'+webServicesEvidencia[d].descripcion+'" ><del><a href="'+webServicesEvidencia[d].url+'" target="_blank">'+webServicesEvidencia[d].nombre+'</a></del></td>'+
+										'<td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+parametros+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+parametros+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';	        				
+				}
+			<%}%>
+			if(webServicesEvidencia[d].borrado == false){
+				cuerpoEvidencia += '<tr>'+
+						'<td data-toggle="tooltip" data-placement="top" title="'+webServicesEvidencia[d].descripcion+'" >'+
+							'<a href="'+webServicesEvidencia[d].url+'" '+downloadTarget+'" '+donwloadName+'>'+webServicesEvidencia[d].nombre+'</a>'+
+						'</td>'+
+				    	'<td class="text-center">'+botones+'</td></tr>';	
+			}	
 		}
 	}
 	
@@ -1970,7 +1974,7 @@ function renderEvidencia(avanceId, parametros){
 			for(var a = 0; a < accion.length; a++)
 			{	
 				if(onoff==true && accion[a].borrado == true){
-					a=a+1;				
+					// pasa a la siguiente fila en el for ++				
 				}else{
 					var suMetas = 0 ;
 					suMetas = accion[a].meta1 + accion[a].meta2 + accion[a].meta3 + accion[a].meta4; 
@@ -3007,26 +3011,29 @@ $("body").on("click", ".borrarAccion",function(event){
     		var fila ="";
     		for(var f = 0; f < accionHasProducto.length; f++)
     		{
-    			    			
     			nombreProducto = "";
-    			for(var j = 0; j < productos.productos.length; j++){
-    				if(productos.productos[j].codigoCatalogo == accionHasProducto[f].sprProductoId){
-    					nombreProducto = productos.productos[j].nombreCatalogo;
-    				}
-    			}
-    			
-    			if(accionHasProducto[f].borrado == false){
-    				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-		    	    	fila += "<tr><td>"+accionHasProducto[f].nivel+"</td><td>"+accionHasProducto[f].entidad+"</td><td>"+accionHasProducto[f].tipoPrograma+"</td><td>"+accionHasProducto[f].programa+"</td><td>"+accionHasProducto[f].subPrograma+"</td><td>"+accionHasProducto[f].proyecto+"</td><td>"+accionHasProducto[f].sprProductoId+"</td><td>"+nombreProducto+"</td><td>"+accionHasProducto[f].cantidadFisica+"</td><td>"+accionHasProducto[f].unidadMedida+"</td><td>"+accionHasProducto[f].clase+"</td><td>Gs."+numeroConComa(accionHasProducto[f].cantidadFinanciera)+"</td><td>Gs."+numeroConComa(accionHasProducto[f].totalAsignacion)+"</td><td><center><button type='submit' class='btn btn-default sm' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accionId+"-"+accionHasProducto[f].id+" disabled='disabled'><span class='glyphicon glyphicon-pencil'></span></button><button type='submit' class='btn btn-default sm consultaBorrarVinculacionProducto' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accionId+"-"+accionHasProducto[f].id+"><span class='glyphicon glyphicon-trash'></span></button></center></td></tr>";
-    				<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-	    	    		fila += "<tr><td>"+accionHasProducto[f].nivel+"</td><td>"+accionHasProducto[f].entidad+"</td><td>"+accionHasProducto[f].tipoPrograma+"</td><td>"+accionHasProducto[f].programa+"</td><td>"+accionHasProducto[f].subPrograma+"</td><td>"+accionHasProducto[f].proyecto+"</td><td>"+accionHasProducto[f].sprProductoId+"</td><td>"+nombreProducto+"</td><td>"+accionHasProducto[f].cantidadFisica+"</td><td>"+accionHasProducto[f].unidadMedida+"</td><td>"+accionHasProducto[f].clase+"</td><td>Gs."+numeroConComa(accionHasProducto[f].cantidadFinanciera)+"</td><td>Gs."+numeroConComa(accionHasProducto[f].totalAsignacion)+"</td><td></td></tr>";
-	    			<%}%>		
-    			}else{
-    				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
-	    	    		fila += "<tr><td><del>"+accionHasProducto[f].nivel+"</del></td><td><del>"+accionHasProducto[f].entidad+"</del></td><td><del>"+accionHasProducto[f].tipoPrograma+"</del></td><td><del>"+accionHasProducto[f].programa+"</del></td><td><del>"+accionHasProducto[f].subPrograma+"</del></td><td><del>"+accionHasProducto[f].proyecto+"</del></td><td><del>"+accionHasProducto[f].sprProductoId+"</del></td><td><del>"+nombreProducto+"</del></td><td><del>"+accionHasProducto[f].cantidadFisica+"</del></td><td><del>"+accionHasProducto[f].unidadMedida+"</del></td><td><del>"+accionHasProducto[f].clase+"</del></td><td><del>Gs."+numeroConComa(accionHasProducto[f].cantidadFinanciera)+"</del></td><td><del>Gs."+numeroConComa(accionHasProducto[f].totalAsignacion)+"</del></td><td><center><button type='submit' class='btn btn-default sm' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accionId+"-"+accionHasProducto[f].id+" disabled='disabled'><span class='glyphicon glyphicon-pencil'></span></button><button type='submit' class='btn btn-default sm consultaBorrarVinculacionProducto' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accionId+"-"+accionHasProducto[f].id+"><span class='glyphicon glyphicon-trash'></span></button></center></td></tr>";
-    				<%}%>
-    			}
-
+        			for(var j = 0; j < productos.productos.length; j++){
+        				if(productos.productos[j].codigoCatalogo == accionHasProducto[f].sprProductoId){
+        					nombreProducto = productos.productos[j].nombreCatalogo;
+        				}
+        			}
+        			
+        			if(onoff==true && accionHasProducto[f].borrado == true){
+        				// pasa a la siguiente fila en el for ++	
+        			}else{	
+        			
+        			if(accionHasProducto[f].borrado == false){
+        				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
+    		    	    	fila += "<tr><td>"+accionHasProducto[f].nivel+"</td><td>"+accionHasProducto[f].entidad+"</td><td>"+accionHasProducto[f].tipoPrograma+"</td><td>"+accionHasProducto[f].programa+"</td><td>"+accionHasProducto[f].subPrograma+"</td><td>"+accionHasProducto[f].proyecto+"</td><td>"+accionHasProducto[f].sprProductoId+"</td><td>"+nombreProducto+"</td><td>"+accionHasProducto[f].cantidadFisica+"</td><td>"+accionHasProducto[f].unidadMedida+"</td><td>"+accionHasProducto[f].clase+"</td><td>Gs."+numeroConComa(accionHasProducto[f].cantidadFinanciera)+"</td><td>Gs."+numeroConComa(accionHasProducto[f].totalAsignacion)+"</td><td><center><button type='submit' class='btn btn-default sm' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accionId+"-"+accionHasProducto[f].id+" disabled='disabled'><span class='glyphicon glyphicon-pencil'></span></button><button type='submit' class='btn btn-default sm consultaBorrarVinculacionProducto' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accionId+"-"+accionHasProducto[f].id+"><span class='glyphicon glyphicon-trash'></span></button></center></td></tr>";
+        				<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
+    	    	    		fila += "<tr><td>"+accionHasProducto[f].nivel+"</td><td>"+accionHasProducto[f].entidad+"</td><td>"+accionHasProducto[f].tipoPrograma+"</td><td>"+accionHasProducto[f].programa+"</td><td>"+accionHasProducto[f].subPrograma+"</td><td>"+accionHasProducto[f].proyecto+"</td><td>"+accionHasProducto[f].sprProductoId+"</td><td>"+nombreProducto+"</td><td>"+accionHasProducto[f].cantidadFisica+"</td><td>"+accionHasProducto[f].unidadMedida+"</td><td>"+accionHasProducto[f].clase+"</td><td>Gs."+numeroConComa(accionHasProducto[f].cantidadFinanciera)+"</td><td>Gs."+numeroConComa(accionHasProducto[f].totalAsignacion)+"</td><td></td></tr>";
+    	    			<%}%>		
+        			}else{
+        				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
+    	    	    		fila += "<tr><td><del>"+accionHasProducto[f].nivel+"</del></td><td><del>"+accionHasProducto[f].entidad+"</del></td><td><del>"+accionHasProducto[f].tipoPrograma+"</del></td><td><del>"+accionHasProducto[f].programa+"</del></td><td><del>"+accionHasProducto[f].subPrograma+"</del></td><td><del>"+accionHasProducto[f].proyecto+"</del></td><td><del>"+accionHasProducto[f].sprProductoId+"</del></td><td><del>"+nombreProducto+"</del></td><td><del>"+accionHasProducto[f].cantidadFisica+"</del></td><td><del>"+accionHasProducto[f].unidadMedida+"</del></td><td><del>"+accionHasProducto[f].clase+"</del></td><td><del>Gs."+numeroConComa(accionHasProducto[f].cantidadFinanciera)+"</del></td><td><del>Gs."+numeroConComa(accionHasProducto[f].totalAsignacion)+"</del></td><td><center><button type='submit' class='btn btn-default sm' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accionId+"-"+accionHasProducto[f].id+" disabled='disabled'><span class='glyphicon glyphicon-pencil'></span></button><button type='submit' class='btn btn-default sm consultaBorrarVinculacionProducto' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accionId+"-"+accionHasProducto[f].id+"><span class='glyphicon glyphicon-trash'></span></button></center></td></tr>";
+        				<%}%>
+        			}	
+    			}	
     		}
     		
     		$("#TablaAccionHasProductos").append(fila);    		
@@ -4593,7 +4600,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		for(var u = 0; u < actividades.length; u++)
 		{	
 			if(onoff==true && actividades[u].borrado == true){
-				u=u+1;
+				// pasa a la siguiente fila en el for ++
 			}else{
 				var nombreUnidadMedida = "";
 				var nombreHitoTipo = "";
@@ -5383,19 +5390,22 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	var cuerpoActividades ="";
 	for(var n = 0; n < programacionWebService.length; n++)
 	{
-		if(programacionWebService[n].borrado == false)
-		{
-			<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-				cuerpoActividades += "<tr><td>"+numeroConComa(programacionWebService[n].cantidad)+"</td><td>"+programacionWebService[n].fechaEntrega+"</td><td>"+programacionWebService[n].version+"</td><td>"+cronogramas[0].nombre+"</td><td>"+nombreUnidadMedidaHitoProgramado+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm consultaEditarHito'  data-toggle='tooltip' data-placement='top' title='Editar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacionWebService[n].id+" ><span class='fa fa-pencil' ></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarHito' title='Borrar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacionWebService[n].id+" ><span class='fa fa-trash' </span></button></td></tr>";
-			<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-				cuerpoActividades += "<tr><td>"+numeroConComa(programacionWebService[n].cantidad)+"</td><td>"+programacionWebService[n].fechaEntrega+"</td><td>"+programacionWebService[n].version+"</td><td>"+cronogramas[0].nombre+"</td><td>"+nombreUnidadMedidaHitoProgramado+"</td><td class='text-center'></td></tr>";
-			<%}%>
+		if(onoff==true && programacionWebService[n].borrado == true){
+			// pasa a la siguiente fila en el for ++
 		}else{
-			<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
-				cuerpoActividades += "<tr><td><del>"+numeroConComa(programacionWebService[n].cantidad)+"</del></td><td><del>"+programacionWebService[n].fechaEntrega+"</del></td><td><del>"+programacionWebService[n].version+"</del></td><td><del>"+cronogramas[0].nombre+"</del></td><td><del>"+nombreUnidadMedidaHitoProgramado+"</del></td><td class='text-center'><button type='button' class='btn btn-default btn-sm consultaBorrarHito' title='Restaurar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacionWebService[n].id+" ><span class='fa fa-recycle' </span></button></td></tr>";
-			<%}%>	
+			if(programacionWebService[n].borrado == false)
+			{
+				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
+					cuerpoActividades += "<tr><td>"+numeroConComa(programacionWebService[n].cantidad)+"</td><td>"+programacionWebService[n].fechaEntrega+"</td><td>"+programacionWebService[n].version+"</td><td>"+cronogramas[0].nombre+"</td><td>"+nombreUnidadMedidaHitoProgramado+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm consultaEditarHito'  data-toggle='tooltip' data-placement='top' title='Editar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacionWebService[n].id+" ><span class='fa fa-pencil' ></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarHito' title='Borrar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacionWebService[n].id+" ><span class='fa fa-trash' </span></button></td></tr>";
+				<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
+					cuerpoActividades += "<tr><td>"+numeroConComa(programacionWebService[n].cantidad)+"</td><td>"+programacionWebService[n].fechaEntrega+"</td><td>"+programacionWebService[n].version+"</td><td>"+cronogramas[0].nombre+"</td><td>"+nombreUnidadMedidaHitoProgramado+"</td><td class='text-center'></td></tr>";
+				<%}%>
+			}else{
+				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
+					cuerpoActividades += "<tr><td><del>"+numeroConComa(programacionWebService[n].cantidad)+"</del></td><td><del>"+programacionWebService[n].fechaEntrega+"</del></td><td><del>"+programacionWebService[n].version+"</del></td><td><del>"+cronogramas[0].nombre+"</del></td><td><del>"+nombreUnidadMedidaHitoProgramado+"</del></td><td class='text-center'><button type='button' class='btn btn-default btn-sm consultaBorrarHito' title='Restaurar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacionWebService[n].id+" ><span class='fa fa-recycle' </span></button></td></tr>";
+				<%}%>	
+			}	
 		}
-	
 	}
 	
 	var modalProgramacion = "";
@@ -5781,19 +5791,22 @@ $("body").on("click", ".agregarAvance",function(event){
 	var cuerpoActividades ="";
 	for(var n = 0; n < programacionWebService.length; n++)
 	{
-		if(programacionWebService[n].borrado == false)
-		{
-			<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-				cuerpoActividades += "<tr><td>"+numeroConComa(programacionWebService[n].cantidad)+"</td><td>"+programacionWebService[n].fechaEntrega+"</td><td>"+nombreUnidadMedidaHitoProgramado+"</td></tr>";
-			<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-				cuerpoActividades += "<tr><td>"+numeroConComa(programacionWebService[n].cantidad)+"</td><td>"+programacionWebService[n].fechaEntrega+"</td><td>"+nombreUnidadMedidaHitoProgramado+"</td><td class='text-center'></td></tr>";
-			<%}%>
+		if(onoff==true && programacionWebService[n].borrado == true){
+			// pasa a la siguiente fila en el for ++
 		}else{
-			<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
-				cuerpoActividades += "<tr><td><del>"+numeroConComa(programacionWebService[n].cantidad)+"</del></td><td><del>"+programacionWebService[n].fechaEntrega+"</del></td><td><del>"+nombreUnidadMedidaHitoProgramado+"</del></td></tr>";
-			<%}%>	
+			if(programacionWebService[n].borrado == false)
+			{
+				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
+					cuerpoActividades += "<tr><td>"+numeroConComa(programacionWebService[n].cantidad)+"</td><td>"+programacionWebService[n].fechaEntrega+"</td><td>"+nombreUnidadMedidaHitoProgramado+"</td></tr>";
+				<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
+					cuerpoActividades += "<tr><td>"+numeroConComa(programacionWebService[n].cantidad)+"</td><td>"+programacionWebService[n].fechaEntrega+"</td><td>"+nombreUnidadMedidaHitoProgramado+"</td><td class='text-center'></td></tr>";
+				<%}%>
+			}else{
+				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
+					cuerpoActividades += "<tr><td><del>"+numeroConComa(programacionWebService[n].cantidad)+"</del></td><td><del>"+programacionWebService[n].fechaEntrega+"</del></td><td><del>"+nombreUnidadMedidaHitoProgramado+"</del></td></tr>";
+				<%}%>	
+			}	
 		}
-	
 	}
 	
  
@@ -5811,18 +5824,22 @@ $("body").on("click", ".agregarAvance",function(event){
 	var cuerpoAvance = " ";
 	for(var d = 0; d < webServicesAvance.length; d++)
 	{
-		if(webServicesAvance[d].borrado == true)
-		{
-			<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
-				cuerpoAvance += '<tr><td><del>'+webServicesAvance[d].justificacion+'</del></td><td><del>'+numeroConComa(webServicesAvance[d].cantidad)+'</del></td><td><del>'+webServicesAvance[d].fechaEntrega+'</del></td><td class="text-center"></td></tr>';
-			<%}%>
+		if(onoff==true && webServicesAvance[d].borrado == true){
+			// pasa a la siguiente fila en el for ++	
 		}else{
-			<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-				cuerpoAvance += '<tr><td>'+webServicesAvance[d].justificacion+'</td><td>'+numeroConComa(webServicesAvance[d].cantidad)+'</td><td>'+webServicesAvance[d].fechaEntrega+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm agregarModalAdministrador" data-toggle="tooltip" data-placement="top" title="Detallar Avance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+webServicesAvance[d].id+'><span class="fa fa-gear"></span></button></td></tr>';
-			<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-				cuerpoAvance += '<tr><td>'+webServicesAvance[d].justificacion+'</td><td>'+numeroConComa(webServicesAvance[d].cantidad)+'</td><td>'+webServicesAvance[d].fechaEntrega+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm agregarModalAdministrador" data-toggle="tooltip" data-placement="top" title="Detallar Avance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+webServicesAvance[d].id+'><span class="fa fa-gear"></span></button></td></tr>';
-			<%}%>
-		}
+			if(webServicesAvance[d].borrado == true)
+			{
+				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
+					cuerpoAvance += '<tr><td><del>'+webServicesAvance[d].justificacion+'</del></td><td><del>'+numeroConComa(webServicesAvance[d].cantidad)+'</del></td><td><del>'+webServicesAvance[d].fechaEntrega+'</del></td><td class="text-center"></td></tr>';
+				<%}%>
+			}else{
+				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
+					cuerpoAvance += '<tr><td>'+webServicesAvance[d].justificacion+'</td><td>'+numeroConComa(webServicesAvance[d].cantidad)+'</td><td>'+webServicesAvance[d].fechaEntrega+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm agregarModalAdministrador" data-toggle="tooltip" data-placement="top" title="Detallar Avance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+webServicesAvance[d].id+'><span class="fa fa-gear"></span></button></td></tr>';
+				<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
+					cuerpoAvance += '<tr><td>'+webServicesAvance[d].justificacion+'</td><td>'+numeroConComa(webServicesAvance[d].cantidad)+'</td><td>'+webServicesAvance[d].fechaEntrega+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm agregarModalAdministrador" data-toggle="tooltip" data-placement="top" title="Detallar Avance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+webServicesAvance[d].id+'><span class="fa fa-gear"></span></button></td></tr>';
+				<%}%>
+			}
+		}	
 	}
 		
 	var modalAvance = "";
@@ -6176,18 +6193,22 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	var cuerpoAvanceCosto = "";
 	for(var d = 0; d < webServicesAvanceCosto.length; d++)
 	{
-		if(webServicesAvanceCosto[d].borrado == true)
-		{
-			<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
-				cuerpoAvanceCosto += '<tr><td><del>'+webServicesAvanceCosto[d].productoConcat+'</del></td><td><del>'+webServicesAvanceCosto[d].objetoGasto+'</del></td><td><del>'+numeroConComa(webServicesAvanceCosto[d].monto)+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaBorrarCosto" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-recycle"></span></button></td></tr>';
-			<%}%>	
+		if(onoff==true && webServicesAvanceCosto[d].borrado == true){
+			// pasa a la siguiente fila en el for ++
 		}else{
-			<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-				cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].productoConcat+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td>'+numeroConComa(webServicesAvanceCosto[d].monto)+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarCosto" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCosto" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
-			<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-				cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].productoConcat+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td>'+numeroConComa(webServicesAvanceCosto[d].monto)+'</td><td class="text-center"></td></tr>';
-			<%}%>
-		}
+			if(webServicesAvanceCosto[d].borrado == true)
+			{
+				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
+					cuerpoAvanceCosto += '<tr><td><del>'+webServicesAvanceCosto[d].productoConcat+'</del></td><td><del>'+webServicesAvanceCosto[d].objetoGasto+'</del></td><td><del>'+numeroConComa(webServicesAvanceCosto[d].monto)+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaBorrarCosto" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-recycle"></span></button></td></tr>';
+				<%}%>	
+			}else{
+				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
+					cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].productoConcat+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td>'+numeroConComa(webServicesAvanceCosto[d].monto)+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarCosto" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCosto" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+				<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
+					cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].productoConcat+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td>'+numeroConComa(webServicesAvanceCosto[d].monto)+'</td><td class="text-center"></td></tr>';
+				<%}%>
+			}	
+		}	
 	}
 		
 	var webServicesBeneficiarioTipo = $.ajax({
@@ -6231,17 +6252,21 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 		}).responseText;
 		webServicesBeneficiarioGrupo = JSON.parse(webServicesBeneficiarioGrupo);
 		
-		if(webServicesBeneficiario[a].borrado == true)
-		{
-			<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
-				cuerpoBeneficiario += '<tr><td><del>'+webServicesBeneficiarioTipo[0].nombre+'</del></td><td><del>'+webServicesBeneficiarioGrupo[0].nombre+'</del></td><td><del>'+webServicesBeneficiario[a].descripcion+'</del></td><td><del>'+numeroConComa(webServicesBeneficiario[a].cantidad)+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaBorrarBeneficiario" data-toggle="tooltip" data-placement="top" title="Restaurar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesBeneficiario[a].id+' ><span class="fa fa-recycle"></span></button></td></tr>';
-			<%}%>	
+		if(onoff==true && webServicesBeneficiario[a].borrado == true){
+			// pasa a la siguiente fila en el for ++
 		}else{
-			<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-				cuerpoBeneficiario += '<tr><td>'+webServicesBeneficiarioTipo[0].nombre+'</td><td>'+webServicesBeneficiarioGrupo[0].nombre+'</td><td>'+webServicesBeneficiario[a].descripcion+'</td><td>'+numeroConComa(webServicesBeneficiario[a].cantidad)+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarBeneficiario" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesBeneficiario[a].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarBeneficiario" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesBeneficiario[a].id+' ><span class="fa fa-trash"></span></button></td></tr>';
-			<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-				cuerpoBeneficiario += '<tr><td>'+webServicesBeneficiarioTipo[0].nombre+'</td><td>'+webServicesBeneficiarioGrupo[0].nombre+'</td><td>'+webServicesBeneficiario[a].descripcion+'</td><td>'+numeroConComa(webServicesBeneficiario[a].cantidad)+'</td><td class="text-center"></td></tr>';
-			<%}%>
+			if(webServicesBeneficiario[a].borrado == true)
+			{
+				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
+					cuerpoBeneficiario += '<tr><td><del>'+webServicesBeneficiarioTipo[0].nombre+'</del></td><td><del>'+webServicesBeneficiarioGrupo[0].nombre+'</del></td><td><del>'+webServicesBeneficiario[a].descripcion+'</del></td><td><del>'+numeroConComa(webServicesBeneficiario[a].cantidad)+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaBorrarBeneficiario" data-toggle="tooltip" data-placement="top" title="Restaurar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesBeneficiario[a].id+' ><span class="fa fa-recycle"></span></button></td></tr>';
+				<%}%>	
+			}else{
+				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
+					cuerpoBeneficiario += '<tr><td>'+webServicesBeneficiarioTipo[0].nombre+'</td><td>'+webServicesBeneficiarioGrupo[0].nombre+'</td><td>'+webServicesBeneficiario[a].descripcion+'</td><td>'+numeroConComa(webServicesBeneficiario[a].cantidad)+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarBeneficiario" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesBeneficiario[a].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarBeneficiario" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesBeneficiario[a].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+				<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
+					cuerpoBeneficiario += '<tr><td>'+webServicesBeneficiarioTipo[0].nombre+'</td><td>'+webServicesBeneficiarioGrupo[0].nombre+'</td><td>'+webServicesBeneficiario[a].descripcion+'</td><td>'+numeroConComa(webServicesBeneficiario[a].cantidad)+'</td><td class="text-center"></td></tr>';
+				<%}%>
+			}	
 		}
 	}
 	
@@ -8521,7 +8546,7 @@ $("body").on("click", ".modalDestinatario",function(event){
 	{
 		
 		if(onoff==true && webServicesBeneficiarioAccion[a].borrado == true){
-			a=a+1;
+			// pasa a la siguiente fila en el for ++
 		}else{
 			var webServicesBeneficiarioTipo = $.ajax({
 				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioTipo&beneficiarioTipoId='+webServicesBeneficiarioAccion[a].beneficiarioTipoId,
@@ -9404,17 +9429,44 @@ function listaAvanceCualitativo(insLineaAccionId,lineaAccionId,institucionId,per
 		  	async:false       
 		}).responseText;
 		trimestre = JSON.parse(trimestre);
-
-		if(avanceCualitativo[a].borrado == true){
-			<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
+		
+		if(onoff==true && avanceCualitativo[a].borrado == true){
+			// pasa a la siguiente fila en el for ++
+		}else{
+			if(avanceCualitativo[a].borrado == true){
+				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
+					tablaAvanceCualitativo+='<tr id="avance'+a+'">'+
+											'	<td id="avanceNombreAccion"><del>'+accionCatalogo[0].nombre+'</del></td>'+
+											'	<td id="avanceDescTrimestre"><del>'+trimestre[0].descripcion+'</del></td>'+
+											'	<td id="avanceAnhoTrimestre"><del>'+trimestre[0].anho+'</del></td>'+
+											'	<td id="avanceGestionesRealizadas"><del>'+avanceCualitativo[a].gestionesRealizadas+'</del></td>'+
+											'	<td id="avancePrincipalesLogrosAlcanzados"><del>'+avanceCualitativo[a].principalesLogrosAlcanzados+'</del></td>'+
+											'	<td id="avanceDificultadesLeccionesAprendidas"><del>'+avanceCualitativo[a].dificultadesLeccionesAprendidas+'</del></td>'+
+											'	<td id="avanceObjetivosTrimestre"><del>'+avanceCualitativo[a].objetivosTrimestre+'</del></td>'+
+											'	<td class="text-center">'+
+											'		<button type="button" class="btn btn-default btn-sm imprimirAvanceCualitativo" data-toggle="tooltip" data-placement="top" title="Descargar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+avanceCualitativo[a].id+'>'+
+											'			<span class="glyphicon glyphicon-download-alt"></span>'+
+											'		</button>'+
+											'		<button type="button" class="btn btn-default btn-sm consultaEditarAvanceCualitativo" data-toggle="tooltip" data-placement="top" title="Editar Avance Cualitativo" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+avanceCualitativo[a].id+'>'+
+											'			<span class="glyphicon glyphicon-pencil" ></span>'+
+											'		</button>'+
+											'		<button type="button" class="btn btn-default btn-sm consultaBorrarAvanceCualitativo" data-toggle="tooltip" data-placement="top" title="Borrar Avance Cualitativo" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+avanceCualitativo[a].id+'>'+
+											'			<span class="glyphicon glyphicon-trash"></span>'+
+											'		</button>'+
+											'	</td>'+
+											'</tr>';
+					
+				<%}%>
+			}else{
+				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
 				tablaAvanceCualitativo+='<tr id="avance'+a+'">'+
-										'	<td id="avanceNombreAccion"><del>'+accionCatalogo[0].nombre+'</del></td>'+
-										'	<td id="avanceDescTrimestre"><del>'+trimestre[0].descripcion+'</del></td>'+
-										'	<td id="avanceAnhoTrimestre"><del>'+trimestre[0].anho+'</del></td>'+
-										'	<td id="avanceGestionesRealizadas"><del>'+avanceCualitativo[a].gestionesRealizadas+'</del></td>'+
-										'	<td id="avancePrincipalesLogrosAlcanzados"><del>'+avanceCualitativo[a].principalesLogrosAlcanzados+'</del></td>'+
-										'	<td id="avanceDificultadesLeccionesAprendidas"><del>'+avanceCualitativo[a].dificultadesLeccionesAprendidas+'</del></td>'+
-										'	<td id="avanceObjetivosTrimestre"><del>'+avanceCualitativo[a].objetivosTrimestre+'</del></td>'+
+										'	<td id="avanceNombreAccion">'+accionCatalogo[0].nombre+'</td>'+
+										'	<td id="avanceDescTrimestre">'+trimestre[0].descripcion+'</td>'+
+										'	<td id="avanceAnhoTrimestre">'+trimestre[0].anho+'</td>'+
+										'	<td id="avanceGestionesRealizadas">'+avanceCualitativo[a].gestionesRealizadas+'</td>'+
+										'	<td id="avancePrincipalesLogrosAlcanzados">'+avanceCualitativo[a].principalesLogrosAlcanzados+'</td>'+
+										'	<td id="avanceDificultadesLeccionesAprendidas">'+avanceCualitativo[a].dificultadesLeccionesAprendidas+'</td>'+
+										'	<td id="avanceObjetivosTrimestre">'+avanceCualitativo[a].objetivosTrimestre+'</td>'+
 										'	<td class="text-center">'+
 										'		<button type="button" class="btn btn-default btn-sm imprimirAvanceCualitativo" data-toggle="tooltip" data-placement="top" title="Descargar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+avanceCualitativo[a].id+'>'+
 										'			<span class="glyphicon glyphicon-download-alt"></span>'+
@@ -9426,49 +9478,24 @@ function listaAvanceCualitativo(insLineaAccionId,lineaAccionId,institucionId,per
 										'			<span class="glyphicon glyphicon-trash"></span>'+
 										'		</button>'+
 										'	</td>'+
-										'</tr>';
-				
-			<%}%>
-		}else{
-			<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-			tablaAvanceCualitativo+='<tr id="avance'+a+'">'+
-									'	<td id="avanceNombreAccion">'+accionCatalogo[0].nombre+'</td>'+
-									'	<td id="avanceDescTrimestre">'+trimestre[0].descripcion+'</td>'+
-									'	<td id="avanceAnhoTrimestre">'+trimestre[0].anho+'</td>'+
-									'	<td id="avanceGestionesRealizadas">'+avanceCualitativo[a].gestionesRealizadas+'</td>'+
-									'	<td id="avancePrincipalesLogrosAlcanzados">'+avanceCualitativo[a].principalesLogrosAlcanzados+'</td>'+
-									'	<td id="avanceDificultadesLeccionesAprendidas">'+avanceCualitativo[a].dificultadesLeccionesAprendidas+'</td>'+
-									'	<td id="avanceObjetivosTrimestre">'+avanceCualitativo[a].objetivosTrimestre+'</td>'+
-									'	<td class="text-center">'+
-									'		<button type="button" class="btn btn-default btn-sm imprimirAvanceCualitativo" data-toggle="tooltip" data-placement="top" title="Descargar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+avanceCualitativo[a].id+'>'+
-									'			<span class="glyphicon glyphicon-download-alt"></span>'+
-									'		</button>'+
-									'		<button type="button" class="btn btn-default btn-sm consultaEditarAvanceCualitativo" data-toggle="tooltip" data-placement="top" title="Editar Avance Cualitativo" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+avanceCualitativo[a].id+'>'+
-									'			<span class="glyphicon glyphicon-pencil" ></span>'+
-									'		</button>'+
-									'		<button type="button" class="btn btn-default btn-sm consultaBorrarAvanceCualitativo" data-toggle="tooltip" data-placement="top" title="Borrar Avance Cualitativo" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+avanceCualitativo[a].id+'>'+
-									'			<span class="glyphicon glyphicon-trash"></span>'+
-									'		</button>'+
-									'	</td>'+
-									'</tr>';	
-			<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-			tablaAvanceCualitativo+='<tr id="avance'+a+'">'+
-									'	<td id="avanceNombreAccion">'+accionCatalogo[0].nombre+'</td>'+
-									'	<td id="avanceDescTrimestre">'+trimestre[0].descripcion+'</td>'+
-									'	<td id="avanceAnhoTrimestre">'+trimestre[0].anho+'</td>'+
-									'	<td id="avanceGestionesRealizadas">'+avanceCualitativo[a].gestionesRealizadas+'</td>'+
-									'	<td id="avancePrincipalesLogrosAlcanzados">'+avanceCualitativo[a].principalesLogrosAlcanzados+'</td>'+
-									'	<td id="avanceDificultadesLeccionesAprendidas">'+avanceCualitativo[a].dificultadesLeccionesAprendidas+'</td>'+
-									'	<td id="avanceObjetivosTrimestre">'+avanceCualitativo[a].objetivosTrimestre+'</td>'+
-									'	<td class="text-center"><button type="button" class="btn btn-default btn-sm imprimirAvanceCualitativo" data-toggle="tooltip" data-placement="top" title="Descargar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+avanceCualitativo[a].id+'>'+
-									'			<span class="glyphicon glyphicon-download-alt"></span>'+
-									'		</button>'+
-									'	</td>'+
-									'</tr>';	
-			<%}%>
-		}
-
-	
+										'</tr>';	
+				<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
+				tablaAvanceCualitativo+='<tr id="avance'+a+'">'+
+										'	<td id="avanceNombreAccion">'+accionCatalogo[0].nombre+'</td>'+
+										'	<td id="avanceDescTrimestre">'+trimestre[0].descripcion+'</td>'+
+										'	<td id="avanceAnhoTrimestre">'+trimestre[0].anho+'</td>'+
+										'	<td id="avanceGestionesRealizadas">'+avanceCualitativo[a].gestionesRealizadas+'</td>'+
+										'	<td id="avancePrincipalesLogrosAlcanzados">'+avanceCualitativo[a].principalesLogrosAlcanzados+'</td>'+
+										'	<td id="avanceDificultadesLeccionesAprendidas">'+avanceCualitativo[a].dificultadesLeccionesAprendidas+'</td>'+
+										'	<td id="avanceObjetivosTrimestre">'+avanceCualitativo[a].objetivosTrimestre+'</td>'+
+										'	<td class="text-center"><button type="button" class="btn btn-default btn-sm imprimirAvanceCualitativo" data-toggle="tooltip" data-placement="top" title="Descargar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+avanceCualitativo[a].id+'>'+
+										'			<span class="glyphicon glyphicon-download-alt"></span>'+
+										'		</button>'+
+										'	</td>'+
+										'</tr>';	
+				<%}%>
+			}	
+		}	
 	}
 	$('#cuerpoTablaAvanceCualitativo').html("");
 

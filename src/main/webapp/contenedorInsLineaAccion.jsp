@@ -176,7 +176,7 @@ if (user != null) { %>
 			{
 				
 				if(onoff==true && insLineaAccion[w].borrado == true){
-					w=w+1;
+					// pasa a la siguiente fila en el for ++
 				}else{
 					bandLineaAccion = 0;
 				 	bandInstitucion = 0;
