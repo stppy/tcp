@@ -83,6 +83,7 @@ if (user != null) { %>
 		usr_nivel_id="<%=attributes.get("nivel_id") %>";
 		usr_entidad_id="<%=attributes.get("entidad_id") %>";
 		usr_unr_id="<%=attributes.get("unr_id") %>";
+		periodo_seleccionado=0;
 		
 		var usuarios = $.ajax({
 			url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
@@ -572,18 +573,53 @@ if (user != null) { %>
 		$('#tablaCuerpoInsLineaAccionPrecargadosAnterior').append(cuerpoTablaInsLineaAccionAnterior);
 		$("#dataTableInsLineaAccionAnterior").DataTable();
 		
-		}
+		}	
 	
 		<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
-			var ocultarBorrado= '<div class="checkbox">'+
-									'<label> <input type="checkbox" id="chkMostrarOcultar">Ocultar Registros Borrados</label>'+
-								'</div>';								
+			var periodo = $.ajax({
+				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+			}).responseText;
+			periodo = JSON.parse(periodo);
+			var optionPeriodo;
+
+			for(p = 0;p<periodo.length; p++)
+			{
+				if(periodo[p].id >= 2014){
+					if(periodo[p].id == 2016)
+					{
+						optionPeriodo+='<option value="'+periodo[p].id+'" selected>'+periodo[p].nombre+'</option>';
+					}else{
+						optionPeriodo+='<option value="'+periodo[p].id+'" >'+periodo[p].nombre+'</option>';
+					}
+				}
+			}
+		
+			var ocultarBorrado= '<div class="col-sm-4">'+
+									'<label for="periodoSeleccion">Periodo</label>'+
+									'<select id="periodoSeleccion" class="form-control">'+optionPeriodo+'</select>'+
+								'</div>'+
+								'<div class="col-sm-4">'+
+								'</div>'+
+								'<div class="col-sm-4">'+
+									'<div class="checkbox">'+
+										'<label> <input type="checkbox" id="chkMostrarOcultar">Ocultar Registros Borrados</label>'+
+									'</div>'+
+								'</div>';
 			$('#mostrarOcultarBorrado').append(ocultarBorrado);
 		<%}%>
 		
 		$("body").on("click", "#chkMostrarOcultar",function(event){			
 			OcultarRegistrosBorrados();
 		});		
+		
+		$("body").on("change", "#periodoSeleccion",function(event){	
+		   	periodoSeleccionado = $("#periodoSeleccion option:selected").val();
+		   	
+		   	ProcesarCambioPeriodo();
+		});
 		
 	});
 <%}else{%>
@@ -598,6 +634,11 @@ if (user != null) { %>
 			onoff=true;			
 		}
 		$("tr > td > del").closest("tr").toggle(onoff);
+	}
+	
+	function ProcesarCambioPeriodo(){
+		
+		//periodoSeleccionado
 	}
 </script>
 	
@@ -615,9 +656,10 @@ if (user != null) { %>
       <div class="content-wrapper">
       
         <!-- Content Header (Page header) -->
-        <section class="content-header">
-				<div class="col-sm-offset-10 col-sm-10" id="mostrarOcultarBorrado"></div>					
-			</section>
+        <div class="row">
+        		
+				<div class="col-md-12" id="mostrarOcultarBorrado"></div>					
+		</div>
 
         <!-- Main content -->
         <section class="content" id="programacion">
