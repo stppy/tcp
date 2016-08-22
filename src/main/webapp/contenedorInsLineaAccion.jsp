@@ -207,7 +207,7 @@ if (user != null) { %>
 						{
 							for(var d=0; d<usuarioLineaAccion.length;d++)
 							{
-								if(usuarioLineaAccion[d].lineaaccionid == insLineaAccion[w].lineaAccionId)
+								if(usuarioLineaAccion[d].lineaAccionId == insLineaAccion[w].lineaAccionId)
 								{
 									if(insLineaAccion[w].periodoId == "2016")
 								 	{		 		
