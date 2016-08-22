@@ -2487,7 +2487,7 @@ $(document).ready(function(){
 		//if (typeof lineaAccionId != "undefined"){ urlHitosAvances+='&linea_accion_id='+lineaAccionId;}
 		if (typeof idDepartamento != "undefined" && idDepartamento != "" ){ urlHitosAvances+='&departamento='+idDepartamento;}
 		if (typeof idDistrito != "undefined" && idDistrito != ""){ urlHitosAvances+='&distrito='+idDistrito;}
-		if (typeof accionId != "undefined" ){ urlHitosAvances+='&accionId='+accionId;}
+		if (typeof accionId != "undefined" ){ urlHitosAvances+='&accion_id='+accionId;}
 		
 		var registrosHitos = $.ajax({
 	    	url:urlHitosAvances,
@@ -2562,7 +2562,11 @@ $(document).ready(function(){
 											'<tbody>'+
 												'<tr><td><div class="form-group"><label for="nombreAccion">Acción</label><input type="text" class="form-control" id="nombreAccion" value="'+accion[0].accion+'"><input type="hidden" class="form-control" id="accionId" value="'+accion[0].accion_id+'"></div></td><td><div class="form-group"><label for="umedida">U. medida</label><input type="text" class="form-control" id="umedida" value="'+accion[0].accion_unidad_medida+'"></div></td></tr>'+
 												'<tr><td><div class="form-group"><label for="departamento">Departamento</label><select id="selectorDepartamento" name="departamento" class="form-control">'+optionDepartamentos+'</select></div></td><td><div class="form-group"><label for="distrito">Distrito</label><select name="departamento" class="form-control" id="distritosDepartamento"></select></div></td></tr>'+
+											
+												<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
 												'<tr><td colspan="2"><button type="submit" class="btn btn-success">Guardar Acción</button>&nbsp&nbsp<button type="submit" class="btn btn-success modalAgregarHito" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'">Programar Hito</button>&nbsp&nbsp<button type="submit" class="btn btn-success modalDeclararAvance" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'" >Declarar Avance</button></td></tr>'+
+												<% } %>
+												
 											'</tbody>'+							           
 										'</table>'+
 										'</div>'+
@@ -2572,6 +2576,7 @@ $(document).ready(function(){
 									'</div>'+
 							     '</div>'+	
 							     
+							     <% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
 					      			'<div class="row">'+
 									'<div class="col-md-12">'+
 							         '<div class="box" height="1000px">'+
@@ -2619,6 +2624,7 @@ $(document).ready(function(){
 									   '</div>'+
 									'</div>'+
 							     '</div>'+	
+							     <% } %>
 						      
 							      	'<div class="row">'+ 
 
@@ -2660,7 +2666,8 @@ $(document).ready(function(){
 					                	'</div>'+//fin box-body
 					                	'<div class="box-footer">'+
 					                	
-					                	'<div id="tituloFormulario"></div>'+
+					               <% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%> 
+					                	'<div id="tituloFormulario"></div>'+ 
 				      					'<form class="form-horizontal" role="form" id="formulario" method="post" action="/ajaxUpdate">'+
 				      						'<input type="hidden" name="accion" value="actEntidad">'+
 				      						'<input type="hidden" name="anho" value="" id="anhoProducto-formulario">'+
@@ -2722,6 +2729,7 @@ $(document).ready(function(){
 							      					'</div>'+
 			      					    		'</div>'+   					    				
 			      					    	'</div>'+// fin row
+			      					  <% } %>	    	
 					                	'</div>'+//fin box-footer
 					                	
 					                	
@@ -2735,8 +2743,8 @@ $(document).ready(function(){
 							        			'</div>'+
 							      			'</div>'+
 							      			'<div class="box-body hitosProgramado">'+//cuerpo del body    			
-							      				'<div class="table-responsive">'+
-													'<table class="table table-hover hitos">'+
+							      				'<div class="table-responsive">'+							      				
+													'<table class="table table-hover table-bordered" id="dataTablesHitos">'+
 														'<thead>'+
 															'<tr class="active"><th>Acción</th><th>Departamento</th><th>Distrito</th><th>U. Medida</th><th>Cantidad. Programado</th><th>Costo Total</th><th>Fecha Terminación</th><th>% Programado</th><th>Editar</th></tr>'+
 														'</thead>'+
@@ -2747,7 +2755,11 @@ $(document).ready(function(){
 														{
 															if(registroHitos[m].hito_porcentaje_programado > 0)
 															{
-																modalHito += '<tr><td>'+registroHitos[m].accion+'</td><td>'+registroHitos[m].accion_departamento+'</td><td>'+registroHitos[m].accion_distrito+'</td><td>'+registroHitos[m].accion_unidad_medida+'</td><td>'+registroHitos[m].hito_cantidad_programado+'</td><td>'+registroHitos[m].accion_costo+'</td><td>'+registroHitos[m].hito_fecha_entrega+'</td><!--td>registroHitos[m].hito_porcentaje_programado</td--><td><a href="#" class="modalEditarHito" parametros="'+registroHitos[m].hito_id+'"><span class="glyphicon glyphicon-pencil"></span></a></td></tr>';
+																modalHito += '<tr><td>'+registroHitos[m].accion_catalogo_nombre+'</td><td>'+registroHitos[m].accion_departamento+'</td><td>'+registroHitos[m].accion_distrito+'</td><td>'+registroHitos[m].accion_unidad_medida+'</td><td>'+registroHitos[m].hito_cantidad_programado+'</td><td>'+registroHitos[m].accion_costo+'</td><td>'+registroHitos[m].hito_fecha_entrega+'</td><td>'+registroHitos[m].hito_porcentaje_programado+'</td><td>'+
+																			 <% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
+																			 '<a href="#" class="modalEditarHito" parametros="'+registroHitos[m].hito_id+'"><span class="glyphicon glyphicon-pencil"></span></a>'+
+																			 <% } %>	 
+																			 '</td></tr>';
 																totalCantidadProgramada+=registroHitos[m].hito_cantidad_programado;
 															}
 														}
@@ -2771,7 +2783,7 @@ $(document).ready(function(){
 						      			'</div>'+
 						      			'<div class="box-body">'+ 
 					      				'<div class="table-responsive">'+
-										'<table class="table table-hover hitos">'+
+										'<table class="table table-hover table-bordered" id="dataTablesAvances">'+
 											'<thead>'+
 												'<tr class="active"><th>Acción</th><th>Departamento</th><th>Distrito</th><th>U. Medida</th><th>Cantidad. Programado</th><th>Costo Total</th><th>Fecha Terminación</th><th>% Ejecutado</th><th>Editar</th></tr>'+
 											'</thead>'+
@@ -2782,7 +2794,11 @@ $(document).ready(function(){
 											{
 												if(registroHitos[m].hito_porcentaje_ejecutado > 0)
 												{
-													modalHito += '<tr><td>'+registroHitos[m].accion+'</td><td>'+registroHitos[m].accion_departamento+'</td><td>'+registroHitos[m].accion_distrito+'</td><td>'+registroHitos[m].accion_unidad_medida+'</td><td>'+registroHitos[m].hito_cantidad_programado+'</td><td>'+registroHitos[m].accion_costo+'</td><td>'+registroHitos[m].hito_fecha_entrega+'</td><td>'+registroHitos[m].hito_porcentaje_ejecutado+'</td><td><a href="#" class="modalEditarHito" parametros="'+registroHitos[m].hito_id+'"><span class="glyphicon glyphicon-pencil"></span></a></td></tr>';
+													modalHito += '<tr><td>'+registroHitos[m].accion_catalogo_nombre+'</td><td>'+registroHitos[m].accion_departamento+'</td><td>'+registroHitos[m].accion_distrito+'</td><td>'+registroHitos[m].accion_unidad_medida+'</td><td>'+registroHitos[m].hito_cantidad_programado+'</td><td>'+registroHitos[m].accion_costo+'</td><td>'+registroHitos[m].hito_fecha_entrega+'</td><td>'+registroHitos[m].hito_porcentaje_ejecutado+'</td><td>'+
+													<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
+													'<a href="#" class="modalEditarHito" parametros="'+registroHitos[m].hito_id+'"><span class="glyphicon glyphicon-pencil"></span></a>'+
+													<% } %>
+													'</td></tr>';
 													totalCantidadProgramada+=registroHitos[m].hito_cantidad_programado;
 												}
 											}
@@ -2810,10 +2826,9 @@ $(document).ready(function(){
          '</div>'+//fin modal-dialog
          '</div>';//fon myModal2
 
-
-
+         
+		$("body").append(modalHito);         		
 		
-		$("body").append(modalHito);
 		
 		if (idDepartamento != ""){
         	$('#selectorDepartamento > option[value="'+idDepartamento+'"]').attr('selected', 'selected');
@@ -2837,7 +2852,10 @@ $(document).ready(function(){
 			
 			$('#distritosDepartamento > option[value="'+idDistrito+'"]').attr('selected', 'selected');
 		}
-		$("#myModal2").modal('show');
+		$("#myModal2").modal('show');		
+		
+		$("#dataTablesHitos").DataTable();
+		$("#dataTablesAvances").DataTable();
 		
 		$("body").on("change", "#selectorDepartamento",function(event){
 			//var departamentoId = $(this).attr("parametro");
@@ -4210,7 +4228,7 @@ $("body").on("click", ".verificarDestinatarios",function(event){
 		    			  	  var cuerpoTablaDestinatario="";
 		    			  	  var destinatarioGrupo= new Array(); //tiene los meses
 		    			  	  var destinatarioDepto = new Array(); //tiene los departamentos
-		    			  	  var fmr = $(formulario);
+		    			  	  //var fmr = $(formulario);
 		    			  	  for (var iDest=0;iDest<datosProductoPresupuestoDestinatario.producto.length;iDest++){
 		    			  		  cuerpoTablaDestinatario+="<tr><td>"+datosProductoPresupuestoDestinatario.producto[iDest].nombreCatalogo+"</td>";
 		    			  		  detalleMes=new Array();

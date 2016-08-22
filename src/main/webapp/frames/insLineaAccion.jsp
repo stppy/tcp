@@ -4239,7 +4239,7 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	lineaAccion = JSON.parse(lineaAccion)
 	
 	var periodo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo&&periodoId='+periodoId,
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo&periodoId='+periodoId,
   		type:'get',
   		dataType:'json',
   		async:false       
