@@ -598,8 +598,8 @@ if (user != null) { %>
 			}
 		
 			var ocultarBorrado= '<div class="col-sm-4">'+
-									'<label for="periodoSeleccion">Periodo</label>'+
-									'<select id="periodoSeleccion" class="form-control">'+optionPeriodo+'</select>'+
+									/*'<label for="periodoSeleccion">Periodo</label>'+
+									'<select id="periodoSeleccion" class="form-control">'+optionPeriodo+'</select>'+*/
 								'</div>'+
 								'<div class="col-sm-4">'+
 								'</div>'+
@@ -615,11 +615,11 @@ if (user != null) { %>
 			OcultarRegistrosBorrados();
 		});		
 		
-		$("body").on("change", "#periodoSeleccion",function(event){	
+		/*$("body").on("change", "#periodoSeleccion",function(event){	
 		   	periodoSeleccionado = $("#periodoSeleccion option:selected").val();
 		   	
 		   	ProcesarCambioPeriodo();
-		});
+		});*/
 		
 	});
 <%}else{%>
