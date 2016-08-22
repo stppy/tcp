@@ -2752,7 +2752,14 @@ public class SqlSelects {
 	}
 	public static String selectUsuarioLineaAccion(String condition) throws SQLException{
 	   	 Connection conect=ConnectionConfiguration.conectar();
-	   	 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from( select * from usuario_linea_accion"+condition+")t";
+	   	 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from( select"
+	   	 		+ " id,"
+	   	 		+ "usuario_correo,"
+	   	 		+ "linea_accion_id as \"lineaAccionId\","
+	   	 		+ "fecha_actualizacion,"
+	   	 		+ "fecha_insercion,"
+	   	 		+ "usuario_responsable"
+	   	 		+ " from usuario_linea_accion"+condition+")t";
 
 
 		Statement statement = null;
