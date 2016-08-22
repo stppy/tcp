@@ -339,7 +339,7 @@ function renderEvidencia(avanceId, parametros){
 		        		$('#cuerpoModalInsLineaAccion').html('');
 		        		$("#cuerpoModalInsLineaAccion").append('<h3 class="text-center">La Línea de Acción se ha insertado con Exito</h3>');
 		        		
-		        		renderInsLineaAccion();
+		        		renderInsLineaAccion(periodoSeleccionado);
 		        		
 		        				        													
 						
@@ -612,7 +612,7 @@ function renderEvidencia(avanceId, parametros){
 		        		$("#cuerpoActualizarInsLineaAccion").append('<h3 class="text-center">La Línea de Acción se ha modificado con Exito</h3>');
 		        		
 		        		
-		        		renderInsLineaAccion();
+		        		renderInsLineaAccion(periodoSeleccionado);
 		        		
 		        		
 		        	}else{
@@ -703,7 +703,7 @@ function renderEvidencia(avanceId, parametros){
 				    		unidadMedida = JSON.parse(unidadMedida);
 
 				    		
-				    		renderInsLineaAccion();
+				    		renderInsLineaAccion(periodoSeleccionado);
 				    		
 				    						    		
 				    		$("#mensajeBorradoInsLineaAccion").html("");
