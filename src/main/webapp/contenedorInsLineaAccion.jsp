@@ -203,7 +203,7 @@ if (user != null) { %>
 				{
 					for(var t = 0; t < insLineaAccionHasEtiqueta.length; t++)
 					{
-						if(insLineaAccionHasEtiqueta[t].ins_linea_accion_id == insLineaAccion[w].lineaAccionId && insLineaAccionHasEtiqueta[t].etiqueta_id == 1)
+						if(insLineaAccionHasEtiqueta[t].ins_linea_accion_id == insLineaAccion[w].id && insLineaAccionHasEtiqueta[t].etiqueta_id == 1)
 						{
 							for(var d=0; d<usuarioLineaAccion.length;d++)
 							{
