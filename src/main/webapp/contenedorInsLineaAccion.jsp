@@ -127,7 +127,7 @@ function renderInsLineaAccion(PeriodoActual){
 	var todasLasLineasAccion="";
 	for(var f = 0; f < insLineaAccion.length; f++)
 	{
-		todasLasLineasAccion += insLineaAccion[f].lineaAccionId+",";
+		todasLasLineasAccion += insLineaAccion[f].id+",";
 	}
 	todasLasLineasAccion = todasLasLineasAccion.substring(0,todasLasLineasAccion.length - 1);
 
