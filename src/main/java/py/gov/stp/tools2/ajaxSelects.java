@@ -768,6 +768,7 @@ public class ajaxSelects extends HttpServlet {
                 if (institucionIdConcat!="") condition += " and ins_linea_accion_base.institucion_id in("+institucionIdConcat+")";
                 if (departamentoId!=null) condition += " and ins_linea_accion_base.depto_id='"+departamentoId+"'";
                 if (distritoId!=null) condition += " and ins_linea_accion_base.dist_id='"+distritoId+"'";
+                if (periodoId!=null) condition += " and periodo ='"+periodoId+"'";
            		try {objetos = SqlSelects.selectResumenLineasAccionProgramacion(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
