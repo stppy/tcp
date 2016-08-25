@@ -1917,7 +1917,7 @@ public class SqlSelects {
 						+ "			 ins_linea_accion_costo_estimado.ins_linea_accion_id=ins_linea_accion_base.ins_linea_accion_id"
 						+ " left join ins_linea_accion_destinatario_real on "
 						+ "			 ins_linea_accion_destinatario_real.ins_linea_accion_id=ins_linea_accion_base.ins_linea_accion_id"
-						+ "  "+condition+" and periodo=2016 order by institucion_orden, la_orden ";
+						+ "  "+condition+" order by institucion_orden, la_orden ";
 
 		Statement statement = null;
 		ResultSet rs=null;

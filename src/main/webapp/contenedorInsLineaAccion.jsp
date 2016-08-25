@@ -619,13 +619,14 @@ function renderInsLineaAccion(PeriodoActual){
 									'<label for="periodoSeleccion">Periodo</label>'+
 									'<select id="periodoSeleccion" class="form-control">'+optionPeriodo+'</select>'+
 								'</div>'+
-								'<div class="col-sm-4">'+
-								'</div>'+/* +
-								'<div class="col-sm-4">'+
+								'<div class="col-sm-6">'+
+								'</div>'+
+								'<div class="col-sm-2">'+
 									'<div class="checkbox">'+
 										'<label> <input type="checkbox" id="chkMostrarOcultar">Ocultar Registros Borrados</label>'+
-									'</div>'+*/
-								'</div>'; 							
+									'</div>'+
+								'</div>';
+								
 			$('#mostrarOcultarBorrado').append(ocultarBorrado);
 		<%}%>
 		
