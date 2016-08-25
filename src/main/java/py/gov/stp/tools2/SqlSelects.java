@@ -2463,6 +2463,8 @@ public class SqlSelects {
 				+ "ins_linea_accion_base_dd.meta as meta,"
 				+ "ins_linea_accion_base_dd.depto_id as \"departamentoId\","
 				+ "ins_linea_accion_base_dd.dist_id as \"distritoId\","
+				+ "ins_linea_accion_base_dd.ins_linea_accion_id as \"insLineaAccionId\","
+
 				+ "ins_linea_accion_programacion_anho_dd.cantidad_anho as \"cantidadAnho\","				
 				+ "ins_linea_accion_destinatarios_dd.cant_dest as \"cantDest\","
 				+ "ins_linea_accion_costo_estimado_dd.inversion_estimada as \"inversionEstimada\","				
