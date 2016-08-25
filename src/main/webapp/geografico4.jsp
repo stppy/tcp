@@ -1457,6 +1457,7 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 	var acum, acumEjecucionPrevista, acumEjecucionLograda;
 	var promedio;
 	var institucionId;
+	var totalDestinatario;
 	
 /* 	  tempInstituciones = '<thead><tr>'+
 	  	'<th rowspan="3" class="text-center" style="vertical-align: middle;">Línea de Acción</th>'+
@@ -1500,7 +1501,7 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 		institucionId=lineasProgramadas[0].institucionId;
 		cont=0, contEjecucion=0, destinatarios=0; inversion=0; 
 		acum=0, acumEjecucionPrevista=0, acumEjecucionLograda=0;
-		promedio=0;
+		promedio=0, totalDestinatario=0;
 		
 		tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[0].institucionSigla+'</strong></td></tr>';
 		for(var n=0; n<lineasProgramadas.length;n++){		
@@ -1522,7 +1523,9 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 				} else {
 					acum =acum + ((lineasProgramadas[n].cantidadAvance / lineasProgramadas[n].cantidadHoy) * 100);
 					cont= cont +1;				
-				}			
+				}
+				
+				totalDestinatario = totalDestinatario + lineasProgramadas[n].cantDest;
 				
 				if (n == lineasProgramadas.length -1){
 
@@ -1546,9 +1549,9 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 					'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
 					'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
 					//'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
-					'<td></td>'+
+					'<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>'+
 					//'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
-					'<td></td>'+
+					'<td>'+numeroConComa(totalDestinatario)+'</td>'+
 					'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
 					'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
 					'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
@@ -1593,9 +1596,9 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 						'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+'-'+distId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
 						'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
 						//'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
-						'<td></td>'+
+						'<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>'+
 						//'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
-						'<td></td>'+
+						'<td>'+numeroConComa(totalDestinatario)+'</td>'+
 						'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
 						'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
 						'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
@@ -1617,6 +1620,7 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 						cont=0, contEjecucion=0; 
 						acum=0, acumEjecucionPrevista=0, acumEjecucionLograda=0;
 						promedio=0,destinatarios=0; inversion=0;
+						totalDestinatario=0;
 						//institucionId = lineasProgramadas[n+1].institucionId;
 						linea_accion_id = lineasProgramadas[n+1].lineaAccionId;
 						//tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n+1].institucionSigla+'</strong></td></tr>';
