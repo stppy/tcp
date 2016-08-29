@@ -206,6 +206,10 @@ tbody {
             <!--  Titulo, donde antes estaba dashboard -->
             </small>
           </h1>
+        	<div class="row">        	
+				<div class="col-md-12" id="mostrarOcultarPeriodo">
+				</div>					
+			</div>
          
         </section>
 
@@ -512,10 +516,13 @@ tbody {
 				    			renderTableroLineaAccion(aux,null,null) */
 				    			
 					    	}
-				    	}
+				    	} 
 					}
 					
-					
+					var periodoActual = 2016;
+					var depto_id =  null;
+					var dist_id = null;
+
 					function renderEntidades(e){
 						var array=[];var tipoInstituciones="";
 						$("#tablaInstituciones").html("");
@@ -544,7 +551,10 @@ tbody {
 									}
 								}
 								var todasInstituciones=getInstitucionesSeleccionadas();
-								var a=renderTableroLineaAccion(todasInstituciones,e.target.feature.properties.dpto,e.target.feature.properties.distrito);
+								var a=renderTableroLineaAccion(todasInstituciones,e.target.feature.properties.dpto,e.target.feature.properties.distrito,periodoActual);
+								depto_id = e.target.feature.properties.dpto;
+								dist_id = e.target.feature.properties.distrito;
+								getPeriodo();
 								$("#cuerpoTableroLineaAccion").html("");
 								$("#cuerpoTableroLineaAccion").html(a);
 							}else{
@@ -578,7 +588,9 @@ tbody {
 									
 								}
 								var todasInstituciones=getInstitucionesSeleccionadas();
-								var a=renderTableroLineaAccion(todasInstituciones,e.target.feature.properties.dpto,null);
+								var a=renderTableroLineaAccion(todasInstituciones,e.target.feature.properties.dpto,null,periodoActual);
+								depto_id = e.target.feature.properties.dpto;
+								getPeriodo();
 								$("#cuerpoTableroLineaAccion").html("");
 								$("#cuerpoTableroLineaAccion").html(a);
 							}
@@ -1266,7 +1278,7 @@ var usuarioEtiqueta = $.ajax({
 }).responseText;
 usuarioEtiqueta = JSON.parse(usuarioEtiqueta);
 
-function renderTableroLineaAccion(institucionIdConcat,deptoId,distId){
+function renderTableroLineaAccion(institucionIdConcat,deptoId,distId,periodo){
 var contenidoEnRowTemp="";	
 var tablaInstituciones="";
 var tempInstituciones="";
@@ -1278,6 +1290,8 @@ var condicion="";
 if(institucionIdConcat!=null)condicion= "&institucionIdConcat="+institucionIdConcat;
 if(deptoId!=null)condicion+= "&departamentoId="+deptoId;
 if(distId!=null)condicion+= "&distritoId="+distId;
+if(periodo!=null)condicion+= "&periodoId="+periodo;
+
 
 if(deptoId!=null && distId!=null){
 	var lineasProgramadas = $.ajax({
@@ -1584,22 +1598,30 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 								{
 			
 									contEjecucion++;
-									if (lineasProgramadas[n].cantidadHoy!=null) acumEjecucionPrevista=acumEjecucionPrevista + lineasProgramadas[n].cantidadHoy;
-									if (lineasProgramadas[n].cantidadAvance!=null) acumEjecucionLograda=acumEjecucionLograda + lineasProgramadas[n].cantidadAvance;
+/* 									if (lineasProgramadas[n].cantidadHoy!=null) acumEjecucionPrevista=acumEjecucionPrevista + lineasProgramadas[n].cantidadHoy;
+									if (lineasProgramadas[n].cantidadAvance!=null) acumEjecucionLograda=acumEjecucionLograda + lineasProgramadas[n].cantidadAvance; */
 									if (lineasProgramadas[n].cantDestinatarioReal!=null) destinatarios= destinatarios + lineasProgramadas[n].cantDestinatarioReal;
 									if (lineasProgramadas[n].costoAc!=null) inversion= inversion + lineasProgramadas[n].costoAc;
 									
 									if ((lineasProgramadas[n].cantidadHoy == 0 || lineasProgramadas[n].cantidadHoy==null ) && lineasProgramadas[n].cantidadAvance > 0) {	
 										acum = acum + 100;
-										cont= cont +1;				
+										cont= cont +1;	
+										acumEjecucionPrevista=acumEjecucionPrevista + lineasProgramadas[n].cantidadHoy;
+										acumEjecucionLograda=acumEjecucionLograda + lineasProgramadas[n].cantidadAvance;
 									} else if (lineasProgramadas[n].cantidadHoy > 0 && (lineasProgramadas[n].cantidadAvance == 0 || lineasProgramadas[n].cantidadAvance == null)) {
 										acum = acum + 0;
-										cont= cont +1;				
+										cont= cont +1;	
+										acumEjecucionPrevista=acumEjecucionPrevista + 0;
+										acumEjecucionLograda=acumEjecucionLograda + 0;
 									} else if ((lineasProgramadas[n].cantidadHoy == 0 || lineasProgramadas[n].cantidadHoy == null)	&& (lineasProgramadas[n].cantidadAvance == 0 || lineasProgramadas[n].cantidadAvance == null )) {
-										acum = acum + 0;				
+										acum = acum + 0;	
+										acumEjecucionPrevista=acumEjecucionPrevista + 0;
+										acumEjecucionLograda=acumEjecucionLograda + 0;
 									} else {
 										acum =acum + ((lineasProgramadas[n].cantidadAvance / lineasProgramadas[n].cantidadHoy) * 100);
-										cont= cont +1;				
+										cont= cont +1;	
+										acumEjecucionPrevista=acumEjecucionPrevista + lineasProgramadas[n].cantidadHoy;
+										acumEjecucionLograda=acumEjecucionLograda + lineasProgramadas[n].cantidadAvance;
 									}
 									
 									totalDestinatario = totalDestinatario + lineasProgramadas[n].cantDest;
@@ -1630,8 +1652,8 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 										//'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
 										'<td>'+numeroConComa(totalDestinatario)+'</td>'+
 										'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
-										'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
-										'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
+										'<td>'+numeroConComa((acumEjecucionPrevista).toFixed(2))+'</td>'+
+										'<td>'+numeroConComa((acumEjecucionLograda).toFixed(2))+'</td>';
 										
 										clase="";			
 										if (promedio>=90){
@@ -1677,8 +1699,8 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 											//'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
 											'<td>'+numeroConComa(totalDestinatario)+'</td>'+
 											'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
-											'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
-											'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
+											'<td>'+numeroConComa((acumEjecucionPrevista).toFixed(2))+'</td>'+
+											'<td>'+numeroConComa((acumEjecucionLograda).toFixed(2))+'</td>';
 											
 											clase="";			
 											if (promedio>=90){
@@ -1882,6 +1904,73 @@ function renderNivelDistrital(lineasProgramadas, deptoId, distId){
 	   
 return contenidoEnRowTemp;
 
+}
+
+$("body").on("change", "#periodoSeleccion",function(event){	
+   	periodoSeleccionado = $("#periodoSeleccion option:selected").val();
+	var institucion_idConcat=getInstitucionesSeleccionadas();
+	var nombreInstituciones="";
+	
+	if (institucion_idConcat==""){
+		$("#cuerpoTableroLineaAccion").html("");
+	}else{
+		if(institucion_idConcat != "" && (depto_id !==null) && (dist_id !==null)){
+			var a = renderTableroLineaAccion(institucion_idConcat,depto_id,dist_id,periodoSeleccionado);
+			$("#cuerpoTableroLineaAccion").html("");
+			$("#cuerpoTableroLineaAccion").html(a);
+		}else{
+			if(institucion_idConcat != "" && (depto_id !==null)){
+				var a = renderTableroLineaAccion(institucion_idConcat,depto_id,null,periodoSeleccionado);
+				$("#cuerpoTableroLineaAccion").html("");
+				$("#cuerpoTableroLineaAccion").html(a);
+			}else{
+				if(institucion_idConcat != ""){
+					var a = renderTableroLineaAccion(institucion_idConcat,null,null,periodoSeleccionado);
+					$("#cuerpoTableroLineaAccion").html("");
+					$("#cuerpoTableroLineaAccion").html(a);
+				}	
+			}			
+		}
+	}
+	
+	
+	event.stopPropagation();
+	
+ });
+
+function getPeriodo(periodo){
+
+	var periodo = $.ajax({
+		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	periodo = JSON.parse(periodo);
+
+	var optionPeriodo;
+	
+	for(p = 0;p<periodo.length; p++){
+		if(periodo[p].id >= 2014){
+			if(periodo[p].id == 2016){
+				optionPeriodo+='<option value="'+periodo[p].id+'" selected>'+periodo[p].nombre+'</option>';
+			}else{
+				optionPeriodo+='<option value="'+periodo[p].id+'" >'+periodo[p].nombre+'</option>';
+			}
+		}
+	}
+	
+	var periodoCuerpo = '<div class="col-sm-4">'+
+							'<label for="periodoSeleccion" style="padding-top:6px;">Periodo: </label>'+
+							'<select id="periodoSeleccion" class="form-control" style="width:50% !important; display: inline-block; margin-left: 8px;">'+optionPeriodo+'</select>'+
+						'</div>'+
+						'<div class="col-sm-4">'+
+						'</div>'+
+						'<div class="col-sm-4">'+
+						'</div>';
+						
+	$('#mostrarOcultarPeriodo').html(periodoCuerpo);
+	
 }	
 
 $("body").on("click", ".cmbInstitucion",function(event){
@@ -2371,7 +2460,8 @@ $(document).ready(function(){
 	todasInstituciones=todasInstituciones.substring(0,todasInstituciones.length - 1);
 	 
 	var todasInstituciones=getInstitucionesSeleccionadas();
-	var a=renderTableroLineaAccion(todasInstituciones,null,null);
+	var a=renderTableroLineaAccion(todasInstituciones,null,null,periodoActual);
+	getPeriodo();
 	$("#cuerpoTableroLineaAccion").html(a);
 
 	function renderTodasLasLineas(){
