@@ -108,8 +108,10 @@ function renderAccion(estrategia, lineasProgramadas, instituciones, periodo){
 			
 	var todasLasLineasAccion="";
 	for(var f = 0; f < lineasProgramadas.length; f++)
-	{
-		todasLasLineasAccion += lineasProgramadas[f].insLineaAccionId+",";
+	{		
+		if (todasLasLineasAccion.indexOf(""+lineasProgramadas[f].insLineaAccionId) == -1){ 
+			todasLasLineasAccion += lineasProgramadas[f].insLineaAccionId+",";
+		}
 	}
 	todasLasLineasAccion = todasLasLineasAccion.substring(0,todasLasLineasAccion.length - 1);
 
@@ -291,7 +293,7 @@ function getPeriodo(periodo){
 							'</div>'+ */
 						'</div>';
 						
-	$('#mostrarOcultarPeriodo').append(periodoCuerpo);
+	$('#mostrarOcultarPeriodo').html(periodoCuerpo);
 	
 	/*$("body").on("click", ".guardarRangoFechas",function(event){
 	
