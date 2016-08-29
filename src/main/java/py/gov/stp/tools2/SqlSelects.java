@@ -1893,6 +1893,8 @@ public class SqlSelects {
 						+ "		ins_linea_accion_base.linea_um_nombre,"
 						+ "		ins_linea_accion_base.periodo,"
 						+ "		ins_linea_accion_base.meta as meta_comprometida,"
+						+ "		ins_linea_accion_base.ins_linea_accion_id,"
+
 						+ "		ins_linea_accion_programacion_anho.cantidad_anho as programado_anho,"
 						+ "		ins_linea_accion_programacion_hoy.cantidad_hoy as programado_hoy,"
 						+ "		ins_linea_accion_destinatarios.cant_dest as destinatarios_estimados,"
@@ -1915,7 +1917,7 @@ public class SqlSelects {
 						+ "			 ins_linea_accion_costo_estimado.ins_linea_accion_id=ins_linea_accion_base.ins_linea_accion_id"
 						+ " left join ins_linea_accion_destinatario_real on "
 						+ "			 ins_linea_accion_destinatario_real.ins_linea_accion_id=ins_linea_accion_base.ins_linea_accion_id"
-						+ "  "+condition+" and periodo=2016 order by institucion_orden, la_orden ";
+						+ "  "+condition+" order by institucion_orden, la_orden ";
 
 		Statement statement = null;
 		ResultSet rs=null;
@@ -1930,6 +1932,7 @@ public class SqlSelects {
 			    objeto.setInstitucionSigla(rs.getString("institucion_sigla"));
 			    objeto.setInstitucionId(rs.getInt("institucion_id"));
 			    objeto.setLineaAccionId(rs.getInt("linea_accion_id"));
+			    objeto.setInsLineaAccionId(rs.getInt("ins_linea_accion_id"));
 			    
 			    objeto.setLineaAccionEstratagiaId(rs.getInt("tipo_estrategia_id"));
 			    objeto.setLineaAccionNombre(rs.getString("linea_accion_nombre"));
@@ -2460,6 +2463,8 @@ public class SqlSelects {
 				+ "ins_linea_accion_base_dd.meta as meta,"
 				+ "ins_linea_accion_base_dd.depto_id as \"departamentoId\","
 				+ "ins_linea_accion_base_dd.dist_id as \"distritoId\","
+				+ "ins_linea_accion_base_dd.ins_linea_accion_id as \"insLineaAccionId\","
+
 				+ "ins_linea_accion_programacion_anho_dd.cantidad_anho as \"cantidadAnho\","				
 				+ "ins_linea_accion_destinatarios_dd.cant_dest as \"cantDest\","
 				+ "ins_linea_accion_costo_estimado_dd.inversion_estimada as \"inversionEstimada\","				
@@ -2750,5 +2755,99 @@ public class SqlSelects {
 		}
 		return objetos;
 	}
+	public static String selectUsuarioLineaAccion(String condition) throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+	   	 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from( select"
+	   	 		+ " id,"
+	   	 		+ "usuario_correo,"
+	   	 		+ "linea_accion_id as \"lineaAccionId\","
+	   	 		+ "fecha_actualizacion,"
+	   	 		+ "fecha_insercion,"
+	   	 		+ "usuario_responsable"
+	   	 		+ " from usuario_linea_accion"+condition+")t";
+
+
+		Statement statement = null;
+		ResultSet rs = null;
+ 		 String objetos = "";
+
+		try {
+			statement = conect.createStatement();
+			rs = statement.executeQuery(query);
+  			while(rs.next()){
+
+  				objetos+=rs.getString("resultado");
+  			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				statement.close();
+			}
+			if (conect != null) {
+				conect.close();
+			}
+		}
+		return objetos;
+	  }
+	public static String selectInsLineaAccionHasEtiqueta(String condition) throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+	   	 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from( select * from ins_linea_accion_has_etiqueta"+condition+")t";
+
+
+		Statement statement = null;
+		ResultSet rs = null;
+		 String objetos = "";
+
+		try {
+			statement = conect.createStatement();
+			rs = statement.executeQuery(query);
+ 			while(rs.next()){
+
+ 				objetos+=rs.getString("resultado");
+ 			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				statement.close();
+			}
+			if (conect != null) {
+				conect.close();
+			}
+		}
+		return objetos;
+	  }
+	public static String selectUsuarioEtiqueta(String condition) throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+	   	 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from( select * from usuario_etiqueta"+condition+")t";
+
+
+		Statement statement = null;
+		ResultSet rs = null;
+		 String objetos = "";
+
+		try {
+			statement = conect.createStatement();
+			rs = statement.executeQuery(query);
+ 			while(rs.next()){
+
+ 				objetos+=rs.getString("resultado");
+ 			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				statement.close();
+			}
+			if (conect != null) {
+				conect.close();
+			}
+		}
+		return objetos;
+	  }
 	
 }
