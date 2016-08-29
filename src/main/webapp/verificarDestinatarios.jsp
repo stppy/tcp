@@ -96,9 +96,33 @@ if (user != null) { %>
 		function renderCiDestinatarios(){
 			$('.box-body').html('');
 			var tablaCiDestinatarios="";
-			tablaCiDestinatarios = '<table class="table table-hover">'+
-						  '<tr class="active"><td colspan="17">Tabla CI Destinatarios</td><td><a href="#" data-toggle="modal" data-target="#ciDestinatario"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
-						  '<tr class="active"><td>Verificar con Identifc.</td><td>AvanceId</td><td>CI</td><td>Pobreza</td><td>Nombre</td><td>Apellido</td><td>Sexo</td><td>Estado Civil</td><td>Nacionalidad</td><td>Profesion</td><td>Fecha de Nac.</td><td>Año</td><td>Version</td><td>Borrado</td><td>Fecha Act</td><td>Fecha Ins</td><td>Editar</td><td>Borrar</td></tr>';
+			
+			tablaCiDestinatarios ='<div class="table-responsive">'+
+			'	              		 <table class="table table-hover table-bordered" id="dataTablesCiDestinatarios">'+
+			'							<thead>'+
+			'	                			<tr class="active">'+
+			'									<th class="text-center">Verificar con Identifc.</th>'+
+			'									<th class="text-center">AvanceId</th>'+
+			'									<th class="text-center">CI</th>'+
+			'									<th class="text-center">Pobreza</th>'+
+			'									<th class="text-center">Nombre</th>'+
+			'									<th class="text-center">Apellido</th>'+
+			'									<th class="text-center">Sexo</th>'+
+			'									<th class="text-center">Estado Civil</th>'+
+			'									<th class="text-center">Nacionalidad</th>'+
+			'									<th class="text-center">Profesion</th>'+
+			'									<th class="text-center">Fecha de Nac.</th>'+
+			'									<th class="text-center">Año</th>'+
+			'									<th class="text-center">Version</th>'+
+			'									<th class="text-center">Borrado</th>'+
+			'									<th class="text-center">Fecha Act</th>'+
+			'									<th class="text-center">Fecha Ins</th>'+
+			'									<th class="text-center">Editar</th>'+
+			'									<th class="text-center">Borrar</th>'+
+			'								</tr>'+
+			'							</thead>'+
+			'	                		<tbody id="cuerpoTablaCiDestinatarios">';
+
 			for(var w=0; w<ciDestinatarios.length;w++)
 			{
 				if(ciDestinatarios[w].borrado == true)
@@ -108,9 +132,12 @@ if (user != null) { %>
 					tablaCiDestinatarios+='<tr  id="ciVer-'+w+'"><td><span class="glyphicon glyphicon-check checkId" codigoRegistroWs='+w+' ci="'+ciDestinatarios[w].ci+'"></span></td><td class="destAvanceId">'+ciDestinatarios[w].avance_id+'</td><td class="destAvanceCi">'+ciDestinatarios[w].ci+'</td><td class="destAvancePobreza"></td><td class="destAvanceNombre">'+ciDestinatarios[w].nombre+'</td><td class="destAvanceApellido">'+ciDestinatarios[w].apellido+'</td><td class="destAvanceSexo">'+ciDestinatarios[w].sexo+'</td><td class="destAvanceEC">'+ciDestinatarios[w].estado_civil+'</td><td class="destAvanceNac">'+ciDestinatarios[w].nacionalidad+'</td><td class="destAvanceProf">'+ciDestinatarios[w].profesion+'</td><td class="destAvanceFN">'+ciDestinatarios[w].fecha_nacimiento+'</td><td class="destAvanceAnho">'+ciDestinatarios[w].anho+'</td><td class="destAvanceVer">'+ciDestinatarios[w].version+'</td><td>'+ciDestinatarios[w].borrado+'</td><td class="destAvanceFA">'+ciDestinatarios[w].fecha_actualizacion+'</td><td class="destAvanceFI">'+ciDestinatarios[w].fecha_insercion+'</td><td><span class="glyphicon glyphicon-pencil registrosWs" codigoRegistroWs='+w+'></span></td><td><span class="glyphicon glyphicon-trash" id="iconoBorradoWs" parametrosBorradoWs='+ciDestinatarios[w].id+'-'+ciDestinatarios[w].borrado+'></span></td></tr>';
 				}
 			}
-			tablaCiDestinatarios +='</table>';				
+			tablaCiDestinatarios +='	</tbody>'+
+			'	                	</table>'+
+			'	              	</div>'	;		
 			
 			$('.box-body').html(tablaCiDestinatarios);
+			$("#dataTablesCiDestinatarios").DataTable();
 		}
 		
 		renderCiDestinatarios();
