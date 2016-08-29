@@ -100,6 +100,9 @@ if (user != null) { %>
 			tablaCiDestinatarios ='<div class="table-responsive">'+
 			'	              		 <table class="table table-hover table-bordered" id="dataTablesCiDestinatarios">'+
 			'							<thead>'+
+			'	                			<tr class="active" role="row">'+
+			'									<th rowspan="1" colspan="16"><span class="glyphicon glyphicon-check selectAll"> Verificar con Identifc.</span></th>'+
+			'								</tr>'+
 			'	                			<tr class="active">'+
 			'									<th class="text-center">Verificar con Identifc.</th>'+
 			'									<th class="text-center">AvanceId</th>'+
@@ -113,8 +116,6 @@ if (user != null) { %>
 			'									<th class="text-center">Profesion</th>'+
 			'									<th class="text-center">Fecha de Nac.</th>'+
 			'									<th class="text-center">Año</th>'+
-			'									<th class="text-center">Version</th>'+
-			'									<th class="text-center">Borrado</th>'+
 			'									<th class="text-center">Fecha Act</th>'+
 			'									<th class="text-center">Fecha Ins</th>'+
 			'									<th class="text-center">Editar</th>'+
@@ -129,7 +130,7 @@ if (user != null) { %>
 				{
 					tablaCiDestinatarios+='<tr id="ciVer-'+w+'"><td><del>---</del></td><td><del>'+ciDestinatarios[w].avance_id+'</del></td><td><del>'+ciDestinatarios[w].ci+'</del></td><td><del></del></td><td><del>'+ciDestinatarios[w].nombre+'</del></td><td><del>'+ciDestinatarios[w].apellido+'</del></td><td><del>'+ciDestinatarios[w].sexo+'</del></td><td><del>'+ciDestinatarios[w].estado_civil+'</del></td><td><del>'+ciDestinatarios[w].nacionalidad+'</del></td><td><del>'+ciDestinatarios[w].profesion+'</del></td><td><del>'+ciDestinatarios[w].fecha_nacimiento+'</del></td><td><del>'+ciDestinatarios[w].anho+'</del></td><td><del>'+ciDestinatarios[w].version+'</del></td><td><del>'+ciDestinatarios[w].borrado+'</del></td><td><del>'+ciDestinatarios[w].fecha_actualizacion+'</del></td><td><del>'+ciDestinatarios[w].fecha_insercion+'</del></td><td><span class="glyphicon glyphicon-pencil registrosWs" codigoRegistroWs='+w+'></span></td><td><span class="glyphicon glyphicon-trash" id="iconoBorradoWs" parametrosBorradoWs='+ciDestinatarios[w].id+'-'+ciDestinatarios[w].borrado+'></span></td></tr>';
 				}else{
-					tablaCiDestinatarios+='<tr  id="ciVer-'+w+'"><td><span class="glyphicon glyphicon-check checkId" codigoRegistroWs='+w+' ci="'+ciDestinatarios[w].ci+'"></span></td><td class="destAvanceId">'+ciDestinatarios[w].avance_id+'</td><td class="destAvanceCi">'+ciDestinatarios[w].ci+'</td><td class="destAvancePobreza"></td><td class="destAvanceNombre">'+ciDestinatarios[w].nombre+'</td><td class="destAvanceApellido">'+ciDestinatarios[w].apellido+'</td><td class="destAvanceSexo">'+ciDestinatarios[w].sexo+'</td><td class="destAvanceEC">'+ciDestinatarios[w].estado_civil+'</td><td class="destAvanceNac">'+ciDestinatarios[w].nacionalidad+'</td><td class="destAvanceProf">'+ciDestinatarios[w].profesion+'</td><td class="destAvanceFN">'+ciDestinatarios[w].fecha_nacimiento+'</td><td class="destAvanceAnho">'+ciDestinatarios[w].anho+'</td><td class="destAvanceVer">'+ciDestinatarios[w].version+'</td><td>'+ciDestinatarios[w].borrado+'</td><td class="destAvanceFA">'+ciDestinatarios[w].fecha_actualizacion+'</td><td class="destAvanceFI">'+ciDestinatarios[w].fecha_insercion+'</td><td><span class="glyphicon glyphicon-pencil registrosWs" codigoRegistroWs='+w+'></span></td><td><span class="glyphicon glyphicon-trash" id="iconoBorradoWs" parametrosBorradoWs='+ciDestinatarios[w].id+'-'+ciDestinatarios[w].borrado+'></span></td></tr>';
+					tablaCiDestinatarios+='<tr  id="ciVer-'+w+'"><td><span class="glyphicon glyphicon-check checkId" codigoRegistroWs='+w+' ci="'+ciDestinatarios[w].ci+'"></span></td><td class="destAvanceId">'+ciDestinatarios[w].avance_id+'</td><td class="destAvanceCi">'+ciDestinatarios[w].ci+'</td><td class="destAvancePobreza"></td><td class="destAvanceNombre">'+ciDestinatarios[w].nombre+'</td><td class="destAvanceApellido">'+ciDestinatarios[w].apellido+'</td><td class="destAvanceSexo">'+ciDestinatarios[w].sexo+'</td><td class="destAvanceEC">'+ciDestinatarios[w].estado_civil+'</td><td class="destAvanceNac">'+ciDestinatarios[w].nacionalidad+'</td><td class="destAvanceProf">'+ciDestinatarios[w].profesion+'</td><td class="destAvanceFN">'+ciDestinatarios[w].fecha_nacimiento+'</td><td class="destAvanceAnho">'+ciDestinatarios[w].anho+'</td><td class="destAvanceFA">'+ciDestinatarios[w].fecha_actualizacion+'</td><td class="destAvanceFI">'+ciDestinatarios[w].fecha_insercion+'</td><td><span class="glyphicon glyphicon-pencil registrosWs" codigoRegistroWs='+w+'></span></td><td><span class="glyphicon glyphicon-trash" id="iconoBorradoWs" parametrosBorradoWs='+ciDestinatarios[w].id+'-'+ciDestinatarios[w].borrado+'></span></td></tr>';
 				}
 			}
 			tablaCiDestinatarios +='	</tbody>'+
@@ -142,39 +143,50 @@ if (user != null) { %>
 		
 		renderCiDestinatarios();
 		
-		$("body").on("click", ".checkId",function(event){
-			var ci = $(this).attr("ci");
-			var id = $(this).parent().parent().attr("id");
-			var verificadas = $.ajax({
-				url:"http://identificaciones.stp.gov.py/identificaciones/?ci="+ci,
-			  	type:'get',
-			  	dataType:'json',
-			  	async:false       
-			}).responseText;		
-			verificadas=JSON.parse(verificadas);
-			var pobreza = $.ajax({
-				url:"http://geo.stp.gov.py/user/stp/api/v2/sql?q=SELECT%20estado_de_pobreza%20FROM%20poblacion_con_localizacion_y_situacion_de_pobreza_090816_actual%20where%20nro_cedula%20=%20%27"+ci+"%27&api_key=161ee21f2cc06f29ecbc1f1d29e7886bc85be12a",
-			  	type:'get',
-			  	dataType:'json',
-			  	async:false       
-			}).responseText;		
-			pobreza=JSON.parse(pobreza);
-			pobreza=pobreza.rows[0];
-			
-			
-			$(this).parent().parent().find(".destAvancePobreza").html(pobreza.estado_de_pobreza);
-			$(this).parent().parent().find(".destAvanceNombre").html(verificadas.nombre);
-			$(this).parent().parent().find(".destAvanceApellido").html(verificadas.apellidos);
-			$(this).parent().parent().find(".destAvanceSexo").html(verificadas.sexo);
-			$(this).parent().parent().find(".destAvanceEC").html(verificadas.estado_civil);
-			$(this).parent().parent().find(".destAvanceNac").html(verificadas.nacionalidad);
-			$(this).parent().parent().find(".destAvanceProf").html(verificadas.profesion);
-			$(this).parent().parent().find(".destAvanceFN").html(verificadas.fecha_naciemiento);
-			 $(this).css("color","green");
-
-			 
-			
+		function verificarCedulasBeneficiarios(thisObj){
+			if (thisObj.css("color") != "green"){
+				var selector = thisObj.parent().parent();
+				var ci = thisObj.attr("ci");
+				var id = thisObj.parent().parent().attr("id");
+				var verificadas = $.ajax({
+					url:"http://identificaciones.stp.gov.py/identificaciones/?ci="+ci,
+				  	type:'get',
+				  	dataType:'json',
+				  	async:false       
+				}).responseText;		
+				verificadas=JSON.parse(verificadas);
+				var pobreza = $.ajax({
+					url:"http://geo.stp.gov.py/user/stp/api/v2/sql?q=SELECT%20estado_de_pobreza%20FROM%20poblacion_con_localizacion_y_situacion_de_pobreza_090816_actual%20where%20nro_cedula%20=%20%27"+ci+"%27&api_key=161ee21f2cc06f29ecbc1f1d29e7886bc85be12a",
+				  	type:'get',
+				  	dataType:'json',
+				  	async:false       
+				}).responseText;		
+				pobreza=JSON.parse(pobreza);
+				pobreza=pobreza.rows[0];
+				
+				thisObj.parent().parent().find(".destAvancePobreza").html(pobreza.estado_de_pobreza);
+				thisObj.parent().parent().find(".destAvanceNombre").html(verificadas.nombre);
+				thisObj.parent().parent().find(".destAvanceApellido").html(verificadas.apellidos);
+				thisObj.parent().parent().find(".destAvanceSexo").html(verificadas.sexo);
+				thisObj.parent().parent().find(".destAvanceEC").html(verificadas.estado_civil);
+				thisObj.parent().parent().find(".destAvanceNac").html(verificadas.nacionalidad);
+				thisObj.parent().parent().find(".destAvanceProf").html(verificadas.profesion);
+				thisObj.parent().parent().find(".destAvanceFN").html(verificadas.fecha_naciemiento);
+				thisObj.css("color","green");
+			}
+		}
+		
+		$("body").on("click", ".checkId, .selectAll" ,function(event){
+			if ($(this).hasClass("selectAll")){
+				$( ".checkId" ).each(function(i){	
+					verificarCedulasBeneficiarios($(this));
+				});
+				$(this).css("color","green");
+			}else{
+				verificarCedulasBeneficiarios($(this));
+			}
 		});
+		
 		
 		/*
 		var ws = $.ajax({
