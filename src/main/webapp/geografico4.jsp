@@ -1250,6 +1250,21 @@ instituciones=instituciones.sort(orden);  */
 lineasProgramadas = JSON.parse(lineasProgramadas);
 lineasProgramadas=lineasProgramadas.sort(lineaAccionOrden); */
 
+var usuarioLineaAccion = $.ajax({
+	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUsuarioLineaAccion',
+  	type:'get',
+  	dataType:'json',
+  	async:false       
+}).responseText;
+usuarioLineaAccion = JSON.parse(usuarioLineaAccion);
+
+var usuarioEtiqueta = $.ajax({
+	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUsuarioEtiqueta',
+  	type:'get',
+  	dataType:'json',
+  	async:false       
+}).responseText;
+usuarioEtiqueta = JSON.parse(usuarioEtiqueta);
 
 function renderTableroLineaAccion(institucionIdConcat,deptoId,distId){
 var contenidoEnRowTemp="";	
@@ -1322,75 +1337,109 @@ return contenidoEnRowTemp;
 	}).responseText;
 	lineasProgramadas = JSON.parse(lineasProgramadas);
 	lineasProgramadas=lineasProgramadas.sort(lineaAccionOrden);
+	
+	var todasLasLineasAccion="";
+	for(var f = 0; f < lineasProgramadas.length; f++)
+	{
+		todasLasLineasAccion += lineasProgramadas[f].insLineaAccionId+",";
+	}
+	todasLasLineasAccion = todasLasLineasAccion.substring(0,todasLasLineasAccion.length - 1);
+
+	if(todasLasLineasAccion != ""){
+		var insLineaAccionHasEtiqueta = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccionHasEtiqueta&insLineaAccionIdConcat='+todasLasLineasAccion,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		insLineaAccionHasEtiqueta = JSON.parse(insLineaAccionHasEtiqueta);
+	}
 
  
 		for(var m=0; m<instituciones.length;m++)
 		{ 
-		  for(var n=0; n<lineasProgramadas.length;n++)
+		  	for(var n=0; n<lineasProgramadas.length;n++)
 			{
-			  if ( instituciones[m].id==lineasProgramadas[n].institucionId ){
-				  if (flagIns == 0){					  
-					  tempInstituciones += '<tr><td colspan="12"><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td></tr>';
-						flagIns++;						  
-				  }
-				  clase="";
-				  var desempProgAnho=numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2));
-				  if (lineasProgramadas[n].cantidadAnho==0 && lineasProgramadas[n].meta ==0) desempProgAnho="-";
-				  if (desempProgAnho!="-"){
-					  if (parseInt(desempProgAnho)>=90 && lineasProgramadas[n].meta != 0){
-						  clase="bg-green-active color-palette"; 
-					  }else if(parseInt(desempProgAnho)>=70 && lineasProgramadas[n].meta != 0){
-						  clase="bg-yellow-active color-palette"; 
-					  }else{
-						  clase="bg-red-active color-palette";
-					  }
-				  }
-				  
-				  if (distId == null) distId = "";
-				  if (deptoId == null) deptoId = "";
-				  
-				  tempInstLineas += '<tr>'+
-				  '<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+'-'+distId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
-				  '<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
-				  '<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
-				  '<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>'+
-				  '<td class="'+clase+'">'+desempProgAnho+'</td>';
-				  if(lineasProgramadas[n].cantDest==0){
-					  tempInstLineas += '<td> - </td>';
-				  }else{
-					  tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>';
-				  }
-				  tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
-				  '<td>'+numeroConComa(lineasProgramadas[n].cantidadHoy)+'</td>'+
-				  '<td>'+numeroConComa(lineasProgramadas[n].cantidadAvance)+'</td>';
-				  
-				  
-				  var desempEjeHoy=numeroConComa(((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100).toFixed(2));
-				  if(lineasProgramadas[n].cantidadAvance==0 && lineasProgramadas[n].cantidadHoy==0) desempEjeHoy="-";
-				  if (desempEjeHoy!="-"){
-					  if (clase!="bg-red-active color-palette" && clase!="" ){
-						  clase="";
-						  if (parseInt((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100)>=90 && lineasProgramadas[n].cantidadHoy != 0){
-							  clase="bg-green-active color-palette"; 
-						  }else if(parseInt((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100)>=70 && lineasProgramadas[n].cantidadHoy != 0){
-							  clase="bg-yellow-active color-palette"; 
-						  }else{
-							  clase="bg-red-active color-palette";
-						  }
-					  }
-				  }else{
-					  clase="";
-				  }
-				  
-				  tempInstLineas += '<td class="'+clase+'">'+desempEjeHoy+'</td>';
-				  if(lineasProgramadas[n].cantDestinatarioReal==0){
-					  tempInstLineas += '<td> - </td>';
-				  }else{
-					  tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDestinatarioReal)+'</td>';
-				  }
-				  tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].costoAc/1000000).toFixed(2))+'</td>'+
-				  '</tr>';
-			  }
+				for(var l = 0; l < usuarioEtiqueta.length; l++)
+				{
+					if(usuarioEtiqueta[l].etiqueta_id == 1)
+					{
+						for(var t = 0; t < insLineaAccionHasEtiqueta.length; t++)
+						{
+							if(insLineaAccionHasEtiqueta[t].ins_linea_accion_id == lineasProgramadas[n].insLineaAccionId && insLineaAccionHasEtiqueta[t].etiqueta_id == 1)
+							{
+								for(var d=0; d<usuarioLineaAccion.length;d++)
+								{
+									if(usuarioLineaAccion[d].lineaAccionId == lineasProgramadas[n].lineaAccionId)
+									{
+										if( instituciones[m].id==lineasProgramadas[n].institucionId ){
+											if (flagIns == 0){					  
+												tempInstituciones += '<tr><td colspan="12"><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td></tr>';
+												flagIns++;						  
+											}
+								  			clase="";
+											var desempProgAnho=numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2));
+											if (lineasProgramadas[n].cantidadAnho==0 && lineasProgramadas[n].meta ==0) desempProgAnho="-";
+											if (desempProgAnho!="-"){
+												if (parseInt(desempProgAnho)>=90 && lineasProgramadas[n].meta != 0){
+													clase="bg-green-active color-palette"; 
+												}else if(parseInt(desempProgAnho)>=70 && lineasProgramadas[n].meta != 0){
+													clase="bg-yellow-active color-palette"; 
+												}else{
+													clase="bg-red-active color-palette";
+												}
+											}
+											  
+											if (distId == null) distId = "";
+											if (deptoId == null) deptoId = "";
+											  
+											tempInstLineas += '<tr>'+
+											'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+'-'+distId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
+											'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
+											'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
+											'<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>'+
+											'<td class="'+clase+'">'+desempProgAnho+'</td>';
+											if(lineasProgramadas[n].cantDest==0){
+												tempInstLineas += '<td> - </td>';
+											}else{
+												tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>';
+											}
+											tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
+											'<td>'+numeroConComa(lineasProgramadas[n].cantidadHoy)+'</td>'+
+											'<td>'+numeroConComa(lineasProgramadas[n].cantidadAvance)+'</td>';
+																						  
+											var desempEjeHoy=numeroConComa(((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100).toFixed(2));
+											if(lineasProgramadas[n].cantidadAvance==0 && lineasProgramadas[n].cantidadHoy==0) desempEjeHoy="-";
+											if (desempEjeHoy!="-"){
+												if (clase!="bg-red-active color-palette" && clase!="" ){
+													clase="";
+													if (parseInt((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100)>=90 && lineasProgramadas[n].cantidadHoy != 0){
+														clase="bg-green-active color-palette"; 
+													}else if(parseInt((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100)>=70 && lineasProgramadas[n].cantidadHoy != 0){
+														clase="bg-yellow-active color-palette"; 
+													}else{
+														clase="bg-red-active color-palette";
+													}
+												}
+											}else{
+												clase="";
+											}
+											  
+											tempInstLineas += '<td class="'+clase+'">'+desempEjeHoy+'</td>';
+											if(lineasProgramadas[n].cantDestinatarioReal==0){
+												tempInstLineas += '<td> - </td>';
+											}else{
+												tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDestinatarioReal)+'</td>';
+											}
+											tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].costoAc/1000000).toFixed(2))+'</td>'+
+											'</tr>';
+										}
+									}	
+								}
+							}
+						}
+					}
+				}								
 			}
 
 		  if (flagIns>0){
@@ -1445,6 +1494,22 @@ return contenidoEnRowTemp;
 }
 
 function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
+	var todasLasLineasAccion="";
+	for(var f = 0; f < lineasProgramadas.length; f++)
+	{
+		todasLasLineasAccion += lineasProgramadas[f].insLineaAccionId+",";
+	}
+	todasLasLineasAccion = todasLasLineasAccion.substring(0,todasLasLineasAccion.length - 1);
+
+	if(todasLasLineasAccion != ""){
+		var insLineaAccionHasEtiqueta = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccionHasEtiqueta&insLineaAccionIdConcat='+todasLasLineasAccion,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		insLineaAccionHasEtiqueta = JSON.parse(insLineaAccionHasEtiqueta);
+	}
 	var tablaInstituciones="";
 	var tempInstituciones="";
 	var tempInstLineas="";
@@ -1457,6 +1522,7 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 	var acum, acumEjecucionPrevista, acumEjecucionLograda;
 	var promedio;
 	var institucionId;
+	var totalDestinatario;
 	
 /* 	  tempInstituciones = '<thead><tr>'+
 	  	'<th rowspan="3" class="text-center" style="vertical-align: middle;">Línea de Acción</th>'+
@@ -1500,134 +1566,154 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 		institucionId=lineasProgramadas[0].institucionId;
 		cont=0, contEjecucion=0, destinatarios=0; inversion=0; 
 		acum=0, acumEjecucionPrevista=0, acumEjecucionLograda=0;
-		promedio=0;
+		promedio=0, totalDestinatario=0;
 		
 		tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[0].institucionSigla+'</strong></td></tr>';
-		for(var n=0; n<lineasProgramadas.length;n++){		
-		 
-				contEjecucion++;
-				if (lineasProgramadas[n].cantidadHoy!=null) acumEjecucionPrevista=acumEjecucionPrevista + lineasProgramadas[n].cantidadHoy;
-				if (lineasProgramadas[n].cantidadAvance!=null) acumEjecucionLograda=acumEjecucionLograda + lineasProgramadas[n].cantidadAvance;
-				if (lineasProgramadas[n].cantDestinatarioReal!=null) destinatarios= destinatarios + lineasProgramadas[n].cantDestinatarioReal;
-				if (lineasProgramadas[n].costoAc!=null) inversion= inversion + lineasProgramadas[n].costoAc;
-				
-				if ((lineasProgramadas[n].cantidadHoy == 0 || lineasProgramadas[n].cantidadHoy==null ) && lineasProgramadas[n].cantidadAvance > 0) {	
-					acum = acum + 100;
-					cont= cont +1;				
-				} else if (lineasProgramadas[n].cantidadHoy > 0 && (lineasProgramadas[n].cantidadAvance == 0 || lineasProgramadas[n].cantidadAvance == null)) {
-					acum = acum + 0;
-					cont= cont +1;				
-				} else if ((lineasProgramadas[n].cantidadHoy == 0 || lineasProgramadas[n].cantidadHoy == null)	&& (lineasProgramadas[n].cantidadAvance == 0 || lineasProgramadas[n].cantidadAvance == null )) {
-					acum = acum + 0;				
-				} else {
-					acum =acum + ((lineasProgramadas[n].cantidadAvance / lineasProgramadas[n].cantidadHoy) * 100);
-					cont= cont +1;				
-				}			
-				
-				if (n == lineasProgramadas.length -1){
-
-					institucionId = lineasProgramadas[n].institucionId;
-					if(cont != 0){
-						promedio = acum / cont;
-					}
-					clase="";			
-					if ((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=90){
-					 clase="bg-green-active color-palette"; 
-					}else if((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=70){
-					 clase="bg-yellow-active color-palette"; 
-					}else{
-					 clase="bg-red-active color-palette";
-					}
+		for(var n=0; n<lineasProgramadas.length;n++){
+			for(var l = 0; l < usuarioEtiqueta.length; l++)
+			{
+				if(usuarioEtiqueta[l].etiqueta_id == 1)
+				{
+					for(var t = 0; t < insLineaAccionHasEtiqueta.length; t++)
+					{
+						if(insLineaAccionHasEtiqueta[t].ins_linea_accion_id == lineasProgramadas[n].insLineaAccionId && insLineaAccionHasEtiqueta[t].etiqueta_id == 1)
+						{
+							for(var d=0; d<usuarioLineaAccion.length;d++)
+							{
+								if(usuarioLineaAccion[d].lineaAccionId == lineasProgramadas[n].lineaAccionId)
+								{
+			
+									contEjecucion++;
+									if (lineasProgramadas[n].cantidadHoy!=null) acumEjecucionPrevista=acumEjecucionPrevista + lineasProgramadas[n].cantidadHoy;
+									if (lineasProgramadas[n].cantidadAvance!=null) acumEjecucionLograda=acumEjecucionLograda + lineasProgramadas[n].cantidadAvance;
+									if (lineasProgramadas[n].cantDestinatarioReal!=null) destinatarios= destinatarios + lineasProgramadas[n].cantDestinatarioReal;
+									if (lineasProgramadas[n].costoAc!=null) inversion= inversion + lineasProgramadas[n].costoAc;
+									
+									if ((lineasProgramadas[n].cantidadHoy == 0 || lineasProgramadas[n].cantidadHoy==null ) && lineasProgramadas[n].cantidadAvance > 0) {	
+										acum = acum + 100;
+										cont= cont +1;				
+									} else if (lineasProgramadas[n].cantidadHoy > 0 && (lineasProgramadas[n].cantidadAvance == 0 || lineasProgramadas[n].cantidadAvance == null)) {
+										acum = acum + 0;
+										cont= cont +1;				
+									} else if ((lineasProgramadas[n].cantidadHoy == 0 || lineasProgramadas[n].cantidadHoy == null)	&& (lineasProgramadas[n].cantidadAvance == 0 || lineasProgramadas[n].cantidadAvance == null )) {
+										acum = acum + 0;				
+									} else {
+										acum =acum + ((lineasProgramadas[n].cantidadAvance / lineasProgramadas[n].cantidadHoy) * 100);
+										cont= cont +1;				
+									}
+									
+									totalDestinatario = totalDestinatario + lineasProgramadas[n].cantDest;
+									
+									if (n == lineasProgramadas.length -1){
 					
-					if (distId == null) distId = "";
-					if (deptoId == null) deptoId = "";
-					
-					tempInstLineas += '<tr>'+
-					'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
-					'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
-					//'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
-					'<td></td>'+
-					//'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
-					'<td></td>'+
-					'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
-					'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
-					'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
-					
-					clase="";			
-					if (promedio>=90){
-					 clase="bg-green-active color-palette"; 
-					}else if(promedio>=70){
-					 clase="bg-yellow-active color-palette"; 
-					}else{
-					 clase="bg-red-active color-palette";
-					}
-					
-					tempInstLineas += '<td class="'+clase+'">'+numeroConComa((promedio).toFixed(2))+'</td>'+
-					'<td>'+numeroConComa(destinatarios.toFixed(2))+'</td>'+
-					'<td>'+numeroConComa((inversion/1000000).toFixed(2))+'</td>'+
-					'</tr>';
+										institucionId = lineasProgramadas[n].institucionId;
+										if(cont != 0){
+											promedio = acum / cont;
+										}
+										clase="";			
+										if ((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=90){
+										 clase="bg-green-active color-palette"; 
+										}else if((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=70){
+										 clase="bg-yellow-active color-palette"; 
+										}else{
+										 clase="bg-red-active color-palette";
+										}
 										
-				//}else if(lineasProgramadas[n+1].institucionId != institucionId){
-				}else if(lineasProgramadas[n+1].lineaAccionId != linea_accion_id){
-
-					if(cont != 0){
-						promedio = acum / cont;
-					}
-					clase="";			
-					if ((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=90){
-					 clase="bg-green-active color-palette"; 
-					}else if((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=70){
-					 clase="bg-yellow-active color-palette"; 
-					}else{
-					 clase="bg-red-active color-palette";
-					}
+										if (distId == null) distId = "";
+										if (deptoId == null) deptoId = "";
+										
+										tempInstLineas += '<tr>'+
+										'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
+										'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
+										//'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
+										'<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>'+
+										//'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
+										'<td>'+numeroConComa(totalDestinatario)+'</td>'+
+										'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
+										'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
+										'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
+										
+										clase="";			
+										if (promedio>=90){
+										 clase="bg-green-active color-palette"; 
+										}else if(promedio>=70){
+										 clase="bg-yellow-active color-palette"; 
+										}else{
+										 clase="bg-red-active color-palette";
+										}
+										
+										tempInstLineas += '<td class="'+clase+'">'+numeroConComa((promedio).toFixed(2))+'</td>'+
+										'<td>'+numeroConComa(destinatarios.toFixed(2))+'</td>'+
+										'<td>'+numeroConComa((inversion/1000000).toFixed(2))+'</td>'+
+										'</tr>';
+															
+									//}else if(lineasProgramadas[n+1].institucionId != institucionId){
+									}else if(lineasProgramadas[n+1].lineaAccionId != linea_accion_id){
 					
-					if (distId == null) distId = "";
-					if (deptoId == null) deptoId = "";
-
-/* 					if(lineasProgramadas[n+1].institucionId != institucionId){
-						tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n+1].institucionSigla+'</strong></td></tr>';
-						institucionId = lineasProgramadas[n+1].institucionId;
-					} */
-						tempInstLineas += '<tr>'+
-						'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+'-'+distId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
-						'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
-						//'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
-						'<td></td>'+
-						//'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
-						'<td></td>'+
-						'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
-						'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
-						'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
-						
-						clase="";			
-						if (promedio>=90){
-						 clase="bg-green-active color-palette"; 
-						}else if(promedio>=70){
-						 clase="bg-yellow-active color-palette"; 
-						}else{
-						 clase="bg-red-active color-palette";
-						}
-						
-						tempInstLineas += '<td class="'+clase+'">'+numeroConComa((promedio).toFixed(2))+'</td>'+
-						'<td>'+numeroConComa(destinatarios.toFixed(2))+'</td>'+
-						'<td>'+numeroConComa((inversion/1000000).toFixed(2))+'</td>'+
-						'</tr>';
-						
-						cont=0, contEjecucion=0; 
-						acum=0, acumEjecucionPrevista=0, acumEjecucionLograda=0;
-						promedio=0,destinatarios=0; inversion=0;
-						//institucionId = lineasProgramadas[n+1].institucionId;
-						linea_accion_id = lineasProgramadas[n+1].lineaAccionId;
-						//tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n+1].institucionSigla+'</strong></td></tr>';
-						
-						if(lineasProgramadas[n+1].institucionId != institucionId){
-							tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n+1].institucionSigla+'</strong></td></tr>';
-							institucionId = lineasProgramadas[n+1].institucionId;
+										if(cont != 0){
+											promedio = acum / cont;
+										}
+										clase="";			
+										if ((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=90){
+										 clase="bg-green-active color-palette"; 
+										}else if((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=70){
+										 clase="bg-yellow-active color-palette"; 
+										}else{
+										 clase="bg-red-active color-palette";
+										}
+										
+										if (distId == null) distId = "";
+										if (deptoId == null) deptoId = "";
+					
+					/* 					if(lineasProgramadas[n+1].institucionId != institucionId){
+											tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n+1].institucionSigla+'</strong></td></tr>';
+											institucionId = lineasProgramadas[n+1].institucionId;
+										} */
+											tempInstLineas += '<tr>'+
+											'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+'-'+distId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
+											'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
+											//'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
+											'<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>'+
+											//'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
+											'<td>'+numeroConComa(totalDestinatario)+'</td>'+
+											'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
+											'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
+											'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
+											
+											clase="";			
+											if (promedio>=90){
+											 clase="bg-green-active color-palette"; 
+											}else if(promedio>=70){
+											 clase="bg-yellow-active color-palette"; 
+											}else{
+											 clase="bg-red-active color-palette";
+											}
+											
+											tempInstLineas += '<td class="'+clase+'">'+numeroConComa((promedio).toFixed(2))+'</td>'+
+											'<td>'+numeroConComa(destinatarios.toFixed(2))+'</td>'+
+											'<td>'+numeroConComa((inversion/1000000).toFixed(2))+'</td>'+
+											'</tr>';
+											
+											cont=0, contEjecucion=0; 
+											acum=0, acumEjecucionPrevista=0, acumEjecucionLograda=0;
+											promedio=0,destinatarios=0; inversion=0;
+											totalDestinatario=0;
+											//institucionId = lineasProgramadas[n+1].institucionId;
+											linea_accion_id = lineasProgramadas[n+1].lineaAccionId;
+											//tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n+1].institucionSigla+'</strong></td></tr>';
+											
+											if(lineasProgramadas[n+1].institucionId != institucionId){
+												tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n+1].institucionSigla+'</strong></td></tr>';
+												institucionId = lineasProgramadas[n+1].institucionId;
+											}
+										}
+									}
+								}
+							}
 						}
 					}
-					
-			}		
+				}	
+			}//*********
 	}
 	  tablaInstituciones+=tempInstituciones+tempInstLineas;
 
@@ -1636,6 +1722,23 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 }	
 
 function renderNivelDistrital(lineasProgramadas, deptoId, distId){
+	var todasLasLineasAccion="";
+	for(var f = 0; f < lineasProgramadas.length; f++)
+	{
+		todasLasLineasAccion += lineasProgramadas[f].insLineaAccionId+",";
+	}
+	todasLasLineasAccion = todasLasLineasAccion.substring(0,todasLasLineasAccion.length - 1);
+
+	if(todasLasLineasAccion != ""){
+		var insLineaAccionHasEtiqueta = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccionHasEtiqueta&insLineaAccionIdConcat='+todasLasLineasAccion,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		insLineaAccionHasEtiqueta = JSON.parse(insLineaAccionHasEtiqueta);
+	}
+	
 	var contenidoEnRowTemp="";	
 	var tablaInstituciones="";
 	var tempInstituciones="";
@@ -1645,78 +1748,96 @@ function renderNivelDistrital(lineasProgramadas, deptoId, distId){
 
 	for(var m=0; m<instituciones.length;m++)
 	{ 
-	  for(var n=0; n<lineasProgramadas.length;n++)
+		for(var n=0; n<lineasProgramadas.length;n++)
 		{
-		  if ( instituciones[m].id==lineasProgramadas[n].institucionId ){
-			  if (flagIns == 0){
-				  
-				  tempInstituciones += '<tr><td colspan="12"><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td></tr>';
-					flagIns++;						  
-			  }
-			  clase="";
-			  var desempProgAnho=numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2));
-			  if (lineasProgramadas[n].cantidadAnho==0 && lineasProgramadas[n].meta ==0) desempProgAnho="-";
-/* 			  if (desempProgAnho!="-"){
-				  if (parseInt(desempProgAnho)>=90 && lineasProgramadas[n].meta != 0){
-					  clase="bg-green-active color-palette"; 
-				  }else if(parseInt(desempProgAnho)>=70 && lineasProgramadas[n].meta != 0){
-					  clase="bg-yellow-active color-palette"; 
-				  }else{
-					  clase="bg-red-active color-palette";
-				  }
-			  } */
-			  
-			  if (deptoId == null) deptoId = "";
-			  if (distId == null) distId = "";			  
-			  
-			  tempInstLineas += '<tr>'+
-			  '<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+'-'+distId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
-			  '<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
-			 // '<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
-			  '<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>';
-			  //'<td class="'+clase+'">'+desempProgAnho+'</td>';
-			  if(lineasProgramadas[n].cantDest==0){
-				  tempInstLineas += '<td> - </td>';
-			  }else{
-				  tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>';
-			  }
-			  tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
-			  '<td>'+numeroConComa(lineasProgramadas[n].cantidadHoy)+'</td>'+
-			  '<td>'+numeroConComa(lineasProgramadas[n].cantidadAvance)+'</td>';
-			  
-			  
-			  var desempEjeHoy=numeroConComa(((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100).toFixed(2));
-			  if(lineasProgramadas[n].cantidadAvance==0 && lineasProgramadas[n].cantidadHoy==0) desempEjeHoy="-";
-			  if (desempEjeHoy!="-"){
-				  if (clase!="bg-red-active color-palette"){
-					  clase="";
-					  if (parseInt((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100)>=90 && lineasProgramadas[n].cantidadHoy != 0){
-						  clase="bg-green-active color-palette"; 
-					  }else if(parseInt((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100)>=70 && lineasProgramadas[n].cantidadHoy != 0){
-						  clase="bg-yellow-active color-palette"; 
-					  }else{
-						  clase="bg-red-active color-palette";
-					  }
-				  }
-			  }else{
-				  clase="";
-			  }
-			  
-			  tempInstLineas += '<td class="'+clase+'">'+desempEjeHoy+'</td>';
-			  if(lineasProgramadas[n].cantDestinatarioReal==0){
-				  tempInstLineas += '<td> - </td>';
-			  }else{
-				  tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDestinatarioReal)+'</td>';
-			  }
-			  tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].costoAc/1000000).toFixed(2))+'</td>'+
-			  '</tr>';
-		  }
+			for(var l = 0; l < usuarioEtiqueta.length; l++)
+			{
+				if(usuarioEtiqueta[l].etiqueta_id == 1)
+				{
+					for(var t = 0; t < insLineaAccionHasEtiqueta.length; t++)
+					{
+						if(insLineaAccionHasEtiqueta[t].ins_linea_accion_id == lineasProgramadas[n].insLineaAccionId && insLineaAccionHasEtiqueta[t].etiqueta_id == 1)
+						{
+							for(var d=0; d<usuarioLineaAccion.length;d++)
+							{
+								if(usuarioLineaAccion[d].lineaAccionId == lineasProgramadas[n].lineaAccionId)
+								{
+									if ( instituciones[m].id==lineasProgramadas[n].institucionId ){
+										if (flagIns == 0){
+											  
+											  tempInstituciones += '<tr><td colspan="12"><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td></tr>';
+												flagIns++;						  
+										  }
+										  clase="";
+										  var desempProgAnho=numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2));
+										  if (lineasProgramadas[n].cantidadAnho==0 && lineasProgramadas[n].meta ==0) desempProgAnho="-";
+							/* 			  if (desempProgAnho!="-"){
+											  if (parseInt(desempProgAnho)>=90 && lineasProgramadas[n].meta != 0){
+												  clase="bg-green-active color-palette"; 
+											  }else if(parseInt(desempProgAnho)>=70 && lineasProgramadas[n].meta != 0){
+												  clase="bg-yellow-active color-palette"; 
+											  }else{
+												  clase="bg-red-active color-palette";
+											  }
+										  } */
+										  
+										  if (deptoId == null) deptoId = "";
+										  if (distId == null) distId = "";			  
+										  
+										  tempInstLineas += '<tr>'+
+										  '<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+'-'+distId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
+										  '<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
+										 // '<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
+										  '<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>';
+										  //'<td class="'+clase+'">'+desempProgAnho+'</td>';
+										  if(lineasProgramadas[n].cantDest==0){
+											  tempInstLineas += '<td> - </td>';
+										  }else{
+											  tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>';
+										  }
+										  tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
+										  '<td>'+numeroConComa(lineasProgramadas[n].cantidadHoy)+'</td>'+
+										  '<td>'+numeroConComa(lineasProgramadas[n].cantidadAvance)+'</td>';
+										  
+										  
+										  var desempEjeHoy=numeroConComa(((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100).toFixed(2));
+										  if(lineasProgramadas[n].cantidadAvance==0 && lineasProgramadas[n].cantidadHoy==0) desempEjeHoy="-";
+										  if (desempEjeHoy!="-"){
+											  if (clase!="bg-red-active color-palette"){
+												  clase="";
+												  if (parseInt((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100)>=90 && lineasProgramadas[n].cantidadHoy != 0){
+													  clase="bg-green-active color-palette"; 
+												  }else if(parseInt((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100)>=70 && lineasProgramadas[n].cantidadHoy != 0){
+													  clase="bg-yellow-active color-palette"; 
+												  }else{
+													  clase="bg-red-active color-palette";
+												  }
+											  }
+										  }else{
+											  clase="";
+										  }
+										  
+										  tempInstLineas += '<td class="'+clase+'">'+desempEjeHoy+'</td>';
+										  if(lineasProgramadas[n].cantDestinatarioReal==0){
+											  tempInstLineas += '<td> - </td>';
+										  }else{
+											  tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDestinatarioReal)+'</td>';
+										  }
+										  tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].costoAc/1000000).toFixed(2))+'</td>'+
+										  '</tr>';
+									}
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 
-	  if (flagIns>0){
-		  tablaInstituciones+=tempInstituciones+tempInstLineas;
-	  }
-	  tempInstituciones="";tempInstLineas="";flagIns=0;
+		if (flagIns>0){
+			tablaInstituciones+=tempInstituciones+tempInstLineas;
+		}
+		tempInstituciones="";tempInstLineas="";flagIns=0;
 	}
 	//tablaInstituciones+="</tbody>";
 	

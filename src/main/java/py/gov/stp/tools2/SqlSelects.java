@@ -1893,6 +1893,8 @@ public class SqlSelects {
 						+ "		ins_linea_accion_base.linea_um_nombre,"
 						+ "		ins_linea_accion_base.periodo,"
 						+ "		ins_linea_accion_base.meta as meta_comprometida,"
+						+ "		ins_linea_accion_base.ins_linea_accion_id,"
+
 						+ "		ins_linea_accion_programacion_anho.cantidad_anho as programado_anho,"
 						+ "		ins_linea_accion_programacion_hoy.cantidad_hoy as programado_hoy,"
 						+ "		ins_linea_accion_destinatarios.cant_dest as destinatarios_estimados,"
@@ -1930,6 +1932,7 @@ public class SqlSelects {
 			    objeto.setInstitucionSigla(rs.getString("institucion_sigla"));
 			    objeto.setInstitucionId(rs.getInt("institucion_id"));
 			    objeto.setLineaAccionId(rs.getInt("linea_accion_id"));
+			    objeto.setInsLineaAccionId(rs.getInt("ins_linea_accion_id"));
 			    
 			    objeto.setLineaAccionEstratagiaId(rs.getInt("tipo_estrategia_id"));
 			    objeto.setLineaAccionNombre(rs.getString("linea_accion_nombre"));
@@ -2460,6 +2463,8 @@ public class SqlSelects {
 				+ "ins_linea_accion_base_dd.meta as meta,"
 				+ "ins_linea_accion_base_dd.depto_id as \"departamentoId\","
 				+ "ins_linea_accion_base_dd.dist_id as \"distritoId\","
+				+ "ins_linea_accion_base_dd.ins_linea_accion_id as \"insLineaAccionId\","
+
 				+ "ins_linea_accion_programacion_anho_dd.cantidad_anho as \"cantidadAnho\","				
 				+ "ins_linea_accion_destinatarios_dd.cant_dest as \"cantDest\","
 				+ "ins_linea_accion_costo_estimado_dd.inversion_estimada as \"inversionEstimada\","				
