@@ -92,26 +92,28 @@ if (user != null) { %>
 		}).responseText;
 		ciDestinatarios=JSON.parse(ciDestinatarios);
 		
+		
 		function renderCiDestinatarios(){
-			
 			$('.box-body').html('');
 			var tablaCiDestinatarios="";
 			tablaCiDestinatarios = '<table class="table table-hover">'+
-						  '<tr class="active"><td colspan="12">Tabla Ws</td><td><a href="#" data-toggle="modal" data-target="#ws"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
-						  '<tr class="active"><td>Id</td><td>Nombre</td><td>Descripción</td><td>Url</td><td>Metodo</td><td>Usuario</td><td>Pass</td><td>idClave</td><td>idValor</td><td>wsTipoId</td><td>borrado</td><td>Editar</td><td>Borrar</td></tr>';
+						  '<tr class="active"><td colspan="12">Tabla CI Destinatarios</td><td><a href="#" data-toggle="modal" data-target="#ciDestinatario"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
+						  '<tr class="active"><td>Id</td><td>AvanceId</td><td>CI</td><td>Nombre</td><td>Apellido</td><td>Sexo</td><td>Estado Civil</td><td>Nacionalidad</td><td>Profesion</td><td>Fecha de Nac.</td><td>Año</td><td>Version</td><td>Borrado</td><td>Fecha Act</td><td>Fecha Ins</td><td>Editar</td><td>Borrar</td></tr>';
 			for(var w=0; w<ciDestinatarios.length;w++)
 			{
 				if(ciDestinatarios[w].borrado == true)
 				{
-					tablaCiDestinatarios+='<tr><td><del>'+ciDestinatarios[w].id+'</del></td><td><del>'+ciDestinatarios[w].nombre+'</del></td><td><del>'+ciDestinatarios[w].descripcion+'</del></td><td><del>'+ciDestinatarios[w].url+'</del></td><td><del>'+ciDestinatarios[w].metodo+'</del></td><td><del>'+ciDestinatarios[w].usuario+'</del></td><td><del>'+ciDestinatarios[w].pass+'</del></td><td><del>'+ciDestinatarios[w].idClave+'</del></td><td><del>'+ciDestinatarios[w].idValor+'</del></td><td><del>'+ciDestinatarios[w].wsTipoId+'</del></td><td><del>'+ciDestinatarios[w].borrado+'</del></td><td><span class="glyphicon glyphicon-pencil registrosWs" codigoRegistroWs='+w+'></span></td><td><span class="glyphicon glyphicon-trash" id="iconoBorradoWs" parametrosBorradoWs='+ciDestinatarios[w].id+'-'+ciDestinatarios[w].borrado+'></span></td></tr>';
+					tablaCiDestinatarios+='<tr><td><del>'+ciDestinatarios[w].id+'</del></td><td><del>'+ciDestinatarios[w].avance_id+'</del></td><td><del>'+ciDestinatarios[w].nombre+'</del></td><td><del>'+ciDestinatarios[w].apellido+'</del></td><td><del>'+ciDestinatarios[w].sexo+'</del></td><td><del>'+ciDestinatarios[w].estado_civil+'</del></td><td><del>'+ciDestinatarios[w].nacionalidad+'</del></td><td><del>'+ciDestinatarios[w].profesion+'</del></td><td><del>'+ciDestinatarios[w].fecha_nacimiento+'</del></td><td><del>'+ciDestinatarios[w].anho+'</del></td><td><del>'+ciDestinatarios[w].version+'</del></td><td><del>'+ciDestinatarios[w].borrado+'</del></td><td><del>'+ciDestinatarios[w].fecha_actualizacion+'</del></td><td><del>'+ciDestinatarios[w].fecha_insercion+'</del></td><td><span class="glyphicon glyphicon-pencil registrosWs" codigoRegistroWs='+w+'></span></td><td><span class="glyphicon glyphicon-trash" id="iconoBorradoWs" parametrosBorradoWs='+ciDestinatarios[w].id+'-'+ciDestinatarios[w].borrado+'></span></td></tr>';
 				}else{
-					tablaCiDestinatarios+='<tr><td>'+ciDestinatarios[w].id+'</td><td>'+ciDestinatarios[w].nombre+'</td><td>'+ciDestinatarios[w].descripcion+'</td><td>'+ciDestinatarios[w].url+'</td><td>'+ciDestinatarios[w].metodo+'</td><td>'+ciDestinatarios[w].usuario+'</td><td>'+ciDestinatarios[w].pass+'</td><td>'+ciDestinatarios[w].idClave+'</td><td>'+ciDestinatarios[w].idValor+'</td><td>'+ciDestinatarios[w].wsTipoId+'</td><td>'+ciDestinatarios[w].borrado+'</td><td><span class="glyphicon glyphicon-pencil registrosWs" codigoRegistroWs='+w+'></span></td><td><span class="glyphicon glyphicon-trash" id="iconoBorradoWs" parametrosBorradoWs='+ciDestinatarios[w].id+'-'+ciDestinatarios[w].borrado+'></span></td></tr>';
+					tablaCiDestinatarios+='<tr><td>'+ciDestinatarios[w].id+'</td><td>'+ciDestinatarios[w].avance_id+'</td><td>'+ciDestinatarios[w].nombre+'</td><td>'+ciDestinatarios[w].apellido+'</td><td>'+ciDestinatarios[w].sexo+'</td><td>'+ciDestinatarios[w].estado_civil+'</td><td>'+ciDestinatarios[w].nacionalidad+'</td><td>'+ciDestinatarios[w].profesion+'</td><td>'+ciDestinatarios[w].fecha_nacimiento+'</td><td>'+ciDestinatarios[w].anho+'</td><td>'+ciDestinatarios[w].version+'</td><td>'+ciDestinatarios[w].borrado+'</td><td>'+ciDestinatarios[w].fecha_actualizacion+'</td><td>'+ciDestinatarios[w].fecha_insercion+'</td><td><span class="glyphicon glyphicon-pencil registrosWs" codigoRegistroWs='+w+'></span></td><td><span class="glyphicon glyphicon-trash" id="iconoBorradoWs" parametrosBorradoWs='+ciDestinatarios[w].id+'-'+ciDestinatarios[w].borrado+'></span></td></tr>';
 				}
 			}
 			tablaCiDestinatarios +='</table>';				
 			
 			$('.box-body').html(tablaCiDestinatarios);
 		}
+		
+		renderCiDestinatarios();
 		/*
 		var ws = $.ajax({
 			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getWs',
