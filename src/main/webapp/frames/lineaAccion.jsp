@@ -35,25 +35,26 @@
 				  <div class="form-group">
 				    <label for="acumularLineaAccion" class="col-lg-2 control-label">Acumular</label>
 				    <div class="col-lg-10">
-				      <input type="text" class="form-control" id="acumularLineaAccion" placeholder="Acumulador">
+				      <select name="acumularLineaAccion" id="acumularLineaAccion" class="form-control"></select>
 				    </div>
 				  </div>		
 				  <div class="form-group">
-				    <label for="tipoAccionIdLineaAccion" class="col-lg-2 control-label">Tipo_accion_id</label>
+				    <label for="tipoAccionIdLineaAccion" class="col-lg-2 control-label">Tipo de Linea de Acción</label>
 				    <div class="col-lg-10">
-				      <input type="number" class="form-control" id="tipoAccionIdLineaAccion" placeholder="Tipo accion id">
+				     <select name="tipoAccionIdLineaAccion" id="tipoAccionIdLineaAccion" class="form-control"></select>
+				      
 				    </div>
 				  </div>
 				  <div class="form-group">
-				    <label for="estrategiaIdLineaAccion" class="col-lg-2 control-label">Estrategia_id</label>
+				    <label for="estrategiaIdLineaAccion" class="col-lg-2 control-label">Linea Estrategica</label>
 				    <div class="col-lg-10">
-				      <input type="number" class="form-control" id="estrategiaIdLineaAccion" placeholder="Estrategia id">
+				        <select name="estrategiaIdLineaAccion" id="estrategiaIdLineaAccion" class="form-control"></select>
 				    </div>
 				  </div>	
 				  <div class="form-group">
-				    <label for="unidadMedidaIdLineaAccion" class="col-lg-2 control-label">Unidad_medida_id</label>
+				    <label for="unidadMedidaIdLineaAccion" class="col-lg-2 control-label">Unidad de Medida</label>
 				    <div class="col-lg-10">
-				      <input type="number" class="form-control" id="unidadMedidaIdLineaAccion" placeholder="Unidad medida id">
+				      <select name="unidadMedidaIdLineaAccion" id="unidadMedidaIdLineaAccion" class="form-control"></select>
 				    </div>
 				  </div>					  			  				  		  			  				  
 				  <div class="form-group">
@@ -68,6 +69,55 @@
 	</div>
 </div>
 	<script>
+	
+	$(document).ready(function(){
+		var tipoAccion = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getTipoAccion',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;		
+		tipoAccion=JSON.parse(tipoAccion);
+		
+		var optionTipoAccion;
+
+		for(i = 0;i<tipoAccion.length; i++){
+			optionTipoAccion+='<option value="'+tipoAccion[i].id+'" >'+tipoAccion[i].descripcion+'</option>';
+		}
+		$("#tipoAccionIdLineaAccion").append(optionTipoAccion);
+		
+		var unidadMedida = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		unidadMedida = JSON.parse(unidadMedida);
+		var optionUnidadMedida;
+		for(var u = 0; u < unidadMedida.length; u++)
+		{
+			optionUnidadMedida+='<option value="'+unidadMedida[u].id+'" parametro="'+unidadMedida[u].id+'">'+unidadMedida[u].descripcion+'</option>';
+		}
+		$("#unidadMedidaIdLineaAccion").append(optionUnidadMedida);
+		
+		var estrategia = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaEstrategica',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		estrategia = JSON.parse(estrategia);
+		var optionEstrategia;
+		for(var u = 0; u < estrategia.length; u++)
+		{
+			optionEstrategia+='<option value="'+estrategia[u].id+'" parametro="'+estrategia[u].id+'">'+estrategia[u].nombre+'</option>';
+		}
+		$("#estrategiaIdLineaAccion").append(optionEstrategia);
+		
+		optionAcumularLineaAccion =		'<option value="true">Si</option><option value="false">No</option>';
+		$("#acumularLineaAccion").append(optionAcumularLineaAccion);
+	});
+	
 	$("body").on("click", "#guardarLineaAccion",function(event){		
 			var objeto = new Object();
 			var accion = "insLineaAccion";
@@ -91,7 +141,7 @@
 
 				 
 			$.ajax({
-			        url: "http://tablero2015.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
+			        url: "http://spr.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
 			        type: 'POST',
 			        dataType: 'json',
 			        data: JSON.stringify(objeto),
@@ -151,7 +201,7 @@ $("body").on("click", "#actualizarLineaAccion",function(event)
 	objeto.unidadMedidaId=unidadMedidaId;
 	
 	$.ajax({
-		url: "http://tablero2015.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
+		url: "http://spr.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
 		type: 'POST',
 		dataType: 'json',
 		data: JSON.stringify(objeto),
@@ -196,7 +246,7 @@ $("body").on("click", "#iconoBorradoLineaAccion",function(event)
 	objeto.borrado=borrado;
 	
 	$.ajax({
-		url: "http://tablero2015.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
+		url: "http://spr.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
 		type: 'POST',
 		dataType: 'json',
 		data: JSON.stringify(objeto),
@@ -226,7 +276,7 @@ $("body").on("click", "#iconoBorradoLineaAccion",function(event)
 			$("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intente de nuevo</p>');
 		}
 	});
-	window.location.href = "http://tablero2015.stp.gov.py/tablero/contenedorLineaAccion.jsp";
+	window.location.href = "http://spr.stp.gov.py/tablero/contenedorLineaAccion.jsp";
 });
 
 	</script>	

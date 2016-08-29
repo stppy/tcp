@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.text.ParseException;
 import java.util.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -75,7 +76,14 @@ public class ajaxInserts  extends HttpServlet {
             //Gson gsonInsert = new Gson();
             Gson gsonInsert = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();            
             objeto=gsonInsert.fromJson(json, Accion.class);
-			SqlInserts.insertAccion(objeto);
+			try {
+				boolean status = SqlInserts.insertAccion(objeto);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
     	}
        }
         if (accion!=null && accion!=""){
@@ -119,7 +127,9 @@ public class ajaxInserts  extends HttpServlet {
             if(br != null){ json = br.readLine();}
             Gson gsonInsert = new Gson();
             productoObj=gsonInsert.fromJson(json, Beneficiario.class);
-			SqlInserts.insertBeneficiario(productoObj);
+			boolean status = SqlInserts.insertBeneficiario(productoObj);
+    		myObj.addProperty("success", status);
+    		out.println(myObj.toString());
     	}
        }
         if (accion!=null && accion!=""){
@@ -167,16 +177,47 @@ public class ajaxInserts  extends HttpServlet {
     	}
        }
         if (accion!=null && accion!=""){
-    	if (accion.equals("insEvidencia")){
-    		Evidencia productoObj = new Evidencia();
-    		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
-            String json = "";
-            if(br != null){ json = br.readLine();}
-            Gson gsonInsert = new Gson();
-            productoObj=gsonInsert.fromJson(json, Evidencia.class);
-			SqlInserts.insertEvidencia(productoObj);
-    	}
-       }
+	    	if (accion.equals("insEvidencia")){
+	    		Evidencia productoObj = new Evidencia();
+	    		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+	            String json = "";
+	            if(br != null){ json = br.readLine();}
+	            Gson gsonInsert = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+	            productoObj=gsonInsert.fromJson(json, Evidencia.class);
+				int idEvidencia = SqlInserts.insertEvidencia(productoObj);			
+	    		if (idEvidencia >= 0){ 
+	    			myObj.addProperty("success", true);
+	    			myObj.addProperty("idEvidencia",idEvidencia);
+	    		} else {
+	    			myObj.addProperty("success", false);
+	    		}	    		
+	    		out.println(myObj.toString());
+	    	}
+        }
+        if (accion!=null && accion!=""){
+        	if (accion.equals("insEvidenciaHasDocumento")){
+        		EvidenciaHasDocumento objeto = new EvidenciaHasDocumento();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                objeto=gsonInsert.fromJson(json, EvidenciaHasDocumento.class);
+    			SqlInserts.insertEvidenciaHasDocumento(objeto);
+        	}
+        }
+        if (accion!=null && accion!=""){
+        	if (accion.equals("insDocumento")){
+        		Documento objeto = new Documento();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+                objeto=gsonInsert.fromJson(json, Documento.class);
+    			boolean status = SqlInserts.insertDocumento(objeto);			
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	}
+        }
         if (accion!=null && accion!=""){
     	if (accion.equals("insGeoPoligono")){
     		GeoPoligono productoObj = new GeoPoligono();
@@ -369,7 +410,106 @@ public class ajaxInserts  extends HttpServlet {
             obj=gsonInsert.fromJson(json, AccionCatalogo.class);
 			SqlInserts.insertAccionCatalogo(obj);
     	}
-       }          
-    
+       }     
+        if (accion!=null && accion!=""){
+    	if (accion.equals("insActividad")){
+    		Cronograma obj = new Cronograma();
+    		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+            String json = "";
+            if(br != null){ json = br.readLine();}
+            Gson gsonInsert = new Gson();
+            obj=gsonInsert.fromJson(json, Cronograma.class);
+			SqlInserts.insertActividad(obj);
+    	}
+       }  
+        if (accion!=null && accion!=""){
+    	if (accion.equals("insProgramacion")){
+    		Programacion obj = new Programacion();
+    		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+            String json = "";
+            if(br != null){ json = br.readLine();}
+            Gson gsonInsert = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+            obj=gsonInsert.fromJson(json, Programacion.class);
+            
+			try {
+				boolean status = SqlInserts.insertProgramacion(obj);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace(); 
+			}
+    	}
+       }    
+        
+        if (accion!=null && accion!=""){
+    	if (accion.equals("insAvance")){
+    		Avance obj = new Avance();
+    		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+            String json = "";
+            if(br != null){ json = br.readLine();}
+            Gson gsonInsert = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+            obj=gsonInsert.fromJson(json, Avance.class);
+            try {
+            	boolean status = SqlInserts.insertAvance(obj);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+    	}
+       }   
+        
+        if (accion!=null && accion!=""){
+    	if (accion.equals("insAvanceCosto")){
+    		AvanceCosto obj = new AvanceCosto();
+    		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+            String json = "";
+            if(br != null){ json = br.readLine();}
+            Gson gsonInsert = new Gson();
+            obj=gsonInsert.fromJson(json, AvanceCosto.class);
+            boolean status = SqlInserts.insertAvanceCosto(obj);
+    		myObj.addProperty("success", status);
+    		out.println(myObj.toString());
+    	}
+       } 
+        
+        
+        if (accion!=null && accion!=""){
+    	if (accion.equals("insAccionDestinatario")){
+    		AccionDestinatario obj = new AccionDestinatario();
+    		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+            String json = "";
+            if(br != null){ json = br.readLine();}
+            Gson gsonInsert = new Gson();
+            obj=gsonInsert.fromJson(json, AccionDestinatario.class);
+            boolean status = SqlInserts.insertAccionDestinatario(obj);
+    		myObj.addProperty("success", status);
+    		out.println(myObj.toString());
+    	}
+       } 
+        
+        if (accion!=null && accion!=""){
+    	if (accion.equals("insAvanceCualitativo")){
+    		AvanceCualitativo objeto = new AvanceCualitativo();
+    		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+            String json = "";
+            if(br != null){ json = br.readLine();}
+            //Gson gsonInsert = new Gson();
+            Gson gsonInsert = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();            
+            objeto=gsonInsert.fromJson(json, AvanceCualitativo.class);
+			try {
+				boolean status = SqlInserts.insertAvanceCualitativo(objeto);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
+       }
+        
+        
     }
 }

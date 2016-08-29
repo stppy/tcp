@@ -1363,7 +1363,7 @@ public class SqlInserts {
 		
 }	
 	
-	public static void insertAccionHasProducto(AccionHasProducto dato){
+	public static boolean insertAccionHasProducto(AccionHasProducto dato){
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
@@ -1378,20 +1378,21 @@ public class SqlInserts {
 		insert.setInt (4, dato.getPrograma());	
 		insert.setInt (5, dato.getSubPrograma());	
 		insert.setInt (6, dato.getProyecto());
-		insert.setInt (7, dato.getProducto());	
+		insert.setInt (7, dato.getSprProductoId());	
 		insert.setInt (8, dato.getAccionId());
 		insert.setInt (9, dato.getAnho());
 		insert.setInt (10, dato.getVersion());
-		insert.setString (11, dato.getuMedida());	
-		insert.setDouble (12, dato.getCantFisica());	
+		insert.setString (11, dato.getUnidadMedida());	
+		insert.setDouble (12, dato.getCantidadFisica());	
 		insert.setString (13, dato.getClase());	
-		insert.setDouble (14, dato.getCantFinanciera());
+		insert.setDouble (14, dato.getCantidadFinanciera());
 		insert.setDouble(15, dato.getTotalAsignacion());
 	
 		insert.execute();
 		   
 		conn.close();
-	} catch (SQLException e) {e.printStackTrace();}
+		return true;
+	} catch (SQLException e) {e.printStackTrace();return false;}
 		
 }	
 	

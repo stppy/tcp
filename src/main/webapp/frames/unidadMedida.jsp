@@ -50,7 +50,7 @@ objeto.descripcion=descripcion;
 objeto.sigla=sigla;
 
 $.ajax({
-url: "http://tablero2015.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
+url: "http://spr.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
 type: 'POST',
 dataType: 'json',
 data: JSON.stringify(objeto),
@@ -100,7 +100,7 @@ $("body").on("click", "#actualizarUnidadMedida",function(event){
 	
 
 	$.ajax({
-	        url: "http://tablero2015.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
+	        url: "http://spr.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
 	        type: 'POST',
 	        dataType: 'json',
 	        data: JSON.stringify(objeto),
@@ -143,7 +143,7 @@ $("body").on("click", "#iconoBorradoUnidadMedida",function(event){
 	objeto.borrado = borrado;
 
 	$.ajax({
-		url: "http://tablero2015.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
+		url: "http://spr.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
 	    type: 'POST',
 	    dataType: 'json',
 	    data: JSON.stringify(objeto),
@@ -173,6 +173,6 @@ $("body").on("click", "#iconoBorradoUnidadMedida",function(event){
 	    	$("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intente de nuevo</p>');
 	    }
 	});
-	window.location.href = "http://tablero2015.stp.gov.py/tablero/contenedorUnidadMedida.jsp";
+	window.location.href = "http://spr.stp.gov.py/tablero/contenedorUnidadMedida.jsp";
 });	
 </script>

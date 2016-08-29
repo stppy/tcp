@@ -2,8 +2,9 @@ package py.gov.stp.tools2;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.InputStreamReader; 
 import java.io.PrintWriter;
+import java.text.ParseException;
 import java.util.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -264,9 +265,11 @@ public class ajaxUpdate extends HttpServlet {
                 //Gson gsonInsert = new Gson();
                 Gson gsonInsert = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
                 objeto=gsonInsert.fromJson(json, Periodo.class);
-                boolean status = SqlUpdates.updatePeriodo(objeto);
-        		myObj.addProperty("success", status);
-        		out.println(myObj.toString());
+                boolean status;
+				status = SqlUpdates.updatePeriodo(objeto);
+				myObj.addProperty("success", status);
+	        	out.println(myObj.toString());
+				        		
         	} 
         	if (accion.equals("borradoPeriodo")){
         		Periodo objeto = new Periodo();
@@ -309,9 +312,11 @@ public class ajaxUpdate extends HttpServlet {
                 //Gson gsonInsert = new Gson();
                 Gson gsonInsert = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
                 objeto=gsonInsert.fromJson(json, Hito.class);
-                boolean status = SqlUpdates.updateHito(objeto);
-        		myObj.addProperty("success", status);
+                boolean status;
+				status = SqlUpdates.updateHito(objeto);
+				myObj.addProperty("success", status);
         		out.println(myObj.toString());
+				
         	} 
         	if (accion.equals("borradoHito")){
         		Hito objeto = new Hito();
@@ -332,9 +337,16 @@ public class ajaxUpdate extends HttpServlet {
                 //Gson gsonInsert = new Gson();
                 Gson gsonInsert = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
                 objeto=gsonInsert.fromJson(json, Accion.class);
-                boolean status = SqlUpdates.updateAccion(objeto);
-        		myObj.addProperty("success", status);
-        		out.println(myObj.toString());
+                boolean status;
+				try {
+					status = SqlUpdates.updateAccion(objeto);
+					myObj.addProperty("success", status);
+	        		out.println(myObj.toString());
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+        		
         	} 
         	if (accion.equals("borradoAccion")){
         		Accion objeto = new Accion();
@@ -681,7 +693,182 @@ public class ajaxUpdate extends HttpServlet {
                 boolean status = SqlUpdates.updateAccionCatalogo(objeto);     
         		myObj.addProperty("success", status);
         		out.println(myObj.toString());
-        	}         	
+        	}
+        	if (accion.equals("actCronograma")){
+        		Cronograma objeto = new Cronograma();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                objeto=gsonInsert.fromJson(json, Cronograma.class);
+                boolean status = SqlUpdates.updateCronograma(objeto);     
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	}
+        	if (accion.equals("borradoCronograma")){
+        		Cronograma objeto = new Cronograma();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                objeto=gsonInsert.fromJson(json, Cronograma.class);
+                boolean status = SqlUpdates.borradoCronograma(objeto);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	}
+        	if (accion.equals("actBorradoAvanceCosto")){
+        		AvanceCosto objeto = new AvanceCosto();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                objeto=gsonInsert.fromJson(json, AvanceCosto.class);
+                boolean status = SqlUpdates.borradoAvanceCosto(objeto);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	}        	
+        	if (accion.equals("actAvanceCosto")){
+        		AvanceCosto objeto = new AvanceCosto();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                objeto=gsonInsert.fromJson(json, AvanceCosto.class);
+                boolean status = SqlUpdates.actAvanceCosto(objeto);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	}
+        	if (accion.equals("actBorradoAvance")){
+        		Avance objeto = new Avance();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                objeto=gsonInsert.fromJson(json, Avance.class);
+                boolean status = SqlUpdates.borradoAvance(objeto);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	}      
+///////////////////////////////////
+        	if (accion.equals("actAvance")){
+        		Avance objeto = new Avance();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                //Gson gsonInsert = new Gson();
+                Gson gsonInsert = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+                objeto=gsonInsert.fromJson(json, Avance.class);
+                boolean status;
+				try {
+					status = SqlUpdates.actAvance(objeto);
+					myObj.addProperty("success", status);
+	        		out.println(myObj.toString());
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+        		
+        	} 
+        	if (accion.equals("actBorradoEvidencia")){
+        		Evidencia objeto = new Evidencia();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                objeto=gsonInsert.fromJson(json, Evidencia.class);
+                boolean status = SqlUpdates.borradoEvidencia(objeto);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	}   
+        	if (accion.equals("actBorradoBeneficiario")){
+        		Beneficiario objeto = new Beneficiario();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                objeto=gsonInsert.fromJson(json, Beneficiario.class);
+                boolean status = SqlUpdates.borradoBeneficiario(objeto);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	} 
+//******************************************************
+        	if (accion.equals("actProgramacion")){
+        		Programacion objeto = new Programacion();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                //Gson gsonInsert = new Gson();
+                Gson gsonInsert = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+                objeto=gsonInsert.fromJson(json, Programacion.class);
+                boolean status;
+				try {
+					status = SqlUpdates.updateProgramacion(objeto);
+	        		myObj.addProperty("success", status); 
+	        		out.println(myObj.toString());
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+        	} 
+        	if (accion.equals("actBorradoProgramacion")){
+        		Programacion objeto = new Programacion();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                objeto=gsonInsert.fromJson(json, Programacion.class);
+                boolean status = SqlUpdates.borradoProgramacion(objeto);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	}
+        	
+        	if (accion.equals("borradoAccionDestinatario")){
+        		AccionDestinatario objeto = new AccionDestinatario();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                objeto=gsonInsert.fromJson(json, AccionDestinatario.class);
+                boolean status = SqlUpdates.borradoAccionDestinatario(objeto);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	} 
+        	
+        	if (accion.equals("actAccionDestinatario")){
+        		AccionDestinatario objeto = new AccionDestinatario();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                objeto=gsonInsert.fromJson(json, AccionDestinatario.class);
+                boolean status = SqlUpdates.updateAccionDestinatario(objeto);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	} 
+        	
+        	if (accion.equals("actAvanceCualitativo")){
+        		AvanceCualitativo objeto = new AvanceCualitativo();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                objeto=gsonInsert.fromJson(json, AvanceCualitativo.class);
+                boolean status = SqlUpdates.updateAvanceCualitativo(objeto);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	} 
+        	
+        	if (accion.equals("borradoAvanceCualitativo")){
+        		AvanceCualitativo objeto = new AvanceCualitativo();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                objeto=gsonInsert.fromJson(json, AvanceCualitativo.class);
+                boolean status = SqlUpdates.borradoAvanceCualitativo(objeto);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	} 
         	
         }     
         

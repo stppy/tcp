@@ -11,13 +11,10 @@ public class LineaAccionAcumuladoMesDistrito {
 	protected double cantidad_ejecutda;
 	protected int distrito_id;
 	protected int departamento_id;
+	protected String departamento;
+	protected String distrito;
 	
-	public int getDepartamento_id() {
-		return departamento_id;
-	}
-	public void setDepartamento_id(int departamento_id) {
-		this.departamento_id = departamento_id;
-	}
+	
 	public int getLinea_accion_id() {
 		return linea_accion_id;
 	}
@@ -72,6 +69,23 @@ public class LineaAccionAcumuladoMesDistrito {
 	public void setDistrito_id(int distrito_id) {
 		this.distrito_id = distrito_id;
 	}
-	
+	public String getDepartamento() {
+		return departamento;
+	}
+	public void setDepartamento(String departamento) {
+		this.departamento = departamento;
+	}
+	public String getDistrito() {
+		return distrito;
+	}
+	public void setDistrito(String distrito) {
+		this.distrito = distrito;
+	}
+	public int getDepartamento_id() {
+		return departamento_id;
+	}
+	public void setDepartamento_id(int departamento_id) {
+		this.departamento_id = departamento_id;
+	}
 
 }

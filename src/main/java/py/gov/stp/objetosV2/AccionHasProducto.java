@@ -11,16 +11,14 @@ public class AccionHasProducto {
 	protected int programa;
 	protected int subPrograma;
 	protected int proyecto;
-	protected int producto;
 	protected int anho;
 	protected int version;
-	protected String uMedida;
-	protected Double cantFisica;
+	protected String unidadMedida;
+	protected Double cantidadFisica;
 	protected String clase;
-	protected Double cantFinanciera;
+	protected Double cantidadFinanciera;
 	protected Double totalAsignacion;
-	protected boolean borrado=false;
-	
+	protected boolean borrado;
 	public int getId() {
 		return id;
 	}
@@ -81,12 +79,6 @@ public class AccionHasProducto {
 	public void setProyecto(int proyecto) {
 		this.proyecto = proyecto;
 	}
-	public int getProducto() {
-		return producto;
-	}
-	public void setProducto(int producto) {
-		this.producto = producto;
-	}
 	public int getAnho() {
 		return anho;
 	}
@@ -99,6 +91,36 @@ public class AccionHasProducto {
 	public void setVersion(int version) {
 		this.version = version;
 	}
+	public String getUnidadMedida() {
+		return unidadMedida;
+	}
+	public void setUnidadMedida(String unidadMedida) {
+		this.unidadMedida = unidadMedida;
+	}
+	public Double getCantidadFisica() {
+		return cantidadFisica;
+	}
+	public void setCantidadFisica(Double cantidadFisica) {
+		this.cantidadFisica = cantidadFisica;
+	}
+	public String getClase() {
+		return clase;
+	}
+	public void setClase(String clase) {
+		this.clase = clase;
+	}
+	public Double getCantidadFinanciera() {
+		return cantidadFinanciera;
+	}
+	public void setCantidadFinanciera(Double cantidadFinanciera) {
+		this.cantidadFinanciera = cantidadFinanciera;
+	}
+	public Double getTotalAsignacion() {
+		return totalAsignacion;
+	}
+	public void setTotalAsignacion(Double totalAsignacion) {
+		this.totalAsignacion = totalAsignacion;
+	}
 	public boolean isBorrado() {
 		return borrado;
 	}
@@ -108,35 +130,5 @@ public class AccionHasProducto {
 	public void changeBorrado(){
 		this.borrado=!borrado;
 	}
-	public String getuMedida() {
-		return uMedida;
-	}
-	public void setuMedida(String uMedida) {
-		this.uMedida = uMedida;
-	}
-	public Double getCantFisica() {
-		return cantFisica;
-	}
-	public void setCantFisica(Double cantFisica) {
-		this.cantFisica = cantFisica;
-	}
-	public String getClase() {
-		return clase;
-	}
-	public void setClase(String clase) {
-		this.clase = clase;
-	}
-	public Double getCantFinanciera() {
-		return cantFinanciera;
-	}
-	public void setCantFinanciera(Double cantFinanciera) {
-		this.cantFinanciera = cantFinanciera;
-	}
-	public Double getTotalAsignacion() {
-		return totalAsignacion;
-	}
-	public void setTotalAsignacion(Double totalAsignacion) {
-		this.totalAsignacion = totalAsignacion;
-	}	
 	
 }

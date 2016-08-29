@@ -42,7 +42,7 @@
 			objeto.descripcion=descripcion;			
 				 
 			$.ajax({
-			        url: "http://tablero2015.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
+			        url: "http://spr.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
 			        type: 'POST',
 			        dataType: 'json',
 			        data: JSON.stringify(objeto),
@@ -91,7 +91,7 @@
 		
 
 		$.ajax({
-		        url: "http://tablero2015.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
+		        url: "http://spr.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
 		        type: 'POST',
 		        dataType: 'json',
 		        data: JSON.stringify(objeto),

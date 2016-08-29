@@ -3,7 +3,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <script>
 var lineaAccion = $.ajax({
-	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
   	type:'get',
   	dataType:'json',
   	async:false       
@@ -17,7 +17,7 @@ for(i = 0;i<lineaAccion.length; i++){
 
 
 var institucion = $.ajax({
-	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
   	type:'get',
   	dataType:'json',
   	async:false       
@@ -30,7 +30,7 @@ for(m = 0;m<institucion.length; m++){
 }
 
 var periodo = $.ajax({
-	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
   	type:'get',
   	dataType:'json',
   	async:false       
@@ -70,11 +70,11 @@ contenido =     '<div class="col-md-12">'+
 				'						</div>'+	
 				'						<div class="form-group">'+
 				'							<label for="meta">Meta</label>'+
-				'							<input type="number" id="metaInsLineaAccion" class="form-control" name="meta" placeholder="Ingrese Meta">'+
+				'							<input type="number" id="metaInsLineaAccion" class="form-control" name="meta" placeholder="Ingrese Meta" required>'+
 				'						</div>'+
 				'						<div class="form-group">'+
 				'							<label for="version">Versión</label>'+
-				'							<input type="number" id="versionInsLineaAccion" class="form-control" name="version" placeholder="Ingrese Versión">'+
+				'							<input type="number" id="versionInsLineaAccion" class="form-control" name="version" placeholder="Ingrese Versión" required>'+
 				'						</div>'+				
 				'					</form>'+			
 				'		</div>'+

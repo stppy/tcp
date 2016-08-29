@@ -74,7 +74,7 @@ if (user != null) { %>
 		var entidadCas = "";
 		entidadCas ="<%=attributes.get("entidad") %>";
 		var usuarios = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -85,7 +85,7 @@ if (user != null) { %>
 		$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
 		
 		var wsTipo = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects2?action=getWsTipo',
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getWsTipo',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       

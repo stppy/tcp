@@ -50,7 +50,7 @@
 			
 				 
 			$.ajax({
-			        url: "http://tablero2015.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
+			        url: "http://spr.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
 			        type: 'POST',
 			        dataType: 'json',
 			        data: JSON.stringify(objeto),
@@ -95,7 +95,7 @@
 		objeto.etiquetaId = etiquetaId;
 		objeto.proporcion = proporcion;
 		$.ajax({
-			url: "http://tablero2015.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
+			url: "http://spr.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
 			type: 'POST',
 			dataType: 'json',
 			data: JSON.stringify(objeto),
@@ -139,7 +139,7 @@
 				objeto.borrado=borrado;
 				
 				$.ajax({
-					url: "http://tablero2015.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
+					url: "http://spr.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
 					type: 'POST',
 					dataType: 'json',
 					data: JSON.stringify(objeto),
@@ -169,7 +169,7 @@
 						$("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intente de nuevo</p>');
 					}
 				});
-				window.location.href = "http://tablero2015.stp.gov.py/tablero/contenedorAccionHasEtiqueta.jsp";
+				window.location.href = "http://spr.stp.gov.py/tablero/contenedorAccionHasEtiqueta.jsp";
 			});
 
 	

@@ -11,11 +11,31 @@ public class Usuario {
 	protected String nombre="";
 	protected int entidad_id=0;
 	protected int nivel_id=0;
-	protected int rol_id=0;
+	protected int rol_id_tablero=0;
 	protected String urlimagen="";	
+	protected int unidadResponsable;
+	protected String url;
+	protected boolean borrado;
+
 	
-	
-	
+	public int getUnidadResponsable() {
+		return unidadResponsable;
+	}
+	public void setUnidadResponsable(int unidadResponsable) {
+		this.unidadResponsable = unidadResponsable;
+	}
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	public boolean isBorrado() {
+		return borrado;
+	}
+	public void setBorrado(boolean borrado) {
+		this.borrado = borrado;
+	}	
 	public int getId() {
 		return id;
 	}
@@ -46,11 +66,11 @@ public class Usuario {
 	public void setEntidad(String entidad) {
 		this.entidad = entidad;
 	}
-	public int getRol_id() {
-		return rol_id;
+	public int getRol_id_tablero() {
+		return rol_id_tablero;
 	}
-	public void setRol_id(int rol_id) {
-		this.rol_id = rol_id;
+	public void setRol_id_tablero(int rol_id_tablero) {
+		this.rol_id_tablero = rol_id_tablero;
 	}
 	public int getEntidad_id() {
 		return entidad_id;
@@ -70,15 +90,15 @@ public class Usuario {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	
-	
-
 	public String getUrlimagen() {
 		return urlimagen;
 	}
 	public void setUrlimagen(String urlimagen) {
 		this.urlimagen = urlimagen;
 	}
-	
-	
+	public void changeBorrado(){
+		this.borrado=!borrado;
+
+	}
+		
 }

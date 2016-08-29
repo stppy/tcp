@@ -97,7 +97,7 @@ public class SqlInserts {
 		insert.setString (1, lineaAccion.getNombre());
 		insert.setString (2, lineaAccion.getDescripcion());
 		insert.setInt (3, lineaAccion.getOrden());
-		insert.setString (4, lineaAccion.getPeso());
+		insert.setInt (4, lineaAccion.getPeso());
 		insert.setBoolean(5, lineaAccion.isAcumular());
 		insert.setInt (6, lineaAccion.getTipoAccionId());
 		insert.setInt (7, lineaAccion.getEstrategiaId());
@@ -151,8 +151,6 @@ public class SqlInserts {
 		insert.setInt (7, institucion.getUnidadResponsableId());
 		insert.setInt (8, institucion.getOrden());
 		insert.setBoolean (9, institucion.isBorrado());
-		
-		
 		insert.execute();
 		   
 		conn.close();
@@ -167,6 +165,8 @@ public class SqlInserts {
 	+ " values (?, ?, ?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
+
+		
 		
 		//insert.setInt (1, insLineaAccion.getId());
 		insert.setString (1, periodo.getNombre());
@@ -228,7 +228,7 @@ public class SqlInserts {
 	} catch (SQLException e) {e.printStackTrace();}
 		
 }
-	public static void insertAccion(Accion accion){
+	public static boolean insertAccion(Accion accion) throws ParseException{
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
@@ -237,10 +237,20 @@ public class SqlInserts {
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
+		String startDate = accion.getFechaInicio();
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+		java.util.Date date = sdf1.parse(startDate);
+		java.sql.Date sqlStartDate = new java.sql.Date(date.getTime());
+		
+		String endDate=accion.getFechaFin();
+		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+		java.util.Date date2 = sdf1.parse(endDate);
+		java.sql.Date sqlEndDate = new java.sql.Date(date2.getTime());
+		
 		insert.setDouble (1, accion.getCosto());
 		insert.setInt (2, accion.getPeso());
-		insert.setDate (3, accion.getFechaInicio());
-		insert.setDate (4, accion.getFechaFin());
+		insert.setDate (3, sqlStartDate);
+		insert.setDate (4, sqlEndDate);
 		insert.setInt(5, accion.getVersion());
 		insert.setBoolean (6, accion.isBorrado());		
 		insert.setDouble (7, accion.getMeta1());
@@ -255,7 +265,8 @@ public class SqlInserts {
 		insert.execute();
 		   
 		conn.close();
-	} catch (SQLException e) {e.printStackTrace();}
+		return true;
+	} catch (SQLException e) {e.printStackTrace(); return false;}
 		
 }
 	public static void insertAccionHasProducto(AccionHasProducto accionHasProducto){
@@ -352,27 +363,85 @@ public class SqlInserts {
 	} catch (SQLException e) {e.printStackTrace();}
 		
 }
-	public static void insertEvidencia(Evidencia evidencia){
-	try {
-		Connection conn=ConnectionConfiguration.conectar();
-	   	
-		String query = " insert into evidencia (nombre,descripcion,ws_id,borrado)"
-	+ " values (?, ?, ?,?)";
+	public static int insertEvidencia(Evidencia evidencia){
+		try {
+			Connection conn=ConnectionConfiguration.conectar();
+		   	
+			String query = " insert into evidencia (nombre,descripcion,url,ws_id,version,avance_id, url_documento, latitud, longitud)"
+		+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			
+			PreparedStatement insert = conn.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
+			
+			insert.setString (1, evidencia.getNombre());
+			insert.setString (2, evidencia.getDescripcion());
+			insert.setString (3, evidencia.getUrl());
+			insert.setInt (4, evidencia.getWsId());
+			insert.setInt (5, evidencia.getVersion());
+			insert.setInt (6, evidencia.getAvanceId());
+			insert.setString (7, evidencia.getUrlDocumento());
+			insert.setDouble (8, evidencia.getLatitud());
+			insert.setDouble (9, evidencia.getLongitud());
+								
+			insert.execute();
+			   
+			/*try (ResultSet generatedKeys = insert.getGeneratedKeys()) {
+	            if (generatedKeys.next()) {
+	                evidencia.setId(generatedKeys.getInt(1));
+	            }
+	            else {
+	            	return -1;
+	            }
+	        }*/
+			
+			conn.close();
+			return 1;
+		} catch (SQLException e) {e.printStackTrace(); return -1;}
+			
+	}
+	public static boolean insertEvidenciaHasDocumento(EvidenciaHasDocumento evidenciaHasDocumento){
 		
-		PreparedStatement insert = conn.prepareStatement(query);
+		try {
+			Connection conn=ConnectionConfiguration.conectar();		  		
+			
+			String query = " insert into evidencia_has_documento (evidencia_id, documento_id)"
+						 	+ " values (?, ?)";
+			
+			PreparedStatement insert = conn.prepareStatement(query);
+			
+			insert.setInt (1, evidenciaHasDocumento.getEvidenciaId());
+			insert.setInt (2, evidenciaHasDocumento.getDocumentoId());				
+								
+			insert.execute();
+			   
+			conn.close();
+			return true;
+		} catch (SQLException e) {e.printStackTrace(); return false;}
 		
-		//insert.setInt (1, evidencia.getId());
-		insert.setString (1, evidencia.getNombre());
-		insert.setString (2, evidencia.getDescripcion());
-		insert.setInt (3, evidencia.getWsId());
-		insert.setBoolean (4, evidencia.isBorrado());
-							
-		insert.execute();
-		   
-		conn.close();
-	} catch (SQLException e) {e.printStackTrace();}
-		
-}
+	}	
+	public static boolean insertDocumento(Documento documento){
+		try {
+			Connection conn=ConnectionConfiguration.conectar();		  		
+			
+			
+			String query = " insert into documento (nombre, descripcion, url)"
+						    + " values (?, ?, ?)";
+			
+			PreparedStatement insert = conn.prepareStatement(query);	
+			
+			insert.setString (1, documento.getNombre());
+			insert.setString (2, documento.getDescripcion());
+			insert.setString (3, documento.getUrl());			
+								
+			insert.execute();			
+			   
+			conn.close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace(); 
+			return false;
+		}
+			
+	}
 	public static void insertAccionHasEtiqueta(AccionHasEtiqueta accionHasEtiqueta){
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
@@ -433,25 +502,28 @@ public class SqlInserts {
 	} catch (SQLException e) {e.printStackTrace();}
 		
 }
-	public static void insertBeneficiario(Beneficiario beneficiario){
+	public static boolean insertBeneficiario(Beneficiario beneficiario){
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into beneficiario (nombre,descripcion,beneficiario_tipo_id,borrado)"
-	+ " values (?, ?, ?, ?)";
+		String query = " insert into beneficiario (nombre,descripcion,beneficiario_tipo_id,version,cantidad,avance_id,beneficiario_grupo_id)"
+	+ " values (?, ?, ?, ?, ?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
-		//insert.setInt (1, beneficiario.getId());
 		insert.setString (1, beneficiario.getNombre());
 		insert.setString (2, beneficiario.getDescripcion());
-		insert.setInt (3, beneficiario.getBeneficiarioTipoId());
-		insert.setBoolean (4, beneficiario.isBorrado());
+		insert.setInt (3, beneficiario.getTipoId());
+		insert.setInt (4, beneficiario.getVersion());
+		insert.setInt (5, beneficiario.getCantidad());
+		insert.setInt (6, beneficiario.getAvanceId());
+		insert.setInt (7, beneficiario.getGrupoId());
 							
 		insert.execute();
 		   
 		conn.close();
-	} catch (SQLException e) {e.printStackTrace();}
+		return true;
+	} catch (SQLException e) {e.printStackTrace(); return false;}
 		
 }
 	public static void insertBeneficiarioTipo(BeneficiarioTipo beneficiarioTipo){
@@ -621,6 +693,164 @@ public class SqlInserts {
 	} catch (SQLException e) {e.printStackTrace();}
 		
 }		
+	public static void insertActividad(Cronograma actividad){
+	try {
+		Connection conn=ConnectionConfiguration.conectar();
+	   	
+		String query = " insert into actividad (nombre,descripcion,proporcion,peso,version,borrado,accion_id,unidad_medida_id,hito_tipo_id,acumulable)"
+	+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		
+		PreparedStatement insert = conn.prepareStatement(query);
+		
+		insert.setString (1, actividad.getNombre());
+		insert.setString (2, actividad.getDescripcion());
+		insert.setDouble (3, actividad.getProporcion());
+		insert.setDouble (4, actividad.getPeso());
+		insert.setInt (5, actividad.getVersion());
+		insert.setBoolean (6, actividad.isBorrado());
+		insert.setInt (7, actividad.getAccion_id());
+		insert.setInt (8, actividad.getUnidad_medida_id());
+		insert.setInt (9, actividad.getHito_tipo_id());	
+		insert.setBoolean(10, actividad.isAcumulable());
+
+		
+		insert.execute();
+		   
+		conn.close();
+	} catch (SQLException e) {e.printStackTrace();}
 	
+}		
 	
+	public static boolean insertProgramacion(Programacion programacion) throws ParseException{
+	try {
+		Connection conn=ConnectionConfiguration.conectar();
+	   	
+		String query = " insert into programacion (cantidad,fecha_entrega,version,actividad_id)"
+	+ " values (?, ?, ?, ?)";
+		
+		PreparedStatement insert = conn.prepareStatement(query);
+		
+		String startDate = programacion.getFechaEntrega();
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+		java.util.Date date = sdf1.parse(startDate);
+		java.sql.Date sqlStartDate = new java.sql.Date(date.getTime());
+		
+		
+		insert.setDouble (1, programacion.getCantidad());
+		insert.setDate (2, sqlStartDate);
+		insert.setInt (3, programacion.getVersion());
+		insert.setInt (4, programacion.getActividad());
+		
+		insert.execute();
+		   
+		conn.close();
+		return true;
+	} catch (SQLException e) {e.printStackTrace(); return false;}
+	
+}	
+////////////////////////////////////////////////////
+	public static boolean insertAvance(Avance avance) throws ParseException{
+	try {
+		Connection conn=ConnectionConfiguration.conectar();
+	   	
+		String query = " insert into avance (justificacion,cantidad,fecha_entrega,actividad_id,version)"
+	+ " values (?, ?, ?, ?, ?)";
+		
+		PreparedStatement insert = conn.prepareStatement(query);
+		
+		String inicio = avance.getFechaEntrega();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		java.util.Date date1 = sdf.parse(inicio);
+		java.sql.Date sqlStart = new java.sql.Date(date1.getTime());
+		
+		insert.setString (1, avance.getJustificacion());
+		insert.setDouble (2, avance.getCantidad());
+		insert.setDate (3, sqlStart); 
+		//insert.setInt (4, avance.getCantidadBeneficiarios());
+		insert.setInt (4, avance.getActividadId());
+		insert.setInt (5, avance.getVersion());
+		
+		insert.execute();
+		   
+		conn.close();
+		return true;
+	} catch (SQLException e) {e.printStackTrace(); return false;}
+	
+}	
+	
+	public static boolean insertAvanceCosto(AvanceCosto costo){
+	try {
+		Connection conn=ConnectionConfiguration.conectar();
+	   	
+		String query = " insert into avance_costo (monto,codigo_contratacionl,objeto_gasto,avance_id, producto_concat)"
+	+ " values (?, ?, ?, ?, ?)";
+		
+		PreparedStatement insert = conn.prepareStatement(query);
+		
+		
+		insert.setDouble (1, costo.getMonto());
+		insert.setString (2, costo.getCodigoContratacion());
+		insert.setInt (3, costo.getObjetoGasto());
+		insert.setInt (4, costo.getAvanceId());
+		insert.setString(5, costo.getProductoConcat());
+		
+		insert.execute();
+		   
+		conn.close();
+		return true;
+	} catch (SQLException e) {e.printStackTrace(); return false;}
+	
+}	
+
+	public static boolean insertAccionDestinatario(AccionDestinatario destinatario){
+		try {
+			Connection conn=ConnectionConfiguration.conectar();
+
+			String query = " insert into accion_destinatario (cantidad, descripcion, version, borrado, beneficiario_tipo_id, accion_id, beneficiario_grupo_id)"
+		+ " values (?, ?, ?, ?, ?, ?, ?)";
+			
+			PreparedStatement insert = conn.prepareStatement(query);
+			
+			insert.setInt (1, destinatario.getCantidad());
+			insert.setString (2, destinatario.getDescripcion());
+			insert.setInt (3, destinatario.getVersion());
+			insert.setBoolean (4, destinatario.isBorrado());
+			insert.setInt (5, destinatario.getBeneficiarioTipoId());
+			insert.setInt (6, destinatario.getAccionId());
+			insert.setInt (7, destinatario.getBeneficiarioGrupoId());
+			
+			insert.execute();
+			   
+			conn.close();
+			return true;
+		} catch (SQLException e) {e.printStackTrace(); return false;}
+		
+	}	
+	
+	public static boolean insertAvanceCualitativo(AvanceCualitativo avanceCualitativo)throws ParseException{
+		try {
+			Connection conn=ConnectionConfiguration.conectar();
+
+			String query = " insert into avance_cualitativo (accion_catalogo_id, ins_linea_accion_id, trimestre_id, gestiones_realizadas, principales_logros_alcanzados, dificultades_lecciones_aprendidas, objetivos_del_siguiente_trimestre)"
+		+ " values (?, ?, ?, ?, ?, ?, ?)";
+			
+			PreparedStatement insert = conn.prepareStatement(query);
+			
+			insert.setInt (1, avanceCualitativo.getAccionCatalogoId());
+			insert.setInt (2, avanceCualitativo.getInsLineaAccionId());
+			insert.setInt (3, avanceCualitativo.getTrimestreId());
+			insert.setString (4, avanceCualitativo.getGestionesRealizadas());
+			insert.setString (5, avanceCualitativo.getPrincipalesLogrosAlcanzados());
+			insert.setString (6, avanceCualitativo.getDificultadesLeccionesAprendidas());
+			insert.setString (7, avanceCualitativo.getObjetivosTrimestre());
+			
+			insert.execute();
+			   
+			conn.close();
+			return true;
+		} catch (SQLException e) {e.printStackTrace(); return false;}
+		
+	}	
+	
+		
 }
