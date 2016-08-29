@@ -1250,6 +1250,21 @@ instituciones=instituciones.sort(orden);  */
 lineasProgramadas = JSON.parse(lineasProgramadas);
 lineasProgramadas=lineasProgramadas.sort(lineaAccionOrden); */
 
+var usuarioLineaAccion = $.ajax({
+	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUsuarioLineaAccion',
+  	type:'get',
+  	dataType:'json',
+  	async:false       
+}).responseText;
+usuarioLineaAccion = JSON.parse(usuarioLineaAccion);
+
+var usuarioEtiqueta = $.ajax({
+	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUsuarioEtiqueta',
+  	type:'get',
+  	dataType:'json',
+  	async:false       
+}).responseText;
+usuarioEtiqueta = JSON.parse(usuarioEtiqueta);
 
 function renderTableroLineaAccion(institucionIdConcat,deptoId,distId){
 var contenidoEnRowTemp="";	
@@ -1322,75 +1337,109 @@ return contenidoEnRowTemp;
 	}).responseText;
 	lineasProgramadas = JSON.parse(lineasProgramadas);
 	lineasProgramadas=lineasProgramadas.sort(lineaAccionOrden);
+	
+	var todasLasLineasAccion="";
+	for(var f = 0; f < lineasProgramadas.length; f++)
+	{
+		todasLasLineasAccion += lineasProgramadas[f].insLineaAccionId+",";
+	}
+	todasLasLineasAccion = todasLasLineasAccion.substring(0,todasLasLineasAccion.length - 1);
+
+	if(todasLasLineasAccion != ""){
+		var insLineaAccionHasEtiqueta = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccionHasEtiqueta&insLineaAccionIdConcat='+todasLasLineasAccion,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		insLineaAccionHasEtiqueta = JSON.parse(insLineaAccionHasEtiqueta);
+	}
 
  
 		for(var m=0; m<instituciones.length;m++)
 		{ 
-		  for(var n=0; n<lineasProgramadas.length;n++)
+		  	for(var n=0; n<lineasProgramadas.length;n++)
 			{
-			  if ( instituciones[m].id==lineasProgramadas[n].institucionId ){
-				  if (flagIns == 0){					  
-					  tempInstituciones += '<tr><td colspan="12"><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td></tr>';
-						flagIns++;						  
-				  }
-				  clase="";
-				  var desempProgAnho=numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2));
-				  if (lineasProgramadas[n].cantidadAnho==0 && lineasProgramadas[n].meta ==0) desempProgAnho="-";
-				  if (desempProgAnho!="-"){
-					  if (parseInt(desempProgAnho)>=90 && lineasProgramadas[n].meta != 0){
-						  clase="bg-green-active color-palette"; 
-					  }else if(parseInt(desempProgAnho)>=70 && lineasProgramadas[n].meta != 0){
-						  clase="bg-yellow-active color-palette"; 
-					  }else{
-						  clase="bg-red-active color-palette";
-					  }
-				  }
-				  
-				  if (distId == null) distId = "";
-				  if (deptoId == null) deptoId = "";
-				  
-				  tempInstLineas += '<tr>'+
-				  '<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+'-'+distId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
-				  '<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
-				  '<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
-				  '<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>'+
-				  '<td class="'+clase+'">'+desempProgAnho+'</td>';
-				  if(lineasProgramadas[n].cantDest==0){
-					  tempInstLineas += '<td> - </td>';
-				  }else{
-					  tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>';
-				  }
-				  tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
-				  '<td>'+numeroConComa(lineasProgramadas[n].cantidadHoy)+'</td>'+
-				  '<td>'+numeroConComa(lineasProgramadas[n].cantidadAvance)+'</td>';
-				  
-				  
-				  var desempEjeHoy=numeroConComa(((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100).toFixed(2));
-				  if(lineasProgramadas[n].cantidadAvance==0 && lineasProgramadas[n].cantidadHoy==0) desempEjeHoy="-";
-				  if (desempEjeHoy!="-"){
-					  if (clase!="bg-red-active color-palette" && clase!="" ){
-						  clase="";
-						  if (parseInt((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100)>=90 && lineasProgramadas[n].cantidadHoy != 0){
-							  clase="bg-green-active color-palette"; 
-						  }else if(parseInt((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100)>=70 && lineasProgramadas[n].cantidadHoy != 0){
-							  clase="bg-yellow-active color-palette"; 
-						  }else{
-							  clase="bg-red-active color-palette";
-						  }
-					  }
-				  }else{
-					  clase="";
-				  }
-				  
-				  tempInstLineas += '<td class="'+clase+'">'+desempEjeHoy+'</td>';
-				  if(lineasProgramadas[n].cantDestinatarioReal==0){
-					  tempInstLineas += '<td> - </td>';
-				  }else{
-					  tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDestinatarioReal)+'</td>';
-				  }
-				  tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].costoAc/1000000).toFixed(2))+'</td>'+
-				  '</tr>';
-			  }
+				for(var l = 0; l < usuarioEtiqueta.length; l++)
+				{
+					if(usuarioEtiqueta[l].etiqueta_id == 1)
+					{
+						for(var t = 0; t < insLineaAccionHasEtiqueta.length; t++)
+						{
+							if(insLineaAccionHasEtiqueta[t].ins_linea_accion_id == lineasProgramadas[n].insLineaAccionId && insLineaAccionHasEtiqueta[t].etiqueta_id == 1)
+							{
+								for(var d=0; d<usuarioLineaAccion.length;d++)
+								{
+									if(usuarioLineaAccion[d].lineaAccionId == lineasProgramadas[n].lineaAccionId)
+									{
+										if( instituciones[m].id==lineasProgramadas[n].institucionId ){
+											if (flagIns == 0){					  
+												tempInstituciones += '<tr><td colspan="12"><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td></tr>';
+												flagIns++;						  
+											}
+								  			clase="";
+											var desempProgAnho=numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2));
+											if (lineasProgramadas[n].cantidadAnho==0 && lineasProgramadas[n].meta ==0) desempProgAnho="-";
+											if (desempProgAnho!="-"){
+												if (parseInt(desempProgAnho)>=90 && lineasProgramadas[n].meta != 0){
+													clase="bg-green-active color-palette"; 
+												}else if(parseInt(desempProgAnho)>=70 && lineasProgramadas[n].meta != 0){
+													clase="bg-yellow-active color-palette"; 
+												}else{
+													clase="bg-red-active color-palette";
+												}
+											}
+											  
+											if (distId == null) distId = "";
+											if (deptoId == null) deptoId = "";
+											  
+											tempInstLineas += '<tr>'+
+											'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+'-'+distId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
+											'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
+											'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
+											'<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>'+
+											'<td class="'+clase+'">'+desempProgAnho+'</td>';
+											if(lineasProgramadas[n].cantDest==0){
+												tempInstLineas += '<td> - </td>';
+											}else{
+												tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>';
+											}
+											tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
+											'<td>'+numeroConComa(lineasProgramadas[n].cantidadHoy)+'</td>'+
+											'<td>'+numeroConComa(lineasProgramadas[n].cantidadAvance)+'</td>';
+																						  
+											var desempEjeHoy=numeroConComa(((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100).toFixed(2));
+											if(lineasProgramadas[n].cantidadAvance==0 && lineasProgramadas[n].cantidadHoy==0) desempEjeHoy="-";
+											if (desempEjeHoy!="-"){
+												if (clase!="bg-red-active color-palette" && clase!="" ){
+													clase="";
+													if (parseInt((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100)>=90 && lineasProgramadas[n].cantidadHoy != 0){
+														clase="bg-green-active color-palette"; 
+													}else if(parseInt((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100)>=70 && lineasProgramadas[n].cantidadHoy != 0){
+														clase="bg-yellow-active color-palette"; 
+													}else{
+														clase="bg-red-active color-palette";
+													}
+												}
+											}else{
+												clase="";
+											}
+											  
+											tempInstLineas += '<td class="'+clase+'">'+desempEjeHoy+'</td>';
+											if(lineasProgramadas[n].cantDestinatarioReal==0){
+												tempInstLineas += '<td> - </td>';
+											}else{
+												tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDestinatarioReal)+'</td>';
+											}
+											tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].costoAc/1000000).toFixed(2))+'</td>'+
+											'</tr>';
+										}
+									}	
+								}
+							}
+						}
+					}
+				}								
 			}
 
 		  if (flagIns>0){
@@ -1445,6 +1494,22 @@ return contenidoEnRowTemp;
 }
 
 function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
+	var todasLasLineasAccion="";
+	for(var f = 0; f < lineasProgramadas.length; f++)
+	{
+		todasLasLineasAccion += lineasProgramadas[f].insLineaAccionId+",";
+	}
+	todasLasLineasAccion = todasLasLineasAccion.substring(0,todasLasLineasAccion.length - 1);
+
+	if(todasLasLineasAccion != ""){
+		var insLineaAccionHasEtiqueta = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccionHasEtiqueta&insLineaAccionIdConcat='+todasLasLineasAccion,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		insLineaAccionHasEtiqueta = JSON.parse(insLineaAccionHasEtiqueta);
+	}
 	var tablaInstituciones="";
 	var tempInstituciones="";
 	var tempInstLineas="";
@@ -1457,6 +1522,7 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 	var acum, acumEjecucionPrevista, acumEjecucionLograda;
 	var promedio;
 	var institucionId;
+	var totalDestinatario;
 	
 /* 	  tempInstituciones = '<thead><tr>'+
 	  	'<th rowspan="3" class="text-center" style="vertical-align: middle;">Línea de Acción</th>'+
@@ -1500,134 +1566,154 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 		institucionId=lineasProgramadas[0].institucionId;
 		cont=0, contEjecucion=0, destinatarios=0; inversion=0; 
 		acum=0, acumEjecucionPrevista=0, acumEjecucionLograda=0;
-		promedio=0;
+		promedio=0, totalDestinatario=0;
 		
 		tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[0].institucionSigla+'</strong></td></tr>';
-		for(var n=0; n<lineasProgramadas.length;n++){		
-		 
-				contEjecucion++;
-				if (lineasProgramadas[n].cantidadHoy!=null) acumEjecucionPrevista=acumEjecucionPrevista + lineasProgramadas[n].cantidadHoy;
-				if (lineasProgramadas[n].cantidadAvance!=null) acumEjecucionLograda=acumEjecucionLograda + lineasProgramadas[n].cantidadAvance;
-				if (lineasProgramadas[n].cantDestinatarioReal!=null) destinatarios= destinatarios + lineasProgramadas[n].cantDestinatarioReal;
-				if (lineasProgramadas[n].costoAc!=null) inversion= inversion + lineasProgramadas[n].costoAc;
-				
-				if ((lineasProgramadas[n].cantidadHoy == 0 || lineasProgramadas[n].cantidadHoy==null ) && lineasProgramadas[n].cantidadAvance > 0) {	
-					acum = acum + 100;
-					cont= cont +1;				
-				} else if (lineasProgramadas[n].cantidadHoy > 0 && (lineasProgramadas[n].cantidadAvance == 0 || lineasProgramadas[n].cantidadAvance == null)) {
-					acum = acum + 0;
-					cont= cont +1;				
-				} else if ((lineasProgramadas[n].cantidadHoy == 0 || lineasProgramadas[n].cantidadHoy == null)	&& (lineasProgramadas[n].cantidadAvance == 0 || lineasProgramadas[n].cantidadAvance == null )) {
-					acum = acum + 0;				
-				} else {
-					acum =acum + ((lineasProgramadas[n].cantidadAvance / lineasProgramadas[n].cantidadHoy) * 100);
-					cont= cont +1;				
-				}			
-				
-				if (n == lineasProgramadas.length -1){
-
-					institucionId = lineasProgramadas[n].institucionId;
-					if(cont != 0){
-						promedio = acum / cont;
-					}
-					clase="";			
-					if ((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=90){
-					 clase="bg-green-active color-palette"; 
-					}else if((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=70){
-					 clase="bg-yellow-active color-palette"; 
-					}else{
-					 clase="bg-red-active color-palette";
-					}
+		for(var n=0; n<lineasProgramadas.length;n++){
+			for(var l = 0; l < usuarioEtiqueta.length; l++)
+			{
+				if(usuarioEtiqueta[l].etiqueta_id == 1)
+				{
+					for(var t = 0; t < insLineaAccionHasEtiqueta.length; t++)
+					{
+						if(insLineaAccionHasEtiqueta[t].ins_linea_accion_id == lineasProgramadas[n].insLineaAccionId && insLineaAccionHasEtiqueta[t].etiqueta_id == 1)
+						{
+							for(var d=0; d<usuarioLineaAccion.length;d++)
+							{
+								if(usuarioLineaAccion[d].lineaAccionId == lineasProgramadas[n].lineaAccionId)
+								{
+			
+									contEjecucion++;
+									if (lineasProgramadas[n].cantidadHoy!=null) acumEjecucionPrevista=acumEjecucionPrevista + lineasProgramadas[n].cantidadHoy;
+									if (lineasProgramadas[n].cantidadAvance!=null) acumEjecucionLograda=acumEjecucionLograda + lineasProgramadas[n].cantidadAvance;
+									if (lineasProgramadas[n].cantDestinatarioReal!=null) destinatarios= destinatarios + lineasProgramadas[n].cantDestinatarioReal;
+									if (lineasProgramadas[n].costoAc!=null) inversion= inversion + lineasProgramadas[n].costoAc;
+									
+									if ((lineasProgramadas[n].cantidadHoy == 0 || lineasProgramadas[n].cantidadHoy==null ) && lineasProgramadas[n].cantidadAvance > 0) {	
+										acum = acum + 100;
+										cont= cont +1;				
+									} else if (lineasProgramadas[n].cantidadHoy > 0 && (lineasProgramadas[n].cantidadAvance == 0 || lineasProgramadas[n].cantidadAvance == null)) {
+										acum = acum + 0;
+										cont= cont +1;				
+									} else if ((lineasProgramadas[n].cantidadHoy == 0 || lineasProgramadas[n].cantidadHoy == null)	&& (lineasProgramadas[n].cantidadAvance == 0 || lineasProgramadas[n].cantidadAvance == null )) {
+										acum = acum + 0;				
+									} else {
+										acum =acum + ((lineasProgramadas[n].cantidadAvance / lineasProgramadas[n].cantidadHoy) * 100);
+										cont= cont +1;				
+									}
+									
+									totalDestinatario = totalDestinatario + lineasProgramadas[n].cantDest;
+									
+									if (n == lineasProgramadas.length -1){
 					
-					if (distId == null) distId = "";
-					if (deptoId == null) deptoId = "";
-					
-					tempInstLineas += '<tr>'+
-					'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
-					'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
-					//'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
-					'<td></td>'+
-					//'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
-					'<td></td>'+
-					'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
-					'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
-					'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
-					
-					clase="";			
-					if (promedio>=90){
-					 clase="bg-green-active color-palette"; 
-					}else if(promedio>=70){
-					 clase="bg-yellow-active color-palette"; 
-					}else{
-					 clase="bg-red-active color-palette";
-					}
-					
-					tempInstLineas += '<td class="'+clase+'">'+numeroConComa((promedio).toFixed(2))+'</td>'+
-					'<td>'+numeroConComa(destinatarios.toFixed(2))+'</td>'+
-					'<td>'+numeroConComa((inversion/1000000).toFixed(2))+'</td>'+
-					'</tr>';
+										institucionId = lineasProgramadas[n].institucionId;
+										if(cont != 0){
+											promedio = acum / cont;
+										}
+										clase="";			
+										if ((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=90){
+										 clase="bg-green-active color-palette"; 
+										}else if((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=70){
+										 clase="bg-yellow-active color-palette"; 
+										}else{
+										 clase="bg-red-active color-palette";
+										}
 										
-				//}else if(lineasProgramadas[n+1].institucionId != institucionId){
-				}else if(lineasProgramadas[n+1].lineaAccionId != linea_accion_id){
-
-					if(cont != 0){
-						promedio = acum / cont;
-					}
-					clase="";			
-					if ((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=90){
-					 clase="bg-green-active color-palette"; 
-					}else if((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=70){
-					 clase="bg-yellow-active color-palette"; 
-					}else{
-					 clase="bg-red-active color-palette";
-					}
+										if (distId == null) distId = "";
+										if (deptoId == null) deptoId = "";
+										
+										tempInstLineas += '<tr>'+
+										'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
+										'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
+										//'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
+										'<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>'+
+										//'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
+										'<td>'+numeroConComa(totalDestinatario)+'</td>'+
+										'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
+										'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
+										'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
+										
+										clase="";			
+										if (promedio>=90){
+										 clase="bg-green-active color-palette"; 
+										}else if(promedio>=70){
+										 clase="bg-yellow-active color-palette"; 
+										}else{
+										 clase="bg-red-active color-palette";
+										}
+										
+										tempInstLineas += '<td class="'+clase+'">'+numeroConComa((promedio).toFixed(2))+'</td>'+
+										'<td>'+numeroConComa(destinatarios.toFixed(2))+'</td>'+
+										'<td>'+numeroConComa((inversion/1000000).toFixed(2))+'</td>'+
+										'</tr>';
+															
+									//}else if(lineasProgramadas[n+1].institucionId != institucionId){
+									}else if(lineasProgramadas[n+1].lineaAccionId != linea_accion_id){
 					
-					if (distId == null) distId = "";
-					if (deptoId == null) deptoId = "";
-
-/* 					if(lineasProgramadas[n+1].institucionId != institucionId){
-						tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n+1].institucionSigla+'</strong></td></tr>';
-						institucionId = lineasProgramadas[n+1].institucionId;
-					} */
-						tempInstLineas += '<tr>'+
-						'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+'-'+distId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
-						'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
-						//'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
-						'<td></td>'+
-						//'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
-						'<td></td>'+
-						'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
-						'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
-						'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
-						
-						clase="";			
-						if (promedio>=90){
-						 clase="bg-green-active color-palette"; 
-						}else if(promedio>=70){
-						 clase="bg-yellow-active color-palette"; 
-						}else{
-						 clase="bg-red-active color-palette";
-						}
-						
-						tempInstLineas += '<td class="'+clase+'">'+numeroConComa((promedio).toFixed(2))+'</td>'+
-						'<td>'+numeroConComa(destinatarios.toFixed(2))+'</td>'+
-						'<td>'+numeroConComa((inversion/1000000).toFixed(2))+'</td>'+
-						'</tr>';
-						
-						cont=0, contEjecucion=0; 
-						acum=0, acumEjecucionPrevista=0, acumEjecucionLograda=0;
-						promedio=0,destinatarios=0; inversion=0;
-						//institucionId = lineasProgramadas[n+1].institucionId;
-						linea_accion_id = lineasProgramadas[n+1].lineaAccionId;
-						//tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n+1].institucionSigla+'</strong></td></tr>';
-						
-						if(lineasProgramadas[n+1].institucionId != institucionId){
-							tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n+1].institucionSigla+'</strong></td></tr>';
-							institucionId = lineasProgramadas[n+1].institucionId;
+										if(cont != 0){
+											promedio = acum / cont;
+										}
+										clase="";			
+										if ((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=90){
+										 clase="bg-green-active color-palette"; 
+										}else if((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=70){
+										 clase="bg-yellow-active color-palette"; 
+										}else{
+										 clase="bg-red-active color-palette";
+										}
+										
+										if (distId == null) distId = "";
+										if (deptoId == null) deptoId = "";
+					
+					/* 					if(lineasProgramadas[n+1].institucionId != institucionId){
+											tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n+1].institucionSigla+'</strong></td></tr>';
+											institucionId = lineasProgramadas[n+1].institucionId;
+										} */
+											tempInstLineas += '<tr>'+
+											'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+'-'+distId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
+											'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
+											//'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
+											'<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>'+
+											//'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
+											'<td>'+numeroConComa(totalDestinatario)+'</td>'+
+											'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
+											'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
+											'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
+											
+											clase="";			
+											if (promedio>=90){
+											 clase="bg-green-active color-palette"; 
+											}else if(promedio>=70){
+											 clase="bg-yellow-active color-palette"; 
+											}else{
+											 clase="bg-red-active color-palette";
+											}
+											
+											tempInstLineas += '<td class="'+clase+'">'+numeroConComa((promedio).toFixed(2))+'</td>'+
+											'<td>'+numeroConComa(destinatarios.toFixed(2))+'</td>'+
+											'<td>'+numeroConComa((inversion/1000000).toFixed(2))+'</td>'+
+											'</tr>';
+											
+											cont=0, contEjecucion=0; 
+											acum=0, acumEjecucionPrevista=0, acumEjecucionLograda=0;
+											promedio=0,destinatarios=0; inversion=0;
+											totalDestinatario=0;
+											//institucionId = lineasProgramadas[n+1].institucionId;
+											linea_accion_id = lineasProgramadas[n+1].lineaAccionId;
+											//tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n+1].institucionSigla+'</strong></td></tr>';
+											
+											if(lineasProgramadas[n+1].institucionId != institucionId){
+												tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n+1].institucionSigla+'</strong></td></tr>';
+												institucionId = lineasProgramadas[n+1].institucionId;
+											}
+										}
+									}
+								}
+							}
 						}
 					}
-					
-			}		
+				}	
+			}//*********
 	}
 	  tablaInstituciones+=tempInstituciones+tempInstLineas;
 
@@ -1636,6 +1722,23 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 }	
 
 function renderNivelDistrital(lineasProgramadas, deptoId, distId){
+	var todasLasLineasAccion="";
+	for(var f = 0; f < lineasProgramadas.length; f++)
+	{
+		todasLasLineasAccion += lineasProgramadas[f].insLineaAccionId+",";
+	}
+	todasLasLineasAccion = todasLasLineasAccion.substring(0,todasLasLineasAccion.length - 1);
+
+	if(todasLasLineasAccion != ""){
+		var insLineaAccionHasEtiqueta = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccionHasEtiqueta&insLineaAccionIdConcat='+todasLasLineasAccion,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		insLineaAccionHasEtiqueta = JSON.parse(insLineaAccionHasEtiqueta);
+	}
+	
 	var contenidoEnRowTemp="";	
 	var tablaInstituciones="";
 	var tempInstituciones="";
@@ -1645,78 +1748,96 @@ function renderNivelDistrital(lineasProgramadas, deptoId, distId){
 
 	for(var m=0; m<instituciones.length;m++)
 	{ 
-	  for(var n=0; n<lineasProgramadas.length;n++)
+		for(var n=0; n<lineasProgramadas.length;n++)
 		{
-		  if ( instituciones[m].id==lineasProgramadas[n].institucionId ){
-			  if (flagIns == 0){
-				  
-				  tempInstituciones += '<tr><td colspan="12"><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td></tr>';
-					flagIns++;						  
-			  }
-			  clase="";
-			  var desempProgAnho=numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2));
-			  if (lineasProgramadas[n].cantidadAnho==0 && lineasProgramadas[n].meta ==0) desempProgAnho="-";
-/* 			  if (desempProgAnho!="-"){
-				  if (parseInt(desempProgAnho)>=90 && lineasProgramadas[n].meta != 0){
-					  clase="bg-green-active color-palette"; 
-				  }else if(parseInt(desempProgAnho)>=70 && lineasProgramadas[n].meta != 0){
-					  clase="bg-yellow-active color-palette"; 
-				  }else{
-					  clase="bg-red-active color-palette";
-				  }
-			  } */
-			  
-			  if (deptoId == null) deptoId = "";
-			  if (distId == null) distId = "";			  
-			  
-			  tempInstLineas += '<tr>'+
-			  '<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+'-'+distId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
-			  '<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
-			 // '<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
-			  '<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>';
-			  //'<td class="'+clase+'">'+desempProgAnho+'</td>';
-			  if(lineasProgramadas[n].cantDest==0){
-				  tempInstLineas += '<td> - </td>';
-			  }else{
-				  tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>';
-			  }
-			  tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
-			  '<td>'+numeroConComa(lineasProgramadas[n].cantidadHoy)+'</td>'+
-			  '<td>'+numeroConComa(lineasProgramadas[n].cantidadAvance)+'</td>';
-			  
-			  
-			  var desempEjeHoy=numeroConComa(((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100).toFixed(2));
-			  if(lineasProgramadas[n].cantidadAvance==0 && lineasProgramadas[n].cantidadHoy==0) desempEjeHoy="-";
-			  if (desempEjeHoy!="-"){
-				  if (clase!="bg-red-active color-palette"){
-					  clase="";
-					  if (parseInt((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100)>=90 && lineasProgramadas[n].cantidadHoy != 0){
-						  clase="bg-green-active color-palette"; 
-					  }else if(parseInt((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100)>=70 && lineasProgramadas[n].cantidadHoy != 0){
-						  clase="bg-yellow-active color-palette"; 
-					  }else{
-						  clase="bg-red-active color-palette";
-					  }
-				  }
-			  }else{
-				  clase="";
-			  }
-			  
-			  tempInstLineas += '<td class="'+clase+'">'+desempEjeHoy+'</td>';
-			  if(lineasProgramadas[n].cantDestinatarioReal==0){
-				  tempInstLineas += '<td> - </td>';
-			  }else{
-				  tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDestinatarioReal)+'</td>';
-			  }
-			  tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].costoAc/1000000).toFixed(2))+'</td>'+
-			  '</tr>';
-		  }
+			for(var l = 0; l < usuarioEtiqueta.length; l++)
+			{
+				if(usuarioEtiqueta[l].etiqueta_id == 1)
+				{
+					for(var t = 0; t < insLineaAccionHasEtiqueta.length; t++)
+					{
+						if(insLineaAccionHasEtiqueta[t].ins_linea_accion_id == lineasProgramadas[n].insLineaAccionId && insLineaAccionHasEtiqueta[t].etiqueta_id == 1)
+						{
+							for(var d=0; d<usuarioLineaAccion.length;d++)
+							{
+								if(usuarioLineaAccion[d].lineaAccionId == lineasProgramadas[n].lineaAccionId)
+								{
+									if ( instituciones[m].id==lineasProgramadas[n].institucionId ){
+										if (flagIns == 0){
+											  
+											  tempInstituciones += '<tr><td colspan="12"><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td></tr>';
+												flagIns++;						  
+										  }
+										  clase="";
+										  var desempProgAnho=numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2));
+										  if (lineasProgramadas[n].cantidadAnho==0 && lineasProgramadas[n].meta ==0) desempProgAnho="-";
+							/* 			  if (desempProgAnho!="-"){
+											  if (parseInt(desempProgAnho)>=90 && lineasProgramadas[n].meta != 0){
+												  clase="bg-green-active color-palette"; 
+											  }else if(parseInt(desempProgAnho)>=70 && lineasProgramadas[n].meta != 0){
+												  clase="bg-yellow-active color-palette"; 
+											  }else{
+												  clase="bg-red-active color-palette";
+											  }
+										  } */
+										  
+										  if (deptoId == null) deptoId = "";
+										  if (distId == null) distId = "";			  
+										  
+										  tempInstLineas += '<tr>'+
+										  '<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+'-'+distId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
+										  '<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
+										 // '<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
+										  '<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>';
+										  //'<td class="'+clase+'">'+desempProgAnho+'</td>';
+										  if(lineasProgramadas[n].cantDest==0){
+											  tempInstLineas += '<td> - </td>';
+										  }else{
+											  tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>';
+										  }
+										  tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
+										  '<td>'+numeroConComa(lineasProgramadas[n].cantidadHoy)+'</td>'+
+										  '<td>'+numeroConComa(lineasProgramadas[n].cantidadAvance)+'</td>';
+										  
+										  
+										  var desempEjeHoy=numeroConComa(((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100).toFixed(2));
+										  if(lineasProgramadas[n].cantidadAvance==0 && lineasProgramadas[n].cantidadHoy==0) desempEjeHoy="-";
+										  if (desempEjeHoy!="-"){
+											  if (clase!="bg-red-active color-palette"){
+												  clase="";
+												  if (parseInt((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100)>=90 && lineasProgramadas[n].cantidadHoy != 0){
+													  clase="bg-green-active color-palette"; 
+												  }else if(parseInt((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100)>=70 && lineasProgramadas[n].cantidadHoy != 0){
+													  clase="bg-yellow-active color-palette"; 
+												  }else{
+													  clase="bg-red-active color-palette";
+												  }
+											  }
+										  }else{
+											  clase="";
+										  }
+										  
+										  tempInstLineas += '<td class="'+clase+'">'+desempEjeHoy+'</td>';
+										  if(lineasProgramadas[n].cantDestinatarioReal==0){
+											  tempInstLineas += '<td> - </td>';
+										  }else{
+											  tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDestinatarioReal)+'</td>';
+										  }
+										  tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].costoAc/1000000).toFixed(2))+'</td>'+
+										  '</tr>';
+									}
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 
-	  if (flagIns>0){
-		  tablaInstituciones+=tempInstituciones+tempInstLineas;
-	  }
-	  tempInstituciones="";tempInstLineas="";flagIns=0;
+		if (flagIns>0){
+			tablaInstituciones+=tempInstituciones+tempInstLineas;
+		}
+		tempInstituciones="";tempInstLineas="";flagIns=0;
 	}
 	//tablaInstituciones+="</tbody>";
 	
@@ -2089,10 +2210,16 @@ $(document).ready(function(){
 												if (elRegistro != null){
 													tituloModal='<h3><center>'+elRegistro[0].institucion+'&nbsp;&nbsp;-&nbsp;&nbsp;'+elRegistro[0].linea_accion_nombre+'</center></h3>';
 													for(var m=0; m<elRegistro.length;m++)
-													{
+													{															
+															var registroFechaInicio = "";
+															var registroFechaFin = "";
+															
+															if (elRegistro[m].accion_fecha_inicio != null) 
+																registroFechaInicio = elRegistro[m].accion_fecha_inicio.split("-"); 
+															if (elRegistro[m].accion_fecha_fin != null)
+																registroFechaFin = elRegistro[m].accion_fecha_fin.split("-");
 															//var registroFechaTerminacion = elRegistro[m].programacion_fecha_terminacion.split("-");
-															var registroFechaInicio = elRegistro[m].accion_fecha_inicio.split("-"); //estas fechas fueron agregadas anteriormente pero se prefiere la fecha de terminación de programación para contrastar con el chart de la linea de acción acumulado por mes.
-															var registroFechaFin = elRegistro[m].accion_fecha_fin.split("-");
+															
 															cuerpoModal+='<tr><td><a href="#" class="modalHitoAvances" parametros="'+institucion_id+'-'+linea_accion_id+'-'+idDepartamento+'-'+idDistrito+'-'+elRegistro[m].accion_id+'" >'+elRegistro[m].accion_catalogo_nombre+'</td>';
 															//if (idDepartamento != "") 
 																cuerpoModal += '<td>'+elRegistro[m].accion_depto_nombre+'</td>';
@@ -2481,7 +2608,7 @@ $(document).ready(function(){
 		//if (typeof lineaAccionId != "undefined"){ urlHitosAvances+='&linea_accion_id='+lineaAccionId;}
 		if (typeof idDepartamento != "undefined" && idDepartamento != "" ){ urlHitosAvances+='&departamento='+idDepartamento;}
 		if (typeof idDistrito != "undefined" && idDistrito != ""){ urlHitosAvances+='&distrito='+idDistrito;}
-		if (typeof accionId != "undefined" ){ urlHitosAvances+='&accionId='+accionId;}
+		if (typeof accionId != "undefined" ){ urlHitosAvances+='&accion_id='+accionId;}
 		
 		var registrosHitos = $.ajax({
 	    	url:urlHitosAvances,
@@ -2556,7 +2683,11 @@ $(document).ready(function(){
 											'<tbody>'+
 												'<tr><td><div class="form-group"><label for="nombreAccion">Acción</label><input type="text" class="form-control" id="nombreAccion" value="'+accion[0].accion+'"><input type="hidden" class="form-control" id="accionId" value="'+accion[0].accion_id+'"></div></td><td><div class="form-group"><label for="umedida">U. medida</label><input type="text" class="form-control" id="umedida" value="'+accion[0].accion_unidad_medida+'"></div></td></tr>'+
 												'<tr><td><div class="form-group"><label for="departamento">Departamento</label><select id="selectorDepartamento" name="departamento" class="form-control">'+optionDepartamentos+'</select></div></td><td><div class="form-group"><label for="distrito">Distrito</label><select name="departamento" class="form-control" id="distritosDepartamento"></select></div></td></tr>'+
+											
+												<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
 												'<tr><td colspan="2"><button type="submit" class="btn btn-success">Guardar Acción</button>&nbsp&nbsp<button type="submit" class="btn btn-success modalAgregarHito" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'">Programar Hito</button>&nbsp&nbsp<button type="submit" class="btn btn-success modalDeclararAvance" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'" >Declarar Avance</button></td></tr>'+
+												<% } %>
+												
 											'</tbody>'+							           
 										'</table>'+
 										'</div>'+
@@ -2566,6 +2697,7 @@ $(document).ready(function(){
 									'</div>'+
 							     '</div>'+	
 							     
+							     <% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
 					      			'<div class="row">'+
 									'<div class="col-md-12">'+
 							         '<div class="box" height="1000px">'+
@@ -2613,6 +2745,7 @@ $(document).ready(function(){
 									   '</div>'+
 									'</div>'+
 							     '</div>'+	
+							     <% } %>
 						      
 							      	'<div class="row">'+ 
 
@@ -2654,7 +2787,8 @@ $(document).ready(function(){
 					                	'</div>'+//fin box-body
 					                	'<div class="box-footer">'+
 					                	
-					                	'<div id="tituloFormulario"></div>'+
+					               <% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%> 
+					                	'<div id="tituloFormulario"></div>'+ 
 				      					'<form class="form-horizontal" role="form" id="formulario" method="post" action="/ajaxUpdate">'+
 				      						'<input type="hidden" name="accion" value="actEntidad">'+
 				      						'<input type="hidden" name="anho" value="" id="anhoProducto-formulario">'+
@@ -2716,6 +2850,7 @@ $(document).ready(function(){
 							      					'</div>'+
 			      					    		'</div>'+   					    				
 			      					    	'</div>'+// fin row
+			      					  <% } %>	    	
 					                	'</div>'+//fin box-footer
 					                	
 					                	
@@ -2729,8 +2864,8 @@ $(document).ready(function(){
 							        			'</div>'+
 							      			'</div>'+
 							      			'<div class="box-body hitosProgramado">'+//cuerpo del body    			
-							      				'<div class="table-responsive">'+
-													'<table class="table table-hover hitos">'+
+							      				'<div class="table-responsive">'+							      				
+													'<table class="table table-hover table-bordered" id="dataTablesHitos">'+
 														'<thead>'+
 															'<tr class="active"><th>Acción</th><th>Departamento</th><th>Distrito</th><th>U. Medida</th><th>Cantidad. Programado</th><th>Costo Total</th><th>Fecha Terminación</th><th>% Programado</th><th>Editar</th></tr>'+
 														'</thead>'+
@@ -2741,7 +2876,11 @@ $(document).ready(function(){
 														{
 															if(registroHitos[m].hito_porcentaje_programado > 0)
 															{
-																modalHito += '<tr><td>'+registroHitos[m].accion+'</td><td>'+registroHitos[m].accion_departamento+'</td><td>'+registroHitos[m].accion_distrito+'</td><td>'+registroHitos[m].accion_unidad_medida+'</td><td>'+registroHitos[m].hito_cantidad_programado+'</td><td>'+registroHitos[m].accion_costo+'</td><td>'+registroHitos[m].hito_fecha_entrega+'</td><!--td>registroHitos[m].hito_porcentaje_programado</td--><td><a href="#" class="modalEditarHito" parametros="'+registroHitos[m].hito_id+'"><span class="glyphicon glyphicon-pencil"></span></a></td></tr>';
+																modalHito += '<tr><td>'+registroHitos[m].accion_catalogo_nombre+'</td><td>'+registroHitos[m].accion_departamento+'</td><td>'+registroHitos[m].accion_distrito+'</td><td>'+registroHitos[m].accion_unidad_medida+'</td><td>'+registroHitos[m].hito_cantidad_programado+'</td><td>'+registroHitos[m].accion_costo+'</td><td>'+registroHitos[m].hito_fecha_entrega+'</td><td>'+registroHitos[m].hito_porcentaje_programado+'</td><td>'+
+																			 <% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
+																			 '<a href="#" class="modalEditarHito" parametros="'+registroHitos[m].hito_id+'"><span class="glyphicon glyphicon-pencil"></span></a>'+
+																			 <% } %>	 
+																			 '</td></tr>';
 																totalCantidadProgramada+=registroHitos[m].hito_cantidad_programado;
 															}
 														}
@@ -2765,7 +2904,7 @@ $(document).ready(function(){
 						      			'</div>'+
 						      			'<div class="box-body">'+ 
 					      				'<div class="table-responsive">'+
-										'<table class="table table-hover hitos">'+
+										'<table class="table table-hover table-bordered" id="dataTablesAvances">'+
 											'<thead>'+
 												'<tr class="active"><th>Acción</th><th>Departamento</th><th>Distrito</th><th>U. Medida</th><th>Cantidad. Programado</th><th>Costo Total</th><th>Fecha Terminación</th><th>% Ejecutado</th><th>Editar</th></tr>'+
 											'</thead>'+
@@ -2776,7 +2915,11 @@ $(document).ready(function(){
 											{
 												if(registroHitos[m].hito_porcentaje_ejecutado > 0)
 												{
-													modalHito += '<tr><td>'+registroHitos[m].accion+'</td><td>'+registroHitos[m].accion_departamento+'</td><td>'+registroHitos[m].accion_distrito+'</td><td>'+registroHitos[m].accion_unidad_medida+'</td><td>'+registroHitos[m].hito_cantidad_programado+'</td><td>'+registroHitos[m].accion_costo+'</td><td>'+registroHitos[m].hito_fecha_entrega+'</td><td>'+registroHitos[m].hito_porcentaje_ejecutado+'</td><td><a href="#" class="modalEditarHito" parametros="'+registroHitos[m].hito_id+'"><span class="glyphicon glyphicon-pencil"></span></a></td></tr>';
+													modalHito += '<tr><td>'+registroHitos[m].accion_catalogo_nombre+'</td><td>'+registroHitos[m].accion_departamento+'</td><td>'+registroHitos[m].accion_distrito+'</td><td>'+registroHitos[m].accion_unidad_medida+'</td><td>'+registroHitos[m].hito_cantidad_programado+'</td><td>'+registroHitos[m].accion_costo+'</td><td>'+registroHitos[m].hito_fecha_entrega+'</td><td>'+registroHitos[m].hito_porcentaje_ejecutado+'</td><td>'+
+													<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
+													'<a href="#" class="modalEditarHito" parametros="'+registroHitos[m].hito_id+'"><span class="glyphicon glyphicon-pencil"></span></a>'+
+													<% } %>
+													'</td></tr>';
 													totalCantidadProgramada+=registroHitos[m].hito_cantidad_programado;
 												}
 											}
@@ -2804,10 +2947,9 @@ $(document).ready(function(){
          '</div>'+//fin modal-dialog
          '</div>';//fon myModal2
 
-
-
+         
+		$("body").append(modalHito);         		
 		
-		$("body").append(modalHito);
 		
 		if (idDepartamento != ""){
         	$('#selectorDepartamento > option[value="'+idDepartamento+'"]').attr('selected', 'selected');
@@ -2831,7 +2973,10 @@ $(document).ready(function(){
 			
 			$('#distritosDepartamento > option[value="'+idDistrito+'"]').attr('selected', 'selected');
 		}
-		$("#myModal2").modal('show');
+		$("#myModal2").modal('show');		
+		
+		$("#dataTablesHitos").DataTable();
+		$("#dataTablesAvances").DataTable();
 		
 		$("body").on("change", "#selectorDepartamento",function(event){
 			//var departamentoId = $(this).attr("parametro");
@@ -4204,7 +4349,7 @@ $("body").on("click", ".verificarDestinatarios",function(event){
 		    			  	  var cuerpoTablaDestinatario="";
 		    			  	  var destinatarioGrupo= new Array(); //tiene los meses
 		    			  	  var destinatarioDepto = new Array(); //tiene los departamentos
-		    			  	  var fmr = $(formulario);
+		    			  	  //var fmr = $(formulario);
 		    			  	  for (var iDest=0;iDest<datosProductoPresupuestoDestinatario.producto.length;iDest++){
 		    			  		  cuerpoTablaDestinatario+="<tr><td>"+datosProductoPresupuestoDestinatario.producto[iDest].nombreCatalogo+"</td>";
 		    			  		  detalleMes=new Array();

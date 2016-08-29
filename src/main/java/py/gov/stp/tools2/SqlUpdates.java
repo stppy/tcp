@@ -487,8 +487,8 @@ public static boolean borradoHito(Hito objeto){
 			/*if(objeto.getMeta3() !=0)*/				query+= ", meta3= ?";
 			/*if(objeto.getMeta4() !=0)*/				query+= ", meta4= ?";
 			if(objeto.getInsLineaAccionId() != 0)		query+= ", ins_linea_accion_id= ?";
-			if(objeto.getDepartamentoId() != 0)	   	 	query+= ", depto_id= ?";
-			if(objeto.getDistritoId() != 0)				query+= ", dist_id= ?";
+			/*if(objeto.getDepartamentoId() != 0)*/	 	query+= ", depto_id= ?";
+			/*if(objeto.getDistritoId() != 0)*/			query+= ", dist_id= ?";
 			if(objeto.getAccionCatalogoId() != 0)		query+= ", id_accion_catalogo= ?";
 			
 			query+=" where id = ?";
@@ -505,8 +505,8 @@ public static boolean borradoHito(Hito objeto){
 			/*if (objeto.getMeta3() != 0)*/	    		{    cantCampos++;update.setDouble (cantCampos, objeto.getMeta3());}
 			/*if (objeto.getMeta4() != 0)*/	    		{    cantCampos++;update.setDouble (cantCampos, objeto.getMeta4());}
 			if (objeto.getInsLineaAccionId() != 0)		{    cantCampos++;update.setInt (cantCampos, objeto.getInsLineaAccionId());}
-			if (objeto.getDepartamentoId() != 0)		{    cantCampos++;update.setInt (cantCampos, objeto.getDepartamentoId());}
-			if (objeto.getDistritoId() != 0)			{    cantCampos++;update.setInt (cantCampos, objeto.getDistritoId());}
+			/*if (objeto.getDepartamentoId() != 0)*/	{    cantCampos++;update.setInt (cantCampos, objeto.getDepartamentoId());}
+			/*if (objeto.getDistritoId() != 0)*/		{    cantCampos++;update.setInt (cantCampos, objeto.getDistritoId());}
 			if (objeto.getAccionCatalogoId() != 0)		{    cantCampos++;update.setInt (cantCampos, objeto.getAccionCatalogoId());}
 			
 	            cantCampos++;
