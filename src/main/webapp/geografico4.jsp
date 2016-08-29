@@ -1909,8 +1909,7 @@ return contenidoEnRowTemp;
 $("body").on("change", "#periodoSeleccion",function(event){	
    	periodoSeleccionado = $("#periodoSeleccion option:selected").val();
 	var institucion_idConcat=getInstitucionesSeleccionadas();
-	var nombreInstituciones="";
-	
+	var nombreInstituciones="";	
 	if (institucion_idConcat==""){
 		$("#cuerpoTableroLineaAccion").html("");
 	}else{
@@ -1976,6 +1975,7 @@ function getPeriodo(periodo){
 $("body").on("click", ".cmbInstitucion",function(event){
 		
 	var institucion_idConcat=getInstitucionesSeleccionadas();
+	var periodoSeleccionado = $("#periodoSeleccion option:selected").val();
 	//var institucion_id=event.target.attributes.institucion_id.value;
 	var nombreInstituciones="";
 	//var dist_id="";
@@ -2010,17 +2010,17 @@ $("body").on("click", ".cmbInstitucion",function(event){
 		$("#nombreInstitucionTabla").html(nombreInstituciones); */
 		//if(institucion_idConcat != "" && (depto_id !=="undefined" || depto_id !=="") && (dist_id !=="undefined" || dist_id !=="")){
 		if(institucion_idConcat != "" && (depto_id !==null) && (dist_id !==null)){
-			var a = renderTableroLineaAccion(institucion_idConcat,depto_id,dist_id);
+			var a = renderTableroLineaAccion(institucion_idConcat,depto_id,dist_id, periodoSeleccionado);
 			$("#cuerpoTableroLineaAccion").html("");
 			$("#cuerpoTableroLineaAccion").html(a);
 		}else{
 			if(institucion_idConcat != "" && (depto_id !==null)){
-				var a = renderTableroLineaAccion(institucion_idConcat,depto_id);
+				var a = renderTableroLineaAccion(institucion_idConcat,depto_id, null, periodoSeleccionado);
 				$("#cuerpoTableroLineaAccion").html("");
 				$("#cuerpoTableroLineaAccion").html(a);
 			}else{
 				if(institucion_idConcat != ""){
-					var a = renderTableroLineaAccion(institucion_idConcat);
+					var a = renderTableroLineaAccion(institucion_idConcat,null,null, periodoSeleccionado);
 					$("#cuerpoTableroLineaAccion").html("");
 					$("#cuerpoTableroLineaAccion").html(a);
 				}	
@@ -2462,6 +2462,7 @@ $(document).ready(function(){
 	var todasInstituciones=getInstitucionesSeleccionadas();
 	var a=renderTableroLineaAccion(todasInstituciones,null,null,periodoActual);
 	getPeriodo();
+	$("#cuerpoTableroLineaAccion").html('');
 	$("#cuerpoTableroLineaAccion").html(a);
 
 	function renderTodasLasLineas(){
