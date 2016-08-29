@@ -152,9 +152,17 @@ if (user != null) { %>
 			  	async:false       
 			}).responseText;		
 			verificadas=JSON.parse(verificadas);
+			var pobreza = $.ajax({
+				url:"http://geo.stp.gov.py/user/stp/api/v2/sql?q=SELECT%20estado_de_pobreza%20FROM%20poblacion_con_localizacion_y_situacion_de_pobreza_090816_actual%20where%20nro_cedula%20=%20%27"+ci+"%27&api_key=161ee21f2cc06f29ecbc1f1d29e7886bc85be12a",
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+			}).responseText;		
+			pobreza=JSON.parse(pobreza);
+			pobreza=pobreza.rows[0];
 			
 			
-			
+			$(this).parent().parent().find(".destAvancePobreza").html(pobreza.estado_de_pobreza);
 			$(this).parent().parent().find(".destAvanceNombre").html(verificadas.nombre);
 			$(this).parent().parent().find(".destAvanceApellido").html(verificadas.apellidos);
 			$(this).parent().parent().find(".destAvanceSexo").html(verificadas.sexo);
