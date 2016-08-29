@@ -413,7 +413,7 @@ tbody {
 					var desPaisDistInst=JSON.parse(desPaisDistInstjson); 
 				    
 				    /*nuevo ajax select en vez de dist4*/
-				    var desPaisDistInstjson = $.ajax({
+				   var desPaisDistInstjson = $.ajax({
 				    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionDptoDistInst',
 				      	type:'get',
 				      	dataType:'json',
@@ -524,6 +524,7 @@ tbody {
 					var dist_id = null;
 
 					function renderEntidades(e){
+								
 						var array=[];var tipoInstituciones="";
 						$("#tablaInstituciones").html("");
 						//$("#cuerpoTableroLineaAccion").html("");
@@ -1301,11 +1302,11 @@ if(deptoId!=null && distId!=null){
 	  	async:false       
 	}).responseText;
 	lineasProgramadas = JSON.parse(lineasProgramadas);
-	lineasProgramadas=lineasProgramadas.sort(lineaAccionOrden);
-	contenidoEnRowTemp = renderNivelDistrital(lineasProgramadas, deptoId, distId);
-	
-return contenidoEnRowTemp;
-
+	if(lineasProgramadas != null){
+		lineasProgramadas=lineasProgramadas.sort(lineaAccionOrden);
+		contenidoEnRowTemp = renderNivelDistrital(lineasProgramadas, deptoId, distId);
+		return contenidoEnRowTemp;
+	}
 
 }else if(deptoId!=null && distId==null){
 	var lineasProgramadas = $.ajax({
@@ -1908,12 +1909,45 @@ return contenidoEnRowTemp;
 
 $("body").on("change", "#periodoSeleccion",function(event){	
    	periodoSeleccionado = $("#periodoSeleccion option:selected").val();
-	var institucion_idConcat=getInstitucionesSeleccionadas();
+	//var institucion_idConcat=getInstitucionesSeleccionadas();
 	var nombreInstituciones="";	
-	if (institucion_idConcat==""){
+	
+    var desPaisDistInstjson = $.ajax({
+    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionDptoDistInst&periodoId='+periodoSeleccionado,
+      	type:'get',
+      	dataType:'json',
+      	crossDomain:true,
+      	async:false       
+    }).responseText;
+	var desPaisDistInst=JSON.parse(desPaisDistInstjson);
+	
+	
+/* 	if (institucion_idConcat==""){
 		$("#cuerpoTableroLineaAccion").html("");
-	}else{
-		if(institucion_idConcat != "" && (depto_id !==null) && (dist_id !==null)){
+	}else{ */
+		if(/* institucion_idConcat != "" &&  */(depto_id !==null) && (dist_id !==null)){
+			tipoInstituciones="distrito";
+			$("#tablaInstituciones").html("");
+			$("#cabeceraInstituciones").html("");
+			$("#cabeceraInstituciones").append('<div class="row">'+
+													'<div class="col-md-12">'+
+														'<h4>'+
+															'<i class="fa fa-building-o"></i> Instituciones en: '+ 
+															'<br><hr><input type="checkbox" onclick="checkAll(this)"  class="cmbInstitucion" id="cmbInstitucion-a" depto_id='+depto_id+' dist_id='+dist_id+' checked="true">'+
+															'<small>MARCAR / DESMARCAR TODAS</small>'+
+				  										'</h4>'+
+			  										'</div>'+
+		  										'</div>');
+			var color="";
+			for (var i = 0; i< instituciones.length;i++){
+				for(var j=0;j < desPaisDistInst.length;j++){
+					if ((desPaisDistInst[j].clave3==instituciones[i].id) && (desPaisDistInst[j].clave1==depto_id) && (desPaisDistInst[j].clave2 == dist_id)){
+						color=getColorDesemp2(desPaisDistInst[j].valor);
+						if (desPaisDistInst[j].valor != 0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+instituciones[i].id+' depto_id='+depto_id+' dist_id='+dist_id+' checked="true"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+instituciones[i].id+' depto_id='+depto_id+' dist_id='+dist_id+' > '+instituciones[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(desPaisDistInst[j].valor).toFixed(0)+'%"><p class="text-left">'+parseFloat(desPaisDistInst[j].valor).toFixed(2)+'%</p></div></div></td></tr>');
+					}
+				}
+			}
+			var institucion_idConcat=getInstitucionesSeleccionadas();
 			var a = renderTableroLineaAccion(institucion_idConcat,depto_id,dist_id,periodoSeleccionado);
 			$("#cuerpoTableroLineaAccion").html("");
 			$("#cuerpoTableroLineaAccion").html(a);
@@ -1930,7 +1964,7 @@ $("body").on("change", "#periodoSeleccion",function(event){
 				}	
 			}			
 		}
-	}
+	//}
 	
 	
 	event.stopPropagation();
