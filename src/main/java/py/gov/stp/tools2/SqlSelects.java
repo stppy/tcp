@@ -2452,7 +2452,7 @@ public class SqlSelects {
 	public static String selectCiDestinatarios(String condition) throws SQLException {
 		Connection conect = ConnectionConfiguration.conectar();
  		 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from( "+
- 				"select * from ci_destinatatios "+condition+
+ 				"select * from ci_destinatarios "+condition+
    				" )t";
 
 		Statement statement = null;

@@ -97,15 +97,15 @@ if (user != null) { %>
 			$('.box-body').html('');
 			var tablaCiDestinatarios="";
 			tablaCiDestinatarios = '<table class="table table-hover">'+
-						  '<tr class="active"><td colspan="12">Tabla CI Destinatarios</td><td><a href="#" data-toggle="modal" data-target="#ciDestinatario"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
-						  '<tr class="active"><td>Id</td><td>AvanceId</td><td>CI</td><td>Nombre</td><td>Apellido</td><td>Sexo</td><td>Estado Civil</td><td>Nacionalidad</td><td>Profesion</td><td>Fecha de Nac.</td><td>Año</td><td>Version</td><td>Borrado</td><td>Fecha Act</td><td>Fecha Ins</td><td>Editar</td><td>Borrar</td></tr>';
+						  '<tr class="active"><td colspan="17">Tabla CI Destinatarios</td><td><a href="#" data-toggle="modal" data-target="#ciDestinatario"><span class="glyphicon glyphicon-plus"></span></a></td></tr>'+
+						  '<tr class="active"><td>Verificar con Identifc.</td><td>AvanceId</td><td>CI</td><td>Pobreza</td><td>Nombre</td><td>Apellido</td><td>Sexo</td><td>Estado Civil</td><td>Nacionalidad</td><td>Profesion</td><td>Fecha de Nac.</td><td>Año</td><td>Version</td><td>Borrado</td><td>Fecha Act</td><td>Fecha Ins</td><td>Editar</td><td>Borrar</td></tr>';
 			for(var w=0; w<ciDestinatarios.length;w++)
 			{
 				if(ciDestinatarios[w].borrado == true)
 				{
-					tablaCiDestinatarios+='<tr><td><del>'+ciDestinatarios[w].id+'</del></td><td><del>'+ciDestinatarios[w].avance_id+'</del></td><td><del>'+ciDestinatarios[w].nombre+'</del></td><td><del>'+ciDestinatarios[w].apellido+'</del></td><td><del>'+ciDestinatarios[w].sexo+'</del></td><td><del>'+ciDestinatarios[w].estado_civil+'</del></td><td><del>'+ciDestinatarios[w].nacionalidad+'</del></td><td><del>'+ciDestinatarios[w].profesion+'</del></td><td><del>'+ciDestinatarios[w].fecha_nacimiento+'</del></td><td><del>'+ciDestinatarios[w].anho+'</del></td><td><del>'+ciDestinatarios[w].version+'</del></td><td><del>'+ciDestinatarios[w].borrado+'</del></td><td><del>'+ciDestinatarios[w].fecha_actualizacion+'</del></td><td><del>'+ciDestinatarios[w].fecha_insercion+'</del></td><td><span class="glyphicon glyphicon-pencil registrosWs" codigoRegistroWs='+w+'></span></td><td><span class="glyphicon glyphicon-trash" id="iconoBorradoWs" parametrosBorradoWs='+ciDestinatarios[w].id+'-'+ciDestinatarios[w].borrado+'></span></td></tr>';
+					tablaCiDestinatarios+='<tr id="ciVer-'+w+'"><td><del>---</del></td><td><del>'+ciDestinatarios[w].avance_id+'</del></td><td><del>'+ciDestinatarios[w].ci+'</del></td><td><del></del></td><td><del>'+ciDestinatarios[w].nombre+'</del></td><td><del>'+ciDestinatarios[w].apellido+'</del></td><td><del>'+ciDestinatarios[w].sexo+'</del></td><td><del>'+ciDestinatarios[w].estado_civil+'</del></td><td><del>'+ciDestinatarios[w].nacionalidad+'</del></td><td><del>'+ciDestinatarios[w].profesion+'</del></td><td><del>'+ciDestinatarios[w].fecha_nacimiento+'</del></td><td><del>'+ciDestinatarios[w].anho+'</del></td><td><del>'+ciDestinatarios[w].version+'</del></td><td><del>'+ciDestinatarios[w].borrado+'</del></td><td><del>'+ciDestinatarios[w].fecha_actualizacion+'</del></td><td><del>'+ciDestinatarios[w].fecha_insercion+'</del></td><td><span class="glyphicon glyphicon-pencil registrosWs" codigoRegistroWs='+w+'></span></td><td><span class="glyphicon glyphicon-trash" id="iconoBorradoWs" parametrosBorradoWs='+ciDestinatarios[w].id+'-'+ciDestinatarios[w].borrado+'></span></td></tr>';
 				}else{
-					tablaCiDestinatarios+='<tr><td>'+ciDestinatarios[w].id+'</td><td>'+ciDestinatarios[w].avance_id+'</td><td>'+ciDestinatarios[w].nombre+'</td><td>'+ciDestinatarios[w].apellido+'</td><td>'+ciDestinatarios[w].sexo+'</td><td>'+ciDestinatarios[w].estado_civil+'</td><td>'+ciDestinatarios[w].nacionalidad+'</td><td>'+ciDestinatarios[w].profesion+'</td><td>'+ciDestinatarios[w].fecha_nacimiento+'</td><td>'+ciDestinatarios[w].anho+'</td><td>'+ciDestinatarios[w].version+'</td><td>'+ciDestinatarios[w].borrado+'</td><td>'+ciDestinatarios[w].fecha_actualizacion+'</td><td>'+ciDestinatarios[w].fecha_insercion+'</td><td><span class="glyphicon glyphicon-pencil registrosWs" codigoRegistroWs='+w+'></span></td><td><span class="glyphicon glyphicon-trash" id="iconoBorradoWs" parametrosBorradoWs='+ciDestinatarios[w].id+'-'+ciDestinatarios[w].borrado+'></span></td></tr>';
+					tablaCiDestinatarios+='<tr  id="ciVer-'+w+'"><td><span class="glyphicon glyphicon-check checkId" codigoRegistroWs='+w+' ci="'+ciDestinatarios[w].ci+'"></span></td><td class="destAvanceId">'+ciDestinatarios[w].avance_id+'</td><td class="destAvanceCi">'+ciDestinatarios[w].ci+'</td><td class="destAvancePobreza"></td><td class="destAvanceNombre">'+ciDestinatarios[w].nombre+'</td><td class="destAvanceApellido">'+ciDestinatarios[w].apellido+'</td><td class="destAvanceSexo">'+ciDestinatarios[w].sexo+'</td><td class="destAvanceEC">'+ciDestinatarios[w].estado_civil+'</td><td class="destAvanceNac">'+ciDestinatarios[w].nacionalidad+'</td><td class="destAvanceProf">'+ciDestinatarios[w].profesion+'</td><td class="destAvanceFN">'+ciDestinatarios[w].fecha_nacimiento+'</td><td class="destAvanceAnho">'+ciDestinatarios[w].anho+'</td><td class="destAvanceVer">'+ciDestinatarios[w].version+'</td><td>'+ciDestinatarios[w].borrado+'</td><td class="destAvanceFA">'+ciDestinatarios[w].fecha_actualizacion+'</td><td class="destAvanceFI">'+ciDestinatarios[w].fecha_insercion+'</td><td><span class="glyphicon glyphicon-pencil registrosWs" codigoRegistroWs='+w+'></span></td><td><span class="glyphicon glyphicon-trash" id="iconoBorradoWs" parametrosBorradoWs='+ciDestinatarios[w].id+'-'+ciDestinatarios[w].borrado+'></span></td></tr>';
 				}
 			}
 			tablaCiDestinatarios +='</table>';				
@@ -114,6 +114,33 @@ if (user != null) { %>
 		}
 		
 		renderCiDestinatarios();
+		
+		$("body").on("click", ".checkId",function(event){
+			var ci = $(this).attr("ci");
+			var id = $(this).parent().parent().attr("id");
+			var verificadas = $.ajax({
+				url:"http://identificaciones.stp.gov.py/identificaciones/?ci="+ci,
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+			}).responseText;		
+			verificadas=JSON.parse(verificadas);
+			
+			
+			
+			$(this).parent().parent().find(".destAvanceNombre").html(verificadas.nombre);
+			$(this).parent().parent().find(".destAvanceApellido").html(verificadas.apellidos);
+			$(this).parent().parent().find(".destAvanceSexo").html(verificadas.sexo);
+			$(this).parent().parent().find(".destAvanceEC").html(verificadas.estado_civil);
+			$(this).parent().parent().find(".destAvanceNac").html(verificadas.nacionalidad);
+			$(this).parent().parent().find(".destAvanceProf").html(verificadas.profesion);
+			$(this).parent().parent().find(".destAvanceFN").html(verificadas.fecha_naciemiento);
+			 $(this).css("color","green");
+
+			 
+			
+		});
+		
 		/*
 		var ws = $.ajax({
 			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getWs',
