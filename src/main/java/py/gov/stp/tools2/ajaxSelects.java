@@ -1503,10 +1503,11 @@ public class ajaxSelects extends HttpServlet {
         	//Obtenemos todas las lineas a nivel departamental y distrital ordenado por institución, departamento y distrito
         	if (action.equals("getLineaAccionDepartamentalDistrital")){
         		String objetos=null;
-        		//condition = " where true";
+        		condition = " where true";
                 if (institucionIdConcat!="") condition += " and ins_linea_accion_base_dd.institucion_id in("+institucionIdConcat+")";
 	            if (departamentoId!=null) condition += " and ins_linea_accion_base_dd.depto_id='"+departamentoId+"'";
 	            if (distritoId!=null) condition += " and ins_linea_accion_base_dd.dist_id='"+distritoId+"'";
+	            if (periodoId!=null) condition += " and periodo='"+periodoId+"'";
            		try {objetos = SqlSelects.selectResumenLineasAccionProgramacionDepartamentalDistrital(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		//JsonElement json = new Gson().toJsonTree(objetos );
