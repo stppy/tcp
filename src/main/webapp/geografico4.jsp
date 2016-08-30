@@ -1379,8 +1379,10 @@ if(deptoId!=null && distId!=null){
 	
 	var todasLasLineasAccion="";
 	for(var f = 0; f < lineasProgramadas.length; f++)
-	{
-		todasLasLineasAccion += lineasProgramadas[f].insLineaAccionId+",";
+	{	
+		if (todasLasLineasAccion.indexOf(""+lineasProgramadas[f].insLineaAccionId) == -1){ 
+			todasLasLineasAccion += lineasProgramadas[f].insLineaAccionId+",";
+		}
 	}
 	todasLasLineasAccion = todasLasLineasAccion.substring(0,todasLasLineasAccion.length - 1);
 
@@ -1536,7 +1538,9 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 	var todasLasLineasAccion="";
 	for(var f = 0; f < lineasProgramadas.length; f++)
 	{
-		todasLasLineasAccion += lineasProgramadas[f].insLineaAccionId+",";
+		if (todasLasLineasAccion.indexOf(""+lineasProgramadas[f].insLineaAccionId) == -1){ 
+			todasLasLineasAccion += lineasProgramadas[f].insLineaAccionId+",";
+		}
 	}
 	todasLasLineasAccion = todasLasLineasAccion.substring(0,todasLasLineasAccion.length - 1);
 
@@ -1772,7 +1776,9 @@ function renderNivelDistrital(lineasProgramadas, deptoId, distId){
 	var todasLasLineasAccion="";
 	for(var f = 0; f < lineasProgramadas.length; f++)
 	{
-		todasLasLineasAccion += lineasProgramadas[f].insLineaAccionId+",";
+		if (todasLasLineasAccion.indexOf(""+lineasProgramadas[f].insLineaAccionId) == -1){ 
+			todasLasLineasAccion += lineasProgramadas[f].insLineaAccionId+",";
+		}
 	}
 	todasLasLineasAccion = todasLasLineasAccion.substring(0,todasLasLineasAccion.length - 1);
 
