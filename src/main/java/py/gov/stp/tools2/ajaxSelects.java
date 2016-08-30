@@ -1130,9 +1130,12 @@ public class ajaxSelects extends HttpServlet {
         	if (action.equals("getResumenLineasAccionProgramacionDptoDistInst")){
         		List<LineaAccionProgramacion> objetos = new ArrayList<LineaAccionProgramacion>();
         		ArrayList<DesempDistritoInst> desempenhoInstDist= new  ArrayList<DesempDistritoInst>();
+        		condition = " where true";
 	    		if (institucionId!=null) condition += " and ins_linea_accion_base_dd.institucion_id='"+institucionId+"'";
 	            if (departamentoId!=null) condition += " and ins_linea_accion_base_dd.depto_id='"+departamentoId+"'";
 	            if (distritoId!=null) condition += " and ins_linea_accion_base_dd.dist_id='"+distritoId+"'";
+	            if (periodoId!=null) condition += " and periodo ='"+periodoId+"'";
+	            
                 try {                	
                 	double acum=0, promedio=0;
                 	int cont=0;
