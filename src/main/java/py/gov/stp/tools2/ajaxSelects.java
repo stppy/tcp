@@ -1557,6 +1557,19 @@ public class ajaxSelects extends HttpServlet {
         		catch (SQLException e) {e.printStackTrace();}
         		out.println(objetos);return;        	
         	}
+        	
+        	if (action.equals("getCiDestinatarios")){
+        		String objetos=null;
+        		condition = " where true";
+              /*  if (institucionIdConcat!="") condition += " and ins_linea_accion_base_dd.institucion_id in("+institucionIdConcat+")";
+	            if (departamentoId!=null) condition += " and ins_linea_accion_base_dd.depto_id='"+departamentoId+"'";
+	            if (distritoId!=null) condition += " and ins_linea_accion_base_dd.dist_id='"+distritoId+"'";*/
+           		try {objetos = SqlSelects.selectCiDestinatarios(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		//JsonElement json = new Gson().toJsonTree(objetos );
+        		//out.println(json.toString()); 
+           		out.println(objetos);return;
+        	}
        }
        out.close();
         

@@ -2450,6 +2450,39 @@ public class SqlSelects {
 		return objetos;
 	}
 	
+	
+	public static String selectCiDestinatarios(String condition) throws SQLException {
+		Connection conect = ConnectionConfiguration.conectar();
+ 		 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from( "+
+ 				"select * from ci_destinatarios "+condition+
+   				" )t";
+
+		Statement statement = null;
+		ResultSet rs = null;
+ 		 String objetos = "";
+
+		try {
+			statement = conect.createStatement();
+			rs = statement.executeQuery(query);
+  			while(rs.next()){
+  				//ObjetivoEstrategia objeto = new ObjetivoEstrategia();
+
+  				objetos+=rs.getString("resultado");
+  			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				statement.close();
+			}
+			if (conect != null) {
+				conect.close();
+			}
+		}
+		return objetos;
+	}
+	
 	public static String selectResumenLineasAccionProgramacionDepartamentalDistrital(String condition) throws SQLException {
 		Connection conect = ConnectionConfiguration.conectar();
  		 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from( "+
