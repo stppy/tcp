@@ -2259,7 +2259,9 @@ public class SqlSelects {
 		+ " 	ins_linea_accion_avance.ins_linea_accion_id=ins_linea_accion_base.ins_linea_accion_id"				
 		+ " left join ins_linea_accion_programacion_hoy on "
 		+ " 	ins_linea_accion_programacion_hoy.ins_linea_accion_id =ins_linea_accion_base.ins_linea_accion_id"
-		+ " where periodo=2016 " + condition;
+		//+ " where periodo=2016 " + condition;
+		+ " " + condition;
+
 		Statement statement = null;
 		ResultSet rs = null;
 		List<LineaAccionProgramacion> objetos = new ArrayList<LineaAccionProgramacion>();
@@ -2518,7 +2520,7 @@ public class SqlSelects {
 				+ " ins_linea_accion_costo_estimado_dd.ins_linea_accion_id=ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_costo_estimado_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_costo_estimado_dd.dist_id=ins_linea_accion_base_dd.dist_id"
 				+ " left join ins_linea_accion_destinatario_real_dd on "
 				+ " ins_linea_accion_destinatario_real_dd.ins_linea_accion_id=ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_destinatario_real_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_destinatario_real_dd.dist_id=ins_linea_accion_base_dd.dist_id"
-				+ " where periodo=2016 " + condition+ " order by \"institucionId\", \"lineaAccionId\", \"departamentoId\", \"distritoId\""+
+				+ " " + condition+ " order by \"institucionId\", \"lineaAccionId\", \"departamentoId\", \"distritoId\""+
    				")t";
 
 		Statement statement = null;
@@ -2561,7 +2563,7 @@ public class SqlSelects {
 				+ " ins_linea_accion_avance_dd.ins_linea_accion_id=ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_avance_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_avance_dd.dist_id=ins_linea_accion_base_dd.dist_id"
 				+ " left join ins_linea_accion_programacion_hoy_dd on "
 				+ " ins_linea_accion_programacion_hoy_dd.ins_linea_accion_id =ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_programacion_hoy_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_programacion_hoy_dd.dist_id=ins_linea_accion_base_dd.dist_id"
-				+ " where periodo=2016 " + condition+ " order by institucion_id, depto_id, dist_id";
+				+ " " + condition+ " order by institucion_id, depto_id, dist_id";
 		Statement statement = null;
 		ResultSet rs = null;
 		List<LineaAccionProgramacion> objetos = new ArrayList<LineaAccionProgramacion>();
@@ -2742,6 +2744,7 @@ public class SqlSelects {
                 + "ins_linea_accion_base_dd.institucion_id,"
                 + "ins_linea_accion_base_dd.depto_id as depto_id,"
                 + "ins_linea_accion_base_dd.dist_id as dist_id,"
+				+ "ins_linea_accion_base_dd.periodo,"
                 + "ins_linea_accion_programacion_hoy_dd.cantidad_hoy as programado_hoy,"
                 + "ins_linea_accion_avance_dd.cantidad as avance_real,"
                 + "ins_linea_accion_destinatario_real_dd.beneficiarios_real as destinatarios_real,"
@@ -2755,7 +2758,9 @@ public class SqlSelects {
                  + " ins_linea_accion_costo_dd.ins_linea_accion_id=ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_costo_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_costo_dd.dist_id=ins_linea_accion_base_dd.dist_id"
                  + " left join ins_linea_accion_destinatario_real_dd on "
                  + " ins_linea_accion_destinatario_real_dd.ins_linea_accion_id=ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_destinatario_real_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_destinatario_real_dd.dist_id=ins_linea_accion_base_dd.dist_id"
-                 + " where periodo=2016"+ condition;
+                 //+ " where periodo=2016"+ condition; para obtener el periodo
+                 + " "+ condition;
+
 
 		Statement statement = null;
 		ResultSet rs = null;

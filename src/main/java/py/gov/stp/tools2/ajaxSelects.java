@@ -1130,9 +1130,12 @@ public class ajaxSelects extends HttpServlet {
         	if (action.equals("getResumenLineasAccionProgramacionDptoDistInst")){
         		List<LineaAccionProgramacion> objetos = new ArrayList<LineaAccionProgramacion>();
         		ArrayList<DesempDistritoInst> desempenhoInstDist= new  ArrayList<DesempDistritoInst>();
+        		condition = " where true";
 	    		if (institucionId!=null) condition += " and ins_linea_accion_base_dd.institucion_id='"+institucionId+"'";
 	            if (departamentoId!=null) condition += " and ins_linea_accion_base_dd.depto_id='"+departamentoId+"'";
 	            if (distritoId!=null) condition += " and ins_linea_accion_base_dd.dist_id='"+distritoId+"'";
+	            if (periodoId!=null) condition += " and periodo ='"+periodoId+"'";
+	            
                 try {                	
                 	double acum=0, promedio=0;
                 	int cont=0;
@@ -1314,21 +1317,29 @@ public class ajaxSelects extends HttpServlet {
                 List<LineaAccionProgramacion> objetos=null;
                 List<Institucion> instituciones= null ;
                 ArrayList<Object> desempenhoDpto= new ArrayList<Object>();
-                //condition = " where true";
+                condition = " where true";
                 
                 try {
 					instituciones = SqlSelects.selectInstitucion(condition);
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
-                
+                condition += " AND ins_linea_accion_base.institucion_id in(";
 				for (int s = 0; s < instituciones.size(); s += 1) {
-	                 condition += " OR ins_linea_accion_base.institucion_id='"+instituciones.get(s).getId()+"'";
-				}
+					if(instituciones.size() == s+1)
+					{
+						condition += instituciones.get(s).getId();
+					}else{
+						condition += instituciones.get(s).getId()+",";
+					}
+				}           
+				condition += ")";
+
 	                try {                	
 
 	                	double acum, promedio;
 	                	int cont;
+	    	            if (periodoId!=null) condition += " and periodo ='"+periodoId+"'";
 	                	objetos = SqlSelects.selectResumenLineasAccionProgramacionInstDptoDistrito(condition);
 	                	
 	                	for(int j = 0; j < instituciones.size(); j+= 1){
@@ -1447,20 +1458,27 @@ public class ajaxSelects extends HttpServlet {
                 List<LineaAccionProgramacion> objetos=null;
                 List<Institucion> instituciones= null ;
                 ArrayList<Object> desempenhoDpto= new ArrayList<Object>();
-                //condition = " where true";                
+//              condition = " where true"; 
+//        		if (periodoId!=null) condition += " and periodo ='"+periodoId+"'";
                 try {
 					instituciones = SqlSelects.selectInstitucion(condition);
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
 
+                condition = " where true"; 
+        		if (periodoId!=null) condition += " AND periodo ='"+periodoId+"'";
+        		if (departamentoId!=null) condition += " AND ins_linea_accion_base_dd.depto_id = '"+departamentoId+"'";
+				condition += " AND ins_linea_accion_base_dd.institucion_id in(";
+
 				for (int s = 0; s < instituciones.size(); s += 1) {
-					if(s == 0){
-						condition += " AND ins_linea_accion_base_dd.depto_id='"+departamentoId+"' AND ins_linea_accion_base_dd.institucion_id='"+instituciones.get(s).getId()+"'";
+					if(instituciones.size() == s+1){
+						condition += instituciones.get(s).getId();
 					}else{
-						condition += " OR ins_linea_accion_base_dd.depto_id='"+departamentoId+"' AND ins_linea_accion_base_dd.institucion_id='"+instituciones.get(s).getId()+"'";
+						condition += instituciones.get(s).getId()+",";
 					}
 				}
+				condition +=")";
 
 	                try {                	
 
@@ -1503,10 +1521,11 @@ public class ajaxSelects extends HttpServlet {
         	//Obtenemos todas las lineas a nivel departamental y distrital ordenado por institución, departamento y distrito
         	if (action.equals("getLineaAccionDepartamentalDistrital")){
         		String objetos=null;
-        		//condition = " where true";
+        		condition = " where true";
                 if (institucionIdConcat!="") condition += " and ins_linea_accion_base_dd.institucion_id in("+institucionIdConcat+")";
 	            if (departamentoId!=null) condition += " and ins_linea_accion_base_dd.depto_id='"+departamentoId+"'";
 	            if (distritoId!=null) condition += " and ins_linea_accion_base_dd.dist_id='"+distritoId+"'";
+	            if (periodoId!=null) condition += " and periodo='"+periodoId+"'";
            		try {objetos = SqlSelects.selectResumenLineasAccionProgramacionDepartamentalDistrital(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		//JsonElement json = new Gson().toJsonTree(objetos );

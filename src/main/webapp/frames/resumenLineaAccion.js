@@ -58,7 +58,7 @@ function renderLineasEstrategicas(periodo){
 	
 	for(var l=0; l<lineasEstrategicas.length;l++){
 		var lineasDeEstrategia="";
-		lineasDeEstrategia=renderAccion(lineasEstrategicas[l].id, lineasProgramadas, instituciones)
+		lineasDeEstrategia=renderAccion(lineasEstrategicas[l].id, lineasProgramadas, instituciones, periodo)
 		contenidoEnRowTemp='<div class="row">'+
 			'<div class="col-md-12">'+
 	          '<div class="box" height="1000px">'+
@@ -104,12 +104,14 @@ var usuarioEtiqueta = $.ajax({
 }).responseText;
 usuarioEtiqueta = JSON.parse(usuarioEtiqueta);
 
-function renderAccion(estrategia, lineasProgramadas, instituciones){
+function renderAccion(estrategia, lineasProgramadas, instituciones, periodo){
 			
 	var todasLasLineasAccion="";
 	for(var f = 0; f < lineasProgramadas.length; f++)
-	{
-		todasLasLineasAccion += lineasProgramadas[f].insLineaAccionId+",";
+	{		
+		if (todasLasLineasAccion.indexOf(""+lineasProgramadas[f].insLineaAccionId) == -1){ 
+			todasLasLineasAccion += lineasProgramadas[f].insLineaAccionId+",";
+		}
 	}
 	todasLasLineasAccion = todasLasLineasAccion.substring(0,todasLasLineasAccion.length - 1);
 
@@ -148,7 +150,7 @@ function renderAccion(estrategia, lineasProgramadas, instituciones){
 	tempInstituciones = '<thead><tr>'+
 		'<th rowspan="3" class="text-center" style="vertical-align: middle;">Línea de Acción</th>'+
 	  	'<th rowspan="3" class="text-center" style="vertical-align: middle;">Unidad de Medida</th>'+
-	  	'<th colspan="5" class="text-center">Plan de Acción 2016</th>'+
+	  	'<th colspan="5" class="text-center">Plan de Acción '+ periodo + '</th>'+
 	  	'<th colspan="5" class="text-center">Ejecución a la Fecha</th></tr>'+
 	  //	'<th colspan="5" class="text-center"><input type="date" id="fechaInicioAccion" min="2014-01-01" max="'+fechaActual+'"/></th>'+
 	  //	'<th colspan="4" class="text-center"><input type="date" id="fechaInicioEjecucion" max="2016-12-31" value="'+fechaActual+'"/></th><th><input	class="btn btn-primary guardarRangoFechas" type="submit" value="Filtrar"></th></tr>'+ 
@@ -291,7 +293,7 @@ function getPeriodo(periodo){
 							'</div>'+ */
 						'</div>';
 						
-	$('#mostrarOcultarPeriodo').append(periodoCuerpo);
+	$('#mostrarOcultarPeriodo').html(periodoCuerpo);
 	
 	/*$("body").on("click", ".guardarRangoFechas",function(event){
 	
