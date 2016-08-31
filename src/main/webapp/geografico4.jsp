@@ -1652,11 +1652,12 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 
 									
 									if (n == lineasProgramadas.length -1){
-					
+
 										institucionId = lineasProgramadas[n].institucionId;
-										if(cont != 0){
-											promedio = acum / cont;
-										}
+										//if(cont != 0){
+											promedio = ((acumEjecucionLograda * 100) / acumEjecucionPrevista);
+										//}
+
 										clase="";			
 										if ((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=90){
 										 clase="bg-green-active color-palette"; 
@@ -1677,8 +1678,8 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 										//'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
 										'<td>'+numeroConComa(totalDestinatario)+'</td>'+
 										'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
-										'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
-										'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
+										'<td>'+numeroConComa((acumEjecucionPrevista).toFixed(2))+'</td>'+
+										'<td>'+numeroConComa((acumEjecucionLograda).toFixed(2))+'</td>';
 										
 										clase="";			
 										if (promedio>=90){
@@ -1693,13 +1694,13 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 										'<td>'+numeroConComa(destinatarios.toFixed(2))+'</td>'+
 										'<td>'+numeroConComa((inversion/1000000).toFixed(2))+'</td>'+
 										'</tr>';
+																			
 															
-									//}else if(lineasProgramadas[n+1].institucionId != institucionId){
 									}else if(lineasProgramadas[n+1].lineaAccionId != linea_accion_id){
 					
-										if(cont != 0){
-											promedio = acum / cont;
-										}
+										//if(cont != 0){
+											promedio = ((acumEjecucionLograda * 100) / acumEjecucionPrevista);
+										//}
 										clase="";			
 										if ((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=90){
 										 clase="bg-green-active color-palette"; 
@@ -1724,8 +1725,8 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 											//'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
 											'<td>'+numeroConComa(totalDestinatario)+'</td>'+
 											'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
-											'<td>'+numeroConComa((acumEjecucionPrevista/contEjecucion).toFixed(2))+'</td>'+
-											'<td>'+numeroConComa((acumEjecucionLograda/contEjecucion).toFixed(2))+'</td>';
+											'<td>'+numeroConComa((acumEjecucionPrevista).toFixed(2))+'</td>'+
+											'<td>'+numeroConComa((acumEjecucionLograda).toFixed(2))+'</td>';
 											
 											clase="";			
 											if (promedio>=90){
