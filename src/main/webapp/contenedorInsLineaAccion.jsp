@@ -68,9 +68,9 @@
 </head>
 <body class="skin-blue sidebar-mini sidebar-collapse">
 
-<% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%>
+<% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%> 
 <% Map attributes = user.getAttributes(); 
-if (user != null) { %>
+if (user != null && user.getName()!= "parce@nandeparaguay.org") { %>
 	<%@ include file="/frames/perfil.jsp" %>
 <script>
 periodoSeleccionado=new Date().getFullYear();
@@ -648,8 +648,23 @@ function renderInsLineaAccion(PeriodoActual){
 		
 	});
 <%}else{%>
-	window.location = "http://spr.stp.gov.py/tablero/resumenLineaAccion.jsp";
-<%}%>	
+	window.location = "http://spr.stp.gov.py/tablero/geografico4.jsp";
+<%}%>
+	var onoff=null;
+	function OcultarRegistrosBorrados(){
+		
+		if($("#chkMostrarOcultar").is(':checked')){
+			onoff=false;						
+		}else{
+			onoff=true;			
+		}
+		$("tr > td > del").closest("tr").toggle(onoff);
+	}
+	
+	function ProcesarCambioPeriodo(){
+		
+		//periodoSeleccionado
+	}
 </script>
 	
     <div class="wrapper">
@@ -808,7 +823,8 @@ function renderInsLineaAccion(PeriodoActual){
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js" type="text/javascript"></script>
         <%  } else { %>
-				est<p>Favor Iniciar Sesion</p>
+        	<script type="text/javascript">window.location = "http://spr.stp.gov.py/tablero/geografico4.jsp";</script>
+				<!-- <p>Favor Iniciar Sesion</p> -->
 			<% } %> 
 
 <!-- Piwik -->

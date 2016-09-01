@@ -84,7 +84,7 @@
 	</filter-mapping>
 
 	<welcome-file-list>
-		<welcome-file>resumenLineaAccion.jsp</welcome-file>
+		<welcome-file>geografico4.jsp</welcome-file>
 	</welcome-file-list>
 
 	<servlet>
