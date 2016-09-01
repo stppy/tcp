@@ -510,7 +510,7 @@ function renderInsLineaAccion(PeriodoActual){
 			'<table class="table table-hover" id="dataTableInsLineaAccion">'+
 				'<thead>'+
 			  		'<tr class="active"><th colspan="6">Línea de Acción por Institución</th></tr>'+
-			  		'<tr class="active"><th style="min-width:110px">Periodo</th><th>Institución</th><th>Línea de Acción</th><th>Meta</th><th class="text-center">U.Medida</th><th style="min-width:250px" class="text-center">Administrar Linea Acción</th></tr>'+
+			  		'<tr class="active"><th style="min-width:110px">Periodo</th><th>Institución</th><th>Línea de Acción</th><th>Meta</th><th class="text-center">U.Medida</th><th style="min-width:250px" class="text-center">Administrar Linea Acción </th></tr>'+
 			 	'</thead>'+
 			 	'<tbody id="tablaCuerpoInsLineaAccionPrecargados">'+
 			 	

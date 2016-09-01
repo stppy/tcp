@@ -601,7 +601,7 @@ tbody {
 							var periodoSeleccionado = $("#periodoSeleccion option:selected").val();
 				        	//obtenemos todas las instituciones en el back end y su desempeño institucional a nivel país
 							var desPaisInstjson = $.ajax({
-		 						url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionDesempenoInstitucional&periodoId=2016',
+		 						url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionDesempenoInstitucional&periodoId='+periodoActual,
 						      	type:'get',
 						      	dataType:'json',
 						      	crossDomain:true,
@@ -1647,8 +1647,8 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 										cont= cont +1;	
 									}
 									
-									totalDestinatario = totalDestinatario + lineasProgramadas[n].cantDest;
-									totalProgramado = totalProgramado + lineasProgramadas[n].cantidadAnho;
+									if (lineasProgramadas[n].cantDest!=null) totalDestinatario = totalDestinatario + lineasProgramadas[n].cantDest;
+									if (lineasProgramadas[n].cantidadAnho!=null) totalProgramado = totalProgramado + lineasProgramadas[n].cantidadAnho;
 
 									
 									if (n == lineasProgramadas.length -1){
@@ -1657,7 +1657,6 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 										//if(cont != 0){
 											promedio = ((acumEjecucionLograda * 100) / acumEjecucionPrevista);
 										//}
-
 										clase="";			
 										if ((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=90){
 										 clase="bg-green-active color-palette"; 
@@ -1670,37 +1669,37 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 										if (distId == null) distId = "";
 										if (deptoId == null) deptoId = "";
 										
-										tempInstLineas += '<tr>'+
-										'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
-										'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
-										//'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
-										'<td>'+numeroConComa(totalProgramado)+'</td>'+
-										//'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
-										'<td>'+numeroConComa(totalDestinatario)+'</td>'+
-										'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
-										'<td>'+numeroConComa((acumEjecucionPrevista).toFixed(2))+'</td>'+
-										'<td>'+numeroConComa((acumEjecucionLograda).toFixed(2))+'</td>';
-										
-										clase="";			
-										if (promedio>=90){
-										 clase="bg-green-active color-palette"; 
-										}else if(promedio>=70){
-										 clase="bg-yellow-active color-palette"; 
-										}else{
-										 clase="bg-red-active color-palette";
+										if(numeroConComa(promedio) != 0){
+											tempInstLineas += '<tr>'+
+											'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
+											'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
+											//'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
+											'<td>'+numeroConComa(totalProgramado)+'</td>'+
+											//'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
+											'<td>'+numeroConComa(totalDestinatario)+'</td>'+
+											'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
+											'<td>'+numeroConComa((acumEjecucionPrevista).toFixed(2))+'</td>'+
+											'<td>'+numeroConComa((acumEjecucionLograda).toFixed(2))+'</td>';
+											
+											clase="";			
+											if (promedio>=90){
+											 clase="bg-green-active color-palette"; 
+											}else if(promedio>=70){
+											 clase="bg-yellow-active color-palette"; 
+											}else{
+											 clase="bg-red-active color-palette";
+											}
+											
+											tempInstLineas += '<td class="'+clase+'">'+numeroConComa((promedio).toFixed(2))+'</td>'+
+											'<td>'+numeroConComa(destinatarios.toFixed(2))+'</td>'+
+											'<td>'+numeroConComa((inversion/1000000).toFixed(2))+'</td>'+
+											'</tr>';
 										}
 										
-										tempInstLineas += '<td class="'+clase+'">'+numeroConComa((promedio).toFixed(2))+'</td>'+
-										'<td>'+numeroConComa(destinatarios.toFixed(2))+'</td>'+
-										'<td>'+numeroConComa((inversion/1000000).toFixed(2))+'</td>'+
-										'</tr>';
-																			
-															
 									}else if(lineasProgramadas[n+1].lineaAccionId != linea_accion_id){
 					
-										//if(cont != 0){
-											promedio = ((acumEjecucionLograda * 100) / acumEjecucionPrevista);
-										//}
+										promedio = ((acumEjecucionLograda * 100) / acumEjecucionPrevista);
+										
 										clase="";			
 										if ((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100>=90){
 										 clase="bg-green-active color-palette"; 
@@ -1717,6 +1716,8 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 											tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n+1].institucionSigla+'</strong></td></tr>';
 											institucionId = lineasProgramadas[n+1].institucionId;
 										} */
+										
+										if(numeroConComa(promedio) != 0){
 											tempInstLineas += '<tr>'+
 											'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+'-'+distId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
 											'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
@@ -1741,30 +1742,33 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 											'<td>'+numeroConComa(destinatarios.toFixed(2))+'</td>'+
 											'<td>'+numeroConComa((inversion/1000000).toFixed(2))+'</td>'+
 											'</tr>';
-											
-											cont=0, contEjecucion=0; 
-											acum=0, acumEjecucionPrevista=0, acumEjecucionLograda=0;
-											promedio=0,destinatarios=0; inversion=0;
-											totalDestinatario=0;
-											totalProgramado=0;
-											//institucionId = lineasProgramadas[n+1].institucionId;
-											linea_accion_id = lineasProgramadas[n+1].lineaAccionId;
-											//tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n+1].institucionSigla+'</strong></td></tr>';
-											
-											if(lineasProgramadas[n+1].institucionId != institucionId){
-												tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n+1].institucionSigla+'</strong></td></tr>';
-												institucionId = lineasProgramadas[n+1].institucionId;
-											}
 										}
+
+										
+										cont=0, contEjecucion=0; 
+										acum=0, acumEjecucionPrevista=0, acumEjecucionLograda=0;
+										promedio=0,destinatarios=0; inversion=0;
+										totalDestinatario=0;
+										totalProgramado=0;
+										//institucionId = lineasProgramadas[n+1].institucionId;
+										linea_accion_id = lineasProgramadas[n+1].lineaAccionId;
+										//tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n+1].institucionSigla+'</strong></td></tr>';
+										
+										if(lineasProgramadas[n+1].institucionId != institucionId){
+											tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n+1].institucionSigla+'</strong></td></tr>';
+											institucionId = lineasProgramadas[n+1].institucionId;
+										}
+										
 									}
 								}
 							}
 						}
 					}
-				}	
-			}//*********
+				}
+			}	
+		}//*********
 	}
-	  tablaInstituciones+=tempInstituciones+tempInstLineas;
+	tablaInstituciones+=tempInstituciones+tempInstLineas;
 
 	return tablaInstituciones;
 
@@ -2349,6 +2353,8 @@ $(document).ready(function(){
 		var urlAccionesAvances="";
 		var primerModal="";
 		
+		var periodoSeleccionado = $("#periodoSeleccion option:selected").val();
+		
 			urlAccionesAvances+='http://spr.stp.gov.py/tablero/ajaxSelects?action=getAccionesAvances';
 		
 			/*Esta parte realiza la función de agrupar a nivel pais, departamento o distrital.
@@ -2364,7 +2370,7 @@ $(document).ready(function(){
 			if (typeof linea_accion_id != "undefined") urlAccionesAvances+='&linea_accion_id='+linea_accion_id;
 			if (typeof idDepartamento != "undefined" && idDepartamento != "") urlAccionesAvances+='&departamentoId='+idDepartamento;
 			if (typeof idDistrito != "undefined" && idDistrito != "") urlAccionesAvances+='&distritoId='+idDistrito;
-			urlAccionesAvances+='&periodoId=2016';
+			urlAccionesAvances+='&periodoId='+periodoSeleccionado;			
 		var registros = $.ajax({
 	    	url:urlAccionesAvances,
 	      	type:'get',
@@ -3974,12 +3980,13 @@ $(document).ready(function(){
 			    	
 			    	function jsonpCallbackProductoUnidadMedida(data) {
 						datosProductoUnidadMedida = data;
+						var periodoSeleccionado = $("#periodoSeleccion option:selected").val(); 
 						
 		        		var mostrarUnidadMedida = datosProductoUnidadMedida.producto[0].unidadMedidaNombre;
 			    		$("#unidadMedida-formulario").val(mostrarUnidadMedida);
 			    		
 				    	$.ajax({
-				         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getAsignacionPresiVersion&nivel=12&entidad=1&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subPrograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto+'&anho=2016',
+				         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getAsignacionPresiVersion&nivel=12&entidad=1&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subPrograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto+'&anho='+periodoSeleccionado,
 				          	type:'get',
 				          	crossDomain: 'true',
 				          	dataType:'jsonp',
