@@ -5027,6 +5027,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	var actividadId = idParsed[5];
 	var avanceId = idParsed[6];//es el id de la tabla avance
 	
+	
 	var insLineaAccion = $.ajax({
 		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion&insLineaAccionId='+insLineaAccionId,
 	  	type:'get',
@@ -5638,6 +5639,20 @@ $("body").on("click", ".consultaEditarAvance",function(event){
   	var actividadId = idParsed[5];
   	var avanceId = idParsed[6];
 
+    var f = new Date();
+    if( (f.getMonth() +1) < 10 ){
+    	var mes =( 0 +""+ (f.getMonth() +1));
+    }else{
+    	var mes =f.getMonth();
+    }
+    
+    if( (f.getDate()) < 10 ){
+    	var dia =( 0 +""+ (f.getDate()));
+    }else{
+    	var dia = f.getDate();
+    }
+    var fechaActual = (f.getFullYear() + "-" + mes + "-" + dia);
+    
   	if ( $("#modalAdministrador").length )
    	{
 		$("#modalAdministrador").remove();
@@ -5686,7 +5701,7 @@ $("body").on("click", ".consultaEditarAvance",function(event){
 
 						'							<tr><td><label for="justificacionAvance">Justificación</label><input type="text" id="justificacionAvance" value="'+webServicesAvance[0].justificacion+'" class="form-control" required /></td><td><label for="cantidadAvance">Cantidad</label><input type="number" id="cantidadAvance" class="form-control" value='+webServicesAvance[0].cantidad+' required/></td></tr>'+
 
-						'							<tr><td><label for="fechaEntregaAvance">Fecha Entrega</label><input type="date" id="fechaEntregaAvance" value='+webServicesAvance[0].fechaEntrega+' class="form-control" required /></td></tr>'+														
+						'							<tr><td><label for="fechaEntregaAvance">Fecha Entrega</label><input type="date" id="fechaEntregaAvance" value='+webServicesAvance[0].fechaEntrega+' max="'+fechaActual+'" class="form-control" required /></td></tr>'+														
 
 						'							<input type="hidden" id="versionAvance" value="3" /><input type="hidden" id="actividadIdAvance" value='+avanceId+' />'+		
 
