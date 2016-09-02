@@ -26,7 +26,7 @@
 		Map attributes = user.getAttributes();
 		if (user != null) {
 	%>
-	<%@ include file="/frames/perfil.jsp"%>
+	 <%@ include file="/frames/perfil.jsp"%> 
 
 	<!-- piwik -->
 	<script type="text/javascript">
@@ -221,13 +221,122 @@ body {
 				</div>
 			</div>
 			<div class="col-md-9">
-				<div class="profile-content" id="detalleSecciones">
-					<!-- Detalles de los links -->
-
-					<div class="container">
-						<div class="row">
+				<div class="profile-content" id="detalleSecciones">					
+						<!-- <div class="row">
 							<div class="col-md-8">
-								<div class="panel panel-primary">
+							</div>
+						</div> -->
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+	//$(document).ready(function(){
+		
+		var preguntas = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false
+		}).responseText;
+		preguntas = JSON.parse(preguntas);
+		
+		var respuestas_posibles = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false
+		}).responseText;
+		respuestas_posibles = JSON.parse(respuestas_posibles);
+		
+		$("body").on("click", ".nav",function(event){
+			
+			$("#detalleSecciones").html("");
+			
+			var lista_respuestas="";
+			
+			for(i = 0;i<preguntas.length; i++){
+				
+				lista_respuestas+=	'<div class="panel panel-primary">'+
+							'		<div class="panel-heading">'+
+							'			<h3 class="panel-title">'+
+							'				<span class="glyphicon glyphicon-arrow-right"></span>'
+											+preguntas[i].nombreDepartamento+ 
+							'			</h3>'+
+							'		</div>'
+							'		<div class="panel-body">'+
+							'			<ul class="list-group">';
+							
+				for(w = 0;w<respuestas_posibles.length; w++){					
+					if(preguntas[i].idDepartamento==respuestas_posibles[w].departamentoId){
+						lista_respuestas+= '		<li class="list-group-item">'+
+									'			<div class="radio">'+
+									'				<label> <input type="radio" name="optionsRadios">'
+													+respuestas_posibles[w].descripcion+
+									'				</label>'+
+									'			</div>'+
+									'		</li>';
+					}
+				}
+				lista_respuestas+=	'	</ul>'+
+							'		</div>'+									
+							'</div>';	
+			}
+			$("#detalleSecciones").append(lista_respuestas);
+		});
+		
+	//});
+	
+	</script>
+	<!-- jQuery 2.1.3 -->
+	<script src="plugins/jQuery/jQuery-2.1.3.min.js"></script>
+	<!-- Bootstrap 3.3.2 JS -->
+	<script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+	<!-- FastClick -->
+	<script src='plugins/fastclick/fastclick.min.js'></script>
+	<!-- AdminLTE App -->
+	<script src="dist/js/app.min.js" type="text/javascript"></script>
+	<!-- Sparkline -->
+	<script src="plugins/sparkline/jquery.sparkline.min.js"
+		type="text/javascript"></script>
+	<!-- jvectormap -->
+	<script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"
+		type="text/javascript"></script>
+	<script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js"
+		type="text/javascript"></script>
+	<!-- daterangepicker -->
+	<script src="plugins/daterangepicker/daterangepicker.js"
+		type="text/javascript"></script>
+	<!-- datepicker -->
+	<script src="plugins/datepicker/bootstrap-datepicker.js"
+		type="text/javascript"></script>
+	<!-- SlimScroll 1.3.0 -->
+	<script src="plugins/slimScroll/jquery.slimscroll.min.js"
+		type="text/javascript"></script>
+	<!-- ChartJS 1.0.1 -->
+	<script src="plugins/chartjs/Chart.min.js" type="text/javascript"></script>
+
+	<!-- AdminLTE dashboard demo (This is only for demo purposes) 
+    <script src="dist/js/pages/dashboard2.js" type="text/javascript"></script>-->
+
+	<!-- Librerias para la rutina de cambio de contraseña -->
+	<script src="dist/js/jquerymd5.js" type="text/javascript"></script>
+	<%@ include file="/frames/pass.jsp"%>
+
+	<!-- AdminLTE for demo purposes -->
+	<script src="dist/js/demo.js" type="text/javascript"></script>
+	<%
+		} else {
+	%>
+	<p>Favor Iniciar Sesion</p>
+	<%
+		}
+	%>
+	
+</body>
+</html>
+<!-- <div class="panel panel-primary">
 									<div class="panel-heading">
 										<h3 class="panel-title">
 											<span class="glyphicon glyphicon-arrow-right"></span>
@@ -251,7 +360,7 @@ body {
 											Segundo Nombre 
 										</h3>
 									</div>									
-									<!-- <div class="panel-body"> -->
+									<div class="panel-body">
 										<ul class="list-group">
 											<li class="list-group-item">												
 													<label> <input type="text" value="MIGUEL">														
@@ -266,7 +375,7 @@ body {
 											Primer Apellido 
 										</h3>
 									</div>									
-									<!-- <div class="panel-body"> -->
+									<div class="panel-body">
 										<ul class="list-group">
 											<li class="list-group-item">												
 													<label> <input type="text" value="PERALTA">														
@@ -281,7 +390,7 @@ body {
 											Segundo Apellido 
 										</h3>
 									</div>									
-									<!-- <div class="panel-body"> -->
+									<div class="panel-body">
 										<ul class="list-group">
 											<li class="list-group-item">												
 													<label> <input type="text" value="DOMINGUEZ">														
@@ -296,7 +405,7 @@ body {
 											Cuantos años cumplidos tiene JOSE? 
 										</h3>
 									</div>									
-									<!-- <div class="panel-body"> -->
+									<div class="panel-body">
 										<ul class="list-group">
 											<li class="list-group-item">												
 													<label> <input type="text" value="24">														
@@ -333,7 +442,7 @@ body {
 								</div>
 							</div>
 							
-							<!-- siguiente pregunta -->
+							siguiente pregunta
 							<div class="col-md-8">
 								<div class="panel panel-primary">
 									<div class="panel-heading">
@@ -411,11 +520,11 @@ body {
 											</li>											
 										</ul>
 									</div>
-									<!-- <div class="panel-footer">
+									<div class="panel-footer">
 										<button type="button" class="btn btn-primary btn-sm">
 											Vote</button>
 										<a href="#">View Result</a>
-									</div> -->
+									</div>
 								</div>
 								
 								<div class="panel panel-primary">
@@ -466,7 +575,7 @@ body {
 											Anote el número de cédula de identidad policial de... JOSE 
 										</h3>
 									</div>									
-									<!-- <div class="panel-body"> -->
+									<div class="panel-body">
 										<ul class="list-group">
 											<li class="list-group-item">												
 													<label> <input type="text" value="3.551.478">														
@@ -515,7 +624,7 @@ body {
 											En que fecha nació JOSE? 
 										</h3>
 									</div>									
-									<!-- <div class="panel-body"> -->
+									<div class="panel-body">
 										<ul class="list-group">
 											<li class="list-group-item">												
 													<label> <input type="text" value="24/04/1988">														
@@ -586,7 +695,7 @@ body {
 											N° de teléfono (linea baja o celular) 
 										</h3>
 									</div>									
-									<!-- <div class="panel-body"> -->
+									<div class="panel-body">
 										<ul class="list-group">
 											<li class="list-group-item">												
 													<label> <input type="text" value="0981-458-874">														
@@ -594,71 +703,4 @@ body {
 											</li>
 										</ul>									
 								</div>
-								
-								
-								
-								
-							</div>
-							
-							
-							
-
-
-						</div>
-					</div>
-
-
-
-				</div>
-			</div>
-		</div>
-	</div>
-
-
-	<!-- jQuery 2.1.3 -->
-	<script src="plugins/jQuery/jQuery-2.1.3.min.js"></script>
-	<!-- Bootstrap 3.3.2 JS -->
-	<script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-	<!-- FastClick -->
-	<script src='plugins/fastclick/fastclick.min.js'></script>
-	<!-- AdminLTE App -->
-	<script src="dist/js/app.min.js" type="text/javascript"></script>
-	<!-- Sparkline -->
-	<script src="plugins/sparkline/jquery.sparkline.min.js"
-		type="text/javascript"></script>
-	<!-- jvectormap -->
-	<script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"
-		type="text/javascript"></script>
-	<script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js"
-		type="text/javascript"></script>
-	<!-- daterangepicker -->
-	<script src="plugins/daterangepicker/daterangepicker.js"
-		type="text/javascript"></script>
-	<!-- datepicker -->
-	<script src="plugins/datepicker/bootstrap-datepicker.js"
-		type="text/javascript"></script>
-	<!-- SlimScroll 1.3.0 -->
-	<script src="plugins/slimScroll/jquery.slimscroll.min.js"
-		type="text/javascript"></script>
-	<!-- ChartJS 1.0.1 -->
-	<script src="plugins/chartjs/Chart.min.js" type="text/javascript"></script>
-
-	<!-- AdminLTE dashboard demo (This is only for demo purposes) 
-    <script src="dist/js/pages/dashboard2.js" type="text/javascript"></script>-->
-
-	<!-- Librerias para la rutina de cambio de contraseña -->
-	<script src="dist/js/jquerymd5.js" type="text/javascript"></script>
-	<%@ include file="/frames/pass.jsp"%>
-
-	<!-- AdminLTE for demo purposes -->
-	<script src="dist/js/demo.js" type="text/javascript"></script>
-	<%
-		} else {
-	%>
-	<p>Favor Iniciar Sesion</p>
-	<%
-		}
-	%>
-
-</body>
-</html>
+ -->
