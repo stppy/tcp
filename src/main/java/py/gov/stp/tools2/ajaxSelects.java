@@ -208,7 +208,8 @@ public class ajaxSelects extends HttpServlet {
         
         Gson gson = new Gson(); 
         JsonObject myObj = new JsonObject();
- 
+        String callback = request.getParameter("callback");
+
         
         if (action!=null && action!=""){
       
@@ -1555,7 +1556,13 @@ public class ajaxSelects extends HttpServlet {
         		if (userCorreo!=null) condition += " and usuario_correo ='"+userCorreo+"'";
            		try {objetos = SqlSelects.selectUsuarioEtiqueta(condition);}
         		catch (SQLException e) {e.printStackTrace();}
-        		out.println(objetos);return;        	
+        		//out.println(objetos);return;        	
+        		
+        		if(callback != null) {
+                    out.println(callback + "(" + objetos + ");");
+                }else{
+                    out.println(objetos);return;
+                }	
         	}
         	
         	if (action.equals("getCiDestinatarios")){

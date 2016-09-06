@@ -850,6 +850,26 @@ public class SqlInserts {
 			return true;
 		} catch (SQLException e) {e.printStackTrace(); return false;}
 		
+	}
+	
+	public static boolean insertEtiquetaUsuario(EtiquetaUsuario etiqueta){
+		try {
+			Connection conn=ConnectionConfiguration.conectar();
+
+			String query = " insert into usuario_etiqueta (usuario_correo, etiqueta_id)"
+		+ " values (?, ?)";
+			
+			PreparedStatement insert = conn.prepareStatement(query);
+			
+			insert.setString (1, etiqueta.getUsuarioCorreo());
+			insert.setInt (2, etiqueta.getEtiquetaId());
+			
+			insert.execute();
+			   
+			conn.close();
+			return true;
+		} catch (SQLException e) {e.printStackTrace(); return false;}
+		
 	}	
 	
 		
