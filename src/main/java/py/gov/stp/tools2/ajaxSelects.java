@@ -208,7 +208,8 @@ public class ajaxSelects extends HttpServlet {
         
         Gson gson = new Gson(); 
         JsonObject myObj = new JsonObject();
- 
+        String callback = request.getParameter("callback");
+
         
         if (action!=null && action!=""){
       
@@ -1317,21 +1318,29 @@ public class ajaxSelects extends HttpServlet {
                 List<LineaAccionProgramacion> objetos=null;
                 List<Institucion> instituciones= null ;
                 ArrayList<Object> desempenhoDpto= new ArrayList<Object>();
-                //condition = " where true";
+                condition = " where true";
                 
                 try {
 					instituciones = SqlSelects.selectInstitucion(condition);
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
-                
+                condition += " AND ins_linea_accion_base.institucion_id in(";
 				for (int s = 0; s < instituciones.size(); s += 1) {
-	                 condition += " OR ins_linea_accion_base.institucion_id='"+instituciones.get(s).getId()+"'";
-				}
+					if(instituciones.size() == s+1)
+					{
+						condition += instituciones.get(s).getId();
+					}else{
+						condition += instituciones.get(s).getId()+",";
+					}
+				}           
+				condition += ")";
+
 	                try {                	
 
 	                	double acum, promedio;
 	                	int cont;
+	    	            if (periodoId!=null) condition += " and periodo ='"+periodoId+"'";
 	                	objetos = SqlSelects.selectResumenLineasAccionProgramacionInstDptoDistrito(condition);
 	                	
 	                	for(int j = 0; j < instituciones.size(); j+= 1){
@@ -1450,20 +1459,27 @@ public class ajaxSelects extends HttpServlet {
                 List<LineaAccionProgramacion> objetos=null;
                 List<Institucion> instituciones= null ;
                 ArrayList<Object> desempenhoDpto= new ArrayList<Object>();
-                //condition = " where true";                
+//              condition = " where true"; 
+//        		if (periodoId!=null) condition += " and periodo ='"+periodoId+"'";
                 try {
 					instituciones = SqlSelects.selectInstitucion(condition);
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
 
+                condition = " where true"; 
+        		if (periodoId!=null) condition += " AND periodo ='"+periodoId+"'";
+        		if (departamentoId!=null) condition += " AND ins_linea_accion_base_dd.depto_id = '"+departamentoId+"'";
+				condition += " AND ins_linea_accion_base_dd.institucion_id in(";
+
 				for (int s = 0; s < instituciones.size(); s += 1) {
-					if(s == 0){
-						condition += " AND ins_linea_accion_base_dd.depto_id='"+departamentoId+"' AND ins_linea_accion_base_dd.institucion_id='"+instituciones.get(s).getId()+"'";
+					if(instituciones.size() == s+1){
+						condition += instituciones.get(s).getId();
 					}else{
-						condition += " OR ins_linea_accion_base_dd.depto_id='"+departamentoId+"' AND ins_linea_accion_base_dd.institucion_id='"+instituciones.get(s).getId()+"'";
+						condition += instituciones.get(s).getId()+",";
 					}
 				}
+				condition +=")";
 
 	                try {                	
 
@@ -1540,7 +1556,26 @@ public class ajaxSelects extends HttpServlet {
         		if (userCorreo!=null) condition += " and usuario_correo ='"+userCorreo+"'";
            		try {objetos = SqlSelects.selectUsuarioEtiqueta(condition);}
         		catch (SQLException e) {e.printStackTrace();}
-        		out.println(objetos);return;        	
+        		//out.println(objetos);return;        	
+        		
+        		if(callback != null) {
+                    out.println(callback + "(" + objetos + ");");
+                }else{
+                    out.println(objetos);return;
+                }	
+        	}
+        	
+        	if (action.equals("getCiDestinatarios")){
+        		String objetos=null;
+        		condition = " where true";
+              /*  if (institucionIdConcat!="") condition += " and ins_linea_accion_base_dd.institucion_id in("+institucionIdConcat+")";
+	            if (departamentoId!=null) condition += " and ins_linea_accion_base_dd.depto_id='"+departamentoId+"'";
+	            if (distritoId!=null) condition += " and ins_linea_accion_base_dd.dist_id='"+distritoId+"'";*/
+           		try {objetos = SqlSelects.selectCiDestinatarios(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		//JsonElement json = new Gson().toJsonTree(objetos );
+        		//out.println(json.toString()); 
+           		out.println(objetos);return;
         	}
        }
        out.close();

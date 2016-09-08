@@ -2259,7 +2259,9 @@ public class SqlSelects {
 		+ " 	ins_linea_accion_avance.ins_linea_accion_id=ins_linea_accion_base.ins_linea_accion_id"				
 		+ " left join ins_linea_accion_programacion_hoy on "
 		+ " 	ins_linea_accion_programacion_hoy.ins_linea_accion_id =ins_linea_accion_base.ins_linea_accion_id"
-		+ " where periodo=2016 " + condition;
+		//+ " where periodo=2016 " + condition;
+		+ " " + condition;
+
 		Statement statement = null;
 		ResultSet rs = null;
 		List<LineaAccionProgramacion> objetos = new ArrayList<LineaAccionProgramacion>();
@@ -2435,6 +2437,39 @@ public class SqlSelects {
 				
 				objetos.add(objeto);
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				statement.close();
+			}
+			if (conect != null) {
+				conect.close();
+			}
+		}
+		return objetos;
+	}
+	
+	
+	public static String selectCiDestinatarios(String condition) throws SQLException {
+		Connection conect = ConnectionConfiguration.conectar();
+ 		 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from( "+
+ 				"select * from ci_destinatarios "+condition+
+   				" )t";
+
+		Statement statement = null;
+		ResultSet rs = null;
+ 		 String objetos = "";
+
+		try {
+			statement = conect.createStatement();
+			rs = statement.executeQuery(query);
+  			while(rs.next()){
+  				//ObjetivoEstrategia objeto = new ObjetivoEstrategia();
+
+  				objetos+=rs.getString("resultado");
+  			}
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -2709,6 +2744,7 @@ public class SqlSelects {
                 + "ins_linea_accion_base_dd.institucion_id,"
                 + "ins_linea_accion_base_dd.depto_id as depto_id,"
                 + "ins_linea_accion_base_dd.dist_id as dist_id,"
+				+ "ins_linea_accion_base_dd.periodo,"
                 + "ins_linea_accion_programacion_hoy_dd.cantidad_hoy as programado_hoy,"
                 + "ins_linea_accion_avance_dd.cantidad as avance_real,"
                 + "ins_linea_accion_destinatario_real_dd.beneficiarios_real as destinatarios_real,"
@@ -2722,7 +2758,9 @@ public class SqlSelects {
                  + " ins_linea_accion_costo_dd.ins_linea_accion_id=ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_costo_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_costo_dd.dist_id=ins_linea_accion_base_dd.dist_id"
                  + " left join ins_linea_accion_destinatario_real_dd on "
                  + " ins_linea_accion_destinatario_real_dd.ins_linea_accion_id=ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_destinatario_real_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_destinatario_real_dd.dist_id=ins_linea_accion_base_dd.dist_id"
-                 + " where periodo=2016"+ condition;
+                 //+ " where periodo=2016"+ condition; para obtener el periodo
+                 + " "+ condition;
+
 
 		Statement statement = null;
 		ResultSet rs = null;

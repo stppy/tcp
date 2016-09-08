@@ -510,6 +510,20 @@ public class ajaxInserts  extends HttpServlet {
     	}
        }
         
+        if (accion!=null && accion!=""){
+    	if (accion.equals("insEtiquetaUsuario")){
+    		EtiquetaUsuario obj = new EtiquetaUsuario();
+    		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+            String json = "";
+            if(br != null){ json = br.readLine();}
+            Gson gsonInsert = new Gson();
+            obj=gsonInsert.fromJson(json, EtiquetaUsuario.class);
+            boolean status = SqlInserts.insertEtiquetaUsuario(obj);
+    		myObj.addProperty("success", status);
+    		out.println(myObj.toString());
+    	}
+       }         
+        
         
     }
 }
