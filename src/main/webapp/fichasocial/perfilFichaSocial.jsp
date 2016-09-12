@@ -13,8 +13,8 @@
 <!--  ISO-8859-1 -->
 <%@ include file="/frames/head.jsp"%>
 <!--   <script src="frames/entidad.js" type="text/javascript"></script> -->
-<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link href="bootstrap/css/bootstrapslider.css" rel="stylesheet">
+<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="/bootstrap/css/bootstrapslider.css" rel="stylesheet">
 
 </head>
 <body class="skin-blue sidebar-mini">
@@ -232,10 +232,10 @@ body {
 	</div>
 
 	<script>
-	//$(document).ready(function(){
+	$(document).ready(function(){
 		
 		var preguntas = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getPreguntas',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false
@@ -243,12 +243,29 @@ body {
 		preguntas = JSON.parse(preguntas);
 		
 		var respuestas_posibles = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito',
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getRespuestasPosibles',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false
 		}).responseText;
 		respuestas_posibles = JSON.parse(respuestas_posibles);
+		
+		var respuestas_viviendas = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getRespuestasViviendas',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false
+		}).responseText;
+		respuestas_viviendas = JSON.parse(respuestas_viviendas);
+				
+		$(":radio").on("mousedown", function() {
+		    alert($('input[type=radio]:checked').val());
+		}).on("mouseup", function() {
+		    $('input[type=radio]').prop('checked', false);
+		    $(this).prop('checked', true);
+		    alert($('input[type=radio]:checked').val());
+		});
+		
 		
 		$("body").on("click", ".nav",function(event){
 			
@@ -256,20 +273,20 @@ body {
 			
 			var lista_respuestas="";
 			
-			for(i = 0;i<preguntas.length; i++){
+			/* for(i = 0;i<preguntas.length; i++){
 				
 				lista_respuestas+=	'<div class="panel panel-primary">'+
 							'		<div class="panel-heading">'+
 							'			<h3 class="panel-title">'+
 							'				<span class="glyphicon glyphicon-arrow-right"></span>'
-											+preguntas[i].nombreDepartamento+ 
+											+preguntas[i].descripcion+ 
 							'			</h3>'+
 							'		</div>'
 							'		<div class="panel-body">'+
 							'			<ul class="list-group">';
 							
 				for(w = 0;w<respuestas_posibles.length; w++){					
-					if(preguntas[i].idDepartamento==respuestas_posibles[w].departamentoId){
+					if(preguntas[i].id==respuestas_posibles[w].pregunta_id){
 						lista_respuestas+= '		<li class="list-group-item">'+
 									'			<div class="radio">'+
 									'				<label> <input type="radio" name="optionsRadios">'
@@ -283,49 +300,140 @@ body {
 							'		</div>'+									
 							'</div>';	
 			}
-			$("#detalleSecciones").append(lista_respuestas);
+			$("#detalleSecciones").append(lista_respuestas); */
+			
+			var lista_titulo_preguntas="", lista_preguntasyrespuestas="", lista_footer="";
+			
+			var pregunta_id_aux=respuestas_viviendas[0].id_pregunta;
+			
+			var pregunta_aux=respuestas_viviendas[0].preguntas;
+			
+			/* for(i = 0;i<respuestas_viviendas.length; i++){
+				
+				lista_titulo_preguntas=	'<div class="panel panel-primary">'+
+										'		<div class="panel-heading">'+
+										'			<h3 class="panel-title">'+
+										'				<span class="glyphicon glyphicon-arrow-right"></span>'
+														+pregunta_aux+ 
+										'			</h3>'+
+										'		</div>'+
+										'		<div class="panel-body">'+
+										'			<ul class="list-group">';
+				
+				if(pregunta_id_aux==respuestas_viviendas[i].id_pregunta){
+					lista_preguntasyrespuestas+= 	'		<li class="list-group-item">'+
+													'			<div class="radio">'+
+													'				<label> <input type="radio" name="optionsRadios">'
+																	+respuestas_viviendas[i].respuestas_posibles+
+													'				</label>'+
+													'			</div>'+
+													'		</li>';
+				}else{					
+					lista_footer=			'	</ul>'+
+												'		</div>'+									
+												'</div>';	
+					pregunta_id_aux=respuestas_viviendas[i].id_pregunta;
+					pregunta_aux=respuestas_viviendas[i].preguntas;
+					i=i-1;
+					lista_respuestas+=lista_titulo_preguntas+lista_preguntasyrespuestas+lista_footer;
+					lista_titulo_preguntas="";
+					lista_preguntasyrespuestas="";
+					lista_footer="";
+				}				 
+			} */
+			var impreso=false;
+			for(j = 0;j<preguntas.length; j++){
+				for(i = 0;i<respuestas_viviendas.length; i++){					
+					if(preguntas[j].id==respuestas_viviendas[i].id_pregunta && impreso==false){
+						lista_titulo_preguntas=	'<div class="panel panel-primary">'+
+						'		<div class="panel-heading">'+
+						'			<h3 class="panel-title">'+
+						'				<span class="glyphicon glyphicon-arrow-right"></span>'
+										+preguntas[j].descripcion+ 
+						'			</h3>'+
+						'		</div>'+
+						'		<div class="panel-body" id="pregunta-100-'+preguntas[j].id+'"></div>';
+						$("#detalleSecciones").append(lista_titulo_preguntas);
+						impreso=true;
+					}else{
+						if(preguntas[j].id!=respuestas_viviendas[i].id_pregunta && impreso==true){
+							impreso=false;
+						}
+					}
+				}
+			}
+			var cabecera="", footer="";
+			
+			for(j = 0;j<preguntas.length; j++){
+				for(i = 0;i<respuestas_viviendas.length; i++){
+					if(preguntas[j].id==respuestas_viviendas[i].id_pregunta && respuestas_viviendas[i].nro_ficha==0){
+						lista_preguntasyrespuestas+= 	'		<li class="list-group-item">'+
+														'			<div class="radio">'+
+														'				<label> <input type="radio" name="respuestas-100-'+preguntas[j].id+'">'
+																		+respuestas_viviendas[i].respuestas_posibles+
+														'				</label>'+
+														'			</div>'+
+														'		</li>';
+					}else{
+						if(preguntas[j].id==respuestas_viviendas[i].id_pregunta && respuestas_viviendas[i].nro_ficha!=0){
+							lista_preguntasyrespuestas+= 	'		<li class="list-group-item">'+
+							'			<div class="radio">'+
+							'				<label> <input type="radio" name="respuestas-100-'+preguntas[j].id+'" checked=true>'
+											+respuestas_viviendas[i].respuestas_posibles+
+							'				</label>'+
+							'			</div>'+
+							'		</li>';
+						}
+					}
+				}
+				cabecera='<fieldset id="respuestas-100-'+preguntas[j].id+'"><ul class="list-group">';
+				footer='	</fieldset></ul></div></div>';
+				$("#pregunta-100-"+preguntas[j].id).append(cabecera+lista_preguntasyrespuestas+footer);
+				lista_preguntasyrespuestas="";
+			}
+			
 		});
 		
-	//});
+	});
 	
 	</script>
 	<!-- jQuery 2.1.3 -->
-	<script src="plugins/jQuery/jQuery-2.1.3.min.js"></script>
+	<script src="/plugins/jQuery/jQuery-2.1.3.min.js"></script>
 	<!-- Bootstrap 3.3.2 JS -->
-	<script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 	<!-- FastClick -->
-	<script src='plugins/fastclick/fastclick.min.js'></script>
+	<script src='/plugins/fastclick/fastclick.min.js'></script>
 	<!-- AdminLTE App -->
-	<script src="dist/js/app.min.js" type="text/javascript"></script>
+	<script src="../dist/js/app.min.js" type="text/javascript"></script>
 	<!-- Sparkline -->
-	<script src="plugins/sparkline/jquery.sparkline.min.js"
+	<script src="/plugins/sparkline/jquery.sparkline.min.js"
 		type="text/javascript"></script>
 	<!-- jvectormap -->
-	<script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"
+	<script src="/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"
 		type="text/javascript"></script>
-	<script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js"
+	<script src="/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"
 		type="text/javascript"></script>
 	<!-- daterangepicker -->
-	<script src="plugins/daterangepicker/daterangepicker.js"
+	<script src="/plugins/daterangepicker/daterangepicker.js"
 		type="text/javascript"></script>
 	<!-- datepicker -->
-	<script src="plugins/datepicker/bootstrap-datepicker.js"
+	<script src="/plugins/datepicker/bootstrap-datepicker.js"
 		type="text/javascript"></script>
 	<!-- SlimScroll 1.3.0 -->
-	<script src="plugins/slimScroll/jquery.slimscroll.min.js"
+	<script src="/plugins/slimScroll/jquery.slimscroll.min.js"
 		type="text/javascript"></script>
 	<!-- ChartJS 1.0.1 -->
-	<script src="plugins/chartjs/Chart.min.js" type="text/javascript"></script>
+	<script src="/plugins/chartjs/Chart.min.js" type="text/javascript"></script>
 
 	<!-- AdminLTE dashboard demo (This is only for demo purposes) 
     <script src="dist/js/pages/dashboard2.js" type="text/javascript"></script>-->
 
 	<!-- Librerias para la rutina de cambio de contraseña -->
-	<script src="dist/js/jquerymd5.js" type="text/javascript"></script>
+	<script src="/dist/js/jquerymd5.js" type="text/javascript"></script>
 	<%@ include file="/frames/pass.jsp"%>
 
 	<!-- AdminLTE for demo purposes -->
-	<script src="dist/js/demo.js" type="text/javascript"></script>
+	<script src="/dist/js/demo.js" type="text/javascript"></script>
 	<%
 		} else {
 	%>

@@ -525,6 +525,45 @@ public class ajaxSelects extends HttpServlet {
         		myObj.add("producto", json);
                 out.println(myObj.toString());
             }
+            if (action.equals("getPreguntas")){
+        		String objetos=null;
+        		String condicion = "";
+//        		if (catalogo_Destinatario != null) condicion += " and producto_presupuesto_destinatario.catalogo_destinatario ="+catalogo_Destinatario+" ";
+//        		
+//        		if (estrategia!=0) condition+=" and estrategia.id="+estrategia+" "; 
+//        		if (linea!=0) condition+=" and linea_transversal.id="+linea+" ";
+//        		if (eje!=0) condition+=" and eje_estrategico.id="+eje+" ";
+
+        		try {objetos = SqlSelects.selectAllPreguntas(condicion);}
+    			catch (SQLException e) {e.printStackTrace();}      		
+        		out.println(objetos);return;
+        	}
+            if (action.equals("getRespuestasPosibles")){
+        		String objetos=null;
+        		String condicion = "";
+//        		if (catalogo_Destinatario != null) condicion += " and producto_presupuesto_destinatario.catalogo_destinatario ="+catalogo_Destinatario+" ";
+//        		
+//        		if (estrategia!=0) condition+=" and estrategia.id="+estrategia+" "; 
+//        		if (linea!=0) condition+=" and linea_transversal.id="+linea+" ";
+//        		if (eje!=0) condition+=" and eje_estrategico.id="+eje+" ";
+
+        		try {objetos = SqlSelects.selectAllRespuestasPosbiles(condicion);}
+    			catch (SQLException e) {e.printStackTrace();}      		
+        		out.println(objetos);return;
+        	}
+            if (action.equals("getRespuestasViviendas")){
+        		String objetos=null;
+        		String condicion = "";
+//        		if (catalogo_Destinatario != null) condicion += " and producto_presupuesto_destinatario.catalogo_destinatario ="+catalogo_Destinatario+" ";
+//        		
+//        		if (estrategia!=0) condition+=" and estrategia.id="+estrategia+" "; 
+//        		if (linea!=0) condition+=" and linea_transversal.id="+linea+" ";
+//        		if (eje!=0) condition+=" and eje_estrategico.id="+eje+" ";
+
+        		try {objetos = SqlSelects.selectAllRespuestasViviendas(condicion);}
+    			catch (SQLException e) {e.printStackTrace();}      		
+        		out.println(objetos);return;
+        	}
         }
        out.close();
         

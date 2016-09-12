@@ -11,7 +11,7 @@
   <head>
  	 <%@ include file="/frames/head.jsp" %>	 
 	<script type="text/javascript" src="dist/canvasjs/canvasjs.min.js" ></script>
-	<script src="dist/js/jspdf.min.js"></script>
+	<script src="/dist/js/jspdf.min.js"></script>
 
 	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="bootstrap/css/bootstrapslider.css" rel="stylesheet">	
