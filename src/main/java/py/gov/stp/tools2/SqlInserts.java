@@ -856,13 +856,14 @@ public class SqlInserts {
 		try {
 			Connection conn=ConnectionConfiguration.conectar();
 
-			String query = " insert into usuario_etiqueta (usuario_correo, etiqueta_id)"
-		+ " values (?, ?)";
+			String query = " insert into usuario_etiqueta (usuario_correo, etiqueta_id, usuario_responsable)"
+		+ " values (?, ?, ?)";
 			
 			PreparedStatement insert = conn.prepareStatement(query);
 			
 			insert.setString (1, etiqueta.getUsuarioCorreo());
 			insert.setInt (2, etiqueta.getEtiquetaId());
+			insert.setString(3, etiqueta.getUsuarioResponsable());
 			
 			insert.execute();
 			   

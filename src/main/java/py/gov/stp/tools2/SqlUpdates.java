@@ -1558,4 +1558,19 @@ public static boolean borradoHito(Hito objeto){
 		    return true;
 		  } catch (SQLException e) {e.printStackTrace(); return false;}
 	}
+	public static boolean borradoEtiquetaUsuario(EtiquetaUsuario objeto){
+	  	 Connection conect=ConnectionConfiguration.conectar();
+	  	 Statement statement = null;
+	  	 objeto.changeBorrado();
+	  	 
+	  	 String query = "update usuario_etiqueta set borrado='"+objeto.isBorrado()+"'";	
+				 
+		 query+=" where id ="+objeto.getId(); 
+		 try {
+			statement=conect.createStatement();
+			statement.execute(query);
+		    conect.close();
+		    return true;
+		  } catch (SQLException e) {e.printStackTrace(); return false;}
+	}
 }
