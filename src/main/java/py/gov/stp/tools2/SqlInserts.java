@@ -110,14 +110,14 @@ public class SqlInserts {
 	} catch (SQLException e) {e.printStackTrace();}
 		
 }
-	public static void insertInsLineaAccion(InsLineaAccion insLineaAccion){
+	public static int insertInsLineaAccion(InsLineaAccion insLineaAccion){
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
 		String query = " insert into ins_linea_accion (linea_accion_id, institucion_id, periodo_id, meta, version, borrado)"
 	+ " values (?, ?, ?, ?, ?, ?)";
 		
-		PreparedStatement insert = conn.prepareStatement(query);
+		PreparedStatement insert = conn.prepareStatement(query,PreparedStatement.RETURN_GENERATED_KEYS);
 		
 		//insert.setInt (1, insLineaAccion.getId());
 		insert.setInt (1, insLineaAccion.getLineaAccionId());
@@ -128,9 +128,14 @@ public class SqlInserts {
 		insert.setBoolean (6, insLineaAccion.isBorrado());		
 		
 		insert.execute();
+		
+		ResultSet keyset = insert.getGeneratedKeys();
+		keyset.next();
+		int valor = keyset.getInt(1);
 		   
 		conn.close();
-	} catch (SQLException e) {e.printStackTrace();}
+		return valor;
+	} catch (SQLException e) {e.printStackTrace();return 0;}
 		
 }
 	public static void insertInstitucion( Institucion institucion){
@@ -858,20 +863,63 @@ public class SqlInserts {
 
 			String query = " insert into usuario_etiqueta (usuario_correo, etiqueta_id, usuario_responsable)"
 		+ " values (?, ?, ?)";
-			
-			PreparedStatement insert = conn.prepareStatement(query);
+						
+			PreparedStatement insert = conn.prepareStatement(query);		
 			
 			insert.setString (1, etiqueta.getUsuarioCorreo());
 			insert.setInt (2, etiqueta.getEtiquetaId());
 			insert.setString(3, etiqueta.getUsuarioResponsable());
 			
 			insert.execute();
-			   
+						
 			conn.close();
 			return true;
 		} catch (SQLException e) {e.printStackTrace(); return false;}
 		
 	}	
+	
+	public static boolean insertInsLineaAccionHasEtiqueta(InsLineaAccionHasEtiqueta objeto, String usuarioResponsable){
+		try {
+			Connection conn=ConnectionConfiguration.conectar();
+
+			String query = " insert into ins_linea_accion_has_etiqueta (ins_linea_accion_id, etiqueta_id, version, usuario_responsable)"
+		+ " values (?, ?, ?, ?)";
+						
+			PreparedStatement insert = conn.prepareStatement(query);		
+			
+			insert.setInt (1, objeto.getInsLineaAccionId());
+			insert.setInt (2, objeto.getEtiquetaId());
+			insert.setInt (3, objeto.getVersion());
+			insert.setString(4, usuarioResponsable);
+			
+			insert.execute();
+			
+			conn.close();
+			return true;
+		} catch (SQLException e) {e.printStackTrace(); return false;}
+		
+	}
+	
+	public static boolean insertUsuarioLineaAccion(UsuarioLineaAccion objeto, String usuarioResponsable){
+		try {
+			Connection conn=ConnectionConfiguration.conectar();
+
+			String query = " insert into usuario_linea_accion (usuario_correo, linea_accion_id, usuario_responsable)"
+		+ " values (?, ?, ?)";
+						
+			PreparedStatement insert = conn.prepareStatement(query);		
+			
+			insert.setString (1, usuarioResponsable);
+			insert.setInt (2, objeto.getLineaAccionId());
+			insert.setString(3, usuarioResponsable);
+			
+			insert.execute();
+			
+			conn.close();
+			return true;
+		} catch (SQLException e) {e.printStackTrace(); return false;}
+		
+	}
 	
 		
 }
