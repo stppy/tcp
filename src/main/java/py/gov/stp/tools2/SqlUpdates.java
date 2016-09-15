@@ -1558,4 +1558,19 @@ public static boolean borradoHito(Hito objeto){
 		    return true;
 		  } catch (SQLException e) {e.printStackTrace(); return false;}
 	}
+	public static boolean borradoRespuestasViviendas(RespuestasViviendas objeto){
+	  	 Connection conect=ConnectionConfiguration.conectar();
+	  	 Statement statement = null;
+	  	 objeto.isBorrado();
+	  	 
+	  	 String query = "update respuestas_viviendas set borrado='"+objeto.isBorrado()+"'";	
+				 
+		 query+=" where nro_ficha ="+objeto.getNroFicha()+" and pregunta_id="+objeto.getPreguntaId(); 
+		 try {
+			statement=conect.createStatement();
+			statement.execute(query);
+		    conect.close();
+		    return true;
+		  } catch (SQLException e) {e.printStackTrace(); return false;}
+	}
 }
