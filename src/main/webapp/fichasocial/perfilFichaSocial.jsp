@@ -187,8 +187,8 @@ body {
 					<!-- END SIDEBAR USERPIC -->
 					<!-- SIDEBAR USER TITLE -->
 					<div class="profile-usertitle">
-						<div class="profile-usertitle-name">José Peralta</div>
-						<div class="profile-usertitle-job">Jefe de Hogar</div>
+						<div class="profile-usertitle-name" id="nombrePersona"></div>
+						<div class="profile-usertitle-job" id="cargoPersona">Jefe de Hogar</div>
 					</div>
 					<!-- END SIDEBAR USER TITLE -->
 					<!-- SIDEBAR BUTTONS -->
@@ -234,6 +234,14 @@ body {
 	<script>
 	$(document).ready(function(){
 		
+		var personas = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getPersonas',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false
+		}).responseText;
+		personas = JSON.parse(personas);
+		
 		var preguntas = $.ajax({
 			url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getPreguntas',
 		  	type:'get',
@@ -257,16 +265,16 @@ body {
 		  	async:false
 		}).responseText;
 		respuestas_viviendas = JSON.parse(respuestas_viviendas);
-				
-		$(":radio").on("mousedown", function() {
-		    alert($('input[type=radio]:checked').val());
-		}).on("mouseup", function() {
-		    $('input[type=radio]').prop('checked', false);
-		    $(this).prop('checked', true);
-		    alert($('input[type=radio]:checked').val());
+		
+		$("#nombrePersona").append(personas[0].nombre_primero);
+		//$("#cargoPersona").append();
+		
+		$("body").on("click", ".respuestas",function(event){				
+			var id=$(this).attr('id');			
+			var idparsed=id.split("-");
+			var id1 = idparsed[0];
 		});
-		
-		
+				
 		$("body").on("click", ".nav",function(event){
 			
 			$("#detalleSecciones").html("");
@@ -369,7 +377,7 @@ body {
 					if(preguntas[j].id==respuestas_viviendas[i].id_pregunta && respuestas_viviendas[i].nro_ficha==0){
 						lista_preguntasyrespuestas+= 	'		<li class="list-group-item">'+
 														'			<div class="radio">'+
-														'				<label> <input type="radio" name="respuestas-100-'+preguntas[j].id+'">'
+														'				<label> <input type="radio" id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" name="respuestas-100-'+preguntas[j].id+'" class="respuestas">'
 																		+respuestas_viviendas[i].respuestas_posibles+
 														'				</label>'+
 														'			</div>'+
@@ -378,7 +386,7 @@ body {
 						if(preguntas[j].id==respuestas_viviendas[i].id_pregunta && respuestas_viviendas[i].nro_ficha!=0){
 							lista_preguntasyrespuestas+= 	'		<li class="list-group-item">'+
 							'			<div class="radio">'+
-							'				<label> <input type="radio" name="respuestas-100-'+preguntas[j].id+'" checked=true>'
+							'				<label> <input type="radio" id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" name="respuestas-100-'+preguntas[j].id+'" checked=true>'
 											+respuestas_viviendas[i].respuestas_posibles+
 							'				</label>'+
 							'			</div>'+

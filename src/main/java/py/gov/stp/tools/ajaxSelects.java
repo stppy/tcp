@@ -564,6 +564,20 @@ public class ajaxSelects extends HttpServlet {
     			catch (SQLException e) {e.printStackTrace();}      		
         		out.println(objetos);return;
         	}
+            if (action.equals("getPersonas")){
+        		String objetos=null;
+        		String condicion = "";
+//        		if (catalogo_Destinatario != null) condicion += " and producto_presupuesto_destinatario.catalogo_destinatario ="+catalogo_Destinatario+" ";
+//        		
+//        		if (estrategia!=0) condition+=" and estrategia.id="+estrategia+" "; 
+//        		if (linea!=0) condition+=" and linea_transversal.id="+linea+" ";
+//        		if (eje!=0) condition+=" and eje_estrategico.id="+eje+" ";
+
+        		try {objetos = SqlSelects.selectAllPersonas(condicion);}
+    			catch (SQLException e) {e.printStackTrace();}      		
+        		out.println(objetos);return;
+        	}
+
         }
        out.close();
         
