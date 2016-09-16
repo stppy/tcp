@@ -1,32 +1,37 @@
 package py.gov.stp.objetosV2;
 
-public class EtiquetaUsuario {
-	protected int id;
-	protected String usuarioCorreo;
+public class InsLineaAccionHasEtiqueta {
+	protected int insLineaAccionId;
 	protected int etiquetaId;
+	protected int version;
+	protected boolean borrado;
 	protected String fechaActualizacion;
 	protected String fechaInsercion;
 	protected String usuarioResponsable;
-	protected boolean borrado;
-
 	
-	public int getId() {
-		return id;
+	public int getInsLineaAccionId() {
+		return insLineaAccionId;
 	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public String getUsuarioCorreo() {
-		return usuarioCorreo;
-	}
-	public void setUsuarioCorreo(String usuarioCorreo) {
-		this.usuarioCorreo = usuarioCorreo;
+	public void setInsLineaAccionId(int insLineaAccionId) {
+		this.insLineaAccionId = insLineaAccionId;
 	}
 	public int getEtiquetaId() {
 		return etiquetaId;
 	}
 	public void setEtiquetaId(int etiquetaId) {
 		this.etiquetaId = etiquetaId;
+	}
+	public int getVersion() {
+		return version;
+	}
+	public void setVersion(int version) {
+		this.version = version;
+	}
+	public boolean isBorrado() {
+		return borrado;
+	}
+	public void setBorrado(boolean borrado) {
+		this.borrado = borrado;
 	}
 	public String getFechaActualizacion() {
 		return fechaActualizacion;
@@ -46,13 +51,7 @@ public class EtiquetaUsuario {
 	public void setUsuarioResponsable(String usuarioResponsable) {
 		this.usuarioResponsable = usuarioResponsable;
 	}
-	public boolean isBorrado() {
-		return borrado;
-	}
-	public void setBorrado(boolean borrado) {
-		this.borrado = borrado;
-	}
 	public void changeBorrado(){
 		this.borrado=!borrado;
-	}	
+	}
 }

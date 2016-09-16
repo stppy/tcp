@@ -1558,14 +1558,14 @@ public static boolean borradoHito(Hito objeto){
 		    return true;
 		  } catch (SQLException e) {e.printStackTrace(); return false;}
 	}
-	public static boolean borradoRespuestasViviendas(RespuestasViviendas objeto){
+	public static boolean borradoEtiquetaUsuario(EtiquetaUsuario objeto){
 	  	 Connection conect=ConnectionConfiguration.conectar();
 	  	 Statement statement = null;
-	  	 objeto.isBorrado();
+	  	 objeto.changeBorrado();
 	  	 
-	  	 String query = "update respuestas_viviendas set borrado='"+objeto.isBorrado()+"'";	
+	  	 String query = "update usuario_etiqueta set borrado='"+objeto.isBorrado()+"'";	
 				 
-		 query+=" where nro_ficha ="+objeto.getNroFicha()+" and pregunta_id="+objeto.getPreguntaId(); 
+		 query+=" where id ="+objeto.getId(); 
 		 try {
 			statement=conect.createStatement();
 			statement.execute(query);
@@ -1573,4 +1573,19 @@ public static boolean borradoHito(Hito objeto){
 		    return true;
 		  } catch (SQLException e) {e.printStackTrace(); return false;}
 	}
+	public static boolean borradoRespuestasViviendas(RespuestasViviendas objeto){
+	  	 Connection conect=ConnectionConfiguration.conectar();
+	  	 Statement statement = null;
+	  	 objeto.isBorrado();
+	  	 
+	  	 String query = "update respuestas_viviendas set borrado='"+objeto.isBorrado()+"'";	
+				 
+		 query+=" where nro_ficha ="+objeto.getNroFicha()+" and pregunta_id="+objeto.getPreguntaId();
+		 try {
+				statement=conect.createStatement();
+				statement.execute(query);
+			    conect.close();
+			    return true;
+			  } catch (SQLException e) {e.printStackTrace(); return false;}
+		}
 }

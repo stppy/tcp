@@ -869,6 +869,17 @@ public class ajaxUpdate extends HttpServlet {
         		myObj.addProperty("success", status);
         		out.println(myObj.toString());
         	} 
+        	if (accion.equals("borradoEtiquetaUsuario")){
+        		EtiquetaUsuario objeto = new EtiquetaUsuario();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                objeto=gsonInsert.fromJson(json, EtiquetaUsuario.class);
+                boolean status = SqlUpdates.borradoEtiquetaUsuario(objeto);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	}
         	if (accion.equals("borradoRespuestasViviendas")){
         		RespuestasViviendas objeto = new RespuestasViviendas();
         		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
@@ -879,10 +890,7 @@ public class ajaxUpdate extends HttpServlet {
                 boolean status = SqlUpdates.borradoRespuestasViviendas(objeto);
         		myObj.addProperty("success", status);
         		out.println(myObj.toString());
-        	} 
-        	
-        }     
-        
-     
+        	}        	
+        }    
     }
 }

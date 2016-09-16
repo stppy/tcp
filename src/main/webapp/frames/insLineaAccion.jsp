@@ -64,6 +64,9 @@ function renderEvidencia(avanceId, parametros){
 	$("body").on("click", ".nuevaInsLineaAccion",function(event){		
 		event.stopPropagation();
 		event.preventDefault();
+		var todasLasEtiquetas = "";
+
+		
 		var lineaAccion = $.ajax({
 			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
 		  	type:'get',
@@ -76,7 +79,6 @@ function renderEvidencia(avanceId, parametros){
 		for(i = 0;i<lineaAccion.length; i++){
 			optionLineaAccion+='<option value="'+lineaAccion[i].id+'" >'+lineaAccion[i].nombre+'</option>';
 		}
-
 
 		var institucion = $.ajax({
 			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
@@ -131,6 +133,18 @@ function renderEvidencia(avanceId, parametros){
 			optionUnidadMedida+='<option value="'+unidadMedida[u].id+'" parametro="'+unidadMedida[u].id+'">'+unidadMedida[u].descripcion+'</option>';
 		}
 		
+		var etiquetas = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getEtiqueta',
+			type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		etiquetas = JSON.parse(etiquetas);
+		
+ 		for(var l = 0; l < etiquetas.length; l++){
+ 			todasLasEtiquetas += ' <input type="checkbox" class="cmbEtiqueta" id=cmbEtiqueta-'+etiquetas[l].id+'> '+ etiquetas[l].nombre;
+		}
+		
 		var contenido = "";
 
 		contenido =			'<div class="modal fade" id="insLineaAccion" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">'+
@@ -167,7 +181,11 @@ function renderEvidencia(avanceId, parametros){
 							'					<div class="form-group">'+
 							'						<label for="version">Versión</label>'+
 							'						<input type="number" id="versionInsLineaAccion" class="form-control" name="version" placeholder="Ingrese Versión" required>'+
-							'					</div>'+				
+							'					</div>'+
+							'					<div class="form-group">'+
+							'						<label for="version">Etiquetas </label>'+
+													todasLasEtiquetas
+							'					</div>'+			
 							'				</form>'+			  
 							
 							'		    </div>'+
@@ -256,6 +274,18 @@ function renderEvidencia(avanceId, parametros){
 		
 	});
 	
+	function getEtiquetaSeleccionadas(){						
+		var etiquetaSelected=[];
+		$(".cmbEtiqueta:checked").each(function(){
+			var idEtiqueta=$(this).attr('id').split("-");
+		    if (idEtiqueta[1]!='a'){
+		    	etiquetaSelected.push(idEtiqueta[1]);	
+		    }
+		     
+		})
+		return etiquetaSelected;
+	}
+	
 	$("body").on("click", "#guardarInsLineaAccion",function(event){
 		if (validarFormulario("formularioInsLineaAccion",false,false)==true){
 				
@@ -270,6 +300,9 @@ function renderEvidencia(avanceId, parametros){
 		var periodoId = $("#periodoInsLineaAccion option:selected").val();
 	    var meta = document.getElementById('metaInsLineaAccion').value; 
 	    var version = document.getElementById('versionInsLineaAccion').value; 
+	    var etiquetaSeleccionada = [];
+		etiquetaSeleccionada = getEtiquetaSeleccionadas();
+		var insLineaAccionId;
 
 	    var datos = new Object();
 	    datos.lineaAccionId = lineaAccionId;
@@ -289,6 +322,7 @@ function renderEvidencia(avanceId, parametros){
 		        
 		        success: function (data)
 		        {
+		        	insLineaAccionId = data.id;
 		        	if (data.success == true)
 		        	{
 		        		
@@ -338,14 +372,70 @@ function renderEvidencia(avanceId, parametros){
 
 		        		$('#cuerpoModalInsLineaAccion').html('');
 		        		$("#cuerpoModalInsLineaAccion").append('<h3 class="text-center">La Línea de Acción se ha insertado con Exito</h3>');
-		        		
-		        		renderInsLineaAccion(periodoSeleccionado);
-		        		
-		        				        													
+		        				        		
+		        		var objeto = new Object();
+		        	    for(var t = 0; t < etiquetaSeleccionada.length; t++){
+		        			
+		        	    	objeto.insLineaAccionId = insLineaAccionId;
+		        	    	objeto.etiquetaId = etiquetaSeleccionada[t];
+		        	    	objeto.version = version;
+
+		        	    	
+		        		  	var info2 = JSON.stringify(objeto);
+		        		    $.ajax({
+		        		        url: "http://spr.stp.gov.py/tablero/ajaxInserts2?accion=insLineaAccionHasEtiqueta",
+		        		        type: 'POST',
+		        		        dataType: 'json',
+		        		        data: info2,
+		        		        contentType: 'application/json',
+		        		        mimeType: 'application/json',
+		        		        success: function (data) {
+		        		        	if(data.success == true)
+		        		        	{
+
+		        		        	}else{
+
+		        		        	}
+		        		        },
+		        		        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
+		        		        error: function(data,status,er) {
+		        		        	
+		        		        	}
+		        			 });
+		        	    }
+		        	    
+		        	    //Inserta en la tabla usuario_linea_accion-------------------------------------------------------------------------------------------
+		        	    
+		        		var usuarioLineaAccion = new Object();
+	        			
+		        		usuarioLineaAccion.lineaAccionId =lineaAccionId ;
+
+	        	    	
+	        		  	var info2 = JSON.stringify(usuarioLineaAccion);
+	        		    $.ajax({
+	        		        url: "http://spr.stp.gov.py/tablero/ajaxInserts2?accion=insUsuarioLineaAccion",
+	        		        type: 'POST',
+	        		        dataType: 'json',
+	        		        data: info2,
+	        		        contentType: 'application/json',
+	        		        mimeType: 'application/json',
+	        		        success: function (data) {
+	        		        	if(data.success == true)
+	        		        	{
+									alert("USUARIO LINEA ACCION EXITOSO");
+	        		        	}else{
+
+	        		        	}
+	        		        },
+	        		        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
+	        		        error: function(data,status,er) {
+	        		        	
+	        		        	}
+	        			 });
+		        		renderInsLineaAccion(periodoSeleccionado);	        				        													
 						
 		        	}else{
-		        		if (data.success == false){
-		        		}
+		
 		        	}
 		        },
 		        error: function(data,status,er)
@@ -354,8 +444,6 @@ function renderEvidencia(avanceId, parametros){
 		        	$("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intente de nuevo</p>');
 		        }
 		 });
-		
-		
 		
 		}	
 	});

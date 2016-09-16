@@ -20,6 +20,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import javax.xml.datatype.DatatypeConfigurationException;
 
+import org.jasig.cas.client.authentication.AttributePrincipal;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -39,6 +41,14 @@ public class ajaxInserts  extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	 
     	String accion = request.getParameter("accion");
+    	
+    	AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();
+    	Map attributes = user.getAttributes(); 
+    	String userCorreo = user.getName(); 
+    	String userNivelId = attributes.get("nivel_id").toString();
+    	String userEntidadId = attributes.get("entidad_id").toString();
+    	String userUnrId = attributes.get("unr_id").toString();
+    	String userRoleId = attributes.get("role_id_tablero").toString();
 
         
         PrintWriter out = response.getWriter();
@@ -283,9 +293,14 @@ public class ajaxInserts  extends HttpServlet {
             Gson gsonInsert = new Gson();
             productoObj=gsonInsert.fromJson(json, InsLineaAccion.class);
 			//SqlInserts.insertInsLineaAccion(productoObj);
-            SqlInserts.insertInsLineaAccion(productoObj);
-            boolean status = true;
-    		myObj.addProperty("success", status);
+            int idInsLineaAccion = SqlInserts.insertInsLineaAccion(productoObj);
+            if(idInsLineaAccion > 0){
+                boolean status = true;
+        		myObj.addProperty("success", status);
+        		myObj.addProperty("id", idInsLineaAccion);
+            }else{
+        		myObj.addProperty("success", false);
+            }
     		out.println(myObj.toString());
     	}
        }
@@ -522,7 +537,33 @@ public class ajaxInserts  extends HttpServlet {
     		myObj.addProperty("success", status);
     		out.println(myObj.toString());
     	}
-       }   
+       }       
+        if (accion!=null && accion!=""){
+    	if (accion.equals("insLineaAccionHasEtiqueta")){
+    		InsLineaAccionHasEtiqueta obj = new InsLineaAccionHasEtiqueta();
+    		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+            String json = "";
+            if(br != null){ json = br.readLine();}
+            Gson gsonInsert = new Gson();
+            obj=gsonInsert.fromJson(json, InsLineaAccionHasEtiqueta.class);
+            boolean status = SqlInserts.insertInsLineaAccionHasEtiqueta(obj,userCorreo);
+    		myObj.addProperty("success", status);
+    		out.println(myObj.toString());
+    	}
+       }
+        if (accion!=null && accion!=""){
+    	if (accion.equals("insUsuarioLineaAccion")){
+    		UsuarioLineaAccion obj = new UsuarioLineaAccion();
+    		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+            String json = "";
+            if(br != null){ json = br.readLine();}
+            Gson gsonInsert = new Gson();
+            obj=gsonInsert.fromJson(json, UsuarioLineaAccion.class);
+            boolean status = SqlInserts.insertUsuarioLineaAccion(obj,userCorreo);
+    		myObj.addProperty("success", status);
+    		out.println(myObj.toString());
+    	}
+       }    
         if (accion!=null && accion!=""){
         	if (accion.equals("insRespuestasViviendas")){
         		RespuestasViviendas obj = new RespuestasViviendas();
@@ -535,8 +576,6 @@ public class ajaxInserts  extends HttpServlet {
         		myObj.addProperty("success", status);
         		out.println(myObj.toString());
         	}
-           }    
-        
-        
+           }
     }
 }

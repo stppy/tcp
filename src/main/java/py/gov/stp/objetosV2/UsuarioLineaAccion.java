@@ -1,14 +1,12 @@
 package py.gov.stp.objetosV2;
 
-public class EtiquetaUsuario {
+public class UsuarioLineaAccion {
 	protected int id;
 	protected String usuarioCorreo;
-	protected int etiquetaId;
+	protected int lineaAccionId;
 	protected String fechaActualizacion;
 	protected String fechaInsercion;
 	protected String usuarioResponsable;
-	protected boolean borrado;
-
 	
 	public int getId() {
 		return id;
@@ -22,11 +20,11 @@ public class EtiquetaUsuario {
 	public void setUsuarioCorreo(String usuarioCorreo) {
 		this.usuarioCorreo = usuarioCorreo;
 	}
-	public int getEtiquetaId() {
-		return etiquetaId;
+	public int getLineaAccionId() {
+		return lineaAccionId;
 	}
-	public void setEtiquetaId(int etiquetaId) {
-		this.etiquetaId = etiquetaId;
+	public void setLineaAccionId(int lineaAccionId) {
+		this.lineaAccionId = lineaAccionId;
 	}
 	public String getFechaActualizacion() {
 		return fechaActualizacion;
@@ -46,13 +44,5 @@ public class EtiquetaUsuario {
 	public void setUsuarioResponsable(String usuarioResponsable) {
 		this.usuarioResponsable = usuarioResponsable;
 	}
-	public boolean isBorrado() {
-		return borrado;
-	}
-	public void setBorrado(boolean borrado) {
-		this.borrado = borrado;
-	}
-	public void changeBorrado(){
-		this.borrado=!borrado;
-	}	
+
 }
