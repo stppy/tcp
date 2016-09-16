@@ -272,7 +272,52 @@ body {
 		$("body").on("click", ".respuestas",function(event){				
 			var id=$(this).attr('id');			
 			var idparsed=id.split("-");
-			var id1 = idparsed[0];
+			var nro_ficha = idparsed[1];
+			var pregunta_id= idparsed[2];
+			var respuesta_seleccionada=idparsed[3];
+			
+			
+			$.ajax({
+		        url: "http://spr.stp.gov.py/tablero/ajaxDelete?accion=delRespuestasViviendas&nroFicha="+nro_ficha+"&preguntaId="+pregunta_id,
+		        type: 'POST',
+		        dataType: 'json',
+		        //data: JSON.stringify(etiquetapresupuesto),
+		        contentType: 'application/json',
+		        mimeType: 'application/json',
+		        success: function (data) {
+		        	if(data.success == true){
+					
+		        		
+		        		var objeto = new Object();
+		    			
+		    			objeto.nroFicha = nro_ficha;
+		    			objeto.fechaRealizacion = "2016-01-01";
+		    			objeto.viviendaNro="1";
+		    			objeto.preguntaId = pregunta_id;
+		    			objeto.respuestaObtenidaId = respuesta_seleccionada;
+		    			objeto.respuesta = "";
+		    			objeto.respuestaBoleana=false;
+		    			
+		    			var info = JSON.stringify(objeto);
+		    		    $.ajax({
+		    		        url: "http://spr.stp.gov.py/tablero/ajaxInserts2?accion=insRespuestasViviendas",
+		    		        type: 'POST',
+		    		        dataType: 'json',
+		    		        data: info,
+		    		        contentType: 'application/json',
+		    		        mimeType: 'application/json',
+		    			 });
+		        		
+		        		
+		    		}else{
+					//	alert("ERROR");
+					}        	
+		        },
+		        error: function(data,status,er) {
+		        //	alert("ERROR function");
+		        }
+		 });			
+			
 		});
 				
 		$("body").on("click", ".nav",function(event){

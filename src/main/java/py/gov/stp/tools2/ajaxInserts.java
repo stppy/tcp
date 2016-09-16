@@ -570,7 +570,8 @@ public class ajaxInserts  extends HttpServlet {
         		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
                 String json = "";
                 if(br != null){ json = br.readLine();}
-                Gson gsonInsert = new Gson();
+                Gson gsonInsert = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+                //Gson gsonInsert = new Gson();
                 obj=gsonInsert.fromJson(json, RespuestasViviendas.class);
                 boolean status = SqlInserts.insertRespuestasViviendas(obj);
         		myObj.addProperty("success", status);

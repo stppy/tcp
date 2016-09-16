@@ -882,8 +882,8 @@ public class SqlInserts {
 		try {
 			Connection conn=ConnectionConfiguration.conectarFichaSocial();
 
-			String query = "insert into respuestas_viviendas (nro_ficha, fecha_realizacion, vivienda_nro, pregunta_id, respuesta_obtenida_id, respuesta,respuesta_boleana, fecha_actualizacion, fecha_insercion, usuario_responsable, borrado)"+
-						"values(?,?,?,?,?,?,?,?,?)";
+			String query = "insert into respuestas_viviendas (nro_ficha, fecha_realizacion, vivienda_nro, pregunta_id, respuesta_obtenida_id, respuesta, respuesta_boleana)"+
+						" values(?,?,?,?,?,?,?)";
 			
 			PreparedStatement insert = conn.prepareStatement(query);
 			
@@ -893,8 +893,7 @@ public class SqlInserts {
 			insert.setInt (4, obj.getPreguntaId());
 			insert.setInt (5, obj.getRespuestaObtenidaId());
 			insert.setString (6, obj.getRespuesta());
-			insert.setBoolean(7, obj.isRespuestaBoleana());
-			insert.setBoolean (8, obj.isBorrado());
+			insert.setBoolean(7, obj.isRespuestaBoleana());			
 			
 			insert.execute();
 			   
