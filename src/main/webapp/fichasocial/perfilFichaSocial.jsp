@@ -181,7 +181,7 @@ body {
 					<!-- SIDEBAR USERPIC -->
 					<div class="profile-userpic">
 						<img
-							src="http://www.american.edu/uploads/profiles/large/chris_palmer_profile_11.jpg"
+							src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/96/user-male-icon.png"
 							class="img-responsive" alt="">
 					</div>
 					<!-- END SIDEBAR USERPIC -->
@@ -242,30 +242,6 @@ body {
 		}).responseText;
 		personas = JSON.parse(personas);
 		
-		var preguntas = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getPreguntas',
-		  	type:'get',
-		  	dataType:'json',
-		  	async:false
-		}).responseText;
-		preguntas = JSON.parse(preguntas);
-		
-		var respuestas_posibles = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getRespuestasPosibles',
-		  	type:'get',
-		  	dataType:'json',
-		  	async:false
-		}).responseText;
-		respuestas_posibles = JSON.parse(respuestas_posibles);
-		
-		var respuestas_viviendas = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getRespuestasViviendas',
-		  	type:'get',
-		  	dataType:'json',
-		  	async:false
-		}).responseText;
-		respuestas_viviendas = JSON.parse(respuestas_viviendas);
-		
 		$("#nombrePersona").append(personas[0].nombre_primero);
 		//$("#cargoPersona").append();
 		
@@ -321,6 +297,30 @@ body {
 		});
 				
 		$("body").on("click", ".nav",function(event){
+			
+			var preguntas = $.ajax({
+				url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getPreguntas',
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false
+			}).responseText;
+			preguntas = JSON.parse(preguntas);
+			
+			var respuestas_posibles = $.ajax({
+				url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getRespuestasPosibles',
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false
+			}).responseText;
+			respuestas_posibles = JSON.parse(respuestas_posibles);
+			
+			var respuestas_viviendas = $.ajax({
+				url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getRespuestasViviendas',
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false
+			}).responseText;
+			respuestas_viviendas = JSON.parse(respuestas_viviendas);
 			
 			$("#detalleSecciones").html("");
 			
