@@ -1207,7 +1207,9 @@ public class SqlSelects {
 						" p.id as id_pregunta,"+
 						" p.descripcion as preguntas,"+ 
 						" rp.id as id_respuesta_posible,"+ 
-						" rp.descripcion as respuestas_posibles"+ 
+						" rp.descripcion as respuestas_posibles,"+ 
+						" ''     as respuestas_text," +
+						" null     as respuestas_bolean"+ 
 						" from preguntas p "+
 						" join respuestas_posibles rp on p.id=rp.pregunta_id and rp.id not in ("+
 						" select rp1.id"+
@@ -1220,7 +1222,9 @@ public class SqlSelects {
 						" p.id as id_pregunta,"+ 
 						" p.descripcion as pregunta,"+ 
 						" rp.id as id_respuesta," +
-						" rp.descripcion as respuesta"+ 
+						" rp.descripcion as respuesta,"+ 
+						" rv.respuesta     as respuestas_text,"+ 
+						" rv.respuesta_boleana as respuestas_bolean"+ 
 						" from respuestas_viviendas rv" +
 						" join respuestas_posibles rp on rp.id=rv.respuesta_obtenida_id"+ 
 						" join preguntas p on p.id=rp.pregunta_id"+
