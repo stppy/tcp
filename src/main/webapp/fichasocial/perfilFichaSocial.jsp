@@ -245,6 +245,16 @@ body {
 		$("#nombrePersona").append(personas[0].nombre_primero);
 		//$("#cargoPersona").append();
 		
+		$("body").on("change", ".respuestas_text",function(event){
+			var id=$(this).attr('id');			
+			var idparsed=id.split("-");
+			var nro_ficha = idparsed[1];
+			var pregunta_id= idparsed[2];
+			var respuesta_seleccionada=idparsed[3];
+			
+			
+		});
+		
 		$("body").on("click", ".respuestas",function(event){				
 			var id=$(this).attr('id');			
 			var idparsed=id.split("-");
@@ -419,7 +429,7 @@ body {
 			
 			for(j = 0;j<preguntas.length; j++){
 				for(i = 0;i<respuestas_viviendas.length; i++){
-					if(preguntas[j].id==respuestas_viviendas[i].id_pregunta && respuestas_viviendas[i].nro_ficha==0){
+					if(preguntas[j].id==respuestas_viviendas[i].id_pregunta && respuestas_viviendas[i].nro_ficha==0 && (respuestas_viviendas[i].respuestas_text==null || respuestas_viviendas[i].respuestas_text=="" ) && respuestas_viviendas[i].respuestas_bolean==null && respuestas_viviendas[i].tipo_respuesta=="lista"){
 						lista_preguntasyrespuestas+= 	'		<li class="list-group-item">'+
 														'			<div class="radio">'+
 														'				<label> <input type="radio" id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" name="respuestas-100-'+preguntas[j].id+'" class="respuestas">'
@@ -428,7 +438,7 @@ body {
 														'			</div>'+
 														'		</li>';
 					}else{
-						if(preguntas[j].id==respuestas_viviendas[i].id_pregunta && respuestas_viviendas[i].nro_ficha!=0){
+						if(preguntas[j].id==respuestas_viviendas[i].id_pregunta && respuestas_viviendas[i].nro_ficha!=0 && (respuestas_viviendas[i].respuestas_text==null || respuestas_viviendas[i].respuestas_text=="" ) && respuestas_viviendas[i].respuestas_bolean==null && respuestas_viviendas[i].tipo_respuesta=="lista"){
 							lista_preguntasyrespuestas+= 	'		<li class="list-group-item">'+
 							'			<div class="radio">'+
 							'				<label> <input type="radio" id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" name="respuestas-100-'+preguntas[j].id+'" checked=true>'
@@ -436,8 +446,21 @@ body {
 							'				</label>'+
 							'			</div>'+
 							'		</li>';
+						}else{
+							if(preguntas[j].id==respuestas_viviendas[i].id_pregunta && respuestas_viviendas[i].nro_ficha!=0 && respuestas_viviendas[i].respuestas_posibles=="0" && (respuestas_viviendas[i].respuestas_text!="" || respuestas_viviendas[i].respuestas_text!=null)){
+								lista_preguntasyrespuestas='<input type="text" id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" value="'+respuestas_viviendas[i].respuestas_text+'" class="respuestas_text">';
+							}else{
+								if(preguntas[j].id==respuestas_viviendas[i].id_pregunta && respuestas_viviendas[i].nro_ficha!=0 && respuestas_viviendas[i].tipo_respuesta=="multitexto"){
+									lista_preguntasyrespuestas+='<input id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" type="checkbox" checked>'+respuestas_viviendas[i].respuestas_posibles+' <input type="number" id="respuestas" value="'+respuestas_viviendas[i].respuestas_text+'"><br>';// check con input
+								}else{
+										if(preguntas[j].id==respuestas_viviendas[i].id_pregunta && respuestas_viviendas[i].nro_ficha!=0 && respuestas_viviendas[i].tipo_respuesta=="multiple"){
+											lista_preguntasyrespuestas+='<input id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" type="checkbox" checked>'+respuestas_viviendas[i].respuestas_posibles+' <br>';// check  
+										}	
+									}
+								}
+							}
 						}
-					}
+					
 				}
 				cabecera='<fieldset id="respuestas-100-'+preguntas[j].id+'"><ul class="list-group">';
 				footer='	</fieldset></ul></div></div>';
