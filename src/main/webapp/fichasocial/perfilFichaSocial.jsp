@@ -251,8 +251,27 @@ body {
 			var nro_ficha = idparsed[1];
 			var pregunta_id= idparsed[2];
 			var respuesta_seleccionada=idparsed[3];
+			var respuesta_text=$(this).val(); 
 			
+			var objeto = new Object();
 			
+			objeto.nroFicha = nro_ficha;
+			objeto.fechaRealizacion = "2016-01-01";
+			objeto.viviendaNro="1";
+			objeto.preguntaId = pregunta_id;
+			objeto.respuestaObtenidaId = respuesta_seleccionada;
+			objeto.respuesta = respuesta_text;
+			objeto.respuestaBoleana=false;
+			
+			var info = JSON.stringify(objeto);
+		    $.ajax({
+		        url: 'http://spr.stp.gov.py/tablero/ajaxUpdate2?accion=actRespuestasViviendas',
+		        type: 'POST',
+		        dataType: 'json',
+		        data: info,
+		        contentType: 'application/json',
+		        mimeType: 'application/json',
+			 });
 		});
 		
 		$("body").on("click", ".respuestas",function(event){				
