@@ -261,7 +261,7 @@ body {
 			objeto.preguntaId = pregunta_id;
 			objeto.respuestaObtenidaId = respuesta_seleccionada;
 			objeto.respuesta = respuesta_text;
-			objeto.respuestaBoleana=false;
+			//objeto.respuestaBoleana=false;
 			
 			var info = JSON.stringify(objeto);
 		    $.ajax({
@@ -300,8 +300,8 @@ body {
 		    			objeto.viviendaNro="1";
 		    			objeto.preguntaId = pregunta_id;
 		    			objeto.respuestaObtenidaId = respuesta_seleccionada;
-		    			objeto.respuesta = "";
-		    			objeto.respuestaBoleana=false;
+		    			objeto.respuesta = null;
+		    			objeto.respuestaBoleana=null;
 		    			
 		    			var info = JSON.stringify(objeto);
 		    		    $.ajax({
@@ -448,7 +448,7 @@ body {
 			
 			for(j = 0;j<preguntas.length; j++){
 				for(i = 0;i<respuestas_viviendas.length; i++){
-					if(preguntas[j].id==respuestas_viviendas[i].id_pregunta && respuestas_viviendas[i].nro_ficha==0 && (respuestas_viviendas[i].respuestas_text==null || respuestas_viviendas[i].respuestas_text=="" ) && respuestas_viviendas[i].respuestas_bolean==null && respuestas_viviendas[i].tipo_respuesta=="lista"){
+					if(preguntas[j].id==respuestas_viviendas[i].id_pregunta && respuestas_viviendas[i].nro_ficha==0 && respuestas_viviendas[i].tipo_respuesta=="lista"){
 						lista_preguntasyrespuestas+= 	'		<li class="list-group-item">'+
 														'			<div class="radio">'+
 														'				<label> <input type="radio" id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" name="respuestas-100-'+preguntas[j].id+'" class="respuestas">'
@@ -457,7 +457,7 @@ body {
 														'			</div>'+
 														'		</li>';
 					}else{
-						if(preguntas[j].id==respuestas_viviendas[i].id_pregunta && respuestas_viviendas[i].nro_ficha!=0 && (respuestas_viviendas[i].respuestas_text==null || respuestas_viviendas[i].respuestas_text=="" ) && respuestas_viviendas[i].respuestas_bolean==null && respuestas_viviendas[i].tipo_respuesta=="lista"){
+						if(preguntas[j].id==respuestas_viviendas[i].id_pregunta && respuestas_viviendas[i].nro_ficha!=0 && respuestas_viviendas[i].tipo_respuesta=="lista"){
 							lista_preguntasyrespuestas+= 	'		<li class="list-group-item">'+
 							'			<div class="radio">'+
 							'				<label> <input type="radio" id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" name="respuestas-100-'+preguntas[j].id+'" checked=true>'

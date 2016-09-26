@@ -16,6 +16,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
 import py.gov.stp.objetosV2.*;
 import py.gov.stp.tools.ConnectionConfiguration;
 
@@ -893,7 +894,8 @@ public class SqlInserts {
 			insert.setInt (4, obj.getPreguntaId());
 			insert.setInt (5, obj.getRespuestaObtenidaId());
 			insert.setString (6, obj.getRespuesta());
-			insert.setBoolean(7, obj.isRespuestaBoleana());			
+			insert.setBoolean(7, obj.isRespuestaBoleana());	
+			//insert.setNull(7, 6);
 			
 			insert.execute();
 			   
