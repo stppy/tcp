@@ -1602,4 +1602,19 @@ public static boolean borradoHito(Hito objeto){
 			    return true;
 			  } catch (SQLException e) {e.printStackTrace(); return false;}
 		}
+	public static boolean borradoInstanciaEtiqueta(InsLineaAccionHasEtiqueta objeto){
+	  	 Connection conect=ConnectionConfiguration.conectar();
+	  	 Statement statement = null;
+	  	 objeto.changeBorrado();
+	  	 
+	  	 String query = "update ins_linea_accion_has_etiqueta set borrado='"+objeto.isBorrado()+"'";	
+				 
+		 query+=" where ins_linea_accion_id ="+objeto.getInsLineaAccionId()+" and etiqueta_id ="+objeto.getEtiquetaId(); 
+		 try {
+			statement=conect.createStatement();
+			statement.execute(query);
+		    conect.close();
+		    return true;
+		  } catch (SQLException e) {e.printStackTrace(); return false;}
+	}
 }

@@ -404,7 +404,7 @@ function renderEvidencia(avanceId, parametros){
 		        			 });
 		        	    }
 		        	    
-		        	    //Inserta en la tabla usuario_linea_accion-------------------------------------------------------------------------------------------
+		        	    //Inserta en la tabla usuario_linea_accion-----------------------------------------------------------------------------------------------------------------------------------------------------
 		        	    
 		        		var usuarioLineaAccion = new Object();
 	        			
@@ -460,6 +460,7 @@ function renderEvidencia(avanceId, parametros){
 		var periodoId = idParsed[3];
 		var meta = idParsed[4];
 		var version = idParsed[5];
+		var etiquetasUsuario ="";
 		
 		if ( $("#insLineaAccion").length )
 		{
@@ -468,7 +469,16 @@ function renderEvidencia(avanceId, parametros){
 		if ( $("#modalAccion").length )
 		{
 			$("#modalAccion").remove();
-		}		
+		}	
+		if ( $("#modalEtiquetaUsuario").length )
+		{
+			$("#modalEtiquetaUsuario").remove();
+		}
+		if ( $("#modalInstanciaLineaAccionEtiqueta").length )
+		{
+			$("#modalInstanciaLineaAccionEtiqueta").remove();
+		}
+		
 		
 		var lineaAccion = $.ajax({
 			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
@@ -516,6 +526,44 @@ function renderEvidencia(avanceId, parametros){
 			}
 		}
 		
+		var etiquetas = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getEtiqueta',
+			type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		etiquetas = JSON.parse(etiquetas);
+		
+		var instanciaEtiqueta = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccionHasEtiqueta&insLineaAccionId='+id,
+			type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		instanciaEtiqueta = JSON.parse(instanciaEtiqueta);
+		
+		var etiquetasSeleccionada = [];
+		if(instanciaEtiqueta != null){
+			for(var i = 0; i < etiquetas.length; i++){
+				for(var l = 0; l < instanciaEtiqueta.length; l++){
+					if(instanciaEtiqueta[l].etiqueta_id == etiquetas[i].id && instanciaEtiqueta[l].borrado != true){
+						etiquetasUsuario += '<input type="checkbox" class="cmbEditarEtiquetaInstancia" id=e-'+id+'-'+instanciaEtiqueta[l].etiqueta_id+'-'+version+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+meta+' checked="true"><a> '+etiquetas[i].nombre+'</a></br> ';
+						etiquetasSeleccionada.push(etiquetas[i].id);
+					}else if(instanciaEtiqueta[l].etiqueta_id == etiquetas[i].id && instanciaEtiqueta[l].borrado != false){
+						etiquetasUsuario += '<input type="checkbox" class="cmbEditarEtiquetaInstancia" id=e-'+id+'-'+instanciaEtiqueta[l].etiqueta_id+'-'+version+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+meta+'><a> '+etiquetas[i].nombre+'</a></br> ';
+						etiquetasSeleccionada.push(etiquetas[i].id);
+					}
+				}
+			}
+		}//fin if
+			
+		for(var h = 0; h < etiquetas.length; h++){
+			if (etiquetasSeleccionada.indexOf(etiquetas[h].id)<0){
+				etiquetasUsuario += '<input type="checkbox" class="cmbEditarEtiquetaInstancia" id=n-'+id+'-'+etiquetas[h].id+'-'+version+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+meta+'><a> '+etiquetas[h].nombre+'</a></br> ';
+				etiquetasSeleccionada.push(etiquetas[h].id);
+			}
+		}
+		
 		var contenido = "";
 
 		contenido =			'<div class="modal fade" id="insLineaAccion" data-backdrop="static" data-keyboard="false" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">'+
@@ -548,7 +596,12 @@ function renderEvidencia(avanceId, parametros){
 							'					<div class="form-group">'+
 							'						<label for="version">Versión</label>'+
 							'						<input type="number" id="versionInsLineaAccion" class="form-control" name="version" placeholder="Ingrese Versión" required>'+
-							'					</div>'+				
+							'					</div>'+
+							'					<div class="form-group">'+
+							'					<label for="etiquetaUsuario">Etiqueta Instancia Linea Acción</label></br>'+
+													etiquetasUsuario
+							'					</div>'+
+
 							'				</form>'+			  
 							
 							'		    </div>'+
@@ -616,6 +669,223 @@ function renderEvidencia(avanceId, parametros){
 		
 	});
 	
+	$("body").on("click", ".cmbEditarEtiquetaInstancia",function(event){
+		var idEtiqueta=$(this).attr('id').split("-");
+		var id = idEtiqueta[1];
+		var etiqueta = idEtiqueta[2];
+		var version = idEtiqueta[3];
+		var lineaAccionId = idEtiqueta[4];
+		var institucionId = idEtiqueta[5];
+		var periodoId = idEtiqueta[6];
+		var meta = idEtiqueta[7];
+
+		var nombreEtiqueta = "";
+		
+		if ( $("#modalEditarUsuario").length )
+		{
+			$("#modalEditarUsuario").remove();
+		}	
+		if ( $("#insLineaAccion").length )
+		{
+			$("#insLineaAccion").remove();
+		}	
+		
+		var etiquetas = $.ajax({
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getEtiqueta',
+			type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		etiquetas = JSON.parse(etiquetas);
+				
+		if(idEtiqueta[0] == "n" ){
+			
+			for(var l = 0; l < etiquetas.length; l++){
+				if(etiquetas[l].id == etiqueta){
+					nombreEtiqueta = etiquetas[l].nombre;
+				}
+			}
+			
+			var objeto = new Object();
+				
+			objeto.insLineaAccionId = id;
+			objeto.etiquetaId = etiqueta;
+			objeto.version = version;
+	    	
+			var cuerpoModalEtiquetaUsuario = "";
+
+		    cuerpoModalEtiquetaUsuario =	'<div class="modal fade" id="modalEtiquetaUsuario" tabindex="-1" aria-labelledby="myLargeModalLabel">'+
+			'	<div class="modal-dialog modal-lg" style="width:90%">'+
+			'		<div class="modal-content" >'+
+			'			<div class="modal-header">'+
+			'		        <button type="button" class="close registrosInsLineaAccion" data-dismiss="modal" codigoRegistroInsLineaAccion="'+id+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+meta+'-'+version+'"><span aria-hidden="true">&times;</span></button>'+
+			'		        <h4 class="modal-title">Editar Usuario</h4>'+   
+			'			</div>'+
+			'		    <div class="modal-body" id="cuerpoModal">'+
+
+			'		      	<div class="row">'+ 
+			'		      		<div class="col-md-12">'+
+			'						<div class="box box-warning">'+
+			'		                	<div class="box-header with-border">'+
+			'		                  		<h3 class="box-title"></h3>'+
+			'               			</div>'+//fin box-heder
+			'               			<div class="box-body" id="cuerpoModalUsuario">'+
+			
+			'								<div id="mensajeBorradoUsuario"><center><h1>Ud agrego la etiqueta '+nombreEtiqueta+' a este usuario exitosamente!! </h1></center></div>'+
+			
+			'							</div>'+
+			'						</div>'+
+			'					</div>'+
+			'				</div>'+
+
+			
+			'			</div>'+
+			'			<div class="modal-footer"  id="agregarBotonUsuario">'+
+			'				<button type="button" class="btn btn-success btn-sm registrosInsLineaAccion" codigoRegistroInsLineaAccion="'+id+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+meta+'-'+version+'">Volver</button>'+
+			'			</div>'+
+			'		</div>'+ 
+			'	</div>'+
+			'</div>';  
+
+			$("body").append(cuerpoModalEtiquetaUsuario);
+			$("#modalEtiquetaUsuario").modal('show');
+			
+		  	var info = JSON.stringify(objeto);
+		    $.ajax({
+		        url: "http://spr.stp.gov.py/tablero/ajaxInserts2?accion=insLineaAccionHasEtiqueta",
+		        type: 'POST',
+		        dataType: 'json',
+		        data: info,
+		        contentType: 'application/json',
+		        mimeType: 'application/json',
+		        success: function (data) {
+		        	if(data.success == true)
+		        	{
+		            	//$("#cuerpoModalUsuario").html("<h3 class='text-center'>ETIQUETA GUARDADO EXITOSAMENTE!!</h3>");
+		        		//renderUsuarios();		        		
+		        	}else{
+
+		            	//$("#cuerpoModalUsuario").html("<h3 class='text-center'>ERROR!! al intentar guardar este usuario y etiqueta, probablemente ya existe un usuario con esta Etiqueta.</h3>");
+		        	}
+		        },
+		        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
+		        error: function(data,status,er) {
+		        	
+		        	}
+			 });
+
+		}else{
+
+			for(var l = 0; l < etiquetas.length; l++){
+				if(etiquetas[l].id == etiqueta){
+					nombreEtiqueta = etiquetas[l].nombre;
+				}
+			}
+			
+			var insLineaAccion = $.ajax({
+				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccionHasEtiqueta&insLineaAccionId='+id+'&etiquetaId='+etiqueta,
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false
+			}).responseText;
+			insLineaAccion = JSON.parse(insLineaAccion);
+						
+		    var objeto = new Object();
+		    objeto.insLineaAccionId = id;
+		    objeto.etiquetaId = etiqueta;
+		    objeto.borrado= insLineaAccion[0].borrado;
+		    
+			var cuerpoModalInstanciaEtiqueta = "";
+
+			cuerpoModalInstanciaEtiqueta =	'<div class="modal fade" id="modalInstanciaLineaAccionEtiqueta" tabindex="-1" aria-labelledby="myLargeModalLabel">'+
+			'	<div class="modal-dialog modal-lg" style="width:90%">'+
+			'		<div class="modal-content" >'+
+			'			<div class="modal-header">'+
+			'		        <button type="button" class="close registrosInsLineaAccion" data-dismiss="modal" codigoRegistroInsLineaAccion="'+id+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+meta+'-'+version+'"><span aria-hidden="true">&times;</span></button>'+
+			'		        <h4 class="modal-title">Editar Usuario</h4>'+   
+			'			</div>'+
+			'		    <div class="modal-body" id="cuerpoModal">'+
+
+			'		      	<div class="row">'+ 
+			'		      		<div class="col-md-12">'+
+			'						<div class="box box-warning">'+
+			'		                	<div class="box-header with-border">'+
+			'		                  		<h3 class="box-title"></h3>'+
+			'               			</div>'+//fin box-heder
+			'               			<div class="box-body" id="cuerpoModalUsuario">'+
+			
+			'								<div id="mensajeBorradoUsuario"><center><h1>Ud a modificado el estado de la etiqueta '+nombreEtiqueta+' exitosamente!!</h1></center></div>'+
+			
+			'							</div>'+
+			'						</div>'+
+			'					</div>'+
+			'				</div>'+
+
+			
+			'			</div>'+
+			'			<div class="modal-footer"  id="agregarBotonUsuario">'+
+			'				<button type="button" class="btn btn-success btn-sm registrosInsLineaAccion" codigoRegistroInsLineaAccion="'+id+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+meta+'-'+version+'">Volver</button>'+
+			'			</div>'+
+			'		</div>'+ 
+			'	</div>'+
+			'</div>';  
+
+			$("body").append(cuerpoModalInstanciaEtiqueta);
+			$("#modalInstanciaLineaAccionEtiqueta").modal('show');
+
+
+		  	var info = JSON.stringify(objeto);
+		    $.ajax({
+		        url: "http://spr.stp.gov.py/tablero/ajaxUpdate2?accion=borradoInstanciaEtiqueta",
+		        type: 'POST',
+		        dataType: 'json',
+		        data: info,
+		        contentType: 'application/json',
+		        mimeType: 'application/json',
+		        success: function (data) {
+		        	
+		        	if(data.success == true){
+		        		
+		        	    //Inserta en la tabla usuario_linea_accion-----------------------------------------------------------------------------------------------------------------------------------------------------
+		        	    
+		        		var usuarioLineaAccion = new Object();
+	        			
+		        		usuarioLineaAccion.lineaAccionId =lineaAccionId ;
+
+	        	    	
+	        		  	var info2 = JSON.stringify(usuarioLineaAccion);
+	        		    $.ajax({
+	        		        url: "http://spr.stp.gov.py/tablero/ajaxInserts2?accion=insUsuarioLineaAccion",
+	        		        type: 'POST',
+	        		        dataType: 'json',
+	        		        data: info2,
+	        		        contentType: 'application/json',
+	        		        mimeType: 'application/json',
+	        		        success: function (data) {
+	        		        	if(data.success == true)
+	        		        	{
+									alert("USUARIO LINEA ACCION EXITOSO");
+	        		        	}else{
+
+	        		        	}
+	        		        },
+	        		        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
+	        		        error: function(data,status,er) {
+	        		        	
+	        		        	}
+	        			 });
+		        	}
+
+		        },
+
+		        error: function(data,status,er) {
+		        	
+		        	}
+			 });
+
+		}
+
+	});
 	
 	$("body").on("click", "#actualizarInsLineaAccion",function(event){		
 		if (validarFormulario("formularioInsLineaAccion",false,false)==true){
