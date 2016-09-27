@@ -274,6 +274,37 @@ body {
 			 });
 		});
 		
+		$("body").on("click", ".multiple",function(event){
+			var id=$(this).attr('id');
+			var respuesta_bol=$(this).is(':checked');
+			var idparsed=id.split("-");
+			var nro_ficha = idparsed[1];
+			var pregunta_id= idparsed[2];
+			var respuesta_seleccionada=idparsed[3];
+			
+			var objeto = new Object();
+			
+			objeto.nroFicha = nro_ficha;
+			objeto.fechaRealizacion = "2016-01-01";
+			objeto.viviendaNro="1";
+			objeto.preguntaId = pregunta_id;
+			objeto.respuestaObtenidaId = respuesta_seleccionada;
+			//objeto.respuesta = respuesta_text;
+			objeto.respuestaBoleana=respuesta_bol; 
+			
+			var info = JSON.stringify(objeto);
+		    $.ajax({
+		        url: 'http://spr.stp.gov.py/tablero/ajaxUpdate2?accion=actRespuestasViviendasBoleana',
+		        type: 'POST',
+		        dataType: 'json',
+		        data: info,
+		        contentType: 'application/json',
+		        mimeType: 'application/json',
+			 });
+			
+			
+		});
+		
 		$("body").on("click", ".respuestas",function(event){				
 			var id=$(this).attr('id');			
 			var idparsed=id.split("-");
@@ -470,10 +501,17 @@ body {
 								lista_preguntasyrespuestas='<input type="text" id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" value="'+respuestas_viviendas[i].respuestas_text+'" class="respuestas_text">';
 							}else{
 								if(preguntas[j].id==respuestas_viviendas[i].id_pregunta && respuestas_viviendas[i].nro_ficha!=0 && respuestas_viviendas[i].tipo_respuesta=="multitexto"){
-									lista_preguntasyrespuestas+='<input id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" type="checkbox" checked>'+respuestas_viviendas[i].respuestas_posibles+' <input type="number" id="respuestas" value="'+respuestas_viviendas[i].respuestas_text+'"><br>';// check con input
+									//lista_preguntasyrespuestas+='<input id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" type="checkbox" checked>'+respuestas_viviendas[i].respuestas_posibles+' <input type="number" id="respuestas" value="'+respuestas_viviendas[i].respuestas_text+'"><br>';// check con input
+									lista_preguntasyrespuestas+=respuestas_viviendas[i].respuestas_posibles+' <input type="number" id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" class="respuestas_text" value="'+respuestas_viviendas[i].respuestas_text+'"><br>';// check con input
 								}else{
 										if(preguntas[j].id==respuestas_viviendas[i].id_pregunta && respuestas_viviendas[i].nro_ficha!=0 && respuestas_viviendas[i].tipo_respuesta=="multiple"){
-											lista_preguntasyrespuestas+='<input id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" type="checkbox" checked>'+respuestas_viviendas[i].respuestas_posibles+' <br>';// check  
+											if(respuestas_viviendas[i].respuestas_bolean==true){
+												lista_preguntasyrespuestas+='<input id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" type="checkbox" class="multiple" checked>'+respuestas_viviendas[i].respuestas_posibles+' <br>';// check	
+											}else{
+												if(respuestas_viviendas[i].respuestas_bolean==false){
+													lista_preguntasyrespuestas+='<input id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" type="checkbox" class="multiple">'+respuestas_viviendas[i].respuestas_posibles+' <br>';// check
+												}
+											}  
 										}	
 									}
 								}
