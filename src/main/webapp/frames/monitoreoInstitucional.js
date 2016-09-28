@@ -9,6 +9,29 @@ function numeroConComa(x) {
 	}
 }
 
+function validarNumero(x) {
+	if (isNaN(x)){
+		return 0;
+	}else if ( x == "Infinity"){
+		return 0;
+	}else{
+		return x;
+	}
+}
+
+function color(a,b) {
+	if (parseInt(a)>=90 && b != 0){ 
+		clase="bg-green-active color-palette";
+		return clase;
+	}else if(parseInt(a)>=70 && b != 0){
+		clase="bg-yellow-active color-palette"; 
+		return clase;
+	}else{
+		clase="bg-red-active color-palette";
+		return clase;
+	}
+}
+
 function orden(a,b) {             
 	if (a.orden < b.orden)
 		return -1;
@@ -45,7 +68,7 @@ function renderLineasEstrategicas(periodo){
 	  	async:false       
 	}).responseText;
 	lineasProgramadas = JSON.parse(lineasProgramadas);
-	lineasProgramadas=lineasProgramadas.sort(lineaAccionOrden);
+	//lineasProgramadas=lineasProgramadas.sort(lineaAccionOrden);
 	
 	var instituciones = $.ajax({
 		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
@@ -130,28 +153,15 @@ function renderAccion(/*estrategia, */lineasProgramadas, instituciones, periodo)
 	var tempInstLineas="";
 	var flagIns=0;
 	var clase="";
+	var clase2="";
 
-	//OBTENCION DE LA FECHA ACTUAL
-	/*var f = new Date();
-	if( (f.getMonth() +1) < 10 ){
-		var mes =( 0 +""+ (f.getMonth() +1));
-	}else{
-		var mes =f.getMonth();
-	}
-	
-	if( (f.getDate()) < 10 ){
-		var dia =( 0 +""+ (f.getDate()));
-	}else{
-		var dia = f.getDate();
-	}
-	var fechaActual = (f.getFullYear() + "-" + mes + "-" + dia);
-	*/
 	
 	tempInstituciones = '<thead><tr>'+
-								  	'<th class="text-center" style="vertical-align: middle;">%</th>'+
-								  	'<th class="text-center" style="vertical-align: middle;">%</th>'+
-								   	'<th class="text-center">%</th>'+
-								  	'<th class="text-center">%</th>'+
+  									'<th class="text-center" style="vertical-align: middle;">Institución</th>'+
+								  	'<th class="text-center" style="vertical-align: middle;">Programación</th>'+
+								  	'<th class="text-center" style="vertical-align: middle;">Avance</th>'+
+								   	'<th class="text-center">Destinatarios</th>'+
+								  	'<th class="text-center">Inversión</th>'+
 							    '</tr></thead><tbody>';
     var valor1 = 0;
     var valor2 = 0;
@@ -173,93 +183,50 @@ function renderAccion(/*estrategia, */lineasProgramadas, instituciones, periodo)
 								if(usuarioLineaAccion[d].lineaAccionId == lineasProgramadas[n].lineaAccionId)
 								{
 
-									if ( instituciones[m].id==lineasProgramadas[n].institucionId /*&&  lineasProgramadas[n].lineaAccionEstratagiaId==estrategia*/){
+									if ( instituciones[m].id==lineasProgramadas[n].institucionId){
 										
 										cont = cont + 1;
 										if (flagIns == 0){
-											tempInstituciones += '<tr><td colspan="4"><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td></tr>';
+											tempInstituciones += '<tr><td><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td>';
 											flagIns++;						  
 										}
-										clase="";
-										var desempProgAnho=numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2));
-										if (lineasProgramadas[n].cantidadAnho==0 && lineasProgramadas[n].meta ==0) desempProgAnho="0";
-										if (desempProgAnho!="-"){
-											if (parseInt(desempProgAnho)>=90 && lineasProgramadas[n].meta != 0){ 
-												clase="bg-green-active color-palette"; 
-											}else if(parseInt(desempProgAnho)>=70 && lineasProgramadas[n].meta != 0){
-												clase="bg-yellow-active color-palette"; 
-											}else{
-												clase="bg-red-active color-palette";
-											}
-										}
-										  
-										tempInstLineas += '<tr>';
-//										'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>';
-										/*'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
-										'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
-										'<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>'+*/
-//										'<td class="'+clase+'">'+desempProgAnho+'</td>';
-										if(lineasProgramadas[n].cantDest==0){
-											/*tempInstLineas += '<td> - </td>';*/
-										}else{
-											/*tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>';*/
-										}
-//										tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDestinatarioReal / lineasProgramadas[n].cantDest) +'</td>'+
-										/*tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+*/
-//										/*tempInstLineas += */'<td>'+numeroConComa( (lineasProgramadas[n].costoAc/1000000) / (lineasProgramadas[n].inversionEstimada/1000000))+'</td>';
-
-										/*'<td>'+numeroConComa(lineasProgramadas[n].cantidadHoy)+'</td>'+
-										'<td>'+numeroConComa(lineasProgramadas[n].cantidadAvance)+'</td>';*/
-						
-										var desempEjeHoy=numeroConComa(((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100).toFixed(2));
-										if(lineasProgramadas[n].cantidadAvance==0 && lineasProgramadas[n].cantidadHoy==0) desempEjeHoy="0";
-										if (desempEjeHoy!="-"){
-											if (clase!="bg-red-active color-palette" && clase!="" ){
-												clase="";
-												if (parseInt((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100)>=90 && lineasProgramadas[n].cantidadHoy != 0){
-													clase="bg-green-active color-palette"; 
-												}else if(parseInt((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100)>=70 && lineasProgramadas[n].cantidadHoy != 0){
-													clase="bg-yellow-active color-palette"; 
-												}else{
-													clase="bg-red-active color-palette";
-												}
-											}
-										}else{
-											clase="";
-										}
-						  
-//										tempInstLineas += '<td class="'+clase+'">'+desempEjeHoy+'</td>';
-										if(lineasProgramadas[n].cantDestinatarioReal==0){
-											/*tempInstLineas += '<td> - </td>';*/
-										}else{
-											/*tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDestinatarioReal)+'</td>';*/
-										}
-//										tempInstLineas += /*'<td>'+numeroConComa((lineasProgramadas[n].costoAc/1000000).toFixed(2))+'</td>'+*/
-//										'</tr>';
-										
+										var desempProgAnho=validarNumero(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2));
+										var desempEjeHoy=validarNumero(((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100).toFixed(2));
+						  									
 										valor1 += parseFloat(desempProgAnho);
-										valor2 += parseFloat((lineasProgramadas[n].cantDestinatarioReal / lineasProgramadas[n].cantDest).toFixed(2));
-										valor3 += parseFloat(((lineasProgramadas[n].costoAc/1000000) / (lineasProgramadas[n].inversionEstimada/1000000)).toFixed(2));
+										valor2 += validarNumero((lineasProgramadas[n].cantDestinatarioReal / lineasProgramadas[n].cantDest));
+										valor3 += validarNumero(((lineasProgramadas[n].costoAc/1000000) / (lineasProgramadas[n].inversionEstimada/1000000)));
 										valor4 += parseFloat(desempEjeHoy);
 
 										if (n == lineasProgramadas.length -1){
 											institucionId = lineasProgramadas[n].institucionId;
 
-											valor1 = parseFloat(valor1 / cont);
-											valor2 = parseFloat(valor2 / cont);
-											valor3 = parseFloat(valor3 / cont);
-											valor4 = parseFloat(valor4 / cont);
+											valor1 = numeroConComa((valor1 / cont).toFixed(2));
+											valor2 = numeroConComa(((valor2 / cont)*100).toFixed(2));
+											valor3 = numeroConComa(((valor3 / cont)*100).toFixed(2));
+											valor4 = numeroConComa((valor4 / cont).toFixed(2));
+											
+											var colorProgramacion = color(valor1,lineasProgramadas[n].meta);
+											var colorAvance = color(valor2,lineasProgramadas[n].meta);
+											var colorDestinatarios = color(valor3,lineasProgramadas[n].meta);
+											var colorInversion = color(valor4,lineasProgramadas[n].meta);
 
-											tempInstLineas += '<td>'+valor1+'</td><td>'+valor2+'</td><td>'+valor3+'</td><td>'+valor4+'</td></tr>';
+											tempInstituciones += '<td class='+colorProgramacion+'>'+valor1+'</td><td class='+colorAvance+'>'+valor2+'</td><td class='+colorDestinatarios+'>'+valor3+'</td><td class='+colorInversion+'>'+valor4+'</td></tr>';
 											valor1=0, valor2=0, valor3=0, valor4=0, cont = 0;
 
 										}else if(lineasProgramadas[n+1].institucionId != instituciones[m].id){
-											valor1 = parseFloat(valor1 / cont);
-											valor2 = parseFloat(valor2 / cont);
-											valor3 = parseFloat(valor3 / cont);
-											valor4 = parseFloat(valor4 / cont);
+											valor1 = numeroConComa((valor1 / cont).toFixed(2));
+											valor2 = numeroConComa(((valor2 / cont)*100).toFixed(2));
+											valor3 = numeroConComa(((valor3 / cont)*100).toFixed(2));
+											valor4 = numeroConComa((valor4 / cont).toFixed(2));
+											
+											var colorProgramacion = color(valor1,lineasProgramadas[n].meta);
+											var colorAvance = color(valor2,lineasProgramadas[n].meta);
+											var colorDestinatarios = color(valor3,lineasProgramadas[n].meta);
+											var colorInversion = color(valor4,lineasProgramadas[n].meta);
 
-											tempInstLineas += '<td>'+valor1+'</td><td>'+valor2+'</td><td>'+valor3+'</td><td>'+valor4+'</td></tr>';
+
+											tempInstituciones += '<td class='+colorProgramacion+'>'+valor1+'</td><td class='+colorAvance+'>'+valor2+'</td><td class='+colorDestinatarios+'>'+valor3+'</td><td class='+colorInversion+'>'+valor4+'</td></tr>';
 											valor1=0, valor2=0, valor3=0, valor4=0, cont = 0;
 										}
 										
@@ -274,9 +241,9 @@ function renderAccion(/*estrategia, */lineasProgramadas, instituciones, periodo)
 		}
 
 		if (flagIns>0){
-			tablaInstituciones+=tempInstituciones+tempInstLineas;
+			tablaInstituciones+=tempInstituciones;
 		}
-		tempInstituciones="";tempInstLineas="";flagIns=0;
+		tempInstituciones="";flagIns=0;
 	}
 	tablaInstituciones+="</tbody>";
 	return tablaInstituciones;
