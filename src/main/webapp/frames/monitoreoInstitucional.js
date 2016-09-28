@@ -3,7 +3,7 @@ function numeroConComa(x) {
 	if (isNaN(x)){
 		return 0;
 	}else if ( x == "Infinity"){
-		return 0;
+		return "-"
 	}else{
 		return x.toString().replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 	}
@@ -159,9 +159,9 @@ function renderAccion(/*estrategia, */lineasProgramadas, instituciones, periodo)
 	tempInstituciones = '<thead><tr>'+
   									'<th class="text-center" style="vertical-align: middle;">Institución</th>'+
 								  	'<th class="text-center" style="vertical-align: middle;">Programación</th>'+
-								  	'<th class="text-center" style="vertical-align: middle;">Avance</th>'+
-								   	'<th class="text-center">Destinatarios</th>'+
-								  	'<th class="text-center">Inversión</th>'+
+								  	'<th class="text-center" style="vertical-align: middle;">Destinatarios</th>'+
+								   	'<th class="text-center">Inversión</th>'+
+								  	'<th class="text-center">Avance</th>'+
 							    '</tr></thead><tbody>';
     var valor1 = 0;
     var valor2 = 0;
@@ -190,7 +190,7 @@ function renderAccion(/*estrategia, */lineasProgramadas, instituciones, periodo)
 											tempInstituciones += '<tr><td><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td>';
 											flagIns++;						  
 										}
-										var desempProgAnho=validarNumero(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2));
+										var desempProgAnho=validarNumero(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100));
 										var desempEjeHoy=validarNumero(((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100).toFixed(2));
 						  									
 										valor1 += parseFloat(desempProgAnho);
