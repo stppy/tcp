@@ -101,7 +101,34 @@ function renderLineasEstrategicas(periodo){
 	            '</div>'+
 			   '</div>'+
 			   '</div>'+
-			   '</div>';
+			   '</div>'+
+			   
+			   '<div class="row">'+
+				'<div class="col-md-12">'+
+		          '<div class="box">'+
+		            '<div class="box-header with-border">'+
+		              '<h3 class="box-title">Información Adicional</h3>'+
+		              '<div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+		              '</div>'+
+		            '</div>'+
+		            '<div class="box-body" >'+
+		            	'<div class="table-responsive">'+
+		          			'<table class="table table-striped table-bordered table-hover">'+
+		          				'<tbody>'+
+		          					'<tr><td>Programación</td><td>...</td></tr>'+
+		          					'<tr><td>Destinatarios</td><td>...</td></tr>'+
+		          					'<tr><td>Inversión</td><td>....</td></tr>'+
+		          					'<tr><td>Avance</td><td>....</td></tr>'+
+		          					'<tr><td>Evidencia</td><td>....</td></tr>'+
+		          					'<tr><td>I.P.R</td><td>....</td></tr>'+
+
+		          				'</tbody>'+
+		          			'</table>'+
+		  				'</div>'+
+		            '</div>'+
+				   '</div>'+
+				   '</div>'+
+				   '</div>';
 		if (lineasDeEstrategia.length>0){
 			contenidoEnRow+=contenidoEnRowTemp;
 			contenidoEnRowTemp=""; 
@@ -158,10 +185,12 @@ function renderAccion(/*estrategia, */lineasProgramadas, instituciones, periodo)
 	
 	tempInstituciones = '<thead><tr>'+
   									'<th class="text-center" style="vertical-align: middle;">Institución</th>'+
-								  	'<th class="text-center" style="vertical-align: middle;">Programación</th>'+
-								  	'<th class="text-center" style="vertical-align: middle;">Destinatarios</th>'+
-								   	'<th class="text-center">Inversión</th>'+
-								  	'<th class="text-center">Avance</th>'+
+								  	'<th class="text-center" style="vertical-align: middle;">Programación (%)</th>'+
+								  	'<th class="text-center" style="vertical-align: middle;">Destinatarios (%)</th>'+
+								   	'<th class="text-center">Inversión (%)</th>'+
+								  	'<th class="text-center">Avance (%)</th>'+
+								  	'<th class="text-center">Evidencia</th>'+
+								  	'<th class="text-center">I.P.R</th>'+
 							    '</tr></thead><tbody>';
     var valor1 = 0;
     var valor2 = 0;
@@ -211,7 +240,7 @@ function renderAccion(/*estrategia, */lineasProgramadas, instituciones, periodo)
 											var colorDestinatarios = color(valor3,lineasProgramadas[n].meta);
 											var colorInversion = color(valor4,lineasProgramadas[n].meta);
 
-											tempInstituciones += '<td class='+colorProgramacion+'>'+valor1+'</td><td class='+colorAvance+'>'+valor2+'</td><td class='+colorDestinatarios+'>'+valor3+'</td><td class='+colorInversion+'>'+valor4+'</td></tr>';
+											tempInstituciones += '<td class='+colorProgramacion+'>'+valor1+'</td><td class='+colorAvance+'>'+valor2+'</td><td class='+colorDestinatarios+'>'+valor3+'</td><td class='+colorInversion+'>'+valor4+'</td><td></td><td></td></tr>';
 											valor1=0, valor2=0, valor3=0, valor4=0, cont = 0;
 
 										}else if(lineasProgramadas[n+1].institucionId != instituciones[m].id){
@@ -226,7 +255,7 @@ function renderAccion(/*estrategia, */lineasProgramadas, instituciones, periodo)
 											var colorInversion = color(valor4,lineasProgramadas[n].meta);
 
 
-											tempInstituciones += '<td class='+colorProgramacion+'>'+valor1+'</td><td class='+colorAvance+'>'+valor2+'</td><td class='+colorDestinatarios+'>'+valor3+'</td><td class='+colorInversion+'>'+valor4+'</td></tr>';
+											tempInstituciones += '<td class='+colorProgramacion+'>'+valor1+'</td><td class='+colorAvance+'>'+valor2+'</td><td class='+colorDestinatarios+'>'+valor3+'</td><td class='+colorInversion+'>'+valor4+'</td><td></td><td></td></tr>';
 											valor1=0, valor2=0, valor3=0, valor4=0, cont = 0;
 										}
 										
@@ -285,33 +314,5 @@ function getPeriodo(periodo){
 						
 	$('#mostrarOcultarPeriodo').html(periodoCuerpo);
 	
-	/*$("body").on("click", ".guardarRangoFechas",function(event){
-	
-		var fechaInicio = document.getElementById("fechaInicioAccion").value;
-		var fechaFin = document.getElementById("fechaFinAccion").value;
-		
-		var datos = new Object();
-	    
-	    datos.fechaInicio = fechaInicio;
-	    datos.fechaFin = fechaFin;
-	    
-	  	/*var info = JSON.stringify(datos);
-	    $.ajax({
-	        url: "ajaxInserts2?accion=insAccion",
-	        type: 'POST',
-	        dataType: 'json',
-	        data: info,
-	        contentType: 'application/json',
-	        mimeType: 'application/json',
-	        success: function (data) {
-	        	actualizarTablaAcciones(insLineaAccionId,lineaAccionId,institucionId,periodoId);
-	        	},
-	        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
-	        error: function(data,status,er) {
-	        	actualizarTablaAcciones(insLineaAccionId,lineaAccionId,institucionId,periodoId);
-	        	}
-		 });*/
-	//});	
-	//window.open('http://spr.stp.gov.py/','_blank');
 }	
 	
