@@ -108,6 +108,7 @@ public class ajaxSelects extends HttpServlet {
     	Integer rolId = null;
     	Integer nivelId = null;
     	Integer entidadId = null;
+    	Integer etiquetaId = null;
     	
     	String institucion=null;
     	String catalogoAccion = null;
@@ -189,7 +190,8 @@ public class ajaxSelects extends HttpServlet {
       	if (request.getParameter("nivelId")!=null) nivelId=Integer.parseInt(request.getParameter("nivelId"));
       	if (request.getParameter("entidadId")!=null) entidadId=Integer.parseInt(request.getParameter("entidadId")); 
       	if (request.getParameter("institucionIdConcat")!=null) institucionIdConcat=request.getParameter("institucionIdConcat");      	
-      	if (request.getParameter("insLineaAccionIdConcat")!=null) insLineaAccionIdConcat=request.getParameter("insLineaAccionIdConcat");      	
+      	if (request.getParameter("insLineaAccionIdConcat")!=null) insLineaAccionIdConcat=request.getParameter("insLineaAccionIdConcat");   
+      	if (request.getParameter("etiquetaId")!=null) etiquetaId=Integer.parseInt(request.getParameter("etiquetaId")); 
 
       	
         PrintWriter out = response.getWriter();
@@ -1544,7 +1546,9 @@ public class ajaxSelects extends HttpServlet {
         	if (action.equals("getInsLineaAccionHasEtiqueta")){
         		String objetos=null;
         		condition = " where true ";
-        		if (insLineaAccionIdConcat!=null) condition += " and ins_linea_accion_id in("+insLineaAccionIdConcat+")";
+        		if (insLineaAccionIdConcat!="") condition += " and ins_linea_accion_id in("+insLineaAccionIdConcat+")";
+        		if (insLineaAccionId!=null) condition += " and ins_linea_accion_id ='"+insLineaAccionId+"'";
+        		if (etiquetaId!=null) condition += " and etiqueta_id ='"+etiquetaId+"'";
            		try {objetos = SqlSelects.selectInsLineaAccionHasEtiqueta(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		out.println(objetos);return;        	
