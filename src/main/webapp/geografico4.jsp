@@ -1452,7 +1452,7 @@ if(deptoId!=null && distId!=null){
 								{
 									if(usuarioLineaAccion[d].lineaAccionId == lineasProgramadas[n].lineaAccionId)
 									{
-										if( instituciones[m].id==lineasProgramadas[n].institucionId ){
+										if( instituciones[m].id==lineasProgramadas[n].institucionId && lineasProgramadas[n].meta != 0 && lineasProgramadas[n].cantidadAvance != 0){
 											if (flagIns == 0){					  
 												tempInstituciones += '<tr><td colspan="12"><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td></tr>';
 												flagIns++;						  
@@ -1490,7 +1490,7 @@ if(deptoId!=null && distId!=null){
 																						  
 											var desempEjeHoy=numeroConComa(((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100).toFixed(2));
 											if(lineasProgramadas[n].cantidadAvance==0 && lineasProgramadas[n].cantidadHoy==0) desempEjeHoy="-";
-											if (desempEjeHoy!="-"){
+											if (desempEjeHoy!="-" && lineasProgramadas[n].meta != 0){
 												if (clase!="bg-red-active color-palette" && clase!="" ){
 													clase="";
 													if (parseInt((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100)>=90 && lineasProgramadas[n].cantidadHoy != 0){
@@ -1708,7 +1708,7 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 										if (distId == null) distId = "";
 										if (deptoId == null) deptoId = "";
 										
-										if(numeroConComa(promedio) >= 0){
+										if(numeroConComa(promedio) != 0){
 											tempInstLineas += '<tr>'+
 											'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
 											'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
@@ -1758,7 +1758,7 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 											institucionId = lineasProgramadas[n+1].institucionId;
 										} */
 										
-										if(numeroConComa(promedio) >= 0){
+										if(numeroConComa(promedio) != 0){
 											tempInstLineas += '<tr>'+
 											'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+'-'+distId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
 											'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
