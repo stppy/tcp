@@ -1664,7 +1664,7 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 						{
 							for(var d=0; d<usuarioLineaAccion.length;d++)
 							{
-								if(usuarioLineaAccion[d].lineaAccionId == lineasProgramadas[n].lineaAccionId)
+								if(usuarioLineaAccion[d].lineaAccionId == lineasProgramadas[n].lineaAccionId && lineasProgramadas[n].meta!=0 && lineasProgramadas[n].cantidadAvance!=0)
 								{
 			
 									contEjecucion++;
@@ -1720,14 +1720,16 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 											'<td>'+numeroConComa((acumEjecucionPrevista).toFixed(2))+'</td>'+
 											'<td>'+numeroConComa((acumEjecucionLograda).toFixed(2))+'</td>';
 											
-											clase="";			
-											if (promedio>=90){
-											 clase="bg-green-active color-palette"; 
-											}else if(promedio>=70){
-											 clase="bg-yellow-active color-palette"; 
-											}else{
-											 clase="bg-red-active color-palette";
-											}
+											clase="";
+											if(lineasProgramadas[n].meta != 0){
+												if (promedio>=90){
+												 clase="bg-green-active color-palette"; 
+												}else if(promedio>=70){
+												 clase="bg-yellow-active color-palette"; 
+												}else{
+												 clase="bg-red-active color-palette";
+												}
+										     }
 											
 											tempInstLineas += '<td class="'+clase+'">'+numeroConComa((promedio).toFixed(2))+'</td>'+
 											'<td>'+numeroConComa(destinatarios.toFixed(2))+'</td>'+
@@ -1769,12 +1771,14 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 											'<td>'+numeroConComa((acumEjecucionLograda).toFixed(2))+'</td>';
 											
 											clase="";			
-											if (promedio>=90){
-											 clase="bg-green-active color-palette"; 
-											}else if(promedio>=70){
-											 clase="bg-yellow-active color-palette"; 
-											}else{
-											 clase="bg-red-active color-palette";
+											if(lineasProgramadas[n].meta != 0){
+												if (promedio>=90){
+												 clase="bg-green-active color-palette"; 
+												}else if(promedio>=70){
+												 clase="bg-yellow-active color-palette"; 
+												}else{
+												 clase="bg-red-active color-palette";
+												}
 											}
 											
 											tempInstLineas += '<td class="'+clase+'">'+numeroConComa((promedio).toFixed(2))+'</td>'+
