@@ -480,47 +480,77 @@ body {
 			for(j = 0;j<preguntas.length; j++){
 				for(i = 0;i<respuestas_viviendas.length; i++){
 					if(preguntas[j].id==respuestas_viviendas[i].id_pregunta && respuestas_viviendas[i].nro_ficha==0 && respuestas_viviendas[i].tipo_respuesta=="lista"){
-						lista_preguntasyrespuestas+= 	'		<li class="list-group-item">'+
+						/* lista_preguntasyrespuestas+= 	'		<li class="list-group-item">'+
 														'			<div class="radio">'+
 														'				<label> <input type="radio" id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" name="respuestas-100-'+preguntas[j].id+'" class="respuestas">'
 																		+respuestas_viviendas[i].respuestas_posibles+
 														'				</label>'+
 														'			</div>'+
-														'		</li>';
-					}else{
+														'		</li>'; */
+						lista_preguntasyrespuestas+=
+						'			<div>'+
+						'				<input type="radio" id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" name="respuestas-100-'+preguntas[j].id+'" class="respuestas">'
+										+respuestas_viviendas[i].respuestas_posibles+						
+						'			</div>';			
+					}else{						
 						if(preguntas[j].id==respuestas_viviendas[i].id_pregunta && respuestas_viviendas[i].nro_ficha!=0 && respuestas_viviendas[i].tipo_respuesta=="lista"){
-							lista_preguntasyrespuestas+= 	'		<li class="list-group-item">'+
+							/* lista_preguntasyrespuestas+= 	'		<li class="list-group-item">'+
 							'			<div class="radio">'+
 							'				<label> <input type="radio" id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" name="respuestas-100-'+preguntas[j].id+'" checked=true>'
 											+respuestas_viviendas[i].respuestas_posibles+
 							'				</label>'+
 							'			</div>'+
-							'		</li>';
+							'		</li>'; */
+							lista_preguntasyrespuestas+=
+							'			<div>'+
+							'				<input type="radio" id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" name="respuestas-100-'+preguntas[j].id+'" checked=true>'
+											+respuestas_viviendas[i].respuestas_posibles+							
+							'			</div>';							
 						}else{
-							if(preguntas[j].id==respuestas_viviendas[i].id_pregunta && respuestas_viviendas[i].nro_ficha!=0 && respuestas_viviendas[i].respuestas_posibles=="0" && (respuestas_viviendas[i].respuestas_text!="" || respuestas_viviendas[i].respuestas_text!=null)){
-								lista_preguntasyrespuestas='<input type="text" id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" value="'+respuestas_viviendas[i].respuestas_text+'" class="respuestas_text">';
+							if(preguntas[j].id==respuestas_viviendas[i].id_pregunta && respuestas_viviendas[i].nro_ficha==0 && respuestas_viviendas[i].tipo_respuesta=="listatexto"){
+								lista_preguntasyrespuestas+=
+									'			<div>'+
+									'				<input type="radio" id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" name="respuestas-100-'+preguntas[j].id+'" class="respuestas">'
+													+respuestas_viviendas[i].respuestas_posibles+	
+									'				<input type="text" id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" value="'+respuestas_viviendas[i].respuestas_text+'" class="respuestas_text">';													
+									'			</div>';
 							}else{
-								if(preguntas[j].id==respuestas_viviendas[i].id_pregunta && respuestas_viviendas[i].nro_ficha!=0 && respuestas_viviendas[i].tipo_respuesta=="multitexto"){
-									//lista_preguntasyrespuestas+='<input id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" type="checkbox" checked>'+respuestas_viviendas[i].respuestas_posibles+' <input type="number" id="respuestas" value="'+respuestas_viviendas[i].respuestas_text+'"><br>';// check con input
-									lista_preguntasyrespuestas+=respuestas_viviendas[i].respuestas_posibles+' <input type="number" id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" class="respuestas_text" value="'+respuestas_viviendas[i].respuestas_text+'"><br>';// check con input
+								if(preguntas[j].id==respuestas_viviendas[i].id_pregunta && respuestas_viviendas[i].nro_ficha!=0 && respuestas_viviendas[i].tipo_respuesta=="listatexto"){
+									lista_preguntasyrespuestas+=
+									'			<div>'+
+									'				<input type="radio" id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" name="respuestas-100-'+preguntas[j].id+'" class="respuestas" checked=true>'
+													+respuestas_viviendas[i].respuestas_posibles+	
+									'				<input type="text" id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" value="'+respuestas_viviendas[i].respuestas_text+'" class="respuestas_text">';													
+									'			</div>';
 								}else{
-										if(preguntas[j].id==respuestas_viviendas[i].id_pregunta && respuestas_viviendas[i].nro_ficha!=0 && respuestas_viviendas[i].tipo_respuesta=="multiple"){
-											if(respuestas_viviendas[i].respuestas_bolean==true){
-												lista_preguntasyrespuestas+='<input id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" type="checkbox" class="multiple" checked>'+respuestas_viviendas[i].respuestas_posibles+' <br>';// check	
-											}else{
-												if(respuestas_viviendas[i].respuestas_bolean==false){
-													lista_preguntasyrespuestas+='<input id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" type="checkbox" class="multiple">'+respuestas_viviendas[i].respuestas_posibles+' <br>';// check
-												}
-											}  
-										}	
-									}
+									if(preguntas[j].id==respuestas_viviendas[i].id_pregunta && respuestas_viviendas[i].nro_ficha!=0 && respuestas_viviendas[i].respuestas_posibles=="0" && (respuestas_viviendas[i].respuestas_text!="" || respuestas_viviendas[i].respuestas_text!=null)){
+										lista_preguntasyrespuestas='<input type="text" id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" value="'+respuestas_viviendas[i].respuestas_text+'" class="respuestas_text">';
+									}else{
+										if(preguntas[j].id==respuestas_viviendas[i].id_pregunta && respuestas_viviendas[i].nro_ficha!=0 && respuestas_viviendas[i].tipo_respuesta=="multitexto"){
+											//lista_preguntasyrespuestas+='<input id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" type="checkbox" checked>'+respuestas_viviendas[i].respuestas_posibles+' <input type="number" id="respuestas" value="'+respuestas_viviendas[i].respuestas_text+'"><br>';// check con input
+											lista_preguntasyrespuestas+=respuestas_viviendas[i].respuestas_posibles+' <input type="number" id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" class="respuestas_text" value="'+respuestas_viviendas[i].respuestas_text+'"><br>';// check con input
+										}else{
+												if(preguntas[j].id==respuestas_viviendas[i].id_pregunta && respuestas_viviendas[i].nro_ficha!=0 && respuestas_viviendas[i].tipo_respuesta=="multiple"){
+													if(respuestas_viviendas[i].respuestas_bolean==true){
+														lista_preguntasyrespuestas+='<input id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" type="checkbox" class="multiple" checked>'+respuestas_viviendas[i].respuestas_posibles+' <br>';// check	
+													}else{
+														if(respuestas_viviendas[i].respuestas_bolean==false){
+															lista_preguntasyrespuestas+='<input id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" type="checkbox" class="multiple">'+respuestas_viviendas[i].respuestas_posibles+' <br>';// check
+														}
+													}  
+												}	
+											}
+										}
 								}
+							}
 							}
 						}
 					
 				}
-				cabecera='<fieldset id="respuestas-100-'+preguntas[j].id+'"><ul class="list-group">';
-				footer='	</fieldset></ul></div></div>';
+				//cabecera='<fieldset id="respuestas-100-'+preguntas[j].id+'"><ul class="list-group">';
+				//footer='	</fieldset></ul></div></div>';
+				cabecera='<fieldset id="respuestas-100-'+preguntas[j].id+'">';
+				footer='	</fieldset></div></div>';
 				$("#pregunta-100-"+preguntas[j].id).append(cabecera+lista_preguntasyrespuestas+footer);
 				lista_preguntasyrespuestas="";
 			}
