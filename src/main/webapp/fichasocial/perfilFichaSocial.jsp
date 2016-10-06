@@ -24,7 +24,7 @@
 	%>
 	<%
 		Map attributes = user.getAttributes();
-		if (user != null) {
+		if (user != null && (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1"))) {
 	%>
 	 <%@ include file="/frames/perfil.jsp"%> 
 
@@ -600,7 +600,7 @@ body {
 	<%
 		} else {
 	%>
-	<p>Favor Iniciar Sesion</p>
+	window.location = "http://spr.stp.gov.py/tablero/geografico4.jsp";
 	<%
 		}
 	%>
