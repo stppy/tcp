@@ -64,7 +64,7 @@ function renderEvidencia(avanceId, parametros){
 	$("body").on("click", ".nuevaInsLineaAccion",function(event){		
 		event.stopPropagation();
 		event.preventDefault();
-		var todasLasEtiquetas = "";
+		//var todasLasEtiquetas = "";
 
 		
 		var lineaAccion = $.ajax({
@@ -133,7 +133,7 @@ function renderEvidencia(avanceId, parametros){
 			optionUnidadMedida+='<option value="'+unidadMedida[u].id+'" parametro="'+unidadMedida[u].id+'">'+unidadMedida[u].descripcion+'</option>';
 		}
 		
-		var etiquetas = $.ajax({
+/* 		var etiquetas = $.ajax({
 			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getEtiqueta',
 			type:'get',
 		  	dataType:'json',
@@ -143,7 +143,7 @@ function renderEvidencia(avanceId, parametros){
 		
  		for(var l = 0; l < etiquetas.length; l++){
  			todasLasEtiquetas += ' <input type="checkbox" class="cmbEtiqueta" id=cmbEtiqueta-'+etiquetas[l].id+'> '+ etiquetas[l].nombre;
-		}
+		} */
 		
 		var contenido = "";
 
@@ -182,10 +182,10 @@ function renderEvidencia(avanceId, parametros){
 							'						<label for="version">Versión</label>'+
 							'						<input type="number" id="versionInsLineaAccion" class="form-control" name="version" placeholder="Ingrese Versión" required>'+
 							'					</div>'+
-							'					<div class="form-group">'+
+/* 							'					<div class="form-group">'+
 							'						<label for="version">Etiquetas </label>'+
 													todasLasEtiquetas
-							'					</div>'+			
+							'					</div>'+ */			
 							'				</form>'+			  
 							
 							'		    </div>'+
@@ -300,9 +300,9 @@ function renderEvidencia(avanceId, parametros){
 		var periodoId = $("#periodoInsLineaAccion option:selected").val();
 	    var meta = document.getElementById('metaInsLineaAccion').value; 
 	    var version = document.getElementById('versionInsLineaAccion').value; 
-	    var etiquetaSeleccionada = [];
-		etiquetaSeleccionada = getEtiquetaSeleccionadas();
-		var insLineaAccionId;
+	   	//var etiquetaSeleccionada = [];
+		//etiquetaSeleccionada = getEtiquetaSeleccionadas();
+		//var insLineaAccionId;
 
 	    var datos = new Object();
 	    datos.lineaAccionId = lineaAccionId;
@@ -322,7 +322,7 @@ function renderEvidencia(avanceId, parametros){
 		        
 		        success: function (data)
 		        {
-		        	insLineaAccionId = data.id;
+		        	//insLineaAccionId = data.id;
 		        	if (data.success == true)
 		        	{
 		        		
@@ -373,7 +373,7 @@ function renderEvidencia(avanceId, parametros){
 		        		$('#cuerpoModalInsLineaAccion').html('');
 		        		$("#cuerpoModalInsLineaAccion").append('<h3 class="text-center">La Línea de Acción se ha insertado con Exito</h3>');
 		        				        		
-		        		var objeto = new Object();
+/* 		        		var objeto = new Object();
 		        	    for(var t = 0; t < etiquetaSeleccionada.length; t++){
 		        			
 		        	    	objeto.insLineaAccionId = insLineaAccionId;
@@ -397,16 +397,15 @@ function renderEvidencia(avanceId, parametros){
 
 		        		        	}
 		        		        },
-		        		        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
 		        		        error: function(data,status,er) {
 		        		        	
 		        		        	}
 		        			 });
-		        	    }
+		        	    } */
 		        	    
 		        	    //Inserta en la tabla usuario_linea_accion-----------------------------------------------------------------------------------------------------------------------------------------------------
 		        	    
-		        		var usuarioLineaAccion = new Object();
+/* 		        		var usuarioLineaAccion = new Object();
 	        			
 		        		usuarioLineaAccion.lineaAccionId =lineaAccionId ;
 
@@ -427,15 +426,12 @@ function renderEvidencia(avanceId, parametros){
 
 	        		        	}
 	        		        },
-	        		        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
 	        		        error: function(data,status,er) {
 	        		        	
 	        		        	}
-	        			 });
-		        		renderInsLineaAccion(periodoSeleccionado);	        				        													
+	        			 });*/
+		        		renderInsLineaAccion(periodoSeleccionado); 				        													
 						
-		        	}else{
-		
 		        	}
 		        },
 		        error: function(data,status,er)
@@ -520,7 +516,6 @@ function renderEvidencia(avanceId, parametros){
 		{
 			if(periodo[p].id == 2016)
 			{
-				optionPeriodo+='<option value="'+periodo[p].id+'" selected>'+periodo[p].nombre+'</option>';
 			}else{
 				optionPeriodo+='<option value="'+periodo[p].id+'" >'+periodo[p].nombre+'</option>';
 			}
@@ -718,7 +713,7 @@ function renderEvidencia(avanceId, parametros){
 			'	<div class="modal-dialog modal-lg" style="width:90%">'+
 			'		<div class="modal-content" >'+
 			'			<div class="modal-header">'+
-			'		        <button type="button" class="close registrosInsLineaAccion" data-dismiss="modal" codigoRegistroInsLineaAccion="'+id+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+meta+'-'+version+'"><span aria-hidden="true">&times;</span></button>'+
+			//'		        <button type="button" class="close registrosInsLineaAccion" data-dismiss="modal" codigoRegistroInsLineaAccion="'+id+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+meta+'-'+version+'"><span aria-hidden="true">&times;</span></button>'+
 			'		        <h4 class="modal-title">Editar Usuario</h4>'+   
 			'			</div>'+
 			'		    <div class="modal-body" id="cuerpoModal">'+
@@ -741,7 +736,7 @@ function renderEvidencia(avanceId, parametros){
 			
 			'			</div>'+
 			'			<div class="modal-footer"  id="agregarBotonUsuario">'+
-			'				<button type="button" class="btn btn-success btn-sm registrosInsLineaAccion" codigoRegistroInsLineaAccion="'+id+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+meta+'-'+version+'">Volver</button>'+
+			//'				<button type="button" class="btn btn-success btn-sm registrosInsLineaAccion" codigoRegistroInsLineaAccion="'+id+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+meta+'-'+version+'">Volver</button>'+
 			'			</div>'+
 			'		</div>'+ 
 			'	</div>'+
@@ -762,7 +757,8 @@ function renderEvidencia(avanceId, parametros){
 		        	if(data.success == true)
 		        	{
 		            	//$("#cuerpoModalUsuario").html("<h3 class='text-center'>ETIQUETA GUARDADO EXITOSAMENTE!!</h3>");
-		        		//renderUsuarios();		        		
+		        		//renderUsuarios();	
+		        		renderInsLineaAccion(periodoSeleccionado);
 		        	}else{
 
 		            	//$("#cuerpoModalUsuario").html("<h3 class='text-center'>ERROR!! al intentar guardar este usuario y etiqueta, probablemente ya existe un usuario con esta Etiqueta.</h3>");
@@ -801,7 +797,7 @@ function renderEvidencia(avanceId, parametros){
 			'	<div class="modal-dialog modal-lg" style="width:90%">'+
 			'		<div class="modal-content" >'+
 			'			<div class="modal-header">'+
-			'		        <button type="button" class="close registrosInsLineaAccion" data-dismiss="modal" codigoRegistroInsLineaAccion="'+id+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+meta+'-'+version+'"><span aria-hidden="true">&times;</span></button>'+
+			//'		        <button type="button" class="close registrosInsLineaAccion" data-dismiss="modal" codigoRegistroInsLineaAccion="'+id+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+meta+'-'+version+'"><span aria-hidden="true">&times;</span></button>'+
 			'		        <h4 class="modal-title">Editar Usuario</h4>'+   
 			'			</div>'+
 			'		    <div class="modal-body" id="cuerpoModal">'+
@@ -824,7 +820,7 @@ function renderEvidencia(avanceId, parametros){
 			
 			'			</div>'+
 			'			<div class="modal-footer"  id="agregarBotonUsuario">'+
-			'				<button type="button" class="btn btn-success btn-sm registrosInsLineaAccion" codigoRegistroInsLineaAccion="'+id+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+meta+'-'+version+'">Volver</button>'+
+			//'				<button type="button" class="btn btn-success btn-sm registrosInsLineaAccion" codigoRegistroInsLineaAccion="'+id+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+meta+'-'+version+'">Volver</button>'+
 			'			</div>'+
 			'		</div>'+ 
 			'	</div>'+
@@ -864,7 +860,8 @@ function renderEvidencia(avanceId, parametros){
 	        		        success: function (data) {
 	        		        	if(data.success == true)
 	        		        	{
-									alert("USUARIO LINEA ACCION EXITOSO");
+									//alert("USUARIO LINEA ACCION EXITOSO");
+	        		        		renderInsLineaAccion(periodoSeleccionado);
 	        		        	}else{
 
 	        		        	}

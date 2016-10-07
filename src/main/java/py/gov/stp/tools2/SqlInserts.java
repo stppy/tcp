@@ -110,14 +110,43 @@ public class SqlInserts {
 	} catch (SQLException e) {e.printStackTrace();}
 		
 }
-	public static int insertInsLineaAccion(InsLineaAccion insLineaAccion){
+//ejemplo para cuando necesitemos devolver el id de un registro insertado para utilizarlo en otra tabla
+//	public static int insertInsLineaAccion(InsLineaAccion insLineaAccion){
+//	try {
+//		Connection conn=ConnectionConfiguration.conectar();
+//	   	
+//		String query = " insert into ins_linea_accion (linea_accion_id, institucion_id, periodo_id, meta, version, borrado)"
+//	+ " values (?, ?, ?, ?, ?, ?)";
+//		
+//		PreparedStatement insert = conn.prepareStatement(query,PreparedStatement.RETURN_GENERATED_KEYS);
+//		
+//		//insert.setInt (1, insLineaAccion.getId());
+//		insert.setInt (1, insLineaAccion.getLineaAccionId());
+//		insert.setInt (2, insLineaAccion.getInstitucionId());
+//		insert.setInt (3, insLineaAccion.getPeriodoId());
+//		insert.setDouble (4, insLineaAccion.getMeta());
+//		insert.setInt(5, insLineaAccion.getVersion());
+//		insert.setBoolean (6, insLineaAccion.isBorrado());		
+//		
+//		insert.execute();
+//		
+//		ResultSet keyset = insert.getGeneratedKeys();
+//		keyset.next();
+//		int valor = keyset.getInt(1);
+//		   
+//		conn.close();
+//		return valor;
+//	} catch (SQLException e) {e.printStackTrace();return 0;}
+//		
+//}
+	public static boolean insertInsLineaAccion(InsLineaAccion insLineaAccion){
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
 		String query = " insert into ins_linea_accion (linea_accion_id, institucion_id, periodo_id, meta, version, borrado)"
 	+ " values (?, ?, ?, ?, ?, ?)";
 		
-		PreparedStatement insert = conn.prepareStatement(query,PreparedStatement.RETURN_GENERATED_KEYS);
+		PreparedStatement insert = conn.prepareStatement(query);
 		
 		//insert.setInt (1, insLineaAccion.getId());
 		insert.setInt (1, insLineaAccion.getLineaAccionId());
@@ -128,14 +157,10 @@ public class SqlInserts {
 		insert.setBoolean (6, insLineaAccion.isBorrado());		
 		
 		insert.execute();
-		
-		ResultSet keyset = insert.getGeneratedKeys();
-		keyset.next();
-		int valor = keyset.getInt(1);
-		   
+				   
 		conn.close();
-		return valor;
-	} catch (SQLException e) {e.printStackTrace();return 0;}
+		return true;
+	} catch (SQLException e) {e.printStackTrace();return false;}
 		
 }
 	public static void insertInstitucion( Institucion institucion){

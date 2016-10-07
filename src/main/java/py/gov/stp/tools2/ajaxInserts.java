@@ -284,6 +284,27 @@ public class ajaxInserts  extends HttpServlet {
 			SqlInserts.insertHitoTipo(objeto);
     	}
        }
+//ES UN EJEMPLO cuando insertamos un registro y necesitamos el id de ese registro para insertar en otra tabla
+//        if (accion!=null && accion!=""){
+//    	if (accion.equals("insInsLineaAccion")){
+//    		InsLineaAccion productoObj = new InsLineaAccion();
+//    		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+//            String json = "";
+//            if(br != null){ json = br.readLine();}
+//            Gson gsonInsert = new Gson();
+//            productoObj=gsonInsert.fromJson(json, InsLineaAccion.class);
+//			//SqlInserts.insertInsLineaAccion(productoObj);
+//            int idInsLineaAccion = SqlInserts.insertInsLineaAccion(productoObj);
+//            if(idInsLineaAccion > 0){
+//                boolean status = true;
+//        		myObj.addProperty("success", status);
+//        		myObj.addProperty("id", idInsLineaAccion);
+//            }else{
+//        		myObj.addProperty("success", false);
+//            }
+//    		out.println(myObj.toString());
+//    	}
+//       }
         if (accion!=null && accion!=""){
     	if (accion.equals("insInsLineaAccion")){
     		InsLineaAccion productoObj = new InsLineaAccion();
@@ -292,15 +313,8 @@ public class ajaxInserts  extends HttpServlet {
             if(br != null){ json = br.readLine();}
             Gson gsonInsert = new Gson();
             productoObj=gsonInsert.fromJson(json, InsLineaAccion.class);
-			//SqlInserts.insertInsLineaAccion(productoObj);
-            int idInsLineaAccion = SqlInserts.insertInsLineaAccion(productoObj);
-            if(idInsLineaAccion > 0){
-                boolean status = true;
-        		myObj.addProperty("success", status);
-        		myObj.addProperty("id", idInsLineaAccion);
-            }else{
-        		myObj.addProperty("success", false);
-            }
+            boolean status = SqlInserts.insertInsLineaAccion(productoObj);
+        	myObj.addProperty("success", status);
     		out.println(myObj.toString());
     	}
        }

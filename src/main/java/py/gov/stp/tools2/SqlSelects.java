@@ -2860,7 +2860,7 @@ public class SqlSelects {
 	  }
 	public static String selectUsuarioEtiqueta(String condition) throws SQLException{
 	   	 Connection conect=ConnectionConfiguration.conectar();
-	   	 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from( select * from usuario_etiqueta"+condition+")t";
+	   	 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from( select * from usuario_etiqueta"+condition+" and borrado is false)t";
 
 
 		Statement statement = null;

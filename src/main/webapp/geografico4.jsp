@@ -1452,7 +1452,7 @@ if(deptoId!=null && distId!=null){
 								{
 									if(usuarioLineaAccion[d].lineaAccionId == lineasProgramadas[n].lineaAccionId)
 									{
-										if( instituciones[m].id==lineasProgramadas[n].institucionId && lineasProgramadas[n].meta != 0 && lineasProgramadas[n].cantidadAvance != 0){
+										if( (instituciones[m].id==lineasProgramadas[n].institucionId && lineasProgramadas[n].cantidadAnho != 0 && lineasProgramadas[n].cantidadAvance != 0) || ( instituciones[m].id==lineasProgramadas[n].institucionId && lineasProgramadas[n].cantidadAnho != 0 && lineasProgramadas[n].cantidadAvance == 0) || ( instituciones[m].id==lineasProgramadas[n].institucionId && lineasProgramadas[n].cantidadAnho == 0 && lineasProgramadas[n].cantidadAvance != 0) ){	
 											if (flagIns == 0){					  
 												tempInstituciones += '<tr><td colspan="12"><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td></tr>';
 												flagIns++;						  
