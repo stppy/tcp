@@ -174,6 +174,27 @@ body {
 }
 </style>
 
+<div class="wrapper">
+	<header class="main-header">
+		  <%@ include file="/frames/mainheader.jsp" %>
+      </header>
+      <!-- Left side column. contains the logo and sidebar -->
+      <aside class="main-sidebar">
+  			 <%@ include file="/frames/main-sidebar.jsp" %>
+      </aside>
+      
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <h1>
+            <small>
+            <!--  Titulo, donde antes estaba dashboard -->
+            </small>
+          </h1>
+         
+        </section>
+
 	<div class="container">
 		<div class="row profile">
 			<div class="col-md-3">
@@ -230,7 +251,8 @@ body {
 			</div>
 		</div>
 	</div>
-
+</div>
+</div>
 	<script>
 	$(document).ready(function(){
 		
