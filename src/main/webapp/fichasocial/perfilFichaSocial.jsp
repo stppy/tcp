@@ -577,8 +577,7 @@ body {
 				lista_preguntasyrespuestas="";
 			}
 			
-		});
-		
+		});	
 	});
 	
 	</script>
@@ -619,13 +618,11 @@ body {
 
 	<!-- AdminLTE for demo purposes -->
 	<script src="/dist/js/demo.js" type="text/javascript"></script>
-	<%
-		} else {
-	%>
+	<%}else{%>
+	<script>
 	window.location = "http://spr.stp.gov.py/tablero/geografico4.jsp";
-	<%
-		}
-	%>
+	</script>
+	<%}%> 
 	
 </body>
 </html>
