@@ -1284,9 +1284,11 @@ function numeroConComa(x) {
 	if (isNaN(x)){
 		return 0;
 	}else
-		if ( x == "Infinity" || x == null){
+		if ( x == "Infinity"){
 			//return "-" se cambió por 100 para el caso en que prevista/lograda sea infinito en vez de desplegar '-'. 
 			return "100"
+		}else if (x == null){
+			return "-"		
 		}else{
 			return x.toString().replace(".00","").replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 		}
@@ -1883,68 +1885,78 @@ function renderNivelDistrital(lineasProgramadas, deptoId, distId){
 								if(usuarioLineaAccion[d].lineaAccionId == lineasProgramadas[n].lineaAccionId)
 								{
 									if ( instituciones[m].id==lineasProgramadas[n].institucionId ){
-										if (flagIns == 0){
-											  
-											  tempInstituciones += '<tr><td colspan="12"><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td></tr>';
-												flagIns++;						  
-										  }
-										  clase="";
-										  var desempProgAnho=numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2));
-										  if (lineasProgramadas[n].cantidadAnho==0 && lineasProgramadas[n].meta ==0) desempProgAnho="-";
-							/* 			  if (desempProgAnho!="-"){
-											  if (parseInt(desempProgAnho)>=90 && lineasProgramadas[n].meta != 0){
-												  clase="bg-green-active color-palette"; 
-											  }else if(parseInt(desempProgAnho)>=70 && lineasProgramadas[n].meta != 0){
-												  clase="bg-yellow-active color-palette"; 
-											  }else{
-												  clase="bg-red-active color-palette";
+										  
+										  if((lineasProgramadas[n].cantidadAnho != 0 && lineasProgramadas[n].cantidadAvance != 0) || (lineasProgramadas[n].cantidadAnho != 0 && lineasProgramadas[n].cantidadAvance == 0) || (lineasProgramadas[n].cantidadAnho == 0 && lineasProgramadas[n].cantidadAvance != 0)){
+										
+											  if (flagIns == 0){
+												  
+												  tempInstituciones += '<tr><td colspan="12"><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td></tr>';
+													flagIns++;						  
 											  }
-										  } */
-										  
-										  if (deptoId == null) deptoId = "";
-										  if (distId == null) distId = "";			  
-										  
-										  tempInstLineas += '<tr>'+
-										  '<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+'-'+distId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
-										  '<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
-										 // '<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
-										  '<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>';
-										  //'<td class="'+clase+'">'+desempProgAnho+'</td>';
-										  if(lineasProgramadas[n].cantDest==0){
-											  tempInstLineas += '<td> - </td>';
-										  }else{
-											  tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>';
-										  }
-										  tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
-										  '<td>'+numeroConComa(lineasProgramadas[n].cantidadHoy)+'</td>'+
-										  '<td>'+numeroConComa(lineasProgramadas[n].cantidadAvance)+'</td>';
-										  
-										  
-										  var desempEjeHoy=numeroConComa(((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100).toFixed(2));
-										  if(lineasProgramadas[n].cantidadAvance==0 && lineasProgramadas[n].cantidadHoy==0) desempEjeHoy="-";
-										  if (desempEjeHoy!="-"){
-											  if (clase!="bg-red-active color-palette"){
-												  clase="";
-												  if (parseInt((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100)>=90 && lineasProgramadas[n].cantidadHoy != 0){
+											  clase="";
+											  var desempProgAnho=numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2));
+											  if (lineasProgramadas[n].cantidadAnho==0 && lineasProgramadas[n].meta ==0) desempProgAnho="-";
+								/* 			  if (desempProgAnho!="-"){
+												  if (parseInt(desempProgAnho)>=90 && lineasProgramadas[n].meta != 0){
 													  clase="bg-green-active color-palette"; 
-												  }else if(parseInt((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100)>=70 && lineasProgramadas[n].cantidadHoy != 0){
+												  }else if(parseInt(desempProgAnho)>=70 && lineasProgramadas[n].meta != 0){
 													  clase="bg-yellow-active color-palette"; 
 												  }else{
 													  clase="bg-red-active color-palette";
 												  }
+											  } */
+											  
+											  if (deptoId == null) deptoId = "";
+											  if (distId == null) distId = "";			  
+											  
+											  tempInstLineas += '<tr>'+
+											  '<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+'-'+distId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
+											  '<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
+											 // '<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
+											  '<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>';
+											  //'<td class="'+clase+'">'+desempProgAnho+'</td>';
+											  if(lineasProgramadas[n].cantDest==0){
+												  tempInstLineas += '<td> - </td>';
+											  }else{
+												  tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>';
 											  }
-										  }else{
-											  clase="";
-										  }
-										  
-										  tempInstLineas += '<td class="'+clase+'">'+desempEjeHoy+'</td>';
-										  if(lineasProgramadas[n].cantDestinatarioReal==0){
-											  tempInstLineas += '<td> - </td>';
-										  }else{
-											  tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDestinatarioReal)+'</td>';
-										  }
-										  tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].costoAc/1000000).toFixed(2))+'</td>'+
-										  '</tr>';
+											  tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
+											  '<td>'+numeroConComa(lineasProgramadas[n].cantidadHoy)+'</td>'+
+											  '<td>'+numeroConComa(lineasProgramadas[n].cantidadAvance)+'</td>';
+											  
+											  
+											  var desempEjeHoy=numeroConComa(((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100).toFixed(2));
+											  if(lineasProgramadas[n].cantidadAvance==0 && lineasProgramadas[n].cantidadHoy==0) desempEjeHoy="-";
+											  if (desempEjeHoy!="-" &&  lineasProgramadas[n].cantidadAnho!= 0 && lineasProgramadas[n].cantidadAnho != null){
+												  if (clase!="bg-red-active color-palette"){
+													  clase="";
+													  if (parseInt((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100)>=90 && lineasProgramadas[n].cantidadHoy != 0){
+														  clase="bg-green-active color-palette"; 
+													  }else if(parseInt((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100)>=70 && lineasProgramadas[n].cantidadHoy != 0){
+														  clase="bg-yellow-active color-palette"; 
+													  }else{
+														  clase="bg-red-active color-palette";
+													  }
+												  }
+											  }else{
+												  clase="";
+											  }
+											  
+											  if(desempEjeHoy != 0 && lineasProgramadas[n].cantidadAnho != 0){
+												  tempInstLineas += '<td class="'+clase+'">'+desempEjeHoy+'</td>';
+												  if(lineasProgramadas[n].cantDestinatarioReal==0){
+													  tempInstLineas += '<td> - </td>';
+												  }else{
+													  tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDestinatarioReal)+'</td>';
+												  }
+												  tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].costoAc/1000000).toFixed(2))+'</td>'+
+												  '</tr>'; 
+											  }else{
+												  tempInstLineas = "";
+												  tempInstituciones = "";
+											  }
+					
+										 }
 									}
 								}
 							}
