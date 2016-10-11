@@ -209,13 +209,14 @@ body {
 					<!-- SIDEBAR USER TITLE -->
 					<div class="profile-usertitle">
 						<div class="profile-usertitle-name" id="nombrePersona"></div>
+						<div class="profile-usertitle-name" id="numeroCedula"></div>
 						<div class="profile-usertitle-job" id="cargoPersona">Jefe de Hogar</div>
 					</div>
 					<!-- END SIDEBAR USER TITLE -->
 					<!-- SIDEBAR BUTTONS -->
 					<div class="profile-userbuttons">
-						<button type="button" class="btn btn-success btn-sm">Procesar</button>
-						<button type="button" class="btn btn-danger btn-sm">Editar</button>
+						<!-- <button type="button" class="btn btn-success btn-sm">Procesar</button>
+						<button type="button" class="btn btn-danger btn-sm">Editar</button> -->
 					</div>
 					<!-- END SIDEBAR BUTTONS -->
 					<!-- SIDEBAR MENU -->
@@ -264,7 +265,8 @@ body {
 		}).responseText;
 		personas = JSON.parse(personas);
 		
-		$("#nombrePersona").append(personas[0].nombre_primero);
+		$("#nombrePersona").append(personas[0].nombres +", "+ personas[0].apellidos);
+		$("#numeroCedula").append("Nro. Cédula: "+personas[0].nro_cedula);
 		//$("#cargoPersona").append();
 		
 		$("body").on("change", ".respuestas_text",function(event){
