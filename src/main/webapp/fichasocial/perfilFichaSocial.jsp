@@ -100,6 +100,7 @@ body {
 	font-size: 16px;
 	font-weight: 600;
 	margin-bottom: 7px;
+	text-transform: uppercase;
 }
 
 .profile-usertitle-job {
@@ -128,11 +129,11 @@ body {
 }
 
 .profile-usermenu {
-	margin-top: 30px;
+	margin-top: 30px;	
 }
 
 .profile-usermenu ul li {
-	border-bottom: 1px solid #f0f4f7;
+	border-bottom: 1px solid #f0f4f7;	
 }
 
 .profile-usermenu ul li:last-child {
@@ -171,6 +172,11 @@ body {
 	padding: 20px;
 	background: #fff;
 	min-height: 460px;
+}
+.panel-title {
+	text-transform: uppercase;    
+    font-size: 16px;
+    color: inherit;
 }
 </style>
 
@@ -536,7 +542,7 @@ body {
 									'			<div>'+
 									'				<input type="radio" id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" name="respuestas-100-'+preguntas[j].id+'" class="respuestas">'
 													+respuestas_viviendas[i].respuestas_posibles+	
-									'				<input type="text" id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" value="'+respuestas_viviendas[i].respuestas_text+'" class="respuestas_text">';													
+									'				<input type="text" id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" value="'+respuestas_viviendas[i].respuestas_text+'" class="respuestas_text" size="10">';													
 									'			</div>';
 							}else{
 								if(preguntas[j].id==respuestas_viviendas[i].id_pregunta && respuestas_viviendas[i].nro_ficha!=0 && respuestas_viviendas[i].tipo_respuesta=="listatexto"){
@@ -544,15 +550,15 @@ body {
 									'			<div>'+
 									'				<input type="radio" id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" name="respuestas-100-'+preguntas[j].id+'" class="respuestas" checked=true>'
 													+respuestas_viviendas[i].respuestas_posibles+	
-									'				<input type="text" id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" value="'+respuestas_viviendas[i].respuestas_text+'" class="respuestas_text">';													
+									'				<input type="text" id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" value="'+respuestas_viviendas[i].respuestas_text+'" class="respuestas_text" size="10">';													
 									'			</div>';
 								}else{
 									if(preguntas[j].id==respuestas_viviendas[i].id_pregunta && respuestas_viviendas[i].nro_ficha!=0 && respuestas_viviendas[i].respuestas_posibles=="0" && (respuestas_viviendas[i].respuestas_text!="" || respuestas_viviendas[i].respuestas_text!=null)){
-										lista_preguntasyrespuestas='<input type="text" id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" value="'+respuestas_viviendas[i].respuestas_text+'" class="respuestas_text">';
+										lista_preguntasyrespuestas='<input type="text" id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" value="'+respuestas_viviendas[i].respuestas_text+'" class="respuestas_text" size="10">';
 									}else{
 										if(preguntas[j].id==respuestas_viviendas[i].id_pregunta && respuestas_viviendas[i].nro_ficha!=0 && respuestas_viviendas[i].tipo_respuesta=="multitexto"){
 											//lista_preguntasyrespuestas+='<input id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" type="checkbox" checked>'+respuestas_viviendas[i].respuestas_posibles+' <input type="number" id="respuestas" value="'+respuestas_viviendas[i].respuestas_text+'"><br>';// check con input
-											lista_preguntasyrespuestas+=respuestas_viviendas[i].respuestas_posibles+' <input type="number" id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" class="respuestas_text" value="'+respuestas_viviendas[i].respuestas_text+'"><br>';// check con input
+											lista_preguntasyrespuestas+=respuestas_viviendas[i].respuestas_posibles+' <input type="number" id="respuestas-100-'+preguntas[j].id+'-'+respuestas_viviendas[i].id_respuesta_posible+'" class="respuestas_text" value="'+respuestas_viviendas[i].respuestas_text+'" size="10"><br>';// check con input
 										}else{
 												if(preguntas[j].id==respuestas_viviendas[i].id_pregunta && respuestas_viviendas[i].nro_ficha!=0 && respuestas_viviendas[i].tipo_respuesta=="multiple"){
 													if(respuestas_viviendas[i].respuestas_bolean==true){
