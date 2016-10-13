@@ -1,5 +1,7 @@
 package py.gov.stp.objetosV2;
 
+import java.sql.Date;
+
 public class AccionDestinatario {
 	protected int  id;
 	protected  int cantidad;
@@ -9,7 +11,11 @@ public class AccionDestinatario {
 	protected int beneficiarioTipoId;
 	protected int accionId;
 	protected int beneficiarioGrupoId;
-	
+	protected Date fechaInsercion;
+	protected Date fechaActualizacion;	
+    protected String usuarioResponsable;
+
+    
 	public int getId() {
 		return id;
 	}
@@ -61,6 +67,23 @@ public class AccionDestinatario {
 	public void setBeneficiarioGrupoId(int beneficiarioGrupoId) {
 		this.beneficiarioGrupoId = beneficiarioGrupoId;
 	}
-
+	public Date getFechaInsercion() {
+		return fechaInsercion;
+	}
+	public void setFechaInsercion(Date fechaInsercion) {
+		this.fechaInsercion = fechaInsercion;
+	}
+	public Date getFechaActualizacion() {
+		return fechaActualizacion;
+	}
+	public void setFechaActualizacion(Date fechaActualizacion) {
+		this.fechaActualizacion = fechaActualizacion;
+	}
+	public String getUsuarioResponsable() {
+		return usuarioResponsable;
+	}
+	public void setUsuarioResponsable(String usuarioResponsable) {
+		this.usuarioResponsable = usuarioResponsable;
+	}
 
 }

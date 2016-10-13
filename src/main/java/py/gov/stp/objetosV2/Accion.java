@@ -15,23 +15,14 @@ public class Accion {
 	protected int insLineaAccionId;
 	protected int departamentoId;
 	protected int distritoId;
-	protected int accionCatalogoId;
-	protected boolean borrado;
+	protected int accionCatalogoId;	
+	protected Date fechaInsercion;
+	protected Date fechaActualizacion;	
+    protected String usuarioResponsable;
+    protected boolean borrado;
 	
 	
-	public boolean isBorrado() {
-		return borrado;
-	}
-
-
-
-	public void setBorrado(boolean borrado) {
-		this.borrado = borrado;
-	}
-
-
-
-	public int getId() {
+    public int getId() {
 		return id;
 	}
 
@@ -197,13 +188,56 @@ public class Accion {
 		this.accionCatalogoId = accionCatalogoId;
 	}
 
+	
+	public Date getFechaInsercion() {
+		return fechaInsercion;
+	}
 
+
+
+	public void setFechaInsercion(Date fechaInsercion) {
+		this.fechaInsercion = fechaInsercion;
+	}
+
+
+
+	public Date getFechaActualizacion() {
+		return fechaActualizacion;
+	}
+
+
+
+	public void setFechaActualizacion(Date fechaActualizacion) {
+		this.fechaActualizacion = fechaActualizacion;
+	}
+
+
+
+	public String getUsuarioResponsable() {
+		return usuarioResponsable;
+	}
+
+
+
+	public void setUsuarioResponsable(String usuarioResponsable) {
+		this.usuarioResponsable = usuarioResponsable;
+	}
+	
+	
+	public boolean isBorrado() {
+		return borrado;
+	}
+
+
+
+	public void setBorrado(boolean borrado) {
+		this.borrado = borrado;
+	}
+	
 	
 	public void changeBorrado(){
 		this.borrado=!borrado;
-
-		}
-	
+	}
 	
 	
 }

@@ -7,7 +7,12 @@ public class Programacion {
 	protected String fechaEntrega;
 	protected int actividad;
 	protected int version;
+	protected Date fechaInsercion;
+	protected Date fechaActualizacion;	
+    protected String usuarioResponsable;
 	protected boolean borrado;
+	
+	
 	public int getId() {
 		return id;
 	}
@@ -47,5 +52,24 @@ public class Programacion {
 	public void changeBorrado(){
 		this.borrado=!borrado;
 	}
-
+	public Date getFechaInsercion() {
+		return fechaInsercion;
+	}
+	public void setFechaInsercion(Date fechaInsercion) {
+		this.fechaInsercion = fechaInsercion;
+	}
+	public Date getFechaActualizacion() {
+		return fechaActualizacion;
+	}
+	public void setFechaActualizacion(Date fechaActualizacion) {
+		this.fechaActualizacion = fechaActualizacion;
+	}
+	public String getUsuarioResponsable() {
+		return usuarioResponsable;
+	}
+	public void setUsuarioResponsable(String usuarioResponsable) {
+		this.usuarioResponsable = usuarioResponsable;
+	}
+	
+	
 }

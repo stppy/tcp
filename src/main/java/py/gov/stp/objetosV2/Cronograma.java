@@ -13,7 +13,10 @@ public class Cronograma {
 	protected int unidad_medida_id;
 	protected int hito_tipo_id;
 	protected boolean acumulable;
-	
+	protected Date fechaInsercion;
+	protected Date fechaActualizacion;	
+    protected String usuarioResponsable;
+    	
 	
 	public int getId() { 
 		return id;
@@ -128,5 +131,36 @@ public class Cronograma {
 	public void changeBorrado(){
 		this.borrado=!borrado;
 	}
+
+
+	public Date getFechaInsercion() {
+		return fechaInsercion;
+	}
+
+
+	public void setFechaInsercion(Date fechaInsercion) {
+		this.fechaInsercion = fechaInsercion;
+	}
+
+
+	public Date getFechaActualizacion() {
+		return fechaActualizacion;
+	}
+
+
+	public void setFechaActualizacion(Date fechaActualizacion) {
+		this.fechaActualizacion = fechaActualizacion;
+	}
+
+
+	public String getUsuarioResponsable() {
+		return usuarioResponsable;
+	}
+
+
+	public void setUsuarioResponsable(String usuarioResponsable) {
+		this.usuarioResponsable = usuarioResponsable;
+	}
+	
 	
 }
