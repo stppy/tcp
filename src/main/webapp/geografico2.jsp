@@ -64,7 +64,12 @@ var datosGeo=[];
 		#R, #G, #B {
 			width: 300px;
 		}
-		
+		.leaflet-popup-close-button {
+	        display: none;
+	    }
+	    .leaflet-popup-content-wrapper {
+	        pointer-events: none;
+	    }
 		
 		#slider12a .slider-track-high, #slider12c .slider-track-high {
 			background: #008d4c;
@@ -96,9 +101,6 @@ var datosGeo=[];
 if (user != null) { %>
 
 <script>
-	
-	
-	
 	
 	//event.stopPropagation();
 	
@@ -196,7 +198,7 @@ tbody {
 					entidadCas ="<%=attributes.get("entidad") %>";
 					
 					var usuarios = $.ajax({						 
-						url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
+						url:'/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
 						
 						
 					  	type:'get',
@@ -215,7 +217,7 @@ tbody {
 					}
 					
 					var entidades = $.ajax({
-				    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getEntidades',
+				    	url:'/tablero/ajaxSelects?action=getEntidades',
 				      	type:'get',
 				      	dataType:'json',
 				      	crossDomain:true,
@@ -225,7 +227,7 @@ tbody {
 					
 					
   					var lineaAccionDepartamento = $.ajax({
-				    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getLineasAccionDepartamento',
+				    	url:'/tablero/ajaxSelects?action=getLineasAccionDepartamento',
 				      	type:'get',
 				      	dataType:'json',
 				      	crossDomain:true,
@@ -234,7 +236,7 @@ tbody {
 					lineaAccionDepartamento=JSON.parse(lineaAccionDepartamento);
 					
 					var departamento = $.ajax({
-				    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
+				    	url:'/tablero/ajaxSelects?action=getDepartamento',
 				      	type:'get',
 				      	dataType:'json',
 				      	crossDomain:true,
@@ -245,7 +247,7 @@ tbody {
 
 					
  					var desPaisDeptojson = $.ajax({
-				    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDesempPaisPorDepto',
+				    	url:'/tablero/ajaxSelects?action=getDesempPaisPorDepto',
 				      	type:'get',
 				      	dataType:'json',
 				      	crossDomain:true,
@@ -254,7 +256,7 @@ tbody {
 					var desPaisDepto=JSON.parse(desPaisDeptojson);
 					
 					var desPaisDistjson = $.ajax({
-				    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDesempPaisPorDist',
+				    	url:'/tablero/ajaxSelects?action=getDesempPaisPorDist',
 				      	type:'get',
 				      	dataType:'json',
 				      	crossDomain:true,
@@ -263,7 +265,7 @@ tbody {
 					var desPaisDist=JSON.parse(desPaisDistjson);
 					
  					var desPaisDistInstjson = $.ajax({
-				    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDesempPaisPorDistInst',
+				    	url:'/tablero/ajaxSelects?action=getDesempPaisPorDistInst',
 				      	type:'get',
 				      	dataType:'json',
 				      	crossDomain:true,
@@ -365,7 +367,7 @@ tbody {
 							}else{
 								
 								var lineaAccionDepartamento = $.ajax({
-						    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getLineasAccionDepartamento',
+						    	url:'/tablero/ajaxSelects?action=getLineasAccionDepartamento',
 						      	type:'get',
 						      	dataType:'json',
 						      	crossDomain:true,
@@ -427,7 +429,7 @@ tbody {
 						
 						if (dist_id=="" && depto_id != ""){
 							var metasDistEntLineajson = $.ajax({
-						    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getMetasDistEntLinea&departamento='+depto_id+'&institucion_id='+institucion_id,
+						    	url:'/tablero/ajaxSelects?action=getMetasDistEntLinea&departamento='+depto_id+'&institucion_id='+institucion_id,
 						      	type:'get',
 						      	dataType:'json',
 						      	crossDomain:true,
@@ -471,7 +473,7 @@ tbody {
 							}
 						}else{
 							var metasDistEntLineajson = $.ajax({
-						    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getMetasDistEntLinea&departamento='+depto_id+'&distrito='+dist_id+'&institucion_id='+institucion_id,
+						    	url:'/tablero/ajaxSelects?action=getMetasDistEntLinea&departamento='+depto_id+'&distrito='+dist_id+'&institucion_id='+institucion_id,
 						      	type:'get',
 						      	dataType:'json',
 						      	crossDomain:true,
@@ -575,6 +577,7 @@ tbody {
 						var map = L.map('map').setView([-24.5, -57], 6);
 						var depto = new L.geoJson(deptoGeojson,{style:style,onEachFeature: onEachFeature});
 						depto.addTo(map);
+
 						var distLayer;
 
 						function renderEntidad(e){
@@ -611,7 +614,9 @@ tbody {
 						}
 						function onEachFeature(feature, layer) {
 						layer.on({
-								click: renderEntidad
+								click: renderEntidad,
+								mousemove: mousemove,
+					            mouseout: mouseout
 							});
 						}
 
@@ -1135,7 +1140,7 @@ $(document).ready(function(){
 		}
 		
 		lineaAccionAcumuladoMesDepto = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action='+urlAcumulado+'&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id+'&departamento='+idDepartamento+urlFinal,
+	    	url:'/tablero/ajaxSelects?action='+urlAcumulado+'&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id+'&departamento='+idDepartamento+urlFinal,
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -1380,7 +1385,7 @@ $(document).ready(function(){
 		var idDistrito= idDistrito;
 		
 		var accionHasProducto = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getAccionHasProducto&accion_id='+accionId,
+	    	url:'/tablero/ajaxSelects?action=getAccionHasProducto&accion_id='+accionId,
 	      	type:'get',
 	      	dataType:'json',
 	      	crossDomain:true,
@@ -1447,7 +1452,7 @@ $(document).ready(function(){
 		var registroHitos=JSON.parse(registrosHitos);
 		
 		var accion = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015Accion&accion_id='+accionId,
+	    	url:'/tablero/ajaxSelects?action=getFactHitos2015Accion&accion_id='+accionId,
 	      	type:'get',
 	      	dataType:'json',
 	      	crossDomain:true,
@@ -1456,7 +1461,7 @@ $(document).ready(function(){
 		accion=JSON.parse(accion);
 		
 		var departamentos = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
+	    	url:'/tablero/ajaxSelects?action=getDepartamento',
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -1767,7 +1772,7 @@ $(document).ready(function(){
 		
 		//var departamentoId = $("#selectorDepartamento option:selected").val();
 		var distritos = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito&departamento='+idDepartamento,
+	    	url:'/tablero/ajaxSelects?action=getDistrito&departamento='+idDepartamento,
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -1789,7 +1794,7 @@ $(document).ready(function(){
 			var departamentoId = $("#selectorDepartamento option:selected").val();
 	    	
 			var distritos = $.ajax({
-		    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito&departamento='+departamentoId,
+		    	url:'/tablero/ajaxSelects?action=getDistrito&departamento='+departamentoId,
 		      	type:'get',
 		      	dataType:'json',
 		      	async:false       
@@ -2691,7 +2696,7 @@ $(document).ready(function(){
 		var hitoId=idParsed[0];
 		
 		var hitoParaEditar = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015&hito_id='+hitoId,
+	    	url:'/tablero/ajaxSelects?action=getFactHitos2015&hito_id='+hitoId,
 	      	type:'get',
 	      	dataType:'json',
 	      	crossDomain:true,
@@ -2901,7 +2906,7 @@ $(document).ready(function(){
 		var accionId = idParsed[4];
 		
 		var accion = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015Accion&accion_id='+accionId,
+	    	url:'/tablero/ajaxSelects?action=getFactHitos2015Accion&accion_id='+accionId,
 	      	type:'get',
 	      	dataType:'json',
 	      	crossDomain:true,
@@ -3221,7 +3226,7 @@ $("body").on("click", ".modalDeclararAvance",function(event){
 	var accionId = idParsed[4];
 	
 	var accion = $.ajax({
-    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015Accion&accion_id='+accionId,
+    	url:'/tablero/ajaxSelects?action=getFactHitos2015Accion&accion_id='+accionId,
       	type:'get',
       	dataType:'json',
       	crossDomain:true,

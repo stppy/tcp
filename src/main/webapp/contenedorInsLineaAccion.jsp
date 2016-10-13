@@ -77,7 +77,7 @@ periodoSeleccionado=new Date().getFullYear();
 function renderInsLineaAccion(PeriodoActual){
 	
 	var insLineaAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion',
+		url:'/tablero/ajaxSelects2?action=getInsLineaAccion',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -85,7 +85,7 @@ function renderInsLineaAccion(PeriodoActual){
 	insLineaAccion=JSON.parse(insLineaAccion);
 
 	var lineaAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+		url:'/tablero/ajaxSelects2?action=getLineaAccion',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -93,7 +93,7 @@ function renderInsLineaAccion(PeriodoActual){
 	lineaAccion = JSON.parse(lineaAccion);
 
 	var institucion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+		url:'/tablero/ajaxSelects2?action=getInstitucion',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -101,7 +101,7 @@ function renderInsLineaAccion(PeriodoActual){
 	institucion = JSON.parse(institucion);
 
 	var periodo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+		url:'/tablero/ajaxSelects2?action=getPeriodo',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -109,7 +109,7 @@ function renderInsLineaAccion(PeriodoActual){
 	periodo = JSON.parse(periodo);
 
 	var unidadMedida = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+		url:'/tablero/ajaxSelects2?action=getUnidadMedida',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -117,7 +117,7 @@ function renderInsLineaAccion(PeriodoActual){
 	unidadMedida = JSON.parse(unidadMedida);
 
 	var usuarioLineaAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUsuarioLineaAccion',
+		url:'/tablero/ajaxSelects2?action=getUsuarioLineaAccion',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -134,7 +134,7 @@ function renderInsLineaAccion(PeriodoActual){
 	todasLasLineasAccion = todasLasLineasAccion.substring(0,todasLasLineasAccion.length - 1);
 
 	var insLineaAccionHasEtiqueta = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccionHasEtiqueta&insLineaAccionIdConcat='+todasLasLineasAccion,
+		url:'/tablero/ajaxSelects2?action=getInsLineaAccionHasEtiqueta&insLineaAccionIdConcat='+todasLasLineasAccion,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -142,7 +142,7 @@ function renderInsLineaAccion(PeriodoActual){
 	insLineaAccionHasEtiqueta = JSON.parse(insLineaAccionHasEtiqueta);
 	
 	var usuarioEtiqueta = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUsuarioEtiqueta',
+		url:'/tablero/ajaxSelects2?action=getUsuarioEtiqueta',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -578,7 +578,7 @@ function renderInsLineaAccion(PeriodoActual){
 		usr_unr_id="<%=attributes.get("unr_id") %>";
 		
 		var usuarios = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
+			url:'/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -597,7 +597,7 @@ function renderInsLineaAccion(PeriodoActual){
 	
 		<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
 			var periodo = $.ajax({
-				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+				url:'/tablero/ajaxSelects2?action=getPeriodo',
 			  	type:'get',
 			  	dataType:'json',
 			  	async:false       
@@ -851,7 +851,7 @@ var entidadCasSpr = "";
 entidadCasSpr ="<%=attributes.get("entidad") %>";
 usuarioRolCasSpr="<%=attributes.get("role_id_tablero") %>";
 var usuariosSpr = $.ajax({
-	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
+	url:'/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
   	type:'get',
   	dataType:'json',
   	async:false       
