@@ -16,6 +16,10 @@ import java.util.logging.Logger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import py.gov.stp.objetosV2.AccionHasProducto;
+import py.gov.stp.objetosV2.HitoPrueba;
+import py.gov.stp.tools.ConnectionConfiguration;
+
 //import py.gov.stp.mh.clasificadores.Departamento;
 //import py.gov.stp.mh.clasificadores.FuenteFinanciamiento;
 //import py.gov.stp.mh.clasificadores.Funcional;
@@ -1332,5 +1336,65 @@ public class SqlInserts {
 //		} catch (SQLException e) {e.printStackTrace();}
 //			
 //	}	
+	
+	public static void insertHitoPrueba(HitoPrueba hito){
+	try {
+		Connection conn=ConnectionConfiguration.conectar();
+	   	
+		String query = "insert into \"hitoPrueba\" (\"accion\",\"nombreHito\",\"tipoHito\",\"unidadMedida\",\"cantidadPrevista\",\"cantidadReal\")"
+	+ " values (?, ?, ?, ?, ?, ?)";
+		
+		PreparedStatement insert = conn.prepareStatement(query);
+		
+		insert.setString (1, hito.getAccion());
+		insert.setString (2, hito.getNombreHito());
+		insert.setString (3, hito.getTipoHito());	
+		insert.setString (4, hito.getUnidadMedida());	
+		insert.setInt (5, hito.getCantidadPrevista());	
+		insert.setInt (6, hito.getCantidadReal());	
+
+
+
+		
+		insert.execute();
+		   
+		conn.close();
+	} catch (SQLException e) {e.printStackTrace();}
+		
+}	
+	
+	public static boolean insertAccionHasProducto(AccionHasProducto dato){
+	try {
+		Connection conn=ConnectionConfiguration.conectar();
+	   	
+		String query = "insert into \"accion_has_producto\" (\"spr_nivel_id\",\"spr_entidad_id\",\"spr_tiprograma_id\",\"spr_programa_id\",\"spr_subprograma_id\",\"srp_proyecto_id\",\"spr_producto_id\",\"accion_id\",\"spr_anho\",\"spr_version\",\"u_medida\",\"cant_fisica\",\"clase\",\"cant_financiera\",\"asignacion_financiera\")"
+	+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?, ?)";
+		
+		PreparedStatement insert = conn.prepareStatement(query);
+		
+		insert.setInt (1, dato.getNivel());
+		insert.setInt (2, dato.getEntidad());
+		insert.setInt (3, dato.getTipoPrograma());	
+		insert.setInt (4, dato.getPrograma());	
+		insert.setInt (5, dato.getSubPrograma());	
+		insert.setInt (6, dato.getProyecto());
+		insert.setInt (7, dato.getSprProductoId());	
+		insert.setInt (8, dato.getAccionId());
+		insert.setInt (9, dato.getAnho());
+		insert.setInt (10, dato.getVersion());
+		insert.setString (11, dato.getUnidadMedida());	
+		insert.setDouble (12, dato.getCantidadFisica());	
+		insert.setString (13, dato.getClase());	
+		insert.setDouble (14, dato.getCantidadFinanciera());
+		insert.setDouble(15, dato.getTotalAsignacion());
+	
+		insert.execute();
+		   
+		conn.close();
+		return true;
+	} catch (SQLException e) {e.printStackTrace();return false;}
+		
+}	
+	
 	
 }

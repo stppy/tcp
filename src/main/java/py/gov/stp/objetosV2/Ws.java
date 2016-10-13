@@ -11,7 +11,7 @@ public class Ws {
 	protected String idClave;
 	protected String idValor;
 	protected int wsTipoId;
-	protected boolean borrado;
+	protected boolean borrado=false;
 	
 	public int getId() {
 		return id;
@@ -79,7 +79,8 @@ public class Ws {
 	public void setBorrado(boolean borrado) {
 		this.borrado = borrado;
 	}
-	
-	
+	public void changeBorrado(){
+		this.borrado=!borrado;
+	}
 
 }

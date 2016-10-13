@@ -1,6 +1,7 @@
 package py.gov.stp.objetosV2;
 
 public class SprProducto {
+	protected int id;
 	protected int nivelId;
 	protected int entidadId;
 	protected int tipoId;
@@ -10,7 +11,14 @@ public class SprProducto {
 	protected int funcionalId;
 	protected int unidadResponsableId;
 	protected int productoId;
+	protected boolean borrado=false;
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public int getNivelId() {
 		return nivelId;
 	}
@@ -65,7 +73,14 @@ public class SprProducto {
 	public void setProductoId(int productoId) {
 		this.productoId = productoId;
 	}
-	
-	
+	public boolean isBorrado() {
+		return borrado;
+	}
+	public void setBorrado(boolean borrado) {
+		this.borrado = borrado;
+	}
+	public void changeBorrado(){
+		this.borrado=!borrado;
+	}
 
 }

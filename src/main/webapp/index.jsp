@@ -60,7 +60,6 @@
     
 
 
-
 </head>
 <body class="skin-blue sidebar-mini sidebar-collapse">
 
@@ -81,7 +80,7 @@
                   <li><a href="#tab_3-2" data-toggle="tab" title="Evolución"><i class="glyphicon glyphicon-stats"></i></a></li>
                   <li><a href="#tab_4-2" data-toggle="tab" title="Beneficiarios"><i class="glyphicon glyphicon-user"></i></a></li>
                   <li><a href="#tab_5-2" data-toggle="tab" title="Ubicaciones"><i class="glyphicon glyphicon glyphicon-map-marker"></i></a></li>
-              		Detalle de Linea de Accion      
+              		Detalle de Línea de Acción      
                </ul>
                 <div class="tab-content">
                   <div class="tab-pane active" id="tab_1-1"></div><!-- /.tab-pane -->
@@ -105,7 +104,7 @@
 if (user != null) { %>
 
 <script>
-	
+<%if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("2")){%>	
 	$(document).ready(function(){
 		$('[data-toggle="tap"]').tooltip();
 			
@@ -262,14 +261,14 @@ if (user != null) { %>
 			
 			if (institucion_id==47720){
 				var registros = $.ajax({
-			    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getFactHitosSnpp&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id,
+			    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getFactHitosSnpp&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id,
 			      	type:'get',
 			      	dataType:'json',
 			      	crossDomain:true,
 			      	async:false       
 			    }).responseText;
 				var registrosHitos = $.ajax({
-			    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getFactHitosSnpp&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id,
+			    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getFactHitosSnpp&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id,
 			      	type:'get',
 			      	dataType:'json',
 			      	crossDomain:true,
@@ -277,7 +276,7 @@ if (user != null) { %>
 			    }).responseText;
 			}else{
 				var registros = $.ajax({
-			    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015Accion&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id,
+			    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015Accion&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id,
 			      	type:'get',
 			      	dataType:'json',
 			      	crossDomain:true,
@@ -285,7 +284,7 @@ if (user != null) { %>
 			    }).responseText;
 				
 				var registrosHitos = $.ajax({
-			    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id,
+			    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id,
 			      	type:'get',
 			      	dataType:'json',
 			      	crossDomain:true,
@@ -362,7 +361,7 @@ if (user != null) { %>
 			
 			
 			lineaAccionAcumuladoMes = $.ajax({
-		    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getLineaAccionAcumuladoMes&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id,
+		    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getLineaAccionAcumuladoMes&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id,
 		      	type:'get',
 		      	dataType:'json',
 		      	async:false       
@@ -444,7 +443,7 @@ if (user != null) { %>
 		var entidadCas = "";
 		entidadCas ="<%=attributes.get("entidad") %>";
 		var usuarios = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -462,11 +461,11 @@ if (user != null) { %>
 		var i=parseInt(0);
 		
 		function numeroConComa(x) {
-		    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		    return x.toString().replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 		}
 		
 		var entidadesjson = $.ajax({
-	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getEntidades',
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getEntidades',
 	      	type:'get',
 	      	dataType:'json',
 	      	crossDomain:true,
@@ -475,7 +474,7 @@ if (user != null) { %>
 		var entidades=JSON.parse(entidadesjson);
 		
 		var eljson = $.ajax({
-	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getLineasAccion',
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getLineasAccion',
 	      	type:'get',
 	      	dataType:'json',
 	      	crossDomain:true,
@@ -484,8 +483,8 @@ if (user != null) { %>
 		var el=JSON.parse(eljson);
 		
 		
-		var elSnppjson = $.ajax({
-	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getLineasAccionSnpp',
+ 		var elSnppjson = $.ajax({
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getLineasAccionSnpp',
 	      	type:'get',
 	      	dataType:'json',
 	      	crossDomain:true,
@@ -750,7 +749,9 @@ if (user != null) { %>
 		}		
 		
 	});
-	
+<%}else{%>
+	window.location = "http://spr.stp.gov.py/tablero/resumenLineaAccion.jsp";
+<%}%>;
 	//event.stopPropagation();
 	
 	     </script>

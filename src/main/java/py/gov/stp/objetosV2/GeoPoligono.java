@@ -7,7 +7,8 @@ public class GeoPoligono {
 	protected String geo;
 	protected int geoPoligonoId;
 	protected int geoPoligonoTipoId;
-	protected boolean borrado;
+	protected boolean borrado = false;
+	protected int version;
 	
 	public int getId() {
 		return id;
@@ -50,6 +51,15 @@ public class GeoPoligono {
 	}
 	public void setBorrado(boolean borrado) {
 		this.borrado = borrado;
+	}
+	public void changeBorrado(){
+		this.borrado=!borrado;
+	}
+	public int getVersion() {
+		return version;
+	}
+	public void setVersion(int version) {
+		this.version = version;
 	}
 	
 

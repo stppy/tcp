@@ -46,7 +46,8 @@
 				
 				
 				var obtenerUsuario = $.ajax({
-					url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
+					<%-- url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',--%>
+					url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=rpalau@stp.gov.py',
 				  	type:'get',
 				  	dataType:'json',
 				  	async:false       
@@ -57,7 +58,7 @@
 				todojunto.correoUsuario=obtenerUsuario[0].correo;
 				 
 				$.ajax({
-				        url: "http://tablero2015.stp.gov.py/tablero/ajaxUpdate?accion="+accion,
+				        url: "http://spr.stp.gov.py/tablero/ajaxUpdate?accion="+accion,
 				        type: 'POST',
 				        dataType: 'json',
 				        data: JSON.stringify(todojunto),

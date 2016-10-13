@@ -29,6 +29,7 @@
                   <!-- User image -->
                   <li class="user-header">
                      <img src="dist/img/2/user.png" class="img-circle" alt="User Image"/>
+                     <p id="PerfilUsuario2"></p>
                    <p> 
                     <span id="PerfilNombre" class="hidden-xs"></span>
                       <small><span id="PerfilEntidad" class="hidden-xs"></span></small>
@@ -65,5 +66,9 @@
               </li>-->
             </ul>
           </div>
+          <div class="navbar-custom-menu">
+          	<div style="padding-top:5px">.</div>
+          	<!-- <input id="ex12c" type="text"/> -->
+           </div>
 
         </nav>

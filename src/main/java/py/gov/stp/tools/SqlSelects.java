@@ -3,30 +3,22 @@ package py.gov.stp.tools;
 
 
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 import java.sql.Statement;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
-
 import objetos.Entidad;
 import objetos.FactHitos;
 import objetos.Generica;
+import objetos.Generica2;
+import objetos.Generica3;
 import objetos.LineaAccion;
 import objetos.LineaAccionAcumuladoMes;
 import objetos.LineaAccionDepartamento;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+import objetos.LineaAccionDistrito;
+import objetos.MetasDistEntLinea;
+import py.gov.stp.objetosV2.AccionHasProducto;
+import py.gov.stp.objetosV2.ProductoObjetoGasto;
 
 
 public class SqlSelects {
@@ -68,6 +60,10 @@ public class SqlSelects {
 				objeto.setEntidad(rs.getString("entidad"));
 				objeto.setEntidad_id(rs.getInt("entidad_id"));
 				objeto.setNivel_id(rs.getInt("nivel_id"));
+				objeto.setRol_id_tablero(rs.getInt("role_id_tablero"));
+				objeto.setUnidadResponsable(rs.getInt("unr_id"));
+				objeto.setUrl(rs.getString("url"));
+				objeto.setBorrado(rs.getBoolean("borrado"));
 				
 				
 				objetos.add(objeto);
@@ -141,12 +137,12 @@ public class SqlSelects {
  				objeto.setAccion_departamento(rs.getString("accion_departamento"));
  				objeto.setAccion_distrito_id(rs.getInt("accion_distrito_id"));
  				objeto.setAccion_distrito(rs.getString("accion_distrito"));
- 				objeto.setAccion_fecha_inicio(rs.getDate("accion_fecha_inicio"));
- 				objeto.setAccion_fecha_entrega(rs.getDate("accion_fecha_entrega"));
- 				objeto.setAccion_status_fin(rs.getString("accion_status_fin").toCharArray()[0]);
- 				objeto.setAccion_avance_programado(rs.getDouble("accion_avance_programado"));
- 				objeto.setAccion_avance_ejecutado(rs.getDouble("accion_avance_ejecutado"));
- 				objeto.setAccion_cantidad_hito(rs.getDouble("accion_cantidad_hito"));
+// 				objeto.setAccion_fecha_inicio(rs.getDate("accion_fecha_inicio"));
+// 				objeto.setAccion_fecha_entrega(rs.getDate("accion_fecha_entrega"));
+// 				objeto.setAccion_status_fin(rs.getString("accion_status_fin").toCharArray()[0]);
+// 				objeto.setAccion_avance_programado(rs.getDouble("accion_avance_programado"));
+// 				objeto.setAccion_avance_ejecutado(rs.getDouble("accion_avance_ejecutado"));
+// 				objeto.setAccion_cantidad_hito(rs.getDouble("accion_cantidad_hito"));
  				objeto.setHito_id(rs.getInt("hito_id"));
  				objeto.setHito(rs.getString("hito"));
  				objeto.setHito_fecha_entrega(rs.getDate("hito_fecha_entrega"));
@@ -156,9 +152,9 @@ public class SqlSelects {
  				objeto.setHito_cantidad_ejecutado(rs.getDouble("hito_cantidad_ejecutado"));
  				objeto.setHito_costo_programado(rs.getDouble("hito_costo_programado"));
  				objeto.setHito_costo_ejecutado(rs.getDouble("hito_costo_ejecutado"));
- 				objeto.setHito_comentario_aprob(rs.getString("hito_comentario_aprob"));
- 				objeto.setHito_status(rs.getString("hito_status").toCharArray()[0]);
- 				objeto.setHito_total_doc(rs.getInt("hito_total_doc"));
+// 				objeto.setHito_comentario_aprob(rs.getString("hito_comentario_aprob"));
+// 				objeto.setHito_status(rs.getString("hito_status").toCharArray()[0]);
+// 				objeto.setHito_total_doc(rs.getInt("hito_total_doc"));
 
 
  				
@@ -267,12 +263,12 @@ public class SqlSelects {
 					objeto.setAccion_departamento(rs.getString("accion_departamento"));
 					objeto.setAccion_distrito_id(rs.getInt("accion_distrito_id"));
 					objeto.setAccion_distrito(rs.getString("accion_distrito"));
-					objeto.setAccion_fecha_inicio(rs.getDate("accion_fecha_inicio"));
-					objeto.setAccion_fecha_entrega(rs.getDate("accion_fecha_entrega"));
-					objeto.setAccion_status_fin(rs.getString("accion_status_fin").toCharArray()[0]);
-					objeto.setAccion_avance_programado(rs.getDouble("accion_avance_programado"));
-					objeto.setAccion_avance_ejecutado(rs.getDouble("accion_avance_ejecutado"));
-					objeto.setAccion_cantidad_hito(rs.getDouble("accion_cantidad_hito"));
+//					objeto.setAccion_fecha_inicio(rs.getDate("accion_fecha_inicio"));
+//					objeto.setAccion_fecha_entrega(rs.getDate("accion_fecha_entrega"));
+//					objeto.setAccion_status_fin(rs.getString("accion_status_fin").toCharArray()[0]);
+//					objeto.setAccion_avance_programado(rs.getDouble("accion_avance_programado"));
+//					objeto.setAccion_avance_ejecutado(rs.getDouble("accion_avance_ejecutado"));
+//					objeto.setAccion_cantidad_hito(rs.getDouble("accion_cantidad_hito"));
 					objeto.setHito_id(rs.getInt("hito_id"));
 					objeto.setHito(rs.getString("hito"));
 					objeto.setHito_fecha_entrega(rs.getDate("hito_fecha_entrega"));
@@ -282,9 +278,69 @@ public class SqlSelects {
 					objeto.setHito_cantidad_ejecutado(rs.getDouble("hito_cantidad_ejecutado"));
 					objeto.setHito_costo_programado(rs.getDouble("hito_costo_programado"));
 					objeto.setHito_costo_ejecutado(rs.getDouble("hito_costo_ejecutado"));
-					objeto.setHito_comentario_aprob(rs.getString("hito_comentario_aprob"));
-					objeto.setHito_status(rs.getString("hito_status").toCharArray()[0]);
-					objeto.setHito_total_doc(rs.getInt("hito_total_doc"));
+//					objeto.setHito_comentario_aprob(rs.getString("hito_comentario_aprob"));
+//					objeto.setHito_status(rs.getString("hito_status").toCharArray()[0]);
+//					objeto.setHito_total_doc(rs.getInt("hito_total_doc"));
+
+					objetos.add(objeto);
+				}
+			}
+			catch (SQLException e) {e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos;
+	  }	
+	public static List<FactHitos> selectFactHitos2016Accion(String condition) throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+			 String query = " select * from fact_acciones_periodo2016 "+condition ;
+			 
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 List<FactHitos> objetos = new ArrayList<FactHitos>();
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					FactHitos objeto = new FactHitos();
+
+					objeto.setLinea_estrategica_id(rs.getInt("linea_estrategica_id"));
+					objeto.setLinea_estrategica(rs.getString("linea_estrategica"));
+					objeto.setLinea_accion_tipo_id(rs.getInt("linea_accion_tipo_id"));
+					objeto.setLinea_accion_tipo(rs.getString("linea_accion_tipo"));
+					objeto.setLinea_accion_id(rs.getInt("linea_accion_id"));
+					objeto.setLinea_accion(rs.getString("linea_accion"));
+					objeto.setInstitucion_id(rs.getInt("institucion_id"));
+					objeto.setInstitucion(rs.getString("institucion"));
+					objeto.setAccion_id(rs.getInt("accion_id"));
+					objeto.setAccion(rs.getString("accion"));
+					objeto.setCantidad(rs.getDouble("accion_cantidad"));
+					objeto.setAccion_unidad_edida(rs.getString("accion_unidad_medida"));
+					objeto.setAccion_costo(rs.getDouble("accion_costo"));
+					objeto.setAccion_departamento_id(rs.getInt("accion_departamento_id"));
+					objeto.setAccion_departamento(rs.getString("accion_departamento"));
+					objeto.setAccion_distrito_id(rs.getInt("accion_distrito_id"));
+					objeto.setAccion_distrito(rs.getString("accion_distrito"));
+//					objeto.setAccion_fecha_inicio(rs.getDate("accion_fecha_inicio"));
+//					objeto.setAccion_fecha_entrega(rs.getDate("accion_fecha_entrega"));
+//					objeto.setAccion_status_fin(rs.getString("accion_status_fin").toCharArray()[0]);
+//					objeto.setAccion_avance_programado(rs.getDouble("accion_avance_programado"));
+//					objeto.setAccion_avance_ejecutado(rs.getDouble("accion_avance_ejecutado"));
+//					objeto.setAccion_cantidad_hito(rs.getDouble("accion_cantidad_hito"));
+					objeto.setHito_id(rs.getInt("hito_id"));
+					objeto.setHito(rs.getString("hito"));
+					objeto.setHito_fecha_entrega(rs.getDate("hito_fecha_entrega"));
+					objeto.setHito_porcentaje_programado(rs.getInt("hito_porcentaje_programado"));
+					objeto.setHito_porcentaje_ejecutado(rs.getInt("hito_porcentaje_ejecutado"));
+					objeto.setHito_cantidad_programado(rs.getDouble("hito_cantidad_programado"));
+					objeto.setHito_cantidad_ejecutado(rs.getDouble("hito_cantidad_ejecutado"));
+					objeto.setHito_costo_programado(rs.getDouble("hito_costo_programado"));
+					objeto.setHito_costo_ejecutado(rs.getDouble("hito_costo_ejecutado"));
+//					objeto.setHito_comentario_aprob(rs.getString("hito_comentario_aprob"));
+//					objeto.setHito_status(rs.getString("hito_status").toCharArray()[0]);
+//					objeto.setHito_total_doc(rs.getInt("hito_total_doc"));
 
 					objetos.add(objeto);
 				}
@@ -345,10 +401,7 @@ public class SqlSelects {
 				objeto.setHito_comentario_aprob(rs.getString("hito_comentario_aprob"));
 				objeto.setHito_status(rs.getString("hito_status").toCharArray()[0]);
 				objeto.setHito_total_doc(rs.getInt("hito_total_doc"));
-
-
 				
-
 				objetos.add(objeto);
 			}
 		}
@@ -359,7 +412,125 @@ public class SqlSelects {
 		}
 		return objetos;
   }
-	
+	public static String selectAccionesAvances(String condition) throws SQLException{
+    	 Connection conect=ConnectionConfiguration.conectar();    	 
+ 		 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from( "+
+ 				"	select * from linea_accion_acciones "+ condition +")t";
+ 		//ins_lin_acc_ava
+ 		 Statement statement = null;
+ 		 ResultSet rs=null;
+ 		 String objetos = "";
+
+ 		try {
+ 			statement = conect.createStatement();
+ 			rs=statement.executeQuery(query);
+ 			while(rs.next()){
+ 				//ObjetivoEstrategia objeto = new ObjetivoEstrategia();
+
+ 				objetos+=rs.getString("resultado");
+ 			}
+ 		}
+ 		catch (SQLException e) {e.printStackTrace();}
+		finally{
+			if (statement != null) {statement.close();}
+			if (conect != null) {conect.close();}
+		}
+		return objetos;
+	}
+	public static String selectAccionesAvancesDepto(String condition) throws SQLException{
+   	 Connection conect=ConnectionConfiguration.conectar();    	 
+		 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from( "+
+				"	select * from linea_accion_acciones_depto "+ condition +")t";
+		//ins_lin_acc_ava
+		 Statement statement = null;
+		 ResultSet rs=null;
+		 String objetos = "";
+
+		try {
+			statement = conect.createStatement();
+			rs=statement.executeQuery(query);
+			while(rs.next()){
+				//ObjetivoEstrategia objeto = new ObjetivoEstrategia();
+
+				objetos+=rs.getString("resultado");
+			}
+		}
+		catch (SQLException e) {e.printStackTrace();}
+		finally{
+			if (statement != null) {statement.close();}
+			if (conect != null) {conect.close();}
+		}
+		return objetos;
+	}
+	public static String selectAccionesAvancesDistrito(String condition) throws SQLException{
+   	 Connection conect=ConnectionConfiguration.conectar();    	 
+		 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from( "+
+				"	select * from linea_accion_acciones_distrito "+ condition +")t";
+		//ins_lin_acc_ava
+		 Statement statement = null;
+		 ResultSet rs=null;
+		 String objetos = "";
+
+		try {
+			statement = conect.createStatement();
+			rs=statement.executeQuery(query);
+			while(rs.next()){
+				//ObjetivoEstrategia objeto = new ObjetivoEstrategia();
+
+				objetos+=rs.getString("resultado");
+			}
+		}
+		catch (SQLException e) {e.printStackTrace();}
+		finally{
+			if (statement != null) {statement.close();}
+			if (conect != null) {conect.close();}
+		}
+		return objetos;
+	}
+	public static String selectAccionesCatalogoUnidadMedida(String condition) throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();    	 
+			 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from( "+
+					" SELECT * FROM accion_accion_catalogo_unidad_medida " + condition + ")t";			
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 String objetos = "";
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					objetos+=rs.getString("resultado");
+				}
+			}
+			catch (SQLException e) {e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos;
+		}	
+	public static String selectHitosAvances(String condition) throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();    	 
+			 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from( "+
+					"SELECT * FROM hitos_avances "+ condition +")t";			
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 String objetos = "";
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					objetos+=rs.getString("resultado");
+				}
+			}
+			catch (SQLException e) {e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos;
+	}
 	public static List<FactHitos> selectFactHitosSnpp(String condition) throws SQLException{
 	   	 Connection conect=ConnectionConfiguration.conectarSnpp();
 			 String query = " select * from snpp "+condition;
@@ -518,6 +689,61 @@ public class SqlSelects {
 			}
 			return objetos; 
 	  }
+	public static List<Generica2> selectGenerico2(String condition, String tabla) throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+			 String query = " select * from "+tabla+" "+condition;
+			 
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 List<Generica2> objetos = new ArrayList<Generica2>();
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					Generica2 objeto = new Generica2();
+					objeto.setClave1(rs.getInt(1));
+					objeto.setClave2(rs.getInt(2));
+					objeto.setValor(rs.getDouble(3));
+					objetos.add(objeto);
+				}
+			}
+			catch (SQLException e) {
+				e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos; 
+	  }
+	public static List<Generica3> selectGenerico3(String condition, String tabla) throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+			 String query = " select * from "+tabla+" "+condition;
+			 
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 List<Generica3> objetos = new ArrayList<Generica3>();
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					Generica3 objeto = new Generica3();
+					objeto.setClave1(rs.getInt(1));
+					objeto.setClave2(rs.getInt(2));
+					objeto.setClave3(rs.getInt(3));
+					objeto.setValor(rs.getDouble(4));
+					objetos.add(objeto);
+				}
+			}
+			catch (SQLException e) {
+				e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos; 
+	  }
 	
 	public static List<LineaAccion> seletLineaAccionSnpp(String condition) throws SQLException{
 	   	 Connection conect=ConnectionConfiguration.conectarSnpp();
@@ -601,6 +827,51 @@ public class SqlSelects {
 			return objetos; 
 	  }
 	
+	public static List<LineaAccionDistrito> selectLineaAccionDistrito() throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+			 String query = " select * from fact_entidad_linea_dist ";
+			 
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 List<LineaAccionDistrito> objetos = new ArrayList<LineaAccionDistrito>();
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					LineaAccionDistrito objeto = new LineaAccionDistrito();
+					objeto.setInstitucion(rs.getString("institucion"));
+					objeto.setInstitucion_id(rs.getInt("institucion_id"));
+					objeto.setLinea_accion(rs.getString("linea_accion"));
+					objeto.setLinea_accion_id(rs.getInt("linea_accion_id"));
+					objeto.setAccion_unidad_medida(rs.getString("accion_unidad_medida"));
+					objeto.setCantidad_ejecutada_hoy(rs.getDouble("sum"));
+					objeto.setAnho(rs.getInt("date_part"));
+					objeto.setSuma_programada_anho(rs.getDouble("sumprog"));
+					objeto.setSuma_programada_hoy(rs.getDouble("sumproghoy"));
+					objeto.setCosto_ejecutado(rs.getDouble("costo_ejecutado"));
+					objeto.setCosto_programado_anho(rs.getDouble("costo_programado_anho"));
+					objeto.setCosto_programado_hoy(rs.getDouble("costo_programado_hoy"));
+					objeto.setLinea_accion_meta(rs.getDouble("linea_accion_meta"));
+					objeto.setHito_cantidad_ejecutado_hoy(rs.getDouble("hito_cantidad_ejecutado_hoy"));
+					objeto.setOrden(rs.getString("orden"));
+					objeto.setOrden_linea_accion(rs.getInt("orden_linea_accion"));
+					objeto.setAccion_departamento_id(rs.getInt("accion_departamento_id"));
+					objeto.setAccion_unidad_medida_id(rs.getInt("accion_unidad_medida_id"));
+					objeto.setAccion_unidad_medida_id(rs.getInt("accion_unidad_medida_id"));
+					objeto.setAccion_distrito_id(rs.getInt("accion_distrito_id"));
+
+					objetos.add(objeto);
+				}
+			}
+			catch (SQLException e) {e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos; 
+	  }
+	
 	
 	public static List<LineaAccionAcumuladoMes> selectLineaAccionAcumuladoMes(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
@@ -635,19 +906,53 @@ public class SqlSelects {
 		return objetos; 
 		}
 	
-	public static List<LineaAccionAcumuladoMes> selectLineaAccionAcumuladoMesDepto(String condition) throws SQLException{
+	public static List<LineaAccionAcumuladoMesDepartamento> selectLineaAccionAcumuladoMesDepto(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
 		String query = " select * from linea_accion_acumulado_mes_depto "+condition;
 
 		Statement statement = null;
 		ResultSet rs=null;
-		List<LineaAccionAcumuladoMes> objetos = new ArrayList<LineaAccionAcumuladoMes>();
+		List<LineaAccionAcumuladoMesDepartamento> objetos = new ArrayList<LineaAccionAcumuladoMesDepartamento>();
 
 		try {
 			statement = conect.createStatement();
 			rs=statement.executeQuery(query);
 			while(rs.next()){
-				LineaAccionAcumuladoMes objeto = new LineaAccionAcumuladoMes();
+				LineaAccionAcumuladoMesDepartamento objeto = new LineaAccionAcumuladoMesDepartamento();
+		
+				objeto.setLinea_accion_id(rs.getInt("linea_accion_id"));
+				objeto.setLinea_accion(rs.getString("linea_accion"));
+				objeto.setInstitucion_id(rs.getInt("institucion_id"));
+				objeto.setInstitucion(rs.getString("institucion"));
+				objeto.setAccion_unidad_medida(rs.getString("accion_unidad_medida"));
+				objeto.setMes(rs.getString("mes"));
+				objeto.setCantidad_programada(rs.getDouble("cantidad_programada"));
+				objeto.setCantidad_ejecutda(rs.getDouble("cantidad_ejecutada"));				
+				objeto.setDepartamento_id(rs.getInt("accion_departamento_id"));
+				objeto.setDepartamento(rs.getString("accion_depto_nombre"));				
+				objetos.add(objeto);
+			}
+		}
+		catch (SQLException e) {e.printStackTrace();}
+		finally{
+			if (statement != null) {statement.close();}
+			if (conect != null) {conect.close();}
+		}
+		return objetos; 
+		}
+	public static List<LineaAccionAcumuladoMesDistrito> selectLineaAccionAcumuladoMesDistrito(String condition) throws SQLException{
+		Connection conect=ConnectionConfiguration.conectar();
+		String query = " select * from linea_accion_acumulado_mes_distrito "+condition;
+
+		Statement statement = null;
+		ResultSet rs=null;
+		List<LineaAccionAcumuladoMesDistrito> objetos = new ArrayList<LineaAccionAcumuladoMesDistrito>();
+
+		try {
+			statement = conect.createStatement();
+			rs=statement.executeQuery(query);
+			while(rs.next()){
+				LineaAccionAcumuladoMesDistrito objeto = new LineaAccionAcumuladoMesDistrito();
 		
 				objeto.setLinea_accion_id(rs.getInt("linea_accion_id"));
 				objeto.setLinea_accion(rs.getString("linea_accion"));
@@ -657,6 +962,10 @@ public class SqlSelects {
 				objeto.setMes(rs.getString("mes"));
 				objeto.setCantidad_programada(rs.getDouble("cantidad_programada"));
 				objeto.setCantidad_ejecutda(rs.getDouble("cantidad_ejecutada"));
+				objeto.setDistrito_id(rs.getInt("accion_distrito_id"));
+				objeto.setDepartamento_id(rs.getInt("accion_departamento_id"));
+				objeto.setDepartamento(rs.getString("accion_depto_nombre"));
+				objeto.setDistrito(rs.getString("accion_dist_nombre"));
 				objetos.add(objeto);
 			}
 		}
@@ -670,7 +979,7 @@ public class SqlSelects {
 
 	public static List<Departamento> selectDepartamento() throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select * from departamento ORDER BY id ASC";
+		String query = " select * from departamento where paisid = 'PY' ORDER BY id ASC";
 
 		Statement statement = null;
 		ResultSet rs=null;
@@ -695,7 +1004,154 @@ public class SqlSelects {
 		}
 		return objetos; 
 		}
+	
+	public static List<Distrito> selectDistritos(String condition) throws SQLException{
+		Connection conect=ConnectionConfiguration.conectar();
+		String query = " select * from distrito "+condition;
 
+		Statement statement = null;
+		ResultSet rs=null;
+		List<Distrito> objetos = new ArrayList<Distrito>();
+
+		try {
+			statement = conect.createStatement();
+			rs=statement.executeQuery(query);
+			while(rs.next()){
+				Distrito objeto = new Distrito();
+		
+				objeto.setId(rs.getInt("id"));
+				objeto.setDescripcion(rs.getString("descripcion"));
+				objeto.setDepartamentoId(rs.getInt("departamentoid"));
+
+				objetos.add(objeto);
+			}
+		}
+		catch (SQLException e) {e.printStackTrace();}
+		finally{
+			if (statement != null) {statement.close();}
+			if (conect != null) {conect.close();}
+		}
+		return objetos; 
+		}
+	
+	public static List<MetasDistEntLinea> selectMetasDistEntLinea(String condition) throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+			 String query = " select * from fact_meta_dist_entidad_linea WHERE periodo = 2015"+condition;
+			 
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 List<MetasDistEntLinea> objetos = new ArrayList<MetasDistEntLinea>();
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					MetasDistEntLinea objeto = new MetasDistEntLinea();
+
+					objeto.setAccionDepartamentoId(rs.getInt("accion_departamento_id"));;
+					objeto.setAccionDistritoId(rs.getInt("accion_distrito_id"));
+					objeto.setOrden(rs.getInt("orden"));
+					objeto.setInstitucionId(rs.getInt("institucion_id"));
+					objeto.setInstitucion(rs.getString("institucion"));
+					objeto.setOrdenLineaAccion(rs.getInt("orden_linea_accion"));
+					objeto.setLineaAccionId(rs.getInt("linea_accion_id"));
+					objeto.setLineaAccion(rs.getString("linea_accion"));
+					objeto.setAccionUnidadMedidaId(rs.getInt("accion_unidad_medida_id"));
+					objeto.setAccionUnidadMedida(rs.getString("accion_unidad_medida"));
+					objeto.setPeriodo(rs.getInt("periodo"));
+					objeto.setLineaAccionMeta(rs.getInt("linea_accion_meta"));
+					objeto.setDatePart(rs.getDouble("date_part"));
+					objeto.setSumProgAnho(rs.getDouble("sum_prog_anho"));
+					objeto.setSumEjecAnho(rs.getDouble("sum_ejec_anho"));
+					objeto.setCostoEjecAnho(rs.getDouble("costo_ejec_anho"));
+					objeto.setCostoProgAnho(rs.getDouble("costo_prog_anho"));
+					objeto.setCostoProgHoy(rs.getDouble("costo_prog_hoy"));
+					objeto.setCostoEjecHoy(rs.getDouble("costo_ejec_hoy"));
+					objeto.setCantidadProgHoy(rs.getDouble("cantidad_prog_hoy"));
+					objeto.setCantidadEjecHoy(rs.getDouble("cantidad_ejec_hoy"));
+										
+					
+					objetos.add(objeto);
+				}
+			}
+			catch (SQLException e) {e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos;
+	  }	
+	
+	public static List<AccionHasProducto> selectAccionHasProducto(String condition) throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+			 String query = " select * from accion_has_producto "+condition;
+			 
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 List<AccionHasProducto> objetos = new ArrayList<AccionHasProducto>();
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					AccionHasProducto objeto = new AccionHasProducto();
+
+					objeto.setNivel(rs.getInt("spr_nivel_id"));
+					objeto.setEntidad(rs.getInt("spr_entidad_id"));
+					objeto.setTipoPrograma(rs.getInt("spr_tiprograma_id"));
+					objeto.setPrograma(rs.getInt("spr_programa_id"));
+					objeto.setSubPrograma(rs.getInt("spr_subprograma_id"));
+					objeto.setProyecto(rs.getInt("srp_proyecto_id"));
+					objeto.setSprProductoId(rs.getInt("spr_producto_id"));
+					objeto.setAnho(rs.getInt("spr_anho"));
+					objeto.setVersion(rs.getInt("spr_version"));
+					objeto.setAccionId(rs.getInt("accion_id"));
+					objeto.setUnidadMedida(rs.getString("u_medida"));
+					objeto.setCantidadFisica(rs.getDouble("cant_fisica"));
+					objeto.setClase(rs.getString("clase"));
+					objeto.setCantidadFinanciera(rs.getDouble("cant_financiera"));
+					objeto.setTotalAsignacion(rs.getDouble("asignacion_financiera"));
+
+					
+					objetos.add(objeto);
+				}
+			}
+			catch (SQLException e) {e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos;
+	  }	
+	
+    public static List<ProductoObjetoGasto> selectObjetoGastoCosto(String condicion)throws SQLException{
+    	Connection conect=ConnectionConfiguration.conectarSpr();
+
+    	String query = " select distinct objeto_gasto from asignacion_presi "+condicion+" and version = 151";
+
+    	Statement statement = null;
+    	ResultSet rs=null;
+    	List<ProductoObjetoGasto> objetos = new ArrayList<ProductoObjetoGasto>();
+
+    	try {
+	    	statement = conect.createStatement();
+	    	rs=statement.executeQuery(query);
+
+	    	while(rs.next()){
+	    		
+	    		ProductoObjetoGasto objeto = new ProductoObjetoGasto();
+					objeto.setCodigoObjetoGasto(rs.getInt("objeto_gasto"));
+					objetos.add(objeto);
+		    	}
+	    	}
+	    	catch (SQLException e) {e.printStackTrace();}
+	    	finally{
+	
+		    	if (statement != null) {statement.close();}
+		    	if (conect != null) {conect.close();}
+	    	}
+	    	return objetos;
+    	}
 //    public static List<ProyectoSNIP> selectProyectoSnip(String condition) throws SQLException{
 //     	 Connection conect=ConnectionConfiguration.conectar();
 //  		 String query = " select * from proyecto_snip "+condition;
@@ -795,7 +1251,7 @@ public class SqlSelects {
 //		 String query = " select DISTINCT(objetivo.nombre), objetivo.id as objetivo_id, estrategia.id as estrategia_id from estrategia_has_objetivo "+
 //				 	"inner join estrategia on estrategia_id=estrategia.id "+
 //				 	"inner join objetivo on objetivo_id=objetivo.id "+
-//				 	"where estrategia_has_objetivo.objetivo_tipo_objetivo_id =1 "+condition;
+//				 	"where estrategia_has_objetipublic int getAccionDepartamentoId() {
 //		 
 //		 Statement statement = null;
 //		 ResultSet rs=null;

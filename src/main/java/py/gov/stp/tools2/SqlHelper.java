@@ -1,5 +1,5 @@
 package py.gov.stp.tools2;
-import py.gov.stp.*;
+import py.gov.stp.tools2.*;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

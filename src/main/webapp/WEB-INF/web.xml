@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
-  <display-name>Tab BackEnd</display-name>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+	<display-name>Tab BackEnd</display-name>
+
 	<!-- Filter to handle logout requests sent directly by the CAS server -->
 	<filter>
 		<filter-name>CAS Single Sign Out Filter</filter-name>
@@ -15,24 +19,23 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	<listener>
-		<listener-class>org.jasig.cas.client.session.SingleSignOutHttpSessionListener
-		</listener-class>
+		<listener-class>org.jasig.cas.client.session.SingleSignOutHttpSessionListener</listener-class>
 	</listener>
 	<!-- charset filter -->
 	<filter>
-    <filter-name>Character Encoding Filter</filter-name>
-    <filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
-    <init-param>
-      <param-name>encoding</param-name>
-      <param-value>UTF-8</param-value>
-    </init-param>
-  </filter>
-  <filter-mapping>
-    <filter-name>Character Encoding Filter</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
-	
-	
+		<filter-name>Character Encoding Filter</filter-name>
+		<filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>Character Encoding Filter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+
 	<!-- paginas protegidas -->
 	<filter>
 		<filter-name>CAS Authentication Filter</filter-name>
@@ -44,16 +47,16 @@
 		</init-param>
 		<init-param>
 			<param-name>service</param-name>
-			<param-value>http://tablero2015.stp.gov.py/tablero/</param-value>
+			<param-value>http://spr.stp.gov.py/tablero/</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>
 		<filter-name>CAS Authentication Filter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
- 
- 	<!-- validacion de ticket -->
- 	<filter>
+
+	<!-- validacion de ticket -->
+	<filter>
 		<filter-name>CAS Validation Filter</filter-name>
 		<filter-class>org.jasig.cas.client.validation.Cas30ProxyReceivingTicketValidationFilter</filter-class>
 		<init-param>
@@ -62,15 +65,15 @@
 		</init-param>
 		<init-param>
 			<param-name>service</param-name>
-			<param-value>http://tablero2015.stp.gov.py/tablero/</param-value>
+			<param-value>http://spr.stp.gov.py/tablero/</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>
 		<filter-name>CAS Validation Filter</filter-name>
 		<url-pattern>*</url-pattern>
 	</filter-mapping>
-	
-	<!--  filtro de cas en todos los request -->
+
+	<!-- filtro de cas en todos los request -->
 	<filter>
 		<filter-name>CAS HttpServletRequest Wrapper Filter</filter-name>
 		<filter-class>org.jasig.cas.client.util.HttpServletRequestWrapperFilter</filter-class>
@@ -80,23 +83,41 @@
 		<url-pattern>*</url-pattern>
 	</filter-mapping>
 
-     <welcome-file-list>
-    	<welcome-file>index.jsp</welcome-file>
-  	</welcome-file-list>
+	<welcome-file-list>
+		<welcome-file>geografico4.jsp</welcome-file>
+	</welcome-file-list>
+
+	<servlet>
+		<servlet-name>jsp</servlet-name>
+		<servlet-class>org.apache.jasper.servlet.JspServlet</servlet-class>
+		<init-param>
+			<param-name>fork</param-name>
+			<param-value>false</param-value>
+		</init-param>
+		<init-param>
+			<param-name>xpoweredBy</param-name>
+			<param-value>false</param-value>
+		</init-param>
+		<init-param>
+			<param-name>mappedfile</param-name>
+			<param-value>false</param-value>
+		</init-param>
+		<load-on-startup>3</load-on-startup>
+	</servlet>
+
+
 
   <servlet>
-    <description>ajaxSelects</description>
-    <display-name>ajaxSelects</display-name>
-    <servlet-name>ajaxSelects</servlet-name>
-    <servlet-class>py.gov.stp.tools.ajaxSelects</servlet-class>
-
+	<description>ajaxSelects</description>
+	<display-name>ajaxSelects</display-name>
+	<servlet-name>ajaxSelects</servlet-name>
+	<servlet-class>py.gov.stp.tools.ajaxSelects</servlet-class>
   </servlet>
   <servlet>
     <description>ajaxSelects2</description>
     <display-name>ajaxSelects2</display-name>
     <servlet-name>ajaxSelects2</servlet-name>
     <servlet-class>py.gov.stp.tools2.ajaxSelects</servlet-class>
-
   </servlet>
   <servlet>
     <description>ajaxUpdate</description>
@@ -105,18 +126,29 @@
     <servlet-class>py.gov.stp.tools.ajaxUpdate</servlet-class>
   </servlet>
   <servlet>
+    <description>ajaxUpdate2</description>
+    <display-name>ajaxUpdate2</display-name>
+    <servlet-name>ajaxUpdate2</servlet-name>
+    <servlet-class>py.gov.stp.tools2.ajaxUpdate</servlet-class>
+  </servlet>  
+  <servlet>
     <description>ajaxInserts</description>
     <display-name>ajaxInserts</display-name>
     <servlet-name>ajaxInserts</servlet-name>
     <servlet-class>py.gov.stp.tools.ajaxInserts</servlet-class>
   </servlet>
   <servlet>
+    <description>ajaxInserts2</description>
+    <display-name>ajaxInserts2</display-name>
+    <servlet-name>ajaxInserts2</servlet-name>
+    <servlet-class>py.gov.stp.tools2.ajaxInserts</servlet-class>
+  </servlet>  
+  <servlet>
     <description>ajaxDelete</description>
     <display-name>ajaxDelete</display-name>
-    <servlet-name>ajaxDelete</servlet-name>
+    <servlet-name>ajaxDelete</servlet-name> 
     <servlet-class>py.gov.stp.tools.ajaxDelete</servlet-class>
   </servlet>
-   
   <servlet-mapping>
     <servlet-name>ajaxSelects</servlet-name>
     <url-pattern>/ajaxSelects</url-pattern>
@@ -130,11 +162,54 @@
     <url-pattern>/ajaxUpdate</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
+    <servlet-name>ajaxUpdate2</servlet-name>
+    <url-pattern>/ajaxUpdate2</url-pattern>
+  </servlet-mapping> 
+  <servlet-mapping>
     <servlet-name>ajaxInserts</servlet-name>
     <url-pattern>/ajaxInserts</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
+    <servlet-name>ajaxInserts2</servlet-name>
+    <url-pattern>/ajaxInserts2</url-pattern>
+  </servlet-mapping>  
+  <servlet-mapping>
     <servlet-name>ajaxDelete</servlet-name>
     <url-pattern>/ajaxDelete</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description>Sirve para almacenar archivos en el servidor</description>
+    <display-name>UploadServlet</display-name>
+    <servlet-name>UploadServlet</servlet-name>
+    <servlet-class>py.gov.stp.tools.UploadServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UploadServlet</servlet-name>
+    <url-pattern>/UploadServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description>Sirve para descargar archivos del servidor</description>
+    <display-name>DownloadServlet</display-name>
+    <servlet-name>DownloadServlet</servlet-name>
+    <servlet-class>py.gov.stp.tools.DownloadServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DownloadServlet</servlet-name>
+    <url-pattern>/DownloadServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description>Sirve para convertir HTML a PDF</description>
+    <display-name>CrearPdfServlet</display-name>
+    <servlet-name>CrearPdfServlet</servlet-name>
+    <servlet-class>py.gov.stp.tools.CrearPdfServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CrearPdfServlet</servlet-name>
+    <url-pattern>/CrearPdfServlet</url-pattern>
+  </servlet-mapping>   
+  <context-param> 
+    <description>Ubicación donde se almacenan los archivos subidos</description> 
+    <param-name>file-upload</param-name> 
+    <param-value>/usr/share/tomcat/uploads</param-value> 
+  </context-param> 
 </web-app>

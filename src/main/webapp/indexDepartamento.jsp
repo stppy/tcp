@@ -80,8 +80,7 @@
                   <li><a href="#tab_2-2" data-toggle="tab" title="Hitos"><i class="glyphicon glyphicon-list-alt"></i></a></li>
                   <li><a href="#tab_3-2" data-toggle="tab" title="Evolución"><i class="glyphicon glyphicon-stats"></i></a></li>
                   <li><a href="#tab_4-2" data-toggle="tab" title="Beneficiarios"><i class="glyphicon glyphicon-user"></i></a></li>
-                  <li><a href="#tab_5-2" data-toggle="tab" title="Ubicaciones"><i class="glyphicon glyphicon glyphicon-map-marker"></i></a></li>
-              		Detalle de Linea de Accion      
+                  <li><a href="#tab_5-2" data-toggle="tab" title="Ubicaciones"><i class="glyphicon glyphicon glyphicon-map-marker"></i></a></li>   
                 </ul>
                 <div class="tab-content">
                   <div class="tab-pane active" id="tab_1-1"></div><!-- /.tab-pane -->
@@ -258,7 +257,7 @@ if (user != null) { %>
 			
 			//Registro tiene los hitos de la accion
 			var registros = $.ajax({
-		    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id+'&departamento='+idDepartamento,
+		    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id+'&departamento='+idDepartamento,
 		      	type:'get',
 		      	dataType:'json',
 		      	crossDomain:true,
@@ -270,17 +269,16 @@ if (user != null) { %>
 
 			cuerpoModal='<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">'+
 						'<div class="row">'+
-							'<div class="col-sm-6">'+
-								'<div class="dataTables_length" id="example1_length"><label>Show <select name="example1_length" aria-controls="example1" class="form-control input-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div>'+
-							'</div>'+
-							'<div class="col-sm-6">'+
+							'<div class="col-sm-12">'+
 								'<div id="example1_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control input-sm" placeholder="" aria-controls="example1"></label></div>'+
+							'</div>'+
 							'</div>'+
 							'<div class="row">'+
 								'<div class="col-sm-12">'+
 									'<div class="table-responsive">'+
 										'<table class="table table-hover hitos" >'+
-											'<tr class="active"><td>Acción</td><td>Departamento</td><td>Distrito</td><td>U. Medida</td><td>Cantidad. Programado</td><td>Costo Total</td><td>Fecha Terminación</td><td>% Programado</td><td>% Ejecutado</td></tr>';
+											' <caption class="bg-gray disabled color-palette text-center"><h4>Detalle de Acción</h4></caption>'+										
+												'<tr class="active"><td>Hitos</td><td>Departamento</td><td>Distrito</td><td>U. Medida</td><td>Cantidad. Programado</td><td>Costo Total</td><td>Fecha Terminación</td><td>% Programado</td><td>% Ejecutado</td></tr>';
 
 						var totalCantidadProgramada=0;
 						tituloModal='<h3><center>'+elRegistro[0].institucion+'&nbsp;&nbsp;-&nbsp;&nbsp;'+elRegistro[0].linea_accion+'</center></h3>';
@@ -308,7 +306,7 @@ if (user != null) { %>
 			
 			//Obtenemos los hitos de las acciones
 			var registrosAccion = $.ajax({
-		    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015Accion&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id+'&departamento='+idDepartamento,
+		    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015Accion&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id+'&departamento='+idDepartamento,
 		      	type:'get',
 		      	dataType:'json',
 		      	crossDomain:true,
@@ -317,18 +315,17 @@ if (user != null) { %>
 			registrosAccion=JSON.parse(registrosAccion);			
 			
 			cuerpoModal2='<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">'+
-						 	'<div class="row">'+
-								'<div class="col-sm-6">'+
-									'<div class="dataTables_length" id="example1_length"><label>Show <select name="example1_length" aria-controls="example1" class="form-control input-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div>'+
-								'</div>'+
-								'<div class="col-sm-6">'+
-									'<div id="example1_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control input-sm" placeholder="" aria-controls="example1"></label></div>'+
-								'</div>'+
+							'<div class="row">'+
+							'<div class="col-sm-12">'+
+								'<div id="example1_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control input-sm" placeholder="" aria-controls="example1"></label></div>'+
+							'</div>'+
+							'</div>'+
 							'<div class="row">'+
 								'<div class="col-sm-12">'+
 									'<div class="table-responsive">'+
 										'<table class="table table-hover hitos" >'+
-											'<tr class="active"><td>Acción</td><td>Departamento</td><td>Distrito</td><td>U. Medida</td><td>Cantidad. Programado</td><td>Costo Total</td><td>Fecha Terminación</td><td>% Programado</td><td>% Ejecutado</td></tr>';
+											' <caption class="bg-gray disabled color-palette text-center"><h4>Acciones</h4></caption>'+											
+												'<tr class="active"><td>Acción</td><td>Departamento</td><td>Distrito</td><td>U. Medida</td><td>Cantidad. Programado</td><td>Costo Total</td><td>Fecha Terminación</td><td>% Programado</td><td>% Ejecutado</td></tr>';
 
 			var totalCantidadProgramada2=0;
 			for(var l=0; l<registrosAccion.length;l++)
@@ -347,7 +344,7 @@ if (user != null) { %>
 			
 			
 			lineaAccionAcumuladoMesDepto = $.ajax({
-		    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getLineaAccionAcumuladoMesDepto&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id+'&departamento='+idDepartamento,
+		    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getLineaAccionAcumuladoMesDepto&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id+'&departamento='+idDepartamento,
 		      	type:'get',
 		      	dataType:'json',
 		      	async:false       
@@ -416,14 +413,14 @@ if (user != null) { %>
 			        	    }
 			        	}
 			        });
-			      });			
+			      });			 
 	});
 		
 		
 		var entidadCas = "";
 		entidadCas ="<%=attributes.get("entidad") %>";
 		var usuarios = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -436,11 +433,11 @@ if (user != null) { %>
 		var i=parseInt(0);
 		
 		function numeroConComa(x) {
-		    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+			return x.toString().replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 		}
 		
 		var entidades = $.ajax({
-	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getEntidades',
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getEntidades',
 	      	type:'get',
 	      	dataType:'json',
 	      	crossDomain:true,
@@ -450,7 +447,7 @@ if (user != null) { %>
 		
 		
 		var lineaAccionDepartamento = $.ajax({
-	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getLineasAccionDepartamento',
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getLineasAccionDepartamento',
 	      	type:'get',
 	      	dataType:'json',
 	      	crossDomain:true,
@@ -459,7 +456,7 @@ if (user != null) { %>
 		lineaAccionDepartamento=JSON.parse(lineaAccionDepartamento);
 		
 		var departamento = $.ajax({
-	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
 	      	type:'get',
 	      	dataType:'json',
 	      	crossDomain:true,
@@ -468,7 +465,7 @@ if (user != null) { %>
 		departamento=JSON.parse(departamento);
 		
 		var elPaisjson = $.ajax({
-	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getLineasAccion',
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getLineasAccion',
 	      	type:'get',
 	      	dataType:'json',
 	      	crossDomain:true,

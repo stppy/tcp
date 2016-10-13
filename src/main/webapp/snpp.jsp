@@ -75,7 +75,7 @@ if (user != null) { %>
 		}
 		
 	/* 	var entidadesjson = $.ajax({
-	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getEntidades',
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getEntidades',
 	      	type:'get',
 	      	dataType:'json',
 	      	crossDomain:true,
@@ -84,7 +84,7 @@ if (user != null) { %>
 		var entidades=JSON.parse(entidadesjson);
 	 */	
 		var eljson = $.ajax({
-	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getLineasAccion',
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getLineasAccion',
 	      	type:'get',
 	      	dataType:'json',
 	      	crossDomain:true,
@@ -257,7 +257,7 @@ textarea { text-transform: uppercase; }
                   <th colspan="3" class="text-center cell-bordered2">Ejecución</th>
                 </tr>
                 <tr style="background-color: white;">
-                  <th>Linea de Acción</th>
+                  <th>Línea de Acción</th>
                   <th>U. M.</th>
                   <th>Base 2014</th>
                   <th>Costo (MM)</th>

@@ -4,7 +4,8 @@ public class BeneficiarioTipo {
 	protected int id;
 	protected String nombre;
 	protected String descripcion;
-	protected boolean borrado;
+	protected int version;
+	protected boolean borrado=false;
 	
 	public int getId() {
 		return id;
@@ -30,6 +31,14 @@ public class BeneficiarioTipo {
 	public void setBorrado(boolean borrado) {
 		this.borrado = borrado;
 	}
-	
+	public int getVersion() {
+		return version;
+	}
+	public void setVersion(int version) {
+		this.version = version;
+	}
+	public void changeBorrado(){
+		this.borrado=!borrado;
+	}	
 
 }

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8"%> 
 <%@ page import="org.jasig.cas.client.authentication.AttributePrincipalImpl"%>
 <%@ page import="org.jasig.cas.client.authentication.AttributePrincipal"%>
 <%@ page import="java.sql.*" %>
@@ -21,6 +21,9 @@
         
 	<!--<script src="frames/entidad.js" type="text/javascript"></script> -->
 	<script type="text/javascript" src="dist/canvasjs/canvasjs.min.js" ></script>
+	
+	<link href="bootstrap/css/bootstrapslider.css" rel="stylesheet">
+	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <script>
 var datosGeo=[];
@@ -62,11 +65,23 @@ var datosGeo=[];
 			width: 300px;
 		}
 		.leaflet-popup-close-button {
-        display: none;
-    }
-    .leaflet-popup-content-wrapper {
-        pointer-events: none;
-    }
+	        display: none;
+	    }
+	    .leaflet-popup-content-wrapper {
+	        pointer-events: none;
+	    }
+		
+		#slider12a .slider-track-high, #slider12c .slider-track-high {
+			background: #008d4c;
+		}
+		
+		#slider12b .slider-track-low, #slider12c .slider-track-low {
+			background: #d33724;
+		}
+		
+		#slider12c .slider-selection {
+			background: #db8b0b;
+		}
     </style>
     
     
@@ -78,350 +93,14 @@ var datosGeo=[];
 </head>
 <body class="skin-blue sidebar-mini sidebar-collapse">
 
-       <div class="modal fade" id="myModal" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">
 
-		<div class="modal-dialog modal-lg" style="width:90%;">
-		    <div class="modal-content" >
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title" id="myModalLabel1"></h4>
-		      </div>
-		      <div class="modal-body" id="editar-subprograma" >
-		     		
-		     	<div class="nav-tabs-custom">
-                <ul class="nav nav-tabs pull-right">
-                  <li class="active"><a href="#tab_1-1" data-toggle="tab"><i class="glyphicon glyphicon-list-alt"></i></a></li>
-                  <!--<li><a href="#tab_2-2" data-toggle="tab"><i class="glyphicon glyphicon-map-marker"></i></a></li>-->
-                  <li><a href="#tab_3-2" data-toggle="tab"><i class="glyphicon glyphicon-stats"></i></a></li>
-                    
-                </ul>
-                <div class="tab-content">
-                  <div class="tab-pane active" id="tab_1-1"></div><!-- /.tab-pane -->
-                  <div class="tab-pane" id="tab_2-2">
-               		<!--  <iframe width='100%' height='520' frameborder='0' src='http://geo.stp.gov.py/user/stp/viz/8f7c6480-2f1c-11e5-aaea-b6fa9714a3b6/embed_map' allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen>
-		     		</iframe>  -->
-                  </div><!-- /.tab-pane -->
-                  <div class="tab-pane" id="tab_3-2">
-                  	
-                  </div><!-- /.tab-pane -->
-                </div><!-- /.tab-content -->
-              </div>
-		      </div>
-			  <div class="modal-footer"> 
-				
-			  </div>
-		    </div> 
-		 </div>
-		</div>
 
 		
-<% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%>
-<% Map attributes = user.getAttributes(); 
+ <% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%>
+ <% Map attributes = user.getAttributes(); 
 if (user != null) { %>
 
 <script>
-	
-	$(document).ready(function(){
-		 
-		
-		var lineaAccionAcumuladoMesDepto;
-		
-		var vectorMin=0;
-		var vectorMax=0;
-		var vectorMinEjecucion=0;
-		var vectorMaxEjecucion=0;
-		
-		function dibujarLineaAccionAcumuladoMesDepto(lineaAccionAcumuladoMesDepto, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion){
-			
-			var dataPoints=[];
-			var ejecutada=[];
-			
-			var mes;
-			var anho;
-			var cantidadTotalProgramada=parseFloat(0);
-			var cantidadTotalEjecutada=parseFloat(0);
-			
-			
-			$("#rango-fecha").attr("data-slider-min",vectorMin);
-			$("#rango-fecha").attr("data-slider-max",vectorMax);
-			$("#rango-fecha").attr("data-slider-value","["+vectorMin+","+vectorMax+"]");
-			
-			$("#rango-fecha-ejecucion").attr("data-slider-min",vectorMinEjecucion);
-			$("#rango-fecha-ejecucion").attr("data-slider-max",vectorMaxEjecucion);
-			$("#rango-fecha-ejecucion").attr("data-slider-value","["+vectorMinEjecucion+","+vectorMaxEjecucion+"]");
-			
-			
-			$("#fechaInicio").html(lineaAccionAcumuladoMesDepto[vectorMin].mes+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-			$("#fechaInicioEjecucion").html(lineaAccionAcumuladoMesDepto[vectorMinEjecucion].mes+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-			$("#fechaFin").html("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+lineaAccionAcumuladoMesDepto[vectorMax].mes);
-			$("#fechaFinEjecucion").html("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+lineaAccionAcumuladoMesDepto[vectorMaxEjecucion].mes);
-			
-			$("#rango-fecha").slider({});
-			$("#rango-fecha-ejecucion").slider({});
-			for(var i = 0;i<lineaAccionAcumuladoMesDepto.length; i++)
-			{
-				cantidadTotalProgramada+=lineaAccionAcumuladoMesDepto[i].cantidad_programada;
-		
-				if(lineaAccionAcumuladoMesDepto[i].mes >= lineaAccionAcumuladoMesDepto[vectorMin].mes && lineaAccionAcumuladoMesDepto[i].mes <= lineaAccionAcumuladoMesDepto[vectorMax].mes)
-				{
-	 				dataPoints.push({ x: new Date( lineaAccionAcumuladoMesDepto[i].mes), y: cantidadTotalProgramada});
-				}
-
-			}
-			
-			for(var i = 0;i<lineaAccionAcumuladoMesDepto.length; i++)
-			{
-				cantidadTotalEjecutada+=lineaAccionAcumuladoMesDepto[i].cantidad_ejecutda;
-		
-				if(lineaAccionAcumuladoMesDepto[i].mes >= lineaAccionAcumuladoMesDepto[vectorMinEjecucion].mes && lineaAccionAcumuladoMesDepto[i].mes <= lineaAccionAcumuladoMesDepto[vectorMaxEjecucion].mes)
-				{
-	 				if (lineaAccionAcumuladoMesDepto[i].cantidad_ejecutda!=0)  ejecutada.push({ x: new Date( lineaAccionAcumuladoMesDepto[i].mes), y: cantidadTotalEjecutada});
-				}
-
-			}
-
-
-			var chart = new CanvasJS.Chart("chartContainer",
-					{
-							zoomEnabled: true,
-							exportEnabled: true,
-							exportFileName: lineaAccionAcumuladoMesDepto[0].institucion+" - "+lineaAccionAcumuladoMesDepto[0].linea_accion+" ("+lineaAccionAcumuladoMesDepto[0].accion_unidad_medida+")",
-							title: {
-								text: "Evolución Mensual" +" ("+lineaAccionAcumuladoMesDepto[0].accion_unidad_medida+")" 
-							},
-	                        	animationEnabled: true,
-	                        	width: 800,
-						axisX:{      
-							valueFormatString: "YYYY-MM" ,
-							interval: 1,
-							intervalType: "month",
-							labelAngle: -50,
-							labelFontColor: "rgb(0,75,141)",
-						},
-						axisY: {
-							title: "",
-							interlacedColor: "#F0FFFF",
-							tickColor: "azure",
-							titleFontColor: "rgb(0,75,141)"
-						},
-						data: [
-						{        
-							indexLabelFontColor: "darkSlateGray",
-							showInLegend: true, 
-							name: 'programada',
-							type: "line",
-							//color: "rgba(0,75,141,0.7)",
-							markerSize:8,
-							legendText:"Programación",
-							dataPoints:dataPoints
-						},
-						{        
-							indexLabelFontColor: "darkSlateGray",
-							showInLegend: true, 
-							name: 'ejecutadas',
-							type: "area",
-							//color: "rgba(0,75,141,0.8)",
-							markerSize:8,
-							legendText:"Ejecución",
-							dataPoints:ejecutada
-						}
-					  ]
-					});
-					
-			chart.render();
-		 }
-
-		$("body").on("change", "#rango-fecha",function(event){
-			var rangoDeFecha= $("#rango-fecha").val();
-			var splitDeRango=rangoDeFecha.split(",");
-			vectorMin=splitDeRango[0];
-			vectorMax=splitDeRango[1];
-			
-			var rangoDeFechaEjecucion= $("#rango-fecha-ejecucion").val();
-			var splitDeRangoEjecucion=rangoDeFechaEjecucion.split(",");
-			vectorMinEjecucion=splitDeRangoEjecucion[0];
-			vectorMaxEjecucion=splitDeRangoEjecucion[1];
-			
-			dibujarLineaAccionAcumuladoMesDepto(lineaAccionAcumuladoMesDepto, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion);
-			
-		});
-		
-		$("body").on("change", "#rango-fecha-ejecucion",function(event){
-			var rangoDeFecha= $("#rango-fecha").val();
-			var splitDeRango=rangoDeFecha.split(",");
-			vectorMin=splitDeRango[0];
-			vectorMax=splitDeRango[1];
-			
-			var rangoDeFechaEjecucion= $("#rango-fecha-ejecucion").val();
-			var splitDeRangoEjecucion=rangoDeFechaEjecucion.split(",");
-			vectorMinEjecucion=splitDeRangoEjecucion[0];
-			vectorMaxEjecucion=splitDeRangoEjecucion[1];
-			
-			dibujarLineaAccionAcumuladoMesDepto(lineaAccionAcumuladoMesDepto, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion);
-			
-		});
-		
-		$("body").on("click", ".registro",function(event){
-			var codigoRegistro = $(this).attr("codigoRegistro");
-		    var idParsed = codigoRegistro.split("-");                                                            
-			var institucion_id=idParsed[1];
-			var linea_accion_id=idParsed[2];
-			var unidad_medida= idParsed[3];
-			var idDepartamento= idParsed[4];
-			var tituloModal="";
-			var cuerpoModal="";
-			var footerModal="<br><br><br>";
-			
-			var registros = $.ajax({
-		    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id+'&departamento='+idDepartamento,
-		      	type:'get',
-		      	dataType:'json',
-		      	crossDomain:true,
-		      	async:false       
-		    }).responseText;
-			var elRegistro=JSON.parse(registros);
-			
-			
-
-			cuerpoModal='<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">'+
-						'<div class="row">'+
-							'<div class="row">'+
-								'<div class="col-sm-12">'+
-									'<div class="table-responsive">'+
-										'<table id="example1" class="table table-hover" >'+
-										    '<thead>'+
-											'<tr class="active"><th>Acción</th><th>Departamento</th><th>Distrito</th><th>U. Medida</th><th>Cantidad. Programado</th><th>Inversión Estimada (Millones de G.)</th><th>Fecha Terminación</th><th>% Programado</th><th>% Ejecutado</th></tr>'+
-											'</thead><tbody>';
-						var totalCantidadProgramada=0;
-						tituloModal='<h3><center>'+elRegistro[0].institucion+'&nbsp;&nbsp;-&nbsp;&nbsp;'+elRegistro[0].linea_accion+'</center></h3>';
-						for(var m=0; m<elRegistro.length;m++)
-						{
-								var registroFecha= elRegistro[m].hito_fecha_entrega.split(" ");
-								if (registroFecha[0]=="Jan" || registroFecha[0]=="ene") registroFecha[0]=1;
-								if (registroFecha[0]=="Feb" || registroFecha[0]=="feb") registroFecha[0]=2;
-								if (registroFecha[0]=="Mar" || registroFecha[0]=="mar") registroFecha[0]=3;
-								if (registroFecha[0]=="Apr" || registroFecha[0]=="abr") registroFecha[0]=4;
-								if (registroFecha[0]=="May" || registroFecha[0]=="may") registroFecha[0]=5;
-								if (registroFecha[0]=="Jun" || registroFecha[0]=="jun") registroFecha[0]=6;
-								if (registroFecha[0]=="Jul" || registroFecha[0]=="jul") registroFecha[0]=7;
-								if (registroFecha[0]=="Aug" || registroFecha[0]=="ago") registroFecha[0]=8;
-								if (registroFecha[0]=="Sep" || registroFecha[0]=="sep") registroFecha[0]=9;
-								if (registroFecha[0]=="Oct" || registroFecha[0]=="oct") registroFecha[0]=10;
-								if (registroFecha[0]=="Nov" || registroFecha[0]=="nov") registroFecha[0]=11;
-								if (registroFecha[0]=="Dec" || registroFecha[0]=="dic") registroFecha[0]=12;
-								registroFecha[1].split(",");
-								
-								cuerpoModal+='<tr><td>'+elRegistro[m].accion+'</td><td>'+elRegistro[m].accion_departamento+'</td><td>'+elRegistro[m].accion_distrito+'</td><td>'+elRegistro[m].accion_unidad_edida+'</td><td>'+elRegistro[m].hito_cantidad_programado+'</td><td>'+numeroConComa((elRegistro[m].accion_costo*elRegistro[m].hito_porcentaje_ejecutado/100000000).toFixed(0))+'</td><td>'+registroFecha[2]+'-'+registroFecha[0]+'-'+registroFecha[1][0]+'</td><td>'+elRegistro[m].hito_porcentaje_programado+'</td><td>'+elRegistro[m].hito_porcentaje_ejecutado+'</td></tr>';
-								totalCantidadProgramada+=elRegistro[m].hito_cantidad_programado;
-						}
-						totalCantidadProgramada=parseFloat(totalCantidadProgramada).toFixed(2);
-
-						cuerpoModal+='</tbody><tfoot><tr class="active"><td colspan="2">Total Cantidad Programada: </td><td colspan="8">'+totalCantidadProgramada+'</td></tr></tfoot>'+
-									 '</table>'+
-									 '</div></div></div></div></div>';
-			
-			$('#myModal').find(".modal-title").html(tituloModal);
-			$('#myModal').find("#tab_1-1").html("");
-			$('#myModal').find("#tab_2-2").html("");
-			$('#myModal').find("#tab_3-2").html("");
-
-			$("#tab_3-2").append('Programación: <label id="fechaInicio"></label><input id="rango-fecha" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="1" data-slider-value="[250,450]"/><label id="fechaFin"></label>');
-			$("#tab_3-2").append('<br><br>Ejecución: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label id="fechaInicioEjecucion"></label><input id="rango-fecha-ejecucion" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="1" data-slider-value="[250,450]"/><label id="fechaFinEjecucion"></label>');
-
-			$('#myModal').find("#tab_1-1").html(cuerpoModal);
-			//$('#myModal').find(".modal-footer").html(footerModal);
-			
-			lineaAccionAcumuladoMesDepto = $.ajax({
-		    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getLineaAccionAcumuladoMesDepto&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id+'&departamento='+idDepartamento,
-		      	type:'get',
-		      	dataType:'json',
-		      	async:false       
-		    }).responseText;
-			
-			
-			lineaAccionAcumuladoMesDepto = JSON.parse(lineaAccionAcumuladoMesDepto);
-			
-			 vectorMin=0;
-			 vectorMax=lineaAccionAcumuladoMesDepto.length-1;
-			 
-			 vectorMinEjecucion=0;
-			 vectorMaxEjecucion=lineaAccionAcumuladoMesDepto.length-1;
-			//grafico de total cantidad programada y total cantidad ejecutada
-			
-			$('#myModal').find("#tab_3-2").append('<div id="chartContainer" style="height:400px;"></div>');
-			
-			function compare(a,b) {             
-				  if (a.mes < b.mes)
-				    return -1;
-				  if (a.mes > b.mes)
-				    return 1;
-				  return 0;
-				}
-			
-			
-			lineaAccionAcumuladoMesDepto=lineaAccionAcumuladoMesDepto.sort(compare);
-			
-			dibujarLineaAccionAcumuladoMesDepto(lineaAccionAcumuladoMesDepto, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion);
-			
-			 $(function () {
-			       
-			        $('#example1').dataTable({
-			          "bPaginate": false,
-			          "bLengthChange": false,
-			          "bFilter": true,
-			          "bSort": true,
-			          "bInfo": true,
-			          "bAutoWidth": false,
-			          "language":{
-			        	    "sProcessing":     "Procesando...",
-			        	    "sLengthMenu":     "Mostrar _MENU_ registros",
-			        	    "sZeroRecords":    "No se encontraron resultados",
-			        	    "sEmptyTable":     "Ningún dato disponible en esta tabla",
-			        	    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-			        	    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-			        	    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-			        	    "sInfoPostFix":    "",
-			        	    "sSearch":         "Buscar:",
-			        	    "sUrl":            "",
-			        	    "sInfoThousands":  ",",
-			        	    "sLoadingRecords": "Cargando...",
-			        	    "oPaginate": {
-			        	        "sFirst":    "Primero",
-			        	        "sLast":     "Último",
-			        	        "sNext":     "Siguiente",
-			        	        "sPrevious": "Anterior"
-			        	    },
-			        	    "oAria": {
-			        	        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-			        	        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-			        	    }
-			        	}
-			        });
-			      });
-	});
-		
-		
-		
-		
-		
-		renderEntidades();
-
-		/*for (var indexI=0; indexI<19;indexI++){
-			renderLineaAccion(indexI, 22691);
-			renderLineaAccion(indexI, 22691);
-			renderLineaAccion(indexI, 22691);
-			renderLineaAccion(indexI, 22691);
-			renderLineaAccion(indexI, 22691);
-			renderLineaAccion(indexI, 22691);
-			renderLineaAccion(indexI, 22691);
-			renderLineaAccion(indexI, 22691);
-		}*/
-
-		//renderLineaAccion(0, 1359);
-		//renderLineaAccion();
-		
-		
-	});
 	
 	//event.stopPropagation();
 	
@@ -503,14 +182,25 @@ tbody {
                   	<div id="map" style="width: 800x; height: 600px"></div>
 
 					<script src="plugins/mapa/deptos2012.geojson" type="text/javascript"></script>
+					<!-- <script src="mapa/0.geojson" type="text/javascript"></script>  -->
 					<script src="plugins/mapa/leaflet.js"></script>
+					<script type="text/javascript" src="mapa/leaflet.ajax.js"></script>
+					<script src="mapa/spin.js"></script>
+					<script src="mapa/leaflet.spin.js"></script>
+					
 				
 					<script>
 					
+					var pocentajeColor1 = parseInt(70);
+					var pocentajeColor2 = parseInt(90);
+					
 					var entidadCas = "";
 					entidadCas ="<%=attributes.get("entidad") %>";
-					var usuarios = $.ajax({
-						url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
+					
+					var usuarios = $.ajax({						 
+						url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
+						
+						
 					  	type:'get',
 					  	dataType:'json',
 					  	async:false       
@@ -523,11 +213,11 @@ tbody {
 					var i=parseInt(0);
 					
 					function numeroConComa(x) {
-					    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+						return x.toString().replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 					}
 					
 					var entidades = $.ajax({
-				    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getEntidades',
+				    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getEntidades',
 				      	type:'get',
 				      	dataType:'json',
 				      	crossDomain:true,
@@ -536,8 +226,8 @@ tbody {
 					entidades=JSON.parse(entidades);
 					
 					
-					var lineaAccionDepartamento = $.ajax({
-				    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getLineasAccionDepartamento',
+  					var lineaAccionDepartamento = $.ajax({
+				    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getLineasAccionDepartamento',
 				      	type:'get',
 				      	dataType:'json',
 				      	crossDomain:true,
@@ -546,7 +236,7 @@ tbody {
 					lineaAccionDepartamento=JSON.parse(lineaAccionDepartamento);
 					
 					var departamento = $.ajax({
-				    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
+				    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
 				      	type:'get',
 				      	dataType:'json',
 				      	crossDomain:true,
@@ -554,29 +244,40 @@ tbody {
 				    }).responseText;
 					departamento=JSON.parse(departamento);
 					
-					var elPaisjson = $.ajax({
-				    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getLineasAccion',
-				      	type:'get',
-				      	dataType:'json',
-				      	crossDomain:true,
-				      	async:false       
-				    }).responseText;
-					var elPais=JSON.parse(elPaisjson);
+
 					
-					var desPaisDeptojson = $.ajax({
-				    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getDesempPaisPorDepto',
+ 					var desPaisDeptojson = $.ajax({
+				    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDesempPaisPorDepto',
 				      	type:'get',
 				      	dataType:'json',
 				      	crossDomain:true,
 				      	async:false       
 				    }).responseText;
 					var desPaisDepto=JSON.parse(desPaisDeptojson);
-				
+					
+					var desPaisDistjson = $.ajax({
+				    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDesempPaisPorDist',
+				      	type:'get',
+				      	dataType:'json',
+				      	crossDomain:true,
+				      	async:false       
+				    }).responseText;
+					var desPaisDist=JSON.parse(desPaisDistjson);
+					
+ 					var desPaisDistInstjson = $.ajax({
+				    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDesempPaisPorDistInst',
+				      	type:'get',
+				      	dataType:'json',
+				      	crossDomain:true,
+				      	async:false       
+				    }).responseText;
+					var desPaisDistInst=JSON.parse(desPaisDistInstjson);
+				    
 
 					
-					var totalLineaPais=[];
+					//var totalLineaPais=[];
 					var y=0;
-					for (var z=0; z<elPais.length;z++){
+					/*for (var z=0; z<elPais.length;z++){
 						if (elPais[z].anho=="2015")
 						{
 							totalLineaPais[y] = new Object();
@@ -587,197 +288,134 @@ tbody {
 							totalLineaPais[y].accion_departamento_id= elPais[z].suma_programada_anho;
 							y++;
 						}
-					}
+					}*/
 					y=0;
-					
-					
-					
-					
+
 					var sumporAClass="";
 					var porAejeClass="";
 					var porHejeClass="";
 					var porHejeClassRow="";
+							
+/* 					function getColorDesemp(val){
+						if (parseFloat(val).toFixed(0)>=90){
+							return "green";
+						}else{
+							if (parseFloat(val).toFixed(0)>=70){
+								return  color="yellow";
+							}else{
+								return  color="red";
+							}
+						}
+					} */
 					
+					function getColorDesemp2(val){
+						if (parseFloat(val).toFixed(0)>=pocentajeColor2){
+							return "green";
+						}else{
+							if (parseFloat(val).toFixed(0)>=pocentajeColor1){
+								return  color="yellow";
+							}else{
+								return  color="red";
+							}
+						}
+					}
 					
+					function setColorBarras(pocentajeColor1, pocentajeColor2){
+						
+						$("div.progress-bar").each(function(){
+							var varlor = parseInt($(this).find('p').html());
+							if (varlor >= pocentajeColor2){
+								$(this).attr("class", "progress-bar bg-green-active color-palette");
+							}else{
+								if (varlor >= pocentajeColor1){
+									$(this).attr("class", "progress-bar bg-yellow-active color-palette");
+								}else{
+									$(this).attr("class", "progress-bar bg-red-active color-palette");
+								}
+							}
+						});
+
+					}
 
 					
 					
 					function renderEntidades(e){
-						var array=[];
+						var array=[];var tipoInstituciones="";
 						$("#tablaInstituciones").html("");
-						if (typeof e != 'undefined'){
-							array=lineaAccionDepartamento;
-							$("#tabla-derecho").html("");
-							$("#tabla-derecho").append('Instituciones en '+e.target.feature.properties.dpto_desc);
-						}else{
-							array=elPais;
-							
-						}
-						for (var i = 0; i< entidades.length;i++){
-							var iteracion=0;
-							var porcentajeAnhoAcumulado=0;
-							var porcentajeHoyEjeAcumulado=0;
-							var lineasDeAccion= [];
-							var iteracionDepto=0;
-							var porcentajeAnhoAcumuladoDepto=0;
-							var porcentajeHoyEjeAcumuladoDepto=0;
-							var porcentajeAnhoAcumuladoDeptoTotal=0;
-							var porcentajeHoyEjeAcumuladoDeptoTotal=0;
-
-							
-							for(var j=0;j<array.length;j++){
-								if (array[j].institucion_id==entidades[i].institucion_id){
-									if (lineasDeAccion.indexOf(array[j].linea_accion_id)<0){
-										if (typeof e != 'undefined'){
-											if (array[j].accion_departamento_id==e.target.feature.properties.dpto && array[j].anho=="2015"){
-
-												lineasDeAccion.push(array[j].linea_accion_id);
-											}
-										}else{
-											lineasDeAccion.push(array[j].linea_accion_id);
-										}
-										if(array[j].anho<="2014"){
-											var anho1=array[j];
-											var anho2;
-											for(var k=0;k<array.length;k++){
-												if (anho1.institucion_id==array[k].institucion_id && anho1.linea_accion_id==array[k].linea_accion_id && array[k].anho =="2015"){
-													anho2=array[k];
-												}
-											}
-											if (typeof anho1h==="undefined") {var anho1= new Object(); anho1.hito_cantidad_ejecutado_hoy="";};
-											if (typeof anho2==="undefined") {var anho2= new Object(); anho2.hito_cantidad_ejecutado_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
-											if (anho2.suma_programada_anho>0 ){
-													iteracion++;
-													var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
-													porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
-
-													var porcentajeHoyEje = (anho2.hito_cantidad_ejecutado_hoy*100)/anho2.suma_programada_hoy;
-													porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
-													porcentajeHoyEjeAcumulado += parseFloat(porcentajeHoyEje);
-													porcentajeAnhoAcumulado+=parseFloat(porcentajeAnho);
-											}else{
-												var porcentajeAnho = 0;
-												var porcentajeAnhoEje = 0;
-												var porcentajeHoyEje =0;
-												porHejeClassRow="";
-											}
 											
-											anho2="";
-											anho1="";
-										}
-										if(array[j].anho>="2015"){
-											var anho2=array[j];
-											var anho1;
-											for(var k=0;k<array.length;k++){
-												if (anho2.institucion_id==array[k].institucion_id && anho2.linea_accion_id==array[k].linea_accion_id && array[k].anho =="2014"){
-													anho1=array[k];
-												}
-											}
-											if (typeof anho1==="undefined") {var anho1= new Object(); anho1.hito_cantidad_ejecutado_hoy="";};
-											if (typeof anho2==="undefined") {var anho2= new Object(); anho2.hito_cantidad_ejecutado_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
-
-											if (anho2.suma_programada_anho>0)
-											{
-													iteracion++;
-													var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
-													porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
-
-													var porcentajeHoyEje = (anho2.hito_cantidad_ejecutado_hoy*100)/anho2.suma_programada_hoy;
-													porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
-													porcentajeHoyEjeAcumulado += parseFloat(porcentajeHoyEje);
-													porcentajeAnhoAcumulado+=parseFloat(porcentajeAnho);
-											}
-										}
-										
-										if (typeof e != 'undefined')
-										{
-											if(array[j].anho>="2015"){
-												var anho2=array[j];
-												var anho3;
-												
-												for(var k=0;k<array.length;k++)
-												{
-													if (anho2.institucion_id==array[k].institucion_id && anho2.linea_accion_id==array[k].linea_accion_id && array[k].anho =="2015" && anho2.accion_departamento_id==array[k].accion_departamento_id)
-													{
-														anho3=array[k];
-													}
-												}
-												
-												if (array[j].accion_departamento_id==e.target.feature.properties.dpto && anho3.suma_programada_anho>0)
-												{
-													iteracionDepto++;
-													var porcentajeAnho = parseFloat((anho3.suma_programada_anho*100)/anho3.linea_accion_meta);
-													porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
-													porcentajeAnhoAcumuladoDepto+=parseFloat(porcentajeAnho);
-													
-			
-													var porcentajeHoyEje = parseFloat((anho3.cantidad_ejecutada_hoy*100)/anho3.suma_programada_hoy);
-													porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
-													porcentajeHoyEjeAcumuladoDepto+=parseFloat(porcentajeHoyEje);
-												}
-											}
-										}
-										
-										
-										
-										
-										
-										
-										
-										
-										
-										
-
-											anho2="";
-											anho1="";
-											anho3="";
+						if (typeof e != 'undefined'){
+							if (e.target.feature.properties.hasOwnProperty("distrito")){
+								tipoInstituciones="distrito";
+								$("#tabla-derecho").html("");
+														
+								$("#tabla-derecho").append('<div class="col-md-4" style="margin:0">Instituciones en: </div><div  class="col-md-4" >'+
+									    e.target.feature.properties.dpto_desc+
+									 '</div>'+
+									 '<div class="col-md-4" >'+
+									    e.target.feature.properties.dist_desc+ 
+									  '</div>'+
+									'</div>');
+								var color="";
+								for (var i = 0; i< entidades.length;i++){
+									for(var j=0;j < desPaisDistInst.length;j++){
+										if ((desPaisDistInst[j].clave3==entidades[i].institucion_id) && (desPaisDistInst[j].clave1==e.target.feature.properties.dpto) && (desPaisDistInst[j].clave2 == e.target.feature.properties.distrito)){
+											color=getColorDesemp2(desPaisDistInst[j].valor);
+											$("#tablaInstituciones").append('<tr><td class="col-md-3"><a tipo="filtroPorEntidad" institucion_id='+entidades[i].institucion_id+' depto_id='+e.target.feature.properties.dpto+' dist_id='+e.target.feature.properties.distrito+' >'+entidades[i].institucion+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(desPaisDistInst[j].valor).toFixed(0)+'%"><p class="text-left">'+parseFloat(desPaisDistInst[j].valor).toFixed(2)+'%</p></div></div></td></tr>');
 										}
 									}
 								}
-							var porcentajeAnhoAcumuladoTotal = porcentajeAnhoAcumulado / iteracion;
-							var porcentajeHoyEjeAcumuladoTotal = porcentajeHoyEjeAcumulado / iteracion;
-							porcentajeAnhoAcumuladoDeptoTotal = porcentajeAnhoAcumuladoDepto / iteracionDepto;
-							porcentajeHoyEjeAcumuladoDeptoTotal = porcentajeHoyEjeAcumuladoDepto / iteracionDepto;
-							
-							var color="";
-							if (!isNaN(porcentajeAnhoAcumuladoDeptoTotal) && !isNaN(porcentajeHoyEjeAcumuladoDeptoTotal)){
-								porcentajeAnhoAcumuladoTotal=porcentajeAnhoAcumuladoDeptoTotal;
-								porcentajeHoyEjeAcumuladoTotal=porcentajeHoyEjeAcumuladoDeptoTotal;
-							}
-							if (!isNaN(porcentajeAnhoAcumuladoTotal) && !isNaN(porcentajeHoyEjeAcumuladoTotal)){
-								if (porcentajeAnhoAcumuladoTotal >= 100) { porcentajeAnhoAcumuladoTotal = 100; }
-								if (porcentajeHoyEjeAcumuladoTotal>=100) { porcentajeHoyEjeAcumuladoTotal = 100; }
-							
-								//if (porcentajeAnhoAcumuladoTotal >= 90){
-									if (porcentajeHoyEjeAcumuladoTotal>=90){
-										color="green";
-									}else{
-										if (porcentajeHoyEjeAcumuladoTotal>=70){
-											color="yellow";
-										}else{
-											color="red";
+							}else{
+								
+								var lineaAccionDepartamento = $.ajax({
+						    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getLineasAccionDepartamento',
+						      	type:'get',
+						      	dataType:'json',
+						      	crossDomain:true,
+						      	async:false       
+						    }).responseText;
+							lineaAccionDepartamento=JSON.parse(lineaAccionDepartamento);
+								
+								
+								tipoInstituciones="departamento";
+								array=lineaAccionDepartamento;
+								$("#tabla-derecho").html("");
+								$("#tabla-derecho").append('Instituciones en '+e.target.feature.properties.dpto_desc);
+								var color="";var depemDeptoInst;var countDeptoInst;var despTotDeptoInst;
+								for (var i = 0; i< entidades.length;i++){
+									countDeptoInst=0;
+									depemDeptoInst=0.0;
+									despTotDeptoInst=0.0;
+									for(var j=0;j < desPaisDistInst.length;j++){
+										if ((desPaisDistInst[j].clave3==entidades[i].institucion_id) && (desPaisDistInst[j].clave1==e.target.feature.properties.dpto)){
+											depemDeptoInst+=desPaisDistInst[j].valor;
+											countDeptoInst++;
 										}
 									}
-								//}else {
-								//	color="red";
-								//}
-								var idDepartamentoLink="";
-								if (typeof e != 'undefined'){idDepartamentoLink=e.target.feature.properties.dpto;}
-								
-								$("#tablaInstituciones").append('<tr><td class="col-md-3"><a tipo="filtroPorEntidad" institucion_id='+entidades[i].institucion_id+' depto_id='+idDepartamentoLink+' >'+entidades[i].institucion+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+porcentajeHoyEjeAcumuladoTotal.toFixed(0)+'%"><p class="text-left">'+porcentajeHoyEjeAcumuladoTotal.toFixed(2)+'%</p></div></div></td></tr>');
-								porcentajeAnhoAcumuladoTotal=0;
-								porcentajeAnhoAcumuladoDeptoTotal=0;
-								
-								porcentajeHoyEjeAcumuladoTotal=0;
-								porcentajeHoyEjeAcumuladoDeptoTotal=0;							
-
-								color="";
+									despTotDeptoInst=depemDeptoInst/countDeptoInst;
+									color=getColorDesemp2(despTotDeptoInst);
+									if (!isNaN(despTotDeptoInst)) $("#tablaInstituciones").append('<tr><td class="col-md-3"><a tipo="filtroPorEntidad" institucion_id='+entidades[i].institucion_id+' depto_id='+e.target.feature.properties.dpto+' >'+entidades[i].institucion+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotDeptoInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotDeptoInst).toFixed(2)+'%</p></div></div></td></tr>');
+								}
 							}
-							
+						}else{ //d
+							var color="";var depemInst;var countInst;var despTotInst;
+							for (var i = 0; i< entidades.length;i++){
+								countInst=0;
+								depemInst=0.0;
+								despTotInst=0.0;
+								for(var j=0;j < desPaisDistInst.length;j++){
+									if ((desPaisDistInst[j].clave3==entidades[i].institucion_id) ){
+										depemInst+=desPaisDistInst[j].valor;
+										countInst++;
+									}
+								}
+								despTotInst=depemInst/countInst;
+								color=getColorDesemp2(despTotInst);
+								if (!isNaN(despTotInst)) $("#tablaInstituciones").append('<tr><td class="col-md-3"><a tipo="filtroPorEntidad" institucion_id='+entidades[i].institucion_id+'  >'+entidades[i].institucion+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotInst).toFixed(2)+'%</p></div></div></td></tr>');
+							}
 						}
 					}
 					
-					function renderLineaAccion(depto_id, institucion_id)
+					function renderLineaAccion(depto_id, institucion_id, dist_id)
 					{
 						var iteracionDepto=0;
 						var porcentajeAnhoAcumuladoDepto=0;
@@ -788,193 +426,85 @@ tbody {
 
 						$("#cuerpoTabla").html("");
 						var lineasDeAccion= [];
-						for (var i = 0; i< 18;i++){
-						  if(departamento[i].idDepartamento==depto_id){
-							$("#cuerpoTabla").append('<tr><td colspan="12" ><strong>'+departamento[i].nombreDepartamento+'</strong></td></tr>');
-
-							var lineasDeAccion= [];
+						
+						if (dist_id=="" && depto_id != ""){
+							var metasDistEntLineajson = $.ajax({
+						    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getMetasDistEntLinea&departamento='+depto_id+'&institucion_id='+institucion_id,
+						      	type:'get',
+						      	dataType:'json',
+						      	crossDomain:true,
+						      	async:false       
+						    }).responseText;
+							var metasDistEntLinea=JSON.parse(metasDistEntLineajson);
 							
+							var desemp=0.0;
+							var color="";
+							var porHejeClassRow="";
+							var acumuladorPlanificacionAnho=0.0;
+							var acumuladorPlanificacion=0.0;
+							var acumuladorEjecucion=0.0;
+							var acumuladorInversion=0.0;
+							var desempenho=0.0;
+							var lineasDeAccion=[];
 							
-							for(var j=0;j<lineaAccionDepartamento.length;j++){
-								
-								if (lineaAccionDepartamento[j].accion_departamento_id==departamento[i].idDepartamento){
+							for(var l=0;l<metasDistEntLinea.length;l++){
+							
+								if (lineasDeAccion.indexOf(metasDistEntLinea[l].lineaAccionId)<0){
+									lineasDeAccion.push(metasDistEntLinea[l].lineaAccionId);
+									acumuladorPlanificacionAnho=0.0;
+									acumuladorPlanificacion=0.0;
+									acumuladorEjecucion=0.0;
+									acumuladorInversion=0.0;
 									
-									if (lineasDeAccion.indexOf(lineaAccionDepartamento[j].linea_accion_id)<0){
-										lineasDeAccion.push(lineaAccionDepartamento[j].linea_accion_id);
-										if(lineaAccionDepartamento[j].anho<="2014"){
-											var anho1=lineaAccionDepartamento[j];
-											
-											var anho2;
-											for(var k=0;k<lineaAccionDepartamento.length;k++){
-												if (anho1.institucion_id==lineaAccionDepartamento[k].institucion_id && institucion_id== anho1.institucion_id && anho1.linea_accion_id==lineaAccionDepartamento[k].linea_accion_id && lineaAccionDepartamento[k].anho =="2015" && lineaAccionDepartamento[k].accion_departamento_id ==anho1.accion_departamento_id){
-													anho2=lineaAccionDepartamento[k];
-												}
-											}
-											if (typeof anho1==="undefined") {var anho1= new Object(); anho1.cantidad_ejecutada_hoy=""};
-											if (typeof anho2==="undefined") {var anho2= new Object(); anho2.cantidad_ejecutada_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
-											if (anho2.suma_programada_anho>0){
-												
-												//for para recorrer totalLineaPais con if para seleccionar la insittucion, la linea y anho considerando lo cargado en anho2, luego 
-												//     anho2.linea_accion_meta = anho2.suma_programada_anho  * 100 / totalLineaPais[y].suma_programada_anho_pais
-												for(var l=0; l<totalLineaPais.length;l++)
-												{
-														if(totalLineaPais[l].institucion_id == anho2.institucion_id && institucion_id== anho2.institucion_id && totalLineaPais[l].linea_accion_id == anho2.linea_accion_id && totalLineaPais[l].anho == anho2.anho)
-														{
-															anho2.linea_accion_meta = parseFloat((anho2.suma_programada_anho / totalLineaPais[l].suma_programada_anho_pais)*anho2.linea_accion_meta).toFixed(2);
-														}
-												}
-												iteracionDepto++;
-											//	var porcentajeAnho = (anho2.suma_programada_hoy*100)/anho2.suma_programada_anho;
-												var porcentajeAnho = parseFloat((anho2.suma_programada_anho*100)/anho2.linea_accion_meta).toFixed(2);
-												porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
-												porcentajeAnhoAcumuladoDepto+=parseFloat(porcentajeAnho);
-												var porcentajeAnhoEje = parseFloat((anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_anho).toFixed(2);
-												porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
-												var porcentajeHoyEje = parseFloat((anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_hoy).toFixed(2);
-												porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
-												porcentajeHoyEjeAcumuladoDepto+=parseFloat(porcentajeHoyEje);
-												/*if (porcentajeAnho<=70) sumporAClass = "text-danger";
-												if (porcentajeAnho>70) sumporAClass = "text-warning";
-												if (porcentajeAnho>90) sumporAClass = "text-success";
-												
-												if (porcentajeAnhoEje<=70) porAejeClass = "text-danger";
-												if (porcentajeAnhoEje>70) porAejeClass = "text-warning";
-												if (porcentajeAnhoEje>90) porAejeClass = "text-success";
-												*/
-												porHejeClassRow="";
-												/*
-												if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";porHejeClassRow="danger";}
-												if (porcentajeHoyEje>70){ porHejeClass = "text-warning";porHejeClassRow="warning";}
-												if (porcentajeHoyEje>90){ porHejeClass = "text-success";porHejeClassRow="success";}
-												
-												if (porcentajeAnho<=70){ porHejeClassRow="danger";porHejeClass="";} */
-
-												//if (porcentajeAnho<90){ porHejeClassRow="danger";porHejeClass="";}
-												/*if (porcentajeAnho>=90){ porHejeClassRow="success";
-													if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";}
-													if (porcentajeHoyEje>70){ porHejeClass = "text-warning";}
-													if (porcentajeHoyEje>90){ porHejeClass = "text-success";}
-												}*/
-												
-												//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
-											 if(lineaAccionDepartamento[j].institucion_id==institucion_id && porcentajeHoyEje>0 ) $("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+lineaAccionDepartamento[j].institucion_id+'-'+lineaAccionDepartamento[j].linea_accion_id+'-'+lineaAccionDepartamento[j].accion_unidad_medida+'-'+lineaAccionDepartamento[j].accion_departamento_id+'> '+lineaAccionDepartamento[j].institucion+'- '+anho2.linea_accion+'</a></td><td>'+anho2.accion_unidad_medida+'</td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_hoy)+'</td><td >'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td >'+porcentajeHoyEje+'</td><td>'+numeroConComa((anho2.costo_ejecutado/1000000).toFixed(0))+'</td></tr>');
-
-																			
-												
-												
-												//<td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td> penultimo
-												if ( porcentajeHoyEje ==="NaN"){ porcentajeHoyEje="";porHejeClassRow="";}
-											}else{
-												var porcentajeAnho = "";
-												var porcentajeAnhoEje = "";
-												var porcentajeHoyEje ="";
-												porHejeClassRow="";
-											}
-											
-											anho2="";
-											anho1="";
-										}
-										if(lineaAccionDepartamento[j].anho>="2015"){
-											var anho2=lineaAccionDepartamento[j];
-				 							var anho1="";
-											for(var k=0;k<lineaAccionDepartamento.length;k++){
-												if (anho2.institucion_id==lineaAccionDepartamento[k].institucion_id && institucion_id== anho2.institucion_id && anho2.linea_accion_id==lineaAccionDepartamento[k].linea_accion_id && lineaAccionDepartamento[k].date_part =="2014"){
-													anho1=lineaAccionDepartamento[k];
-												}
-											}
-											if (typeof anho1==="undefined") {var anho1= new Object(); anho1.cantidad_ejecutada_hoy="";};
-											if (typeof anho2==="undefined") {var anho2= new Object(); anho2.cantidad_ejecutada_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
-											if (anho2.suma_programada_anho>0){// tenia suma_programada_anho --------------------------------------------------
-												
-												
-												//     anho2.linea_accion_meta = anho2.suma_programada_anho  * 100 / totalLineaPais[y].suma_programada_anho_pais
-												for(var l=0; l<totalLineaPais.length;l++)
-												{
-														if(totalLineaPais[l].institucion_id == anho2.institucion_id && institucion_id== anho2.institucion_id && totalLineaPais[l].linea_accion_id == anho2.linea_accion_id && totalLineaPais[l].anho == anho2.anho)
-														{
-															anho2.linea_accion_meta = parseFloat((anho2.suma_programada_anho / totalLineaPais[l].suma_programada_anho_pais)*anho2.linea_accion_meta).toFixed(2);
-														}
-												}
-												
-												iteracionDepto++;
-												//var porcentajeAnho = (anho2.suma_programada_hoy*100)/anho2.suma_programada_anho;
-												var porcentajeAnho = parseFloat((anho2.suma_programada_anho*100)/anho2.linea_accion_meta).toFixed(2);
-												porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
-												porcentajeAnhoAcumuladoDepto+=parseFloat(porcentajeAnho);
-												var porcentajeAnhoEje = parseFloat((anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_anho).toFixed(2);
-												porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
-												var porcentajeHoyEje = parseFloat((anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_hoy).toFixed(2);
-												porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
-												porcentajeHoyEjeAcumuladoDepto+=parseFloat(porcentajeHoyEje);
-												/*if (porcentajeAnho<=70) sumporAClass = "text-danger";
-												if (porcentajeAnho>70) sumporAClass = "text-warning";
-												if (porcentajeAnho>90) sumporAClass = "text-success";
-												
-												if (porcentajeAnhoEje<=70) porAejeClass = "text-danger";
-												if (porcentajeAnhoEje>70) porAejeClass = "text-warning";
-												if (porcentajeAnhoEje>90) porAejeClass = "text-success";
-												*/
-												porHejeClassRow="";
-												/*
-												if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";porHejeClassRow="danger";}
-												if (porcentajeHoyEje>70){ porHejeClass = "text-warning";porHejeClassRow="warning";}
-												if (porcentajeHoyEje>90){ porHejeClass = "text-success";porHejeClassRow="success";}
-
-												if (porcentajeAnho<=70){ porHejeClassRow="danger";porHejeClass="";} */
-
-												
-												/* if (porcentajeAnho<90){ porHejeClassRow="danger";porHejeClass="";}
-
-												if (porcentajeAnho>=90){ porHejeClassRow="success";
-													if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";}
-													if (porcentajeHoyEje>70){ porHejeClass = "text-warning";}
-													if (porcentajeHoyEje>90){ porHejeClass = "text-success";}
-												}
-
-												*/
-
-												
-												
-												if (  porcentajeHoyEje ==="NaN"){ porcentajeHoyEje="";porHejeClassRow="";}
-											}else{
-												var porcentajeAnho = "";
-												var porcentajeAnhoEje = "";
-												var porcentajeHoyEje ="";
-												porHejeClassRow="";
-											}
-											//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
-
-											if(lineaAccionDepartamento[j].institucion_id==institucion_id && porcentajeHoyEje>0  )  $("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+lineaAccionDepartamento[j].institucion_id+'-'+lineaAccionDepartamento[j].linea_accion_id+'-'+lineaAccionDepartamento[j].accion_unidad_medida+'-'+lineaAccionDepartamento[j].accion_departamento_id+'> '+lineaAccionDepartamento[j].institucion+'- '+anho2.linea_accion+'</a></td><td>'+anho2.accion_unidad_medida+'</td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_hoy)+'</td><td>'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td >'+porcentajeHoyEje+'</td><td>'+numeroConComa((anho2.costo_ejecutado/1000000).toFixed(0))+'</td></tr>');
-											
-											//<td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td> penultima
-											anho2="";
-											anho1="";
+									for(var k=0;k<metasDistEntLinea.length;k++){
+										if(metasDistEntLinea[l].lineaAccionId==metasDistEntLinea[k].lineaAccionId){
+											acumuladorPlanificacionAnho += parseFloat(metasDistEntLinea[k].sumProgAnho);
+											acumuladorPlanificacion += parseFloat(metasDistEntLinea[k].cantidadProgHoy);
+											acumuladorEjecucion += parseFloat(metasDistEntLinea[k].cantidadEjecHoy);
+											acumuladorInversion += parseFloat(metasDistEntLinea[k].costoProgHoy);													
 										}
 									}
+									desempenho = parseFloat((acumuladorEjecucion/acumuladorPlanificacion)*100);
+									color= getColorDesemp2(desempenho)
+									$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+l+'-'+metasDistEntLinea[l].institucionId+'-'+metasDistEntLinea[l].lineaAccionId+'-'+metasDistEntLinea[l].accionDepartamentoId+'> '+metasDistEntLinea[l].institucion+'- '+metasDistEntLinea[l].lineaAccion+'</a></td><td>'+metasDistEntLinea[l].accionUnidadMedida+'</td><td >'+numeroConComa(parseFloat(acumuladorPlanificacionAnho).toFixed(2))+'</td><td class="cell-bordered2">'+numeroConComa(parseFloat(acumuladorPlanificacion).toFixed(2))+'</td><td >'+numeroConComa(parseFloat(acumuladorEjecucion).toFixed(2))+'</td><td >'+numeroConComa(parseFloat(desempenho).toFixed(2))+'</td><td>'+numeroConComa((acumuladorInversion/1000000).toFixed(0)))+'</td></tr>';
 								}
 								
+		
 							}
-							porcentajeAnhoAcumuladoDeptoTotal = porcentajeAnhoAcumuladoDepto / iteracionDepto;
-							porcentajeHoyEjeAcumuladoDeptoTotal = porcentajeHoyEjeAcumuladoDepto / iteracionDepto;
+						}else{
+							var metasDistEntLineajson = $.ajax({
+						    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getMetasDistEntLinea&departamento='+depto_id+'&distrito='+dist_id+'&institucion_id='+institucion_id,
+						      	type:'get',
+						      	dataType:'json',
+						      	crossDomain:true,
+						      	async:false       
+						    }).responseText;
+							var metasDistEntLinea=JSON.parse(metasDistEntLineajson);
+							var desemp=0.0;
+							var color="";
+							var porHejeClassRow="";
+							for(var j=0;j<metasDistEntLinea.length;j++){
+								
+								desemp = parseFloat((metasDistEntLinea[j].cantidadEjecHoy/metasDistEntLinea[j].cantidadProgHoy)*100);
+								color= getColorDesemp2(desemp)
+								$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+metasDistEntLinea[j].institucionId+'-'+metasDistEntLinea[j].lineaAccionId+'-'+metasDistEntLinea[j].accionDepartamentoId+'-'+metasDistEntLinea[j].accionDistritoId+'> '+metasDistEntLinea[j].institucion+'- '+metasDistEntLinea[j].lineaAccion+'</a></td><td>'+metasDistEntLinea[j].accionUnidadMedida+'</td><td >'+numeroConComa(metasDistEntLinea[j].sumProgAnho)+'</td><td class="cell-bordered2">'+numeroConComa(metasDistEntLinea[j].cantidadProgHoy)+'</td><td >'+numeroConComa(metasDistEntLinea[j].cantidadEjecHoy)+'</td><td >'+numeroConComa(parseFloat(desemp).toFixed(2))+'</td><td>'+numeroConComa((metasDistEntLinea[j].costoEjecHoy/1000000).toFixed(0))+'</td></tr>');	
+							}
+	
 							
-
-									datosGeo[departamento[i].idDepartamento]=new Object();
-									datosGeo[departamento[i].idDepartamento].program= porcentajeAnhoAcumuladoDeptoTotal;
-									datosGeo[departamento[i].idDepartamento].desemp = porcentajeHoyEjeAcumuladoDeptoTotal;
-
-				      }		
-					 }
+							
+						}
 					}
-				
-					
-					// borradoJsDeGeo2
-					
-					
-					
+
 						function getColor(d) {
-						    return d >= 90  ? '#008d4c' :
-						           d >= 70  ? '#db8b0b' :
+						  
+						  return d >= pocentajeColor2  ? '#008d4c' :
+						           d >= pocentajeColor1  ? '#db8b0b' :
 						                      '#d33724';
+						 /*
+							return d >= 90  ? 'green' :
+						           d >= 70  ? 'yellow' :
+						                      'red';
+						  */
 						}
 						
 						function compareGenerico(a,b) {             
@@ -984,12 +514,20 @@ tbody {
 							    return 1;
 							  return 0;
 							}
+
+						function getClave2(array, clave1, clave2) {
+							var val;
+							for (val of array){
+								if (val.clave1==clave1 && val.clave2==clave2)
+									return val.valor;
+							}
+						}
 						
 						desPaisDepto=desPaisDepto.sort(compareGenerico);
-						// fillColor: getColor(), feature.properties.dpto
+
 						function style(feature) {
 							return {
-								 fillColor: getColor(parseFloat(desPaisDepto[parseInt(feature.properties.dpto)].valor).toFixed(0)),
+								fillColor: getColor(desPaisDepto[parseInt(feature.properties.dpto)].valor),
 						        weight: 2,
 						        opacity: 0.6,
 						        color: 'white',
@@ -997,31 +535,82 @@ tbody {
 						        fillOpacity: 0.6
 						    };						    
 						}
+						function style2(feature) {
+							return {
+								fillColor: getColor(getClave2(desPaisDist,parseInt(feature.properties.dpto), parseInt(feature.properties.distrito))),
+						        weight: 2,
+						        opacity: 1,
+						        color: 'white',
+						        dashArray: '3',
+						        fillOpacity: 1
+						    };						    
+						}
 						
 						function highlightFeature(e) {
 						    var layer = e.target;
 
 						    layer.setStyle({
-						        weight: 5,
-						        fillOpacity: 0.7
+						        weight: 4,
+						        fillOpacity: 1
 						    });
 
 						    if (!L.Browser.ie && !L.Browser.opera) {
 						        layer.bringToFront();
 						    }
 						}
+						function highlightFeature2(e) {
+						    var layer = e.target;
+							
+						    layer.setStyle({
+						        weight: 5,
+						        fillOpacity: 1,
+						        dashArray: '1'
+						    });
+
+						    if (!L.Browser.ie && !L.Browser.opera) {
+						        layer.bringToFront();
+						    }
+						}
+						
 
 						
 						var map = L.map('map').setView([-24.5, -57], 6);
 						var depto = new L.geoJson(deptoGeojson,{style:style,onEachFeature: onEachFeature});
 						depto.addTo(map);
-						var popup = new L.Popup({ autoPan: false })
+
+						var distLayer;
+
 						function renderEntidad(e){
-							depto.eachLayer(function(l){depto.resetStyle(l);});
-							highlightFeature(e);
-							renderEntidades(e);
-							map.fitBounds(e.target.getBounds());
+							$("#cuerpoTabla").html("");
 							
+							depto.eachLayer(function(l){depto.resetStyle(l);});
+							if (typeof distLayer !== "undefined"){
+								if (e.target.feature.properties.hasOwnProperty("distrito")){
+									renderEntidades(e);
+									distLayer.eachLayer(function(l2){distLayer.resetStyle(l2);});
+									highlightFeature2(e);
+								
+								}else{
+									map.removeLayer(distLayer);
+									highlightFeature(e);
+									renderEntidades(e);
+									map.fitBounds(e.target.getBounds());
+									e.target.feature.properties.dpto
+									distLayer = new L.GeoJSON.AJAX("mapa/"+e.target.feature.properties.dpto+".geojson",{style:style2,onEachFeature: onEachFeature});
+									distLayer.addTo(map);
+									
+								}
+							}else{
+								highlightFeature(e);
+								renderEntidades(e);
+								map.fitBounds(e.target.getBounds());
+								e.target.feature.properties.dpto
+								distLayer = new L.GeoJSON.AJAX("mapa/"+e.target.feature.properties.dpto+".geojson",{style:style2,onEachFeature: onEachFeature});
+								distLayer.addTo(map);
+								/* var distritos = new L.geoJson(dist0Geojson,{style:style2,onEachFeature: onEachFeature2});
+								distritos.addTo(map);*/
+							}
+
 						}
 						function onEachFeature(feature, layer) {
 						layer.on({
@@ -1029,208 +618,8 @@ tbody {
 								mousemove: mousemove,
 					            mouseout: mouseout
 							});
-						}					
-						var closeTooltip;
-						//var depto = new L.geoJson(depto,{style:miestilo})
-						function mousemove(e) {					        
-					        var layer = e.target;
-					        popup.setLatLng(e.latlng);
-					        popup.setContent('<h2>' + layer.feature.properties.dpto_desc + '</h2>');
-							if (!popup._map) popup.openOn(map);
-					        window.clearTimeout(closeTooltip);
-					    }
-					
-					    function mouseout(e) {
-					        closeTooltip = window.setTimeout(function() {
-					            map.closePopup();
-					        }, 100);
-					    }
-	
-					
-					$("body").on("click", "#tablaInstituciones",function(event){
-						
-						
-						var institucion_id=event.target.attributes.institucion_id.value;
-						var depto_id=event.target.attributes.depto_id.value;
-						if (depto_id==""){
-							alert("Favor seleccionar previamente Departamento en el mapa");
-							event.stopPropagation();
 						}
-						renderLineaAccion(depto_id, institucion_id);
-						event.stopPropagation();
-						
-						
-					});
-						
-						
-						$("document").ready(function(){
-							
-							
-							function renderTodasLasLineas(){
-								
-								
-								var sumporAClass="";
-								var porAejeClass="";
-								var porHejeClass="";
-								var porHejeClassRow="";
-								
-								for (var i = 0; i< 18;i++){
-									$("#cuerpoTabla").append('<tr><td colspan="12" ><strong>'+departamento[i].nombreDepartamento+'</strong></td></tr>');
-									var lineasDeAccion= [];
-									for(var j=0;j<lineaAccionDepartamento.length;j++){
-										
-										if (lineaAccionDepartamento[j].accion_departamento_id==departamento[i].idDepartamento){
-											if (lineasDeAccion.indexOf(lineaAccionDepartamento[j].linea_accion_id)<0){
-												lineasDeAccion.push(lineaAccionDepartamento[j].linea_accion_id);
-												if(lineaAccionDepartamento[j].anho<="2014"){
-													var anho1=lineaAccionDepartamento[j];
-													
-													var anho2;
-													for(var k=0;k<lineaAccionDepartamento.length;k++){
-														if (anho1.institucion_id==lineaAccionDepartamento[k].institucion_id && anho1.linea_accion_id==lineaAccionDepartamento[k].linea_accion_id && lineaAccionDepartamento[k].anho =="2015" && lineaAccionDepartamento[k].accion_departamento_id ==anho1.accion_departamento_id){
-															anho2=lineaAccionDepartamento[k];
-														}
-													}
-													if (typeof anho1==="undefined") {var anho1= new Object(); anho1.cantidad_ejecutada_hoy=""};
-													if (typeof anho2==="undefined") {var anho2= new Object(); anho2.cantidad_ejecutada_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
-													if (anho2.suma_programada_anho>0){
-														
-														//for para recorrer totalLineaPais con if para seleccionar la insittucion, la linea y anho considerando lo cargado en anho2, luego 
-														//     anho2.linea_accion_meta = anho2.suma_programada_anho  * 100 / totalLineaPais[y].suma_programada_anho_pais
-														for(var l=0; l<totalLineaPais.length;l++)
-														{
-																if(totalLineaPais[l].institucion_id == anho2.institucion_id && totalLineaPais[l].linea_accion_id == anho2.linea_accion_id && totalLineaPais[l].anho == anho2.anho)
-																{
-																	anho2.linea_accion_meta = parseFloat((anho2.suma_programada_anho / totalLineaPais[l].suma_programada_anho_pais)*anho2.linea_accion_meta).toFixed(2);
-																}
-														}
-												
-													//	var porcentajeAnho = (anho2.suma_programada_hoy*100)/anho2.suma_programada_anho;
-														var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
-														porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
-														var porcentajeAnhoEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_anho;
-														porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
-														var porcentajeHoyEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_hoy;
-														porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
-														/*if (porcentajeAnho<=70) sumporAClass = "text-danger";
-														if (porcentajeAnho>70) sumporAClass = "text-warning";
-														if (porcentajeAnho>90) sumporAClass = "text-success";
-														
-														if (porcentajeAnhoEje<=70) porAejeClass = "text-danger";
-														if (porcentajeAnhoEje>70) porAejeClass = "text-warning";
-														if (porcentajeAnhoEje>90) porAejeClass = "text-success";
-														*/
-														porHejeClassRow="";
-														/*
-														if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";porHejeClassRow="danger";}
-														if (porcentajeHoyEje>70){ porHejeClass = "text-warning";porHejeClassRow="warning";}
-														if (porcentajeHoyEje>90){ porHejeClass = "text-success";porHejeClassRow="success";}
-														
-														if (porcentajeAnho<=70){ porHejeClassRow="danger";porHejeClass="";} */
-														if (porcentajeAnho<90){ porHejeClassRow="danger";porHejeClass="";}
-														if (porcentajeAnho>=90){ porHejeClassRow="success";
-															if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";}
-															if (porcentajeHoyEje>70){ porHejeClass = "text-warning";}
-															if (porcentajeHoyEje>90){ porHejeClass = "text-success";}
-														}
-														
-														//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
-														$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+lineaAccionDepartamento[j].institucion_id+'-'+lineaAccionDepartamento[j].linea_accion_id+'-'+lineaAccionDepartamento[j].accion_unidad_medida+'-'+lineaAccionDepartamento[j].accion_departamento_id+'> '+lineaAccionDepartamento[j].institucion+'- '+anho2.linea_accion+'</a></td></td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</a></td><td>'+anho2.accion_unidad_medida+'</td><td class="cell-bordered2">'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_hoy)+'</td><td >'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class="text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
-																					
-														
-														
-														//<td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td> penultimo
-														if ( porcentajeHoyEje ==="NaN"){ porcentajeHoyEje="";porHejeClassRow="";}
-													}else{
-														var porcentajeAnho = "";
-														var porcentajeAnhoEje = "";
-														var porcentajeHoyEje ="";
-														porHejeClassRow="";
-													}
-													
-													anho2="";
-													anho1="";
-												}
-												if(lineaAccionDepartamento[j].anho>="2015"){
-													var anho2=lineaAccionDepartamento[j];
-						 							var anho1="";
-													for(var k=0;k<lineaAccionDepartamento.length;k++){
-														if (anho2.institucion_id==lineaAccionDepartamento[k].institucion_id && anho2.linea_accion_id==lineaAccionDepartamento[k].linea_accion_id && lineaAccionDepartamento[k].date_part =="2014"){
-															anho1=lineaAccionDepartamento[k];
-														}
-													}
-													if (typeof anho1==="undefined") {var anho1= new Object(); anho1.cantidad_ejecutada_hoy="";};
-													if (typeof anho2==="undefined") {var anho2= new Object(); anho2.cantidad_ejecutada_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
-													if (anho2.suma_programada_anho>0){// tenia suma_programada_anho --------------------------------------------------
-														
-														
-														//     anho2.linea_accion_meta = anho2.suma_programada_anho  * 100 / totalLineaPais[y].suma_programada_anho_pais
-														for(var l=0; l<totalLineaPais.length;l++)
-														{
-																if(totalLineaPais[l].institucion_id == anho2.institucion_id && totalLineaPais[l].linea_accion_id == anho2.linea_accion_id && totalLineaPais[l].anho == anho2.anho)
-																{
-																	anho2.linea_accion_meta = parseFloat((anho2.suma_programada_anho / totalLineaPais[l].suma_programada_anho_pais)*anho2.linea_accion_meta).toFixed(2);
-																}
-														}
-														
-														
-														//var porcentajeAnho = (anho2.suma_programada_hoy*100)/anho2.suma_programada_anho;
-														var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
-														porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
-														var porcentajeAnhoEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_anho;
-														porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
-														var porcentajeHoyEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_hoy;
-														porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
-														/*if (porcentajeAnho<=70) sumporAClass = "text-danger";
-														if (porcentajeAnho>70) sumporAClass = "text-warning";
-														if (porcentajeAnho>90) sumporAClass = "text-success";
-														
-														if (porcentajeAnhoEje<=70) porAejeClass = "text-danger";
-														if (porcentajeAnhoEje>70) porAejeClass = "text-warning";
-														if (porcentajeAnhoEje>90) porAejeClass = "text-success";
-														*/
-														porHejeClassRow="";
-														/*
-														if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";porHejeClassRow="danger";}
-														if (porcentajeHoyEje>70){ porHejeClass = "text-warning";porHejeClassRow="warning";}
-														if (porcentajeHoyEje>90){ porHejeClass = "text-success";porHejeClassRow="success";}
 
-														if (porcentajeAnho<=70){ porHejeClassRow="danger";porHejeClass="";} */
-														if (porcentajeAnho<90){ porHejeClassRow="danger";porHejeClass="";}
-														if (porcentajeAnho>=90){ porHejeClassRow="success";
-															if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";}
-															if (porcentajeHoyEje>70){ porHejeClass = "text-warning";}
-															if (porcentajeHoyEje>90){ porHejeClass = "text-success";}
-														}
-														
-														
-														if (  porcentajeHoyEje ==="NaN"){ porcentajeHoyEje="";porHejeClassRow="";}
-													}else{
-														var porcentajeAnho = "";
-														var porcentajeAnhoEje = "";
-														var porcentajeHoyEje ="";
-														porHejeClassRow="";
-													}
-													//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
-													$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+lineaAccionDepartamento[j].institucion_id+'-'+lineaAccionDepartamento[j].linea_accion_id+'-'+lineaAccionDepartamento[j].accion_unidad_medida+'-'+lineaAccionDepartamento[j].accion_departamento_id+'> '+lineaAccionDepartamento[j].institucion+'- '+anho2.linea_accion+'</a></td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+anho2.accion_unidad_medida+'</td><td class="cell-bordered2">'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_hoy)+'</td><td>'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class=" text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
-													
-													//<td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td> penultima
-													anho2="";
-													anho1="";
-												}
-											}
-										}
-									}
-								}	
-								
-								
-								
-							}
-							
-							
-							//renderTodasLasLineas();
-							
-						});
 
 					</script>
                   
@@ -1379,9 +768,11 @@ var $tabla=$("#lineasPorEntidad");
     
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js" type="text/javascript"></script>
+     
         <%  } else { %>
 				est<p>Favor Iniciar Sesion</p>
 			<%  } %>
+	
 
 <!-- Piwik -->
 <script type="text/javascript">
@@ -1404,7 +795,2549 @@ var $tabla=$("#lineasPorEntidad");
 <script type="text/javascript" src="bootstrap/js/jquery.min.js"></script>--> 
 <script type="text/javascript" src="bootstrap/js/bootstrap-slider.js"></script>
 
+<script>
+
+$("body").on("click", "#cierreEtiquetaDepartamento",function(event){
+	var distrito;
+	if($("#cierreEtiquetaDistrito").attr("value")!= ""){
+		alert ("existe un distrito");
+		
+		
+	}else{
+		alert("puede cerrar");
+		
+	}
+	
+});
+
+
+$("body").on("click", "#cierreEtiquetaDistrito",function(event){
+	
+
+	var idDepartamento = $(this).attr("parametroDepartamento");
+	renderEntidades(idDepartamento);
+	
+});
+
+
+
+
+$("body").on("click", "#tablaInstituciones",function(event){
+	
+	
+	var institucion_id=event.target.attributes.institucion_id.value;
+	var depto_id=event.target.attributes.depto_id.value;
+	var dist_id="";
+	if (event.target.attributes.hasOwnProperty("dist_id")){
+		dist_id=event.target.attributes.dist_id.value;
+	}
+	if (depto_id==""){
+		alert("Favor seleccionar previamente Departamento en el mapa");
+	}else{
+		renderLineaAccion(depto_id, institucion_id, dist_id);
+	}
+	
+	
+	event.stopPropagation();
+	
+	
+});
+
+
+$(document).ready(function(){
+
+	$("#ex12c").slider({
+		id: "slider12c",
+		min: 0,
+		max: 100,
+		range: true,
+		value: [ 70, 90 ]
+	});
+
+
+	$("body").on("change", "#ex12c",function(event){
+		var rangoDeColor= $("#ex12c").attr("value");
+		var splitDeRango=rangoDeColor.split(",");
+		pocentajeColor1 = parseInt(splitDeRango[0]);
+		pocentajeColor2 = parseInt(splitDeRango[1]); 
+		if (typeof distLayer !== "undefined"){
+			distLayer.eachLayer(function(l2){distLayer.resetStyle(l2);});
+		}
+		setColorBarras(pocentajeColor1, pocentajeColor2);
+		depto.eachLayer(function(l){depto.resetStyle(l);});
+
+	});
+	
+
+	
+	var lineaAccionAcumuladoMesDepto;
+	
+	var vectorMin=0;
+	var vectorMax=0;
+	var vectorMinEjecucion=0;
+	var vectorMaxEjecucion=0;
+	
+	var porcentaje1 = 70; //la variable porcentaje1 se utiliza para colorear las tablas
+	var porcentaje2 = 90 //la variable porcentaje2 se utiliza para colorear las tablas
+	
+	function dibujarLineaAccionAcumuladoMesDepto(lineaAccionAcumuladoMesDepto, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion){
+		
+		var dataPoints=[];
+		var ejecutada=[];
+		
+		var mes;
+		var anho;
+		var cantidadTotalProgramada=parseFloat(0);
+		var cantidadTotalEjecutada=parseFloat(0);
+		
+		
+		$("#rango-fecha").attr("data-slider-min",vectorMin);
+		$("#rango-fecha").attr("data-slider-max",vectorMax);
+		$("#rango-fecha").attr("data-slider-value","["+vectorMin+","+vectorMax+"]");
+		
+		$("#rango-fecha-ejecucion").attr("data-slider-min",vectorMinEjecucion);
+		$("#rango-fecha-ejecucion").attr("data-slider-max",vectorMaxEjecucion);
+		$("#rango-fecha-ejecucion").attr("data-slider-value","["+vectorMinEjecucion+","+vectorMaxEjecucion+"]");
+		
+		
+		$("#fechaInicio").html(lineaAccionAcumuladoMesDepto[vectorMin].mes+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+		$("#fechaInicioEjecucion").html(lineaAccionAcumuladoMesDepto[vectorMinEjecucion].mes+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+		$("#fechaFin").html("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+lineaAccionAcumuladoMesDepto[vectorMax].mes);
+		$("#fechaFinEjecucion").html("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+lineaAccionAcumuladoMesDepto[vectorMaxEjecucion].mes);
+		
+		$("#rango-fecha").slider({});
+		$("#rango-fecha-ejecucion").slider({});
+		for(var i = 0;i<lineaAccionAcumuladoMesDepto.length; i++)
+		{
+			cantidadTotalProgramada+=lineaAccionAcumuladoMesDepto[i].cantidad_programada;
+	
+			if(lineaAccionAcumuladoMesDepto[i].mes >= lineaAccionAcumuladoMesDepto[vectorMin].mes && lineaAccionAcumuladoMesDepto[i].mes <= lineaAccionAcumuladoMesDepto[vectorMax].mes)
+			{
+ 				dataPoints.push({ x: new Date( lineaAccionAcumuladoMesDepto[i].mes), y: cantidadTotalProgramada});
+			}
+
+		}
+		
+		for(var i = 0;i<lineaAccionAcumuladoMesDepto.length; i++)
+		{
+			cantidadTotalEjecutada+=lineaAccionAcumuladoMesDepto[i].cantidad_ejecutda;
+	
+			if(lineaAccionAcumuladoMesDepto[i].mes >= lineaAccionAcumuladoMesDepto[vectorMinEjecucion].mes && lineaAccionAcumuladoMesDepto[i].mes <= lineaAccionAcumuladoMesDepto[vectorMaxEjecucion].mes)
+			{
+ 				if (lineaAccionAcumuladoMesDepto[i].cantidad_ejecutda!=0)  ejecutada.push({ x: new Date( lineaAccionAcumuladoMesDepto[i].mes), y: cantidadTotalEjecutada});
+			}
+
+		}
+
+
+		var chart = new CanvasJS.Chart("chartContainer",
+				{
+						zoomEnabled: true,
+						exportEnabled: true,
+						exportFileName: lineaAccionAcumuladoMesDepto[0].institucion+" - "+lineaAccionAcumuladoMesDepto[0].linea_accion+" ("+lineaAccionAcumuladoMesDepto[0].accion_unidad_medida+")",
+						title: {
+							text: "Evolución Mensual" +" ("+lineaAccionAcumuladoMesDepto[0].accion_unidad_medida+")" 
+						},
+                        	animationEnabled: true,
+                        	width: 800,
+					axisX:{      
+						valueFormatString: "YYYY-MM" ,
+						interval: 1,
+						intervalType: "month",
+						labelAngle: -50,
+						labelFontColor: "rgb(0,75,141)",
+					},
+					axisY: {
+						title: "",
+						interlacedColor: "#F0FFFF",
+						tickColor: "azure",
+						titleFontColor: "rgb(0,75,141)"
+					},
+					data: [
+					{        
+						indexLabelFontColor: "darkSlateGray",
+						showInLegend: true, 
+						name: 'programada',
+						type: "line",
+						//color: "rgba(0,75,141,0.7)",
+						markerSize:8,
+						legendText:"Programación",
+						dataPoints:dataPoints
+					},
+					{        
+						indexLabelFontColor: "darkSlateGray",
+						showInLegend: true, 
+						name: 'ejecutadas',
+						type: "area",
+						//color: "rgba(0,75,141,0.8)",
+						markerSize:8,
+						legendText:"Ejecución",
+						dataPoints:ejecutada
+					}
+				  ]
+				});
+				
+		chart.render();
+	 }
+
+	$("body").on("change", "#rango-fecha",function(event){
+		var rangoDeFecha= $("#rango-fecha").val();
+		var splitDeRango=rangoDeFecha.split(",");
+		vectorMin=splitDeRango[0];
+		vectorMax=splitDeRango[1];
+		
+		var rangoDeFechaEjecucion= $("#rango-fecha-ejecucion").val();
+		var splitDeRangoEjecucion=rangoDeFechaEjecucion.split(",");
+		vectorMinEjecucion=splitDeRangoEjecucion[0];
+		vectorMaxEjecucion=splitDeRangoEjecucion[1];
+		
+		dibujarLineaAccionAcumuladoMesDepto(lineaAccionAcumuladoMesDepto, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion);
+		
+	});
+	
+	
+	$("body").on("change", "#rango-fecha-ejecucion",function(event){
+		var rangoDeFecha= $("#rango-fecha").val();
+		var splitDeRango=rangoDeFecha.split(",");
+		vectorMin=splitDeRango[0];
+		vectorMax=splitDeRango[1];
+		
+		var rangoDeFechaEjecucion= $("#rango-fecha-ejecucion").val();
+		var splitDeRangoEjecucion=rangoDeFechaEjecucion.split(",");
+		vectorMinEjecucion=splitDeRangoEjecucion[0];
+		vectorMaxEjecucion=splitDeRangoEjecucion[1];
+		
+		dibujarLineaAccionAcumuladoMesDepto(lineaAccionAcumuladoMesDepto, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion);
+		
+	});
+	
+	$("body").on("click", ".registro",function(event){
+		var codigoRegistro = $(this).attr("codigoRegistro");
+	    var idParsed = codigoRegistro.split("-");                                                            
+		var institucion_id=idParsed[1];
+		var linea_accion_id=idParsed[2];
+		//var unidad_medida= idParsed[3];
+		var idDepartamento= idParsed[3];
+		var idDistrito= idParsed[4];
+		var tituloModal="";
+		var cuerpoModal="";
+		var footerModal="<br><br><br>";
+		var urlFactHitos="";
+		var primerModal="";
+		urlFactHitos+='http://spr.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015Accion';
+		if (typeof institucion_id != "undefined") urlFactHitos+='&institucion_id='+institucion_id;
+		if (typeof linea_accion_id != "undefined") urlFactHitos+='&linea_accion_id='+linea_accion_id;
+		if (typeof idDepartamento != "undefined") urlFactHitos+='&departamento='+idDepartamento;
+		if (typeof idDistrito != "undefined") urlFactHitos+='&distrito='+idDistrito;
+		var registros = $.ajax({
+	    	url:urlFactHitos,
+	      	type:'get',
+	      	dataType:'json',
+	      	crossDomain:true,
+	      	async:false       
+	    }).responseText;
+		var elRegistro=JSON.parse(registros);
+		
+		if ( $("#myModal").length ) {
+			$("#myModal").remove();
+			$("#myModal2").remove();
+		}
+		
+
+		primerModal =     '<div class="modal fade" id="myModal" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">'+
+							'<div class="modal-dialog modal-lg" style="width:90%;">'+
+							    '<div class="modal-content" >'+
+							      '<div class="modal-header">'+
+							        '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+							        '<h4 class="modal-title" id="myModalLabel1"></h4>'+
+							      '</div>'+
+							      '<div class="modal-body" id="cuerpoModalAcciones" >'+
+							     		
+							     	'<div class="nav-tabs-custom">'+
+					                '<ul class="nav nav-tabs pull-right">'+
+					              	  '<li class="active"><a href="#tab_1-1" data-toggle="tab"  title="Acciones"><i class="glyphicon glyphicon-list"></i></a></li>'+
+					                  '<li><a href="#tab_3-2" data-toggle="tab" title="Evolución"><i class="glyphicon glyphicon-stats"></i></a></li>'+
+					                  '<li><a href="#tab_4-2" data-toggle="tab" title="Beneficiarios"><i class="glyphicon glyphicon-user"></i></a></li>'+
+					                  '<li><a href="#tab_5-2" data-toggle="tab" title="Ubicaciones"><i class="glyphicon glyphicon glyphicon-map-marker"></i></a></li>'+                    
+					                    
+					                '</ul>'+
+					                '<div class="tab-content">'+
+					                  '<div class="tab-pane active" id="tab_1-1"></div>'+
+					                  '<div class="tab-pane" id="tab_2-2">'+
+			
+					                  '</div>'+
+					                  '<div class="tab-pane" id="tab_3-2"></div>'+
+					                   '<div class="tab-pane" id="tab_4-2"><p>Datos no disponibles</p></div>'+
+					                   '<div class="tab-pane" id="tab_5-2"><p>Datos no disponibles</p></div>'+                            
+					                '</div>'+
+					              '</div>'+
+							      '</div>'+
+								  '<div class="modal-footer">'+
+									
+								  '</div>'+
+							    '</div>'+ 
+							 '</div>'+
+							'</div>';
+							
+		$("body").append(primerModal);
+		
+
+		cuerpoModal='<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">'+
+					'<div class="row">'+
+						'<div class="row">'+
+							'<div class="col-sm-12">'+
+								'<div class="table-responsive">'+
+									'<table id="example1" class="table table-hover" >'+
+									    '<thead>'+
+										'<tr class="active"><th>Acción</th><th>Departamento</th><th>Distrito</th><th>U. Medida</th><th>Cantidad. Programado</th><th>Inversión Estimada (Millones de G.)</th><th>Fecha Terminación</th><th>% Programado</th><th>% Ejecutado</th><th>Editar</th><th>Borrar</th></tr>'+
+										'</thead><tbody>';
+					var totalCantidadProgramada=0;
+					tituloModal='<h3><center>'+elRegistro[0].institucion+'&nbsp;&nbsp;-&nbsp;&nbsp;'+elRegistro[0].linea_accion+'</center></h3>';
+					for(var m=0; m<elRegistro.length;m++)
+					{
+							var registroFecha= elRegistro[m].hito_fecha_entrega.split(" ");
+							if (registroFecha[0]=="Jan" || registroFecha[0]=="ene") registroFecha[0]=1;
+							if (registroFecha[0]=="Feb" || registroFecha[0]=="feb") registroFecha[0]=2;
+							if (registroFecha[0]=="Mar" || registroFecha[0]=="mar") registroFecha[0]=3;
+							if (registroFecha[0]=="Apr" || registroFecha[0]=="abr") registroFecha[0]=4;
+							if (registroFecha[0]=="May" || registroFecha[0]=="may") registroFecha[0]=5;
+							if (registroFecha[0]=="Jun" || registroFecha[0]=="jun") registroFecha[0]=6;
+							if (registroFecha[0]=="Jul" || registroFecha[0]=="jul") registroFecha[0]=7;
+							if (registroFecha[0]=="Aug" || registroFecha[0]=="ago") registroFecha[0]=8;
+							if (registroFecha[0]=="Sep" || registroFecha[0]=="sep") registroFecha[0]=9;
+							if (registroFecha[0]=="Oct" || registroFecha[0]=="oct") registroFecha[0]=10;
+							if (registroFecha[0]=="Nov" || registroFecha[0]=="nov") registroFecha[0]=11;
+							if (registroFecha[0]=="Dec" || registroFecha[0]=="dic") registroFecha[0]=12;
+							registroFecha[1].split(",");
+							
+							cuerpoModal+='<tr><td>'+elRegistro[m].accion+'</td><td>'+elRegistro[m].accion_departamento+'</td><td>'+elRegistro[m].accion_distrito+'</td><td>'+elRegistro[m].accion_unidad_edida+'</td><td>'+elRegistro[m].hito_cantidad_programado+'</td><td>'+numeroConComa((elRegistro[m].accion_costo*elRegistro[m].hito_porcentaje_ejecutado/100000000).toFixed(0))+'</td><td>'+registroFecha[2]+'-'+registroFecha[0]+'-'+registroFecha[1][0]+'</td><td>'+elRegistro[m].hito_porcentaje_programado+'</td><td>'+elRegistro[m].hito_porcentaje_ejecutado+'</td><td><a href="#" class="modalHitoAvances" parametros="'+institucion_id+'-'+linea_accion_id+'-'+idDepartamento+'-'+idDistrito+'-'+elRegistro[m].accion_id+'" "><span class="glyphicon glyphicon-pencil"></span></a></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';
+							totalCantidadProgramada+=elRegistro[m].hito_cantidad_programado;
+					}
+					totalCantidadProgramada=parseFloat(totalCantidadProgramada).toFixed(2);
+
+					cuerpoModal+='</tbody><tfoot><tr class="active"><td colspan="2">Total Cantidad Programada: </td><td colspan="8">'+totalCantidadProgramada+'</td></tr></tfoot>'+
+								 '</table>'+
+								 '</div></div></div></div></div>';
+								 		
+		$('#myModal').find(".modal-title").html("");			
+		$('#myModal').find("#tab_1-1").html(""); 
+		$('#myModal').find("#tab_2-2").html("");
+		$('#myModal').find("#tab_3-2").html("");			
+		
+		$('#myModal').find(".modal-title").html(tituloModal);
+		$('#myModal').find("#tab_1-1").html(cuerpoModal);
+		$("#tab_3-2").append('Programación: <label id="fechaInicio"></label><input id="rango-fecha" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="1" data-slider-value="[250,450]"/><label id="fechaFin"></label>');
+		$("#tab_3-2").append('<br><br>Ejecución: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label id="fechaInicioEjecucion"></label><input id="rango-fecha-ejecucion" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="1" data-slider-value="[250,450]"/><label id="fechaFinEjecucion"></label>');
+
+
+		//$('#myModal').find(".modal-footer").html(footerModal);
+		var urlAcumulado="";
+		var urlFinal="";
+		
+		
+		if (typeof idDistrito != "undefined") {urlAcumulado+='getLineaAccionAcumuladoMesDistrito';urlFinal+="&distrito="+idDistrito}else{
+			if (typeof idDepartamento != "undefined") urlAcumulado+='getLineaAccionAcumuladoMesDepto';	
+		}
+		
+		lineaAccionAcumuladoMesDepto = $.ajax({
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action='+urlAcumulado+'&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id+'&departamento='+idDepartamento+urlFinal,
+	      	type:'get',
+	      	dataType:'json',
+	      	async:false       
+	    }).responseText;
+		
+		
+		lineaAccionAcumuladoMesDepto = JSON.parse(lineaAccionAcumuladoMesDepto);
+		
+		 vectorMin=0;
+		 vectorMax=lineaAccionAcumuladoMesDepto.length-1;
+		 
+		 vectorMinEjecucion=0;
+		 vectorMaxEjecucion=lineaAccionAcumuladoMesDepto.length-1;
+		//grafico de total cantidad programada y total cantidad ejecutada
+		
+		$('#myModal').find("#tab_3-2").append('<div id="chartContainer" style="height:400px;"></div>');
+		
+		function compare(a,b) {             
+			  if (a.mes < b.mes)
+			    return -1;
+			  if (a.mes > b.mes)
+			    return 1;
+			  return 0;
+			}
+		
+		
+		lineaAccionAcumuladoMesDepto=lineaAccionAcumuladoMesDepto.sort(compare);
+		
+		dibujarLineaAccionAcumuladoMesDepto(lineaAccionAcumuladoMesDepto, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion);
+		
+		 $(function () {
+		       
+		        $('#example1').dataTable({
+		          "bPaginate": false,
+		          "bLengthChange": false,
+		          "bFilter": true,
+		          "bSort": true,
+		          "bInfo": true,
+		          "bAutoWidth": false,
+		          "language":{
+		        	    "sProcessing":     "Procesando...",
+		        	    "sLengthMenu":     "Mostrar _MENU_ registros",
+		        	    "sZeroRecords":    "No se encontraron resultados",
+		        	    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+		        	    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+		        	    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+		        	    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+		        	    "sInfoPostFix":    "",
+		        	    "sSearch":         "Buscar:",
+		        	    "sUrl":            "",
+		        	    "sInfoThousands":  ",",
+		        	    "sLoadingRecords": "Cargando...",
+		        	    "oPaginate": {
+		        	        "sFirst":    "Primero",
+		        	        "sLast":     "Último",
+		        	        "sNext":     "Siguiente",
+		        	        "sPrevious": "Anterior"
+		        	    },
+		        	    "oAria": {
+		        	        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+		        	        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+		        	    }
+		        	}
+		        });
+		      });
+});
+	
+	
+	
+	
+	
+	renderEntidades();
+
+	function renderTodasLasLineas(){
+		
+		
+		var sumporAClass="";
+		var porAejeClass="";
+		var porHejeClass="";
+		var porHejeClassRow="";
+		
+		for (var i = 0; i< 18;i++){
+			$("#cuerpoTabla").append('<tr><td colspan="12" ><strong>'+departamento[i].nombreDepartamento+'</strong></td></tr>');
+			var lineasDeAccion= [];
+			for(var j=0;j<lineaAccionDepartamento.length;j++){
+				
+				if (lineaAccionDepartamento[j].accion_departamento_id==departamento[i].idDepartamento){
+					if (lineasDeAccion.indexOf(lineaAccionDepartamento[j].linea_accion_id)<0){
+						lineasDeAccion.push(lineaAccionDepartamento[j].linea_accion_id);
+						if(lineaAccionDepartamento[j].anho<="2014"){
+							var anho1=lineaAccionDepartamento[j];
+							
+							var anho2;
+							for(var k=0;k<lineaAccionDepartamento.length;k++){
+								if (anho1.institucion_id==lineaAccionDepartamento[k].institucion_id && anho1.linea_accion_id==lineaAccionDepartamento[k].linea_accion_id && lineaAccionDepartamento[k].anho =="2015" && lineaAccionDepartamento[k].accion_departamento_id ==anho1.accion_departamento_id){
+									anho2=lineaAccionDepartamento[k];
+								}
+							}
+							if (typeof anho1==="undefined") {var anho1= new Object(); anho1.cantidad_ejecutada_hoy=""};
+							if (typeof anho2==="undefined") {var anho2= new Object(); anho2.cantidad_ejecutada_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
+							if (anho2.suma_programada_anho>0){
+								
+								//for para recorrer totalLineaPais con if para seleccionar la insittucion, la linea y anho considerando lo cargado en anho2, luego 
+								//     anho2.linea_accion_meta = anho2.suma_programada_anho  * 100 / totalLineaPais[y].suma_programada_anho_pais
+								for(var l=0; l<totalLineaPais.length;l++)
+								{
+										if(totalLineaPais[l].institucion_id == anho2.institucion_id && totalLineaPais[l].linea_accion_id == anho2.linea_accion_id && totalLineaPais[l].anho == anho2.anho)
+										{
+											anho2.linea_accion_meta = parseFloat((anho2.suma_programada_anho / totalLineaPais[l].suma_programada_anho_pais)*anho2.linea_accion_meta).toFixed(2);
+										}
+								}
+						
+							//	var porcentajeAnho = (anho2.suma_programada_hoy*100)/anho2.suma_programada_anho;
+								var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
+								porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
+								var porcentajeAnhoEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_anho;
+								porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
+								var porcentajeHoyEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_hoy;
+								porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
+								/*if (porcentajeAnho<=70) sumporAClass = "text-danger";
+								if (porcentajeAnho>70) sumporAClass = "text-warning";
+								if (porcentajeAnho>90) sumporAClass = "text-success";
+								
+								if (porcentajeAnhoEje<=70) porAejeClass = "text-danger";
+								if (porcentajeAnhoEje>70) porAejeClass = "text-warning";
+								if (porcentajeAnhoEje>90) porAejeClass = "text-success";
+								*/
+								porHejeClassRow="";
+								/*
+								if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";porHejeClassRow="danger";}
+								if (porcentajeHoyEje>70){ porHejeClass = "text-warning";porHejeClassRow="warning";}
+								if (porcentajeHoyEje>90){ porHejeClass = "text-success";porHejeClassRow="success";}
+								
+								if (porcentajeAnho<=70){ porHejeClassRow="danger";porHejeClass="";} */
+								if (porcentajeAnho<porcentaje2){ porHejeClassRow="danger";porHejeClass="";}
+								if (porcentajeAnho>=porcentaje2){ porHejeClassRow="success";
+									if (porcentajeHoyEje<=porcentaje1){ porHejeClass = "text-danger";}
+									if (porcentajeHoyEje>porcentaje1){ porHejeClass = "text-warning";}
+									if (porcentajeHoyEje>porcentaje2){ porHejeClass = "text-success";}
+								}
+								
+								//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
+								$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+lineaAccionDepartamento[j].institucion_id+'-'+lineaAccionDepartamento[j].linea_accion_id+'-'+lineaAccionDepartamento[j].accion_departamento_id+'> '+lineaAccionDepartamento[j].institucion+'- '+anho2.linea_accion+'</a></td></td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</a></td><td>'+anho2.accion_unidad_medida+'</td><td class="cell-bordered2">'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_hoy)+'</td><td >'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class="text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
+															
+								
+								
+								//<td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td> penultimo
+								if ( porcentajeHoyEje ==="NaN"){ porcentajeHoyEje="";porHejeClassRow="";}
+							}else{
+								var porcentajeAnho = "";
+								var porcentajeAnhoEje = "";
+								var porcentajeHoyEje ="";
+								porHejeClassRow="";
+							}
+							
+							anho2="";
+							anho1="";
+						}
+						if(lineaAccionDepartamento[j].anho>="2015"){
+							var anho2=lineaAccionDepartamento[j];
+ 							var anho1="";
+							for(var k=0;k<lineaAccionDepartamento.length;k++){
+								if (anho2.institucion_id==lineaAccionDepartamento[k].institucion_id && anho2.linea_accion_id==lineaAccionDepartamento[k].linea_accion_id && lineaAccionDepartamento[k].date_part =="2014"){
+									anho1=lineaAccionDepartamento[k];
+								}
+							}
+							if (typeof anho1==="undefined") {var anho1= new Object(); anho1.cantidad_ejecutada_hoy="";};
+							if (typeof anho2==="undefined") {var anho2= new Object(); anho2.cantidad_ejecutada_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
+							if (anho2.suma_programada_anho>0){// tenia suma_programada_anho --------------------------------------------------
+								
+								
+								//     anho2.linea_accion_meta = anho2.suma_programada_anho  * 100 / totalLineaPais[y].suma_programada_anho_pais
+								for(var l=0; l<totalLineaPais.length;l++)
+								{
+										if(totalLineaPais[l].institucion_id == anho2.institucion_id && totalLineaPais[l].linea_accion_id == anho2.linea_accion_id && totalLineaPais[l].anho == anho2.anho)
+										{
+											anho2.linea_accion_meta = parseFloat((anho2.suma_programada_anho / totalLineaPais[l].suma_programada_anho_pais)*anho2.linea_accion_meta).toFixed(2);
+										}
+								}
+								
+								
+								//var porcentajeAnho = (anho2.suma_programada_hoy*100)/anho2.suma_programada_anho;
+								var porcentajeAnho = (anho2.suma_programada_anho*100)/anho2.linea_accion_meta;
+								porcentajeAnho=parseFloat(porcentajeAnho).toFixed(2);
+								var porcentajeAnhoEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_anho;
+								porcentajeAnhoEje=parseFloat(porcentajeAnhoEje).toFixed(2);
+								var porcentajeHoyEje = (anho2.cantidad_ejecutada_hoy*100)/anho2.suma_programada_hoy;
+								porcentajeHoyEje=parseFloat(porcentajeHoyEje).toFixed(2);
+								/*if (porcentajeAnho<=70) sumporAClass = "text-danger";
+								if (porcentajeAnho>70) sumporAClass = "text-warning";
+								if (porcentajeAnho>90) sumporAClass = "text-success";
+								
+								if (porcentajeAnhoEje<=70) porAejeClass = "text-danger";
+								if (porcentajeAnhoEje>70) porAejeClass = "text-warning";
+								if (porcentajeAnhoEje>90) porAejeClass = "text-success";
+								*/
+								porHejeClassRow="";
+								/*
+								if (porcentajeHoyEje<=70){ porHejeClass = "text-danger";porHejeClassRow="danger";}
+								if (porcentajeHoyEje>70){ porHejeClass = "text-warning";porHejeClassRow="warning";}
+								if (porcentajeHoyEje>90){ porHejeClass = "text-success";porHejeClassRow="success";}
+
+								if (porcentajeAnho<=70){ porHejeClassRow="danger";porHejeClass="";} */
+								if (porcentajeAnho<porcentaje2){ porHejeClassRow="danger";porHejeClass="";}
+								if (porcentajeAnho>=porcentaje2){ porHejeClassRow="success";
+									if (porcentajeHoyEje<=porcentaje1){ porHejeClass = "text-danger";}
+									if (porcentajeHoyEje>porcentaje1){ porHejeClass = "text-warning";}
+									if (porcentajeHoyEje>porcentaje2){ porHejeClass = "text-success";}
+								}
+								
+								
+								if (  porcentajeHoyEje ==="NaN"){ porcentajeHoyEje="";porHejeClassRow="";}
+							}else{
+								var porcentajeAnho = "";
+								var porcentajeAnhoEje = "";
+								var porcentajeHoyEje ="";
+								porHejeClassRow="";
+							}
+							//<td>'+numeroConComa(anho1.cantidad_ejecutada_hoy)+'</td> despues de meta
+							$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+lineaAccionDepartamento[j].institucion_id+'-'+lineaAccionDepartamento[j].linea_accion_id+'-'+lineaAccionDepartamento[j].accion_departamento_id+'> '+lineaAccionDepartamento[j].institucion+'- '+anho2.linea_accion+'</a></td><td>Gs.'+numeroConComa((anho2.costo_programado_anho/1000000).toFixed(0))+'</td><td>'+anho2.accion_unidad_medida+'</td><td class="cell-bordered2">'+numeroConComa(anho2.linea_accion_meta)+'</td><td></td><td >'+numeroConComa(anho2.suma_programada_anho)+'</td><td class="'+sumporAClass+'">'+porcentajeAnho+'</td><td class="cell-bordered2">'+numeroConComa(anho2.suma_programada_hoy)+'</td><td>'+numeroConComa(anho2.cantidad_ejecutada_hoy)+'</td><td class=" text-center '+porHejeClass+'">'+porcentajeHoyEje+'</td></tr>');
+							
+							//<td class="'+porAejeClass+'">'+porcentajeAnhoEje+'</td> penultima
+							anho2="";
+							anho1="";
+						}
+					}
+				}
+			}
+		}	
+		
+		
+		
+	}
+	
+	//renderTodasLasLineas();
+	function cargarTablaAccionHasProducto(institucionId, lineaAccionId, idDepartamento, idDistrito, accionId){
+		
+		var accionId= accionId;
+		var institucionId= institucionId;
+		var lineaAccionId= lineaAccionId;
+		var idDepartamento= idDepartamento;
+		var idDistrito= idDistrito;
+		
+		var accionHasProducto = $.ajax({
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getAccionHasProducto&accion_id='+accionId,
+	      	type:'get',
+	      	dataType:'json',
+	      	crossDomain:true,
+	      	async:false       
+	    }).responseText;		
+		accionHasProducto=JSON.parse(accionHasProducto);
+		
+		
+		$("#TablaAccionHasProductos").html("");
+	    var departamentoId = document.getElementById('selectorDepartamento').value;
+		var fila ="";
+		for(var f = 0; f < accionHasProducto.length; f++)
+		{
+			
+			fila += "<tr><td>"+accionHasProducto[f].nivel+"</td><td>"+accionHasProducto[f].entidad+"</td><td>"+accionHasProducto[f].tipoPrograma+"</td><td>"+accionHasProducto[f].programa+"</td><td>"+accionHasProducto[f].subPrograma+"</td><td>"+accionHasProducto[f].proyecto+"</td><td>"+accionHasProducto[f].producto+"</td><td>"+accionHasProducto[f].cantFisica+"</td><td>"+accionHasProducto[f].uMedida+"</td><td>"+accionHasProducto[f].clase+"</td><td>Gs."+accionHasProducto[f].cantFinanciera+"</td><td>Gs."+accionHasProducto[f].totalAsignacion+"</td><td><center><button type='submit' class='btn btn-success verificarDestinatarios' parametros="+accionHasProducto[f].nivel+"-"+accionHasProducto[f].entidad+"-"+accionHasProducto[f].tipoPrograma+"-"+accionHasProducto[f].programa+"-"+accionHasProducto[f].subPrograma+"-"+accionHasProducto[f].proyecto+"-"+accionHasProducto[f].producto+"-"+institucionId+"-"+lineaAccionId+"-"+idDepartamento+"-"+idDistrito+"-"+accionId+"><span class='glyphicon glyphicon-user'></span></button></center></td></tr>";
+		}
+		
+		$("#TablaAccionHasProductos").append(fila);
+		
+	}
+	//Falta pregunta si existe el modal y borrar si existe
+	$("body").on("click", ".modalHitoAvances",function(event){
+		
+		if ( $("#myModal2").length ) {
+			$("#myModal2").remove();
+		}
+ 		if ( $("#modalAgregarHito").length ) {
+			$("#modalAgregarHito").remove();
+		} 
+		if ( $("#modalDeclararAvance").length ) {
+			$("#modalDeclararAvance").remove();
+		}
+		if ( $("#modalDestinatarios").length ) {
+			$("#modalDestinatarios").remove();
+		}
+		
+			
+		var parametros = $(this).attr("parametros");
+	    var idParsed = parametros.split("-");                                                            
+		var institucionId=idParsed[0];
+		var lineaAccionId=idParsed[1];
+		var idDepartamento= idParsed[2];
+		var idDistrito= idParsed[3];
+		var accionId = idParsed[4];
+		var modalHito = "";
+		var urlFactHitos="";
+		var optionDepartamentos = "";
+		var optionDistritos = "";
+		urlFactHitos+='http://spr.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015';
+		if (typeof institucionId != "undefined"){ urlFactHitos+='&institucion_id='+institucionId;}
+		if (typeof lineaAccionId != "undefined"){ urlFactHitos+='&linea_accion_id='+lineaAccionId;}
+		if (typeof idDepartamento != "undefined"){ urlFactHitos+='&departamento='+idDepartamento;}
+		if (typeof idDistrito != "undefined"){ urlFactHitos+='&distrito='+idDistrito;}
+		if (typeof accionId != "undefined"){ urlFactHitos+='&accion_id='+accionId;}
+
+		
+		var registrosHitos = $.ajax({
+	    	url:urlFactHitos,
+	      	type:'get',
+	      	dataType:'json',
+	      	crossDomain:true,
+	      	async:false       
+	    }).responseText;		
+		var registroHitos=JSON.parse(registrosHitos);
+		
+		var accion = $.ajax({
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015Accion&accion_id='+accionId,
+	      	type:'get',
+	      	dataType:'json',
+	      	crossDomain:true,
+	      	async:false       
+	    }).responseText;		
+		accion=JSON.parse(accion);
+		
+		var departamentos = $.ajax({
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
+	      	type:'get',
+	      	dataType:'json',
+	      	async:false       
+	    }).responseText;
+		departamentos = JSON.parse(departamentos);
+	
+		for(i = 0;i<18; i++){
+			optionDepartamentos+='<option value="'+departamentos[i].idDepartamento+'" parametro="'+departamentos[i].idDepartamento+'">'+departamentos[i].nombreDepartamento+'</option>';
+		}
+		optionDepartamentos+='<option value="88" parametro="88">AUX.TRASP.</option>';
+		optionDepartamentos+='<option value="99" parametro="99">ALC.NACIONAL</option>';
+/*
+		function Combo2(){
+			
+		    this.selectorDistrito = function(){
+		    	
+		    }
+		}*/
+	    
+/* 		var eje2 = new Combo();		
+		document.getElementsByClassName('departamentoSeleccionado').addEventListener('change',eje2.selectorDistrito,false); */
+		
+
+		
+		var totalCantidadProgramada=0;
+	
+		
+		modalHito +=	'<div class="modal fade" id="myModal2" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">'+
+						'<div class="modal-dialog modal-lg" style="width:90%;" >'+
+						    '<div class="modal-content" >'+
+						      '<div class="modal-header">'+
+						        '<button type="button" class="close registro" data-dismiss="modal"  codigoregistro="'+institucionId+'-'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'" data-toggle="modal" data-target="#myModal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+						        '<h4 class="modal-title" id="myModalLabel1"></h4>'+
+						      '</div>'+
+						      '<div class="modal-body" style="heigth:1200px;">'+ 
+						      
+					      			'<div class="row">'+
+									'<div class="col-md-12">'+
+							         '<div class="box" height="1000px">'+
+							           '<div class="box-header with-border" height="1000px">'+
+							             '<h2 class="box-title text-center" id="tituloTipoPrograma">'+
+							               'Acción'+
+							             '</h2>'+
+							             '<div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+							             '</div>'+
+							           '</div>'+
+							           '<div class="box-body" style="display: block;">'+//INICIO DEL BODY
+							           '<form role="form">'+
+							           '<div class="table-responsive">'+
+										'<table class="table table-hover hitos">'+
+											'<tbody>'+
+												'<tr><td><div class="form-group"><label for="nombreAccion">Acción</label><input type="text" class="form-control" id="nombreAccion" value="'+accion[0].accion+'"><input type="hidden" class="form-control" id="accionId" value="'+accion[0].accion_id+'"></div></td><td><div class="form-group"><label for="umedida">U. medida</label><input type="text" class="form-control" id="umedida" value="'+accion[0].accion_unidad_edida+'"></div></td></tr>'+
+												'<tr><td><div class="form-group"><label for="departamento">Departamento</label><select id="selectorDepartamento" name="departamento" class="form-control">'+optionDepartamentos+'</select></div></td><td><div class="form-group"><label for="distrito">Distrito</label><select name="departamento" class="form-control" id="distritosDepartamento"></select></div></td></tr>'+
+												'<tr><td colspan="2"><button type="submit" class="btn btn-success">Guardar Acción</button>&nbsp&nbsp<button type="submit" class="btn btn-success modalAgregarHito" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'">Programar Hito</button>&nbsp&nbsp<button type="submit" class="btn btn-success modalDeclararAvance" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'" >Declarar Avance</button></td></tr>'+
+											'</tbody>'+							           
+										'</table>'+
+										'</div>'+
+										'</form>'+
+							           '</div>'+//FIN DEL BODY
+									   '</div>'+
+									'</div>'+
+							     '</div>'+	
+							     
+					      			'<div class="row">'+
+									'<div class="col-md-12">'+
+							         '<div class="box" height="1000px">'+
+							           '<div class="box-header with-border" height="1000px">'+
+							             '<h2 class="box-title text-center">'+
+							               'Planificación Trimestral'+
+							             '</h2>'+
+							             '<div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+							             '</div>'+
+							           '</div>'+
+							           '<div class="box-body" style="display: block;">'+
+							           
+					      			   	'<div class="row">'+
+				      					    '<div class="form-group col-md-3">'+
+	  					  						'<label for="totalFinanciero-formulario">Primer Trimestre</label>'+
+					      						'<div class="input-group input-group-sm">'+						      			
+		      					    				'<input type="text" name="primerTrimestre" id="primerTrimestre-formulario" value="" class="form-control">'+
+					      						'</div>'+
+			      					    	'</div>'+
+			      					    		
+					      					'<div class="form-group col-md-3">'+
+		  					  					'<label for="totalFinanciero-formulario">Segundo Trimestre</label>'+
+						      					'<div class="input-group input-group-sm">'+
+			      					    			'<input type="text" name="segundoTrimestre" id="segundoTrimestre-formulario" value="" class="form-control">'+
+						      					'</div>'+
+		      					    		'</div>'+
+			  					    		
+					      					'<div class="form-group col-md-3">'+
+								  					'<label for="totalFinanciero-formulario">Tercer Trimestre</label>'+
+						      					'<div class="input-group input-group-sm">'+
+			      					    			'<input type="text" name="tercerTrimestre" id="tercerTrimestre-formulario" value="" class="form-control">'+
+						      					'</div>'+
+			  					    		'</div>'+
+								    		
+				      					    '<div class="form-group col-md-3">'+
+							  					'<label for="totalFinanciero-formulario">Cuarto Trimestre</label>'+
+					      						'<div class="input-group input-group-sm">'+
+			  					    				'<input type="text" name="cuartoTrimestre" id="cuartoTrimestre-formulario" value="" class="form-control">'+
+					      						'</div>'+
+								    		'</div>'+
+			      					    '</div>'+
+			      					    '<button type="submit" class="btn btn-success guardarMetas">Guardar Metas</button>'+
+			      					    	
+							           '</div>'+
+									   '</div>'+
+									'</div>'+
+							     '</div>'+	
+						      
+							      	'<div class="row">'+ 
+
+							      	'<div class="col-md-12">'+
+									'<div class="box box-danger">'+
+					                	'<div class="box-header with-border">'+
+					                  		'<h3 class="box-title">Vinculación de Productos de la acción</h3>'+
+				                  			'<div class="box-tools pull-right">'+
+							                    '<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>'+
+					                    		'</button>'+
+					                    		'<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>'+
+					                    		'</button>'+
+					                  		'</div>'+
+					                	'</div>'+//fin box-heder
+					                	'<div class="box-body no-padding">'+
+							      			
+							      			'<div class="table-responsive">'+
+							                '<table class="table table-striped table-bordered  table-hover">'+
+							               ' 	<tr>'+
+							                '		<th>Nivel</th>'+
+							                '		<th>Entidad</th>'+
+							                '		<th>Tipo</th>'+
+							                '		<th>Programa</th>'+
+							                '		<th>Subprograma</th>'+
+							                '		<th>Proyecto</th>'+
+							                '		<th>Producto</th>'+
+							                '		<th>Cantidad</th>'+
+							                '		<th>U. Medida</th>'+
+							                '		<th>Tipo</th>'+
+							                '		<th>Asig. Financiera</th>'+
+							                '		<th>Costo de la Acción</th>'+
+							                '		<th>Destinatarios</th>'+
+							                '	</tr>'+
+							                '<tbody class="table-body-producto" id="TablaAccionHasProductos">'+
+							                '</tbody>'+
+							                '</table>'+
+							                '</div>'+
+
+					                	'</div>'+//fin box-body
+					                	'<div class="box-footer">'+
+					                	
+					                	'<div id="tituloFormulario"></div>'+
+				      					'<form class="form-horizontal" role="form" id="formulario" method="post" action="/ajaxUpdate">'+
+				      						'<input type="hidden" name="accion" value="actEntidad">'+
+				      						'<input type="hidden" name="anho" value="" id="anhoProducto-formulario">'+
+				      						'<input type="hidden" name="version" value="" id="versionProducto-formulario">'+
+											'<row>'+
+					      						'<div class="form-group col-md-1">'+
+					      							'<input type="text" name="nivel" id="nivel-formulario" value="12" class="form-control" disabled>'+
+					      						'</div>'+
+					      						'<div class="form-group col-md-1">'+
+					  								'<input type="text" name="entidad" id="entidad-formulario" value="1" class="form-control" disabled>'+
+					  							'</div>'+
+					      					    '<div class="form-group col-md-1">'+
+					      					    	'<input type="text" name="tipoPrograma" id="tipoPrograma-formulario" placeholder="Tipo Programa" list="listaf3c2" class="form-control">'+
+					      					    '</div>'+
+					      					    '<div class="form-group col-md-1">'+
+					      					    	'<input type="text" name="programa" id="programa-formulario" placeholder="Programa" list="listaf4c2" class="form-control">'+
+					      					    '</div>'+
+					      					    '<div class="form-group col-md-1">'+
+					      					    	'<input type="text" name="subPrograma" id="subPrograma-formulario" placeholder="SubPrograma" list="listaf5c2" class="form-control">'+
+					      					    '</div>'+
+					      					    '<div class="form-group col-md-2">'+
+					      					    	'<input type="text" name="proyecto" id="proyecto-formulario" placeholder="Proyecto" list="listaf6c2" class="form-control">'+
+					      					    '</div>'+
+					  					    	'<div class="form-group col-md-2">'+
+					  					    		'<input type="text" name="producto" id="producto-formulario" placeholder="Producto" list="listaf7c2" class="form-control">'+
+					      					  	'</div>'+ 
+					  					    	'<div class="form-group col-md-3">'+
+						      						'<div class="input-group input-group-md">'+
+						      							'<span class="input-group-addon">Gs</span>'+
+			      					    				'<input type="text" name="total" id="total-formulario" value="" class="form-control" >'+
+			      					                    '<div class="input-group-btn">'+
+				      					                	'<button type="submit" class="btn btn-success guardarComboProducto" parametros='+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'><span class="glyphicon glyphicon-plus"></span></button>'+
+				      					                '</div>'+			      					    				
+			      					    			'</div>'+
+					  					    	'</div>'+ 	
+					  					    '</div>'+
+				      					'</form>'+
+				      					
+		      					  	'</div>'+
+		      					  
+					                		'<div class="row">'+
+					      					    '<div class="form-group col-md-3">'+
+					      					  		'<label for="totalFisico-formulario">Cantidad</label>'+
+				      					    		'<input type="text" name="totalFisico" id="totalFisico-formulario" value="" class="form-control" disabled>'+
+				      					    	'</div>'+
+					      					    '<div class="form-group col-md-3">'+
+				      					  			'<label for="unidadMedida-formulario">U. Medida</label>'+
+			      					    			'<input type="text" name="totalFisico" id="unidadMedida-formulario" value="" class="form-control" disabled>'+
+			      					    		'</div>'+
+					      					    '<div class="form-group col-md-3">'+
+			      					  				'<label for="clase-formulario">Tipo</label>'+
+		      					    				'<input type="text" name="totalFisico" id="clase-formulario" value="" class="form-control" disabled>'+
+		      					    			'</div>'+			      					    		
+					      					    '<div class="form-group col-md-3">'+
+		      					  					'<label for="totalFinanciero-formulario">Asig. Financiera</label>'+
+							      					'<div class="input-group input-group-sm">'+
+							      						'<span class="input-group-addon">Gs</span>'+
+				      					    			'<input type="text" name="totalFinanciero" id="totalFinanciero-formulario" value="" class="form-control" disabled>'+
+							      					'</div>'+
+			      					    		'</div>'+   					    				
+			      					    	'</div>'+// fin row
+					                	'</div>'+//fin box-footer
+					                	
+					                	
+								    	'<div class="col-md-6">'+
+							    		 '<div class="box">'+
+							      			'<div class="box-header with-border">'+
+							       				'<h2 class="box-title text-center">'+
+							          				'Agregar Hito'+ 	
+							        			'</h2>'+
+							        			'<div class="box-tools pull-right"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+							        			'</div>'+
+							      			'</div>'+
+							      			'<div class="box-body hitosProgramado">'+//cuerpo del body    			
+							      				'<div class="table-responsive">'+
+													'<table class="table table-hover hitos">'+
+														'<thead>'+
+															'<tr class="active"><th>Acción</th><th>Departamento</th><th>Distrito</th><th>U. Medida</th><th>Cantidad. Programado</th><th>Costo Total</th><th>Fecha Terminación</th><th>% Programado</th><th>Editar</th></tr>'+
+														'</thead>'+
+														'<tbody>';
+														
+														
+														for(var m = 0; m < registroHitos.length; m++)
+														{
+															if(registroHitos[m].hito_porcentaje_programado > 0)
+															{
+																modalHito += '<tr><td>'+registroHitos[m].accion+'</td><td>'+registroHitos[m].accion_departamento+'</td><td>'+registroHitos[m].accion_distrito+'</td><td>'+registroHitos[m].accion_unidad_edida+'</td><td>'+registroHitos[m].hito_cantidad_programado+'</td><td>'+registroHitos[m].accion_costo+'</td><td>'+registroHitos[m].hito_fecha_entrega+'</td><td>'+registroHitos[m].hito_porcentaje_programado+'</td><td><a href="#" class="modalEditarHito" parametros="'+registroHitos[m].hito_id+'"><span class="glyphicon glyphicon-pencil"></span></a></td></tr>';
+																totalCantidadProgramada+=registroHitos[m].hito_cantidad_programado;
+															}
+														}
+														totalCantidadProgramada=parseFloat(totalCantidadProgramada).toFixed(2);
+
+														modalHito += '</tbody><tfoot><tr class="active"><td colspan="2">Total Cantidad Programada: </td><td colspan="8">'+totalCantidadProgramada+'</td></tr></tfoot>'+
+																	 '</table>'+
+																	 '</div>'+
+							      			'</div>'+//FIN BODY
+								   		'</div>'+
+									'</div>'+
+									
+							    	'<div class="col-md-6">'+
+						    		'<div class="box">'+
+						      			'<div class="box-header with-border">'+
+						       				'<h2 class="box-title text-center">'+
+						          				'Avance'+ 	
+						        			'</h2>'+
+						        			'<div class="box-tools pull-right"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+						        			'</div>'+
+						      			'</div>'+
+						      			'<div class="box-body">'+ 
+					      				'<div class="table-responsive">'+
+										'<table class="table table-hover hitos">'+
+											'<thead>'+
+												'<tr class="active"><th>Acción</th><th>Departamento</th><th>Distrito</th><th>U. Medida</th><th>Cantidad. Programado</th><th>Costo Total</th><th>Fecha Terminación</th><th>% Ejecutado</th><th>Editar</th></tr>'+
+											'</thead>'+
+											'<tbody>';
+											
+											
+											for(var m = 0; m < registroHitos.length; m++)
+											{
+												if(registroHitos[m].hito_porcentaje_ejecutado > 0)
+												{
+													modalHito += '<tr><td>'+registroHitos[m].accion+'</td><td>'+registroHitos[m].accion_departamento+'</td><td>'+registroHitos[m].accion_distrito+'</td><td>'+registroHitos[m].accion_unidad_edida+'</td><td>'+registroHitos[m].hito_cantidad_programado+'</td><td>'+registroHitos[m].accion_costo+'</td><td>'+registroHitos[m].hito_fecha_entrega+'</td><td>'+registroHitos[m].hito_porcentaje_ejecutado+'</td><td><a href="#" class="modalEditarHito" parametros="'+registroHitos[m].hito_id+'"><span class="glyphicon glyphicon-pencil"></span></a></td></tr>';
+													totalCantidadProgramada+=registroHitos[m].hito_cantidad_programado;
+												}
+											}
+											totalCantidadProgramada=parseFloat(totalCantidadProgramada).toFixed(2);
+
+											modalHito += '</tbody><tfoot><tr class="active"><td colspan="2">Total Cantidad Programada: </td><td colspan="8">'+totalCantidadProgramada+'</td></tr></tfoot>'+
+														 '</table>'+
+														 '</div>'+						      			
+						      			'</div>'+
+							   		'</div>'+
+								'</div>'+	
+
+						    '</div>'+//fin row
+						    
+					      '</div>'+// fin body
+						  '<div class="modal-footer">'+
+						 	'<button type="button" class="btn btn-success registro" data-dismiss="modal" codigoregistro="'+institucionId+'-'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'" data-toggle="modal" data-target="#myModal">Cerrar</button>'+
+						  '</div>'+
+					    '</div>'+
+					 '</div>'+
+					'</div>'+
+					
+					               	
+           	'</div>'+//fin modal-content
+         '</div>'+//fin modal-dialog
+         '</div>';//fon myModal2
+
+
+
+		
+		$("body").append(modalHito);
+		
+		$('#selectorDepartamento > option[value="'+idDepartamento+'"]').attr('selected', 'selected');
+		
+		//var departamentoId = $("#selectorDepartamento option:selected").val();
+		var distritos = $.ajax({
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito&departamento='+idDepartamento,
+	      	type:'get',
+	      	dataType:'json',
+	      	async:false       
+	    }).responseText;
+		distritos = JSON.parse(distritos);
+		optionDistritos="";
+		for(k = 0;k<distritos.length; k++){
+			
+			optionDistritos+='<option value="'+distritos[k].id+'">'+distritos[k].descripcion+'</option>';
+		}
+		$("#distritosDepartamento").html("");
+		$("#distritosDepartamento").append(optionDistritos);
+		
+		$('#distritosDepartamento > option[value="'+idDistrito+'"]').attr('selected', 'selected');
+		$("#myModal2").modal('show');
+		
+		$("body").on("change", "#selectorDepartamento",function(event){
+			//var departamentoId = $(this).attr("parametro");
+			var departamentoId = $("#selectorDepartamento option:selected").val();
+	    	
+			var distritos = $.ajax({
+		    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito&departamento='+departamentoId,
+		      	type:'get',
+		      	dataType:'json',
+		      	async:false       
+		    }).responseText;
+			distritos = JSON.parse(distritos);
+			optionDistritos="";
+			for(k = 0;k<distritos.length; k++){
+				
+				optionDistritos+='<option value="'+distritos[k].id+'">'+distritos[k].descripcion+'</option>';
+			}
+			$("#distritosDepartamento").html("");
+			$("#distritosDepartamento").append(optionDistritos);
+			
+		});
+		
+		cargarTablaAccionHasProducto(institucionId, lineaAccionId, idDepartamento, idDistrito, accionId);
+		
+		
+		function Combo(){
+
+		    this.nivelFocus = function(){
+			
+		   	  var listaDatalist=document.getElementsByTagName('datalist');
+		      var datosNiveles = $.ajax({
+		          url:'http://spr.stp.gov.py/ajaxSelects?accion=getNiveles',
+		          type:'get',
+		          	crossDomain: 'true',
+		          	dataType:'jsonp',	
+		          async:false       
+		        }).responseText;  
+		  
+		        
+		        datosNiveles = JSON.parse(datosNiveles);
+				
+		        if(listaDatalist.length === 0 )
+		        {
+			        var datalistNiveles = document.createElement('datalist');
+			        datalistNiveles.setAttribute('id','listaf1c2');
+			        datalistNiveles.setAttribute('size','5'); 
+			        var ubicacionDatalistNiveles = document.getElementById('formulario');
+			        ubicacionDatalistNiveles.appendChild(datalistNiveles);
+			
+			        for(var i = 0; i < datosNiveles.niveles.length ; i++) 
+			        {    
+			        	var option = document.createElement('option');
+			          	option.setAttribute('value',datosNiveles.niveles[i].nivel);
+			          	option.setAttribute('label',datosNiveles.niveles[i].nombreNivel);
+			          	datalistNiveles.appendChild(option);      
+			      	} 
+		        }
+		    } 
+
+		    this.nivel = function(){
+		    	//var rutaNivel = document.getElementById('nivel-formulario').value;
+		    	var rutaNivel = 12;
+		    	var datosNiveles = $.ajax({
+		        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getNiveles',
+		          	type:'get',
+		          	crossDomain: 'true',
+		          	dataType:'jsonp',		          	
+		          	async:false       
+		        }).responseText;
+
+		        
+		        datosNiveles = JSON.parse(datosNiveles);
+		      	for(var x = 0; x < datosNiveles.niveles.length; x++)
+		      	{
+		        	if(datosNiveles.niveles[x].nivel === parseInt(rutaNivel))
+		        	{
+			        	var mostrarNivel = datosNiveles.niveles[x].nombreNivel;
+			          	var nt=document.createTextNode(mostrarNivel+" >");
+			          	var nparrafo=document.getElementById('tituloFormulario');
+			          	nparrafo.innerHTML="";
+			          	nparrafo.appendChild(nt);
+			        }
+		      	}
+		    }  
+
+
+		    this.entidadFocus = function(){ 
+		      	//var linkEntidad = document.getElementById('nivel-formulario').value;
+		    	var linkEntidad = 12;
+		    	var datosEntidades = $.ajax({
+		         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getEntidades&nivel='+linkEntidad,
+		          	type:'get',
+		          	crossDomain: 'true',
+		          	dataType:'jsonp',
+		          	async:false
+		    	}).responseText;
+
+		          	option.setAttribute('value',datosEntidades.entidades[i].entidad);
+		          	option.setAttribute('label',datosEntidades.entidades[i].nombreEntidad);
+		          	datalistEntidades.appendChild(option);      
+		      	}   
+		     
+
+
+		    this.entidad = function(){ 
+		    	//var linkEntidad = document.getElementById('nivel-formulario').value;
+		      	//var rutaEntidad2 = document.getElementById('entidad-formulario').value;
+		    	var linkEntidad = 12;
+		      	var rutaEntidad2 = 1;
+		      	
+
+		      	var datosEntidades = $.ajax({
+		        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getEntidades&nivel='+linkEntidad,
+		          	type:'get',
+		          	dataType:'json',
+		          	async:false       
+		        }).responseText;
+
+		        datosEntidades = JSON.parse(datosEntidades);
+		 
+		    	for(var x = 0; x < datosEntidades.entidades.length; x++)
+		      	{
+		        	if(datosEntidades.entidades[x].entidad === parseInt(rutaEntidad2)) 
+		        	{
+		        		document.getElementById('entidad-formulario').setAttribute("entidad",rutaEntidad2 );
+		        		var mostrarEntidad = datosEntidades.entidades[x].nombreEntidad;
+		          		var nt=document.createTextNode(mostrarEntidad);
+		          		var nparrafo=document.getElementById('tituloFormulario');
+		          		//nparrafo.innerHTML="";
+		          		nparrafo.appendChild(nt);
+		        	} 
+		      	} 
+		    }  
+
+		    this.tipoProgramaFocus = function(){
+
+		    	var rutaNivel = 12;
+		    	var datosNiveles = [];
+		    	
+				if ( $("#listaf3c2").length ) {
+					$("#listaf3c2").remove();
+					$('#tipoPrograma-formulario').val('');
+					$("#listaf4c2").remove();
+					$('#programa-formulario').val('');
+					$("#listaf5c2").remove();
+					$('#subPrograma-formulario').val('');
+					$("#listaf6c2").remove();
+					$('#proyecto-formulario').val('');
+					$("#listaf7c2").remove();
+					$('#producto-formulario').val('');
+					$('#totalFisico-formulario').val('');
+					$('#unidadMedida-formulario').val('');
+					$('#clase-formulario').val('');
+					$('#totalFinanciero-formulario').val('');
+				}
+				
+			    $.ajax({
+			        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getNiveles',
+			          	type:'get',
+			          	crossDomain: 'true',
+			          	dataType:'jsonp',
+		                jsonp: 'callback',
+		                jsonpCallback: 'jsonpCallback',
+			          	async:false,
+			          	success: function( data, textStatus, jqXHR) {
+			          		if(data.success){
+			          			jsonpCallback(data)
+			          		}
+			          	}
+			        });
+		    			
+ 			    	 function jsonpCallback(data) {
+			          		datosNiveles= data;
+			          		
+					      	for(var y = 0; y < datosNiveles.niveles.length; y++)
+					      	{
+					        	if(datosNiveles.niveles[y].nivel === parseInt(rutaNivel))
+					        	{
+						        	var mostrarNivel = datosNiveles.niveles[y].nombreNivel;
+						          	var nt=document.createElement('small');
+						          	var ntText = document.createTextNode(mostrarNivel);
+						          	nt.appendChild(ntText);
+						          	var separador=document.createTextNode(" > ");
+						          	var nparrafo=document.getElementById('tituloFormulario');
+						          	var strong = document.createElement('strong');
+						          	strong.appendChild(separador);
+						          	nparrafo.innerHTML="";
+						          	nparrafo.appendChild(nt);
+						          	nparrafo.appendChild(strong);
+						          	
+						        }
+					      	}
+					    	
+					    	var linkEntidad = 12;
+					      	var rutaEntidad2 = 1;
+					      	
+
+					      	var datosEntidades =[];
+					      		$.ajax({
+					        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getEntidades&nivel='+linkEntidad,
+					          	type:'get',
+					          	crossDomain: 'true',
+					          	dataType:'jsonp',
+				                jsonp: 'callback',
+				                jsonpCallback: 'jsonpCallbackEntidad',
+					          	async:false,
+					          	success: function( data, textStatus, jqXHR) {
+					          		if(data.success){
+					          			jsonpCallbackEntidad(data)
+					          		}
+					          	}
+					        });
+					      		
+					      	function jsonpCallbackEntidad(data) {
+					      		datosEntidades= data;
+					 
+						    	for(var x = 0; x < datosEntidades.entidades.length; x++)
+						      	{
+						        	if(datosEntidades.entidades[x].entidad === parseInt(rutaEntidad2)) 
+						        	{
+						        		document.getElementById('entidad-formulario').setAttribute("entidad",rutaEntidad2 );
+						        		var mostrarEntidad = datosEntidades.entidades[x].nombreEntidad;
+						        		var nt=document.createElement('small');
+						          		var ntText=document.createTextNode(mostrarEntidad);
+						          		nt.appendChild(ntText);
+							          	var separador=document.createTextNode(" > ");
+							          	var nparrafo=document.getElementById('tituloFormulario');
+							          	var strong = document.createElement('strong');
+							          	strong.appendChild(separador);
+						          		nparrafo.appendChild(nt);
+							          	nparrafo.appendChild(strong);
+
+						        	} 
+						      	}
+						    	
+						      	var datosTipoPrograma = [];
+						      		$.ajax({
+						        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getTiposPrograma',
+						          	type:'get',
+						          	crossDomain: 'true',
+						          	dataType:'jsonp',
+					                jsonp: 'callback',
+					                jsonpCallback: 'jsonpCallbackTipoPrograma',
+						          	async:false,
+						          	success: function( data, textStatus, jqXHR) {
+						          		if(data.success){
+						          			jsonpCallbackTipoPrograma(data)
+						          		}
+						          	}    
+						        });
+	
+							    function jsonpCallbackTipoPrograma(data) {
+							    	datosTipoPrograma= data;
+							    	
+							      	var datalistEntidades = document.createElement('datalist'); 
+							        datalistEntidades.setAttribute('id','listaf3c2'); 
+							        var ubicacionDatalistEntidades = document.getElementById('formulario');
+							        ubicacionDatalistEntidades.appendChild(datalistEntidades);
+		
+							        for(var i = 0; i < datosTipoPrograma.tiposPrograma.length ; i++) 
+							        {       
+							        	var option = document.createElement('option');
+							          	option.setAttribute('value',datosTipoPrograma.tiposPrograma[i].numeroFila);
+							          	option.setAttribute('label',datosTipoPrograma.tiposPrograma[i].nombreTipoPrograma);
+							          	datalistEntidades.appendChild(option);      
+							      	}   
+							        
+							    }
+			          		
+					      	}
+			          		
+			          		
+			          		
+			          		
+			          		
+ 			    	 } 
+		    	   
+		    	
+		    	   
+		    }
+		    this.tipoPrograma = function(){
+		    	var linkTipoPrograma = document.getElementById('tipoPrograma-formulario').value;
+
+		      	var datosTipoPrograma = [];
+		      	
+		      	$.ajax({
+		        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getTiposPrograma',
+		          	type:'get',
+		          	crossDomain: 'true',
+		          	dataType:'jsonp',
+	                jsonp: 'callback',
+	                jsonpCallback: 'jsonpCallbackTipoPrograma',
+		          	async:false,
+		          	success: function( data, textStatus, jqXHR) {
+		          		if(data.success){
+		          			jsonpCallbackTipoPrograma(data)
+		          		}
+		          	}        
+		        });
+		      	
+			    function jsonpCallbackTipoPrograma(data) {
+			    	datosTipoPrograma= data;
+
+			    	for(var x = 0; x < datosTipoPrograma.tiposPrograma.length; x++)
+			      	{
+			        	if(datosTipoPrograma.tiposPrograma[x].numeroFila === parseInt(linkTipoPrograma)) 
+			        	{
+			        		var mostrarTipoPrograma = datosTipoPrograma.tiposPrograma[x].nombreTipoPrograma;
+			          		var ntText=document.createTextNode(mostrarTipoPrograma);
+			              	var nt=document.createElement('small');
+			              	var ntText = document.createTextNode(mostrarTipoPrograma);
+			              	nt.appendChild(ntText);
+			              	var separador=document.createTextNode(" > ");
+			          		var nparrafo=document.getElementById('tituloFormulario');
+			              	var strong = document.createElement('strong');
+			              	strong.appendChild(separador);
+			              	nparrafo.appendChild(nt);
+			              	nparrafo.appendChild(strong);
+			        	} 
+			      	}
+			    }
+		    }    	
+
+		    this.programasFocus = function(){
+		      	//var linkNivel = document.getElementById('nivel-formulario').value;
+		      	//var linkEntidad = document.getElementById("entidad-formulario").value;
+		    	var linkNivel = 12;
+		      	var linkEntidad = 1;
+		      	var linkTipoPrograma = parseInt(document.getElementById("tipoPrograma-formulario").value)
+		      	;
+
+		    	var datosProgramas = [];
+		    	
+				if ( $("#listaf4c2").length ) {
+					$("#listaf4c2").remove();
+					$('#programa-formulario').val('');
+					$("#listaf5c2").remove();
+					$('#subPrograma-formulario').val('');
+					$("#listaf6c2").remove();
+					$('#proyecto-formulario').val('');
+					$("#listaf7c2").remove();
+					$('#producto-formulario').val('');
+					$('#totalFisico-formulario').val('');
+					$('#unidadMedida-formulario').val('');
+					$('#clase-formulario').val('');
+					$('#totalFinanciero-formulario').val('');
+
+				}
+		    	
+		    	$.ajax({
+		        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getProgramas&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipoPresupuesto='+linkTipoPrograma,
+		          	type:'get',
+		          	crossDomain: 'true',
+		          	dataType:'jsonp',
+	                jsonp: 'callback',
+	                jsonpCallback: 'jsonpCallbackPrograma',
+		          	async:false,
+		          	success: function( data, textStatus, jqXHR) {
+		          		if(data.success){
+		          			jsonpCallbackPrograma(data)
+		          		}
+		          	}         
+		        });
+		        
+			    function jsonpCallbackPrograma(data) {
+			    	datosProgramas = data;
+
+			    	$("#listaf4c2").remove();
+			        var datalistProgramas = document.createElement('datalist');
+			        datalistProgramas.setAttribute('id','listaf4c2'); 
+			        var ubicacionDatalistProgramas = document.getElementById('formulario');
+			        ubicacionDatalistProgramas.appendChild(datalistProgramas);
+	
+			        for(var i = 0; i < datosProgramas.programas.length ; i++) 
+			        {       
+				        var option = document.createElement('option');
+			    	    option.setAttribute('value',datosProgramas.programas[i].codigoPrograma);
+			    	    option.setAttribute('label',datosProgramas.programas[i].nombrePrograma);
+			        	datalistProgramas.appendChild(option);       
+			      	} 
+			    }
+		    }
+		    
+		    this.programas = function(){
+		      	//var linkNivel = document.getElementById('nivel-formulario').value;
+		      	//var linkEntidad = document.getElementById("entidad-formulario").value;
+		    	var linkNivel = 12;
+		      	var linkEntidad = 1;
+		      	var linkTipoPrograma = document.getElementById("tipoPrograma-formulario").value;
+		      	var numeroProgramaIngresado = document.getElementById("programa-formulario").value;
+
+		    	var datosProgramas =  [];
+		    	
+		    	$.ajax({
+		        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getProgramas&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipoPresupuesto='+linkTipoPrograma,
+		          	type:'get',
+		          	crossDomain: 'true',
+		          	dataType:'jsonp',
+	                jsonp: 'callback',
+	                jsonpCallback: 'jsonpCallbackPrograma',
+		          	async:false,
+		          	success: function( data, textStatus, jqXHR) {
+		          		if(data.success){
+		          			jsonpCallbackPrograma(data)
+		          		}
+		          	}      
+		        });
+
+			    function jsonpCallbackPrograma(data) {
+			    	datosProgramas = data;
+			    	
+			    	for(var x = 0; x < datosProgramas.programas.length; x++)
+			    	{
+			        	if(datosProgramas.programas[x].codigoPrograma === parseInt(numeroProgramaIngresado))
+			        	{
+			        		var mostrarNombrePrograma = datosProgramas.programas[x].nombrePrograma;
+			        		var nt=document.createElement('small');
+					        var ntText=document.createTextNode(mostrarNombrePrograma);
+					        nt.appendChild(ntText);
+					        var separador=document.createTextNode(" > ");
+					        var nparrafo=document.getElementById('tituloFormulario');
+				          	var strong = document.createElement('strong');
+				          	strong.appendChild(separador);
+				          	nparrafo.appendChild(nt);
+				          	nparrafo.appendChild(strong);
+
+					    }
+			      	}
+			    }
+		    } 
+
+		    this.subProgramasFocus = function(){
+			    //var linkNivel = document.getElementById('nivel-formulario').value;
+			    //var linkEntidad = document.getElementById('entidad-formulario').value;
+		    	var linkNivel = 12;
+		      	var linkEntidad = 1;    	
+			    var linkTipoPrograma = document.getElementById("tipoPrograma-formulario").value;
+			    var linkPrograma = document.getElementById("programa-formulario").value;
+
+		    	var datosSubProgramas = [];
+		    	
+				if ( $("#listaf5c2").length ) {
+					$("#listaf5c2").remove();
+					$('#subPrograma-formulario').val('');
+					$("#listaf6c2").remove();
+					$('#proyecto-formulario').val('');
+					$("#listaf7c2").remove();
+					$('#producto-formulario').val('');
+					$('#totalFisico-formulario').val('');
+					$('#unidadMedida-formulario').val('');
+					$('#clase-formulario').val('');
+					$('#totalFinanciero-formulario').val('');
+				}
+		    	
+		    	$.ajax({
+		        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getSubprogramas&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipoPresupuesto='+linkTipoPrograma+'&programa='+linkPrograma,
+		          	type:'get',
+		          	crossDomain: 'true',
+		          	dataType:'jsonp',
+	                jsonp: 'callback',
+	                jsonpCallback: 'jsonpCallbackSubPrograma',
+		          	async:false,
+		          	success: function( data, textStatus, jqXHR) {
+		          		if(data.success){
+		          			jsonpCallbackSubPrograma(data)
+		          		}
+		          	}       
+		        });
+
+			    function jsonpCallbackSubPrograma(data) {
+			    	datosSubProgramas = data;
+			    	
+			        var datalistSubProgramas = document.createElement('datalist');
+			        datalistSubProgramas.setAttribute('id','listaf5c2'); 
+			        var ubicacionDatalistProgramas = document.getElementById('formulario');
+			        ubicacionDatalistProgramas.appendChild(datalistSubProgramas);
+	
+			          for(var i = 0; i < datosSubProgramas.subprogramas.length ; i++) 
+			          {       
+				          var option = document.createElement('option');
+				          option.setAttribute('value', datosSubProgramas.subprogramas[i].id);
+				          option.setAttribute('label', datosSubProgramas.subprogramas[i].nombre);
+				          datalistSubProgramas.appendChild(option);     
+			      	  } 
+			    }
+		    } 
+		    
+		    this.subProgramas = function(){
+			    //var linkNivel = document.getElementById('nivel-formulario').value;
+			    //var linkEntidad = document.getElementById('entidad-formulario').value;
+		    	var linkNivel = 12;
+		      	var linkEntidad = 1;
+			    var linkTipoPrograma = document.getElementById("tipoPrograma-formulario").value;
+			    var linkPrograma = document.getElementById("programa-formulario").value;
+			    var numeroSubProgramaIngresado = document.getElementById("subPrograma-formulario").value;
+
+		    	var datosSubProgramas = [];
+		    	
+		    	$.ajax({
+		        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getSubprogramas&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipoPresupuesto='+linkTipoPrograma+'&programa='+linkPrograma,
+		          	type:'get',
+		          	crossDomain: 'true',
+		          	dataType:'jsonp',
+	                jsonp: 'callback',
+	                jsonpCallback: 'jsonpCallbackSubPrograma',
+		          	async:false,
+		          	success: function( data, textStatus, jqXHR) {
+		          		if(data.success){
+		          			jsonpCallbackSubPrograma(data)
+		          		}
+		          	} 
+		        });
+
+			    function jsonpCallbackSubPrograma(data) {
+			    	datosSubProgramas = data;
+			    	
+			      	for(var x = 0; x < datosSubProgramas.subprogramas.length; x++)
+			      	{
+			        	if(datosSubProgramas.subprogramas[x].id === parseInt(numeroSubProgramaIngresado))
+			        	{
+				        	var mostrarNombrePrograma = datosSubProgramas.subprogramas[x].nombre;
+				        	var nt=document.createElement('small');
+				          	var ntText=document.createTextNode(mostrarNombrePrograma);
+					        nt.appendChild(ntText);
+					        var separador=document.createTextNode(" > ");
+				          	var nparrafo=document.getElementById('tituloFormulario');
+				          	var strong = document.createElement('strong');
+				          	strong.appendChild(separador);
+				          	nparrafo.appendChild(nt);
+				          	nparrafo.appendChild(strong);
+				        }
+			      	}
+			    }
+		    } 
+		    
+		    this.proyectoFocus = function(){
+			    //var linkNivel = document.getElementById("nivel-formulario").value;
+			    //var linkEntidad = document.getElementById("entidad-formulario").value;
+		    	var linkNivel = 12;
+		      	var linkEntidad = 1;
+			    var linkTipoPrograma = document.getElementById("tipoPrograma-formulario").value;
+			    var linkPrograma = document.getElementById('programa-formulario').value;
+			    var linkSubPrograma = document.getElementById('subPrograma-formulario').value;
+
+		    	var datosProyectos = [];
+		    	
+				if ( $("#listaf6c2").length ) {
+					$("#listaf6c2").remove();
+					$('#proyecto-formulario').val('');
+					$("#listaf7c2").remove();
+					$('#producto-formulario').val('');
+					$('#totalFisico-formulario').val('');
+					$('#unidadMedida-formulario').val('');
+					$('#clase-formulario').val('');
+					$('#totalFinanciero-formulario').val('');
+				}
+		    	
+		    	$.ajax({
+		         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getProyectos&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipoPresupuesto='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma,
+		          	type:'get',
+		          	crossDomain: 'true',
+		          	dataType:'jsonp',
+	                jsonp: 'callback',
+	                jsonpCallback: 'jsonpCallbackProyecto',
+		          	async:false,
+		          	success: function( data, textStatus, jqXHR) {
+		          		if(data.success){
+		          			jsonpCallbackProyecto(data)
+		          		}
+		          	}    
+		        });
+
+			    function jsonpCallbackProyecto(data) {
+			    	datosProyectos = data;
+
+			        var datalistProyectos = document.createElement('datalist');
+			        datalistProyectos.setAttribute('id','listaf6c2'); 
+			        var ubicacionDatalistProyectos = document.getElementById('formulario');
+			        ubicacionDatalistProyectos.appendChild(datalistProyectos);
+	
+			          for(var i = 0; i < datosProyectos.proyectos.length ; i++) 
+			          {       
+				          var option = document.createElement('option');
+				          option.setAttribute('value', datosProyectos.proyectos[i].codigoProyecto);
+				          option.setAttribute('label', datosProyectos.proyectos[i].nombreProyecto);
+				          datalistProyectos.appendChild(option);      
+			      	  } 
+			    }
+		    }
+		    this.proyecto = function(){
+			    //var linkNivel = document.getElementById("nivel-formulario").value;
+			    //var linkEntidad = document.getElementById("entidad-formulario").value;
+		    	var linkNivel = 12;
+		      	var linkEntidad = 1;
+			    var linkTipoPrograma = document.getElementById("tipoPrograma-formulario").value;
+			    var linkPrograma = document.getElementById('programa-formulario').value;
+			    var linkSubPrograma = document.getElementById('subPrograma-formulario').value;
+			    var numeroProyectoIngresado = document.getElementById("proyecto-formulario").value;
+
+		    	var datosProyectos = [];
+		    	$.ajax({
+		          url:'http://spr.stp.gov.py/ajaxSelects?accion=getProyectos&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipoPresupuesto='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma,
+		          type:'get',
+		          	crossDomain: 'true',
+		          	dataType:'jsonp',
+	                jsonp: 'callback',
+	                jsonpCallback: 'jsonpCallbackProyecto',
+		          	async:false,
+		          	success: function( data, textStatus, jqXHR) {
+		          		if(data.success){
+		          			jsonpCallbackProyecto(data)
+		          		}
+		          	}    
+		        });
+
+			    function jsonpCallbackProyecto(data) {
+			    	datosProyectos = data;
+				    for(var x = 0; x < datosProyectos.proyectos.length; x++)
+			      	{
+			        	if(datosProyectos.proyectos[x].codigoProyecto === parseInt(numeroProyectoIngresado))
+			        	{
+			        		var mostrarNombreProyecto = datosProyectos.proyectos[x].nombreProyecto;
+			        		var nt=document.createElement('small');
+			          		var ntText=document.createTextNode(mostrarNombreProyecto);
+			    	        nt.appendChild(ntText);
+			    	        var separador=document.createTextNode(" > ");
+			          		var nparrafo=document.getElementById('tituloFormulario');
+			              	var strong = document.createElement('strong');
+			              	strong.appendChild(separador);
+			              	nparrafo.appendChild(nt);
+			              	nparrafo.appendChild(strong);
+
+			        	}
+			      	}
+			   }
+		    }
+		    
+		    this.productoFocus = function(){
+			    //var linkNivel = document.getElementById("nivel-formulario").value;
+			    //var linkEntidad = document.getElementById("entidad-formulario").value;
+		    	var linkNivel = 12;
+		      	var linkEntidad = 1;
+			    var linkTipoPrograma = document.getElementById("tipoPrograma-formulario").value;
+			    var linkPrograma = document.getElementById('programa-formulario').value;
+			    var linkSubPrograma = document.getElementById('subPrograma-formulario').value;
+			    var linkProyecto = document.getElementById('proyecto-formulario').value;   
+
+
+		    	var datosProductos = [];
+		    	var datosProductosDetalle = [];
+		    	
+				if ( $("#listaf7c2").length ) {
+					$("#listaf7c2").remove();
+					$('#producto-formulario').val('');
+					$('#totalFisico-formulario').val('');
+					$('#unidadMedida-formulario').val('');
+					$('#clase-formulario').val('');
+					$('#totalFinanciero-formulario').val('');
+					
+				}
+		    	$.ajax({
+		         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductosPresupuesto&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto,
+		          	type:'get',
+		          	crossDomain: 'true',
+		          	dataType:'jsonp',
+	                jsonp: 'callback',
+	                jsonpCallback: 'jsonpCallbackProducto',
+		          	async:false,
+		          	success: function( data, textStatus, jqXHR) {
+		          		if(data.success){
+		          			jsonpCallbackProducto(data)
+		          		}
+		          	}    
+		        });
+
+			    function jsonpCallbackProducto(data) {
+			    	datosProductos = data;
+			    	
+			    	
+			        var datalistProductos = document.createElement('datalist');
+			        datalistProductos.setAttribute('id','listaf7c2'); 
+			        var ubicacionDatalistProductos = document.getElementById('formulario');
+			        ubicacionDatalistProductos.appendChild(datalistProductos);
+			        
+ 			          for(var i = 0; i < datosProductos.producto.length ; i++) 
+			          {       
+
+					    	$.ajax({
+					         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductos&producto='+datosProductos.producto[i].producto_id,
+					          	type:'get',
+					          	crossDomain: 'true',
+					          	dataType:'jsonp',
+				                jsonp: 'callback',
+				                jsonpCallback: 'jsonpCallbackProductoDetalle',
+					          	async:false,
+					          	success: function( data, textStatus, jqXHR) {
+					          		if(data.success){
+					          			jsonpCallbackProductoDetalle(data)
+					          		}
+					          	}    
+					        });
+			          } 
+					    	
+			        	  function jsonpCallbackProductoDetalle(data) {
+						    	datosProductosDetalle = data;
+						    	
+					    	
+   
+							          var option = document.createElement('option');
+							          option.setAttribute('value', datosProductosDetalle.productos[0].codigoCatalogo);
+							          option.setAttribute('label', datosProductosDetalle.productos[0].nombreCatalogo);
+							          datalistProductos.appendChild(option);      
+						    }
+			        	  
+			      	  
+			    	
+			    }//fin primer callback
+		    }
+		    
+		    this.producto = function(){
+			    //var linkNivel = document.getElementById("nivel-formulario").value;
+			    //var linkEntidad = document.getElementById("entidad-formulario").value;
+		    	var linkNivel = 12;
+		      	var linkEntidad = 1;
+			    var linkTipoPrograma = document.getElementById("tipoPrograma-formulario").value;
+			    var linkPrograma = document.getElementById('programa-formulario').value;
+			    var linkSubPrograma = document.getElementById('subPrograma-formulario').value;
+			    var linkProyecto = document.getElementById('proyecto-formulario').value; 
+			    var linkProducto = document.getElementById('producto-formulario').value; 
+			    var datosProductos = [];
+			    var valorProducto = [];
+			    var datosProductoUnidadMedida = [];
+			    var datos = [];
+			    var sumaTotal=0;
+			    var maxValor = 0;	
+			    var totalFinanciero;  
+			    
+		    	$.ajax({
+		         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductos&producto='+linkProducto,
+		          	type:'get',
+		          	crossDomain: 'true',
+		          	dataType:'jsonp',
+	                jsonp: 'callback',
+	                jsonpCallback: 'jsonpCallbackProducto',
+		          	async:false,
+		          	success: function( data, textStatus, jqXHR) {
+		          		if(data.success){
+		          			jsonpCallbackProducto(data)
+		          		}
+		          	}    
+		        });
+		    	
+		    	function jsonpCallbackProducto(data) {
+					datosProductos = data;
+		    		
+			    	$.ajax({
+			         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductoUnidadMedida&unidadMedidaId='+datosProductos.productos[0].codUnidadMedida,
+			          	type:'get',
+			          	crossDomain: 'true',
+			          	dataType:'jsonp',
+		                jsonp: 'callback',
+		                jsonpCallback: 'jsonpCallbackProductoUnidadMedida',
+			          	async:false,
+			          	success: function( data, textStatus, jqXHR) {
+			          		if(data.success){
+			          			jsonpCallbackProductoUnidadMedida(data)
+			          		}
+			          	}    
+			        });
+			    	
+			    	function jsonpCallbackProductoUnidadMedida(data) {
+						datosProductoUnidadMedida = data;
+						
+		        		var mostrarUnidadMedida = datosProductoUnidadMedida.producto[0].unidadMedidaNombre;
+			    		$("#unidadMedida-formulario").val(mostrarUnidadMedida);
+			    		
+				    	$.ajax({
+				         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getAsignacionPresiVersion&nivel=12&entidad=1&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subPrograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto+'&anho=2016',
+				          	type:'get',
+				          	crossDomain: 'true',
+				          	dataType:'jsonp',
+			                jsonp: 'callback',
+			                jsonpCallback: 'jsonpCallbackAsignacionPresi',
+				          	async:false,
+				          	success: function( data, textStatus, jqXHR) {
+				          			jsonpCallbackAsignacionPresi(data);
+				          	}    
+				        });
+				    	
+				    	function jsonpCallbackAsignacionPresi(data) {
+							datos = data;
+							totalFinanciero = 0;
+			        		for(var z = 0; z < datos.length; z++)
+			        		{
+			        			totalFinanciero += ( parseFloat(datos[z].planificado1) + parseFloat(datos[z].planificado2) + parseFloat(datos[z].planificado3) + parseFloat(datos[z].planificado4) + parseFloat(datos[z].planificado5) + parseFloat(datos[z].planificado6) + parseFloat(datos[z].planificado7) + parseFloat(datos[z].planificado8) + parseFloat(datos[z].planificado9) + parseFloat(datos[z].planificado10) + parseFloat(datos[z].planificado11) + parseFloat(datos[z].planificado12) );
+			        		}
+				    		//$("#totalFinanciero-formulario").val(numeroConComa(totalFinanciero));
+				    		$("#totalFinanciero-formulario").val(totalFinanciero);
+				    		$("#anhoProducto-formulario").val(datos[0].anho);
+				    		$("#versionProducto-formulario").val(datos[0].version);
+
+
+				    	}
+			    	}
+			    	    	
+	        		var mostrarNombreProducto = datosProductos.productos[0].nombreCatalogo;
+	        		var nt=document.createElement('small');
+	          		var ntText=document.createTextNode(mostrarNombreProducto);
+	    	        nt.appendChild(ntText);
+	    	        var separador=document.createTextNode(" > ");
+	          		var nparrafo=document.getElementById('tituloFormulario');
+	              	var strong = document.createElement('strong');
+	              	strong.appendChild(separador);
+	              	nparrafo.appendChild(nt);
+	              	nparrafo.appendChild(strong);
+	    	              	
+	        		var mostrarClase = datosProductos.productos[0].clase;
+		    		$("#clase-formulario").val(mostrarClase);
+	              	
+					if( datosProductos.productos[0].clase === "N" )
+					{
+				    	$.ajax({
+				         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductoTipoN&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto,
+				          	type:'get',
+				          	crossDomain: 'true',
+				          	dataType:'jsonp',
+			                jsonp: 'callback',
+			                jsonpCallback: 'jsonpCallbackProductoTipoN',
+				          	async:false,
+				          	success: function( data, textStatus, jqXHR) {
+				          		if(data.success){
+				          			jsonpCallbackProductoTipoN(data)
+				          		}
+				          	}
+				        });
+				    	
+				    	function jsonpCallbackProductoTipoN(data) {
+				    		valorProducto = data;
+				    		
+				    		for(var x = 0; x < valorProducto.productoTipoN.length; x++){
+				    			sumaTotal += parseInt(valorProducto.productoTipoN[x].valor);
+				    		}
+				    		$("#totalFisico-formulario").val(sumaTotal);
+				    	}	
+					}//finIf
+					
+ 					if( datosProductos.productos[0].clase === "C" )
+					{
+				    	$.ajax({
+				         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductoTipoN&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto,
+				          	type:'get',
+				          	crossDomain: 'true',
+				          	dataType:'jsonp',
+			                jsonp: 'callback',
+			                jsonpCallback: 'jsonpCallbackProductoTipoC',
+				          	async:false,
+ 				          	success: function( data, textStatus, jqXHR) {
+				          		if(data.success){
+				          			jsonpCallbackProductoTipoC(data)
+				          		}
+				          	}   
+				        });
+				    	function jsonpCallbackProductoTipoC(data) {
+				    		valorProducto = data;
+				    		
+				    		for(var x = 0; x < valorProducto.productoTipoN.length; x++){
+				    			if(valorProducto.productoTipoN[x].valor > maxValor)
+				    			{
+				    				maxValor = valorProducto.productoTipoN[x].valor;
+				    			}
+				    		}
+				    	}		
+					} 
+		    	}//finCallbackProducto
+
+		    }
+		    
+		}//fin combo
+		
+		  var eje1 = new Combo();
+		  document.getElementById('nivel-formulario').addEventListener('focus',eje1.nivelFocus,false);
+		  document.getElementById('nivel-formulario').addEventListener('change',eje1.nivel,false);
+		  document.getElementById('entidad-formulario').addEventListener('focus',eje1.entidadFocus,false);
+		  document.getElementById('entidad-formulario').addEventListener('change',eje1.entidad,false);
+		  document.getElementById('tipoPrograma-formulario').addEventListener('focus',eje1.tipoProgramaFocus,false); 
+		  document.getElementById('tipoPrograma-formulario').addEventListener('change',eje1.tipoPrograma,false);
+		  document.getElementById('programa-formulario').addEventListener('focus',eje1.programasFocus,false); 
+		  document.getElementById('programa-formulario').addEventListener('change',eje1.programas,false); 
+		  document.getElementById('subPrograma-formulario').addEventListener('focus',eje1.subProgramasFocus,false); 
+		  document.getElementById('subPrograma-formulario').addEventListener('change',eje1.subProgramas,false);  
+		  document.getElementById('proyecto-formulario').addEventListener('focus',eje1.proyectoFocus,false); 
+		  document.getElementById('proyecto-formulario').addEventListener('change',eje1.proyecto,false);
+		  document.getElementById('producto-formulario').addEventListener('focus',eje1.productoFocus,false); 
+		  document.getElementById('producto-formulario').addEventListener('change',eje1.producto,false); 
+
+		
+		
+	});
+
+	$("body").on("click", ".modalEditarHito",function(event){
+		$("#modalEditarHito").remove();
+		
+		
+		var parametros = $(this).attr("parametros");
+	    var idParsed = parametros.split("-");                                                            
+		var hitoId=idParsed[0];
+		
+		var hitoParaEditar = $.ajax({
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015&hito_id='+hitoId,
+	      	type:'get',
+	      	dataType:'json',
+	      	crossDomain:true,
+	      	async:false       
+	    }).responseText;		
+		hitoParaEditar=JSON.parse(hitoParaEditar);		
+
+		
+//MODAL PARA EDITAR HITO
+		var modalEditarHito = "";
+
+		modalEditarHito =	 '<div class="modal fade" role="dialog" id="modalEditarHito" data-backdrop="static" data-keyboard="false">'+ 
+							    '<div class="modal-dialog modal-lg">'+ 
+							    
+							      '<div class="modal-content">'+ 
+							        '<div class="modal-header">'+ 
+							          '<button type="button" class="close" data-dismiss="modal">&times;</button>'+ 
+							          '<h4 class="modal-title">Editar Hito</h4><small>('+hitoParaEditar[0].accion_departamento+'-'+hitoParaEditar[0].accion_distrito+'-'+hitoParaEditar[0].institucion+'-'+hitoParaEditar[0].linea_accion+'-'+hitoParaEditar[0].accion+')</small>'+ 
+							        '</div>'+ 
+							        '<div class="modal-body">'+ 				        
+							        '<form role="form">'+
+								  	  '<div class="form-group">'+
+								  	    '<label for="nombreHito">Nombre Hito</label>'+
+								  	    '<input type="text" class="form-control" id="nombreHito" value="'+hitoParaEditar[0].hito+'">'+
+								  	  '</div>'+
+								  	  '<div class="form-group">'+
+								  	    '<label for="unidadMedida">U. Medida</label>'+
+								  	    '<input type="text" class="form-control" id="uMedida" value="'+hitoParaEditar[0].accion_unidad_edida+'">'+
+								  	  '</div>'+
+								  	  '<div class="form-group">'+
+								  	    '<label for="cantProgramado">Cantidad Programado</label>'+
+								  	    '<input type="text" id="cantProgramado" class="form-control" value="'+hitoParaEditar[0].hito_cantidad_programado+'">'+
+								  	  '</div>'+
+								  	  '<div class="form-group">'+
+								  	    '<label for="costoTotal">Costo Total</label>'+
+								  	    '<input type="text" class="form-control" id="costoTotal" value="'+hitoParaEditar[0].accion_costo+'">'+
+								  	  '</div>'+
+								  	  '<div class="form-group">'+
+								  	    '<label for="fechaTerminacion">Fecha Terminación</label>'+
+								  	    '<input type="text" class="form-control" id="fechaTerminacion" value="'+hitoParaEditar[0].hito_fecha_entrega+'">'+
+								  	  '</div>'+
+								  	  '<div class="form-group">'+
+								  	    '<label for="porcProgramado">% Programado</label>'+
+								  	    '<input type="date" class="form-control" id="porcProgramado" value="'+hitoParaEditar[0].hito_porcentaje_programado+'">'+
+								  	  '</div>'+
+								  	  '<button type="submit" class="btn btn-success">Guardar</button>'+
+								  	'</form>'+
+							        
+							        '</div>'+ 
+							        '<div class="modal-footer">'+ 
+							          '<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>'+ 
+							        '</div>'+ 
+							      '</div>'+ 
+							      
+							    '</div>'+ 
+							  '</div>';
+							
+															
+															
+		
+		$("body").append(modalEditarHito);
+		$("#modalEditarHito").modal('show');
+//FIN MODAL PARA EDITAR HITO
+		
+	});
+	
+	//Guarda nivel-entidad-tipo-programa-subPrograma-proyecto-producto-anho-version en la tabla accion_has_producto
+	$("body").on("click", ".guardarComboProducto",function(event){
+		event.stopPropagation();
+		event.preventDefault();
+		
+		var parametros = $(this).attr("parametros");
+    	var idParsed = parametros.split("-");                                                            
+		var institucionId=idParsed[0];
+		var lineaAccionId=idParsed[1];
+		var idDepartamento= idParsed[2];
+		var idDistrito= idParsed[3];
+		var accionId = idParsed[4];
+		
+		
+    	var nivel = 12;
+      	var entidad = 1;
+	    var tipoPrograma = document.getElementById("tipoPrograma-formulario").value;
+	    var programa = document.getElementById('programa-formulario').value;
+	    var subPrograma = document.getElementById('subPrograma-formulario').value;
+	    var proyecto = document.getElementById('proyecto-formulario').value; 
+	    var producto = document.getElementById('producto-formulario').value; 
+	    //var accionId = document.getElementById('accionId').value; 
+	    var anho = document.getElementById('anhoProducto-formulario').value; 
+	    var version = document.getElementById('versionProducto-formulario').value; 
+	    var totalFisico = document.getElementById('totalFisico-formulario').value; 
+	    var unidadMedida = document.getElementById('unidadMedida-formulario').value; 
+	    var clase = document.getElementById('clase-formulario').value; 
+	    var totalFinanciero = document.getElementById('totalFinanciero-formulario').value; 
+	    var totalAsignacion = document.getElementById('total-formulario').value; 
+
+	    var datos = new Object();
+	    
+	    datos.nivel = nivel;
+	    datos.entidad = entidad;
+	    datos.tipoPrograma = tipoPrograma;
+	    datos.programa = programa;
+	    datos.subPrograma = subPrograma;
+	    datos.proyecto = proyecto;
+	    datos.producto = producto;
+	    datos.accionId = accionId;
+	    datos.anho = anho;
+	    datos.version = version;
+	    datos.uMedida = unidadMedida;
+	    datos.cantFisica = totalFisico;
+	    datos.clase = clase;
+	    datos.cantFinanciera = totalFinanciero;
+	    datos.totalAsignacion = totalAsignacion;
+
+
+	  	var info = JSON.stringify(datos);
+	    $.ajax({
+	        url: "ajaxInserts?accion=insAccionHasProducto",
+	        type: 'POST',
+	        dataType: 'json',
+	        data: info,
+	        contentType: 'application/json',
+	        mimeType: 'application/json',
+	        success: function (data) {
+	        	alert("Guardado!");
+	        	cargarTablaAccionHasProducto(institucionId, lineaAccionId, idDepartamento, idDistrito, accionId);
+	        	},
+	        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
+	        error: function(data,status,er) {
+	        	alert("Guardado");
+	        	cargarTablaAccionHasProducto(institucionId, lineaAccionId, idDepartamento, idDistrito, accionId);
+	        	}
+		 });
+		$('#tipoPrograma-formulario').val('');
+		$('#programa-formulario').val('');
+		$('#subPrograma-formulario').val('');
+		$('#proyecto-formulario').val('');
+		$('#producto-formulario').val('');
+		$('#totalFisico-formulario').val('');
+		$('#unidadMedida-formulario').val('');
+		$('#clase-formulario').val('');
+		$('#totalFinanciero-formulario').val('');
+		$('#anhoProducto-formulario').val('');
+		$('#versionProducto-formulario').val('');
+		$('#total-formulario').val('');
+		
+	});
+	
+	$("body").on("click", ".guardarMetas",function(event){
+		event.stopPropagation();
+		event.preventDefault();
+		
+    	var nivel = 12;
+      	var entidad = 1;
+	    var meta1 = document.getElementById("primerTrimestre-formulario").value;
+	    var mets2 = document.getElementById('segundoTrimestre-formulario').value;
+	    var meta3 = document.getElementById('tercerTrimestre-formulario').value;
+	    var mets4 = document.getElementById('cuartoTrimestre-formulario').value; 
+
+
+	    var datos = new Object();
+	    
+	    datos.meta1 = meta1;
+	    datos.meta2 = meta2;
+	    datos.meta3 = meta3;
+	    datos.meta4 = meta4;
+
+
+	  	var info = JSON.stringify(datos);
+	    $.ajax({
+	        url: "ajaxInserts?accion=insAccionHasProducto",
+	        type: 'POST',
+	        dataType: 'json',
+	        data: info,
+	        contentType: 'application/json',
+	        mimeType: 'application/json',
+	        success: function (data) {
+	        	alert("Guardado!");
+	        	cargarTablaAccionHasProducto(accionId);
+	        	},
+	        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
+	        error: function(data,status,er) {
+	        	alert("Guardado");
+	        	cargarTablaAccionHasProducto(accionId);
+	        	}
+		 });
+		$('#primerTrimestre-formulario').val('');
+		$('#segundoTrimestre-formulario').val('');
+		$('#tercerTrimestre-formulario').val('');
+		$('#cuartoTrimestre-formulario').val('');
+		
+	});
+	
+	$("body").on("click", ".modalAgregarHito",function(event){
+		event.stopPropagation();
+		event.preventDefault();
+		if ( $("#modalAgregarHito").length ) {
+			$("#modalAgregarHito").remove();
+		}
+		
+		var parametros = $(this).attr("parametros");
+	    var idParsed = parametros.split("-");                                                            
+		var institucionId=idParsed[0];
+		var lineaAccionId=idParsed[1];
+		var idDepartamento= idParsed[2];
+		var idDistrito= idParsed[3];
+		var accionId = idParsed[4];
+		
+		var accion = $.ajax({
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015Accion&accion_id='+accionId,
+	      	type:'get',
+	      	dataType:'json',
+	      	crossDomain:true,
+	      	async:false       
+	    }).responseText;		
+		accion=JSON.parse(accion);
+
+		var modalAgregarHito = "";
+
+		modalAgregarHito =	 '<div class="modal fade" role="dialog" id="modalAgregarHito" data-backdrop="static" data-keyboard="false">'+ 
+							    '<div class="modal-dialog modal-lg">'+ 
+							    
+							      '<div class="modal-content">'+ 
+							        '<div class="modal-header">'+ 
+							          '<button type="button" class="close modalHitoAvances" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'">&times;</button>'+ 
+							          '<h4 class="modal-title">Agregar Hito</h4>'+ 
+							        '</div>'+ 
+							        '<div class="modal-body">'+ 
+							        
+								    	'<form role="form">'+
+									  	  '<div class="form-group">'+
+									  	    '<label for="departamento">Departamento</label>'+
+									  	    '<input type="text" class="form-control" id="departamento" value="'+accion[0].accion_departamento+'" disabled>'+
+									  	  '</div>'+
+									  	  '<div class="form-group">'+
+									  	    '<label for="distrito">Distrito</label>'+
+									  	    '<input type="text" class="form-control" id="distrito" value="'+accion[0].accion_distrito+'" disabled>'+
+									  	  '</div>'+										  	  
+									  	  '<div class="form-group">'+
+									  	    '<label for="accionHito">Acción</label>'+
+									  	    '<input type="text" class="form-control" id="accionHito" value="'+accion[0].accion+'" disabled>'+
+									  	  '</div>'+
+								    	'<form role="form">'+
+									  	  '<div class="form-group">'+
+									  	    '<label for="nombreHito">Nombre Hito</label>'+
+									  	    '<input type="text" class="form-control" id="nombreHito" placeholder="Introduzca nombre del hito">'+
+									  	  '</div>'+
+									  	  '<div class="form-group">'+
+									  	    '<label for="tipoHito">Tipo Hito</label>'+
+												'<select class="form-control" id="tipoHito">'+
+											  	  '<option value="Entregable">Entregable</option>'+
+											  	  '<option value="Intermedio">Intermedio</option>'+
+											  	  '<option value="Autonomo">Autonomo</option>'+
+											  	'</select>'+
+									  	  '</div>'+
+									  	  '<div class="form-group">'+
+									  	    '<label for="unidadMedidaHito">Unidad Medida</label>'+
+									  	    '<input type="text" id="unidadMedidaHito" class="form-control" placeholder="Unidad Medida">'+
+									  	  '</div>'+
+									  	  '<div class="form-group">'+
+									  	    '<label for="cantidadPrevistaHito">Cantidad Prevista</label>'+
+									  	    '<input type="text" class="form-control" id="cantidadPrevistaHito" placeholder="Cantidad Prevista">'+
+									  	  '</div>'+
+									  	  '<div class="form-group">'+
+									  	    '<label for="cantidadRealHito">Fecha de Entrega</label>'+
+									  	    '<input type="text" class="form-control" id="cantidadRealHito" placeholder="Fecha de Entrega">'+
+									  	  '</div>'+
+									  	  '<button type="submit" class="btn btn-success guardarHito">Guardar</button>'+
+									  	'</form>'+
+							        
+							        '</div>'+ 
+							        '<div class="modal-footer">'+ 
+							          '<button type="button" class="btn btn-default modalHitoAvances" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'">Cerrar</button>'+ 
+							        '</div>'+ 
+							      '</div>'+ 
+							      
+							    '</div>'+ 
+							  '</div>';
+							
+															
+															
+		
+		$("body").append(modalAgregarHito);
+		$("#modalAgregarHito").modal('show');
+		
+	});
+	
+	$("body").on("click", ".guardarHito",function(event){
+		
+		var accionhito = $("#accionHito").val();
+		var nombreHito = $("#nombreHito").val();
+		var tipoHito = $("#tipoHito").val();
+		var unidadMedida = $("#unidadMedidaHito").val();
+		var cantidadPrevista = $("#cantidadPrevistaHito").val();
+		var cantidadReal = $("#cantidadRealHito").val();
+		var accion = "insHitoPrueba";
+		var obj= new Object();
+		
+		//aca como la clase
+		obj.accion = accionhito;
+		obj.nombreHito = nombreHito;
+		obj.tipoHito = tipoHito;		
+		obj.unidadMedida = unidadMedida;
+		obj.cantidadPrevista = cantidadPrevista;
+		obj.cantidadReal = cantidadReal;
+
+		 $.ajax({
+		        url: "ajaxInserts?accion="+accion,
+		        type: 'POST',
+		        dataType: 'json',
+		        data: JSON.stringify(obj),
+		        contentType: 'application/json',
+		        mimeType: 'application/json',
+		        success: function (data) {},
+		        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
+		        error: function(data,status,er) {}
+		 });
+
+		 $("#modalAgregarHito").modal('hide');
+	});
+	
+
+	
+});
+
+
+
+
+//Modal para desplegar Destinatarios
+$("body").on("click", ".verificarDestinatarios",function(event){
+	event.stopPropagation();
+	event.preventDefault();
+	
+	if ( $("#modalDestinatarios").length ) {
+		$("#modalDestinatarios").remove();
+	}
+	
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-"); 
+    var nivel=idParsed[0];
+    var entidad=idParsed[1];
+    var tipoPrograma=idParsed[2];
+    var programa=idParsed[3];
+    var subPrograma=idParsed[4];
+    var proyecto=idParsed[5];
+    var producto=idParsed[6]
+	var institucionId=idParsed[7];
+	var lineaAccionId=idParsed[8];
+	var idDepartamento= idParsed[9];
+	var idDistrito= idParsed[10];
+	var accionId = idParsed[11];
+	
+
+/* 	var linkNivel = 12;
+  	var linkEntidad = 1;
+    var linkTipoPrograma = document.getElementById("tipoPrograma-formulario").value;
+    var linkPrograma = document.getElementById('programa-formulario').value;
+    var linkSubPrograma = document.getElementById('subPrograma-formulario').value;
+    var linkProyecto = document.getElementById('proyecto-formulario').value; 
+    var linkProducto = document.getElementById('producto-formulario').value; */
+    var linkDepartamentoId = document.getElementById('selectorDepartamento').value;
+    var nombreDepartamento = $("#selectorDepartamento option:selected").text();
     
-    
+	var modalVerificarDestinatarios = "";
+	var cuerpoTablaDestinatario="";
+	var tabla='#tabla-destinatarios-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto;
+	
+
+	      $(tabla).html("");
+	      
+	      //callback ProductoPresupuestoDestinatario
+	      	var datosProductoPresupuestoDestinatario =[];
+      		$.ajax({
+        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductoPresupuestoDestinatario&nivel='+nivel+'&entidad='+entidad+'&tipoPresupuesto='+tipoPrograma+'&programa='+programa+'&subprograma='+subPrograma+'&proyecto='+proyecto+'&producto='+producto+'&deptoPais='+linkDepartamentoId,
+          	type:'get',
+          	crossDomain: 'true',
+          	dataType:'jsonp',
+            jsonp: 'callback',
+            jsonpCallback: 'jsonpCallbackProductoPresupuestoDestinatarios',
+          	async:false,
+          	success: function( data, textStatus, jqXHR) {
+          		if(data.success){
+          			jsonpCallbackProductoPresupuestoDestinatarios(data);
+          		}
+          	}
+        });
+      		
+      		
+
+      	function jsonpCallbackProductoPresupuestoDestinatarios(data) {
+      		datosProductoPresupuestoDestinatario= data;
+      		
+      		
+	      	var datosDepartamentos =[];
+      		$.ajax({
+        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getDepartamentos',
+          	type:'get',
+          	crossDomain: 'true',
+          	dataType:'jsonp',
+            jsonp: 'callback',
+            jsonpCallback: 'jsonpCallbackDepartamento',
+          	async:false,
+          	success: function( data, textStatus, jqXHR) {
+          		if(data.success){
+          			jsonpCallbackDepartamento(data);
+          		}
+          	}
+        });
+
+      	function jsonpCallbackDepartamento(data) {
+      		datosDepartamentos= data;
+      		
+      		
+      		
+      		
+      		 var modalVerificarDestinatarios="";
+      		modalVerificarDestinatarios+='<div class="modal fade" id="modalDestinatarios" data-backdrop="static" data-keyboard="false">'+
+ 		  '<div class="modal-dialog modal-lg" >'+
+ 		    '<div class="modal-content">'+
+ 		      '<div class="modal-header">'+
+	          '<button type="button" class="btn btn-default modalHitoAvances" data-dismiss="modal" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'" aria-label="Close"><span aria-hidden="true">&times;</button>'+ 
+ 		      '</div>'+
+ 		      '<div class="modal-body">'; 
+ 		    modalVerificarDestinatarios+=
+ 		        '<div class="box" height="1000px" style="overflow-y: initial !important;overflow-x: initial !important">'+
+ 		         '<div class="box-header with-border" height="1000px">'+
+ 		          '<h3 class="box-title" id="tituloTipoPrograma">'+
+ 		           '<strong>Destinatarios</strong>'+
+ 		            '</h3>'+
+ 		              '</div>'+
+ 		           
+ 		            
+ 		            '<div class="box-body scroll-x pre-scrollable">'+
+ 		              '<ul  class="col-md-12">'+
+ 		              '<form id="form-guardar-destinatario-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'">'+
+                       '<table class="table table-striped table-bordered  table-hover">'+
+ 	                     ' 	<tr>'+
+                       '<th>Destinatario</th>';
+ 		    				 for (var iDep=0;iDep<20;iDep++){
+ 		    					modalVerificarDestinatarios+= '<th>'+datosDepartamentos.departamentos[iDep].abrevDepartamento+'</th>';
+ 		    				 }
+ 		    				
+ 		    				
+ 		    				modalVerificarDestinatarios+='	</tr>'+
+ 	                      '<tbody class="table-body-producto-destinatario" id="tabla-destinatarios-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'">'+
+ 	                      '</tbody>'+
+ 	                      '</table>'+
+ 	                      '<br>'+
+ 		                    '<div class="box-footer">'+
+					          '<button type="button" class="btn btn-default modalHitoAvances" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'">Cerrar</button>'+ 
+ 		                    '</div>'+
+ 						'</form>'+
+ 					'</ul>'+
+ 				'</div>'+
+ 				 '</div>'+
+ 		'</div>';
+ 		
+		    				$("body").append(modalVerificarDestinatarios);
+		    				
+		    				
+		    			  	  var cuerpoTablaDestinatario="";
+		    			  	  var destinatarioGrupo= new Array(); //tiene los meses
+		    			  	  var destinatarioDepto = new Array(); //tiene los departamentos
+		    			  	  var fmr = $(formulario);
+		    			  	  for (var iDest=0;iDest<datosProductoPresupuestoDestinatario.producto.length;iDest++){
+		    			  		  cuerpoTablaDestinatario+="<tr><td>"+datosProductoPresupuestoDestinatario.producto[iDest].nombreCatalogo+"</td>";
+		    			  		  detalleMes=new Array();
+		    				    	  if (datosProductoPresupuestoDestinatario.producto.length>0){  
+		    				    		  for (var iDepto=0;iDepto<18;iDepto++){
+		    				    			  if(datosProductoPresupuestoDestinatario.producto[iDest].departamento == iDepto){
+			    				    		  	cuerpoTablaDestinatario+='<td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+producto+'-'+iDest+'-'+iDepto+'" id="dest-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'-'+iDest+'-'+iDepto+'" value="'+datosProductoPresupuestoDestinatario.producto[iDest].cantidad+'"></td>';
+		    				    			  }else{
+				    				    		cuerpoTablaDestinatario+='<td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+producto+'-'+iDest+'-'+iDepto+'" id="dest-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'-'+iDest+'-'+iDepto+'" value=""></td>';		 
+		    				    			  }
+		    				    		  }
+		    				    		  	if (datosProductoPresupuestoDestinatario.producto[iDest].departamento == 88){
+			    				    		  	cuerpoTablaDestinatario+='<td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+producto+'-'+iDest+'-'+iDepto+'" id="dest-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'-'+iDest+'-'+iDepto+'" value="'+datosProductoPresupuestoDestinatario.producto[iDest].cantidad+'"></td><td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+producto+'-'+iDest+'-'+iDepto+'" id="dest-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'-'+iDest+'-'+iDepto+'" value=""></td>';			    				    		  		
+		    				    		  	}
+		    				    		  	if (datosProductoPresupuestoDestinatario.producto[iDest].departamento == 99){
+			    				    		  	cuerpoTablaDestinatario+='<td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+producto+'-'+iDest+'-'+iDepto+'" id="dest-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'-'+iDest+'-'+iDepto+'" value=""></td><td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+producto+'-'+iDest+'-'+iDepto+'" id="dest-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'-'+iDest+'-'+iDepto+'" value="'+datosProductoPresupuestoDestinatario.producto[iDest].cantidad+'"></td>';			    				    		  		
+		    				    		  	
+	    				    			  	}
+		    				    		  	if (datosProductoPresupuestoDestinatario.producto[iDest].departamento != 88 && datosProductoPresupuestoDestinatario.producto[iDest].departamento != 99){
+			    				    		  	cuerpoTablaDestinatario+='<td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+producto+'-'+iDest+'-'+iDepto+'" id="dest-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'-'+iDest+'-'+iDepto+'" value=""></td><td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+producto+'-'+iDest+'-'+iDepto+'" id="dest-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'-'+iDest+'-'+iDepto+'" value=""></td>';			    				    		  			  
+	    				    			  	}
+		    				    		 
+		    				    	  }else{
+		    				    		  for (var iDepto=0;iDepto<20;iDepto++){
+		    				    			  cuerpoTablaDestinatario+='<td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+producto+'-'+iDest+'-'+iDepto+'" id="dest-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'-'+iDest+'-'+iDepto+'" value=""></td>';
+		    				    			  
+		    				    		  }
+
+		    				    	  }
+		    			  		  cuerpoTablaDestinatario+='<input type="hidden" name="catalogo_destinatario[]" value="'+datosProductoPresupuestoDestinatario.producto[iDest].id+'">'
+		    			  		  cuerpoTablaDestinatario+='</tr>';
+		    			  		  
+		    			  	  }
+		    			  	  $(tabla).append(cuerpoTablaDestinatario);				
+		    				
+	
+		    				
+		    				
+		    				$('#modalDestinatarios').modal('show');
+      		
+        	}//fin callback departamentos
+      }// fin callback productoPresupuestoDestinatario
+     
+});
+ 
+
+
+
+$("body").on("click", ".modalDeclararAvance",function(event){
+	event.stopPropagation();
+	event.preventDefault();
+	
+	if ( $("#modalDeclararAvance").length ) {
+		$("#modalDeclararAvance").remove();
+	}
+	
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-");                                                            
+	var institucionId=idParsed[0];
+	var lineaAccionId=idParsed[1];
+	var idDepartamento= idParsed[2];
+	var idDistrito= idParsed[3];
+	var accionId = idParsed[4];
+	
+	var accion = $.ajax({
+    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015Accion&accion_id='+accionId,
+      	type:'get',
+      	dataType:'json',
+      	crossDomain:true,
+      	async:false       
+    }).responseText;		
+	accion=JSON.parse(accion);
+
+	var modalDeclararAvance = "";
+
+	modalDeclararAvance =	 '<div class="modal fade" role="dialog" id="modalDeclararAvance" data-backdrop="static" data-keyboard="false">'+ 
+						    '<div class="modal-dialog modal-lg">'+ 
+						    
+						      '<div class="modal-content">'+ 
+						        '<div class="modal-header">'+ 
+						          '<button type="button" class="close modalHitoAvances" data-dismiss="modal" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'">&times;</button>'+ 
+						          '<h4 class="modal-title">Declarar Avances</h4>'+ 
+						        '</div>'+ 
+						        '<div class="modal-body">'+ 
+						        
+					      			'<form role="form">'+
+						      		  '<div class="form-group">'+
+						      		    '<label for="departamento">Departamento</label>'+
+						      		    '<input type="text" class="form-control" id="departamento" value="'+accion[0].accion_departamento+'" disabled>'+
+						      		  '</div>'+
+						      		  '<div class="form-group">'+
+						      		    '<label for="distrito">Distrito</label>'+
+						      		    '<input type="text" class="form-control" id="distrito" value="'+accion[0].accion_distrito+'" disabled>'+
+						      		  '</div>'+
+						      		  '<div class="form-group">'+
+						      		    '<label for="cantidadAvances">Cantidad</label>'+
+						      		    '<input type="number" class="form-control" id="cantidadAvances" placeholder="Introduzca cantidad">'+
+						      		  '</div>'+
+						      		  '<div class="form-group">'+
+						      		    '<label for="url">Url</label>'+
+						      		    '<input type="url" class="form-control" id="url" placeholder="Introduzca URL">'+
+						      		  '</div>'+
+						      		  '<div class="form-group">'+
+						      		    '<label for="fecha">Fecha Avance</label>'+
+						      		    '<input type="date" class="form-control" id="fecha" placeholder="Fecha">'+
+						      		  '</div>'+
+						      		  '<div class="form-group">'+
+						      		    '<label for="coordenadas">Coordenadas Geográficas</label>'+
+						      		    '<table class="table">'+
+						      		    '<tr><td><input type="text" class="form-control" placeholder="Latitud"></td><td><input type="text" class="form-control" placeholder="Longitud"></td></tr>'+
+										'</table>'+
+						      		  '</div>'+
+						      		  '<div class="form-group">'+
+						      		    '<label for="codigoContratacion">Código Contratación</label>'+
+						      		    '<input type="text" class="form-control" id="codigoContratacion" placeholder="Código Contratación">'+
+						      		  '</div>'+
+						      		  '<div class="form-group">'+
+						      		    '<label for="beneficiarios">Beneficiarios</label>'+
+						      		    '<input type="text" class="form-control" id="beneficiarios" placeholder="Beneficiarios">'+
+						      		  '</div>'+
+						      		  '<div class="form-group">'+
+						      		    '<label for="objetoGasto">Objeto de Gasto</label>'+
+						      		    '<input type="text" class="form-control" id="objetoGasto" placeholder="Objeto Gasto">'+
+						      		  '</div>'+			
+						      		  '<div class="form-group">'+
+						      		    '<label for="monto">Monto</label>'+
+						      		    '<input type="text" class="form-control" id="monto" placeholder="Monto">'+
+						      		  '</div>'+							      		  
+						      		  '<button type="submit" class="btn btn-success guardarAvance">Guardar</button>'+
+					      			'</form>'+
+						        
+						        '</div>'+ 
+						        '<div class="modal-footer">'+ 
+						          '<button type="button" class="btn btn-default modalHitoAvances" data-dismiss="modal" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'">Cerrar</button>'+ 
+						        '</div>'+ 
+						      '</div>'+ 
+						      
+						    '</div>'+ 
+						  '</div>';
+						
+														
+														
+	
+	$("body").append(modalDeclararAvance);
+	$("#modalDeclararAvance").modal('show');
+
+});
+
+$("body").on("click", ".guardarAvance",function(event){
+	var cantidadAvance = $("#cantidadAvances").val();
+	var url = $("#url").val();
+	//var fecha = $("#Fecha").val();
+	var accion = "insAvancePrueba";
+	var obj= new Object();
+	
+	//aca como la clase
+	obj.cantidadAvance = cantidadAvance;
+	obj.url = url;
+
+
+	 $.ajax({
+	        url: "ajaxInserts?accion="+accion,
+	        type: 'POST',
+	        dataType: 'json',
+	        data: JSON.stringify(obj),
+	        contentType: 'application/json',
+	        mimeType: 'application/json',
+	        success: function (data) {},
+	        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
+	        error: function(data,status,er) {}
+	 });
+
+	 $("#modalAgregarHito").modal('hide');
+
+});
+
+</script>    
+<script type="text/javascript" src="bootstrap/js/bootstrap-slider.js"></script>
   </body>
 </html>

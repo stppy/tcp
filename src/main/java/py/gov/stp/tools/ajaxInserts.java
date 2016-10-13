@@ -17,8 +17,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
- 
 import javax.xml.datatype.DatatypeConfigurationException;
+
+import py.gov.stp.objetosV2.AccionHasProducto;
+import py.gov.stp.objetosV2.HitoPrueba;
+import py.gov.stp.tools.SqlInserts;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -37,7 +40,7 @@ public class ajaxInserts  extends HttpServlet {
 
         
         PrintWriter out = response.getWriter();
-        response.setContentType("text/html");
+        response.setContentType("text/html"); 
         response.setHeader("Cache-control", "no-cache, no-store");
         response.setHeader("Pragma", "no-cache");
         response.setHeader("Expires", "-1");
@@ -62,7 +65,34 @@ public class ajaxInserts  extends HttpServlet {
 				SqlInserts.insertProductoPresupuesto(productoObj);
         	}
            }*/
-        	    
+        
+        if (accion!=null && accion!=""){
+    	if (accion.equals("insHitoPrueba")){
+    		HitoPrueba obj = new HitoPrueba();
+    		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+            String json = "";
+            if(br != null){ json = br.readLine();}
+            Gson gsonInsert = new Gson();
+            obj=gsonInsert.fromJson(json, HitoPrueba.class);
+			SqlInserts.insertHitoPrueba(obj);
+    	}
+       }
+
+        
+        if (accion!=null && accion!=""){
+    	if (accion.equals("insAccionHasProducto")){
+    		AccionHasProducto obj = new AccionHasProducto();
+    		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+            String json = "";
+            if(br != null){ json = br.readLine();}
+            Gson gsonInsert = new Gson();
+            obj=gsonInsert.fromJson(json, AccionHasProducto.class);
+            boolean status = SqlInserts.insertAccionHasProducto(obj);
+    		myObj.addProperty("success", status);
+    		out.println(myObj.toString());
+    	}
+       } 
     
+
     }
 }

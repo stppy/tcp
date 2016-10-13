@@ -261,7 +261,7 @@ if (user != null) { %>
 			var footerModal="<br><br><br>";
 			
 			var registros = $.ajax({
-		    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?db=base&action=getFactHitos2015&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id+'&departamento='+idDepartamento,
+		    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?db=base&action=getFactHitos2015&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id+'&departamento='+idDepartamento,
 		      	type:'get',
 		      	dataType:'json',
 		      	crossDomain:true,
@@ -310,7 +310,7 @@ if (user != null) { %>
 			//$('#myModal').find(".modal-footer").html(footerModal);
 			
 			lineaAccionAcumuladoMesDepto = $.ajax({
-		    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?db=base&action=getLineaAccionAcumuladoMesDepto&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id+'&departamento='+idDepartamento,
+		    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?db=base&action=getLineaAccionAcumuladoMesDepto&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id+'&departamento='+idDepartamento,
 		      	type:'get',
 		      	dataType:'json',
 		      	async:false       
@@ -345,7 +345,7 @@ if (user != null) { %>
 		var entidadCas = "";
 		entidadCas ="<%=attributes.get("entidad") %>";
 		var usuarios = $.ajax({
-			url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
+			url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -362,7 +362,7 @@ if (user != null) { %>
 		}
 		
 		var entidades = $.ajax({
-	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getEntidades',
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getEntidades',
 	      	type:'get',
 	      	dataType:'json',
 	      	crossDomain:true,
@@ -372,7 +372,7 @@ if (user != null) { %>
 		
 		
 		var lineaAccionDepartamento = $.ajax({
-	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?db=base&action=getLineasAccionDepartamento',
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?db=base&action=getLineasAccionDepartamento',
 	      	type:'get',
 	      	dataType:'json',
 	      	crossDomain:true,
@@ -381,7 +381,7 @@ if (user != null) { %>
 		lineaAccionDepartamento=JSON.parse(lineaAccionDepartamento);
 		
 		var departamento = $.ajax({
-	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
 	      	type:'get',
 	      	dataType:'json',
 	      	crossDomain:true,
@@ -390,7 +390,7 @@ if (user != null) { %>
 		departamento=JSON.parse(departamento);
 		
 		var elPaisjson = $.ajax({
-	    	url:'http://tablero2015.stp.gov.py/tablero/ajaxSelects&action=getLineasAccion',
+	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects&action=getLineasAccion',
 	      	type:'get',
 	      	dataType:'json',
 	      	crossDomain:true,

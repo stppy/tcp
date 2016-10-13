@@ -4,7 +4,7 @@ public class Etiqueta {
 	protected int id;
 	protected String nombre;
 	protected String descripcion;
-	protected boolean borrado;
+	protected boolean borrado=false;
 	
 	
 	public int getId() {
@@ -31,7 +31,8 @@ public class Etiqueta {
 	public void setBorrado(boolean borrado) {
 		this.borrado = borrado;
 	}
-	
-	
+	public void changeBorrado(){
+		this.borrado=!borrado;
+	}	
 
 }
