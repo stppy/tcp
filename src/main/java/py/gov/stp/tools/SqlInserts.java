@@ -1337,12 +1337,12 @@ public class SqlInserts {
 //			
 //	}	
 	
-	public static void insertHitoPrueba(HitoPrueba hito){
+	public static void insertHitoPrueba(HitoPrueba hito, String usuarioResponsable){
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = "insert into \"hitoPrueba\" (\"accion\",\"nombreHito\",\"tipoHito\",\"unidadMedida\",\"cantidadPrevista\",\"cantidadReal\")"
-	+ " values (?, ?, ?, ?, ?, ?)";
+		String query = "insert into \"hitoPrueba\" (\"accion\",\"nombreHito\",\"tipoHito\",\"unidadMedida\",\"cantidadPrevista\",\"cantidadReal\", usuario_responsable)"
+	+ " values (?, ?, ?, ?, ?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
@@ -1351,10 +1351,8 @@ public class SqlInserts {
 		insert.setString (3, hito.getTipoHito());	
 		insert.setString (4, hito.getUnidadMedida());	
 		insert.setInt (5, hito.getCantidadPrevista());	
-		insert.setInt (6, hito.getCantidadReal());	
-
-
-
+		insert.setInt (6, hito.getCantidadReal());
+		insert.setString (7, usuarioResponsable);
 		
 		insert.execute();
 		   
@@ -1363,12 +1361,12 @@ public class SqlInserts {
 		
 }	
 	
-	public static boolean insertAccionHasProducto(AccionHasProducto dato){
+	public static boolean insertAccionHasProducto(AccionHasProducto dato, String usuarioResponsable){
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = "insert into \"accion_has_producto\" (\"spr_nivel_id\",\"spr_entidad_id\",\"spr_tiprograma_id\",\"spr_programa_id\",\"spr_subprograma_id\",\"srp_proyecto_id\",\"spr_producto_id\",\"accion_id\",\"spr_anho\",\"spr_version\",\"u_medida\",\"cant_fisica\",\"clase\",\"cant_financiera\",\"asignacion_financiera\")"
-	+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?, ?)";
+		String query = "insert into \"accion_has_producto\" (\"spr_nivel_id\",\"spr_entidad_id\",\"spr_tiprograma_id\",\"spr_programa_id\",\"spr_subprograma_id\",\"srp_proyecto_id\",\"spr_producto_id\",\"accion_id\",\"spr_anho\",\"spr_version\",\"u_medida\",\"cant_fisica\",\"clase\",\"cant_financiera\",\"asignacion_financiera\", usuario_responsable)"
+	+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
@@ -1387,7 +1385,8 @@ public class SqlInserts {
 		insert.setString (13, dato.getClase());	
 		insert.setDouble (14, dato.getCantidadFinanciera());
 		insert.setDouble(15, dato.getTotalAsignacion());
-	
+		insert.setString (16, usuarioResponsable );	
+		
 		insert.execute();
 		   
 		conn.close();
