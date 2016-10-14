@@ -47,7 +47,7 @@
 		</init-param>
 		<init-param>
 			<param-name>service</param-name>
-			<param-value>http://spr.stp.gov.py/tablero/</param-value>
+			<param-value>http://sprtest.stp.gov.py/tablero/</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>
@@ -65,7 +65,7 @@
 		</init-param>
 		<init-param>
 			<param-name>service</param-name>
-			<param-value>http://spr.stp.gov.py/tablero/</param-value>
+			<param-value>http://sprtest.stp.gov.py/tablero/</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>
@@ -84,7 +84,7 @@
 	</filter-mapping>
 
 	<welcome-file-list>
-		<welcome-file>resumenLineaAccion.jsp</welcome-file>
+		<welcome-file>geografico4.jsp</welcome-file>
 	</welcome-file-list>
 
 	<servlet>

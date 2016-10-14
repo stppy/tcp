@@ -68,16 +68,16 @@
 </head>
 <body class="skin-blue sidebar-mini sidebar-collapse">
 
-<% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%>
+<% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%> 
 <% Map attributes = user.getAttributes(); 
-if (user != null) { %>
+if (user != null && user.getName()!= "parce@nandeparaguay.org") { %>
 	<%@ include file="/frames/perfil.jsp" %>
 <script>
 periodoSeleccionado=new Date().getFullYear();
 function renderInsLineaAccion(PeriodoActual){
 	
 	var insLineaAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion',
+		url:'/tablero/ajaxSelects2?action=getInsLineaAccion',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -85,7 +85,7 @@ function renderInsLineaAccion(PeriodoActual){
 	insLineaAccion=JSON.parse(insLineaAccion);
 
 	var lineaAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+		url:'/tablero/ajaxSelects2?action=getLineaAccion',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -93,7 +93,7 @@ function renderInsLineaAccion(PeriodoActual){
 	lineaAccion = JSON.parse(lineaAccion);
 
 	var institucion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+		url:'/tablero/ajaxSelects2?action=getInstitucion',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -101,7 +101,7 @@ function renderInsLineaAccion(PeriodoActual){
 	institucion = JSON.parse(institucion);
 
 	var periodo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+		url:'/tablero/ajaxSelects2?action=getPeriodo',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -109,7 +109,7 @@ function renderInsLineaAccion(PeriodoActual){
 	periodo = JSON.parse(periodo);
 
 	var unidadMedida = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+		url:'/tablero/ajaxSelects2?action=getUnidadMedida',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -117,7 +117,7 @@ function renderInsLineaAccion(PeriodoActual){
 	unidadMedida = JSON.parse(unidadMedida);
 
 	var usuarioLineaAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUsuarioLineaAccion',
+		url:'/tablero/ajaxSelects2?action=getUsuarioLineaAccion',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -134,7 +134,7 @@ function renderInsLineaAccion(PeriodoActual){
 	todasLasLineasAccion = todasLasLineasAccion.substring(0,todasLasLineasAccion.length - 1);
 
 	var insLineaAccionHasEtiqueta = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccionHasEtiqueta&insLineaAccionIdConcat='+todasLasLineasAccion,
+		url:'/tablero/ajaxSelects2?action=getInsLineaAccionHasEtiqueta&insLineaAccionIdConcat='+todasLasLineasAccion,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -142,7 +142,7 @@ function renderInsLineaAccion(PeriodoActual){
 	insLineaAccionHasEtiqueta = JSON.parse(insLineaAccionHasEtiqueta);
 	
 	var usuarioEtiqueta = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUsuarioEtiqueta',
+		url:'/tablero/ajaxSelects2?action=getUsuarioEtiqueta',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -510,7 +510,7 @@ function renderInsLineaAccion(PeriodoActual){
 			'<table class="table table-hover" id="dataTableInsLineaAccion">'+
 				'<thead>'+
 			  		'<tr class="active"><th colspan="6">Línea de Acción por Institución</th></tr>'+
-			  		'<tr class="active"><th style="min-width:110px">Periodo</th><th>Institución</th><th>Línea de Acción</th><th>Meta</th><th class="text-center">U.Medida</th><th style="min-width:250px" class="text-center">Administrar Linea Acción</th></tr>'+
+			  		'<tr class="active"><th style="min-width:110px">Periodo</th><th>Institución</th><th>Línea de Acción</th><th>Meta</th><th class="text-center">U.Medida</th><th style="min-width:250px" class="text-center">Administrar Linea Acción </th></tr>'+
 			 	'</thead>'+
 			 	'<tbody id="tablaCuerpoInsLineaAccionPrecargados">'+
 			 	
@@ -578,7 +578,7 @@ function renderInsLineaAccion(PeriodoActual){
 		usr_unr_id="<%=attributes.get("unr_id") %>";
 		
 		var usuarios = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
+			url:'/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -597,7 +597,7 @@ function renderInsLineaAccion(PeriodoActual){
 	
 		<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
 			var periodo = $.ajax({
-				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+				url:'/tablero/ajaxSelects2?action=getPeriodo',
 			  	type:'get',
 			  	dataType:'json',
 			  	async:false       
@@ -648,8 +648,23 @@ function renderInsLineaAccion(PeriodoActual){
 		
 	});
 <%}else{%>
-	window.location = "http://spr.stp.gov.py/tablero/resumenLineaAccion.jsp";
-<%}%>	
+	window.location = "http://spr.stp.gov.py/tablero/geografico4.jsp";
+<%}%>
+	var onoff=null;
+	function OcultarRegistrosBorrados(){
+		
+		if($("#chkMostrarOcultar").is(':checked')){
+			onoff=false;						
+		}else{
+			onoff=true;			
+		}
+		$("tr > td > del").closest("tr").toggle(onoff);
+	}
+	
+	function ProcesarCambioPeriodo(){
+		
+		//periodoSeleccionado
+	}
 </script>
 	
     <div class="wrapper">
@@ -808,7 +823,8 @@ function renderInsLineaAccion(PeriodoActual){
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js" type="text/javascript"></script>
         <%  } else { %>
-				est<p>Favor Iniciar Sesion</p>
+        	<script type="text/javascript">window.location = "http://spr.stp.gov.py/tablero/geografico4.jsp";</script>
+				<!-- <p>Favor Iniciar Sesion</p> -->
 			<% } %> 
 
 <!-- Piwik -->
@@ -835,7 +851,7 @@ var entidadCasSpr = "";
 entidadCasSpr ="<%=attributes.get("entidad") %>";
 usuarioRolCasSpr="<%=attributes.get("role_id_tablero") %>";
 var usuariosSpr = $.ajax({
-	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
+	url:'/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
   	type:'get',
   	dataType:'json',
   	async:false       

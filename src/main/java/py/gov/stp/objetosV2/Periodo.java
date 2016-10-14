@@ -7,7 +7,10 @@ public class Periodo {
 	protected String descripcion;
 	protected Date fechaInicio;
 	protected Date fechaFin;
-	protected boolean borrado=false;
+	protected Date fechaInsercion;
+	protected Date fechaActualizacion;	
+    protected String usuarioResponsable;
+    protected boolean borrado=false;
 	
 	public int getId() {
 		return id;
@@ -46,10 +49,25 @@ public class Periodo {
 		this.borrado = borrado;
 	}
 	public void changeBorrado(){
-		this.borrado=!borrado;
-		
+		this.borrado=!borrado;	
+	}
+	public Date getFechaInsercion() {
+		return fechaInsercion;
+	}
+	public void setFechaInsercion(Date fechaInsercion) {
+		this.fechaInsercion = fechaInsercion;
+	}
+	public Date getFechaActualizacion() {
+		return fechaActualizacion;
+	}
+	public void setFechaActualizacion(Date fechaActualizacion) {
+		this.fechaActualizacion = fechaActualizacion;
+	}
+	public String getUsuarioResponsable() {
+		return usuarioResponsable;
+	}
+	public void setUsuarioResponsable(String usuarioResponsable) {
+		this.usuarioResponsable = usuarioResponsable;
 	}
 	
-
-
 }

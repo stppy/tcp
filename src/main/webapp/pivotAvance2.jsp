@@ -162,7 +162,7 @@ textarea { text-transform: uppercase; }
             google.load("visualization", "1", {packages:["corechart", "charteditor"]});
             $(function(){
             	$.noConflict();
-                var derivers = $.pivotUtilities.derivers;
+            /*    var derivers = $.pivotUtilities.derivers;
                 var renderers = $.extend($.pivotUtilities.renderers, 
                         $.pivotUtilities.export_renderers);
 				
@@ -183,9 +183,94 @@ textarea { text-transform: uppercase; }
                         cols: ["Age Bin"], rows: ["Gender"],
                         rendererName: "Area Chart"
 						*/
-                    });
-                });
+               /*     });
+                });*/
              });
+            
+            	var avances = $.ajax({
+            		url:'/tablero/ajaxSelects2?action=getPivotAvance',
+            	  	type:'get',
+            	  	dataType:'json',
+            	  	async:false       
+            	}).responseText;
+            avances = JSON.parse(avances);
+            
+            function compararAvancesPorFecha(a,b) {  
+                if (a.avanceFecha > b.avanceFecha) return -1;
+                if (a.avanceFecha < b.avanceFecha) return 1;
+                return 0;
+            }
+            avances=avances.sort(compararAvancesPorFecha);
+            
+            var fechaAnterior=avances[0].avanceFecha;
+            var laAnterior=avances[0].lineaAccion;
+            var flowContent="";
+            flowContent+='<li class="time-label">'+
+                    '<span class="bg-red">'+
+                    avances[0].avanceFecha+
+                    '</span>'+
+                '</li>';
+                flowContent+='<li>'+
+                    '    <i class="fa fa-envelope bg-blue"></i>'+
+                    '    <div class="timeline-item">'+
+                    '        <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>'+
+                    '        <h3 class="timeline-header"><a href="#">'+avances[0].lineaAccion+'</a> </h3>'+
+                    '        <div class="timeline-body">'+
+                    avances[0].institucion+' ha realizado '+avances[0].accion+' alcanzando '+avances[0].avanceCantidad+' '+avances[0].cronoUnidadMedida+' en el distrito '+avances[0].distrito+' del departamento de '+avances[0].departamento;
+            
+            for (var i=1; i<avances.length;i++){
+            	if (fechaAnterior>avances[i].avanceFecha){
+            		fechaAnterior=avances[i].avanceFecha;
+            		flowContent+='        </div>'+
+                            '        <div class="timeline-footer">'+
+                            '            <a class="btn btn-primary btn-xs">Ver evidencias</a>'+
+                            '        </div>'+
+                            '   </div>'+
+                            '</li>';
+                            flowContent+='<li name="'+avances[i].avanceFecha+'" class="time-label">'+
+                               '<span class="bg-red">'+
+                               avances[i].avanceFecha+
+                               '</span>'+
+                           '</li>';
+                           flowContent+='<li>'+
+                            '    <i class="fa fa-envelope bg-blue"></i>'+
+                            '    <div class="timeline-item">'+
+                            '        <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>'+
+                            '        <h3 class="timeline-header"><a name="'+i+'" href="#">'+avances[i].lineaAccion+'</a> </h3>'+
+                            '        <div class="timeline-body">'+
+                            avances[i].institucion+' ha realizado '+avances[i].accion+' alcanzando '+avances[i].avanceCantidad+' '+avances[i].cronoUnidadMedida+' en el distrito '+avances[i].distrito+' del departamento de '+avances[i].departamento;
+            		
+            	}else{
+	            	if (avances[i].lineaAccion!=laAnterior){
+	            		laAnterior=avances[i].lineaAccion;
+	            		flowContent+='        </div>'+
+	                             '        <div class="timeline-footer">'+
+	                             '            <a class="btn btn-primary btn-xs">Ver evidencias</a>'+
+	                             '        </div>'+
+	                             '   </div>'+
+	                             '</li>';
+	            		flowContent+='<li>'+
+	                            '    <i class="fa fa-envelope bg-blue"></i>'+
+	                            '    <div class="timeline-item">'+
+	                            '        <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>'+
+	                            '        <h3 class="timeline-header"><a href="#">'+avances[i].lineaAccion+'</a> </h3>'+
+	                            '        <div class="timeline-body">'+
+	                            avances[i].institucion+' ha realizado '+avances[i].accion+' alcanzando '+avances[i].avanceCantidad+' '+avances[i].cronoUnidadMedida+' en el distrito '+avances[i].distrito+' del departamento de '+avances[i].departamento;
+	            		
+	            	}else{
+	            		flowContent+='<br>'+avances[i].institucion+' ha realizado '+avances[i].accion+' alcanzando '+avances[i].avanceCantidad+' '+avances[i].cronoUnidadMedida+' en el distrito '+avances[i].distrito+' del departamento de '+avances[i].departamento;
+	            	}    
+            	}
+            }
+            flowContent+='        </div>'+
+            '        <div class="timeline-footer">'+
+            '            <a class="btn btn-primary btn-xs">Ver evidencias</a>'+
+            '        </div>'+
+            '   </div>'+
+            '</li>'
+            $("#flow").append(flowContent);
+            
+                
 		});
         </script>
 
@@ -275,6 +360,14 @@ textarea { text-transform: uppercase; }
         
           
           </div><!-- /.row -->
+          <div class="row">
+	         <div class="col-md-12">
+          
+		          <ul id="flow" class="timeline">
+					
+					</ul>
+				</div>
+			</div>
    
           
                

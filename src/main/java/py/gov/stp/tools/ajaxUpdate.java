@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import javax.xml.datatype.DatatypeConfigurationException;
 
+import org.jasig.cas.client.authentication.AttributePrincipal;
+
 import py.gov.stp.tools.SqlSelects;
 
 import com.google.gson.Gson;
@@ -39,9 +41,12 @@ public class ajaxUpdate extends HttpServlet {
     	response.setContentType("text/html;charset=UTF-8");
     	request.setCharacterEncoding("UTF-8");
     	
-    	
-    	
     	String accion = request.getParameter("accion");
+    	
+    	AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();
+    	Map attributes = user.getAttributes(); 
+    	String userCorreo = user.getName();
+    	
     	Integer nivel = null;
     	Integer entidad = null;
     	Integer tipoPresupuesto = null;

@@ -1,11 +1,16 @@
 package py.gov.stp.objetosV2;
 
+import java.sql.Date;
+
 public class AccionHasGeoPoligono {
 	protected int accionId;
 	protected int geoPoligonoId;
 	protected int geoPoligonoGeoPoligonoId;
 	protected int proporcion;
-	protected boolean borrado = false;
+	protected Date fechaInsercion;
+	protected Date fechaActualizacion;	
+    protected String usuarioResponsable;
+	protected boolean borrado = false;	
 	protected int version;
 	
 	public int getAccionId() {
@@ -31,7 +36,31 @@ public class AccionHasGeoPoligono {
 	}
 	public void setProporcion(int proporcion) {
 		this.proporcion = proporcion;
+	}	
+	public int getVersion() {
+		return version;
 	}
+	public void setVersion(int version) {
+		this.version = version;
+	}
+	public Date getFechaInsercion() {
+		return fechaInsercion;
+	}
+	public void setFechaInsercion(Date fechaInsercion) {
+		this.fechaInsercion = fechaInsercion;
+	}
+	public Date getFechaActualizacion() {
+		return fechaActualizacion;
+	}
+	public void setFechaActualizacion(Date fechaActualizacion) {
+		this.fechaActualizacion = fechaActualizacion;
+	}
+	public String getUsuarioResponsable() {
+		return usuarioResponsable;
+	}
+	public void setUsuarioResponsable(String usuarioResponsable) {
+		this.usuarioResponsable = usuarioResponsable;
+	}	
 	public boolean isBorrado() {
 		return borrado;
 	}
@@ -41,12 +70,5 @@ public class AccionHasGeoPoligono {
 	public void changeBorrado(){
 		this.borrado=!borrado;
 	}
-	public int getVersion() {
-		return version;
-	}
-	public void setVersion(int version) {
-		this.version = version;
-	}
 	
-
 }

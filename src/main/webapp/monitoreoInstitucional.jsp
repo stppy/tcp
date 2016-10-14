@@ -24,7 +24,7 @@
 		<script type="text/javascript" src="tablero_files/gchart_renderers.js"></script>
 		<script type="text/javascript" src="tablero_files/d3_renderers.js"></script>
 		<script type="text/javascript" src="tablero_files/jquery.js"></script>
-		<script type="text/javascript" src="frames/resumenLineaAccion.js"></script>
+		<script type="text/javascript" src="frames/monitoreoInstitucional.js"></script>
 		<style>
 			* {font-family: Verdana;}
 			.node {
