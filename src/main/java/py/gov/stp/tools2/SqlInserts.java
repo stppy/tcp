@@ -65,12 +65,12 @@ public class SqlInserts {
 	} catch (SQLException e) {e.printStackTrace();}
 		
 }
-	public static void insertLineaEstrategica(LineaEstrategica lineaEstrategica){
+	public static void insertLineaEstrategica(LineaEstrategica lineaEstrategica, String usuarioResponsable){
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into linea_estrategica (nombre,descripcion,orden,borrado)"
-	+ " values (?, ?, ?, ?)";
+		String query = " insert into linea_estrategica (nombre,descripcion,orden,borrado, usuario_responsable)"
+	+ " values (?, ?, ?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
@@ -79,6 +79,7 @@ public class SqlInserts {
 		insert.setString (2, lineaEstrategica.getDescripcion());
 		insert.setInt (3, lineaEstrategica.getOrden());
 		insert.setBoolean (4, lineaEstrategica.isBorrado());
+		insert.setString (5, usuarioResponsable);
 		
 		insert.execute();
 		   
@@ -86,12 +87,12 @@ public class SqlInserts {
 	} catch (SQLException e) {e.printStackTrace();}
 		
 }
-	public static void insertLineaAccion(LineaAccion lineaAccion){
+	public static void insertLineaAccion(LineaAccion lineaAccion, String usuarioResponsable){
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into linea_accion (nombre,descripcion,orden,peso,acumular,tipo_accion_id,estrategia_id,unidad_medida_id,borrado)"
-	+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String query = " insert into linea_accion (nombre,descripcion,orden,peso,acumular,tipo_accion_id,estrategia_id,unidad_medida_id,borrado, usuario_responsable)"
+	+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
@@ -105,6 +106,7 @@ public class SqlInserts {
 		insert.setInt (7, lineaAccion.getEstrategiaId());
 		insert.setInt (8, lineaAccion.getUnidadMedidaId());
 		insert.setBoolean (9, lineaAccion.isBorrado());		
+		insert.setString (10, usuarioResponsable);
 		
 		insert.execute();
 		   
@@ -112,12 +114,12 @@ public class SqlInserts {
 	} catch (SQLException e) {e.printStackTrace();}
 		
 }
-	public static int insertInsLineaAccion(InsLineaAccion insLineaAccion){
+	public static int insertInsLineaAccion(InsLineaAccion insLineaAccion, String usuarioResponsable){
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into ins_linea_accion (linea_accion_id, institucion_id, periodo_id, meta, version, borrado)"
-	+ " values (?, ?, ?, ?, ?, ?)";
+		String query = " insert into ins_linea_accion (linea_accion_id, institucion_id, periodo_id, meta, version, borrado, usuario_responsable)"
+	+ " values (?, ?, ?, ?, ?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query,PreparedStatement.RETURN_GENERATED_KEYS);
 		
@@ -128,6 +130,7 @@ public class SqlInserts {
 		insert.setDouble (4, insLineaAccion.getMeta());
 		insert.setInt(5, insLineaAccion.getVersion());
 		insert.setBoolean (6, insLineaAccion.isBorrado());		
+		insert.setString(7, usuarioResponsable);
 		
 		insert.execute();
 		
@@ -140,12 +143,12 @@ public class SqlInserts {
 	} catch (SQLException e) {e.printStackTrace();return 0;}
 		
 }
-	public static void insertInstitucion( Institucion institucion){
+	public static void insertInstitucion( Institucion institucion, String usuarioResponsable){
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into institucion (nombre,descripcion,sigla,nivel_id,entidad_id,unidad_jerarquica_id,unidad_responsable_id,orden,borrado)"
-	+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String query = " insert into institucion (nombre,descripcion,sigla,nivel_id,entidad_id,unidad_jerarquica_id,unidad_responsable_id,orden,borrado, usuario_responsable)"
+	+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
@@ -158,18 +161,20 @@ public class SqlInserts {
 		insert.setInt (7, institucion.getUnidadResponsableId());
 		insert.setInt (8, institucion.getOrden());
 		insert.setBoolean (9, institucion.isBorrado());
+		insert.setString (10, usuarioResponsable);
+		
 		insert.execute();
 		   
 		conn.close();
 	} catch (SQLException e) {e.printStackTrace();}
 		
 }
-	public static void insertPeriodo( Periodo periodo){
+	public static void insertPeriodo( Periodo periodo, String usuarioResponsable){
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into periodo (nombre,descripcion,fecha_inicio,fecha_fin,borrado)"
-	+ " values (?, ?, ?, ?, ?)";
+		String query = " insert into periodo (nombre,descripcion,fecha_inicio,fecha_fin,borrado, usuario_responsable)"
+	+ " values (?, ?, ?, ?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 
@@ -181,19 +186,20 @@ public class SqlInserts {
 		insert.setDate(3, periodo.getFechaInicio());
 		insert.setDate (4, periodo.getFechaFin());
 		insert.setBoolean (5, periodo.isBorrado());	
-
+		insert.setString (6, usuarioResponsable);
+		
 		insert.execute();
 		   
 		conn.close();
 	} catch (SQLException e) {e.printStackTrace();}
 		
 }
-	public static void insertHitoTipo( HitoTipo hitoTipo){
+	public static void insertHitoTipo( HitoTipo hitoTipo, String usuarioResponsable){
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into hito_tipo (nombre,descripcion,borrado)"
-	+ " values (?, ?, ?)";
+		String query = " insert into hito_tipo (nombre,descripcion,borrado, usuario_responsable)"
+	+ " values (?, ?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
@@ -201,6 +207,7 @@ public class SqlInserts {
 		insert.setString (1, hitoTipo.getNombre());
 		insert.setString (2, hitoTipo.getDescripcion());
 		insert.setBoolean (3, hitoTipo.isBorrado());
+		insert.setString (4, usuarioResponsable);
 		
 		insert.execute();
 		   
@@ -208,12 +215,12 @@ public class SqlInserts {
 	} catch (SQLException e) {e.printStackTrace();}
 		
 }
-	public static void insertHito( Hito hito){
+	public static void insertHito( Hito hito, String usuarioResponsable){
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into hito (nombre,descripcion,cantidad,fecha_entrega,hito_tipo_id,accion_id,evidencia_id,unidad_medida_id,peso,borrado)"
-	+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String query = " insert into hito (nombre,descripcion,cantidad,fecha_entrega,hito_tipo_id,accion_id,evidencia_id,unidad_medida_id,peso,borrado, usuario_responsable)"
+	+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
@@ -228,6 +235,7 @@ public class SqlInserts {
 		insert.setInt (8, hito.getUnidadMedidaId());
 		insert.setInt (9, hito.getPeso());
 		insert.setBoolean (10, hito.isBorrado());		
+		insert.setString (11, usuarioResponsable);
 		
 		insert.execute();
 		   
@@ -298,12 +306,12 @@ public class SqlInserts {
 	} catch (SQLException e) {e.printStackTrace();}
 		
 }
-	public static void insertSprProducto(SprProducto sprProducto){
+	public static void insertSprProducto(SprProducto sprProducto, String usuarioResponsable){
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into spr_producto (nivel_id,entidad_id,tipo_id,progama_id,subprograma_id,proyecto_id,funcional_id,unidad_responsable_id,producto_id)"
-	+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String query = " insert into spr_producto (nivel_id,entidad_id,tipo_id,progama_id,subprograma_id,proyecto_id,funcional_id,unidad_responsable_id,producto_id, usuario_responsable)"
+	+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
@@ -316,7 +324,8 @@ public class SqlInserts {
 		insert.setInt (6, sprProducto.getProyectoId());
 		insert.setInt (7, sprProducto.getFuncionalId());
 		insert.setInt (8, sprProducto.getUnidadResponsableId());
-		insert.setInt (9, sprProducto.getProductoId());		
+		insert.setInt (9, sprProducto.getProductoId());
+		insert.setString (10, usuarioResponsable);	
 		
 		insert.execute();
 		   
@@ -378,7 +387,7 @@ public class SqlInserts {
 		try {
 			Connection conn=ConnectionConfiguration.conectar();
 		   	
-			String query = " insert into evidencia (nombre,descripcion,url,ws_id,version,avance_id, url_documento, latitud, longitud, usuarioResponsable)"
+			String query = " insert into evidencia (nombre,descripcion,url,ws_id,version,avance_id, url_documento, latitud, longitud, usuario_responsable)"
 		+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			
 			PreparedStatement insert = conn.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
@@ -498,12 +507,12 @@ public class SqlInserts {
 	} catch (SQLException e) {e.printStackTrace();}
 		
 }
-	public static void insertHitoHasBeneficiario(HitoHasBeneficiario hitoHasBeneficiario){
+	public static void insertHitoHasBeneficiario(HitoHasBeneficiario hitoHasBeneficiario, String usuarioResponsable){
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into hito_has_beneficiario (hito_id,hito_accion_id,beneficiario_id,borrado)"
-	+ " values (?, ?, ?, ?)";
+		String query = " insert into hito_has_beneficiario (hito_id,hito_accion_id,beneficiario_id,borrado, usuario_responsable)"
+	+ " values (?, ?, ?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
@@ -511,7 +520,8 @@ public class SqlInserts {
 		insert.setInt (2, hitoHasBeneficiario.getHitoAccionId());
 		insert.setInt (3, hitoHasBeneficiario.getBeneficiarioId());
 		insert.setBoolean (4, hitoHasBeneficiario.isBorrado());
-							
+		insert.setString (5, usuarioResponsable);					
+		
 		insert.execute();
 		   
 		conn.close();
@@ -650,12 +660,12 @@ public class SqlInserts {
 	} catch (SQLException e) {e.printStackTrace();}
 		
 }
-	public static void insertGeoPoligonoTipo(GeoPoligonoTipo geoPoligonoTipo){
+	public static void insertGeoPoligonoTipo(GeoPoligonoTipo geoPoligonoTipo, String usuarioResponsable){
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into geo_poligono_tipo (nombre,descripcion,borrado)"
-	+ " values (?, ?, ?)";
+		String query = " insert into geo_poligono_tipo (nombre,descripcion,borrado, usuario_responsable)"
+	+ " values (?, ?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
@@ -663,6 +673,7 @@ public class SqlInserts {
 		insert.setString (1, geoPoligonoTipo.getNombre());
 		insert.setString (2, geoPoligonoTipo.getDescripcion());
 		insert.setBoolean (3, geoPoligonoTipo.isBorrado());	
+		insert.setString (4, usuarioResponsable);
 		
 		insert.execute();
 		   

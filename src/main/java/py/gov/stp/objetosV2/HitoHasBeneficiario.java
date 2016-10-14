@@ -1,9 +1,14 @@
 package py.gov.stp.objetosV2;
 
+import java.sql.Date;
+
 public class HitoHasBeneficiario {
 	protected int hitoId;
 	protected int hitoAccionId;
 	protected int beneficiarioId;
+	protected Date fechaInsercion;
+	protected Date fechaActualizacion;	
+    protected String usuarioResponsable;
 	protected boolean borrado = false;
 	protected int version;
 	
@@ -40,8 +45,23 @@ public class HitoHasBeneficiario {
 	public void setVersion(int version) {
 		this.version = version;
 	}
-	
-	
-	
+	public Date getFechaInsercion() {
+		return fechaInsercion;
+	}
+	public void setFechaInsercion(Date fechaInsercion) {
+		this.fechaInsercion = fechaInsercion;
+	}
+	public Date getFechaActualizacion() {
+		return fechaActualizacion;
+	}
+	public void setFechaActualizacion(Date fechaActualizacion) {
+		this.fechaActualizacion = fechaActualizacion;
+	}
+	public String getUsuarioResponsable() {
+		return usuarioResponsable;
+	}
+	public void setUsuarioResponsable(String usuarioResponsable) {
+		this.usuarioResponsable = usuarioResponsable;
+	}
 
 }
