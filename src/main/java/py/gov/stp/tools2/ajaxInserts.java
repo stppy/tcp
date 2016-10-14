@@ -247,7 +247,7 @@ public class ajaxInserts  extends HttpServlet {
             if(br != null){ json = br.readLine();}
             Gson gsonInsert = new Gson();
             objeto=gsonInsert.fromJson(json, GeoPoligonoTipo.class);
-			SqlInserts.insertGeoPoligonoTipo(objeto);
+			SqlInserts.insertGeoPoligonoTipo(objeto, userCorreo);
     	}
        }
         if (accion!=null && accion!=""){
@@ -259,7 +259,7 @@ public class ajaxInserts  extends HttpServlet {
             //Gson gsonInsert = new Gson();
             Gson gsonInsert = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();            
             productoObj=gsonInsert.fromJson(json, Hito.class);
-			SqlInserts.insertHito(productoObj);
+			SqlInserts.insertHito(productoObj, userCorreo);
     	}
        }
         if (accion!=null && accion!=""){
@@ -270,7 +270,7 @@ public class ajaxInserts  extends HttpServlet {
             if(br != null){ json = br.readLine();}
             Gson gsonInsert = new Gson();
             productoObj=gsonInsert.fromJson(json, HitoHasBeneficiario.class);
-			SqlInserts.insertHitoHasBeneficiario(productoObj);
+			SqlInserts.insertHitoHasBeneficiario(productoObj, userCorreo);
     	}
        }
         if (accion!=null && accion!=""){
@@ -281,7 +281,7 @@ public class ajaxInserts  extends HttpServlet {
             if(br != null){ json = br.readLine();}
             Gson gsonInsert = new Gson();
             objeto=gsonInsert.fromJson(json, HitoTipo.class);
-			SqlInserts.insertHitoTipo(objeto);
+			SqlInserts.insertHitoTipo(objeto, userCorreo);
     	}
        }
         if (accion!=null && accion!=""){
@@ -293,7 +293,7 @@ public class ajaxInserts  extends HttpServlet {
             Gson gsonInsert = new Gson();
             productoObj=gsonInsert.fromJson(json, InsLineaAccion.class);
 			//SqlInserts.insertInsLineaAccion(productoObj);
-            int idInsLineaAccion = SqlInserts.insertInsLineaAccion(productoObj);
+            int idInsLineaAccion = SqlInserts.insertInsLineaAccion(productoObj, userCorreo);
             if(idInsLineaAccion > 0){
                 boolean status = true;
         		myObj.addProperty("success", status);
@@ -312,7 +312,7 @@ public class ajaxInserts  extends HttpServlet {
             if(br != null){ json = br.readLine();}
             Gson gsonInsert = new Gson();
             productoObj=gsonInsert.fromJson(json, Institucion.class);
-			SqlInserts.insertInstitucion(productoObj);
+			SqlInserts.insertInstitucion(productoObj, userCorreo);
     	}
        }
         if (accion!=null && accion!=""){
@@ -323,7 +323,7 @@ public class ajaxInserts  extends HttpServlet {
             if(br != null){ json = br.readLine();}
             Gson gsonInsert = new Gson();
             productoObj=gsonInsert.fromJson(json, LineaAccion.class);
-			SqlInserts.insertLineaAccion(productoObj);
+			SqlInserts.insertLineaAccion(productoObj, userCorreo);
     	}
        }
         if (accion!=null && accion!=""){
@@ -334,7 +334,7 @@ public class ajaxInserts  extends HttpServlet {
             if(br != null){ json = br.readLine();}
             Gson gsonInsert = new Gson();
             productoObj=gsonInsert.fromJson(json, LineaEstrategica.class);
-			SqlInserts.insertLineaEstrategica(productoObj);
+			SqlInserts.insertLineaEstrategica(productoObj, userCorreo);
     	}
        }         
         if (accion!=null && accion!=""){
@@ -346,7 +346,7 @@ public class ajaxInserts  extends HttpServlet {
             //Gson gsonInsert = new Gson();
             Gson gsonInsert = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
             Objeto=gsonInsert.fromJson(json, Periodo.class);
-			SqlInserts.insertPeriodo(Objeto);
+			SqlInserts.insertPeriodo(Objeto, userCorreo);
     	}
        }
         if (accion!=null && accion!=""){
@@ -357,7 +357,7 @@ public class ajaxInserts  extends HttpServlet {
             if(br != null){ json = br.readLine();}
             Gson gsonInsert = new Gson();
             productoObj=gsonInsert.fromJson(json, SprProducto.class);
-			SqlInserts.insertSprProducto(productoObj);
+			SqlInserts.insertSprProducto(productoObj,userCorreo);
     	}
        }
         if (accion!=null && accion!=""){
