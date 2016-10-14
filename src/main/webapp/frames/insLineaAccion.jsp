@@ -5,7 +5,7 @@
 
 function renderEvidencia(avanceId, parametros){
 	var webServicesEvidencia = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getEvidencia&avanceId='+avanceId,
+		url:'/tablero/ajaxSelects2?action=getEvidencia&avanceId='+avanceId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false
@@ -68,7 +68,7 @@ function renderEvidencia(avanceId, parametros){
 
 		
 		var lineaAccion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+			url:'/tablero/ajaxSelects2?action=getLineaAccion',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -81,7 +81,7 @@ function renderEvidencia(avanceId, parametros){
 		}
 
 		var institucion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+			url:'/tablero/ajaxSelects2?action=getInstitucion',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -94,7 +94,7 @@ function renderEvidencia(avanceId, parametros){
 		}
 
 		var periodo = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+			url:'/tablero/ajaxSelects2?action=getPeriodo',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -121,7 +121,7 @@ function renderEvidencia(avanceId, parametros){
 		}
 		
 		var unidadMedida = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+			url:'/tablero/ajaxSelects2?action=getUnidadMedida',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -134,7 +134,7 @@ function renderEvidencia(avanceId, parametros){
 		}
 		
 		var etiquetas = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getEtiqueta',
+			url:'/tablero/ajaxSelects2?action=getEtiqueta',
 			type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -241,7 +241,7 @@ function renderEvidencia(avanceId, parametros){
 		var catalogoLineaAccionId = $("#nombreLineaAccionInsLineaAccion option:selected").val();
     	
 		var catalogoLineaAccion = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId='+catalogoLineaAccionId,
+	    	url:'/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId='+catalogoLineaAccionId,
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -249,7 +249,7 @@ function renderEvidencia(avanceId, parametros){
 		catalogoLineaAccion = JSON.parse(catalogoLineaAccion);
 		
 		var unidadMedida = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+			url:'/tablero/ajaxSelects2?action=getUnidadMedida',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -331,7 +331,7 @@ function renderEvidencia(avanceId, parametros){
 		        		$('#cuerpoInsLineaAccionAnterior').html(""); 
 
 		        		var insLineaAccion = $.ajax({
-		        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion',
+		        			url:'/tablero/ajaxSelects2?action=getInsLineaAccion',
 		        		  	type:'get',
 		        		  	dataType:'json',
 		        		  	async:false       
@@ -339,7 +339,7 @@ function renderEvidencia(avanceId, parametros){
 		        		insLineaAccion=JSON.parse(insLineaAccion);
 		        		
 		        		var lineaAccion = $.ajax({
-		        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+		        			url:'/tablero/ajaxSelects2?action=getLineaAccion',
 		        		  	type:'get',
 		        		  	dataType:'json',
 		        		  	async:false       
@@ -347,7 +347,7 @@ function renderEvidencia(avanceId, parametros){
 		        		lineaAccion = JSON.parse(lineaAccion);
 		        		
 		        		var institucion = $.ajax({
-		        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+		        			url:'/tablero/ajaxSelects2?action=getInstitucion',
 		        		  	type:'get',
 		        		  	dataType:'json',
 		        		  	async:false       
@@ -355,7 +355,7 @@ function renderEvidencia(avanceId, parametros){
 		        		institucion = JSON.parse(institucion);
 		        		
 		        		var periodo = $.ajax({
-		        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+		        			url:'/tablero/ajaxSelects2?action=getPeriodo',
 		        		  	type:'get',
 		        		  	dataType:'json',
 		        		  	async:false       
@@ -363,7 +363,7 @@ function renderEvidencia(avanceId, parametros){
 		        		periodo = JSON.parse(periodo);
 		        		
 		        		var unidadMedida = $.ajax({
-		        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+		        			url:'/tablero/ajaxSelects2?action=getUnidadMedida',
 		        		  	type:'get',
 		        		  	dataType:'json',
 		        		  	async:false       
@@ -481,7 +481,7 @@ function renderEvidencia(avanceId, parametros){
 		
 		
 		var lineaAccion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+			url:'/tablero/ajaxSelects2?action=getLineaAccion',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -495,7 +495,7 @@ function renderEvidencia(avanceId, parametros){
 
 
 		var institucion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+			url:'/tablero/ajaxSelects2?action=getInstitucion',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -508,7 +508,7 @@ function renderEvidencia(avanceId, parametros){
 		}
 
 		var periodo = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+			url:'/tablero/ajaxSelects2?action=getPeriodo',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -527,7 +527,7 @@ function renderEvidencia(avanceId, parametros){
 		}
 		
 		var etiquetas = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getEtiqueta',
+			url:'/tablero/ajaxSelects2?action=getEtiqueta',
 			type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -535,7 +535,7 @@ function renderEvidencia(avanceId, parametros){
 		etiquetas = JSON.parse(etiquetas);
 		
 		var instanciaEtiqueta = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccionHasEtiqueta&insLineaAccionId='+id,
+			url:'/tablero/ajaxSelects2?action=getInsLineaAccionHasEtiqueta&insLineaAccionId='+id,
 			type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -617,7 +617,7 @@ function renderEvidencia(avanceId, parametros){
 		$("#idInsLineaAccion").val(id);
 		
 		var lineaAccion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+			url:'/tablero/ajaxSelects2?action=getLineaAccion',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -633,7 +633,7 @@ function renderEvidencia(avanceId, parametros){
 		}
 		
 		var institucion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+			url:'/tablero/ajaxSelects2?action=getInstitucion',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -648,7 +648,7 @@ function renderEvidencia(avanceId, parametros){
 		}	
 
 		var periodo = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+			url:'/tablero/ajaxSelects2?action=getPeriodo',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -691,7 +691,7 @@ function renderEvidencia(avanceId, parametros){
 		}	
 		
 		var etiquetas = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getEtiqueta',
+			url:'/tablero/ajaxSelects2?action=getEtiqueta',
 			type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -783,7 +783,7 @@ function renderEvidencia(avanceId, parametros){
 			}
 			
 			var insLineaAccion = $.ajax({
-				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccionHasEtiqueta&insLineaAccionId='+id+'&etiquetaId='+etiqueta,
+				url:'/tablero/ajaxSelects2?action=getInsLineaAccionHasEtiqueta&insLineaAccionId='+id+'&etiquetaId='+etiqueta,
 			  	type:'get',
 			  	dataType:'json',
 			  	async:false
@@ -927,7 +927,7 @@ function renderEvidencia(avanceId, parametros){
 		        		$('#cuerpoInsLineaAccionAnterior').html(""); 
 
 		        		var insLineaAccion = $.ajax({
-		        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion',
+		        			url:'/tablero/ajaxSelects2?action=getInsLineaAccion',
 		        		  	type:'get',
 		        		  	dataType:'json',
 		        		  	async:false       
@@ -935,7 +935,7 @@ function renderEvidencia(avanceId, parametros){
 		        		insLineaAccion=JSON.parse(insLineaAccion);
 		        		
 		        		var lineaAccion = $.ajax({
-		        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+		        			url:'/tablero/ajaxSelects2?action=getLineaAccion',
 		        		  	type:'get',
 		        		  	dataType:'json',
 		        		  	async:false       
@@ -943,7 +943,7 @@ function renderEvidencia(avanceId, parametros){
 		        		lineaAccion = JSON.parse(lineaAccion);
 		        		
 		        		var institucion = $.ajax({
-		        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+		        			url:'/tablero/ajaxSelects2?action=getInstitucion',
 		        		  	type:'get',
 		        		  	dataType:'json',
 		        		  	async:false       
@@ -951,7 +951,7 @@ function renderEvidencia(avanceId, parametros){
 		        		institucion = JSON.parse(institucion);
 		        		
 		        		var periodo = $.ajax({
-		        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+		        			url:'/tablero/ajaxSelects2?action=getPeriodo',
 		        		  	type:'get',
 		        		  	dataType:'json',
 		        		  	async:false       
@@ -959,7 +959,7 @@ function renderEvidencia(avanceId, parametros){
 		        		periodo = JSON.parse(periodo);
 		        		
 		        		var unidadMedida = $.ajax({
-		        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+		        			url:'/tablero/ajaxSelects2?action=getUnidadMedida',
 		        		  	type:'get',
 		        		  	dataType:'json',
 		        		  	async:false       
@@ -1021,7 +1021,7 @@ function renderEvidencia(avanceId, parametros){
 				    	if (data.success == true)
 				       	{
 				    		var insLineaAccion = $.ajax({
-				    			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion',
+				    			url:'/tablero/ajaxSelects2?action=getInsLineaAccion',
 				    		  	type:'get',
 				    		  	dataType:'json',
 				    		  	async:false       
@@ -1029,7 +1029,7 @@ function renderEvidencia(avanceId, parametros){
 				    		insLineaAccion=JSON.parse(insLineaAccion);
 				    		
 				    		var lineaAccion = $.ajax({
-				    			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+				    			url:'/tablero/ajaxSelects2?action=getLineaAccion',
 				    		  	type:'get',
 				    		  	dataType:'json',
 				    		  	async:false       
@@ -1037,7 +1037,7 @@ function renderEvidencia(avanceId, parametros){
 				    		lineaAccion = JSON.parse(lineaAccion);
 				    		
 				    		var institucion = $.ajax({
-				    			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+				    			url:'/tablero/ajaxSelects2?action=getInstitucion',
 				    		  	type:'get',
 				    		  	dataType:'json',
 				    		  	async:false       
@@ -1045,7 +1045,7 @@ function renderEvidencia(avanceId, parametros){
 				    		institucion = JSON.parse(institucion);
 				    		
 				    		var periodo = $.ajax({
-				    			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+				    			url:'/tablero/ajaxSelects2?action=getPeriodo',
 				    		  	type:'get',
 				    		  	dataType:'json',
 				    		  	async:false       
@@ -1053,7 +1053,7 @@ function renderEvidencia(avanceId, parametros){
 				    		periodo = JSON.parse(periodo);
 				    		
 				    		var unidadMedida = $.ajax({
-				    			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+				    			url:'/tablero/ajaxSelects2?action=getUnidadMedida',
 				    		  	type:'get',
 				    		  	dataType:'json',
 				    		  	async:false       
@@ -1135,7 +1135,7 @@ function renderEvidencia(avanceId, parametros){
 			$("#modalDestinatario").remove();
 		}
 		var lineaAccion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+			url:'/tablero/ajaxSelects2?action=getLineaAccion',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -1151,7 +1151,7 @@ function renderEvidencia(avanceId, parametros){
 		}
 		
 		var catalogoAccion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo',
+			url:'/tablero/ajaxSelects2?action=getAccionCatalogo',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -1165,7 +1165,7 @@ function renderEvidencia(avanceId, parametros){
 		}
 		
 		var institucion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+			url:'/tablero/ajaxSelects2?action=getInstitucion',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -1181,7 +1181,7 @@ function renderEvidencia(avanceId, parametros){
 		}
 		
 		var periodo = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+			url:'/tablero/ajaxSelects2?action=getPeriodo',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -1197,7 +1197,7 @@ function renderEvidencia(avanceId, parametros){
 		}
 		
 		var unidadMedida = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+			url:'/tablero/ajaxSelects2?action=getUnidadMedida',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -1210,7 +1210,7 @@ function renderEvidencia(avanceId, parametros){
 		}
 		
 		var departamentos = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
+	    	url:'/tablero/ajaxSelects?action=getDepartamento',
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -1223,7 +1223,7 @@ function renderEvidencia(avanceId, parametros){
 		}
 		
 		var distritos = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito',
+	    	url:'/tablero/ajaxSelects?action=getDistrito',
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -1231,7 +1231,7 @@ function renderEvidencia(avanceId, parametros){
 		distritos = JSON.parse(distritos);
 		
 		var accion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccionId,
+			url:'/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccionId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -1467,7 +1467,7 @@ function renderEvidencia(avanceId, parametros){
 
 		
 		var catalogoAccion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo',
+			url:'/tablero/ajaxSelects2?action=getAccionCatalogo',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -1481,7 +1481,7 @@ function renderEvidencia(avanceId, parametros){
 		}
 				
 		var unidadMedida = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+			url:'/tablero/ajaxSelects2?action=getUnidadMedida',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -1494,7 +1494,7 @@ function renderEvidencia(avanceId, parametros){
 		}
 		
 		var accion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&accionId='+id,
+			url:'/tablero/ajaxSelects2?action=getAccion&accionId='+id,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -1504,7 +1504,7 @@ function renderEvidencia(avanceId, parametros){
 		
 
 		var departamentos = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
+	    	url:'/tablero/ajaxSelects?action=getDepartamento',
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -1517,7 +1517,7 @@ function renderEvidencia(avanceId, parametros){
 		}
 		
 		var distritos = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito&departamento='+accion[0].departamentoId,
+	    	url:'/tablero/ajaxSelects?action=getDistrito&departamento='+accion[0].departamentoId,
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -1797,7 +1797,7 @@ $("body").on("click", ".consultaBorrarAccion",function(event){
 
    
 	var accion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&accionId='+id,
+		url:'/tablero/ajaxSelects2?action=getAccion&accionId='+id,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -1805,7 +1805,7 @@ $("body").on("click", ".consultaBorrarAccion",function(event){
 	accion = JSON.parse(accion);
 
 	var catalogoAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo',
+		url:'/tablero/ajaxSelects2?action=getAccionCatalogo',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -1869,7 +1869,7 @@ $("body").on("click", ".borrarAccion",function(event){
     var estado = idParsed[1];
     
 	var accion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&accionId='+id,
+		url:'/tablero/ajaxSelects2?action=getAccion&accionId='+id,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -1937,7 +1937,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		}		 
 		
 		var lineaAccion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+			url:'/tablero/ajaxSelects2?action=getLineaAccion',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -1953,7 +1953,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		}
 		
 		var institucion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+			url:'/tablero/ajaxSelects2?action=getInstitucion',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -1969,7 +1969,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		}
 		
 		var periodo = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+			url:'/tablero/ajaxSelects2?action=getPeriodo',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -1985,7 +1985,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		}
 		
 		var unidadMedida = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+			url:'/tablero/ajaxSelects2?action=getUnidadMedida',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -1998,7 +1998,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		}
 		
 		var departamentos = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
+	    	url:'/tablero/ajaxSelects?action=getDepartamento',
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -2007,7 +2007,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		
 		
 		var distritos = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito',
+	    	url:'/tablero/ajaxSelects?action=getDistrito',
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -2020,7 +2020,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		}
 		
 		var accion_catalogo = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo',
+	    	url:'/tablero/ajaxSelects2?action=getAccionCatalogo',
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -2033,7 +2033,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		}		
 		
 		var accion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccionId,
+			url:'/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccionId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -2091,7 +2091,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		var departamentoId = $("#selectorDepartamento option:selected").val();
     	
 		var distritos = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito&departamento='+departamentoId,
+	    	url:'/tablero/ajaxSelects?action=getDistrito&departamento='+departamentoId,
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -2112,7 +2112,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		var catalogoAccionId = $("#selectorCatalogoAccion option:selected").val();
     	
 		var catalogoAccion = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+catalogoAccionId,
+	    	url:'/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+catalogoAccionId,
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -2120,7 +2120,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		catalogoAccion = JSON.parse(catalogoAccion);
 		
 		var unidadMedida = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+			url:'/tablero/ajaxSelects2?action=getUnidadMedida',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -2245,7 +2245,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		var nombreProducto = "";
 		
 		var accionHasProducto = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionHasProducto&accionId='+accionId,
+	    	url:'/tablero/ajaxSelects2?action=getAccionHasProducto&accionId='+accionId,
 	      	type:'get',
 	      	dataType:'json',
 	      	crossDomain:true,
@@ -2346,7 +2346,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		var accionId = idParsed[4];
 				
 		var accion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&accionId='+accionId,
+			url:'/tablero/ajaxSelects2?action=getAccion&accionId='+accionId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -2354,7 +2354,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		accion = JSON.parse(accion);
 		
 		var catalogoAccion = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[0].accionCatalogoId,
+	    	url:'/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[0].accionCatalogoId,
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -2362,7 +2362,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		catalogoAccion = JSON.parse(catalogoAccion);
 		
 		var insLineaAccion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion&insLineaAccionId='+insLineaAccionId,
+			url:'/tablero/ajaxSelects2?action=getInsLineaAccion&insLineaAccionId='+insLineaAccionId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -2370,7 +2370,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		insLineaAccion=JSON.parse(insLineaAccion);
 		
 		var institucion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion&institucionId='+insLineaAccion[0].institucionId,
+			url:'/tablero/ajaxSelects2?action=getInstitucion&institucionId='+insLineaAccion[0].institucionId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -2378,7 +2378,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		institucion = JSON.parse(institucion);
 		
 		var lineaAccion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId='+lineaAccionId,
+			url:'/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId='+lineaAccionId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -2518,7 +2518,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		function Combo(){
 			
 			var usuarios = $.ajax({
-				url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
+				url:'/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
 			  	type:'get',
 			  	dataType:'json',
 			  	async:false       
@@ -3418,7 +3418,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		}		
 		
 		var WebServiceVinculacionProducto = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionHasProducto&accionHasProductoId='+accionHasProductoId,
+			url:'/tablero/ajaxSelects2?action=getAccionHasProducto&accionHasProductoId='+accionHasProductoId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -3470,7 +3470,7 @@ $("body").on("click", ".borrarAccion",function(event){
 	    var estado = idParsed[1];
 	    
 		var WebServiceVinculacionProducto = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionHasProducto&accionHasProductoId='+accionHasProductoId,
+			url:'/tablero/ajaxSelects2?action=getAccionHasProducto&accionHasProductoId='+accionHasProductoId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -3582,7 +3582,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		var periodoId = periodoId;
 	
 		var accion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccionId,
+			url:'/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccionId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -3590,7 +3590,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		accion = JSON.parse(accion);
 		
 		var departamentos = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
+	    	url:'/tablero/ajaxSelects?action=getDepartamento',
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -3598,7 +3598,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		departamentos = JSON.parse(departamentos);
 		
 		var distritos = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito',
+	    	url:'/tablero/ajaxSelects?action=getDistrito',
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -3606,7 +3606,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		distritos = JSON.parse(distritos);
 		
 		var unidadMedida = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+			url:'/tablero/ajaxSelects2?action=getUnidadMedida',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -3626,7 +3626,7 @@ $("body").on("click", ".borrarAccion",function(event){
 			suMetas = accion[a].meta1 + accion[a].meta2 + accion[a].meta3 + accion[a].meta4; 
 			
 			var catalogoAccion = $.ajax({
-				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[a].accionCatalogoId,
+				url:'/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[a].accionCatalogoId,
 			  	type:'get',
 			  	dataType:'json',
 			  	async:false       
@@ -3760,7 +3760,7 @@ $("body").on("click", ".borrarAccion",function(event){
 	    var accionCatalogoId = idParsed[5];
 				
 		var insLineaAccion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion&insLineaAccionId='+insLineaAccionId,
+			url:'/tablero/ajaxSelects2?action=getInsLineaAccion&insLineaAccionId='+insLineaAccionId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -3768,7 +3768,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		insLineaAccion=JSON.parse(insLineaAccion);
 		
 		var institucion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion&institucionId='+insLineaAccion[0].institucionId,
+			url:'/tablero/ajaxSelects2?action=getInstitucion&institucionId='+insLineaAccion[0].institucionId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -3776,7 +3776,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		institucion = JSON.parse(institucion);
 		
 		var lineaAccion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId='+lineaAccionId,
+			url:'/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId='+lineaAccionId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -3784,7 +3784,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		lineaAccion = JSON.parse(lineaAccion);
 		
 		var unidadMedida = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+			url:'/tablero/ajaxSelects2?action=getUnidadMedida',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -3799,7 +3799,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		}
 
 		var hitoTipo = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getHitoTipo',
+			url:'/tablero/ajaxSelects2?action=getHitoTipo',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -3817,7 +3817,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		optionAcumulable+='<option value="FALSE" parametro="FALSE">No</option>';
 		
 		var actividades = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getCronograma&accionId='+accionId,
+			url:'/tablero/ajaxSelects2?action=getCronograma&accionId='+accionId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -3825,7 +3825,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		actividades = JSON.parse(actividades);
 		
 		var accion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&accionId='+accionId,
+			url:'/tablero/ajaxSelects2?action=getAccion&accionId='+accionId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -3833,7 +3833,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		accion = JSON.parse(accion);
 		
 		var accionCatalogo = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[0].accionCatalogoId,
+			url:'/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[0].accionCatalogoId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -3841,7 +3841,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		accionCatalogo = JSON.parse(accionCatalogo);
 		
 		var departamentos = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
+	    	url:'/tablero/ajaxSelects?action=getDepartamento',
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -3849,7 +3849,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		departamentos = JSON.parse(departamentos);
 		
 		var distritos = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito',
+	    	url:'/tablero/ajaxSelects?action=getDistrito',
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -4056,7 +4056,7 @@ $("body").on("click", ".editarCronograma", function(event){
 
 	
 	var actividades = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getCronograma&cronogramaId='+cronogramaId,
+		url:'/tablero/ajaxSelects2?action=getCronograma&cronogramaId='+cronogramaId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4065,7 +4065,7 @@ $("body").on("click", ".editarCronograma", function(event){
 	
 	
 	var unidadMedida = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+		url:'/tablero/ajaxSelects2?action=getUnidadMedida',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4079,7 +4079,7 @@ $("body").on("click", ".editarCronograma", function(event){
 	}
 	
 	var hitoTipo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getHitoTipo',
+		url:'/tablero/ajaxSelects2?action=getHitoTipo',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4174,7 +4174,7 @@ $("body").on("click", ".consultaBorrarCronograma",function(event){
 
    
 	var actividades = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getCronograma&cronogramaId='+cronogramaId,
+		url:'/tablero/ajaxSelects2?action=getCronograma&cronogramaId='+cronogramaId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4231,7 +4231,7 @@ $("body").on("click", ".borrarCronograma",function(event){
     var estatus = idParsed[1];
     
 	var actividades = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getCronograma&cronogramaId='+cronogramaId,
+		url:'/tablero/ajaxSelects2?action=getCronograma&cronogramaId='+cronogramaId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4413,7 +4413,7 @@ function actualizarTablaActividades(accion_id,insLineaAccionId,lineaAccionId,ins
 	
 	
 	var actividades = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getCronograma&accionId='+accionId,
+		url:'/tablero/ajaxSelects2?action=getCronograma&accionId='+accionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4421,7 +4421,7 @@ function actualizarTablaActividades(accion_id,insLineaAccionId,lineaAccionId,ins
 	actividades = JSON.parse(actividades);
 	
 	var unidadMedida = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+		url:'/tablero/ajaxSelects2?action=getUnidadMedida',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4429,7 +4429,7 @@ function actualizarTablaActividades(accion_id,insLineaAccionId,lineaAccionId,ins
 	unidadMedida = JSON.parse(unidadMedida);
 
 	var hitoTipo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getHitoTipo',
+		url:'/tablero/ajaxSelects2?action=getHitoTipo',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4437,7 +4437,7 @@ function actualizarTablaActividades(accion_id,insLineaAccionId,lineaAccionId,ins
 	hitoTipo = JSON.parse(hitoTipo);
 	
 	var accion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&accionId='+accionId,
+		url:'/tablero/ajaxSelects2?action=getAccion&accionId='+accionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4445,7 +4445,7 @@ function actualizarTablaActividades(accion_id,insLineaAccionId,lineaAccionId,ins
 	accion = JSON.parse(accion);
 	
 	var accionCatalogo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[0].accionCatalogoId,
+		url:'/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[0].accionCatalogoId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4548,7 +4548,7 @@ $("body").on("click", ".agregarProgramacion",function(event){
 
 	
 	var cronogramas = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getCronograma&cronogramaId='+cronogramaId,
+		url:'/tablero/ajaxSelects2?action=getCronograma&cronogramaId='+cronogramaId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4556,7 +4556,7 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	cronogramas = JSON.parse(cronogramas);
 	
 	var programacionWebService = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getProgramacion&actividadId='+cronogramaId,
+		url:'/tablero/ajaxSelects2?action=getProgramacion&actividadId='+cronogramaId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4564,7 +4564,7 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	programacionWebService = JSON.parse(programacionWebService);
 	
 	var hitoTipo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getHitoTipo',
+		url:'/tablero/ajaxSelects2?action=getHitoTipo',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4572,7 +4572,7 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	hitoTipo = JSON.parse(hitoTipo);
 	
 	var accion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&accionId='+accionId,
+		url:'/tablero/ajaxSelects2?action=getAccion&accionId='+accionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4580,7 +4580,7 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	accion = JSON.parse(accion);
 	
 	var accionCatalogo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[0].accionCatalogoId,
+		url:'/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[0].accionCatalogoId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4588,7 +4588,7 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	accionCatalogo = JSON.parse(accionCatalogo);
 	
 	var unidadMedida = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+		url:'/tablero/ajaxSelects2?action=getUnidadMedida',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4596,7 +4596,7 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	unidadMedida = JSON.parse(unidadMedida);
 	
 	var lineaAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId='+lineaAccionId,
+		url:'/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId='+lineaAccionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4604,7 +4604,7 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	lineaAccion = JSON.parse(lineaAccion)
 	
 	var periodo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo&periodoId='+periodoId,
+		url:'/tablero/ajaxSelects2?action=getPeriodo&periodoId='+periodoId,
   		type:'get',
   		dataType:'json',
   		async:false       
@@ -4612,7 +4612,7 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	periodo = JSON.parse(periodo);
 	
 	var departamentos = $.ajax({
-    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
+    	url:'/tablero/ajaxSelects?action=getDepartamento',
       	type:'get',
       	dataType:'json',
       	async:false       
@@ -4620,7 +4620,7 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	departamentos = JSON.parse(departamentos);
 	
 	var distritos = $.ajax({
-    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito',
+    	url:'/tablero/ajaxSelects?action=getDistrito',
       	type:'get',
       	dataType:'json',
       	async:false       
@@ -4839,7 +4839,7 @@ $("body").on("click", ".guardarProgramacion",function(event){
         	{
         		
         		var unidadMedida = $.ajax({
-        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+        			url:'/tablero/ajaxSelects2?action=getUnidadMedida',
         		  	type:'get',
         		  	dataType:'json',
         		  	async:false       
@@ -4847,7 +4847,7 @@ $("body").on("click", ".guardarProgramacion",function(event){
         		unidadMedida = JSON.parse(unidadMedida);
         		
         		var programacion = $.ajax({
-        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getProgramacion&actividadId='+actividadId,
+        			url:'/tablero/ajaxSelects2?action=getProgramacion&actividadId='+actividadId,
         		  	type:'get',
         		  	dataType:'json',
         		  	async:false       
@@ -4855,7 +4855,7 @@ $("body").on("click", ".guardarProgramacion",function(event){
         		programacion = JSON.parse(programacion);
         		
         		var cronogramas = $.ajax({
-        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getCronograma&cronogramaId='+cronogramaId,
+        			url:'/tablero/ajaxSelects2?action=getCronograma&cronogramaId='+cronogramaId,
         		  	type:'get',
         		  	dataType:'json',
         		  	async:false       
@@ -4962,7 +4962,7 @@ $("body").on("click", ".agregarAvance",function(event){
     var fechaActual = (f.getFullYear() + "-" + mes + "-" + dia);
     
 	var insLineaAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion&insLineaAccionId='+insLineaAccionId,
+		url:'/tablero/ajaxSelects2?action=getInsLineaAccion&insLineaAccionId='+insLineaAccionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4970,7 +4970,7 @@ $("body").on("click", ".agregarAvance",function(event){
 	insLineaAccion=JSON.parse(insLineaAccion);
 	
 	var institucion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion&institucionId='+insLineaAccion[0].institucionId,
+		url:'/tablero/ajaxSelects2?action=getInstitucion&institucionId='+insLineaAccion[0].institucionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4978,7 +4978,7 @@ $("body").on("click", ".agregarAvance",function(event){
 	institucion = JSON.parse(institucion);
     
 	var programacionWebService = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getProgramacion&actividadId='+actividadId,
+		url:'/tablero/ajaxSelects2?action=getProgramacion&actividadId='+actividadId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4986,7 +4986,7 @@ $("body").on("click", ".agregarAvance",function(event){
 	programacionWebService = JSON.parse(programacionWebService);
 		
 	var accion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&accionId='+accionId,
+		url:'/tablero/ajaxSelects2?action=getAccion&accionId='+accionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4994,7 +4994,7 @@ $("body").on("click", ".agregarAvance",function(event){
 	accion = JSON.parse(accion);
 	
 	var accionCatalogo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[0].accionCatalogoId,
+		url:'/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[0].accionCatalogoId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -5002,7 +5002,7 @@ $("body").on("click", ".agregarAvance",function(event){
 	accionCatalogo = JSON.parse(accionCatalogo);
 	
 	var lineaAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId='+lineaAccionId,
+		url:'/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId='+lineaAccionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -5010,7 +5010,7 @@ $("body").on("click", ".agregarAvance",function(event){
 	lineaAccion = JSON.parse(lineaAccion)
 	
 	var webServicesAvance = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvance&actividadId='+actividadId,
+		url:'/tablero/ajaxSelects2?action=getAvance&actividadId='+actividadId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -5018,7 +5018,7 @@ $("body").on("click", ".agregarAvance",function(event){
 	webServicesAvance = JSON.parse(webServicesAvance);
 	
 	var actividades = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getCronograma&cronogramaId='+actividadId,
+		url:'/tablero/ajaxSelects2?action=getCronograma&cronogramaId='+actividadId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -5026,7 +5026,7 @@ $("body").on("click", ".agregarAvance",function(event){
 	actividades = JSON.parse(actividades);
 	
 	var unidadMedida = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+		url:'/tablero/ajaxSelects2?action=getUnidadMedida',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -5034,7 +5034,7 @@ $("body").on("click", ".agregarAvance",function(event){
 	unidadMedida = JSON.parse(unidadMedida);
 	
 	var departamentos = $.ajax({
-    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
+    	url:'/tablero/ajaxSelects?action=getDepartamento',
       	type:'get',
       	dataType:'json',
       	async:false       
@@ -5042,7 +5042,7 @@ $("body").on("click", ".agregarAvance",function(event){
 	departamentos = JSON.parse(departamentos);
 	
 	var distritos = $.ajax({
-    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito',
+    	url:'/tablero/ajaxSelects?action=getDistrito',
       	type:'get',
       	dataType:'json',
       	async:false       
@@ -5304,7 +5304,7 @@ $("body").on("click", ".guardarAvance",function(event){
 	        	if(data.success == true)
 	        	{
 	        		var webServicesAvance = $.ajax({
-	        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvance&actividadId='+actividadId,
+	        			url:'/tablero/ajaxSelects2?action=getAvance&actividadId='+actividadId,
 	        		  	type:'get',
 	        		  	dataType:'json',
 	        		  	async:false       
@@ -5387,7 +5387,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	
 	
 	var insLineaAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion&insLineaAccionId='+insLineaAccionId,
+		url:'/tablero/ajaxSelects2?action=getInsLineaAccion&insLineaAccionId='+insLineaAccionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -5395,7 +5395,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	insLineaAccion=JSON.parse(insLineaAccion);
 	
 	var institucion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion&institucionId='+insLineaAccion[0].institucionId,
+		url:'/tablero/ajaxSelects2?action=getInstitucion&institucionId='+insLineaAccion[0].institucionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -5403,7 +5403,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	institucion = JSON.parse(institucion);
 	
 	var lineaAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId='+lineaAccionId,
+		url:'/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId='+lineaAccionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -5411,7 +5411,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	lineaAccion = JSON.parse(lineaAccion);
 	
 	var accion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&accionId='+accionId,
+		url:'/tablero/ajaxSelects2?action=getAccion&accionId='+accionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -5419,7 +5419,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	accion = JSON.parse(accion);
 	
 	var accionCatalogo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[0].accionCatalogoId,
+		url:'/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[0].accionCatalogoId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -5427,7 +5427,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	accionCatalogo = JSON.parse(accionCatalogo);
 	
 	var actividades = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getCronograma&cronogramaId='+actividadId,
+		url:'/tablero/ajaxSelects2?action=getCronograma&cronogramaId='+actividadId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -5435,7 +5435,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	actividades = JSON.parse(actividades);
 	
 	var unidadMedida = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+		url:'/tablero/ajaxSelects2?action=getUnidadMedida',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -5452,7 +5452,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	}
 
 	var webServicesAvance = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvance&avanceId='+avanceId,
+		url:'/tablero/ajaxSelects2?action=getAvance&avanceId='+avanceId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -5472,7 +5472,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	var cuerpoEvidencia = renderEvidencia(avanceId,parametrosEvidencia);
 	
 	var webServicesAvanceCosto = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCosto&avanceId='+avanceId,
+		url:'/tablero/ajaxSelects2?action=getAvanceCosto&avanceId='+avanceId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -5501,7 +5501,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	}
 		
 	var webServicesBeneficiarioTipo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioTipo',
+		url:'/tablero/ajaxSelects2?action=getBeneficiarioTipo',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -5515,7 +5515,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	}
 	
 	var webServicesBeneficiario = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiario&avanceId='+avanceId,
+		url:'/tablero/ajaxSelects2?action=getBeneficiario&avanceId='+avanceId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -5526,7 +5526,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	for(var a = 0; a < webServicesBeneficiario.length; a++)
 	{
 		var webServicesBeneficiarioTipo = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioTipo&beneficiarioTipoId='+webServicesBeneficiario[a].tipoId,
+			url:'/tablero/ajaxSelects2?action=getBeneficiarioTipo&beneficiarioTipoId='+webServicesBeneficiario[a].tipoId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -5534,7 +5534,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 		webServicesBeneficiarioTipo = JSON.parse(webServicesBeneficiarioTipo);
 		
 		var webServicesBeneficiarioGrupo = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioGrupoId='+webServicesBeneficiario[a].grupoId,
+			url:'/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioGrupoId='+webServicesBeneficiario[a].grupoId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -5560,7 +5560,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	}
 	
 	var webServicesProductoObjetoGasto = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getProductoObjetoGasto&accionId='+accionId,
+		url:'/tablero/ajaxSelects2?action=getProductoObjetoGasto&accionId='+accionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -5925,7 +5925,7 @@ $("body").on("change", "#productoObjetoGasto",function(event){
 	var productoObjetoGastoId = $("#productoObjetoGasto option:selected").val();
 	if (productoObjetoGastoId != undefined){
 		var webServicesDatosProducto = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getProductoObjetoGasto&productoObjetoGastoId='+productoObjetoGastoId,
+			url:'/tablero/ajaxSelects2?action=getProductoObjetoGasto&productoObjetoGastoId='+productoObjetoGastoId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false,
@@ -5937,7 +5937,7 @@ $("body").on("change", "#productoObjetoGasto",function(event){
 		webServicesDatosProducto = JSON.parse(webServicesDatosProducto);
 		
 		var webServicesObjetoGastoCosto = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getObjetoGastoCosto&nivel='+webServicesDatosProducto[0].nivelId+'&entidad='+webServicesDatosProducto[0].entidadId+'&tiprograma='+webServicesDatosProducto[0].tiprogramaId+'&programa='+webServicesDatosProducto[0].programaId+'&subprograma='+webServicesDatosProducto[0].subprogramaId+'&proyecto='+webServicesDatosProducto[0].proyectoId+'&producto='+webServicesDatosProducto[0].productoId+'&anho=2016',
+			url:'/tablero/ajaxSelects?action=getObjetoGastoCosto&nivel='+webServicesDatosProducto[0].nivelId+'&entidad='+webServicesDatosProducto[0].entidadId+'&tiprograma='+webServicesDatosProducto[0].tiprogramaId+'&programa='+webServicesDatosProducto[0].programaId+'&subprograma='+webServicesDatosProducto[0].subprogramaId+'&proyecto='+webServicesDatosProducto[0].proyectoId+'&producto='+webServicesDatosProducto[0].productoId+'&anho=2016',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -5965,7 +5965,7 @@ $("body").on("change", "#beneficiarioTipo",function(event){
 	var beneficiarioTipoId = $("#beneficiarioTipo option:selected").val();
 	
 	var webServicesBeneficiarioGrupo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioTipoId='+beneficiarioTipoId,
+		url:'/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioTipoId='+beneficiarioTipoId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -6018,7 +6018,7 @@ $("body").on("click", ".consultaEditarAvance",function(event){
   	
    	var webServicesAvance = $.ajax({
 
-   		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvance&avanceId='+avanceId,
+   		url:'/tablero/ajaxSelects2?action=getAvance&avanceId='+avanceId,
 
    	  	type:'get',
 
@@ -6117,7 +6117,7 @@ $("body").on("click", ".editarAvance",function(event){
 		//$("#cantidadBeneficiariosAvance").val("");
 	    
 	   	var webServicesAvance = $.ajax({
-	   		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvance&avanceId='+avanceId,
+	   		url:'/tablero/ajaxSelects2?action=getAvance&avanceId='+avanceId,
 	   	  	type:'get',
 	   	  	dataType:'json',
 	   	  	async:false       
@@ -6182,7 +6182,7 @@ $("body").on("click", ".consultaBorrarAvance",function(event){
 	}		
 	
    	var webServicesAvance = $.ajax({
-   		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvance&avanceId='+avanceId,
+   		url:'/tablero/ajaxSelects2?action=getAvance&avanceId='+avanceId,
    	  	type:'get',
    	  	dataType:'json',
    	  	async:false       
@@ -6234,7 +6234,7 @@ $("body").on("click", ".borrarAvance",function(event){
     var estado = idParsed[1];
     
    	var webServicesAvance = $.ajax({
-   		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvance&avanceId='+avanceId,
+   		url:'/tablero/ajaxSelects2?action=getAvance&avanceId='+avanceId,
    	  	type:'get',
    	  	dataType:'json',
    	  	async:false       
@@ -6324,7 +6324,7 @@ $("body").on("click", ".guardarCosto",function(event){
         	{
         		
         		var webServicesAvanceCosto = $.ajax({
-        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCosto&avanceId='+avanceId,
+        			url:'/tablero/ajaxSelects2?action=getAvanceCosto&avanceId='+avanceId,
         		  	type:'get',
         		  	dataType:'json',
         		  	async:false       
@@ -6404,7 +6404,7 @@ $("body").on("click", ".consultaBorrarCosto",function(event){
 	}		
 	
 	var webServicesAvanceCosto = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCosto&costoId='+costoId,
+		url:'/tablero/ajaxSelects2?action=getAvanceCosto&costoId='+costoId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -6456,7 +6456,7 @@ $("body").on("click", ".borrarAvanceCosto",function(event){
     var estado = idParsed[1];
     
 	var webServicesAvanceCosto = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCosto&costoId='+costoId,
+		url:'/tablero/ajaxSelects2?action=getAvanceCosto&costoId='+costoId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -6517,7 +6517,7 @@ $("body").on("click", ".consultaEditarCosto",function(event){
 	}	
 	
 	var webServicesAvanceCosto = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCosto&costoId='+costoId,
+		url:'/tablero/ajaxSelects2?action=getAvanceCosto&costoId='+costoId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -6576,7 +6576,7 @@ $("body").on("click", ".editarAvanceCosto",function(event){
 	var costoId = idParsed[0];
 	
 	var webServicesAvanceCosto = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCosto&costoId='+costoId,
+		url:'/tablero/ajaxSelects2?action=getAvanceCosto&costoId='+costoId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -6767,7 +6767,7 @@ $("body").on("click", ".consultaBorrarEvidencia",function(event){
 	}		
 	
 	var webServicesEvidencia = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getEvidencia&idEvidencia='+idEvidencia,
+		url:'/tablero/ajaxSelects2?action=getEvidencia&idEvidencia='+idEvidencia,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -6819,7 +6819,7 @@ $("body").on("click", ".borrarEvidencia",function(event){
     var estado = idParsed[1];
     
 	var webServicesEvidencia = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getEvidencia&idEvidencia='+evidenciaId,
+		url:'/tablero/ajaxSelects2?action=getEvidencia&idEvidencia='+evidenciaId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -6879,7 +6879,7 @@ $("body").on("click", ".consultaEditarEvidencia",function(event){
 	}	
 	
 	var webServicesEvidencia = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getEvidencia&idEvidencia='+evidenciaId,
+		url:'/tablero/ajaxSelects2?action=getEvidencia&idEvidencia='+evidenciaId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -7085,7 +7085,7 @@ $("body").on("click", ".guardarBeneficiario",function(event){
         	{
         		
         		var webServicesBeneficiario = $.ajax({
-        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiario&avanceId='+avanceId,
+        			url:'/tablero/ajaxSelects2?action=getBeneficiario&avanceId='+avanceId,
         		  	type:'get',
         		  	dataType:'json',
         		  	async:false       
@@ -7096,7 +7096,7 @@ $("body").on("click", ".guardarBeneficiario",function(event){
         		for(var d = 0; d < webServicesBeneficiario.length; d++)
         		{
             		var webServicesBeneficiarioTipo = $.ajax({
-            			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioTipo&beneficiarioTipoId='+webServicesBeneficiario[d].tipoId,
+            			url:'/tablero/ajaxSelects2?action=getBeneficiarioTipo&beneficiarioTipoId='+webServicesBeneficiario[d].tipoId,
             		  	type:'get',
             		  	dataType:'json',
             		  	async:false       
@@ -7104,7 +7104,7 @@ $("body").on("click", ".guardarBeneficiario",function(event){
             		webServicesBeneficiarioTipo = JSON.parse(webServicesBeneficiarioTipo);
             		
             		var webServicesBeneficiarioGrupo = $.ajax({
-            			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioGrupoId='+webServicesBeneficiario[d].grupoId,
+            			url:'/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioGrupoId='+webServicesBeneficiario[d].grupoId,
             		  	type:'get',
             		  	dataType:'json',
             		  	async:false       
@@ -7182,7 +7182,7 @@ $("body").on("click", ".consultaBorrarBeneficiario",function(event){
 	}		
 	
 	var webServicesBeneficiario = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiario&beneficiarioId='+beneficiarioId,
+		url:'/tablero/ajaxSelects2?action=getBeneficiario&beneficiarioId='+beneficiarioId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -7234,7 +7234,7 @@ $("body").on("click", ".borrarBeneficiario",function(event){
     var estado = idParsed[1];
     
 	var webServicesBeneficiario = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiario&beneficiarioId='+beneficiarioId,
+		url:'/tablero/ajaxSelects2?action=getBeneficiario&beneficiarioId='+beneficiarioId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -7297,7 +7297,7 @@ $("body").on("click", ".consultaEditarBeneficiario",function(event){
 	}	
 	
 	var webServicesBeneficiarioTipo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioTipo',
+		url:'/tablero/ajaxSelects2?action=getBeneficiarioTipo',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -7311,7 +7311,7 @@ $("body").on("click", ".consultaEditarBeneficiario",function(event){
 	}
 	
 	var webServicesBeneficiario = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiario&beneficiarioId='+beneficiarioId,
+		url:'/tablero/ajaxSelects2?action=getBeneficiario&beneficiarioId='+beneficiarioId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -7319,7 +7319,7 @@ $("body").on("click", ".consultaEditarBeneficiario",function(event){
 	webServicesBeneficiario = JSON.parse(webServicesBeneficiario);
 	
 	var webServicesBeneficiarioGrupo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioTipoId='+webServicesBeneficiario[0].tipoId,
+		url:'/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioTipoId='+webServicesBeneficiario[0].tipoId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -7438,7 +7438,7 @@ $("body").on("click", ".consultaBorrarInsLineaAccion",function(event){
 	}	
 	
 	var insLineaAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion&insLineaAccionId='+id,
+		url:'/tablero/ajaxSelects2?action=getInsLineaAccion&insLineaAccionId='+id,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -7447,7 +7447,7 @@ $("body").on("click", ".consultaBorrarInsLineaAccion",function(event){
 	
 	
 	var lineaAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+		url:'/tablero/ajaxSelects2?action=getLineaAccion',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -7556,7 +7556,7 @@ $("body").on("click", ".consultaEditarHito",function(event){
  
 
 	var programacionWebService = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getProgramacion&programacionId='+programacionId,
+		url:'/tablero/ajaxSelects2?action=getProgramacion&programacionId='+programacionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -7670,7 +7670,7 @@ $("body").on("click", ".consultaBorrarHito",function(event){
 	}		
 	
 	var programacionWebService = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getProgramacion&programacionId='+programacionId,
+		url:'/tablero/ajaxSelects2?action=getProgramacion&programacionId='+programacionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -7721,7 +7721,7 @@ $("body").on("click", ".borrarHito",function(event){
     var estado = idParsed[1];
     
 	var programacionWebService = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getProgramacion&programacionId='+programacionId,
+		url:'/tablero/ajaxSelects2?action=getProgramacion&programacionId='+programacionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -7792,7 +7792,7 @@ $("body").on("click", ".modalDestinatario",function(event){
 		$("#modalBorrarDestinatarioAccion").remove();
 	}		
 	var insLineaAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion&insLineaAccionId='+insLineaAccionId,
+		url:'/tablero/ajaxSelects2?action=getInsLineaAccion&insLineaAccionId='+insLineaAccionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -7800,7 +7800,7 @@ $("body").on("click", ".modalDestinatario",function(event){
 	insLineaAccion=JSON.parse(insLineaAccion);
 	
 	var institucion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion&institucionId='+insLineaAccion[0].institucionId,
+		url:'/tablero/ajaxSelects2?action=getInstitucion&institucionId='+insLineaAccion[0].institucionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -7808,7 +7808,7 @@ $("body").on("click", ".modalDestinatario",function(event){
 	institucion = JSON.parse(institucion);
 	
 	var lineaAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId='+lineaAccionId,
+		url:'/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId='+lineaAccionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -7816,7 +7816,7 @@ $("body").on("click", ".modalDestinatario",function(event){
 	lineaAccion = JSON.parse(lineaAccion);
 	
 	var accion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&accionId='+accionId,
+		url:'/tablero/ajaxSelects2?action=getAccion&accionId='+accionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -7824,7 +7824,7 @@ $("body").on("click", ".modalDestinatario",function(event){
 	accion = JSON.parse(accion);
 	
 	var accionCatalogo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[0].accionCatalogoId,
+		url:'/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[0].accionCatalogoId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -7832,7 +7832,7 @@ $("body").on("click", ".modalDestinatario",function(event){
 	accionCatalogo = JSON.parse(accionCatalogo);
 	
 	var webServicesBeneficiarioTipo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioTipo',
+		url:'/tablero/ajaxSelects2?action=getBeneficiarioTipo',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -7846,7 +7846,7 @@ $("body").on("click", ".modalDestinatario",function(event){
 	}
 	
 	var webServicesBeneficiarioAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionDestinatario&accionId='+accionId,
+		url:'/tablero/ajaxSelects2?action=getAccionDestinatario&accionId='+accionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -7861,7 +7861,7 @@ $("body").on("click", ".modalDestinatario",function(event){
 			// pasa a la siguiente fila en el for ++
 		}else{
 			var webServicesBeneficiarioTipo = $.ajax({
-				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioTipo&beneficiarioTipoId='+webServicesBeneficiarioAccion[a].beneficiarioTipoId,
+				url:'/tablero/ajaxSelects2?action=getBeneficiarioTipo&beneficiarioTipoId='+webServicesBeneficiarioAccion[a].beneficiarioTipoId,
 			  	type:'get',
 			  	dataType:'json',
 			  	async:false       
@@ -7869,7 +7869,7 @@ $("body").on("click", ".modalDestinatario",function(event){
 			webServicesBeneficiarioTipo = JSON.parse(webServicesBeneficiarioTipo);
 			
 			var webServicesBeneficiarioGrupo = $.ajax({
-				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioGrupoId='+webServicesBeneficiarioAccion[a].beneficiarioGrupoId,
+				url:'/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioGrupoId='+webServicesBeneficiarioAccion[a].beneficiarioGrupoId,
 			  	type:'get',
 			  	dataType:'json',
 			  	async:false       
@@ -8043,7 +8043,7 @@ $("body").on("click", ".guardarAccionBeneficiario",function(event){
 	        		$("#cantidadDestinatarioAccion").val('');
 	        		
 	        		var webServicesBeneficiarioTipo = $.ajax({
-	        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioTipo',
+	        			url:'/tablero/ajaxSelects2?action=getBeneficiarioTipo',
 	        		  	type:'get',
 	        		  	dataType:'json',
 	        		  	async:false       
@@ -8057,7 +8057,7 @@ $("body").on("click", ".guardarAccionBeneficiario",function(event){
 	        		}
 	        		
 	        		var webServicesBeneficiarioAccion = $.ajax({
-	        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionDestinatario&accionId='+accionId,
+	        			url:'/tablero/ajaxSelects2?action=getAccionDestinatario&accionId='+accionId,
 	        		  	type:'get',
 	        		  	dataType:'json',
 	        		  	async:false       
@@ -8068,7 +8068,7 @@ $("body").on("click", ".guardarAccionBeneficiario",function(event){
 	        		for(var a = 0; a < webServicesBeneficiarioAccion.length; a++)
 	        		{
 	        			var webServicesBeneficiarioTipo = $.ajax({
-	        				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioTipo&beneficiarioTipoId='+webServicesBeneficiarioAccion[a].beneficiarioTipoId,
+	        				url:'/tablero/ajaxSelects2?action=getBeneficiarioTipo&beneficiarioTipoId='+webServicesBeneficiarioAccion[a].beneficiarioTipoId,
 	        			  	type:'get',
 	        			  	dataType:'json',
 	        			  	async:false       
@@ -8076,7 +8076,7 @@ $("body").on("click", ".guardarAccionBeneficiario",function(event){
 	        			webServicesBeneficiarioTipo = JSON.parse(webServicesBeneficiarioTipo);
 	        			
 	        			var webServicesBeneficiarioGrupo = $.ajax({
-	        				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioGrupoId='+webServicesBeneficiarioAccion[a].beneficiarioGrupoId,
+	        				url:'/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioGrupoId='+webServicesBeneficiarioAccion[a].beneficiarioGrupoId,
 	        			  	type:'get',
 	        			  	dataType:'json',
 	        			  	async:false       
@@ -8132,7 +8132,7 @@ $("body").on("click", ".consultaEditarDestinatario",function(event){
 	}	
 	
 	var webServicesBeneficiarioTipo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioTipo',
+		url:'/tablero/ajaxSelects2?action=getBeneficiarioTipo',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -8146,7 +8146,7 @@ $("body").on("click", ".consultaEditarDestinatario",function(event){
 	}
 	
 	var webServicesDestinatarioAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionDestinatario&destinatarioId='+destinatarioId,
+		url:'/tablero/ajaxSelects2?action=getAccionDestinatario&destinatarioId='+destinatarioId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -8154,7 +8154,7 @@ $("body").on("click", ".consultaEditarDestinatario",function(event){
 	webServicesDestinatarioAccion = JSON.parse(webServicesDestinatarioAccion);
 	
 	var webServicesBeneficiarioGrupo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioTipoId='+webServicesDestinatarioAccion[0].beneficiarioTipoId,
+		url:'/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioTipoId='+webServicesDestinatarioAccion[0].beneficiarioTipoId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -8215,7 +8215,7 @@ $("body").on("change", "#tipoDestinatarioAccion",function(event){
 	var destinatarioTipoId = $("#tipoDestinatarioAccion option:selected").val();
 	
 	var webServicesDestinatarioGrupo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioTipoId='+destinatarioTipoId,
+		url:'/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioTipoId='+destinatarioTipoId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -8303,7 +8303,7 @@ $("body").on("click", ".consultaBorrarDestinatarioAccion",function(event){
 	}		
 	
 	var WebServiceDestinatarioAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionDestinatario&destinatarioId='+destinatarioId,
+		url:'/tablero/ajaxSelects2?action=getAccionDestinatario&destinatarioId='+destinatarioId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -8354,7 +8354,7 @@ $("body").on("click", ".borrarDestinatarioAccion",function(event){
     var estado = idParsed[1];
     
 	var WebServiceDestinatarioAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionDestinatario&destinatarioId='+destinatarioId,
+		url:'/tablero/ajaxSelects2?action=getAccionDestinatario&destinatarioId='+destinatarioId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -8420,7 +8420,7 @@ $("body").on("click", ".avanceCualitativo",function(event){
 	}	
 	
 	var lineaAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+		url:'/tablero/ajaxSelects2?action=getLineaAccion',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -8436,7 +8436,7 @@ $("body").on("click", ".avanceCualitativo",function(event){
 	}
 	
 	var catalogoAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo',
+		url:'/tablero/ajaxSelects2?action=getAccionCatalogo',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -8450,7 +8450,7 @@ $("body").on("click", ".avanceCualitativo",function(event){
 	}
 	
 	var institucion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+		url:'/tablero/ajaxSelects2?action=getInstitucion',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -8466,7 +8466,7 @@ $("body").on("click", ".avanceCualitativo",function(event){
 	}
 	
 	var periodo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+		url:'/tablero/ajaxSelects2?action=getPeriodo',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -8482,7 +8482,7 @@ $("body").on("click", ".avanceCualitativo",function(event){
 	}
 	
 	var unidadMedida = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+		url:'/tablero/ajaxSelects2?action=getUnidadMedida',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -8495,7 +8495,7 @@ $("body").on("click", ".avanceCualitativo",function(event){
 	}
 	
 	var departamentos = $.ajax({
-    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
+    	url:'/tablero/ajaxSelects?action=getDepartamento',
       	type:'get',
       	dataType:'json',
       	async:false       
@@ -8508,7 +8508,7 @@ $("body").on("click", ".avanceCualitativo",function(event){
 	}
 	
 	var distritos = $.ajax({
-    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito',
+    	url:'/tablero/ajaxSelects?action=getDistrito',
       	type:'get',
       	dataType:'json',
       	async:false       
@@ -8516,7 +8516,7 @@ $("body").on("click", ".avanceCualitativo",function(event){
 	distritos = JSON.parse(distritos);
 	
 	var accion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccionId,
+		url:'/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -8524,7 +8524,7 @@ $("body").on("click", ".avanceCualitativo",function(event){
 	accion = JSON.parse(accion);
 	
 	var trimestre = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getTrimestre',
+		url:'/tablero/ajaxSelects2?action=getTrimestre',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -8717,7 +8717,7 @@ function listaAvanceCualitativo(insLineaAccionId,lineaAccionId,institucionId,per
 	
 	var tablaAvanceCualitativo;
 	var avanceCualitativo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCualitativo&insLineaAccionId='+insLineaAccionId,
+		url:'/tablero/ajaxSelects2?action=getAvanceCualitativo&insLineaAccionId='+insLineaAccionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -8727,7 +8727,7 @@ function listaAvanceCualitativo(insLineaAccionId,lineaAccionId,institucionId,per
 	for(a = 0;a < avanceCualitativo.length; a++){
 		
 		var accionCatalogo = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+avanceCualitativo[a].accionCatalogoId,
+			url:'/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+avanceCualitativo[a].accionCatalogoId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -8735,7 +8735,7 @@ function listaAvanceCualitativo(insLineaAccionId,lineaAccionId,institucionId,per
 		accionCatalogo = JSON.parse(accionCatalogo);
 		
 		var trimestre = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getTrimestre&trimestreId='+avanceCualitativo[a].trimestreId,
+			url:'/tablero/ajaxSelects2?action=getTrimestre&trimestreId='+avanceCualitativo[a].trimestreId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -8852,7 +8852,7 @@ $("body").on("click", ".consultaEditarAvanceCualitativo",function(event){
 	}	
 	
 	var accion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccionId,
+		url:'/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -8860,7 +8860,7 @@ $("body").on("click", ".consultaEditarAvanceCualitativo",function(event){
 	accion = JSON.parse(accion);
 	
 	var catalogoAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo',
+		url:'/tablero/ajaxSelects2?action=getAccionCatalogo',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -8868,7 +8868,7 @@ $("body").on("click", ".consultaEditarAvanceCualitativo",function(event){
 	catalogoAccion = JSON.parse(catalogoAccion);
 	
 	var trimestre = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getTrimestre',
+		url:'/tablero/ajaxSelects2?action=getTrimestre',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -8876,7 +8876,7 @@ $("body").on("click", ".consultaEditarAvanceCualitativo",function(event){
 	trimestre = JSON.parse(trimestre);
 	
 	var avanceCualitativo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCualitativo&idAvanceCualitativo='+avanceCualitativoId,
+		url:'/tablero/ajaxSelects2?action=getAvanceCualitativo&idAvanceCualitativo='+avanceCualitativoId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -9044,7 +9044,7 @@ $("body").on("click", ".consultaBorrarAvanceCualitativo",function(event){
 	}	
 	
 	var webServiceAvanceCualitativo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCualitativo&idAvanceCualitativo='+avanceCualitativoId,
+		url:'/tablero/ajaxSelects2?action=getAvanceCualitativo&idAvanceCualitativo='+avanceCualitativoId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -9096,7 +9096,7 @@ $("body").on("click", ".borrarAvanceCualitativo",function(event){
     var estado = idParsed[1];
     
 	var webServiceAvanceCualitativo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCualitativo&idAvanceCualitativo='+avanceCualitativoId,
+		url:'/tablero/ajaxSelects2?action=getAvanceCualitativo&idAvanceCualitativo='+avanceCualitativoId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       

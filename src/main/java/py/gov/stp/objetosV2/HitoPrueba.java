@@ -1,5 +1,7 @@
 package py.gov.stp.objetosV2;
 
+import java.sql.Date;
+
 public class HitoPrueba {
 	protected String accion;
 	protected String nombreHito;
@@ -7,6 +9,10 @@ public class HitoPrueba {
 	protected String unidadMedida;
 	protected int cantidadPrevista;
 	protected int cantidadReal;
+	protected Date fechaInsercion;
+	protected Date fechaActualizacion;	
+    protected String usuarioResponsable;
+    
 	
 	public String getAccion() {
 		return accion;
@@ -44,6 +50,23 @@ public class HitoPrueba {
 	public void setCantidadReal(int cantidadReal) {
 		this.cantidadReal = cantidadReal;
 	}
-	
+	public Date getFechaInsercion() {
+		return fechaInsercion;
+	}
+	public void setFechaInsercion(Date fechaInsercion) {
+		this.fechaInsercion = fechaInsercion;
+	}
+	public Date getFechaActualizacion() {
+		return fechaActualizacion;
+	}
+	public void setFechaActualizacion(Date fechaActualizacion) {
+		this.fechaActualizacion = fechaActualizacion;
+	}
+	public String getUsuarioResponsable() {
+		return usuarioResponsable;
+	}
+	public void setUsuarioResponsable(String usuarioResponsable) {
+		this.usuarioResponsable = usuarioResponsable;
+	}
 
 }
