@@ -20,6 +20,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import javax.xml.datatype.DatatypeConfigurationException;
 
+import org.jasig.cas.client.authentication.AttributePrincipal;
+
 import py.gov.stp.tools2.*;
 import py.gov.stp.objetosV2.*;
 
@@ -43,8 +45,18 @@ public class ajaxUpdate extends HttpServlet {
     	request.setCharacterEncoding("UTF-8");
     	
     	
-    	
     	String accion = request.getParameter("accion");
+    	
+    	AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();
+    	Map attributes = user.getAttributes(); 
+    	String userCorreo = user.getName(); 
+    	String userNivelId = attributes.get("nivel_id").toString();
+    	String userEntidadId = attributes.get("entidad_id").toString();
+    	String userUnrId = attributes.get("unr_id").toString();
+    	String userRoleId = attributes.get("role_id_tablero").toString();
+    	
+    	
+    	//String accion = request.getParameter("accion");
     	Integer nivel = null;
     	Integer entidad = null;
     	Integer tipoPresupuesto = null;
@@ -888,10 +900,21 @@ public class ajaxUpdate extends HttpServlet {
                 if(br != null){ json = br.readLine();}
                 Gson gsonInsert = new Gson();
                 objeto=gsonInsert.fromJson(json, InsLineaAccionHasEtiqueta.class);
-                boolean status = SqlUpdates.borradoInstanciaEtiqueta(objeto);
+                boolean status = SqlUpdates.borradoInstanciaEtiqueta(objeto,userCorreo);
         		myObj.addProperty("success", status);
         		out.println(myObj.toString());
-        	}        
+        	}
+        	if (accion.equals("borradoUsuarioLineaAccion")){
+        		UsuarioLineaAccion objeto = new UsuarioLineaAccion();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                objeto=gsonInsert.fromJson(json, UsuarioLineaAccion.class);
+                boolean status = SqlUpdates.borradoUsuarioLineaAccion(objeto);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	} 
         	
         }     
         

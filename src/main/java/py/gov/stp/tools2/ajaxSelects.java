@@ -1538,8 +1538,12 @@ public class ajaxSelects extends HttpServlet {
         	if (action.equals("getUsuarioLineaAccion")){
         		String objetos=null;
         		condition = " where true ";
-        		if (userCorreo!=null) condition += " and usuario_correo ='"+userCorreo+"'";
-           		try {objetos = SqlSelects.selectUsuarioLineaAccion(condition);}
+        		if (usuario!=null){
+        			condition += " and usuario_correo ='"+usuario+"'";
+        		}else{
+        			condition += " and usuario_correo ='"+userCorreo+"'";
+        		}
+        		try {objetos = SqlSelects.selectUsuarioLineaAccion(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		out.println(objetos);return;        	
         	}

@@ -882,7 +882,7 @@ public class SqlInserts {
 		
 	}
 	
-	public static boolean insertEtiquetaUsuario(EtiquetaUsuario etiqueta){
+	public static boolean insertEtiquetaUsuario(EtiquetaUsuario etiqueta, String usuarioResponsable){
 		try {
 			Connection conn=ConnectionConfiguration.conectar();
 
@@ -893,7 +893,7 @@ public class SqlInserts {
 			
 			insert.setString (1, etiqueta.getUsuarioCorreo());
 			insert.setInt (2, etiqueta.getEtiquetaId());
-			insert.setString(3, etiqueta.getUsuarioResponsable());
+			insert.setString(3, usuarioResponsable);
 			
 			insert.execute();
 						
@@ -934,7 +934,7 @@ public class SqlInserts {
 						
 			PreparedStatement insert = conn.prepareStatement(query);		
 			
-			insert.setString (1, usuarioResponsable);
+			insert.setString (1, objeto.getUsuarioCorreo());
 			insert.setInt (2, objeto.getLineaAccionId());
 			insert.setString(3, usuarioResponsable);
 			

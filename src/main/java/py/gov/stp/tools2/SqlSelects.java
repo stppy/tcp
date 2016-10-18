@@ -2801,7 +2801,8 @@ public class SqlSelects {
 	   	 		+ "linea_accion_id as \"lineaAccionId\","
 	   	 		+ "fecha_actualizacion,"
 	   	 		+ "fecha_insercion,"
-	   	 		+ "usuario_responsable"
+	   	 		+ "usuario_responsable,"
+	   	 		+ "borrado"
 	   	 		+ " from usuario_linea_accion"+condition+")t";
 
 
@@ -2860,7 +2861,7 @@ public class SqlSelects {
 	  }
 	public static String selectUsuarioEtiqueta(String condition) throws SQLException{
 	   	 Connection conect=ConnectionConfiguration.conectar();
-	   	 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from( select * from usuario_etiqueta"+condition+" and borrado is false)t";
+	   	 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from( select * from usuario_etiqueta"+condition+")t";
 
 
 		Statement statement = null;

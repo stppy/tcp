@@ -1573,14 +1573,29 @@ public static boolean borradoHito(Hito objeto){
 		    return true;
 		  } catch (SQLException e) {e.printStackTrace(); return false;}
 	}
-	public static boolean borradoInstanciaEtiqueta(InsLineaAccionHasEtiqueta objeto){
+	public static boolean borradoInstanciaEtiqueta(InsLineaAccionHasEtiqueta objeto, String userCorreo){
 	  	 Connection conect=ConnectionConfiguration.conectar();
 	  	 Statement statement = null;
 	  	 objeto.changeBorrado();
 	  	 
-	  	 String query = "update ins_linea_accion_has_etiqueta set borrado='"+objeto.isBorrado()+"'";	
+	  	 String query = "update ins_linea_accion_has_etiqueta set borrado='"+objeto.isBorrado()+"', usuario_responsable='"+userCorreo+"'";	
 				 
 		 query+=" where ins_linea_accion_id ="+objeto.getInsLineaAccionId()+" and etiqueta_id ="+objeto.getEtiquetaId(); 
+		 try {
+			statement=conect.createStatement();
+			statement.execute(query);
+		    conect.close();
+		    return true;
+		  } catch (SQLException e) {e.printStackTrace(); return false;}
+	}
+	public static boolean borradoUsuarioLineaAccion(UsuarioLineaAccion objeto){
+	  	 Connection conect=ConnectionConfiguration.conectar();
+	  	 Statement statement = null;
+	  	 objeto.changeBorrado();
+	  	 
+	  	 String query = "update usuario_linea_accion set borrado='"+objeto.isBorrado()+"'";	
+				 
+		 query+=" where id ="+objeto.getId(); 
 		 try {
 			statement=conect.createStatement();
 			statement.execute(query);

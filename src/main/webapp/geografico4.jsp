@@ -1832,7 +1832,7 @@ function renderNivelDistrital(lineasProgramadas, deptoId, distId){
 		}).responseText;
 		insLineaAccionHasEtiqueta = JSON.parse(insLineaAccionHasEtiqueta);
 	}
-	
+	 
 	var contenidoEnRowTemp="";	
 	var tablaInstituciones="";
 	var tempInstituciones="";
@@ -1856,7 +1856,8 @@ function renderNivelDistrital(lineasProgramadas, deptoId, distId){
 							{
 								if(usuarioLineaAccion[d].lineaAccionId == lineasProgramadas[n].lineaAccionId)
 								{
-									if ( instituciones[m].id==lineasProgramadas[n].institucionId ){
+									if (( instituciones[m].id==lineasProgramadas[n].institucionId  && lineasProgramadas[n].cantidadAnho > 0 && lineasProgramadas[n].cantidadAvance > 0) || ( instituciones[m].id==lineasProgramadas[n].institucionId && lineasProgramadas[n].cantidadAnho > 0) || ( instituciones[m].id==lineasProgramadas[n].institucionId && lineasProgramadas[n].cantidadAvance > 0) ){
+
 										if (flagIns == 0){
 											  
 											  tempInstituciones += '<tr><td colspan="12"><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td></tr>';
@@ -1919,6 +1920,7 @@ function renderNivelDistrital(lineasProgramadas, deptoId, distId){
 										  }
 										  tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].costoAc/1000000).toFixed(2))+'</td>'+
 										  '</tr>';
+
 									}
 								}
 							}

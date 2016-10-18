@@ -74,6 +74,16 @@ if (user != null && user.getName()!= "parce@nandeparaguay.org") { %>
 	<%@ include file="/frames/perfil.jsp" %>
 <script>
 periodoSeleccionado=new Date().getFullYear();
+
+var permisosModulos = $.ajax({
+	url:'http://spr.stp.gov.py/ajaxSelects?accion=getPermisosPorModulos&usuarioId='+usuarios[0].id,
+  	type:'get',
+  	dataType:'json',
+  	async:false       
+}).responseText;		
+permisosModulos=JSON.parse(permisosModulos);
+
+
 function renderInsLineaAccion(PeriodoActual){
 	
 	var insLineaAccion = $.ajax({
@@ -198,13 +208,19 @@ function renderInsLineaAccion(PeriodoActual){
 											{
 												if(insLineaAccion[w].borrado == true){
 													<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
-														cuerpoTablaInsLineaAccion+='<tr><td><del>'+periodo[p].nombre+'</del></td>';
+										 				if(permisosModulos[0].permisoModuloId == 0 || permisosModulos[0].permisoModuloId == 1 ){
+															cuerpoTablaInsLineaAccion+='<tr><td><del>'+periodo[p].nombre+'</del></td>';
+										 				}
 													<%}%>
 												}else{
 													<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-														cuerpoTablaInsLineaAccion+='<tr><td>'+periodo[p].nombre+'</td>';	
+									 					if(permisosModulos[0].permisoModuloId == 0 || permisosModulos[0].permisoModuloId == 1 || permisosModulos[0].permisoModuloId == 2 ){
+															cuerpoTablaInsLineaAccion+='<tr><td>'+periodo[p].nombre+'</td>';
+									 					}
 													<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-														cuerpoTablaInsLineaAccion+='<tr><td>'+periodo[p].nombre+'</td>';    
+														if(permisosModulos[0].permisoModuloId == 3 ){
+															cuerpoTablaInsLineaAccion+='<tr><td>'+periodo[p].nombre+'</td>';
+														}
 													<%}%>
 												}
 												bandPeriodo = 1;
@@ -220,13 +236,19 @@ function renderInsLineaAccion(PeriodoActual){
 											{
 												if(insLineaAccion[w].borrado == true){
 													<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
-														cuerpoTablaInsLineaAccion+='<td><del>'+institucion[m].sigla+'</del></td>';
+										 				if(permisosModulos[0].permisoModuloId == 0 || permisosModulos[0].permisoModuloId == 1 ){
+															cuerpoTablaInsLineaAccion+='<td><del>'+institucion[m].sigla+'</del></td>';
+										 				}
 													<%}%>
 												}else{
 													<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-														cuerpoTablaInsLineaAccion+='<td>'+institucion[m].sigla+'</td>';
+								 						if(permisosModulos[0].permisoModuloId == 0 || permisosModulos[0].permisoModuloId == 1 || permisosModulos[0].permisoModuloId == 2 ){
+															cuerpoTablaInsLineaAccion+='<td>'+institucion[m].sigla+'</td>';
+								 						}
 													<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-														cuerpoTablaInsLineaAccion+='<td>'+institucion[m].sigla+'</td>';
+														if(permisosModulos[0].permisoModuloId == 3 ){
+															cuerpoTablaInsLineaAccion+='<td>'+institucion[m].sigla+'</td>';
+														}
 													<%}%>
 												}
 												bandInstitucion = 1;
@@ -243,13 +265,19 @@ function renderInsLineaAccion(PeriodoActual){
 											{
 												if(insLineaAccion[w].borrado == true){
 													<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
-													cuerpoTablaInsLineaAccion+='<td><del>'+lineaAccion[i].nombre+'</del></td>';
+									 					if(permisosModulos[0].permisoModuloId == 0 || permisosModulos[0].permisoModuloId == 1 ){
+															cuerpoTablaInsLineaAccion+='<td><del>'+lineaAccion[i].nombre+'</del></td>';
+									 					}
 													<%}%>
 												}else{
 													<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-														cuerpoTablaInsLineaAccion+='<td>'+lineaAccion[i].nombre+'</td>';	
+								 						if(permisosModulos[0].permisoModuloId == 0 || permisosModulos[0].permisoModuloId == 1 || permisosModulos[0].permisoModuloId == 2 ){
+															cuerpoTablaInsLineaAccion+='<td>'+lineaAccion[i].nombre+'</td>';
+								 						}
 													<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-														cuerpoTablaInsLineaAccion+='<td>'+lineaAccion[i].nombre+'</td>';	
+														if(permisosModulos[0].permisoModuloId == 3 ){
+															cuerpoTablaInsLineaAccion+='<td>'+lineaAccion[i].nombre+'</td>';
+														}
 													<%}%>
 												}
 												bandLineaAccion = 1;
@@ -280,13 +308,19 @@ function renderInsLineaAccion(PeriodoActual){
 										
 										if(insLineaAccion[w].borrado == true){
 											<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
-						 						cuerpoTablaInsLineaAccion+='<td><del>'+numeroConComa(parseFloat(insLineaAccion[w].meta))+'</del></td><td class="text-center"><del>'+nombreUnidadMedida+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaBorrarInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Borrar Acción" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+'><span class="glyphicon glyphicon-refresh"></span></button></td></tr>';	 						
-						 						<%}%>	
+									 			if(permisosModulos[0].permisoModuloId == 0 || permisosModulos[0].permisoModuloId == 1 ){
+						 							cuerpoTablaInsLineaAccion+='<td><del>'+numeroConComa(parseFloat(insLineaAccion[w].meta))+'</del></td><td class="text-center"><del>'+nombreUnidadMedida+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaBorrarInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Borrar Acción" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+'><span class="glyphicon glyphicon-refresh"></span></button></td></tr>';
+									 			}
+						 					<%}%>	
 											}else{
 											<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-						 						cuerpoTablaInsLineaAccion+='<td>'+numeroConComa(parseFloat(insLineaAccion[w].meta))+'</td><td class="text-center">'+nombreUnidadMedida+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm registrosInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Editar Línea de Acción" codigoRegistroInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'-'+insLineaAccion[w].meta+'-'+insLineaAccion[w].version+'><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Borrar Línea de Acción" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+'><span class="glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-default btn-sm  agregarAccion" data-toggle="tooltip" data-placement="top" title="Agregar Acción" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-list-alt"></span></button><button type="button" class="btn btn-default btn-sm avanceCualitativo" data-toggle="tooltip" data-placement="top" title="Avance Cualitativo" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-tasks"></span></button></td></tr>';
+								 				if(permisosModulos[0].permisoModuloId == 0 || permisosModulos[0].permisoModuloId == 1 || permisosModulos[0].permisoModuloId == 2 ){
+						 							cuerpoTablaInsLineaAccion+='<td>'+numeroConComa(parseFloat(insLineaAccion[w].meta))+'</td><td class="text-center">'+nombreUnidadMedida+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm registrosInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Editar Línea de Acción" codigoRegistroInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'-'+insLineaAccion[w].meta+'-'+insLineaAccion[w].version+'><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Borrar Línea de Acción" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+'><span class="glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-default btn-sm  agregarAccion" data-toggle="tooltip" data-placement="top" title="Agregar Acción" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-list-alt"></span></button><button type="button" class="btn btn-default btn-sm avanceCualitativo" data-toggle="tooltip" data-placement="top" title="Avance Cualitativo" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-tasks"></span></button></td></tr>';
+								 				}
 											<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-												cuerpoTablaInsLineaAccion+='<td>'+numeroConComa(parseFloat(insLineaAccion[w].meta))+'</td><td class="text-center">'+nombreUnidadMedida+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm  agregarAccion" data-toggle="tooltip" data-placement="top" title="Agregar Acción" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-list-alt"></span></button><button type="button" class="btn btn-default btn-sm avanceCualitativo" data-toggle="tooltip" data-placement="top" title="Avance Cualitativo" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-tasks"></span></button></td></tr>';
+												if(permisosModulos[0].permisoModuloId == 3 ){
+													cuerpoTablaInsLineaAccion+='<td>'+numeroConComa(parseFloat(insLineaAccion[w].meta))+'</td><td class="text-center">'+nombreUnidadMedida+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm  agregarAccion" data-toggle="tooltip" data-placement="top" title="Agregar Acción" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-list-alt"></span></button><button type="button" class="btn btn-default btn-sm avanceCualitativo" data-toggle="tooltip" data-placement="top" title="Avance Cualitativo" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-tasks"></span></button></td></tr>';
+												}
 											<%}%>
 										}
 									}
@@ -554,10 +588,11 @@ function renderInsLineaAccion(PeriodoActual){
 	$("#dataTableInsLineaAccionAnterior").DataTable();
 	
 	}
-
+	
 <%if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
  	$(document).ready(function(){
- 		
+ 		if(permisosModulos[0].permisoModuloId != 4){
+ 			
  		onoff=false;
 		function OcultarRegistrosBorrados(){
 			if($("#chkMostrarOcultar").is(':checked')){
@@ -645,6 +680,10 @@ function renderInsLineaAccion(PeriodoActual){
 		/* $('.pagination').on('click',function(){
 			OcultarRegistrosBorrados();
 			}); */
+			
+ 		}else{
+ 			window.location = "http://spr.stp.gov.py/tablero/geografico4.jsp";
+ 		}
 		
 	});
 <%}else{%>
