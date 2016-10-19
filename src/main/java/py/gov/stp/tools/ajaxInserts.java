@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import javax.xml.datatype.DatatypeConfigurationException;
 
+import org.jasig.cas.client.authentication.AttributePrincipal;
+
 import py.gov.stp.objetosV2.AccionHasProducto;
 import py.gov.stp.objetosV2.HitoPrueba;
 import py.gov.stp.tools.SqlInserts;
@@ -38,6 +40,9 @@ public class ajaxInserts  extends HttpServlet {
     	 
     	String accion = request.getParameter("accion");
 
+    	AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();
+    	Map attributes = user.getAttributes(); 
+    	String userCorreo = user.getName(); 
         
         PrintWriter out = response.getWriter();
         response.setContentType("text/html"); 
@@ -74,7 +79,7 @@ public class ajaxInserts  extends HttpServlet {
             if(br != null){ json = br.readLine();}
             Gson gsonInsert = new Gson();
             obj=gsonInsert.fromJson(json, HitoPrueba.class);
-			SqlInserts.insertHitoPrueba(obj);
+			SqlInserts.insertHitoPrueba(obj,userCorreo);
     	}
        }
 
@@ -87,7 +92,7 @@ public class ajaxInserts  extends HttpServlet {
             if(br != null){ json = br.readLine();}
             Gson gsonInsert = new Gson();
             obj=gsonInsert.fromJson(json, AccionHasProducto.class);
-            boolean status = SqlInserts.insertAccionHasProducto(obj);
+            boolean status = SqlInserts.insertAccionHasProducto(obj,userCorreo);
     		myObj.addProperty("success", status);
     		out.println(myObj.toString());
     	}

@@ -3,7 +3,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <script>
 var lineaAccion = $.ajax({
-	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+	url:'/tablero/ajaxSelects2?action=getLineaAccion',
   	type:'get',
   	dataType:'json',
   	async:false       
@@ -17,7 +17,7 @@ for(i = 0;i<lineaAccion.length; i++){
 
 
 var institucion = $.ajax({
-	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+	url:'/tablero/ajaxSelects2?action=getInstitucion',
   	type:'get',
   	dataType:'json',
   	async:false       
@@ -30,7 +30,7 @@ for(m = 0;m<institucion.length; m++){
 }
 
 var periodo = $.ajax({
-	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+	url:'/tablero/ajaxSelects2?action=getPeriodo',
   	type:'get',
   	dataType:'json',
   	async:false       

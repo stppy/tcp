@@ -1938,7 +1938,7 @@ public class SqlSelects {
 			    objeto.setLineaAccionNombre(rs.getString("linea_accion_nombre"));
 			    objeto.setLineaAccionUnidadMedidaNombre(rs.getString("linea_um_nombre"));
 			    objeto.setInsLineaAccionPeriodoId(rs.getInt("periodo"));
-			    objeto.setMeta(rs.getInt("meta_comprometida"));
+			    objeto.setMeta(rs.getDouble("meta_comprometida"));
 			    objeto.setCantidadAnho(rs.getDouble("programado_anho"));
 			    objeto.setCantidadHoy(rs.getDouble("programado_hoy"));
 			    objeto.setCantDest(rs.getDouble("destinatarios_estimados"));
