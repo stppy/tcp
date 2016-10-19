@@ -1811,21 +1811,21 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 												'</tr>';
 											//}
 	
-											
-											cont=0, contEjecucion=0; 
-											acum=0, acumEjecucionPrevista=0, acumEjecucionLograda=0;
-											promedio=0,destinatarios=0; inversion=0;
-											totalDestinatario=0;
-											totalProgramado=0;
-											//institucionId = lineasProgramadas[n+1].institucionId;
-											linea_accion_id = lineasProgramadas[n+1].lineaAccionId;
-											//tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n+1].institucionSigla+'</strong></td></tr>';
-											
-											if(lineasProgramadas[n+1].institucionId != institucionId){
-												tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n+1].institucionSigla+'</strong></td></tr>';
-												institucionId = lineasProgramadas[n+1].institucionId;
-											}
 										}
+											
+										cont=0, contEjecucion=0; 
+										acum=0, acumEjecucionPrevista=0, acumEjecucionLograda=0;
+										promedio=0,destinatarios=0; inversion=0;
+										totalDestinatario=0;
+										totalProgramado=0;
+										//institucionId = lineasProgramadas[n+1].institucionId;
+										linea_accion_id = lineasProgramadas[n+1].lineaAccionId;
+										//tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n+1].institucionSigla+'</strong></td></tr>';
+										
+										if(lineasProgramadas[n+1].institucionId != institucionId){
+											tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n+1].institucionSigla+'</strong></td></tr>';
+											institucionId = lineasProgramadas[n+1].institucionId;
+										}									
 									}
 								}
 							}
