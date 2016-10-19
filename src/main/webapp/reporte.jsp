@@ -90,10 +90,10 @@ if (user != null) { %>
 
 	var entidadCasSpr = "";
 	entidadCasSpr ="<%=attributes.get("entidad") %>";
-	usuarioRolCasSpr="<%=attributes.get("role_id") %>";
+	usuarioRolCasSpr="<%=attributes.get("role_id_tablero") %>";
 
 	
-<%//if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0")){%>
+<%//if (attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("0")){%>
  	$(document).ready(function(){
 
  		function numeroConComa(x) {

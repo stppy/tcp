@@ -1826,6 +1826,7 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 											tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n+1].institucionSigla+'</strong></td></tr>';
 											institucionId = lineasProgramadas[n+1].institucionId;
 										}									
+
 									}
 								}
 							}

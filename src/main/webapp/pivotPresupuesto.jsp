@@ -53,7 +53,7 @@ if (user != null) { %>
 		/* $(do ()	{ */
 		var entidadCas = "";
 		entidadCas ="<%=attributes.get("entidad") %>";
-		usuarioRolCas="<%=attributes.get("role_id") %>";
+		usuarioRolCas="<%=attributes.get("role_id_tablero") %>";
 		var usuarios = $.ajax({
 			url:'/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
 		  	type:'get',
