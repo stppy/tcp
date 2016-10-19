@@ -1,5 +1,7 @@
 package py.gov.stp.objetosV2;
 
+import java.sql.Date;
+
 public class GeoPoligono {
 	protected int id;
 	protected String nombre;
@@ -7,6 +9,9 @@ public class GeoPoligono {
 	protected String geo;
 	protected int geoPoligonoId;
 	protected int geoPoligonoTipoId;
+	protected Date fechaInsercion;
+	protected Date fechaActualizacion;	
+    protected String usuarioResponsable;
 	protected boolean borrado = false;
 	protected int version;
 	
@@ -46,6 +51,24 @@ public class GeoPoligono {
 	public void setGeoPoligonoTipoId(int geoPoligonoTipoId) {
 		this.geoPoligonoTipoId = geoPoligonoTipoId;
 	}
+	public Date getFechaInsercion() {
+		return fechaInsercion;
+	}
+	public void setFechaInsercion(Date fechaInsercion) {
+		this.fechaInsercion = fechaInsercion;
+	}
+	public Date getFechaActualizacion() {
+		return fechaActualizacion;
+	}
+	public void setFechaActualizacion(Date fechaActualizacion) {
+		this.fechaActualizacion = fechaActualizacion;
+	}
+	public String getUsuarioResponsable() {
+		return usuarioResponsable;
+	}
+	public void setUsuarioResponsable(String usuarioResponsable) {
+		this.usuarioResponsable = usuarioResponsable;
+	}
 	public boolean isBorrado() {
 		return borrado;
 	}
@@ -62,5 +85,4 @@ public class GeoPoligono {
 		this.version = version;
 	}
 	
-
 }

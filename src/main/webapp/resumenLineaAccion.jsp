@@ -53,7 +53,7 @@
 			entidadCas ="<%=attributes.get("entidad") %>";
 			usuarioRolCas="<%=attributes.get("role_id") %>";
 			var usuarios = $.ajax({
-				url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
+				url:'/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
 			  	type:'get',
 			  	dataType:'json',
 			  	async:false       

@@ -1,5 +1,7 @@
 package py.gov.stp.objetosV2;
 
+import java.sql.Date;
+
 public class AvanceCosto {
 	
 protected int id;
@@ -8,6 +10,9 @@ protected String codigoContratacion;
 protected int objetoGasto;
 protected String productoConcat;
 protected int avanceId;
+protected Date fechaInsercion;
+protected Date fechaActualizacion;	
+protected String usuarioResponsable;
 protected boolean borrado;
 
 
