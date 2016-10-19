@@ -51,7 +51,7 @@
 		$( document ).ready(function() {
 			var entidadCas = "";
 			entidadCas ="<%=attributes.get("entidad") %>";
-			usuarioRolCas="<%=attributes.get("role_id") %>";
+			usuarioRolCas="<%=attributes.get("role_id_tablero") %>";
 			var usuarios = $.ajax({
 				url:'/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
 			  	type:'get',
@@ -106,7 +106,7 @@
 				<%@ include file="/frames/mainheader.jsp" %>
 			</header>
 		    <!-- Left side column. contains the logo and sidebar -->
-		    <%-- <%if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0")){%> --%>
+		    <%-- <%if (attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("0")){%> --%>
 			<aside class="main-sidebar">
 				<%@ include file="/frames/main-sidebar.jsp"%>
 			</aside>

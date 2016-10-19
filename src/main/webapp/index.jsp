@@ -104,7 +104,7 @@
 if (user != null) { %>
 
 <script>
-<%if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("2")){%>	
+<%if (attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("2")){%>	
 	$(document).ready(function(){
 		$('[data-toggle="tap"]').tooltip();
 			
