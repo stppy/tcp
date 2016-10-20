@@ -504,7 +504,7 @@ public class ajaxSelects extends HttpServlet {
         	}
 ////////////Pivot Plan de Acción        	
         	if (action.equals("getPivotPlanDeAccion")){
-        		String objetos=null; 
+        		List objetos=null; 
         		condition = " where true ";
         		String condition2=" where true ";
         		if (!userRoleId.equals("0") && !userRoleId.equals("1")){ 
