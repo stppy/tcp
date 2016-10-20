@@ -72,6 +72,8 @@ private static final long serialVersionUID = 1L;
     	Integer proyectoSnipAutorizado = null;
     	Integer usuario = null;
     	Integer tipoZonaGeografica = null;
+    	Integer nroFicha=null;
+    	Integer preguntaId=null;
     	   	
     	
     	String condition = "";
@@ -147,6 +149,8 @@ private static final long serialVersionUID = 1L;
     	if (request.getParameter("proyectoSnipAutorizado")!=null) proyectoSnipAutorizado = Integer.parseInt(request.getParameter("proyectoSnipAutorizado")); else proyectoSnipAutorizado=0;
     	if (request.getParameter("usuario")!=null) usuario = Integer.parseInt(request.getParameter("usuario")); else usuario=0;
     	if (request.getParameter("tipoZonaGeografica")!=null) tipoZonaGeografica = Integer.parseInt(request.getParameter("tipoZonaGeografica")); else tipoZonaGeografica=0;
+    	if (request.getParameter("nroFicha")!=null) nroFicha= Integer.parseInt(request.getParameter("nroFicha"));
+    	if (request.getParameter("preguntaId")!=null) preguntaId= Integer.parseInt(request.getParameter("preguntaId"));
     	
         PrintWriter out = response.getWriter();
         response.setContentType("text/html");
@@ -176,6 +180,15 @@ private static final long serialVersionUID = 1L;
         	}
 
         }*/
+        if (accion.equals("delRespuestasViviendas")){
+    		List objetivoHasObjetivo=null;
+    		SqlDelete.deleteRespuestasViviendas(nroFicha, preguntaId);
+    		JsonElement json = new Gson().toJsonTree(objetivoHasObjetivo);
+    		myObj.addProperty("success", true);
+    		myObj.add("objetivos", json);
+    		out.println(myObj.toString());
+    	}
+
      
     }
 }

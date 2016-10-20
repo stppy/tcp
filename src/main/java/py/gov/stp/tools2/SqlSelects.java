@@ -817,6 +817,8 @@ public class SqlSelects {
 				objeto.setGrupoDestNombre(rs.getString("grupo_dest_nombre"));
 				objeto.setCantDest(rs.getString("cant_dest"));
 				objeto.setDescDest(rs.getString("desc_dest"));
+				objeto.setHitoTipoId(rs.getInt("hito_tipo_id"));
+				objeto.setNombreHitoTipo(rs.getString("nombre_hito_tipo"));
 				
 				objetos.add(objeto);
 			}
