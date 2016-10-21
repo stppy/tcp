@@ -27,7 +27,6 @@
         <script type="text/javascript" src="tablero_files/d3_renderers.js"></script>
         <script type="text/javascript" src="tablero_files/export_renderers.js"></script>
         <script type="text/javascript" src="tablero_files/jquery.js"></script>
-        <script type="text/javascript" src="tablero_files/export_renders.js"></script>        
         <style>
             * {font-family: Verdana;}
             .node {

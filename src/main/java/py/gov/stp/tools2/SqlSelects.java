@@ -472,9 +472,7 @@ public class SqlSelects {
 	public static List<LineasAccionAvances> selectPivotPlanAccionAvances(String condition) throws SQLException{
 		
 		Connection conect = ConnectionConfiguration.conectar();
-		String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from( "+
-				"select * from plan_accion_avances "+condition+
-				" )t";
+		String query = " select * from plan_accion_avances";
 
 		Statement statement = null;
 		ResultSet rs = null;
