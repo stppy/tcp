@@ -109,6 +109,7 @@ public class ajaxSelects extends HttpServlet {
     	Integer nivelId = null;
     	Integer entidadId = null;
     	Integer etiquetaId = null;
+    	Integer version = null;
     	
     	String institucion=null;
     	String catalogoAccion = null;
@@ -127,8 +128,7 @@ public class ajaxSelects extends HttpServlet {
     	String db = "";
     	String institucionIdConcat = "";
     	String insLineaAccionIdConcat = "";    	
-
-    	//Boolean borrado=null;
+    	Boolean borrado=null;
     	
     	
     	if (request.getParameter("usuario")!=null) usuario=request.getParameter("usuario");
@@ -183,7 +183,7 @@ public class ajaxSelects extends HttpServlet {
       	if (request.getParameter("productoObjetoGastoId")!=null) productoObjetoGastoId=Integer.parseInt(request.getParameter("productoObjetoGastoId"));
       	if (request.getParameter("trimestreId")!=null) trimestreId=Integer.parseInt(request.getParameter("trimestreId"));      	
       	if (request.getParameter("idAvanceCualitativo")!=null) idAvanceCualitativo=Integer.parseInt(request.getParameter("idAvanceCualitativo")); 
-      	//if (request.getParameter("borrado")!=null) borrado=Boolean.parseBoolean(request.getParameter("borrado")); 
+      	if (request.getParameter("borrado")!=null) borrado=Boolean.parseBoolean(request.getParameter("borrado")); 
       	if (request.getParameter("departamentoId")!=null) departamentoId=Integer.parseInt(request.getParameter("departamentoId")); 
       	if (request.getParameter("distritoId")!=null) distritoId=Integer.parseInt(request.getParameter("distritoId")); 
       	if (request.getParameter("rolId")!=null) rolId=Integer.parseInt(request.getParameter("rolId")); 
@@ -192,7 +192,8 @@ public class ajaxSelects extends HttpServlet {
       	if (request.getParameter("institucionIdConcat")!=null) institucionIdConcat=request.getParameter("institucionIdConcat");      	
       	if (request.getParameter("insLineaAccionIdConcat")!=null) insLineaAccionIdConcat=request.getParameter("insLineaAccionIdConcat");   
       	if (request.getParameter("etiquetaId")!=null) etiquetaId=Integer.parseInt(request.getParameter("etiquetaId")); 
-
+      	if (request.getParameter("version")!=null) version=Integer.parseInt(request.getParameter("version")); 
+      	
       	
         PrintWriter out = response.getWriter();
         response.setContentType("text/html");
@@ -1547,6 +1548,8 @@ public class ajaxSelects extends HttpServlet {
 	            if (departamentoId!=null) condition += " and ins_linea_accion_base_dd.depto_id='"+departamentoId+"'";
 	            if (distritoId!=null) condition += " and ins_linea_accion_base_dd.dist_id='"+distritoId+"'";
 	            if (periodoId!=null) condition += " and periodo='"+periodoId+"'";
+	            
+	            
            		try {objetos = SqlSelects.selectResumenLineasAccionProgramacionDepartamentalDistrital(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		//JsonElement json = new Gson().toJsonTree(objetos );
@@ -1567,6 +1570,10 @@ public class ajaxSelects extends HttpServlet {
         		if (insLineaAccionIdConcat!="") condition += " and ins_linea_accion_id in("+insLineaAccionIdConcat+")";
         		if (insLineaAccionId!=null) condition += " and ins_linea_accion_id ='"+insLineaAccionId+"'";
         		if (etiquetaId!=null) condition += " and etiqueta_id ='"+etiquetaId+"'";
+        		if (version!=null) condition += " and version ='"+version+"'";
+        		if (borrado!=null) condition += " and borrado ='"+borrado.toString()+"'";
+        		
+        		
            		try {objetos = SqlSelects.selectInsLineaAccionHasEtiqueta(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		out.println(objetos);return;        	
