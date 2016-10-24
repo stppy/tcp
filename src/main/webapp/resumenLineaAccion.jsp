@@ -44,7 +44,9 @@
 	</head>
 	<body class="skin-blue sidebar-mini">
 		<% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%>
-		<% Map attributes = user.getAttributes(); 
+		<% Map attributes = user.getAttributes();
+	     if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2") || attributes.get("role_id_tablero").toString().equals("3")){
+
 		if (user != null) { %>
 	
 		<script>
@@ -197,6 +199,8 @@
 			<p>Favor Iniciar Sesion</p>
 		<%  } %>
 		<a href="#" data-toggle="tooltip" title="Some tooltip text!">Hover over me</a>
-				
+		<%  } else { %>
+            <script type="text/javascript">window.location = "http://spr.stp.gov.py";</script>
+        <% } %> 		
 </body>
 </html>

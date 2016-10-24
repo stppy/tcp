@@ -68,6 +68,7 @@ public class ajaxSelects extends HttpServlet {
     	Integer accion_id=null;
     	Integer accionId=null;
     	Integer linea_accion_id=null;
+    	Integer ins_linea_accion_id=null;
     	Integer usuarioId = null;
     	Integer anho = null;
     	Integer periodoId = null; 
@@ -125,6 +126,7 @@ public class ajaxSelects extends HttpServlet {
       	if (request.getParameter("accion_id")!=null) accion_id=Integer.parseInt(request.getParameter("accion_id")); else accion_id=0;
       	if (request.getParameter("accionId")!=null) accionId=Integer.parseInt(request.getParameter("accionId"));
       	if (request.getParameter("linea_accion_id")!=null) linea_accion_id=Integer.parseInt(request.getParameter("linea_accion_id")); else linea_accion_id=0;
+      	if (request.getParameter("ins_linea_accion_id")!=null) ins_linea_accion_id=Integer.parseInt(request.getParameter("ins_linea_accion_id")); 
       	if (request.getParameter("hito_id")!=null) hito_id=Integer.parseInt(request.getParameter("hito_id")); else hito_id=0;
       	if (request.getParameter("usuarioId")!=null) usuarioId=Integer.parseInt(request.getParameter("usuarioId"));
       	if (request.getParameter("anho")!=null) anho=Integer.parseInt(request.getParameter("anho"));

@@ -70,6 +70,7 @@
 
 <% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%> 
 <% Map attributes = user.getAttributes(); 
+if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2") || attributes.get("role_id_tablero").toString().equals("3")){
 if (user != null && user.getName()!= "parce@nandeparaguay.org") { %>
 	<%@ include file="/frames/perfil.jsp" %>
 <script>
@@ -859,5 +860,8 @@ var usuariosSpr = $.ajax({
 usuariosSpr = JSON.parse(usuariosSpr);
 usuariosSpr = usuariosSpr.usuarios;
 </script>
+		<%  } else { %>
+            <script type="text/javascript">window.location = "http://spr.stp.gov.py";</script>
+        <% } %> 
   </body>
 </html>
