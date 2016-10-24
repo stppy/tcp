@@ -41,6 +41,24 @@ public class ConnectionConfiguration {
 	        } 
 	        return con;
     }
+    
+    public static Connection conectarFichaSocial(){
+		 Connection con = null;
+	        Statement st = null;
+	        ResultSet rs = null;
+	        try {Class.forName("org.postgresql.Driver");}
+	        catch (ClassNotFoundException e) {e.printStackTrace();}
+	        String url = "";
+	        String user = "postgres";
+	        String password = "t3R3R3.ol";
+
+	        try {con = DriverManager.getConnection("jdbc:postgresql://pg01.stp.gov.py/ficha_social_v3?useUnicode=true&characterEncoding=UTF-8&user=postgres&password=t3R3R3.ol");}
+	        catch (SQLException ex) {
+	            Logger lgr = Logger.getLogger(SqlHelper.class.getName());
+	            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+	        } 
+	        return con;
+   }
 //    	
 //    	 Connection con = null;
 //	        Statement st = null;

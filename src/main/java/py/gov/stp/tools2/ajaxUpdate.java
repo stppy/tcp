@@ -873,8 +873,7 @@ public class ajaxUpdate extends HttpServlet {
                 boolean status = SqlUpdates.borradoAvanceCualitativo(objeto, userCorreo);
         		myObj.addProperty("success", status);
         		out.println(myObj.toString());
-        	}
-        	
+        	} 
         	if (accion.equals("borradoEtiquetaUsuario")){
         		EtiquetaUsuario objeto = new EtiquetaUsuario();
         		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
@@ -882,7 +881,29 @@ public class ajaxUpdate extends HttpServlet {
                 if(br != null){ json = br.readLine();}
                 Gson gsonInsert = new Gson();
                 objeto=gsonInsert.fromJson(json, EtiquetaUsuario.class);
-                boolean status = SqlUpdates.borradoEtiquetaUsuario(objeto, userCorreo);
+				boolean status = SqlUpdates.borradoEtiquetaUsuario(objeto, userCorreo);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	}
+        	if (accion.equals("actRespuestasViviendas")){
+        		RespuestasViviendas objeto = new RespuestasViviendas();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+                objeto=gsonInsert.fromJson(json, RespuestasViviendas.class);
+                boolean status = SqlUpdates.actRespuestasViviendas(objeto);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	}
+        	if (accion.equals("actRespuestasViviendasBoleana")){
+        		RespuestasViviendas objeto = new RespuestasViviendas();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+                objeto=gsonInsert.fromJson(json, RespuestasViviendas.class);
+                boolean status = SqlUpdates.actRespuestasViviendasBoleana(objeto);
         		myObj.addProperty("success", status);
         		out.println(myObj.toString());
         	}
@@ -898,8 +919,6 @@ public class ajaxUpdate extends HttpServlet {
         		out.println(myObj.toString());
         	}        
         	
-        }     
-        
-     
+        }
     }
 }

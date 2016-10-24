@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import py.gov.stp.objetosV2.*;
+import py.gov.stp.tools.ConnectionConfiguration;
 
 
 public class SqlUpdates {
@@ -1728,6 +1729,34 @@ public static boolean borradoHito(Hito objeto, String usuarioResponsable){
 		    return true;
 		  } catch (SQLException e) {e.printStackTrace(); return false;}
 	}
+	public static boolean actRespuestasViviendas(RespuestasViviendas objeto){
+	  	 Connection conect=ConnectionConfiguration.conectarFichaSocial();
+	  	 Statement statement = null;	  	 
+	  	 
+	  	 String query = "update respuestas_viviendas set respuesta='"+objeto.getRespuesta()+"'";	
+				 
+		 query+=" where nro_ficha="+objeto.getNroFicha()+" and fecha_realizacion='"+objeto.getFechaRealizacion()+"' and vivienda_nro="+objeto.getViviendaNro()+" and pregunta_id="+objeto.getPreguntaId()+" and respuesta_obtenida_id="+objeto.getRespuestaObtenidaId();
+		 try {
+				statement=conect.createStatement();
+				statement.execute(query);
+			    conect.close();
+			    return true;
+			  } catch (SQLException e) {e.printStackTrace(); return false;}
+		}
+	public static boolean actRespuestasViviendasBoleana(RespuestasViviendas objeto){
+	  	 Connection conect=ConnectionConfiguration.conectarFichaSocial();
+	  	 Statement statement = null;	  	 
+	  	 
+	  	 String query = "update respuestas_viviendas set respuesta_boleana="+objeto.isRespuestaBoleana()+"";	
+				 
+		 query+=" where nro_ficha="+objeto.getNroFicha()+" and fecha_realizacion='"+objeto.getFechaRealizacion()+"' and vivienda_nro="+objeto.getViviendaNro()+" and pregunta_id="+objeto.getPreguntaId()+" and respuesta_obtenida_id="+objeto.getRespuestaObtenidaId();
+		 try {
+				statement=conect.createStatement();
+				statement.execute(query);
+			    conect.close();
+			    return true;
+			  } catch (SQLException e) {e.printStackTrace(); return false;}
+		}
 	public static boolean borradoInstanciaEtiqueta(InsLineaAccionHasEtiqueta objeto, String usuarioResponsable){
 	  	 Connection conect=ConnectionConfiguration.conectar();
 	  	 Statement statement = null;

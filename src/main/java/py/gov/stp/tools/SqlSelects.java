@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 import java.sql.Statement;
+
 import objetos.Entidad;
 import objetos.FactHitos;
 import objetos.Generica;
@@ -1152,6 +1153,128 @@ public class SqlSelects {
 	    	}
 	    	return objetos;
     	}
+    
+	public static String selectAllPreguntas(String condicion) throws SQLException  {
+		Connection conect = ConnectionConfiguration.conectarFichaSocial();
+		String query="select array_to_json(array_agg(row_to_json(t))) as resultado from(select * from preguntas)t";
+												
+		 Statement statement = null;
+   		 ResultSet rs=null;
+   		 String objetos = "";
+
+   		try {
+   			statement = conect.createStatement();
+   			rs=statement.executeQuery(query);
+   			while(rs.next()){				   				
+   				objetos+=rs.getString("resultado");
+   			}
+   		}
+   		catch (SQLException e) {e.printStackTrace();}
+   		finally{
+   			if (statement != null) {statement.close();}
+   			if (conect != null) {conect.close();}
+   		}
+   		return objetos;
+
+	}
+	public static String selectAllRespuestasPosbiles(String condicion) throws SQLException  {
+		Connection conect = ConnectionConfiguration.conectarFichaSocial();
+		String query="select array_to_json(array_agg(row_to_json(t))) as resultado from(select * from respuestas_posibles)t";
+												
+		 Statement statement = null;
+   		 ResultSet rs=null;
+   		 String objetos = "";
+
+   		try {
+   			statement = conect.createStatement();
+   			rs=statement.executeQuery(query);
+   			while(rs.next()){				   				
+   				objetos+=rs.getString("resultado");
+   			}
+   		}
+   		catch (SQLException e) {e.printStackTrace();}
+   		finally{
+   			if (statement != null) {statement.close();}
+   			if (conect != null) {conect.close();}
+   		}
+   		return objetos;
+
+	}
+	public static String selectAllRespuestasViviendas(String condicion) throws SQLException  {
+		Connection conect = ConnectionConfiguration.conectarFichaSocial();
+		String query=	"select array_to_json(array_agg(row_to_json(t))) as resultado from(select"+ 
+						" 0 as nro_ficha," +
+						" p.id as id_pregunta,"+
+						" p.descripcion as preguntas,"+ 
+						" rp.id as id_respuesta_posible,"+ 
+						" rp.descripcion as respuestas_posibles,"+ 
+						" ''     as respuestas_text," +
+						" null     as respuestas_bolean,"+
+						" rp.tipo_respuesta"+
+						" from preguntas p "+
+						" join respuestas_posibles rp on p.id=rp.pregunta_id and rp.id not in ("+
+						" select rp1.id"+
+						" from respuestas_viviendas rv"+ 
+						" join respuestas_posibles rp1 on rp1.id=rv.respuesta_obtenida_id"+ 
+						" join preguntas p on p.id=rp1.pregunta_id)"+
+						" union"+
+						" select"+ 
+						" rv.nro_ficha,"+ 
+						" p.id as id_pregunta,"+ 
+						" p.descripcion as pregunta,"+ 
+						" rp.id as id_respuesta," +
+						" rp.descripcion as respuesta,"+ 
+						" rv.respuesta     as respuestas_text,"+ 
+						" rv.respuesta_boleana as respuestas_bolean,"+
+						" rp.tipo_respuesta"+
+						" from respuestas_viviendas rv" +
+						" join respuestas_posibles rp on rp.id=rv.respuesta_obtenida_id"+ 
+						" join preguntas p on p.id=rp.pregunta_id"+
+						" order by preguntas)t";
+												
+		 Statement statement = null;
+   		 ResultSet rs=null;
+   		 String objetos = "";
+
+   		try {
+   			statement = conect.createStatement();
+   			rs=statement.executeQuery(query);
+   			while(rs.next()){				   				
+   				objetos+=rs.getString("resultado");
+   			}
+   		}
+   		catch (SQLException e) {e.printStackTrace();}
+   		finally{
+   			if (statement != null) {statement.close();}
+   			if (conect != null) {conect.close();}
+   		}
+   		return objetos;
+
+	}
+	public static String selectAllPersonas(String condicion) throws SQLException  {
+		Connection conect = ConnectionConfiguration.conectarFichaSocial();
+		String query=	"select array_to_json(array_agg(row_to_json(t))) as resultado from(select * from personas where id=1)t";
+												
+		 Statement statement = null;
+   		 ResultSet rs=null;
+   		 String objetos = "";
+
+   		try {
+   			statement = conect.createStatement();
+   			rs=statement.executeQuery(query);
+   			while(rs.next()){				   				
+   				objetos+=rs.getString("resultado");
+   			}
+   		}
+   		catch (SQLException e) {e.printStackTrace();}
+   		finally{
+   			if (statement != null) {statement.close();}
+   			if (conect != null) {conect.close();}
+   		}
+   		return objetos;
+
+	}
+	
 //    public static List<ProyectoSNIP> selectProyectoSnip(String condition) throws SQLException{
 //     	 Connection conect=ConnectionConfiguration.conectar();
 //  		 String query = " select * from proyecto_snip "+condition;

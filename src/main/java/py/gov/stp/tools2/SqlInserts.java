@@ -16,8 +16,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import py.gov.stp.objetosV2.*;
 
+import py.gov.stp.objetosV2.*;
+import py.gov.stp.tools.ConnectionConfiguration;
 
 public class SqlInserts {
 	
@@ -911,7 +912,33 @@ public class SqlInserts {
 			return true;
 		} catch (SQLException e) {e.printStackTrace(); return false;}
 		
-	}	
+	}
+	
+	public static boolean insertRespuestasViviendas(RespuestasViviendas obj){
+		try {
+			Connection conn=ConnectionConfiguration.conectarFichaSocial();
+
+			String query = "insert into respuestas_viviendas (nro_ficha, fecha_realizacion, vivienda_nro, pregunta_id, respuesta_obtenida_id, respuesta, respuesta_boleana)"+
+						" values(?,?,?,?,?,?,?)";
+			
+			PreparedStatement insert = conn.prepareStatement(query);
+			
+			insert.setInt (1, obj.getNroFicha());
+			insert.setDate (2, (Date) obj.getFechaRealizacion());
+			insert.setInt (3, obj.getViviendaNro());
+			insert.setInt (4, obj.getPreguntaId());
+			insert.setInt (5, obj.getRespuestaObtenidaId());
+			insert.setString (6, obj.getRespuesta());
+			insert.setBoolean(7, obj.isRespuestaBoleana());	
+			//insert.setNull(7, 6);
+			
+			insert.execute();
+			   
+			conn.close();
+			return true;
+		} catch (SQLException e) {e.printStackTrace(); return false;}
+		
+	}
 	
 	public static boolean insertInsLineaAccionHasEtiqueta(InsLineaAccionHasEtiqueta objeto, String usuarioResponsable){
 		try {
