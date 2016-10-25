@@ -45,9 +45,12 @@
 	<body class="skin-blue sidebar-mini">
 		<% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%>
 		<% Map attributes = user.getAttributes(); 
+		 if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){
+
 		if (user != null) { %>
 	
 		<script>
+
 		$( document ).ready(function() {
 			var entidadCas = "";
 			entidadCas ="<%=attributes.get("entidad") %>";
@@ -72,13 +75,13 @@
 			getPeriodo();
 			
 		});
-		
+
 		$("body").on("change", "#periodoSeleccion",function(event){	
 		   	periodoSeleccionado = $("#periodoSeleccion option:selected").val();
 		   	renderLineasEstrategicas(periodoSeleccionado); 
 		});
 		</script>
-	
+
 	<!-- Piwik -->
 	<script type="text/javascript">
 	  var _paq = _paq || [];
@@ -198,5 +201,9 @@
 		<%  } %>
 		<a href="#" data-toggle="tooltip" title="Some tooltip text!">Hover over me</a>
 				
+				
+		<%  } else { %>
+    		<script type="text/javascript">window.location = "http://www.google.com";</script>
+		<% } %> 
 </body>
 </html>

@@ -138,7 +138,7 @@ textarea { text-transform: uppercase; }
 	          <!-- Info row de buscador de productos -->
 
 	         <div class="row">
-	         <div class="col-md-12">
+	         <div class="col-md-12" style="overflow-y:auto;">
 	          <div class="box" height="1000px">
 	            <div class="box-header with-border" height="1000px">
 	              <h3 class="box-title" id="tituloTipoPrograma">
@@ -191,6 +191,7 @@ textarea { text-transform: uppercase; }
 
         
         <div id="output" style="margin: 30px;">
+        
         <table cellpadding="5">
 			<tbody>
 				<tr> 
@@ -267,7 +268,6 @@ textarea { text-transform: uppercase; }
 	  				</tr>
 			
 	  			</table>
-	  			
 	            </div>
 			   </div>
 			   </div>

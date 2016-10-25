@@ -139,6 +139,7 @@ var datosGeo=[];
  <% Map attributes = user.getAttributes(); 
 if (user != null) { %>
 
+
 <script>
 	
 	
@@ -236,6 +237,8 @@ tbody {
 					
 				
 					<script>
+
+					
 					var totalDesempenhoDeptoDis=[];
 					var pocentajeColor1 = parseInt(70);
 					var pocentajeColor2 = parseInt(90);
@@ -604,7 +607,7 @@ tbody {
 								for (var i = 0; i< instituciones.length;i++){
 									
 									color=getColorDesemp2(lineaAccionDepartamento[i]);
-									/* if (lineaAccionDepartamento[i] !=0) */ $("#tablaInstituciones").append('<tr><td><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+instituciones[i].id+' depto_id='+e.target.feature.properties.dpto+' dist_id='+e.target.feature.properties.distrito+' checked="true"></td><td class="col-md-3"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+instituciones[i].id+' depto_id='+e.target.feature.properties.dpto+' > '+instituciones[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(lineaAccionDepartamento[i]).toFixed(0)+'%"><p class="text-left">'+parseFloat(lineaAccionDepartamento[i]).toFixed(2)+'%</p></div></div></td></tr>');
+									 if (lineaAccionDepartamento[i] !=0) $("#tablaInstituciones").append('<tr><td><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+instituciones[i].id+' depto_id='+e.target.feature.properties.dpto+' dist_id='+e.target.feature.properties.distrito+' checked="true"></td><td class="col-md-3"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+instituciones[i].id+' depto_id='+e.target.feature.properties.dpto+' > '+instituciones[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(lineaAccionDepartamento[i]).toFixed(0)+'%"><p class="text-left">'+parseFloat(lineaAccionDepartamento[i]).toFixed(2)+'%</p></div></div></td></tr>');
 									
 								}
 								var todasInstituciones=getInstitucionesSeleccionadas();
@@ -1657,7 +1660,7 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 		
 		tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[0].institucionSigla+'</strong></td></tr>';
 		for(var n=0; n<lineasProgramadas.length;n++){
-			for(var l = 0; l < usuarioEtiqueta.length; l++)
+/* 			for(var l = 0; l < usuarioEtiqueta.length; l++)
 			{
 				if(usuarioEtiqueta[l].etiqueta_id == 1)
 				{
@@ -1668,7 +1671,7 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 							for(var d=0; d<usuarioLineaAccion.length;d++)
 							{
 								if(usuarioLineaAccion[d].lineaAccionId == lineasProgramadas[n].lineaAccionId)
-								{
+								{ */
 			
 									contEjecucion++;
 									if (lineasProgramadas[n].cantidadHoy!=null) acumEjecucionPrevista=acumEjecucionPrevista + lineasProgramadas[n].cantidadHoy;
@@ -1751,7 +1754,7 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 										
 									}else if(lineasProgramadas[n+1].lineaAccionId != linea_accion_id){
 																				
-										if((totalProgramado != 0 && acumEjecucionLograda != 0) || (totalProgramado != 0 && acumEjecucionLograda == 0) || (totalProgramado == 0 && acumEjecucionLograda != 0)){																
+										//if((totalProgramado != 0 && acumEjecucionLograda != 0) || (totalProgramado != 0 && acumEjecucionLograda == 0) || (totalProgramado == 0 && acumEjecucionLograda != 0)){																
 											
 											/*if(totalProgramado == 0 && acumEjecucionLograda > 0){
 												promedio = 100;	
@@ -1811,7 +1814,7 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 												'</tr>';
 											//}
 	
-										}
+										//}
 											
 										cont=0, contEjecucion=0; 
 										acum=0, acumEjecucionPrevista=0, acumEjecucionLograda=0;
@@ -1828,12 +1831,12 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 										}									
 
 									}
-								}
-							}
-						}
-					}
-				}
-			}	
+								//}
+							//}
+						//}
+					//}
+				//}
+			//}	
 		}//*********
 	}
 	tablaInstituciones+=tempInstituciones+tempInstLineas;
@@ -4862,6 +4865,7 @@ $("body").on("click", ".guardarAvance",function(event){
 	 $("#modalAgregarHito").modal('hide');
 
 });
+
 
 </script>    
 <script type="text/javascript" src="bootstrap/js/bootstrap-slider.js"></script>
