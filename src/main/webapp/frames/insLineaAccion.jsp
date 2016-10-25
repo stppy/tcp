@@ -1444,7 +1444,7 @@ function renderEvidencia(avanceId, parametros){
 		$("#selectorCatalogoAccion").change();
 		$("#selectorDepartamento").change();
 		$('#dataTablesAcciones').dataTable({
-	        "footerCallback": function ( row, data, start, end, display ) {
+	 /*        "footerCallback": function ( row, data, start, end, display ) {
 	            var api = this.api(), data;
 	 
 	         // saca los puntos y <del> de la cadena para pasarlo a entero
@@ -1554,7 +1554,7 @@ function renderEvidencia(avanceId, parametros){
 	            $( api.column( 10 ).footer() ).html(
 	            		numeroConComa(pageTotal10) +' (Total Gral. '+ numeroConComa(total10) +')'
 	            );
-	        },
+	        }, */
 	        dom: 'Bfrtip',
 	        buttons: [
 	            'copy', 'csv', 'excel', 'pdf', 'print'
@@ -2636,8 +2636,8 @@ $("body").on("click", ".borrarAccion",function(event){
 		$('#TablaAccionHasProductos').append(cargarTablaAccionHasProducto(accionId,insLineaAccionId,lineaAccionId,institucionId,periodoId));	        
 		$("#modalVincularProductos").modal('show');
 		//$("#dataTablesVinculacionProducto").DataTable();
-		$("#dataTablesVinculacionProducto").dataTable({
-	        "footerCallback": function ( row, data, start, end, display ) {
+	/* 	$("#dataTablesVinculacionProducto").dataTable({
+	        /* "footerCallback": function ( row, data, start, end, display ) {
 	            var api = this.api(), data;
 	 
 	         // saca los puntos y <del> de la cadena para pasarlo a entero
@@ -2707,13 +2707,13 @@ $("body").on("click", ".borrarAccion",function(event){
 	         // se muestran los valores de los totales en el footer del table
 	            $( api.column( 12 ).footer() ).html(
 	            		numeroConComa(pageTotal12) +' (Total Gral. '+ numeroConComa(total12) +')'
-	            );	    */      
-	        },
+	            );	          
+	        }, 
 	        dom: 'Bfrtip',
 	        buttons: [
 	            'copy', 'csv', 'excel', 'pdf', 'print'
 	        ]
-	}); 
+	});  */
 		
 		
 		function Combo(){
@@ -3915,7 +3915,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		$("#selectorCatalogoAccion").val('');
 		$("#unidadMedidaAccion").val('');
 		$('#dataTablesAcciones').dataTable({
-	        "footerCallback": function ( row, data, start, end, display ) {
+	        /* "footerCallback": function ( row, data, start, end, display ) {
 	            var api = this.api(), data;
 	 
 	         // saca los puntos y <del> de la cadena para pasarlo a entero
@@ -4026,7 +4026,7 @@ $("body").on("click", ".borrarAccion",function(event){
 	            		numeroConComa(pageTotal10) +' (Total Gral. '+ numeroConComa(total10) +')'
 	            );
 	        },
-	        dom: 'Bfrtip',
+ */	        dom: 'Bfrtip',
 	        buttons: [
 	            'copy', 'csv', 'excel', 'pdf', 'print'
 	        ]
