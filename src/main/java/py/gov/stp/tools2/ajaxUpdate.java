@@ -881,8 +881,7 @@ public class ajaxUpdate extends HttpServlet {
                 boolean status = SqlUpdates.borradoAvanceCualitativo(objeto, userCorreo);
         		myObj.addProperty("success", status);
         		out.println(myObj.toString());
-        	}
-        	
+        	} 
         	if (accion.equals("borradoEtiquetaUsuario")){
         		EtiquetaUsuario objeto = new EtiquetaUsuario();
         		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
