@@ -29,15 +29,15 @@ function renderEvidencia(avanceId, parametros){
 				downloadTarget="";
 			}
 			
-			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>
+			<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
 				botones='<button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+parametros+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+parametros+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button>';
 			<%}%>
 			
-			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") ){%>
+			<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
 				if(webServicesEvidencia[d].borrado == true)
 				{
 					cuerpoEvidencia +='<tr><td data-toggle="tooltip" data-placement="top" title="'+webServicesEvidencia[d].descripcion+'" ><del><a href="'+webServicesEvidencia[d].url+'" target="_blank">'+webServicesEvidencia[d].nombre+'</a></del></td>'+
-										'<td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+parametros+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+parametros+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';	        				
+										'<td class="text-center"><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+parametros+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-recycle"></span></button></td></tr>';	        				
 				}
 			<%}%>
 			if(webServicesEvidencia[d].borrado == false){
@@ -1428,6 +1428,11 @@ function renderEvidencia(avanceId, parametros){
 		'	                						<tr class="active"><th rowspan="2" class="text-center">Acción</th><th rowspan="2" class="text-center">Depto</th><th rowspan="2" class="text-center">Distrito</th><th rowspan="2" class="text-center">Fecha Inicio</th><th rowspan="2" class="text-center">Fecha Fin</th><th rowspan="2" class="text-center">Unidad Medida</th><th colspan="4" class="text-center">Metas</th><th rowspan="2" class="text-center">Total Metas</th><th rowspan="2" class="text-center" style="min-width:130px">Administrar Acción</th></tr>'+
 		'	                						<tr class="active"><th class="text-center">1er Trimestre</th><th class="text-center">2do Trimestre</th><th class="text-center">3er Trimestre</th><th class="text-center">4to Trimestre</th></tr>'+
 		'	                					</thead>'+
+		'										<tfoot>'+
+		'								 			<tr>'+
+		'								 				<th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th>'+
+		'								 			</tr>'+
+		'								    	</tfoot>'+
 		'	                						<tbody id="tablaAccionesPrecargadas">'+
 		'	                						</tbody>'+
 		'	                				</table>'+
@@ -1438,7 +1443,123 @@ function renderEvidencia(avanceId, parametros){
 		$('#modalAccion').modal('show');
 		$("#selectorCatalogoAccion").change();
 		$("#selectorDepartamento").change();
-		$('#dataTablesAcciones').dataTable();		
+		$('#dataTablesAcciones').dataTable({
+	 /*        "footerCallback": function ( row, data, start, end, display ) {
+	            var api = this.api(), data;
+	 
+	         // saca los puntos y <del> de la cadena para pasarlo a entero
+	            var intVal = function ( i ) {
+	                return typeof i === 'string' ?
+	                		i.replace(/[\.,"<\/*del>","Gs\."]/g, '')*1 :
+	                    typeof i === 'number' ?
+	                        i : 0;
+	            };
+	 
+	         // total general para todas las paginas de la columna
+	            total6 = api
+	                .column( 6 )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	 
+	         // total por pagina segun número de columna
+	            pageTotal6 = api
+	                .column( 6, { page: 'current'} )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	         // total general para todas las paginas de la columna
+	            total7 = api
+	                .column( 7 )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	 
+	         // total por pagina segun número de columna
+	            pageTotal7 = api
+	                .column( 7, { page: 'current'} )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	         
+	         // total general para todas las paginas de la columna
+	            total8 = api
+	                .column( 8 )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	 
+	         // total por pagina segun número de columna
+	            pageTotal8 = api
+	                .column( 8, { page: 'current'} )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	         
+	         // total general para todas las paginas de la columna
+	            total9 = api
+	                .column( 9 )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	 
+	         // total por pagina segun número de columna
+	            pageTotal9 = api
+	                .column( 9, { page: 'current'} )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	         
+	         // total general para todas las paginas de la columna
+	            total10 = api
+	                .column( 10 )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	 
+	         // total por pagina segun número de columna
+	            pageTotal10 = api
+	                .column( 10, { page: 'current'} )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	 
+	         // se muestran los valores de los totales en el footer del table
+	            $( api.column( 6 ).footer() ).html(
+	            		numeroConComa(pageTotal6) +' (Total Gral. '+ numeroConComa(total6) +')'
+	            );
+	         // se muestran los valores de los totales en el footer del table
+	            $( api.column( 7 ).footer() ).html(
+	            		numeroConComa(pageTotal7) +' (Total Gral. '+ numeroConComa(total7) +')'
+	            );
+	         // se muestran los valores de los totales en el footer del table
+	            $( api.column( 8 ).footer() ).html(
+	            		numeroConComa(pageTotal8) +' (Total Gral. '+ numeroConComa(total8) +')'
+	            );
+	         // se muestran los valores de los totales en el footer del table
+	            $( api.column( 9 ).footer() ).html(
+	            		numeroConComa(pageTotal9) +' (Total Gral. '+ numeroConComa(total9) +')'
+	            );
+	         // se muestran los valores de los totales en el footer del table
+	            $( api.column( 10 ).footer() ).html(
+	            		numeroConComa(pageTotal10) +' (Total Gral. '+ numeroConComa(total10) +')'
+	            );
+	        }, */
+	        dom: 'Bfrtip',
+	        buttons: [
+	            'copy', 'csv', 'excel', 'pdf', 'print'
+	        ]
+	});			
 
 	});
 	
@@ -2419,6 +2540,7 @@ $("body").on("click", ".borrarAccion",function(event){
 				        '    											<th>Administrar</th>'+
 				        '    										</tr>'+
 				        '										</thead>'+
+				        '										<tfoot><tr><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th></tr></tfoot>'+
 				        '    									<tbody class="table-body-producto" id="TablaAccionHasProductos">'+
 				        '										</tbody>'+
 				        '   								</table>'+
@@ -2514,7 +2636,86 @@ $("body").on("click", ".borrarAccion",function(event){
 		$('#TablaAccionHasProductos').append(cargarTablaAccionHasProducto(accionId,insLineaAccionId,lineaAccionId,institucionId,periodoId));	        
 		$("#modalVincularProductos").modal('show');
 		//$("#dataTablesVinculacionProducto").DataTable();
-				
+	/* 	$("#dataTablesVinculacionProducto").dataTable({
+	        /* "footerCallback": function ( row, data, start, end, display ) {
+	            var api = this.api(), data;
+	 
+	         // saca los puntos y <del> de la cadena para pasarlo a entero
+	            var intVal = function ( i ) {
+	                return typeof i === 'string' ?
+	                		i.replace(/[\.,"<\/*del>","Gs\."]/g, '')*1 :
+	                    typeof i === 'number' ?
+	                        i : 0;
+	            };
+	 
+	         // total general para todas las paginas de la columna
+	            total8 = api
+	                .column( 8 )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	 
+	         // total por pagina segun número de columna
+	            pageTotal8 = api
+	                .column( 8, { page: 'current'} )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	         
+	         // total general para todas las paginas de la columna
+	            total11 = api
+	                .column( 11 )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	 
+	         // total por pagina segun número de columna
+	            pageTotal11 = api
+	                .column( 11, { page: 'current'} )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	         
+	         // total general para todas las paginas de la columna
+	            total12 = api
+	                .column( 12 )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	 
+	         // total por pagina segun número de columna
+	            pageTotal12 = api
+	                .column( 12, { page: 'current'} )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	         
+	         // se muestran los valores de los totales en el footer del table
+	            $( api.column( 8 ).footer() ).html(
+	            		numeroConComa(pageTotal8) +' (Total Gral. '+ numeroConComa(total8) +')'
+	            );
+	         /* // se muestran los valores de los totales en el footer del table
+	            $( api.column( 11 ).footer() ).html(
+	            		numeroConComa(pageTotal11) +' (Total Gral. '+ numeroConComa(total11) +')'
+	            );
+	         // se muestran los valores de los totales en el footer del table
+	            $( api.column( 12 ).footer() ).html(
+	            		numeroConComa(pageTotal12) +' (Total Gral. '+ numeroConComa(total12) +')'
+	            );	          
+	        }, 
+	        dom: 'Bfrtip',
+	        buttons: [
+	            'copy', 'csv', 'excel', 'pdf', 'print'
+	        ]
+	});  */
+		
+		
 		function Combo(){
 			
 			var usuarios = $.ajax({
@@ -3687,6 +3888,11 @@ $("body").on("click", ".borrarAccion",function(event){
 		'	                						<tr class="active"><th rowspan="2" class="text-center">Id</th><th rowspan="2" class="text-center">Acción</th><th rowspan="2" class="text-center">Depto</th><th rowspan="2" class="text-center">Distrito</th><th rowspan="2" class="text-center">Fecha Inicio</th><th rowspan="2" class="text-center">Fecha Fin</th><th rowspan="2" class="text-center">Unidad Medida</th><th colspan="4" class="text-center">Metas</th><th rowspan="2" class="text-center">Total Metas</th><th rowspan="2" class="text-center" style="min-width:130px">Administrar Acción</th></tr>'+
 		'	                						<tr class="active"><th class="text-center">1er Trimestre</th><th class="text-center">2do Trimestre</th><th class="text-center">3er Trimestre</th><th class="text-center">4to Trimestre</th></tr>'+
 		'	                					</thead>'+
+		'										<tfoot>'+
+		'								 			<tr>'+
+		'								 				<th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th>'+
+		'								 			</tr>'+
+		'								    	</tfoot>'+
 		'	                						<tbody id="tablaAccionesPrecargadas">'+
 		'	                						</tbody>'+
 		'	                				</table>'+
@@ -3708,13 +3914,123 @@ $("body").on("click", ".borrarAccion",function(event){
 		$("#distritosDepartamento").val('');
 		$("#selectorCatalogoAccion").val('');
 		$("#unidadMedidaAccion").val('');
-		$("#dataTablesAcciones").DataTable(
-		{
-	        "sPaginationType":"full_numbers"
-	          ,"iDisplayLength":10
-	          ,"bJQueryUI":true
-	          ,"aaSorting":[[0,"desc"]]
-		});
+		$('#dataTablesAcciones').dataTable({
+	        /* "footerCallback": function ( row, data, start, end, display ) {
+	            var api = this.api(), data;
+	 
+	         // saca los puntos y <del> de la cadena para pasarlo a entero
+	            var intVal = function ( i ) {
+	                return typeof i === 'string' ?
+	                		i.replace(/[\.,"<\/*del>","Gs\."]/g, '')*1 :
+	                    typeof i === 'number' ?
+	                        i : 0;
+	            };
+	 
+	         // total general para todas las paginas de la columna
+	            total6 = api
+	                .column( 6 )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	 
+	         // total por pagina segun número de columna
+	            pageTotal6 = api
+	                .column( 6, { page: 'current'} )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	         // total general para todas las paginas de la columna
+	            total7 = api
+	                .column( 7 )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	 
+	         // total por pagina segun número de columna
+	            pageTotal7 = api
+	                .column( 7, { page: 'current'} )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	         
+	         // total general para todas las paginas de la columna
+	            total8 = api
+	                .column( 8 )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	 
+	         // total por pagina segun número de columna
+	            pageTotal8 = api
+	                .column( 8, { page: 'current'} )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	         
+	         // total general para todas las paginas de la columna
+	            total9 = api
+	                .column( 9 )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	 
+	         // total por pagina segun número de columna
+	            pageTotal9 = api
+	                .column( 9, { page: 'current'} )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	         
+	         // total general para todas las paginas de la columna
+	            total10 = api
+	                .column( 10 )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	 
+	         // total por pagina segun número de columna
+	            pageTotal10 = api
+	                .column( 10, { page: 'current'} )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	 
+	         // se muestran los valores de los totales en el footer del table
+	            $( api.column( 6 ).footer() ).html(
+	            		numeroConComa(pageTotal6) +' (Total Gral. '+ numeroConComa(total6) +')'
+	            );
+	         // se muestran los valores de los totales en el footer del table
+	            $( api.column( 7 ).footer() ).html(
+	            		numeroConComa(pageTotal7) +' (Total Gral. '+ numeroConComa(total7) +')'
+	            );
+	         // se muestran los valores de los totales en el footer del table
+	            $( api.column( 8 ).footer() ).html(
+	            		numeroConComa(pageTotal8) +' (Total Gral. '+ numeroConComa(total8) +')'
+	            );
+	         // se muestran los valores de los totales en el footer del table
+	            $( api.column( 9 ).footer() ).html(
+	            		numeroConComa(pageTotal9) +' (Total Gral. '+ numeroConComa(total9) +')'
+	            );
+	         // se muestran los valores de los totales en el footer del table
+	            $( api.column( 10 ).footer() ).html(
+	            		numeroConComa(pageTotal10) +' (Total Gral. '+ numeroConComa(total10) +')'
+	            );
+	        },
+ */	        dom: 'Bfrtip',
+	        buttons: [
+	            'copy', 'csv', 'excel', 'pdf', 'print'
+	        ]
+	});
 
 		
 	}
@@ -4777,7 +5093,8 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	
 	var tablaProgramacionHito1 ='	<div class="table-responsive">'+
 	'									<table class="table table-hover table-bordered" id="dataTablesProgramacionHito1">'+
-	'										<thead><tr class="active"><th>Cantidad</th><th>FechaEntrega</th><th>Versión</th><th>Cronograma</th><th>Unidad Medida</th><th class="text-center">Administrar</th></tr>'+
+	'										<thead><tr class="active"><th>Cantidad</th><th>FechaEntrega</th><th>Versión</th><th>Cronograma</th><th>Unidad Medida</th><th class="text-center">Administrar</th></tr></thead>'+
+	'										<tfoot><tr><th></th><th></th><th></th><th></th><th></th><th></th></tr></tfoot>'+
 	'										<tbody id="listaActividades">'+
 	'										</tbody>'+
 	'									</table>'+
@@ -4786,7 +5103,46 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	$("#tablaListaProgramacionHito1").append(tablaProgramacionHito1);
 	$("#listaActividades").append(cuerpoActividades);
 	$("#modalProgramacion").modal('show');
-	$("#dataTablesProgramacionHito1").DataTable();
+	//$("#dataTablesProgramacionHito1").DataTable();
+	$('#dataTablesProgramacionHito1').dataTable({
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+ 
+         // saca los puntos y <del> de la cadena para pasarlo a entero
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                		i.replace(/[\.,"<\/*del>","Gs\."]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+ 
+         // total general para todas las paginas de la columna
+            total0 = api
+                .column( 0 )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+ 
+         // total por pagina segun número de columna
+            pageTotal0 = api
+                .column( 0, { page: 'current'} )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+         
+         // se muestran los valores de los totales en el footer del table
+            $( api.column( 0 ).footer() ).html(
+            		numeroConComa(pageTotal0) +' (Total Gral. '+ numeroConComa(total0) +')'
+            );	         
+        },
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+});
+	
 	
 });	
 
@@ -5226,7 +5582,8 @@ $("body").on("click", ".agregarAvance",function(event){
 	
 	var tablaListaAvance ='<div class="table-responsive">'+
 		'							<table class="table table-hover table-bordered" id="dataTablesListaAvance">'+
-		'								<thead><tr class="active"><th>Justificación</th><th>cantidad</th><th>Fecha Entrega</th><th>Administrar</th></tr>'+
+		'								<thead><tr class="active"><th>Justificación</th><th>cantidad</th><th>Fecha Entrega</th><th>Administrar</th></tr></thead>'+
+		'								<tfoot><tr><th></th><th></th><th></th><th></th></tr></tfoot>'+
 		'								<tbody id="listaAvances">'+
 		'								</tbody>'+
 		'							</table>'+
@@ -5238,7 +5595,8 @@ $("body").on("click", ".agregarAvance",function(event){
 	
 	var tablaProgramacionHito2 ='<div class="table-responsive">'+
 	'								<table class="table table-hover table-bordered" id="dataTablesProgramacionHito2">'+
-	'									<thead><tr class="active"><th>Cantidad</th><th>FechaEntrega</th><th>Unidad Medida</th></tr>'+
+	'									<thead><tr class="active"><th>Cantidad</th><th>FechaEntrega</th><th>Unidad Medida</th></tr></thead>'+
+	'									<tfoot><tr><th></th><th></th><th></th></tr></tfoot>'+
 	'									<tbody id="listaActividades">'+
 	'									</tbody>'+
 	'								</table>'+
@@ -5247,8 +5605,84 @@ $("body").on("click", ".agregarAvance",function(event){
 	$("#tablaListaProgramacionHito2").append(tablaProgramacionHito2);
 	$("#listaActividades").append(cuerpoActividades);
 	$("#modalAvance").modal('show');
-	$("#dataTablesListaAvance").DataTable();
-	$("#dataTablesProgramacionHito2").DataTable();
+	//$("#dataTablesListaAvance").DataTable();
+	$("#dataTablesListaAvance").dataTable({
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+ 
+         // saca los puntos y <del> de la cadena para pasarlo a entero
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                		i.replace(/[\.,"<\/*del>","Gs\."]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+ 
+         // total general para todas las paginas de la columna
+            total1 = api
+                .column( 1 )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+ 
+         // total por pagina segun número de columna
+            pageTotal1 = api
+                .column( 1, { page: 'current'} )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+         
+         // se muestran los valores de los totales en el footer del table
+            $( api.column( 1 ).footer() ).html(
+            		numeroConComa(pageTotal1) +' (Total Gral. '+ numeroConComa(total1) +')'
+            );	         
+        },
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+	});
+	//$("#dataTablesProgramacionHito2").DataTable();
+	$('#dataTablesProgramacionHito2').dataTable({
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+ 
+         // saca los puntos y <del> de la cadena para pasarlo a entero
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                		i.replace(/[\.,"<\/*del>","Gs\."]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+ 
+         // total general para todas las paginas de la columna
+            total0 = api
+                .column( 0 )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+ 
+         // total por pagina segun número de columna
+            pageTotal0 = api
+                .column( 0, { page: 'current'} )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+         
+         // se muestran los valores de los totales en el footer del table
+            $( api.column( 0 ).footer() ).html(
+            		numeroConComa(pageTotal0) +' (Total Gral. '+ numeroConComa(total0) +')'
+            );	         
+        },
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+});
 		
 	
 });
@@ -5603,6 +6037,9 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'										<thead>'+
 									'											<tr class="active"><th>Justificación</th><th>Cantidad</th><th>FechaEntrega</th><th class="text-center">Administrar</th></tr>'+
 									' 										</thead>'+
+									'										<tfoot>'+
+									'											<tr><th></th><th></th><th></th><th></th></tr>'+
+									' 										</tfoot>'+
 									'										<tbody>';
 																				if(webServicesAvance[0].borrado == true)
 																				{
@@ -5691,6 +6128,9 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'												<thead>'+
 									'													<tr class="active"><th>Tipo</th><th>Grupo</th><th>Descripción</th><th>Cantidad</th><th class="text-center">Administrar</th></tr>'+
 									'												</thead>'+
+									'												<tfoot>'+
+									'													<tr><th></th><th></th><th></th><th></th><th></th></tr>'+
+									'												</tfoot>'+
 									'												<tbody id="listaBeneficiario">'+
 									'												</tbody>'+
 									'											</table>'+
@@ -5778,6 +6218,9 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'												<thead>'+
 									'													<tr class="active"><th>Producto</th><th>ObjetoGasto</th><th>Monto</th><th class="text-center">Administrar</th></tr>'+
 									'												</thead>'+
+									'												<tfoot>'+
+									'													<tr><th></th><th></th><th></th><th></th></tr>'+
+									'												</tfoot>'+
 									'												<tbody id="listaCosto">'+
 									'												</tbody>'+
 									'											</table>'+
@@ -5867,6 +6310,9 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'												<thead>'+
 									'													<tr class="active"><th>Nombre</th><th class="text-center">Administrar</th></tr>'+
 									'												</thead>'+
+									'												<tfoot>'+
+									'													<tr><th></th><th></th></tr>'+
+									'												</tfoot>'+
 									'												<tbody  id="listaEvidencia">'+
 									
 									'												</tbody>'+
@@ -5902,10 +6348,132 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	$("#modalAdministrador").modal('show');	
 	$("#beneficiarioTipo").change();
 	$("#productoObjetoGasto").change();
-	$("#dataTableEvidencia").DataTable();
-	$("#dataTableAvanceCosto").DataTable();
-	$("#dataTableBeneficiario").DataTable();
-	$("#dataTableAvance").DataTable();
+	//$("#dataTableEvidencia").DataTable();
+	$('#dataTableEvidencia').dataTable({ 
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+	});
+	//$("#dataTableAvanceCosto").DataTable();
+	$('#dataTableAvanceCosto').dataTable({
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+ 
+         // saca los puntos y <del> de la cadena para pasarlo a entero
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                		i.replace(/[\.,"<\/*del>","Gs\."]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+ 
+         // total general para todas las paginas de la columna
+            total2 = api
+                .column( 2 )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+ 
+         // total por pagina segun número de columna
+            pageTotal2 = api
+                .column( 2, { page: 'current'} )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+         
+         // se muestran los valores de los totales en el footer del table
+            $( api.column( 2 ).footer() ).html(
+            		numeroConComa(pageTotal2) +' (Total Gral. '+ numeroConComa(total2) +')'
+            );	         
+        },
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+	}); 
+	//$("#dataTableBeneficiario").DataTable();
+	$('#dataTableBeneficiario').dataTable({
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+ 
+         // saca los puntos y <del> de la cadena para pasarlo a entero
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                		i.replace(/[\.,"<\/*del>","Gs\."]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+ 
+         // total general para todas las paginas de la columna
+            total3 = api
+                .column( 3 )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+ 
+         // total por pagina segun número de columna
+            pageTotal3 = api
+                .column( 3, { page: 'current'} )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+         
+         // se muestran los valores de los totales en el footer del table
+            $( api.column( 3 ).footer() ).html(
+            		numeroConComa(pageTotal3) +' (Total Gral. '+ numeroConComa(total3) +')'
+            );	         
+        },
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+	}); 
+	
+	//$("#dataTableAvance").DataTable();
+	$('#dataTableAvance').dataTable({
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+ 
+         // saca los puntos y <del> de la cadena para pasarlo a entero
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                		i.replace(/[\.,"<\/*del>","Gs\."]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+ 
+         // total general para todas las paginas de la columna
+            total1 = api
+                .column( 1 )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+ 
+         // total por pagina segun número de columna
+            pageTotal1 = api
+                .column( 1, { page: 'current'} )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+         
+         // se muestran los valores de los totales en el footer del table
+            $( api.column( 1 ).footer() ).html(
+            		numeroConComa(pageTotal1) +' (Total Gral. '+ numeroConComa(total1) +')'
+            );	         
+        },
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+}); 
+
 	
 	
 
@@ -7968,6 +8536,9 @@ $("body").on("click", ".modalDestinatario",function(event){
 						'												<thead>'+
 						'													<tr class="active"><th>Tipo</th><th>Grupo</th><th>Descripción</th><th>Cantidad</th><th class="text-center">Administrar</th></tr>'+
 						'												</thead>'+
+						'												<tfoot>'+
+						'													<tr><th></th><th></th><th></th><th></th><th></th></tr>'+
+						'												</tfoot>'+
 						'												<tbody id="listaDestinatarioAccion">'+
 						'												</tbody>'+
 						'											</table>'+
@@ -7995,7 +8566,45 @@ $("body").on("click", ".modalDestinatario",function(event){
 	$('#tipoDestinatarioAccion > option[value="1"]').attr('selected', 'selected');
 	$('#modalDestinatario').modal('show');
 	$('#tipoDestinatarioAccion').change();
-	$("#dataTableDestinatarioAccion").DataTable();
+	//$("#dataTableDestinatarioAccion").DataTable();
+	$('#dataTableDestinatarioAccion').dataTable({
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+ 
+         // saca los puntos y <del> de la cadena para pasarlo a entero
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                		i.replace(/[\.,"<\/*del>","Gs\."]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+ 
+         // total general para todas las paginas de la columna
+            total3 = api
+                .column( 3 )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+ 
+         // total por pagina segun número de columna
+            pageTotal3 = api
+                .column( 3, { page: 'current'} )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+         
+         // se muestran los valores de los totales en el footer del table
+            $( api.column( 3 ).footer() ).html(
+            		numeroConComa(pageTotal3) +' (Total Gral. '+ numeroConComa(total3) +')'
+            );	         
+        },
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+}); 
 	
 });
 
@@ -8643,6 +9252,9 @@ $("body").on("click", ".avanceCualitativo",function(event){
 	'	                					<thead>'+
 	'	                						<tr class="active"><th class="text-center">Accion</th><th class="text-center">Trimestre</th><th class="text-center">Año</th><th class="text-center">Gestiones Realizadas</th><th class="text-center">Principales Logros Alcanzados</th><th class="text-center">Dificultades Lecciones Aprendidas</th><th class="text-center">Objetivos del Trimestre</th><th class="text-center">Administrar</th></tr>'+
 	'	                					</thead>'+
+	'	                					<tfoot>'+
+	'	                						<tr><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th></tr>'+
+	'	                					</tfoot>'+
 	'	                						<tbody id="tablaAvanceCualitativo">'+
 	'	                						</tbody>'+
 	'	                				</table>'+
@@ -8650,8 +9262,13 @@ $("body").on("click", ".avanceCualitativo",function(event){
 	$('#cuerpoTablaAvanceCualitativo').append(tablaAccion);
 	listaAvanceCualitativo(insLineaAccionId,lineaAccionId,institucionId,periodoId);	
 	//$('#tablaAccionesPrecargadas').append(cuerpoAccion);
-	$('#modalAvanceCualitativo').modal('show');
-	$("#dataTablesAvanceCualitativo").DataTable();	
+	$('#modalAvanceCualitativo').modal('show');	
+	$('#dataTablesAvanceCualitativo').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    } );
 	
 });
 
@@ -8815,15 +9432,15 @@ function listaAvanceCualitativo(insLineaAccionId,lineaAccionId,institucionId,per
 	'	                				<table class="table table-hover table-bordered" id="dataTablesAvanceCualitativo">'+
 	'	                					<thead>'+
 	'	                						<tr class="active"><th class="text-center">Accion</th><th class="text-center">Trimestre</th><th class="text-center">Año</th><th class="text-center">Gestiones Realizadas</th><th class="text-center">Principales Logros Alcanzados</th><th class="text-center">Dificultades Lecciones Aprendidas</th><th class="text-center">Objetivos del Trimestre</th><th class="text-center">Administrar</th></tr>'+
-	'	                					</thead>'+
+	'	                					</thead>'+	
 	'	                						<tbody id="tablaAvanceCualitativo">'+
 	'	                						</tbody>'+
 	'	                				</table>'+
 	'	                			</div>';
 	$('#cuerpoTablaAvanceCualitativo').append(tablaAccion);
 	$('#tablaAvanceCualitativo').html("");
-	$('#tablaAvanceCualitativo').append(tablaAvanceCualitativo);
-	$("#dataTablesAvanceCualitativo").DataTable();
+	$('#tablaAvanceCualitativo').append(tablaAvanceCualitativo);	
+	//$('#dataTablesAvanceCualitativo').DataTable();
 	
 }
 

@@ -1,6 +1,9 @@
 package py.gov.stp.tools2;
 
+import java.sql.Date;
+
 public class LineasAccionAvances {
+	
 	protected int insId;
 	protected String institucion;
 	protected int laId;
@@ -42,6 +45,17 @@ public class LineasAccionAvances {
 	protected String avanceFecha;
 	protected double avanceCantidad;
 	protected String avanceJustificacion;
+	
+	protected double contribucion;
+	protected double influencia;
+	protected Date fecha;
+	protected String mes;
+	protected double programacionCantidad;
+	protected double avanceCosto;
+	protected double avanceDestinatario;
+	protected int avanceEvidencias;
+	
+	
 	public int getInsId() {
 		return insId;
 	}
@@ -287,7 +301,54 @@ public class LineasAccionAvances {
 	}
 	public void setAvanceJustificacion(String avanceJustificacion) {
 		this.avanceJustificacion = avanceJustificacion;
+	}
+	public double getContribucion() {
+		return contribucion;
+	}
+	public void setContribucion(double contribucion) {
+		this.contribucion = contribucion;
+	}
+	public double getInfluencia() {
+		return influencia;
+	}
+	public void setInfluencia(double influencia) {
+		this.influencia = influencia;
+	}
+	public Date getFecha() {
+		return fecha;
+	}
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+	public String getMes() {
+		return mes;
+	}
+	public void setMes(String mes) {
+		this.mes = mes;
+	}
+	public double getProgramacionCantidad() {
+		return programacionCantidad;
+	}
+	public void setProgramacionCantidad(double programacionCantidad) {
+		this.programacionCantidad = programacionCantidad;
+	}
+	public double getAvanceCosto() {
+		return avanceCosto;
+	}
+	public void setAvanceCosto(double avanceCosto) {
+		this.avanceCosto = avanceCosto;
 	}	
-	
+	public int getAvanceEvidencias() {
+		return avanceEvidencias;
+	}
+	public void setAvanceEvidencias(int avanceEvidencias) {
+		this.avanceEvidencias = avanceEvidencias;
+	}
+	public double getAvanceDestinatario() {
+		return avanceDestinatario;
+	}
+	public void setAvanceDestinatario(double avanceDestinatario) {
+		this.avanceDestinatario = avanceDestinatario;
+	}
 	
 }
