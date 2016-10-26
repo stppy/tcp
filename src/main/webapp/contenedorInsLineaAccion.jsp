@@ -558,8 +558,7 @@ function renderInsLineaAccion(PeriodoActual){
 	
 <%if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
  	$(document).ready(function(){
-/*  		if(permisosModulos[0].permisoModuloId != 4){
- */ 			
+ 			
  		onoff=false;
 		function OcultarRegistrosBorrados(){
 			if($("#chkMostrarOcultar").is(':checked')){
@@ -647,11 +646,7 @@ function renderInsLineaAccion(PeriodoActual){
 		/* $('.pagination').on('click',function(){
 			OcultarRegistrosBorrados();
 			}); */
-			
-/*  		}else{
- 			window.location = "http://spr.stp.gov.py/tablero/geografico4.jsp";
- 		} */
-		
+					
 	});
 <%}else{%>
 	window.location = "http://spr.stp.gov.py/tablero/geografico4.jsp";

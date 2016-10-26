@@ -34,6 +34,8 @@ public class LineaAccionDestinatario {
 	public String 	grupoDestNombre;
 	public String 	cantDest;
 	public String 	descDest;
+	public int 		hitoTipoId;
+	public String 	nombreHitoTipo;
 	
 	
 	public int getInsId() {
@@ -221,6 +223,18 @@ public class LineaAccionDestinatario {
 	}
 	public void setDescDest(String descDest) {
 		this.descDest = descDest;
+	}
+	public int getHitoTipoId() {
+		return hitoTipoId;
+	}
+	public void setHitoTipoId(int hitoTipoId) {
+		this.hitoTipoId = hitoTipoId;
+	}
+	public String getNombreHitoTipo() {
+		return nombreHitoTipo;
+	}
+	public void setNombreHitoTipo(String nombreHitoTipo) {
+		this.nombreHitoTipo = nombreHitoTipo;
 	}
 	
 
