@@ -113,7 +113,7 @@ $(document).ready(function(){
 	
 	$("#lista-pnd").html("");
   	var estrategias = $.ajax({
-    	url:'http://spr.stp.gov.py/ajaxSelects?accion=getEstrategias',
+    	url:'/ajaxSelects?accion=getEstrategias',
       	type:'get',
       	dataType:'json',
       	async:false       
@@ -144,7 +144,7 @@ $("body").on("click", ".tituloEstrategiaPnd",function(event){
   var estrategia=$(this).attr("estrategia");
   $("div [class=lista-objetivos][estrategia="+estrategia+"]").html("");
   	var objetivos = $.ajax({
-    	url:'http://spr.stp.gov.py/ajaxSelects?accion=getObjetivosEstrategicos&estrategia='+estrategia,
+    	url:'/ajaxSelects?accion=getObjetivosEstrategicos&estrategia='+estrategia,
       	type:'get',
       	dataType:'json',
       	async:false       
@@ -174,7 +174,7 @@ $("body").on("click", ".tituloObjetivoPnd",function(event){
   var objetivo=$(this).attr("objetivo");
   $("div [class=lista-indicadores][objetivo="+objetivo+"]").html("");
   	var indicadores = $.ajax({
-    	url:'http://spr.stp.gov.py/ajaxSelects?accion=getIndicadoresPnd&objetivo='+objetivo,
+    	url:'/ajaxSelects?accion=getIndicadoresPnd&objetivo='+objetivo,
       	type:'get',
       	dataType:'json',
       	async:false       
@@ -204,7 +204,7 @@ $("body").on("click", ".tituloIndicadorPnd",function(event){
   var indicador=$(this).attr("indicador");
   $("div [class=lista-metas][indicador="+indicador+"]").html("");
   	var metas = $.ajax({
-    	url:'http://spr.stp.gov.py/ajaxSelects?accion=getMetasPnd&indicador='+indicador,
+    	url:'/ajaxSelects?accion=getMetasPnd&indicador='+indicador,
       	type:'get',
       	dataType:'json',
       	async:false       
@@ -398,7 +398,7 @@ $("body").on("click", ".tituloIndicadorPnd",function(event){
 	'</optgroup>';
 	
 	var departamentos = $.ajax({
-    	url:'http://spr.stp.gov.py/ajaxSelects?accion=getDepartamentos',
+    	url:'/ajaxSelects?accion=getDepartamentos',
       	type:'get',
       	dataType:'json',
       	async:false       
@@ -411,7 +411,7 @@ $("body").on("click", ".tituloIndicadorPnd",function(event){
 	
 	
 	var funcionales = $.ajax({
-    	url:'http://spr.stp.gov.py/ajaxSelects?accion=getFuncionales&anio=2015',
+    	url:'/ajaxSelects?accion=getFuncionales&anio=2015',
       	type:'get',
       	dataType:'json',
       	async:false       
@@ -425,7 +425,7 @@ $("body").on("click", ".tituloIndicadorPnd",function(event){
 	
 	
 	var unidadesResponsables = $.ajax({
-    	url:'http://spr.stp.gov.py/ajaxSelects?accion=getUnidadesResponsables&anio=2015&nivel='+nivel+'&entidad='+entidad,
+    	url:'/ajaxSelects?accion=getUnidadesResponsables&anio=2015&nivel='+nivel+'&entidad='+entidad,
       	type:'get',
       	dataType:'json',
       	async:false       
@@ -438,7 +438,7 @@ $("body").on("click", ".tituloIndicadorPnd",function(event){
 	
 	
 	var snip = $.ajax({
-    	url:'http://spr.stp.gov.py/ajaxSelects?accion=getSnip&nivel='+nivel+'&entidad='+entidad,
+    	url:'/ajaxSelects?accion=getSnip&nivel='+nivel+'&entidad='+entidad,
       	type:'get',
       	dataType:'json',
       	async:false       
@@ -447,7 +447,7 @@ $("body").on("click", ".tituloIndicadorPnd",function(event){
 	snip = snip.snip;
 	
 	var snipAutorizado = $.ajax({
-    	url:'http://spr.stp.gov.py/ajaxSelects?accion=getSnipAutorizado&nivel='+nivel+'&entidad='+entidad,
+    	url:'/ajaxSelects?accion=getSnipAutorizado&nivel='+nivel+'&entidad='+entidad,
       	type:'get',
       	dataType:'json',
       	async:false       
@@ -468,7 +468,7 @@ $("body").on("click", ".tituloIndicadorPnd",function(event){
 	
 	$("#row-body-programacionfisica").html("");
 	var tiposPrograma = $.ajax({
-    	url:'http://spr.stp.gov.py/ajaxSelects?accion=getTiposPrograma',
+    	url:'/ajaxSelects?accion=getTiposPrograma',
       	type:'get',
       	dataType:'json',
       	async:false       
@@ -506,7 +506,7 @@ $("body").on("click", ".tituloIndicadorPnd",function(event){
 		var tipoPrograma= $(this).attr("tipoPrograma");
 		$("#programas-contenedor-"+tipoPrograma).html("");
 		var programas = $.ajax({
-        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getProgramas&nivel='+nivel+'&entidad='+entidad+'&tipoPresupuesto='+tipoPrograma+'',
+        	url:'/ajaxSelects?accion=getProgramas&nivel='+nivel+'&entidad='+entidad+'&tipoPresupuesto='+tipoPrograma+'',
           	type:'get',
           	dataType:'json',
           	async:false       
@@ -583,7 +583,7 @@ $("body").on("click", ".tituloIndicadorPnd",function(event){
 		var tipoPrograma= $(this).attr("tipoPrograma");
 		$("#subprograma-contenedor-"+programa+"-"+tipoPrograma).html("");
 		var subprogramas = $.ajax({
-        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getSubprogramas&nivel='+nivel+'&entidad='+entidad+'&tipoPresupuesto='+tipoPrograma+'&programa='+programa,
+        	url:'/ajaxSelects?accion=getSubprogramas&nivel='+nivel+'&entidad='+entidad+'&tipoPresupuesto='+tipoPrograma+'&programa='+programa,
           	type:'get',
           	dataType:'json',
           	async:false       
@@ -657,7 +657,7 @@ $("body").on("click", ".tituloIndicadorPnd",function(event){
 	$("body").on("click", ".tituloSubprograma",function(event){
 		var optionUnidadesMedida=""; 
 		var unidadesMedida = $.ajax({
-	    	url:'http://spr.stp.gov.py/ajaxSelects?accion=getUnidadesMedida',
+	    	url:'/ajaxSelects?accion=getUnidadesMedida',
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -675,7 +675,7 @@ $("body").on("click", ".tituloIndicadorPnd",function(event){
 		
 		$("#proyecto-contenedor-"+subprograma+"-"+programa+"-"+tipoPrograma).html("");
 		var proyectos = $.ajax({
-        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getProyectos&nivel='+nivel+'&entidad='+entidad+'&tipoPresupuesto='+tipoPrograma+'&programa='+programa+'&subprograma='+subprograma,
+        	url:'/ajaxSelects?accion=getProyectos&nivel='+nivel+'&entidad='+entidad+'&tipoPresupuesto='+tipoPrograma+'&programa='+programa+'&subprograma='+subprograma,
           	type:'get',
           	dataType:'json',
           	async:false       
@@ -761,7 +761,7 @@ $("body").on("click", ".tituloIndicadorPnd",function(event){
     		$('#pnd-proyecto-'+proyectos[i].codigoProyecto+' option[value="'+proyectos[i].objetivo_estrategico_id+'"]').attr("selected", "selected");
     		
     		var resultados = $.ajax({
-            	url:'http://spr.stp.gov.py/ajaxSelects?accion=getResultados&nivel='+nivel+'&entidad='+entidad+'&tipoPresupuesto='+tipoPrograma+'&programa='+programa+'&subprograma='+subprograma+'&proyecto='+proyectos[i].codigoProyecto,
+            	url:'/ajaxSelects?accion=getResultados&nivel='+nivel+'&entidad='+entidad+'&tipoPresupuesto='+tipoPrograma+'&programa='+programa+'&subprograma='+subprograma+'&proyecto='+proyectos[i].codigoProyecto,
               	type:'get',
               	dataType:'json',
               	async:false       
@@ -826,7 +826,7 @@ $("body").on("click", ".tituloIndicadorPnd",function(event){
     		    				'<div class="box-body lista-resultados" id="indicadores-contenedor-'+resultados[j].id+'" style="display:block;">';
 
     		    		var indicadores = $.ajax({
-  		    	        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getIndicadoresPnd&objetivo='+resultados[j].id,
+  		    	        	url:'/ajaxSelects?accion=getIndicadoresPnd&objetivo='+resultados[j].id,
   		    	          	type:'get',
   		    	          	dataType:'json',
   		    	          	async:false       
@@ -839,7 +839,7 @@ $("body").on("click", ".tituloIndicadorPnd",function(event){
   		    	      	
   		    	    var nombreUnidadMedida="";
   		        	var productos = $.ajax({
-  		    	    	url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductos',
+  		    	    	url:'/ajaxSelects?accion=getProductos',
   		    	      	type:'get',
   		    	      	dataType:'json',
   		    	      	async:false       
@@ -1144,7 +1144,7 @@ $("body").on("click", ".tituloIndicadorPnd",function(event){
 		  var indicador=$(this).attr("indicador");
 		  $("div [class=lista-metas][indicador="+indicador+"]").html("");
 	      	var metas = $.ajax({
-	        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getMetasPnd&indicador='+indicador,
+	        	url:'/ajaxSelects?accion=getMetasPnd&indicador='+indicador,
 	          	type:'get',
 	          	dataType:'json',
 	          	async:false       
@@ -1361,7 +1361,7 @@ $("body").on("click", ".tituloIndicadorPnd",function(event){
 			    if (contenido==="indicadores"&&elemento==="contenedor"){
 				    if (confirm("Esta seguro que desea elimiar?") == true) {
 				    	var resultadoBorrado = $.ajax({
-				        	url:'http://spr.stp.gov.py/ajaxDelete?accion=delResultado&objetivoId='+id,
+				        	url:'/ajaxDelete?accion=delResultado&objetivoId='+id,
 				          	type:'get',
 				          	dataType:'json',
 				          	async:false       
@@ -1391,7 +1391,7 @@ $("body").on("click", ".tituloIndicadorPnd",function(event){
 			
 				
 				var programas = $.ajax({
-		        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getProgramas&nivel='+nivel+'&entidad='+entidad+'&tipoPresupuesto='+tipoPrograma+'&programa='+codigoPrograma,
+		        	url:'/ajaxSelects?accion=getProgramas&nivel='+nivel+'&entidad='+entidad+'&tipoPresupuesto='+tipoPrograma+'&programa='+codigoPrograma,
 		          	type:'get',
 		          	dataType:'json',
 		          	async:false       
@@ -1456,7 +1456,7 @@ $("body").on("click", ".tituloIndicadorPnd",function(event){
 			{//HALLAR EL ID DE MAYOR VALOR PARA AGREGAR SIGUIENTE agregar subprogramas
 				
 				var subprogramas = $.ajax({
-		        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getSubprogramas&nivel='+nivel+'&entidad='+entidad+'&tipoPresupuesto='+tipoPrograma+'&programa='+codigoPrograma,
+		        	url:'/ajaxSelects?accion=getSubprogramas&nivel='+nivel+'&entidad='+entidad+'&tipoPresupuesto='+tipoPrograma+'&programa='+codigoPrograma,
 		          	type:'get',
 		          	dataType:'json',
 		          	async:false       
@@ -1537,7 +1537,7 @@ $("body").on("click", ".tituloIndicadorPnd",function(event){
 			{//Editar subprogramas
 				var codigoSubPrograma = $(this).attr("codigoSubPrograma");
 				var subprogramas = $.ajax({
-		        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getSubprogramas&nivel='+nivel+'&entidad='+entidad+'&tipoPresupuesto='+tipoPrograma+'&programa='+codigoPrograma+'&subprograma='+codigoSubPrograma,
+		        	url:'/ajaxSelects?accion=getSubprogramas&nivel='+nivel+'&entidad='+entidad+'&tipoPresupuesto='+tipoPrograma+'&programa='+codigoPrograma+'&subprograma='+codigoSubPrograma,
 		          	type:'get',
 		          	dataType:'json',
 		          	async:false       
@@ -1605,7 +1605,7 @@ $("body").on("click", ".tituloIndicadorPnd",function(event){
 			{ //agregrar proyecto 
 				snipAutorizado="";
 				var snipAutorizado = $.ajax({
-			    	url:'http://spr.stp.gov.py/ajaxSelects?accion=getSnipAutorizado&nivel='+nivel+'&entidad='+entidad,
+			    	url:'/ajaxSelects?accion=getSnipAutorizado&nivel='+nivel+'&entidad='+entidad,
 			      	type:'get',
 			      	dataType:'json',
 			      	async:false       
@@ -1624,7 +1624,7 @@ $("body").on("click", ".tituloIndicadorPnd",function(event){
 
 				var codigoSubPrograma = $(this).attr("codigoSubPrograma");
 				var proyectos = $.ajax({
-				url:'http://spr.stp.gov.py/ajaxSelects?accion=getProyectos&nivel='+nivel+'&entidad='+entidad+'&tipoPresupuesto='+tipoPrograma+'&programa='+codigoPrograma+'&subprograma='+codigoSubPrograma,
+				url:'/ajaxSelects?accion=getProyectos&nivel='+nivel+'&entidad='+entidad+'&tipoPresupuesto='+tipoPrograma+'&programa='+codigoPrograma+'&subprograma='+codigoSubPrograma,
 				type:'get',
 				dataType:'json',
 				async:false       

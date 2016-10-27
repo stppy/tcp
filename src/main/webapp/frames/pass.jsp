@@ -58,7 +58,7 @@
 				todojunto.correoUsuario=obtenerUsuario[0].correo;
 				 
 				$.ajax({
-				        url: "http://spr.stp.gov.py/tablero/ajaxUpdate?accion="+accion,
+				        url: "/tablero/ajaxUpdate?accion="+accion,
 				        type: 'POST',
 				        dataType: 'json',
 				        data: JSON.stringify(todojunto),

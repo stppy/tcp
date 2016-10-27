@@ -57,7 +57,7 @@
     			</ul>
    			</li>
     			<!-- <li class="treeview">
-    				<a href="http://spr.stp.gov.py/tablero/geografico4.jsp">
+    				<a href="/tablero/geografico4.jsp">
     					<i class="fa fa-globe"></i> <span>Geográfico</span> <i class="fa fa-angle-left pull-right"></i>
     				</a>
     			</li> -->

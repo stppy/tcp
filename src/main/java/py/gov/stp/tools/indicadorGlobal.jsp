@@ -47,7 +47,7 @@ if (user != null) { %>
 		var entidadCas = "";
 		entidadCas = "<%= attributes.get("entidad") %>";
 		var usuarios = $.ajax({
-			url:'http://spr.stp.gov.py/ajaxSelects?accion=getUsuarios&usuario=<%=user.getName()%>',
+			url:'/ajaxSelects?accion=getUsuarios&usuario=<%=user.getName()%>',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -57,7 +57,7 @@ if (user != null) { %>
 		
 		var i=parseInt(0);
 		var datosNiveles = $.ajax({
-	        url:'http://spr.stp.gov.py/ajaxSelects?accion=getNiveles&nivel='+usuarios[0].nivel_id,
+	        url:'/ajaxSelects?accion=getNiveles&nivel='+usuarios[0].nivel_id,
 	        type:'get',
 	        dataType:'json',
 	        async:false       
@@ -66,7 +66,7 @@ if (user != null) { %>
 	      datosNiveles=datosNiveles.niveles;
 	      
 	     var datosEntidad = $.ajax({
-	          url:'http://spr.stp.gov.py/ajaxSelects?accion=getEntidad&nivel='+usuarios[0].nivel_id+'&entidad='+usuarios[0].entidad_id,
+	          url:'/ajaxSelects?accion=getEntidad&nivel='+usuarios[0].nivel_id+'&entidad='+usuarios[0].entidad_id,
 	          type:'get',
 	          dataType:'json',
 	          async:false       
@@ -75,7 +75,7 @@ if (user != null) { %>
 	        datosEntidad=datosEntidad.entidades;
 	        
 	        var programas = $.ajax({
-	        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getProgramas&nivel='+usuarios[0].nivel_id+'&entidad='+usuarios[0].entidad_id,
+	        	url:'/ajaxSelects?accion=getProgramas&nivel='+usuarios[0].nivel_id+'&entidad='+usuarios[0].entidad_id,
 	          	type:'get',
 	          	dataType:'json',
 	          	async:false       
@@ -85,7 +85,7 @@ if (user != null) { %>
 			programas = programas.programas;
 	        
 			var tiposPrograma = $.ajax({
-		    	url:'http://spr.stp.gov.py/ajaxSelects?accion=getTiposPrograma',
+		    	url:'/ajaxSelects?accion=getTiposPrograma',
 		      	type:'get',
 		      	dataType:'json',
 		      	async:false       
@@ -95,7 +95,7 @@ if (user != null) { %>
 			tiposPrograma = tiposPrograma.tiposPrograma;
 			
 			var departamentos = $.ajax({
-		    	url:'http://spr.stp.gov.py/ajaxSelects?accion=getDepartamentos',
+		    	url:'/ajaxSelects?accion=getDepartamentos',
 		      	type:'get',
 		      	dataType:'json',
 		      	async:false       
@@ -109,7 +109,7 @@ if (user != null) { %>
 			
 			/*var optionUnidadResponsable='';
 			var unidadesResponsables = $.ajax({
-		    	url:'http://spr.stp.gov.py/ajaxSelects?accion=getUnidadesResponsables&anio=2015&nivel='+nivel+'&entidad='+entidad,
+		    	url:'/ajaxSelects?accion=getUnidadesResponsables&anio=2015&nivel='+nivel+'&entidad='+entidad,
 		      	type:'get',
 		      	dataType:'json',
 		      	async:false       
@@ -149,7 +149,7 @@ if (user != null) { %>
 		{
 				var band=0;
 				var programas = $.ajax({
-	        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getProgramas&nivel='+usuarios[0].nivel_id+'&entidad='+usuarios[0].entidad_id+'&tipoPresupuesto='+l,
+	        	url:'/ajaxSelects?accion=getProgramas&nivel='+usuarios[0].nivel_id+'&entidad='+usuarios[0].entidad_id+'&tipoPresupuesto='+l,
 	          	type:'get',
 	          	dataType:'json',
 	          	async:false       
@@ -161,7 +161,7 @@ if (user != null) { %>
 			for(var m = 0; m < programas.length; m++)
 			{
 					var subprogramas = $.ajax({
-		        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getSubprogramas&nivel='+usuarios[0].nivel_id+'&entidad='+usuarios[0].entidad_id+'&tipoPresupuesto='+l+'&programa='+programas[m].codigoPrograma,
+		        	url:'/ajaxSelects?accion=getSubprogramas&nivel='+usuarios[0].nivel_id+'&entidad='+usuarios[0].entidad_id+'&tipoPresupuesto='+l+'&programa='+programas[m].codigoPrograma,
 		          	type:'get',
 		          	dataType:'json',
 		          	async:false       
@@ -175,7 +175,7 @@ if (user != null) { %>
 							
 	
 								var proyectos = $.ajax({
-						        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getProyectos&nivel='+usuarios[0].nivel_id+'&entidad='+usuarios[0].entidad_id+'&tipoPresupuesto='+l+'&programa='+programas[m].codigoPrograma+'&subprograma='+subprogramas[v].id,
+						        	url:'/ajaxSelects?accion=getProyectos&nivel='+usuarios[0].nivel_id+'&entidad='+usuarios[0].entidad_id+'&tipoPresupuesto='+l+'&programa='+programas[m].codigoPrograma+'&subprograma='+subprogramas[v].id,
 						          	type:'get',
 						          	dataType:'json', 
 						          	async:false       
@@ -187,7 +187,7 @@ if (user != null) { %>
 								for( var k=0; k<proyectos.length;k++)
 								{	
 									var objetivos = $.ajax({
-								    	url:'http://spr.stp.gov.py/ajaxSelects?accion=getObjetivosEstrategicos&objetivo='+proyectos[k].objetivo_estrategico_id,
+								    	url:'/ajaxSelects?accion=getObjetivosEstrategicos&objetivo='+proyectos[k].objetivo_estrategico_id,
 								      	type:'get',
 								      	dataType:'json',
 								      	async:false       
@@ -196,7 +196,7 @@ if (user != null) { %>
 								  	objetivos = objetivos.objetivos;
 								  	
 									var estrategias = $.ajax({
-								    	url:'http://spr.stp.gov.py/ajaxSelects?accion=getEstrategias&codigoPilar='+objetivos[0].estrategia_id,
+								    	url:'/ajaxSelects?accion=getEstrategias&codigoPilar='+objetivos[0].estrategia_id,
 								      	type:'get',
 								      	dataType:'json',
 								      	async:false       
@@ -205,7 +205,7 @@ if (user != null) { %>
 								  	estrategias = estrategias.estrategias;
 								  	
 									var lineaTransversal = $.ajax({
-								    	url:'http://spr.stp.gov.py/ajaxSelects?accion=getLineaTransversal&idLinea='+estrategias[0].lineaTransversal,
+								    	url:'/ajaxSelects?accion=getLineaTransversal&idLinea='+estrategias[0].lineaTransversal,
 								      	type:'get',
 								      	dataType:'json',
 								      	async:false       
@@ -214,7 +214,7 @@ if (user != null) { %>
 									lineaTransversal = lineaTransversal.lineaTransversal;
 									
 									var ejeEstrategico = $.ajax({
-								    	url:'http://spr.stp.gov.py/ajaxSelects?accion=getEjeEstrategico&idEje='+estrategias[0].ejeEstrategico,
+								    	url:'/ajaxSelects?accion=getEjeEstrategico&idEje='+estrategias[0].ejeEstrategico,
 								      	type:'get',
 								      	dataType:'json', 
 								      	async:false

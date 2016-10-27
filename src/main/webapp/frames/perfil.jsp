@@ -4,7 +4,7 @@
 	entidadCas ="<%=attributes.get("entidad") %>";
 	
 	var usuarios = $.ajax({
-		url:'http://spr.stp.gov.py/ajaxSelects?accion=getUsuarios&usuario=<%=user.getName()%>',
+		url:'/ajaxSelects?accion=getUsuarios&usuario=<%=user.getName()%>',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -15,7 +15,7 @@
 	var i=parseInt(0);
 	
 	var datosNiveles = $.ajax({
-        url:'http://spr.stp.gov.py/ajaxSelects?accion=getNiveles&nivel='+usuarios[0].nivel_id,
+        url:'/ajaxSelects?accion=getNiveles&nivel='+usuarios[0].nivel_id,
         type:'get',
         dataType:'json',
         async:false       
@@ -24,7 +24,7 @@
       datosNiveles = datosNiveles.niveles;
       
      var datosEntidad = $.ajax({
-          url:'http://spr.stp.gov.py/ajaxSelects?accion=getEntidad&nivel='+usuarios[0].nivel_id+'&entidad='+usuarios[0].entidad_id,
+          url:'/ajaxSelects?accion=getEntidad&nivel='+usuarios[0].nivel_id+'&entidad='+usuarios[0].entidad_id,
           type:'get',
           dataType:'json',
           async:false       

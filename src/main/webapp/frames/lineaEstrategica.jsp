@@ -52,7 +52,7 @@
 			
 				 
 			$.ajax({
-			        url: "http://spr.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
+			        url: "/tablero/ajaxInserts2?accion="+accion,
 			        type: 'POST',
 			        dataType: 'json',
 			        data: JSON.stringify(objeto),
@@ -97,7 +97,7 @@
 				objeto.orden = orden;
 				
 				$.ajax({
-					url: "http://spr.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
+					url: "/tablero/ajaxUpdate2?accion="+accion,
 					type: 'POST',
 					dataType: 'json',
 					data: JSON.stringify(objeto),
@@ -140,7 +140,7 @@
 				objeto.borrado=borrado;
 				
 				$.ajax({
-					url: "http://spr.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
+					url: "/tablero/ajaxUpdate2?accion="+accion,
 					type: 'POST',
 					dataType: 'json',
 					data: JSON.stringify(objeto),
@@ -170,6 +170,6 @@
 						$("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intente de nuevo</p>');
 					}
 				});
-				window.location.href = "http://spr.stp.gov.py/tablero/contenedorLineaEstrategica.jsp";
+				window.location.href = "/tablero/contenedorLineaEstrategica.jsp";
 			});	
 	</script>	

@@ -1426,7 +1426,7 @@ var margin = {top: 5, right: 40, bottom: 20, left: 250},
 
 var chart = d3.bullet();
 
-d3.json("http://spr.stp.gov.py/tablero/ajaxSelects?action=getLineasAccion&institucion_id=1359", function(error, data) {
+d3.json("/tablero/ajaxSelects?action=getLineasAccion&institucion_id=1359", function(error, data) {
   if (error) throw error;
 
   var svg = d3.select("bulletChartInstitucion").selectAll("svg")

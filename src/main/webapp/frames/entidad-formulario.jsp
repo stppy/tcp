@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
-				<form class="form-horizontal" role="form" id="formulario" action="http://spr.stp.gov.py/ajaxUpdate" method="post">
+				<form class="form-horizontal" role="form" id="formulario" action="/ajaxUpdate" method="post">
 					<input type="hidden" name="anho" id="anho" anho="2015" value="2015">
 					<input type="hidden" name="nivel"  id="nivel" anho="2015" value="">
 					<input type="hidden" name="entidad"  id="entidad" anho="2015" value="">

@@ -200,7 +200,7 @@
 		<%  } %>
 		<a href="#" data-toggle="tooltip" title="Some tooltip text!">Hover over me</a>
 		<%  } else { %>
-            <script type="text/javascript">window.location = "http://spr.stp.gov.py";</script>
+            <script type="text/javascript">window.location = "";</script>
         <% } %> 		
 </body>
 </html>

@@ -264,7 +264,7 @@ body {
 	$(document).ready(function(){
 		
 		var personas = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getPersonas',
+			url:'/tablero/ajaxSelects?action=getPersonas',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false
@@ -295,7 +295,7 @@ body {
 			
 			var info = JSON.stringify(objeto);
 		    $.ajax({
-		        url: 'http://spr.stp.gov.py/tablero/ajaxUpdate2?accion=actRespuestasViviendas',
+		        url: '/tablero/ajaxUpdate2?accion=actRespuestasViviendas',
 		        type: 'POST',
 		        dataType: 'json',
 		        data: info,
@@ -324,7 +324,7 @@ body {
 			
 			var info = JSON.stringify(objeto);
 		    $.ajax({
-		        url: 'http://spr.stp.gov.py/tablero/ajaxUpdate2?accion=actRespuestasViviendasBoleana',
+		        url: '/tablero/ajaxUpdate2?accion=actRespuestasViviendasBoleana',
 		        type: 'POST',
 		        dataType: 'json',
 		        data: info,
@@ -344,7 +344,7 @@ body {
 			
 			
 			$.ajax({
-		        url: "http://spr.stp.gov.py/tablero/ajaxDelete?accion=delRespuestasViviendas&nroFicha="+nro_ficha+"&preguntaId="+pregunta_id,
+		        url: "/tablero/ajaxDelete?accion=delRespuestasViviendas&nroFicha="+nro_ficha+"&preguntaId="+pregunta_id,
 		        type: 'POST',
 		        dataType: 'json',
 		        //data: JSON.stringify(etiquetapresupuesto),
@@ -366,7 +366,7 @@ body {
 		    			
 		    			var info = JSON.stringify(objeto);
 		    		    $.ajax({
-		    		        url: "http://spr.stp.gov.py/tablero/ajaxInserts2?accion=insRespuestasViviendas",
+		    		        url: "/tablero/ajaxInserts2?accion=insRespuestasViviendas",
 		    		        type: 'POST',
 		    		        dataType: 'json',
 		    		        data: info,
@@ -389,7 +389,7 @@ body {
 		$("body").on("click", ".nav",function(event){
 			
 			var preguntas = $.ajax({
-				url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getPreguntas',
+				url:'/tablero/ajaxSelects?action=getPreguntas',
 			  	type:'get',
 			  	dataType:'json',
 			  	async:false
@@ -397,7 +397,7 @@ body {
 			preguntas = JSON.parse(preguntas);
 			
 			var respuestas_posibles = $.ajax({
-				url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getRespuestasPosibles',
+				url:'/tablero/ajaxSelects?action=getRespuestasPosibles',
 			  	type:'get',
 			  	dataType:'json',
 			  	async:false
@@ -405,7 +405,7 @@ body {
 			respuestas_posibles = JSON.parse(respuestas_posibles);
 			
 			var respuestas_viviendas = $.ajax({
-				url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getRespuestasViviendas',
+				url:'/tablero/ajaxSelects?action=getRespuestasViviendas',
 			  	type:'get',
 			  	dataType:'json',
 			  	async:false
@@ -628,7 +628,7 @@ body {
 	<script src="/dist/js/demo.js" type="text/javascript"></script>
 	<%}else{%>
 	<script>
-	window.location = "http://spr.stp.gov.py/tablero/geografico4.jsp";
+	window.location = "/tablero/geografico4.jsp";
 	</script>
 	<%}%> 
 	

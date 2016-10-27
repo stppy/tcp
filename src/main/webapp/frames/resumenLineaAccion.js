@@ -39,7 +39,7 @@ function renderLineasEstrategicas(periodo){
 	lineasEstrategicas=lineasEstrategicas.sort(orden);
 		
 	var lineasProgramadas = $.ajax({
-		url: 'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacion&periodoId='+periodo,
+		url: '/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacion&periodoId='+periodo,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -322,6 +322,6 @@ function getPeriodo(periodo){
 	        	}
 		 });*/
 	//});	
-	//window.open('http://spr.stp.gov.py/','_blank');
+	//window.open('/','_blank');
 }	
 	

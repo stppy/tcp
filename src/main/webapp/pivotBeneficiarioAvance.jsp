@@ -66,7 +66,7 @@ $( document ).ready(function() {
 	$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
 		var i=parseInt(0);
 /* 		var datosNiveles = $.ajax({
-	        url:'http://spr.stp.gov.py/ajaxSelects?accion=getNiveles&nivel='+usuarios[0].nivel_id,
+	        url:'/ajaxSelects?accion=getNiveles&nivel='+usuarios[0].nivel_id,
 	        type:'get',
 	        dataType:'json',
 	        async:false       
@@ -75,7 +75,7 @@ $( document ).ready(function() {
 	      datosNiveles.niveles;
 	      
 	     var datosEntidad = $.ajax({
-	          url:'http://spr.stp.gov.py/ajaxSelects?accion=getEntidad&nivel='+usuarios[0].nivel_id+'&entidad='+usuarios[0].entidad_id,
+	          url:'/ajaxSelects?accion=getEntidad&nivel='+usuarios[0].nivel_id+'&entidad='+usuarios[0].entidad_id,
 	          type:'get',
 	          dataType:'json',
 	          async:false       
@@ -165,7 +165,7 @@ textarea { text-transform: uppercase; }
                 var renderers = $.extend($.pivotUtilities.renderers, 
                         $.pivotUtilities.export_renderers);
 				
-                $.getJSON("http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPivotBeneficiarioAvance", function(mps) {
+                $.getJSON("/tablero/ajaxSelects2?action=getPivotBeneficiarioAvance", function(mps) {
                 	$("#output").pivotUI(mps, {
                         renderers: $.extend(
                             $.pivotUtilities.renderers, 
