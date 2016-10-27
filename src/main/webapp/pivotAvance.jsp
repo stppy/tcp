@@ -27,7 +27,7 @@
         <script type="text/javascript" src="tablero_files/d3_renderers.js"></script>
         <script type="text/javascript" src="tablero_files/export_renderers.js"></script>
         <script type="text/javascript" src="tablero_files/jquery.js"></script>
-        <script type="text/javascript" src="tablero_files/export_renders.js"></script>        
+        <script type="text/javascript" src="tablero_files/export_renderers.js"></script>        
         <style>
             * {font-family: Verdana;}
             .node {
@@ -148,7 +148,7 @@ textarea { text-transform: uppercase; }
 	              <div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
 	              </div>
 	            </div>
-	            <div class="box-body" >
+	            <div class="box-body" style="overflow: auto; display: block;">
 	            
 	          <table class="table table-striped table-bordered table-hover">
 	            	<tr>	  					
