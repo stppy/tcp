@@ -2488,7 +2488,8 @@ public class SqlSelects {
  		 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from( "+
  				"select "
 				+ "ins_linea_accion_base_dd.institucion_sigla as \"institucionSigla\","
-				+ "ins_linea_accion_base_dd.institucion_id as \"institucionId\","								
+				+ "ins_linea_accion_base_dd.institucion_id as \"institucionId\","
+
 				+ "ins_linea_accion_programacion_hoy_dd.cantidad_hoy as \"cantidadHoy\","
 				+ "ins_linea_accion_avance_dd.cantidad as \"cantidadAvance\","
 				+ "ins_linea_accion_base_dd.linea_accion_id as \"lineaAccionId\", "
