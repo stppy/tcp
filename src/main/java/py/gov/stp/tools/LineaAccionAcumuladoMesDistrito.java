@@ -9,6 +9,8 @@ public class LineaAccionAcumuladoMesDistrito {
 	protected String mes;
 	protected double cantidad_programada;
 	protected double cantidad_ejecutda;
+	protected double max_cant_prog_no_acum;
+	protected double max_cant_ejec_no_acum;
 	protected int distrito_id;
 	protected int departamento_id;
 	protected String departamento;
@@ -87,5 +89,17 @@ public class LineaAccionAcumuladoMesDistrito {
 	public void setDepartamento_id(int departamento_id) {
 		this.departamento_id = departamento_id;
 	}
+	public double getMax_cant_prog_no_acum() {
+		return max_cant_prog_no_acum;
+	}
+	public void setMax_cant_prog_no_acum(double max_cant_prog_no_acum) {
+		this.max_cant_prog_no_acum = max_cant_prog_no_acum;
+	}
+	public double getMax_cant_ejec_no_acum() {
+		return max_cant_ejec_no_acum;
+	}
+	public void setMax_cant_ejec_no_acum(double max_cant_ejec_no_acum) {
+		this.max_cant_ejec_no_acum = max_cant_ejec_no_acum;
+	}	
 
 }

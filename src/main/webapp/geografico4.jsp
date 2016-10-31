@@ -1700,7 +1700,7 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 									
 									if (n == lineasProgramadas.length -1){
 										
-										if((totalProgramado != 0 && acumEjecucionLograda != 0) || (totalProgramado != 0 && acumEjecucionLograda == 0) || (totalProgramado == 0 && acumEjecucionLograda != 0)){
+										if(( totalProgramado > 0 && acumEjecucionLograda > 0 ) || ( totalProgramado > 0 ) || ( acumEjecucionLograda > 0 )){
 										
 											institucionId = lineasProgramadas[n].institucionId;
 											//if(cont != 0){
@@ -1759,7 +1759,7 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 
 									}else if(lineasProgramadas[n+1].lineaAccionId != linea_accion_id){
 																				
-										if((totalProgramado != 0 && acumEjecucionLograda != 0) || (totalProgramado != 0 && acumEjecucionLograda == 0) || (totalProgramado == 0 && acumEjecucionLograda != 0)){																
+										if(( totalProgramado > 0 && acumEjecucionLograda > 0 ) || ( totalProgramado > 0 ) || ( acumEjecucionLograda > 0 )){																
 											
 											/*if(totalProgramado == 0 && acumEjecucionLograda > 0){
 												promedio = 100;	
@@ -2355,26 +2355,43 @@ $(document).ready(function(){
 		
 		$("#rango-fecha").slider({});
 		$("#rango-fecha-ejecucion").slider({});
+		
+		/*var maxCantProgNoAcumulado = 0;
+		for(var i = 0;i<lineaAccionAcumuladoMesDepto.length; i++){
+			if (lineaAccionAcumuladoMesDepto[i].cantidad_programada > maxCantProgNoAcumulado && lineaAccionAcumuladoMesDepto[i].actividad_acumulable != true)
+				maxCantProgNoAcumulado = lineaAccionAcumuladoMesDepto[i].cantidad_programada;
+		}*/		
+		
 		for(var i = 0;i<lineaAccionAcumuladoMesDepto.length; i++)
-		{
-			cantidadTotalProgramada+=lineaAccionAcumuladoMesDepto[i].cantidad_programada;
+		{				
+			//if (lineaAccionAcumuladoMesDepto[i].actividad_acumulable){
+				cantidadTotalProgramada += lineaAccionAcumuladoMesDepto[i].cantidad_programada;
 	
-			if(lineaAccionAcumuladoMesDepto[i].mes >= lineaAccionAcumuladoMesDepto[vectorMin].mes && lineaAccionAcumuladoMesDepto[i].mes <= lineaAccionAcumuladoMesDepto[vectorMax].mes)
-			{
- 				dataPoints.push({ x: new Date( lineaAccionAcumuladoMesDepto[i].mes), y: cantidadTotalProgramada});
-			}
+				if(lineaAccionAcumuladoMesDepto[i].mes >= lineaAccionAcumuladoMesDepto[vectorMin].mes && lineaAccionAcumuladoMesDepto[i].mes <= lineaAccionAcumuladoMesDepto[vectorMax].mes)
+				{
+	 				dataPoints.push({ x: new Date( lineaAccionAcumuladoMesDepto[i].mes), y: lineaAccionAcumuladoMesDepto[i].max_cant_prog_no_acum + cantidadTotalProgramada});
+				}
+			//}
 
 		}
 		
+		
+		/* var maxCantAvanceNoAcumulado = 0;
+		for(var i = 0;i<lineaAccionAcumuladoMesDepto.length; i++){
+			if (lineaAccionAcumuladoMesDepto[i].cantidad_ejecutda > maxCantAvanceNoAcumulado && lineaAccionAcumuladoMesDepto[i].actividad_acumulable != true)
+				maxCantAvanceNoAcumulado = lineaAccionAcumuladoMesDepto[i].cantidad_ejecutda;
+		} */
+		
 		for(var i = 0;i<lineaAccionAcumuladoMesDepto.length; i++)
 		{
-			cantidadTotalEjecutada+=lineaAccionAcumuladoMesDepto[i].cantidad_ejecutda;
+			//if (lineaAccionAcumuladoMesDepto[i].actividad_acumulable){ 
+				cantidadTotalEjecutada += lineaAccionAcumuladoMesDepto[i].cantidad_ejecutda;
 	
-			if(lineaAccionAcumuladoMesDepto[i].mes >= lineaAccionAcumuladoMesDepto[vectorMinEjecucion].mes && lineaAccionAcumuladoMesDepto[i].mes <= lineaAccionAcumuladoMesDepto[vectorMaxEjecucion].mes)
-			{
- 				if (lineaAccionAcumuladoMesDepto[i].cantidad_ejecutda!=0)  ejecutada.push({ x: new Date( lineaAccionAcumuladoMesDepto[i].mes), y: cantidadTotalEjecutada});
-			}
-
+				if(lineaAccionAcumuladoMesDepto[i].mes >= lineaAccionAcumuladoMesDepto[vectorMinEjecucion].mes && lineaAccionAcumuladoMesDepto[i].mes <= lineaAccionAcumuladoMesDepto[vectorMaxEjecucion].mes)
+				{
+	 				if (lineaAccionAcumuladoMesDepto[i].cantidad_ejecutda != 0 || lineaAccionAcumuladoMesDepto[i].max_cant_ejec_no_acum != 0)  ejecutada.push({ x: new Date( lineaAccionAcumuladoMesDepto[i].mes), y: lineaAccionAcumuladoMesDepto[i].max_cant_ejec_no_acum + cantidadTotalEjecutada});
+				}
+			//}			
 		}
 
 
@@ -2623,9 +2640,9 @@ $(document).ready(function(){
 		var urlFinal="";
 		
 		
-		if (idDistrito != "") {// a nivel distrito
+		if (idDistrito != "" && typeof idDistrito != "undefined") {// a nivel distrito
 			urlAcumulado='getLineaAccionAcumuladoMesDistrito';urlFinal+="&departamento="+idDepartamento+"&distrito="+idDistrito;
-		} else	if(idDepartamento != "") { // a nivel departamento
+		} else	if(idDepartamento != "" && typeof idDepartamento != "undefined") { // a nivel departamento
 			urlAcumulado='getLineaAccionAcumuladoMesDepto';urlFinal+="&departamento="+idDepartamento;			
 		}
 		
