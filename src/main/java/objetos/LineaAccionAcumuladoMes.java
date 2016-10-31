@@ -9,7 +9,11 @@ public class LineaAccionAcumuladoMes {
 	protected String mes;
 	protected double cantidad_programada;
 	protected double cantidad_ejecutda;
+	//protected boolean actividad_acumulable;
+	protected double max_cant_prog_no_acum;
+	protected double max_cant_ejec_no_acum;	
 
+		
 	public int getLinea_accion_id() {
 		return linea_accion_id;
 	}
@@ -58,4 +62,23 @@ public class LineaAccionAcumuladoMes {
 	public void setCantidad_ejecutda(double cantidad_ejecutda) {
 		this.cantidad_ejecutda = cantidad_ejecutda;
 	}
+//	public boolean isActividad_acumulable() {
+//		return actividad_acumulable;
+//	}
+//	public void setActividad_acumulable(boolean actividad_acumulable) {
+//		this.actividad_acumulable = actividad_acumulable;
+//	}
+	public double getMax_cant_prog_no_acum() {
+		return max_cant_prog_no_acum;
+	}
+	public void setMax_cant_prog_no_acum(double max_cant_prog_no_acum) {
+		this.max_cant_prog_no_acum = max_cant_prog_no_acum;
+	}
+	public double getMax_cant_ejec_no_acum() {
+		return max_cant_ejec_no_acum;
+	}
+	public void setMax_cant_ejec_no_acum(double max_cant_ejec_no_acum) {
+		this.max_cant_ejec_no_acum = max_cant_ejec_no_acum;
+	}	
+	
 }
