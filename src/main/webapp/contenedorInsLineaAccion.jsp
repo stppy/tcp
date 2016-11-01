@@ -11,8 +11,8 @@
   <head>
  	 <%@ include file="/frames/head.jsp" %>	 
 	<script type="text/javascript" src="dist/canvasjs/canvasjs.min.js" ></script>
-	<script src="dist/js/jspdf.min.js"></script>
-
+	<script src="/dist/js/jspdf.min.js"></script>
+	
 	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="bootstrap/css/bootstrapslider.css" rel="stylesheet">	
 	<script src="plugins/jquery-bootstrap-modal-steps.js"></script>	
@@ -25,7 +25,10 @@
     <script src="plugins/mapa/leaflet.js"></script>
     <!-- leaflet location picker css -->
     <link href="plugins/mapa/leaflet-locationpicker.css" rel="stylesheet">
-    <script src="plugins/mapa/leaflet-locationpicker.js"></script>   
+    <script src="plugins/mapa/leaflet-locationpicker.js"></script>
+    
+    <link href="plugins/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="plugins/datatables/css/buttons.dataTables.min.css" rel="stylesheet">       
 	
 	<style type="text/css">
 		/* Example 1 custom styles */
@@ -70,11 +73,11 @@
 
 <% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%> 
 <% Map attributes = user.getAttributes(); 
+if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2") || attributes.get("role_id_tablero").toString().equals("3")){
 if (user != null && user.getName()!= "parce@nandeparaguay.org") { %>
 	<%@ include file="/frames/perfil.jsp" %>
 <script>
 periodoSeleccionado=new Date().getFullYear();
-
 function renderInsLineaAccion(PeriodoActual){
 	
 	var insLineaAccion = $.ajax({
@@ -513,15 +516,70 @@ function renderInsLineaAccion(PeriodoActual){
 			  		'<tr class="active"><th colspan="6">Línea de Acción por Institución</th></tr>'+
 			  		'<tr class="active"><th style="min-width:110px">Periodo</th><th>Institución</th><th>Línea de Acción</th><th>Meta</th><th class="text-center">U.Medida</th><th style="min-width:250px" class="text-center">Administrar Linea Acción </th></tr>'+
 			 	'</thead>'+
+			 	'<tfoot>'+
+			 		'<tr>'+
+			 			'<th>Total</th><th></th><th></th><th></th><th></th><th></th>'+
+			 		'</tr>'+
+	            '</tfoot>'+
+
 			 	'<tbody id="tablaCuerpoInsLineaAccionPrecargados">'+
 			 	
 			 	'</tbody>'+
 			' </table> '+
 		'</div>';
 	$('#cuerpoInsLineaAccion').append(tablaInsLineaAccion);
-	$('#tablaCuerpoInsLineaAccionPrecargados').append(cuerpoTablaInsLineaAccion);	
-	$("#dataTableInsLineaAccion").DataTable();
+	$('#tablaCuerpoInsLineaAccionPrecargados').append(cuerpoTablaInsLineaAccion);
+		
+	$('#dataTableInsLineaAccion').DataTable(
+	{
+	        dom: 'Bfrtip',
+	        buttons: [
+	            'copy', 'csv', 'excel', 'pdf', 'print'
+	        ],
+	        "footerCallback": function ( row, data, start, end, display ) {
+	        	var api = this.api(), data;
+	        	SumarizarColumnas(row, data, start, end, display, api, 1, null );
+	        },
+	        "search": {
+	            "regex": true
+			}
+	}
 	
+	);
+		
+	function SumarizarColumnas( row, data, start, end, display, api, cantColumnas, Indices ){
+		//var api = this.api(), data;
+		 
+        // saca los puntos y <del> de la cadena para pasarlo a entero
+        var intVal = function ( i ) {	            	
+        	return typeof i === 'string' ?
+        			i.replace(/[\.,"<\/*del>"]/g, '')*1 :
+                typeof i === 'number' ?
+                    i : 0;           		
+        };
+
+        // total general para todas las paginas
+        total = api
+            .column( 3 )
+            .data()
+            .reduce( function (a, b) {
+                return intVal(a) + intVal(b);
+            }, 0 );
+
+        // total por pagina 
+        pageTotal = api
+            .column( 3, { page: 'current'} )
+            .data()
+            .reduce( function (a, b) {
+                return intVal(a) + intVal(b);
+            }, 0 );
+
+        // se muestran los valores de los totales en el footer del table
+        $( api.column( 3 ).footer() ).html(
+        		numeroConComa(pageTotal) +' (Total Gral. '+ numeroConComa(total) +')'
+        );	
+	}
+		
 	//Tabla de linea de accion del año que viene
 	var tablaInsLineaAccionPosterior = 	'<div class="table-responsive">'+
 			'<table class="table table-hover" id="dataTableInsLineaAccionPosterior">'+
@@ -529,14 +587,31 @@ function renderInsLineaAccion(PeriodoActual){
 			  		'<tr class="active"><th colspan="6">Línea de Acción por Institución</th></tr>'+
 			  		'<tr class="active"><th style="min-width:110px">Periodo</th><th>Institución</th><th>Línea de Acción</th><th>Meta</th><th class="text-center">U.Medida</th><th style="min-width:250px" class="text-center">Administrar Linea Acción</th></tr>'+
 			 	'</thead>'+
-			 	'<tbody id="tablaCuerpoInsLineaAccionPrecargadosPosterior">'+
-			 	
+			 	'<tfoot>'+
+		 			'<tr>'+
+		 				'<th>Total</th><th></th><th></th><th></th><th></th><th></th>'+
+		 			'</tr>'+
+            	'</tfoot>'+
+			 	'<tbody id="tablaCuerpoInsLineaAccionPrecargadosPosterior">'+			 	
 			 	'</tbody>'+
 			' </table> '+
 		'</div>';
 	$('#cuerpoInsLineaAccionPosterior').append(tablaInsLineaAccionPosterior);
 	$('#tablaCuerpoInsLineaAccionPrecargadosPosterior').append(cuerpoTablaInsLineaAccionPosterior);
-	$("#dataTableInsLineaAccionPosterior").DataTable();
+	$("#dataTableInsLineaAccionPosterior").DataTable(
+	{
+	        dom: 'Bfrtip',
+	        buttons: [
+	            'copy', 'csv', 'excel', 'pdf', 'print'
+	        ],
+	        "footerCallback": function ( row, data, start, end, display ) {
+	        	var api = this.api(), data;
+	        	SumarizarColumnas(row, data, start, end, display, api, 1, null );
+	        },
+	        "search": {
+	            "regex": true
+			}
+	});
 	
 	//Tabla de linea de accion del año anterior
 	var tablaInsLineaAccionAnterior = 	'<div class="table-responsive">'+
@@ -545,6 +620,11 @@ function renderInsLineaAccion(PeriodoActual){
 		  		'<tr class="active"><th colspan="6">Línea de Acción por Institución</th></tr>'+
 		  		'<tr class="active"><th style="min-width:110px">Periodo</th><th>Institución</th><th>Línea de Acción</th><th>Meta</th><th class="text-center">U.Medida</th><th style="min-width:250px" class="text-center">Administrar Linea Acción</th></tr>'+
 		 	'</thead>'+
+		 	'<tfoot>'+
+ 				'<tr>'+
+ 					'<th>Total</th><th></th><th></th><th></th><th></th><th></th>'+
+ 				'</tr>'+
+    		'</tfoot>'+
 		 	'<tbody id="tablaCuerpoInsLineaAccionPrecargadosAnterior">'+
 		 	
 		 	'</tbody>'+
@@ -552,13 +632,27 @@ function renderInsLineaAccion(PeriodoActual){
 		'</div>';
 	$('#cuerpoInsLineaAccionAnterior').append(tablaInsLineaAccionAnterior);
 	$('#tablaCuerpoInsLineaAccionPrecargadosAnterior').append(cuerpoTablaInsLineaAccionAnterior);
-	$("#dataTableInsLineaAccionAnterior").DataTable();
+	$("#dataTableInsLineaAccionAnterior").DataTable(
+	{
+		        dom: 'Bfrtip',
+		        buttons: [
+		            'copy', 'csv', 'excel', 'pdf', 'print'
+		        ],
+		        "footerCallback": function ( row, data, start, end, display ) {
+		        	var api = this.api(), data;
+		        	SumarizarColumnas(row, data, start, end, display, api, 1, null );
+		        },
+		        "search": {
+		            "regex": true
+				}	
+	}
+	);
 	
 	}
-	
+
 <%if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
- 	$(document).ready(function(){
- 			
+ $(document).ready(function(){	
+ 		
  		onoff=false;
 		function OcultarRegistrosBorrados(){
 			if($("#chkMostrarOcultar").is(':checked')){
@@ -791,8 +885,18 @@ function renderInsLineaAccion(PeriodoActual){
     <!-- script src="plugins/jQuery/jQuery-2.1.3.min.js"></script-->        
 	<!-- Bootstrap 3.3.2 JS -->
     <script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-    <!-- DATA TABES SCRIPT -->
+    <!-- DATA TABES SCRIPT -->    
     <script src="plugins/datatables/jquery.dataTables.js" type="text/javascript"></script>
+    <!-- <script src="plugins/datatables/Plugins/api/sum().js"></script> -->
+        
+	<script src="plugins/datatables/dataTables.buttons.min.js" type="text/javascript"></script>
+	<script src="plugins/datatables/buttons.flash.min.js" type="text/javascript"></script>
+	<script src="plugins/datatables/jszip.min.js" type="text/javascript"></script>
+	<script src="plugins/datatables/pdfmake.min.js" type="text/javascript"></script>
+	<script src="plugins/datatables/vfs_fonts.js" type="text/javascript"></script>
+	<script src="plugins/datatables/buttons.html5.min.js" type="text/javascript"></script>
+	<script src="plugins/datatables/buttons.print.min.js" type="text/javascript"></script>
+	
     <script src="plugins/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
     <!-- FastClick -->
     <script src='plugins/fastclick/fastclick.min.js'></script>
@@ -860,5 +964,8 @@ var usuariosSpr = $.ajax({
 usuariosSpr = JSON.parse(usuariosSpr);
 usuariosSpr = usuariosSpr.usuarios;
 </script>
+		<%  } else { %>
+            <script type="text/javascript">window.location = "http://spr.stp.gov.py";</script>
+        <% } %> 
   </body>
 </html>
