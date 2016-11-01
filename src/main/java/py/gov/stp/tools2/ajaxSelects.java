@@ -1322,8 +1322,16 @@ public class ajaxSelects extends HttpServlet {
                 ArrayList<Object> desempenhoDpto= new ArrayList<Object>();
                 condition = " where true";
                 
+                String condition2="";
+        		if (!userRoleId.equals("0") && !userRoleId.equals("1") && !userRoleId.equals("2")){ 
+        			condition2 += " and entidad_id="+userEntidadId+" and nivel_id="+userNivelId;
+        			if ( !userUnrId.equals("0") ){
+        				condition2+= " and unidad_responsable_id="+userUnrId;
+        			}
+        		};
+                
                 try {
-					instituciones = SqlSelects.selectInstitucion(condition);
+					instituciones = SqlSelects.selectInstitucion(condition+condition2);
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
@@ -1461,10 +1469,19 @@ public class ajaxSelects extends HttpServlet {
                 List<LineaAccionProgramacion> objetos=null;
                 List<Institucion> instituciones= null ;
                 ArrayList<Object> desempenhoDpto= new ArrayList<Object>();
-//              condition = " where true"; 
+                condition = " where true"; 
 //        		if (periodoId!=null) condition += " and periodo ='"+periodoId+"'";
+                
+                String condition2="";
+        		if (!userRoleId.equals("0") && !userRoleId.equals("1") && !userRoleId.equals("2")){ 
+        			condition2 += " and entidad_id="+userEntidadId+" and nivel_id="+userNivelId;
+        			if ( !userUnrId.equals("0") ){
+        				condition2+= " and unidad_responsable_id="+userUnrId;
+        			}
+        		};
+                
                 try {
-					instituciones = SqlSelects.selectInstitucion(condition);
+					instituciones = SqlSelects.selectInstitucion(condition+condition2);
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}

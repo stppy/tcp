@@ -8098,8 +8098,16 @@ $("body").on("click", ".guardarAccionBeneficiario",function(event){
 	        			
 	        		}
 	        		
+	        		/* $("#listaDestinatarioAccion").html("");
+	        		//$("#listaDestinatarioAccion").html(cuerpoDestinatarioAccion); */
+	        		
+	        		//$("#programacion").append(cuerpoModalDestinatario);
 	        		$("#listaDestinatarioAccion").html("");
 	        		$("#listaDestinatarioAccion").html(cuerpoDestinatarioAccion);
+	        		//$('#tipoDestinatarioAccion > option[value="1"]').attr('selected', 'selected');
+	        		//$('#modalDestinatario').modal('show');
+	        		//$('#tipoDestinatarioAccion').change();
+	        		 
 	        		
 	        	}else{
 	        		alert("ERROR");        		
@@ -8650,8 +8658,9 @@ $("body").on("click", ".avanceCualitativo",function(event){
 	$('#cuerpoTablaAvanceCualitativo').append(tablaAccion);
 	listaAvanceCualitativo(insLineaAccionId,lineaAccionId,institucionId,periodoId);	
 	//$('#tablaAccionesPrecargadas').append(cuerpoAccion);
-	$('#modalAvanceCualitativo').modal('show');
-	$("#dataTablesAvanceCualitativo").DataTable();	
+
+	$('#modalAvanceCualitativo').modal('show');	
+	//$('#dataTablesAvanceCualitativo').DataTable();
 	
 });
 
@@ -8822,9 +8831,15 @@ function listaAvanceCualitativo(insLineaAccionId,lineaAccionId,institucionId,per
 	'	                			</div>';
 	$('#cuerpoTablaAvanceCualitativo').append(tablaAccion);
 	$('#tablaAvanceCualitativo').html("");
-	$('#tablaAvanceCualitativo').append(tablaAvanceCualitativo);
-	$("#dataTablesAvanceCualitativo").DataTable();
-	
+
+	$('#tablaAvanceCualitativo').append(tablaAvanceCualitativo);	
+	//$('#dataTablesAvanceCualitativo').DataTable();
+	$('#dataTablesAvanceCualitativo').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    } );	
 }
 
 $("body").on("click", ".consultaEditarAvanceCualitativo",function(event){

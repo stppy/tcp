@@ -16,7 +16,7 @@
 
 
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-        <title>Pivot Table - Beneficiarios de Avances</title>
+        <title>Pivot Table - Avance</title>
         <link rel="stylesheet" type="text/css" href="tablero_files/pivot.css">
         <script type="text/javascript" src="tablero_files/d3.js"></script>
         <script type="text/javascript" src="tablero_files/jsapi"></script>
@@ -25,8 +25,8 @@
         <script type="text/javascript" src="tablero_files/pivot.js"></script>
         <script type="text/javascript" src="tablero_files/gchart_renderers.js"></script>
         <script type="text/javascript" src="tablero_files/d3_renderers.js"></script>
+        <script type="text/javascript" src="tablero_files/export_renderers.js"></script>
         <script type="text/javascript" src="tablero_files/jquery.js"></script>
-        <script type="text/javascript" src="tablero_files/export_renderers.js"></script>        
         <style>
             * {font-family: Verdana;}
             .node {
@@ -65,7 +65,7 @@ $( document ).ready(function() {
 	$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
 	$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
 		var i=parseInt(0);
-/* 		var datosNiveles = $.ajax({
+		/* var datosNiveles = $.ajax({
 	        url:'http://spr.stp.gov.py/ajaxSelects?accion=getNiveles&nivel='+usuarios[0].nivel_id,
 	        type:'get',
 	        dataType:'json',
@@ -142,7 +142,7 @@ textarea { text-transform: uppercase; }
 	          <div class="box" height="1000px">
 	            <div class="box-header with-border" height="1000px">
 	              <h3 class="box-title" id="tituloTipoPrograma">
-	                Beneficiario Avance
+	                Avance
 	              </h3> 
 	              <div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
 	              </div>
@@ -165,7 +165,7 @@ textarea { text-transform: uppercase; }
                 var renderers = $.extend($.pivotUtilities.renderers, 
                         $.pivotUtilities.export_renderers);
 				
-                $.getJSON("http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPivotBeneficiarioAvance", function(mps) {
+                $.getJSON("http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPivotPlanDeAccion", function(mps) {
                 	$("#output").pivotUI(mps, {
                         renderers: $.extend(
                             $.pivotUtilities.renderers, 
