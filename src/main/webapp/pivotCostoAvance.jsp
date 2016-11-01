@@ -26,7 +26,7 @@
         <script type="text/javascript" src="tablero_files/gchart_renderers.js"></script>
         <script type="text/javascript" src="tablero_files/d3_renderers.js"></script>
         <script type="text/javascript" src="tablero_files/jquery.js"></script>
-        <script type="text/javascript" src="tablero_files/export_renders.js"></script>
+        <script type="text/javascript" src="tablero_files/export_renderers.js"></script>
         <style>
             * {font-family: Verdana;}
             .node {
@@ -46,6 +46,7 @@
 <body class="skin-blue sidebar-mini">
 <% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%>
 <% Map attributes = user.getAttributes(); 
+if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){
 if (user != null) { %>
 
 <script>
@@ -147,7 +148,7 @@ textarea { text-transform: uppercase; }
 	              <div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
 	              </div>
 	            </div>
-	            <div class="box-body" >
+	            <div class="box-body" style="overflow: auto; display: block;" >
 	            
 	          <table class="table table-striped table-bordered table-hover">
 	            	<tr>	  					
@@ -327,7 +328,10 @@ textarea { text-transform: uppercase; }
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js" type="text/javascript"></script>
         <%  } else { %>
-				<p>Favor Iniciar Sesion</p>
-			<%  } %>
+			<p>Favor Iniciar Sesion</p>
+		<%  } %>
+		<%  } else { %>
+            <script type="text/javascript">window.location = "http://spr.stp.gov.py";</script>
+        <% } %> 
   </body>
 </html>
