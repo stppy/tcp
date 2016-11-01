@@ -4336,7 +4336,11 @@ $("body").on("click", ".borrarAccion",function(event){
 		$('#cuerpoListaCronogramas').append(tablaCronograma);
 		$('#tablaActividades').append(cuerpoActividad);
 		$("#modalActividad").modal('show');
-		$("#dataTablesActividades").DataTable();
+		$("#dataTablesActividades").DataTable({
+			dom: 'Bfrtip',
+	        buttons: [
+	  	            'copy', 'csv', 'excel', 'pdf', 'print'
+	  	        ]});
 				
 	});
 	
@@ -4829,11 +4833,16 @@ function actualizarTablaActividades(accion_id,insLineaAccionId,lineaAccionId,ins
 	$("#hitoTipoIdActividad").val('');
 	//$("#proporcionActividad").val('');
 	//$("#pesoActividad").val('');
-	$("#dataTablesActividades").DataTable();
+	$("#dataTablesActividades").DataTable({
+		dom: 'Bfrtip',
+        buttons: [
+  	            'copy', 'csv', 'excel', 'pdf', 'print'
+  	        ]
+	});
 		
 }
 
-$("body").on("click", ".agregarProgramacion",function(event){ 
+function renderProgramacion(insLineaAccionId,lineaAccionId,institucionId,periodoId,accionId,cronogramaId){
 	
 	if ( $("#modalActividad").length )
 	{
@@ -4851,17 +4860,6 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	{
 		$("#modalBorrarHito").remove();
 	}	
-	var parametros = $(this).attr("parametros");
-    var idParsed = parametros.split("-");                                                            
-	
-	//Las siguentes 4 variables se utiliza en esta funcion para redibujar el modal anterior
-	var insLineaAccionId = idParsed[0];
-	var lineaAccionId = idParsed[1];
-	var institucionId = idParsed[2];
-	var periodoId = idParsed[3];
-	var accionId = idParsed[4];
-	var cronogramaId = idParsed[5];
-
 	
 	var cronogramas = $.ajax({
 		url:'/tablero/ajaxSelects2?action=getCronograma&cronogramaId='+cronogramaId,
@@ -5061,8 +5059,8 @@ $("body").on("click", ".agregarProgramacion",function(event){
 											
 							<% }%>		
 
-							'		      	<div class="row">'+ 
-							'		      		<div class="col-md-12">'+
+							'		      	<div class="row" id="tableCronograma">'+ 
+							'		      		<div class="col-md-12" >'+
 							'						<div class="box box-warning">'+
 							'		                	<div class="box-header with-border">'+
 							'								<h3 class="box-title">Hitos Programados</h3>'+
@@ -5143,6 +5141,22 @@ $("body").on("click", ".agregarProgramacion",function(event){
         ]
 });
 	
+}
+
+$("body").on("click", ".agregarProgramacion",function(event){ 
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-");                                                            
+	
+	//Las siguentes 4 variables se utiliza en esta funcion para redibujar el modal anterior
+	var insLineaAccionId = idParsed[0];
+	var lineaAccionId = idParsed[1];
+	var institucionId = idParsed[2];
+	var periodoId = idParsed[3];
+	var accionId = idParsed[4];
+	var cronogramaId = idParsed[5];
+
+	renderProgramacion(insLineaAccionId,lineaAccionId,institucionId,periodoId,accionId,cronogramaId);
+		
 	
 });	
 
@@ -5194,7 +5208,39 @@ $("body").on("click", ".guardarProgramacion",function(event){
         	if(data.success == true)
         	{
         		
-        		var unidadMedida = $.ajax({
+        		$("#tableCronograma").html("");
+        		
+        		var tableProgamacion= "";
+        		tableProgamacion= 
+				'		      		<div class="col-md-12" >'+
+				'						<div class="box box-warning">'+
+				'		                	<div class="box-header with-border">'+
+				'								<h3 class="box-title">Hitos Programados</h3>'+
+				'	                  			<div class="box-tools pull-right">'+
+				'				                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>'+
+				'		                    		</button>'+
+				'		                    		<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>'+
+				'		                    		</button>'+
+				'		                  		</div>'+
+				'               			</div>'+//fin box-heder
+				'               			<div class="box-body" id="tablaListaProgramacionHito1">'+
+											//cuerpo del dataTable de ProgramacionHito1
+				'               			</div>'+//fin box-body
+				'                		</div>'+	
+				'                	</div>'+
+				'                </div>'+
+				
+
+				'		    </div>'+
+				'			<div class="modal-footer">'+
+		      	'			</div>'+														
+				'		</div>'+ 
+				'	</div>';
+						
+				$("#tableCronograma").append(tableProgamacion);	
+        		
+        		renderProgramacion(insLineaAccionId,lineaAccionId,institucionId,periodoId,accionId,cronogramaId);
+        		<%-- var unidadMedida = $.ajax({
         			url:'/tablero/ajaxSelects2?action=getUnidadMedida',
         		  	type:'get',
         		  	dataType:'json',
@@ -5250,7 +5296,7 @@ $("body").on("click", ".guardarProgramacion",function(event){
         		
 									
         		$("#listaActividades").html("");
-        		$("#listaActividades").append(registroProgramacion);
+        		$("#listaActividades").append(registroProgramacion); --%>
 
         		
         	}else{
@@ -5265,7 +5311,7 @@ $("body").on("click", ".guardarProgramacion",function(event){
 	}
 });	
 
-$("body").on("click", ".agregarAvance",function(event){
+function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId, accionId, actividadId){
 	
 	if ( $("#modalVincularProductos").length )
 	{
@@ -5291,18 +5337,7 @@ $("body").on("click", ".agregarAvance",function(event){
 	{
 		$("#modalAdministrador").remove();
 	}	
-	
-	var parametros = $(this).attr("parametros");
-    var idParsed = parametros.split("-");                                                            
-	
-	//Las siguentes 4 variables se utiliza en esta funcion para redibujar el modal anterior
-	var insLineaAccionId = idParsed[0];
-	var lineaAccionId = idParsed[1];
-	var institucionId = idParsed[2];
-	var periodoId = idParsed[3];
-	var accionId = idParsed[4];
-	var actividadId = idParsed[5];//es el id de la tabla actidad
-	
+			
     var f = new Date();
     if( (f.getMonth() +1) < 10 ){
     	var mes =( 0 +""+ (f.getMonth() +1));
@@ -5554,7 +5589,7 @@ $("body").on("click", ".agregarAvance",function(event){
 							'                		</div>'+	
 							'                	</div>'+
 							
-							'		      		<div class="col-md-6">'+
+							'		      		<div class="col-md-6" id="tableAvance">'+
 							'						<div class="box box-warning">'+
 							'		                	<div class="box-header with-border">'+
 							'		                  		<h3 class="box-title">Lista de Avance</h3>'+
@@ -5683,8 +5718,21 @@ $("body").on("click", ".agregarAvance",function(event){
             'copy', 'csv', 'excel', 'pdf', 'print'
         ]
 });
-		
+}
+$("body").on("click", ".agregarAvance",function(event){
 	
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-");                                                            
+	
+	//Las siguentes 4 variables se utiliza en esta funcion para redibujar el modal anterior
+	var insLineaAccionId = idParsed[0];
+	var lineaAccionId = idParsed[1];
+	var institucionId = idParsed[2];
+	var periodoId = idParsed[3];
+	var accionId = idParsed[4];
+	var actividadId = idParsed[5];//es el id de la tabla actidad	
+		
+	renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId, accionId, actividadId);
 });
 
 $("body").on("click", ".guardarAvance",function(event){
@@ -5737,7 +5785,27 @@ $("body").on("click", ".guardarAvance",function(event){
 	        success: function (data) {
 	        	if(data.success == true)
 	        	{
-	        		var webServicesAvance = $.ajax({
+	        		$("#tableAvance").html("");
+	        			        		
+	        		var tableAvance="";
+	        		tableAvance=
+					'						<div class="box box-warning">'+
+					'		                	<div class="box-header with-border">'+
+					'		                  		<h3 class="box-title">Lista de Avance</h3>'+
+					'	                  			<div class="box-tools pull-right">'+
+					'		                  		</div>'+
+					'               			</div>'+//fin box-heder
+					'               			<div class="box-body" id="tablaListaAvanceBox">'+
+													//cuerpo de dataTable de lista de Avances
+					'               			</div>'+//fin box-body
+					'                		</div>'+	
+					'                	</div>';
+					
+					$("#tableAvance").html(tableAvance);
+					
+					renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId, accionId, actividadId);
+	        		
+	        		/* var webServicesAvance = $.ajax({
 	        			url:'/tablero/ajaxSelects2?action=getAvance&actividadId='+actividadId,
 	        		  	type:'get',
 	        		  	dataType:'json',
@@ -5752,7 +5820,7 @@ $("body").on("click", ".guardarAvance",function(event){
 	        		}
 	        		
 	        		$("#listaAvances").html("");
-	        		$("#listaAvances").html(cuerpoAvance);
+	        		$("#listaAvances").html(cuerpoAvance); */
 	        		
 	        	}else{
 	        		alert("ERROR");        		
@@ -6203,7 +6271,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									<% }%>	
 
 
-									'		      					<div class="col-md-12">'+
+									'		      					<div class="col-md-12" id="tableCosto">'+
 									'									<div class="box box-default box-solid">'+
 									'		                				<div class="box-header with-border">'+
 									'		                  					<h3 class="box-title">Lista Costos</h3>'+
@@ -7705,6 +7773,9 @@ $("body").on("click", ".guardarBeneficiario",function(event){
 				'						<thead>'+
 				'							<tr class="active"><th>Tipo</th><th>Grupo</th><th>Descripción</th><th>Cantidad</th><th class="text-center">Administrar</th></tr>'+
 				'						</thead>'+
+				'						<tfoot>'+
+				'							<tr><th></th><th></th><th></th><th></th><th></th></tr>'+
+				'						</tfoot>'+
 				'						<tbody id="listaBeneficiario">'+
 				'						</tbody>'+
 				'					</table>'+
@@ -7715,7 +7786,45 @@ $("body").on("click", ".guardarBeneficiario",function(event){
         		$("#cuerpoTablaBeneficiario").html(contenidoTabla);   
         		$("#listaBeneficiario").html("");
         		$("#listaBeneficiario").html(cuerpoBeneficiario);  
-        		$("#dataTableBeneficiario").DataTable();
+        		//$("#dataTableBeneficiario").DataTable();
+        		$('#dataTableBeneficiario').dataTable({
+        	        "footerCallback": function ( row, data, start, end, display ) {
+        	            var api = this.api(), data;
+        	 
+        	         // saca los puntos y <del> de la cadena para pasarlo a entero
+        	            var intVal = function ( i ) {
+        	                return typeof i === 'string' ?
+        	                		i.replace(/[\.,"<\/*del>","Gs\."]/g, '')*1 :
+        	                    typeof i === 'number' ?
+        	                        i : 0;
+        	            };
+        	 
+        	         // total general para todas las paginas de la columna
+        	            total3 = api
+        	                .column( 3 )
+        	                .data()
+        	                .reduce( function (a, b) {
+        	                    return intVal(a) + intVal(b);
+        	                }, 0 );
+        	 
+        	         // total por pagina segun número de columna
+        	            pageTotal3 = api
+        	                .column( 3, { page: 'current'} )
+        	                .data()
+        	                .reduce( function (a, b) {
+        	                    return intVal(a) + intVal(b);
+        	                }, 0 );
+        	         
+        	         // se muestran los valores de los totales en el footer del table
+        	            $( api.column( 3 ).footer() ).html(
+        	            		numeroConComa(pageTotal3) +' (Total Gral. '+ numeroConComa(total3) +')'
+        	            );	         
+        	        },
+        	        dom: 'Bfrtip',
+        	        buttons: [
+        	            'copy', 'csv', 'excel', 'pdf', 'print'
+        	        ]
+        		}); 
         	}else{
   		
         	}
@@ -8332,17 +8441,10 @@ $("body").on("click", ".borrarHito",function(event){
 	
 });
 
-$("body").on("click", ".modalDestinatario",function(event){
-	var parametros = $(this).attr("parametros");
-    var idParsed = parametros.split("-"); 
-    var insLineaAccionId = idParsed[0];
-    var lineaAccionId = idParsed[1];
-    var institucionId = idParsed[2];
-    var periodoId = idParsed[3];
-    var accionId = idParsed[4];
-    var accionCatalogoId = idParsed[5];
-    var cuerpoDestinatarioAccion = "";
+function renderAccionDestinatario(insLineaAccionId,lineaAccionId,institucionId,periodoId,accionId,accionCatalogoId){
 	
+	cuerpoDestinatarioAccion = "";
+		
 	if ( $("#modalDuplicarAccion").length )
 	{
 		$("#modalDuplicarAccion").remove();
@@ -8521,7 +8623,7 @@ $("body").on("click", ".modalDestinatario",function(event){
 						<% }%>		
 
 
-						'		      					<div class="col-md-12">'+
+						'		      					<div class="col-md-12" id="tableListaDestinatario">'+
 						'									<div class="box box-default box-solid">'+
 						'		                				<div class="box-header with-border">'+
 						'										<h3 class="box-title">Lista Destinatarios</h3>'+
@@ -8606,6 +8708,23 @@ $("body").on("click", ".modalDestinatario",function(event){
         ]
 }); 
 	
+	}
+
+$("body").on("click", ".modalDestinatario",function(event){
+	event.stopPropagation();
+	event.preventDefault(); 
+	
+	
+	parametros = $(this).attr("parametros");
+    idParsed = parametros.split("-"); 
+    insLineaAccionId = idParsed[0];
+    lineaAccionId = idParsed[1];
+    institucionId = idParsed[2];
+    periodoId = idParsed[3];
+    accionId = idParsed[4];
+    accionCatalogoId = idParsed[5];    
+    
+	renderAccionDestinatario(insLineaAccionId,lineaAccionId,institucionId,periodoId,accionId,accionCatalogoId);
 });
 
 $("body").on("click", ".guardarAccionBeneficiario",function(event){
@@ -8645,8 +8764,59 @@ $("body").on("click", ".guardarAccionBeneficiario",function(event){
 	        contentType: 'application/json',
 	        mimeType: 'application/json',
 	        success: function (data) {
-	        	if(data.success == true){
-	        	    $("#descripcionDestinatarioAccion").val('');
+	        	if(data.success == true){	
+	        		//$("#programacion").html("");
+	        		
+	        		$("#descripcionDestinatarioAccion").val('');
+	        		$("#cantidadDestinatarioAccion").val('');
+	        		
+	        		$("#tableListaDestinatario").html("");
+	        		var tableListaDestinatario="";
+	        		
+	        		tableListaDestinatario=
+					'									<div class="box box-default box-solid">'+
+					'		                				<div class="box-header with-border">'+
+					'										<h3 class="box-title">Lista Destinatarios</h3>'+
+					'	                  						<div class="box-tools pull-right">'+
+					'				                    			<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+					'		                    					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>'+
+					'		                  					</div>'+
+					'              							</div>'+
+					'              						<div class="box-body">'+	
+					'										<div class="table-responsive">'+
+					'											<table class="table table-hover table-bordered" id="dataTableDestinatarioAccion">'+
+					'												<thead>'+
+					'													<tr class="active"><th>Tipo</th><th>Grupo</th><th>Descripción</th><th>Cantidad</th><th class="text-center">Administrar</th></tr>'+
+					'												</thead>'+
+					'												<tfoot>'+
+					'													<tr><th></th><th></th><th></th><th></th><th></th></tr>'+
+					'												</tfoot>'+
+					'												<tbody id="listaDestinatarioAccion">'+
+					'												</tbody>'+
+					'											</table>'+
+					'				      					</div>'+
+					
+					'				      				</div>'+
+					'				      			</div>'+
+					'              				</div>'+
+	
+					'              				</div>'+
+					'                		</div>'+	
+					'               	</div>'+
+					'                </div>'+//fin row																	
+					
+					'		    </div>'+
+					'			<div class="modal-footer">'+
+			      	'			</div>'+														
+					'		</div>'+ 
+					'	</div>';
+					
+					
+					$("#tableListaDestinatario").html(tableListaDestinatario);
+	        		
+	        		renderAccionDestinatario(insLineaAccionId,lineaAccionId,institucionId,periodoId,accionId,accionCatalogoId);
+	        	    
+	        		<%-- $("#descripcionDestinatarioAccion").val('');
 	        		$("#tipoDestinatarioAccion").val('');
 	        		$("#grupoDestinatarioAccion").val('');
 	        		$("#cantidadDestinatarioAccion").val('');
@@ -8716,6 +8886,45 @@ $("body").on("click", ".guardarAccionBeneficiario",function(event){
 	        		//$('#tipoDestinatarioAccion > option[value="1"]').attr('selected', 'selected');
 	        		//$('#modalDestinatario').modal('show');
 	        		//$('#tipoDestinatarioAccion').change();
+	        		
+	        		$('#dataTableDestinatarioAccion').dataTable({
+	        	        "footerCallback": function ( row, data, start, end, display ) {
+	        	            var api = this.api(), data;
+	        	 
+	        	         // saca los puntos y <del> de la cadena para pasarlo a entero
+	        	            var intVal = function ( i ) {
+	        	                return typeof i === 'string' ?
+	        	                		i.replace(/[\.,"<\/*del>","Gs\."]/g, '')*1 :
+	        	                    typeof i === 'number' ?
+	        	                        i : 0;
+	        	            };
+	        	 
+	        	         // total general para todas las paginas de la columna
+	        	            total3 = api
+	        	                .column( 3 )
+	        	                .data()
+	        	                .reduce( function (a, b) {
+	        	                    return intVal(a) + intVal(b);
+	        	                }, 0 );
+	        	 
+	        	         // total por pagina segun número de columna
+	        	            pageTotal3 = api
+	        	                .column( 3, { page: 'current'} )
+	        	                .data()
+	        	                .reduce( function (a, b) {
+	        	                    return intVal(a) + intVal(b);
+	        	                }, 0 );
+	        	         
+	        	         // se muestran los valores de los totales en el footer del table
+	        	            $( api.column( 3 ).footer() ).html(
+	        	            		numeroConComa(pageTotal3) +' (Total Gral. '+ numeroConComa(total3) +')'
+	        	            );	         
+	        	        },
+	        	        dom: 'Bfrtip',
+	        	        buttons: [
+	        	            'copy', 'csv', 'excel', 'pdf', 'print'
+	        	        ]
+	        	});  --%>
 	        		 
 	        		
 	        	}else{
@@ -8730,6 +8939,9 @@ $("body").on("click", ".guardarAccionBeneficiario",function(event){
 	});
 
 $("body").on("click", ".consultaEditarDestinatario",function(event){
+	event.stopPropagation();
+	event.preventDefault();
+	
 	var parametros = $(this).attr("parametros");
     var idParsed = parametros.split("-");                                                            
 	
