@@ -5835,7 +5835,13 @@ $("body").on("click", ".guardarAvance",function(event){
 	}
 });	
 
-$("body").on("click", ".agregarModalAdministrador",function(event){
+function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,periodoId,accionId,actividadId,avanceId){
+	
+	/* if ( $("#tableCosto").length )
+	{
+		$("#tableCosto").remove();
+	}
+	 */
 	
 	if ( $("#modalAvance").length )
 	{
@@ -5873,20 +5879,6 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	{
 		$("#modalEditarBeneficiario").remove();
 	}	
-
-
-	var parametros = $(this).attr("parametros");
-    var idParsed = parametros.split("-");                                                            
-	
-	//Las siguentes variables se utiliza en esta funcion para redibujar el modal anterior
-	var insLineaAccionId = idParsed[0];
-	var lineaAccionId = idParsed[1];
-	var institucionId = idParsed[2]; 
-	var periodoId = idParsed[3];
-	var accionId = idParsed[4];
-	var actividadId = idParsed[5];
-	var avanceId = idParsed[6];//es el id de la tabla avance
-	
 	
 	var insLineaAccion = $.ajax({
 		url:'/tablero/ajaxSelects2?action=getInsLineaAccion&insLineaAccionId='+insLineaAccionId,
@@ -6543,8 +6535,24 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 }); 
 
 	
-	
+}
 
+
+$("body").on("click", ".agregarModalAdministrador",function(event){
+	
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-");                                                            
+	
+	//Las siguentes variables se utiliza en esta funcion para redibujar el modal anterior
+	var insLineaAccionId = idParsed[0];
+	var lineaAccionId = idParsed[1];
+	var institucionId = idParsed[2]; 
+	var periodoId = idParsed[3];
+	var accionId = idParsed[4];
+	var actividadId = idParsed[5];
+	var avanceId = idParsed[6];//es el id de la tabla avance
+	
+	renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,periodoId,accionId,actividadId,avanceId);
 });	
 
 /* $(document).ready(function(){
@@ -6959,7 +6967,43 @@ $("body").on("click", ".guardarCosto",function(event){
         	if(data.success == true)
         	{
         		
-        		var webServicesAvanceCosto = $.ajax({
+        		var tableCosto="";
+        			tableCosto=
+        		
+				'									<div class="box box-default box-solid">'+
+				'		                				<div class="box-header with-border">'+
+				'		                  					<h3 class="box-title">Lista Costos</h3>'+
+				'	                  						<div class="box-tools pull-right">'+
+				'				                    			<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+				'		                    					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>'+
+				'		                  					</div>'+
+				'              							</div>'+
+				'              						<div class="box-body" id="cuerpoTablaCosto">'+	
+				'										<div class="table-responsive">'+
+				'											<table class="table table-hover table-bordered" id="dataTableAvanceCosto">'+
+				'												<thead>'+
+				'													<tr class="active"><th>Producto</th><th>ObjetoGasto</th><th>Monto</th><th class="text-center">Administrar</th></tr>'+
+				'												</thead>'+
+				'												<tfoot>'+
+				'													<tr><th></th><th></th><th></th><th></th></tr>'+
+				'												</tfoot>'+
+				'												<tbody id="listaCosto">'+
+				'												</tbody>'+
+				'											</table>'+
+				'				      					</div>'+
+				
+				'				      				</div>'+
+				'				      			</div>'+
+				'              				</div>'+
+
+				'              				</div>'+
+				'                		</div>';	
+			
+				$("#tableCosto").html(tableCosto);
+				
+				renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,periodoId,accionId,actividadId,avanceId);
+				
+        		<%-- var webServicesAvanceCosto = $.ajax({
         			url:'/tablero/ajaxSelects2?action=getAvanceCosto&avanceId='+avanceId,
         		  	type:'get',
         		  	dataType:'json',
@@ -7005,7 +7049,7 @@ $("body").on("click", ".guardarCosto",function(event){
         		$("#cuerpoTablaCosto").html(contenidoTabla);
         		$("#listaCosto").html("");
         		$("#listaCosto").html(cuerpoAvanceCosto);
-        		$("#dataTableAvanceCosto").DataTable();
+        		$("#dataTableAvanceCosto").DataTable(); --%>
         		
         	}else{
   		
