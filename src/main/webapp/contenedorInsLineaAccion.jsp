@@ -966,6 +966,6 @@ usuariosSpr = usuariosSpr.usuarios;
 </script>
 		<%  } else { %>
             <script type="text/javascript">window.location = "http://spr.stp.gov.py";</script>
-        <% } %> 
+        <%  } %> 
   </body>
 </html>
