@@ -2341,10 +2341,12 @@ $(document).ready(function(){
 	var porcentaje1 = 70; //la variable porcentaje1 se utiliza para colorear las tablas
 	var porcentaje2 = 90 //la variable porcentaje2 se utiliza para colorear las tablas
 	
-	function dibujarLineaAccionAcumuladoMesDepto(lineaAccionAcumuladoMesDepto, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion){
+	function dibujarLineaAccionAcumuladoMesDepto(lineaAccionAcumuladoMesDepto, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion, mostrarOcultarNoAcumulables){
 		
-		var dataPoints=[];
-		var ejecutada=[];
+		var programadaTotal=[];
+		var programadaNoAcumulable=[];
+		var ejecutadaTotal=[];
+		var ejecutadaNoAcumulable=[];
 		
 		var mes;
 		var anho;
@@ -2382,7 +2384,9 @@ $(document).ready(function(){
 	
 				if(lineaAccionAcumuladoMesDepto[i].mes >= lineaAccionAcumuladoMesDepto[vectorMin].mes && lineaAccionAcumuladoMesDepto[i].mes <= lineaAccionAcumuladoMesDepto[vectorMax].mes)
 				{
-	 				dataPoints.push({ x: new Date( lineaAccionAcumuladoMesDepto[i].mes), y: lineaAccionAcumuladoMesDepto[i].max_cant_prog_no_acum + cantidadTotalProgramada});
+					programadaTotal.push({ x: new Date( lineaAccionAcumuladoMesDepto[i].mes), y: lineaAccionAcumuladoMesDepto[i].max_cant_prog_no_acum + cantidadTotalProgramada});
+	 				
+					if (lineaAccionAcumuladoMesDepto[i].max_cant_prog_no_acum != 0) programadaNoAcumulable.push({ x: new Date( lineaAccionAcumuladoMesDepto[i].mes), y: lineaAccionAcumuladoMesDepto[i].max_cant_prog_no_acum});
 				}
 			//}
 
@@ -2402,24 +2406,106 @@ $(document).ready(function(){
 	
 				if(lineaAccionAcumuladoMesDepto[i].mes >= lineaAccionAcumuladoMesDepto[vectorMinEjecucion].mes && lineaAccionAcumuladoMesDepto[i].mes <= lineaAccionAcumuladoMesDepto[vectorMaxEjecucion].mes)
 				{
-	 				if (lineaAccionAcumuladoMesDepto[i].cantidad_ejecutda != 0 || lineaAccionAcumuladoMesDepto[i].max_cant_ejec_no_acum != 0)  ejecutada.push({ x: new Date( lineaAccionAcumuladoMesDepto[i].mes), y: lineaAccionAcumuladoMesDepto[i].max_cant_ejec_no_acum + cantidadTotalEjecutada});
+	 				if (lineaAccionAcumuladoMesDepto[i].cantidad_ejecutda != 0 || lineaAccionAcumuladoMesDepto[i].max_cant_ejec_no_acum != 0)	 				
+	 					ejecutadaTotal.push({ x: new Date( lineaAccionAcumuladoMesDepto[i].mes), y: lineaAccionAcumuladoMesDepto[i].max_cant_ejec_no_acum + cantidadTotalEjecutada});
+	 				
+	 				if (lineaAccionAcumuladoMesDepto[i].max_cant_ejec_no_acum != 0)
+	 					ejecutadaNoAcumulable.push({ x: new Date( lineaAccionAcumuladoMesDepto[i].mes), y: lineaAccionAcumuladoMesDepto[i].max_cant_ejec_no_acum});	 				
+	 					 				
 				}
 			//}			
 		}
+		
+		//Despliega o no las lineas de programacion y ejecucion no acumulables en los datos del chart
+		if (!mostrarOcultarNoAcumulables){
+			var data = [					     
+					{        
+						indexLabelFontColor: "darkSlateGray",
+						showInLegend: true, 
+						name: 'programada',
+						type: "line",
+						color: "#1856F2", /*"rgba(0,75,141,0.7)"*/
+						markerSize:8,
+						markerType:"triangle",
+						legendText:"Programación",
+						dataPoints:programadaTotal
+					},
+					{        
+						indexLabelFontColor: "darkSlateGray",
+						showInLegend: true, 
+						name: 'ejecutadas',
+						type: "area",
+						color: "#C24642",
+						markerSize:8,
+						markerType:"circle",
+						legendText:"Ejecución",
+						dataPoints:ejecutadaTotal
+					}
+			  	];
+		} else	
+			var data = [
+					{        
+						indexLabelFontColor: "darkSlateGray",
+						showInLegend: true, 
+						name: 'programada total',
+						type: "line",
+						color: "#1856F2", /*"rgba(0,75,141,0.7)"*/
+						markerSize:8,
+						markerType:"triangle",
+						legendText:"Programación total",
+						dataPoints:programadaTotal
+					},
+					{        
+						indexLabelFontColor: "darkSlateGray",
+						showInLegend: true, 
+						name: 'programada no acumulables',
+						type: "line",
+						color: "#369EAD",
+						markerSize:8,
+						markerType:"triangle",
+						legendText:"Programación no acumulables",
+						dataPoints:programadaNoAcumulable
+					},
+					{        
+						indexLabelFontColor: "darkSlateGray",
+						showInLegend: true, 
+						name: 'ejecutadas total',
+						type: "area",
+						color: "#C24642",
+						markerSize:8,
+						markerType:"circle",
+						legendText:"Ejecución total",
+						dataPoints:ejecutadaTotal
+					},
+					{        
+						indexLabelFontColor: "darkSlateGray",
+						showInLegend: true, 
+						name: 'ejecutada no acumulables',
+						type: "line",
+						color: "#FF706B",
+						markerSize:8,
+						markerType:"circle",
+						legendText:"Ejecución no acumulables",
+						dataPoints:ejecutadaNoAcumulable
+					}
+				];
 
-
+		//dibuja el chart
 		var chart = new CanvasJS.Chart("chartContainer",
 				{
-						zoomEnabled: true,
-						exportEnabled: true,
-						exportFileName: lineaAccionAcumuladoMesDepto[0].institucion+" - "+lineaAccionAcumuladoMesDepto[0].linea_accion+" ("+lineaAccionAcumuladoMesDepto[0].accion_unidad_medida+")",
-						title: {
-							text: "Evolución Mensual" +" ("+lineaAccionAcumuladoMesDepto[0].accion_unidad_medida+")" 
-						},
-                        	animationEnabled: true,
-                        	width: 800,
+					zoomEnabled: true,
+					exportEnabled: true,
+					exportFileName: lineaAccionAcumuladoMesDepto[0].institucion+" - "+lineaAccionAcumuladoMesDepto[0].linea_accion+" ("+lineaAccionAcumuladoMesDepto[0].accion_unidad_medida+")",
+					toolTip: {
+				        shared: true  //disable here. 
+				    }, 
+					title: {
+						text: "Evolución Mensual" +" ("+lineaAccionAcumuladoMesDepto[0].accion_unidad_medida+")" 
+					},
+                       	animationEnabled: true,
+                       	width: 800,
 					axisX:{      
-						valueFormatString: "YYYY-MM" ,
+						valueFormatString: "YYYY-MM",
 						interval: 1,
 						intervalType: "month",
 						labelAngle: -50,
@@ -2431,32 +2517,28 @@ $(document).ready(function(){
 						tickColor: "azure",
 						titleFontColor: "rgb(0,75,141)"
 					},
-					data: [
-					{        
-						indexLabelFontColor: "darkSlateGray",
-						showInLegend: true, 
-						name: 'programada',
-						type: "line",
-						//color: "rgba(0,75,141,0.7)",
-						markerSize:8,
-						legendText:"Programación",
-						dataPoints:dataPoints
-					},
-					{        
-						indexLabelFontColor: "darkSlateGray",
-						showInLegend: true, 
-						name: 'ejecutadas',
-						type: "area",
-						//color: "rgba(0,75,141,0.8)",
-						markerSize:8,
-						legendText:"Ejecución",
-						dataPoints:ejecutada
-					}
-				  ]
+					data: data
 				});
 				
 		chart.render();
 	 }
+	
+	
+	$("body").on("click", "#chkMostrarOcultarNoAcumulables",function(event){			
+		var rangoDeFecha= $("#rango-fecha").val();
+		var splitDeRango=rangoDeFecha.split(",");
+		vectorMin=splitDeRango[0];
+		vectorMax=splitDeRango[1];
+		
+		var rangoDeFechaEjecucion= $("#rango-fecha-ejecucion").val();
+		var splitDeRangoEjecucion=rangoDeFechaEjecucion.split(",");
+		vectorMinEjecucion=splitDeRangoEjecucion[0];
+		vectorMaxEjecucion=splitDeRangoEjecucion[1];
+		
+		var mostrarNoAcumulables = $("#chkMostrarOcultarNoAcumulables").is(':checked'); 
+		
+		dibujarLineaAccionAcumuladoMesDepto(lineaAccionAcumuladoMesDepto, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion, mostrarNoAcumulables);		
+	});
 
 	$("body").on("change", "#rango-fecha",function(event){
 		var rangoDeFecha= $("#rango-fecha").val();
@@ -2645,8 +2727,7 @@ $(document).ready(function(){
 		$("#dataTablesAccionesAvances").DataTable();	
 			
 		$("#tab_3-2").append('Programación: <label id="fechaInicio"></label><input id="rango-fecha" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="1" data-slider-value="[250,450]"/><label id="fechaFin"></label>');
-		$("#tab_3-2").append('<br><br>Ejecución: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label id="fechaInicioEjecucion"></label><input id="rango-fecha-ejecucion" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="1" data-slider-value="[250,450]"/><label id="fechaFinEjecucion"></label>');
-
+		$("#tab_3-2").append('<br><br>Ejecución: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label id="fechaInicioEjecucion"></label><input id="rango-fecha-ejecucion" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="1" data-slider-value="[250,450]"/><label id="fechaFinEjecucion"></label> &nbsp&nbsp <!--div class="checkbox"--><label> <input type="checkbox" id="chkMostrarOcultarNoAcumulables">Mostrar no acumulables</label><!-- /div-->');
 
 		//$('#myModal').find(".modal-footer").html(footerModal);
 		var urlAcumulado="getLineaAccionAcumuladoMes";// a nivel pais
