@@ -619,7 +619,7 @@ tbody {
 								$("#cuerpoTableroLineaAccion").html(a);
 							}
 						}else{ //d
-							var color="";var depemInst;var countInst;var despTotInst;
+							var color="";var depemInst;var countInst;var despTotInst; var ordenInstitucionPais;
 							var periodoSeleccionado = $("#periodoSeleccion option:selected").val();
 				        	//obtenemos todas las instituciones en el back end y su desempeño institucional a nivel país
 							var desPaisInstjson = $.ajax({
@@ -662,15 +662,21 @@ tbody {
 						  					    					'</table>'+
 																'</div>'+
 															'</div>');
-							for (var i = 0; i< instituciones.length;i++){
+							
+							ordenInstitucionPais = instituciones.sort(orden);
+							for (var i = 0; i< ordenInstitucionPais.length;i++){
 								
 								for (var c = 0 ; c<desPaisInst.length;c++){
-									if(desPaisInst[c].institucionId==instituciones[i].id)
-										despTotInst=desPaisInst[i].promedio;
+									if(desPaisInst[c].institucionId==ordenInstitucionPais[i].id)
+									{
+										despTotInst=desPaisInst[c].promedio;
+										color=getColorDesemp2(despTotInst);
+										if (/*despTotInst !=0 &&*/ ordenInstitucionPais[i].id != 47981) $("#tablaInstituciones").append('<tr><td><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+ordenInstitucionPais[i].id+' checked="true"></td><td class="col-md-3"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+ordenInstitucionPais[i].id+'  > '+ordenInstitucionPais[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotInst).toFixed(2)+'%</p></div></div></td></tr>');
+									}
 								}
 								
-								color=getColorDesemp2(despTotInst);
-								if (/*despTotInst !=0 &&*/ instituciones[i].id != 47981) $("#tablaInstituciones").append('<tr><td><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+instituciones[i].id+' checked="true"></td><td class="col-md-3"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+instituciones[i].id+'  > '+instituciones[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotInst).toFixed(2)+'%</p></div></div></td></tr>');
+							//	color=getColorDesemp2(despTotInst);
+							//	if (/*despTotInst !=0 &&*/ ordenInstitucionPais[i].id != 47981) $("#tablaInstituciones").append('<tr><td><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+ordenInstitucionPais[i].id+' checked="true"></td><td class="col-md-3"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+ordenInstitucionPais[i].id+'  > '+ordenInstitucionPais[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotInst).toFixed(2)+'%</p></div></div></td></tr>');
 
 							}
 						}
