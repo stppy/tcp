@@ -202,7 +202,7 @@ function renderAccion(estrategia, lineasProgramadas, instituciones, periodo){
 										}
 										  
 										tempInstLineas += '<tr>'+
-										'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
+										'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #3c8dbc;">'+lineasProgramadas[n].lineaAccionNombre+'</span></td>'+
 										'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
 										'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
 										'<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>'+

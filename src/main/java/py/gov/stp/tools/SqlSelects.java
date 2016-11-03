@@ -883,10 +883,14 @@ public class SqlSelects {
 							"	tmp2.institucion, " +
 							"	tmp2.accion_unidad_medida, " +
 							"	tmp2.mes, " +
-							"	(SELECT MAX(tmp.cantidad_programada) " +
-							"	 FROM linea_accion_acumulado_mes tmp " + condition +
-							//"	 WHERE tmp.institucion_id = 1359 and tmp.linea_accion_id = 88 " +
-							"	     AND NOT tmp.actividad_acumulable) as max_cant_prog_no_acum, " +
+							"	MAX(CASE " +
+							"			WHEN NOT tmp2.actividad_acumulable THEN tmp2.cantidad_programada " +
+							"			ELSE 0::double precision " + 
+							"	    END) AS max_cant_prog_no_acum, " +
+							"	MAX(CASE " +
+							"			WHEN NOT tmp2.actividad_acumulable THEN tmp2.cantidad_ejecutada " +
+							"			ELSE 0::double precision " + 
+							"	    END) AS max_cant_ejec_no_acum, " +
 							"	(SELECT MAX(tmp.cantidad_ejecutada) " +
 							"	FROM linea_accion_acumulado_mes tmp " + condition +
 							//"	WHERE tmp.institucion_id = 1359 and tmp.linea_accion_id = 88 " + 
