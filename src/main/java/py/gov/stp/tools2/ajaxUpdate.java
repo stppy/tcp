@@ -43,13 +43,21 @@ public class ajaxUpdate extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	response.setContentType("text/html;charset=UTF-8");
     	request.setCharacterEncoding("UTF-8");
-    	
-    	AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();
-    	Map attributes = user.getAttributes(); 
-    	String userCorreo = user.getName();
+
     	
     	String accion = request.getParameter("accion");
     	
+    	AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();
+    	Map attributes = user.getAttributes(); 
+    	String userCorreo = user.getName(); 
+    	String userNivelId = attributes.get("nivel_id").toString();
+    	String userEntidadId = attributes.get("entidad_id").toString();
+    	String userUnrId = attributes.get("unr_id").toString();
+    	String userRoleId = attributes.get("role_id_tablero").toString();
+    	
+    	
+    	//String accion = request.getParameter("accion");
+
     	Integer nivel = null;
     	Integer entidad = null;
     	Integer tipoPresupuesto = null;
@@ -881,29 +889,7 @@ public class ajaxUpdate extends HttpServlet {
                 if(br != null){ json = br.readLine();}
                 Gson gsonInsert = new Gson();
                 objeto=gsonInsert.fromJson(json, EtiquetaUsuario.class);
-				boolean status = SqlUpdates.borradoEtiquetaUsuario(objeto, userCorreo);
-        		myObj.addProperty("success", status);
-        		out.println(myObj.toString());
-        	}
-        	if (accion.equals("actRespuestasViviendas")){
-        		RespuestasViviendas objeto = new RespuestasViviendas();
-        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
-                String json = "";
-                if(br != null){ json = br.readLine();}
-                Gson gsonInsert = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-                objeto=gsonInsert.fromJson(json, RespuestasViviendas.class);
-                boolean status = SqlUpdates.actRespuestasViviendas(objeto);
-        		myObj.addProperty("success", status);
-        		out.println(myObj.toString());
-        	}
-        	if (accion.equals("actRespuestasViviendasBoleana")){
-        		RespuestasViviendas objeto = new RespuestasViviendas();
-        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
-                String json = "";
-                if(br != null){ json = br.readLine();}
-                Gson gsonInsert = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-                objeto=gsonInsert.fromJson(json, RespuestasViviendas.class);
-                boolean status = SqlUpdates.actRespuestasViviendasBoleana(objeto);
+                boolean status = SqlUpdates.borradoEtiquetaUsuario(objeto, userCorreo);
         		myObj.addProperty("success", status);
         		out.println(myObj.toString());
         	}
@@ -914,11 +900,24 @@ public class ajaxUpdate extends HttpServlet {
                 if(br != null){ json = br.readLine();}
                 Gson gsonInsert = new Gson();
                 objeto=gsonInsert.fromJson(json, InsLineaAccionHasEtiqueta.class);
-                boolean status = SqlUpdates.borradoInstanciaEtiqueta(objeto, userCorreo);
+                boolean status = SqlUpdates.borradoInstanciaEtiqueta(objeto,userCorreo);
         		myObj.addProperty("success", status);
         		out.println(myObj.toString());
-        	}        
+        	}
+        	if (accion.equals("borradoUsuarioLineaAccion")){
+        		UsuarioLineaAccion objeto = new UsuarioLineaAccion();
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String json = "";
+                if(br != null){ json = br.readLine();}
+                Gson gsonInsert = new Gson();
+                objeto=gsonInsert.fromJson(json, UsuarioLineaAccion.class);
+                boolean status = SqlUpdates.borradoUsuarioLineaAccion(objeto);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	} 
         	
-        }
+        }     
+        
+     
     }
 }
