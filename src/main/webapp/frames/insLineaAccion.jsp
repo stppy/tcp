@@ -1469,13 +1469,10 @@ function renderEvidencia(avanceId, parametros){
 		            	if(typeof i==='string'){	
 		            		i=i.replace(/[\."<\/*del>""Gs\."]/g, '');
 		            		i=i.replace(/[","]/g, '.');
-		            		i=i*1;
-		            		//i=i.replace(/[","]/g, '.')*1;
-		            		//i=i.replace(/[","]/g, '.')*1;
+		            		i=i*1;		            		
 		            	}else{
 		            		if(typeof i==='number'){
-		            			i=i;
-		            			//i=i.replace(/[","]/g, '.')*1;
+		            			i=i;		            			
 		            	}else{
 		            		i=0;
 		            	}
@@ -5392,7 +5389,7 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
     if( (f.getMonth() +1) < 10 ){
     	var mes =( 0 +""+ (f.getMonth() +1));
     }else{
-    	var mes =f.getMonth();
+    	var mes =f.getMonth()+1;
     }
     
     if( (f.getDate()) < 10 ){
@@ -6857,7 +6854,7 @@ $("body").on("click", ".consultaEditarAvance",function(event){
     if( (f.getMonth() +1) < 10 ){
     	var mes =( 0 +""+ (f.getMonth() +1));
     }else{
-    	var mes =f.getMonth();
+    	var mes =f.getMonth()+1;
     }
     
     if( (f.getDate()) < 10 ){
