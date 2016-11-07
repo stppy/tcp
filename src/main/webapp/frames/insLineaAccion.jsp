@@ -1464,8 +1464,9 @@ function renderEvidencia(avanceId, parametros){
 			$('#dataTablesAcciones').dataTable({
 		         "footerCallback": function ( row, data, start, end, display ) {
 		            var api = this.api(), data;
-		 
-		            var entero=function(i){
+		 		            
+		         // saca los puntos y <del> de la cadena para pasarlo a entero
+		            var intVal = function(i){
 		            	if(typeof i==='string'){	
 		            		i=i.replace(/[\."<\/*del>""Gs\."]/g, '');
 		            		i=i.replace(/[","]/g, '.');
@@ -1478,23 +1479,14 @@ function renderEvidencia(avanceId, parametros){
 		            	}
 		            }
 		            	return i;
-		            };	
-		            
-		         // saca los puntos y <del> de la cadena para pasarlo a entero
-		            var intVal = function ( i ) {
-		                return typeof i === 'string' ?
-		                		i.replace(/[\.,"<\/*del>","Gs\."]/g, '')*1 :	                			 	
-		                    typeof i === 'number' ?
-		                        i : 0;
 		            };
 		          
 		         // total general para todas las paginas de la columna
 		            total6 = api
 		                .column( 6 )
 		                .data()
-		                .reduce( function (a, b) {
-		                    //return intVal2(intVal(a)) + intVal2(intVal(b));
-		                	return entero(a) + entero(b);
+		                .reduce( function (a, b) {		                    
+		                	return intVal(a) + intVal(b);
 		                }, 0 );
 		 
 		         // total por pagina segun número de columna
@@ -1502,14 +1494,14 @@ function renderEvidencia(avanceId, parametros){
 		                .column( 6, { page: 'current'} )
 		                .data()
 		                .reduce( function (a, b) {
-		                    return entero(a) + entero(b);
+		                    return intVal(a) + intVal(b);
 		                }, 0 );
 		         // total general para todas las paginas de la columna
 		            total7 = api
 		                .column( 7 )
 		                .data()
 		                .reduce( function (a, b) {
-		                    return entero(a) + entero(b);
+		                    return intVal(a) + intVal(b);
 		                }, 0 );
 		 
 		         // total por pagina segun número de columna
@@ -1517,7 +1509,7 @@ function renderEvidencia(avanceId, parametros){
 		                .column( 7, { page: 'current'} )
 		                .data()
 		                .reduce( function (a, b) {
-		                    return entero(a) + entero(b);
+		                    return intVal(a) + intVal(b);
 		                }, 0 );
 		         
 		         // total general para todas las paginas de la columna
@@ -1525,7 +1517,7 @@ function renderEvidencia(avanceId, parametros){
 		                .column( 8 )
 		                .data()
 		                .reduce( function (a, b) {
-		                    return entero(a) + entero(b);
+		                    return intVal(a) + intVal(b);
 		                }, 0 );
 		 
 		         // total por pagina segun número de columna
@@ -1533,7 +1525,7 @@ function renderEvidencia(avanceId, parametros){
 		                .column( 8, { page: 'current'} )
 		                .data()
 		                .reduce( function (a, b) {
-		                    return entero(a) + entero(b);
+		                    return intVal(a) + intVal(b);
 		                }, 0 );
 		         
 		         // total general para todas las paginas de la columna
@@ -1541,7 +1533,7 @@ function renderEvidencia(avanceId, parametros){
 		                .column( 9 )
 		                .data()
 		                .reduce( function (a, b) {
-		                    return entero(a) + entero(b);
+		                    return intVal(a) + intVal(b);
 		                }, 0 );
 		 
 		         // total por pagina segun número de columna
@@ -1549,7 +1541,7 @@ function renderEvidencia(avanceId, parametros){
 		                .column( 9, { page: 'current'} )
 		                .data()
 		                .reduce( function (a, b) {
-		                    return entero(a) + entero(b);
+		                    return intVal(a) + intVal(b);
 		                }, 0 );
 		         
 		         // total general para todas las paginas de la columna
@@ -1557,7 +1549,7 @@ function renderEvidencia(avanceId, parametros){
 		                .column( 10 )
 		                .data()
 		                .reduce( function (a, b) {
-		                    return entero(a) + entero(b);
+		                    return intVal(a) + intVal(b);
 		                }, 0 );
 		 
 		         // total por pagina segun número de columna
@@ -1565,28 +1557,28 @@ function renderEvidencia(avanceId, parametros){
 		                .column( 10, { page: 'current'} )
 		                .data()
 		                .reduce( function (a, b) {
-		                    return entero(a) + entero(b);
+		                    return intVal(a) + intVal(b);
 		                }, 0 );
 		 
 		         // se muestran los valores de los totales en el footer del table
 		            $( api.column( 6 ).footer() ).html(
-		            		numeroConComa(pageTotal6) +' (Total Gral. '+ numeroConComa(total6) +')'
+		            		'Total Pág. '+ numeroConComa(pageTotal6) +' (Total Gral. '+ numeroConComa(total6) +')'
 		            );
 		         // se muestran los valores de los totales en el footer del table
 		            $( api.column( 7 ).footer() ).html(
-		            		numeroConComa(pageTotal7) +' (Total Gral. '+ numeroConComa(total7) +')'
+		            		'Total Pág. '+ numeroConComa(pageTotal7) +' (Total Gral. '+ numeroConComa(total7) +')'
 		            );
 		         // se muestran los valores de los totales en el footer del table
 		            $( api.column( 8 ).footer() ).html(
-		            		numeroConComa(pageTotal8) +' (Total Gral. '+ numeroConComa(total8) +')'
+		            		'Total Pág. '+ numeroConComa(pageTotal8) +' (Total Gral. '+ numeroConComa(total8) +')'
 		            );
 		         // se muestran los valores de los totales en el footer del table
 		            $( api.column( 9 ).footer() ).html(
-		            		numeroConComa(pageTotal9) +' (Total Gral. '+ numeroConComa(total9) +')'
+		            		'Total Pág. '+ numeroConComa(pageTotal9) +' (Total Gral. '+ numeroConComa(total9) +')'
 		            );
 		         // se muestran los valores de los totales en el footer del table
 		            $( api.column( 10 ).footer() ).html(
-		            		numeroConComa(pageTotal10) +' (Total Gral. '+ numeroConComa(total10) +')'
+		            		'Total Pág. '+ numeroConComa(pageTotal10) +' (Total Gral. '+ numeroConComa(total10) +')'
 		            );
 		        }, 
 		        dom: 'Bfrtip',
@@ -2687,12 +2679,20 @@ $("body").on("click", ".borrarAccion",function(event){
 	            var api = this.api(), data;
 	 
 	         // saca los puntos y <del> de la cadena para pasarlo a entero
-	            var intVal = function ( i ) {
-	                return typeof i === 'string' ?
-	                		i.replace(/[\.,"<\/*del>","Gs\."]/g, '')*1 :
-	                    typeof i === 'number' ?
-	                        i : 0;
-	            };
+	            var intVal = function(i){
+		            	if(typeof i==='string'){	
+		            		i=i.replace(/[\."<\/*del>""Gs\."]/g, '');
+		            		i=i.replace(/[","]/g, '.');
+		            		i=i*1;		            		
+		            	}else{
+		            		if(typeof i==='number'){
+		            			i=i;		            			
+		            	}else{
+		            		i=0;
+		            	}
+		            }
+		            	return i;
+		            };
 	 
 	         // total general para todas las paginas de la columna
 	            total8 = api
@@ -2744,15 +2744,15 @@ $("body").on("click", ".borrarAccion",function(event){
 	         
 	         // se muestran los valores de los totales en el footer del table
 	            $( api.column( 8 ).footer() ).html(
-	            		numeroConComa(pageTotal8) +' (Total Gral. '+ numeroConComa(total8) +')'
+	            		'Total Pág. '+ numeroConComa(pageTotal8) +' (Total Gral. '+ numeroConComa(total8) +')'
 	            );
 	         /* // se muestran los valores de los totales en el footer del table
 	            $( api.column( 11 ).footer() ).html(
-	            		numeroConComa(pageTotal11) +' (Total Gral. '+ numeroConComa(total11) +')'
+	            		'Total Pág. '+ numeroConComa(pageTotal11) +' (Total Gral. '+ numeroConComa(total11) +')'
 	            );
 	         // se muestran los valores de los totales en el footer del table
 	            $( api.column( 12 ).footer() ).html(
-	            		numeroConComa(pageTotal12) +' (Total Gral. '+ numeroConComa(total12) +')'
+	            		'Total Pág. '+ numeroConComa(pageTotal12) +' (Total Gral. '+ numeroConComa(total12) +')'
 	            );	          
 	        }, 
 	        dom: 'Bfrtip',
@@ -3643,7 +3643,8 @@ $("body").on("click", ".borrarAccion",function(event){
 		  document.getElementById('proyecto-formulario').addEventListener('focus',eje1.proyectoFocus,false); 
 		  document.getElementById('proyecto-formulario').addEventListener('change',eje1.proyecto,false);
 		  document.getElementById('producto-formulario').addEventListener('focus',eje1.productoFocus,false); 
-		  document.getElementById('producto-formulario').addEventListener('change',eje1.producto,false); 
+		  document.getElementById('producto-formulario').addEventListener('change',eje1.producto,false);
+		  
 		
 	});
 	$("body").on("click", ".consultaBorrarVinculacionProducto",function(event){
@@ -3966,12 +3967,20 @@ $("body").on("click", ".borrarAccion",function(event){
 	            var api = this.api(), data;
 	 
 	         // saca los puntos y <del> de la cadena para pasarlo a entero
-	            var intVal = function ( i ) {
-	                return typeof i === 'string' ?
-	                		i.replace(/[\.,"<\/*del>","Gs\."]/g, '')*1 :
-	                    typeof i === 'number' ?
-	                        i : 0;
-	            };
+			var intVal = function(i){
+        	if(typeof i==='string'){	
+        		i=i.replace(/[\."<\/*del>""Gs\."]/g, '');
+        		i=i.replace(/[","]/g, '.');
+        		i=i*1;		            		
+        	}else{
+        		if(typeof i==='number'){
+        			i=i;		            			
+        	}else{
+        		i=0;
+        	}
+        	}
+        	return i;
+        	};
 	 
 	         // total general para todas las paginas de la columna
 	            total6 = api
@@ -4054,23 +4063,23 @@ $("body").on("click", ".borrarAccion",function(event){
 	 
 	         // se muestran los valores de los totales en el footer del table
 	            $( api.column( 6 ).footer() ).html(
-	            		numeroConComa(pageTotal6) +' (Total Gral. '+ numeroConComa(total6) +')'
+	            		'Total Pág. '+ numeroConComa(pageTotal6) +' (Total Gral. '+ numeroConComa(total6) +')'
 	            );
 	         // se muestran los valores de los totales en el footer del table
 	            $( api.column( 7 ).footer() ).html(
-	            		numeroConComa(pageTotal7) +' (Total Gral. '+ numeroConComa(total7) +')'
+	            		'Total Pág. '+ numeroConComa(pageTotal7) +' (Total Gral. '+ numeroConComa(total7) +')'
 	            );
 	         // se muestran los valores de los totales en el footer del table
 	            $( api.column( 8 ).footer() ).html(
-	            		numeroConComa(pageTotal8) +' (Total Gral. '+ numeroConComa(total8) +')'
+	            		'Total Pág. '+ numeroConComa(pageTotal8) +' (Total Gral. '+ numeroConComa(total8) +')'
 	            );
 	         // se muestran los valores de los totales en el footer del table
 	            $( api.column( 9 ).footer() ).html(
-	            		numeroConComa(pageTotal9) +' (Total Gral. '+ numeroConComa(total9) +')'
+	            		'Total Pág. '+ numeroConComa(pageTotal9) +' (Total Gral. '+ numeroConComa(total9) +')'
 	            );
 	         // se muestran los valores de los totales en el footer del table
 	            $( api.column( 10 ).footer() ).html(
-	            		numeroConComa(pageTotal10) +' (Total Gral. '+ numeroConComa(total10) +')'
+	            		'Total Pág. '+ numeroConComa(pageTotal10) +' (Total Gral. '+ numeroConComa(total10) +')'
 	            );
 	        },
  */	        dom: 'Bfrtip',
@@ -5154,11 +5163,19 @@ function renderProgramacion(insLineaAccionId,lineaAccionId,institucionId,periodo
             var api = this.api(), data;
  
          // saca los puntos y <del> de la cadena para pasarlo a entero
-            var intVal = function ( i ) {
-                return typeof i === 'string' ?
-                		i.replace(/[\.,"<\/*del>","Gs\."]/g, '')*1 :
-                    typeof i === 'number' ?
-                        i : 0;
+            var intVal = function(i){
+            	if(typeof i==='string'){	
+            		i=i.replace(/[\."<\/*del>""Gs\."]/g, '');
+            		i=i.replace(/[","]/g, '.');
+            		i=i*1;		            		
+            	}else{
+            		if(typeof i==='number'){
+            			i=i;		            			
+            	}else{
+            		i=0;
+            	}
+            }
+            	return i;
             };
  
          // total general para todas las paginas de la columna
@@ -5179,7 +5196,7 @@ function renderProgramacion(insLineaAccionId,lineaAccionId,institucionId,periodo
          
          // se muestran los valores de los totales en el footer del table
             $( api.column( 0 ).footer() ).html(
-            		numeroConComa(pageTotal0) +' (Total Gral. '+ numeroConComa(total0) +')'
+            		'Total Pág. '+ numeroConComa(pageTotal0) +' (Total Gral. '+ numeroConComa(total0) +')'
             );	         
         },
         dom: 'Bfrtip',
@@ -5693,11 +5710,19 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
             var api = this.api(), data;
  
          // saca los puntos y <del> de la cadena para pasarlo a entero
-            var intVal = function ( i ) {
-                return typeof i === 'string' ?
-                		i.replace(/[\.,"<\/*del>","Gs\."]/g, '')*1 :
-                    typeof i === 'number' ?
-                        i : 0;
+            var intVal = function(i){
+            	if(typeof i==='string'){	
+            		i=i.replace(/[\."<\/*del>""Gs\."]/g, '');
+            		i=i.replace(/[","]/g, '.');
+            		i=i*1;		            		
+            	}else{
+            		if(typeof i==='number'){
+            			i=i;		            			
+            	}else{
+            		i=0;
+            	}
+            }
+            	return i;
             };
  
          // total general para todas las paginas de la columna
@@ -5718,7 +5743,7 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
          
          // se muestran los valores de los totales en el footer del table
             $( api.column( 1 ).footer() ).html(
-            		numeroConComa(pageTotal1) +' (Total Gral. '+ numeroConComa(total1) +')'
+            		'Total Pág. '+ numeroConComa(pageTotal1) +' (Total Gral. '+ numeroConComa(total1) +')'
             );	         
         },
         dom: 'Bfrtip',
@@ -5732,11 +5757,19 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
             var api = this.api(), data;
  
          // saca los puntos y <del> de la cadena para pasarlo a entero
-            var intVal = function ( i ) {
-                return typeof i === 'string' ?
-                		i.replace(/[\.,"<\/*del>","Gs\."]/g, '')*1 :
-                    typeof i === 'number' ?
-                        i : 0;
+            var intVal = function(i){
+            	if(typeof i==='string'){	
+            		i=i.replace(/[\."<\/*del>""Gs\."]/g, '');
+            		i=i.replace(/[","]/g, '.');
+            		i=i*1;		            		
+            	}else{
+            		if(typeof i==='number'){
+            			i=i;		            			
+            	}else{
+            		i=0;
+            	}
+            }
+            	return i;
             };
  
          // total general para todas las paginas de la columna
@@ -5757,7 +5790,7 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
          
          // se muestran los valores de los totales en el footer del table
             $( api.column( 0 ).footer() ).html(
-            		numeroConComa(pageTotal0) +' (Total Gral. '+ numeroConComa(total0) +')'
+            		'Total Pág. '+ numeroConComa(pageTotal0) +' (Total Gral. '+ numeroConComa(total0) +')'
             );	         
         },
         dom: 'Bfrtip',
@@ -6628,11 +6661,19 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
             var api = this.api(), data;
  
          // saca los puntos y <del> de la cadena para pasarlo a entero
-            var intVal = function ( i ) {
-                return typeof i === 'string' ?
-                		i.replace(/[\.,"<\/*del>","Gs\."]/g, '')*1 :
-                    typeof i === 'number' ?
-                        i : 0;
+            var intVal = function(i){
+            	if(typeof i==='string'){	
+            		i=i.replace(/[\."<\/*del>""Gs\."]/g, '');
+            		i=i.replace(/[","]/g, '.');
+            		i=i*1;		            		
+            	}else{
+            		if(typeof i==='number'){
+            			i=i;		            			
+            	}else{
+            		i=0;
+            	}
+            }
+            	return i;
             };
  
          // total general para todas las paginas de la columna
@@ -6653,7 +6694,7 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
          
          // se muestran los valores de los totales en el footer del table
             $( api.column( 2 ).footer() ).html(
-            		numeroConComa(pageTotal2) +' (Total Gral. '+ numeroConComa(total2) +')'
+            		'Total Pág. '+ numeroConComa(pageTotal2) +' (Total Gral. '+ numeroConComa(total2) +')'
             );	         
         },
         dom: 'Bfrtip',
@@ -6667,11 +6708,19 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
             var api = this.api(), data;
  
          // saca los puntos y <del> de la cadena para pasarlo a entero
-            var intVal = function ( i ) {
-                return typeof i === 'string' ?
-                		i.replace(/[\.,"<\/*del>","Gs\."]/g, '')*1 :
-                    typeof i === 'number' ?
-                        i : 0;
+            var intVal = function(i){
+            	if(typeof i==='string'){	
+            		i=i.replace(/[\."<\/*del>""Gs\."]/g, '');
+            		i=i.replace(/[","]/g, '.');
+            		i=i*1;		            		
+            	}else{
+            		if(typeof i==='number'){
+            			i=i;		            			
+            	}else{
+            		i=0;
+            	}
+            }
+            	return i;
             };
  
          // total general para todas las paginas de la columna
@@ -6692,7 +6741,7 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
          
          // se muestran los valores de los totales en el footer del table
             $( api.column( 3 ).footer() ).html(
-            		numeroConComa(pageTotal3) +' (Total Gral. '+ numeroConComa(total3) +')'
+            		'Total Pág. '+ numeroConComa(pageTotal3) +' (Total Gral. '+ numeroConComa(total3) +')'
             );	         
         },
         dom: 'Bfrtip',
@@ -6707,11 +6756,19 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
             var api = this.api(), data;
  
          // saca los puntos y <del> de la cadena para pasarlo a entero
-            var intVal = function ( i ) {
-                return typeof i === 'string' ?
-                		i.replace(/[\.,"<\/*del>","Gs\."]/g, '')*1 :
-                    typeof i === 'number' ?
-                        i : 0;
+            var intVal = function(i){
+            	if(typeof i==='string'){	
+            		i=i.replace(/[\."<\/*del>""Gs\."]/g, '');
+            		i=i.replace(/[","]/g, '.');
+            		i=i*1;		            		
+            	}else{
+            		if(typeof i==='number'){
+            			i=i;		            			
+            	}else{
+            		i=0;
+            	}
+            }
+            	return i;
             };
  
          // total general para todas las paginas de la columna
@@ -6732,7 +6789,7 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
          
          // se muestran los valores de los totales en el footer del table
             $( api.column( 1 ).footer() ).html(
-            		numeroConComa(pageTotal1) +' (Total Gral. '+ numeroConComa(total1) +')'
+            		'Total Pág. '+ numeroConComa(pageTotal1) +' (Total Gral. '+ numeroConComa(total1) +')'
             );	         
         },
         dom: 'Bfrtip',
@@ -8012,12 +8069,20 @@ $("body").on("click", ".guardarBeneficiario",function(event){
         	            var api = this.api(), data;
         	 
         	         // saca los puntos y <del> de la cadena para pasarlo a entero
-        	            var intVal = function ( i ) {
-        	                return typeof i === 'string' ?
-        	                		i.replace(/[\.,"<\/*del>","Gs\."]/g, '')*1 :
-        	                    typeof i === 'number' ?
-        	                        i : 0;
-        	            };
+        	            var intVal = function(i){
+		            	if(typeof i==='string'){	
+		            		i=i.replace(/[\."<\/*del>""Gs\."]/g, '');
+		            		i=i.replace(/[","]/g, '.');
+		            		i=i*1;		            		
+		            	}else{
+		            		if(typeof i==='number'){
+		            			i=i;		            			
+		            	}else{
+		            		i=0;
+		            	}
+		            }
+		            	return i;
+		            };
         	 
         	         // total general para todas las paginas de la columna
         	            total3 = api
@@ -8037,7 +8102,7 @@ $("body").on("click", ".guardarBeneficiario",function(event){
         	         
         	         // se muestran los valores de los totales en el footer del table
         	            $( api.column( 3 ).footer() ).html(
-        	            		numeroConComa(pageTotal3) +' (Total Gral. '+ numeroConComa(total3) +')'
+        	            		'Total Pág. '+ numeroConComa(pageTotal3) +' (Total Gral. '+ numeroConComa(total3) +')'
         	            );	         
         	        },
         	        dom: 'Bfrtip',
@@ -8932,11 +8997,19 @@ function renderAccionDestinatario(insLineaAccionId,lineaAccionId,institucionId,p
             var api = this.api(), data;
  
          // saca los puntos y <del> de la cadena para pasarlo a entero
-            var intVal = function ( i ) {
-                return typeof i === 'string' ?
-                		i.replace(/[\.,"<\/*del>","Gs\."]/g, '')*1 :
-                    typeof i === 'number' ?
-                        i : 0;
+            var intVal = function(i){
+            	if(typeof i==='string'){	
+            		i=i.replace(/[\."<\/*del>""Gs\."]/g, '');
+            		i=i.replace(/[","]/g, '.');
+            		i=i*1;		            		
+            	}else{
+            		if(typeof i==='number'){
+            			i=i;		            			
+            	}else{
+            		i=0;
+            	}
+            }
+            	return i;
             };
  
          // total general para todas las paginas de la columna
@@ -8957,7 +9030,7 @@ function renderAccionDestinatario(insLineaAccionId,lineaAccionId,institucionId,p
          
          // se muestran los valores de los totales en el footer del table
             $( api.column( 3 ).footer() ).html(
-            		numeroConComa(pageTotal3) +' (Total Gral. '+ numeroConComa(total3) +')'
+            		'Total Pág. '+ numeroConComa(pageTotal3) +' (Total Gral. '+ numeroConComa(total3) +')'
             );	         
         },
         dom: 'Bfrtip',
@@ -9103,12 +9176,20 @@ $("body").on("click", ".guardarAccionBeneficiario",function(event){
 	        	            var api = this.api(), data;
 	        	 
 	        	         // saca los puntos y <del> de la cadena para pasarlo a entero
-	        	            var intVal = function ( i ) {
-	        	                return typeof i === 'string' ?
-	        	                		i.replace(/[\.,"<\/*del>","Gs\."]/g, '')*1 :
-	        	                    typeof i === 'number' ?
-	        	                        i : 0;
-	        	            };
+	        	            var intVal = function(i){
+		            	if(typeof i==='string'){	
+		            		i=i.replace(/[\."<\/*del>""Gs\."]/g, '');
+		            		i=i.replace(/[","]/g, '.');
+		            		i=i*1;		            		
+		            	}else{
+		            		if(typeof i==='number'){
+		            			i=i;		            			
+		            	}else{
+		            		i=0;
+		            	}
+		            }
+		            	return i;
+		            };
 	        	 
 	        	         // total general para todas las paginas de la columna
 	        	            total3 = api
@@ -9128,7 +9209,7 @@ $("body").on("click", ".guardarAccionBeneficiario",function(event){
 	        	         
 	        	         // se muestran los valores de los totales en el footer del table
 	        	            $( api.column( 3 ).footer() ).html(
-	        	            		numeroConComa(pageTotal3) +' (Total Gral. '+ numeroConComa(total3) +')'
+	        	            		'Total Pág. '+ numeroConComa(pageTotal3) +' (Total Gral. '+ numeroConComa(total3) +')'
 	        	            );	         
 	        	        },
 	        	        dom: 'Bfrtip',
