@@ -1087,9 +1087,9 @@ function renderEvidencia(avanceId, parametros){
 		
 	function renderAcciones(insLineaAccionId,lineaAccionId,institucionId,periodoId){
 		
-		if ( $("#tableAccion").length )
+		if ( $("#dataTablesAcciones").length )
 		{
-			var tableAccion="";
+			/* var tableAccion="";
 			tableAccion=
 				'		      		<div class="col-md-12">'+
 				'						<div class="box box-warning">'+
@@ -1110,7 +1110,10 @@ function renderEvidencia(avanceId, parametros){
 				'                		</div>'+	
 				'                	</div>';
 			$("#tableAccion").html("");
-			$("#tableAccion").html(tableAccion);
+			$("#tableAccion").html(tableAccion); */
+			
+			//$('#dataTablesAcciones').DataTable().fnDestroy();
+			$('#dataTablesAcciones').DataTable().destroy();
 				
 		}
 		
