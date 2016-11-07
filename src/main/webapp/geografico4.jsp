@@ -3358,7 +3358,7 @@ $(document).ready(function(){
 							    		 '<div class="box">'+
 							      			'<div class="box-header with-border">'+
 							       				'<h2 class="box-title text-center">'+
-							          				'Agregar Hito'+ 	
+							          				'Hitos'+ 	
 							        			'</h2>'+
 							        			'<div class="box-tools pull-right"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
 							        			'</div>'+
@@ -3386,7 +3386,7 @@ $(document).ready(function(){
 														}
 														totalCantidadProgramada=parseFloat(totalCantidadProgramada).toFixed(2);
 
-														modalHito += '</tbody><tfoot><tr class="active"><td colspan="2">Total Cantidad Programada: </td><td colspan="8">'+totalCantidadProgramada+'</td></tr></tfoot>'+
+														modalHito += '</tbody><tfoot><tr class="active"><td colspan="2">Total Cantidad Programada: </td><td colspan="7">'+totalCantidadProgramada+'</td></tr></tfoot>'+
 																	 '</table>'+
 																	 '</div>'+
 							      			'</div>'+//FIN BODY
@@ -3397,7 +3397,7 @@ $(document).ready(function(){
 						    		'<div class="box">'+
 						      			'<div class="box-header with-border">'+
 						       				'<h2 class="box-title text-center">'+
-						          				'Avance'+ 	
+						          				'Avances'+ 	
 						        			'</h2>'+
 						        			'<div class="box-tools pull-right"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
 						        			'</div>'+
@@ -3425,7 +3425,7 @@ $(document).ready(function(){
 											}
 											totalCantidadProgramada=parseFloat(totalCantidadProgramada).toFixed(2);
 
-											modalHito += '</tbody><tfoot><tr class="active"><td colspan="2">Total Cantidad Programada: </td><td colspan="8">'+totalCantidadProgramada+'</td></tr></tfoot>'+
+											modalHito += '</tbody><tfoot><tr class="active"><td colspan="2">Total Cantidad Programada: </td><td colspan="7">'+totalCantidadProgramada+'</td></tr></tfoot>'+
 														 '</table>'+
 														 '</div>'+						      			
 						      			'</div>'+
@@ -4612,7 +4612,7 @@ $(document).ready(function(){
 							      '<div class="modal-content">'+ 
 							        '<div class="modal-header">'+ 
 							          '<button type="button" class="close modalHitoAvances" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'">&times;</button>'+ 
-							          '<h4 class="modal-title">Agregar Hito</h4>'+ 
+							          '<h4 class="modal-title">Hitos</h4>'+ 
 							        '</div>'+ 
 							        '<div class="modal-body">'+ 
 							        
