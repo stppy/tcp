@@ -1084,6 +1084,513 @@ function renderEvidencia(avanceId, parametros){
 			$("#modalConsultaBorrarInsLineaAccion").remove();
 		}
 	});	
+		
+	function renderAcciones(insLineaAccionId,lineaAccionId,institucionId,periodoId){
+		
+		if ( $("#dataTablesAcciones").length )
+		{
+			/* var tableAccion="";
+			tableAccion=
+				'		      		<div class="col-md-12">'+
+				'						<div class="box box-warning">'+
+				'		                	<div class="box-header with-border">'+
+				'		                  		<h3 class="box-title">Acciones Precargadas</h3>'+
+				'	                  			<div class="box-tools pull-right">'+
+				'				                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>'+
+				'		                    		</button>'+
+				'		                    		<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>'+
+				'		                    		</button>'+
+				'		                  		</div>'+
+				'               			</div>'+//fin box-heder
+				'               			<div class="box-body" id="cuerpoTablaAccion">'+
+				
+    			
+		
+				'               			</div>'+//fin box-body
+				'                		</div>'+	
+				'                	</div>';
+			$("#tableAccion").html("");
+			$("#tableAccion").html(tableAccion); */
+			
+			//$('#dataTablesAcciones').DataTable().fnDestroy();
+			$('#dataTablesAcciones').DataTable().destroy();
+				
+		}
+		
+		 var f = new Date();
+		    if( (f.getMonth() +1) < 10 ){
+		    	var mes =( 0 +""+ (f.getMonth() +1));
+		    }else{
+		    	var mes =f.getMonth();
+		    }
+		    
+		    if( (f.getDate()) < 10 ){
+		    	var dia =( 0 +""+ (f.getDate()));
+		    }else{
+		    	var dia = f.getDate();
+		    }
+		    var fechaActual = (f.getFullYear() + "-" + mes + "-" + dia);
+			
+		    if ( $("#modalEditarAccion").length )
+			{
+				$("#modalEditarAccion").remove();
+			}
+		    if ( $("#insLineaAccion").length )
+			{
+				$("#insLineaAccion").remove();
+			}
+			if ( $("#modalAccion").length )
+			{
+				$("#modalAccion").remove();
+			}		
+			if ( $("#modalVincularProductos").length )
+			{
+				$("#modalVincularProductos").remove();
+			}
+			if ( $("#modalBorrarAccion").length )
+			{
+				$("#modalBorrarAccion").remove();
+			}
+			if ( $("#modalActividad").length )
+			{
+				$("#modalActividad").remove();
+			}
+			if ( $("#modalDestinatario").length )
+			{
+				$("#modalDestinatario").remove();
+			}
+			var lineaAccion = $.ajax({
+				url:'/tablero/ajaxSelects2?action=getLineaAccion',
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+			}).responseText;
+			lineaAccion = JSON.parse(lineaAccion);
+
+			for(i = 0;i<lineaAccion.length; i++)
+			{
+				if(lineaAccion[i].id == lineaAccionId)
+				{
+					var nombreLineaAccion = lineaAccion[i].nombre;
+				}
+			}
+			
+			var catalogoAccion = $.ajax({
+				url:'/tablero/ajaxSelects2?action=getAccionCatalogo',
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+			}).responseText;
+			catalogoAccion = JSON.parse(catalogoAccion);
+			var optionCatalogoAccion = "";
+
+			for(l = 0; l < catalogoAccion.length; l++)
+			{
+				optionCatalogoAccion+='<option value="'+catalogoAccion[l].id+'" parametro="'+catalogoAccion[l].id+'">'+catalogoAccion[l].nombre+'</option>';
+			}
+			
+			var institucion = $.ajax({
+				url:'/tablero/ajaxSelects2?action=getInstitucion',
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+			}).responseText;
+			institucion = JSON.parse(institucion);
+
+			for(m = 0;m<institucion.length; m++)
+			{
+				if(institucion[m].id == institucionId)
+				{
+					var nombreInstitucion = institucion[m].sigla;
+				}
+			}
+			
+			var periodo = $.ajax({
+				url:'/tablero/ajaxSelects2?action=getPeriodo',
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+			}).responseText;
+			periodo = JSON.parse(periodo);
+
+			for(p = 0;p<periodo.length; p++)
+			{
+				if(periodo[p].id == periodoId)
+				{
+					var nombrePeriodo = periodo[p].nombre;
+				}
+			}
+			
+			var unidadMedida = $.ajax({
+				url:'/tablero/ajaxSelects2?action=getUnidadMedida',
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+			}).responseText;
+			unidadMedida = JSON.parse(unidadMedida);
+			var optionUnidadMedida;
+			for(var u = 0; u < unidadMedida.length; u++)
+			{
+				optionUnidadMedida+='<option value="'+unidadMedida[u].id+'" parametro="'+unidadMedida[u].id+'">'+unidadMedida[u].descripcion+'</option>';
+			}
+			
+			var departamentos = $.ajax({
+		    	url:'/tablero/ajaxSelects?action=getDepartamento',
+		      	type:'get',
+		      	dataType:'json',
+		      	async:false       
+		    }).responseText;
+			departamentos = JSON.parse(departamentos);
+			
+			var optionDepartamentos = "";
+			for(i = 0;i<departamentos.length; i++){
+				optionDepartamentos+='<option value="'+departamentos[i].idDepartamento+'" parametro="'+departamentos[i].idDepartamento+'">'+departamentos[i].nombreDepartamento+'</option>';
+			}
+			
+			var distritos = $.ajax({
+		    	url:'/tablero/ajaxSelects?action=getDistrito',
+		      	type:'get',
+		      	dataType:'json',
+		      	async:false       
+		    }).responseText;
+			distritos = JSON.parse(distritos);
+			
+			var accion = $.ajax({
+				url:'/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccionId,
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+			}).responseText;
+			accion = JSON.parse(accion);
+			
+			var cuerpoAccion = "";
+			renderAccion();		
+			
+			function renderAccion(){
+				
+				var nombreDepartamento;
+				var nombreDistrito;
+				var nombreAccionCatalogo;
+				
+
+				for(var a = 0; a < accion.length; a++)
+				{	
+					if(onoff==true && accion[a].borrado == true){
+						// pasa a la siguiente fila en el for ++				
+					}else{
+						var suMetas = 0 ;
+						suMetas = accion[a].meta1 + accion[a].meta2 + accion[a].meta3 + accion[a].meta4; 
+						
+						for(var f = 0; f < catalogoAccion.length; f++)
+						{
+							if(accion[a].accionCatalogoId == catalogoAccion[f].id){
+								nombreAccionCatalogo = catalogoAccion[f].nombre;
+								}
+						}			
+						
+						for(var d = 0; d < departamentos.length; d++)
+						{
+							if(accion[a].departamentoId == departamentos[d].idDepartamento){
+								nombreDepartamento = departamentos[d].nombreDepartamento;
+								//cuerpoAccion +="<td class='text-center'>"+nombreDepartamento+"</td>";
+								}
+						}
+						
+
+						for(var e = 0; e < distritos.length; e++)
+						{
+							if(accion[a].distritoId == distritos[e].id && accion[a].departamentoId == distritos[e].departamentoId){
+								nombreDistrito = distritos[e].descripcion;
+
+							}
+						}
+
+						var nombreUnidadMedidaAccion = "";
+						for(var j = 0; j < catalogoAccion.length; j++){
+							if(accion[a].accionCatalogoId == catalogoAccion[j].id){
+								nombreUnidadMedidaAccion = "";
+								for(i = 0; i < unidadMedida.length; i++){
+									
+									if (catalogoAccion[j].idUnidadMedida == unidadMedida[i].id ){
+										nombreUnidadMedidaAccion =  unidadMedida[i].descripcion;
+									}
+								}
+							}	
+						}
+								
+						if(accion[a].borrado == true){
+							<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
+								cuerpoAccion +="<tr><td class='text-center'><del>"+nombreAccionCatalogo+"</del></td><td class='text-center'><del>"+nombreDepartamento+"</del></td><td class='text-center'><del>"+nombreDistrito+"</del></td><td class='text-center'><del>"+accion[a].fechaInicio+"</del></td><td class='text-center'><del>"+accion[a].fechaFin+"</del></td><td class='text-center'><del>"+nombreUnidadMedidaAccion+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(suMetas).toFixed(2))+"</del></td><td class='text-center'><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Restaurar Acción'><span class='fa fa-recycle'></span></button></td></tr>";
+							<%}%>
+						}else{
+							<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
+								cuerpoAccion +="<tr><td class='text-center'>"+nombreAccionCatalogo+"</td><td class='text-center'>"+nombreDepartamento+"</td><td class='text-center'>"+nombreDistrito+"</td><td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+nombreUnidadMedidaAccion+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(suMetas).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm modalVincularProducto' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos Presupuestarios' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"><span>Gs</span></button><button type='button' class='btn btn-default btn-sm agregarActividad' title='Agregar Cronograma' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" ><span class='glyphicon glyphicon-time'></span></button><button type='button' class='btn btn-default btn-sm editarAccion' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button><button type='button' class='btn btn-default btn-sm modalDestinatario'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Agregar Destinatario'><span class='glyphicon glyphicon-user'></span></button></td></tr>";
+							<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
+								cuerpoAccion +="<tr><td class='text-center'>"+nombreAccionCatalogo+"</td><td class='text-center'>"+nombreDepartamento+"</td><td class='text-center'>"+nombreDistrito+"</td><td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+nombreUnidadMedidaAccion+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(suMetas).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm modalVincularProducto' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos Presupuestarios' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"><span>Gs</span></button><button type='button' class='btn btn-default btn-sm agregarActividad' title='Agregar Cronograma' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" ><span class='glyphicon glyphicon-time'></span></button><button type='button' class='btn btn-default btn-sm modalDestinatario'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Agregar Destinatario'><span class='glyphicon glyphicon-user'></span></button></td></tr>";
+							<%}%>
+						}
+					}
+				}
+			}
+							
+			var cuerpoModalAccion = "";
+
+			cuerpoModalAccion =	'<div class="modal fade" id="modalAccion" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="myLargeModalLabel">'+
+								'	<div class="modal-dialog modal-lg" style="width:90%">'+
+								'		<div class="modal-content" >'+
+								'			<div class="modal-header">'+
+								'		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+								'		        <h4 class="modal-title">Registrar Acción de '+nombreLineaAccion+' ('+nombreInstitucion+') - '+nombrePeriodo+'</h4>'+ 
+								'			</div>'+
+								'		    <div class="modal-body" id="accionCuerpo" >';
+								
+								
+			<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>		
+			
+			
+			cuerpoModalAccion +='		      	<div class="row">'+
+								'				 <form role="form" id="formularioAccion">'+
+								'		      		<div class="col-md-12">'+
+								'						<div class="box box-warning">'+
+								'		                	<div class="box-header with-border">'+
+								'		                  		<h3 class="box-title">Agregar Acción</h3>'+
+								'	                  			<div class="box-tools pull-right">'+
+								'				                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>'+
+								'		                    		</button>'+
+								'		                    		<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>'+
+								'		                    		</button>'+
+								'		                  		</div>'+
+								'               			</div>'+//fin box-heder
+								'               			<div class="box-body">'+
+								'									<div class="table-responsive">'+
+								'										<table class="table table-hover">'+
+								'											<tbody>'+
+								'												<tr><td><div class="form-group"><label for="nombreAccion">Acción</label><select id="selectorCatalogoAccion" class="form-control">'+optionCatalogoAccion+'</select><input type="hidden" class="form-control" id="insLineaAccionId" value="'+insLineaAccionId+'"></div></td><td><div class="form-group"><label for="umedida">U. medida</label><input type="text" id="unidadMedidaAccion" value="" class="form-control" disabled> </div></td></tr>'+
+								'												<tr><td><div class="form-group"><label for="departamento">Departamento</label><select id="selectorDepartamento" name="departamento" class="form-control">'+optionDepartamentos+'</select></div></td><td><div class="form-group"><label for="distrito">Distrito</label><select name="departamento" class="form-control" id="distritosDepartamento"></select></div></td></tr>'+
+								'												<tr><td><div class="form-group"><label for="fechaInicioAccion">Fecha Inicio</label><input type="date" id="fechaInicioAccion" class="form-control" value="'+fechaActual+'" required /></div></td><td><div class="form-group"><label for="fechaFinAccion">Fecha Fin</label><input type="date" id="fechaFinAccion" class="form-control" required /></div></td></tr>'+							
+								'											</tbody>'+							           
+								'										</table>'+
+								'									</div>'+
+								'									<div class="row">'+
+								'			      					    <div class="form-group col-md-3">'+
+								'						  						<label for="totalFinanciero-formulario">Primer Trimestre</label>'+
+								'				      						<div class="input-group input-group-sm">'+						      			
+								'								    				<input type="number" name="primerTrimestre" id="primerTrimestre-formulario" value="0" class="form-control" required>'+
+								'													<input type="hidden" class="form-control" id="versionAccion" value="3">'+//Aqui estan los input hidden que en este formulario son 3
+								'													<input type="hidden" class="form-control" id="costoAccion" value="99">'+
+								'													<input type="hidden" class="form-control" id="pesoAccion" value="1">'+
+								'				      						</div>'+
+								'			  					    	</div>'+
+								'				     					<div class="form-group col-md-3">'+
+								'							  					<label for="totalFinanciero-formulario">Segundo Trimestre</label>'+
+								'					      					<div class="input-group input-group-sm">'+
+								'			  					    			<input type="number" name="segundoTrimestre" id="segundoTrimestre-formulario" value="0" class="form-control" required>'+
+								'					      					</div>'+
+								'								    		</div>'+
+								'				     					<div class="form-group col-md-3">'+
+								'							  					<label for="totalFinanciero-formulario">Tercer Trimestre</label>'+
+								'					      					<div class="input-group input-group-sm">'+
+								'			  					    			<input type="number" name="tercerTrimestre" id="tercerTrimestre-formulario" value="0" class="form-control" required>'+
+								'					      					</div>'+
+								'								    		</div>'+
+								'			      					    <div class="form-group col-md-3">'+
+								'						  					<label for="totalFinanciero-formulario">Cuarto Trimestre</label>'+
+								'				      						<div class="input-group input-group-sm">'+
+								'								    				<input type="number" name="cuartoTrimestre" id="cuartoTrimestre-formulario" value="0" class="form-control" required>'+
+								'				      						</div>'+
+								'							    		</div>'+
+								'			  						</div>'+				
+								'               			</div>'+//fin box-body
+								'							<div class="modal-footer">'+
+								'								<button type="submit" class="btn btn-success btn-sm guardarAccion" parametros = '+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'>Guardar Acción</button>'+
+								'							</div>'+
+								'                		</div>'+	
+								'                	</div>'+				
+								'				  </form>'+
+								'                </div>';										
+								
+			<%}%>	
+			
+			cuerpoModalAccion +='		      	<div class="row" id="tableAccion">'+ 
+								'		      		<div class="col-md-12">'+
+								'						<div class="box box-warning">'+
+								'		                	<div class="box-header with-border">'+
+								'		                  		<h3 class="box-title">Acciones Precargadas</h3>'+
+								'	                  			<div class="box-tools pull-right">'+
+								'				                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>'+
+								'		                    		</button>'+
+								'		                    		<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>'+
+								'		                    		</button>'+
+								'		                  		</div>'+
+								'               			</div>'+//fin box-heder
+								'               			<div class="box-body" id="cuerpoTablaAccion">'+
+								
+	                			
+						
+								'               			</div>'+//fin box-body
+								'                		</div>'+	
+								'                	</div>'+
+								'                </div>'+
+								
+
+								'		    </div>'+
+								'			<div class="modal-footer">'+
+						      	'			</div>'+														
+								'		</div>'+ 
+								'	</div>'+
+								'</div>';
+								
+			$("#programacion").append(cuerpoModalAccion);
+			$('#cuerpoTablaAccion').html("");
+
+			var tablaAccion ='     			<div class="table-responsive">'+
+			'	                				<table class="table table-hover table-bordered" id="dataTablesAcciones">'+
+			'	                					<thead>'+
+			'	                						<tr class="active"><th rowspan="2" class="text-center">Acción</th><th rowspan="2" class="text-center">Depto</th><th rowspan="2" class="text-center">Distrito</th><th rowspan="2" class="text-center">Fecha Inicio</th><th rowspan="2" class="text-center">Fecha Fin</th><th rowspan="2" class="text-center">Unidad Medida</th><th colspan="4" class="text-center">Metas</th><th rowspan="2" class="text-center">Total Metas</th><th rowspan="2" class="text-center" style="min-width:130px">Administrar Acción</th></tr>'+
+			'	                						<tr class="active"><th class="text-center">1er Trimestre</th><th class="text-center">2do Trimestre</th><th class="text-center">3er Trimestre</th><th class="text-center">4to Trimestre</th></tr>'+
+			'	                					</thead>'+
+			'										<tfoot>'+
+			'								 			<tr>'+
+			'								 				<th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th>'+
+			'								 			</tr>'+
+			'								    	</tfoot>'+
+			'	                						<tbody id="tablaAccionesPrecargadas">'+
+			'	                						</tbody>'+
+			'	                				</table>'+
+			'	                			</div>';
+			$('#cuerpoTablaAccion').append(tablaAccion);
+			
+			$('#tablaAccionesPrecargadas').append(cuerpoAccion);
+			$('#modalAccion').modal('show');
+			$("#selectorCatalogoAccion").change();
+			$("#selectorDepartamento").change();
+			$('#dataTablesAcciones').dataTable({
+		         "footerCallback": function ( row, data, start, end, display ) {
+		            var api = this.api(), data;
+		 		            
+		         // saca los puntos y <del> de la cadena para pasarlo a entero
+		            var intVal = function(i){
+		            	if(typeof i==='string'){	
+		            		i=i.replace(/[\."<\/*del>""Gs\."]/g, '');
+		            		i=i.replace(/[","]/g, '.');
+		            		i=i*1;		            		
+		            	}else{
+		            		if(typeof i==='number'){
+		            			i=i;		            			
+		            	}else{
+		            		i=0;
+		            	}
+		            }
+		            	return i;
+		            };
+		          
+		         // total general para todas las paginas de la columna
+		            total6 = api
+		                .column( 6 )
+		                .data()
+		                .reduce( function (a, b) {		                    
+		                	return intVal(a) + intVal(b);
+		                }, 0 );
+		 
+		         // total por pagina segun número de columna
+		            pageTotal6 = api
+		                .column( 6, { page: 'current'} )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+		         // total general para todas las paginas de la columna
+		            total7 = api
+		                .column( 7 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+		 
+		         // total por pagina segun número de columna
+		            pageTotal7 = api
+		                .column( 7, { page: 'current'} )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+		         
+		         // total general para todas las paginas de la columna
+		            total8 = api
+		                .column( 8 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+		 
+		         // total por pagina segun número de columna
+		            pageTotal8 = api
+		                .column( 8, { page: 'current'} )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+		         
+		         // total general para todas las paginas de la columna
+		            total9 = api
+		                .column( 9 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+		 
+		         // total por pagina segun número de columna
+		            pageTotal9 = api
+		                .column( 9, { page: 'current'} )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+		         
+		         // total general para todas las paginas de la columna
+		            total10 = api
+		                .column( 10 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+		 
+		         // total por pagina segun número de columna
+		            pageTotal10 = api
+		                .column( 10, { page: 'current'} )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+		 
+		         // se muestran los valores de los totales en el footer del table
+		            $( api.column( 6 ).footer() ).html(
+		            		'Total Pág. '+ numeroConComa(pageTotal6) +' (Total Gral. '+ numeroConComa(total6) +')'
+		            );
+		         // se muestran los valores de los totales en el footer del table
+		            $( api.column( 7 ).footer() ).html(
+		            		'Total Pág. '+ numeroConComa(pageTotal7) +' (Total Gral. '+ numeroConComa(total7) +')'
+		            );
+		         // se muestran los valores de los totales en el footer del table
+		            $( api.column( 8 ).footer() ).html(
+		            		'Total Pág. '+ numeroConComa(pageTotal8) +' (Total Gral. '+ numeroConComa(total8) +')'
+		            );
+		         // se muestran los valores de los totales en el footer del table
+		            $( api.column( 9 ).footer() ).html(
+		            		'Total Pág. '+ numeroConComa(pageTotal9) +' (Total Gral. '+ numeroConComa(total9) +')'
+		            );
+		         // se muestran los valores de los totales en el footer del table
+		            $( api.column( 10 ).footer() ).html(
+		            		'Total Pág. '+ numeroConComa(pageTotal10) +' (Total Gral. '+ numeroConComa(total10) +')'
+		            );
+		        }, 
+		        dom: 'Bfrtip',
+		        buttons: [
+		            'copy', 'csv', 'excel', 'pdf', 'print'
+		        ]
+		});			
+		
+	}
 			
 	$("body").on("click", ".agregarAccion",function(event){
 		var parametros = $(this).attr("parametros");
@@ -1092,475 +1599,9 @@ function renderEvidencia(avanceId, parametros){
 	    var lineaAccionId = idParsed[1];
 	    var institucionId = idParsed[2];
 	    var periodoId = idParsed[3];
-	    var f = new Date();
-	    if( (f.getMonth() +1) < 10 ){
-	    	var mes =( 0 +""+ (f.getMonth() +1));
-	    }else{
-	    	var mes =f.getMonth()+1;
-	    }
 	    
-	    if( (f.getDate()) < 10 ){
-	    	var dia =( 0 +""+ (f.getDate()));
-	    }else{
-	    	var dia = f.getDate();
-	    }
-	    var fechaActual = (f.getFullYear() + "-" + mes + "-" + dia);
-		
-	    if ( $("#modalEditarAccion").length )
-		{
-			$("#modalEditarAccion").remove();
-		}
-	    if ( $("#insLineaAccion").length )
-		{
-			$("#insLineaAccion").remove();
-		}
-		if ( $("#modalAccion").length )
-		{
-			$("#modalAccion").remove();
-		}		
-		if ( $("#modalVincularProductos").length )
-		{
-			$("#modalVincularProductos").remove();
-		}
-		if ( $("#modalBorrarAccion").length )
-		{
-			$("#modalBorrarAccion").remove();
-		}
-		if ( $("#modalActividad").length )
-		{
-			$("#modalActividad").remove();
-		}
-		if ( $("#modalDestinatario").length )
-		{
-			$("#modalDestinatario").remove();
-		}
-		var lineaAccion = $.ajax({
-			url:'/tablero/ajaxSelects2?action=getLineaAccion',
-		  	type:'get',
-		  	dataType:'json',
-		  	async:false       
-		}).responseText;
-		lineaAccion = JSON.parse(lineaAccion);
-
-		for(i = 0;i<lineaAccion.length; i++)
-		{
-			if(lineaAccion[i].id == lineaAccionId)
-			{
-				var nombreLineaAccion = lineaAccion[i].nombre;
-			}
-		}
-		
-		var catalogoAccion = $.ajax({
-			url:'/tablero/ajaxSelects2?action=getAccionCatalogo',
-		  	type:'get',
-		  	dataType:'json',
-		  	async:false       
-		}).responseText;
-		catalogoAccion = JSON.parse(catalogoAccion);
-		var optionCatalogoAccion = "";
-
-		for(l = 0; l < catalogoAccion.length; l++)
-		{
-			optionCatalogoAccion+='<option value="'+catalogoAccion[l].id+'" parametro="'+catalogoAccion[l].id+'">'+catalogoAccion[l].nombre+'</option>';
-		}
-		
-		var institucion = $.ajax({
-			url:'/tablero/ajaxSelects2?action=getInstitucion',
-		  	type:'get',
-		  	dataType:'json',
-		  	async:false       
-		}).responseText;
-		institucion = JSON.parse(institucion);
-
-		for(m = 0;m<institucion.length; m++)
-		{
-			if(institucion[m].id == institucionId)
-			{
-				var nombreInstitucion = institucion[m].sigla;
-			}
-		}
-		
-		var periodo = $.ajax({
-			url:'/tablero/ajaxSelects2?action=getPeriodo',
-		  	type:'get',
-		  	dataType:'json',
-		  	async:false       
-		}).responseText;
-		periodo = JSON.parse(periodo);
-
-		for(p = 0;p<periodo.length; p++)
-		{
-			if(periodo[p].id == periodoId)
-			{
-				var nombrePeriodo = periodo[p].nombre;
-			}
-		}
-		
-		var unidadMedida = $.ajax({
-			url:'/tablero/ajaxSelects2?action=getUnidadMedida',
-		  	type:'get',
-		  	dataType:'json',
-		  	async:false       
-		}).responseText;
-		unidadMedida = JSON.parse(unidadMedida);
-		var optionUnidadMedida;
-		for(var u = 0; u < unidadMedida.length; u++)
-		{
-			optionUnidadMedida+='<option value="'+unidadMedida[u].id+'" parametro="'+unidadMedida[u].id+'">'+unidadMedida[u].descripcion+'</option>';
-		}
-		
-		var departamentos = $.ajax({
-	    	url:'/tablero/ajaxSelects?action=getDepartamento',
-	      	type:'get',
-	      	dataType:'json',
-	      	async:false       
-	    }).responseText;
-		departamentos = JSON.parse(departamentos);
-		
-		var optionDepartamentos = "";
-		for(i = 0;i<departamentos.length; i++){
-			optionDepartamentos+='<option value="'+departamentos[i].idDepartamento+'" parametro="'+departamentos[i].idDepartamento+'">'+departamentos[i].nombreDepartamento+'</option>';
-		}
-		
-		var distritos = $.ajax({
-	    	url:'/tablero/ajaxSelects?action=getDistrito',
-	      	type:'get',
-	      	dataType:'json',
-	      	async:false       
-	    }).responseText;
-		distritos = JSON.parse(distritos);
-		
-		var accion = $.ajax({
-			url:'/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccionId,
-		  	type:'get',
-		  	dataType:'json',
-		  	async:false       
-		}).responseText;
-		accion = JSON.parse(accion);
-		
-		var cuerpoAccion = "";
-		renderAccion();		
-		
-		function renderAccion(){
-			
-			var nombreDepartamento;
-			var nombreDistrito;
-			var nombreAccionCatalogo;
-			
-
-			for(var a = 0; a < accion.length; a++)
-			{	
-				if(onoff==true && accion[a].borrado == true){
-					// pasa a la siguiente fila en el for ++				
-				}else{
-					var suMetas = 0 ;
-					suMetas = accion[a].meta1 + accion[a].meta2 + accion[a].meta3 + accion[a].meta4; 
-					
-					for(var f = 0; f < catalogoAccion.length; f++)
-					{
-						if(accion[a].accionCatalogoId == catalogoAccion[f].id){
-							nombreAccionCatalogo = catalogoAccion[f].nombre;
-							}
-					}			
-					
-					for(var d = 0; d < departamentos.length; d++)
-					{
-						if(accion[a].departamentoId == departamentos[d].idDepartamento){
-							nombreDepartamento = departamentos[d].nombreDepartamento;
-							//cuerpoAccion +="<td class='text-center'>"+nombreDepartamento+"</td>";
-							}
-					}
-					
-
-					for(var e = 0; e < distritos.length; e++)
-					{
-						if(accion[a].distritoId == distritos[e].id && accion[a].departamentoId == distritos[e].departamentoId){
-							nombreDistrito = distritos[e].descripcion;
-
-						}
-					}
-
-					var nombreUnidadMedidaAccion = "";
-					for(var j = 0; j < catalogoAccion.length; j++){
-						if(accion[a].accionCatalogoId == catalogoAccion[j].id){
-							nombreUnidadMedidaAccion = "";
-							for(i = 0; i < unidadMedida.length; i++){
-								
-								if (catalogoAccion[j].idUnidadMedida == unidadMedida[i].id ){
-									nombreUnidadMedidaAccion =  unidadMedida[i].descripcion;
-								}
-							}
-						}	
-					}
-							
-					if(accion[a].borrado == true){
-						<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
-							cuerpoAccion +="<tr><td class='text-center'><del>"+nombreAccionCatalogo+"</del></td><td class='text-center'><del>"+nombreDepartamento+"</del></td><td class='text-center'><del>"+nombreDistrito+"</del></td><td class='text-center'><del>"+accion[a].fechaInicio+"</del></td><td class='text-center'><del>"+accion[a].fechaFin+"</del></td><td class='text-center'><del>"+nombreUnidadMedidaAccion+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(suMetas).toFixed(2))+"</del></td><td class='text-center'><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Restaurar Acción'><span class='fa fa-recycle'></span></button></td></tr>";
-						<%}%>
-					}else{
-						<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-							cuerpoAccion +="<tr><td class='text-center'>"+nombreAccionCatalogo+"</td><td class='text-center'>"+nombreDepartamento+"</td><td class='text-center'>"+nombreDistrito+"</td><td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+nombreUnidadMedidaAccion+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(suMetas).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm modalVincularProducto' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos Presupuestarios' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"><span>Gs</span></button><button type='button' class='btn btn-default btn-sm agregarActividad' title='Agregar Cronograma' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" ><span class='glyphicon glyphicon-time'></span></button><button type='button' class='btn btn-default btn-sm editarAccion' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button><button type='button' class='btn btn-default btn-sm modalDestinatario'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Agregar Destinatario'><span class='glyphicon glyphicon-user'></span></button></td></tr>";
-						<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-							cuerpoAccion +="<tr><td class='text-center'>"+nombreAccionCatalogo+"</td><td class='text-center'>"+nombreDepartamento+"</td><td class='text-center'>"+nombreDistrito+"</td><td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+nombreUnidadMedidaAccion+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(suMetas).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm modalVincularProducto' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos Presupuestarios' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"><span>Gs</span></button><button type='button' class='btn btn-default btn-sm agregarActividad' title='Agregar Cronograma' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" ><span class='glyphicon glyphicon-time'></span></button><button type='button' class='btn btn-default btn-sm modalDestinatario'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Agregar Destinatario'><span class='glyphicon glyphicon-user'></span></button></td></tr>";
-						<%}%>
-					}
-				}
-			}
-		}
-		
-		
-		
-		
-				
-		var cuerpoModalAccion = "";
-
-		cuerpoModalAccion =	'<div class="modal fade" id="modalAccion" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="myLargeModalLabel">'+
-							'	<div class="modal-dialog modal-lg" style="width:90%">'+
-							'		<div class="modal-content" >'+
-							'			<div class="modal-header">'+
-							'		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
-							'		        <h4 class="modal-title">Registrar Acción de '+nombreLineaAccion+' ('+nombreInstitucion+') - '+nombrePeriodo+'</h4>'+ 
-							'			</div>'+
-							'		    <div class="modal-body" id="accionCuerpo" >';
-							
-							
-		<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>		
-		
-		
-		cuerpoModalAccion +='		      	<div class="row">'+
-							'				 <form role="form" id="formularioAccion">'+
-							'		      		<div class="col-md-12">'+
-							'						<div class="box box-warning">'+
-							'		                	<div class="box-header with-border">'+
-							'		                  		<h3 class="box-title">Agregar Acción</h3>'+
-							'	                  			<div class="box-tools pull-right">'+
-							'				                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>'+
-							'		                    		</button>'+
-							'		                    		<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>'+
-							'		                    		</button>'+
-							'		                  		</div>'+
-							'               			</div>'+//fin box-heder
-							'               			<div class="box-body">'+
-							'									<div class="table-responsive">'+
-							'										<table class="table table-hover">'+
-							'											<tbody>'+
-							'												<tr><td><div class="form-group"><label for="nombreAccion">Acción</label><select id="selectorCatalogoAccion" class="form-control">'+optionCatalogoAccion+'</select><input type="hidden" class="form-control" id="insLineaAccionId" value="'+insLineaAccionId+'"></div></td><td><div class="form-group"><label for="umedida">U. medida</label><input type="text" id="unidadMedidaAccion" value="" class="form-control" disabled> </div></td></tr>'+
-							'												<tr><td><div class="form-group"><label for="departamento">Departamento</label><select id="selectorDepartamento" name="departamento" class="form-control">'+optionDepartamentos+'</select></div></td><td><div class="form-group"><label for="distrito">Distrito</label><select name="departamento" class="form-control" id="distritosDepartamento"></select></div></td></tr>'+
-							'												<tr><td><div class="form-group"><label for="fechaInicioAccion">Fecha Inicio</label><input type="date" id="fechaInicioAccion" class="form-control" value="'+fechaActual+'" required /></div></td><td><div class="form-group"><label for="fechaFinAccion">Fecha Fin</label><input type="date" id="fechaFinAccion" class="form-control" required /></div></td></tr>'+							
-							'											</tbody>'+							           
-							'										</table>'+
-							'									</div>'+
-							'									<div class="row">'+
-							'			      					    <div class="form-group col-md-3">'+
-							'						  						<label for="totalFinanciero-formulario">Primer Trimestre</label>'+
-							'				      						<div class="input-group input-group-sm">'+						      			
-							'								    				<input type="number" name="primerTrimestre" id="primerTrimestre-formulario" value="0" class="form-control" required>'+
-							'													<input type="hidden" class="form-control" id="versionAccion" value="3">'+//Aqui estan los input hidden que en este formulario son 3
-							'													<input type="hidden" class="form-control" id="costoAccion" value="99">'+
-							'													<input type="hidden" class="form-control" id="pesoAccion" value="1">'+
-							'				      						</div>'+
-							'			  					    	</div>'+
-							'				     					<div class="form-group col-md-3">'+
-							'							  					<label for="totalFinanciero-formulario">Segundo Trimestre</label>'+
-							'					      					<div class="input-group input-group-sm">'+
-							'			  					    			<input type="number" name="segundoTrimestre" id="segundoTrimestre-formulario" value="0" class="form-control" required>'+
-							'					      					</div>'+
-							'								    		</div>'+
-							'				     					<div class="form-group col-md-3">'+
-							'							  					<label for="totalFinanciero-formulario">Tercer Trimestre</label>'+
-							'					      					<div class="input-group input-group-sm">'+
-							'			  					    			<input type="number" name="tercerTrimestre" id="tercerTrimestre-formulario" value="0" class="form-control" required>'+
-							'					      					</div>'+
-							'								    		</div>'+
-							'			      					    <div class="form-group col-md-3">'+
-							'						  					<label for="totalFinanciero-formulario">Cuarto Trimestre</label>'+
-							'				      						<div class="input-group input-group-sm">'+
-							'								    				<input type="number" name="cuartoTrimestre" id="cuartoTrimestre-formulario" value="0" class="form-control" required>'+
-							'				      						</div>'+
-							'							    		</div>'+
-							'			  						</div>'+				
-							'               			</div>'+//fin box-body
-							'							<div class="modal-footer">'+
-							'								<button type="submit" class="btn btn-success btn-sm guardarAccion" parametros = '+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'>Guardar Acción</button>'+
-							'							</div>'+
-							'                		</div>'+	
-							'                	</div>'+				
-							'				  </form>'+
-							'                </div>';										
-							
-		<%}%>	
-		
-		cuerpoModalAccion +='		      	<div class="row">'+ 
-							'		      		<div class="col-md-12">'+
-							'						<div class="box box-warning">'+
-							'		                	<div class="box-header with-border">'+
-							'		                  		<h3 class="box-title">Acciones Precargadas</h3>'+
-							'	                  			<div class="box-tools pull-right">'+
-							'				                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>'+
-							'		                    		</button>'+
-							'		                    		<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>'+
-							'		                    		</button>'+
-							'		                  		</div>'+
-							'               			</div>'+//fin box-heder
-							'               			<div class="box-body" id="cuerpoTablaAccion">'+
-							
-                			
-					
-							'               			</div>'+//fin box-body
-							'                		</div>'+	
-							'                	</div>'+
-							'                </div>'+
-							
-
-							'		    </div>'+
-							'			<div class="modal-footer">'+
-					      	'			</div>'+														
-							'		</div>'+ 
-							'	</div>'+
-							'</div>';
-							
-		$("#programacion").append(cuerpoModalAccion);
-		$('#cuerpoTablaAccion').html("");
-
-		var tablaAccion ='     			<div class="table-responsive">'+
-		'	                				<table class="table table-hover table-bordered" id="dataTablesAcciones">'+
-		'	                					<thead>'+
-		'	                						<tr class="active"><th rowspan="2" class="text-center">Acción</th><th rowspan="2" class="text-center">Depto</th><th rowspan="2" class="text-center">Distrito</th><th rowspan="2" class="text-center">Fecha Inicio</th><th rowspan="2" class="text-center">Fecha Fin</th><th rowspan="2" class="text-center">Unidad Medida</th><th colspan="4" class="text-center">Metas</th><th rowspan="2" class="text-center">Total Metas</th><th rowspan="2" class="text-center" style="min-width:130px">Administrar Acción</th></tr>'+
-		'	                						<tr class="active"><th class="text-center">1er Trimestre</th><th class="text-center">2do Trimestre</th><th class="text-center">3er Trimestre</th><th class="text-center">4to Trimestre</th></tr>'+
-		'	                					</thead>'+
-		'										<tfoot>'+
-		'								 			<tr>'+
-		'								 				<th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th>'+
-		'								 			</tr>'+
-		'								    	</tfoot>'+
-		'	                						<tbody id="tablaAccionesPrecargadas">'+
-		'	                						</tbody>'+
-		'	                				</table>'+
-		'	                			</div>';
-		$('#cuerpoTablaAccion').append(tablaAccion);
-		
-		$('#tablaAccionesPrecargadas').append(cuerpoAccion);
-		$('#modalAccion').modal('show');
-		$("#selectorCatalogoAccion").change();
-		$("#selectorDepartamento").change();
-		$('#dataTablesAcciones').dataTable({
-	 /*        "footerCallback": function ( row, data, start, end, display ) {
-	            var api = this.api(), data;
-	 
-	         // saca los puntos y <del> de la cadena para pasarlo a entero
-	            var intVal = function ( i ) {
-	                return typeof i === 'string' ?
-	                		i.replace(/[\.,"<\/*del>","Gs\."]/g, '')*1 :
-	                    typeof i === 'number' ?
-	                        i : 0;
-	            };
-	 
-	         // total general para todas las paginas de la columna
-	            total6 = api
-	                .column( 6 )
-	                .data()
-	                .reduce( function (a, b) {
-	                    return intVal(a) + intVal(b);
-	                }, 0 );
-	 
-	         // total por pagina segun número de columna
-	            pageTotal6 = api
-	                .column( 6, { page: 'current'} )
-	                .data()
-	                .reduce( function (a, b) {
-	                    return intVal(a) + intVal(b);
-	                }, 0 );
-	         // total general para todas las paginas de la columna
-	            total7 = api
-	                .column( 7 )
-	                .data()
-	                .reduce( function (a, b) {
-	                    return intVal(a) + intVal(b);
-	                }, 0 );
-	 
-	         // total por pagina segun número de columna
-	            pageTotal7 = api
-	                .column( 7, { page: 'current'} )
-	                .data()
-	                .reduce( function (a, b) {
-	                    return intVal(a) + intVal(b);
-	                }, 0 );
-	         
-	         // total general para todas las paginas de la columna
-	            total8 = api
-	                .column( 8 )
-	                .data()
-	                .reduce( function (a, b) {
-	                    return intVal(a) + intVal(b);
-	                }, 0 );
-	 
-	         // total por pagina segun número de columna
-	            pageTotal8 = api
-	                .column( 8, { page: 'current'} )
-	                .data()
-	                .reduce( function (a, b) {
-	                    return intVal(a) + intVal(b);
-	                }, 0 );
-	         
-	         // total general para todas las paginas de la columna
-	            total9 = api
-	                .column( 9 )
-	                .data()
-	                .reduce( function (a, b) {
-	                    return intVal(a) + intVal(b);
-	                }, 0 );
-	 
-	         // total por pagina segun número de columna
-	            pageTotal9 = api
-	                .column( 9, { page: 'current'} )
-	                .data()
-	                .reduce( function (a, b) {
-	                    return intVal(a) + intVal(b);
-	                }, 0 );
-	         
-	         // total general para todas las paginas de la columna
-	            total10 = api
-	                .column( 10 )
-	                .data()
-	                .reduce( function (a, b) {
-	                    return intVal(a) + intVal(b);
-	                }, 0 );
-	 
-	         // total por pagina segun número de columna
-	            pageTotal10 = api
-	                .column( 10, { page: 'current'} )
-	                .data()
-	                .reduce( function (a, b) {
-	                    return intVal(a) + intVal(b);
-	                }, 0 );
-	 
-	         // se muestran los valores de los totales en el footer del table
-	            $( api.column( 6 ).footer() ).html(
-	            		numeroConComa(pageTotal6) +' (Total Gral. '+ numeroConComa(total6) +')'
-	            );
-	         // se muestran los valores de los totales en el footer del table
-	            $( api.column( 7 ).footer() ).html(
-	            		numeroConComa(pageTotal7) +' (Total Gral. '+ numeroConComa(total7) +')'
-	            );
-	         // se muestran los valores de los totales en el footer del table
-	            $( api.column( 8 ).footer() ).html(
-	            		numeroConComa(pageTotal8) +' (Total Gral. '+ numeroConComa(total8) +')'
-	            );
-	         // se muestran los valores de los totales en el footer del table
-	            $( api.column( 9 ).footer() ).html(
-	            		numeroConComa(pageTotal9) +' (Total Gral. '+ numeroConComa(total9) +')'
-	            );
-	         // se muestran los valores de los totales en el footer del table
-	            $( api.column( 10 ).footer() ).html(
-	            		numeroConComa(pageTotal10) +' (Total Gral. '+ numeroConComa(total10) +')'
-	            );
-	        }, */
-	        dom: 'Bfrtip',
-	        buttons: [
-	            'copy', 'csv', 'excel', 'pdf', 'print'
-	        ]
-	});			
-
+	    renderAcciones(insLineaAccionId,lineaAccionId,institucionId,periodoId);
+	   
 	});
 	
 	
@@ -2641,12 +2682,20 @@ $("body").on("click", ".borrarAccion",function(event){
 	            var api = this.api(), data;
 	 
 	         // saca los puntos y <del> de la cadena para pasarlo a entero
-	            var intVal = function ( i ) {
-	                return typeof i === 'string' ?
-	                		i.replace(/[\.,"<\/*del>","Gs\."]/g, '')*1 :
-	                    typeof i === 'number' ?
-	                        i : 0;
-	            };
+	            var intVal = function(i){
+		            	if(typeof i==='string'){	
+		            		i=i.replace(/[\."<\/*del>""Gs\."]/g, '');
+		            		i=i.replace(/[","]/g, '.');
+		            		i=i*1;		            		
+		            	}else{
+		            		if(typeof i==='number'){
+		            			i=i;		            			
+		            	}else{
+		            		i=0;
+		            	}
+		            }
+		            	return i;
+		            };
 	 
 	         // total general para todas las paginas de la columna
 	            total8 = api
@@ -2698,15 +2747,15 @@ $("body").on("click", ".borrarAccion",function(event){
 	         
 	         // se muestran los valores de los totales en el footer del table
 	            $( api.column( 8 ).footer() ).html(
-	            		numeroConComa(pageTotal8) +' (Total Gral. '+ numeroConComa(total8) +')'
+	            		'Total Pág. '+ numeroConComa(pageTotal8) +' (Total Gral. '+ numeroConComa(total8) +')'
 	            );
 	         /* // se muestran los valores de los totales en el footer del table
 	            $( api.column( 11 ).footer() ).html(
-	            		numeroConComa(pageTotal11) +' (Total Gral. '+ numeroConComa(total11) +')'
+	            		'Total Pág. '+ numeroConComa(pageTotal11) +' (Total Gral. '+ numeroConComa(total11) +')'
 	            );
 	         // se muestran los valores de los totales en el footer del table
 	            $( api.column( 12 ).footer() ).html(
-	            		numeroConComa(pageTotal12) +' (Total Gral. '+ numeroConComa(total12) +')'
+	            		'Total Pág. '+ numeroConComa(pageTotal12) +' (Total Gral. '+ numeroConComa(total12) +')'
 	            );	          
 	        }, 
 	        dom: 'Bfrtip',
@@ -3597,7 +3646,8 @@ $("body").on("click", ".borrarAccion",function(event){
 		  document.getElementById('proyecto-formulario').addEventListener('focus',eje1.proyectoFocus,false); 
 		  document.getElementById('proyecto-formulario').addEventListener('change',eje1.proyecto,false);
 		  document.getElementById('producto-formulario').addEventListener('focus',eje1.productoFocus,false); 
-		  document.getElementById('producto-formulario').addEventListener('change',eje1.producto,false); 
+		  document.getElementById('producto-formulario').addEventListener('change',eje1.producto,false);
+		  
 		
 	});
 	$("body").on("click", ".consultaBorrarVinculacionProducto",function(event){
@@ -3765,11 +3815,12 @@ $("body").on("click", ".borrarAccion",function(event){
 	        contentType: 'application/json',
 	        mimeType: 'application/json',
 	        success: function (data) {
-	        	actualizarTablaAcciones(insLineaAccionId,lineaAccionId,institucionId,periodoId);
+	        	renderAcciones(insLineaAccionId,lineaAccionId,institucionId,periodoId);
+	        	//actualizarTablaAcciones(insLineaAccionId,lineaAccionId,institucionId,periodoId);
 	        	},
 	        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
 	        error: function(data,status,er) {
-	        	actualizarTablaAcciones(insLineaAccionId,lineaAccionId,institucionId,periodoId);
+	        	//actualizarTablaAcciones(insLineaAccionId,lineaAccionId,institucionId,periodoId);
 	        	}
 		 });
 
@@ -3919,12 +3970,20 @@ $("body").on("click", ".borrarAccion",function(event){
 	            var api = this.api(), data;
 	 
 	         // saca los puntos y <del> de la cadena para pasarlo a entero
-	            var intVal = function ( i ) {
-	                return typeof i === 'string' ?
-	                		i.replace(/[\.,"<\/*del>","Gs\."]/g, '')*1 :
-	                    typeof i === 'number' ?
-	                        i : 0;
-	            };
+			var intVal = function(i){
+        	if(typeof i==='string'){	
+        		i=i.replace(/[\."<\/*del>""Gs\."]/g, '');
+        		i=i.replace(/[","]/g, '.');
+        		i=i*1;		            		
+        	}else{
+        		if(typeof i==='number'){
+        			i=i;		            			
+        	}else{
+        		i=0;
+        	}
+        	}
+        	return i;
+        	};
 	 
 	         // total general para todas las paginas de la columna
 	            total6 = api
@@ -4007,23 +4066,23 @@ $("body").on("click", ".borrarAccion",function(event){
 	 
 	         // se muestran los valores de los totales en el footer del table
 	            $( api.column( 6 ).footer() ).html(
-	            		numeroConComa(pageTotal6) +' (Total Gral. '+ numeroConComa(total6) +')'
+	            		'Total Pág. '+ numeroConComa(pageTotal6) +' (Total Gral. '+ numeroConComa(total6) +')'
 	            );
 	         // se muestran los valores de los totales en el footer del table
 	            $( api.column( 7 ).footer() ).html(
-	            		numeroConComa(pageTotal7) +' (Total Gral. '+ numeroConComa(total7) +')'
+	            		'Total Pág. '+ numeroConComa(pageTotal7) +' (Total Gral. '+ numeroConComa(total7) +')'
 	            );
 	         // se muestran los valores de los totales en el footer del table
 	            $( api.column( 8 ).footer() ).html(
-	            		numeroConComa(pageTotal8) +' (Total Gral. '+ numeroConComa(total8) +')'
+	            		'Total Pág. '+ numeroConComa(pageTotal8) +' (Total Gral. '+ numeroConComa(total8) +')'
 	            );
 	         // se muestran los valores de los totales en el footer del table
 	            $( api.column( 9 ).footer() ).html(
-	            		numeroConComa(pageTotal9) +' (Total Gral. '+ numeroConComa(total9) +')'
+	            		'Total Pág. '+ numeroConComa(pageTotal9) +' (Total Gral. '+ numeroConComa(total9) +')'
 	            );
 	         // se muestran los valores de los totales en el footer del table
 	            $( api.column( 10 ).footer() ).html(
-	            		numeroConComa(pageTotal10) +' (Total Gral. '+ numeroConComa(total10) +')'
+	            		'Total Pág. '+ numeroConComa(pageTotal10) +' (Total Gral. '+ numeroConComa(total10) +')'
 	            );
 	        },
  */	        dom: 'Bfrtip',
@@ -5107,11 +5166,19 @@ function renderProgramacion(insLineaAccionId,lineaAccionId,institucionId,periodo
             var api = this.api(), data;
  
          // saca los puntos y <del> de la cadena para pasarlo a entero
-            var intVal = function ( i ) {
-                return typeof i === 'string' ?
-                		i.replace(/[\.,"<\/*del>","Gs\."]/g, '')*1 :
-                    typeof i === 'number' ?
-                        i : 0;
+            var intVal = function(i){
+            	if(typeof i==='string'){	
+            		i=i.replace(/[\."<\/*del>""Gs\."]/g, '');
+            		i=i.replace(/[","]/g, '.');
+            		i=i*1;		            		
+            	}else{
+            		if(typeof i==='number'){
+            			i=i;		            			
+            	}else{
+            		i=0;
+            	}
+            }
+            	return i;
             };
  
          // total general para todas las paginas de la columna
@@ -5132,7 +5199,7 @@ function renderProgramacion(insLineaAccionId,lineaAccionId,institucionId,periodo
          
          // se muestran los valores de los totales en el footer del table
             $( api.column( 0 ).footer() ).html(
-            		numeroConComa(pageTotal0) +' (Total Gral. '+ numeroConComa(total0) +')'
+            		'Total Pág. '+ numeroConComa(pageTotal0) +' (Total Gral. '+ numeroConComa(total0) +')'
             );	         
         },
         dom: 'Bfrtip',
@@ -5588,11 +5655,19 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
             var api = this.api(), data;
  
          // saca los puntos y <del> de la cadena para pasarlo a entero
-            var intVal = function ( i ) {
-                return typeof i === 'string' ?
-                		i.replace(/[\.,"<\/*del>","Gs\."]/g, '')*1 :
-                    typeof i === 'number' ?
-                        i : 0;
+            var intVal = function(i){
+            	if(typeof i==='string'){	
+            		i=i.replace(/[\."<\/*del>""Gs\."]/g, '');
+            		i=i.replace(/[","]/g, '.');
+            		i=i*1;		            		
+            	}else{
+            		if(typeof i==='number'){
+            			i=i;		            			
+            	}else{
+            		i=0;
+            	}
+            }
+            	return i;
             };
  
          // total general para todas las paginas de la columna
@@ -5613,7 +5688,7 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
          
          // se muestran los valores de los totales en el footer del table
             $( api.column( 1 ).footer() ).html(
-            		numeroConComa(pageTotal1) +' (Total Gral. '+ numeroConComa(total1) +')'
+            		'Total Pág. '+ numeroConComa(pageTotal1) +' (Total Gral. '+ numeroConComa(total1) +')'
             );	         
         },
         dom: 'Bfrtip',
@@ -5627,11 +5702,19 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
             var api = this.api(), data;
  
          // saca los puntos y <del> de la cadena para pasarlo a entero
-            var intVal = function ( i ) {
-                return typeof i === 'string' ?
-                		i.replace(/[\.,"<\/*del>","Gs\."]/g, '')*1 :
-                    typeof i === 'number' ?
-                        i : 0;
+            var intVal = function(i){
+            	if(typeof i==='string'){	
+            		i=i.replace(/[\."<\/*del>""Gs\."]/g, '');
+            		i=i.replace(/[","]/g, '.');
+            		i=i*1;		            		
+            	}else{
+            		if(typeof i==='number'){
+            			i=i;		            			
+            	}else{
+            		i=0;
+            	}
+            }
+            	return i;
             };
  
          // total general para todas las paginas de la columna
@@ -5652,7 +5735,7 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
          
          // se muestran los valores de los totales en el footer del table
             $( api.column( 0 ).footer() ).html(
-            		numeroConComa(pageTotal0) +' (Total Gral. '+ numeroConComa(total0) +')'
+            		'Total Pág. '+ numeroConComa(pageTotal0) +' (Total Gral. '+ numeroConComa(total0) +')'
             );	         
         },
         dom: 'Bfrtip',
@@ -5777,8 +5860,174 @@ $("body").on("click", ".guardarAvance",function(event){
 	}
 });	
 
-$("body").on("click", ".agregarModalAdministrador",function(event){
+function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,periodoId,accionId,actividadId,avanceId){
 	
+	if ( $("#tableCosto").length )
+	{
+		var tableCosto="";
+		tableCosto=
+		'									<div class="box box-default box-solid">'+
+		'		                				<div class="box-header with-border">'+
+		'		                  					<h3 class="box-title">Lista Costos</h3>'+
+		'	                  						<div class="box-tools pull-right">'+
+		'				                    			<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+		'		                    					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>'+
+		'		                  					</div>'+
+		'              							</div>'+
+		'              						<div class="box-body" id="cuerpoTablaCosto">'+	
+		'										<div class="table-responsive">'+
+		'											<table class="table table-hover table-bordered" id="dataTableAvanceCosto">'+
+		'												<thead>'+
+		'													<tr class="active"><th>Producto</th><th>ObjetoGasto</th><th>Monto</th><th class="text-center">Administrar</th></tr>'+
+		'												</thead>'+
+		'												<tfoot>'+
+		'													<tr><th></th><th></th><th></th><th></th></tr>'+
+		'												</tfoot>'+
+		'												<tbody id="listaCosto">'+
+		'												</tbody>'+
+		'											</table>'+
+		'				      					</div>'+
+		
+		'				      				</div>'+
+		'				      			</div>'+
+		'              				</div>'+
+	
+		'              				</div>'+
+		'                		</div>';	
+		$("#tableCosto").html("");
+		$("#tableCosto").html(tableCosto);
+	}
+	
+	if ( $("#tableAvance").length )
+	{
+		
+		var webServicesAvance = $.ajax({
+			url:'/tablero/ajaxSelects2?action=getAvance&avanceId='+avanceId,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		webServicesAvance = JSON.parse(webServicesAvance); 
+		
+		var tableAvance="";
+		tableAvance=
+			'						<div class="box box-warning box-solid">'+
+			'		                	<div class="box-header with-border">'+
+			'		                  		<h3 class="box-title">Avance</h3>'+
+			'	                  			<div class="box-tools pull-right">'+
+			'				                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>'+
+			'		                    		</button>'+
+			'		                    		<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>'+
+			'		                    		</button>'+
+			'		                  		</div>'+
+			'               			</div>'+//fin box-heder
+			'               			<div class="box-body">'+
+			
+			'								<div class="table-responsive">'+
+			'									<table class="table table-hover table-bordered" id="dataTableAvance">'+
+			'										<thead>'+
+			'											<tr class="active"><th>Justificación</th><th>Cantidad</th><th>FechaEntrega</th><th class="text-center">Administrar</th></tr>'+
+			' 										</thead>'+
+			'										<tfoot>'+
+			'											<tr><th></th><th></th><th></th><th></th></tr>'+
+			' 										</tfoot>'+
+			'										<tbody>';
+			if(webServicesAvance[0].borrado == true)
+			{
+				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
+				tableAvance +=	'													<tr><td><del>'+webServicesAvance[0].justificacion+'</del></td><td><del>'+numeroConComa(webServicesAvance[0].cantidad)+'</del></td><td><del>'+webServicesAvance[0].fechaEntrega+'</del></td></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaBorrarAvance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' data-toggle="tooltip" data-placement="top" title="Restaurar" ><span class="fa fa-recycle"></span></button></td></tr>';
+				<%}%>
+			}else{
+				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
+				tableAvance +=	'													<tr><td>'+webServicesAvance[0].justificacion+'</td><td>'+numeroConComa(webServicesAvance[0].cantidad)+'</td><td>'+webServicesAvance[0].fechaEntrega+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarAvance" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarAvance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' data-toggle="tooltip" data-placement="top" title="Borrar" ><span class="fa fa-trash"></span></button></td></tr>';
+				<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
+				tableAvance +=	'													<tr><td>'+webServicesAvance[0].justificacion+'</td><td>'+numeroConComa(webServicesAvance[0].cantidad)+'</td><td>'+webServicesAvance[0].fechaEntrega+'</td><td class="text-center"></td></tr>';
+				<%}%>
+			}
+			
+			tableAvance +=	'										</tbody>'+
+			'									</table>'+
+			'				      			</div>'+							
+			
+			'               			</div>'+//fin box-body
+			'							<div class="modal-footer">'+ 
+			'							</div>'+
+			'                		</div>';	
+			
+			
+		$("#tableAvance").html("");
+		$("#tableAvance").html(tableAvance);
+	}		
+		
+	if ( $("#tableBeneficiario").length )
+	{
+		
+		$("#tableBeneficiario").html("");
+		
+		var tableBeneficiario="";
+		tableBeneficiario=
+		'									<div class="box box-default box-solid">'+
+		'		                				<div class="box-header with-border">'+
+		'		                  					<h3 class="box-title">Lista Beneficiarios</h3>'+
+		'	                  						<div class="box-tools pull-right">'+
+		'				                    			<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+		'		                    					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>'+
+		'		                  					</div>'+
+		'              							</div>'+
+		'              						<div class="box-body" id="cuerpoTablaBeneficiario">'+	
+		'										<div class="table-responsive">'+
+		'											<table class="table table-hover table-bordered" id="dataTableBeneficiario">'+
+		'												<thead>'+
+		'													<tr class="active"><th>Tipo</th><th>Grupo</th><th>Descripción</th><th>Cantidad</th><th class="text-center">Administrar</th></tr>'+
+		'												</thead>'+
+		'												<tfoot>'+
+		'													<tr><th></th><th></th><th></th><th></th><th></th></tr>'+
+		'												</tfoot>'+
+		'												<tbody id="listaBeneficiario">'+
+		'												</tbody>'+
+		'											</table>'+
+		'				      					</div>'+
+		
+		'				      				</div>'+
+		'				      			</div>';
+		$("#tableBeneficiario").html("");
+		$("#tableBeneficiario").html(tableBeneficiario); 
+	}
+	
+	if ( $("#tableEvidencia").length )
+	{
+			
+		var tableEvidencia="";
+		tableEvidencia=
+			'									<div class="box box-default box-solid">'+
+			'		                				<div class="box-header with-border">'+
+			'		                  					<h3 class="box-title">Lista Evidencia</h3>'+
+			'	                  						<div class="box-tools pull-right">'+
+			'				                    			<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+			'		                    					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>'+
+			'		                  					</div>'+
+			'              							</div>'+
+			'              						<div class="box-body" id="cuerpoTablaEvidencia">'+	
+			'										<div class="table-responsive">'+
+			'											<table class="table table-hover table-bordered" id="dataTableEvidencia">'+
+			'												<thead>'+
+			'													<tr class="active"><th>Nombre</th><th class="text-center">Administrar</th></tr>'+
+			'												</thead>'+
+			'												<tfoot>'+
+			'													<tr><th></th><th></th></tr>'+
+			'												</tfoot>'+
+			'												<tbody  id="listaEvidencia">'+
+			
+			'												</tbody>'+
+			'											</table>'+
+			'				      					</div>'+
+			
+			'				      				</div>';
+		$("#tableEvidencia").html("");
+		$("#tableEvidencia").html(tableEvidencia);
+	
+	}	
+		
 	if ( $("#modalAvance").length )
 	{
 		$("#modalAvance").remove();
@@ -5815,20 +6064,6 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	{
 		$("#modalEditarBeneficiario").remove();
 	}	
-
-
-	var parametros = $(this).attr("parametros");
-    var idParsed = parametros.split("-");                                                            
-	
-	//Las siguentes variables se utiliza en esta funcion para redibujar el modal anterior
-	var insLineaAccionId = idParsed[0];
-	var lineaAccionId = idParsed[1];
-	var institucionId = idParsed[2]; 
-	var periodoId = idParsed[3];
-	var accionId = idParsed[4];
-	var actividadId = idParsed[5];
-	var avanceId = idParsed[6];//es el id de la tabla avance
-	
 	
 	var insLineaAccion = $.ajax({
 		url:'/tablero/ajaxSelects2?action=getInsLineaAccion&insLineaAccionId='+insLineaAccionId,
@@ -6029,7 +6264,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'		    <div class="modal-body">'+
 									
 									'		      	<div class="row">'+ 
-									'		      		<div class="col-md-6">'+
+									'		      		<div class="col-md-6" id="tableAvance">'+
 									'						<div class="box box-warning box-solid">'+
 									'		                	<div class="box-header with-border">'+
 									'		                  		<h3 class="box-title">Avance</h3>'+
@@ -6123,7 +6358,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									<% }%>	
 
 									
-									'		      					<div class="col-md-12">'+
+									'		      					<div class="col-md-12" id="tableBeneficiario">'+
 									'									<div class="box box-default box-solid">'+
 									'		                				<div class="box-header with-border">'+
 									'		                  					<h3 class="box-title">Lista Beneficiarios</h3>'+
@@ -6305,7 +6540,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									<% }%>	
 
 
-									'		      					<div class="col-md-12">'+
+									'		      					<div class="col-md-12" id="tableEvidencia">'+
 									'									<div class="box box-default box-solid">'+
 									'		                				<div class="box-header with-border">'+
 									'		                  					<h3 class="box-title">Lista Evidencia</h3>'+
@@ -6371,11 +6606,19 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
             var api = this.api(), data;
  
          // saca los puntos y <del> de la cadena para pasarlo a entero
-            var intVal = function ( i ) {
-                return typeof i === 'string' ?
-                		i.replace(/[\.,"<\/*del>","Gs\."]/g, '')*1 :
-                    typeof i === 'number' ?
-                        i : 0;
+            var intVal = function(i){
+            	if(typeof i==='string'){	
+            		i=i.replace(/[\."<\/*del>""Gs\."]/g, '');
+            		i=i.replace(/[","]/g, '.');
+            		i=i*1;		            		
+            	}else{
+            		if(typeof i==='number'){
+            			i=i;		            			
+            	}else{
+            		i=0;
+            	}
+            }
+            	return i;
             };
  
          // total general para todas las paginas de la columna
@@ -6396,7 +6639,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
          
          // se muestran los valores de los totales en el footer del table
             $( api.column( 2 ).footer() ).html(
-            		numeroConComa(pageTotal2) +' (Total Gral. '+ numeroConComa(total2) +')'
+            		'Total Pág. '+ numeroConComa(pageTotal2) +' (Total Gral. '+ numeroConComa(total2) +')'
             );	         
         },
         dom: 'Bfrtip',
@@ -6410,11 +6653,19 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
             var api = this.api(), data;
  
          // saca los puntos y <del> de la cadena para pasarlo a entero
-            var intVal = function ( i ) {
-                return typeof i === 'string' ?
-                		i.replace(/[\.,"<\/*del>","Gs\."]/g, '')*1 :
-                    typeof i === 'number' ?
-                        i : 0;
+            var intVal = function(i){
+            	if(typeof i==='string'){	
+            		i=i.replace(/[\."<\/*del>""Gs\."]/g, '');
+            		i=i.replace(/[","]/g, '.');
+            		i=i*1;		            		
+            	}else{
+            		if(typeof i==='number'){
+            			i=i;		            			
+            	}else{
+            		i=0;
+            	}
+            }
+            	return i;
             };
  
          // total general para todas las paginas de la columna
@@ -6435,7 +6686,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
          
          // se muestran los valores de los totales en el footer del table
             $( api.column( 3 ).footer() ).html(
-            		numeroConComa(pageTotal3) +' (Total Gral. '+ numeroConComa(total3) +')'
+            		'Total Pág. '+ numeroConComa(pageTotal3) +' (Total Gral. '+ numeroConComa(total3) +')'
             );	         
         },
         dom: 'Bfrtip',
@@ -6450,11 +6701,19 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
             var api = this.api(), data;
  
          // saca los puntos y <del> de la cadena para pasarlo a entero
-            var intVal = function ( i ) {
-                return typeof i === 'string' ?
-                		i.replace(/[\.,"<\/*del>","Gs\."]/g, '')*1 :
-                    typeof i === 'number' ?
-                        i : 0;
+            var intVal = function(i){
+            	if(typeof i==='string'){	
+            		i=i.replace(/[\."<\/*del>""Gs\."]/g, '');
+            		i=i.replace(/[","]/g, '.');
+            		i=i*1;		            		
+            	}else{
+            		if(typeof i==='number'){
+            			i=i;		            			
+            	}else{
+            		i=0;
+            	}
+            }
+            	return i;
             };
  
          // total general para todas las paginas de la columna
@@ -6475,7 +6734,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
          
          // se muestran los valores de los totales en el footer del table
             $( api.column( 1 ).footer() ).html(
-            		numeroConComa(pageTotal1) +' (Total Gral. '+ numeroConComa(total1) +')'
+            		'Total Pág. '+ numeroConComa(pageTotal1) +' (Total Gral. '+ numeroConComa(total1) +')'
             );	         
         },
         dom: 'Bfrtip',
@@ -6485,8 +6744,24 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 }); 
 
 	
-	
+}
 
+
+$("body").on("click", ".agregarModalAdministrador",function(event){
+	
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-");                                                            
+	
+	//Las siguentes variables se utiliza en esta funcion para redibujar el modal anterior
+	var insLineaAccionId = idParsed[0];
+	var lineaAccionId = idParsed[1];
+	var institucionId = idParsed[2]; 
+	var periodoId = idParsed[3];
+	var accionId = idParsed[4];
+	var actividadId = idParsed[5];
+	var avanceId = idParsed[6];//es el id de la tabla avance
+	
+	renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,periodoId,accionId,actividadId,avanceId);
 });	
 
 /* $(document).ready(function(){
@@ -6540,25 +6815,27 @@ $("body").on("change", "#productoObjetoGasto",function(event){
 
 $("body").on("change", "#beneficiarioTipo",function(event){
 	//var departamentoId = $(this).attr("parametro");
+		
 	var beneficiarioTipoId = $("#beneficiarioTipo option:selected").val();
 	
-	var webServicesBeneficiarioGrupo = $.ajax({
-		url:'/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioTipoId='+beneficiarioTipoId,
-	  	type:'get',
-	  	dataType:'json',
-	  	async:false       
-	}).responseText;
-	webServicesBeneficiarioGrupo = JSON.parse(webServicesBeneficiarioGrupo);
-	
-	var optionBeneficiarioGrupo="";
-	
-	for(var o = 0; o < webServicesBeneficiarioGrupo.length; o++){
-		optionBeneficiarioGrupo+='<option value="'+webServicesBeneficiarioGrupo[o].id+'" >'+webServicesBeneficiarioGrupo[o].nombre+'</option>';
+	if(beneficiarioTipoId !== undefined){
+		var webServicesBeneficiarioGrupo = $.ajax({
+			url:'/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioTipoId='+beneficiarioTipoId,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		webServicesBeneficiarioGrupo = JSON.parse(webServicesBeneficiarioGrupo);
+		
+		var optionBeneficiarioGrupo="";
+		
+		for(var o = 0; o < webServicesBeneficiarioGrupo.length; o++){
+			optionBeneficiarioGrupo+='<option value="'+webServicesBeneficiarioGrupo[o].id+'" >'+webServicesBeneficiarioGrupo[o].nombre+'</option>';
+		}
+		
+		$("#grupoBeneficiario").html("");
+		$("#grupoBeneficiario").append(optionBeneficiarioGrupo);
 	}
-	
-	$("#grupoBeneficiario").html("");
-	$("#grupoBeneficiario").append(optionBeneficiarioGrupo);
-	
 });
 
 $("body").on("click", ".consultaEditarAvance",function(event){
@@ -6901,7 +7178,9 @@ $("body").on("click", ".guardarCosto",function(event){
         	if(data.success == true)
         	{
         		
-        		var webServicesAvanceCosto = $.ajax({
+				renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,periodoId,accionId,actividadId,avanceId);
+				
+        		<%-- var webServicesAvanceCosto = $.ajax({
         			url:'/tablero/ajaxSelects2?action=getAvanceCosto&avanceId='+avanceId,
         		  	type:'get',
         		  	dataType:'json',
@@ -6947,7 +7226,7 @@ $("body").on("click", ".guardarCosto",function(event){
         		$("#cuerpoTablaCosto").html(contenidoTabla);
         		$("#listaCosto").html("");
         		$("#listaCosto").html(cuerpoAvanceCosto);
-        		$("#dataTableAvanceCosto").DataTable();
+        		$("#dataTableAvanceCosto").DataTable(); --%>
         		
         	}else{
   		
@@ -7289,7 +7568,8 @@ $("body").on("click", ".editarAvanceCosto",function(event){
         success: function (data) {
         	if(data.success == true)
         	{
-        		var parametrosEvidencia=insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId;
+        		renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,periodoId,accionId,actividadId,avanceId);
+        		/* var parametrosEvidencia=insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId;
         		var cuerpoEvidencia=renderEvidencia(avanceId, parametrosEvidencia);
         		
         		var contenidoTabla;
@@ -7309,7 +7589,7 @@ $("body").on("click", ".editarAvanceCosto",function(event){
         		$("#cuerpoTablaEvidencia").html(contenidoTabla);
         		$("#listaEvidencia").html("");
         		$("#listaEvidencia").html(cuerpoEvidencia);
-        		$("#dataTableEvidencia").DataTable();
+        		$("#dataTableEvidencia").DataTable(); */
         		
         	}else{
   		
@@ -7661,8 +7941,8 @@ $("body").on("click", ".guardarBeneficiario",function(event){
         success: function (data) {
         	if(data.success == true)
         	{
-        		
-        		var webServicesBeneficiario = $.ajax({
+        		renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,periodoId,accionId,actividadId,avanceId);
+        		<%-- var webServicesBeneficiario = $.ajax({
         			url:'/tablero/ajaxSelects2?action=getBeneficiario&avanceId='+avanceId,
         		  	type:'get',
         		  	dataType:'json',
@@ -7734,12 +8014,20 @@ $("body").on("click", ".guardarBeneficiario",function(event){
         	            var api = this.api(), data;
         	 
         	         // saca los puntos y <del> de la cadena para pasarlo a entero
-        	            var intVal = function ( i ) {
-        	                return typeof i === 'string' ?
-        	                		i.replace(/[\.,"<\/*del>","Gs\."]/g, '')*1 :
-        	                    typeof i === 'number' ?
-        	                        i : 0;
-        	            };
+        	            var intVal = function(i){
+		            	if(typeof i==='string'){	
+		            		i=i.replace(/[\."<\/*del>""Gs\."]/g, '');
+		            		i=i.replace(/[","]/g, '.');
+		            		i=i*1;		            		
+		            	}else{
+		            		if(typeof i==='number'){
+		            			i=i;		            			
+		            	}else{
+		            		i=0;
+		            	}
+		            }
+		            	return i;
+		            };
         	 
         	         // total general para todas las paginas de la columna
         	            total3 = api
@@ -7759,14 +8047,14 @@ $("body").on("click", ".guardarBeneficiario",function(event){
         	         
         	         // se muestran los valores de los totales en el footer del table
         	            $( api.column( 3 ).footer() ).html(
-        	            		numeroConComa(pageTotal3) +' (Total Gral. '+ numeroConComa(total3) +')'
+        	            		'Total Pág. '+ numeroConComa(pageTotal3) +' (Total Gral. '+ numeroConComa(total3) +')'
         	            );	         
         	        },
         	        dom: 'Bfrtip',
         	        buttons: [
         	            'copy', 'csv', 'excel', 'pdf', 'print'
         	        ]
-        		}); 
+        		}); --%> 
         	}else{
   		
         	}
@@ -8385,6 +8673,44 @@ $("body").on("click", ".borrarHito",function(event){
 
 function renderAccionDestinatario(insLineaAccionId,lineaAccionId,institucionId,periodoId,accionId,accionCatalogoId){
 	
+	if ( $("#tableListaDestinatario").length )
+	{
+		$("#descripcionDestinatarioAccion").val('');
+		$("#cantidadDestinatarioAccion").val('');
+		
+		$("#tableListaDestinatario").html("");
+		var tableListaDestinatario="";
+		
+		tableListaDestinatario=
+			
+			'									<div class="box box-default box-solid">'+
+			'		                				<div class="box-header with-border">'+
+			'										<h3 class="box-title">Lista Destinatarios</h3>'+
+			'	                  						<div class="box-tools pull-right">'+
+			'				                    			<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+			'		                    					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>'+
+			'		                  					</div>'+
+			'              							</div>'+
+			'              						<div class="box-body">'+	
+			'										<div class="table-responsive">'+
+			'											<table class="table table-hover table-bordered" id="dataTableDestinatarioAccion">'+
+			'												<thead>'+
+			'													<tr class="active"><th>Tipo</th><th>Grupo</th><th>Descripción</th><th>Cantidad</th><th class="text-center">Administrar</th></tr>'+
+			'												</thead>'+
+			'												<tfoot>'+
+			'													<tr><th></th><th></th><th></th><th></th><th></th></tr>'+
+			'												</tfoot>'+
+			'												<tbody id="listaDestinatarioAccion">'+
+			'												</tbody>'+
+			'											</table>'+
+			'				      					</div>'+
+			
+			'				      				</div>';
+				
+		
+		$("#tableListaDestinatario").html(tableListaDestinatario);
+	}
+	
 	cuerpoDestinatarioAccion = "";
 		
 	if ( $("#modalDuplicarAccion").length )
@@ -8616,11 +8942,19 @@ function renderAccionDestinatario(insLineaAccionId,lineaAccionId,institucionId,p
             var api = this.api(), data;
  
          // saca los puntos y <del> de la cadena para pasarlo a entero
-            var intVal = function ( i ) {
-                return typeof i === 'string' ?
-                		i.replace(/[\.,"<\/*del>","Gs\."]/g, '')*1 :
-                    typeof i === 'number' ?
-                        i : 0;
+            var intVal = function(i){
+            	if(typeof i==='string'){	
+            		i=i.replace(/[\."<\/*del>""Gs\."]/g, '');
+            		i=i.replace(/[","]/g, '.');
+            		i=i*1;		            		
+            	}else{
+            		if(typeof i==='number'){
+            			i=i;		            			
+            	}else{
+            		i=0;
+            	}
+            }
+            	return i;
             };
  
          // total general para todas las paginas de la columna
@@ -8641,7 +8975,7 @@ function renderAccionDestinatario(insLineaAccionId,lineaAccionId,institucionId,p
          
          // se muestran los valores de los totales en el footer del table
             $( api.column( 3 ).footer() ).html(
-            		numeroConComa(pageTotal3) +' (Total Gral. '+ numeroConComa(total3) +')'
+            		'Total Pág. '+ numeroConComa(pageTotal3) +' (Total Gral. '+ numeroConComa(total3) +')'
             );	         
         },
         dom: 'Bfrtip',
@@ -8708,53 +9042,6 @@ $("body").on("click", ".guardarAccionBeneficiario",function(event){
 	        success: function (data) {
 	        	if(data.success == true){	
 	        		//$("#programacion").html("");
-	        		
-	        		$("#descripcionDestinatarioAccion").val('');
-	        		$("#cantidadDestinatarioAccion").val('');
-	        		
-	        		$("#tableListaDestinatario").html("");
-	        		var tableListaDestinatario="";
-	        		
-	        		tableListaDestinatario=
-					'									<div class="box box-default box-solid">'+
-					'		                				<div class="box-header with-border">'+
-					'										<h3 class="box-title">Lista Destinatarios</h3>'+
-					'	                  						<div class="box-tools pull-right">'+
-					'				                    			<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
-					'		                    					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>'+
-					'		                  					</div>'+
-					'              							</div>'+
-					'              						<div class="box-body">'+	
-					'										<div class="table-responsive">'+
-					'											<table class="table table-hover table-bordered" id="dataTableDestinatarioAccion">'+
-					'												<thead>'+
-					'													<tr class="active"><th>Tipo</th><th>Grupo</th><th>Descripción</th><th>Cantidad</th><th class="text-center">Administrar</th></tr>'+
-					'												</thead>'+
-					'												<tfoot>'+
-					'													<tr><th></th><th></th><th></th><th></th><th></th></tr>'+
-					'												</tfoot>'+
-					'												<tbody id="listaDestinatarioAccion">'+
-					'												</tbody>'+
-					'											</table>'+
-					'				      					</div>'+
-					
-					'				      				</div>'+
-					'				      			</div>'+
-					'              				</div>'+
-	
-					'              				</div>'+
-					'                		</div>'+	
-					'               	</div>'+
-					'                </div>'+//fin row																	
-					
-					'		    </div>'+
-					'			<div class="modal-footer">'+
-			      	'			</div>'+														
-					'		</div>'+ 
-					'	</div>';
-					
-					
-					$("#tableListaDestinatario").html(tableListaDestinatario);
 	        		
 	        		renderAccionDestinatario(insLineaAccionId,lineaAccionId,institucionId,periodoId,accionId,accionCatalogoId);
 	        	    
@@ -8834,12 +9121,20 @@ $("body").on("click", ".guardarAccionBeneficiario",function(event){
 	        	            var api = this.api(), data;
 	        	 
 	        	         // saca los puntos y <del> de la cadena para pasarlo a entero
-	        	            var intVal = function ( i ) {
-	        	                return typeof i === 'string' ?
-	        	                		i.replace(/[\.,"<\/*del>","Gs\."]/g, '')*1 :
-	        	                    typeof i === 'number' ?
-	        	                        i : 0;
-	        	            };
+	        	            var intVal = function(i){
+		            	if(typeof i==='string'){	
+		            		i=i.replace(/[\."<\/*del>""Gs\."]/g, '');
+		            		i=i.replace(/[","]/g, '.');
+		            		i=i*1;		            		
+		            	}else{
+		            		if(typeof i==='number'){
+		            			i=i;		            			
+		            	}else{
+		            		i=0;
+		            	}
+		            }
+		            	return i;
+		            };
 	        	 
 	        	         // total general para todas las paginas de la columna
 	        	            total3 = api
@@ -8859,7 +9154,7 @@ $("body").on("click", ".guardarAccionBeneficiario",function(event){
 	        	         
 	        	         // se muestran los valores de los totales en el footer del table
 	        	            $( api.column( 3 ).footer() ).html(
-	        	            		numeroConComa(pageTotal3) +' (Total Gral. '+ numeroConComa(total3) +')'
+	        	            		'Total Pág. '+ numeroConComa(pageTotal3) +' (Total Gral. '+ numeroConComa(total3) +')'
 	        	            );	         
 	        	        },
 	        	        dom: 'Bfrtip',
