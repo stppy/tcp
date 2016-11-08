@@ -16,9 +16,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
 import py.gov.stp.objetosV2.*;
-import py.gov.stp.tools.ConnectionConfiguration;
+
 
 public class SqlInserts {
 	
@@ -115,14 +114,44 @@ public class SqlInserts {
 	} catch (SQLException e) {e.printStackTrace();}
 		
 }
-	public static int insertInsLineaAccion(InsLineaAccion insLineaAccion, String usuarioResponsable){
+//ejemplo para cuando necesitemos devolver el id de un registro insertado para utilizarlo en otra tabla
+//	public static int insertInsLineaAccion(InsLineaAccion insLineaAccion){
+//	try {
+//		Connection conn=ConnectionConfiguration.conectar();
+//	   	
+//		String query = " insert into ins_linea_accion (linea_accion_id, institucion_id, periodo_id, meta, version, borrado)"
+//	+ " values (?, ?, ?, ?, ?, ?)";
+//		
+//		PreparedStatement insert = conn.prepareStatement(query,PreparedStatement.RETURN_GENERATED_KEYS);
+//		
+//		//insert.setInt (1, insLineaAccion.getId());
+//		insert.setInt (1, insLineaAccion.getLineaAccionId());
+//		insert.setInt (2, insLineaAccion.getInstitucionId());
+//		insert.setInt (3, insLineaAccion.getPeriodoId());
+//		insert.setDouble (4, insLineaAccion.getMeta());
+//		insert.setInt(5, insLineaAccion.getVersion());
+//		insert.setBoolean (6, insLineaAccion.isBorrado());		
+//		
+//		insert.execute();
+//		
+//		ResultSet keyset = insert.getGeneratedKeys();
+//		keyset.next();
+//		int valor = keyset.getInt(1);
+//		   
+//		conn.close();
+//		return valor;
+//	} catch (SQLException e) {e.printStackTrace();return 0;}
+//		
+//}
+
+	public static boolean insertInsLineaAccion(InsLineaAccion insLineaAccion, String usuarioResponsable){
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
 		String query = " insert into ins_linea_accion (linea_accion_id, institucion_id, periodo_id, meta, version, borrado, usuario_responsable)"
 	+ " values (?, ?, ?, ?, ?, ?, ?)";
 		
-		PreparedStatement insert = conn.prepareStatement(query,PreparedStatement.RETURN_GENERATED_KEYS);
+		PreparedStatement insert = conn.prepareStatement(query);
 		
 		//insert.setInt (1, insLineaAccion.getId());
 		insert.setInt (1, insLineaAccion.getLineaAccionId());
@@ -134,14 +163,10 @@ public class SqlInserts {
 		insert.setString(7, usuarioResponsable);
 		
 		insert.execute();
-		
-		ResultSet keyset = insert.getGeneratedKeys();
-		keyset.next();
-		int valor = keyset.getInt(1);
-		   
+				   
 		conn.close();
-		return valor;
-	} catch (SQLException e) {e.printStackTrace();return 0;}
+		return true;
+	} catch (SQLException e) {e.printStackTrace();return false;}
 		
 }
 	public static void insertInstitucion( Institucion institucion, String usuarioResponsable){
@@ -912,33 +937,7 @@ public class SqlInserts {
 			return true;
 		} catch (SQLException e) {e.printStackTrace(); return false;}
 		
-	}
-	
-	public static boolean insertRespuestasViviendas(RespuestasViviendas obj){
-		try {
-			Connection conn=ConnectionConfiguration.conectarFichaSocial();
-
-			String query = "insert into respuestas_viviendas (nro_ficha, fecha_realizacion, vivienda_nro, pregunta_id, respuesta_obtenida_id, respuesta, respuesta_boleana)"+
-						" values(?,?,?,?,?,?,?)";
-			
-			PreparedStatement insert = conn.prepareStatement(query);
-			
-			insert.setInt (1, obj.getNroFicha());
-			insert.setDate (2, (Date) obj.getFechaRealizacion());
-			insert.setInt (3, obj.getViviendaNro());
-			insert.setInt (4, obj.getPreguntaId());
-			insert.setInt (5, obj.getRespuestaObtenidaId());
-			insert.setString (6, obj.getRespuesta());
-			insert.setBoolean(7, obj.isRespuestaBoleana());	
-			//insert.setNull(7, 6);
-			
-			insert.execute();
-			   
-			conn.close();
-			return true;
-		} catch (SQLException e) {e.printStackTrace(); return false;}
-		
-	}
+	}	
 	
 	public static boolean insertInsLineaAccionHasEtiqueta(InsLineaAccionHasEtiqueta objeto, String usuarioResponsable){
 		try {
@@ -971,7 +970,7 @@ public class SqlInserts {
 						
 			PreparedStatement insert = conn.prepareStatement(query);		
 			
-			insert.setString (1, usuarioResponsable);
+			insert.setString (1, objeto.getUsuarioCorreo());
 			insert.setInt (2, objeto.getLineaAccionId());
 			insert.setString(3, usuarioResponsable);
 			

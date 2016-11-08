@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 import java.sql.Statement;
-
 import objetos.Entidad;
 import objetos.FactHitos;
 import objetos.Generica;
@@ -883,10 +882,14 @@ public class SqlSelects {
 							"	tmp2.institucion, " +
 							"	tmp2.accion_unidad_medida, " +
 							"	tmp2.mes, " +
-							"	(SELECT MAX(tmp.cantidad_programada) " +
-							"	 FROM linea_accion_acumulado_mes tmp " + condition +
-							//"	 WHERE tmp.institucion_id = 1359 and tmp.linea_accion_id = 88 " +
-							"	     AND NOT tmp.actividad_acumulable) as max_cant_prog_no_acum, " +
+							"	MAX(CASE " +
+							"			WHEN NOT tmp2.actividad_acumulable THEN tmp2.cantidad_programada " +
+							"			ELSE 0::double precision " + 
+							"	    END) AS max_cant_prog_no_acum, " +
+							"	MAX(CASE " +
+							"			WHEN NOT tmp2.actividad_acumulable THEN tmp2.cantidad_ejecutada " +
+							"			ELSE 0::double precision " + 
+							"	    END) AS max_cant_ejec_no_acum, " +
 							"	(SELECT MAX(tmp.cantidad_ejecutada) " +
 							"	FROM linea_accion_acumulado_mes tmp " + condition +
 							//"	WHERE tmp.institucion_id = 1359 and tmp.linea_accion_id = 88 " + 
@@ -1247,128 +1250,6 @@ public class SqlSelects {
 	    	}
 	    	return objetos;
     	}
-    
-	public static String selectAllPreguntas(String condicion) throws SQLException  {
-		Connection conect = ConnectionConfiguration.conectarFichaSocial();
-		String query="select array_to_json(array_agg(row_to_json(t))) as resultado from(select * from preguntas)t";
-												
-		 Statement statement = null;
-   		 ResultSet rs=null;
-   		 String objetos = "";
-
-   		try {
-   			statement = conect.createStatement();
-   			rs=statement.executeQuery(query);
-   			while(rs.next()){				   				
-   				objetos+=rs.getString("resultado");
-   			}
-   		}
-   		catch (SQLException e) {e.printStackTrace();}
-   		finally{
-   			if (statement != null) {statement.close();}
-   			if (conect != null) {conect.close();}
-   		}
-   		return objetos;
-
-	}
-	public static String selectAllRespuestasPosbiles(String condicion) throws SQLException  {
-		Connection conect = ConnectionConfiguration.conectarFichaSocial();
-		String query="select array_to_json(array_agg(row_to_json(t))) as resultado from(select * from respuestas_posibles)t";
-												
-		 Statement statement = null;
-   		 ResultSet rs=null;
-   		 String objetos = "";
-
-   		try {
-   			statement = conect.createStatement();
-   			rs=statement.executeQuery(query);
-   			while(rs.next()){				   				
-   				objetos+=rs.getString("resultado");
-   			}
-   		}
-   		catch (SQLException e) {e.printStackTrace();}
-   		finally{
-   			if (statement != null) {statement.close();}
-   			if (conect != null) {conect.close();}
-   		}
-   		return objetos;
-
-	}
-	public static String selectAllRespuestasViviendas(String condicion) throws SQLException  {
-		Connection conect = ConnectionConfiguration.conectarFichaSocial();
-		String query=	"select array_to_json(array_agg(row_to_json(t))) as resultado from(select"+ 
-						" 0 as nro_ficha," +
-						" p.id as id_pregunta,"+
-						" p.descripcion as preguntas,"+ 
-						" rp.id as id_respuesta_posible,"+ 
-						" rp.descripcion as respuestas_posibles,"+ 
-						" ''     as respuestas_text," +
-						" null     as respuestas_bolean,"+
-						" rp.tipo_respuesta"+
-						" from preguntas p "+
-						" join respuestas_posibles rp on p.id=rp.pregunta_id and rp.id not in ("+
-						" select rp1.id"+
-						" from respuestas_viviendas rv"+ 
-						" join respuestas_posibles rp1 on rp1.id=rv.respuesta_obtenida_id"+ 
-						" join preguntas p on p.id=rp1.pregunta_id)"+
-						" union"+
-						" select"+ 
-						" rv.nro_ficha,"+ 
-						" p.id as id_pregunta,"+ 
-						" p.descripcion as pregunta,"+ 
-						" rp.id as id_respuesta," +
-						" rp.descripcion as respuesta,"+ 
-						" rv.respuesta     as respuestas_text,"+ 
-						" rv.respuesta_boleana as respuestas_bolean,"+
-						" rp.tipo_respuesta"+
-						" from respuestas_viviendas rv" +
-						" join respuestas_posibles rp on rp.id=rv.respuesta_obtenida_id"+ 
-						" join preguntas p on p.id=rp.pregunta_id"+
-						" order by preguntas)t";
-												
-		 Statement statement = null;
-   		 ResultSet rs=null;
-   		 String objetos = "";
-
-   		try {
-   			statement = conect.createStatement();
-   			rs=statement.executeQuery(query);
-   			while(rs.next()){				   				
-   				objetos+=rs.getString("resultado");
-   			}
-   		}
-   		catch (SQLException e) {e.printStackTrace();}
-   		finally{
-   			if (statement != null) {statement.close();}
-   			if (conect != null) {conect.close();}
-   		}
-   		return objetos;
-
-	}
-	public static String selectAllPersonas(String condicion) throws SQLException  {
-		Connection conect = ConnectionConfiguration.conectarFichaSocial();
-		String query=	"select array_to_json(array_agg(row_to_json(t))) as resultado from(select * from personas where id=1)t";
-												
-		 Statement statement = null;
-   		 ResultSet rs=null;
-   		 String objetos = "";
-
-   		try {
-   			statement = conect.createStatement();
-   			rs=statement.executeQuery(query);
-   			while(rs.next()){				   				
-   				objetos+=rs.getString("resultado");
-   			}
-   		}
-   		catch (SQLException e) {e.printStackTrace();}
-   		finally{
-   			if (statement != null) {statement.close();}
-   			if (conect != null) {conect.close();}
-   		}
-   		return objetos;
-
-	}
-	
 //    public static List<ProyectoSNIP> selectProyectoSnip(String condition) throws SQLException{
 //     	 Connection conect=ConnectionConfiguration.conectar();
 //  		 String query = " select * from proyecto_snip "+condition;

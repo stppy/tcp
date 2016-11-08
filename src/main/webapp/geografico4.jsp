@@ -562,6 +562,7 @@ tbody {
 								$("#cuerpoTableroLineaAccion").html("");
 								$("#cuerpoTableroLineaAccion").html(a);
 							}else{
+																
 								tipoInstituciones="departamento"; 
 								array=lineaAccionDepartamento;
 								$("#cabeceraInstituciones").html("");
@@ -595,11 +596,38 @@ tbody {
 							    }).responseText;
 								lineaAccionDepartamento=JSON.parse(lineaAccionDepartamento);
 								
+								//Volvi a llamar a instituciones por que la otra llamada ya viene ordenado por orden y yo necesito las instituciones sin orden para asignarle su desempeño
+								var institucionesDepartamental = $.ajax({
+							    	url:'/tablero/ajaxSelects2?action=getInstitucion',
+							      	type:'get',
+							      	dataType:'json',
+							      	crossDomain:true,
+							      	async:false       
+							    }).responseText;
+								institucionesDepartamental=JSON.parse(institucionesDepartamental);
+								
+								var desDepartInst= [];//Obtenemos el desempeño de las instituciones a nivel departamental
+								for(var i=0;i<institucionesDepartamental.length;i++){		
+
+									var objeto = new Object(); 
+									objeto.institucionId = institucionesDepartamental[i].id;
+									objeto.promedio = lineaAccionDepartamento[i];
+									desDepartInst.push(objeto);
+								}
+								
 								for (var i = 0; i< instituciones.length;i++){
 									
-									color=getColorDesemp2(lineaAccionDepartamento[i]);
-									 if (/*lineaAccionDepartamento[i] !=0 &&*/ instituciones[i].id != 47981) $("#tablaInstituciones").append('<tr><td><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+instituciones[i].id+' depto_id='+e.target.feature.properties.dpto+' dist_id='+e.target.feature.properties.distrito+' checked="true"></td><td class="col-md-3"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+instituciones[i].id+' depto_id='+e.target.feature.properties.dpto+' > '+instituciones[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(lineaAccionDepartamento[i]).toFixed(0)+'%"><p class="text-left">'+parseFloat(lineaAccionDepartamento[i]).toFixed(2)+'%</p></div></div></td></tr>');
+									//color=getColorDesemp2(lineaAccionDepartamento[i]);
+									//if (/*lineaAccionDepartamento[i] !=0 &&*/ instituciones[i].id != 47981) $("#tablaInstituciones").append('<tr><td><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+instituciones[i].id+' depto_id='+e.target.feature.properties.dpto+' dist_id='+e.target.feature.properties.distrito+' checked="true"></td><td class="col-md-3"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+instituciones[i].id+' depto_id='+e.target.feature.properties.dpto+' > '+instituciones[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(lineaAccionDepartamento[i]).toFixed(0)+'%"><p class="text-left">'+parseFloat(lineaAccionDepartamento[i]).toFixed(2)+'%</p></div></div></td></tr>');
 									
+									for (var c = 0 ; c<desDepartInst.length;c++){
+										if(desDepartInst[c].institucionId==instituciones[i].id)
+										{
+											despTotDeptoInst=desDepartInst[c].promedio;
+											color=getColorDesemp2(despTotDeptoInst);
+											if (/*despTotInst !=0 &&*/ instituciones[i].id != 47981) $("#tablaInstituciones").append('<tr><td><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+instituciones[i].id+' checked="true"></td><td class="col-md-3"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+instituciones[i].id+'  > '+instituciones[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotDeptoInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotDeptoInst).toFixed(2)+'%</p></div></div></td></tr>');
+										}
+									}
 								}
 								var todasInstituciones=getInstitucionesSeleccionadas();
 								var a=renderTableroLineaAccion(todasInstituciones,e.target.feature.properties.dpto,null,periodoActual);
@@ -610,7 +638,7 @@ tbody {
 								$("#cuerpoTableroLineaAccion").html(a);
 							}
 						}else{ //d
-							var color="";var depemInst;var countInst;var despTotInst;
+							var color="";var depemInst;var countInst;var despTotInst; var ordenInstitucionPais = [];
 							var periodoSeleccionado = $("#periodoSeleccion option:selected").val();
 				        	//obtenemos todas las instituciones en el back end y su desempeño institucional a nivel país
 							var desPaisInstjson = $.ajax({
@@ -653,15 +681,30 @@ tbody {
 						  					    					'</table>'+
 																'</div>'+
 															'</div>');
-							for (var i = 0; i< instituciones.length;i++){
+							
+							ordenInstitucionPais = instituciones;
+							ordenInstitucionPais = ordenInstitucionPais.sort(
+								function orden(a,b) {             
+								  if (a.orden < b.orden)
+									    return -1;
+									  if (a.orden > b.orden)
+									    return 1;
+									  return 0;
+									});
+
+							for (var i = 0; i< ordenInstitucionPais.length;i++){
 								
 								for (var c = 0 ; c<desPaisInst.length;c++){
-									if(desPaisInst[c].institucionId==instituciones[i].id)
-										despTotInst=desPaisInst[i].promedio;
+									if(desPaisInst[c].institucionId==ordenInstitucionPais[i].id)
+									{
+										despTotInst=desPaisInst[c].promedio;
+										color=getColorDesemp2(despTotInst);
+										if (/*despTotInst !=0 &&*/ ordenInstitucionPais[i].id != 47981) $("#tablaInstituciones").append('<tr><td><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+ordenInstitucionPais[i].id+' checked="true"></td><td class="col-md-3"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+ordenInstitucionPais[i].id+'  > '+ordenInstitucionPais[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotInst).toFixed(2)+'%</p></div></div></td></tr>');
+									}
 								}
 								
-								color=getColorDesemp2(despTotInst);
-								if (/*despTotInst !=0 &&*/ instituciones[i].id != 47981) $("#tablaInstituciones").append('<tr><td><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+instituciones[i].id+' checked="true"></td><td class="col-md-3"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+instituciones[i].id+'  > '+instituciones[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotInst).toFixed(2)+'%</p></div></div></td></tr>');
+							//	color=getColorDesemp2(despTotInst);
+							//	if (/*despTotInst !=0 &&*/ ordenInstitucionPais[i].id != 47981) $("#tablaInstituciones").append('<tr><td><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+ordenInstitucionPais[i].id+' checked="true"></td><td class="col-md-3"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+ordenInstitucionPais[i].id+'  > '+ordenInstitucionPais[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotInst).toFixed(2)+'%</p></div></div></td></tr>');
 
 							}
 						}
@@ -1302,6 +1345,13 @@ function lineaAccionOrden(a,b) {
 	    return 1;
 	  return 0;
 	}
+function lineaAccionOrdenInstitucion(a,b) {             
+	  if (a.institucionOrden < b.institucionOrden)
+	    return -1;
+	  if (a.institucionOrden > b.institucionOrden)
+	    return 1;
+	  return 0;
+	}
 
 		
 /* var instituciones = $.ajax({
@@ -1437,7 +1487,7 @@ if(deptoId!=null && distId!=null){
 		{ 
 		  	for(var n=0; n<lineasProgramadas.length;n++)
 			{
-/* 				for(var l = 0; l < usuarioEtiqueta.length; l++)
+/*				for(var l = 0; l < usuarioEtiqueta.length; l++)
 				{
 					if(usuarioEtiqueta[l].etiqueta_id == 1)
 					{
@@ -1448,8 +1498,8 @@ if(deptoId!=null && distId!=null){
 								for(var d=0; d<usuarioLineaAccion.length;d++)
 								{
 									if(usuarioLineaAccion[d].lineaAccionId == lineasProgramadas[n].lineaAccionId)
-									{ */
-										if( instituciones[m].id==lineasProgramadas[n].institucionId && lineasProgramadas[n].meta != 0 && lineasProgramadas[n].cantidadAvance != 0){
+									{*/
+										if( (instituciones[m].id==lineasProgramadas[n].institucionId && lineasProgramadas[n].cantidadAnho != 0 && lineasProgramadas[n].cantidadAvance != 0) || ( instituciones[m].id==lineasProgramadas[n].institucionId && lineasProgramadas[n].cantidadAnho != 0 && lineasProgramadas[n].cantidadAvance == 0) || ( instituciones[m].id==lineasProgramadas[n].institucionId && lineasProgramadas[n].cantidadAnho == 0 && lineasProgramadas[n].cantidadAvance != 0) ){	
 											if (flagIns == 0){					  
 												tempInstituciones += '<tr><td colspan="12"><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td></tr>';
 												flagIns++;						  
@@ -1511,12 +1561,12 @@ if(deptoId!=null && distId!=null){
 											tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].costoAc/1000000).toFixed(2))+'</td>'+
 											'</tr>';
 										}
-/* 									}	
+									/*}	
 								}
 							}
 						}
 					}
-				}	 */							
+				}*/								
 			}
 
 		  if (flagIns>0){
@@ -1642,7 +1692,8 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 	'<th class="text-center">Lograda</th>'+
 	'<th class="text-center">%</th>'+
 '</tr></thead><tbody>';
-	
+lineasProgramadas = lineasProgramadas.sort(orden);
+
 	if(lineasProgramadas.length > 0){
 		linea_accion_id=lineasProgramadas[0].lineaAccionId;
 		institucionId=lineasProgramadas[0].institucionId;
@@ -1653,7 +1704,7 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 		tempInstituciones += '<tr><td colspan="12"><strong>'+lineasProgramadas[0].institucionSigla+'</strong></td></tr>';
 		
 		for(var n=0; n<lineasProgramadas.length;n++){
-			/*for(var l = 0; l < usuarioEtiqueta.length; l++)
+/* 			for(var l = 0; l < usuarioEtiqueta.length; l++)
 			{
 				if(usuarioEtiqueta[l].etiqueta_id == 1)
 				{
@@ -1664,7 +1715,7 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 							for(var d=0; d<usuarioLineaAccion.length;d++)
 							{
 								if(usuarioLineaAccion[d].lineaAccionId == lineasProgramadas[n].lineaAccionId)
-								{*/
+								{ */
 			
 									contEjecucion++;
 									if (lineasProgramadas[n].cantidadHoy!=null) acumEjecucionPrevista=acumEjecucionPrevista + lineasProgramadas[n].cantidadHoy;
@@ -1809,8 +1860,7 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 												'<td>'+numeroConComa((inversion/1000000).toFixed(2))+'</td>'+
 												'</tr>';
 											//}
-									    }
-										
+										}
 										
 										cont=0, contEjecucion=0; 
 										acum=0, acumEjecucionPrevista=0, acumEjecucionLograda=0;
@@ -1828,7 +1878,6 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 										}
 
 										
-										
 										if(lineasProgramadas[n+1].institucionId != institucionId){
 											if (a != "") tablaInstituciones += tempInstituciones + a;										
 											tempInstituciones  = '<tr><td colspan="12"><strong>'+lineasProgramadas[n+1].institucionSigla+'</strong></td></tr>';
@@ -1837,14 +1886,14 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 											institucionId = lineasProgramadas[n+1].institucionId;											
 										}										
 									}
-								/*}
-							}
-						}
-					}
-				}
-			}*/	
+								//}
+							//}
+						//}
+					//}
+				//}
+			//}	
 		}//*********
-	}	
+	}    
 
 	return tablaInstituciones;
 
@@ -1869,7 +1918,7 @@ function renderNivelDistrital(lineasProgramadas, deptoId, distId){
 		}).responseText;
 		insLineaAccionHasEtiqueta = JSON.parse(insLineaAccionHasEtiqueta);
 	}
-	
+	 
 	var contenidoEnRowTemp="";	
 	var tablaInstituciones="";
 	var tempInstituciones="";
@@ -1881,7 +1930,7 @@ function renderNivelDistrital(lineasProgramadas, deptoId, distId){
 	{ 
 		for(var n=0; n<lineasProgramadas.length;n++)
 		{
-			/* for(var l = 0; l < usuarioEtiqueta.length; l++)
+			/*for(var l = 0; l < usuarioEtiqueta.length; l++)
 			{
 				if(usuarioEtiqueta[l].etiqueta_id == 1)
 				{
@@ -1892,7 +1941,8 @@ function renderNivelDistrital(lineasProgramadas, deptoId, distId){
 							for(var d=0; d<usuarioLineaAccion.length;d++)
 							{
 								if(usuarioLineaAccion[d].lineaAccionId == lineasProgramadas[n].lineaAccionId)
-								{ */
+								{*/
+
 									if ( instituciones[m].id==lineasProgramadas[n].institucionId ){
 										  
 										  if((lineasProgramadas[n].cantidadAnho > 0 && lineasProgramadas[n].cantidadAvance > 0) || (lineasProgramadas[n].cantidadAnho > 0) || (lineasProgramadas[n].cantidadAvance > 0)){
@@ -1929,6 +1979,7 @@ function renderNivelDistrital(lineasProgramadas, deptoId, distId){
 											  }else{
 												  tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>';
 											  }
+
 											  tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
 											  '<td>'+numeroConComa(lineasProgramadas[n].cantidadHoy)+'</td>'+
 											  '<td>'+numeroConComa(lineasProgramadas[n].cantidadAvance)+'</td>';
@@ -1964,12 +2015,12 @@ function renderNivelDistrital(lineasProgramadas, deptoId, distId){
 											  tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].costoAc/1000000).toFixed(2))+'</td>'+
 											  '</tr>'; 
 										 }
-									/* }
+									/*}
 								}
 							}
 						}
 					}
-				} */
+				}*/
 			}
 		}
 
@@ -2319,10 +2370,12 @@ $(document).ready(function(){
 	var porcentaje1 = 70; //la variable porcentaje1 se utiliza para colorear las tablas
 	var porcentaje2 = 90 //la variable porcentaje2 se utiliza para colorear las tablas
 	
-	function dibujarLineaAccionAcumuladoMesDepto(lineaAccionAcumuladoMesDepto, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion){
+	function dibujarLineaAccionAcumuladoMesDepto(lineaAccionAcumuladoMesDepto, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion, mostrarOcultarNoAcumulables){
 		
-		var dataPoints=[];
-		var ejecutada=[];
+		var programadaTotal=[];
+		var programadaNoAcumulable=[];
+		var ejecutadaTotal=[];
+		var ejecutadaNoAcumulable=[];
 		
 		var mes;
 		var anho;
@@ -2360,7 +2413,9 @@ $(document).ready(function(){
 	
 				if(lineaAccionAcumuladoMesDepto[i].mes >= lineaAccionAcumuladoMesDepto[vectorMin].mes && lineaAccionAcumuladoMesDepto[i].mes <= lineaAccionAcumuladoMesDepto[vectorMax].mes)
 				{
-	 				dataPoints.push({ x: new Date( lineaAccionAcumuladoMesDepto[i].mes), y: lineaAccionAcumuladoMesDepto[i].max_cant_prog_no_acum + cantidadTotalProgramada});
+					programadaTotal.push({ x: new Date( lineaAccionAcumuladoMesDepto[i].mes), y: lineaAccionAcumuladoMesDepto[i].max_cant_prog_no_acum + cantidadTotalProgramada});
+	 				
+					if (lineaAccionAcumuladoMesDepto[i].max_cant_prog_no_acum != 0) programadaNoAcumulable.push({ x: new Date( lineaAccionAcumuladoMesDepto[i].mes), y: lineaAccionAcumuladoMesDepto[i].max_cant_prog_no_acum});
 				}
 			//}
 
@@ -2380,24 +2435,106 @@ $(document).ready(function(){
 	
 				if(lineaAccionAcumuladoMesDepto[i].mes >= lineaAccionAcumuladoMesDepto[vectorMinEjecucion].mes && lineaAccionAcumuladoMesDepto[i].mes <= lineaAccionAcumuladoMesDepto[vectorMaxEjecucion].mes)
 				{
-	 				if (lineaAccionAcumuladoMesDepto[i].cantidad_ejecutda != 0 || lineaAccionAcumuladoMesDepto[i].max_cant_ejec_no_acum != 0)  ejecutada.push({ x: new Date( lineaAccionAcumuladoMesDepto[i].mes), y: lineaAccionAcumuladoMesDepto[i].max_cant_ejec_no_acum + cantidadTotalEjecutada});
+	 				if (lineaAccionAcumuladoMesDepto[i].cantidad_ejecutda != 0 || lineaAccionAcumuladoMesDepto[i].max_cant_ejec_no_acum != 0)	 				
+	 					ejecutadaTotal.push({ x: new Date( lineaAccionAcumuladoMesDepto[i].mes), y: lineaAccionAcumuladoMesDepto[i].max_cant_ejec_no_acum + cantidadTotalEjecutada});
+	 				
+	 				if (lineaAccionAcumuladoMesDepto[i].max_cant_ejec_no_acum != 0)
+	 					ejecutadaNoAcumulable.push({ x: new Date( lineaAccionAcumuladoMesDepto[i].mes), y: lineaAccionAcumuladoMesDepto[i].max_cant_ejec_no_acum});	 				
+	 					 				
 				}
 			//}			
 		}
+		
+		//Despliega o no las lineas de programacion y ejecucion no acumulables en los datos del chart
+		if (!mostrarOcultarNoAcumulables){
+			var data = [					     
+					{        
+						indexLabelFontColor: "darkSlateGray",
+						showInLegend: true, 
+						name: 'programada',
+						type: "line",
+						color: "#1856F2", /*"rgba(0,75,141,0.7)"*/
+						markerSize:8,
+						markerType:"triangle",
+						legendText:"Programación",
+						dataPoints:programadaTotal
+					},
+					{        
+						indexLabelFontColor: "darkSlateGray",
+						showInLegend: true, 
+						name: 'ejecutadas',
+						type: "area",
+						color: "#C24642",
+						markerSize:8,
+						markerType:"circle",
+						legendText:"Ejecución",
+						dataPoints:ejecutadaTotal
+					}
+			  	];
+		} else	
+			var data = [
+					{        
+						indexLabelFontColor: "darkSlateGray",
+						showInLegend: true, 
+						name: 'programada total',
+						type: "line",
+						color: "#1856F2", /*"rgba(0,75,141,0.7)"*/
+						markerSize:8,
+						markerType:"triangle",
+						legendText:"Programación total",
+						dataPoints:programadaTotal
+					},
+					{        
+						indexLabelFontColor: "darkSlateGray",
+						showInLegend: true, 
+						name: 'programada no acumulables',
+						type: "line",
+						color: "#369EAD",
+						markerSize:8,
+						markerType:"triangle",
+						legendText:"Programación no acumulables",
+						dataPoints:programadaNoAcumulable
+					},
+					{        
+						indexLabelFontColor: "darkSlateGray",
+						showInLegend: true, 
+						name: 'ejecutadas total',
+						type: "area",
+						color: "#C24642",
+						markerSize:8,
+						markerType:"circle",
+						legendText:"Ejecución total",
+						dataPoints:ejecutadaTotal
+					},
+					{        
+						indexLabelFontColor: "darkSlateGray",
+						showInLegend: true, 
+						name: 'ejecutada no acumulables',
+						type: "line",
+						color: "#FF706B",
+						markerSize:8,
+						markerType:"circle",
+						legendText:"Ejecución no acumulables",
+						dataPoints:ejecutadaNoAcumulable
+					}
+				];
 
-
+		//dibuja el chart
 		var chart = new CanvasJS.Chart("chartContainer",
 				{
-						zoomEnabled: true,
-						exportEnabled: true,
-						exportFileName: lineaAccionAcumuladoMesDepto[0].institucion+" - "+lineaAccionAcumuladoMesDepto[0].linea_accion+" ("+lineaAccionAcumuladoMesDepto[0].accion_unidad_medida+")",
-						title: {
-							text: "Evolución Mensual" +" ("+lineaAccionAcumuladoMesDepto[0].accion_unidad_medida+")" 
-						},
-                        	animationEnabled: true,
-                        	width: 800,
+					zoomEnabled: true,
+					exportEnabled: true,
+					exportFileName: lineaAccionAcumuladoMesDepto[0].institucion+" - "+lineaAccionAcumuladoMesDepto[0].linea_accion+" ("+lineaAccionAcumuladoMesDepto[0].accion_unidad_medida+")",
+					toolTip: {
+				        shared: true  //disable here. 
+				    }, 
+					title: {
+						text: "Evolución Mensual" +" ("+lineaAccionAcumuladoMesDepto[0].accion_unidad_medida+")" 
+					},
+                       	animationEnabled: true,
+                       	width: 800,
 					axisX:{      
-						valueFormatString: "YYYY-MM" ,
+						valueFormatString: "YYYY-MM",
 						interval: 1,
 						intervalType: "month",
 						labelAngle: -50,
@@ -2409,32 +2546,28 @@ $(document).ready(function(){
 						tickColor: "azure",
 						titleFontColor: "rgb(0,75,141)"
 					},
-					data: [
-					{        
-						indexLabelFontColor: "darkSlateGray",
-						showInLegend: true, 
-						name: 'programada',
-						type: "line",
-						//color: "rgba(0,75,141,0.7)",
-						markerSize:8,
-						legendText:"Programación",
-						dataPoints:dataPoints
-					},
-					{        
-						indexLabelFontColor: "darkSlateGray",
-						showInLegend: true, 
-						name: 'ejecutadas',
-						type: "area",
-						//color: "rgba(0,75,141,0.8)",
-						markerSize:8,
-						legendText:"Ejecución",
-						dataPoints:ejecutada
-					}
-				  ]
+					data: data
 				});
 				
 		chart.render();
 	 }
+	
+	
+	$("body").on("click", "#chkMostrarOcultarNoAcumulables",function(event){			
+		var rangoDeFecha= $("#rango-fecha").val();
+		var splitDeRango=rangoDeFecha.split(",");
+		vectorMin=splitDeRango[0];
+		vectorMax=splitDeRango[1];
+		
+		var rangoDeFechaEjecucion= $("#rango-fecha-ejecucion").val();
+		var splitDeRangoEjecucion=rangoDeFechaEjecucion.split(",");
+		vectorMinEjecucion=splitDeRangoEjecucion[0];
+		vectorMaxEjecucion=splitDeRangoEjecucion[1];
+		
+		var mostrarNoAcumulables = $("#chkMostrarOcultarNoAcumulables").is(':checked'); 
+		
+		dibujarLineaAccionAcumuladoMesDepto(lineaAccionAcumuladoMesDepto, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion, mostrarNoAcumulables);		
+	});
 
 	$("body").on("change", "#rango-fecha",function(event){
 		var rangoDeFecha= $("#rango-fecha").val();
@@ -2623,8 +2756,7 @@ $(document).ready(function(){
 		$("#dataTablesAccionesAvances").DataTable();	
 			
 		$("#tab_3-2").append('Programación: <label id="fechaInicio"></label><input id="rango-fecha" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="1" data-slider-value="[250,450]"/><label id="fechaFin"></label>');
-		$("#tab_3-2").append('<br><br>Ejecución: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label id="fechaInicioEjecucion"></label><input id="rango-fecha-ejecucion" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="1" data-slider-value="[250,450]"/><label id="fechaFinEjecucion"></label>');
-
+		$("#tab_3-2").append('<br><br>Ejecución: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label id="fechaInicioEjecucion"></label><input id="rango-fecha-ejecucion" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="1" data-slider-value="[250,450]"/><label id="fechaFinEjecucion"></label> &nbsp&nbsp <!--div class="checkbox"--><label> <input type="checkbox" id="chkMostrarOcultarNoAcumulables">Mostrar no acumulables</label><!-- /div-->');
 
 		//$('#myModal').find(".modal-footer").html(footerModal);
 		var urlAcumulado="getLineaAccionAcumuladoMes";// a nivel pais
@@ -3217,7 +3349,7 @@ $(document).ready(function(){
 							    		 '<div class="box">'+
 							      			'<div class="box-header with-border">'+
 							       				'<h2 class="box-title text-center">'+
-							          				'Agregar Hito'+ 	
+							          				'Hitos'+ 	
 							        			'</h2>'+
 							        			'<div class="box-tools pull-right"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
 							        			'</div>'+
@@ -3245,7 +3377,7 @@ $(document).ready(function(){
 														}
 														totalCantidadProgramada=parseFloat(totalCantidadProgramada).toFixed(2);
 
-														modalHito += '</tbody><tfoot><tr class="active"><td colspan="2">Total Cantidad Programada: </td><td colspan="8">'+totalCantidadProgramada+'</td></tr></tfoot>'+
+														modalHito += '</tbody><tfoot><tr class="active"><td colspan="2">Total Cantidad Programada: </td><td colspan="7">'+totalCantidadProgramada+'</td></tr></tfoot>'+
 																	 '</table>'+
 																	 '</div>'+
 							      			'</div>'+//FIN BODY
@@ -3256,7 +3388,7 @@ $(document).ready(function(){
 						    		'<div class="box">'+
 						      			'<div class="box-header with-border">'+
 						       				'<h2 class="box-title text-center">'+
-						          				'Avance'+ 	
+						          				'Avances'+ 	
 						        			'</h2>'+
 						        			'<div class="box-tools pull-right"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
 						        			'</div>'+
@@ -3284,7 +3416,7 @@ $(document).ready(function(){
 											}
 											totalCantidadProgramada=parseFloat(totalCantidadProgramada).toFixed(2);
 
-											modalHito += '</tbody><tfoot><tr class="active"><td colspan="2">Total Cantidad Programada: </td><td colspan="8">'+totalCantidadProgramada+'</td></tr></tfoot>'+
+											modalHito += '</tbody><tfoot><tr class="active"><td colspan="2">Total Cantidad Programada: </td><td colspan="7">'+totalCantidadProgramada+'</td></tr></tfoot>'+
 														 '</table>'+
 														 '</div>'+						      			
 						      			'</div>'+
@@ -4471,7 +4603,7 @@ $(document).ready(function(){
 							      '<div class="modal-content">'+ 
 							        '<div class="modal-header">'+ 
 							          '<button type="button" class="close modalHitoAvances" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'">&times;</button>'+ 
-							          '<h4 class="modal-title">Agregar Hito</h4>'+ 
+							          '<h4 class="modal-title">Hitos</h4>'+ 
 							        '</div>'+ 
 							        '<div class="modal-body">'+ 
 							        
