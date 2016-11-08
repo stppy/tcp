@@ -11,22 +11,8 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class SqlDelete {
-	
-	public static void deleteRespuestasViviendas(int nroFicha, int preguntaId){
-	   	 Connection conect=ConnectionConfiguration.conectarFichaSocial();
-	   	 Statement statement = null;
-			 String 					query = "delete from respuestas_viviendas";
-			
-			 query+=" where nro_ficha='"+nroFicha+"' and pregunta_id="+preguntaId;
 
-			try {
-				statement=conect.createStatement();
-				statement.execute(query);
-			    conect.close();
-			} catch (SQLException e) {e.printStackTrace();}
-			
-	   }
+public class SqlDelete {
 	
 //
 //	

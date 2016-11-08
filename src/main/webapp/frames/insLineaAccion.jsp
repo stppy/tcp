@@ -5307,69 +5307,11 @@ $("body").on("click", ".guardarProgramacion",function(event){
 				$("#tableCronograma").append(tableProgamacion);	
         		
         		renderProgramacion(insLineaAccionId,lineaAccionId,institucionId,periodoId,accionId,cronogramaId);
-        		<%-- var unidadMedida = $.ajax({
-        			url:'/tablero/ajaxSelects2?action=getUnidadMedida',
-        		  	type:'get',
-        		  	dataType:'json',
-        		  	async:false       
-        		}).responseText;
-        		unidadMedida = JSON.parse(unidadMedida);
-        		
-        		var programacion = $.ajax({
-        			url:'/tablero/ajaxSelects2?action=getProgramacion&actividadId='+actividadId,
-        		  	type:'get',
-        		  	dataType:'json',
-        		  	async:false       
-        		}).responseText;
-        		programacion = JSON.parse(programacion);
-        		
-        		var cronogramas = $.ajax({
-        			url:'/tablero/ajaxSelects2?action=getCronograma&cronogramaId='+cronogramaId,
-        		  	type:'get',
-        		  	dataType:'json',
-        		  	async:false       
-        		}).responseText;
-        		cronogramas = JSON.parse(cronogramas);
-        		
-        		var nombreUnidadMedidaHitoProgramado="";
-        		for(var g = 0; g < unidadMedida.length; g++ )
-        		{
-        			if(cronogramas[0].unidad_medida_id == unidadMedida[g].id)
-        			{
-        				nombreUnidadMedidaHitoProgramado = unidadMedida[g].descripcion;
-        			}
-        		}	        		
-        		
-        		var registroProgramacion="";
-        		for(var j = 0; j < programacion.length; j++)
-        		{
-        			if(onoff==true && programacion[j].borrado == true){
-        				//	
-        			}else{
-        				if(programacion[j].borrado == false)
-            			{
-                			<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-                				registroProgramacion += "<tr><td>"+numeroConComa(programacion[j].cantidad)+"</td><td>"+programacion[j].fechaEntrega+"</td><td>"+programacion[j].version+"</td><td>"+cronogramas[0].nombre+"</td><td>"+nombreUnidadMedidaHitoProgramado+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm consultaEditarHito'  data-toggle='tooltip' data-placement='top' title='Editar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacion[j].id+" ><span class='fa fa-pencil' ></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarHito' title='Borrar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacion[j].id+" ><span class='fa fa-trash' </span></button></td></tr>";
-            				<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-            					registroProgramacion += "<tr><td>"+numeroConComa(programacion[j].cantidad)+"</td><td>"+programacion[j].fechaEntrega+"</td><td>"+programacion[j].version+"</td><td>"+cronogramas[0].nombre+"</td><td>"+nombreUnidadMedidaHitoProgramado+"</td><td class='text-center'></td></tr>";
-            			<%}%>            			
-            			}else{
-            				<% if (attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("0")){%>
-                				registroProgramacion += "<tr><td><del>"+numeroConComa(programacion[j].cantidad)+"</del></td><td><del>"+programacion[j].fechaEntrega+"</del></td><td><del>"+programacion[j].version+"</del></td><td><del>"+cronogramas[0].nombre+"</del></td><td><del>"+nombreUnidadMedidaHitoProgramado+"</del></td><td class='text-center'><button type='button' class='btn btn-default btn-sm consultaBorrarHito' title='Restaurar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacion[j].id+" ><span class='fa fa-recycle' </span></button></td></tr>";
-                			<% }%>
-            			}	
-        			}
-        		}
-        		
-									
-        		$("#listaActividades").html("");
-        		$("#listaActividades").append(registroProgramacion); --%>
 
-        		
         	}else{
         		alert("ERROR");
         	}
-        	},
+        },
         //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
         error: function(data,status,er) {
         	
@@ -5377,7 +5319,7 @@ $("body").on("click", ".guardarProgramacion",function(event){
 	 });
 	}
 });	
-
+ 
 function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId, accionId, actividadId){
 	
 	if ( $("#modalVincularProductos").length )
@@ -9942,7 +9884,7 @@ function listaAvanceCualitativo(insLineaAccionId,lineaAccionId,institucionId,per
 	'	                				<table class="table table-hover table-bordered" id="dataTablesAvanceCualitativo">'+
 	'	                					<thead>'+
 	'	                						<tr class="active"><th class="text-center">Accion</th><th class="text-center">Trimestre</th><th class="text-center">Año</th><th class="text-center">Gestiones Realizadas</th><th class="text-center">Principales Logros Alcanzados</th><th class="text-center">Dificultades Lecciones Aprendidas</th><th class="text-center">Objetivos del Trimestre</th><th class="text-center">Administrar</th></tr>'+
-	'	                					</thead>'+	
+	'	                					</thead>'+
 	'	                						<tbody id="tablaAvanceCualitativo">'+
 	'	                						</tbody>'+
 	'	                				</table>'+
