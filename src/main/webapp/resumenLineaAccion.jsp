@@ -203,7 +203,7 @@
 				
 				
 		<%  } else { %>
-    		<script type="text/javascript">window.location = "http://www.google.com";</script>
+    		<script type="text/javascript">window.location = "http://spr.stp.gov.py/";</script>
 		<% } %> 
 </body>
 </html>
