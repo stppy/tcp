@@ -507,12 +507,12 @@ public class SqlSelects {
 				objeto.setAcumula(rs.getBoolean("crono_acumula"));
 				objeto.setFecha(rs.getDate("fecha"));
 				objeto.setMes(rs.getString("mes"));
-				objeto.setProgramacionCantidad(rs.getDouble("programacion_cantidad"));
-				objeto.setAvanceCantidad(rs.getDouble("avance_cantidad"));
+				objeto.setProgramacionCantidad(rs.getString("programacion_cantidad"));
+				objeto.setAvanceCantidadString(rs.getString("avance_cantidad"));
 				objeto.setAvanceJustificacion(rs.getString("justificacion"));
-				objeto.setAvanceCosto(rs.getDouble("avance_costo"));
-				objeto.setAvanceDestinatario(rs.getDouble("avance_destinatarios"));
-				objeto.setAvanceEvidencias(rs.getInt("avance_evidencias"));
+				objeto.setAvanceCosto(rs.getString("avance_costo"));
+				objeto.setAvanceDestinatario(rs.getString("avance_destinatarios"));
+				objeto.setAvanceEvidencias(rs.getString("avance_evidencias"));
 				
 				objetos.add(objeto);
 			}
