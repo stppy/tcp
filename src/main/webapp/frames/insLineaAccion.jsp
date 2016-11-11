@@ -1121,7 +1121,7 @@ function renderEvidencia(avanceId, parametros){
 		    if( (f.getMonth() +1) < 10 ){
 		    	var mes =( 0 +""+ (f.getMonth() +1));
 		    }else{
-		    	var mes =f.getMonth();
+		    	var mes =f.getMonth()+1;
 		    }
 		    
 		    if( (f.getDate()) < 10 ){
@@ -2463,13 +2463,13 @@ $("body").on("click", ".borrarAccion",function(event){
         			
         			if(accionHasProducto[f].borrado == false){
         				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-    		    	    	fila += "<tr><td>"+accionHasProducto[f].nivel+"-"+accionHasProducto[f].entidad+"-"+accionHasProducto[f].tipoPrograma+"-"+accionHasProducto[f].programa+"-"+accionHasProducto[f].subPrograma+"-"+accionHasProducto[f].proyecto+"</td><td>"+accionHasProducto[f].sprProductoId+"</td><td>"+nombreProducto+"</td><td>"+accionHasProducto[f].cantidadFisica+"</td><td>"+accionHasProducto[f].unidadMedida+"</td><td>"+accionHasProducto[f].clase+"</td><td>Gs."+numeroConComa(accionHasProducto[f].cantidadFinanciera)+"</td><td>Gs."+numeroConComa(accionHasProducto[f].totalAsignacion)+"</td><td><center><button type='submit' class='btn btn-default sm' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accionId+"-"+accionHasProducto[f].id+" disabled='disabled'><span class='glyphicon glyphicon-pencil'></span></button><button type='submit' class='btn btn-default sm consultaBorrarVinculacionProducto' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accionId+"-"+accionHasProducto[f].id+"><span class='glyphicon glyphicon-trash'></span></button></center></td></tr>";
+    		    	    	fila += "<tr><td>"+accionHasProducto[f].nivel+"</td><td>"+accionHasProducto[f].entidad+"</td><td>"+accionHasProducto[f].tipoPrograma+"</td><td>"+accionHasProducto[f].programa+"</td><td>"+accionHasProducto[f].subPrograma+"</td><td>"+accionHasProducto[f].proyecto+"</td><td>"+accionHasProducto[f].sprProductoId+"</td><td>"+nombreProducto+"</td><td>"+accionHasProducto[f].cantidadFisica+"</td><td>"+accionHasProducto[f].unidadMedida+"</td><td>"+accionHasProducto[f].clase+"</td><td>Gs."+numeroConComa(accionHasProducto[f].cantidadFinanciera)+"</td><td>Gs."+numeroConComa(accionHasProducto[f].totalAsignacion)+"</td><td><center><button type='submit' class='btn btn-default sm' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accionId+"-"+accionHasProducto[f].id+" disabled='disabled'><span class='glyphicon glyphicon-pencil'></span></button><button type='submit' class='btn btn-default sm consultaBorrarVinculacionProducto' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accionId+"-"+accionHasProducto[f].id+"><span class='glyphicon glyphicon-trash'></span></button></center></td></tr>";
         				<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-    	    	    		fila += "<tr><td>"+accionHasProducto[f].nivel+"-"+accionHasProducto[f].entidad+"-"+accionHasProducto[f].tipoPrograma+"-"+accionHasProducto[f].programa+"-"+accionHasProducto[f].subPrograma+"-"+accionHasProducto[f].proyecto+"</td><td>"+accionHasProducto[f].sprProductoId+"</td><td>"+nombreProducto+"</td><td>"+accionHasProducto[f].cantidadFisica+"</td><td>"+accionHasProducto[f].unidadMedida+"</td><td>"+accionHasProducto[f].clase+"</td><td>Gs."+numeroConComa(accionHasProducto[f].cantidadFinanciera)+"</td><td>Gs."+numeroConComa(accionHasProducto[f].totalAsignacion)+"</td><td></td></tr>";
+    	    	    		fila += "<tr><td>"+accionHasProducto[f].nivel+"</td><td>"+accionHasProducto[f].entidad+"</td><td>"+accionHasProducto[f].tipoPrograma+"</td><td>"+accionHasProducto[f].programa+"</td><td>"+accionHasProducto[f].subPrograma+"</td><td>"+accionHasProducto[f].proyecto+"</td><td>"+accionHasProducto[f].sprProductoId+"</td><td>"+nombreProducto+"</td><td>"+accionHasProducto[f].cantidadFisica+"</td><td>"+accionHasProducto[f].unidadMedida+"</td><td>"+accionHasProducto[f].clase+"</td><td>Gs."+numeroConComa(accionHasProducto[f].cantidadFinanciera)+"</td><td>Gs."+numeroConComa(accionHasProducto[f].totalAsignacion)+"</td><td></td></tr>";
     	    			<%}%>		
         			}else{
         				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
-    	    	    		fila += "<tr><td><del>"+accionHasProducto[f].nivel+"-"+accionHasProducto[f].entidad+"-"+accionHasProducto[f].tipoPrograma+"-"+accionHasProducto[f].programa+"-"+accionHasProducto[f].subPrograma+"-"+accionHasProducto[f].proyecto+"</del></td><td><del>"+accionHasProducto[f].sprProductoId+"</del></td><td><del>"+nombreProducto+"</del></td><td><del>"+accionHasProducto[f].cantidadFisica+"</del></td><td><del>"+accionHasProducto[f].unidadMedida+"</del></td><td><del>"+accionHasProducto[f].clase+"</del></td><td><del>Gs."+numeroConComa(accionHasProducto[f].cantidadFinanciera)+"</del></td><td><del>Gs."+numeroConComa(accionHasProducto[f].totalAsignacion)+"</del></td><td><center><button type='submit' class='btn btn-default sm' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accionId+"-"+accionHasProducto[f].id+" disabled='disabled'><span class='glyphicon glyphicon-pencil'></span></button><button type='submit' class='btn btn-default sm consultaBorrarVinculacionProducto' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accionId+"-"+accionHasProducto[f].id+"><span class='glyphicon glyphicon-trash'></span></button></center></td></tr>";
+    	    	    		fila += "<tr><td><del>"+accionHasProducto[f].nivel+"</del></td><td><del>"+accionHasProducto[f].entidad+"</del></td><td><del>"+accionHasProducto[f].tipoPrograma+"</del></td><td><del>"+accionHasProducto[f].programa+"</del></td><td><del>"+accionHasProducto[f].subPrograma+"</del></td><td><del>"+accionHasProducto[f].proyecto+"</del></td><td><del>"+accionHasProducto[f].sprProductoId+"</del></td><td><del>"+nombreProducto+"</del></td><td><del>"+accionHasProducto[f].cantidadFisica+"</del></td><td><del>"+accionHasProducto[f].unidadMedida+"</del></td><td><del>"+accionHasProducto[f].clase+"</del></td><td><del>Gs."+numeroConComa(accionHasProducto[f].cantidadFinanciera)+"</del></td><td><del>Gs."+numeroConComa(accionHasProducto[f].totalAsignacion)+"</del></td><td><center><button type='submit' class='btn btn-default sm' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accionId+"-"+accionHasProducto[f].id+" disabled='disabled'><span class='glyphicon glyphicon-pencil'></span></button><button type='submit' class='btn btn-default sm consultaBorrarVinculacionProducto' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accionId+"-"+accionHasProducto[f].id+"><span class='glyphicon glyphicon-trash'></span></button></center></td></tr>";
         				<%}%>
         			}	
     			}	
@@ -2487,8 +2487,6 @@ $("body").on("click", ".borrarAccion",function(event){
 		if ( $("#modalVincularProductos").length )
 		{
 			$("#modalVincularProductos").remove();
-			
-			
 		}
 		if ( $("#modalAccion").length )
 		{
@@ -2572,8 +2570,7 @@ $("body").on("click", ".borrarAccion",function(event){
 				        '									<table class="table table-striped table-bordered  table-hover" id="dataTablesVinculacionProducto">'+
 				        '										<thead>'+
 				        '    										<tr>'+
-				        //'    											<th colspan="6" class="text-center" data-toggle="tooltip" data-placement="top" title="Nivel,Entidad,Tipo,Programa,SubPrograma,Proyecto">Cod. Pres.</th>'+
-				        '    											<th>Cod. Pres.</th>'+
+				        '    											<th colspan="6" class="text-center" data-toggle="tooltip" data-placement="top" title="Nivel,Entidad,Tipo,Programa,SubPrograma,Proyecto">Cod. Pres.</th>'+
 				        '   											<th>Cod. Prod</th>'+						            
 				        '   											<th>NombreProducto</th>'+
 				        '    											<th>Cantidad</th>'+
@@ -2584,7 +2581,7 @@ $("body").on("click", ".borrarAccion",function(event){
 				        '    											<th>Administrar</th>'+
 				        '    										</tr>'+
 				        '										</thead>'+
-				        '										<tfoot><tr><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th></tr></tfoot>'+
+				        '										<tfoot><tr><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th></tr></tfoot>'+
 				        '    									<tbody class="table-body-producto" id="TablaAccionHasProductos">'+
 				        '										</tbody>'+
 				        '   								</table>'+
@@ -2678,9 +2675,95 @@ $("body").on("click", ".borrarAccion",function(event){
 
 		$("body").append(modalProductos);
 		$('#TablaAccionHasProductos').append(cargarTablaAccionHasProducto(accionId,insLineaAccionId,lineaAccionId,institucionId,periodoId));	        
-		$("#modalVincularProductos").modal('show');
-		//$("#dataTablesVinculacionProducto").DataTable();
-	 	
+		$("#modalVincularProductos").modal('show');		
+	/* 	$("#dataTablesVinculacionProducto").dataTable({
+	        /* "footerCallback": function ( row, data, start, end, display ) {
+	            var api = this.api(), data;
+	 
+	         // saca los puntos y <del> de la cadena para pasarlo a entero
+	            var intVal = function(i){
+		            	if(typeof i==='string'){	
+		            		i=i.replace(/[\."<\/*del>""Gs\."]/g, '');
+		            		i=i.replace(/[","]/g, '.');
+		            		i=i*1;		            		
+		            	}else{
+		            		if(typeof i==='number'){
+		            			i=i;		            			
+		            	}else{
+		            		i=0;
+		            	}
+		            }
+		            	return i;
+		            };
+	 
+	         // total general para todas las paginas de la columna
+	            total8 = api
+	                .column( 8 )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	 
+	         // total por pagina segun número de columna
+	            pageTotal8 = api
+	                .column( 8, { page: 'current'} )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	         
+	         // total general para todas las paginas de la columna
+	            total11 = api
+	                .column( 11 )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	 
+	         // total por pagina segun número de columna
+	            pageTotal11 = api
+	                .column( 11, { page: 'current'} )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	         
+	         // total general para todas las paginas de la columna
+	            total12 = api
+	                .column( 12 )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	 
+	         // total por pagina segun número de columna
+	            pageTotal12 = api
+	                .column( 12, { page: 'current'} )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	         
+	         // se muestran los valores de los totales en el footer del table
+	            $( api.column( 8 ).footer() ).html(
+	            		'Total Pág. '+ numeroConComa(pageTotal8) +' (Total Gral. '+ numeroConComa(total8) +')'
+	            );
+	         /* // se muestran los valores de los totales en el footer del table
+	            $( api.column( 11 ).footer() ).html(
+	            		'Total Pág. '+ numeroConComa(pageTotal11) +' (Total Gral. '+ numeroConComa(total11) +')'
+	            );
+	         // se muestran los valores de los totales en el footer del table
+	            $( api.column( 12 ).footer() ).html(
+	            		'Total Pág. '+ numeroConComa(pageTotal12) +' (Total Gral. '+ numeroConComa(total12) +')'
+	            );	          
+	        }, 
+	        dom: 'Bfrtip',
+	        buttons: [
+	            'copy', 'csv', 'excel', 'pdf', 'print'
+	        ]
+	});  */
+		
+		
 		function Combo(){
 			
 			var usuarios = $.ajax({
@@ -3563,53 +3646,6 @@ $("body").on("click", ".borrarAccion",function(event){
 		  document.getElementById('proyecto-formulario').addEventListener('change',eje1.proyecto,false);
 		  document.getElementById('producto-formulario').addEventListener('focus',eje1.productoFocus,false); 
 		  document.getElementById('producto-formulario').addEventListener('change',eje1.producto,false);
-		  
-		  $('#dataTablesVinculacionProducto').dataTable({
-		        "footerCallback": function ( row, data, start, end, display ) {
-		            var api = this.api(), data;
-		 
-		         // saca los puntos y <del> de la cadena para pasarlo a entero
-		            var intVal = function(i){
-		            	if(typeof i==='string'){	
-		            		i=i.replace(/[\."<\/*del>""Gs\."]/g, '');
-		            		i=i.replace(/[","]/g, '.');
-		            		i=i*1;		            		
-		            	}else{
-		            		if(typeof i==='number'){
-		            			i=i;		            			
-		            	}else{
-		            		i=0;
-		            	}
-		            }
-		            	return i;
-		            };
-		 
-		         // total general para todas las paginas de la columna
-		            total3 = api
-		                .column( 5 )
-		                .data()
-		                .reduce( function (a, b) {
-		                    return intVal(a) + intVal(b);
-		                }, 0 );
-		 
-		         // total por pagina segun número de columna
-		            pageTotal3 = api
-		                .column( 5, { page: 'current'} )
-		                .data()
-		                .reduce( function (a, b) {
-		                    return intVal(a) + intVal(b);
-		                }, 0 );
-		         
-		         // se muestran los valores de los totales en el footer del table
-		            $( api.column( 3 ).footer() ).html(
-		            		'Total Pág. '+ numeroConComa(pageTotal3) +' (Total Gral. '+ numeroConComa(total3) +')'
-		            );	         
-		        },
-		        dom: 'Bfrtip',
-		        buttons: [
-		            'copy', 'csv', 'excel', 'pdf', 'print'
-		        ]
-		});
 		  
 		
 	});
