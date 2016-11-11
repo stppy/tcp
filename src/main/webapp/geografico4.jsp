@@ -1808,9 +1808,9 @@ lineasProgramadas = lineasProgramadas.sort(orden);
 										}
 										tablaInstituciones += tempInstituciones + a;
 
-									}else if(lineasProgramadas[n+1].lineaAccionId != linea_accion_id){
+									}else if( (lineasProgramadas[n+1].lineaAccionId != linea_accion_id && lineasProgramadas[n+1].institucionId == institucionId) || (lineasProgramadas[n+1].lineaAccionId == linea_accion_id && lineasProgramadas[n+1].institucionId != institucionId) || (lineasProgramadas[n+1].lineaAccionId != linea_accion_id && lineasProgramadas[n+1].institucionId != institucionId))  {
 																				
-										if(( totalProgramado > 0 && acumEjecucionLograda > 0 ) || ( totalProgramado > 0 ) || ( acumEjecucionLograda > 0 )){																
+										if(( totalProgramado > 0 && acumEjecucionLograda > 0 ) || ( totalProgramado > 0 ) || ( acumEjecucionLograda > 0 )){
 											
 											/*if(totalProgramado == 0 && acumEjecucionLograda > 0){
 												promedio = 100;	
