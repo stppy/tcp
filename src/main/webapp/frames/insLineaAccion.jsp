@@ -1121,7 +1121,7 @@ function renderEvidencia(avanceId, parametros){
 		    if( (f.getMonth() +1) < 10 ){
 		    	var mes =( 0 +""+ (f.getMonth() +1));
 		    }else{
-		    	var mes =f.getMonth();
+		    	var mes =f.getMonth()+1;
 		    }
 		    
 		    if( (f.getDate()) < 10 ){
@@ -2675,8 +2675,7 @@ $("body").on("click", ".borrarAccion",function(event){
 
 		$("body").append(modalProductos);
 		$('#TablaAccionHasProductos').append(cargarTablaAccionHasProducto(accionId,insLineaAccionId,lineaAccionId,institucionId,periodoId));	        
-		$("#modalVincularProductos").modal('show');
-		//$("#dataTablesVinculacionProducto").DataTable();
+		$("#modalVincularProductos").modal('show');		
 	/* 	$("#dataTablesVinculacionProducto").dataTable({
 	        /* "footerCallback": function ( row, data, start, end, display ) {
 	            var api = this.api(), data;

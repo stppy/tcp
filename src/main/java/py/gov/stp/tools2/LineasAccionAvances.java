@@ -50,11 +50,11 @@ public class LineasAccionAvances {
 	protected double influencia;
 	protected Date fecha;
 	protected String mes;
-	protected double programacionCantidad;
-	protected double avanceCosto;
-	protected double avanceDestinatario;
-	protected int avanceEvidencias;
-	
+	protected String programacionCantidad;
+	protected String avanceCosto;
+	protected String avanceDestinatario;
+	protected String avanceEvidencias;
+	protected String avanceCantidadString;	
 	
 	public int getInsId() {
 		return insId;
@@ -326,29 +326,34 @@ public class LineasAccionAvances {
 	public void setMes(String mes) {
 		this.mes = mes;
 	}
-	public double getProgramacionCantidad() {
+	public String getProgramacionCantidad() {
 		return programacionCantidad;
 	}
-	public void setProgramacionCantidad(double programacionCantidad) {
+	public void setProgramacionCantidad(String programacionCantidad) {
 		this.programacionCantidad = programacionCantidad;
 	}
-	public double getAvanceCosto() {
+	public String getAvanceCosto() {
 		return avanceCosto;
 	}
-	public void setAvanceCosto(double avanceCosto) {
+	public void setAvanceCosto(String avanceCosto) {
 		this.avanceCosto = avanceCosto;
 	}	
-	public int getAvanceEvidencias() {
+	public String getAvanceEvidencias() {
 		return avanceEvidencias;
 	}
-	public void setAvanceEvidencias(int avanceEvidencias) {
+	public void setAvanceEvidencias(String avanceEvidencias) {
 		this.avanceEvidencias = avanceEvidencias;
 	}
-	public double getAvanceDestinatario() {
+	public String getAvanceDestinatario() {
 		return avanceDestinatario;
 	}
-	public void setAvanceDestinatario(double avanceDestinatario) {
+	public void setAvanceDestinatario(String avanceDestinatario) {
 		this.avanceDestinatario = avanceDestinatario;
 	}
-	
+	public String getAvanceCantidadString() {
+		return avanceCantidadString;
+	}
+	public void setAvanceCantidadString(String avanceCantidadString) {
+		this.avanceCantidadString = avanceCantidadString;
+	}
 }
