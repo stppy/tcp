@@ -4903,6 +4903,11 @@ function actualizarTablaActividades(accion_id,insLineaAccionId,lineaAccionId,ins
 
 function renderProgramacion(insLineaAccionId,lineaAccionId,institucionId,periodoId,accionId,cronogramaId){
 	
+	
+	if ( $("#modalProgramacion").length )
+	{
+		$("#modalProgramacion").remove();
+	}
 	if ( $("#modalActividad").length )
 	{
 		$("#modalActividad").remove();
@@ -5160,6 +5165,9 @@ function renderProgramacion(insLineaAccionId,lineaAccionId,institucionId,periodo
 	$("#tablaListaProgramacionHito1").append(tablaProgramacionHito1);
 	$("#listaActividades").append(cuerpoActividades);
 	$("#modalProgramacion").modal('show');
+	if ( $("#dataTablesProgramacionHito1").length ){
+		$('#dataTablesProgramacionHito1').DataTable().destroy();	
+	}
 	//$("#dataTablesProgramacionHito1").DataTable();
 	$('#dataTablesProgramacionHito1').dataTable({
         "footerCallback": function ( row, data, start, end, display ) {
@@ -5862,6 +5870,11 @@ $("body").on("click", ".guardarAvance",function(event){
 
 function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,periodoId,accionId,actividadId,avanceId){
 	
+	
+	if ($("#modalAdministrador").length){
+		$("#modalAdministrador").remove();
+	}
+		
 	if ( $("#tableCosto").length )
 	{
 		var tableCosto="";
@@ -8716,6 +8729,12 @@ function renderAccionDestinatario(insLineaAccionId,lineaAccionId,institucionId,p
 	} */
 
 	cuerpoDestinatarioAccion = "";
+	
+	
+	if ( $("#modalDestinatario").length )
+	{
+		$("#modalDestinatario").remove();
+	}
 		
 	if ( $("#modalDuplicarAccion").length )
 	{
@@ -8942,6 +8961,8 @@ function renderAccionDestinatario(insLineaAccionId,lineaAccionId,institucionId,p
 	$("#listaDestinatarioAccion").html("");
 	$("#listaDestinatarioAccion").html(cuerpoDestinatarioAccion);
 	$('#tipoDestinatarioAccion > option[value="1"]').attr('selected', 'selected');
+	$("#cantidadDestinatarioAccion").val('');
+	$("#descripcionDestinatarioAccion").val('');
 	$('#modalDestinatario').modal('show');
 	$('#tipoDestinatarioAccion').change();
 	//$("#dataTableDestinatarioAccion").DataTable();	
@@ -9052,9 +9073,6 @@ $("body").on("click", ".guardarAccionBeneficiario",function(event){
 	        		
 	        		renderAccionDestinatario(insLineaAccionId,lineaAccionId,institucionId,periodoId,accionId,accionCatalogoId);
 	        	    
-	        		$("#cantidadDestinatarioAccion").val('');
-	        		$("#descripcionDestinatarioAccion").val('');
-
 	        		<%-- $("#descripcionDestinatarioAccion").val('');
 	        		$("#tipoDestinatarioAccion").val('');
 	        		$("#grupoDestinatarioAccion").val('');
