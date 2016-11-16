@@ -1508,6 +1508,8 @@ public class ajaxSelects extends HttpServlet {
                 condition = " where true"; 
         		if (periodoId!=null) condition += " AND periodo ='"+periodoId+"'";
         		if (departamentoId!=null) condition += " AND ins_linea_accion_base_dd.depto_id = '"+departamentoId+"'";
+	            if (distritoId!=null) condition += " and ins_linea_accion_base_dd.dist_id='"+distritoId+"'";
+
 				condition += " AND ins_linea_accion_base_dd.institucion_id in(";
 
 				for (int s = 0; s < instituciones.size(); s += 1) {
