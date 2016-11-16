@@ -1467,7 +1467,7 @@ if(deptoId!=null && distId!=null){
 	}).responseText;
 	lineasProgramadas = JSON.parse(lineasProgramadas);
 	if(lineasProgramadas != null){
-		lineasProgramadas=lineasProgramadas.sort(lineaAccionOrden);
+		//lineasProgramadas=lineasProgramadas.sort(lineaAccionOrden);
 		contenidoEnRowTemp = renderNivelDistrital(lineasProgramadas, deptoId, distId);
 		return contenidoEnRowTemp;
 	}
@@ -1746,7 +1746,7 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 	'<th class="text-center">Lograda</th>'+
 	'<th class="text-center">%</th>'+
 '</tr></thead><tbody>';
-lineasProgramadas = lineasProgramadas.sort(orden);
+//lineasProgramadas = lineasProgramadas.sort(orden);-----------------------------
 
 	if(lineasProgramadas.length > 0){
 		linea_accion_id=lineasProgramadas[0].lineaAccionId;
