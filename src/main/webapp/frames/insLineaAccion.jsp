@@ -203,17 +203,18 @@ function renderEvidencia(avanceId, parametros){
 	
 	function validarFormulario(formId, fechaAccion, fechaAccionEdit) {	    
 		var validacion=true;	
-		
-		/* $("#formularioInsLineaAccion :input").each(function(){
-			if (document.getElementById($(this).attr('id')).checkValidity() == false) {
-				validacion=false;
-			} 
-		}); */ 
 		 
 		if (document.getElementById(formId).checkValidity() == false) {
 			validacion=false;
 		}
 		
+		/* $("#formularioDestinatarios :input").each(function(){
+			//if (document.getElementById($(this).attr('id')).checkValidity() == false) {
+			if (document.getElementById('#cantidadDestinatarioAccion').checkValidity() == false) {
+				validacion=false;
+			} 
+		}); */
+				
 		if(fechaAccion==true){
 			var fechaInicio = $("#fechaInicioAccion").val();
 			var fechaFin = $("#fechaFinAccion").val();				
@@ -4902,6 +4903,11 @@ function actualizarTablaActividades(accion_id,insLineaAccionId,lineaAccionId,ins
 
 function renderProgramacion(insLineaAccionId,lineaAccionId,institucionId,periodoId,accionId,cronogramaId){
 	
+	
+	if ( $("#modalProgramacion").length )
+	{
+		$("#modalProgramacion").remove();
+	}
 	if ( $("#modalActividad").length )
 	{
 		$("#modalActividad").remove();
@@ -5159,6 +5165,9 @@ function renderProgramacion(insLineaAccionId,lineaAccionId,institucionId,periodo
 	$("#tablaListaProgramacionHito1").append(tablaProgramacionHito1);
 	$("#listaActividades").append(cuerpoActividades);
 	$("#modalProgramacion").modal('show');
+	if ( $("#dataTablesProgramacionHito1").length ){
+		$('#dataTablesProgramacionHito1').DataTable().destroy();	
+	}
 	//$("#dataTablesProgramacionHito1").DataTable();
 	$('#dataTablesProgramacionHito1').dataTable({
         "footerCallback": function ( row, data, start, end, display ) {
@@ -5861,6 +5870,11 @@ $("body").on("click", ".guardarAvance",function(event){
 
 function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,periodoId,accionId,actividadId,avanceId){
 	
+	
+	if ($("#modalAdministrador").length){
+		$("#modalAdministrador").remove();
+	}
+		
 	if ( $("#tableCosto").length )
 	{
 		var tableCosto="";
@@ -8672,8 +8686,12 @@ $("body").on("click", ".borrarHito",function(event){
 
 function renderAccionDestinatario(insLineaAccionId,lineaAccionId,institucionId,periodoId,accionId,accionCatalogoId){
 	
-	if ( $("#tableListaDestinatario").length )
-	{
+	if ( $("#dataTableDestinatarioAccion").length ){
+		$('#dataTableDestinatarioAccion').DataTable().destroy();	
+	} 
+	
+	
+	/* if ( $("#tableListaDestinatario").length ){
 		$("#descripcionDestinatarioAccion").val('');
 		$("#cantidadDestinatarioAccion").val('');
 		
@@ -8708,9 +8726,15 @@ function renderAccionDestinatario(insLineaAccionId,lineaAccionId,institucionId,p
 				
 		
 		$("#tableListaDestinatario").html(tableListaDestinatario);
-	}
-	
+	} */
+
 	cuerpoDestinatarioAccion = "";
+	
+	
+	if ( $("#modalDestinatario").length )
+	{
+		$("#modalDestinatario").remove();
+	}
 		
 	if ( $("#modalDuplicarAccion").length )
 	{
@@ -8929,13 +8953,19 @@ function renderAccionDestinatario(insLineaAccionId,lineaAccionId,institucionId,p
 						'	</div>'+
 						'</div>';
 						
+						/* if ( $("#dataTableDestinatarioAccion").length ){
+							$('#dataTableDestinatarioAccion').DataTable().destroy();	
+						} */					
+						
 	$("#programacion").append(cuerpoModalDestinatario);
 	$("#listaDestinatarioAccion").html("");
 	$("#listaDestinatarioAccion").html(cuerpoDestinatarioAccion);
 	$('#tipoDestinatarioAccion > option[value="1"]').attr('selected', 'selected');
+	$("#cantidadDestinatarioAccion").val('');
+	$("#descripcionDestinatarioAccion").val('');
 	$('#modalDestinatario').modal('show');
 	$('#tipoDestinatarioAccion').change();
-	//$("#dataTableDestinatarioAccion").DataTable();
+	//$("#dataTableDestinatarioAccion").DataTable();	
 	$('#dataTableDestinatarioAccion').dataTable({
         "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;
@@ -8986,10 +9016,9 @@ function renderAccionDestinatario(insLineaAccionId,lineaAccionId,institucionId,p
 	}
 
 $("body").on("click", ".modalDestinatario",function(event){
-	event.stopPropagation();
-	event.preventDefault(); 
-	
-	
+	//event.stopPropagation();
+	//event.preventDefault();
+		
 	parametros = $(this).attr("parametros");
     idParsed = parametros.split("-"); 
     insLineaAccionId = idParsed[0];
@@ -9021,7 +9050,7 @@ $("body").on("click", ".guardarAccionBeneficiario",function(event){
 		var grupo = $("#grupoDestinatarioAccion").val();
 		var cantidad = $("#cantidadDestinatarioAccion").val();
 		var cuerpoDestinatarioAccion ="";
-			
+					
 		var datos = new Object();
 	    
 	    datos.descripcion = descripcion;
@@ -9175,8 +9204,8 @@ $("body").on("click", ".guardarAccionBeneficiario",function(event){
 	});
 
 $("body").on("click", ".consultaEditarDestinatario",function(event){
-	event.stopPropagation();
-	event.preventDefault();
+	//event.stopPropagation();
+	//event.preventDefault();
 	
 	var parametros = $(this).attr("parametros");
     var idParsed = parametros.split("-");                                                            
@@ -9305,8 +9334,8 @@ $("body").on("click", ".editarDestinatarioAccion",function(event){
 
 		
 		var parametros = $(this).attr("parametros");
-	    var idParsed = parametros.split("-");                                                            
-		
+	    var idParsed = parametros.split("-");               
+	   
 		//Las siguentes variables se utiliza en esta funcion para redibujar el modal anterior
 		var destinatarioId = idParsed[0];// es el id de la tabla accion_destinatario
 	
@@ -9337,7 +9366,9 @@ $("body").on("click", ".editarDestinatarioAccion",function(event){
 	        	{
 	        		$("#botonGuardarDestinatarioAccion").remove();
 	            	$("#cuerpoModalEditarDestinatarios").html("");
-	            	$("#cuerpoModalEditarDestinatarios").html("<h3 class='text-center'>Ud ha actualizado exitosamente!!</h3>");        		
+	            	$("#cuerpoModalEditarDestinatarios").html("<h3 class='text-center'>Ud ha actualizado exitosamente!!</h3>"); 
+	            	//renderAccionDestinatario(insLineaAccionId,lineaAccionId,institucionId,periodoId,accionId,accionCatalogoId);
+	            	
 	        	}
 	        	
 	        	},
@@ -9346,7 +9377,7 @@ $("body").on("click", ".editarDestinatarioAccion",function(event){
 	        	
 	        	}
 		 });
-	}
+	}	
 });
 
 $("body").on("click", ".consultaBorrarDestinatarioAccion",function(event){
