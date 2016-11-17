@@ -1114,7 +1114,7 @@ function renderEvidencia(avanceId, parametros){
 			$("#tableAccion").html(tableAccion); */
 			
 			//$('#dataTablesAcciones').DataTable().fnDestroy();
-			$('#dataTablesAcciones').DataTable().Destroy();
+			$('#dataTablesAcciones').DataTable().destroy();
 				
 		}
 		
@@ -7158,7 +7158,7 @@ $("body").on("click", ".guardarCosto",function(event){
 	var periodoId = idParsed[3];
 	var accionId = idParsed[4];
 	var actividadId = idParsed[5];
-	//var avanceId = idParsed[6];
+	var avanceId = idParsed[6];
 	
 	var monto = $("#montoCosto").val();
 	var codigoContratacion = $("#codigoContratacionalCosto").val();
