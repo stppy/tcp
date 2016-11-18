@@ -170,18 +170,18 @@ function renderAccion(estrategia, lineasProgramadas, instituciones, periodo){
     
 	for(var m=0; m<instituciones.length;m++){ 
 		for(var n=0; n<lineasProgramadas.length;n++){
-			for(var l = 0; l < usuarioEtiqueta.length; l++)
-			{
-				if(usuarioEtiqueta[l].etiqueta_id == 1)
-				{
-					for(var t = 0; t < insLineaAccionHasEtiqueta.length; t++)
-					{
-						if(insLineaAccionHasEtiqueta[t].ins_linea_accion_id == lineasProgramadas[n].insLineaAccionId && insLineaAccionHasEtiqueta[t].etiqueta_id == 1)
-						{
-							for(var d=0; d<usuarioLineaAccion.length;d++)
-							{
-								if(usuarioLineaAccion[d].lineaAccionId == lineasProgramadas[n].lineaAccionId)
-								{
+//			for(var l = 0; l < usuarioEtiqueta.length; l++)
+//			{
+//				if(usuarioEtiqueta[l].etiqueta_id == 1)
+//				{
+//					for(var t = 0; t < insLineaAccionHasEtiqueta.length; t++)
+//					{
+//						if(insLineaAccionHasEtiqueta[t].ins_linea_accion_id == lineasProgramadas[n].insLineaAccionId && insLineaAccionHasEtiqueta[t].etiqueta_id == 1)
+//						{
+//							for(var d=0; d<usuarioLineaAccion.length;d++)
+//							{
+//								if(usuarioLineaAccion[d].lineaAccionId == lineasProgramadas[n].lineaAccionId)
+//								{
 
 									if ( instituciones[m].id==lineasProgramadas[n].institucionId &&  lineasProgramadas[n].lineaAccionEstratagiaId==estrategia){
 										if (flagIns == 0){
@@ -242,12 +242,12 @@ function renderAccion(estrategia, lineasProgramadas, instituciones, periodo){
 										tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].costoAc/1000000).toFixed(2))+'</td>'+
 										'</tr>';
 									}
-								}
-							}
-						}
-					}
-				}
-			}
+//								}
+//							}
+//						}
+//					}
+//				}
+//			}
 		}
 
 		if (flagIns>0){

@@ -1,6 +1,9 @@
 package py.gov.stp.tools2;
 
+import java.sql.Date;
+
 public class LineasAccionAvances {
+	
 	protected int insId;
 	protected String institucion;
 	protected int laId;
@@ -42,6 +45,17 @@ public class LineasAccionAvances {
 	protected String avanceFecha;
 	protected double avanceCantidad;
 	protected String avanceJustificacion;
+	
+	protected double contribucion;
+	protected double influencia;
+	protected Date fecha;
+	protected String mes;
+	protected String programacionCantidad;
+	protected String avanceCosto;
+	protected String avanceDestinatario;
+	protected String avanceEvidencias;
+	protected String avanceCantidadString;	
+	
 	public int getInsId() {
 		return insId;
 	}
@@ -287,7 +301,59 @@ public class LineasAccionAvances {
 	}
 	public void setAvanceJustificacion(String avanceJustificacion) {
 		this.avanceJustificacion = avanceJustificacion;
+	}
+	public double getContribucion() {
+		return contribucion;
+	}
+	public void setContribucion(double contribucion) {
+		this.contribucion = contribucion;
+	}
+	public double getInfluencia() {
+		return influencia;
+	}
+	public void setInfluencia(double influencia) {
+		this.influencia = influencia;
+	}
+	public Date getFecha() {
+		return fecha;
+	}
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+	public String getMes() {
+		return mes;
+	}
+	public void setMes(String mes) {
+		this.mes = mes;
+	}
+	public String getProgramacionCantidad() {
+		return programacionCantidad;
+	}
+	public void setProgramacionCantidad(String programacionCantidad) {
+		this.programacionCantidad = programacionCantidad;
+	}
+	public String getAvanceCosto() {
+		return avanceCosto;
+	}
+	public void setAvanceCosto(String avanceCosto) {
+		this.avanceCosto = avanceCosto;
 	}	
-	
-	
+	public String getAvanceEvidencias() {
+		return avanceEvidencias;
+	}
+	public void setAvanceEvidencias(String avanceEvidencias) {
+		this.avanceEvidencias = avanceEvidencias;
+	}
+	public String getAvanceDestinatario() {
+		return avanceDestinatario;
+	}
+	public void setAvanceDestinatario(String avanceDestinatario) {
+		this.avanceDestinatario = avanceDestinatario;
+	}
+	public String getAvanceCantidadString() {
+		return avanceCantidadString;
+	}
+	public void setAvanceCantidadString(String avanceCantidadString) {
+		this.avanceCantidadString = avanceCantidadString;
+	}
 }
