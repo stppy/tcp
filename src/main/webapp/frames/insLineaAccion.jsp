@@ -1587,8 +1587,38 @@ function renderEvidencia(avanceId, parametros){
 		        }, 
 		        dom: 'Bfrtip',
 		        buttons: [
-		            'copy', 'csv', 'excel', 'pdf', 'print'
-		        ]
+		                    {
+		                        extend: 'copy',
+		                        exportOptions: {
+		                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
+		                }
+		                    },
+		                    {
+		                        extend: 'csv',
+		                        exportOptions: {
+		                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
+		                }
+		                    },
+		                    {
+		                        extend: 'excel',
+		                        exportOptions: {
+		                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
+		                }
+		                    },
+		                    {
+		                        extend: 'pdf',
+		                        orientation: 'landscape',
+		                        exportOptions: {
+		                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
+		                }
+		                    },
+		                    {
+		                        extend: 'print',
+		                        exportOptions: {
+		                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
+		                }
+		                    }
+		                ]
 		});			
 		
 	}
@@ -4398,8 +4428,37 @@ $("body").on("click", ".borrarAccion",function(event){
 		$("#dataTablesActividades").DataTable({
 			dom: 'Bfrtip',
 	        buttons: [
-	  	            'copy', 'csv', 'excel', 'pdf', 'print'
-	  	        ]});
+	                    {
+	                        extend: 'copy',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+	                }
+	                    },
+	                    {
+	                        extend: 'csv',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+	                }
+	                    },
+	                    {
+	                        extend: 'excel',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+	                }
+	                    },
+	                    {
+	                        extend: 'pdf',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+	                }
+	                    },
+	                    {
+	                        extend: 'print',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+	                }
+	                    }
+	                ]});
 				
 	});
 	
@@ -4895,8 +4954,37 @@ function actualizarTablaActividades(accion_id,insLineaAccionId,lineaAccionId,ins
 	$("#dataTablesActividades").DataTable({
 		dom: 'Bfrtip',
         buttons: [
-  	            'copy', 'csv', 'excel', 'pdf', 'print'
-  	        ]
+                  {
+                      extend: 'copy',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+              }
+                  },
+                  {
+                      extend: 'csv',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+              }
+                  },
+                  {
+                      extend: 'excel',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+              }
+                  },
+                  {
+                      extend: 'pdf',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+              }
+                  },
+                  {
+                      extend: 'print',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+              }
+                  }
+              ]
 	});
 		
 }
@@ -5212,8 +5300,37 @@ function renderProgramacion(insLineaAccionId,lineaAccionId,institucionId,periodo
         },
         dom: 'Bfrtip',
         buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
+                  {
+                      extend: 'copy',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3, 4 ]
+              }
+                  },
+                  {
+                      extend: 'csv',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3, 4 ]
+              }
+                  },
+                  {
+                      extend: 'excel',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3, 4 ]
+              }
+                  },
+                  {
+                      extend: 'pdf',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3, 4 ]
+              }
+                  },
+                  {
+                      extend: 'print',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3, 4 ]
+              }
+                  }
+              ]
 });
 	
 }
@@ -5701,8 +5818,37 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
         },
         dom: 'Bfrtip',
         buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
+                  {
+                      extend: 'copy',
+                      exportOptions: {
+                  columns: [ 0, 1, 2 ]
+              }
+                  },
+                  {
+                      extend: 'csv',
+                      exportOptions: {
+                  columns: [ 0, 1, 2 ]
+              }
+                  },
+                  {
+                      extend: 'excel',
+                      exportOptions: {
+                  columns: [ 0, 1, 2 ]
+              }
+                  },
+                  {
+                      extend: 'pdf',
+                      exportOptions: {
+                  columns: [ 0, 1, 2 ]
+              }
+                  },
+                  {
+                      extend: 'print',
+                      exportOptions: {
+                  columns: [ 0, 1, 2 ]
+              }
+                  }
+              ]
 	});
 	//$("#dataTablesProgramacionHito2").DataTable();
 	$('#dataTablesProgramacionHito2').dataTable({
@@ -5748,8 +5894,37 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
         },
         dom: 'Bfrtip',
         buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
+                  {
+                      extend: 'copy',
+                      exportOptions: {
+                  columns: [ 0, 1, 2 ]
+              }
+                  },
+                  {
+                      extend: 'csv',
+                      exportOptions: {
+                  columns: [ 0, 1, 2 ]
+              }
+                  },
+                  {
+                      extend: 'excel',
+                      exportOptions: {
+                  columns: [ 0, 1, 2 ]
+              }
+                  },
+                  {
+                      extend: 'pdf',
+                      exportOptions: {
+                  columns: [ 0, 1, 2 ]
+              }
+                  },
+                  {
+                      extend: 'print',
+                      exportOptions: {
+                  columns: [ 0, 1, 2 ]
+              }
+                  }
+              ]
 });
 }
 $("body").on("click", ".agregarAvance",function(event){
@@ -6610,8 +6785,37 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 	$('#dataTableEvidencia').dataTable({ 
         dom: 'Bfrtip',
         buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
+                  {
+                      extend: 'copy',
+                      exportOptions: {
+                  columns: [ 0 ]
+              }
+                  },
+                  {
+                      extend: 'csv',
+                      exportOptions: {
+                  columns: [ 0 ]
+              }
+                  },
+                  {
+                      extend: 'excel',
+                      exportOptions: {
+                  columns: [ 0 ]
+              }
+                  },
+                  {
+                      extend: 'pdf',
+                      exportOptions: {
+                  columns: [ 0 ]
+              }
+                  },
+                  {
+                      extend: 'print',
+                      exportOptions: {
+                  columns: [ 0 ]
+              }
+                  }
+              ]
 	});
 	//$("#dataTableAvanceCosto").DataTable();
 	$('#dataTableAvanceCosto').dataTable({
@@ -6657,8 +6861,37 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
         },
         dom: 'Bfrtip',
         buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
+                  {
+                      extend: 'copy',
+                      exportOptions: {
+                  columns: [ 0, 1, 2 ]
+              }
+                  },
+                  {
+                      extend: 'csv',
+                      exportOptions: {
+                  columns: [ 0, 1, 2 ]
+              }
+                  },
+                  {
+                      extend: 'excel',
+                      exportOptions: {
+                  columns: [ 0, 1, 2 ]
+              }
+                  },
+                  {
+                      extend: 'pdf',
+                      exportOptions: {
+                  columns: [ 0, 1, 2 ]
+              }
+                  },
+                  {
+                      extend: 'print',
+                      exportOptions: {
+                  columns: [ 0, 1, 2 ]
+              }
+                  }
+              ]
 	}); 
 	//$("#dataTableBeneficiario").DataTable();
 	$('#dataTableBeneficiario').dataTable({
@@ -6704,8 +6937,37 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
         },
         dom: 'Bfrtip',
         buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
+                  {
+                      extend: 'copy',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3 ]
+              }
+                  },
+                  {
+                      extend: 'csv',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3 ]
+              }
+                  },
+                  {
+                      extend: 'excel',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3 ]
+              }
+                  },
+                  {
+                      extend: 'pdf',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3 ]
+              }
+                  },
+                  {
+                      extend: 'print',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3 ]
+              }
+                  }
+              ]
 	}); 
 	
 	//$("#dataTableAvance").DataTable();
@@ -6752,8 +7014,37 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
         },
         dom: 'Bfrtip',
         buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
+                  {
+                      extend: 'copy',
+                      exportOptions: {
+                  columns: [ 0, 1, 2 ]
+              }
+                  },
+                  {
+                      extend: 'csv',
+                      exportOptions: {
+                  columns: [ 0, 1, 2 ]
+              }
+                  },
+                  {
+                      extend: 'excel',
+                      exportOptions: {
+                  columns: [ 0, 1, 2 ]
+              }
+                  },
+                  {
+                      extend: 'pdf',
+                      exportOptions: {
+                  columns: [ 0, 1, 2 ]
+              }
+                  },
+                  {
+                      extend: 'print',
+                      exportOptions: {
+                  columns: [ 0, 1, 2 ]
+              }
+                  }
+              ]
 }); 
 
 	
@@ -9010,8 +9301,37 @@ function renderAccionDestinatario(insLineaAccionId,lineaAccionId,institucionId,p
         },
         dom: 'Bfrtip',
         buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
+                  {
+                      extend: 'copy',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3 ]
+              }
+                  },
+                  {
+                      extend: 'csv',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3 ]
+              }
+                  },
+                  {
+                      extend: 'excel',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3 ]
+              }
+                  },
+                  {
+                      extend: 'pdf',                      
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3 ]
+              }
+                  },
+                  {
+                      extend: 'print',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3 ]
+              }
+                  }
+              ]
 }); 
 	
 	}
@@ -9927,8 +10247,37 @@ function listaAvanceCualitativo(insLineaAccionId,lineaAccionId,institucionId,per
 	$('#dataTablesAvanceCualitativo').DataTable( {
         dom: 'Bfrtip',
         buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
+                  {
+                      extend: 'copy',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+              }
+                  },
+                  {
+                      extend: 'csv',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+              }
+                  },
+                  {
+                      extend: 'excel',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+              }
+                  },
+                  {
+                      extend: 'pdf',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+              }
+                  },
+                  {
+                      extend: 'print',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+              }
+                  }
+              ]
     } );
 	
 }
