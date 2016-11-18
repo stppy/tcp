@@ -5066,8 +5066,5 @@ $("body").on("click", ".guardarAvance",function(event){
 
 </script>    
 <script type="text/javascript" src="bootstrap/js/bootstrap-slider.js"></script>
-	<%  } else { %>
-    	<script type="text/javascript">window.location = "";</script>
-	<% } %> 	
   </body>
 </html>
