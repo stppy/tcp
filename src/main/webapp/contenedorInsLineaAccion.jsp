@@ -534,8 +534,37 @@ function renderInsLineaAccion(PeriodoActual){
 	{
 	        dom: 'Bfrtip',
 	        buttons: [
-	            'copy', 'csv', 'excel', 'pdf', 'print'
-	        ],
+	                    {
+	                        extend: 'copy',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4 ]
+	                }
+	                    },
+	                    {
+	                        extend: 'csv',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4 ]
+	                }
+	                    },
+	                    {
+	                        extend: 'excel',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4 ]
+	                }
+	                    },
+	                    {
+	                        extend: 'pdf',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4 ]
+	                }
+	                    },
+	                    {
+	                        extend: 'print',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4 ]
+	                }
+	                    }
+	                ],
 	        "footerCallback": function ( row, data, start, end, display ) {
 	        	var api = this.api(), data;
 	        	SumarizarColumnas(row, data, start, end, display, api, 1, null );
@@ -610,8 +639,37 @@ function renderInsLineaAccion(PeriodoActual){
 	{
 	        dom: 'Bfrtip',
 	        buttons: [
-	            'copy', 'csv', 'excel', 'pdf', 'print'
-	        ],
+	                    {
+	                        extend: 'copy',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4 ]
+	                }
+	                    },
+	                    {
+	                        extend: 'csv',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4 ]
+	                }
+	                    },
+	                    {
+	                        extend: 'excel',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4 ]
+	                }
+	                    },
+	                    {
+	                        extend: 'pdf',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4 ]
+	                }
+	                    },
+	                    {
+	                        extend: 'print',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4 ]
+	                }
+	                    }
+	                ],
 	        "footerCallback": function ( row, data, start, end, display ) {
 	        	var api = this.api(), data;
 	        	SumarizarColumnas(row, data, start, end, display, api, 1, null );
@@ -644,8 +702,37 @@ function renderInsLineaAccion(PeriodoActual){
 	{
 		        dom: 'Bfrtip',
 		        buttons: [
-		            'copy', 'csv', 'excel', 'pdf', 'print'
-		        ],
+		                    {
+		                        extend: 'copy',
+		                        exportOptions: {
+		                    columns: [ 0, 1, 2, 3, 4 ]
+		                }
+		                    },
+		                    {
+		                        extend: 'csv',
+		                        exportOptions: {
+		                    columns: [ 0, 1, 2, 3, 4 ]
+		                }
+		                    },
+		                    {
+		                        extend: 'excel',
+		                        exportOptions: {
+		                    columns: [ 0, 1, 2, 3, 4 ]
+		                }
+		                    },
+		                    {
+		                        extend: 'pdf',
+		                        exportOptions: {
+		                    columns: [ 0, 1, 2, 3, 4 ]
+		                }
+		                    },
+		                    {
+		                        extend: 'print',
+		                        exportOptions: {
+		                    columns: [ 0, 1, 2, 3, 4 ]
+		                }
+		                    }
+		                ],
 		        "footerCallback": function ( row, data, start, end, display ) {
 		        	var api = this.api(), data;
 		        	SumarizarColumnas(row, data, start, end, display, api, 1, null );
