@@ -534,8 +534,37 @@ function renderInsLineaAccion(PeriodoActual){
 	{
 	        dom: 'Bfrtip',
 	        buttons: [
-	            'copy', 'csv', 'excel', 'pdf', 'print'
-	        ],
+	                    {
+	                        extend: 'copy',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4 ]
+	                }
+	                    },
+	                    {
+	                        extend: 'csv',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4 ]
+	                }
+	                    },
+	                    {
+	                        extend: 'excel',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4 ]
+	                }
+	                    },
+	                    {
+	                        extend: 'pdf',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4 ]
+	                }
+	                    },
+	                    {
+	                        extend: 'print',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4 ]
+	                }
+	                    }
+	                ],
 	        "footerCallback": function ( row, data, start, end, display ) {
 	        	var api = this.api(), data;
 	        	SumarizarColumnas(row, data, start, end, display, api, 1, null );
@@ -551,11 +580,19 @@ function renderInsLineaAccion(PeriodoActual){
 		//var api = this.api(), data;
 		 
         // saca los puntos y <del> de la cadena para pasarlo a entero
-        var intVal = function ( i ) {	            	
-        	return typeof i === 'string' ?
-        			i.replace(/[\.,"<\/*del>"]/g, '')*1 :
-                typeof i === 'number' ?
-                    i : 0;           		
+		var intVal = function(i){
+        	if(typeof i==='string'){	
+        		i=i.replace(/[\."<\/*del>""Gs\."]/g, '');
+        		i=i.replace(/[","]/g, '.');
+        		i=i*1;		            		
+        	}else{
+        		if(typeof i==='number'){
+        			i=i;		            			
+        	}else{
+        		i=0;
+        	}
+        }
+        	return i;
         };
 
         // total general para todas las paginas
@@ -576,7 +613,7 @@ function renderInsLineaAccion(PeriodoActual){
 
         // se muestran los valores de los totales en el footer del table
         $( api.column( 3 ).footer() ).html(
-        		numeroConComa(pageTotal) +' (Total Gral. '+ numeroConComa(total) +')'
+        		'Total Pág. '+numeroConComa(pageTotal) +' (Total Gral. '+ numeroConComa(total) +')'
         );	
 	}
 		
@@ -602,8 +639,37 @@ function renderInsLineaAccion(PeriodoActual){
 	{
 	        dom: 'Bfrtip',
 	        buttons: [
-	            'copy', 'csv', 'excel', 'pdf', 'print'
-	        ],
+	                    {
+	                        extend: 'copy',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4 ]
+	                }
+	                    },
+	                    {
+	                        extend: 'csv',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4 ]
+	                }
+	                    },
+	                    {
+	                        extend: 'excel',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4 ]
+	                }
+	                    },
+	                    {
+	                        extend: 'pdf',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4 ]
+	                }
+	                    },
+	                    {
+	                        extend: 'print',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4 ]
+	                }
+	                    }
+	                ],
 	        "footerCallback": function ( row, data, start, end, display ) {
 	        	var api = this.api(), data;
 	        	SumarizarColumnas(row, data, start, end, display, api, 1, null );
@@ -636,8 +702,37 @@ function renderInsLineaAccion(PeriodoActual){
 	{
 		        dom: 'Bfrtip',
 		        buttons: [
-		            'copy', 'csv', 'excel', 'pdf', 'print'
-		        ],
+		                    {
+		                        extend: 'copy',
+		                        exportOptions: {
+		                    columns: [ 0, 1, 2, 3, 4 ]
+		                }
+		                    },
+		                    {
+		                        extend: 'csv',
+		                        exportOptions: {
+		                    columns: [ 0, 1, 2, 3, 4 ]
+		                }
+		                    },
+		                    {
+		                        extend: 'excel',
+		                        exportOptions: {
+		                    columns: [ 0, 1, 2, 3, 4 ]
+		                }
+		                    },
+		                    {
+		                        extend: 'pdf',
+		                        exportOptions: {
+		                    columns: [ 0, 1, 2, 3, 4 ]
+		                }
+		                    },
+		                    {
+		                        extend: 'print',
+		                        exportOptions: {
+		                    columns: [ 0, 1, 2, 3, 4 ]
+		                }
+		                    }
+		                ],
 		        "footerCallback": function ( row, data, start, end, display ) {
 		        	var api = this.api(), data;
 		        	SumarizarColumnas(row, data, start, end, display, api, 1, null );

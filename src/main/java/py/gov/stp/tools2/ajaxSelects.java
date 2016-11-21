@@ -503,23 +503,23 @@ public class ajaxSelects extends HttpServlet {
         		out.println(json.toString());
         	}
 ////////////Pivot Plan de Acción        	
-//        	if (action.equals("getPivotPlanDeAccion")){
-//        		List objetos=null; 
-//        		condition = " where true ";
-////        		String condition2=" where true ";
-////        		if (!userRoleId.equals("0") && !userRoleId.equals("1")){ 
-////        			condition2 += " and entidad_id="+userEntidadId+" and nivel_id="+userNivelId;
-////	        		if ( !userUnrId.equals("0") ){
-////	        			condition2+= " and unidad_responsable_id="+userUnrId;
-////	        		}
-////        		};
-////        		condition += " and ins_id IN (select id from institucion "+condition2+") ";
-////        		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
-//        		try {objetos = SqlSelects.selectPivotPlanAccionAvances(condition);}
-//        		catch (SQLException e) {e.printStackTrace();}
-//        		JsonElement json = new Gson().toJsonTree(objetos );
-//        		out.println(json.toString());
-//        		}
+        	if (action.equals("getPivotPlanDeAccion")){
+        		List objetos=null;
+        		condition = " where true ";
+//        		String condition2=" where true ";
+//        		if (!userRoleId.equals("0") && !userRoleId.equals("1")){ 
+//        			condition2 += " and entidad_id="+userEntidadId+" and nivel_id="+userNivelId;
+//	        		if ( !userUnrId.equals("0") ){
+//	        			condition2+= " and unidad_responsable_id="+userUnrId;
+//	        		}
+//        		};
+//        		condition += " and ins_id IN (select id from institucion "+condition2+") ";
+//        		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
+        		try {objetos = SqlSelects.selectPivotPlanAccionAvances(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());
+        		}
 ////////////Pivot Presupuesto   
         	if (action.equals("getPivotLineaAccionPresupuesto")){
         		List objetos=null; 
@@ -1507,6 +1507,8 @@ public class ajaxSelects extends HttpServlet {
                 condition = " where true"; 
         		if (periodoId!=null) condition += " AND periodo ='"+periodoId+"'";
         		if (departamentoId!=null) condition += " AND ins_linea_accion_base_dd.depto_id = '"+departamentoId+"'";
+	            if (distritoId!=null) condition += " and ins_linea_accion_base_dd.dist_id='"+distritoId+"'";
+
 				condition += " AND ins_linea_accion_base_dd.institucion_id in(";
 
 				for (int s = 0; s < instituciones.size(); s += 1) {
