@@ -1,5 +1,7 @@
 package py.gov.stp.objetosV2;
 
+import java.sql.Date;
+
 public class Institucion {
 	protected int id;
 	protected String nombre;
@@ -10,6 +12,9 @@ public class Institucion {
 	protected int unidadJerarquicaId;
 	protected int unidadResponsableId;
 	protected int orden;
+	protected Date fechaInsercion;
+	protected Date fechaActualizacion;	
+    protected String usuarioResponsable;
 	protected boolean borrado=false;
 	
 	public int getId() {
@@ -74,5 +79,24 @@ public class Institucion {
 	}
 	public void changeBorrado(){
 		this.borrado=!borrado;
+	}
+	public Date getFechaInsercion() {
+		return fechaInsercion;
+	}
+	public void setFechaInsercion(Date fechaInsercion) {
+		this.fechaInsercion = fechaInsercion;
+	}
+	public Date getFechaActualizacion() {
+		return fechaActualizacion;
+	}
+	public void setFechaActualizacion(Date fechaActualizacion) {
+		this.fechaActualizacion = fechaActualizacion;
+	}
+	public String getUsuarioResponsable() {
+		return usuarioResponsable;
+	}
+	public void setUsuarioResponsable(String usuarioResponsable) {
+		this.usuarioResponsable = usuarioResponsable;
 	}	
+	
 }

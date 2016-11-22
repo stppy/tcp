@@ -5,7 +5,7 @@
 
 function renderEvidencia(avanceId, parametros){
 	var webServicesEvidencia = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getEvidencia&avanceId='+avanceId,
+		url:'/tablero/ajaxSelects2?action=getEvidencia&avanceId='+avanceId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false
@@ -29,15 +29,15 @@ function renderEvidencia(avanceId, parametros){
 				downloadTarget="";
 			}
 			
-			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>
+			<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
 				botones='<button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+parametros+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+parametros+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button>';
 			<%}%>
 			
-			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") ){%>
+			<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
 				if(webServicesEvidencia[d].borrado == true)
 				{
 					cuerpoEvidencia +='<tr><td data-toggle="tooltip" data-placement="top" title="'+webServicesEvidencia[d].descripcion+'" ><del><a href="'+webServicesEvidencia[d].url+'" target="_blank">'+webServicesEvidencia[d].nombre+'</a></del></td>'+
-										'<td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+parametros+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+parametros+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';	        				
+										'<td class="text-center"><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+parametros+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-recycle"></span></button></td></tr>';	        				
 				}
 			<%}%>
 			if(webServicesEvidencia[d].borrado == false){
@@ -68,7 +68,7 @@ function renderEvidencia(avanceId, parametros){
 
 		
 		var lineaAccion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+			url:'/tablero/ajaxSelects2?action=getLineaAccion',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -81,7 +81,7 @@ function renderEvidencia(avanceId, parametros){
 		}
 
 		var institucion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+			url:'/tablero/ajaxSelects2?action=getInstitucion',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -94,7 +94,7 @@ function renderEvidencia(avanceId, parametros){
 		}
 
 		var periodo = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+			url:'/tablero/ajaxSelects2?action=getPeriodo',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -121,7 +121,7 @@ function renderEvidencia(avanceId, parametros){
 		}
 		
 		var unidadMedida = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+			url:'/tablero/ajaxSelects2?action=getUnidadMedida',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -134,7 +134,7 @@ function renderEvidencia(avanceId, parametros){
 		}
 		
 		var etiquetas = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getEtiqueta',
+			url:'/tablero/ajaxSelects2?action=getEtiqueta',
 			type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -203,17 +203,18 @@ function renderEvidencia(avanceId, parametros){
 	
 	function validarFormulario(formId, fechaAccion, fechaAccionEdit) {	    
 		var validacion=true;	
-		
-		/* $("#formularioInsLineaAccion :input").each(function(){
-			if (document.getElementById($(this).attr('id')).checkValidity() == false) {
-				validacion=false;
-			} 
-		}); */ 
 		 
 		if (document.getElementById(formId).checkValidity() == false) {
 			validacion=false;
 		}
 		
+		/* $("#formularioDestinatarios :input").each(function(){
+			//if (document.getElementById($(this).attr('id')).checkValidity() == false) {
+			if (document.getElementById('#cantidadDestinatarioAccion').checkValidity() == false) {
+				validacion=false;
+			} 
+		}); */
+				
 		if(fechaAccion==true){
 			var fechaInicio = $("#fechaInicioAccion").val();
 			var fechaFin = $("#fechaFinAccion").val();				
@@ -241,7 +242,7 @@ function renderEvidencia(avanceId, parametros){
 		var catalogoLineaAccionId = $("#nombreLineaAccionInsLineaAccion option:selected").val();
     	
 		var catalogoLineaAccion = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId='+catalogoLineaAccionId,
+	    	url:'/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId='+catalogoLineaAccionId,
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -249,7 +250,7 @@ function renderEvidencia(avanceId, parametros){
 		catalogoLineaAccion = JSON.parse(catalogoLineaAccion);
 		
 		var unidadMedida = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+			url:'/tablero/ajaxSelects2?action=getUnidadMedida',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -331,7 +332,7 @@ function renderEvidencia(avanceId, parametros){
 		        		$('#cuerpoInsLineaAccionAnterior').html(""); 
 
 		        		var insLineaAccion = $.ajax({
-		        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion',
+		        			url:'/tablero/ajaxSelects2?action=getInsLineaAccion',
 		        		  	type:'get',
 		        		  	dataType:'json',
 		        		  	async:false       
@@ -339,7 +340,7 @@ function renderEvidencia(avanceId, parametros){
 		        		insLineaAccion=JSON.parse(insLineaAccion);
 		        		
 		        		var lineaAccion = $.ajax({
-		        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+		        			url:'/tablero/ajaxSelects2?action=getLineaAccion',
 		        		  	type:'get',
 		        		  	dataType:'json',
 		        		  	async:false       
@@ -347,7 +348,7 @@ function renderEvidencia(avanceId, parametros){
 		        		lineaAccion = JSON.parse(lineaAccion);
 		        		
 		        		var institucion = $.ajax({
-		        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+		        			url:'/tablero/ajaxSelects2?action=getInstitucion',
 		        		  	type:'get',
 		        		  	dataType:'json',
 		        		  	async:false       
@@ -355,7 +356,7 @@ function renderEvidencia(avanceId, parametros){
 		        		institucion = JSON.parse(institucion);
 		        		
 		        		var periodo = $.ajax({
-		        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+		        			url:'/tablero/ajaxSelects2?action=getPeriodo',
 		        		  	type:'get',
 		        		  	dataType:'json',
 		        		  	async:false       
@@ -363,7 +364,7 @@ function renderEvidencia(avanceId, parametros){
 		        		periodo = JSON.parse(periodo);
 		        		
 		        		var unidadMedida = $.ajax({
-		        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+		        			url:'/tablero/ajaxSelects2?action=getUnidadMedida',
 		        		  	type:'get',
 		        		  	dataType:'json',
 		        		  	async:false       
@@ -481,7 +482,7 @@ function renderEvidencia(avanceId, parametros){
 		
 		
 		var lineaAccion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+			url:'/tablero/ajaxSelects2?action=getLineaAccion',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -495,7 +496,7 @@ function renderEvidencia(avanceId, parametros){
 
 
 		var institucion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+			url:'/tablero/ajaxSelects2?action=getInstitucion',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -508,7 +509,7 @@ function renderEvidencia(avanceId, parametros){
 		}
 
 		var periodo = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+			url:'/tablero/ajaxSelects2?action=getPeriodo',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -527,7 +528,7 @@ function renderEvidencia(avanceId, parametros){
 		}
 		
 		var etiquetas = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getEtiqueta',
+			url:'/tablero/ajaxSelects2?action=getEtiqueta',
 			type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -535,7 +536,7 @@ function renderEvidencia(avanceId, parametros){
 		etiquetas = JSON.parse(etiquetas);
 		
 		var instanciaEtiqueta = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccionHasEtiqueta&insLineaAccionId='+id,
+			url:'/tablero/ajaxSelects2?action=getInsLineaAccionHasEtiqueta&insLineaAccionId='+id,
 			type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -617,7 +618,7 @@ function renderEvidencia(avanceId, parametros){
 		$("#idInsLineaAccion").val(id);
 		
 		var lineaAccion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+			url:'/tablero/ajaxSelects2?action=getLineaAccion',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -633,7 +634,7 @@ function renderEvidencia(avanceId, parametros){
 		}
 		
 		var institucion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+			url:'/tablero/ajaxSelects2?action=getInstitucion',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -648,7 +649,7 @@ function renderEvidencia(avanceId, parametros){
 		}	
 
 		var periodo = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+			url:'/tablero/ajaxSelects2?action=getPeriodo',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -691,7 +692,7 @@ function renderEvidencia(avanceId, parametros){
 		}	
 		
 		var etiquetas = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getEtiqueta',
+			url:'/tablero/ajaxSelects2?action=getEtiqueta',
 			type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -783,7 +784,7 @@ function renderEvidencia(avanceId, parametros){
 			}
 			
 			var insLineaAccion = $.ajax({
-				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccionHasEtiqueta&insLineaAccionId='+id+'&etiquetaId='+etiqueta,
+				url:'/tablero/ajaxSelects2?action=getInsLineaAccionHasEtiqueta&insLineaAccionId='+id+'&etiquetaId='+etiqueta,
 			  	type:'get',
 			  	dataType:'json',
 			  	async:false
@@ -927,7 +928,7 @@ function renderEvidencia(avanceId, parametros){
 		        		$('#cuerpoInsLineaAccionAnterior').html(""); 
 
 		        		var insLineaAccion = $.ajax({
-		        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion',
+		        			url:'/tablero/ajaxSelects2?action=getInsLineaAccion',
 		        		  	type:'get',
 		        		  	dataType:'json',
 		        		  	async:false       
@@ -935,7 +936,7 @@ function renderEvidencia(avanceId, parametros){
 		        		insLineaAccion=JSON.parse(insLineaAccion);
 		        		
 		        		var lineaAccion = $.ajax({
-		        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+		        			url:'/tablero/ajaxSelects2?action=getLineaAccion',
 		        		  	type:'get',
 		        		  	dataType:'json',
 		        		  	async:false       
@@ -943,7 +944,7 @@ function renderEvidencia(avanceId, parametros){
 		        		lineaAccion = JSON.parse(lineaAccion);
 		        		
 		        		var institucion = $.ajax({
-		        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+		        			url:'/tablero/ajaxSelects2?action=getInstitucion',
 		        		  	type:'get',
 		        		  	dataType:'json',
 		        		  	async:false       
@@ -951,7 +952,7 @@ function renderEvidencia(avanceId, parametros){
 		        		institucion = JSON.parse(institucion);
 		        		
 		        		var periodo = $.ajax({
-		        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+		        			url:'/tablero/ajaxSelects2?action=getPeriodo',
 		        		  	type:'get',
 		        		  	dataType:'json',
 		        		  	async:false       
@@ -959,7 +960,7 @@ function renderEvidencia(avanceId, parametros){
 		        		periodo = JSON.parse(periodo);
 		        		
 		        		var unidadMedida = $.ajax({
-		        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+		        			url:'/tablero/ajaxSelects2?action=getUnidadMedida',
 		        		  	type:'get',
 		        		  	dataType:'json',
 		        		  	async:false       
@@ -1021,7 +1022,7 @@ function renderEvidencia(avanceId, parametros){
 				    	if (data.success == true)
 				       	{
 				    		var insLineaAccion = $.ajax({
-				    			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion',
+				    			url:'/tablero/ajaxSelects2?action=getInsLineaAccion',
 				    		  	type:'get',
 				    		  	dataType:'json',
 				    		  	async:false       
@@ -1029,7 +1030,7 @@ function renderEvidencia(avanceId, parametros){
 				    		insLineaAccion=JSON.parse(insLineaAccion);
 				    		
 				    		var lineaAccion = $.ajax({
-				    			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+				    			url:'/tablero/ajaxSelects2?action=getLineaAccion',
 				    		  	type:'get',
 				    		  	dataType:'json',
 				    		  	async:false       
@@ -1037,7 +1038,7 @@ function renderEvidencia(avanceId, parametros){
 				    		lineaAccion = JSON.parse(lineaAccion);
 				    		
 				    		var institucion = $.ajax({
-				    			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+				    			url:'/tablero/ajaxSelects2?action=getInstitucion',
 				    		  	type:'get',
 				    		  	dataType:'json',
 				    		  	async:false       
@@ -1045,7 +1046,7 @@ function renderEvidencia(avanceId, parametros){
 				    		institucion = JSON.parse(institucion);
 				    		
 				    		var periodo = $.ajax({
-				    			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+				    			url:'/tablero/ajaxSelects2?action=getPeriodo',
 				    		  	type:'get',
 				    		  	dataType:'json',
 				    		  	async:false       
@@ -1053,7 +1054,7 @@ function renderEvidencia(avanceId, parametros){
 				    		periodo = JSON.parse(periodo);
 				    		
 				    		var unidadMedida = $.ajax({
-				    			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+				    			url:'/tablero/ajaxSelects2?action=getUnidadMedida',
 				    		  	type:'get',
 				    		  	dataType:'json',
 				    		  	async:false       
@@ -1084,6 +1085,543 @@ function renderEvidencia(avanceId, parametros){
 			$("#modalConsultaBorrarInsLineaAccion").remove();
 		}
 	});	
+		
+	function renderAcciones(insLineaAccionId,lineaAccionId,institucionId,periodoId){
+		
+		if ( $("#dataTablesAcciones").length )
+		{
+			/* var tableAccion="";
+			tableAccion=
+				'		      		<div class="col-md-12">'+
+				'						<div class="box box-warning">'+
+				'		                	<div class="box-header with-border">'+
+				'		                  		<h3 class="box-title">Acciones Precargadas</h3>'+
+				'	                  			<div class="box-tools pull-right">'+
+				'				                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>'+
+				'		                    		</button>'+
+				'		                    		<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>'+
+				'		                    		</button>'+
+				'		                  		</div>'+
+				'               			</div>'+//fin box-heder
+				'               			<div class="box-body" id="cuerpoTablaAccion">'+
+				
+    			
+		
+				'               			</div>'+//fin box-body
+				'                		</div>'+	
+				'                	</div>';
+			$("#tableAccion").html("");
+			$("#tableAccion").html(tableAccion); */
+			
+			//$('#dataTablesAcciones').DataTable().fnDestroy();
+			$('#dataTablesAcciones').DataTable().destroy();
+				
+		}
+		
+		 var f = new Date();
+		    if( (f.getMonth() +1) < 10 ){
+		    	var mes =( 0 +""+ (f.getMonth() +1));
+		    }else{
+		    	var mes =f.getMonth()+1;
+		    }
+		    
+		    if( (f.getDate()) < 10 ){
+		    	var dia =( 0 +""+ (f.getDate()));
+		    }else{
+		    	var dia = f.getDate();
+		    }
+		    var fechaActual = (f.getFullYear() + "-" + mes + "-" + dia);
+			
+		    if ( $("#modalEditarAccion").length )
+			{
+				$("#modalEditarAccion").remove();
+			}
+		    if ( $("#insLineaAccion").length )
+			{
+				$("#insLineaAccion").remove();
+			}
+			if ( $("#modalAccion").length )
+			{
+				$("#modalAccion").remove();
+			}		
+			if ( $("#modalVincularProductos").length )
+			{
+				$("#modalVincularProductos").remove();
+			}
+			if ( $("#modalBorrarAccion").length )
+			{
+				$("#modalBorrarAccion").remove();
+			}
+			if ( $("#modalActividad").length )
+			{
+				$("#modalActividad").remove();
+			}
+			if ( $("#modalDestinatario").length )
+			{
+				$("#modalDestinatario").remove();
+			}
+			var lineaAccion = $.ajax({
+				url:'/tablero/ajaxSelects2?action=getLineaAccion',
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+			}).responseText;
+			lineaAccion = JSON.parse(lineaAccion);
+
+			for(i = 0;i<lineaAccion.length; i++)
+			{
+				if(lineaAccion[i].id == lineaAccionId)
+				{
+					var nombreLineaAccion = lineaAccion[i].nombre;
+				}
+			}
+			
+			var catalogoAccion = $.ajax({
+				url:'/tablero/ajaxSelects2?action=getAccionCatalogo',
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+			}).responseText;
+			catalogoAccion = JSON.parse(catalogoAccion);
+			var optionCatalogoAccion = "";
+
+			for(l = 0; l < catalogoAccion.length; l++)
+			{
+				optionCatalogoAccion+='<option value="'+catalogoAccion[l].id+'" parametro="'+catalogoAccion[l].id+'">'+catalogoAccion[l].nombre+'</option>';
+			}
+			
+			var institucion = $.ajax({
+				url:'/tablero/ajaxSelects2?action=getInstitucion',
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+			}).responseText;
+			institucion = JSON.parse(institucion);
+
+			for(m = 0;m<institucion.length; m++)
+			{
+				if(institucion[m].id == institucionId)
+				{
+					var nombreInstitucion = institucion[m].sigla;
+				}
+			}
+			
+			var periodo = $.ajax({
+				url:'/tablero/ajaxSelects2?action=getPeriodo',
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+			}).responseText;
+			periodo = JSON.parse(periodo);
+
+			for(p = 0;p<periodo.length; p++)
+			{
+				if(periodo[p].id == periodoId)
+				{
+					var nombrePeriodo = periodo[p].nombre;
+				}
+			}
+			
+			var unidadMedida = $.ajax({
+				url:'/tablero/ajaxSelects2?action=getUnidadMedida',
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+			}).responseText;
+			unidadMedida = JSON.parse(unidadMedida);
+			var optionUnidadMedida;
+			for(var u = 0; u < unidadMedida.length; u++)
+			{
+				optionUnidadMedida+='<option value="'+unidadMedida[u].id+'" parametro="'+unidadMedida[u].id+'">'+unidadMedida[u].descripcion+'</option>';
+			}
+			
+			var departamentos = $.ajax({
+		    	url:'/tablero/ajaxSelects?action=getDepartamento',
+		      	type:'get',
+		      	dataType:'json',
+		      	async:false       
+		    }).responseText;
+			departamentos = JSON.parse(departamentos);
+			
+			var optionDepartamentos = "";
+			for(i = 0;i<departamentos.length; i++){
+				optionDepartamentos+='<option value="'+departamentos[i].idDepartamento+'" parametro="'+departamentos[i].idDepartamento+'">'+departamentos[i].nombreDepartamento+'</option>';
+			}
+			
+			var distritos = $.ajax({
+		    	url:'/tablero/ajaxSelects?action=getDistrito',
+		      	type:'get',
+		      	dataType:'json',
+		      	async:false       
+		    }).responseText;
+			distritos = JSON.parse(distritos);
+			
+			var accion = $.ajax({
+				url:'/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccionId,
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+			}).responseText;
+			accion = JSON.parse(accion);
+			
+			var cuerpoAccion = "";
+			renderAccion();		
+			
+			function renderAccion(){
+				
+				var nombreDepartamento;
+				var nombreDistrito;
+				var nombreAccionCatalogo;
+				
+
+				for(var a = 0; a < accion.length; a++)
+				{	
+					if(onoff==true && accion[a].borrado == true){
+						// pasa a la siguiente fila en el for ++				
+					}else{
+						var suMetas = 0 ;
+						suMetas = accion[a].meta1 + accion[a].meta2 + accion[a].meta3 + accion[a].meta4; 
+						
+						for(var f = 0; f < catalogoAccion.length; f++)
+						{
+							if(accion[a].accionCatalogoId == catalogoAccion[f].id){
+								nombreAccionCatalogo = catalogoAccion[f].nombre;
+								}
+						}			
+						
+						for(var d = 0; d < departamentos.length; d++)
+						{
+							if(accion[a].departamentoId == departamentos[d].idDepartamento){
+								nombreDepartamento = departamentos[d].nombreDepartamento;
+								//cuerpoAccion +="<td class='text-center'>"+nombreDepartamento+"</td>";
+								}
+						}
+						
+
+						for(var e = 0; e < distritos.length; e++)
+						{
+							if(accion[a].distritoId == distritos[e].id && accion[a].departamentoId == distritos[e].departamentoId){
+								nombreDistrito = distritos[e].descripcion;
+
+							}
+						}
+
+						var nombreUnidadMedidaAccion = "";
+						for(var j = 0; j < catalogoAccion.length; j++){
+							if(accion[a].accionCatalogoId == catalogoAccion[j].id){
+								nombreUnidadMedidaAccion = "";
+								for(i = 0; i < unidadMedida.length; i++){
+									
+									if (catalogoAccion[j].idUnidadMedida == unidadMedida[i].id ){
+										nombreUnidadMedidaAccion =  unidadMedida[i].descripcion;
+									}
+								}
+							}	
+						}
+								
+						if(accion[a].borrado == true){
+							<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
+								cuerpoAccion +="<tr><td class='text-center'><del>"+nombreAccionCatalogo+"</del></td><td class='text-center'><del>"+nombreDepartamento+"</del></td><td class='text-center'><del>"+nombreDistrito+"</del></td><td class='text-center'><del>"+accion[a].fechaInicio+"</del></td><td class='text-center'><del>"+accion[a].fechaFin+"</del></td><td class='text-center'><del>"+nombreUnidadMedidaAccion+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(suMetas).toFixed(2))+"</del></td><td class='text-center'><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Restaurar Acción'><span class='fa fa-recycle'></span></button></td></tr>";
+							<%}%>
+						}else{
+							<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
+								cuerpoAccion +="<tr><td class='text-center'>"+nombreAccionCatalogo+"</td><td class='text-center'>"+nombreDepartamento+"</td><td class='text-center'>"+nombreDistrito+"</td><td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+nombreUnidadMedidaAccion+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(suMetas).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm modalVincularProducto' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos Presupuestarios' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"><span>Gs</span></button><button type='button' class='btn btn-default btn-sm agregarActividad' title='Agregar Cronograma' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" ><span class='glyphicon glyphicon-time'></span></button><button type='button' class='btn btn-default btn-sm editarAccion' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button><button type='button' class='btn btn-default btn-sm modalDestinatario'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Agregar Destinatario'><span class='glyphicon glyphicon-user'></span></button></td></tr>";
+							<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
+								cuerpoAccion +="<tr><td class='text-center'>"+nombreAccionCatalogo+"</td><td class='text-center'>"+nombreDepartamento+"</td><td class='text-center'>"+nombreDistrito+"</td><td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+nombreUnidadMedidaAccion+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(suMetas).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm modalVincularProducto' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos Presupuestarios' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"><span>Gs</span></button><button type='button' class='btn btn-default btn-sm agregarActividad' title='Agregar Cronograma' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" ><span class='glyphicon glyphicon-time'></span></button><button type='button' class='btn btn-default btn-sm modalDestinatario'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Agregar Destinatario'><span class='glyphicon glyphicon-user'></span></button></td></tr>";
+							<%}%>
+						}
+					}
+				}
+			}
+							
+			var cuerpoModalAccion = "";
+
+			cuerpoModalAccion =	'<div class="modal fade" id="modalAccion" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="myLargeModalLabel">'+
+								'	<div class="modal-dialog modal-lg" style="width:90%">'+
+								'		<div class="modal-content" >'+
+								'			<div class="modal-header">'+
+								'		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+								'		        <h4 class="modal-title">Registrar Acción de '+nombreLineaAccion+' ('+nombreInstitucion+') - '+nombrePeriodo+'</h4>'+ 
+								'			</div>'+
+								'		    <div class="modal-body" id="accionCuerpo" >';
+								
+								
+			<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>		
+			
+			
+			cuerpoModalAccion +='		      	<div class="row">'+
+								'				 <form role="form" id="formularioAccion">'+
+								'		      		<div class="col-md-12">'+
+								'						<div class="box box-warning">'+
+								'		                	<div class="box-header with-border">'+
+								'		                  		<h3 class="box-title">Agregar Acción</h3>'+
+								'	                  			<div class="box-tools pull-right">'+
+								'				                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>'+
+								'		                    		</button>'+
+								'		                    		<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>'+
+								'		                    		</button>'+
+								'		                  		</div>'+
+								'               			</div>'+//fin box-heder
+								'               			<div class="box-body">'+
+								'									<div class="table-responsive">'+
+								'										<table class="table table-hover">'+
+								'											<tbody>'+
+								'												<tr><td><div class="form-group"><label for="nombreAccion">Acción</label><select id="selectorCatalogoAccion" class="form-control">'+optionCatalogoAccion+'</select><input type="hidden" class="form-control" id="insLineaAccionId" value="'+insLineaAccionId+'"></div></td><td><div class="form-group"><label for="umedida">U. medida</label><input type="text" id="unidadMedidaAccion" value="" class="form-control" disabled> </div></td></tr>'+
+								'												<tr><td><div class="form-group"><label for="departamento">Departamento</label><select id="selectorDepartamento" name="departamento" class="form-control">'+optionDepartamentos+'</select></div></td><td><div class="form-group"><label for="distrito">Distrito</label><select name="departamento" class="form-control" id="distritosDepartamento"></select></div></td></tr>'+
+								'												<tr><td><div class="form-group"><label for="fechaInicioAccion">Fecha Inicio</label><input type="date" id="fechaInicioAccion" class="form-control" value="'+fechaActual+'" required /></div></td><td><div class="form-group"><label for="fechaFinAccion">Fecha Fin</label><input type="date" id="fechaFinAccion" class="form-control" required /></div></td></tr>'+							
+								'											</tbody>'+							           
+								'										</table>'+
+								'									</div>'+
+								'									<div class="row">'+
+								'			      					    <div class="form-group col-md-3">'+
+								'						  						<label for="totalFinanciero-formulario">Primer Trimestre</label>'+
+								'				      						<div class="input-group input-group-sm">'+						      			
+								'								    				<input type="number" name="primerTrimestre" id="primerTrimestre-formulario" value="0" class="form-control" required>'+
+								'													<input type="hidden" class="form-control" id="versionAccion" value="3">'+//Aqui estan los input hidden que en este formulario son 3
+								'													<input type="hidden" class="form-control" id="costoAccion" value="99">'+
+								'													<input type="hidden" class="form-control" id="pesoAccion" value="1">'+
+								'				      						</div>'+
+								'			  					    	</div>'+
+								'				     					<div class="form-group col-md-3">'+
+								'							  					<label for="totalFinanciero-formulario">Segundo Trimestre</label>'+
+								'					      					<div class="input-group input-group-sm">'+
+								'			  					    			<input type="number" name="segundoTrimestre" id="segundoTrimestre-formulario" value="0" class="form-control" required>'+
+								'					      					</div>'+
+								'								    		</div>'+
+								'				     					<div class="form-group col-md-3">'+
+								'							  					<label for="totalFinanciero-formulario">Tercer Trimestre</label>'+
+								'					      					<div class="input-group input-group-sm">'+
+								'			  					    			<input type="number" name="tercerTrimestre" id="tercerTrimestre-formulario" value="0" class="form-control" required>'+
+								'					      					</div>'+
+								'								    		</div>'+
+								'			      					    <div class="form-group col-md-3">'+
+								'						  					<label for="totalFinanciero-formulario">Cuarto Trimestre</label>'+
+								'				      						<div class="input-group input-group-sm">'+
+								'								    				<input type="number" name="cuartoTrimestre" id="cuartoTrimestre-formulario" value="0" class="form-control" required>'+
+								'				      						</div>'+
+								'							    		</div>'+
+								'			  						</div>'+				
+								'               			</div>'+//fin box-body
+								'							<div class="modal-footer">'+
+								'								<button type="submit" class="btn btn-success btn-sm guardarAccion" parametros = '+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'>Guardar Acción</button>'+
+								'							</div>'+
+								'                		</div>'+	
+								'                	</div>'+				
+								'				  </form>'+
+								'                </div>';										
+								
+			<%}%>	
+			
+			cuerpoModalAccion +='		      	<div class="row" id="tableAccion">'+ 
+								'		      		<div class="col-md-12">'+
+								'						<div class="box box-warning">'+
+								'		                	<div class="box-header with-border">'+
+								'		                  		<h3 class="box-title">Acciones Precargadas</h3>'+
+								'	                  			<div class="box-tools pull-right">'+
+								'				                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>'+
+								'		                    		</button>'+
+								'		                    		<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>'+
+								'		                    		</button>'+
+								'		                  		</div>'+
+								'               			</div>'+//fin box-heder
+								'               			<div class="box-body" id="cuerpoTablaAccion">'+
+								
+	                			
+						
+								'               			</div>'+//fin box-body
+								'                		</div>'+	
+								'                	</div>'+
+								'                </div>'+
+								
+
+								'		    </div>'+
+								'			<div class="modal-footer">'+
+						      	'			</div>'+														
+								'		</div>'+ 
+								'	</div>'+
+								'</div>';
+								
+			$("#programacion").append(cuerpoModalAccion);
+			$('#cuerpoTablaAccion').html("");
+
+			var tablaAccion ='     			<div class="table-responsive">'+
+			'	                				<table class="table table-hover table-bordered" id="dataTablesAcciones">'+
+			'	                					<thead>'+
+			'	                						<tr class="active"><th rowspan="2" class="text-center">Acción</th><th rowspan="2" class="text-center">Depto</th><th rowspan="2" class="text-center">Distrito</th><th rowspan="2" class="text-center">Fecha Inicio</th><th rowspan="2" class="text-center">Fecha Fin</th><th rowspan="2" class="text-center">Unidad Medida</th><th colspan="4" class="text-center">Metas</th><th rowspan="2" class="text-center">Total Metas</th><th rowspan="2" class="text-center" style="min-width:130px">Administrar Acción</th></tr>'+
+			'	                						<tr class="active"><th class="text-center">1er Trimestre</th><th class="text-center">2do Trimestre</th><th class="text-center">3er Trimestre</th><th class="text-center">4to Trimestre</th></tr>'+
+			'	                					</thead>'+
+			'										<tfoot>'+
+			'								 			<tr>'+
+			'								 				<th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th>'+
+			'								 			</tr>'+
+			'								    	</tfoot>'+
+			'	                						<tbody id="tablaAccionesPrecargadas">'+
+			'	                						</tbody>'+
+			'	                				</table>'+
+			'	                			</div>';
+			$('#cuerpoTablaAccion').append(tablaAccion);
+			
+			$('#tablaAccionesPrecargadas').append(cuerpoAccion);
+			$('#modalAccion').modal('show');
+			$("#selectorCatalogoAccion").change();
+			$("#selectorDepartamento").change();
+			$('#dataTablesAcciones').dataTable({
+		         "footerCallback": function ( row, data, start, end, display ) {
+		            var api = this.api(), data;
+		 		            
+		         // saca los puntos y <del> de la cadena para pasarlo a entero
+		            var intVal = function(i){
+		            	if(typeof i==='string'){	
+		            		i=i.replace(/[\."<\/*del>""Gs\."]/g, '');
+		            		i=i.replace(/[","]/g, '.');
+		            		i=i*1;		            		
+		            	}else{
+		            		if(typeof i==='number'){
+		            			i=i;		            			
+		            	}else{
+		            		i=0;
+		            	}
+		            }
+		            	return i;
+		            };
+		          
+		         // total general para todas las paginas de la columna
+		            total6 = api
+		                .column( 6 )
+		                .data()
+		                .reduce( function (a, b) {		                    
+		                	return intVal(a) + intVal(b);
+		                }, 0 );
+		 
+		         // total por pagina segun número de columna
+		            pageTotal6 = api
+		                .column( 6, { page: 'current'} )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+		         // total general para todas las paginas de la columna
+		            total7 = api
+		                .column( 7 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+		 
+		         // total por pagina segun número de columna
+		            pageTotal7 = api
+		                .column( 7, { page: 'current'} )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+		         
+		         // total general para todas las paginas de la columna
+		            total8 = api
+		                .column( 8 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+		 
+		         // total por pagina segun número de columna
+		            pageTotal8 = api
+		                .column( 8, { page: 'current'} )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+		         
+		         // total general para todas las paginas de la columna
+		            total9 = api
+		                .column( 9 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+		 
+		         // total por pagina segun número de columna
+		            pageTotal9 = api
+		                .column( 9, { page: 'current'} )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+		         
+		         // total general para todas las paginas de la columna
+		            total10 = api
+		                .column( 10 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+		 
+		         // total por pagina segun número de columna
+		            pageTotal10 = api
+		                .column( 10, { page: 'current'} )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+		 
+		         // se muestran los valores de los totales en el footer del table
+		            $( api.column( 6 ).footer() ).html(
+		            		'Total Pág. '+ numeroConComa(pageTotal6) +' (Total Gral. '+ numeroConComa(total6) +')'
+		            );
+		         // se muestran los valores de los totales en el footer del table
+		            $( api.column( 7 ).footer() ).html(
+		            		'Total Pág. '+ numeroConComa(pageTotal7) +' (Total Gral. '+ numeroConComa(total7) +')'
+		            );
+		         // se muestran los valores de los totales en el footer del table
+		            $( api.column( 8 ).footer() ).html(
+		            		'Total Pág. '+ numeroConComa(pageTotal8) +' (Total Gral. '+ numeroConComa(total8) +')'
+		            );
+		         // se muestran los valores de los totales en el footer del table
+		            $( api.column( 9 ).footer() ).html(
+		            		'Total Pág. '+ numeroConComa(pageTotal9) +' (Total Gral. '+ numeroConComa(total9) +')'
+		            );
+		         // se muestran los valores de los totales en el footer del table
+		            $( api.column( 10 ).footer() ).html(
+		            		'Total Pág. '+ numeroConComa(pageTotal10) +' (Total Gral. '+ numeroConComa(total10) +')'
+		            );
+		        }, 
+		        dom: 'Bfrtip',
+		        buttons: [
+		                    {
+		                        extend: 'copy',
+		                        exportOptions: {
+		                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
+		                }
+		                    },
+		                    {
+		                        extend: 'csv',
+		                        exportOptions: {
+		                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
+		                }
+		                    },
+		                    {
+		                        extend: 'excel',
+		                        exportOptions: {
+		                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
+		                }
+		                    },
+		                    {
+		                        extend: 'pdf',
+		                        orientation: 'landscape',
+		                        exportOptions: {
+		                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
+		                }
+		                    },
+		                    {
+		                        extend: 'print',
+		                        exportOptions: {
+		                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
+		                }
+		                    }
+		                ]
+		});			
+		
+	}
 			
 	$("body").on("click", ".agregarAccion",function(event){
 		var parametros = $(this).attr("parametros");
@@ -1092,354 +1630,9 @@ function renderEvidencia(avanceId, parametros){
 	    var lineaAccionId = idParsed[1];
 	    var institucionId = idParsed[2];
 	    var periodoId = idParsed[3];
-	    var f = new Date();
-	    if( (f.getMonth() +1) < 10 ){
-	    	var mes =( 0 +""+ (f.getMonth() +1));
-	    }else{
-	    	var mes =f.getMonth();
-	    }
 	    
-	    if( (f.getDate()) < 10 ){
-	    	var dia =( 0 +""+ (f.getDate()));
-	    }else{
-	    	var dia = f.getDate();
-	    }
-	    var fechaActual = (f.getFullYear() + "-" + mes + "-" + dia);
-		
-	    if ( $("#modalEditarAccion").length )
-		{
-			$("#modalEditarAccion").remove();
-		}
-	    if ( $("#insLineaAccion").length )
-		{
-			$("#insLineaAccion").remove();
-		}
-		if ( $("#modalAccion").length )
-		{
-			$("#modalAccion").remove();
-		}		
-		if ( $("#modalVincularProductos").length )
-		{
-			$("#modalVincularProductos").remove();
-		}
-		if ( $("#modalBorrarAccion").length )
-		{
-			$("#modalBorrarAccion").remove();
-		}
-		if ( $("#modalActividad").length )
-		{
-			$("#modalActividad").remove();
-		}
-		if ( $("#modalDestinatario").length )
-		{
-			$("#modalDestinatario").remove();
-		}
-		var lineaAccion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
-		  	type:'get',
-		  	dataType:'json',
-		  	async:false       
-		}).responseText;
-		lineaAccion = JSON.parse(lineaAccion);
-
-		for(i = 0;i<lineaAccion.length; i++)
-		{
-			if(lineaAccion[i].id == lineaAccionId)
-			{
-				var nombreLineaAccion = lineaAccion[i].nombre;
-			}
-		}
-		
-		var catalogoAccion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo',
-		  	type:'get',
-		  	dataType:'json',
-		  	async:false       
-		}).responseText;
-		catalogoAccion = JSON.parse(catalogoAccion);
-		var optionCatalogoAccion = "";
-
-		for(l = 0; l < catalogoAccion.length; l++)
-		{
-			optionCatalogoAccion+='<option value="'+catalogoAccion[l].id+'" parametro="'+catalogoAccion[l].id+'">'+catalogoAccion[l].nombre+'</option>';
-		}
-		
-		var institucion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
-		  	type:'get',
-		  	dataType:'json',
-		  	async:false       
-		}).responseText;
-		institucion = JSON.parse(institucion);
-
-		for(m = 0;m<institucion.length; m++)
-		{
-			if(institucion[m].id == institucionId)
-			{
-				var nombreInstitucion = institucion[m].sigla;
-			}
-		}
-		
-		var periodo = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
-		  	type:'get',
-		  	dataType:'json',
-		  	async:false       
-		}).responseText;
-		periodo = JSON.parse(periodo);
-
-		for(p = 0;p<periodo.length; p++)
-		{
-			if(periodo[p].id == periodoId)
-			{
-				var nombrePeriodo = periodo[p].nombre;
-			}
-		}
-		
-		var unidadMedida = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
-		  	type:'get',
-		  	dataType:'json',
-		  	async:false       
-		}).responseText;
-		unidadMedida = JSON.parse(unidadMedida);
-		var optionUnidadMedida;
-		for(var u = 0; u < unidadMedida.length; u++)
-		{
-			optionUnidadMedida+='<option value="'+unidadMedida[u].id+'" parametro="'+unidadMedida[u].id+'">'+unidadMedida[u].descripcion+'</option>';
-		}
-		
-		var departamentos = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
-	      	type:'get',
-	      	dataType:'json',
-	      	async:false       
-	    }).responseText;
-		departamentos = JSON.parse(departamentos);
-		
-		var optionDepartamentos = "";
-		for(i = 0;i<departamentos.length; i++){
-			optionDepartamentos+='<option value="'+departamentos[i].idDepartamento+'" parametro="'+departamentos[i].idDepartamento+'">'+departamentos[i].nombreDepartamento+'</option>';
-		}
-		
-		var distritos = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito',
-	      	type:'get',
-	      	dataType:'json',
-	      	async:false       
-	    }).responseText;
-		distritos = JSON.parse(distritos);
-		
-		var accion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccionId,
-		  	type:'get',
-		  	dataType:'json',
-		  	async:false       
-		}).responseText;
-		accion = JSON.parse(accion);
-		
-		var cuerpoAccion = "";
-		renderAccion();		
-		
-		function renderAccion(){
-			
-			var nombreDepartamento;
-			var nombreDistrito;
-			var nombreAccionCatalogo;
-			
-
-			for(var a = 0; a < accion.length; a++)
-			{	
-				if(onoff==true && accion[a].borrado == true){
-					// pasa a la siguiente fila en el for ++				
-				}else{
-					var suMetas = 0 ;
-					suMetas = accion[a].meta1 + accion[a].meta2 + accion[a].meta3 + accion[a].meta4; 
-					
-					for(var f = 0; f < catalogoAccion.length; f++)
-					{
-						if(accion[a].accionCatalogoId == catalogoAccion[f].id){
-							nombreAccionCatalogo = catalogoAccion[f].nombre;
-							}
-					}			
-					
-					for(var d = 0; d < departamentos.length; d++)
-					{
-						if(accion[a].departamentoId == departamentos[d].idDepartamento){
-							nombreDepartamento = departamentos[d].nombreDepartamento;
-							//cuerpoAccion +="<td class='text-center'>"+nombreDepartamento+"</td>";
-							}
-					}
-					
-
-					for(var e = 0; e < distritos.length; e++)
-					{
-						if(accion[a].distritoId == distritos[e].id && accion[a].departamentoId == distritos[e].departamentoId){
-							nombreDistrito = distritos[e].descripcion;
-
-						}
-					}
-
-					var nombreUnidadMedidaAccion = "";
-					for(var j = 0; j < catalogoAccion.length; j++){
-						if(accion[a].accionCatalogoId == catalogoAccion[j].id){
-							nombreUnidadMedidaAccion = "";
-							for(i = 0; i < unidadMedida.length; i++){
-								
-								if (catalogoAccion[j].idUnidadMedida == unidadMedida[i].id ){
-									nombreUnidadMedidaAccion =  unidadMedida[i].descripcion;
-								}
-							}
-						}	
-					}
-							
-					if(accion[a].borrado == true){
-						<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
-							cuerpoAccion +="<tr><td class='text-center'><del>"+nombreAccionCatalogo+"</del></td><td class='text-center'><del>"+nombreDepartamento+"</del></td><td class='text-center'><del>"+nombreDistrito+"</del></td><td class='text-center'><del>"+accion[a].fechaInicio+"</del></td><td class='text-center'><del>"+accion[a].fechaFin+"</del></td><td class='text-center'><del>"+nombreUnidadMedidaAccion+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(suMetas).toFixed(2))+"</del></td><td class='text-center'><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Restaurar Acción'><span class='fa fa-recycle'></span></button></td></tr>";
-						<%}%>
-					}else{
-						<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-							cuerpoAccion +="<tr><td class='text-center'>"+nombreAccionCatalogo+"</td><td class='text-center'>"+nombreDepartamento+"</td><td class='text-center'>"+nombreDistrito+"</td><td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+nombreUnidadMedidaAccion+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(suMetas).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm modalVincularProducto' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos Presupuestarios' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"><span>Gs</span></button><button type='button' class='btn btn-default btn-sm agregarActividad' title='Agregar Cronograma' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" ><span class='glyphicon glyphicon-time'></span></button><button type='button' class='btn btn-default btn-sm editarAccion' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button><button type='button' class='btn btn-default btn-sm modalDestinatario'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Agregar Destinatario'><span class='glyphicon glyphicon-user'></span></button></td></tr>";
-						<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-							cuerpoAccion +="<tr><td class='text-center'>"+nombreAccionCatalogo+"</td><td class='text-center'>"+nombreDepartamento+"</td><td class='text-center'>"+nombreDistrito+"</td><td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+nombreUnidadMedidaAccion+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(suMetas).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm modalVincularProducto' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos Presupuestarios' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"><span>Gs</span></button><button type='button' class='btn btn-default btn-sm agregarActividad' title='Agregar Cronograma' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" ><span class='glyphicon glyphicon-time'></span></button><button type='button' class='btn btn-default btn-sm modalDestinatario'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Agregar Destinatario'><span class='glyphicon glyphicon-user'></span></button></td></tr>";
-						<%}%>
-					}
-				}
-			}
-		}
-		
-		
-		
-		
-				
-		var cuerpoModalAccion = "";
-
-		cuerpoModalAccion =	'<div class="modal fade" id="modalAccion" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="myLargeModalLabel">'+
-							'	<div class="modal-dialog modal-lg" style="width:90%">'+
-							'		<div class="modal-content" >'+
-							'			<div class="modal-header">'+
-							'		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
-							'		        <h4 class="modal-title">Registrar Acción de '+nombreLineaAccion+' ('+nombreInstitucion+') - '+nombrePeriodo+'</h4>'+ 
-							'			</div>'+
-							'		    <div class="modal-body" id="accionCuerpo" >';
-							
-							
-		<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>		
-		
-		
-		cuerpoModalAccion +='		      	<div class="row">'+
-							'				 <form role="form" id="formularioAccion">'+
-							'		      		<div class="col-md-12">'+
-							'						<div class="box box-warning">'+
-							'		                	<div class="box-header with-border">'+
-							'		                  		<h3 class="box-title">Agregar Acción</h3>'+
-							'	                  			<div class="box-tools pull-right">'+
-							'				                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>'+
-							'		                    		</button>'+
-							'		                    		<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>'+
-							'		                    		</button>'+
-							'		                  		</div>'+
-							'               			</div>'+//fin box-heder
-							'               			<div class="box-body">'+
-							'									<div class="table-responsive">'+
-							'										<table class="table table-hover">'+
-							'											<tbody>'+
-							'												<tr><td><div class="form-group"><label for="nombreAccion">Acción</label><select id="selectorCatalogoAccion" class="form-control">'+optionCatalogoAccion+'</select><input type="hidden" class="form-control" id="insLineaAccionId" value="'+insLineaAccionId+'"></div></td><td><div class="form-group"><label for="umedida">U. medida</label><input type="text" id="unidadMedidaAccion" value="" class="form-control" disabled> </div></td></tr>'+
-							'												<tr><td><div class="form-group"><label for="departamento">Departamento</label><select id="selectorDepartamento" name="departamento" class="form-control">'+optionDepartamentos+'</select></div></td><td><div class="form-group"><label for="distrito">Distrito</label><select name="departamento" class="form-control" id="distritosDepartamento"></select></div></td></tr>'+
-							'												<tr><td><div class="form-group"><label for="fechaInicioAccion">Fecha Inicio</label><input type="date" id="fechaInicioAccion" class="form-control" value="'+fechaActual+'" required /></div></td><td><div class="form-group"><label for="fechaFinAccion">Fecha Fin</label><input type="date" id="fechaFinAccion" class="form-control" required /></div></td></tr>'+							
-							'											</tbody>'+							           
-							'										</table>'+
-							'									</div>'+
-							'									<div class="row">'+
-							'			      					    <div class="form-group col-md-3">'+
-							'						  						<label for="totalFinanciero-formulario">Primer Trimestre</label>'+
-							'				      						<div class="input-group input-group-sm">'+						      			
-							'								    				<input type="number" name="primerTrimestre" id="primerTrimestre-formulario" value="0" class="form-control" required>'+
-							'													<input type="hidden" class="form-control" id="versionAccion" value="3">'+//Aqui estan los input hidden que en este formulario son 3
-							'													<input type="hidden" class="form-control" id="costoAccion" value="99">'+
-							'													<input type="hidden" class="form-control" id="pesoAccion" value="1">'+
-							'				      						</div>'+
-							'			  					    	</div>'+
-							'				     					<div class="form-group col-md-3">'+
-							'							  					<label for="totalFinanciero-formulario">Segundo Trimestre</label>'+
-							'					      					<div class="input-group input-group-sm">'+
-							'			  					    			<input type="number" name="segundoTrimestre" id="segundoTrimestre-formulario" value="0" class="form-control" required>'+
-							'					      					</div>'+
-							'								    		</div>'+
-							'				     					<div class="form-group col-md-3">'+
-							'							  					<label for="totalFinanciero-formulario">Tercer Trimestre</label>'+
-							'					      					<div class="input-group input-group-sm">'+
-							'			  					    			<input type="number" name="tercerTrimestre" id="tercerTrimestre-formulario" value="0" class="form-control" required>'+
-							'					      					</div>'+
-							'								    		</div>'+
-							'			      					    <div class="form-group col-md-3">'+
-							'						  					<label for="totalFinanciero-formulario">Cuarto Trimestre</label>'+
-							'				      						<div class="input-group input-group-sm">'+
-							'								    				<input type="number" name="cuartoTrimestre" id="cuartoTrimestre-formulario" value="0" class="form-control" required>'+
-							'				      						</div>'+
-							'							    		</div>'+
-							'			  						</div>'+				
-							'               			</div>'+//fin box-body
-							'							<div class="modal-footer">'+
-							'								<button type="submit" class="btn btn-success btn-sm guardarAccion" parametros = '+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'>Guardar Acción</button>'+
-							'							</div>'+
-							'                		</div>'+	
-							'                	</div>'+				
-							'				  </form>'+
-							'                </div>';										
-							
-		<%}%>	
-		
-		cuerpoModalAccion +='		      	<div class="row">'+ 
-							'		      		<div class="col-md-12">'+
-							'						<div class="box box-warning">'+
-							'		                	<div class="box-header with-border">'+
-							'		                  		<h3 class="box-title">Acciones Precargadas</h3>'+
-							'	                  			<div class="box-tools pull-right">'+
-							'				                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>'+
-							'		                    		</button>'+
-							'		                    		<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>'+
-							'		                    		</button>'+
-							'		                  		</div>'+
-							'               			</div>'+//fin box-heder
-							'               			<div class="box-body" id="cuerpoTablaAccion">'+
-							
-                			
-					
-							'               			</div>'+//fin box-body
-							'                		</div>'+	
-							'                	</div>'+
-							'                </div>'+
-							
-
-							'		    </div>'+
-							'			<div class="modal-footer">'+
-					      	'			</div>'+														
-							'		</div>'+ 
-							'	</div>'+
-							'</div>';
-							
-		$("#programacion").append(cuerpoModalAccion);
-		$('#cuerpoTablaAccion').html("");
-
-		var tablaAccion ='     			<div class="table-responsive">'+
-		'	                				<table class="table table-hover table-bordered" id="dataTablesAcciones">'+
-		'	                					<thead>'+
-		'	                						<tr class="active"><th rowspan="2" class="text-center">Acción</th><th rowspan="2" class="text-center">Depto</th><th rowspan="2" class="text-center">Distrito</th><th rowspan="2" class="text-center">Fecha Inicio</th><th rowspan="2" class="text-center">Fecha Fin</th><th rowspan="2" class="text-center">Unidad Medida</th><th colspan="4" class="text-center">Metas</th><th rowspan="2" class="text-center">Total Metas</th><th rowspan="2" class="text-center" style="min-width:130px">Administrar Acción</th></tr>'+
-		'	                						<tr class="active"><th class="text-center">1er Trimestre</th><th class="text-center">2do Trimestre</th><th class="text-center">3er Trimestre</th><th class="text-center">4to Trimestre</th></tr>'+
-		'	                					</thead>'+
-		'	                						<tbody id="tablaAccionesPrecargadas">'+
-		'	                						</tbody>'+
-		'	                				</table>'+
-		'	                			</div>';
-		$('#cuerpoTablaAccion').append(tablaAccion);
-		
-		$('#tablaAccionesPrecargadas').append(cuerpoAccion);
-		$('#modalAccion').modal('show');
-		$("#selectorCatalogoAccion").change();
-		$("#selectorDepartamento").change();
-		$('#dataTablesAcciones').dataTable();		
-
+	    renderAcciones(insLineaAccionId,lineaAccionId,institucionId,periodoId);
+	   
 	});
 	
 	
@@ -1467,7 +1660,7 @@ function renderEvidencia(avanceId, parametros){
 
 		
 		var catalogoAccion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo',
+			url:'/tablero/ajaxSelects2?action=getAccionCatalogo',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -1481,7 +1674,7 @@ function renderEvidencia(avanceId, parametros){
 		}
 				
 		var unidadMedida = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+			url:'/tablero/ajaxSelects2?action=getUnidadMedida',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -1494,7 +1687,7 @@ function renderEvidencia(avanceId, parametros){
 		}
 		
 		var accion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&accionId='+id,
+			url:'/tablero/ajaxSelects2?action=getAccion&accionId='+id,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -1504,7 +1697,7 @@ function renderEvidencia(avanceId, parametros){
 		
 
 		var departamentos = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
+	    	url:'/tablero/ajaxSelects?action=getDepartamento',
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -1517,7 +1710,7 @@ function renderEvidencia(avanceId, parametros){
 		}
 		
 		var distritos = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito&departamento='+accion[0].departamentoId,
+	    	url:'/tablero/ajaxSelects?action=getDistrito&departamento='+accion[0].departamentoId,
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -1797,7 +1990,7 @@ $("body").on("click", ".consultaBorrarAccion",function(event){
 
    
 	var accion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&accionId='+id,
+		url:'/tablero/ajaxSelects2?action=getAccion&accionId='+id,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -1805,7 +1998,7 @@ $("body").on("click", ".consultaBorrarAccion",function(event){
 	accion = JSON.parse(accion);
 
 	var catalogoAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo',
+		url:'/tablero/ajaxSelects2?action=getAccionCatalogo',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -1869,7 +2062,7 @@ $("body").on("click", ".borrarAccion",function(event){
     var estado = idParsed[1];
     
 	var accion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&accionId='+id,
+		url:'/tablero/ajaxSelects2?action=getAccion&accionId='+id,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -1937,7 +2130,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		}		 
 		
 		var lineaAccion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+			url:'/tablero/ajaxSelects2?action=getLineaAccion',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -1953,7 +2146,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		}
 		
 		var institucion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+			url:'/tablero/ajaxSelects2?action=getInstitucion',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -1969,7 +2162,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		}
 		
 		var periodo = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+			url:'/tablero/ajaxSelects2?action=getPeriodo',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -1985,7 +2178,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		}
 		
 		var unidadMedida = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+			url:'/tablero/ajaxSelects2?action=getUnidadMedida',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -1998,7 +2191,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		}
 		
 		var departamentos = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
+	    	url:'/tablero/ajaxSelects?action=getDepartamento',
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -2007,7 +2200,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		
 		
 		var distritos = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito',
+	    	url:'/tablero/ajaxSelects?action=getDistrito',
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -2020,7 +2213,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		}
 		
 		var accion_catalogo = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo',
+	    	url:'/tablero/ajaxSelects2?action=getAccionCatalogo',
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -2033,7 +2226,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		}		
 		
 		var accion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccionId,
+			url:'/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccionId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -2091,7 +2284,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		var departamentoId = $("#selectorDepartamento option:selected").val();
     	
 		var distritos = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito&departamento='+departamentoId,
+	    	url:'/tablero/ajaxSelects?action=getDistrito&departamento='+departamentoId,
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -2112,7 +2305,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		var catalogoAccionId = $("#selectorCatalogoAccion option:selected").val();
     	
 		var catalogoAccion = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+catalogoAccionId,
+	    	url:'/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+catalogoAccionId,
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -2120,7 +2313,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		catalogoAccion = JSON.parse(catalogoAccion);
 		
 		var unidadMedida = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+			url:'/tablero/ajaxSelects2?action=getUnidadMedida',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -2245,7 +2438,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		var nombreProducto = "";
 		
 		var accionHasProducto = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionHasProducto&accionId='+accionId,
+	    	url:'/tablero/ajaxSelects2?action=getAccionHasProducto&accionId='+accionId,
 	      	type:'get',
 	      	dataType:'json',
 	      	crossDomain:true,
@@ -2346,7 +2539,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		var accionId = idParsed[4];
 				
 		var accion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&accionId='+accionId,
+			url:'/tablero/ajaxSelects2?action=getAccion&accionId='+accionId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -2354,7 +2547,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		accion = JSON.parse(accion);
 		
 		var catalogoAccion = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[0].accionCatalogoId,
+	    	url:'/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[0].accionCatalogoId,
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -2362,7 +2555,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		catalogoAccion = JSON.parse(catalogoAccion);
 		
 		var insLineaAccion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion&insLineaAccionId='+insLineaAccionId,
+			url:'/tablero/ajaxSelects2?action=getInsLineaAccion&insLineaAccionId='+insLineaAccionId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -2370,7 +2563,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		insLineaAccion=JSON.parse(insLineaAccion);
 		
 		var institucion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion&institucionId='+insLineaAccion[0].institucionId,
+			url:'/tablero/ajaxSelects2?action=getInstitucion&institucionId='+insLineaAccion[0].institucionId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -2378,7 +2571,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		institucion = JSON.parse(institucion);
 		
 		var lineaAccion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId='+lineaAccionId,
+			url:'/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId='+lineaAccionId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -2419,6 +2612,7 @@ $("body").on("click", ".borrarAccion",function(event){
 				        '    											<th>Administrar</th>'+
 				        '    										</tr>'+
 				        '										</thead>'+
+				        '										<tfoot><tr><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th></tr></tfoot>'+
 				        '    									<tbody class="table-body-producto" id="TablaAccionHasProductos">'+
 				        '										</tbody>'+
 				        '   								</table>'+
@@ -2512,13 +2706,99 @@ $("body").on("click", ".borrarAccion",function(event){
 
 		$("body").append(modalProductos);
 		$('#TablaAccionHasProductos').append(cargarTablaAccionHasProducto(accionId,insLineaAccionId,lineaAccionId,institucionId,periodoId));	        
-		$("#modalVincularProductos").modal('show');
-		//$("#dataTablesVinculacionProducto").DataTable();
-				
+		$("#modalVincularProductos").modal('show');		
+	/* 	$("#dataTablesVinculacionProducto").dataTable({
+	        /* "footerCallback": function ( row, data, start, end, display ) {
+	            var api = this.api(), data;
+	 
+	         // saca los puntos y <del> de la cadena para pasarlo a entero
+	            var intVal = function(i){
+		            	if(typeof i==='string'){	
+		            		i=i.replace(/[\."<\/*del>""Gs\."]/g, '');
+		            		i=i.replace(/[","]/g, '.');
+		            		i=i*1;		            		
+		            	}else{
+		            		if(typeof i==='number'){
+		            			i=i;		            			
+		            	}else{
+		            		i=0;
+		            	}
+		            }
+		            	return i;
+		            };
+	 
+	         // total general para todas las paginas de la columna
+	            total8 = api
+	                .column( 8 )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	 
+	         // total por pagina segun número de columna
+	            pageTotal8 = api
+	                .column( 8, { page: 'current'} )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	         
+	         // total general para todas las paginas de la columna
+	            total11 = api
+	                .column( 11 )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	 
+	         // total por pagina segun número de columna
+	            pageTotal11 = api
+	                .column( 11, { page: 'current'} )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	         
+	         // total general para todas las paginas de la columna
+	            total12 = api
+	                .column( 12 )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	 
+	         // total por pagina segun número de columna
+	            pageTotal12 = api
+	                .column( 12, { page: 'current'} )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	         
+	         // se muestran los valores de los totales en el footer del table
+	            $( api.column( 8 ).footer() ).html(
+	            		'Total Pág. '+ numeroConComa(pageTotal8) +' (Total Gral. '+ numeroConComa(total8) +')'
+	            );
+	         /* // se muestran los valores de los totales en el footer del table
+	            $( api.column( 11 ).footer() ).html(
+	            		'Total Pág. '+ numeroConComa(pageTotal11) +' (Total Gral. '+ numeroConComa(total11) +')'
+	            );
+	         // se muestran los valores de los totales en el footer del table
+	            $( api.column( 12 ).footer() ).html(
+	            		'Total Pág. '+ numeroConComa(pageTotal12) +' (Total Gral. '+ numeroConComa(total12) +')'
+	            );	          
+	        }, 
+	        dom: 'Bfrtip',
+	        buttons: [
+	            'copy', 'csv', 'excel', 'pdf', 'print'
+	        ]
+	});  */
+		
+		
 		function Combo(){
 			
 			var usuarios = $.ajax({
-				url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
+				url:'/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
 			  	type:'get',
 			  	dataType:'json',
 			  	async:false       
@@ -3396,7 +3676,8 @@ $("body").on("click", ".borrarAccion",function(event){
 		  document.getElementById('proyecto-formulario').addEventListener('focus',eje1.proyectoFocus,false); 
 		  document.getElementById('proyecto-formulario').addEventListener('change',eje1.proyecto,false);
 		  document.getElementById('producto-formulario').addEventListener('focus',eje1.productoFocus,false); 
-		  document.getElementById('producto-formulario').addEventListener('change',eje1.producto,false); 
+		  document.getElementById('producto-formulario').addEventListener('change',eje1.producto,false);
+		  
 		
 	});
 	$("body").on("click", ".consultaBorrarVinculacionProducto",function(event){
@@ -3418,7 +3699,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		}		
 		
 		var WebServiceVinculacionProducto = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionHasProducto&accionHasProductoId='+accionHasProductoId,
+			url:'/tablero/ajaxSelects2?action=getAccionHasProducto&accionHasProductoId='+accionHasProductoId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -3470,7 +3751,7 @@ $("body").on("click", ".borrarAccion",function(event){
 	    var estado = idParsed[1];
 	    
 		var WebServiceVinculacionProducto = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionHasProducto&accionHasProductoId='+accionHasProductoId,
+			url:'/tablero/ajaxSelects2?action=getAccionHasProducto&accionHasProductoId='+accionHasProductoId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -3564,11 +3845,12 @@ $("body").on("click", ".borrarAccion",function(event){
 	        contentType: 'application/json',
 	        mimeType: 'application/json',
 	        success: function (data) {
-	        	actualizarTablaAcciones(insLineaAccionId,lineaAccionId,institucionId,periodoId);
+	        	renderAcciones(insLineaAccionId,lineaAccionId,institucionId,periodoId);
+	        	//actualizarTablaAcciones(insLineaAccionId,lineaAccionId,institucionId,periodoId);
 	        	},
 	        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
 	        error: function(data,status,er) {
-	        	actualizarTablaAcciones(insLineaAccionId,lineaAccionId,institucionId,periodoId);
+	        	//actualizarTablaAcciones(insLineaAccionId,lineaAccionId,institucionId,periodoId);
 	        	}
 		 });
 
@@ -3582,7 +3864,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		var periodoId = periodoId;
 	
 		var accion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccionId,
+			url:'/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccionId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -3590,7 +3872,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		accion = JSON.parse(accion);
 		
 		var departamentos = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
+	    	url:'/tablero/ajaxSelects?action=getDepartamento',
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -3598,7 +3880,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		departamentos = JSON.parse(departamentos);
 		
 		var distritos = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito',
+	    	url:'/tablero/ajaxSelects?action=getDistrito',
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -3606,7 +3888,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		distritos = JSON.parse(distritos);
 		
 		var unidadMedida = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+			url:'/tablero/ajaxSelects2?action=getUnidadMedida',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -3626,7 +3908,7 @@ $("body").on("click", ".borrarAccion",function(event){
 			suMetas = accion[a].meta1 + accion[a].meta2 + accion[a].meta3 + accion[a].meta4; 
 			
 			var catalogoAccion = $.ajax({
-				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[a].accionCatalogoId,
+				url:'/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[a].accionCatalogoId,
 			  	type:'get',
 			  	dataType:'json',
 			  	async:false       
@@ -3687,6 +3969,11 @@ $("body").on("click", ".borrarAccion",function(event){
 		'	                						<tr class="active"><th rowspan="2" class="text-center">Id</th><th rowspan="2" class="text-center">Acción</th><th rowspan="2" class="text-center">Depto</th><th rowspan="2" class="text-center">Distrito</th><th rowspan="2" class="text-center">Fecha Inicio</th><th rowspan="2" class="text-center">Fecha Fin</th><th rowspan="2" class="text-center">Unidad Medida</th><th colspan="4" class="text-center">Metas</th><th rowspan="2" class="text-center">Total Metas</th><th rowspan="2" class="text-center" style="min-width:130px">Administrar Acción</th></tr>'+
 		'	                						<tr class="active"><th class="text-center">1er Trimestre</th><th class="text-center">2do Trimestre</th><th class="text-center">3er Trimestre</th><th class="text-center">4to Trimestre</th></tr>'+
 		'	                					</thead>'+
+		'										<tfoot>'+
+		'								 			<tr>'+
+		'								 				<th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th>'+
+		'								 			</tr>'+
+		'								    	</tfoot>'+
 		'	                						<tbody id="tablaAccionesPrecargadas">'+
 		'	                						</tbody>'+
 		'	                				</table>'+
@@ -3708,13 +3995,131 @@ $("body").on("click", ".borrarAccion",function(event){
 		$("#distritosDepartamento").val('');
 		$("#selectorCatalogoAccion").val('');
 		$("#unidadMedidaAccion").val('');
-		$("#dataTablesAcciones").DataTable(
-		{
-	        "sPaginationType":"full_numbers"
-	          ,"iDisplayLength":10
-	          ,"bJQueryUI":true
-	          ,"aaSorting":[[0,"desc"]]
-		});
+		$('#dataTablesAcciones').dataTable({
+	        /* "footerCallback": function ( row, data, start, end, display ) {
+	            var api = this.api(), data;
+	 
+	         // saca los puntos y <del> de la cadena para pasarlo a entero
+			var intVal = function(i){
+        	if(typeof i==='string'){	
+        		i=i.replace(/[\."<\/*del>""Gs\."]/g, '');
+        		i=i.replace(/[","]/g, '.');
+        		i=i*1;		            		
+        	}else{
+        		if(typeof i==='number'){
+        			i=i;		            			
+        	}else{
+        		i=0;
+        	}
+        	}
+        	return i;
+        	};
+	 
+	         // total general para todas las paginas de la columna
+	            total6 = api
+	                .column( 6 )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	 
+	         // total por pagina segun número de columna
+	            pageTotal6 = api
+	                .column( 6, { page: 'current'} )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	         // total general para todas las paginas de la columna
+	            total7 = api
+	                .column( 7 )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	 
+	         // total por pagina segun número de columna
+	            pageTotal7 = api
+	                .column( 7, { page: 'current'} )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	         
+	         // total general para todas las paginas de la columna
+	            total8 = api
+	                .column( 8 )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	 
+	         // total por pagina segun número de columna
+	            pageTotal8 = api
+	                .column( 8, { page: 'current'} )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	         
+	         // total general para todas las paginas de la columna
+	            total9 = api
+	                .column( 9 )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	 
+	         // total por pagina segun número de columna
+	            pageTotal9 = api
+	                .column( 9, { page: 'current'} )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	         
+	         // total general para todas las paginas de la columna
+	            total10 = api
+	                .column( 10 )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	 
+	         // total por pagina segun número de columna
+	            pageTotal10 = api
+	                .column( 10, { page: 'current'} )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );
+	 
+	         // se muestran los valores de los totales en el footer del table
+	            $( api.column( 6 ).footer() ).html(
+	            		'Total Pág. '+ numeroConComa(pageTotal6) +' (Total Gral. '+ numeroConComa(total6) +')'
+	            );
+	         // se muestran los valores de los totales en el footer del table
+	            $( api.column( 7 ).footer() ).html(
+	            		'Total Pág. '+ numeroConComa(pageTotal7) +' (Total Gral. '+ numeroConComa(total7) +')'
+	            );
+	         // se muestran los valores de los totales en el footer del table
+	            $( api.column( 8 ).footer() ).html(
+	            		'Total Pág. '+ numeroConComa(pageTotal8) +' (Total Gral. '+ numeroConComa(total8) +')'
+	            );
+	         // se muestran los valores de los totales en el footer del table
+	            $( api.column( 9 ).footer() ).html(
+	            		'Total Pág. '+ numeroConComa(pageTotal9) +' (Total Gral. '+ numeroConComa(total9) +')'
+	            );
+	         // se muestran los valores de los totales en el footer del table
+	            $( api.column( 10 ).footer() ).html(
+	            		'Total Pág. '+ numeroConComa(pageTotal10) +' (Total Gral. '+ numeroConComa(total10) +')'
+	            );
+	        },
+ */	        dom: 'Bfrtip',
+	        buttons: [
+	            'copy', 'csv', 'excel', 'pdf', 'print'
+	        ]
+	});
 
 		
 	}
@@ -3760,7 +4165,7 @@ $("body").on("click", ".borrarAccion",function(event){
 	    var accionCatalogoId = idParsed[5];
 				
 		var insLineaAccion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion&insLineaAccionId='+insLineaAccionId,
+			url:'/tablero/ajaxSelects2?action=getInsLineaAccion&insLineaAccionId='+insLineaAccionId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -3768,7 +4173,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		insLineaAccion=JSON.parse(insLineaAccion);
 		
 		var institucion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion&institucionId='+insLineaAccion[0].institucionId,
+			url:'/tablero/ajaxSelects2?action=getInstitucion&institucionId='+insLineaAccion[0].institucionId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -3776,7 +4181,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		institucion = JSON.parse(institucion);
 		
 		var lineaAccion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId='+lineaAccionId,
+			url:'/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId='+lineaAccionId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -3784,7 +4189,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		lineaAccion = JSON.parse(lineaAccion);
 		
 		var unidadMedida = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+			url:'/tablero/ajaxSelects2?action=getUnidadMedida',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -3799,7 +4204,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		}
 
 		var hitoTipo = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getHitoTipo',
+			url:'/tablero/ajaxSelects2?action=getHitoTipo',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -3817,7 +4222,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		optionAcumulable+='<option value="FALSE" parametro="FALSE">No</option>';
 		
 		var actividades = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getCronograma&accionId='+accionId,
+			url:'/tablero/ajaxSelects2?action=getCronograma&accionId='+accionId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -3825,7 +4230,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		actividades = JSON.parse(actividades);
 		
 		var accion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&accionId='+accionId,
+			url:'/tablero/ajaxSelects2?action=getAccion&accionId='+accionId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -3833,7 +4238,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		accion = JSON.parse(accion);
 		
 		var accionCatalogo = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[0].accionCatalogoId,
+			url:'/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[0].accionCatalogoId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -3841,7 +4246,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		accionCatalogo = JSON.parse(accionCatalogo);
 		
 		var departamentos = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
+	    	url:'/tablero/ajaxSelects?action=getDepartamento',
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -3849,7 +4254,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		departamentos = JSON.parse(departamentos);
 		
 		var distritos = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito',
+	    	url:'/tablero/ajaxSelects?action=getDistrito',
 	      	type:'get',
 	      	dataType:'json',
 	      	async:false       
@@ -4020,7 +4425,40 @@ $("body").on("click", ".borrarAccion",function(event){
 		$('#cuerpoListaCronogramas').append(tablaCronograma);
 		$('#tablaActividades').append(cuerpoActividad);
 		$("#modalActividad").modal('show');
-		$("#dataTablesActividades").DataTable();
+		$("#dataTablesActividades").DataTable({
+			dom: 'Bfrtip',
+	        buttons: [
+	                    {
+	                        extend: 'copy',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+	                }
+	                    },
+	                    {
+	                        extend: 'csv',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+	                }
+	                    },
+	                    {
+	                        extend: 'excel',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+	                }
+	                    },
+	                    {
+	                        extend: 'pdf',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+	                }
+	                    },
+	                    {
+	                        extend: 'print',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+	                }
+	                    }
+	                ]});
 				
 	});
 	
@@ -4056,7 +4494,7 @@ $("body").on("click", ".editarCronograma", function(event){
 
 	
 	var actividades = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getCronograma&cronogramaId='+cronogramaId,
+		url:'/tablero/ajaxSelects2?action=getCronograma&cronogramaId='+cronogramaId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4065,7 +4503,7 @@ $("body").on("click", ".editarCronograma", function(event){
 	
 	
 	var unidadMedida = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+		url:'/tablero/ajaxSelects2?action=getUnidadMedida',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4079,7 +4517,7 @@ $("body").on("click", ".editarCronograma", function(event){
 	}
 	
 	var hitoTipo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getHitoTipo',
+		url:'/tablero/ajaxSelects2?action=getHitoTipo',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4174,7 +4612,7 @@ $("body").on("click", ".consultaBorrarCronograma",function(event){
 
    
 	var actividades = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getCronograma&cronogramaId='+cronogramaId,
+		url:'/tablero/ajaxSelects2?action=getCronograma&cronogramaId='+cronogramaId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4231,7 +4669,7 @@ $("body").on("click", ".borrarCronograma",function(event){
     var estatus = idParsed[1];
     
 	var actividades = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getCronograma&cronogramaId='+cronogramaId,
+		url:'/tablero/ajaxSelects2?action=getCronograma&cronogramaId='+cronogramaId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4413,7 +4851,7 @@ function actualizarTablaActividades(accion_id,insLineaAccionId,lineaAccionId,ins
 	
 	
 	var actividades = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getCronograma&accionId='+accionId,
+		url:'/tablero/ajaxSelects2?action=getCronograma&accionId='+accionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4421,7 +4859,7 @@ function actualizarTablaActividades(accion_id,insLineaAccionId,lineaAccionId,ins
 	actividades = JSON.parse(actividades);
 	
 	var unidadMedida = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+		url:'/tablero/ajaxSelects2?action=getUnidadMedida',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4429,7 +4867,7 @@ function actualizarTablaActividades(accion_id,insLineaAccionId,lineaAccionId,ins
 	unidadMedida = JSON.parse(unidadMedida);
 
 	var hitoTipo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getHitoTipo',
+		url:'/tablero/ajaxSelects2?action=getHitoTipo',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4437,7 +4875,7 @@ function actualizarTablaActividades(accion_id,insLineaAccionId,lineaAccionId,ins
 	hitoTipo = JSON.parse(hitoTipo);
 	
 	var accion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&accionId='+accionId,
+		url:'/tablero/ajaxSelects2?action=getAccion&accionId='+accionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4445,7 +4883,7 @@ function actualizarTablaActividades(accion_id,insLineaAccionId,lineaAccionId,ins
 	accion = JSON.parse(accion);
 	
 	var accionCatalogo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[0].accionCatalogoId,
+		url:'/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[0].accionCatalogoId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4513,12 +4951,51 @@ function actualizarTablaActividades(accion_id,insLineaAccionId,lineaAccionId,ins
 	$("#hitoTipoIdActividad").val('');
 	//$("#proporcionActividad").val('');
 	//$("#pesoActividad").val('');
-	$("#dataTablesActividades").DataTable();
+	$("#dataTablesActividades").DataTable({
+		dom: 'Bfrtip',
+        buttons: [
+                  {
+                      extend: 'copy',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+              }
+                  },
+                  {
+                      extend: 'csv',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+              }
+                  },
+                  {
+                      extend: 'excel',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+              }
+                  },
+                  {
+                      extend: 'pdf',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+              }
+                  },
+                  {
+                      extend: 'print',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+              }
+                  }
+              ]
+	});
 		
 }
 
-$("body").on("click", ".agregarProgramacion",function(event){ 
+function renderProgramacion(insLineaAccionId,lineaAccionId,institucionId,periodoId,accionId,cronogramaId){
 	
+	
+	if ( $("#modalProgramacion").length )
+	{
+		$("#modalProgramacion").remove();
+	}
 	if ( $("#modalActividad").length )
 	{
 		$("#modalActividad").remove();
@@ -4535,20 +5012,9 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	{
 		$("#modalBorrarHito").remove();
 	}	
-	var parametros = $(this).attr("parametros");
-    var idParsed = parametros.split("-");                                                            
-	
-	//Las siguentes 4 variables se utiliza en esta funcion para redibujar el modal anterior
-	var insLineaAccionId = idParsed[0];
-	var lineaAccionId = idParsed[1];
-	var institucionId = idParsed[2];
-	var periodoId = idParsed[3];
-	var accionId = idParsed[4];
-	var cronogramaId = idParsed[5];
-
 	
 	var cronogramas = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getCronograma&cronogramaId='+cronogramaId,
+		url:'/tablero/ajaxSelects2?action=getCronograma&cronogramaId='+cronogramaId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4556,7 +5022,7 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	cronogramas = JSON.parse(cronogramas);
 	
 	var programacionWebService = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getProgramacion&actividadId='+cronogramaId,
+		url:'/tablero/ajaxSelects2?action=getProgramacion&actividadId='+cronogramaId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4564,7 +5030,7 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	programacionWebService = JSON.parse(programacionWebService);
 	
 	var hitoTipo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getHitoTipo',
+		url:'/tablero/ajaxSelects2?action=getHitoTipo',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4572,7 +5038,7 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	hitoTipo = JSON.parse(hitoTipo);
 	
 	var accion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&accionId='+accionId,
+		url:'/tablero/ajaxSelects2?action=getAccion&accionId='+accionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4580,7 +5046,7 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	accion = JSON.parse(accion);
 	
 	var accionCatalogo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[0].accionCatalogoId,
+		url:'/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[0].accionCatalogoId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4588,7 +5054,7 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	accionCatalogo = JSON.parse(accionCatalogo);
 	
 	var unidadMedida = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+		url:'/tablero/ajaxSelects2?action=getUnidadMedida',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4596,7 +5062,7 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	unidadMedida = JSON.parse(unidadMedida);
 	
 	var lineaAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId='+lineaAccionId,
+		url:'/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId='+lineaAccionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4604,7 +5070,7 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	lineaAccion = JSON.parse(lineaAccion)
 	
 	var periodo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo&periodoId='+periodoId,
+		url:'/tablero/ajaxSelects2?action=getPeriodo&periodoId='+periodoId,
   		type:'get',
   		dataType:'json',
   		async:false       
@@ -4612,7 +5078,7 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	periodo = JSON.parse(periodo);
 	
 	var departamentos = $.ajax({
-    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
+    	url:'/tablero/ajaxSelects?action=getDepartamento',
       	type:'get',
       	dataType:'json',
       	async:false       
@@ -4620,7 +5086,7 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	departamentos = JSON.parse(departamentos);
 	
 	var distritos = $.ajax({
-    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito',
+    	url:'/tablero/ajaxSelects?action=getDistrito',
       	type:'get',
       	dataType:'json',
       	async:false       
@@ -4745,8 +5211,8 @@ $("body").on("click", ".agregarProgramacion",function(event){
 											
 							<% }%>		
 
-							'		      	<div class="row">'+ 
-							'		      		<div class="col-md-12">'+
+							'		      	<div class="row" id="tableCronograma">'+ 
+							'		      		<div class="col-md-12" >'+
 							'						<div class="box box-warning">'+
 							'		                	<div class="box-header with-border">'+
 							'								<h3 class="box-title">Hitos Programados</h3>'+
@@ -4777,7 +5243,8 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	
 	var tablaProgramacionHito1 ='	<div class="table-responsive">'+
 	'									<table class="table table-hover table-bordered" id="dataTablesProgramacionHito1">'+
-	'										<thead><tr class="active"><th>Cantidad</th><th>FechaEntrega</th><th>Versión</th><th>Cronograma</th><th>Unidad Medida</th><th class="text-center">Administrar</th></tr>'+
+	'										<thead><tr class="active"><th>Cantidad</th><th>FechaEntrega</th><th>Versión</th><th>Cronograma</th><th>Unidad Medida</th><th class="text-center">Administrar</th></tr></thead>'+
+	'										<tfoot><tr><th></th><th></th><th></th><th></th><th></th><th></th></tr></tfoot>'+
 	'										<tbody id="listaActividades">'+
 	'										</tbody>'+
 	'									</table>'+
@@ -4786,7 +5253,102 @@ $("body").on("click", ".agregarProgramacion",function(event){
 	$("#tablaListaProgramacionHito1").append(tablaProgramacionHito1);
 	$("#listaActividades").append(cuerpoActividades);
 	$("#modalProgramacion").modal('show');
-	$("#dataTablesProgramacionHito1").DataTable();
+	if ( $("#dataTablesProgramacionHito1").length ){
+		$('#dataTablesProgramacionHito1').DataTable().destroy();	
+	}
+	//$("#dataTablesProgramacionHito1").DataTable();
+	$('#dataTablesProgramacionHito1').dataTable({
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+ 
+         // saca los puntos y <del> de la cadena para pasarlo a entero
+            var intVal = function(i){
+            	if(typeof i==='string'){	
+            		i=i.replace(/[\."<\/*del>""Gs\."]/g, '');
+            		i=i.replace(/[","]/g, '.');
+            		i=i*1;		            		
+            	}else{
+            		if(typeof i==='number'){
+            			i=i;		            			
+            	}else{
+            		i=0;
+            	}
+            }
+            	return i;
+            };
+ 
+         // total general para todas las paginas de la columna
+            total0 = api
+                .column( 0 )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+ 
+         // total por pagina segun número de columna
+            pageTotal0 = api
+                .column( 0, { page: 'current'} )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+         
+         // se muestran los valores de los totales en el footer del table
+            $( api.column( 0 ).footer() ).html(
+            		'Total Pág. '+ numeroConComa(pageTotal0) +' (Total Gral. '+ numeroConComa(total0) +')'
+            );	         
+        },
+        dom: 'Bfrtip',
+        buttons: [
+                  {
+                      extend: 'copy',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3, 4 ]
+              }
+                  },
+                  {
+                      extend: 'csv',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3, 4 ]
+              }
+                  },
+                  {
+                      extend: 'excel',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3, 4 ]
+              }
+                  },
+                  {
+                      extend: 'pdf',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3, 4 ]
+              }
+                  },
+                  {
+                      extend: 'print',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3, 4 ]
+              }
+                  }
+              ]
+});
+	
+}
+
+$("body").on("click", ".agregarProgramacion",function(event){ 
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-");                                                            
+	
+	//Las siguentes 4 variables se utiliza en esta funcion para redibujar el modal anterior
+	var insLineaAccionId = idParsed[0];
+	var lineaAccionId = idParsed[1];
+	var institucionId = idParsed[2];
+	var periodoId = idParsed[3];
+	var accionId = idParsed[4];
+	var cronogramaId = idParsed[5];
+
+	renderProgramacion(insLineaAccionId,lineaAccionId,institucionId,periodoId,accionId,cronogramaId);
+		
 	
 });	
 
@@ -4838,69 +5400,43 @@ $("body").on("click", ".guardarProgramacion",function(event){
         	if(data.success == true)
         	{
         		
-        		var unidadMedida = $.ajax({
-        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
-        		  	type:'get',
-        		  	dataType:'json',
-        		  	async:false       
-        		}).responseText;
-        		unidadMedida = JSON.parse(unidadMedida);
+        		$("#tableCronograma").html("");
         		
-        		var programacion = $.ajax({
-        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getProgramacion&actividadId='+actividadId,
-        		  	type:'get',
-        		  	dataType:'json',
-        		  	async:false       
-        		}).responseText;
-        		programacion = JSON.parse(programacion);
-        		
-        		var cronogramas = $.ajax({
-        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getCronograma&cronogramaId='+cronogramaId,
-        		  	type:'get',
-        		  	dataType:'json',
-        		  	async:false       
-        		}).responseText;
-        		cronogramas = JSON.parse(cronogramas);
-        		
-        		var nombreUnidadMedidaHitoProgramado="";
-        		for(var g = 0; g < unidadMedida.length; g++ )
-        		{
-        			if(cronogramas[0].unidad_medida_id == unidadMedida[g].id)
-        			{
-        				nombreUnidadMedidaHitoProgramado = unidadMedida[g].descripcion;
-        			}
-        		}	        		
-        		
-        		var registroProgramacion="";
-        		for(var j = 0; j < programacion.length; j++)
-        		{
-        			if(onoff==true && programacion[j].borrado == true){
-        				//	
-        			}else{
-        				if(programacion[j].borrado == false)
-            			{
-                			<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-                				registroProgramacion += "<tr><td>"+numeroConComa(programacion[j].cantidad)+"</td><td>"+programacion[j].fechaEntrega+"</td><td>"+programacion[j].version+"</td><td>"+cronogramas[0].nombre+"</td><td>"+nombreUnidadMedidaHitoProgramado+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm consultaEditarHito'  data-toggle='tooltip' data-placement='top' title='Editar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacion[j].id+" ><span class='fa fa-pencil' ></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarHito' title='Borrar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacion[j].id+" ><span class='fa fa-trash' </span></button></td></tr>";
-            				<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-            					registroProgramacion += "<tr><td>"+numeroConComa(programacion[j].cantidad)+"</td><td>"+programacion[j].fechaEntrega+"</td><td>"+programacion[j].version+"</td><td>"+cronogramas[0].nombre+"</td><td>"+nombreUnidadMedidaHitoProgramado+"</td><td class='text-center'></td></tr>";
-            			<%}%>            			
-            			}else{
-            				<% if (attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("0")){%>
-                				registroProgramacion += "<tr><td><del>"+numeroConComa(programacion[j].cantidad)+"</del></td><td><del>"+programacion[j].fechaEntrega+"</del></td><td><del>"+programacion[j].version+"</del></td><td><del>"+cronogramas[0].nombre+"</del></td><td><del>"+nombreUnidadMedidaHitoProgramado+"</del></td><td class='text-center'><button type='button' class='btn btn-default btn-sm consultaBorrarHito' title='Restaurar Hito' parametros="+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'-'+programacion[j].id+" ><span class='fa fa-recycle' </span></button></td></tr>";
-                			<% }%>
-            			}	
-        			}
-        		}
-        		
-									
-        		$("#listaActividades").html("");
-        		$("#listaActividades").append(registroProgramacion);
+        		var tableProgamacion= "";
+        		tableProgamacion= 
+				'		      		<div class="col-md-12" >'+
+				'						<div class="box box-warning">'+
+				'		                	<div class="box-header with-border">'+
+				'								<h3 class="box-title">Hitos Programados</h3>'+
+				'	                  			<div class="box-tools pull-right">'+
+				'				                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>'+
+				'		                    		</button>'+
+				'		                    		<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>'+
+				'		                    		</button>'+
+				'		                  		</div>'+
+				'               			</div>'+//fin box-heder
+				'               			<div class="box-body" id="tablaListaProgramacionHito1">'+
+											//cuerpo del dataTable de ProgramacionHito1
+				'               			</div>'+//fin box-body
+				'                		</div>'+	
+				'                	</div>'+
+				'                </div>'+
+				
 
+				'		    </div>'+
+				'			<div class="modal-footer">'+
+		      	'			</div>'+														
+				'		</div>'+ 
+				'	</div>';
+						
+				$("#tableCronograma").append(tableProgamacion);	
         		
+        		renderProgramacion(insLineaAccionId,lineaAccionId,institucionId,periodoId,accionId,cronogramaId);
+
         	}else{
         		alert("ERROR");
         	}
-        	},
+        },
         //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
         error: function(data,status,er) {
         	
@@ -4908,8 +5444,8 @@ $("body").on("click", ".guardarProgramacion",function(event){
 	 });
 	}
 });	
-
-$("body").on("click", ".agregarAvance",function(event){
+ 
+function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId, accionId, actividadId){
 	
 	if ( $("#modalVincularProductos").length )
 	{
@@ -4935,23 +5471,12 @@ $("body").on("click", ".agregarAvance",function(event){
 	{
 		$("#modalAdministrador").remove();
 	}	
-	
-	var parametros = $(this).attr("parametros");
-    var idParsed = parametros.split("-");                                                            
-	
-	//Las siguentes 4 variables se utiliza en esta funcion para redibujar el modal anterior
-	var insLineaAccionId = idParsed[0];
-	var lineaAccionId = idParsed[1];
-	var institucionId = idParsed[2];
-	var periodoId = idParsed[3];
-	var accionId = idParsed[4];
-	var actividadId = idParsed[5];//es el id de la tabla actidad
-	
+			
     var f = new Date();
     if( (f.getMonth() +1) < 10 ){
     	var mes =( 0 +""+ (f.getMonth() +1));
     }else{
-    	var mes =f.getMonth();
+    	var mes =f.getMonth()+1;
     }
     
     if( (f.getDate()) < 10 ){
@@ -4962,7 +5487,7 @@ $("body").on("click", ".agregarAvance",function(event){
     var fechaActual = (f.getFullYear() + "-" + mes + "-" + dia);
     
 	var insLineaAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion&insLineaAccionId='+insLineaAccionId,
+		url:'/tablero/ajaxSelects2?action=getInsLineaAccion&insLineaAccionId='+insLineaAccionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4970,7 +5495,7 @@ $("body").on("click", ".agregarAvance",function(event){
 	insLineaAccion=JSON.parse(insLineaAccion);
 	
 	var institucion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion&institucionId='+insLineaAccion[0].institucionId,
+		url:'/tablero/ajaxSelects2?action=getInstitucion&institucionId='+insLineaAccion[0].institucionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4978,7 +5503,7 @@ $("body").on("click", ".agregarAvance",function(event){
 	institucion = JSON.parse(institucion);
     
 	var programacionWebService = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getProgramacion&actividadId='+actividadId,
+		url:'/tablero/ajaxSelects2?action=getProgramacion&actividadId='+actividadId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4986,7 +5511,7 @@ $("body").on("click", ".agregarAvance",function(event){
 	programacionWebService = JSON.parse(programacionWebService);
 		
 	var accion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&accionId='+accionId,
+		url:'/tablero/ajaxSelects2?action=getAccion&accionId='+accionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -4994,7 +5519,7 @@ $("body").on("click", ".agregarAvance",function(event){
 	accion = JSON.parse(accion);
 	
 	var accionCatalogo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[0].accionCatalogoId,
+		url:'/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[0].accionCatalogoId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -5002,7 +5527,7 @@ $("body").on("click", ".agregarAvance",function(event){
 	accionCatalogo = JSON.parse(accionCatalogo);
 	
 	var lineaAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId='+lineaAccionId,
+		url:'/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId='+lineaAccionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -5010,7 +5535,7 @@ $("body").on("click", ".agregarAvance",function(event){
 	lineaAccion = JSON.parse(lineaAccion)
 	
 	var webServicesAvance = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvance&actividadId='+actividadId,
+		url:'/tablero/ajaxSelects2?action=getAvance&actividadId='+actividadId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -5018,7 +5543,7 @@ $("body").on("click", ".agregarAvance",function(event){
 	webServicesAvance = JSON.parse(webServicesAvance);
 	
 	var actividades = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getCronograma&cronogramaId='+actividadId,
+		url:'/tablero/ajaxSelects2?action=getCronograma&cronogramaId='+actividadId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -5026,7 +5551,7 @@ $("body").on("click", ".agregarAvance",function(event){
 	actividades = JSON.parse(actividades);
 	
 	var unidadMedida = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+		url:'/tablero/ajaxSelects2?action=getUnidadMedida',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -5034,7 +5559,7 @@ $("body").on("click", ".agregarAvance",function(event){
 	unidadMedida = JSON.parse(unidadMedida);
 	
 	var departamentos = $.ajax({
-    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
+    	url:'/tablero/ajaxSelects?action=getDepartamento',
       	type:'get',
       	dataType:'json',
       	async:false       
@@ -5042,7 +5567,7 @@ $("body").on("click", ".agregarAvance",function(event){
 	departamentos = JSON.parse(departamentos);
 	
 	var distritos = $.ajax({
-    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito',
+    	url:'/tablero/ajaxSelects?action=getDistrito',
       	type:'get',
       	dataType:'json',
       	async:false       
@@ -5198,7 +5723,7 @@ $("body").on("click", ".agregarAvance",function(event){
 							'                		</div>'+	
 							'                	</div>'+
 							
-							'		      		<div class="col-md-6">'+
+							'		      		<div class="col-md-6" id="tableAvance">'+
 							'						<div class="box box-warning">'+
 							'		                	<div class="box-header with-border">'+
 							'		                  		<h3 class="box-title">Lista de Avance</h3>'+
@@ -5226,7 +5751,8 @@ $("body").on("click", ".agregarAvance",function(event){
 	
 	var tablaListaAvance ='<div class="table-responsive">'+
 		'							<table class="table table-hover table-bordered" id="dataTablesListaAvance">'+
-		'								<thead><tr class="active"><th>Justificación</th><th>cantidad</th><th>Fecha Entrega</th><th>Administrar</th></tr>'+
+		'								<thead><tr class="active"><th>Justificación</th><th>cantidad</th><th>Fecha Entrega</th><th>Administrar</th></tr></thead>'+
+		'								<tfoot><tr><th></th><th></th><th></th><th></th></tr></tfoot>'+
 		'								<tbody id="listaAvances">'+
 		'								</tbody>'+
 		'							</table>'+
@@ -5238,7 +5764,8 @@ $("body").on("click", ".agregarAvance",function(event){
 	
 	var tablaProgramacionHito2 ='<div class="table-responsive">'+
 	'								<table class="table table-hover table-bordered" id="dataTablesProgramacionHito2">'+
-	'									<thead><tr class="active"><th>Cantidad</th><th>FechaEntrega</th><th>Unidad Medida</th></tr>'+
+	'									<thead><tr class="active"><th>Cantidad</th><th>FechaEntrega</th><th>Unidad Medida</th></tr></thead>'+
+	'									<tfoot><tr><th></th><th></th><th></th></tr></tfoot>'+
 	'									<tbody id="listaActividades">'+
 	'									</tbody>'+
 	'								</table>'+
@@ -5247,10 +5774,173 @@ $("body").on("click", ".agregarAvance",function(event){
 	$("#tablaListaProgramacionHito2").append(tablaProgramacionHito2);
 	$("#listaActividades").append(cuerpoActividades);
 	$("#modalAvance").modal('show');
-	$("#dataTablesListaAvance").DataTable();
-	$("#dataTablesProgramacionHito2").DataTable();
-		
+	//$("#dataTablesListaAvance").DataTable();
+	$("#dataTablesListaAvance").dataTable({
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+ 
+         // saca los puntos y <del> de la cadena para pasarlo a entero
+            var intVal = function(i){
+            	if(typeof i==='string'){	
+            		i=i.replace(/[\."<\/*del>""Gs\."]/g, '');
+            		i=i.replace(/[","]/g, '.');
+            		i=i*1;		            		
+            	}else{
+            		if(typeof i==='number'){
+            			i=i;		            			
+            	}else{
+            		i=0;
+            	}
+            }
+            	return i;
+            };
+ 
+         // total general para todas las paginas de la columna
+            total1 = api
+                .column( 1 )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+ 
+         // total por pagina segun número de columna
+            pageTotal1 = api
+                .column( 1, { page: 'current'} )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+         
+         // se muestran los valores de los totales en el footer del table
+            $( api.column( 1 ).footer() ).html(
+            		'Total Pág. '+ numeroConComa(pageTotal1) +' (Total Gral. '+ numeroConComa(total1) +')'
+            );	         
+        },
+        dom: 'Bfrtip',
+        buttons: [
+                  {
+                      extend: 'copy',
+                      exportOptions: {
+                  columns: [ 0, 1, 2 ]
+              }
+                  },
+                  {
+                      extend: 'csv',
+                      exportOptions: {
+                  columns: [ 0, 1, 2 ]
+              }
+                  },
+                  {
+                      extend: 'excel',
+                      exportOptions: {
+                  columns: [ 0, 1, 2 ]
+              }
+                  },
+                  {
+                      extend: 'pdf',
+                      exportOptions: {
+                  columns: [ 0, 1, 2 ]
+              }
+                  },
+                  {
+                      extend: 'print',
+                      exportOptions: {
+                  columns: [ 0, 1, 2 ]
+              }
+                  }
+              ]
+	});
+	//$("#dataTablesProgramacionHito2").DataTable();
+	$('#dataTablesProgramacionHito2').dataTable({
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+ 
+         // saca los puntos y <del> de la cadena para pasarlo a entero
+            var intVal = function(i){
+            	if(typeof i==='string'){	
+            		i=i.replace(/[\."<\/*del>""Gs\."]/g, '');
+            		i=i.replace(/[","]/g, '.');
+            		i=i*1;		            		
+            	}else{
+            		if(typeof i==='number'){
+            			i=i;		            			
+            	}else{
+            		i=0;
+            	}
+            }
+            	return i;
+            };
+ 
+         // total general para todas las paginas de la columna
+            total0 = api
+                .column( 0 )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+ 
+         // total por pagina segun número de columna
+            pageTotal0 = api
+                .column( 0, { page: 'current'} )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+         
+         // se muestran los valores de los totales en el footer del table
+            $( api.column( 0 ).footer() ).html(
+            		'Total Pág. '+ numeroConComa(pageTotal0) +' (Total Gral. '+ numeroConComa(total0) +')'
+            );	         
+        },
+        dom: 'Bfrtip',
+        buttons: [
+                  {
+                      extend: 'copy',
+                      exportOptions: {
+                  columns: [ 0, 1, 2 ]
+              }
+                  },
+                  {
+                      extend: 'csv',
+                      exportOptions: {
+                  columns: [ 0, 1, 2 ]
+              }
+                  },
+                  {
+                      extend: 'excel',
+                      exportOptions: {
+                  columns: [ 0, 1, 2 ]
+              }
+                  },
+                  {
+                      extend: 'pdf',
+                      exportOptions: {
+                  columns: [ 0, 1, 2 ]
+              }
+                  },
+                  {
+                      extend: 'print',
+                      exportOptions: {
+                  columns: [ 0, 1, 2 ]
+              }
+                  }
+              ]
+});
+}
+$("body").on("click", ".agregarAvance",function(event){
 	
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-");                                                            
+	
+	//Las siguentes 4 variables se utiliza en esta funcion para redibujar el modal anterior
+	var insLineaAccionId = idParsed[0];
+	var lineaAccionId = idParsed[1];
+	var institucionId = idParsed[2];
+	var periodoId = idParsed[3];
+	var accionId = idParsed[4];
+	var actividadId = idParsed[5];//es el id de la tabla actidad	
+		
+	renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId, accionId, actividadId);
 });
 
 $("body").on("click", ".guardarAvance",function(event){
@@ -5303,8 +5993,28 @@ $("body").on("click", ".guardarAvance",function(event){
 	        success: function (data) {
 	        	if(data.success == true)
 	        	{
-	        		var webServicesAvance = $.ajax({
-	        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvance&actividadId='+actividadId,
+	        		$("#tableAvance").html("");
+	        			        		
+	        		var tableAvance="";
+	        		tableAvance=
+					'						<div class="box box-warning">'+
+					'		                	<div class="box-header with-border">'+
+					'		                  		<h3 class="box-title">Lista de Avance</h3>'+
+					'	                  			<div class="box-tools pull-right">'+
+					'		                  		</div>'+
+					'               			</div>'+//fin box-heder
+					'               			<div class="box-body" id="tablaListaAvanceBox">'+
+													//cuerpo de dataTable de lista de Avances
+					'               			</div>'+//fin box-body
+					'                		</div>'+	
+					'                	</div>';
+					
+					$("#tableAvance").html(tableAvance);
+					
+					renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId, accionId, actividadId);
+	        		
+	        		/* var webServicesAvance = $.ajax({
+	        			url:'/tablero/ajaxSelects2?action=getAvance&actividadId='+actividadId,
 	        		  	type:'get',
 	        		  	dataType:'json',
 	        		  	async:false       
@@ -5318,7 +6028,7 @@ $("body").on("click", ".guardarAvance",function(event){
 	        		}
 	        		
 	        		$("#listaAvances").html("");
-	        		$("#listaAvances").html(cuerpoAvance);
+	        		$("#listaAvances").html(cuerpoAvance); */
 	        		
 	        	}else{
 	        		alert("ERROR");        		
@@ -5333,8 +6043,179 @@ $("body").on("click", ".guardarAvance",function(event){
 	}
 });	
 
-$("body").on("click", ".agregarModalAdministrador",function(event){
+function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,periodoId,accionId,actividadId,avanceId){
 	
+	
+	if ($("#modalAdministrador").length){
+		$("#modalAdministrador").remove();
+	}
+		
+	if ( $("#tableCosto").length )
+	{
+		var tableCosto="";
+		tableCosto=
+		'									<div class="box box-default box-solid">'+
+		'		                				<div class="box-header with-border">'+
+		'		                  					<h3 class="box-title">Lista Costos</h3>'+
+		'	                  						<div class="box-tools pull-right">'+
+		'				                    			<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+		'		                    					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>'+
+		'		                  					</div>'+
+		'              							</div>'+
+		'              						<div class="box-body" id="cuerpoTablaCosto">'+	
+		'										<div class="table-responsive">'+
+		'											<table class="table table-hover table-bordered" id="dataTableAvanceCosto">'+
+		'												<thead>'+
+		'													<tr class="active"><th>Producto</th><th>ObjetoGasto</th><th>Monto</th><th class="text-center">Administrar</th></tr>'+
+		'												</thead>'+
+		'												<tfoot>'+
+		'													<tr><th></th><th></th><th></th><th></th></tr>'+
+		'												</tfoot>'+
+		'												<tbody id="listaCosto">'+
+		'												</tbody>'+
+		'											</table>'+
+		'				      					</div>'+
+		
+		'				      				</div>'+
+		'				      			</div>'+
+		'              				</div>'+
+	
+		'              				</div>'+
+		'                		</div>';	
+		$("#tableCosto").html("");
+		$("#tableCosto").html(tableCosto);
+	}
+	
+	if ( $("#tableAvance").length )
+	{
+		
+		var webServicesAvance = $.ajax({
+			url:'/tablero/ajaxSelects2?action=getAvance&avanceId='+avanceId,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		webServicesAvance = JSON.parse(webServicesAvance); 
+		
+		var tableAvance="";
+		tableAvance=
+			'						<div class="box box-warning box-solid">'+
+			'		                	<div class="box-header with-border">'+
+			'		                  		<h3 class="box-title">Avance</h3>'+
+			'	                  			<div class="box-tools pull-right">'+
+			'				                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>'+
+			'		                    		</button>'+
+			'		                    		<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>'+
+			'		                    		</button>'+
+			'		                  		</div>'+
+			'               			</div>'+//fin box-heder
+			'               			<div class="box-body">'+
+			
+			'								<div class="table-responsive">'+
+			'									<table class="table table-hover table-bordered" id="dataTableAvance">'+
+			'										<thead>'+
+			'											<tr class="active"><th>Justificación</th><th>Cantidad</th><th>FechaEntrega</th><th class="text-center">Administrar</th></tr>'+
+			' 										</thead>'+
+			'										<tfoot>'+
+			'											<tr><th></th><th></th><th></th><th></th></tr>'+
+			' 										</tfoot>'+
+			'										<tbody>';
+			if(webServicesAvance[0].borrado == true)
+			{
+				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
+				tableAvance +=	'													<tr><td><del>'+webServicesAvance[0].justificacion+'</del></td><td><del>'+numeroConComa(webServicesAvance[0].cantidad)+'</del></td><td><del>'+webServicesAvance[0].fechaEntrega+'</del></td></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaBorrarAvance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' data-toggle="tooltip" data-placement="top" title="Restaurar" ><span class="fa fa-recycle"></span></button></td></tr>';
+				<%}%>
+			}else{
+				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
+				tableAvance +=	'													<tr><td>'+webServicesAvance[0].justificacion+'</td><td>'+numeroConComa(webServicesAvance[0].cantidad)+'</td><td>'+webServicesAvance[0].fechaEntrega+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarAvance" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarAvance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' data-toggle="tooltip" data-placement="top" title="Borrar" ><span class="fa fa-trash"></span></button></td></tr>';
+				<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
+				tableAvance +=	'													<tr><td>'+webServicesAvance[0].justificacion+'</td><td>'+numeroConComa(webServicesAvance[0].cantidad)+'</td><td>'+webServicesAvance[0].fechaEntrega+'</td><td class="text-center"></td></tr>';
+				<%}%>
+			}
+			
+			tableAvance +=	'										</tbody>'+
+			'									</table>'+
+			'				      			</div>'+							
+			
+			'               			</div>'+//fin box-body
+			'							<div class="modal-footer">'+ 
+			'							</div>'+
+			'                		</div>';	
+			
+			
+		$("#tableAvance").html("");
+		$("#tableAvance").html(tableAvance);
+	}		
+		
+	if ( $("#tableBeneficiario").length )
+	{
+		
+		$("#tableBeneficiario").html("");
+		
+		var tableBeneficiario="";
+		tableBeneficiario=
+		'									<div class="box box-default box-solid">'+
+		'		                				<div class="box-header with-border">'+
+		'		                  					<h3 class="box-title">Lista Beneficiarios</h3>'+
+		'	                  						<div class="box-tools pull-right">'+
+		'				                    			<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+		'		                    					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>'+
+		'		                  					</div>'+
+		'              							</div>'+
+		'              						<div class="box-body" id="cuerpoTablaBeneficiario">'+	
+		'										<div class="table-responsive">'+
+		'											<table class="table table-hover table-bordered" id="dataTableBeneficiario">'+
+		'												<thead>'+
+		'													<tr class="active"><th>Tipo</th><th>Grupo</th><th>Descripción</th><th>Cantidad</th><th class="text-center">Administrar</th></tr>'+
+		'												</thead>'+
+		'												<tfoot>'+
+		'													<tr><th></th><th></th><th></th><th></th><th></th></tr>'+
+		'												</tfoot>'+
+		'												<tbody id="listaBeneficiario">'+
+		'												</tbody>'+
+		'											</table>'+
+		'				      					</div>'+
+		
+		'				      				</div>'+
+		'				      			</div>';
+		$("#tableBeneficiario").html("");
+		$("#tableBeneficiario").html(tableBeneficiario); 
+	}
+	
+	if ( $("#tableEvidencia").length )
+	{
+			
+		var tableEvidencia="";
+		tableEvidencia=
+			'									<div class="box box-default box-solid">'+
+			'		                				<div class="box-header with-border">'+
+			'		                  					<h3 class="box-title">Lista Evidencia</h3>'+
+			'	                  						<div class="box-tools pull-right">'+
+			'				                    			<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+			'		                    					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>'+
+			'		                  					</div>'+
+			'              							</div>'+
+			'              						<div class="box-body" id="cuerpoTablaEvidencia">'+	
+			'										<div class="table-responsive">'+
+			'											<table class="table table-hover table-bordered" id="dataTableEvidencia">'+
+			'												<thead>'+
+			'													<tr class="active"><th>Nombre</th><th class="text-center">Administrar</th></tr>'+
+			'												</thead>'+
+			'												<tfoot>'+
+			'													<tr><th></th><th></th></tr>'+
+			'												</tfoot>'+
+			'												<tbody  id="listaEvidencia">'+
+			
+			'												</tbody>'+
+			'											</table>'+
+			'				      					</div>'+
+			
+			'				      				</div>';
+		$("#tableEvidencia").html("");
+		$("#tableEvidencia").html(tableEvidencia);
+	
+	}	
+		
 	if ( $("#modalAvance").length )
 	{
 		$("#modalAvance").remove();
@@ -5371,23 +6252,9 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	{
 		$("#modalEditarBeneficiario").remove();
 	}	
-
-
-	var parametros = $(this).attr("parametros");
-    var idParsed = parametros.split("-");                                                            
-	
-	//Las siguentes variables se utiliza en esta funcion para redibujar el modal anterior
-	var insLineaAccionId = idParsed[0];
-	var lineaAccionId = idParsed[1];
-	var institucionId = idParsed[2]; 
-	var periodoId = idParsed[3];
-	var accionId = idParsed[4];
-	var actividadId = idParsed[5];
-	var avanceId = idParsed[6];//es el id de la tabla avance
-	
 	
 	var insLineaAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion&insLineaAccionId='+insLineaAccionId,
+		url:'/tablero/ajaxSelects2?action=getInsLineaAccion&insLineaAccionId='+insLineaAccionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -5395,7 +6262,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	insLineaAccion=JSON.parse(insLineaAccion);
 	
 	var institucion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion&institucionId='+insLineaAccion[0].institucionId,
+		url:'/tablero/ajaxSelects2?action=getInstitucion&institucionId='+insLineaAccion[0].institucionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -5403,7 +6270,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	institucion = JSON.parse(institucion);
 	
 	var lineaAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId='+lineaAccionId,
+		url:'/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId='+lineaAccionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -5411,7 +6278,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	lineaAccion = JSON.parse(lineaAccion);
 	
 	var accion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&accionId='+accionId,
+		url:'/tablero/ajaxSelects2?action=getAccion&accionId='+accionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -5419,7 +6286,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	accion = JSON.parse(accion);
 	
 	var accionCatalogo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[0].accionCatalogoId,
+		url:'/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[0].accionCatalogoId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -5427,7 +6294,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	accionCatalogo = JSON.parse(accionCatalogo);
 	
 	var actividades = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getCronograma&cronogramaId='+actividadId,
+		url:'/tablero/ajaxSelects2?action=getCronograma&cronogramaId='+actividadId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -5435,7 +6302,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	actividades = JSON.parse(actividades);
 	
 	var unidadMedida = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+		url:'/tablero/ajaxSelects2?action=getUnidadMedida',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -5452,7 +6319,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	}
 
 	var webServicesAvance = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvance&avanceId='+avanceId,
+		url:'/tablero/ajaxSelects2?action=getAvance&avanceId='+avanceId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -5472,7 +6339,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	var cuerpoEvidencia = renderEvidencia(avanceId,parametrosEvidencia);
 	
 	var webServicesAvanceCosto = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCosto&avanceId='+avanceId,
+		url:'/tablero/ajaxSelects2?action=getAvanceCosto&avanceId='+avanceId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -5501,7 +6368,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	}
 		
 	var webServicesBeneficiarioTipo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioTipo',
+		url:'/tablero/ajaxSelects2?action=getBeneficiarioTipo',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -5515,7 +6382,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	}
 	
 	var webServicesBeneficiario = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiario&avanceId='+avanceId,
+		url:'/tablero/ajaxSelects2?action=getBeneficiario&avanceId='+avanceId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -5526,7 +6393,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	for(var a = 0; a < webServicesBeneficiario.length; a++)
 	{
 		var webServicesBeneficiarioTipo = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioTipo&beneficiarioTipoId='+webServicesBeneficiario[a].tipoId,
+			url:'/tablero/ajaxSelects2?action=getBeneficiarioTipo&beneficiarioTipoId='+webServicesBeneficiario[a].tipoId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -5534,7 +6401,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 		webServicesBeneficiarioTipo = JSON.parse(webServicesBeneficiarioTipo);
 		
 		var webServicesBeneficiarioGrupo = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioGrupoId='+webServicesBeneficiario[a].grupoId,
+			url:'/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioGrupoId='+webServicesBeneficiario[a].grupoId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -5560,7 +6427,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	}
 	
 	var webServicesProductoObjetoGasto = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getProductoObjetoGasto&accionId='+accionId,
+		url:'/tablero/ajaxSelects2?action=getProductoObjetoGasto&accionId='+accionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -5585,7 +6452,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'		    <div class="modal-body">'+
 									
 									'		      	<div class="row">'+ 
-									'		      		<div class="col-md-6">'+
+									'		      		<div class="col-md-6" id="tableAvance">'+
 									'						<div class="box box-warning box-solid">'+
 									'		                	<div class="box-header with-border">'+
 									'		                  		<h3 class="box-title">Avance</h3>'+
@@ -5603,6 +6470,9 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'										<thead>'+
 									'											<tr class="active"><th>Justificación</th><th>Cantidad</th><th>FechaEntrega</th><th class="text-center">Administrar</th></tr>'+
 									' 										</thead>'+
+									'										<tfoot>'+
+									'											<tr><th></th><th></th><th></th><th></th></tr>'+
+									' 										</tfoot>'+
 									'										<tbody>';
 																				if(webServicesAvance[0].borrado == true)
 																				{
@@ -5676,7 +6546,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									<% }%>	
 
 									
-									'		      					<div class="col-md-12">'+
+									'		      					<div class="col-md-12" id="tableBeneficiario">'+
 									'									<div class="box box-default box-solid">'+
 									'		                				<div class="box-header with-border">'+
 									'		                  					<h3 class="box-title">Lista Beneficiarios</h3>'+
@@ -5691,6 +6561,9 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'												<thead>'+
 									'													<tr class="active"><th>Tipo</th><th>Grupo</th><th>Descripción</th><th>Cantidad</th><th class="text-center">Administrar</th></tr>'+
 									'												</thead>'+
+									'												<tfoot>'+
+									'													<tr><th></th><th></th><th></th><th></th><th></th></tr>'+
+									'												</tfoot>'+
 									'												<tbody id="listaBeneficiario">'+
 									'												</tbody>'+
 									'											</table>'+
@@ -5763,7 +6636,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									<% }%>	
 
 
-									'		      					<div class="col-md-12">'+
+									'		      					<div class="col-md-12" id="tableCosto">'+
 									'									<div class="box box-default box-solid">'+
 									'		                				<div class="box-header with-border">'+
 									'		                  					<h3 class="box-title">Lista Costos</h3>'+
@@ -5778,6 +6651,9 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'												<thead>'+
 									'													<tr class="active"><th>Producto</th><th>ObjetoGasto</th><th>Monto</th><th class="text-center">Administrar</th></tr>'+
 									'												</thead>'+
+									'												<tfoot>'+
+									'													<tr><th></th><th></th><th></th><th></th></tr>'+
+									'												</tfoot>'+
 									'												<tbody id="listaCosto">'+
 									'												</tbody>'+
 									'											</table>'+
@@ -5852,7 +6728,7 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									<% }%>	
 
 
-									'		      					<div class="col-md-12">'+
+									'		      					<div class="col-md-12" id="tableEvidencia">'+
 									'									<div class="box box-default box-solid">'+
 									'		                				<div class="box-header with-border">'+
 									'		                  					<h3 class="box-title">Lista Evidencia</h3>'+
@@ -5867,6 +6743,9 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 									'												<thead>'+
 									'													<tr class="active"><th>Nombre</th><th class="text-center">Administrar</th></tr>'+
 									'												</thead>'+
+									'												<tfoot>'+
+									'													<tr><th></th><th></th></tr>'+
+									'												</tfoot>'+
 									'												<tbody  id="listaEvidencia">'+
 									
 									'												</tbody>'+
@@ -5902,13 +6781,291 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 	$("#modalAdministrador").modal('show');	
 	$("#beneficiarioTipo").change();
 	$("#productoObjetoGasto").change();
-	$("#dataTableEvidencia").DataTable();
-	$("#dataTableAvanceCosto").DataTable();
-	$("#dataTableBeneficiario").DataTable();
-	$("#dataTableAvance").DataTable();
+	//$("#dataTableEvidencia").DataTable();
+	$('#dataTableEvidencia').dataTable({ 
+        dom: 'Bfrtip',
+        buttons: [
+                  {
+                      extend: 'copy',
+                      exportOptions: {
+                  columns: [ 0 ]
+              }
+                  },
+                  {
+                      extend: 'csv',
+                      exportOptions: {
+                  columns: [ 0 ]
+              }
+                  },
+                  {
+                      extend: 'excel',
+                      exportOptions: {
+                  columns: [ 0 ]
+              }
+                  },
+                  {
+                      extend: 'pdf',
+                      exportOptions: {
+                  columns: [ 0 ]
+              }
+                  },
+                  {
+                      extend: 'print',
+                      exportOptions: {
+                  columns: [ 0 ]
+              }
+                  }
+              ]
+	});
+	//$("#dataTableAvanceCosto").DataTable();
+	$('#dataTableAvanceCosto').dataTable({
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+ 
+         // saca los puntos y <del> de la cadena para pasarlo a entero
+            var intVal = function(i){
+            	if(typeof i==='string'){	
+            		i=i.replace(/[\."<\/*del>""Gs\."]/g, '');
+            		i=i.replace(/[","]/g, '.');
+            		i=i*1;		            		
+            	}else{
+            		if(typeof i==='number'){
+            			i=i;		            			
+            	}else{
+            		i=0;
+            	}
+            }
+            	return i;
+            };
+ 
+         // total general para todas las paginas de la columna
+            total2 = api
+                .column( 2 )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+ 
+         // total por pagina segun número de columna
+            pageTotal2 = api
+                .column( 2, { page: 'current'} )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+         
+         // se muestran los valores de los totales en el footer del table
+            $( api.column( 2 ).footer() ).html(
+            		'Total Pág. '+ numeroConComa(pageTotal2) +' (Total Gral. '+ numeroConComa(total2) +')'
+            );	         
+        },
+        dom: 'Bfrtip',
+        buttons: [
+                  {
+                      extend: 'copy',
+                      exportOptions: {
+                  columns: [ 0, 1, 2 ]
+              }
+                  },
+                  {
+                      extend: 'csv',
+                      exportOptions: {
+                  columns: [ 0, 1, 2 ]
+              }
+                  },
+                  {
+                      extend: 'excel',
+                      exportOptions: {
+                  columns: [ 0, 1, 2 ]
+              }
+                  },
+                  {
+                      extend: 'pdf',
+                      exportOptions: {
+                  columns: [ 0, 1, 2 ]
+              }
+                  },
+                  {
+                      extend: 'print',
+                      exportOptions: {
+                  columns: [ 0, 1, 2 ]
+              }
+                  }
+              ]
+	}); 
+	//$("#dataTableBeneficiario").DataTable();
+	$('#dataTableBeneficiario').dataTable({
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+ 
+         // saca los puntos y <del> de la cadena para pasarlo a entero
+            var intVal = function(i){
+            	if(typeof i==='string'){	
+            		i=i.replace(/[\."<\/*del>""Gs\."]/g, '');
+            		i=i.replace(/[","]/g, '.');
+            		i=i*1;		            		
+            	}else{
+            		if(typeof i==='number'){
+            			i=i;		            			
+            	}else{
+            		i=0;
+            	}
+            }
+            	return i;
+            };
+ 
+         // total general para todas las paginas de la columna
+            total3 = api
+                .column( 3 )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+ 
+         // total por pagina segun número de columna
+            pageTotal3 = api
+                .column( 3, { page: 'current'} )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+         
+         // se muestran los valores de los totales en el footer del table
+            $( api.column( 3 ).footer() ).html(
+            		'Total Pág. '+ numeroConComa(pageTotal3) +' (Total Gral. '+ numeroConComa(total3) +')'
+            );	         
+        },
+        dom: 'Bfrtip',
+        buttons: [
+                  {
+                      extend: 'copy',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3 ]
+              }
+                  },
+                  {
+                      extend: 'csv',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3 ]
+              }
+                  },
+                  {
+                      extend: 'excel',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3 ]
+              }
+                  },
+                  {
+                      extend: 'pdf',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3 ]
+              }
+                  },
+                  {
+                      extend: 'print',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3 ]
+              }
+                  }
+              ]
+	}); 
 	
-	
+	//$("#dataTableAvance").DataTable();
+	$('#dataTableAvance').dataTable({
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+ 
+         // saca los puntos y <del> de la cadena para pasarlo a entero
+            var intVal = function(i){
+            	if(typeof i==='string'){	
+            		i=i.replace(/[\."<\/*del>""Gs\."]/g, '');
+            		i=i.replace(/[","]/g, '.');
+            		i=i*1;		            		
+            	}else{
+            		if(typeof i==='number'){
+            			i=i;		            			
+            	}else{
+            		i=0;
+            	}
+            }
+            	return i;
+            };
+ 
+         // total general para todas las paginas de la columna
+            total1 = api
+                .column( 1 )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+ 
+         // total por pagina segun número de columna
+            pageTotal1 = api
+                .column( 1, { page: 'current'} )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+         
+         // se muestran los valores de los totales en el footer del table
+            $( api.column( 1 ).footer() ).html(
+            		'Total Pág. '+ numeroConComa(pageTotal1) +' (Total Gral. '+ numeroConComa(total1) +')'
+            );	         
+        },
+        dom: 'Bfrtip',
+        buttons: [
+                  {
+                      extend: 'copy',
+                      exportOptions: {
+                  columns: [ 0, 1, 2 ]
+              }
+                  },
+                  {
+                      extend: 'csv',
+                      exportOptions: {
+                  columns: [ 0, 1, 2 ]
+              }
+                  },
+                  {
+                      extend: 'excel',
+                      exportOptions: {
+                  columns: [ 0, 1, 2 ]
+              }
+                  },
+                  {
+                      extend: 'pdf',
+                      exportOptions: {
+                  columns: [ 0, 1, 2 ]
+              }
+                  },
+                  {
+                      extend: 'print',
+                      exportOptions: {
+                  columns: [ 0, 1, 2 ]
+              }
+                  }
+              ]
+}); 
 
+	
+}
+
+
+$("body").on("click", ".agregarModalAdministrador",function(event){
+	
+	var parametros = $(this).attr("parametros");
+    var idParsed = parametros.split("-");                                                            
+	
+	//Las siguentes variables se utiliza en esta funcion para redibujar el modal anterior
+	var insLineaAccionId = idParsed[0];
+	var lineaAccionId = idParsed[1];
+	var institucionId = idParsed[2]; 
+	var periodoId = idParsed[3];
+	var accionId = idParsed[4];
+	var actividadId = idParsed[5];
+	var avanceId = idParsed[6];//es el id de la tabla avance
+	
+	renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,periodoId,accionId,actividadId,avanceId);
 });	
 
 /* $(document).ready(function(){
@@ -5925,7 +7082,7 @@ $("body").on("change", "#productoObjetoGasto",function(event){
 	var productoObjetoGastoId = $("#productoObjetoGasto option:selected").val();
 	if (productoObjetoGastoId != undefined){
 		var webServicesDatosProducto = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getProductoObjetoGasto&productoObjetoGastoId='+productoObjetoGastoId,
+			url:'/tablero/ajaxSelects2?action=getProductoObjetoGasto&productoObjetoGastoId='+productoObjetoGastoId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false,
@@ -5937,7 +7094,7 @@ $("body").on("change", "#productoObjetoGasto",function(event){
 		webServicesDatosProducto = JSON.parse(webServicesDatosProducto);
 		
 		var webServicesObjetoGastoCosto = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getObjetoGastoCosto&nivel='+webServicesDatosProducto[0].nivelId+'&entidad='+webServicesDatosProducto[0].entidadId+'&tiprograma='+webServicesDatosProducto[0].tiprogramaId+'&programa='+webServicesDatosProducto[0].programaId+'&subprograma='+webServicesDatosProducto[0].subprogramaId+'&proyecto='+webServicesDatosProducto[0].proyectoId+'&producto='+webServicesDatosProducto[0].productoId+'&anho=2016',
+			url:'/tablero/ajaxSelects?action=getObjetoGastoCosto&nivel='+webServicesDatosProducto[0].nivelId+'&entidad='+webServicesDatosProducto[0].entidadId+'&tiprograma='+webServicesDatosProducto[0].tiprogramaId+'&programa='+webServicesDatosProducto[0].programaId+'&subprograma='+webServicesDatosProducto[0].subprogramaId+'&proyecto='+webServicesDatosProducto[0].proyectoId+'&producto='+webServicesDatosProducto[0].productoId+'&anho=2016',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -5962,25 +7119,27 @@ $("body").on("change", "#productoObjetoGasto",function(event){
 
 $("body").on("change", "#beneficiarioTipo",function(event){
 	//var departamentoId = $(this).attr("parametro");
+		
 	var beneficiarioTipoId = $("#beneficiarioTipo option:selected").val();
 	
-	var webServicesBeneficiarioGrupo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioTipoId='+beneficiarioTipoId,
-	  	type:'get',
-	  	dataType:'json',
-	  	async:false       
-	}).responseText;
-	webServicesBeneficiarioGrupo = JSON.parse(webServicesBeneficiarioGrupo);
-	
-	var optionBeneficiarioGrupo="";
-	
-	for(var o = 0; o < webServicesBeneficiarioGrupo.length; o++){
-		optionBeneficiarioGrupo+='<option value="'+webServicesBeneficiarioGrupo[o].id+'" >'+webServicesBeneficiarioGrupo[o].nombre+'</option>';
+	if(beneficiarioTipoId !== undefined){
+		var webServicesBeneficiarioGrupo = $.ajax({
+			url:'/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioTipoId='+beneficiarioTipoId,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		webServicesBeneficiarioGrupo = JSON.parse(webServicesBeneficiarioGrupo);
+		
+		var optionBeneficiarioGrupo="";
+		
+		for(var o = 0; o < webServicesBeneficiarioGrupo.length; o++){
+			optionBeneficiarioGrupo+='<option value="'+webServicesBeneficiarioGrupo[o].id+'" >'+webServicesBeneficiarioGrupo[o].nombre+'</option>';
+		}
+		
+		$("#grupoBeneficiario").html("");
+		$("#grupoBeneficiario").append(optionBeneficiarioGrupo);
 	}
-	
-	$("#grupoBeneficiario").html("");
-	$("#grupoBeneficiario").append(optionBeneficiarioGrupo);
-	
 });
 
 $("body").on("click", ".consultaEditarAvance",function(event){
@@ -6001,7 +7160,7 @@ $("body").on("click", ".consultaEditarAvance",function(event){
     if( (f.getMonth() +1) < 10 ){
     	var mes =( 0 +""+ (f.getMonth() +1));
     }else{
-    	var mes =f.getMonth();
+    	var mes =f.getMonth()+1;
     }
     
     if( (f.getDate()) < 10 ){
@@ -6018,7 +7177,7 @@ $("body").on("click", ".consultaEditarAvance",function(event){
   	
    	var webServicesAvance = $.ajax({
 
-   		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvance&avanceId='+avanceId,
+   		url:'/tablero/ajaxSelects2?action=getAvance&avanceId='+avanceId,
 
    	  	type:'get',
 
@@ -6117,7 +7276,7 @@ $("body").on("click", ".editarAvance",function(event){
 		//$("#cantidadBeneficiariosAvance").val("");
 	    
 	   	var webServicesAvance = $.ajax({
-	   		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvance&avanceId='+avanceId,
+	   		url:'/tablero/ajaxSelects2?action=getAvance&avanceId='+avanceId,
 	   	  	type:'get',
 	   	  	dataType:'json',
 	   	  	async:false       
@@ -6182,7 +7341,7 @@ $("body").on("click", ".consultaBorrarAvance",function(event){
 	}		
 	
    	var webServicesAvance = $.ajax({
-   		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvance&avanceId='+avanceId,
+   		url:'/tablero/ajaxSelects2?action=getAvance&avanceId='+avanceId,
    	  	type:'get',
    	  	dataType:'json',
    	  	async:false       
@@ -6234,7 +7393,7 @@ $("body").on("click", ".borrarAvance",function(event){
     var estado = idParsed[1];
     
    	var webServicesAvance = $.ajax({
-   		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvance&avanceId='+avanceId,
+   		url:'/tablero/ajaxSelects2?action=getAvance&avanceId='+avanceId,
    	  	type:'get',
    	  	dataType:'json',
    	  	async:false       
@@ -6290,6 +7449,7 @@ $("body").on("click", ".guardarCosto",function(event){
 	var periodoId = idParsed[3];
 	var accionId = idParsed[4];
 	var actividadId = idParsed[5];
+	var avanceId = idParsed[6];
 	
 	var monto = $("#montoCosto").val();
 	var codigoContratacion = $("#codigoContratacionalCosto").val();
@@ -6323,8 +7483,10 @@ $("body").on("click", ".guardarCosto",function(event){
         	if(data.success == true)
         	{
         		
-        		var webServicesAvanceCosto = $.ajax({
-        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCosto&avanceId='+avanceId,
+				renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,periodoId,accionId,actividadId,avanceId);
+				
+        		<%-- var webServicesAvanceCosto = $.ajax({
+        			url:'/tablero/ajaxSelects2?action=getAvanceCosto&avanceId='+avanceId,
         		  	type:'get',
         		  	dataType:'json',
         		  	async:false       
@@ -6369,7 +7531,7 @@ $("body").on("click", ".guardarCosto",function(event){
         		$("#cuerpoTablaCosto").html(contenidoTabla);
         		$("#listaCosto").html("");
         		$("#listaCosto").html(cuerpoAvanceCosto);
-        		$("#dataTableAvanceCosto").DataTable();
+        		$("#dataTableAvanceCosto").DataTable(); --%>
         		
         	}else{
   		
@@ -6404,7 +7566,7 @@ $("body").on("click", ".consultaBorrarCosto",function(event){
 	}		
 	
 	var webServicesAvanceCosto = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCosto&costoId='+costoId,
+		url:'/tablero/ajaxSelects2?action=getAvanceCosto&costoId='+costoId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -6456,7 +7618,7 @@ $("body").on("click", ".borrarAvanceCosto",function(event){
     var estado = idParsed[1];
     
 	var webServicesAvanceCosto = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCosto&costoId='+costoId,
+		url:'/tablero/ajaxSelects2?action=getAvanceCosto&costoId='+costoId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -6517,7 +7679,7 @@ $("body").on("click", ".consultaEditarCosto",function(event){
 	}	
 	
 	var webServicesAvanceCosto = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCosto&costoId='+costoId,
+		url:'/tablero/ajaxSelects2?action=getAvanceCosto&costoId='+costoId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -6576,7 +7738,7 @@ $("body").on("click", ".editarAvanceCosto",function(event){
 	var costoId = idParsed[0];
 	
 	var webServicesAvanceCosto = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCosto&costoId='+costoId,
+		url:'/tablero/ajaxSelects2?action=getAvanceCosto&costoId='+costoId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -6711,7 +7873,8 @@ $("body").on("click", ".editarAvanceCosto",function(event){
         success: function (data) {
         	if(data.success == true)
         	{
-        		var parametrosEvidencia=insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId;
+        		renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,periodoId,accionId,actividadId,avanceId);
+        		/* var parametrosEvidencia=insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId;
         		var cuerpoEvidencia=renderEvidencia(avanceId, parametrosEvidencia);
         		
         		var contenidoTabla;
@@ -6731,7 +7894,7 @@ $("body").on("click", ".editarAvanceCosto",function(event){
         		$("#cuerpoTablaEvidencia").html(contenidoTabla);
         		$("#listaEvidencia").html("");
         		$("#listaEvidencia").html(cuerpoEvidencia);
-        		$("#dataTableEvidencia").DataTable();
+        		$("#dataTableEvidencia").DataTable(); */
         		
         	}else{
   		
@@ -6767,7 +7930,7 @@ $("body").on("click", ".consultaBorrarEvidencia",function(event){
 	}		
 	
 	var webServicesEvidencia = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getEvidencia&idEvidencia='+idEvidencia,
+		url:'/tablero/ajaxSelects2?action=getEvidencia&idEvidencia='+idEvidencia,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -6819,7 +7982,7 @@ $("body").on("click", ".borrarEvidencia",function(event){
     var estado = idParsed[1];
     
 	var webServicesEvidencia = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getEvidencia&idEvidencia='+evidenciaId,
+		url:'/tablero/ajaxSelects2?action=getEvidencia&idEvidencia='+evidenciaId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -6879,7 +8042,7 @@ $("body").on("click", ".consultaEditarEvidencia",function(event){
 	}	
 	
 	var webServicesEvidencia = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getEvidencia&idEvidencia='+evidenciaId,
+		url:'/tablero/ajaxSelects2?action=getEvidencia&idEvidencia='+evidenciaId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -7083,9 +8246,9 @@ $("body").on("click", ".guardarBeneficiario",function(event){
         success: function (data) {
         	if(data.success == true)
         	{
-        		
-        		var webServicesBeneficiario = $.ajax({
-        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiario&avanceId='+avanceId,
+        		renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,periodoId,accionId,actividadId,avanceId);
+        		<%-- var webServicesBeneficiario = $.ajax({
+        			url:'/tablero/ajaxSelects2?action=getBeneficiario&avanceId='+avanceId,
         		  	type:'get',
         		  	dataType:'json',
         		  	async:false       
@@ -7096,7 +8259,7 @@ $("body").on("click", ".guardarBeneficiario",function(event){
         		for(var d = 0; d < webServicesBeneficiario.length; d++)
         		{
             		var webServicesBeneficiarioTipo = $.ajax({
-            			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioTipo&beneficiarioTipoId='+webServicesBeneficiario[d].tipoId,
+            			url:'/tablero/ajaxSelects2?action=getBeneficiarioTipo&beneficiarioTipoId='+webServicesBeneficiario[d].tipoId,
             		  	type:'get',
             		  	dataType:'json',
             		  	async:false       
@@ -7104,7 +8267,7 @@ $("body").on("click", ".guardarBeneficiario",function(event){
             		webServicesBeneficiarioTipo = JSON.parse(webServicesBeneficiarioTipo);
             		
             		var webServicesBeneficiarioGrupo = $.ajax({
-            			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioGrupoId='+webServicesBeneficiario[d].grupoId,
+            			url:'/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioGrupoId='+webServicesBeneficiario[d].grupoId,
             		  	type:'get',
             		  	dataType:'json',
             		  	async:false       
@@ -7137,6 +8300,9 @@ $("body").on("click", ".guardarBeneficiario",function(event){
 				'						<thead>'+
 				'							<tr class="active"><th>Tipo</th><th>Grupo</th><th>Descripción</th><th>Cantidad</th><th class="text-center">Administrar</th></tr>'+
 				'						</thead>'+
+				'						<tfoot>'+
+				'							<tr><th></th><th></th><th></th><th></th><th></th></tr>'+
+				'						</tfoot>'+
 				'						<tbody id="listaBeneficiario">'+
 				'						</tbody>'+
 				'					</table>'+
@@ -7147,7 +8313,53 @@ $("body").on("click", ".guardarBeneficiario",function(event){
         		$("#cuerpoTablaBeneficiario").html(contenidoTabla);   
         		$("#listaBeneficiario").html("");
         		$("#listaBeneficiario").html(cuerpoBeneficiario);  
-        		$("#dataTableBeneficiario").DataTable();
+        		//$("#dataTableBeneficiario").DataTable();
+        		$('#dataTableBeneficiario').dataTable({
+        	        "footerCallback": function ( row, data, start, end, display ) {
+        	            var api = this.api(), data;
+        	 
+        	         // saca los puntos y <del> de la cadena para pasarlo a entero
+        	            var intVal = function(i){
+		            	if(typeof i==='string'){	
+		            		i=i.replace(/[\."<\/*del>""Gs\."]/g, '');
+		            		i=i.replace(/[","]/g, '.');
+		            		i=i*1;		            		
+		            	}else{
+		            		if(typeof i==='number'){
+		            			i=i;		            			
+		            	}else{
+		            		i=0;
+		            	}
+		            }
+		            	return i;
+		            };
+        	 
+        	         // total general para todas las paginas de la columna
+        	            total3 = api
+        	                .column( 3 )
+        	                .data()
+        	                .reduce( function (a, b) {
+        	                    return intVal(a) + intVal(b);
+        	                }, 0 );
+        	 
+        	         // total por pagina segun número de columna
+        	            pageTotal3 = api
+        	                .column( 3, { page: 'current'} )
+        	                .data()
+        	                .reduce( function (a, b) {
+        	                    return intVal(a) + intVal(b);
+        	                }, 0 );
+        	         
+        	         // se muestran los valores de los totales en el footer del table
+        	            $( api.column( 3 ).footer() ).html(
+        	            		'Total Pág. '+ numeroConComa(pageTotal3) +' (Total Gral. '+ numeroConComa(total3) +')'
+        	            );	         
+        	        },
+        	        dom: 'Bfrtip',
+        	        buttons: [
+        	            'copy', 'csv', 'excel', 'pdf', 'print'
+        	        ]
+        		}); --%> 
         	}else{
   		
         	}
@@ -7182,7 +8394,7 @@ $("body").on("click", ".consultaBorrarBeneficiario",function(event){
 	}		
 	
 	var webServicesBeneficiario = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiario&beneficiarioId='+beneficiarioId,
+		url:'/tablero/ajaxSelects2?action=getBeneficiario&beneficiarioId='+beneficiarioId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -7234,7 +8446,7 @@ $("body").on("click", ".borrarBeneficiario",function(event){
     var estado = idParsed[1];
     
 	var webServicesBeneficiario = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiario&beneficiarioId='+beneficiarioId,
+		url:'/tablero/ajaxSelects2?action=getBeneficiario&beneficiarioId='+beneficiarioId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -7297,7 +8509,7 @@ $("body").on("click", ".consultaEditarBeneficiario",function(event){
 	}	
 	
 	var webServicesBeneficiarioTipo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioTipo',
+		url:'/tablero/ajaxSelects2?action=getBeneficiarioTipo',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -7311,7 +8523,7 @@ $("body").on("click", ".consultaEditarBeneficiario",function(event){
 	}
 	
 	var webServicesBeneficiario = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiario&beneficiarioId='+beneficiarioId,
+		url:'/tablero/ajaxSelects2?action=getBeneficiario&beneficiarioId='+beneficiarioId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -7319,7 +8531,7 @@ $("body").on("click", ".consultaEditarBeneficiario",function(event){
 	webServicesBeneficiario = JSON.parse(webServicesBeneficiario);
 	
 	var webServicesBeneficiarioGrupo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioTipoId='+webServicesBeneficiario[0].tipoId,
+		url:'/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioTipoId='+webServicesBeneficiario[0].tipoId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -7438,7 +8650,7 @@ $("body").on("click", ".consultaBorrarInsLineaAccion",function(event){
 	}	
 	
 	var insLineaAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion&insLineaAccionId='+id,
+		url:'/tablero/ajaxSelects2?action=getInsLineaAccion&insLineaAccionId='+id,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -7447,7 +8659,7 @@ $("body").on("click", ".consultaBorrarInsLineaAccion",function(event){
 	
 	
 	var lineaAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+		url:'/tablero/ajaxSelects2?action=getLineaAccion',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -7556,7 +8768,7 @@ $("body").on("click", ".consultaEditarHito",function(event){
  
 
 	var programacionWebService = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getProgramacion&programacionId='+programacionId,
+		url:'/tablero/ajaxSelects2?action=getProgramacion&programacionId='+programacionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -7670,7 +8882,7 @@ $("body").on("click", ".consultaBorrarHito",function(event){
 	}		
 	
 	var programacionWebService = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getProgramacion&programacionId='+programacionId,
+		url:'/tablero/ajaxSelects2?action=getProgramacion&programacionId='+programacionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -7721,7 +8933,7 @@ $("body").on("click", ".borrarHito",function(event){
     var estado = idParsed[1];
     
 	var programacionWebService = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getProgramacion&programacionId='+programacionId,
+		url:'/tablero/ajaxSelects2?action=getProgramacion&programacionId='+programacionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -7764,17 +8976,58 @@ $("body").on("click", ".borrarHito",function(event){
 	
 });
 
-$("body").on("click", ".modalDestinatario",function(event){
-	var parametros = $(this).attr("parametros");
-    var idParsed = parametros.split("-"); 
-    var insLineaAccionId = idParsed[0];
-    var lineaAccionId = idParsed[1];
-    var institucionId = idParsed[2];
-    var periodoId = idParsed[3];
-    var accionId = idParsed[4];
-    var accionCatalogoId = idParsed[5];
-    var cuerpoDestinatarioAccion = "";
+function renderAccionDestinatario(insLineaAccionId,lineaAccionId,institucionId,periodoId,accionId,accionCatalogoId){
 	
+	if ( $("#dataTableDestinatarioAccion").length ){
+		$('#dataTableDestinatarioAccion').DataTable().destroy();	
+	} 
+	
+	
+	/* if ( $("#tableListaDestinatario").length ){
+		$("#descripcionDestinatarioAccion").val('');
+		$("#cantidadDestinatarioAccion").val('');
+		
+		$("#tableListaDestinatario").html("");
+		var tableListaDestinatario="";
+		
+		tableListaDestinatario=
+			
+			'									<div class="box box-default box-solid">'+
+			'		                				<div class="box-header with-border">'+
+			'										<h3 class="box-title">Lista Destinatarios</h3>'+
+			'	                  						<div class="box-tools pull-right">'+
+			'				                    			<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+			'		                    					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>'+
+			'		                  					</div>'+
+			'              							</div>'+
+			'              						<div class="box-body">'+	
+			'										<div class="table-responsive">'+
+			'											<table class="table table-hover table-bordered" id="dataTableDestinatarioAccion">'+
+			'												<thead>'+
+			'													<tr class="active"><th>Tipo</th><th>Grupo</th><th>Descripción</th><th>Cantidad</th><th class="text-center">Administrar</th></tr>'+
+			'												</thead>'+
+			'												<tfoot>'+
+			'													<tr><th></th><th></th><th></th><th></th><th></th></tr>'+
+			'												</tfoot>'+
+			'												<tbody id="listaDestinatarioAccion">'+
+			'												</tbody>'+
+			'											</table>'+
+			'				      					</div>'+
+			
+			'				      				</div>';
+				
+		
+		$("#tableListaDestinatario").html(tableListaDestinatario);
+	} */
+
+	cuerpoDestinatarioAccion = "";
+	
+	
+	if ( $("#modalDestinatario").length )
+	{
+		$("#modalDestinatario").remove();
+	}
+		
 	if ( $("#modalDuplicarAccion").length )
 	{
 		$("#modalDuplicarAccion").remove();
@@ -7792,7 +9045,7 @@ $("body").on("click", ".modalDestinatario",function(event){
 		$("#modalBorrarDestinatarioAccion").remove();
 	}		
 	var insLineaAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion&insLineaAccionId='+insLineaAccionId,
+		url:'/tablero/ajaxSelects2?action=getInsLineaAccion&insLineaAccionId='+insLineaAccionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -7800,7 +9053,7 @@ $("body").on("click", ".modalDestinatario",function(event){
 	insLineaAccion=JSON.parse(insLineaAccion);
 	
 	var institucion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion&institucionId='+insLineaAccion[0].institucionId,
+		url:'/tablero/ajaxSelects2?action=getInstitucion&institucionId='+insLineaAccion[0].institucionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -7808,7 +9061,7 @@ $("body").on("click", ".modalDestinatario",function(event){
 	institucion = JSON.parse(institucion);
 	
 	var lineaAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId='+lineaAccionId,
+		url:'/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId='+lineaAccionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -7816,7 +9069,7 @@ $("body").on("click", ".modalDestinatario",function(event){
 	lineaAccion = JSON.parse(lineaAccion);
 	
 	var accion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&accionId='+accionId,
+		url:'/tablero/ajaxSelects2?action=getAccion&accionId='+accionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -7824,7 +9077,7 @@ $("body").on("click", ".modalDestinatario",function(event){
 	accion = JSON.parse(accion);
 	
 	var accionCatalogo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[0].accionCatalogoId,
+		url:'/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+accion[0].accionCatalogoId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -7832,7 +9085,7 @@ $("body").on("click", ".modalDestinatario",function(event){
 	accionCatalogo = JSON.parse(accionCatalogo);
 	
 	var webServicesBeneficiarioTipo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioTipo',
+		url:'/tablero/ajaxSelects2?action=getBeneficiarioTipo',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -7846,7 +9099,7 @@ $("body").on("click", ".modalDestinatario",function(event){
 	}
 	
 	var webServicesBeneficiarioAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionDestinatario&accionId='+accionId,
+		url:'/tablero/ajaxSelects2?action=getAccionDestinatario&accionId='+accionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -7861,7 +9114,7 @@ $("body").on("click", ".modalDestinatario",function(event){
 			// pasa a la siguiente fila en el for ++
 		}else{
 			var webServicesBeneficiarioTipo = $.ajax({
-				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioTipo&beneficiarioTipoId='+webServicesBeneficiarioAccion[a].beneficiarioTipoId,
+				url:'/tablero/ajaxSelects2?action=getBeneficiarioTipo&beneficiarioTipoId='+webServicesBeneficiarioAccion[a].beneficiarioTipoId,
 			  	type:'get',
 			  	dataType:'json',
 			  	async:false       
@@ -7869,7 +9122,7 @@ $("body").on("click", ".modalDestinatario",function(event){
 			webServicesBeneficiarioTipo = JSON.parse(webServicesBeneficiarioTipo);
 			
 			var webServicesBeneficiarioGrupo = $.ajax({
-				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioGrupoId='+webServicesBeneficiarioAccion[a].beneficiarioGrupoId,
+				url:'/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioGrupoId='+webServicesBeneficiarioAccion[a].beneficiarioGrupoId,
 			  	type:'get',
 			  	dataType:'json',
 			  	async:false       
@@ -7953,7 +9206,7 @@ $("body").on("click", ".modalDestinatario",function(event){
 						<% }%>		
 
 
-						'		      					<div class="col-md-12">'+
+						'		      					<div class="col-md-12" id="tableListaDestinatario">'+
 						'									<div class="box box-default box-solid">'+
 						'		                				<div class="box-header with-border">'+
 						'										<h3 class="box-title">Lista Destinatarios</h3>'+
@@ -7968,6 +9221,9 @@ $("body").on("click", ".modalDestinatario",function(event){
 						'												<thead>'+
 						'													<tr class="active"><th>Tipo</th><th>Grupo</th><th>Descripción</th><th>Cantidad</th><th class="text-center">Administrar</th></tr>'+
 						'												</thead>'+
+						'												<tfoot>'+
+						'													<tr><th></th><th></th><th></th><th></th><th></th></tr>'+
+						'												</tfoot>'+
 						'												<tbody id="listaDestinatarioAccion">'+
 						'												</tbody>'+
 						'											</table>'+
@@ -7989,14 +9245,111 @@ $("body").on("click", ".modalDestinatario",function(event){
 						'	</div>'+
 						'</div>';
 						
+						/* if ( $("#dataTableDestinatarioAccion").length ){
+							$('#dataTableDestinatarioAccion').DataTable().destroy();	
+						} */					
+						
 	$("#programacion").append(cuerpoModalDestinatario);
 	$("#listaDestinatarioAccion").html("");
 	$("#listaDestinatarioAccion").html(cuerpoDestinatarioAccion);
 	$('#tipoDestinatarioAccion > option[value="1"]').attr('selected', 'selected');
+	$("#cantidadDestinatarioAccion").val('');
+	$("#descripcionDestinatarioAccion").val('');
 	$('#modalDestinatario').modal('show');
 	$('#tipoDestinatarioAccion').change();
-	$("#dataTableDestinatarioAccion").DataTable();
+	//$("#dataTableDestinatarioAccion").DataTable();	
+	$('#dataTableDestinatarioAccion').dataTable({
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+ 
+         // saca los puntos y <del> de la cadena para pasarlo a entero
+            var intVal = function(i){
+            	if(typeof i==='string'){	
+            		i=i.replace(/[\."<\/*del>""Gs\."]/g, '');
+            		i=i.replace(/[","]/g, '.');
+            		i=i*1;		            		
+            	}else{
+            		if(typeof i==='number'){
+            			i=i;		            			
+            	}else{
+            		i=0;
+            	}
+            }
+            	return i;
+            };
+ 
+         // total general para todas las paginas de la columna
+            total3 = api
+                .column( 3 )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+ 
+         // total por pagina segun número de columna
+            pageTotal3 = api
+                .column( 3, { page: 'current'} )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+         
+         // se muestran los valores de los totales en el footer del table
+            $( api.column( 3 ).footer() ).html(
+            		'Total Pág. '+ numeroConComa(pageTotal3) +' (Total Gral. '+ numeroConComa(total3) +')'
+            );	         
+        },
+        dom: 'Bfrtip',
+        buttons: [
+                  {
+                      extend: 'copy',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3 ]
+              }
+                  },
+                  {
+                      extend: 'csv',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3 ]
+              }
+                  },
+                  {
+                      extend: 'excel',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3 ]
+              }
+                  },
+                  {
+                      extend: 'pdf',                      
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3 ]
+              }
+                  },
+                  {
+                      extend: 'print',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3 ]
+              }
+                  }
+              ]
+}); 
 	
+	}
+
+$("body").on("click", ".modalDestinatario",function(event){
+	//event.stopPropagation();
+	//event.preventDefault();
+		
+	parametros = $(this).attr("parametros");
+    idParsed = parametros.split("-"); 
+    insLineaAccionId = idParsed[0];
+    lineaAccionId = idParsed[1];
+    institucionId = idParsed[2];
+    periodoId = idParsed[3];
+    accionId = idParsed[4];
+    accionCatalogoId = idParsed[5];    
+    
+	renderAccionDestinatario(insLineaAccionId,lineaAccionId,institucionId,periodoId,accionId,accionCatalogoId);
 });
 
 $("body").on("click", ".guardarAccionBeneficiario",function(event){
@@ -8018,7 +9371,7 @@ $("body").on("click", ".guardarAccionBeneficiario",function(event){
 		var grupo = $("#grupoDestinatarioAccion").val();
 		var cantidad = $("#cantidadDestinatarioAccion").val();
 		var cuerpoDestinatarioAccion ="";
-			
+					
 		var datos = new Object();
 	    
 	    datos.descripcion = descripcion;
@@ -8036,14 +9389,18 @@ $("body").on("click", ".guardarAccionBeneficiario",function(event){
 	        contentType: 'application/json',
 	        mimeType: 'application/json',
 	        success: function (data) {
-	        	if(data.success == true){
-	        	    $("#descripcionDestinatarioAccion").val('');
+	        	if(data.success == true){	
+	        		//$("#programacion").html("");
+	        		
+	        		renderAccionDestinatario(insLineaAccionId,lineaAccionId,institucionId,periodoId,accionId,accionCatalogoId);
+	        	    
+	        		<%-- $("#descripcionDestinatarioAccion").val('');
 	        		$("#tipoDestinatarioAccion").val('');
 	        		$("#grupoDestinatarioAccion").val('');
 	        		$("#cantidadDestinatarioAccion").val('');
 	        		
 	        		var webServicesBeneficiarioTipo = $.ajax({
-	        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioTipo',
+	        			url:'/tablero/ajaxSelects2?action=getBeneficiarioTipo',
 	        		  	type:'get',
 	        		  	dataType:'json',
 	        		  	async:false       
@@ -8057,7 +9414,7 @@ $("body").on("click", ".guardarAccionBeneficiario",function(event){
 	        		}
 	        		
 	        		var webServicesBeneficiarioAccion = $.ajax({
-	        			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionDestinatario&accionId='+accionId,
+	        			url:'/tablero/ajaxSelects2?action=getAccionDestinatario&accionId='+accionId,
 	        		  	type:'get',
 	        		  	dataType:'json',
 	        		  	async:false       
@@ -8068,7 +9425,7 @@ $("body").on("click", ".guardarAccionBeneficiario",function(event){
 	        		for(var a = 0; a < webServicesBeneficiarioAccion.length; a++)
 	        		{
 	        			var webServicesBeneficiarioTipo = $.ajax({
-	        				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioTipo&beneficiarioTipoId='+webServicesBeneficiarioAccion[a].beneficiarioTipoId,
+	        				url:'/tablero/ajaxSelects2?action=getBeneficiarioTipo&beneficiarioTipoId='+webServicesBeneficiarioAccion[a].beneficiarioTipoId,
 	        			  	type:'get',
 	        			  	dataType:'json',
 	        			  	async:false       
@@ -8076,7 +9433,7 @@ $("body").on("click", ".guardarAccionBeneficiario",function(event){
 	        			webServicesBeneficiarioTipo = JSON.parse(webServicesBeneficiarioTipo);
 	        			
 	        			var webServicesBeneficiarioGrupo = $.ajax({
-	        				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioGrupoId='+webServicesBeneficiarioAccion[a].beneficiarioGrupoId,
+	        				url:'/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioGrupoId='+webServicesBeneficiarioAccion[a].beneficiarioGrupoId,
 	        			  	type:'get',
 	        			  	dataType:'json',
 	        			  	async:false       
@@ -8098,8 +9455,63 @@ $("body").on("click", ".guardarAccionBeneficiario",function(event){
 	        			
 	        		}
 	        		
+	        		/* $("#listaDestinatarioAccion").html("");
+	        		//$("#listaDestinatarioAccion").html(cuerpoDestinatarioAccion); */
+	        		
+	        		//$("#programacion").append(cuerpoModalDestinatario);
 	        		$("#listaDestinatarioAccion").html("");
 	        		$("#listaDestinatarioAccion").html(cuerpoDestinatarioAccion);
+	        		//$('#tipoDestinatarioAccion > option[value="1"]').attr('selected', 'selected');
+	        		//$('#modalDestinatario').modal('show');
+	        		//$('#tipoDestinatarioAccion').change();
+	        		
+	        		$('#dataTableDestinatarioAccion').dataTable({
+	        	        "footerCallback": function ( row, data, start, end, display ) {
+	        	            var api = this.api(), data;
+	        	 
+	        	         // saca los puntos y <del> de la cadena para pasarlo a entero
+	        	            var intVal = function(i){
+		            	if(typeof i==='string'){	
+		            		i=i.replace(/[\."<\/*del>""Gs\."]/g, '');
+		            		i=i.replace(/[","]/g, '.');
+		            		i=i*1;		            		
+		            	}else{
+		            		if(typeof i==='number'){
+		            			i=i;		            			
+		            	}else{
+		            		i=0;
+		            	}
+		            }
+		            	return i;
+		            };
+	        	 
+	        	         // total general para todas las paginas de la columna
+	        	            total3 = api
+	        	                .column( 3 )
+	        	                .data()
+	        	                .reduce( function (a, b) {
+	        	                    return intVal(a) + intVal(b);
+	        	                }, 0 );
+	        	 
+	        	         // total por pagina segun número de columna
+	        	            pageTotal3 = api
+	        	                .column( 3, { page: 'current'} )
+	        	                .data()
+	        	                .reduce( function (a, b) {
+	        	                    return intVal(a) + intVal(b);
+	        	                }, 0 );
+	        	         
+	        	         // se muestran los valores de los totales en el footer del table
+	        	            $( api.column( 3 ).footer() ).html(
+	        	            		'Total Pág. '+ numeroConComa(pageTotal3) +' (Total Gral. '+ numeroConComa(total3) +')'
+	        	            );	         
+	        	        },
+	        	        dom: 'Bfrtip',
+	        	        buttons: [
+	        	            'copy', 'csv', 'excel', 'pdf', 'print'
+	        	        ]
+	        	});  --%>
+	        		 
 	        		
 	        	}else{
 	        		alert("ERROR");        		
@@ -8113,6 +9525,9 @@ $("body").on("click", ".guardarAccionBeneficiario",function(event){
 	});
 
 $("body").on("click", ".consultaEditarDestinatario",function(event){
+	//event.stopPropagation();
+	//event.preventDefault();
+	
 	var parametros = $(this).attr("parametros");
     var idParsed = parametros.split("-");                                                            
 	
@@ -8132,7 +9547,7 @@ $("body").on("click", ".consultaEditarDestinatario",function(event){
 	}	
 	
 	var webServicesBeneficiarioTipo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioTipo',
+		url:'/tablero/ajaxSelects2?action=getBeneficiarioTipo',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -8146,7 +9561,7 @@ $("body").on("click", ".consultaEditarDestinatario",function(event){
 	}
 	
 	var webServicesDestinatarioAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionDestinatario&destinatarioId='+destinatarioId,
+		url:'/tablero/ajaxSelects2?action=getAccionDestinatario&destinatarioId='+destinatarioId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -8154,7 +9569,7 @@ $("body").on("click", ".consultaEditarDestinatario",function(event){
 	webServicesDestinatarioAccion = JSON.parse(webServicesDestinatarioAccion);
 	
 	var webServicesBeneficiarioGrupo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioTipoId='+webServicesDestinatarioAccion[0].beneficiarioTipoId,
+		url:'/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioTipoId='+webServicesDestinatarioAccion[0].beneficiarioTipoId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -8215,7 +9630,7 @@ $("body").on("change", "#tipoDestinatarioAccion",function(event){
 	var destinatarioTipoId = $("#tipoDestinatarioAccion option:selected").val();
 	
 	var webServicesDestinatarioGrupo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioTipoId='+destinatarioTipoId,
+		url:'/tablero/ajaxSelects2?action=getBeneficiarioGrupo&beneficiarioTipoId='+destinatarioTipoId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -8240,8 +9655,8 @@ $("body").on("click", ".editarDestinatarioAccion",function(event){
 
 		
 		var parametros = $(this).attr("parametros");
-	    var idParsed = parametros.split("-");                                                            
-		
+	    var idParsed = parametros.split("-");               
+	   
 		//Las siguentes variables se utiliza en esta funcion para redibujar el modal anterior
 		var destinatarioId = idParsed[0];// es el id de la tabla accion_destinatario
 	
@@ -8272,7 +9687,9 @@ $("body").on("click", ".editarDestinatarioAccion",function(event){
 	        	{
 	        		$("#botonGuardarDestinatarioAccion").remove();
 	            	$("#cuerpoModalEditarDestinatarios").html("");
-	            	$("#cuerpoModalEditarDestinatarios").html("<h3 class='text-center'>Ud ha actualizado exitosamente!!</h3>");        		
+	            	$("#cuerpoModalEditarDestinatarios").html("<h3 class='text-center'>Ud ha actualizado exitosamente!!</h3>"); 
+	            	//renderAccionDestinatario(insLineaAccionId,lineaAccionId,institucionId,periodoId,accionId,accionCatalogoId);
+	            	
 	        	}
 	        	
 	        	},
@@ -8281,7 +9698,7 @@ $("body").on("click", ".editarDestinatarioAccion",function(event){
 	        	
 	        	}
 		 });
-	}
+	}	
 });
 
 $("body").on("click", ".consultaBorrarDestinatarioAccion",function(event){
@@ -8303,7 +9720,7 @@ $("body").on("click", ".consultaBorrarDestinatarioAccion",function(event){
 	}		
 	
 	var WebServiceDestinatarioAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionDestinatario&destinatarioId='+destinatarioId,
+		url:'/tablero/ajaxSelects2?action=getAccionDestinatario&destinatarioId='+destinatarioId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -8354,7 +9771,7 @@ $("body").on("click", ".borrarDestinatarioAccion",function(event){
     var estado = idParsed[1];
     
 	var WebServiceDestinatarioAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionDestinatario&destinatarioId='+destinatarioId,
+		url:'/tablero/ajaxSelects2?action=getAccionDestinatario&destinatarioId='+destinatarioId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -8420,7 +9837,7 @@ $("body").on("click", ".avanceCualitativo",function(event){
 	}	
 	
 	var lineaAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+		url:'/tablero/ajaxSelects2?action=getLineaAccion',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -8436,7 +9853,7 @@ $("body").on("click", ".avanceCualitativo",function(event){
 	}
 	
 	var catalogoAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo',
+		url:'/tablero/ajaxSelects2?action=getAccionCatalogo',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -8450,7 +9867,7 @@ $("body").on("click", ".avanceCualitativo",function(event){
 	}
 	
 	var institucion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+		url:'/tablero/ajaxSelects2?action=getInstitucion',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -8466,7 +9883,7 @@ $("body").on("click", ".avanceCualitativo",function(event){
 	}
 	
 	var periodo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+		url:'/tablero/ajaxSelects2?action=getPeriodo',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -8482,7 +9899,7 @@ $("body").on("click", ".avanceCualitativo",function(event){
 	}
 	
 	var unidadMedida = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+		url:'/tablero/ajaxSelects2?action=getUnidadMedida',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -8495,7 +9912,7 @@ $("body").on("click", ".avanceCualitativo",function(event){
 	}
 	
 	var departamentos = $.ajax({
-    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDepartamento',
+    	url:'/tablero/ajaxSelects?action=getDepartamento',
       	type:'get',
       	dataType:'json',
       	async:false       
@@ -8508,7 +9925,7 @@ $("body").on("click", ".avanceCualitativo",function(event){
 	}
 	
 	var distritos = $.ajax({
-    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito',
+    	url:'/tablero/ajaxSelects?action=getDistrito',
       	type:'get',
       	dataType:'json',
       	async:false       
@@ -8516,7 +9933,7 @@ $("body").on("click", ".avanceCualitativo",function(event){
 	distritos = JSON.parse(distritos);
 	
 	var accion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccionId,
+		url:'/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -8524,7 +9941,7 @@ $("body").on("click", ".avanceCualitativo",function(event){
 	accion = JSON.parse(accion);
 	
 	var trimestre = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getTrimestre',
+		url:'/tablero/ajaxSelects2?action=getTrimestre',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -8643,6 +10060,9 @@ $("body").on("click", ".avanceCualitativo",function(event){
 	'	                					<thead>'+
 	'	                						<tr class="active"><th class="text-center">Accion</th><th class="text-center">Trimestre</th><th class="text-center">Año</th><th class="text-center">Gestiones Realizadas</th><th class="text-center">Principales Logros Alcanzados</th><th class="text-center">Dificultades Lecciones Aprendidas</th><th class="text-center">Objetivos del Trimestre</th><th class="text-center">Administrar</th></tr>'+
 	'	                					</thead>'+
+	'	                					<tfoot>'+
+	'	                						<tr><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th></tr>'+
+	'	                					</tfoot>'+
 	'	                						<tbody id="tablaAvanceCualitativo">'+
 	'	                						</tbody>'+
 	'	                				</table>'+
@@ -8650,8 +10070,8 @@ $("body").on("click", ".avanceCualitativo",function(event){
 	$('#cuerpoTablaAvanceCualitativo').append(tablaAccion);
 	listaAvanceCualitativo(insLineaAccionId,lineaAccionId,institucionId,periodoId);	
 	//$('#tablaAccionesPrecargadas').append(cuerpoAccion);
-	$('#modalAvanceCualitativo').modal('show');
-	$("#dataTablesAvanceCualitativo").DataTable();	
+	$('#modalAvanceCualitativo').modal('show');	
+	//$('#dataTablesAvanceCualitativo').DataTable();
 	
 });
 
@@ -8717,7 +10137,7 @@ function listaAvanceCualitativo(insLineaAccionId,lineaAccionId,institucionId,per
 	
 	var tablaAvanceCualitativo;
 	var avanceCualitativo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCualitativo&insLineaAccionId='+insLineaAccionId,
+		url:'/tablero/ajaxSelects2?action=getAvanceCualitativo&insLineaAccionId='+insLineaAccionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -8727,7 +10147,7 @@ function listaAvanceCualitativo(insLineaAccionId,lineaAccionId,institucionId,per
 	for(a = 0;a < avanceCualitativo.length; a++){
 		
 		var accionCatalogo = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+avanceCualitativo[a].accionCatalogoId,
+			url:'/tablero/ajaxSelects2?action=getAccionCatalogo&catalogoAccionId='+avanceCualitativo[a].accionCatalogoId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -8735,7 +10155,7 @@ function listaAvanceCualitativo(insLineaAccionId,lineaAccionId,institucionId,per
 		accionCatalogo = JSON.parse(accionCatalogo);
 		
 		var trimestre = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getTrimestre&trimestreId='+avanceCualitativo[a].trimestreId,
+			url:'/tablero/ajaxSelects2?action=getTrimestre&trimestreId='+avanceCualitativo[a].trimestreId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -8822,8 +10242,43 @@ function listaAvanceCualitativo(insLineaAccionId,lineaAccionId,institucionId,per
 	'	                			</div>';
 	$('#cuerpoTablaAvanceCualitativo').append(tablaAccion);
 	$('#tablaAvanceCualitativo').html("");
-	$('#tablaAvanceCualitativo').append(tablaAvanceCualitativo);
-	$("#dataTablesAvanceCualitativo").DataTable();
+	$('#tablaAvanceCualitativo').append(tablaAvanceCualitativo);	
+	//$('#dataTablesAvanceCualitativo').DataTable();
+	$('#dataTablesAvanceCualitativo').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+                  {
+                      extend: 'copy',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+              }
+                  },
+                  {
+                      extend: 'csv',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+              }
+                  },
+                  {
+                      extend: 'excel',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+              }
+                  },
+                  {
+                      extend: 'pdf',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+              }
+                  },
+                  {
+                      extend: 'print',
+                      exportOptions: {
+                  columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+              }
+                  }
+              ]
+    } );
 	
 }
 
@@ -8852,7 +10307,7 @@ $("body").on("click", ".consultaEditarAvanceCualitativo",function(event){
 	}	
 	
 	var accion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccionId,
+		url:'/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccionId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -8860,7 +10315,7 @@ $("body").on("click", ".consultaEditarAvanceCualitativo",function(event){
 	accion = JSON.parse(accion);
 	
 	var catalogoAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAccionCatalogo',
+		url:'/tablero/ajaxSelects2?action=getAccionCatalogo',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -8868,7 +10323,7 @@ $("body").on("click", ".consultaEditarAvanceCualitativo",function(event){
 	catalogoAccion = JSON.parse(catalogoAccion);
 	
 	var trimestre = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getTrimestre',
+		url:'/tablero/ajaxSelects2?action=getTrimestre',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -8876,7 +10331,7 @@ $("body").on("click", ".consultaEditarAvanceCualitativo",function(event){
 	trimestre = JSON.parse(trimestre);
 	
 	var avanceCualitativo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCualitativo&idAvanceCualitativo='+avanceCualitativoId,
+		url:'/tablero/ajaxSelects2?action=getAvanceCualitativo&idAvanceCualitativo='+avanceCualitativoId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -9044,7 +10499,7 @@ $("body").on("click", ".consultaBorrarAvanceCualitativo",function(event){
 	}	
 	
 	var webServiceAvanceCualitativo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCualitativo&idAvanceCualitativo='+avanceCualitativoId,
+		url:'/tablero/ajaxSelects2?action=getAvanceCualitativo&idAvanceCualitativo='+avanceCualitativoId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -9096,7 +10551,7 @@ $("body").on("click", ".borrarAvanceCualitativo",function(event){
     var estado = idParsed[1];
     
 	var webServiceAvanceCualitativo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getAvanceCualitativo&idAvanceCualitativo='+avanceCualitativoId,
+		url:'/tablero/ajaxSelects2?action=getAvanceCualitativo&idAvanceCualitativo='+avanceCualitativoId,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       

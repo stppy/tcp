@@ -104,7 +104,7 @@
 if (user != null) { %>
 
 <script>
-<%if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("2")){%>	
+<%if (attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("2")){%>	
 	$(document).ready(function(){
 		$('[data-toggle="tap"]').tooltip();
 			
@@ -261,14 +261,14 @@ if (user != null) { %>
 			
 			if (institucion_id==47720){
 				var registros = $.ajax({
-			    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getFactHitosSnpp&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id,
+			    	url:'/tablero/ajaxSelects?action=getFactHitosSnpp&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id,
 			      	type:'get',
 			      	dataType:'json',
 			      	crossDomain:true,
 			      	async:false       
 			    }).responseText;
 				var registrosHitos = $.ajax({
-			    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getFactHitosSnpp&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id,
+			    	url:'/tablero/ajaxSelects?action=getFactHitosSnpp&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id,
 			      	type:'get',
 			      	dataType:'json',
 			      	crossDomain:true,
@@ -276,7 +276,7 @@ if (user != null) { %>
 			    }).responseText;
 			}else{
 				var registros = $.ajax({
-			    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015Accion&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id,
+			    	url:'/tablero/ajaxSelects?action=getFactHitos2015Accion&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id,
 			      	type:'get',
 			      	dataType:'json',
 			      	crossDomain:true,
@@ -284,7 +284,7 @@ if (user != null) { %>
 			    }).responseText;
 				
 				var registrosHitos = $.ajax({
-			    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id,
+			    	url:'/tablero/ajaxSelects?action=getFactHitos2015&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id,
 			      	type:'get',
 			      	dataType:'json',
 			      	crossDomain:true,
@@ -361,7 +361,7 @@ if (user != null) { %>
 			
 			
 			lineaAccionAcumuladoMes = $.ajax({
-		    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getLineaAccionAcumuladoMes&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id,
+		    	url:'/tablero/ajaxSelects?action=getLineaAccionAcumuladoMes&institucion_id='+institucion_id+'&linea_accion_id='+linea_accion_id,
 		      	type:'get',
 		      	dataType:'json',
 		      	async:false       
@@ -443,7 +443,7 @@ if (user != null) { %>
 		var entidadCas = "";
 		entidadCas ="<%=attributes.get("entidad") %>";
 		var usuarios = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
+			url:'/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -465,7 +465,7 @@ if (user != null) { %>
 		}
 		
 		var entidadesjson = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getEntidades',
+	    	url:'/tablero/ajaxSelects?action=getEntidades',
 	      	type:'get',
 	      	dataType:'json',
 	      	crossDomain:true,
@@ -474,7 +474,7 @@ if (user != null) { %>
 		var entidades=JSON.parse(entidadesjson);
 		
 		var eljson = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getLineasAccion',
+	    	url:'/tablero/ajaxSelects?action=getLineasAccion',
 	      	type:'get',
 	      	dataType:'json',
 	      	crossDomain:true,
@@ -484,7 +484,7 @@ if (user != null) { %>
 		
 		
  		var elSnppjson = $.ajax({
-	    	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getLineasAccionSnpp',
+	    	url:'/tablero/ajaxSelects?action=getLineasAccionSnpp',
 	      	type:'get',
 	      	dataType:'json',
 	      	crossDomain:true,

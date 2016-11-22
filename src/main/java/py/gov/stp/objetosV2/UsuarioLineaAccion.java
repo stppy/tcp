@@ -7,6 +7,7 @@ public class UsuarioLineaAccion {
 	protected String fechaActualizacion;
 	protected String fechaInsercion;
 	protected String usuarioResponsable;
+	protected boolean borrado;
 	
 	public int getId() {
 		return id;
@@ -44,5 +45,13 @@ public class UsuarioLineaAccion {
 	public void setUsuarioResponsable(String usuarioResponsable) {
 		this.usuarioResponsable = usuarioResponsable;
 	}
-
+	public boolean isBorrado() {
+		return borrado;
+	}
+	public void setBorrado(boolean borrado) {
+		this.borrado = borrado;
+	}
+	public void changeBorrado(){
+		this.borrado=!borrado;
+	}
 }

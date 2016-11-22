@@ -53,7 +53,7 @@ function renderLineasEstrategicas(periodo){
 	var contenidoEnRowTemp="";				
 	
 //	var lineasEstrategicas = $.ajax({
-//		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaEstrategica',
+//		url:'/tablero/ajaxSelects2?action=getLineaEstrategica',
 //	  	type:'get',
 //	  	dataType:'json',
 //	  	async:false       
@@ -71,7 +71,7 @@ function renderLineasEstrategicas(periodo){
 	//lineasProgramadas=lineasProgramadas.sort(lineaAccionOrden);
 	
 	var instituciones = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+		url:'/tablero/ajaxSelects2?action=getInstitucion',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -139,7 +139,7 @@ function renderLineasEstrategicas(periodo){
 }
 
 var usuarioLineaAccion = $.ajax({
-	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUsuarioLineaAccion',
+	url:'/tablero/ajaxSelects2?action=getUsuarioLineaAccion',
   	type:'get',
   	dataType:'json',
   	async:false       
@@ -147,7 +147,7 @@ var usuarioLineaAccion = $.ajax({
 usuarioLineaAccion = JSON.parse(usuarioLineaAccion);
 
 var usuarioEtiqueta = $.ajax({
-	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUsuarioEtiqueta',
+	url:'/tablero/ajaxSelects2?action=getUsuarioEtiqueta',
   	type:'get',
   	dataType:'json',
   	async:false       
@@ -167,7 +167,7 @@ function renderAccion(/*estrategia, */lineasProgramadas, instituciones, periodo)
 
 	if(todasLasLineasAccion != ""){
 		var insLineaAccionHasEtiqueta = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccionHasEtiqueta&insLineaAccionIdConcat='+todasLasLineasAccion,
+			url:'/tablero/ajaxSelects2?action=getInsLineaAccionHasEtiqueta&insLineaAccionIdConcat='+todasLasLineasAccion,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -281,7 +281,7 @@ function renderAccion(/*estrategia, */lineasProgramadas, instituciones, periodo)
 function getPeriodo(periodo){
 
 	var periodo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+		url:'/tablero/ajaxSelects2?action=getPeriodo',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       

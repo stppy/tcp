@@ -11,8 +11,8 @@
   <head>
  	 <%@ include file="/frames/head.jsp" %>	 
 	<script type="text/javascript" src="dist/canvasjs/canvasjs.min.js" ></script>
-	<script src="dist/js/jspdf.min.js"></script>
-
+	<script src="/dist/js/jspdf.min.js"></script>
+	
 	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="bootstrap/css/bootstrapslider.css" rel="stylesheet">	
 	<script src="plugins/jquery-bootstrap-modal-steps.js"></script>	
@@ -25,7 +25,10 @@
     <script src="plugins/mapa/leaflet.js"></script>
     <!-- leaflet location picker css -->
     <link href="plugins/mapa/leaflet-locationpicker.css" rel="stylesheet">
-    <script src="plugins/mapa/leaflet-locationpicker.js"></script>   
+    <script src="plugins/mapa/leaflet-locationpicker.js"></script>
+    
+    <link href="plugins/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="plugins/datatables/css/buttons.dataTables.min.css" rel="stylesheet">       
 	
 	<style type="text/css">
 		/* Example 1 custom styles */
@@ -70,6 +73,7 @@
 
 <% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%> 
 <% Map attributes = user.getAttributes(); 
+if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2") || attributes.get("role_id_tablero").toString().equals("3")){
 if (user != null && user.getName()!= "parce@nandeparaguay.org") { %>
 	<%@ include file="/frames/perfil.jsp" %>
 <script>
@@ -77,7 +81,7 @@ periodoSeleccionado=new Date().getFullYear();
 function renderInsLineaAccion(PeriodoActual){
 	
 	var insLineaAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccion',
+		url:'/tablero/ajaxSelects2?action=getInsLineaAccion',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -85,7 +89,7 @@ function renderInsLineaAccion(PeriodoActual){
 	insLineaAccion=JSON.parse(insLineaAccion);
 
 	var lineaAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+		url:'/tablero/ajaxSelects2?action=getLineaAccion',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -93,7 +97,7 @@ function renderInsLineaAccion(PeriodoActual){
 	lineaAccion = JSON.parse(lineaAccion);
 
 	var institucion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInstitucion',
+		url:'/tablero/ajaxSelects2?action=getInstitucion',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -101,7 +105,7 @@ function renderInsLineaAccion(PeriodoActual){
 	institucion = JSON.parse(institucion);
 
 	var periodo = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+		url:'/tablero/ajaxSelects2?action=getPeriodo',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -109,7 +113,7 @@ function renderInsLineaAccion(PeriodoActual){
 	periodo = JSON.parse(periodo);
 
 	var unidadMedida = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+		url:'/tablero/ajaxSelects2?action=getUnidadMedida',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -117,7 +121,7 @@ function renderInsLineaAccion(PeriodoActual){
 	unidadMedida = JSON.parse(unidadMedida);
 
 	var usuarioLineaAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUsuarioLineaAccion',
+		url:'/tablero/ajaxSelects2?action=getUsuarioLineaAccion',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -134,7 +138,7 @@ function renderInsLineaAccion(PeriodoActual){
 	todasLasLineasAccion = todasLasLineasAccion.substring(0,todasLasLineasAccion.length - 1);
 
 	var insLineaAccionHasEtiqueta = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getInsLineaAccionHasEtiqueta&insLineaAccionIdConcat='+todasLasLineasAccion,
+		url:'/tablero/ajaxSelects2?action=getInsLineaAccionHasEtiqueta&insLineaAccionIdConcat='+todasLasLineasAccion,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -142,7 +146,7 @@ function renderInsLineaAccion(PeriodoActual){
 	insLineaAccionHasEtiqueta = JSON.parse(insLineaAccionHasEtiqueta);
 	
 	var usuarioEtiqueta = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUsuarioEtiqueta',
+		url:'/tablero/ajaxSelects2?action=getUsuarioEtiqueta',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -202,9 +206,9 @@ function renderInsLineaAccion(PeriodoActual){
 													<%}%>
 												}else{
 													<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-														cuerpoTablaInsLineaAccion+='<tr><td>'+periodo[p].nombre+'</td>';	
+														cuerpoTablaInsLineaAccion+='<tr><td>'+periodo[p].nombre+'</td>';
 													<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-														cuerpoTablaInsLineaAccion+='<tr><td>'+periodo[p].nombre+'</td>';    
+														cuerpoTablaInsLineaAccion+='<tr><td>'+periodo[p].nombre+'</td>';
 													<%}%>
 												}
 												bandPeriodo = 1;
@@ -243,13 +247,13 @@ function renderInsLineaAccion(PeriodoActual){
 											{
 												if(insLineaAccion[w].borrado == true){
 													<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
-													cuerpoTablaInsLineaAccion+='<td><del>'+lineaAccion[i].nombre+'</del></td>';
+														cuerpoTablaInsLineaAccion+='<td><del>'+lineaAccion[i].nombre+'</del></td>';
 													<%}%>
 												}else{
 													<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-														cuerpoTablaInsLineaAccion+='<td>'+lineaAccion[i].nombre+'</td>';	
+														cuerpoTablaInsLineaAccion+='<td>'+lineaAccion[i].nombre+'</td>';
 													<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-														cuerpoTablaInsLineaAccion+='<td>'+lineaAccion[i].nombre+'</td>';	
+														cuerpoTablaInsLineaAccion+='<td>'+lineaAccion[i].nombre+'</td>';
 													<%}%>
 												}
 												bandLineaAccion = 1;
@@ -280,11 +284,11 @@ function renderInsLineaAccion(PeriodoActual){
 										
 										if(insLineaAccion[w].borrado == true){
 											<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
-						 						cuerpoTablaInsLineaAccion+='<td><del>'+numeroConComa(parseFloat(insLineaAccion[w].meta))+'</del></td><td class="text-center"><del>'+nombreUnidadMedida+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaBorrarInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Borrar Acción" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+'><span class="glyphicon glyphicon-refresh"></span></button></td></tr>';	 						
-						 						<%}%>	
+					 							cuerpoTablaInsLineaAccion+='<td><del>'+numeroConComa(parseFloat(insLineaAccion[w].meta))+'</del></td><td class="text-center"><del>'+nombreUnidadMedida+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaBorrarInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Borrar Acción" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+'><span class="glyphicon glyphicon-refresh"></span></button></td></tr>';
+						 					<%}%>	
 											}else{
 											<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-						 						cuerpoTablaInsLineaAccion+='<td>'+numeroConComa(parseFloat(insLineaAccion[w].meta))+'</td><td class="text-center">'+nombreUnidadMedida+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm registrosInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Editar Línea de Acción" codigoRegistroInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'-'+insLineaAccion[w].meta+'-'+insLineaAccion[w].version+'><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Borrar Línea de Acción" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+'><span class="glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-default btn-sm  agregarAccion" data-toggle="tooltip" data-placement="top" title="Agregar Acción" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-list-alt"></span></button><button type="button" class="btn btn-default btn-sm avanceCualitativo" data-toggle="tooltip" data-placement="top" title="Avance Cualitativo" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-tasks"></span></button></td></tr>';
+					 							cuerpoTablaInsLineaAccion+='<td>'+numeroConComa(parseFloat(insLineaAccion[w].meta))+'</td><td class="text-center">'+nombreUnidadMedida+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm registrosInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Editar Línea de Acción" codigoRegistroInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'-'+insLineaAccion[w].meta+'-'+insLineaAccion[w].version+'><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarInsLineaAccion" data-toggle="tooltip" data-placement="top" title="Borrar Línea de Acción" parametrosBorradoInsLineaAccion='+insLineaAccion[w].id+'-'+insLineaAccion[w].borrado+'><span class="glyphicon glyphicon-trash"></span></button><button type="button" class="btn btn-default btn-sm  agregarAccion" data-toggle="tooltip" data-placement="top" title="Agregar Acción" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-list-alt"></span></button><button type="button" class="btn btn-default btn-sm avanceCualitativo" data-toggle="tooltip" data-placement="top" title="Avance Cualitativo" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-tasks"></span></button></td></tr>';
 											<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
 												cuerpoTablaInsLineaAccion+='<td>'+numeroConComa(parseFloat(insLineaAccion[w].meta))+'</td><td class="text-center">'+nombreUnidadMedida+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm  agregarAccion" data-toggle="tooltip" data-placement="top" title="Agregar Acción" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-list-alt"></span></button><button type="button" class="btn btn-default btn-sm avanceCualitativo" data-toggle="tooltip" data-placement="top" title="Avance Cualitativo" parametros="'+insLineaAccion[w].id+'-'+insLineaAccion[w].lineaAccionId+'-'+insLineaAccion[w].institucionId+'-'+insLineaAccion[w].periodoId+'"><span class="glyphicon glyphicon-tasks"></span></button></td></tr>';
 											<%}%>
@@ -512,15 +516,107 @@ function renderInsLineaAccion(PeriodoActual){
 			  		'<tr class="active"><th colspan="6">Línea de Acción por Institución</th></tr>'+
 			  		'<tr class="active"><th style="min-width:110px">Periodo</th><th>Institución</th><th>Línea de Acción</th><th>Meta</th><th class="text-center">U.Medida</th><th style="min-width:250px" class="text-center">Administrar Linea Acción </th></tr>'+
 			 	'</thead>'+
+			 	'<tfoot>'+
+			 		'<tr>'+
+			 			'<th>Total</th><th></th><th></th><th></th><th></th><th></th>'+
+			 		'</tr>'+
+	            '</tfoot>'+
+
 			 	'<tbody id="tablaCuerpoInsLineaAccionPrecargados">'+
 			 	
 			 	'</tbody>'+
 			' </table> '+
 		'</div>';
 	$('#cuerpoInsLineaAccion').append(tablaInsLineaAccion);
-	$('#tablaCuerpoInsLineaAccionPrecargados').append(cuerpoTablaInsLineaAccion);	
-	$("#dataTableInsLineaAccion").DataTable();
+	$('#tablaCuerpoInsLineaAccionPrecargados').append(cuerpoTablaInsLineaAccion);
+		
+	$('#dataTableInsLineaAccion').DataTable(
+	{
+	        dom: 'Bfrtip',
+	        buttons: [
+	                    {
+	                        extend: 'copy',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4 ]
+	                }
+	                    },
+	                    {
+	                        extend: 'csv',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4 ]
+	                }
+	                    },
+	                    {
+	                        extend: 'excel',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4 ]
+	                }
+	                    },
+	                    {
+	                        extend: 'pdf',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4 ]
+	                }
+	                    },
+	                    {
+	                        extend: 'print',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4 ]
+	                }
+	                    }
+	                ],
+	        "footerCallback": function ( row, data, start, end, display ) {
+	        	var api = this.api(), data;
+	        	SumarizarColumnas(row, data, start, end, display, api, 1, null );
+	        },
+	        "search": {
+	            "regex": true
+			}
+	}
 	
+	);
+		
+	function SumarizarColumnas( row, data, start, end, display, api, cantColumnas, Indices ){
+		//var api = this.api(), data;
+		 
+        // saca los puntos y <del> de la cadena para pasarlo a entero
+		var intVal = function(i){
+        	if(typeof i==='string'){	
+        		i=i.replace(/[\."<\/*del>""Gs\."]/g, '');
+        		i=i.replace(/[","]/g, '.');
+        		i=i*1;		            		
+        	}else{
+        		if(typeof i==='number'){
+        			i=i;		            			
+        	}else{
+        		i=0;
+        	}
+        }
+        	return i;
+        };
+
+        // total general para todas las paginas
+        total = api
+            .column( 3 )
+            .data()
+            .reduce( function (a, b) {
+                return intVal(a) + intVal(b);
+            }, 0 );
+
+        // total por pagina 
+        pageTotal = api
+            .column( 3, { page: 'current'} )
+            .data()
+            .reduce( function (a, b) {
+                return intVal(a) + intVal(b);
+            }, 0 );
+
+        // se muestran los valores de los totales en el footer del table
+        $( api.column( 3 ).footer() ).html(
+        		'Total Pág. '+numeroConComa(pageTotal) +' (Total Gral. '+ numeroConComa(total) +')'
+        );	
+	}
+		
 	//Tabla de linea de accion del año que viene
 	var tablaInsLineaAccionPosterior = 	'<div class="table-responsive">'+
 			'<table class="table table-hover" id="dataTableInsLineaAccionPosterior">'+
@@ -528,14 +624,60 @@ function renderInsLineaAccion(PeriodoActual){
 			  		'<tr class="active"><th colspan="6">Línea de Acción por Institución</th></tr>'+
 			  		'<tr class="active"><th style="min-width:110px">Periodo</th><th>Institución</th><th>Línea de Acción</th><th>Meta</th><th class="text-center">U.Medida</th><th style="min-width:250px" class="text-center">Administrar Linea Acción</th></tr>'+
 			 	'</thead>'+
-			 	'<tbody id="tablaCuerpoInsLineaAccionPrecargadosPosterior">'+
-			 	
+			 	'<tfoot>'+
+		 			'<tr>'+
+		 				'<th>Total</th><th></th><th></th><th></th><th></th><th></th>'+
+		 			'</tr>'+
+            	'</tfoot>'+
+			 	'<tbody id="tablaCuerpoInsLineaAccionPrecargadosPosterior">'+			 	
 			 	'</tbody>'+
 			' </table> '+
 		'</div>';
 	$('#cuerpoInsLineaAccionPosterior').append(tablaInsLineaAccionPosterior);
 	$('#tablaCuerpoInsLineaAccionPrecargadosPosterior').append(cuerpoTablaInsLineaAccionPosterior);
-	$("#dataTableInsLineaAccionPosterior").DataTable();
+	$("#dataTableInsLineaAccionPosterior").DataTable(
+	{
+	        dom: 'Bfrtip',
+	        buttons: [
+	                    {
+	                        extend: 'copy',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4 ]
+	                }
+	                    },
+	                    {
+	                        extend: 'csv',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4 ]
+	                }
+	                    },
+	                    {
+	                        extend: 'excel',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4 ]
+	                }
+	                    },
+	                    {
+	                        extend: 'pdf',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4 ]
+	                }
+	                    },
+	                    {
+	                        extend: 'print',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4 ]
+	                }
+	                    }
+	                ],
+	        "footerCallback": function ( row, data, start, end, display ) {
+	        	var api = this.api(), data;
+	        	SumarizarColumnas(row, data, start, end, display, api, 1, null );
+	        },
+	        "search": {
+	            "regex": true
+			}
+	});
 	
 	//Tabla de linea de accion del año anterior
 	var tablaInsLineaAccionAnterior = 	'<div class="table-responsive">'+
@@ -544,6 +686,11 @@ function renderInsLineaAccion(PeriodoActual){
 		  		'<tr class="active"><th colspan="6">Línea de Acción por Institución</th></tr>'+
 		  		'<tr class="active"><th style="min-width:110px">Periodo</th><th>Institución</th><th>Línea de Acción</th><th>Meta</th><th class="text-center">U.Medida</th><th style="min-width:250px" class="text-center">Administrar Linea Acción</th></tr>'+
 		 	'</thead>'+
+		 	'<tfoot>'+
+ 				'<tr>'+
+ 					'<th>Total</th><th></th><th></th><th></th><th></th><th></th>'+
+ 				'</tr>'+
+    		'</tfoot>'+
 		 	'<tbody id="tablaCuerpoInsLineaAccionPrecargadosAnterior">'+
 		 	
 		 	'</tbody>'+
@@ -551,12 +698,55 @@ function renderInsLineaAccion(PeriodoActual){
 		'</div>';
 	$('#cuerpoInsLineaAccionAnterior').append(tablaInsLineaAccionAnterior);
 	$('#tablaCuerpoInsLineaAccionPrecargadosAnterior').append(cuerpoTablaInsLineaAccionAnterior);
-	$("#dataTableInsLineaAccionAnterior").DataTable();
+	$("#dataTableInsLineaAccionAnterior").DataTable(
+	{
+		        dom: 'Bfrtip',
+		        buttons: [
+		                    {
+		                        extend: 'copy',
+		                        exportOptions: {
+		                    columns: [ 0, 1, 2, 3, 4 ]
+		                }
+		                    },
+		                    {
+		                        extend: 'csv',
+		                        exportOptions: {
+		                    columns: [ 0, 1, 2, 3, 4 ]
+		                }
+		                    },
+		                    {
+		                        extend: 'excel',
+		                        exportOptions: {
+		                    columns: [ 0, 1, 2, 3, 4 ]
+		                }
+		                    },
+		                    {
+		                        extend: 'pdf',
+		                        exportOptions: {
+		                    columns: [ 0, 1, 2, 3, 4 ]
+		                }
+		                    },
+		                    {
+		                        extend: 'print',
+		                        exportOptions: {
+		                    columns: [ 0, 1, 2, 3, 4 ]
+		                }
+		                    }
+		                ],
+		        "footerCallback": function ( row, data, start, end, display ) {
+		        	var api = this.api(), data;
+		        	SumarizarColumnas(row, data, start, end, display, api, 1, null );
+		        },
+		        "search": {
+		            "regex": true
+				}	
+	}
+	);
 	
 	}
 
 <%if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
- 	$(document).ready(function(){
+ $(document).ready(function(){	
  		
  		onoff=false;
 		function OcultarRegistrosBorrados(){
@@ -578,7 +768,7 @@ function renderInsLineaAccion(PeriodoActual){
 		usr_unr_id="<%=attributes.get("unr_id") %>";
 		
 		var usuarios = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
+			url:'/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -597,7 +787,7 @@ function renderInsLineaAccion(PeriodoActual){
 	
 		<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
 			var periodo = $.ajax({
-				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPeriodo',
+				url:'/tablero/ajaxSelects2?action=getPeriodo',
 			  	type:'get',
 			  	dataType:'json',
 			  	async:false       
@@ -645,7 +835,7 @@ function renderInsLineaAccion(PeriodoActual){
 		/* $('.pagination').on('click',function(){
 			OcultarRegistrosBorrados();
 			}); */
-		
+					
 	});
 <%}else{%>
 	window.location = "http://spr.stp.gov.py/tablero/geografico4.jsp";
@@ -790,8 +980,18 @@ function renderInsLineaAccion(PeriodoActual){
     <!-- script src="plugins/jQuery/jQuery-2.1.3.min.js"></script-->        
 	<!-- Bootstrap 3.3.2 JS -->
     <script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-    <!-- DATA TABES SCRIPT -->
+    <!-- DATA TABES SCRIPT -->    
     <script src="plugins/datatables/jquery.dataTables.js" type="text/javascript"></script>
+    <!-- <script src="plugins/datatables/Plugins/api/sum().js"></script> -->
+        
+	<script src="plugins/datatables/dataTables.buttons.min.js" type="text/javascript"></script>
+	<script src="plugins/datatables/buttons.flash.min.js" type="text/javascript"></script>
+	<script src="plugins/datatables/jszip.min.js" type="text/javascript"></script>
+	<script src="plugins/datatables/pdfmake.min.js" type="text/javascript"></script>
+	<script src="plugins/datatables/vfs_fonts.js" type="text/javascript"></script>
+	<script src="plugins/datatables/buttons.html5.min.js" type="text/javascript"></script>
+	<script src="plugins/datatables/buttons.print.min.js" type="text/javascript"></script>
+	
     <script src="plugins/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
     <!-- FastClick -->
     <script src='plugins/fastclick/fastclick.min.js'></script>
@@ -851,7 +1051,7 @@ var entidadCasSpr = "";
 entidadCasSpr ="<%=attributes.get("entidad") %>";
 usuarioRolCasSpr="<%=attributes.get("role_id_tablero") %>";
 var usuariosSpr = $.ajax({
-	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
+	url:'/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
   	type:'get',
   	dataType:'json',
   	async:false       
@@ -859,5 +1059,8 @@ var usuariosSpr = $.ajax({
 usuariosSpr = JSON.parse(usuariosSpr);
 usuariosSpr = usuariosSpr.usuarios;
 </script>
+		<%  } else { %>
+            <script type="text/javascript">window.location = "http://spr.stp.gov.py";</script>
+        <%  } %> 
   </body>
 </html>

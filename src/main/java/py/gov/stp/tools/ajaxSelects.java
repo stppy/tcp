@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.jasig.cas.client.authentication.AttributePrincipal;
+
 import py.gov.stp.tools.SqlSelects;
 
 import com.google.gson.Gson;
@@ -25,6 +27,12 @@ public class ajaxSelects extends HttpServlet {
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
   
+    	AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();
+    	Map attributes = user.getAttributes(); 
+    	String nivelCas =  attributes.get("nivel_id").toString();
+    	String entidadCas =  attributes.get("entidad_id").toString();
+    	String userRoleId = attributes.get("role_id_tablero").toString();
+    	String userCorreo = user.getName();    	
     	
     	String action = request.getParameter("action");
     	String accion = request.getParameter("accion");
@@ -412,7 +420,7 @@ public class ajaxSelects extends HttpServlet {
         		condition = "where true ";
         		if (institucion_id!=0) condition += " and institucion_id ='"+institucion_id+"'";
         		if (linea_accion_id!=0) condition += " and linea_accion_id ='"+linea_accion_id+"'";
-        		if (departamento!=99) condition += " and accion_departamento_id ='"+departamento+"'"; 
+        		//if (departamento!=99) condition += " and accion_departamento_id ='"+departamento+"'"; 
         		try {objetos = SqlSelects.selectLineaAccionAcumuladoMes(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );

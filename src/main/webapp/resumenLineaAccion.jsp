@@ -45,15 +45,18 @@
 	<body class="skin-blue sidebar-mini">
 		<% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%>
 		<% Map attributes = user.getAttributes(); 
+		 if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){
+
 		if (user != null) { %>
 	
 		<script>
+
 		$( document ).ready(function() {
 			var entidadCas = "";
 			entidadCas ="<%=attributes.get("entidad") %>";
-			usuarioRolCas="<%=attributes.get("role_id") %>";
+			usuarioRolCas="<%=attributes.get("role_id_tablero") %>";
 			var usuarios = $.ajax({
-				url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
+				url:'/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
 			  	type:'get',
 			  	dataType:'json',
 			  	async:false       
@@ -72,13 +75,13 @@
 			getPeriodo();
 			
 		});
-		
+
 		$("body").on("change", "#periodoSeleccion",function(event){	
 		   	periodoSeleccionado = $("#periodoSeleccion option:selected").val();
 		   	renderLineasEstrategicas(periodoSeleccionado); 
 		});
 		</script>
-	
+
 	<!-- Piwik -->
 	<script type="text/javascript">
 	  var _paq = _paq || [];
@@ -106,7 +109,7 @@
 				<%@ include file="/frames/mainheader.jsp" %>
 			</header>
 		    <!-- Left side column. contains the logo and sidebar -->
-		    <%-- <%if (attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("0")){%> --%>
+		    <%-- <%if (attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("0")){%> --%>
 			<aside class="main-sidebar">
 				<%@ include file="/frames/main-sidebar.jsp"%>
 			</aside>
@@ -198,5 +201,9 @@
 		<%  } %>
 		<a href="#" data-toggle="tooltip" title="Some tooltip text!">Hover over me</a>
 				
+				
+		<%  } else { %>
+    		<script type="text/javascript">window.location = "http://spr.stp.gov.py/";</script>
+		<% } %> 
 </body>
 </html>

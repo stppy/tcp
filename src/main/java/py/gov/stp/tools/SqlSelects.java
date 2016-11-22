@@ -875,7 +875,37 @@ public class SqlSelects {
 	
 	public static List<LineaAccionAcumuladoMes> selectLineaAccionAcumuladoMes(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select * from linea_accion_acumulado_mes "+condition;
+		//String query = " select * from linea_accion_acumulado_mes "+condition;
+		String query =      " SELECT  tmp2.linea_accion_id, " +
+							"	tmp2.linea_accion, " +
+							"	tmp2.institucion_id, " +
+							"	tmp2.institucion, " +
+							"	tmp2.accion_unidad_medida, " +
+							"	tmp2.mes, " +
+							"	MAX(CASE " +
+							"			WHEN NOT tmp2.actividad_acumulable THEN tmp2.cantidad_programada " +
+							"			ELSE 0::double precision " + 
+							"	    END) AS max_cant_prog_no_acum, " +
+							"	MAX(CASE " +
+							"			WHEN NOT tmp2.actividad_acumulable THEN tmp2.cantidad_ejecutada " +
+							"			ELSE 0::double precision " + 
+							"	    END) AS max_cant_ejec_no_acum, " +
+							"	(SELECT MAX(tmp.cantidad_ejecutada) " +
+							"	FROM linea_accion_acumulado_mes tmp " + condition +
+							//"	WHERE tmp.institucion_id = 1359 and tmp.linea_accion_id = 88 " + 
+							"	     AND NOT tmp.actividad_acumulable) as max_cant_ejec_no_acum, " +
+							"	sum(CASE " +
+							"		WHEN tmp2.actividad_acumulable THEN tmp2.cantidad_programada::double precision " +
+							"		ELSE 0::double precision " +
+							"	    END) AS cantidad_programada, " +
+							"	sum(CASE " +
+							"		WHEN tmp2.actividad_acumulable THEN tmp2.cantidad_ejecutada::double precision " +
+							"		ELSE 0::double precision " +
+							"	    END) AS cantidad_ejecutada " +
+							" FROM linea_accion_acumulado_mes tmp2 " +  condition +
+							//" WHERE tmp2.institucion_id = 1359 and tmp2.linea_accion_id = 88 " + 
+							" group by tmp2.linea_accion_id, tmp2.linea_accion, tmp2.institucion_id, tmp2.institucion, tmp2.accion_unidad_medida, tmp2.mes " +
+							" ORDER BY tmp2.institucion, tmp2.linea_accion_id, tmp2.mes ";
 
 		Statement statement = null;
 		ResultSet rs=null;
@@ -895,6 +925,9 @@ public class SqlSelects {
 				objeto.setMes(rs.getString("mes"));
 				objeto.setCantidad_programada(rs.getDouble("cantidad_programada"));
 				objeto.setCantidad_ejecutda(rs.getDouble("cantidad_ejecutada"));
+				//objeto.setActividad_acumulable(rs.getBoolean("actividad_acumulable"));
+				objeto.setMax_cant_prog_no_acum(rs.getDouble("max_cant_prog_no_acum"));
+				objeto.setMax_cant_ejec_no_acum(rs.getDouble("max_cant_ejec_no_acum"));
 				objetos.add(objeto);
 			}
 		}
@@ -908,7 +941,36 @@ public class SqlSelects {
 	
 	public static List<LineaAccionAcumuladoMesDepartamento> selectLineaAccionAcumuladoMesDepto(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select * from linea_accion_acumulado_mes_depto "+condition;
+		//String query = " select * from linea_accion_acumulado_mes_depto "+condition;
+		
+		String query =      " SELECT  tmp2.linea_accion_id, " +
+							"	tmp2.linea_accion, " +
+							"	tmp2.institucion_id, " +
+							"	tmp2.institucion, " +
+							"	tmp2.accion_unidad_medida, " +
+							"	tmp2.mes, " +
+							"	tmp2.accion_departamento_id, " +
+							"	tmp2.accion_depto_nombre, " +
+							"	(SELECT MAX(tmp.cantidad_programada) " +
+							"	 FROM linea_accion_acumulado_mes_depto tmp " + condition +
+							//"	 WHERE tmp.institucion_id = 1359 and tmp.linea_accion_id = 88 " +
+							"	     AND NOT tmp.actividad_acumulable) as max_cant_prog_no_acum, " +
+							"	(SELECT MAX(tmp.cantidad_ejecutada) " +				
+							"	 FROM linea_accion_acumulado_mes_depto tmp " + condition +
+							//"	WHERE tmp.institucion_id = 1359 and tmp.linea_accion_id = 88 " + 
+							"	     AND NOT tmp.actividad_acumulable) as max_cant_ejec_no_acum, " +
+							"	sum(CASE " +
+							"		WHEN tmp2.actividad_acumulable THEN tmp2.cantidad_programada::double precision " +
+							"		ELSE 0::double precision " +
+							"	    END) AS cantidad_programada, " +
+							"	sum(CASE " +
+							"		WHEN tmp2.actividad_acumulable THEN tmp2.cantidad_ejecutada::double precision " +
+							"		ELSE 0::double precision " +
+							"	    END) AS cantidad_ejecutada " +
+							" FROM linea_accion_acumulado_mes_depto tmp2 " +  condition +
+							//" WHERE tmp2.institucion_id = 1359 and tmp2.linea_accion_id = 88 " + 
+							" group by tmp2.linea_accion_id, tmp2.linea_accion, tmp2.institucion_id, tmp2.institucion, tmp2.accion_unidad_medida, tmp2.mes, tmp2.accion_departamento_id, tmp2.accion_depto_nombre " +
+							" ORDER BY tmp2.institucion, tmp2.linea_accion_id, tmp2.mes ";
 
 		Statement statement = null;
 		ResultSet rs=null;
@@ -927,7 +989,9 @@ public class SqlSelects {
 				objeto.setAccion_unidad_medida(rs.getString("accion_unidad_medida"));
 				objeto.setMes(rs.getString("mes"));
 				objeto.setCantidad_programada(rs.getDouble("cantidad_programada"));
-				objeto.setCantidad_ejecutda(rs.getDouble("cantidad_ejecutada"));				
+				objeto.setCantidad_ejecutda(rs.getDouble("cantidad_ejecutada"));
+				objeto.setMax_cant_prog_no_acum(rs.getDouble("max_cant_prog_no_acum"));
+				objeto.setMax_cant_ejec_no_acum(rs.getDouble("max_cant_ejec_no_acum"));
 				objeto.setDepartamento_id(rs.getInt("accion_departamento_id"));
 				objeto.setDepartamento(rs.getString("accion_depto_nombre"));				
 				objetos.add(objeto);
@@ -940,9 +1004,41 @@ public class SqlSelects {
 		}
 		return objetos; 
 		}
+	
 	public static List<LineaAccionAcumuladoMesDistrito> selectLineaAccionAcumuladoMesDistrito(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select * from linea_accion_acumulado_mes_distrito "+condition;
+		//String query = " select * from linea_accion_acumulado_mes_distrito "+condition;
+		String query =  " SELECT tmp2.linea_accion_id, " +
+						"	tmp2.linea_accion, " +
+						"	tmp2.institucion_id, " +
+						"	tmp2.institucion, " +
+						"	tmp2.accion_unidad_medida, " +
+						"	tmp2.mes, " +
+						"	tmp2.accion_departamento_id, " +
+						"	tmp2.accion_distrito_id, " +
+						"	tmp2.accion_depto_nombre, " +						
+						"	tmp2.accion_dist_nombre, " +
+						"	(SELECT MAX(tmp.cantidad_programada) " +
+						"	 FROM linea_accion_acumulado_mes_distrito tmp " + condition +
+						//"	 WHERE tmp.institucion_id = 1359 and tmp.linea_accion_id = 88 " +
+						"	     AND NOT tmp.actividad_acumulable) as max_cant_prog_no_acum, " +
+						"	(SELECT MAX(tmp.cantidad_ejecutada) " +				
+						"	 FROM linea_accion_acumulado_mes_distrito tmp " + condition +
+						//"	WHERE tmp.institucion_id = 1359 and tmp.linea_accion_id = 88 " + 
+						"	     AND NOT tmp.actividad_acumulable) as max_cant_ejec_no_acum, " +
+						"	sum(CASE " +
+						"		WHEN tmp2.actividad_acumulable THEN tmp2.cantidad_programada::double precision " +
+						"		ELSE 0::double precision " +
+						"	    END) AS cantidad_programada, " +
+						"	sum(CASE " +
+						"		WHEN tmp2.actividad_acumulable THEN tmp2.cantidad_ejecutada::double precision " +
+						"		ELSE 0::double precision " +
+						"	    END) AS cantidad_ejecutada " +
+						" FROM linea_accion_acumulado_mes_distrito tmp2 " +  condition +
+						//" WHERE tmp2.institucion_id = 1359 and tmp2.linea_accion_id = 88 " + 
+						" group by tmp2.linea_accion_id, tmp2.linea_accion, tmp2.institucion_id, tmp2.institucion, tmp2.accion_unidad_medida, tmp2.mes, " +
+						" 		   tmp2.accion_departamento_id, tmp2.accion_distrito_id, tmp2.accion_depto_nombre, tmp2.accion_dist_nombre " +
+						" ORDER BY tmp2.institucion, tmp2.linea_accion_id, tmp2.mes ";
 
 		Statement statement = null;
 		ResultSet rs=null;
@@ -962,6 +1058,8 @@ public class SqlSelects {
 				objeto.setMes(rs.getString("mes"));
 				objeto.setCantidad_programada(rs.getDouble("cantidad_programada"));
 				objeto.setCantidad_ejecutda(rs.getDouble("cantidad_ejecutada"));
+				objeto.setMax_cant_prog_no_acum(rs.getDouble("max_cant_prog_no_acum"));
+				objeto.setMax_cant_ejec_no_acum(rs.getDouble("max_cant_ejec_no_acum"));
 				objeto.setDistrito_id(rs.getInt("accion_distrito_id"));
 				objeto.setDepartamento_id(rs.getInt("accion_departamento_id"));
 				objeto.setDepartamento(rs.getString("accion_depto_nombre"));
@@ -1127,7 +1225,7 @@ public class SqlSelects {
     public static List<ProductoObjetoGasto> selectObjetoGastoCosto(String condicion)throws SQLException{
     	Connection conect=ConnectionConfiguration.conectarSpr();
 
-    	String query = " select distinct objeto_gasto from asignacion_presi "+condicion+" and version = 151";
+    	String query = " select distinct objeto_gasto from asignacion_presi "+condicion+" and version = 151 order by objeto_gasto";
 
     	Statement statement = null;
     	ResultSet rs=null;

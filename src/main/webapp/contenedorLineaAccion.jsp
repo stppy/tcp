@@ -74,7 +74,7 @@ $(document).ready(function(){
 	var entidadCas = "";
 	entidadCas ="<%=attributes.get("entidad") %>";
 	var usuarios = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
+		url:'/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -85,7 +85,7 @@ $(document).ready(function(){
 	$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
 	
 	var lineaAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+		url:'/tablero/ajaxSelects2?action=getLineaAccion',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -93,7 +93,7 @@ $(document).ready(function(){
 	lineaAccion=JSON.parse(lineaAccion);
 	
 	var tipoAccion = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getTipoAccion',
+		url:'/tablero/ajaxSelects2?action=getTipoAccion',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -101,7 +101,7 @@ $(document).ready(function(){
 	tipoAccion=JSON.parse(tipoAccion);
 	
 	var estrategia = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaEstrategica',
+		url:'/tablero/ajaxSelects2?action=getLineaEstrategica',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -109,7 +109,7 @@ $(document).ready(function(){
 	estrategia = JSON.parse(estrategia);	
 	
 	var unidadMedida = $.ajax({
-		url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+		url:'/tablero/ajaxSelects2?action=getUnidadMedida',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       

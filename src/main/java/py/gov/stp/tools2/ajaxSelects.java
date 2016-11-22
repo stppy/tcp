@@ -502,6 +502,25 @@ public class ajaxSelects extends HttpServlet {
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
         	}
+////////////Pivot Plan de Acción        	
+        	if (action.equals("getPivotPlanDeAccion")){
+        		List objetos=null;
+        		condition = " where true ";
+//        		String condition2=" where true ";
+//        		if (!userRoleId.equals("0") && !userRoleId.equals("1")){ 
+//        			condition2 += " and entidad_id="+userEntidadId+" and nivel_id="+userNivelId;
+//	        		if ( !userUnrId.equals("0") ){
+//	        			condition2+= " and unidad_responsable_id="+userUnrId;
+//	        		}
+//        		};
+//        		condition += " and ins_id IN (select id from institucion "+condition2+") ";
+//        		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
+        		try {objetos = SqlSelects.selectPivotPlanAccionAvances(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());
+        		}
+////////////Pivot Presupuesto   
 ////////////Pivot Presupuesto   
         	if (action.equals("getPivotLineaAccionPresupuesto")){
         		List objetos=null; 
@@ -1322,8 +1341,16 @@ public class ajaxSelects extends HttpServlet {
                 ArrayList<Object> desempenhoDpto= new ArrayList<Object>();
                 condition = " where true";
                 
+                String condition2="";
+        		if (!userRoleId.equals("0") && !userRoleId.equals("1") && !userRoleId.equals("2")){ 
+        			condition2 += " and entidad_id="+userEntidadId+" and nivel_id="+userNivelId;
+        			if ( !userUnrId.equals("0") ){
+        				condition2+= " and unidad_responsable_id="+userUnrId;
+        			}
+        		};
+                
                 try {
-					instituciones = SqlSelects.selectInstitucion(condition);
+					instituciones = SqlSelects.selectInstitucion(condition+condition2);
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
@@ -1461,10 +1488,19 @@ public class ajaxSelects extends HttpServlet {
                 List<LineaAccionProgramacion> objetos=null;
                 List<Institucion> instituciones= null ;
                 ArrayList<Object> desempenhoDpto= new ArrayList<Object>();
-//              condition = " where true"; 
+                condition = " where true"; 
 //        		if (periodoId!=null) condition += " and periodo ='"+periodoId+"'";
+                
+                String condition2="";
+        		if (!userRoleId.equals("0") && !userRoleId.equals("1") && !userRoleId.equals("2")){ 
+        			condition2 += " and entidad_id="+userEntidadId+" and nivel_id="+userNivelId;
+        			if ( !userUnrId.equals("0") ){
+        				condition2+= " and unidad_responsable_id="+userUnrId;
+        			}
+        		};
+                
                 try {
-					instituciones = SqlSelects.selectInstitucion(condition);
+					instituciones = SqlSelects.selectInstitucion(condition+condition2);
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
@@ -1472,6 +1508,8 @@ public class ajaxSelects extends HttpServlet {
                 condition = " where true"; 
         		if (periodoId!=null) condition += " AND periodo ='"+periodoId+"'";
         		if (departamentoId!=null) condition += " AND ins_linea_accion_base_dd.depto_id = '"+departamentoId+"'";
+	            if (distritoId!=null) condition += " and ins_linea_accion_base_dd.dist_id='"+distritoId+"'";
+
 				condition += " AND ins_linea_accion_base_dd.institucion_id in(";
 
 				for (int s = 0; s < instituciones.size(); s += 1) {
@@ -1538,8 +1576,12 @@ public class ajaxSelects extends HttpServlet {
         	if (action.equals("getUsuarioLineaAccion")){
         		String objetos=null;
         		condition = " where true ";
-        		if (userCorreo!=null) condition += " and usuario_correo ='"+userCorreo+"'";
-           		try {objetos = SqlSelects.selectUsuarioLineaAccion(condition);}
+        		if (usuario!=null){
+        			condition += " and usuario_correo ='"+usuario+"'";
+        		}else{
+        			condition += " and usuario_correo ='"+userCorreo+"'";
+        		}
+        		try {objetos = SqlSelects.selectUsuarioLineaAccion(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		out.println(objetos);return;        	
         	}

@@ -72,7 +72,7 @@
 	
 	$(document).ready(function(){
 		var tipoAccion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getTipoAccion',
+			url:'/tablero/ajaxSelects2?action=getTipoAccion',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -87,7 +87,7 @@
 		$("#tipoAccionIdLineaAccion").append(optionTipoAccion);
 		
 		var unidadMedida = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida',
+			url:'/tablero/ajaxSelects2?action=getUnidadMedida',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -101,7 +101,7 @@
 		$("#unidadMedidaIdLineaAccion").append(optionUnidadMedida);
 		
 		var estrategia = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaEstrategica',
+			url:'/tablero/ajaxSelects2?action=getLineaEstrategica',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       

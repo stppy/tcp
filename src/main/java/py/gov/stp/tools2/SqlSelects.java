@@ -469,6 +469,66 @@ public class SqlSelects {
 		return objetos; 
 		}
 	
+	public static List<LineasAccionAvances> selectPivotPlanAccionAvances(String condition) throws SQLException{
+		
+		Connection conect = ConnectionConfiguration.conectar();
+		String query = " select * from plan_accion_avances";
+
+		Statement statement = null;
+		ResultSet rs = null;
+		List<LineasAccionAvances> objetos = new ArrayList<LineasAccionAvances>();
+
+		try{
+			statement = conect.createStatement();
+			rs = statement.executeQuery(query);
+			while(rs.next()){
+				LineasAccionAvances objeto = new LineasAccionAvances();
+				objeto.setInstitucion(rs.getString("institucion"));
+				objeto.setLaId(rs.getInt("la_id"));
+				objeto.setLineaAccion(rs.getString("linea_accion"));
+				objeto.setLaUnidadMedida(rs.getString("la_unidad"));
+				objeto.setPeriodo(rs.getInt("anho"));
+				objeto.setLaMeta(rs.getDouble("la_meta"));
+				objeto.setAccionId(rs.getInt("a_id"));
+				objeto.setAccion(rs.getString("accion"));
+				objeto.setAccionPeso(rs.getInt("a_peso"));
+				objeto.setAccionUnidadMedida(rs.getString("a_unidad"));
+				objeto.setDeptoId(rs.getInt("depto_id"));
+				objeto.setDepartamento(rs.getString("departamento"));
+				objeto.setDistId(rs.getInt("dist_id"));
+				objeto.setDistrito(rs.getString("distrito"));
+				objeto.setCronoId(rs.getInt("crono_id"));
+				objeto.setCronograma(rs.getString("cronograma"));
+				objeto.setCronoDescripcion(rs.getString("crono_descripcion"));
+				objeto.setContribucion(rs.getDouble("contribucion"));
+				objeto.setInfluencia(rs.getDouble("influencia"));
+				objeto.setCronoUnidadMedida(rs.getString("crono_unidad"));
+				objeto.setCronoTipoNombre(rs.getString("crono_tipo"));
+				objeto.setAcumula(rs.getBoolean("crono_acumula"));
+				objeto.setFecha(rs.getDate("fecha"));
+				objeto.setMes(rs.getString("mes"));
+				objeto.setProgramacionCantidad(rs.getString("programacion_cantidad"));
+				objeto.setAvanceCantidadString(rs.getString("avance_cantidad"));
+				objeto.setAvanceJustificacion(rs.getString("justificacion"));
+				objeto.setAvanceCosto(rs.getString("avance_costo"));
+				objeto.setAvanceDestinatario(rs.getString("avance_destinatarios"));
+				objeto.setAvanceEvidencias(rs.getString("avance_evidencias"));
+				
+				objetos.add(objeto);
+			}
+			
+		}catch (SQLException e){
+			e.printStackTrace();
+		}finally{
+			if(statement != null){
+				statement.close();
+			}
+			if(conect != null){
+				conect.close();
+			}
+		}
+		return objetos;
+	}		
 	
 	public static List<LineasAccionAvances> selectPivotAvance(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
@@ -1938,7 +1998,7 @@ public class SqlSelects {
 			    objeto.setLineaAccionNombre(rs.getString("linea_accion_nombre"));
 			    objeto.setLineaAccionUnidadMedidaNombre(rs.getString("linea_um_nombre"));
 			    objeto.setInsLineaAccionPeriodoId(rs.getInt("periodo"));
-			    objeto.setMeta(rs.getInt("meta_comprometida"));
+			    objeto.setMeta(rs.getDouble("meta_comprometida"));
 			    objeto.setCantidadAnho(rs.getDouble("programado_anho"));
 			    objeto.setCantidadHoy(rs.getDouble("programado_hoy"));
 			    objeto.setCantDest(rs.getDouble("destinatarios_estimados"));
@@ -2488,7 +2548,10 @@ public class SqlSelects {
  		 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from( "+
  				"select "
 				+ "ins_linea_accion_base_dd.institucion_sigla as \"institucionSigla\","
-				+ "ins_linea_accion_base_dd.institucion_id as \"institucionId\","								
+				+ "ins_linea_accion_base_dd.institucion_id as \"institucionId\","
+				+ "ins_linea_accion_base_dd.institucion_orden as \"orden\","
+
+
 				+ "ins_linea_accion_programacion_hoy_dd.cantidad_hoy as \"cantidadHoy\","
 				+ "ins_linea_accion_avance_dd.cantidad as \"cantidadAvance\","
 				+ "ins_linea_accion_base_dd.linea_accion_id as \"lineaAccionId\", "
@@ -2520,7 +2583,7 @@ public class SqlSelects {
 				+ " ins_linea_accion_costo_estimado_dd.ins_linea_accion_id=ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_costo_estimado_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_costo_estimado_dd.dist_id=ins_linea_accion_base_dd.dist_id"
 				+ " left join ins_linea_accion_destinatario_real_dd on "
 				+ " ins_linea_accion_destinatario_real_dd.ins_linea_accion_id=ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_destinatario_real_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_destinatario_real_dd.dist_id=ins_linea_accion_base_dd.dist_id"
-				+ " " + condition+ " order by \"institucionId\", \"lineaAccionId\", \"departamentoId\", \"distritoId\""+
+				+ " " + condition+ " order by \"orden\", \"institucionId\", \"lineaAccionId\", \"departamentoId\", \"distritoId\""+
    				")t";
 
 		Statement statement = null;
@@ -2801,7 +2864,8 @@ public class SqlSelects {
 	   	 		+ "linea_accion_id as \"lineaAccionId\","
 	   	 		+ "fecha_actualizacion,"
 	   	 		+ "fecha_insercion,"
-	   	 		+ "usuario_responsable"
+	   	 		+ "usuario_responsable,"
+	   	 		+ "borrado"
 	   	 		+ " from usuario_linea_accion"+condition+")t";
 
 
