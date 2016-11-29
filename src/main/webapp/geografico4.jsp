@@ -1687,7 +1687,7 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 	var tablaInstituciones="";
 	var tempInstituciones="";
 	var tempInstLineas="";
-	var a = "";
+	var todasLasLineas = "";
 	var flagIns=0;
 	var clase="";
 	
@@ -1839,10 +1839,14 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 												'<td>'+numeroConComa((inversion/1000000).toFixed(2))+'</td>'+
 												'</tr>';
 																																					
-												if (tempInstLineas != "") a +=  tempInstLineas;
+												if (tempInstLineas != "") todasLasLineas +=  tempInstLineas;
+
 											//}
 										}
-										tablaInstituciones += tempInstituciones + a;
+										/* Preguntamos por la variable todasLasLineas, en caso de que este vacio significa que no tiene ninguna linea de acción y por lo tanto no deberia de mostrar el nombre de la 
+										institucion como el caso de SICOM. Caso contrario va a mostrar el nombre de la institucion con sus lineas */
+										if(todasLasLineas != "") tablaInstituciones += tempInstituciones + todasLasLineas; 
+
 
 									}else if( (lineasProgramadas[n+1].lineaAccionId != linea_accion_id && lineasProgramadas[n+1].institucionId == institucionId) || (lineasProgramadas[n+1].lineaAccionId == linea_accion_id && lineasProgramadas[n+1].institucionId != institucionId) || (lineasProgramadas[n+1].lineaAccionId != linea_accion_id && lineasProgramadas[n+1].institucionId != institucionId))  {
 																				
@@ -1918,16 +1922,16 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 											
 										if (tempInstLineas != "")
 										{
-											a +=  tempInstLineas ;
+											todasLasLineas+=  tempInstLineas ;
 											tempInstLineas = "";
 										}
 
 										
 										if(lineasProgramadas[n+1].institucionId != institucionId){
-											if (a != "") tablaInstituciones += tempInstituciones + a;										
+											if (todasLasLineas != "") tablaInstituciones += tempInstituciones + todasLasLineas;										
 											tempInstituciones  = '<tr><td colspan="12"><strong>'+lineasProgramadas[n+1].institucionSigla+'</strong></td></tr>';
 											tempInstLineas = "";
-											a = "";
+											todasLasLineas = "";
 											institucionId = lineasProgramadas[n+1].institucionId;											
 										}										
 									}
