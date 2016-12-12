@@ -71,7 +71,7 @@
             	<li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Preguntas Frecuentes</span></a></li>
             	<li><a href="/documentacion.jsp"><i class="fa fa-circle-o text-green"></i> <span>Acerca de Tablero de Control</span></a></li>
 				<li><a href="https://nube.stp.gov.py/index.php/s/a6JRumfONc48ynV" target="_blank"><i class="fa fa-user" id="linkFichaSocial"></i><span>Ficha Social</span></a></li>
-
+				<li><a href="/reporte_pnd.jsp"><i class="fa fa-circle-o text-green"></i> <span>Reporte PND</span></a></li>
             <% if (attributes.get("role_id_tablero").toString().equals("0")  && user.getName()!="parce@nandeparaguay.org"){%>	 
            	 <li class="header">ADMINISTRAR</li>
             	<li><a href="/indicadores.jsp"><i class="glyphicon glyphicon-info-sign text-red"></i> <span>Indicadores</span></a></li>

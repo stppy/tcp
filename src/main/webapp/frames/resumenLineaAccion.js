@@ -64,7 +64,7 @@ function renderLineasEstrategicas(periodo){
 	          '<div class="box" height="1000px">'+
 	            '<div class="box-header with-border" height="1000px">'+
 	              '<h3 class="box-title" id="tituloTipoPrograma">'+
-	              lineasEstrategicas[l].nombre+
+	              		lineasEstrategicas[l].nombre+
 	              '</h3> '+
 	              '<div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
 	              '</div>'+
@@ -72,8 +72,29 @@ function renderLineasEstrategicas(periodo){
 	            '<div class="box-body" >'+
 	            	'<div class="table-responsive">'+
 	          			'<table class="table table-striped table-bordered table-hover tablaLineasPorInstitucion">'+
+	          				'<thead>'+
+			          			'<tr><th rowspan="3" class="text-center" style="vertical-align: middle;">Línea de Acción</th>'+
+			          			  	'<th rowspan="3" class="text-center" style="vertical-align: middle;">Unidad de Medida</th>'+
+			          			  	'<th colspan="5" class="text-center">Plan de Acción '+ periodo + '</th>'+
+			          			  	'<th colspan="5" class="text-center">Ejecución a la Fecha</th></tr>'+
+			          			  //	'<th colspan="5" class="text-center"><input type="date" id="fechaInicioAccion" min="2014-01-01" max="'+fechaActual+'"/></th>'+
+			          			  //	'<th colspan="4" class="text-center"><input type="date" id="fechaInicioEjecucion" max="2016-12-31" value="'+fechaActual+'"/></th><th><input	class="btn btn-primary guardarRangoFechas" type="submit" value="Filtrar"></th></tr>'+ 
+			          			'<tr><th colspan="3" class="text-center">Meta</th>'+
+			          			  	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Destinatarios</th>'+
+			          			  	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Inversión (en millones G.)</th>'+
+			          			  	'<th colspan="3" class="text-center">Meta</th>'+
+			          			  	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Destinatarios</th>'+
+			          			  	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Inversión (en millones G.)</th></tr>'+
+			          			'<tr><th class="text-center">Aprobada</th>'+
+			          			  	'<th class="text-center">Programada</th>'+
+			          			  	'<th class="text-center">%</th>'+
+			          			  	'<th class="text-center">Prevista</th>'+
+			          			  	'<th class="text-center">Lograda</th>'+
+			          			  	'<th class="text-center">%</th>'+
+			          		    '</tr>'+
+			          		'</thead>'+
 	          	 			lineasDeEstrategia+
-	  					'</tbody></table>'+
+	  					'</table>'+
 	  				'</div>'+
 	            '</div>'+
 			   '</div>'+
@@ -126,7 +147,7 @@ function renderAccion(estrategia, lineasProgramadas, instituciones, periodo){
 	}
 	
 	var tablaInstituciones="";
-	var tempInstituciones="";
+	var tempInstituciones="<tbody>";
 	var tempInstLineas="";
 	var flagIns=0;
 	var clase="";
@@ -147,26 +168,7 @@ function renderAccion(estrategia, lineasProgramadas, instituciones, periodo){
 	var fechaActual = (f.getFullYear() + "-" + mes + "-" + dia);
 	*/
 	
-	tempInstituciones = '<thead><tr>'+
-		'<th rowspan="3" class="text-center" style="vertical-align: middle;">Línea de Acción</th>'+
-	  	'<th rowspan="3" class="text-center" style="vertical-align: middle;">Unidad de Medida</th>'+
-	  	'<th colspan="5" class="text-center">Plan de Acción '+ periodo + '</th>'+
-	  	'<th colspan="5" class="text-center">Ejecución a la Fecha</th></tr>'+
-	  //	'<th colspan="5" class="text-center"><input type="date" id="fechaInicioAccion" min="2014-01-01" max="'+fechaActual+'"/></th>'+
-	  //	'<th colspan="4" class="text-center"><input type="date" id="fechaInicioEjecucion" max="2016-12-31" value="'+fechaActual+'"/></th><th><input	class="btn btn-primary guardarRangoFechas" type="submit" value="Filtrar"></th></tr>'+ 
-	'<tr><th colspan="3" class="text-center">Meta</th>'+
-	  	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Destinatarios</th>'+
-	  	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Inversión (en millones G.)</th>'+
-	  	'<th colspan="3" class="text-center">Meta</th>'+
-	  	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Destinatarios</th>'+
-	  	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Inversión (en millones G.)</th></tr>'+
-	'<tr><th class="text-center">Aprobada</th>'+
-	  	'<th class="text-center">Programada</th>'+
-	  	'<th class="text-center">%</th>'+
-	  	'<th class="text-center">Prevista</th>'+
-	  	'<th class="text-center">Lograda</th>'+
-	  	'<th class="text-center">%</th>'+
-    '</tr></thead><tbody>';
+	
     
 	for(var m=0; m<instituciones.length;m++){ 
 		for(var n=0; n<lineasProgramadas.length;n++){
