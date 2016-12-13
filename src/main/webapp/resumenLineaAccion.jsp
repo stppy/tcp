@@ -45,7 +45,7 @@
 	<body class="skin-blue sidebar-mini">
 		<% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%>
 		<% Map attributes = user.getAttributes(); 
-		 if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){
+		 if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){
 
 		if (user != null) { %>
 	
