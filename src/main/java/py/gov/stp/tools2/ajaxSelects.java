@@ -521,7 +521,6 @@ public class ajaxSelects extends HttpServlet {
         		out.println(json.toString());
         		}
 ////////////Pivot Presupuesto   
-////////////Pivot Presupuesto   
         	if (action.equals("getPivotLineaAccionPresupuesto")){
         		List objetos=null; 
         		condition = " where true ";
