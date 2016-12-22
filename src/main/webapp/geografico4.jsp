@@ -2332,7 +2332,7 @@ $("body").on("click", ".cmbInstitucion",function(event){
 	//var dist_id=event.target.attributes.depto_id.nodeValue;
  	//var depto_id=event.target.attributes.dist_id.nodeValue;
 	
-	if (event.target.attributes.hasOwnProperty("dist_id")){
+	/* if (event.target.attributes.hasOwnProperty("dist_id")){
 		if((event.target.attributes.dist_id.value !=="undefined")){
 			dist_id=event.target.attributes.dist_id.value;
 		}else{
@@ -2345,7 +2345,7 @@ $("body").on("click", ".cmbInstitucion",function(event){
 	 	depto_id=event.target.attributes.depto_id.value;
 	}else{
 		depto_id=null;
-	}
+	} */
 	
 	if (institucion_idConcat==""){
 		//alert("Favor seleccionar previamente Departamento en el mapa");
