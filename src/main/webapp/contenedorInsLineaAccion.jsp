@@ -77,7 +77,8 @@ if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("
 if (user != null && user.getName()!= "parce@nandeparaguay.org") { %>
 	<%@ include file="/frames/perfil.jsp" %>
 <script>
-periodoSeleccionado=new Date().getFullYear();
+//periodoSeleccionado=new Date().getFullYear();
+//periodoSeleccionado = $("#periodoSeleccion option:selected").val();
 function renderInsLineaAccion(PeriodoActual){
 	
 	var insLineaAccion = $.ajax({
@@ -747,45 +748,8 @@ function renderInsLineaAccion(PeriodoActual){
 
 <%if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
  $(document).ready(function(){	
- 		
- 		onoff=false;
-		function OcultarRegistrosBorrados(){
-			if($("#chkMostrarOcultar").is(':checked')){
-				onoff=true;						
-			}else{
-				onoff=false;			
-			}	
-			renderInsLineaAccion(periodoSeleccionado);
-			//$("tr > td > del").closest("tr").toggle(onoff);
-		}
-
-		var entidadCas = "";
-		entidadCas ="<%=attributes.get("entidad") %>";
-		usuarioRolCas="<%=attributes.get("role_id_tablero") %>";
-		
-		usr_nivel_id="<%=attributes.get("nivel_id") %>";
-		usr_entidad_id="<%=attributes.get("entidad_id") %>";
-		usr_unr_id="<%=attributes.get("unr_id") %>";
-		
-		var usuarios = $.ajax({
-			url:'/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
-		  	type:'get',
-		  	dataType:'json',
-		  	async:false       
-		}).responseText;
-		usuarios = JSON.parse(usuarios);
-		usuarios = usuarios.usuarios;
-		
-		//$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
-		//$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
-		
-		//$("#botonImprimirAvanceInstitucional").attr('parametros', usuarios[0].nivel_id+"-"+usuarios[0].entidad_id+"-"+usuarios[0].unidadResponsable);
-		
-				
-		renderInsLineaAccion(periodoSeleccionado);
-			
-	
-		<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
+ 			
+		 <!-- /*%if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){% */ -->
 			var periodo = $.ajax({
 				url:'/tablero/ajaxSelects2?action=getPeriodo',
 			  	type:'get',
@@ -820,7 +784,45 @@ function renderInsLineaAccion(PeriodoActual){
 								'</div>';
 								
 			$('#mostrarOcultarBorrado').append(ocultarBorrado);
-		<%}%>
+		<!-- /*%}%*/ -->
+	 
+	 	periodoSeleccionado = $("#periodoSeleccion option:selected").val();
+	 
+ 		onoff=false;
+		function OcultarRegistrosBorrados(){
+			if($("#chkMostrarOcultar").is(':checked')){
+				onoff=true;						
+			}else{
+				onoff=false;			
+			}	
+			renderInsLineaAccion(periodoSeleccionado);
+			//$("tr > td > del").closest("tr").toggle(onoff);
+		}
+
+		var entidadCas = "";
+		entidadCas ="<%=attributes.get("entidad") %>";
+		usuarioRolCas="<%=attributes.get("role_id_tablero") %>";
+		
+		usr_nivel_id="<%=attributes.get("nivel_id") %>";
+		usr_entidad_id="<%=attributes.get("entidad_id") %>";
+		usr_unr_id="<%=attributes.get("unr_id") %>";
+		
+		var usuarios = $.ajax({
+			url:'/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		usuarios = JSON.parse(usuarios);
+		usuarios = usuarios.usuarios;
+		
+		//$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
+		//$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
+		
+		//$("#botonImprimirAvanceInstitucional").attr('parametros', usuarios[0].nivel_id+"-"+usuarios[0].entidad_id+"-"+usuarios[0].unidadResponsable);
+		
+				
+		renderInsLineaAccion(periodoSeleccionado);				
 		
 		$("body").on("click", "#chkMostrarOcultar",function(event){			
 			OcultarRegistrosBorrados();
