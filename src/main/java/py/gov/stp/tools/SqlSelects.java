@@ -1225,7 +1225,7 @@ public class SqlSelects {
     public static List<ProductoObjetoGasto> selectObjetoGastoCosto(String condicion)throws SQLException{
     	Connection conect=ConnectionConfiguration.conectarSpr();
 
-    	String query = " select distinct objeto_gasto from asignacion_presi "+condicion+" and version = 151 order by objeto_gasto";
+    	String query = " select distinct objeto_gasto from asignacion_presi "+condicion+" and version = (select max(version) from asignacion_presi "+condicion+") order by objeto_gasto";
 
     	Statement statement = null;
     	ResultSet rs=null;
