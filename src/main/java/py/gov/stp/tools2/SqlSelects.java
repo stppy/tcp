@@ -2922,6 +2922,36 @@ public class SqlSelects {
 		}
 		return objetos;
 	  }
+	
+	public static String selectAllTablas(String condition) throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+	   	 String query = "select array_to_json(array_agg(row_to_json(t))) as resultado from(SELECT tablename FROM tablero2015v3.pg_catalog.pg_tables where schemaname='public' order by tablename)t";
+
+
+		Statement statement = null;
+		ResultSet rs = null;
+		 String objetos = "";
+
+		try {
+			statement = conect.createStatement();
+			rs = statement.executeQuery(query);
+			while(rs.next()){
+
+				objetos+=rs.getString("resultado");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				statement.close();
+			}
+			if (conect != null) {
+				conect.close();
+			}
+		}
+		return objetos;
+	  }
 	public static String selectUsuarioEtiqueta(String condition) throws SQLException{
 	   	 Connection conect=ConnectionConfiguration.conectar();
 	   	 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from( select * from usuario_etiqueta"+condition+")t";

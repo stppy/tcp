@@ -1594,6 +1594,13 @@ public class ajaxSelects extends HttpServlet {
         		catch (SQLException e) {e.printStackTrace();}
         		out.println(objetos);return;        	
         	}
+        	if (action.equals("getAllTablas")){
+        		String objetos=null;
+        		condition = " where true ";
+           		try {objetos = SqlSelects.selectAllTablas(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		out.println(objetos);return;        	
+        	}
         	//Información de las etiquetas que el usuario logueado puede visualizar o tiene acceso
         	if (action.equals("getUsuarioEtiqueta")){
         		String objetos=null;

@@ -100,20 +100,21 @@
  <script>
  $(document).ready(function(){
 	 
-	 var tablasbd = $.ajax({
-			url:'http://spr.stp.gov.py/ajaxSelects?accion=getNiveles',
-			type:'get',
-			dataType:'json',
-			async:false       
+	 var tablas = $.ajax({
+			url:'/tablero/ajaxSelects2?action=getAllTablas',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false
 		}).responseText;
-	 tablasbd = JSON.parse(tablasbd);
+	 tablas = JSON.parse(tablas);
 	 
-	 var listatablas="";
-	  for(var i = 0; i < tablasbd.length; i++){    		  
-		  listatablas+='<li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>'+encabezado[i]+'</li>';		    		  
-	  }
+	var listatablas="";
+  	for(var i = 0; i < tablas.length; i++){    		  
+  		listatablas+='<option value="'+tablas[i]+'">'+tablas[i]+'</option>';		    		  
+  	}
+  	$("#selbd").append(listatablas);
 	 
-	 $("body").on("click", "#cargarWs",function(event){
+	$("body").on("click", "#cargarWs",function(event){
 		 if($("#urlws").val() !== '' && $("#metodo").val() !== ''){
 			 
 			var myList = $.ajax({
@@ -187,7 +188,26 @@
 			 WHERE table_schema = 'public'
 			   AND table_name   = 'meta'
  */		 
-	 });	 
+ 
+/*  
+ http://stackoverflow.com/questions/5180382/convert-json-data-to-a-html-table
+	 http://stackoverflow.com/questions/5180382/convert-json-data-to-a-html-table
+		 http://jsfiddle.net/manishmmulani/7MRx6/
+			 http://jsfiddle.net/7MRx6/338/
+				 http://stackoverflow.com/questions/9888861/view-json-file-in-browser
+					 http://www.jsonviewer.com/
+	 */				 
+ 
+ 
+	 });
+	 
+	 $("body").on("onchange", "#selbd",function(event){
+		 
+		 
+		 
+		 
+		 
+	 });
  });
   </script>
 
