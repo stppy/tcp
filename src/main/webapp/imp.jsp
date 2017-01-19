@@ -110,13 +110,13 @@
 	 
 	var listatablas="";
   	for(var i = 0; i < tablas.length; i++){    		  
-  		listatablas+='<option value="'+tablas[i]+'">'+tablas[i]+'</option>';		    		  
+  		listatablas+='<option value="'+tablas[i].tablename+'">'+tablas[i].tablename+'</option>';		    		  
   	}
   	$("#selbd").append(listatablas);
 	 
 	$("body").on("click", "#cargarWs",function(event){
 		 if($("#urlws").val() !== '' && $("#metodo").val() !== ''){
-			 
+						
 			var myList = $.ajax({
 		 			url:$("#urlws").val(),
 		 		  	type:$("#metodo").val(),
@@ -125,7 +125,7 @@
 		 		  	async:false       
 		 		}).responseText;
 			 myList = JSON.parse(myList);
-			 myList = myList.niveles;
+			 //myList = myList.niveles;
 		    	 
 		    	 buildHtmlTable();
 
@@ -179,15 +179,7 @@
 		    	  }
 		    	  $("#sortable").append(listaws);
 		    	  //$('#tablaJson').DataTable();
-		 }
-		 
-		 /* SELECT * FROM spr.pg_catalog.pg_tables where schemaname='public'
-
-			 SELECT *
-			 FROM spr.information_schema.columns
-			 WHERE table_schema = 'public'
-			   AND table_name   = 'meta'
- */		 
+		 }				 
  
 /*  
  http://stackoverflow.com/questions/5180382/convert-json-data-to-a-html-table
@@ -201,13 +193,41 @@
  
 	 });
 	 
-	 $("body").on("onchange", "#selbd",function(event){
+	 $("body").on("change", "#selbd",function(event){
 		 
+		 $("#sortable1").html("");
+		 var columnas = $.ajax({
+				url:'/tablero/ajaxSelects2?action=getColumna&tabla='+$(this).find('option:selected').val(),
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false
+			}).responseText;
+		 columnas = JSON.parse(columnas);
 		 
-		 
-		 
+	  var listaws="";
+   	  for(var i = 0; i < columnas.length; i++){    		  
+   		  listaws+='<li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>'+columnas[i].column_name+'</li>';		    		  
+   	  }
+   	  $("#sortable1").append(listaws);
 		 
 	 });
+	 
+	 $("body").on("click", "#emparejar",function(event){
+		var sql="insert into "+$("#selbd").find('option:selected').val()+" (";
+		
+		var sql1="";
+		$("#sortable1 li").each(function(index){     	    
+     	    sql1+=""+$(this).text()+",";
+     	});		 
+		sql1=sql1.substring(0,sql1.length - 1)+")";
+		//sql=sql+sql1; 
+		
+		
+		
+		 
+	 });
+	 
+	//http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida
  });
   </script>
 

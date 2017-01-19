@@ -126,7 +126,8 @@ public class ajaxSelects extends HttpServlet {
     	String descripcion = "";
     	String db = "";
     	String institucionIdConcat = "";
-    	String insLineaAccionIdConcat = "";    	
+    	String insLineaAccionIdConcat = "";
+    	String tabla="";
 
     	//Boolean borrado=null;
     	
@@ -192,6 +193,7 @@ public class ajaxSelects extends HttpServlet {
       	if (request.getParameter("institucionIdConcat")!=null) institucionIdConcat=request.getParameter("institucionIdConcat");      	
       	if (request.getParameter("insLineaAccionIdConcat")!=null) insLineaAccionIdConcat=request.getParameter("insLineaAccionIdConcat");   
       	if (request.getParameter("etiquetaId")!=null) etiquetaId=Integer.parseInt(request.getParameter("etiquetaId")); 
+      	if (request.getParameter("tabla")!=null) tabla=request.getParameter("tabla");
 
       	
         PrintWriter out = response.getWriter();
@@ -1598,6 +1600,14 @@ public class ajaxSelects extends HttpServlet {
         		String objetos=null;
         		condition = " where true ";
            		try {objetos = SqlSelects.selectAllTablas(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		out.println(objetos);return;        	
+        	}
+        	if (action.equals("getColumna")){
+        		String objetos=null;
+        		condition = " where true and table_schema = 'public'";
+        		if (tabla!="") condition += " and table_name = '"+tabla+"'";
+           		try {objetos = SqlSelects.selectAllColumnas(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		out.println(objetos);return;        	
         	}
