@@ -412,6 +412,23 @@ public class ajaxSelects extends HttpServlet {
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
         	}
+////////////Privot Estructura Programática        	
+        	if (action.equals("getPivotEstructuraProgramatica")){
+        		String objetos=null; 
+        		condition = " where true ";
+//        		String condition2=" where true ";
+//        		if (!userRoleId.equals("0") && !userRoleId.equals("1")){ 
+//        			condition2 += " and entidad_id="+userEntidadId+" and nivel_id="+userNivelId;
+//        			if ( !userUnrId.equals("0") ){
+//        				condition2+= " and unidad_responsable_id="+userUnrId;
+//        			}
+//        		};
+//        		condition += " and ins_id IN (select id from institucion "+condition2+") ";
+        		//if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
+           		try {objetos = SqlSelects.selectPivotEstructurasProgramaticas(condition);}
+        		catch (SQLException e) {e.printStackTrace();}        		
+        		out.println(objetos.toString());
+        	}
 ////////////Pivot Costo Avance
         	if (action.equals("getPivotCostoAvance")){
         		List objetos=null; 
