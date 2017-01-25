@@ -46,7 +46,6 @@
          			<li class=""><a href="/tablero/pivotPresupuesto.jsp"><i class="fa fa-signal" id="linkPivotPresupuesto"></i>Análisis de Productos</a></li>
 					<li class=""><a href="/tablero/pivotDestinatario.jsp"><i class="fa fa-group" id="linkPivotDestinatario"></i>Análisis de Destinatarios</a></li>
 					<li class=""><a href="/tablero/pivotProgramado.jsp"><i class="fa fa-calendar" id="linkPivotProgramacion"></i>Análisis de Programación</a></li>
-					<li class=""><a href="/tablero/pivotEstructuraProgramatica.jsp"><i class="fa fa-sitemap" id="linkPivotEstructuraProgramatica"></i>Análisis de Estructura Programática</a></li>
 					<li class=""><a href="/tablero/pivotCostoAvance.jsp"><i class="fa fa-money" id="linkPivotCostosAvances"></i>Análisis de Costos de Avances</a></li>
 					<li class=""><a href="/tablero/pivotBeneficiarioAvance.jsp"><i class="fa fa-male" id="linkPivotBeneficiariosAvances"></i>Análisis de Beneficiarios de Avances</a></li>
 					<li class=""><a href="/tablero/pivotEvidenciaAvance.jsp"><i class="fa fa-area-chart" id="linkPivotEvidenciasAvances"></i>Análisis de Evidencias de Avances</a></li>
