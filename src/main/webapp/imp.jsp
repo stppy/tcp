@@ -8,10 +8,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
@@ -58,7 +59,7 @@
 				<button type="button" class="btn btn-default" id="cargarWs">Mostrar Datos</button>				
 			</div>
 			<div class="row">
-				<table id="tablaJson"></table>
+				<table id="tablaJson"><thead id="thtablaJson"></thead><tbody id="cuerpoTabla"></tbody></table>
 			</div>
 			<div class="row">
 				<div class="col-md-6">
@@ -117,45 +118,46 @@
 	$("body").on("click", "#cargarWs",function(event){
 		 if($("#urlws").val() !== '' && $("#metodo").val() !== ''){
 						
-			var myList = $.ajax({
+			datos = $.ajax({
 		 			url:$("#urlws").val(),
 		 		  	type:$("#metodo").val(),
 		 		  	dataType:'json',
 		 		  	//headers: $("#encabezado").val(),
 		 		  	async:false       
 		 		}).responseText;
-			 myList = JSON.parse(myList);
-			 //myList = myList.niveles;
+			 datos = JSON.parse(datos);
+			 //datos = datos.niveles;
 		    	 
 		    	 buildHtmlTable();
 
-		    	 // Builds the HTML Table out of myList json data from Ivy restful service.
+		    	 // Builds the HTML Table out of datos json data from Ivy restful service.
 		    	  function buildHtmlTable() {
-		    	      var columns = addAllColumnHeaders(myList);
+		    	      var columns = addAllColumnHeaders(datos);
 		    	  
-		    	      for (var i = 0 ; i < myList.length ; i++) {
+		    	      for (var i = 0 ; i < datos.length ; i++) {
 		    	          var row$ = $('<tr/>');
 		    	          for (var colIndex = 0 ; colIndex < columns.length ; colIndex++) {
-		    	              var cellValue = myList[i][columns[colIndex]];
+		    	              var cellValue = datos[i][columns[colIndex]];
 		    	  
 		    	              if (cellValue == null) { cellValue = ""; }
 		    	  
 		    	              row$.append($('<td/>').html(cellValue));
 		    	          }
-		    	          $("#tablaJson").append(row$);
+		    	          //$("#tablaJson").append(row$);
+		    	          $("#cuerpoTabla").append(row$);
 		    	      }
 		    	  }
 		    	  
 		    	  // Adds a header row to the table and returns the set of columns.
 		    	  // Need to do union of keys from all records as some records may not contain
 		    	  // all records
-		    	  function addAllColumnHeaders(myList)
+		    	  function addAllColumnHeaders(datos)
 		    	  {
 		    	      var columnSet = [];
 		    	      var headerTr$ = $('<tr/>');
 		    	  
-		    	      for (var i = 0 ; i < myList.length ; i++) {
-		    	          var rowHash = myList[i];
+		    	      for (var i = 0 ; i < datos.length ; i++) {
+		    	          var rowHash = datos[i];
 		    	          for (var key in rowHash) {
 		    	              if ($.inArray(key, columnSet) == -1){
 		    	                  columnSet.push(key);
@@ -163,7 +165,8 @@
 		    	              }
 		    	          }
 		    	      }
-		    	      $("#tablaJson").append(headerTr$);
+		    	      //$("#tablaJson").append(headerTr$);
+		    	      $("#thtablaJson").append(headerTr$);
 		    	  
 		    	      return columnSet;
 		    	  }
@@ -178,7 +181,7 @@
 		    		  listaws+='<li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>'+encabezado[i]+'</li>';		    		  
 		    	  }
 		    	  $("#sortable").append(listaws);
-		    	  //$('#tablaJson').DataTable();
+		    	  $('#tablaJson').DataTable();
 		 }				 
  
 /*  
@@ -214,19 +217,24 @@
 	 
 	 $("body").on("click", "#emparejar",function(event){
 		var sql="insert into "+$("#selbd").find('option:selected').val()+" (";
+		columnasWs=[], columnasBd=[];
 		
-		var sql1="";
 		$("#sortable1 li").each(function(index){     	    
-     	    sql1+=""+$(this).text()+",";
+			columnasBd.push($(this).text());     	    			
      	});		 
-		sql1=sql1.substring(0,sql1.length - 1)+")";
-		//sql=sql+sql1; 
 		
+		$("#sortable li").each(function(index){     	    
+			columnasWs.push($(this).text());     	    			
+     	});
 		
+		for(var i = 0; i < datos.length; i++){    		  
+	   		//		
+	   	}
 		
-		 
+		// var aux=datos[i][aux];
+		//sql1=sql1.substring(0,sql1.length - 1)+") values(";
+		//sql=sql+sql1;  
 	 });
-	 
 	//http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida
  });
   </script>
