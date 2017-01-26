@@ -28,8 +28,8 @@
   </style>
 <script>
   $( function() {
-    $( "#sortable" ).sortable();
-    $( "#sortable" ).disableSelection();
+    //$( "#sortable" ).sortable();
+    //$( "#sortable" ).disableSelection();
     $( "#sortable1" ).sortable();
     $( "#sortable1" ).disableSelection();
   } );
@@ -87,9 +87,9 @@
 				<button type="button" class="btn btn-default" id="emparejar">Confirmar Emparejamiento</button>
 			</div>
 			<div class="row">
-				<label class="control-label col-sm-2" for="comment">Comando SQL:</label>
+				<label class="control-label col-sm-2" for="previasql">Comando SQL:</label>
 				<div class="col-sm-10">					
-  					<textarea class="form-control" rows="5" id="comment"></textarea>
+  					<textarea class="form-control" rows="5" id="previasql"></textarea>
 				</div>
 			</div>
 			<div class="row">
@@ -216,8 +216,9 @@
 	 });
 	 
 	 $("body").on("click", "#emparejar",function(event){
-		var sql="insert into "+$("#selbd").find('option:selected').val()+" (";
+		var sql="insert into "+$("#selbd").find('option:selected').val();
 		columnasWs=[], columnasBd=[];
+		var sql2="", sqlcuerpo="", filadatos="";
 		
 		$("#sortable1 li").each(function(index){     	    
 			columnasBd.push($(this).text());     	    			
@@ -227,13 +228,55 @@
 			columnasWs.push($(this).text());     	    			
      	});
 		
+		for(var i = 0; i < columnasWs.length; i++){
+			sql2+=columnasBd[i]+",";			
+		}
+		sql2=sql2.substring(0,sql2.length - 1);
+		sql2="("+sql2+") values";
+				
 		for(var i = 0; i < datos.length; i++){    		  
-	   		//		
+			for(var j = 0; j < columnasWs.length; j++){
+				if(typeof datos[i][columnasWs[j]] == "undefined"){
+					sqlcuerpo+="null,";	
+				}else{
+					sqlcuerpo+="'"+datos[i][columnasWs[j]]+"',";
+				}
+			}
+			sqlcuerpo="("+sqlcuerpo.substring(0,sqlcuerpo.length - 1)+"),";
+			//concat=$("#previasql").text();
+			filadatos+=sqlcuerpo;
+			sqlcuerpo="";
 	   	}
+		filadatos=filadatos.substring(0,filadatos.length - 1)+";";
+		$("#previasql").text(sql+sql2+filadatos);
 		
-		// var aux=datos[i][aux];
-		//sql1=sql1.substring(0,sql1.length - 1)+") values(";
-		//sql=sql+sql1;  
+		// insert into unidad_medida (borrado,nombre,descripcion,sigla, version,id) 
+		//values('true',null,'descr',null,3,70),('true',null,'descr',null,3,71);		
+		  
+	 });
+	 
+	 $("body").on("click", "#migrar",function(event){
+		 var sql=$("#previasql").text();
+		 
+		 var info = JSON.stringify(sql);
+		    $.ajax({
+		        url: "/tablero/ajaxInserts2?accion=insMigrar",
+		        type: 'POST',
+		        dataType: 'json',
+		        data: info,
+		        contentType: 'application/json',
+		        mimeType: 'application/json',
+		        success: function (data) {
+		        	if(data.success == true)
+		        	{
+		            	//exito		        		
+		        	}else{
+						//error		          
+		        	}
+		        },		        
+		        error: function(data,status,er) {}
+			 });
+		 
 	 });
 	//http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida
  });
