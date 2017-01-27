@@ -580,8 +580,16 @@ public class ajaxInserts  extends HttpServlet {
     		myObj.addProperty("success", status);
     		out.println(myObj.toString());
     	}
-       }    
-        
-        
+       }
+        if (accion!=null && accion!=""){
+        	if (accion.equals("insMigrar")){        		
+        		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                String datos = "";
+                if(br != null){ datos = br.readLine();}
+                boolean status = SqlInserts.insertMigrar(datos);
+        		myObj.addProperty("success", status);
+        		out.println(myObj.toString());
+        	}
+           }
     }
 }

@@ -94,6 +94,7 @@
 			</div>
 			<div class="row">
 				<button type="button" class="btn btn-default" id="migrar">Migrar Datos</button>
+				<button type="button" class="btn btn-default" id="limpiar">Limpiar</button>
 			</div>
 		</form>
 	</div>
@@ -130,7 +131,7 @@
 		    	 
 		    	 buildHtmlTable();
 
-		    	 // Builds the HTML Table out of datos json data from Ivy restful service.
+		    	 // genera un table html a partir del webservice proveído
 		    	  function buildHtmlTable() {
 		    	      var columns = addAllColumnHeaders(datos);
 		    	  
@@ -148,9 +149,8 @@
 		    	      }
 		    	  }
 		    	  
-		    	  // Adds a header row to the table and returns the set of columns.
-		    	  // Need to do union of keys from all records as some records may not contain
-		    	  // all records
+		    	  
+		    	  // agrega los headers al table
 		    	  function addAllColumnHeaders(datos)
 		    	  {
 		    	      var columnSet = [];
@@ -182,18 +182,7 @@
 		    	  }
 		    	  $("#sortable").append(listaws);
 		    	  $('#tablaJson').DataTable();
-		 }				 
- 
-/*  
- http://stackoverflow.com/questions/5180382/convert-json-data-to-a-html-table
-	 http://stackoverflow.com/questions/5180382/convert-json-data-to-a-html-table
-		 http://jsfiddle.net/manishmmulani/7MRx6/
-			 http://jsfiddle.net/7MRx6/338/
-				 http://stackoverflow.com/questions/9888861/view-json-file-in-browser
-					 http://www.jsonviewer.com/
-	 */				 
- 
- 
+		 } 
 	 });
 	 
 	 $("body").on("change", "#selbd",function(event){
@@ -241,6 +230,9 @@
 				}else{
 					sqlcuerpo+="'"+datos[i][columnasWs[j]]+"',";
 				}
+				if(columnasBd[j]=""){
+					// preguntar si es id serial para no agregar en el ()
+				}
 			}
 			sqlcuerpo="("+sqlcuerpo.substring(0,sqlcuerpo.length - 1)+"),";
 			//concat=$("#previasql").text();
@@ -248,35 +240,41 @@
 			sqlcuerpo="";
 	   	}
 		filadatos=filadatos.substring(0,filadatos.length - 1)+";";
-		$("#previasql").text(sql+sql2+filadatos);
-		
-		// insert into unidad_medida (borrado,nombre,descripcion,sigla, version,id) 
-		//values('true',null,'descr',null,3,70),('true',null,'descr',null,3,71);		
-		  
+		$("#previasql").text(sql+sql2+filadatos);  
 	 });
 	 
 	 $("body").on("click", "#migrar",function(event){
 		 var sql=$("#previasql").text();
 		 
-		 var info = JSON.stringify(sql);
-		    $.ajax({
-		        url: "/tablero/ajaxInserts2?accion=insMigrar",
-		        type: 'POST',
-		        dataType: 'json',
-		        data: info,
-		        contentType: 'application/json',
-		        mimeType: 'application/json',
-		        success: function (data) {
-		        	if(data.success == true)
-		        	{
-		            	//exito		        		
-		        	}else{
-						//error		          
-		        	}
-		        },		        
-		        error: function(data,status,er) {}
-			 });
-		 
+		 if(sql!==""){
+			 var info = JSON.stringify(sql);
+			    $.ajax({
+			        url: "/tablero/ajaxInserts2?accion=insMigrar",
+			        type: 'POST',
+			        dataType: 'json',
+			        data: info,
+			        contentType: 'application/json',
+			        mimeType: 'application/json',
+			        success: function (data) {
+			        	if(data.success == true)
+			        	{
+			            	alert("exito");		        		
+			        	}else{
+			        		alert("error");		          
+			        	}
+			        },		        
+			        error: function(data,status,er) {}
+				 });	 
+		 }
+	 });
+	 
+	 $("body").on("click", "#limpiar",function(event){
+		 $("#urlws").text("");
+		 $("#cuerpoTabla").html("");
+		 $("#thtablaJson").html("");
+		 $("#sortable1").html("");
+		 $("#sortable").html("");
+		 $("#previasql").text("");
 	 });
 	//http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida
  });

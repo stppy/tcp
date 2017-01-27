@@ -2954,7 +2954,7 @@ public class SqlSelects {
 	  }
 	public static String selectAllColumnas(String condition) throws SQLException{
 	   	 Connection conect=ConnectionConfiguration.conectar();
-	   	 String query = "select array_to_json(array_agg(row_to_json(t))) as resultado from(SELECT column_name::text FROM information_schema.columns "+condition+")t";
+	   	 String query = "select array_to_json(array_agg(row_to_json(t))) as resultado from(SELECT CAST( column_name AS text),CAST( data_type AS text),CAST(column_default  AS text),CAST(is_nullable  AS text) FROM information_schema.columns "+condition+")t";
 
 		Statement statement = null;
 		ResultSet rs = null;
