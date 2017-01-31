@@ -454,7 +454,7 @@ public class SqlSelects {
 		objeto.setEvidId(rs.getInt("evid_id"));
 		objeto.setEvidNombre(rs.getString("evid_nom"));
 		objeto.setEvidDesc(rs.getString("evid_desc"));
-		//objeto.setEvidUrl(rs.getString("evid_url"));
+		objeto.setEvidUrl(rs.getString("evid_url"));
 		/*objeto.setEvidDoc(rs.getString("evid_doc"));*/
 		
 	
