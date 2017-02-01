@@ -266,17 +266,35 @@
 		sql2="("+sql2+") values";		
 				
 		for(var i = 0; i < datos.length; i++){    		  
-			for(var j = 0; j < columnasWs.length; j++){
+			for(var j = 0; j < columnasBd.length; j++){
 				propColumna=$('#sortable1 li').eq(j).text().split('[');
-				isSerial=propColumna[1].search("nextval");				
-				if(columnasBd[j]!="id" && isSerial<0){// si no es id serial
-					if(typeof datos[i][columnasWs[j]] == "undefined"){
-						sqlcuerpo+="null,";	
+				
+				nombreCol=propColumna[0];
+				nombreCol=nombreCol.substring(0,nombreCol.length - 1);
+				
+				caractCol=propColumna[1].split(',');
+				tipodatos=caractCol[0];
+				valdefecto=caractCol[1];
+				nulo=caractCol[2];        	
+				nulo=nulo.substring(0,nulo.length - 1);
+				
+				//isSerial=propColumna[1].search("nextval");
+				
+				if(nombreCol!="id" && (valdefecto.search("nextval")<0)){ // si no es id serial
+					if(columnasWs.length<j){
+						if(nulo!="NO" && valdefecto!="null"){
+							//sql2=sql2+','+nombreCol; mostrar alert que no coinciden las columnas
+						}
 					}else{
-						sqlcuerpo+="'"+datos[i][columnasWs[j]]+"',";
-					}
-					if(){
-						
+						if(typeof datos[i][columnasWs[j]] == "undefined"){
+							sqlcuerpo+="null,";	
+						}else{
+							if(tipodatos=="date"){
+								//	
+							}else{
+								sqlcuerpo+="'"+datos[i][columnasWs[j]]+"',";	
+							}
+						}
 					}
 				}
 			}
