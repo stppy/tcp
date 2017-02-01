@@ -12,10 +12,11 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
 
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+<script src="http://bootboxjs.com/bootbox.js"></script>
 
 
 <style>
@@ -132,14 +133,7 @@
 			<div class="row">
 				<button type="button" class="btn btn-default" id="migrar">Migrar Datos</button>
 				<button type="button" class="btn btn-default" id="limpiar">Limpiar</button>
-			</div>
-			<div id="confirm" class="modal hide fade">
-				<div class="modal-body">Usted está realmente seguro de llevar a cabo ésta operación?</div>
-				<div class="modal-footer">
-					<button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Si</button>
-					<button type="button" data-dismiss="modal" class="btn">No</button>
-				</div>
-			</div>
+			</div>			
 		</form>
 	</div>
 
@@ -280,7 +274,10 @@
 						sqlcuerpo+="null,";	
 					}else{
 						sqlcuerpo+="'"+datos[i][columnasWs[j]]+"',";
-					}	
+					}
+					if(){
+						
+					}
 				}
 			}
 			sqlcuerpo="("+sqlcuerpo.substring(0,sqlcuerpo.length - 1)+"),";
@@ -292,14 +289,14 @@
 		$("#previasql").text(sql+sql2+filadatos);  
 	 });
 	 
-	 $("body").on("click", "#migrar",function(event){
+	 $("body").on("click", "#migrar",function(e){
 		 var sql=$("#previasql").text();
 		 
 		 if(sql!==""){			 
-			    //event.preventDefault();
-			    $('#confirm').modal({ backdrop: 'static', keyboard: false })
-			        .one('click', '#delete', function (event) {
-			        	var info = JSON.stringify(sql);
+			 bootbox.confirm("Está seguro que desea confirmar la operación?", function(result) {
+			      //alert("Confirm result: " + result);
+			      if(result==true){
+			    	  var info = JSON.stringify(sql);
 					    $.ajax({
 					        url: "/tablero/ajaxInserts2?accion=insMigrar",
 					        type: 'POST',
@@ -310,14 +307,16 @@
 					        success: function (data) {
 					        	if(data.success == true)
 					        	{
-					            	alert("exito");		        		
+					            	alert("Registros insertados");	
+					            	location.reload();
 					        	}else{
-					        		alert("error");		          
+					        		alert("Error al migrar datos");		          
 					        	}
 					        },		        
 					        error: function(data,status,er) {}
 						 });
-			        });		 
+			      }
+			    });	 
 		}
 		  
 	 });

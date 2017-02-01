@@ -584,7 +584,7 @@ public class ajaxInserts  extends HttpServlet {
         if (accion!=null && accion!=""){
         	if (accion.equals("insMigrar")){        		
         		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
-                String datos = "";
+                String datos = null;
                 if(br != null){ datos = br.readLine();}
                 boolean status = SqlInserts.insertMigrar(datos);
         		myObj.addProperty("success", status);
