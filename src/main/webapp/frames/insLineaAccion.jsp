@@ -2339,6 +2339,10 @@ $("body").on("click", ".borrarAccion",function(event){
 	});
 	
 	function modalError(mensaje) {
+		if ( $("#modalMensajeError").length )
+		{
+			$("#modalMensajeError").remove();
+		}
 		var ModalError = '    <div id="modalMensajeError" class="modal fade">'+
 	    '        <div class="modal-dialog">'+
 	 '            <div class="modal-content">'+
@@ -2362,10 +2366,24 @@ $("body").on("click", ".borrarAccion",function(event){
 	}
 	
 	$("body").on("click", ".guardarComboProducto",function(event){
-		var totaFinanciero=$("#totalFinanciero-formulario").val();
-		var totaFinancieroInputado=$("#total-formulario").val();		
+		var totaFinanciero=parseInt($("#totalFinanciero-formulario").val());
+		var totaFinancieroInputado=parseInt($("#total-formulario").val());
+		var productoIngresado=parseInt($("#producto-formulario").val());			
+		var sumatoriaAsignacion=0;
+		
+		$('#TablaAccionHasProductos  > tr').each(function() {
+			var asignacion=$(this).find("td").eq(12).html();
+			var prod=parseInt($(this).find("td").eq(6).text());
+			if(asignacion.search("del")<0){
+				asignacion=asignacion.replace(/[\."<\/*del>""Gs\."]/g, '');
+				if(prod==productoIngresado){
+					sumatoriaAsignacion+=parseInt(asignacion);	
+				}
+			}		
+		});			
+				
 		if(validarFormulario("formulario",false,false)==true){
-			if(totaFinancieroInputado<totaFinanciero){
+			if((totaFinancieroInputado+sumatoriaAsignacion)<=totaFinanciero){
 				event.stopPropagation();
 				event.preventDefault();
 				
@@ -2453,6 +2471,14 @@ $("body").on("click", ".borrarAccion",function(event){
 					modalError("El monto ingresado supera la Asignación Financiera, vuelva a intentarlo");
 					$("#total-formulario").val("");
 				}
+			}else{
+				modalError("Valor ingresado incorrecto. Solo se permiten valores numéricos enteros");
+				$("#total-formulario").val("");
+				$("#producto-formulario").val("");
+				$("#proyecto-formulario").val("");
+				$("#subPrograma-formulario").val("");
+				$("#programa-formulario").val("");
+				$("#tipoPrograma-formulario").val("");
 			}
 		event.stopPropagation();
 		event.preventDefault();
@@ -2692,7 +2718,7 @@ $("body").on("click", ".borrarAccion",function(event){
 			  			'		    								<div class="form-group col-md-3">'+
 				      	'												<div class="input-group input-group-md">'+
 				      	'													<span class="input-group-addon">Gs</span>'+
-	      				'	    											<input type="text" name="total" id="total-formulario" value="" class="form-control" required>'+
+	      				'	    											<input type="number" name="total" id="total-formulario" value="" class="form-control" required>'+
 	      				'	               								    <div class="input-group-btn">'+
 		      			'		                								<button type="submit" class="btn btn-success guardarComboProducto" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'><span class="glyphicon glyphicon-plus"></span></button>'+
 		      			'		                							</div>'+	      					    				
