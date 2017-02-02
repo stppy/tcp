@@ -1502,7 +1502,7 @@ public static boolean borradoHito(Hito objeto, String usuarioResponsable){
 			java.sql.Date sqlStartDate = new java.sql.Date(date.getTime());
 
 			if(objeto.getJustificacion()!=null) 	query+= "justificacion= ?";
-			if(objeto.getCantidad()!=0)				query+= ", cantidad= ?";
+			if(objeto.getCantidad()!=null)				query+= ", cantidad= ?";
 			if(objeto.getFechaEntrega()!=null)  	query+= ", fecha_entrega= ?";
 			if(objeto.getActividadId()!=0)      	query+= ", actividad_id= ?";
 			if(objeto.getVersion()!=0)   			query+= ", version= ?";
@@ -1513,7 +1513,7 @@ public static boolean borradoHito(Hito objeto, String usuarioResponsable){
 			int cantCampos =0;
 			update = conect.prepareStatement(query);
 			if (objeto.getJustificacion()!=null)	{    cantCampos++;update.setString (cantCampos, objeto.getJustificacion());}
-			if (objeto.getCantidad()!=0)          	{    cantCampos++;update.setDouble (cantCampos, objeto.getCantidad());}
+			if (objeto.getCantidad()!=null)         {    cantCampos++;update.setDouble (cantCampos, objeto.getCantidad());}
 			if (objeto.getFechaEntrega()!=null)     {    cantCampos++;update.setDate(cantCampos, sqlStartDate);}
 			if (objeto.getActividadId()!=0)        	{    cantCampos++;update.setInt	(cantCampos, objeto.getActividadId());}
 			if (objeto.getVersion()!=0)  			{    cantCampos++;update.setInt (cantCampos, objeto.getVersion());}
