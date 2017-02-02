@@ -2338,93 +2338,124 @@ $("body").on("click", ".borrarAccion",function(event){
 		
 	});
 	
+	function modalError(mensaje) {
+		var ModalError = '    <div id="modalMensajeError" class="modal fade">'+
+	    '        <div class="modal-dialog">'+
+	 '            <div class="modal-content">'+
+	 '                 <div class="modal-body alert-danger">'+
+	 '                        <div class="alert-danger">'+
+	 '                        <h3 class="text-center">'+mensaje+'</h3>'+ 
+	 '                    </div>'+
+	 '                </div>'+ 
+	 '            </div> '+
+	 '        </div>'+
+	 '    </div>';
+	$("body").append(ModalError);
+	$('#modalMensajeError').on('show.bs.modal', function (){
+	    var myModal = $(this);
+	    clearTimeout(myModal.data('hideInterval'));
+	    myModal.data('hideInterval', setTimeout(function(){
+	        myModal.modal('hide');
+	    }, 1800));
+	}).modal('show')
+	//$('#modalMensajeError').modal('show');
+	}
+	
 	$("body").on("click", ".guardarComboProducto",function(event){
+		var totaFinanciero=$("#totalFinanciero-formulario").val();
+		var totaFinancieroInputado=$("#total-formulario").val();		
 		if(validarFormulario("formulario",false,false)==true){
-			event.stopPropagation();
-			event.preventDefault();
-			
-			var parametros = $(this).attr("parametros");
-	    	var idParsed = parametros.split("-");
-		    var insLineaAccionId = idParsed[0];
-		    var lineaAccionId = idParsed[1];
-		    var institucionId = idParsed[2];
-		    var periodoId = idParsed[3];
-			var accionId = idParsed[4];		
-			
-	    	var nivel = document.getElementById("nivel-formulario").value;
-	      	var entidad = document.getElementById("entidad-formulario").value;;
-		    var tipoPrograma = document.getElementById("tipoPrograma-formulario").value;
-		    var programa = document.getElementById('programa-formulario').value;
-		    var subPrograma = document.getElementById('subPrograma-formulario').value;
-		    var proyecto = document.getElementById('proyecto-formulario').value; 
-		    var producto = document.getElementById('producto-formulario').value; 
-		    var anho = document.getElementById('anhoProducto-formulario').value; 
-		    var version = document.getElementById('versionProducto-formulario').value; 
-		    var totalFisico = document.getElementById('totalFisico-formulario').value; 
-		    var unidadMedida = document.getElementById('unidadMedida-formulario').value; 
-		    var clase = document.getElementById('clase-formulario').value; 
-		    var totalFinanciero = document.getElementById('totalFinanciero-formulario').value; 
-		    var totalAsignacion = document.getElementById('total-formulario').value; 
-		    
-		    
-		    if(totalFisico == ""){
-		    	totalFisico = 0;	    	
-		    }
-	    	$('#tipoPrograma-formulario').val('');
-			$('#programa-formulario').val('');
-			$('#subPrograma-formulario').val('');
-			$('#proyecto-formulario').val('');
-			$('#producto-formulario').val('');
-			$('#totalFisico-formulario').val('');
-			$('#unidadMedida-formulario').val('');
-			$('#clase-formulario').val('');
-			$('#totalFinanciero-formulario').val('');
-			$('#anhoProducto-formulario').val('');
-			$('#versionProducto-formulario').val('');
-			$('#total-formulario').val('');
-	
-		    var datos = new Object();
-		    
-		    datos.nivel = nivel;
-		    datos.entidad = entidad;
-		    datos.tipoPrograma = tipoPrograma;
-		    datos.programa = programa;
-		    datos.subPrograma = subPrograma;
-		    datos.proyecto = proyecto;
-		    datos.sprProductoId = producto;
-		    datos.accionId = accionId;
-		    datos.anho = anho;
-		    datos.version = version;
-		    datos.unidadMedida = unidadMedida;
-		    datos.cantidadFisica = totalFisico;
-		    datos.clase = clase;
-		    datos.cantidadFinanciera = totalFinanciero;
-		    datos.totalAsignacion = totalAsignacion;
-	
-	
-		  	var info = JSON.stringify(datos);
-		    $.ajax({
-		        url: "ajaxInserts?accion=insAccionHasProducto",
-		        type: 'POST',
-		        dataType: 'json',
-		        data: info,
-		        contentType: 'application/json',
-		        mimeType: 'application/json',
-		        success: function (data) {
-		        	
-		        	if(data.success = true){
-			        	cargarTablaAccionHasProducto(accionId,insLineaAccionId,lineaAccionId,institucionId,periodoId);
-		        	}else{
-		        		cargarTablaAccionHasProducto(accionId,insLineaAccionId,lineaAccionId,institucionId,periodoId);
-		        	}
-	
-		        	},
-		        error: function(data,status,er) {
-		        	cargarTablaAccionHasProducto(accionId,insLineaAccionId,lineaAccionId,institucionId,periodoId);
-		        	}
-			 });
-		}
+			if(totaFinancieroInputado<totaFinanciero){
+				event.stopPropagation();
+				event.preventDefault();
+				
+				var parametros = $(this).attr("parametros");
+		    	var idParsed = parametros.split("-");
+			    var insLineaAccionId = idParsed[0];
+			    var lineaAccionId = idParsed[1];
+			    var institucionId = idParsed[2];
+			    var periodoId = idParsed[3];
+				var accionId = idParsed[4];		
+				
+		    	var nivel = document.getElementById("nivel-formulario").value;
+		      	var entidad = document.getElementById("entidad-formulario").value;;
+			    var tipoPrograma = document.getElementById("tipoPrograma-formulario").value;
+			    var programa = document.getElementById('programa-formulario').value;
+			    var subPrograma = document.getElementById('subPrograma-formulario').value;
+			    var proyecto = document.getElementById('proyecto-formulario').value; 
+			    var producto = document.getElementById('producto-formulario').value; 
+			    var anho = document.getElementById('anhoProducto-formulario').value; 
+			    var version = document.getElementById('versionProducto-formulario').value; 
+			    var totalFisico = document.getElementById('totalFisico-formulario').value; 
+			    var unidadMedida = document.getElementById('unidadMedida-formulario').value; 
+			    var clase = document.getElementById('clase-formulario').value; 
+			    var totalFinanciero = document.getElementById('totalFinanciero-formulario').value; 
+			    var totalAsignacion = document.getElementById('total-formulario').value; 
+			    
+			    
+			    if(totalFisico == ""){
+			    	totalFisico = 0;	    	
+			    }
+		    	$('#tipoPrograma-formulario').val('');
+				$('#programa-formulario').val('');
+				$('#subPrograma-formulario').val('');
+				$('#proyecto-formulario').val('');
+				$('#producto-formulario').val('');
+				$('#totalFisico-formulario').val('');
+				$('#unidadMedida-formulario').val('');
+				$('#clase-formulario').val('');
+				$('#totalFinanciero-formulario').val('');
+				$('#anhoProducto-formulario').val('');
+				$('#versionProducto-formulario').val('');
+				$('#total-formulario').val('');
 		
+			    var datos = new Object();
+			    
+			    datos.nivel = nivel;
+			    datos.entidad = entidad;
+			    datos.tipoPrograma = tipoPrograma;
+			    datos.programa = programa;
+			    datos.subPrograma = subPrograma;
+			    datos.proyecto = proyecto;
+			    datos.sprProductoId = producto;
+			    datos.accionId = accionId;
+			    datos.anho = anho;
+			    datos.version = version;
+			    datos.unidadMedida = unidadMedida;
+			    datos.cantidadFisica = totalFisico;
+			    datos.clase = clase;
+			    datos.cantidadFinanciera = totalFinanciero;
+			    datos.totalAsignacion = totalAsignacion;
+		
+		
+			  	var info = JSON.stringify(datos);
+			    $.ajax({
+			        url: "ajaxInserts?accion=insAccionHasProducto",
+			        type: 'POST',
+			        dataType: 'json',
+			        data: info,
+			        contentType: 'application/json',
+			        mimeType: 'application/json',
+			        success: function (data) {
+			        	
+			        	if(data.success = true){
+				        	cargarTablaAccionHasProducto(accionId,insLineaAccionId,lineaAccionId,institucionId,periodoId);
+			        	}else{
+			        		cargarTablaAccionHasProducto(accionId,insLineaAccionId,lineaAccionId,institucionId,periodoId);
+			        	}
+		
+			        	},
+			        error: function(data,status,er) {
+			        	cargarTablaAccionHasProducto(accionId,insLineaAccionId,lineaAccionId,institucionId,periodoId);
+			        	}
+				 });
+				}else{
+					modalError("El monto ingresado supera la Asignación Financiera, vuelva a intentarlo");
+					$("#total-formulario").val("");
+				}
+			}
+		event.stopPropagation();
+		event.preventDefault();
 	});
 	
 	function cargarTablaAccionHasProducto(accionId,insLineaAccionId,lineaAccionId,institucionId,periodoId){

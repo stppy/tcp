@@ -111,7 +111,7 @@ if (user != null) { %>
 								        
 										var webServiceDocumento = $.ajax({
 									    	url:'/ajaxSelects?accion=getDocumento&tipo='+webServicesTipoDocumento[0].id,
-									      	type:'get',
+											type:'get',
 									      	dataType:'json',
 									      	async:false       
 									    }).responseText;
@@ -156,14 +156,12 @@ if (user != null) { %>
 														<%}%>
 													}	
 												} --%>
-												for(var p = 0; p < webServiceDocumento.length; p++)
-												{													
-													if(webServiceDocumento[p].borrado == true)
-													{
+												for(var p = 0; p < webServiceDocumento.length; p++){													
+													if(webServiceDocumento[p].borrado == true){
 														<%if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
 															cajaTipoDocumento += '<tr><td><del>'+webServiceDocumento[p].nombre+'</del>';
 															if(webServiceDocumento[p].url){
-																cajaTipoDocumento += '<a href="/tablero/DownloadServlet?urlDocumento='+webServiceDocumento[p].url+'" Download="Documento_'+webServiceDocumento[p].nombre+'" ><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Descargar Documento"><span class="fa fa-download"></span></button></a></td></tr>';
+																cajaTipoDocumento += '<a href="/tablero/DownloadServlet?urlDocumento='+webServiceDocumento[p].url+'" ><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Descargar Documento"><span class="fa fa-download"></span></button></a></td></tr>';
 															}else{
 																cajaTipoDocumento += '<button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="No Existe Documento" disabled="disabled"><span class="fa fa-download"></span></button></td></tr>';
 															}
@@ -172,14 +170,14 @@ if (user != null) { %>
 														<%if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
 																cajaTipoDocumento += '<tr><td>'+webServiceDocumento[p].nombre;
 																if (webServiceDocumento[p].url) {
-																	cajaTipoDocumento += ' <a href="/tablero/DownloadServlet?urlDocumento='+webServiceDocumento[p].url+'" Download="Documento_'+webServiceDocumento[p].nombre+'" ><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Descargar Documento"><span class="fa fa-download"></span></button></a></td></tr>';
+																	cajaTipoDocumento += ' <a href="/tablero/DownloadServlet?urlDocumento='+webServiceDocumento[p].url+'" ><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Descargar Documento"><span class="fa fa-download"></span></button></a></td></tr>';
 																} else {
 																	cajaTipoDocumento += ' <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="No Existe Documento" disabled="disabled"><span class="fa fa-download"></span></button></td></tr>';
 																}					
 														<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
 																cajaTipoDocumento += '<tr><td>'+webServiceDocumento[p].nombre;
 																if (webServiceDocumento[p].url) {
-																	cajaTipoDocumento += ' <a href="/tablero/DownloadServlet?urlDocumento='+webServiceDocumento[p].url+'" Download="Documento_'+webServiceDocumento[p].nombre+'" ><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Descargar Documento"><span class="fa fa-download"></span></button></a></td></tr>';
+																	cajaTipoDocumento += ' <a href="/tablero/DownloadServlet?urlDocumento='+webServiceDocumento[p].url+'" ><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Descargar Documento"><span class="fa fa-download"></span></button></a></td></tr>';
 																}else{
 																	cajaTipoDocumento += ' <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="No Existe Documento" disabled="disabled"><span class="fa fa-download"></span></button></td></tr>';
 																}
