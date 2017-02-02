@@ -826,7 +826,7 @@ public class SqlInserts {
 		java.sql.Date sqlStart = new java.sql.Date(date1.getTime());
 		
 		insert.setString (1, avance.getJustificacion());
-		insert.setDouble (2, avance.getCantidad());
+		insert.setDouble(2, avance.getCantidad());
 		insert.setDate (3, sqlStart); 
 		//insert.setInt (4, avance.getCantidadBeneficiarios());
 		insert.setInt (4, avance.getActividadId());
