@@ -3079,5 +3079,34 @@ public class SqlSelects {
 		}
 		return objetos;
 	  }
+	public static String selectPresupuestoAsignado(String condition) throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+	   	 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from(select sum(asignacion_financiera)as AsignacionUsada from accion_has_producto "+condition+" and borrado=false)t";
+
+
+		Statement statement = null;
+		ResultSet rs = null;
+		 String objetos = "";
+
+		try {
+			statement = conect.createStatement();
+			rs = statement.executeQuery(query);
+			while(rs.next()){
+
+				objetos+=rs.getString("resultado");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				statement.close();
+			}
+			if (conect != null) {
+				conect.close();
+			}
+		}
+		return objetos;
+	  }
 	
 }

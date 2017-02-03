@@ -2366,12 +2366,44 @@ $("body").on("click", ".borrarAccion",function(event){
 	}
 	
 	$("body").on("click", ".guardarComboProducto",function(event){
+		var parametros = $(this).attr("parametros");
+    	var idParsed = parametros.split("-");
+	    var insLineaAccionId = idParsed[0];
+	    var lineaAccionId = idParsed[1];
+	    var institucionId = idParsed[2];
+	    var periodoId = idParsed[3];
+		var accionId = idParsed[4];		
+		
+    	var nivel = document.getElementById("nivel-formulario").value;
+      	var entidad = document.getElementById("entidad-formulario").value;;
+	    var tipoPrograma = document.getElementById("tipoPrograma-formulario").value;
+	    var programa = document.getElementById('programa-formulario').value;
+	    var subPrograma = document.getElementById('subPrograma-formulario').value;
+	    var proyecto = document.getElementById('proyecto-formulario').value; 
+	    var producto = document.getElementById('producto-formulario').value; 
+	    var anho = document.getElementById('anhoProducto-formulario').value; 
+	    var version = document.getElementById('versionProducto-formulario').value; 
+	    var totalFisico = document.getElementById('totalFisico-formulario').value; 
+	    var unidadMedida = document.getElementById('unidadMedida-formulario').value; 
+	    var clase = document.getElementById('clase-formulario').value; 
+	    var totalFinanciero = document.getElementById('totalFinanciero-formulario').value; 
+	    var totalAsignacion = document.getElementById('total-formulario').value;
+		
+		var PresupuestoAsignado = $.ajax({
+			url:'/tablero/ajaxSelects2?action=getPresupuestoAsignado&nivel='+nivel+'&entidad='+entidad+'&tipoPresupuesto='+tipoPrograma+'&programa='+programa+'&subprograma='+subPrograma+'&proyecto='+proyecto+'&producto='+producto+'&anio='+anho+'&version='+version,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		PresupuestoAsignado = JSON.parse(PresupuestoAsignado);	
+				
 		var totaFinanciero=parseInt($("#totalFinanciero-formulario").val());
 		var totaFinancieroInputado=parseInt($("#total-formulario").val());
+		//var totaFinancieroInputado=parseInt(PresupuestoAsignado[0].asignacionusada);
 		var productoIngresado=parseInt($("#producto-formulario").val());			
 		var sumatoriaAsignacion=0;
 		
-		$('#TablaAccionHasProductos  > tr').each(function() {
+		/*$('#TablaAccionHasProductos  > tr').each(function() {
 			var asignacion=$(this).find("td").eq(12).html();
 			var prod=parseInt($(this).find("td").eq(6).text());
 			if(asignacion.search("del")<0){
@@ -2380,35 +2412,16 @@ $("body").on("click", ".borrarAccion",function(event){
 					sumatoriaAsignacion+=parseInt(asignacion);	
 				}
 			}		
-		});			
-				
+		});*/			
+			
+		sumatoriaAsignacion=PresupuestoAsignado[0].asignacionusada;
+		
 		if(validarFormulario("formulario",false,false)==true){
 			if((totaFinancieroInputado+sumatoriaAsignacion)<=totaFinanciero){
 				event.stopPropagation();
 				event.preventDefault();
 				
-				var parametros = $(this).attr("parametros");
-		    	var idParsed = parametros.split("-");
-			    var insLineaAccionId = idParsed[0];
-			    var lineaAccionId = idParsed[1];
-			    var institucionId = idParsed[2];
-			    var periodoId = idParsed[3];
-				var accionId = idParsed[4];		
 				
-		    	var nivel = document.getElementById("nivel-formulario").value;
-		      	var entidad = document.getElementById("entidad-formulario").value;;
-			    var tipoPrograma = document.getElementById("tipoPrograma-formulario").value;
-			    var programa = document.getElementById('programa-formulario').value;
-			    var subPrograma = document.getElementById('subPrograma-formulario').value;
-			    var proyecto = document.getElementById('proyecto-formulario').value; 
-			    var producto = document.getElementById('producto-formulario').value; 
-			    var anho = document.getElementById('anhoProducto-formulario').value; 
-			    var version = document.getElementById('versionProducto-formulario').value; 
-			    var totalFisico = document.getElementById('totalFisico-formulario').value; 
-			    var unidadMedida = document.getElementById('unidadMedida-formulario').value; 
-			    var clase = document.getElementById('clase-formulario').value; 
-			    var totalFinanciero = document.getElementById('totalFinanciero-formulario').value; 
-			    var totalAsignacion = document.getElementById('total-formulario').value; 
 			    
 			    
 			    if(totalFisico == ""){
@@ -2720,7 +2733,7 @@ $("body").on("click", ".borrarAccion",function(event){
 				      	'													<span class="input-group-addon">Gs</span>'+
 	      				'	    											<input type="number" name="total" id="total-formulario" value="" class="form-control" required>'+
 	      				'	               								    <div class="input-group-btn">'+
-		      			'		                								<button type="submit" class="btn btn-success guardarComboProducto" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'><span class="glyphicon glyphicon-plus"></span></button>'+
+		      			'		                								<button type="button" class="btn btn-success guardarComboProducto" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'><span class="glyphicon glyphicon-plus"></span></button>'+
 		      			'		                							</div>'+	      					    				
 	      				'		    									</div>'+
 			  			'			    							</div>'+

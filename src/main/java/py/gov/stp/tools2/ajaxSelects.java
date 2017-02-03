@@ -79,7 +79,7 @@ public class ajaxSelects extends HttpServlet {
     	Integer funcional = null;
     	Integer catalogoDestinatario = null;
     	Integer catalogoAccionId = null;    	
-    	
+    	Integer version = null;
     	Integer institucion_id=null;
     	Integer accion_id=null;
     	Integer accionId = null;
@@ -197,6 +197,7 @@ public class ajaxSelects extends HttpServlet {
       	if (request.getParameter("etiquetaId")!=null) etiquetaId=Integer.parseInt(request.getParameter("etiquetaId"));
       	if (request.getParameter("idDocumento")!=null) idDocumento= Integer.parseInt(request.getParameter("idDocumento"));
       	if (request.getParameter("tipo")!=null) tipo = Integer.parseInt(request.getParameter("tipo"));
+      	if (request.getParameter("version")!=null) version= Integer.parseInt(request.getParameter("version"));
 
 
       	
@@ -1662,6 +1663,24 @@ public class ajaxSelects extends HttpServlet {
 	            if (departamentoId!=null) condition += " and ins_linea_accion_base_dd.depto_id='"+departamentoId+"'";
 	            if (distritoId!=null) condition += " and ins_linea_accion_base_dd.dist_id='"+distritoId+"'";*/
            		try {objetos = SqlSelects.selectCiDestinatarios(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		//JsonElement json = new Gson().toJsonTree(objetos );
+        		//out.println(json.toString()); 
+           		out.println(objetos);return;
+        	}
+        	if (action.equals("getPresupuestoAsignado")){
+        		String objetos=null;
+        		condition = " where true";
+                if (nivel!=null) condition += " and spr_nivel_id ="+nivel;
+                if (entidad!=null) condition += " and spr_entidad_id ="+entidad;
+                if (tipoPresupuesto!=null) condition += " and spr_tiprograma_id ="+tipoPresupuesto;
+                if (programa!=null) condition += " and spr_programa_id ="+programa;
+                if (subprograma!=null) condition += " and spr_subprograma_id ="+subprograma;
+                if (proyecto!=null) condition += " and srp_proyecto_id ="+proyecto;
+                if (producto!=null) condition += " and spr_producto_id ="+producto;
+                if (anio!=null) condition += " and spr_anho ="+anio;
+                if (version!=null) condition += " and spr_version ="+version;                
+           		try {objetos = SqlSelects.selectPresupuestoAsignado(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		//JsonElement json = new Gson().toJsonTree(objetos );
         		//out.println(json.toString()); 
