@@ -1,4 +1,5 @@
 package py.gov.stp.tools2;
+
 import py.gov.stp.objetosV2.*;
 
 import java.io.File;
@@ -1429,6 +1430,75 @@ public class SqlSelects {
 			fileName = fullPath.substring(index + 1);
 		}
 		return fileName;
+	}
+	public static List<TipoDocumento> selectAllTipoDocumento(String condicion) throws SQLException  {
+		Connection conect = ConnectionConfiguration.conectarSpr();
+		String query = " select * from tipo_documentos " + condicion;
+
+		Statement statement = null;
+		ResultSet rs = null;
+		List<TipoDocumento> objetos = new ArrayList<TipoDocumento>();
+		try {
+			statement = conect.createStatement();
+			rs = statement.executeQuery(query);
+			while (rs.next()) {
+				TipoDocumento objeto = new TipoDocumento();
+
+				objeto.setId(rs.getInt("id"));
+				objeto.setNombre(rs.getString("nombre"));
+				objeto.setBorrado(rs.getBoolean("borrado"));
+				objeto.setFechaActualizacion(rs.getString("fecha_actualizacion"));
+				objeto.setFechaInsercion(rs.getString("fecha_insercion"));
+
+				objetos.add(objeto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				statement.close();
+			}
+			if (conect != null) {
+				conect.close();
+			}
+		}
+		return objetos;
+	}
+	public static List<Documentos> selectAllDocumento(String condicion) throws SQLException  {
+		Connection conect = ConnectionConfiguration.conectarSpr();
+		String query = " select * from documentos " + condicion;
+
+		Statement statement = null;
+		ResultSet rs = null;
+		List<Documentos> objetos = new ArrayList<Documentos>();
+		try {
+			statement = conect.createStatement();
+			rs = statement.executeQuery(query);
+			while (rs.next()) {
+				Documentos objeto = new Documentos();
+
+				objeto.setId(rs.getInt("id"));
+				objeto.setNombre(rs.getString("nombre"));
+   				objeto.setUrl(getFileName(rs.getString("url")));
+				objeto.setDescripcion(rs.getString("descripcion"));
+				objeto.setBorrado(rs.getBoolean("borrado"));
+				objeto.setFecha(rs.getString("fecha_valides"));
+				objeto.setTipoId(rs.getInt("tipos_id"));
+				objeto.setUsuarioResponsable(rs.getString("usuario_responsable"));
+
+				objetos.add(objeto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				statement.close();
+			}
+			if (conect != null) {
+				conect.close();
+			}
+		}
+		return objetos;
 	}
 	public static List<WsTipo> selectWsTipo() throws SQLException{
 	   	 Connection conect=ConnectionConfiguration.conectar();

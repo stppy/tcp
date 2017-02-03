@@ -185,7 +185,8 @@ function renderInsLineaAccion(PeriodoActual){
 		 	
 		 	for(var l = 0; l < usuarioEtiqueta.length; l++)
 			{
-				if(usuarioEtiqueta[l].etiqueta_id == 1)
+				//if(usuarioEtiqueta[l].etiqueta_id == 1 && usuarioEtiqueta[l].borrado != true)
+		 		if(usuarioEtiqueta[l].etiqueta_id == 1)
 				{
 					for(var t = 0; t < insLineaAccionHasEtiqueta.length; t++)
 					{
