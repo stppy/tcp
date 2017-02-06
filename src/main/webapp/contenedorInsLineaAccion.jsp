@@ -812,7 +812,7 @@ function renderInsLineaAccion(PeriodoActual, etiquetaSeleccionado){
 								'</div>'+
 								'<div class="col-sm-2">'+
 									'<div class="checkbox">'+
-										'<label> <input type="checkbox" id="chkMostrarOcultar">Ocultar Registros Borrados</label>'+
+										'<label> <input type="checkbox" id="chkMostrarOcultar" checked>Ocultar Registros Borrados</label>'+
 									'</div>'+
 								'</div>';
 								
@@ -858,7 +858,9 @@ function renderInsLineaAccion(PeriodoActual, etiquetaSeleccionado){
 		//$("#botonImprimirAvanceInstitucional").attr('parametros', usuarios[0].nivel_id+"-"+usuarios[0].entidad_id+"-"+usuarios[0].unidadResponsable);
 		
 				
-		renderInsLineaAccion(periodoSeleccionado,etiquetaSeleccionado);				
+		renderInsLineaAccion(periodoSeleccionado,etiquetaSeleccionado);	
+	   	OcultarRegistrosBorrados();
+
 		
 		$("body").on("click", "#chkMostrarOcultar",function(event){			
 			OcultarRegistrosBorrados();
