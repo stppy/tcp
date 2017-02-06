@@ -2398,8 +2398,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		PresupuestoAsignado = JSON.parse(PresupuestoAsignado);	
 				
 		var totaFinanciero=parseInt($("#totalFinanciero-formulario").val());
-		var totaFinancieroInputado=parseInt($("#total-formulario").val());
-		//var totaFinancieroInputado=parseInt(PresupuestoAsignado[0].asignacionusada);
+		var totaFinancieroInputado=parseInt($("#total-formulario").val());		
 		var productoIngresado=parseInt($("#producto-formulario").val());			
 		var sumatoriaAsignacion=0;
 		
@@ -2413,8 +2412,12 @@ $("body").on("click", ".borrarAccion",function(event){
 				}
 			}		
 		});*/			
-			
-		sumatoriaAsignacion=PresupuestoAsignado[0].asignacionusada;
+		
+		if(PresupuestoAsignado[0].asignacionusada==null){
+			sumatoriaAsignacion=0;
+		}else{
+			sumatoriaAsignacion=PresupuestoAsignado[0].asignacionusada;
+		}
 		
 		if(validarFormulario("formulario",false,false)==true){
 			if((totaFinancieroInputado+sumatoriaAsignacion)<=totaFinanciero){
