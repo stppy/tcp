@@ -2992,6 +2992,64 @@ public class SqlSelects {
 		}
 		return objetos;
 	  }
+	
+	public static String selectAllTablas(String condition) throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+	   	 String query = "select array_to_json(array_agg(row_to_json(t))) as resultado from(SELECT tablename::text FROM tablero2015v3.pg_catalog.pg_tables where schemaname='public' order by tablename)t";
+
+
+		Statement statement = null;
+		ResultSet rs = null;
+		 String objetos = "";
+
+		try {
+			statement = conect.createStatement();
+			rs = statement.executeQuery(query);
+			while(rs.next()){
+
+				objetos+=rs.getString("resultado");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				statement.close();
+			}
+			if (conect != null) {
+				conect.close();
+			}
+		}
+		return objetos;
+	  }
+	public static String selectAllColumnas(String condition) throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+	   	 String query = "select array_to_json(array_agg(row_to_json(t))) as resultado from(SELECT CAST( column_name AS text),CAST( data_type AS text),CAST(column_default  AS text),CAST(is_nullable  AS text) FROM information_schema.columns "+condition+")t";
+
+		Statement statement = null;
+		ResultSet rs = null;
+		 String objetos = "";
+
+		try {
+			statement = conect.createStatement();
+			rs = statement.executeQuery(query);
+			while(rs.next()){
+
+				objetos+=rs.getString("resultado");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				statement.close();
+			}
+			if (conect != null) {
+				conect.close();
+			}
+		}
+		return objetos;
+	  }
 	public static String selectUsuarioEtiqueta(String condition) throws SQLException{
 	   	 Connection conect=ConnectionConfiguration.conectar();
 	   	 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from( select * from usuario_etiqueta"+condition+")t";
@@ -3008,6 +3066,35 @@ public class SqlSelects {
 
  				objetos+=rs.getString("resultado");
  			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				statement.close();
+			}
+			if (conect != null) {
+				conect.close();
+			}
+		}
+		return objetos;
+	  }
+	public static String selectPresupuestoAsignado(String condition) throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+	   	 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from(select sum(asignacion_financiera)as AsignacionUsada from accion_has_producto "+condition+" and borrado=false)t";
+
+
+		Statement statement = null;
+		ResultSet rs = null;
+		 String objetos = "";
+
+		try {
+			statement = conect.createStatement();
+			rs = statement.executeQuery(query);
+			while(rs.next()){
+
+				objetos+=rs.getString("resultado");
+			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
