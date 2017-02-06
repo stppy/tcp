@@ -4,7 +4,7 @@ import java.sql.Date;
 public class Avance {
 	protected int id;
 	protected String justificacion;
-	protected double cantidad;
+	protected Double cantidad;
 	protected String fechaEntrega;
 	protected int cantidadBeneficiarios;
 	protected int actividadId;
@@ -35,12 +35,12 @@ public class Avance {
 	}
 
 
-	public double getCantidad() {
+	public Double getCantidad() {
 		return cantidad;
 	}
 
 
-	public void setCantidad(double cantidad) {
+	public void setCantidad(Double cantidad) {
 		this.cantidad = cantidad;
 	}
 
