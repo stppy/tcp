@@ -1,47 +1,74 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+    pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page import="org.jasig.cas.client.authentication.AttributePrincipalImpl"%>
+<%@ page import="org.jasig.cas.client.authentication.AttributePrincipal"%>
+<%@ page import="java.sql.*" %>
+<%@ page import="java.util.*" %>
+
+<!DOCTYPE html>
 <html>
-<head>
-<title>Importar datos</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- <link rel="stylesheet" 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
-<link rel="stylesheet" 	href="bootstrap/css/bootstrap.min.css">
-<!-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
-<link rel="stylesheet" href="plugins/jQueryUI/css/jquery-ui.css">
+  <head>
+  	<!--  ISO-8859-1 -->
+  	<%@ include file="/frames/head.jsp" %>
+	<!--   <script src="frames/entidad.js" type="text/javascript"></script> -->
+	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	
 
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
-
-
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
-<script src="http://bootboxjs.com/bootbox.js"></script>
+</head>
+<body class="skin-blue sidebar-mini">
+<% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%>
+<% Map attributes = user.getAttributes(); 
+if (user != null) { %>
+	<%@ include file="/frames/perfil.jsp" %>
+	
+  <!-- piwik -->
+  <script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
+  _paq.push(["setCookieDomain", "*.spr.stp.gov.py"]);
+  _paq.push(["setDomains", ["*.spr.stp.gov.py"]]);
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//infra.stp.gov.py/monitoreoweb/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', 20]);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<noscript><p><img src="//infra.stp.gov.py/monitoreoweb/piwik.php?idsite=4" style="border:0;" alt="" /></p></noscript>
+<!-- /piwik -->
 
 
 <style>
-  #sortable { list-style-type: none; margin: 0; padding: 0; width: 100%; }
-  #sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1em; height: 30px; }
-  #sortable li span { position: absolute; margin-left: -1.3em; }
-  #sortable1 { list-style-type: none; margin: 0; padding: 0; width: 100%; }
-  #sortable1 li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1em; height: 30px; }
-  #sortable1 li span { position: absolute; margin-left: -1.3em; }
-  </style>
-<script>
-  $( function() {
-    //$( "#sortable" ).sortable();
-    //$( "#sortable" ).disableSelection();
-    $( "#sortable1" ).sortable();
-    $( "#sortable1" ).disableSelection();
-  } );
-</script>	
-</head>
-<body>
+textarea { text-transform: uppercase; }
+</style>
+    <div class="wrapper">
+
+      <header class="main-header">
+		  <%@ include file="/frames/mainheader.jsp" %>
+      </header>
+      <!-- Left side column. contains the logo and sidebar -->
+      <aside class="main-sidebar">
+  			 <%@ include file="/frames/main-sidebar.jsp" %>
+      </aside>
+
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <h1>
+            <small>
+            <!--  Titulo, donde antes estaba dashboard -->
+            </small>
+          </h1>
+         
+        </section>
+
+        <!-- Main content -->
+        <section class="content" id="programacion">
 
 	<div class="container">
 		<h2>Migrar datos desde Webservices</h2>
@@ -66,30 +93,7 @@
 			</div>
 			<div class="row">
 				<table id="tablaJson"><thead id="thtablaJson"></thead><tbody id="cuerpoTabla"></tbody></table>
-			</div>
-			<!-- <div class="row">
-				<div class="col-md-6">
-					<h3>Columnas proveídas por el webservice</h3>
-					<div class="row"></div>
-					<ul id="sortable">
-					</ul>
-				</div>
-				<div class="col-md-6">
-					<h3>Columnas proveídas por la base de datos</h3>
-					<div class="row">
-						<div class="col-sm-4">
-							<label for="selbd">Seleccionar Tabla:</label>
-						</div>					
-						<div class="col-sm-8">
-							<select class="form-control" id="selbd"></select>
-						</div>
-					</div>					
-					<div class="row">						
-						<ul id="sortable1">	
-					</ul>
-					</div>
-				</div>
-			</div> -->
+			</div>			
 			<div class="row">
 				<div class="row-height">
 					<div class="col-xs-6 col-height">
@@ -143,7 +147,7 @@
 	</div>
 
  <script>
- $(document).ready(function(){
+ //$(document).ready(function(){
 	 
 	 var tablas = $.ajax({
 			url:'/tablero/ajaxSelects2?action=getAllTablas',
@@ -355,9 +359,73 @@
 	 });
 	 
 	//http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida
- });
+ //});
   </script>
 
 
-</body>
+
+			   </div>
+			</div>
+          </div><!-- /.row -->
+
+          
+          
+               
+          
+    </section><!-- /.content -->
+      </div><!-- /.content-wrapper -->
+
+      <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+          <b>Version</b> 2.0
+        </div>
+        <strong>Copyright &copy; 2015 <a href="http://www.stp.gov.py">STP</a>.</strong> All rights reserved.
+      </footer>
+
+      <!-- Control Sidebar -->
+      <aside class="control-sidebar control-sidebar-light">
+		<!-- include file="/frames/control-sidebar.jsp"  -->
+      </aside><!-- /.control-sidebar -->
+      <!-- Add the sidebar's background. This div must be placed
+           immediately after the control sidebar -->
+      <div class='control-sidebar-bg'></div>
+
+    </div><!-- ./wrapper -->
+
+    <!-- jQuery 2.1.3 -->
+    <script src="plugins/jQuery/jQuery-2.1.3.min.js"></script>
+    <!-- Bootstrap 3.3.2 JS -->
+    <script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <!-- FastClick -->
+    <script src='plugins/fastclick/fastclick.min.js'></script>
+    <!-- AdminLTE App -->
+    <script src="dist/js/app.min.js" type="text/javascript"></script>
+    <!-- Sparkline -->
+    <script src="plugins/sparkline/jquery.sparkline.min.js" type="text/javascript"></script>
+    <!-- jvectormap -->
+    <script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js" type="text/javascript"></script>
+    <script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js" type="text/javascript"></script>
+    <!-- daterangepicker -->
+    <script src="plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+    <!-- datepicker -->
+    <script src="plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
+    <!-- SlimScroll 1.3.0 -->
+    <script src="plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <!-- ChartJS 1.0.1 -->
+    <script src="plugins/chartjs/Chart.min.js" type="text/javascript"></script>
+
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) 
+    <script src="dist/js/pages/dashboard2.js" type="text/javascript"></script>-->
+
+    <!-- Librerias para la rutina de cambio de contraseña -->
+    <script src="dist/js/jquerymd5.js" type="text/javascript"></script>    	
+    <%@ include file="/frames/pass.jsp" %>
+    
+    <!-- AdminLTE for demo purposes -->
+    <script src="dist/js/demo.js" type="text/javascript"></script>
+        <%  } else { %>
+				<p>Favor Iniciar Sesion</p>
+			<%  } %>
+			
+  </body>
 </html>

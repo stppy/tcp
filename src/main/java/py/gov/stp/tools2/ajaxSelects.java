@@ -198,6 +198,7 @@ public class ajaxSelects extends HttpServlet {
       	if (request.getParameter("idDocumento")!=null) idDocumento= Integer.parseInt(request.getParameter("idDocumento"));
       	if (request.getParameter("tipo")!=null) tipo = Integer.parseInt(request.getParameter("tipo"));
       	if (request.getParameter("version")!=null) version= Integer.parseInt(request.getParameter("version"));
+      	if (request.getParameter("tabla")!=null) tabla=request.getParameter("tabla");
 
 
       	
