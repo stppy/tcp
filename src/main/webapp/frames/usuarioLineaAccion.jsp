@@ -142,6 +142,10 @@
 		if ( $("#modalUsuarioLinea").length )
 		{
 			$("#modalUsuarioLinea").remove();
+		}
+		if ( $("#modalEditarUsuarioLineas").length )
+		{
+			$("#modalEditarUsuarioLineas").remove();
 		}	
 		var parametros = $(this).attr("parametros");
 	    var idParsed = parametros.split("-"); 
