@@ -763,7 +763,8 @@ function renderEvidencia(avanceId, parametros){
 		        	if(data.success == true)
 		        	{
 		            	//$("#cuerpoModalUsuario").html("<h3 class='text-center'>ETIQUETA GUARDADO EXITOSAMENTE!!</h3>");
-		        		//renderUsuarios();		        		
+		        		//renderUsuarios();	
+		        		renderInsLineaAccion(periodoId);
 		        	}else{
 
 		            	//$("#cuerpoModalUsuario").html("<h3 class='text-center'>ERROR!! al intentar guardar este usuario y etiqueta, probablemente ya existe un usuario con esta Etiqueta.</h3>");
@@ -848,7 +849,8 @@ function renderEvidencia(avanceId, parametros){
 		        	if(data.success == true){
 		        		
 		        	    //Inserta en la tabla usuario_linea_accion-----------------------------------------------------------------------------------------------------------------------------------------------------
-		        	    
+		        	   	renderInsLineaAccion(periodoId);
+
 		        		var usuarioLineaAccion = new Object();
 	        			
 		        		usuarioLineaAccion.lineaAccionId =lineaAccionId ;
