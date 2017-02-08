@@ -981,6 +981,16 @@ public class SqlInserts {
 		} catch (SQLException e) {e.printStackTrace(); return false;}
 		
 	}
-	
+	public static boolean insertMigrar(String query){
+		try {
+			Connection conn=ConnectionConfiguration.conectar();
+			query= query.substring(1);
+			query= query.substring(0, query.length()-1);			
+			PreparedStatement insert = conn.prepareStatement(query);
+			insert.execute();
+			conn.close();
+			return true;
+		} catch (SQLException e) {e.printStackTrace(); return false;}
+	}
 		
 }

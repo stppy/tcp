@@ -79,7 +79,15 @@ if (user != null && user.getName()!= "parce@nandeparaguay.org") { %>
 <script>
 //periodoSeleccionado=new Date().getFullYear();
 //periodoSeleccionado = $("#periodoSeleccion option:selected").val();
-function renderInsLineaAccion(PeriodoActual){
+			var usuarioEtiqueta = $.ajax({
+				url:'/tablero/ajaxSelects2?action=getUsuarioEtiqueta',
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+			}).responseText;
+			usuarioEtiqueta = JSON.parse(usuarioEtiqueta);
+			
+function renderInsLineaAccion(PeriodoActual, etiquetaSeleccionado){
 	
 	var insLineaAccion = $.ajax({
 		url:'/tablero/ajaxSelects2?action=getInsLineaAccion',
@@ -146,13 +154,13 @@ function renderInsLineaAccion(PeriodoActual){
 	}).responseText;
 	insLineaAccionHasEtiqueta = JSON.parse(insLineaAccionHasEtiqueta);
 	
-	var usuarioEtiqueta = $.ajax({
+/* 	var usuarioEtiqueta = $.ajax({
 		url:'/tablero/ajaxSelects2?action=getUsuarioEtiqueta',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
 	}).responseText;
-	usuarioEtiqueta = JSON.parse(usuarioEtiqueta);
+	usuarioEtiqueta = JSON.parse(usuarioEtiqueta); */
 	
 
 	var tablaInsLineaAccion="";
@@ -185,12 +193,12 @@ function renderInsLineaAccion(PeriodoActual){
 		 	
 		 	for(var l = 0; l < usuarioEtiqueta.length; l++)
 			{
-				//if(usuarioEtiqueta[l].etiqueta_id == 1 && usuarioEtiqueta[l].borrado != true)
-		 		if(usuarioEtiqueta[l].etiqueta_id == 1)
+				if(usuarioEtiqueta[l].etiqueta_id == etiquetaSeleccionado && usuarioEtiqueta[l].borrado != true)
+		 		//if(usuarioEtiqueta[l].etiqueta_id == 1)
 				{
 					for(var t = 0; t < insLineaAccionHasEtiqueta.length; t++)
 					{
-						if(insLineaAccionHasEtiqueta[t].ins_linea_accion_id == insLineaAccion[w].id && insLineaAccionHasEtiqueta[t].etiqueta_id == 1)
+						if(insLineaAccionHasEtiqueta[t].ins_linea_accion_id == insLineaAccion[w].id && insLineaAccionHasEtiqueta[t].etiqueta_id == etiquetaSeleccionado)
 						{
 							for(var d=0; d<usuarioLineaAccion.length;d++)
 							{
@@ -758,8 +766,18 @@ function renderInsLineaAccion(PeriodoActual){
 			  	async:false       
 			}).responseText;
 			periodo = JSON.parse(periodo);
+			
+			var etiqueta = $.ajax({
+				url:'/tablero/ajaxSelects2?action=getEtiqueta',
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+			}).responseText;
+			etiqueta = JSON.parse(etiqueta);
+			
 			var optionPeriodo;
-	
+			var optionEtiqueta;
+
 			for(p = 0;p<periodo.length; p++)
 			{
 				if(periodo[p].id >= 2014){
@@ -771,16 +789,30 @@ function renderInsLineaAccion(PeriodoActual){
 					}
 				}
 			}	
+			
+			if(usuarioEtiqueta.length > 0){
+				for(var d = 0; d<usuarioEtiqueta.length; d++){
+					for(var e = 0; e<etiqueta.length; e++){
+						if(usuarioEtiqueta[d].borrado != true && usuarioEtiqueta[d].etiqueta_id == etiqueta[e].id && d==0){
+							optionEtiqueta+='<option value="'+etiqueta[e].id+'" selected>'+etiqueta[e].nombre+'</option>';
+						}else if(usuarioEtiqueta[d].borrado != true && usuarioEtiqueta[d].etiqueta_id == etiqueta[e].id){
+							optionEtiqueta+='<option value="'+etiqueta[e].id+'">'+etiqueta[e].nombre+'</option>';
+						}
+					}
+				}
+			}
 		
 			var ocultarBorrado= '<div class="col-sm-4">'+
 									'<label for="periodoSeleccion">Periodo</label>'+
 									'<select id="periodoSeleccion" class="form-control">'+optionPeriodo+'</select>'+
 								'</div>'+
 								'<div class="col-sm-6">'+
+									'<label for="etiquetaSeleccion">Etiqueta</label>'+
+									'<select id="etiquetaSeleccion" class="form-control">'+optionEtiqueta+'</select>'+
 								'</div>'+
 								'<div class="col-sm-2">'+
 									'<div class="checkbox">'+
-										'<label> <input type="checkbox" id="chkMostrarOcultar">Ocultar Registros Borrados</label>'+
+										'<label> <input type="checkbox" id="chkMostrarOcultar" checked>Ocultar Registros Borrados</label>'+
 									'</div>'+
 								'</div>';
 								
@@ -788,15 +820,18 @@ function renderInsLineaAccion(PeriodoActual){
 		<!-- /*%}%*/ -->
 	 
 	 	periodoSeleccionado = $("#periodoSeleccion option:selected").val();
+	 	var etiquetaSeleccionado = $("#etiquetaSeleccion option:selected").val();
 	 
  		onoff=false;
 		function OcultarRegistrosBorrados(){
+		 	var periodoSeleccionado = $("#periodoSeleccion option:selected").val();
+		 	var etiquetaSeleccionado = $("#etiquetaSeleccion option:selected").val();
 			if($("#chkMostrarOcultar").is(':checked')){
 				onoff=true;						
 			}else{
 				onoff=false;			
 			}	
-			renderInsLineaAccion(periodoSeleccionado);
+			renderInsLineaAccion(periodoSeleccionado,etiquetaSeleccionado);
 			//$("tr > td > del").closest("tr").toggle(onoff);
 		}
 
@@ -823,7 +858,9 @@ function renderInsLineaAccion(PeriodoActual){
 		//$("#botonImprimirAvanceInstitucional").attr('parametros', usuarios[0].nivel_id+"-"+usuarios[0].entidad_id+"-"+usuarios[0].unidadResponsable);
 		
 				
-		renderInsLineaAccion(periodoSeleccionado);				
+		renderInsLineaAccion(periodoSeleccionado,etiquetaSeleccionado);	
+	   	OcultarRegistrosBorrados();
+
 		
 		$("body").on("click", "#chkMostrarOcultar",function(event){			
 			OcultarRegistrosBorrados();
@@ -831,8 +868,18 @@ function renderInsLineaAccion(PeriodoActual){
 		
 		$("body").on("change", "#periodoSeleccion",function(event){	
 		   	periodoSeleccionado = $("#periodoSeleccion option:selected").val();
-		   	renderInsLineaAccion(periodoSeleccionado);
-		   			   	
+		 	var etiquetaSeleccionado = $("#etiquetaSeleccion option:selected").val();
+
+		   	renderInsLineaAccion(periodoSeleccionado,etiquetaSeleccionado);
+		   
+		});
+		
+		$("body").on("change", "#etiquetaSeleccion",function(event){	
+		   	periodoSeleccionado = $("#periodoSeleccion option:selected").val();
+		 	var etiquetaSeleccionado = $("#etiquetaSeleccion option:selected").val();
+
+		   	renderInsLineaAccion(periodoSeleccionado,etiquetaSeleccionado);
+		   
 		});
 				
 		/* $('.pagination').on('click',function(){
@@ -844,7 +891,7 @@ function renderInsLineaAccion(PeriodoActual){
 	window.location = "/tablero/geografico4.jsp";
 <%}%>
 	var onoff=null;
-	function OcultarRegistrosBorrados(){
+/* 	function OcultarRegistrosBorrados(){
 		
 		if($("#chkMostrarOcultar").is(':checked')){
 			onoff=false;						
@@ -852,7 +899,7 @@ function renderInsLineaAccion(PeriodoActual){
 			onoff=true;			
 		}
 		$("tr > td > del").closest("tr").toggle(onoff);
-	}
+	} */
 	
 	function ProcesarCambioPeriodo(){
 		
