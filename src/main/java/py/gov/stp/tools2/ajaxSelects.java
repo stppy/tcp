@@ -79,7 +79,7 @@ public class ajaxSelects extends HttpServlet {
     	Integer funcional = null;
     	Integer catalogoDestinatario = null;
     	Integer catalogoAccionId = null;    	
-    	
+    	Integer version = null;
     	Integer institucion_id=null;
     	Integer accion_id=null;
     	Integer accionId = null;
@@ -92,6 +92,7 @@ public class ajaxSelects extends HttpServlet {
     	Integer beneficiarioGrupoId = null;
     	Integer departamentoId = null;// nueva columna
     	Integer distritoId = null;
+    	Integer tipo=null;
     	
     	Integer cronogramaId=null;
     	Integer programacionId = null;
@@ -109,6 +110,7 @@ public class ajaxSelects extends HttpServlet {
     	Integer nivelId = null;
     	Integer entidadId = null;
     	Integer etiquetaId = null;
+    	Integer idDocumento = null;
     	
     	String institucion=null;
     	String catalogoAccion = null;
@@ -126,9 +128,10 @@ public class ajaxSelects extends HttpServlet {
     	String descripcion = "";
     	String db = "";
     	String institucionIdConcat = "";
-    	String insLineaAccionIdConcat = "";    	
+    	String insLineaAccionIdConcat = "";
+    	String tabla="";
 
-    	//Boolean borrado=null;
+    	Boolean borrado=null;
     	
     	
     	if (request.getParameter("usuario")!=null) usuario=request.getParameter("usuario");
@@ -183,15 +186,19 @@ public class ajaxSelects extends HttpServlet {
       	if (request.getParameter("productoObjetoGastoId")!=null) productoObjetoGastoId=Integer.parseInt(request.getParameter("productoObjetoGastoId"));
       	if (request.getParameter("trimestreId")!=null) trimestreId=Integer.parseInt(request.getParameter("trimestreId"));      	
       	if (request.getParameter("idAvanceCualitativo")!=null) idAvanceCualitativo=Integer.parseInt(request.getParameter("idAvanceCualitativo")); 
-      	//if (request.getParameter("borrado")!=null) borrado=Boolean.parseBoolean(request.getParameter("borrado")); 
+      	if (request.getParameter("borrado")!=null) borrado=Boolean.parseBoolean(request.getParameter("borrado")); 
       	if (request.getParameter("departamentoId")!=null) departamentoId=Integer.parseInt(request.getParameter("departamentoId")); 
       	if (request.getParameter("distritoId")!=null) distritoId=Integer.parseInt(request.getParameter("distritoId")); 
       	if (request.getParameter("rolId")!=null) rolId=Integer.parseInt(request.getParameter("rolId")); 
       	if (request.getParameter("nivelId")!=null) nivelId=Integer.parseInt(request.getParameter("nivelId"));
       	if (request.getParameter("entidadId")!=null) entidadId=Integer.parseInt(request.getParameter("entidadId")); 
       	if (request.getParameter("institucionIdConcat")!=null) institucionIdConcat=request.getParameter("institucionIdConcat");      	
-      	if (request.getParameter("insLineaAccionIdConcat")!=null) insLineaAccionIdConcat=request.getParameter("insLineaAccionIdConcat");   
-      	if (request.getParameter("etiquetaId")!=null) etiquetaId=Integer.parseInt(request.getParameter("etiquetaId")); 
+      	if (request.getParameter("insLineaAccionIdConcat")!=null) insLineaAccionIdConcat=request.getParameter("insLineaAccionIdConcat");
+      	if (request.getParameter("etiquetaId")!=null) etiquetaId=Integer.parseInt(request.getParameter("etiquetaId"));
+      	if (request.getParameter("idDocumento")!=null) idDocumento= Integer.parseInt(request.getParameter("idDocumento"));
+      	if (request.getParameter("tipo")!=null) tipo = Integer.parseInt(request.getParameter("tipo"));
+      	if (request.getParameter("version")!=null) version= Integer.parseInt(request.getParameter("version"));
+
 
       	
         PrintWriter out = response.getWriter();
@@ -230,10 +237,30 @@ public class ajaxSelects extends HttpServlet {
            		try {objetos = SqlSelects.selectEvidencia(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
-        		out.println(json.toString());        	
-        	
-        	
-       }    
+        		out.println(json.toString());        	        	        	
+        	}    
+        	if (action.equals("getTipoDocumento")){
+        		List objetos=null;
+        		String condicion = " where true ";
+        		if (tipo != null) condicion += " and id ='"+tipo+"'";
+        		if (borrado != null) condicion += " and borrado is "+borrado;
+
+        		try {objetos = SqlSelects.selectAllTipoDocumento(condicion);}			
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );        	
+                out.println(json.toString());
+        	}
+        	if (action.equals("getDocumento")){
+        		List objetos=null;
+        		String condicion = " where true ";
+        		if (tipo != null) condicion += " and tipos_id ='"+tipo+"'";
+        		if (idDocumento != null) condicion += " and id ='"+idDocumento+"'";
+        		
+        		try {objetos = SqlSelects.selectAllDocumento(condicion);}			
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );  	
+                out.println(json.toString());
+        	}
         	if (action.equals("getWsTipo")){
         		List objetos=null;
            		try {objetos = SqlSelects.selectWsTipo();}
@@ -242,7 +269,7 @@ public class ajaxSelects extends HttpServlet {
         		out.println(json.toString());        	
         	
         	
-       }    
+        	}    
         	if (action.equals("getAccionHasEtiqueta")){
         		List objetos=null;
            		try {objetos = SqlSelects.selectAccionHasEtiqueta();}
@@ -1594,6 +1621,21 @@ public class ajaxSelects extends HttpServlet {
         		catch (SQLException e) {e.printStackTrace();}
         		out.println(objetos);return;        	
         	}
+        	if (action.equals("getAllTablas")){
+        		String objetos=null;
+        		condition = " where true ";
+           		try {objetos = SqlSelects.selectAllTablas(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		out.println(objetos);return;        	
+        	}
+        	if (action.equals("getColumna")){
+        		String objetos=null;
+        		condition = " where true and table_schema = 'public'";
+        		if (tabla!="") condition += " and table_name = '"+tabla+"'";
+           		try {objetos = SqlSelects.selectAllColumnas(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		out.println(objetos);return;        	
+        	}
         	//Información de las etiquetas que el usuario logueado puede visualizar o tiene acceso
         	if (action.equals("getUsuarioEtiqueta")){
         		String objetos=null;
@@ -1621,6 +1663,24 @@ public class ajaxSelects extends HttpServlet {
 	            if (departamentoId!=null) condition += " and ins_linea_accion_base_dd.depto_id='"+departamentoId+"'";
 	            if (distritoId!=null) condition += " and ins_linea_accion_base_dd.dist_id='"+distritoId+"'";*/
            		try {objetos = SqlSelects.selectCiDestinatarios(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		//JsonElement json = new Gson().toJsonTree(objetos );
+        		//out.println(json.toString()); 
+           		out.println(objetos);return;
+        	}
+        	if (action.equals("getPresupuestoAsignado")){
+        		String objetos=null;
+        		condition = " where true";
+                if (nivel!=null) condition += " and spr_nivel_id ="+nivel;
+                if (entidad!=null) condition += " and spr_entidad_id ="+entidad;
+                if (tipoPresupuesto!=null) condition += " and spr_tiprograma_id ="+tipoPresupuesto;
+                if (programa!=null) condition += " and spr_programa_id ="+programa;
+                if (subprograma!=null) condition += " and spr_subprograma_id ="+subprograma;
+                if (proyecto!=null) condition += " and srp_proyecto_id ="+proyecto;
+                if (producto!=null) condition += " and spr_producto_id ="+producto;
+                if (anio!=null) condition += " and spr_anho ="+anio;
+                if (version!=null) condition += " and spr_version ="+version;                
+           		try {objetos = SqlSelects.selectPresupuestoAsignado(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		//JsonElement json = new Gson().toJsonTree(objetos );
         		//out.println(json.toString()); 

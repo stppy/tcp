@@ -1,4 +1,5 @@
 package py.gov.stp.tools2;
+
 import py.gov.stp.objetosV2.*;
 
 import java.io.File;
@@ -454,7 +455,7 @@ public class SqlSelects {
 		objeto.setEvidId(rs.getInt("evid_id"));
 		objeto.setEvidNombre(rs.getString("evid_nom"));
 		objeto.setEvidDesc(rs.getString("evid_desc"));
-		//objeto.setEvidUrl(rs.getString("evid_url"));
+		objeto.setEvidUrl(rs.getString("evid_url"));
 		/*objeto.setEvidDoc(rs.getString("evid_doc"));*/
 		
 	
@@ -1429,6 +1430,75 @@ public class SqlSelects {
 			fileName = fullPath.substring(index + 1);
 		}
 		return fileName;
+	}
+	public static List<TipoDocumento> selectAllTipoDocumento(String condicion) throws SQLException  {
+		Connection conect = ConnectionConfiguration.conectarSpr();
+		String query = " select * from tipo_documentos " + condicion;
+
+		Statement statement = null;
+		ResultSet rs = null;
+		List<TipoDocumento> objetos = new ArrayList<TipoDocumento>();
+		try {
+			statement = conect.createStatement();
+			rs = statement.executeQuery(query);
+			while (rs.next()) {
+				TipoDocumento objeto = new TipoDocumento();
+
+				objeto.setId(rs.getInt("id"));
+				objeto.setNombre(rs.getString("nombre"));
+				objeto.setBorrado(rs.getBoolean("borrado"));
+				objeto.setFechaActualizacion(rs.getString("fecha_actualizacion"));
+				objeto.setFechaInsercion(rs.getString("fecha_insercion"));
+
+				objetos.add(objeto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				statement.close();
+			}
+			if (conect != null) {
+				conect.close();
+			}
+		}
+		return objetos;
+	}
+	public static List<Documentos> selectAllDocumento(String condicion) throws SQLException  {
+		Connection conect = ConnectionConfiguration.conectarSpr();
+		String query = " select * from documentos " + condicion;
+
+		Statement statement = null;
+		ResultSet rs = null;
+		List<Documentos> objetos = new ArrayList<Documentos>();
+		try {
+			statement = conect.createStatement();
+			rs = statement.executeQuery(query);
+			while (rs.next()) {
+				Documentos objeto = new Documentos();
+
+				objeto.setId(rs.getInt("id"));
+				objeto.setNombre(rs.getString("nombre"));
+   				objeto.setUrl(getFileName(rs.getString("url")));
+				objeto.setDescripcion(rs.getString("descripcion"));
+				objeto.setBorrado(rs.getBoolean("borrado"));
+				objeto.setFecha(rs.getString("fecha_valides"));
+				objeto.setTipoId(rs.getInt("tipos_id"));
+				objeto.setUsuarioResponsable(rs.getString("usuario_responsable"));
+
+				objetos.add(objeto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				statement.close();
+			}
+			if (conect != null) {
+				conect.close();
+			}
+		}
+		return objetos;
 	}
 	public static List<WsTipo> selectWsTipo() throws SQLException{
 	   	 Connection conect=ConnectionConfiguration.conectar();
@@ -2922,6 +2992,64 @@ public class SqlSelects {
 		}
 		return objetos;
 	  }
+	
+	public static String selectAllTablas(String condition) throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+	   	 String query = "select array_to_json(array_agg(row_to_json(t))) as resultado from(SELECT tablename::text FROM tablero2015v3.pg_catalog.pg_tables where schemaname='public' order by tablename)t";
+
+
+		Statement statement = null;
+		ResultSet rs = null;
+		 String objetos = "";
+
+		try {
+			statement = conect.createStatement();
+			rs = statement.executeQuery(query);
+			while(rs.next()){
+
+				objetos+=rs.getString("resultado");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				statement.close();
+			}
+			if (conect != null) {
+				conect.close();
+			}
+		}
+		return objetos;
+	  }
+	public static String selectAllColumnas(String condition) throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+	   	 String query = "select array_to_json(array_agg(row_to_json(t))) as resultado from(SELECT CAST( column_name AS text),CAST( data_type AS text),CAST(column_default  AS text),CAST(is_nullable  AS text) FROM information_schema.columns "+condition+")t";
+
+		Statement statement = null;
+		ResultSet rs = null;
+		 String objetos = "";
+
+		try {
+			statement = conect.createStatement();
+			rs = statement.executeQuery(query);
+			while(rs.next()){
+
+				objetos+=rs.getString("resultado");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				statement.close();
+			}
+			if (conect != null) {
+				conect.close();
+			}
+		}
+		return objetos;
+	  }
 	public static String selectUsuarioEtiqueta(String condition) throws SQLException{
 	   	 Connection conect=ConnectionConfiguration.conectar();
 	   	 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from( select * from usuario_etiqueta"+condition+")t";
@@ -2938,6 +3066,35 @@ public class SqlSelects {
 
  				objetos+=rs.getString("resultado");
  			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				statement.close();
+			}
+			if (conect != null) {
+				conect.close();
+			}
+		}
+		return objetos;
+	  }
+	public static String selectPresupuestoAsignado(String condition) throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+	   	 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from(select sum(asignacion_financiera)as AsignacionUsada from accion_has_producto "+condition+" and borrado=false)t";
+
+
+		Statement statement = null;
+		ResultSet rs = null;
+		 String objetos = "";
+
+		try {
+			statement = conect.createStatement();
+			rs = statement.executeQuery(query);
+			while(rs.next()){
+
+				objetos+=rs.getString("resultado");
+			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();

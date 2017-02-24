@@ -651,7 +651,7 @@ function renderInsLineaAccion(PeriodoActual){
 			for(p = 0;p<periodo.length; p++)
 			{
 				if(periodo[p].id >= 2014){
-					if(periodo[p].id == 2016)
+					if(periodo[p].id == 2017)
 					{
 						optionPeriodo+='<option value="'+periodo[p].id+'" selected>'+periodo[p].nombre+'</option>';
 					}else{
