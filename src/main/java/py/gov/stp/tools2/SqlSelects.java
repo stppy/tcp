@@ -5,6 +5,7 @@ import py.gov.stp.objetosV2.*;
 import java.io.File;
 import java.sql.Connection;
 
+import py.gov.stp.spr.modelos.estructura_programatica.TipoPrograma;
 import py.gov.stp.tools.Departamento;
 import py.gov.stp.tools.Distrito;
 import py.gov.stp.tools2.ConnectionConfiguration;
@@ -764,7 +765,58 @@ public class SqlSelects {
 			if (conect != null) {conect.close();}
 		}
 		return objetos; 
+		} 
+	
+	
+	public static List<InsLineaAccion> selectInsLineaAccionGobiernoAbierto(String condition) throws SQLException{
+		Connection conect=ConnectionConfiguration.conectar();
+		String query = 	" SELECT 	la.nombre AS name_laccion,"+
+						"	acc_cat.nombre AS name_accion,"+
+						"	acc_cat.descripcion AS descripcion_accion,"+
+						//falta agregar cronograma
+						"	ins.nombre AS institucion"+
+						//falta agregar avances
+						"FROM linea_accion la"+
+						"JOIN ins_linea_accion insla ON insla.linea_accion_id = la.id"+
+						"JOIN accion acc ON acc.ins_linea_accion_id = insla.id"+
+						"JOIN accion_catalogo acc_cat ON  acc.id_accion_catalogo = acc_cat.id"+
+						"JOIN institucion ins ON insla.institucion_id = ins.id"+
+						
+						"Where la.id BETWEEN 235 AND 245"+
+						"	AND la.borrado=false "+
+						"	AND acc.id BETWEEN 7424 AND 7477"+
+						"	AND acc.borrado = false "+
+						"	AND acc_cat.borrado = false  "+condition;
+
+		Statement statement = null;
+		ResultSet rs=null;
+		List<InsLineaAccion> objetos = new ArrayList<InsLineaAccion>();
+
+		try {
+			statement = conect.createStatement();
+			rs=statement.executeQuery(query);
+			while(rs.next()){
+				InsLineaAccion objeto = new InsLineaAccion();
+		
+				objeto.setId(rs.getInt("id"));
+				objeto.setLineaAccionId(rs.getInt("linea_accion_id"));
+				objeto.setInstitucionId(rs.getInt("institucion_id"));
+				objeto.setPeriodoId(rs.getInt("periodo_id"));
+				objeto.setMeta(rs.getDouble("meta"));
+				objeto.setVersion(rs.getInt("version"));
+				objeto.setBorrado(rs.getBoolean("borrado"));
+
+				objetos.add(objeto);
+			}
 		}
+		catch (SQLException e) {e.printStackTrace();}
+		finally{
+			if (statement != null) {statement.close();}
+			if (conect != null) {conect.close();}
+		}
+		return objetos; 
+		}
+		
 	
 	public static List<LineasProgramadas> selectPivotLineasProgramadas(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();

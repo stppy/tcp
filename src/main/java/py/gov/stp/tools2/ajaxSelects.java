@@ -421,6 +421,20 @@ public class ajaxSelects extends HttpServlet {
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
         	}
+/*===========GOBIERNO ABIERTO==============*/        	
+        	if (action.equals("getGobiernoAbierto")){
+        		List objetos=null; 
+        		condition = "";
+        		String condition2 = " where entidad_id="+userEntidadId+" and nivel_id="+userNivelId ;
+        		if (!userUnrId.equals("0")){ condition2+= " and unidad_responsable_id="+userUnrId;}
+        		condition += " and institucion_id IN (select id from institucion "+condition2+") ";
+        		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
+        		if (periodoId!=null) condition += " and periodo_id ='"+periodoId+"'";        		
+           		try {objetos = SqlSelects.selectInsLineaAccionGobiernoAbierto(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos);
+        		out.println(json.toString());
+        	}
 ////////////Privot programado        	
         	if (action.equals("getPivotLineasProgramadas")){
         		List objetos=null; 
