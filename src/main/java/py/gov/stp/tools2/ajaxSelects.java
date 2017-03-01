@@ -23,11 +23,7 @@ import javax.xml.datatype.DatatypeConfigurationException;
 
 import org.jasig.cas.client.authentication.AttributePrincipal;
 
-import py.gov.stp.objetosV2.DesempDistrito;
-import py.gov.stp.objetosV2.DesempDistritoInst;
-import py.gov.stp.objetosV2.Institucion;
-import py.gov.stp.objetosV2.LineaAccionProgramacion;
-import py.gov.stp.objetosV2.ResumenLineaAccion;
+import py.gov.stp.objetosV2.*;
 import py.gov.stp.tools.Distrito;
 import py.gov.stp.tools2.SqlSelects;
 
@@ -116,6 +112,9 @@ public class ajaxSelects extends HttpServlet {
     	String catalogoAccion = null;
     	String usuario=null;
     	String condition = "";
+    	String condition1 = "";
+		String condition3 = "";
+		String condition4 = "";
     	String mision = "";
     	String nombre = "";
     	String vision = "";
@@ -403,7 +402,7 @@ public class ajaxSelects extends HttpServlet {
         		List objetos=null; 
         		condition = " where true ";
         		if (lineaAccionId!=null) condition += " and id ='"+lineaAccionId+"'";
-           		try {objetos = SqlSelects.selectLineaAccion(condition);}
+           		try {objetos = SqlSelects.selectLineaAccion(condition, condition1);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -423,16 +422,64 @@ public class ajaxSelects extends HttpServlet {
         	}
 /*===========GOBIERNO ABIERTO==============*/        	
         	if (action.equals("getGobiernoAbierto")){
-        		List objetos=null; 
+        		List<LineaAccion> lineaAccion = null;
+        		List<InsLineaAccion> insLineaAccion = null;
+        		List<Accion> axion = null; 
+        		List<AccionCatalogo> accionCatalogo = null;
+        		
+                ArrayList<Object> object = new ArrayList<Object>();
+                ArrayList<Object> children = new ArrayList<Object>();
+
         		condition = "";
         		String condition2 = " where entidad_id="+userEntidadId+" and nivel_id="+userNivelId ;
-        		if (!userUnrId.equals("0")){ condition2+= " and unidad_responsable_id="+userUnrId;}
-        		condition += " and institucion_id IN (select id from institucion "+condition2+") ";
+        		if (!userUnrId.equals("0")){ condition2 += " and unidad_responsable_id="+userUnrId;} ;
         		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
-        		if (periodoId!=null) condition += " and periodo_id ='"+periodoId+"'";        		
-           		try {objetos = SqlSelects.selectInsLineaAccionGobiernoAbierto(condition);}
+        		if (periodoId!=null) condition += " and periodo_id ='"+periodoId+"'";
+        		
+        			condition1 += " WHERE id BETWEEN 235 AND 245 AND borrado = false"; //para linea de accion de gobierno abierto
+        			condition3 += " WHERE id BETWEEN 7424 AND 7477 AND borrado = false"; //para accion de gobierno abierto
+        			condition4 += " WHERE borrado = false"; //para accion de gobierno abierto
+        		
+           		try {
+           			insLineaAccion = SqlSelects.selectInsLineaAccion(condition);
+           			lineaAccion = SqlSelects.selectLineaAccion(condition, condition1);
+           			axion = SqlSelects.selectAccion(condition, condition3);
+           			accionCatalogo = SqlSelects.selectAccionCatalogo(condition, condition4);
+           			
+           			Accion ax = new Accion();
+           			AccionCatalogo acc = new AccionCatalogo();
+					LineaAccion la = new LineaAccion();
+
+           			
+           			for (int a = 0; a < insLineaAccion.size(); a += 1) {
+           				for(int e = 0; e < lineaAccion.size(); e += 1) {
+           					if (insLineaAccion.get(a).getLineaAccionId() == lineaAccion.get(e).getId()){
+           						la.setId(lineaAccion.get(e).getId());
+           						la.setNombre(lineaAccion.get(e).getNombre());
+           						object.add(la.getNombre());
+           						object.add(null); //agregar el color
+           						for(int i = 0; i < axion.size(); i += 1) {
+           							for(int o = 0; o < accionCatalogo.size(); o += 1) {
+           								if(accionCatalogo.get(o).getId() == axion.get(i).getAccionCatalogoId()){           									
+           									if(insLineaAccion.get(a).getId() == axion.get(i).getInsLineaAccionId()){
+           										ax.setId(axion.get(i).getId());
+           										acc.setNombre(accionCatalogo.get(o).getNombre());
+           										acc.setDescripcion(accionCatalogo.get(o).getDescripcion());
+           										children.add(acc.getNombre());
+           										//children.add(acc.getDescripcion());
+                   								object.add(children);
+           									}
+           								}
+           							}
+           						}
+           					}
+           				}
+           			}
+           			 
+           			
+           		}
         		catch (SQLException e) {e.printStackTrace();}
-        		JsonElement json = new Gson().toJsonTree(objetos);
+        		JsonElement json = new Gson().toJsonTree(object);
         		out.println(json.toString());
         	}
 ////////////Privot programado        	
@@ -650,7 +697,7 @@ public class ajaxSelects extends HttpServlet {
         		if (distrito!=null) condition += " and dist_id ='"+distrito+"'";
         		if (catalogoAccionId!=null) condition += " and id_accion_catalogo ='"+catalogoAccionId+"'";
         		if (accionId!=null) condition += " and id ='"+accionId+"'";
-           		try {objetos = SqlSelects.selectAccion(condition);}
+           		try {objetos = SqlSelects.selectAccion(condition, condition3);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -670,7 +717,7 @@ public class ajaxSelects extends HttpServlet {
         		condition = " where true ";        		        		        		
         		if (accionId!=null) condition += " and accion_id ='"+accionId+"'";
         		if (catalogoAccion!=null) condition += " and accion ='"+catalogoAccion+"'";        		
-           		try {objetos = SqlSelects.selectAccion(condition);}
+           		try {objetos = SqlSelects.selectAccion(condition, condition3);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -687,7 +734,7 @@ public class ajaxSelects extends HttpServlet {
         		List objetos=null; 
         		condition = " where true ";
         		if (catalogoAccionId!=null) condition += " and id ='"+catalogoAccionId+"'";
-           		try {objetos = SqlSelects.selectAccionCatalogo(condition);}
+           		try {objetos = SqlSelects.selectAccionCatalogo(condition, condition4);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());

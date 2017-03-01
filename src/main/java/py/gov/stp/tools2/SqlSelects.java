@@ -5,7 +5,6 @@ import py.gov.stp.objetosV2.*;
 import java.io.File;
 import java.sql.Connection;
 
-import py.gov.stp.spr.modelos.estructura_programatica.TipoPrograma;
 import py.gov.stp.tools.Departamento;
 import py.gov.stp.tools.Distrito;
 import py.gov.stp.tools2.ConnectionConfiguration;
@@ -92,7 +91,7 @@ public class SqlSelects {
 		return objetos; 
 		}
 	
-	public static List<AccionCatalogo> selectAccionCatalogo(String condition) throws SQLException{
+	public static List<AccionCatalogo> selectAccionCatalogo(String condition, String condition4) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
 		String query = " select * from accion_catalogo"+condition+" ORDER BY nombre";
 
@@ -698,9 +697,9 @@ public class SqlSelects {
 		return objetos; 
 		}
 	
-	public static List<LineaAccion> selectLineaAccion(String condition) throws SQLException{
+	public static List<LineaAccion> selectLineaAccion(String condition, String condition1) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select * from linea_accion "+condition+" ORDER BY nombre";
+		String query = " select * from linea_accion " +condition+ " " +condition1+ " ORDER BY nombre";
 
 		Statement statement = null;
 		ResultSet rs=null;
@@ -767,22 +766,21 @@ public class SqlSelects {
 		return objetos; 
 		} 
 	
-	
-	public static List<InsLineaAccion> selectInsLineaAccionGobiernoAbierto(String condition) throws SQLException{
+	public static List<LineaAccion> selectInsLineaAccionGobiernoAbierto(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
 		String query = 	" SELECT 	la.nombre AS name_laccion,"+
 						"	acc_cat.nombre AS name_accion,"+
 						"	acc_cat.descripcion AS descripcion_accion,"+
 						//falta agregar cronograma
-						"	ins.nombre AS institucion"+
+						"	ins.nombre AS institucion "+
 						//falta agregar avances
-						"FROM linea_accion la"+
-						"JOIN ins_linea_accion insla ON insla.linea_accion_id = la.id"+
-						"JOIN accion acc ON acc.ins_linea_accion_id = insla.id"+
-						"JOIN accion_catalogo acc_cat ON  acc.id_accion_catalogo = acc_cat.id"+
-						"JOIN institucion ins ON insla.institucion_id = ins.id"+
+						" FROM linea_accion la"+
+						" JOIN ins_linea_accion insla ON insla.linea_accion_id = la.id"+
+						" JOIN accion acc ON acc.ins_linea_accion_id = insla.id"+
+						" JOIN accion_catalogo acc_cat ON  acc.id_accion_catalogo = acc_cat.id"+
+						" JOIN institucion ins ON insla.institucion_id = ins.id"+
 						
-						"Where la.id BETWEEN 235 AND 245"+
+						" Where la.id BETWEEN 235 AND 245"+
 						"	AND la.borrado=false "+
 						"	AND acc.id BETWEEN 7424 AND 7477"+
 						"	AND acc.borrado = false "+
@@ -790,21 +788,15 @@ public class SqlSelects {
 
 		Statement statement = null;
 		ResultSet rs=null;
-		List<InsLineaAccion> objetos = new ArrayList<InsLineaAccion>();
+		List<LineaAccion> objetos = new ArrayList<LineaAccion>();
 
 		try {
 			statement = conect.createStatement();
 			rs=statement.executeQuery(query);
 			while(rs.next()){
-				InsLineaAccion objeto = new InsLineaAccion();
+				LineaAccion objeto = new LineaAccion();
 		
-				objeto.setId(rs.getInt("id"));
-				objeto.setLineaAccionId(rs.getInt("linea_accion_id"));
-				objeto.setInstitucionId(rs.getInt("institucion_id"));
-				objeto.setPeriodoId(rs.getInt("periodo_id"));
-				objeto.setMeta(rs.getDouble("meta"));
-				objeto.setVersion(rs.getInt("version"));
-				objeto.setBorrado(rs.getBoolean("borrado"));
+				objeto.setNombre(rs.getString("la.nombre"));
 
 				objetos.add(objeto);
 			}
@@ -1248,9 +1240,9 @@ public class SqlSelects {
 		return objetos; 
 		}	
 	
-	public static List<Accion> selectAccion(String condition) throws SQLException{
+	public static List<Accion> selectAccion(String condition, String condition3) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select * from accion "+condition;
+		String query = " select * from accion "+condition + " " +condition3;
 
 		Statement statement = null;
 		ResultSet rs=null;
@@ -3160,5 +3152,4 @@ public class SqlSelects {
 		}
 		return objetos;
 	  }
-	
 }
