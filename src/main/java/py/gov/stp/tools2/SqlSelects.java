@@ -1203,9 +1203,9 @@ public class SqlSelects {
 		return objetos; 
 		}	
 	
-	public static List<Hito> selectHito() throws SQLException{
+	public static List<Hito> selectHito(String condition6) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select * from hito";
+		String query = " select * from hito "+condition6;
 
 		Statement statement = null;
 		ResultSet rs=null;
@@ -1280,6 +1280,45 @@ public class SqlSelects {
 		}
 		return objetos; 
 		}
+	
+	public static List<Actividad> selectActividad(String condition5) throws SQLException{
+		Connection conect=ConnectionConfiguration.conectar();
+		String query = " select * from actividad "+condition5;
+
+		Statement statement = null;
+		ResultSet rs=null;
+		List<Actividad> objetos = new ArrayList<Actividad>();
+
+		try {
+			statement = conect.createStatement();
+			rs=statement.executeQuery(query);
+			while(rs.next()){
+				Actividad objeto = new Actividad();
+				
+				objeto.setId(rs.getInt("id"));
+				objeto.setVersion(rs.getInt("version"));
+				objeto.setAccionId(rs.getInt("accion_id"));
+				objeto.setVersion(rs.getInt("version"));
+				objeto.setUnidadMedidaId(rs.getInt("unidad_medida_id"));
+				objeto.setHitoTipoId(rs.getInt("hito_tipo_id"));
+				objeto.setNombre(rs.getString("nombre"));
+				objeto.setDescripcion(rs.getString("descripcion"));
+				objeto.setProporcion(rs.getDouble("porporcion"));
+				objeto.setPeso(rs.getDouble("peso"));
+				objeto.setBorrado(rs.getBoolean("borrado"));
+				objeto.setAcumulable(rs.getBoolean("acumulable"));
+				
+				objetos.add(objeto);
+			}
+		}
+		catch (SQLException e) {e.printStackTrace();}
+		finally{
+			if (statement != null) {statement.close();}
+			if (conect != null) {conect.close();}
+		}
+		return objetos; 
+		}
+	
 	
 	public static List<AccionPorLineaAccion> selectAccionCatalogoPorLineaAccion(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();

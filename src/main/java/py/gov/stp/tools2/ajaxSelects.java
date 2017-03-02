@@ -115,6 +115,8 @@ public class ajaxSelects extends HttpServlet {
     	String condition1 = "";
 		String condition3 = "";
 		String condition4 = "";
+		String condition5 = "";
+		String condition6 = "";
     	String mision = "";
     	String nombre = "";
     	String vision = "";
@@ -426,9 +428,19 @@ public class ajaxSelects extends HttpServlet {
         		List<InsLineaAccion> insLineaAccion = null;
         		List<Accion> axion = null; 
         		List<AccionCatalogo> accionCatalogo = null;
+        		List<Actividad> actividad = null;
+        		List<Institucion> institu = null;
+        		List<Hito> hito = null;
         		
-                ArrayList<Object> object = new ArrayList<Object>();
-                ArrayList<Object> children = new ArrayList<Object>();
+                //ArrayList<LineaAccion> object = new ArrayList<LineaAccion>();
+                ArrayList<LineaAccion> objectLa = new ArrayList<LineaAccion>();
+                //ArrayList<Accion> children = new ArrayList<Accion>();
+                ArrayList<Accion> childrenAcc = new ArrayList<Accion>();
+                
+                ArrayList<Object> cronograma = new ArrayList<Object>();
+                ArrayList<Object> responsable = new ArrayList<Object>();
+                ArrayList<Object> fecha = new ArrayList<Object>();
+                ArrayList<Object> anexos = new ArrayList<Object>();
 
         		condition = "";
         		String condition2 = " where entidad_id="+userEntidadId+" and nivel_id="+userNivelId ;
@@ -438,48 +450,125 @@ public class ajaxSelects extends HttpServlet {
         		
         			condition1 += " WHERE id BETWEEN 235 AND 245 AND borrado = false"; //para linea de accion de gobierno abierto
         			condition3 += " WHERE id BETWEEN 7424 AND 7477 AND borrado = false"; //para accion de gobierno abierto
-        			condition4 += " WHERE borrado = false"; //para accion de gobierno abierto
+        			condition4 += " WHERE borrado = false"; //para accion catalogo de gobierno abierto
+        			condition5 += " WHERE accion_id BETWEEN 7424 AND 7477 AND borrado = false"; //para actividad de gobierno abierto
+        			condition6 += " WHERE ins_linea_accion_id BETWEEN 235 AND 245 AND borrado = false"; //para hito de gobierno abierto
         		
            		try {
            			insLineaAccion = SqlSelects.selectInsLineaAccion(condition);
            			lineaAccion = SqlSelects.selectLineaAccion(condition, condition1);
            			axion = SqlSelects.selectAccion(condition, condition3);
            			accionCatalogo = SqlSelects.selectAccionCatalogo(condition, condition4);
+           			actividad = SqlSelects.selectActividad(condition5);
+           			institu = SqlSelects.selectInstitucion(condition);
+           			hito = SqlSelects.selectHito(condition6);
            			
-           			Accion ax = new Accion();
-           			AccionCatalogo acc = new AccionCatalogo();
-					LineaAccion la = new LineaAccion();
+           			
+					
+					Actividad crono = new Actividad();
+					Institucion insti = new Institucion();
+					Hito programacion = new Hito();
+					Evidencia evide= new Evidencia();
+					
+					
+					/*JSONObject object = new JSONObject();
+					object.put("name", "sample");
+					JSONArray array = new JSONArray();
 
-           			
+					JSONObject arrayElementOne = new JSONObject();
+					arrayElementOne.put("setId", 1);
+					JSONArray arrayElementOneArray = new JSONArray();
+
+					JSONObject arrayElementOneArrayElementOne = new JSONObject();
+					arrayElementOneArrayElementOne.put("name", "ABC");
+					arrayElementOneArrayElementOne.put("type", "STRING");
+
+					JSONObject arrayElementOneArrayElementTwo = new JSONObject();
+					arrayElementOneArrayElementTwo.put("name", "XYZ");
+					arrayElementOneArrayElementTwo.put("type", "STRING");
+
+					arrayElementOneArray.put(arrayElementOneArrayElementOne);
+					arrayElementOneArray.put(arrayElementOneArrayElementTwo);
+
+					arrayElementOne.put("setDef", arrayElementOneArray);
+					array.put(arrayElementOne);
+					object.put("def", array);*/
+					
+					
            			for (int a = 0; a < insLineaAccion.size(); a += 1) {
            				for(int e = 0; e < lineaAccion.size(); e += 1) {
            					if (insLineaAccion.get(a).getLineaAccionId() == lineaAccion.get(e).getId()){
-           						la.setId(lineaAccion.get(e).getId());
-           						la.setNombre(lineaAccion.get(e).getNombre());
-           						object.add(la.getNombre());
-           						object.add(null); //agregar el color
-           						for(int i = 0; i < axion.size(); i += 1) {
+           						//object = new ArrayList<Object>();
+           						childrenAcc = new ArrayList<Accion>();
+           						LineaAccion la = lineaAccion.get(e);
+           						//objectLa.add(la.getNombre());
+           						//object.add(la.get); //agregar el color
+           						for(int i = 0; i < axion.size(); i += 1) { //se recorren las acciones de cada linea de accion
            							for(int o = 0; o < accionCatalogo.size(); o += 1) {
            								if(accionCatalogo.get(o).getId() == axion.get(i).getAccionCatalogoId()){           									
            									if(insLineaAccion.get(a).getId() == axion.get(i).getInsLineaAccionId()){
-           										ax.setId(axion.get(i).getId());
-           										acc.setNombre(accionCatalogo.get(o).getNombre());
-           										acc.setDescripcion(accionCatalogo.get(o).getDescripcion());
-           										children.add(acc.getNombre());
-           										//children.add(acc.getDescripcion());
-                   								object.add(children);
+           										Accion ax = axion.get(i);
+           					           			AccionCatalogo acc = accionCatalogo.get(o);
+           										//ax.setId(.getId());
+           										//acc.setNombre(.getNombre());
+           										//acc.setDescripcion(accionCatalogo.get(o).getDescripcion());
+           					           			
+           					           			childrenAcc.add(ax);
+           					           			//childrenAcc = new ArrayList<Accion>();
+           		           						
+           		           						
+           		           						
+           		           						//JsonElement json = new Gson().toJsonTree(children);
+           		           						//object.add(json.toString());
+           		           						
            									}
            								}
            							}
+           							
+           							
+           							/*for(int u = 0; u < actividad.size(); u +=1){ //cronograma de cada accion
+           								if(actividad.get(u).getAccionId() == axion.get(i).getId()){
+           									crono.setId(axion.get(i).getId());
+           									crono.setNombre(actividad.get(u).getNombre());
+           									crono.setDescripcion(actividad.get(u).getDescripcion());
+           									cronograma.add(crono.getNombre());
+           									cronograma.add(crono.getDescripcion());
+           									
+           									for(int y = 0; y < institu.size(); y +=1){
+           										if(institu.get(y).getId() == insLineaAccion.get(a).getInstitucionId()){
+           											insti.setId(insLineaAccion.get(a).getInstitucionId());
+           											insti.setNombre(institu.get(y).getNombre());
+           											responsable.add(insti.getNombre());
+           											cronograma.add(responsable);
+           										}
+           									}
+           									for(int x = 0; x < hito.size(); x +=1){
+           										if(hito.get(x).getAccionId() == axion.get(i).getId()){
+           											programacion.setFechaEntrega(hito.get(x).getFechaEntrega());
+           											fecha.add(programacion.getFechaEntrega());
+           											cronograma.add(fecha);
+           										}
+           									}
+           									children.add(cronograma);
+           								}
+           							}*/
            						}
+           						//children.add("otros_ejes");
+           						//children.add("pnd");
+           						//children.add("ods");
+           						//object.add(children);  
+           						la.setAcciones(childrenAcc);
+           						objectLa.add(la);
+           						//objectLa.add(object);
            					}
            				}
            			}
+           			
            			 
            			
            		}
         		catch (SQLException e) {e.printStackTrace();}
-        		JsonElement json = new Gson().toJsonTree(object);
+        		JsonElement json = new Gson().toJsonTree(objectLa);
         		out.println(json.toString());
         	}
 ////////////Privot programado        	
@@ -684,7 +773,7 @@ public class ajaxSelects extends HttpServlet {
         	}   
         	if (action.equals("getHito")){
         		List objetos=null; 
-           		try {objetos = SqlSelects.selectHito();}
+           		try {objetos = SqlSelects.selectHito(condition6);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -1752,5 +1841,6 @@ public class ajaxSelects extends HttpServlet {
         
     }
 }
+
 
 
