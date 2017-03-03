@@ -4,19 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LineaAccionGA {
-	private int id;
+	//private int id;
 	private String nombre;
-	private String color;
-	protected List<Accion> acciones = new ArrayList<Accion>();
+	protected String color = "#ffcc00";
+	protected List<AccionGA> acciones = new ArrayList<AccionGA>();
 	
-	public int getId() {
+	/*public int getId() {
 		return id;
 	}
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
+	}*/
+	
 	public String getNombre() {
 		return nombre;
 	}
@@ -32,10 +32,10 @@ public class LineaAccionGA {
 	public void setColor(String color) {
 		this.color = color;
 	}
-	public List<Accion> getAcciones() {
+	public List<AccionGA> getAcciones() {
 		return acciones;
 	}
-	public void setAcciones(List<Accion> acciones) {
+	public void setAcciones(List<AccionGA> acciones) {
 		this.acciones = acciones;
 	}
 }

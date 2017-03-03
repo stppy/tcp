@@ -1,16 +1,17 @@
 package py.gov.stp.objetosV2;
 
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class CronogramaGA {
+	private String color = "e62e00";
 	private String nombre;
 	private String titulo;
-	private List<String> responsables = new ArrayList<String>();
+	private List<Object> responsables = new ArrayList<Object>();
 	private Date fecha_inicio;
 	private Date fecha_fin;
-	private Date fecha;
+	private Date fecha = new Date();
 	private String estado;
 	private String fuente_de_verificacion;
 	private List<EvidenciaGA> anexos = new ArrayList <EvidenciaGA>();
@@ -27,10 +28,10 @@ public class CronogramaGA {
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
 	}
-	public List<String> getResponsables() {
+	public List<Object> getResponsables() {
 		return responsables;
 	}
-	public void setResponsables(List<String> responsables) {
+	public void setResponsables(List<Object> responsables) {
 		this.responsables = responsables;
 	}
 	public Date getFecha_inicio() {
@@ -74,6 +75,12 @@ public class CronogramaGA {
 	}
 	public void setContacto(String contacto) {
 		this.contacto = contacto;
+	}
+	public String getColor() {
+		return color;
+	}
+	public void setColor(String color) {
+		this.color = color;
 	}
 	
 	

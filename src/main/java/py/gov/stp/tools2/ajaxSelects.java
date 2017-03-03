@@ -431,16 +431,16 @@ public class ajaxSelects extends HttpServlet {
         		List<Actividad> actividad = null;
         		List<Institucion> institu = null;
         		List<Hito> hito = null;
+        		List<Avance> avances = null;
+        		List<Evidencia> eviden = null;
         		
-                //ArrayList<LineaAccion> object = new ArrayList<LineaAccion>();
-                ArrayList<LineaAccion> objectLa = new ArrayList<LineaAccion>();
-                //ArrayList<Accion> children = new ArrayList<Accion>();
-                ArrayList<Accion> childrenAcc = new ArrayList<Accion>();
+                ArrayList<LineaAccionGA> objectLa = new ArrayList<LineaAccionGA>();
+                ArrayList<AccionGA> childrenAcc = new ArrayList<AccionGA>();
+                ArrayList<CronogramaGA> childrenCrono = new ArrayList<CronogramaGA>();
+                ArrayList<EvidenciaGA> childrenAnex = new ArrayList<EvidenciaGA>();
+                ArrayList<Object> childrenRes = new ArrayList<Object>();
                 
-                ArrayList<Object> cronograma = new ArrayList<Object>();
-                ArrayList<Object> responsable = new ArrayList<Object>();
-                ArrayList<Object> fecha = new ArrayList<Object>();
-                ArrayList<Object> anexos = new ArrayList<Object>();
+                Date fechaFin = new Date();
 
         		condition = "";
         		String condition2 = " where entidad_id="+userEntidadId+" and nivel_id="+userNivelId ;
@@ -448,10 +448,10 @@ public class ajaxSelects extends HttpServlet {
         		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
         		if (periodoId!=null) condition += " and periodo_id ='"+periodoId+"'";
         		
-        			condition1 += " WHERE id BETWEEN 235 AND 245 AND borrado = false"; //para linea de accion de gobierno abierto
-        			condition3 += " WHERE id BETWEEN 7424 AND 7477 AND borrado = false"; //para accion de gobierno abierto
-        			condition4 += " WHERE borrado = false"; //para accion catalogo de gobierno abierto
-        			condition5 += " WHERE accion_id BETWEEN 7424 AND 7477 AND borrado = false"; //para actividad de gobierno abierto
+        			condition1 += " WHERE id BETWEEN 235 AND 245 AND borrado = false"; 					//para linea de accion de gobierno abierto
+        			condition3 += " WHERE id BETWEEN 7424 AND 7477 AND borrado = false"; 				//para accion de gobierno abierto
+        			condition4 += " WHERE borrado = false"; 											//para accion catalogo de gobierno abierto
+        			condition5 += " WHERE accion_id BETWEEN 7424 AND 7477 AND borrado = false"; 		//para actividad de gobierno abierto
         			condition6 += " WHERE ins_linea_accion_id BETWEEN 235 AND 245 AND borrado = false"; //para hito de gobierno abierto
         		
            		try {
@@ -462,110 +462,82 @@ public class ajaxSelects extends HttpServlet {
            			actividad = SqlSelects.selectActividad(condition5);
            			institu = SqlSelects.selectInstitucion(condition);
            			hito = SqlSelects.selectHito(condition6);
+           			avances = SqlSelects.selectAvance(condition);
+           			eviden = SqlSelects.selectEvidencia(condition);
            			
-           			
-					
-					Actividad crono = new Actividad();
-					Institucion insti = new Institucion();
-					Hito programacion = new Hito();
-					Evidencia evide= new Evidencia();
-					
-					
-					/*JSONObject object = new JSONObject();
-					object.put("name", "sample");
-					JSONArray array = new JSONArray();
-
-					JSONObject arrayElementOne = new JSONObject();
-					arrayElementOne.put("setId", 1);
-					JSONArray arrayElementOneArray = new JSONArray();
-
-					JSONObject arrayElementOneArrayElementOne = new JSONObject();
-					arrayElementOneArrayElementOne.put("name", "ABC");
-					arrayElementOneArrayElementOne.put("type", "STRING");
-
-					JSONObject arrayElementOneArrayElementTwo = new JSONObject();
-					arrayElementOneArrayElementTwo.put("name", "XYZ");
-					arrayElementOneArrayElementTwo.put("type", "STRING");
-
-					arrayElementOneArray.put(arrayElementOneArrayElementOne);
-					arrayElementOneArray.put(arrayElementOneArrayElementTwo);
-
-					arrayElementOne.put("setDef", arrayElementOneArray);
-					array.put(arrayElementOne);
-					object.put("def", array);*/
-					
-					
            			for (int a = 0; a < insLineaAccion.size(); a += 1) {
            				for(int e = 0; e < lineaAccion.size(); e += 1) {
            					if (insLineaAccion.get(a).getLineaAccionId() == lineaAccion.get(e).getId()){
-           						//object = new ArrayList<Object>();
-           						childrenAcc = new ArrayList<Accion>();
+           						childrenAcc = new ArrayList<AccionGA>();
            						LineaAccion la = lineaAccion.get(e);
-           						//objectLa.add(la.getNombre());
-           						//object.add(la.get); //agregar el color
-           						for(int i = 0; i < axion.size(); i += 1) { //se recorren las acciones de cada linea de accion
+           						LineaAccionGA laGA = new LineaAccionGA();
+           						laGA.setNombre(la.getNombre());
+           						for(int i = 0; i < axion.size(); i += 1) { 											//se recorren las acciones de cada linea de accion
            							for(int o = 0; o < accionCatalogo.size(); o += 1) {
            								if(accionCatalogo.get(o).getId() == axion.get(i).getAccionCatalogoId()){           									
            									if(insLineaAccion.get(a).getId() == axion.get(i).getInsLineaAccionId()){
-           										Accion ax = axion.get(i);
-           					           			AccionCatalogo acc = accionCatalogo.get(o);
-           										//ax.setId(.getId());
-           										//acc.setNombre(.getNombre());
-           										//acc.setDescripcion(accionCatalogo.get(o).getDescripcion());
+           										AccionCatalogo acc = accionCatalogo.get(o);
+           					           			AccionGA axGA = new AccionGA();
+           										axGA.setNombre(acc.getNombre());
+           										axGA.setDescripcion(acc.getDescripcion());;
            					           			
-           					           			childrenAcc.add(ax);
-           					           			//childrenAcc = new ArrayList<Accion>();
-           		           						
-           		           						
-           		           						
-           		           						//JsonElement json = new Gson().toJsonTree(children);
-           		           						//object.add(json.toString());
-           		           						
+           					           			childrenCrono = new ArrayList<CronogramaGA>();
+           					           			for(int u = 0; u < actividad.size(); u +=1){									//cronograma de cada accion
+           					           				if(actividad.get(u).getAccionId() == axion.get(i).getId()){
+           					           					Actividad crono = actividad.get(u);
+           					           					CronogramaGA croGA = new CronogramaGA();
+           					           					croGA.setNombre(crono.getNombre());
+           					           					croGA.setTitulo(crono.getDescripcion());
+           					           					
+           					           					childrenRes = new ArrayList<Object>();
+           					           					for(int y = 0; y < institu.size(); y +=1){
+			           										if(institu.get(y).getId() == insLineaAccion.get(a).getInstitucionId()){
+			           											Institucion insti = institu.get(y);
+			           											//Institucion insGA = new Institucion();
+			           											//insGA.setNombre(insti.getNombre());
+			           											childrenRes.add(insti.getNombre());
+			           										}
+			           									}
+			           					           		croGA.setResponsables(childrenRes);			
+			           					           		
+			           					           		fechaFin = new Date();	
+			           					           		for(int x = 0; x < hito.size(); x +=1){
+			           										if(hito.get(x).getAccionId() == axion.get(i).getId()){
+			           											Hito fechas = hito.get(x);
+			           											fechaFin = fechas.getFechaEntrega();
+			           										}
+			           									}
+			           					           		croGA.setFecha_fin(fechaFin);
+			           					           		
+			           					           		childrenAnex = new ArrayList<EvidenciaGA>();
+			           					           		for(int w = 0; w < avances.size(); w +=1){
+			           					           			if(avances.get(w).getActividadId() == actividad.get(u).getId()){
+			           					           				for(int z = 0; z < eviden.size(); z +=1){
+			           					           					if(eviden.get(z).getAvanceId() == avances.get(w).getId()){
+			           					           						Evidencia evide = eviden.get(z);
+			           					           						EvidenciaGA anexos = new EvidenciaGA();
+			           					           						anexos.setDescripcion(evide.getDescripcion());
+			           					           						anexos.setUrl(evide.getUrl());
+			           					           						childrenAnex.add(anexos);
+			           					           					}
+			           					           				}
+			           					           			}
+			           					           		}
+			           					           		croGA.setAnexos(childrenAnex);
+			           					           		childrenCrono.add(croGA);
+           					           				}
+           					           			}
+           					           			axGA.setCronogramas(childrenCrono);
+           					           			childrenAcc.add(axGA);
            									}
            								}
            							}
-           							
-           							
-           							/*for(int u = 0; u < actividad.size(); u +=1){ //cronograma de cada accion
-           								if(actividad.get(u).getAccionId() == axion.get(i).getId()){
-           									crono.setId(axion.get(i).getId());
-           									crono.setNombre(actividad.get(u).getNombre());
-           									crono.setDescripcion(actividad.get(u).getDescripcion());
-           									cronograma.add(crono.getNombre());
-           									cronograma.add(crono.getDescripcion());
-           									
-           									for(int y = 0; y < institu.size(); y +=1){
-           										if(institu.get(y).getId() == insLineaAccion.get(a).getInstitucionId()){
-           											insti.setId(insLineaAccion.get(a).getInstitucionId());
-           											insti.setNombre(institu.get(y).getNombre());
-           											responsable.add(insti.getNombre());
-           											cronograma.add(responsable);
-           										}
-           									}
-           									for(int x = 0; x < hito.size(); x +=1){
-           										if(hito.get(x).getAccionId() == axion.get(i).getId()){
-           											programacion.setFechaEntrega(hito.get(x).getFechaEntrega());
-           											fecha.add(programacion.getFechaEntrega());
-           											cronograma.add(fecha);
-           										}
-           									}
-           									children.add(cronograma);
-           								}
-           							}*/
            						}
-           						//children.add("otros_ejes");
-           						//children.add("pnd");
-           						//children.add("ods");
-           						//object.add(children);  
-           						la.setAcciones(childrenAcc);
-           						objectLa.add(la);
-           						//objectLa.add(object);
+           						laGA.setAcciones(childrenAcc);
+           						objectLa.add(laGA);
            					}
            				}
            			}
-           			
-           			 
-           			
            		}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objectLa);
