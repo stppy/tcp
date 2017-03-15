@@ -8,9 +8,9 @@ public class AccionGA {
 	protected String color = "#4d9900";
 	protected String nombre;
 	protected String descripcion;
-	protected String otros_ejes;
-	protected String pnd;
-	protected String ods;
+	protected String otros_ejes = "";
+	protected String pnd = "";
+	protected String ods = "";
 	protected List<CronogramaGA> cronogramas = new ArrayList<CronogramaGA>();
 	
 	/*public int getId() {
