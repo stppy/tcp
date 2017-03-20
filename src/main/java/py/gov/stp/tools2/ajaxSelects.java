@@ -472,6 +472,7 @@ public class ajaxSelects extends HttpServlet {
            						LineaAccion la = lineaAccion.get(e);
            						LineaAccionGA laGA = new LineaAccionGA();
            						laGA.setNombre(la.getNombre());
+           						laGA.setDescripcion(la.getDescripcion());
            						for(int i = 0; i < axion.size(); i += 1) { 											//se recorren las acciones de cada linea de accion
            							for(int o = 0; o < accionCatalogo.size(); o += 1) {
            								if(accionCatalogo.get(o).getId() == axion.get(i).getAccionCatalogoId()){           									
@@ -479,7 +480,7 @@ public class ajaxSelects extends HttpServlet {
            										AccionCatalogo acc = accionCatalogo.get(o);
            					           			AccionGA axGA = new AccionGA();
            										axGA.setNombre(acc.getNombre());
-           										axGA.setDescripcion(acc.getDescripcion());;
+           										
            					           			
            					           			childrenCrono = new ArrayList<CronogramaGA>();
            					           			for(int u = 0; u < actividad.size(); u +=1){									//cronograma de cada accion
