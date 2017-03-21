@@ -101,7 +101,7 @@ public class LineaAccion {
 	}
 	public void setUsuarioResponsable(String usuarioResponsable) {
 		this.usuarioResponsable = usuarioResponsable;
-	}	
+	}
 	public List<Accion> getAcciones() {
 		return acciones;
 	}
