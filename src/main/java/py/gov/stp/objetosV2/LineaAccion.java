@@ -101,6 +101,12 @@ public class LineaAccion {
 	}
 	public void setUsuarioResponsable(String usuarioResponsable) {
 		this.usuarioResponsable = usuarioResponsable;
+	}	
+	public List<Accion> getAcciones() {
+		return acciones;
+	}
+	public void setAcciones(List<Accion> acciones) {
+		this.acciones = acciones;
 	}
 	public List<Accion> getAcciones() {
 		return acciones;

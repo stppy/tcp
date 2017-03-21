@@ -41,12 +41,22 @@ public class ajaxSelects extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
   
     	AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();
-    	Map attributes = user.getAttributes(); 
-    	String userCorreo = user.getName(); 
-    	String userNivelId = attributes.get("nivel_id").toString();
-    	String userEntidadId = attributes.get("entidad_id").toString();
-    	String userUnrId = attributes.get("unr_id").toString();
-    	String userRoleId = attributes.get("role_id_tablero").toString();
+    	Map attributes = null; 
+    	String userCorreo=""; 
+    	String userNivelId="";
+    	String userEntidadId="";
+    	String userUnrId="";
+    	String userRoleId="";
+    	
+    	if (user!=null){
+    		 attributes= user.getAttributes();
+    		 userCorreo = user.getName(); 
+        	 userNivelId = attributes.get("nivel_id").toString();
+        	 userEntidadId = attributes.get("entidad_id").toString();
+        	 userUnrId = attributes.get("unr_id").toString();
+        	 userRoleId = attributes.get("role_id_tablero").toString();
+    	}
+    	
     	
     	String action = request.getParameter("action");
     	String accion = request.getParameter("accion");
