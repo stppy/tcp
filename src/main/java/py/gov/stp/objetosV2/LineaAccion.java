@@ -1,6 +1,8 @@
 package py.gov.stp.objetosV2;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LineaAccion {
 	protected int id;
@@ -16,7 +18,9 @@ public class LineaAccion {
 	protected Date fechaActualizacion;	
     protected String usuarioResponsable;
 	protected boolean borrado=false;
+	protected List<Accion> acciones = new ArrayList<Accion>();
 	
+		
 	public int getId() {
 		return id;
 	}
@@ -97,6 +101,12 @@ public class LineaAccion {
 	}
 	public void setUsuarioResponsable(String usuarioResponsable) {
 		this.usuarioResponsable = usuarioResponsable;
+	}	
+	public List<Accion> getAcciones() {
+		return acciones;
+	}
+	public void setAcciones(List<Accion> acciones) {
+		this.acciones = acciones;
 	}
 	
 }
