@@ -122,11 +122,11 @@ public class ajaxSelects extends HttpServlet {
     	String catalogoAccion = null;
     	String usuario=null;
     	String condition = "";
-    	String condition1 = "";
-		String condition3 = "";
-		String condition4 = "";
-		String condition5 = "";
-		String condition6 = "";
+    	String conditionIdLAGA = "";
+		String conditionAccGA = "";
+		String conditionAccCat = "";
+		String conditionActGA = "";
+		String conditionHitoGA = "";
     	String mision = "";
     	String nombre = "";
     	String vision = "";
@@ -414,7 +414,7 @@ public class ajaxSelects extends HttpServlet {
         		List objetos=null; 
         		condition = " where true ";
         		if (lineaAccionId!=null) condition += " and id ='"+lineaAccionId+"'";
-           		try {objetos = SqlSelects.selectLineaAccion(condition, condition1);}
+           		try {objetos = SqlSelects.selectLineaAccion(condition, conditionIdLAGA);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -458,20 +458,20 @@ public class ajaxSelects extends HttpServlet {
         		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
         		if (periodoId!=null) condition += " and periodo_id ='"+periodoId+"'";
         		
-        			condition1 += " WHERE id BETWEEN 235 AND 245 AND borrado = false"; 					//para linea de accion de gobierno abierto
-        			condition3 += " WHERE id BETWEEN 7424 AND 7477 AND borrado = false"; 				//para accion de gobierno abierto
-        			condition4 += " WHERE borrado = false"; 											//para accion catalogo de gobierno abierto
-        			condition5 += " WHERE accion_id BETWEEN 7424 AND 7477 AND borrado = false"; 		//para actividad de gobierno abierto
-        			condition6 += " WHERE ins_linea_accion_id BETWEEN 235 AND 245 AND borrado = false"; //para hito de gobierno abierto
+        			conditionIdLAGA += " WHERE id BETWEEN 235 AND 245 AND borrado = false"; 					//para linea de accion de gobierno abierto
+        			conditionAccGA += " WHERE id BETWEEN 7424 AND 7477 AND borrado = false"; 				//para accion de gobierno abierto
+        			conditionAccCat += " WHERE borrado = false"; 											//para accion catalogo de gobierno abierto
+        			conditionActGA += " WHERE accion_id BETWEEN 7424 AND 7477 AND borrado = false"; 		//para actividad de gobierno abierto
+        			conditionHitoGA += " WHERE ins_linea_accion_id BETWEEN 235 AND 245 AND borrado = false"; //para hito de gobierno abierto
         		
            		try {
            			insLineaAccion = SqlSelects.selectInsLineaAccion(condition);
-           			lineaAccion = SqlSelects.selectLineaAccion(condition, condition1);
-           			axion = SqlSelects.selectAccion(condition, condition3);
-           			accionCatalogo = SqlSelects.selectAccionCatalogo(condition, condition4);
-           			actividad = SqlSelects.selectActividad(condition5);
+           			lineaAccion = SqlSelects.selectLineaAccion(condition, conditionIdLAGA);
+           			axion = SqlSelects.selectAccion(condition, conditionAccGA);
+           			accionCatalogo = SqlSelects.selectAccionCatalogo(condition, conditionAccCat);
+           			actividad = SqlSelects.selectActividad(conditionActGA);
            			institu = SqlSelects.selectInstitucion(condition);
-           			hito = SqlSelects.selectHito(condition6);
+           			hito = SqlSelects.selectHito(conditionHitoGA);
            			avances = SqlSelects.selectAvance(condition);
            			eviden = SqlSelects.selectEvidencia(condition);
            			
@@ -756,7 +756,7 @@ public class ajaxSelects extends HttpServlet {
         	}   
         	if (action.equals("getHito")){
         		List objetos=null; 
-           		try {objetos = SqlSelects.selectHito(condition6);}
+           		try {objetos = SqlSelects.selectHito(conditionHitoGA);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -769,7 +769,7 @@ public class ajaxSelects extends HttpServlet {
         		if (distrito!=null) condition += " and dist_id ='"+distrito+"'";
         		if (catalogoAccionId!=null) condition += " and id_accion_catalogo ='"+catalogoAccionId+"'";
         		if (accionId!=null) condition += " and id ='"+accionId+"'";
-           		try {objetos = SqlSelects.selectAccion(condition, condition3);}
+           		try {objetos = SqlSelects.selectAccion(condition, conditionAccGA);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -789,7 +789,7 @@ public class ajaxSelects extends HttpServlet {
         		condition = " where true ";        		        		        		
         		if (accionId!=null) condition += " and accion_id ='"+accionId+"'";
         		if (catalogoAccion!=null) condition += " and accion ='"+catalogoAccion+"'";        		
-           		try {objetos = SqlSelects.selectAccion(condition, condition3);}
+           		try {objetos = SqlSelects.selectAccion(condition, conditionAccGA);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -806,7 +806,7 @@ public class ajaxSelects extends HttpServlet {
         		List objetos=null; 
         		condition = " where true ";
         		if (catalogoAccionId!=null) condition += " and id ='"+catalogoAccionId+"'";
-           		try {objetos = SqlSelects.selectAccionCatalogo(condition, condition4);}
+           		try {objetos = SqlSelects.selectAccionCatalogo(condition, conditionAccCat);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());

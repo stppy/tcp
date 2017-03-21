@@ -91,7 +91,7 @@ public class SqlSelects {
 		return objetos; 
 		}
 	
-	public static List<AccionCatalogo> selectAccionCatalogo(String condition, String condition4) throws SQLException{
+	public static List<AccionCatalogo> selectAccionCatalogo(String condition, String conditionAccCat) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
 		String query = " select * from accion_catalogo"+condition+" ORDER BY nombre";
 
@@ -697,9 +697,9 @@ public class SqlSelects {
 		return objetos; 
 		}
 	
-	public static List<LineaAccion> selectLineaAccion(String condition, String condition1) throws SQLException{
+	public static List<LineaAccion> selectLineaAccion(String condition, String conditionIdLAGA) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select * from linea_accion " +condition+ " " +condition1+ " ORDER BY nombre";
+		String query = " select * from linea_accion " +condition+ " " +conditionIdLAGA+ " ORDER BY nombre";
 
 		Statement statement = null;
 		ResultSet rs=null;
@@ -1203,9 +1203,9 @@ public class SqlSelects {
 		return objetos; 
 		}	
 	
-	public static List<Hito> selectHito(String condition6) throws SQLException{
+	public static List<Hito> selectHito(String conditionHitoGA) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select * from hito "+condition6;
+		String query = " select * from hito "+conditionHitoGA;
 
 		Statement statement = null;
 		ResultSet rs=null;
@@ -1240,9 +1240,9 @@ public class SqlSelects {
 		return objetos; 
 		}	
 	
-	public static List<Accion> selectAccion(String condition, String condition3) throws SQLException{
+	public static List<Accion> selectAccion(String condition, String conditionAccGA) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select * from accion "+condition + " " +condition3;
+		String query = " select * from accion "+condition + " " +conditionAccGA;
 
 		Statement statement = null;
 		ResultSet rs=null;
@@ -1281,9 +1281,9 @@ public class SqlSelects {
 		return objetos; 
 		}
 	
-	public static List<Actividad> selectActividad(String condition5) throws SQLException{
+	public static List<Actividad> selectActividad(String conditionActGA) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select * from actividad "+condition5;
+		String query = " select * from actividad "+conditionActGA;
 
 		Statement statement = null;
 		ResultSet rs=null;
