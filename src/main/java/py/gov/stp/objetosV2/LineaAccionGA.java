@@ -4,28 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LineaAccionGA {
-	protected String color = "#ffcc00";
-	protected String nombre;
+	protected String colour = "#ffcc00";
+	protected String name;
 	protected String descripcion;
 	protected String otros_ejes = "";
-	protected String pnd = "";
-	protected String ods = "";
+	protected List<PndGA> pnd = new ArrayList<PndGA>();
+	protected List<OdsGA> ods = new ArrayList<OdsGA>();
 	protected List<AccionGA> acciones = new ArrayList<AccionGA>();
 	
-	
-	public String getColor() {
-		return color;
+	public String getColour() {
+		return colour;
 	}
-	
-	public void setColor(String color) {
-		this.color = color;
+	public void setColour(String colour) {
+		this.colour = colour;
 	}
 	public String getNombre() {
-		return nombre;
+		return name;
 	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setNombre(String name) {
+		this.name = name;
 	}
 	public String getDescripcion() {
 		return descripcion;
@@ -33,23 +30,22 @@ public class LineaAccionGA {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-
 	public String getOtros_ejes() {
 		return otros_ejes;
 	}
 	public void setOtros_ejes(String otros_ejes) {
 		this.otros_ejes = otros_ejes;
 	}
-	public String getPnd() {
+	public List<PndGA> getPnd() {
 		return pnd;
 	}
-	public void setPnd(String pnd) {
+	public void setPnd(List<PndGA> pnd) {
 		this.pnd = pnd;
 	}
-	public String getOds() {
+	public List<OdsGA> getOds() {
 		return ods;
 	}
-	public void setOds(String ods) {
+	public void setOds(List<OdsGA> ods) {
 		this.ods = ods;
 	}
 	public List<AccionGA> getAcciones() {

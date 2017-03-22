@@ -1,54 +1,87 @@
 package py.gov.stp.objetosV2;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class AccionGA {
-	//protected int id;
-	protected String color = "#4d9900";
-	protected String nombre;
-	protected String descripcion;
-
-	protected List<CronogramaGA> cronogramas = new ArrayList<CronogramaGA>();
+	protected String colour = "#4d9900";
+	protected String name;
+	protected String titulo;
+	protected List<Object> responsable = new ArrayList<Object>();
+	protected Date fecha_inicio;
+	protected Date fecha_fin;
+	protected Date fecha = new Date();
+	private String estado = "";
+	private String fuente_de_verificacion = "";
+	private List<EvidenciaGA> anexos = new ArrayList <EvidenciaGA>();
+	private String contacto = "";
 	
-	/*public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}*/
 	public String getNombre() {
-		return nombre;
+		return name;
 	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setNombre(String name) {
+		this.name = name;
 	}
 	public String getDescripcion() {
-		return descripcion;
+		return titulo;
 	}
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
+	public void setDescripcion(String titulo) {
+		this.titulo = titulo;
 	}
 	
 	public String getColor() {
-		return color;
+		return colour;
 	}
-	public void setColor(String color) {
-		this.color = color;
+	public void setColor(String colour) {
+		this.colour = colour;
 	}
-	public List<CronogramaGA> getCronogramasGA() {
-		return cronogramas;
+	public List<Object> getResponsables() {
+		return responsable;
 	}
-	public void setCronogramasGA(List<CronogramaGA> cronogramasGA) {
-		this.cronogramas = cronogramasGA;
+	public void setResponsables(List<Object> responsable) {
+		this.responsable = responsable;
 	}
-	
-	public List<CronogramaGA> getCronogramas() {
-		return cronogramas;
+	public Date getFecha_inicio() {
+		return fecha_inicio;
 	}
-	public void setCronogramas(List<CronogramaGA> cronogramas) {
-		this.cronogramas = cronogramas;
+	public void setFecha_inicio(Date fecha_inicio) {
+		this.fecha_inicio = fecha_inicio;
 	}
-	
-	
+	public Date getFecha_fin() {
+		return fecha_fin;
+	}
+	public void setFecha_fin(Date fecha_fin) {
+		this.fecha_fin = fecha_fin;
+	}
+	public Date getFecha() {
+		return fecha;
+	}
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+	public String getEstado() {
+		return estado;
+	}
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+	public String getFuente_de_verificacion() {
+		return fuente_de_verificacion;
+	}
+	public void setFuente_de_verificacion(String fuente_de_verificacion) {
+		this.fuente_de_verificacion = fuente_de_verificacion;
+	}
+	public List<EvidenciaGA> getAnexos() {
+		return anexos;
+	}
+	public void setAnexos(List<EvidenciaGA> anexos) {
+		this.anexos = anexos;
+	}
+	public String getContacto() {
+		return contacto;
+	}
+	public void setContacto(String contacto) {
+		this.contacto = contacto;
+	}
 }
