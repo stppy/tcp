@@ -129,6 +129,7 @@ public class ajaxSelects extends HttpServlet {
 		String conditionAccCat = "";
 		String conditionActGA = "";
 		String conditionHitoGA = "";
+		String conditionLaHasAreasAga ="";
     	String mision = "";
     	String nombre = "";
     	String vision = "";
@@ -417,7 +418,7 @@ public class ajaxSelects extends HttpServlet {
         		List objetos=null; 
         		condition = " where true ";
         		if (lineaAccionId!=null) condition += " and id ='"+lineaAccionId+"'";
-           		try {objetos = SqlSelects.selectLineaAccion(condition, conditionIdLAGA);}
+           		try {objetos = SqlSelects.selectLineaAccion(condition, "");}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -474,10 +475,10 @@ public class ajaxSelects extends HttpServlet {
         			conditionAccCat += " WHERE borrado = false"; 											//para accion catalogo de gobierno abierto
         			conditionActGA += " WHERE accion_id BETWEEN 7424 AND 7477 AND borrado = false"; 		//para actividad de gobierno abierto
         			conditionHitoGA += " WHERE ins_linea_accion_id BETWEEN 235 AND 245 AND borrado = false"; //para hito de gobierno abierto
-        		
+        			conditionLaHasAreasAga += "WHERE peso = 1 ";
            		try {
            			areasAgaCat = SqlSelects.selectAreasAgaCat();
-           			laHasAreasAga = SqlSelects.selectLaHasAreasAga();
+           			laHasAreasAga = SqlSelects.selectLaHasAreasAga(conditionLaHasAreasAga);
            			insLineaAccion = SqlSelects.selectInsLineaAccion(condition);
            			children = SqlSelects.selectLineaAccion(condition, conditionIdLAGA);
            			laHasPnd = SqlSelects.selectLaHasPND();
@@ -493,121 +494,122 @@ public class ajaxSelects extends HttpServlet {
            			eviden = SqlSelects.selectEvidencia(condition);
            			
            			
-           			for(int c = 0; c < areasAgaCat.size(); c += 1){
+           			for(int c = 0; c < areasAgaCat.size(); c += 1){ //
            				objectLa = new ArrayList<LineaAccionGA>();
            				AreasAga aaCat = areasAgaCat.get(c);
            				AreasAgaGA ArAgGA = new AreasAgaGA();
            				ArAgGA.setNombre(aaCat.getNombre());
            				
-           				//for(int b = 0; b < laHasAreasAga.size(); b += 1){
-           					//if(laHasAreasAga.get(b).getAreasAgaId() == areasAgaCat.get(c).getId()){
-		           				for (int a = 0; a < insLineaAccion.size(); a += 1) {
-			           				for(int e = 0; e < children.size(); e += 1) {
-				           					if (insLineaAccion.get(a).getLineaAccionId() == children.get(e).getId()){
-				           						childrenAcc = new ArrayList<AccionGA>();
-				           						LineaAccion la = children.get(e);
-				           						LineaAccionGA laGA = new LineaAccionGA();
-				           						laGA.setNombre(la.getNombre());
-				           						laGA.setDescripcion(la.getDescripcion());
-				           						
-				           						childrenPnd = new ArrayList<PndGA>();
-				           						for(int d = 0; d < laHasPnd.size(); d += 1){
-				           							if(laHasPnd.get(d).getLineaAccionId() == children.get(e).getId()){
-				           								for(int f = 0; f < pnd.size(); f += 1){
-					           								if(pnd.get(f).getId() == laHasPnd.get(d).getPndId()){				           									
-					           									Pnd pnde = pnd.get(f);
-					           									LaHasPnd HasPnd = laHasPnd.get(d);
-					           									PndGA pndGA = new PndGA();
-					           									pndGA.setName(pnde.getNombre());
-					           									pndGA.setWeight(HasPnd.getPeso());
-					           									childrenPnd.add(pndGA);
-					           								}
-						           						}
-				           							}
+           				for(int b = 0; b < laHasAreasAga.size(); b += 1){
+           					if(laHasAreasAga.get(b).getAreasAgaId() == areasAgaCat.get(c).getId()){ // para cada area
+		           				for(int e = 0; e < children.size(); e += 1) {
+		           					if(laHasAreasAga.get(b).getLineaAccionId() == children.get(e).getId() && 
+		           					   laHasAreasAga.get(b).getAreasAgaId() ==  areasAgaCat.get(c).getId()){
+		           						childrenAcc = new ArrayList<AccionGA>();
+		           						LineaAccion la = children.get(e);
+		           						LineaAccionGA laGA = new LineaAccionGA();
+		           						laGA.setNombre(la.getNombre());
+		           						laGA.setDescripcion(la.getDescripcion());
+		           						
+		           						childrenPnd = new ArrayList<PndGA>();
+		           						for(int d = 0; d < laHasPnd.size(); d += 1){
+		           							if(laHasPnd.get(d).getLineaAccionId() == children.get(e).getId()){
+		           								for(int f = 0; f < pnd.size(); f += 1){
+			           								if(pnd.get(f).getId() == laHasPnd.get(d).getPndId()){				           									
+			           									Pnd pnde = pnd.get(f);
+			           									LaHasPnd HasPnd = laHasPnd.get(d);
+			           									PndGA pndGA = new PndGA();
+			           									pndGA.setName(pnde.getNombre());
+			           									pndGA.setWeight(HasPnd.getPeso());
+			           									childrenPnd.add(pndGA);
+			           								}
 				           						}
-				           						laGA.setPnd(childrenPnd);
-				           						
-				           						childrenOds= new ArrayList<OdsGA>();
-				           						for(int g = 0; g < laHasOds.size(); g += 1){
-				           							if(laHasOds.get(g).getLineaAccionId() == children.get(e).getId()){
-				           								for(int h = 0; h < ods.size(); h += 1){
-					           								if(ods.get(h).getId() == laHasOds.get(g).getOdsId()){				           									
-					           									Ods odse = ods.get(h);
-					           									LaHasOds HasOds = laHasOds.get(g);
-					           									OdsGA odsGA = new OdsGA();
-					           									odsGA.setName(odse.getNombre());
-					           									odsGA.setWeight(HasOds.getPeso());
-					           									childrenOds.add(odsGA);
-					           								}
-						           						}
-				           							}
+		           							}
+		           						}
+		           						laGA.setPnd(childrenPnd);
+		           						
+		           						childrenOds= new ArrayList<OdsGA>();
+		           						for(int g = 0; g < laHasOds.size(); g += 1){
+		           							if(laHasOds.get(g).getLineaAccionId() == children.get(e).getId()){
+		           								for(int h = 0; h < ods.size(); h += 1){
+			           								if(ods.get(h).getId() == laHasOds.get(g).getOdsId()){				           									
+			           									Ods odse = ods.get(h);
+			           									LaHasOds HasOds = laHasOds.get(g);
+			           									OdsGA odsGA = new OdsGA();
+			           									odsGA.setName(odse.getNombre());
+			           									odsGA.setWeight(HasOds.getPeso());
+			           									childrenOds.add(odsGA);
+			           								}
 				           						}
-				           						laGA.setOds(childrenOds);
-				           						
-				           						for(int i = 0; i < axion.size(); i += 1) { 											//se recorren las acciones de cada linea de accion
-				           							for(int o = 0; o < accionCatalogo.size(); o += 1) {								//se recorre el catalogo para nombras las acciones
-				           								if(accionCatalogo.get(o).getId() == axion.get(i).getAccionCatalogoId()){           									
-				           									if(insLineaAccion.get(a).getId() == axion.get(i).getInsLineaAccionId()){
-				           										AccionCatalogo acc = accionCatalogo.get(o);
-				           					           			AccionGA axGA = new AccionGA();
-				           										axGA.setNombre(acc.getNombre());
-				           										axGA.setDescripcion(acc.getDescripcion());
-				           										
-				           										childrenRes = new ArrayList<Object>();
-				   					           					for(int y = 0; y < institu.size(); y +=1){							//se cargan las instituciones responsables
-					           										if(institu.get(y).getId() == insLineaAccion.get(a).getInstitucionId()){
-					           											Institucion insti = institu.get(y);
-					           											childrenRes.add(insti.getNombre());
-					           										}
-					           									}
-				   					           					axGA.setResponsables(childrenRes);	
-					           					           		
-				   					           					Date fecha_fin = new Date();
-					           					           		for(int x = 0; x < hito.size(); x +=1){								//se cargan las fechas fin
-					           										if(hito.get(x).getAccionId() == axion.get(i).getId()){
-					           											Hito fechas = hito.get(x);
-					           											String fechaFin =  fechas.getFechaEntrega().toString();
-							           					           		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-							           					           		fecha_fin = sdf1.parse(fechaFin);
-					           										}
-					           									}
-					           					           		axGA.setFecha_fin(fecha_fin);
-					           					           		
-					           					           		Date fecha_inicio = new Date();
-					           					           		String startDate = "2016-06-01";
-					           					           		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-					           					           		fecha_inicio = sdf1.parse(startDate);
-					           					           		axGA.setFecha_inicio(fecha_inicio);
-				   					           					
-					           					           		childrenAnex = new ArrayList<EvidenciaGA>();
-					           					           		for(int w = 0; w < avances.size(); w +=1){							//carga de anexos
-					           					           			for(int u = 0; u < actividad.size(); u+=1){
-						           					           			if(avances.get(w).getActividadId() == actividad.get(u).getId()){
-						           					           				for(int z = 0; z < eviden.size(); z +=1){
-						           					           					if(eviden.get(z).getAvanceId() == avances.get(w).getId()){
-						           					           						Evidencia evide = eviden.get(z);
-						           					           						EvidenciaGA anexos = new EvidenciaGA();
-						           					           						anexos.setDescripcion(evide.getDescripcion());
-						           					           						anexos.setUrl(evide.getUrl());
-						           					           						childrenAnex.add(anexos);
-						           					           					}
-						           					           				}
-						           					           			}
-					           					           			}
-					           					           		}
-					           					           		axGA.setAnexos(childrenAnex);
-				           					           			childrenAcc.add(axGA);
+		           							}
+		           						}
+		           						laGA.setOds(childrenOds);
+		           						for(int i = 0; i < axion.size(); i += 1) { 											//se recorren las acciones de cada linea de accion
+		           							for(int o = 0; o < accionCatalogo.size(); o += 1) {								//se recorre el catalogo para nombras las acciones
+		           								if(accionCatalogo.get(o).getId() == axion.get(i).getAccionCatalogoId()){           									
+		           									for (int a = 0; a < insLineaAccion.size(); a += 1) {
+			           									if(insLineaAccion.get(a).getId() == axion.get(i).getInsLineaAccionId() && 
+			           											insLineaAccion.get(a).getLineaAccionId() == children.get(e).getId()){
+			           										AccionCatalogo acc = accionCatalogo.get(o);
+			           					           			AccionGA axGA = new AccionGA();
+			           										axGA.setNombre(acc.getNombre());
+			           										axGA.setDescripcion(acc.getDescripcion());
+			           										
+			           										childrenRes = new ArrayList<Object>();
+			   					           					for(int y = 0; y < institu.size(); y +=1){							//se cargan las instituciones responsables
+				           										if(institu.get(y).getId() == insLineaAccion.get(a).getInstitucionId()){
+				           											Institucion insti = institu.get(y);
+				           											childrenRes.add(insti.getNombre());
+				           										}
 				           									}
-				           								}
-				           							}
-				           						}
-				           						laGA.setAcciones(childrenAcc);
-				           						objectLa.add(laGA);
-				           					}
-				           				}
-				           			}
-		           				//}
-	           			//}
+			   					           					axGA.setResponsables(childrenRes);	
+				           					           		
+			   					           					Date fecha_fin = new Date();
+				           					           		for(int x = 0; x < hito.size(); x +=1){								//se cargan las fechas fin
+				           										if(hito.get(x).getAccionId() == axion.get(i).getId()){
+				           											Hito fechas = hito.get(x);
+				           											String fechaFin =  fechas.getFechaEntrega().toString();
+						           					           		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+						           					           		fecha_fin = sdf1.parse(fechaFin);
+				           										}
+				           									}
+				           					           		axGA.setFecha_fin(fecha_fin);
+				           					           		
+				           					           		Date fecha_inicio = new Date();
+				           					           		String startDate = "2016-06-01";
+				           					           		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+				           					           		fecha_inicio = sdf1.parse(startDate);
+				           					           		axGA.setFecha_inicio(fecha_inicio);
+			   					           					
+				           					           		childrenAnex = new ArrayList<EvidenciaGA>();
+				           					           		for(int w = 0; w < avances.size(); w +=1){							//carga de anexos
+				           					           			for(int u = 0; u < actividad.size(); u+=1){
+					           					           			if(avances.get(w).getActividadId() == actividad.get(u).getId()){
+					           					           				for(int z = 0; z < eviden.size(); z +=1){
+					           					           					if(eviden.get(z).getAvanceId() == avances.get(w).getId()){
+					           					           						Evidencia evide = eviden.get(z);
+					           					           						EvidenciaGA anexos = new EvidenciaGA();
+					           					           						anexos.setDescripcion(evide.getDescripcion());
+					           					           						anexos.setUrl(evide.getUrl());
+					           					           						childrenAnex.add(anexos);
+					           					           					}
+					           					           				}
+					           					           			}
+				           					           			}
+				           					           		}
+				           					           		axGA.setAnexos(childrenAnex);
+			           					           			childrenAcc.add(axGA);
+			           									}
+			           								}
+			           							}
+			           						}
+		           						}
+		           						laGA.setAcciones(childrenAcc);
+		           						objectLa.add(laGA);
+		           					}
+		           				}
+	           				}
+	           			}
            				ArAgGA.setLineaAccion(objectLa);
            				objectAreas.add(ArAgGA);
            			}
@@ -834,7 +836,7 @@ public class ajaxSelects extends HttpServlet {
         		if (distrito!=null) condition += " and dist_id ='"+distrito+"'";
         		if (catalogoAccionId!=null) condition += " and id_accion_catalogo ='"+catalogoAccionId+"'";
         		if (accionId!=null) condition += " and id ='"+accionId+"'";
-           		try {objetos = SqlSelects.selectAccion(condition, conditionAccGA);}
+           		try {objetos = SqlSelects.selectAccion(condition, "");}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -854,7 +856,7 @@ public class ajaxSelects extends HttpServlet {
         		condition = " where true ";        		        		        		
         		if (accionId!=null) condition += " and accion_id ='"+accionId+"'";
         		if (catalogoAccion!=null) condition += " and accion ='"+catalogoAccion+"'";        		
-           		try {objetos = SqlSelects.selectAccion(condition, conditionAccGA);}
+           		try {objetos = SqlSelects.selectAccion(condition, "");}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -871,7 +873,7 @@ public class ajaxSelects extends HttpServlet {
         		List objetos=null; 
         		condition = " where true ";
         		if (catalogoAccionId!=null) condition += " and id ='"+catalogoAccionId+"'";
-           		try {objetos = SqlSelects.selectAccionCatalogo(condition, conditionAccCat);}
+           		try {objetos = SqlSelects.selectAccionCatalogo(condition, "");}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -1011,7 +1013,7 @@ public class ajaxSelects extends HttpServlet {
 //        		condition += " and ins_id IN (select id from institucion "+condition2+") ";
 //        		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
         		if (institucionId!=null) condition += " and ins_linea_accion_base.institucion_id='"+institucionId+"'";
-                if (institucionIdConcat!="" || institucionIdConcat!=null) condition += " and ins_linea_accion_base.institucion_id in("+institucionIdConcat+")";
+                if (institucionIdConcat!="" && institucionIdConcat!=null) condition += " and ins_linea_accion_base.institucion_id in("+institucionIdConcat+")";
                 if (departamentoId!=null) condition += " and ins_linea_accion_base.depto_id='"+departamentoId+"'";
                 if (distritoId!=null) condition += " and ins_linea_accion_base.dist_id='"+distritoId+"'";
                 if (periodoId!=null) condition += " and periodo ='"+periodoId+"'";

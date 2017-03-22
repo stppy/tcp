@@ -794,9 +794,9 @@ public class SqlSelects {
 		return objetos; 
 	} 
 	
-	public static List<LaHasAreasAga> selectLaHasAreasAga() throws SQLException{
+	public static List<LaHasAreasAga> selectLaHasAreasAga(String conditionLaHasAreasAga) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select * from la_has_areas_aga ";
+		String query = " select * from la_has_areas_aga "+conditionLaHasAreasAga;
 
 		Statement statement = null;
 		ResultSet rs=null;
