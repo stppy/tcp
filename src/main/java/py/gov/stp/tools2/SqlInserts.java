@@ -272,37 +272,41 @@ public class SqlInserts {
 	public static boolean insertAccion(Accion accion, String usuarioResponsable) throws ParseException{
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
+		java.sql.Date sqlStartDate=null;
+		java.sql.Date sqlEndDate=null;
 	   	
-		String query = " insert into accion (costo,peso,fecha_inicio,fecha_fin,version,borrado,meta1,meta2,meta3,meta4,ins_linea_accion_id,depto_id,dist_id,id_accion_catalogo,usuario_responsable)"
-	+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String query = " insert into accion (costo,peso,version,borrado,meta1,meta2,meta3,meta4,ins_linea_accion_id,depto_id,dist_id,id_accion_catalogo,usuario_responsable)"
+	+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
+		if(accion.getFechaInicio()!=null || accion.getFechaFin()!=null){
+			String startDate = accion.getFechaInicio();
+			SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+			java.util.Date date = sdf1.parse(startDate);
+			sqlStartDate = new java.sql.Date(date.getTime());
+			
+			String endDate=accion.getFechaFin();
+			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+			java.util.Date date2 = sdf1.parse(endDate);
+			sqlEndDate = new java.sql.Date(date2.getTime());
+		}
 		
-		String startDate = accion.getFechaInicio();
-		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-		java.util.Date date = sdf1.parse(startDate);
-		java.sql.Date sqlStartDate = new java.sql.Date(date.getTime());
-		
-		String endDate=accion.getFechaFin();
-		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
-		java.util.Date date2 = sdf1.parse(endDate);
-		java.sql.Date sqlEndDate = new java.sql.Date(date2.getTime());
 		
 		insert.setDouble (1, accion.getCosto());
 		insert.setInt (2, accion.getPeso());
-		insert.setDate (3, sqlStartDate);
-		insert.setDate (4, sqlEndDate);
-		insert.setInt(5, accion.getVersion());
-		insert.setBoolean (6, accion.isBorrado());		
-		insert.setDouble (7, accion.getMeta1());
-		insert.setDouble (8, accion.getMeta2());
-		insert.setDouble (9, accion.getMeta3());
-		insert.setDouble (10, accion.getMeta4());
-		insert.setInt (11, accion.getInsLineaAccionId());
-		insert.setInt (12, accion.getDepartamentoId());
-		insert.setInt (13, accion.getDistritoId());
-		insert.setInt (14, accion.getAccionCatalogoId());
-		insert.setString(15, usuarioResponsable);
+		//insert.setDate (3, sqlStartDate);
+		//insert.setDate (4, sqlEndDate);
+		insert.setInt(3, accion.getVersion());
+		insert.setBoolean (4, accion.isBorrado());		
+		insert.setDouble (5, accion.getMeta1());
+		insert.setDouble (6, accion.getMeta2());
+		insert.setDouble (7, accion.getMeta3());
+		insert.setDouble (8, accion.getMeta4());
+		insert.setInt (9, accion.getInsLineaAccionId());
+		insert.setInt (10, accion.getDepartamentoId());
+		insert.setInt (11, accion.getDistritoId());
+		insert.setInt (12, accion.getAccionCatalogoId());
+		insert.setString(13, usuarioResponsable);
 		
 		insert.execute();
 		   
