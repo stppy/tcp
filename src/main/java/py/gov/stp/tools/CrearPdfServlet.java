@@ -183,7 +183,7 @@ public class CrearPdfServlet extends HttpServlet {
 				Integer catalogoAccionId = avanceCualitativo.get(0).getAccionCatalogoId();
 				List<AccionCatalogo> catalogo=null; 		
 				if (catalogoAccionId!=null) condition += " and id ='"+catalogoAccionId+"'";
-				try {catalogo = SqlSelects.selectAccionCatalogo(condition);}
+				try {catalogo = SqlSelects.selectAccionCatalogo(condition,"");}
 				catch (SQLException e) {e.printStackTrace();}
 				
 				condition = " where true ";
@@ -205,7 +205,7 @@ public class CrearPdfServlet extends HttpServlet {
 				condition = " where true ";							
 				List<LineaAccion> lineaAccion=null; 		
 				if (insLineaAccionId != null) condition += " and id ='"+insLineaAccion.get(0).getLineaAccionId()+"'";
-				try {lineaAccion = SqlSelects.selectLineaAccion(condition);}
+				try {lineaAccion = SqlSelects.selectLineaAccion(condition,"");}
 				catch (SQLException e) {e.printStackTrace();}
 				
 				if (unidadResponsableId.equals("0")){					
@@ -241,7 +241,7 @@ public class CrearPdfServlet extends HttpServlet {
 	    		//Obtiene todas las lineas de acción
 	    		condition = " where true and borrado is false ";
 				List<LineaAccion> lineaAccion=null;
-				try {lineaAccion = SqlSelects.selectLineaAccion(condition);}
+				try {lineaAccion = SqlSelects.selectLineaAccion(condition,"");}
 				catch (SQLException e) {e.printStackTrace();}
 				
 				//Recorre las lineas de acción
@@ -290,7 +290,7 @@ public class CrearPdfServlet extends HttpServlet {
 								Integer catalogoAccionId = avanceCualitativoAux.getAccionCatalogoId();
 								List<AccionCatalogo> catalogo=null; 		
 								if (catalogoAccionId!=null) condition += " and id ='"+catalogoAccionId+"'";
-								try {catalogo = SqlSelects.selectAccionCatalogo(condition);}
+								try {catalogo = SqlSelects.selectAccionCatalogo(condition,"");}
 								catch (SQLException e) {e.printStackTrace();}
 								
 								//Obtiene el trimestre del avance
