@@ -69,7 +69,7 @@
 			$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
 			var i=parseInt(0);
 						
-			var periodoActual = 2016;
+			var periodoActual = 2017;
 			
 			renderLineasEstrategicas(periodoActual); 
 			getPeriodo();

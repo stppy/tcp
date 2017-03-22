@@ -1013,7 +1013,7 @@ public class ajaxSelects extends HttpServlet {
 //        		condition += " and ins_id IN (select id from institucion "+condition2+") ";
 //        		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
         		if (institucionId!=null) condition += " and ins_linea_accion_base.institucion_id='"+institucionId+"'";
-                if (institucionIdConcat!="" || institucionIdConcat!=null) condition += " and ins_linea_accion_base.institucion_id in("+institucionIdConcat+")";
+                if (institucionIdConcat!="" && institucionIdConcat!=null) condition += " and ins_linea_accion_base.institucion_id in("+institucionIdConcat+")";
                 if (departamentoId!=null) condition += " and ins_linea_accion_base.depto_id='"+departamentoId+"'";
                 if (distritoId!=null) condition += " and ins_linea_accion_base.dist_id='"+distritoId+"'";
                 if (periodoId!=null) condition += " and periodo ='"+periodoId+"'";
