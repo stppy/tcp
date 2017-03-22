@@ -1,8 +1,8 @@
 package py.gov.stp.objetosV2;
 
 public class EvidenciaGA {
-	private String descripcion;
-	private String url;
+	private String descripcion = " ";
+	private String url = " ";
 	public String getDescripcion() {
 		return descripcion;
 	}

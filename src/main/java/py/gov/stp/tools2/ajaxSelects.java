@@ -462,6 +462,12 @@ public class ajaxSelects extends HttpServlet {
                 ArrayList<PndGA> childrenPnd = new ArrayList<PndGA>();
                 ArrayList<OdsGA> childrenOds = new ArrayList<OdsGA>();
                 
+                String colores[] = new String[4] ;
+                colores[0]="#556270";
+                colores[1]="#4ECDC4";
+                colores[2]="#C7F464";
+                colores[3]="#FF6B6B";
+                
                 //Date fechaFin = new Date();
                 
         		condition = "";
@@ -499,7 +505,7 @@ public class ajaxSelects extends HttpServlet {
            				AreasAga aaCat = areasAgaCat.get(c);
            				AreasAgaGA ArAgGA = new AreasAgaGA();
            				ArAgGA.setNombre(aaCat.getNombre());
-           				
+           				ArAgGA.setColour(colores[c]);
            				for(int b = 0; b < laHasAreasAga.size(); b += 1){
            					if(laHasAreasAga.get(b).getAreasAgaId() == areasAgaCat.get(c).getId()){ // para cada area
 		           				for(int e = 0; e < children.size(); e += 1) {
@@ -510,6 +516,7 @@ public class ajaxSelects extends HttpServlet {
 		           						LineaAccionGA laGA = new LineaAccionGA();
 		           						laGA.setNombre(la.getNombre());
 		           						laGA.setDescripcion(la.getDescripcion());
+		           						laGA.setColour(colores[c]);
 		           						
 		           						childrenPnd = new ArrayList<PndGA>();
 		           						for(int d = 0; d < laHasPnd.size(); d += 1){
@@ -554,6 +561,7 @@ public class ajaxSelects extends HttpServlet {
 			           					           			AccionGA axGA = new AccionGA();
 			           										axGA.setNombre(acc.getNombre());
 			           										axGA.setDescripcion(acc.getDescripcion());
+			           										axGA.setColor(colores[c]);
 			           										
 			           										childrenRes = new ArrayList<Object>();
 			   					           					for(int y = 0; y < institu.size(); y +=1){							//se cargan las instituciones responsables
@@ -581,7 +589,7 @@ public class ajaxSelects extends HttpServlet {
 				           					           		fecha_inicio = sdf1.parse(startDate);
 				           					           		axGA.setFecha_inicio(fecha_inicio);
 			   					           					
-				           					           		childrenAnex = new ArrayList<EvidenciaGA>();
+				           					           		/*childrenAnex = new ArrayList<EvidenciaGA>();
 				           					           		for(int w = 0; w < avances.size(); w +=1){							//carga de anexos
 				           					           			for(int u = 0; u < actividad.size(); u+=1){
 					           					           			if(avances.get(w).getActividadId() == actividad.get(u).getId()){
@@ -597,7 +605,7 @@ public class ajaxSelects extends HttpServlet {
 					           					           			}
 				           					           			}
 				           					           		}
-				           					           		axGA.setAnexos(childrenAnex);
+				           					           		axGA.setAnexos(childrenAnex);*/
 			           					           			childrenAcc.add(axGA);
 			           									}
 			           								}
