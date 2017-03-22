@@ -10,7 +10,7 @@ public class LineaAccionGA {
 	protected String otros_ejes = "";
 	protected List<PndGA> pnd = new ArrayList<PndGA>();
 	protected List<OdsGA> ods = new ArrayList<OdsGA>();
-	protected List<AccionGA> acciones = new ArrayList<AccionGA>();
+	protected List<AccionGA> children = new ArrayList<AccionGA>();
 	
 	public String getColour() {
 		return colour;
@@ -49,9 +49,9 @@ public class LineaAccionGA {
 		this.ods = ods;
 	}
 	public List<AccionGA> getAcciones() {
-		return acciones;
+		return children;
 	}
-	public void setAcciones(List<AccionGA> acciones) {
-		this.acciones = acciones;
+	public void setAcciones(List<AccionGA> children) {
+		this.children = children;
 	}
 }
