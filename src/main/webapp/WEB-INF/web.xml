@@ -49,6 +49,14 @@
 			<param-name>service</param-name>
 			<param-value>http://sprtest.stp.gov.py/tablero/</param-value>
 		</init-param>
+		<init-param>
+			<param-name>ignorePattern</param-name>
+			<param-value>ajaxSelects2?action=getGobiernoAbierto</param-value>
+		</init-param>
+		<init-param>
+			<param-name>ignoreUrlPatternType</param-name>
+			<param-value>CONTAINS</param-value>
+		</init-param>
 	</filter>
 	<filter-mapping>
 		<filter-name>CAS Authentication Filter</filter-name>

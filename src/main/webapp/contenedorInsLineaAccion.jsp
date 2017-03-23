@@ -198,11 +198,11 @@ function renderInsLineaAccion(PeriodoActual, etiquetaSeleccionado){
 				{
 					for(var t = 0; t < insLineaAccionHasEtiqueta.length; t++)
 					{
-						if(insLineaAccionHasEtiqueta[t].ins_linea_accion_id == insLineaAccion[w].id && insLineaAccionHasEtiqueta[t].etiqueta_id == etiquetaSeleccionado)
+						if(insLineaAccionHasEtiqueta[t].ins_linea_accion_id == insLineaAccion[w].id && insLineaAccionHasEtiqueta[t].etiqueta_id == etiquetaSeleccionado && insLineaAccionHasEtiqueta[t].borrado != true)
 						{
 							for(var d=0; d<usuarioLineaAccion.length;d++)
 							{
-								if(usuarioLineaAccion[d].lineaAccionId == insLineaAccion[w].lineaAccionId)
+								if(usuarioLineaAccion[d].lineaAccionId == insLineaAccion[w].lineaAccionId && usuarioLineaAccion[d].borrado != true)
 								{
 									if(insLineaAccion[w].periodoId == PeriodoActual)
 								 	{		 		
@@ -781,7 +781,7 @@ function renderInsLineaAccion(PeriodoActual, etiquetaSeleccionado){
 			for(p = 0;p<periodo.length; p++)
 			{
 				if(periodo[p].id >= 2014){
-					if(periodo[p].id == 2016)
+					if(periodo[p].id == 2017)
 					{
 						optionPeriodo+='<option value="'+periodo[p].id+'" selected>'+periodo[p].nombre+'</option>';
 					}else{

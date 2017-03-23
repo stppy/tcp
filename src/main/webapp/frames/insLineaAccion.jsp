@@ -104,7 +104,7 @@ function renderEvidencia(avanceId, parametros){
 
 		for(p = 0;p<periodo.length; p++)
 		{
-			if(periodo[p].id == 2016)
+			if(periodo[p].id == 2017)
 			{
 				optionPeriodo+='<option value="'+periodo[p].id+'" selected>'+periodo[p].nombre+'</option>';
 			}else{
@@ -519,7 +519,7 @@ function renderEvidencia(avanceId, parametros){
 
 		for(p = 0;p<periodo.length; p++)
 		{
-			if(periodo[p].id == 2016)
+			if(periodo[p].id == 2017)
 			{
 				optionPeriodo+='<option value="'+periodo[p].id+'" selected>'+periodo[p].nombre+'</option>';
 			}else{
@@ -1323,13 +1323,13 @@ function renderEvidencia(avanceId, parametros){
 								
 						if(accion[a].borrado == true){
 							<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
-								cuerpoAccion +="<tr><td class='text-center'><del>"+nombreAccionCatalogo+"</del></td><td class='text-center'><del>"+nombreDepartamento+"</del></td><td class='text-center'><del>"+nombreDistrito+"</del></td><td class='text-center'><del>"+accion[a].fechaInicio+"</del></td><td class='text-center'><del>"+accion[a].fechaFin+"</del></td><td class='text-center'><del>"+nombreUnidadMedidaAccion+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(suMetas).toFixed(2))+"</del></td><td class='text-center'><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Restaurar Acción'><span class='fa fa-recycle'></span></button></td></tr>";
+								cuerpoAccion +="<tr><td class='text-center'><del>"+nombreAccionCatalogo+"</del></td><td class='text-center'><del>"+nombreDepartamento+"</del></td><td class='text-center'><del>"+nombreDistrito+"</del></td><td class='text-center' style='display:none;'><del>"+accion[a].fechaInicio+"</del></td><td class='text-center' style='display:none;'><del>"+accion[a].fechaFin+"</del></td><td class='text-center'><del>"+nombreUnidadMedidaAccion+"</del></td><td class='text-center' style='display:none;'><del>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</del></td><td class='text-center' style='display:none;'><del>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</del></td><td class='text-center' style='display:none;'><del>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</del></td><td class='text-center' style='display:none;'><del>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</del></td><td class='text-center' style='display:none;'><del>"+numeroConComa(parseFloat(suMetas).toFixed(2))+"</del></td><td class='text-center'><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Restaurar Acción'><span class='fa fa-recycle'></span></button></td></tr>";
 							<%}%>
 						}else{
 							<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-								cuerpoAccion +="<tr><td class='text-center'>"+nombreAccionCatalogo+"</td><td class='text-center'>"+nombreDepartamento+"</td><td class='text-center'>"+nombreDistrito+"</td><td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+nombreUnidadMedidaAccion+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(suMetas).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm modalVincularProducto' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos Presupuestarios' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"><span>Gs</span></button><button type='button' class='btn btn-default btn-sm agregarActividad' title='Agregar Cronograma' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" ><span class='glyphicon glyphicon-time'></span></button><button type='button' class='btn btn-default btn-sm editarAccion' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button><button type='button' class='btn btn-default btn-sm modalDestinatario'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Agregar Destinatario'><span class='glyphicon glyphicon-user'></span></button></td></tr>";
+								cuerpoAccion +="<tr><td class='text-center'>"+nombreAccionCatalogo+"</td><td class='text-center'>"+nombreDepartamento+"</td><td class='text-center'>"+nombreDistrito+"</td><td class='text-center' style='display:none;'>"+accion[a].fechaInicio+"</td><td class='text-center' style='display:none;'>"+accion[a].fechaFin+"</td><td class='text-center'>"+nombreUnidadMedidaAccion+"</td><td class='text-center' style='display:none;'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center' style='display:none;'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center' style='display:none;'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center' style='display:none;'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center' style='display:none;'>"+numeroConComa(parseFloat(suMetas).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm modalVincularProducto' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos Presupuestarios' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"><span>Gs</span></button><button type='button' class='btn btn-default btn-sm agregarActividad' title='Agregar Cronograma' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" ><span class='glyphicon glyphicon-time'></span></button><button type='button' class='btn btn-default btn-sm editarAccion' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button><button type='button' class='btn btn-default btn-sm modalDestinatario'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Agregar Destinatario'><span class='glyphicon glyphicon-user'></span></button></td></tr>";
 							<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-								cuerpoAccion +="<tr><td class='text-center'>"+nombreAccionCatalogo+"</td><td class='text-center'>"+nombreDepartamento+"</td><td class='text-center'>"+nombreDistrito+"</td><td class='text-center'>"+accion[a].fechaInicio+"</td><td class='text-center'>"+accion[a].fechaFin+"</td><td class='text-center'>"+nombreUnidadMedidaAccion+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(suMetas).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm modalVincularProducto' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos Presupuestarios' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"><span>Gs</span></button><button type='button' class='btn btn-default btn-sm agregarActividad' title='Agregar Cronograma' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" ><span class='glyphicon glyphicon-time'></span></button><button type='button' class='btn btn-default btn-sm modalDestinatario'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Agregar Destinatario'><span class='glyphicon glyphicon-user'></span></button></td></tr>";
+								cuerpoAccion +="<tr><td class='text-center'>"+nombreAccionCatalogo+"</td><td class='text-center'>"+nombreDepartamento+"</td><td class='text-center'>"+nombreDistrito+"</td><td class='text-center' style='display:none;'>"+accion[a].fechaInicio+"</td><td class='text-center' style='display:none;'>"+accion[a].fechaFin+"</td><td class='text-center'>"+nombreUnidadMedidaAccion+"</td><td class='text-center' style='display:none;'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center' style='display:none;'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center' style='display:none;'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center' style='display:none;'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center' style='display:none;'>"+numeroConComa(parseFloat(suMetas).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm modalVincularProducto' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos Presupuestarios' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"><span>Gs</span></button><button type='button' class='btn btn-default btn-sm agregarActividad' title='Agregar Cronograma' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" ><span class='glyphicon glyphicon-time'></span></button><button type='button' class='btn btn-default btn-sm modalDestinatario'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Agregar Destinatario'><span class='glyphicon glyphicon-user'></span></button></td></tr>";
 							<%}%>
 						}
 					}
@@ -1370,36 +1370,36 @@ function renderEvidencia(avanceId, parametros){
 								'											<tbody>'+
 								'												<tr><td><div class="form-group"><label for="nombreAccion">Acción</label><select id="selectorCatalogoAccion" class="form-control">'+optionCatalogoAccion+'</select><input type="hidden" class="form-control" id="insLineaAccionId" value="'+insLineaAccionId+'"></div></td><td><div class="form-group"><label for="umedida">U. medida</label><input type="text" id="unidadMedidaAccion" value="" class="form-control" disabled> </div></td></tr>'+
 								'												<tr><td><div class="form-group"><label for="departamento">Departamento</label><select id="selectorDepartamento" name="departamento" class="form-control">'+optionDepartamentos+'</select></div></td><td><div class="form-group"><label for="distrito">Distrito</label><select name="departamento" class="form-control" id="distritosDepartamento"></select></div></td></tr>'+
-								'												<tr><td><div class="form-group"><label for="fechaInicioAccion">Fecha Inicio</label><input type="date" id="fechaInicioAccion" class="form-control" value="'+fechaActual+'" required /></div></td><td><div class="form-group"><label for="fechaFinAccion">Fecha Fin</label><input type="date" id="fechaFinAccion" class="form-control" required /></div></td></tr>'+							
+								/* '												<tr><td><div class="form-group"><label for="fechaInicioAccion">Fecha Inicio</label><input type="date" id="fechaInicioAccion" class="form-control" value="'+fechaActual+'" required /></div></td><td><div class="form-group"><label for="fechaFinAccion">Fecha Fin</label><input type="date" id="fechaFinAccion" class="form-control" required /></div></td></tr>'+ */							
 								'											</tbody>'+							           
 								'										</table>'+
 								'									</div>'+
 								'									<div class="row">'+
 								'			      					    <div class="form-group col-md-3">'+
-								'						  						<label for="totalFinanciero-formulario">Primer Trimestre</label>'+
+								/* '						  						<label for="totalFinanciero-formulario">Primer Trimestre</label>'+ */
 								'				      						<div class="input-group input-group-sm">'+						      			
-								'								    				<input type="number" name="primerTrimestre" id="primerTrimestre-formulario" value="0" class="form-control" required>'+
+								'								    				<input type="hidden" name="primerTrimestre" id="primerTrimestre-formulario" value="0" class="form-control" required>'+
 								'													<input type="hidden" class="form-control" id="versionAccion" value="3">'+//Aqui estan los input hidden que en este formulario son 3
 								'													<input type="hidden" class="form-control" id="costoAccion" value="99">'+
 								'													<input type="hidden" class="form-control" id="pesoAccion" value="1">'+
 								'				      						</div>'+
 								'			  					    	</div>'+
 								'				     					<div class="form-group col-md-3">'+
-								'							  					<label for="totalFinanciero-formulario">Segundo Trimestre</label>'+
+								/* '							  					<label for="totalFinanciero-formulario">Segundo Trimestre</label>'+ */
 								'					      					<div class="input-group input-group-sm">'+
-								'			  					    			<input type="number" name="segundoTrimestre" id="segundoTrimestre-formulario" value="0" class="form-control" required>'+
+								'			  					    			<input type="hidden" name="segundoTrimestre" id="segundoTrimestre-formulario" value="0" class="form-control" required>'+
 								'					      					</div>'+
 								'								    		</div>'+
 								'				     					<div class="form-group col-md-3">'+
-								'							  					<label for="totalFinanciero-formulario">Tercer Trimestre</label>'+
+								/* '							  					<label for="totalFinanciero-formulario">Tercer Trimestre</label>'+ */
 								'					      					<div class="input-group input-group-sm">'+
-								'			  					    			<input type="number" name="tercerTrimestre" id="tercerTrimestre-formulario" value="0" class="form-control" required>'+
+								'			  					    			<input type="hidden" name="tercerTrimestre" id="tercerTrimestre-formulario" value="0" class="form-control" required>'+
 								'					      					</div>'+
 								'								    		</div>'+
 								'			      					    <div class="form-group col-md-3">'+
-								'						  					<label for="totalFinanciero-formulario">Cuarto Trimestre</label>'+
+								/* '						  					<label for="totalFinanciero-formulario">Cuarto Trimestre</label>'+ */
 								'				      						<div class="input-group input-group-sm">'+
-								'								    				<input type="number" name="cuartoTrimestre" id="cuartoTrimestre-formulario" value="0" class="form-control" required>'+
+								'								    				<input type="hidden" name="cuartoTrimestre" id="cuartoTrimestre-formulario" value="0" class="form-control" required>'+
 								'				      						</div>'+
 								'							    		</div>'+
 								'			  						</div>'+				
@@ -1449,12 +1449,12 @@ function renderEvidencia(avanceId, parametros){
 			var tablaAccion ='     			<div class="table-responsive">'+
 			'	                				<table class="table table-hover table-bordered" id="dataTablesAcciones">'+
 			'	                					<thead>'+
-			'	                						<tr class="active"><th rowspan="2" class="text-center">Acción</th><th rowspan="2" class="text-center">Depto</th><th rowspan="2" class="text-center">Distrito</th><th rowspan="2" class="text-center">Fecha Inicio</th><th rowspan="2" class="text-center">Fecha Fin</th><th rowspan="2" class="text-center">Unidad Medida</th><th colspan="4" class="text-center">Metas</th><th rowspan="2" class="text-center">Total Metas</th><th rowspan="2" class="text-center" style="min-width:130px">Administrar Acción</th></tr>'+
-			'	                						<tr class="active"><th class="text-center">1er Trimestre</th><th class="text-center">2do Trimestre</th><th class="text-center">3er Trimestre</th><th class="text-center">4to Trimestre</th></tr>'+
+			'	                						<tr class="active"><th rowspan="2" class="text-center">Acción</th><th rowspan="2" class="text-center">Depto</th><th rowspan="2" class="text-center">Distrito</th><th rowspan="2" class="text-center" style="display:none;">Fecha Inicio</th><th rowspan="2" class="text-center" style="display:none;">Fecha Fin</th><th rowspan="2" class="text-center">Unidad Medida</th><th colspan="4" class="text-center" style="display:none;">Metas</th><th rowspan="2" class="text-center" style="display:none;">Total Metas</th><th rowspan="2" class="text-center" style="min-width:130px">Administrar Acción</th></tr>'+
+			'	                						<tr class="active" style="display:none;"><th class="text-center" style="display:none;">1er Trimestre</th><th class="text-center" style="display:none;">2do Trimestre</th><th class="text-center" style="display:none;">3er Trimestre</th><th class="text-center" style="display:none;">4to Trimestre</th></tr>'+
 			'	                					</thead>'+
 			'										<tfoot>'+
 			'								 			<tr>'+
-			'								 				<th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th>'+
+			'								 				<th></th><th></th><th></th><th style="display:none;"></th><th style="display:none;"></th><th></th><th style="display:none;"></th><th style="display:none;"></th><th style="display:none;"></th><th style="display:none;"></th><th style="display:none;"></th><th></th>'+
 			'								 			</tr>'+
 			'								    	</tfoot>'+
 			'	                						<tbody id="tablaAccionesPrecargadas">'+
@@ -1466,9 +1466,9 @@ function renderEvidencia(avanceId, parametros){
 			$('#tablaAccionesPrecargadas').append(cuerpoAccion);
 			$('#modalAccion').modal('show');
 			$("#selectorCatalogoAccion").change();
-			$("#selectorDepartamento").change();
+			$("#selectorDepartamento").change();			
 			$('#dataTablesAcciones').dataTable({
-		         "footerCallback": function ( row, data, start, end, display ) {
+		         /*"footerCallback": function ( row, data, start, end, display ) {
 		            var api = this.api(), data;
 		 		            
 		         // saca los puntos y <del> de la cadena para pasarlo a entero
@@ -1488,21 +1488,21 @@ function renderEvidencia(avanceId, parametros){
 		            };
 		          
 		         // total general para todas las paginas de la columna
-		            total6 = api
-		                .column( 6 )
+		            total4 = api
+		                .column( 4 )
 		                .data()
 		                .reduce( function (a, b) {		                    
 		                	return intVal(a) + intVal(b);
 		                }, 0 );
 		 
 		         // total por pagina segun número de columna
-		            pageTotal6 = api
-		                .column( 6, { page: 'current'} )
+		            pageTotal4 = api
+		                .column( 4, { page: 'current'} )
 		                .data()
 		                .reduce( function (a, b) {
 		                    return intVal(a) + intVal(b);
 		                }, 0 );
-		         // total general para todas las paginas de la columna
+		         /* // total general para todas las paginas de la columna
 		            total7 = api
 		                .column( 7 )
 		                .data()
@@ -1565,8 +1565,8 @@ function renderEvidencia(avanceId, parametros){
 		                .reduce( function (a, b) {
 		                    return intVal(a) + intVal(b);
 		                }, 0 );
-		 
-		         // se muestran los valores de los totales en el footer del table
+		  
+		          // se muestran los valores de los totales en el footer del table
 		            $( api.column( 6 ).footer() ).html(
 		            		'Total Pág. '+ numeroConComa(pageTotal6) +' (Total Gral. '+ numeroConComa(total6) +')'
 		            );
@@ -1581,48 +1581,48 @@ function renderEvidencia(avanceId, parametros){
 		         // se muestran los valores de los totales en el footer del table
 		            $( api.column( 9 ).footer() ).html(
 		            		'Total Pág. '+ numeroConComa(pageTotal9) +' (Total Gral. '+ numeroConComa(total9) +')'
-		            );
+		            ); 
 		         // se muestran los valores de los totales en el footer del table
-		            $( api.column( 10 ).footer() ).html(
-		            		'Total Pág. '+ numeroConComa(pageTotal10) +' (Total Gral. '+ numeroConComa(total10) +')'
+		            $( api.column( 4 ).footer() ).html(
+		            		'Total Pág. '+ numeroConComa(pageTotal4) +' (Total Gral. '+ numeroConComa(total4) +')'
 		            );
-		        }, 
+		        }, */
 		        dom: 'Bfrtip',
 		        buttons: [
 		                    {
 		                        extend: 'copy',
 		                        exportOptions: {
-		                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
+		                    columns: [ 0, 1, 2, 5 ]
 		                }
 		                    },
 		                    {
 		                        extend: 'csv',
 		                        exportOptions: {
-		                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
+		                    columns: [ 0, 1, 2, 5 ]
 		                }
 		                    },
 		                    {
 		                        extend: 'excel',
 		                        exportOptions: {
-		                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
+		                    columns: [ 0, 1, 2, 5 ]
 		                }
 		                    },
 		                    {
 		                        extend: 'pdf',
 		                        orientation: 'landscape',
 		                        exportOptions: {
-		                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
+		                    columns: [ 0, 1, 2, 5 ]
 		                }
 		                    },
 		                    {
 		                        extend: 'print',
 		                        exportOptions: {
-		                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
+		                    columns: [ 0, 1, 2, 5 ]
 		                }
 		                    }
 		                ]
-		});			
-		
+		});		
+	 	
 	}
 			
 	$("body").on("click", ".agregarAccion",function(event){
@@ -1793,16 +1793,16 @@ function renderEvidencia(avanceId, parametros){
 							'											<tbody>'+																																																																																					
 							'												<tr><td><div class="form-group"><label for="nombreAccion">Acción</label><select id="selectorCatalogoAccion" name="catalogoAccion"class="form-control">'+optionCatalogoAccion+'</select><input type="hidden" class="form-control" id="insLineaAccionId" value="'+insLineaAccionId+'"></div></td><td><div class="form-group"><label for="umedida">U. medida</label><input type="text" id="unidadMedidaAccion" class="form-control" disabled></div></td></tr>'+
 							'												<tr><td><div class="form-group"><label for="departamento">Departamento</label><select id="selectorDepartamento" name="departamento" class="form-control">'+optionDepartamentos+'</select></div></td><td><div class="form-group"><label for="distrito">Distrito</label><select class="form-control" id="distritosDepartamento">'+optionDistritos+'</select></div></td></tr>'+
-							'												<tr><td><div class="form-group"><label for="fechaInicio">Fecha Inicio</label><input type="date"  id="fechaInicio" value='+accion[0].fechaInicio+' class="form-control" required></div></td><td><div class="form-group"><label for="fichaFin">Fecha Fin</label><input type="date"  id="fechaFin" value='+accion[0].fechaFin+' class="form-control" required></div></td></tr>'+
+							/* '												<tr><td><div class="form-group"><label for="fechaInicio">Fecha Inicio</label><input type="date"  id="fechaInicio" value='+accion[0].fechaInicio+' class="form-control" required></div></td><td><div class="form-group"><label for="fichaFin">Fecha Fin</label><input type="date"  id="fechaFin" value='+accion[0].fechaFin+' class="form-control" required></div></td></tr>'+ */
 
 							'											</tbody>'+							           
 							'										</table>'+
 							'									</div>'+
 							'									<div class="row">'+
 							'			      					    <div class="form-group col-md-3">'+
-							'						  						<label for="totalFinanciero-formulario">Primer Trimestre</label>'+
+							/* '						  						<label for="totalFinanciero-formulario">Primer Trimestre</label>'+ */
 							'				      						<div class="input-group input-group-sm">'+						      			
-							'								    				<input type="number" name="primerTrimestre" id="primerTrimestre-formulario" value='+accion[0].meta1+' class="form-control" required>'+
+							'								    				<input type="hidden" name="primerTrimestre" id="primerTrimestre-formulario" value='+accion[0].meta1+' class="form-control" required>'+
 							'													<input type="hidden" class="form-control" id="versionAccion" value="3">'+//Aqui estan los input hidden que en este formulario son 3
 							'													<input type="hidden" class="form-control" id="costoAccion" value="99">'+
 							'													<input type="hidden" class="form-control" id="pesoAccion" value="1">'+
@@ -1813,23 +1813,23 @@ function renderEvidencia(avanceId, parametros){
 							'			  					    	</div>'+
 										  					    		
 							'				     					<div class="form-group col-md-3">'+
-							'							  					<label for="totalFinanciero-formulario">Segundo Trimestre</label>'+
+							/* '							  					<label for="totalFinanciero-formulario">Segundo Trimestre</label>'+ */
 							'					      					<div class="input-group input-group-sm">'+
-							'			  					    			<input type="number" name="segundoTrimestre" id="segundoTrimestre-formulario" value='+accion[0].meta2+' class="form-control" required>'+
+							'			  					    			<input type="hidden" name="segundoTrimestre" id="segundoTrimestre-formulario" value='+accion[0].meta2+' class="form-control" required>'+
 							'					      					</div>'+
 							'								    		</div>'+
 															    		
 							'				     					<div class="form-group col-md-3">'+
-							'							  					<label for="totalFinanciero-formulario">Tercer Trimestre</label>'+
+							/* '							  					<label for="totalFinanciero-formulario">Tercer Trimestre</label>'+ */
 							'					      					<div class="input-group input-group-sm">'+
-							'			  					    			<input type="number" name="tercerTrimestre" id="tercerTrimestre-formulario" value='+accion[0].meta3+' class="form-control" required>'+
+							'			  					    			<input type="hidden" name="tercerTrimestre" id="tercerTrimestre-formulario" value='+accion[0].meta3+' class="form-control" required>'+
 							'					      					</div>'+
 							'								    		</div>'+
 														    		
 							'			      					    <div class="form-group col-md-3">'+
-							'						  					<label for="totalFinanciero-formulario">Cuarto Trimestre</label>'+
+							/* '						  					<label for="totalFinanciero-formulario">Cuarto Trimestre</label>'+ */
 							'				      						<div class="input-group input-group-sm">'+
-							'								    				<input type="number" name="cuartoTrimestre" id="cuartoTrimestre-formulario" value='+accion[0].meta4+' class="form-control" required>'+
+							'								    				<input type="hidden" name="cuartoTrimestre" id="cuartoTrimestre-formulario" value='+accion[0].meta4+' class="form-control" required>'+
 							'				      						</div>'+
 							'							    		</div>'+
 							'			  						</div>'+				
@@ -1901,8 +1901,8 @@ $("body").on("click", ".actualizarAccion",function(event){
 	var accionCatalogo = $("#selectorCatalogoAccion option:selected").val();
 	var departamento = $("#selectorDepartamento option:selected").val();
 	var distrito = $("#distritosDepartamento option:selected").val();
-    var fechaInicio = document.getElementById('fechaInicio').value;
-    var fechaFin = document.getElementById('fechaFin').value;
+    //var fechaInicio = document.getElementById('fechaInicio').value;
+    //var fechaFin = document.getElementById('fechaFin').value;
     var metaPrimerTrimestre = document.getElementById('primerTrimestre-formulario').value;
     var metaSegundoTrimestre = document.getElementById('segundoTrimestre-formulario').value;
     var metaTercerTrimestre = document.getElementById('tercerTrimestre-formulario').value;
@@ -1933,13 +1933,13 @@ $("body").on("click", ".actualizarAccion",function(event){
     datos.id = id;
     datos.costo = costo;
     datos.peso = peso;
-    datos.fechaInicio = fechaInicio;
-    datos.fechaFin = fechaFin;
+    //datos.fechaInicio = null;
+    //datos.fechaFin = null;
     datos.version = version;
-    datos.meta1 = metaPrimerTrimestre;
-    datos.meta2 = metaSegundoTrimestre;
-    datos.meta3 = metaTercerTrimestre;
-    datos.meta4 = metaCuartoTrimestre;
+    datos.meta1 = 0;
+    datos.meta2 = 0;
+    datos.meta3 = 0;
+    datos.meta4 = 0;
     datos.insLineaAccionId = insLineaAccionId;
     datos.departamentoId = departamento;
     datos.distritoId = distrito;
@@ -3635,7 +3635,9 @@ $("body").on("click", ".borrarAccion",function(event){
 			    		$("#unidadMedida-formulario").val(mostrarUnidadMedida);
 			    		
 				    	$.ajax({
-				         	 url:'/ajaxSelects?accion=getAsignacionPresiVersion&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto+'&anho=2016',
+
+
+						url:'ajaxSelects?accion=getAsignacionPresiVersion&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto+'&anho=2017',
 				          	type:'get',
 				          	crossDomain: 'true',
 				          	dataType:'jsonp',
@@ -3883,8 +3885,8 @@ $("body").on("click", ".borrarAccion",function(event){
 		
 		var costo = document.getElementById("costoAccion").value;
 		var peso = document.getElementById("pesoAccion").value;
-		var fechaInicio = document.getElementById("fechaInicioAccion").value;
-		var fechaFin = document.getElementById("fechaFinAccion").value;
+		//var fechaInicio = document.getElementById("fechaInicioAccion").value;
+		//var fechaFin = document.getElementById("fechaFinAccion").value;
 		var version = document.getElementById("versionAccion").value;
 	    var meta1 = document.getElementById("primerTrimestre-formulario").value;
 	    var meta2 = document.getElementById("segundoTrimestre-formulario").value;
@@ -3898,8 +3900,8 @@ $("body").on("click", ".borrarAccion",function(event){
 	    
 	    datos.costo = costo;
 	    datos.peso = peso;
-	    datos.fechaInicio = fechaInicio;
-	    datos.fechaFin = fechaFin;
+	    datos.fechaInicio = null;
+	    datos.fechaFin = null;
 	    datos.version = version;
 	    datos.meta1 = meta1;
 	    datos.meta2 = meta2;
@@ -7169,7 +7171,7 @@ $("body").on("change", "#productoObjetoGasto",function(event){
 		webServicesDatosProducto = JSON.parse(webServicesDatosProducto);
 		
 		var webServicesObjetoGastoCosto = $.ajax({
-			url:'/tablero/ajaxSelects?action=getObjetoGastoCosto&nivel='+webServicesDatosProducto[0].nivelId+'&entidad='+webServicesDatosProducto[0].entidadId+'&tiprograma='+webServicesDatosProducto[0].tiprogramaId+'&programa='+webServicesDatosProducto[0].programaId+'&subprograma='+webServicesDatosProducto[0].subprogramaId+'&proyecto='+webServicesDatosProducto[0].proyectoId+'&producto='+webServicesDatosProducto[0].productoId+'&anho=2016',
+			url:'/tablero/ajaxSelects?action=getObjetoGastoCosto&nivel='+webServicesDatosProducto[0].nivelId+'&entidad='+webServicesDatosProducto[0].entidadId+'&tiprograma='+webServicesDatosProducto[0].tiprogramaId+'&programa='+webServicesDatosProducto[0].programaId+'&subprograma='+webServicesDatosProducto[0].subprogramaId+'&proyecto='+webServicesDatosProducto[0].proyectoId+'&producto='+webServicesDatosProducto[0].productoId+'&anho=2017',
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
