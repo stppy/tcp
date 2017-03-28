@@ -360,7 +360,7 @@ if (user != null) { %>
 			if (!instituciones[i].borrado){
 				for(var il=0; il<insLineaAccion.length;il++)
 				{
-					if (insLineaAccion[il].periodoId=="2016" && !insLineaAccion[il].borrado && insLineaAccion[il].institucionId==instituciones[i].id){
+					if (insLineaAccion[il].periodoId=="2017" && !insLineaAccion[il].borrado && insLineaAccion[il].institucionId==instituciones[i].id){
 						flagInst++;
 						if(flagInst=="1"){
 							$("#contenedorReporte").append('<h1 class="text-center" ><strong>INSTITUTCIÓN:</strong> <u>'+instituciones[i].nombre+'</u></h1>');
@@ -375,7 +375,7 @@ if (user != null) { %>
 										unidadDeMedida=unidadMedida[um].descripcion;
 									}
 								}
-								$("#contenedorReporte").append("<h1><strong>LÍNEA DE ACCIÓN:</strong> "+lineaAccion[la].nombre+"<div class='pull-right col-md-12'><small><strong>Meta 2016:</strong> "+numeroConComa(insLineaAccion[il].meta.toFixed(2))+" "+unidadDeMedida+"</small></div></h1><br>");
+								$("#contenedorReporte").append("<h1><strong>LÍNEA DE ACCIÓN:</strong> "+lineaAccion[la].nombre+"<div class='pull-right col-md-12'><small><strong>Meta 2017:</strong> "+numeroConComa(insLineaAccion[il].meta.toFixed(2))+" "+unidadDeMedida+"</small></div></h1><br>");
 								unidadDeMedida="";
 								var acciones = $.ajax({
 									url:'/tablero/ajaxSelects2?action=getAccion&lineaAccionId='+insLineaAccion[il].id,
@@ -472,7 +472,7 @@ if (user != null) { %>
 	<div class="row" >
 		<div id="contenedorReporte" class="col-md-12 table-responsive">
 				<div class="col-md-12 text-center" style="padding-top:20px;font-size:40px">
-					<h1><strong><u>SPR-PA-01: Plan de Acción  del Área Social - 2016</u></strong></h1>
+					<h1><strong><u>SPR-PA-01: Plan de Acción  del Área Social - 2017</u></strong></h1>
 					<div class="overlay" id="cargado" style="display: block;">
                   			<i class="fa fa-refresh fa-spin"></i>
                 	</div>
