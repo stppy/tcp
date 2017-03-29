@@ -413,9 +413,9 @@ if (user != null) { %>
 																	contenidoAcciones+=contenidoDist;
 																}
 																contenidoAcciones+='<table class="table table-striped table-bordered table-hover table-condensed" style="margin-bottom: 3px;">';
-																contenidoAcciones+='<tr><th>Acción</th><th>U. Medida</th><th>Inicio</th><th>Fin</th> <th>1er Trim</th><th>2do Trim</th><th>3er Trim</th><th>4to Trim</th></tr>';
+																contenidoAcciones+='<tr><th>Acción</th><th>U. Medida</th><th style="display:none;">Inicio</th><th style="display:none;">Fin</th> <th style="display:none;">1er Trim</th><th style="display:none;">2do Trim</th><th style="display:none;">3er Trim</th><th style="display:none;">4to Trim</th></tr>';
 																//contenidoAcciones+="<tr><td>"+accionCatalogo[ac].nombre+"</td><td>"+acciones[x].peso+"</td><td>"+acciones[x].fechaInicio+"</td><td>"+acciones[x].fechaFin+"</td><td>"+acciones[x].meta1+"</td><td>"+acciones[x].meta2+"</td><td>"+acciones[x].meta3+"</td><td>"+acciones[x].meta4+"</td></tr>";
-																contenidoAcciones+="<tr><td>"+accionCatalogo[ac].nombre+"</td><td>"+accionCatalogo[ac].nombreUnidadMedida+"</td><td>"+acciones[x].fechaInicio+"</td><td>"+acciones[x].fechaFin+"</td><td>"+acciones[x].meta1+"</td><td>"+acciones[x].meta2+"</td><td>"+acciones[x].meta3+"</td><td>"+acciones[x].meta4+"</td></tr>";
+																contenidoAcciones+="<tr><td>"+accionCatalogo[ac].nombre+"</td><td>"+accionCatalogo[ac].nombreUnidadMedida+"</td><td style='display:none;'>"+acciones[x].fechaInicio+"</td><td style='display:none;'>"+acciones[x].fechaFin+"</td><td style='display:none;'>"+acciones[x].meta1+"</td><td style='display:none;'>"+acciones[x].meta2+"</td><td style='display:none;'>"+acciones[x].meta3+"</td><td style='display:none;'>"+acciones[x].meta4+"</td></tr>";
 																contenidoAcciones+="<tr><td colspan='8'>"+getCronograma(acciones[x].id)+"</td></tr>";
 																contenidoAcciones+="<tr><td colspan='8'>"+getDetallePresupuesto(acciones[x].id)+"</td></tr>";
 																contenidoAcciones+="<tr><td colspan='8'>"+getDetalleDestinatario(acciones[x].id)+"</td></tr>";
