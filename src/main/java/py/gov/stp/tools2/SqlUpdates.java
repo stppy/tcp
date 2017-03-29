@@ -511,15 +511,20 @@ public static boolean borradoHito(Hito objeto, String usuarioResponsable){
 			Connection conect=ConnectionConfiguration.conectar();
 			String	query = "update accion set ";
 			PreparedStatement update =null;
+			java.sql.Date sqlStartDate = null;
+			java.sql.Date sqlEndDate = null;
 			
-			String startDate = objeto.getFechaInicio();
-			SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-			java.util.Date date1 = sdf1.parse(startDate);
-			java.sql.Date sqlStartDate = new java.sql.Date(date1.getTime());
-			String endDate = objeto.getFechaFin();
-			SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
-			java.util.Date date2 = sdf2.parse(endDate);
-			java.sql.Date sqlEndDate = new java.sql.Date(date2.getTime());
+			if(objeto.getFechaInicio()!=null || objeto.getFechaFin()!=null){
+				String startDate = objeto.getFechaInicio();
+				SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+				java.util.Date date1 = sdf1.parse(startDate);
+				sqlStartDate = new java.sql.Date(date1.getTime());
+				String endDate = objeto.getFechaFin();
+				SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+				java.util.Date date2 = sdf2.parse(endDate);
+				sqlEndDate = new java.sql.Date(date2.getTime());
+			}
+			
 
 			if(objeto.getCosto() != 0)      			query+= "costo= ?";
 			if(objeto.getPeso() != 0)	    			query+= ", peso= ?";

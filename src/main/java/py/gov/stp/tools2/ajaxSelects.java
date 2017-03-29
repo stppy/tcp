@@ -4,6 +4,8 @@ package py.gov.stp.tools2;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,11 +25,7 @@ import javax.xml.datatype.DatatypeConfigurationException;
 
 import org.jasig.cas.client.authentication.AttributePrincipal;
 
-import py.gov.stp.objetosV2.DesempDistrito;
-import py.gov.stp.objetosV2.DesempDistritoInst;
-import py.gov.stp.objetosV2.Institucion;
-import py.gov.stp.objetosV2.LineaAccionProgramacion;
-import py.gov.stp.objetosV2.ResumenLineaAccion;
+import py.gov.stp.objetosV2.*;
 import py.gov.stp.tools.Distrito;
 import py.gov.stp.tools2.SqlSelects;
 
@@ -45,12 +43,22 @@ public class ajaxSelects extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
   
     	AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();
-    	Map attributes = user.getAttributes(); 
-    	String userCorreo = user.getName(); 
-    	String userNivelId = attributes.get("nivel_id").toString();
-    	String userEntidadId = attributes.get("entidad_id").toString();
-    	String userUnrId = attributes.get("unr_id").toString();
-    	String userRoleId = attributes.get("role_id_tablero").toString();
+    	Map attributes = null; 
+    	String userCorreo=""; 
+    	String userNivelId="";
+    	String userEntidadId="";
+    	String userUnrId="";
+    	String userRoleId="";
+    	
+    	if (user!=null){
+    		 attributes= user.getAttributes();
+    		 userCorreo = user.getName(); 
+        	 userNivelId = attributes.get("nivel_id").toString();
+        	 userEntidadId = attributes.get("entidad_id").toString();
+        	 userUnrId = attributes.get("unr_id").toString();
+        	 userRoleId = attributes.get("role_id_tablero").toString();
+    	}
+    	
     	
     	String action = request.getParameter("action");
     	String accion = request.getParameter("accion");
@@ -116,6 +124,12 @@ public class ajaxSelects extends HttpServlet {
     	String catalogoAccion = null;
     	String usuario=null;
     	String condition = "";
+    	String conditionIdLAGA = "";
+		String conditionAccGA = "";
+		String conditionAccCat = "";
+		String conditionActGA = "";
+		String conditionHitoGA = "";
+		String conditionLaHasAreasAga ="";
     	String mision = "";
     	String nombre = "";
     	String vision = "";
@@ -198,6 +212,7 @@ public class ajaxSelects extends HttpServlet {
       	if (request.getParameter("idDocumento")!=null) idDocumento= Integer.parseInt(request.getParameter("idDocumento"));
       	if (request.getParameter("tipo")!=null) tipo = Integer.parseInt(request.getParameter("tipo"));
       	if (request.getParameter("version")!=null) version= Integer.parseInt(request.getParameter("version"));
+      	if (request.getParameter("tabla")!=null) tabla=request.getParameter("tabla");
 
 
       	
@@ -403,7 +418,7 @@ public class ajaxSelects extends HttpServlet {
         		List objetos=null; 
         		condition = " where true ";
         		if (lineaAccionId!=null) condition += " and id ='"+lineaAccionId+"'";
-           		try {objetos = SqlSelects.selectLineaAccion(condition);}
+           		try {objetos = SqlSelects.selectLineaAccion(condition, "");}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -419,6 +434,199 @@ public class ajaxSelects extends HttpServlet {
            		try {objetos = SqlSelects.selectInsLineaAccion(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());
+        	}
+/*===========GOBIERNO ABIERTO==============*/        	
+        	if (action.equals("getGobiernoAbierto")){
+        		List<AreasAga> areasAgaCat= null;
+        		List<LaHasAreasAga> laHasAreasAga= null;
+        		List<LineaAccion> children = null;
+        		List<InsLineaAccion> insLineaAccion = null;
+        		List<LaHasPnd> laHasPnd = null;
+        		List<Pnd> pnd = null;
+        		List<LaHasOds> laHasOds = null;
+        		List<Ods> ods = null; 
+        		List<Accion> axion = null; 
+        		List<AccionCatalogo> accionCatalogo = null;
+        		List<Actividad> actividad = null;
+        		List<Institucion> institu = null;
+        		List<Hito> hito = null;
+        		List<Avance> avances = null;
+        		List<Evidencia> eviden = null;
+        		
+        		ArrayList<AreasAgaGA> objectAreas = new ArrayList <AreasAgaGA>();
+                ArrayList<LineaAccionGA> objectLa = new ArrayList<LineaAccionGA>();
+                ArrayList<AccionGA> childrenAcc = new ArrayList<AccionGA>();
+                ArrayList<EvidenciaGA> childrenAnex = new ArrayList<EvidenciaGA>();
+                ArrayList<Object> childrenRes = new ArrayList<Object>();
+                ArrayList<PndGA> childrenPnd = new ArrayList<PndGA>();
+                ArrayList<OdsGA> childrenOds = new ArrayList<OdsGA>();
+                
+                String colores[] = new String[4] ;
+                colores[0]="#556270";
+                colores[1]="#4ECDC4";
+                colores[2]="#C7F464";
+                colores[3]="#FF6B6B";
+                
+                //Date fechaFin = new Date();
+                
+        		condition = "";
+        		String condition2 = " where entidad_id="+userEntidadId+" and nivel_id="+userNivelId ;
+        		if (!userUnrId.equals("0")){ condition2 += " and unidad_responsable_id="+userUnrId;} ;
+        		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
+        		if (periodoId!=null) condition += " and periodo_id ='"+periodoId+"'";
+        		
+        			conditionIdLAGA += " WHERE id BETWEEN 235 AND 245 AND borrado = false"; 					//para linea de accion de gobierno abierto
+        			conditionAccGA += " WHERE id BETWEEN 7424 AND 7477 AND borrado = false"; 				//para accion de gobierno abierto
+        			conditionAccCat += " WHERE borrado = false"; 											//para accion catalogo de gobierno abierto
+        			conditionActGA += " WHERE accion_id BETWEEN 7424 AND 7477 AND borrado = false"; 		//para actividad de gobierno abierto
+        			conditionHitoGA += " WHERE ins_linea_accion_id BETWEEN 235 AND 245 AND borrado = false"; //para hito de gobierno abierto
+        			conditionLaHasAreasAga += "WHERE peso = 1 ";
+           		try {
+           			areasAgaCat = SqlSelects.selectAreasAgaCat();
+           			laHasAreasAga = SqlSelects.selectLaHasAreasAga(conditionLaHasAreasAga);
+           			insLineaAccion = SqlSelects.selectInsLineaAccion(condition);
+           			children = SqlSelects.selectLineaAccion(condition, conditionIdLAGA);
+           			laHasPnd = SqlSelects.selectLaHasPND();
+           			pnd = SqlSelects.selectPND();
+           			laHasOds = SqlSelects.selectLaHasODS();
+           			ods = SqlSelects.selectODS();
+           			axion = SqlSelects.selectAccion(condition, conditionAccGA);
+           			accionCatalogo = SqlSelects.selectAccionCatalogo(condition, conditionAccCat);
+           			actividad = SqlSelects.selectActividad(conditionActGA);
+           			institu = SqlSelects.selectInstitucion(condition);
+           			hito = SqlSelects.selectHito(conditionHitoGA);
+           			avances = SqlSelects.selectAvance(condition);
+           			eviden = SqlSelects.selectEvidencia(condition);
+           			
+           			
+           			for(int c = 0; c < areasAgaCat.size(); c += 1){ //
+           				objectLa = new ArrayList<LineaAccionGA>();
+           				AreasAga aaCat = areasAgaCat.get(c);
+           				AreasAgaGA ArAgGA = new AreasAgaGA();
+           				ArAgGA.setNombre(aaCat.getNombre());
+           				ArAgGA.setColour(colores[c]);
+           				for(int b = 0; b < laHasAreasAga.size(); b += 1){
+           					if(laHasAreasAga.get(b).getAreasAgaId() == areasAgaCat.get(c).getId()){ // para cada area
+		           				for(int e = 0; e < children.size(); e += 1) {
+		           					if(laHasAreasAga.get(b).getLineaAccionId() == children.get(e).getId() && 
+		           					   laHasAreasAga.get(b).getAreasAgaId() ==  areasAgaCat.get(c).getId()){
+		           						childrenAcc = new ArrayList<AccionGA>();
+		           						LineaAccion la = children.get(e);
+		           						LineaAccionGA laGA = new LineaAccionGA();
+		           						laGA.setNombre(la.getNombre());
+		           						laGA.setDescripcion(la.getDescripcion());
+		           						laGA.setColour(colores[c]);
+		           						
+		           						childrenPnd = new ArrayList<PndGA>();
+		           						for(int d = 0; d < laHasPnd.size(); d += 1){
+		           							if(laHasPnd.get(d).getLineaAccionId() == children.get(e).getId()){
+		           								for(int f = 0; f < pnd.size(); f += 1){
+			           								if(pnd.get(f).getId() == laHasPnd.get(d).getPndId()){				           									
+			           									Pnd pnde = pnd.get(f);
+			           									LaHasPnd HasPnd = laHasPnd.get(d);
+			           									PndGA pndGA = new PndGA();
+			           									pndGA.setName(pnde.getNombre());
+			           									pndGA.setWeight(HasPnd.getPeso());
+			           									childrenPnd.add(pndGA);
+			           								}
+				           						}
+		           							}
+		           						}
+		           						laGA.setPnd(childrenPnd);
+		           						
+		           						childrenOds= new ArrayList<OdsGA>();
+		           						for(int g = 0; g < laHasOds.size(); g += 1){
+		           							if(laHasOds.get(g).getLineaAccionId() == children.get(e).getId()){
+		           								for(int h = 0; h < ods.size(); h += 1){
+			           								if(ods.get(h).getId() == laHasOds.get(g).getOdsId()){				           									
+			           									Ods odse = ods.get(h);
+			           									LaHasOds HasOds = laHasOds.get(g);
+			           									OdsGA odsGA = new OdsGA();
+			           									odsGA.setName(odse.getNombre());
+			           									odsGA.setWeight(HasOds.getPeso());
+			           									childrenOds.add(odsGA);
+			           								}
+				           						}
+		           							}
+		           						}
+		           						laGA.setOds(childrenOds);
+		           						for(int i = 0; i < axion.size(); i += 1) { 											//se recorren las acciones de cada linea de accion
+		           							for(int o = 0; o < accionCatalogo.size(); o += 1) {								//se recorre el catalogo para nombras las acciones
+		           								if(accionCatalogo.get(o).getId() == axion.get(i).getAccionCatalogoId()){           									
+		           									for (int a = 0; a < insLineaAccion.size(); a += 1) {
+			           									if(insLineaAccion.get(a).getId() == axion.get(i).getInsLineaAccionId() && 
+			           											insLineaAccion.get(a).getLineaAccionId() == children.get(e).getId()){
+			           										AccionCatalogo acc = accionCatalogo.get(o);
+			           					           			AccionGA axGA = new AccionGA();
+			           										axGA.setNombre(acc.getNombre());
+			           										axGA.setDescripcion(acc.getDescripcion());
+			           										axGA.setColor(colores[c]);
+			           										
+			           										childrenRes = new ArrayList<Object>();
+			   					           					for(int y = 0; y < institu.size(); y +=1){							//se cargan las instituciones responsables
+				           										if(institu.get(y).getId() == insLineaAccion.get(a).getInstitucionId()){
+				           											Institucion insti = institu.get(y);
+				           											childrenRes.add(insti.getNombre());
+				           										}
+				           									}
+			   					           					axGA.setResponsables(childrenRes);	
+				           					           		
+			   					           					Date fecha_fin = new Date();
+				           					           		for(int x = 0; x < hito.size(); x +=1){								//se cargan las fechas fin
+				           										if(hito.get(x).getAccionId() == axion.get(i).getId()){
+				           											Hito fechas = hito.get(x);
+				           											String fechaFin =  fechas.getFechaEntrega().toString();
+						           					           		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+						           					           		fecha_fin = sdf1.parse(fechaFin);
+				           										}
+				           									}
+				           					           		axGA.setFecha_fin(fecha_fin);
+				           					           		
+				           					           		Date fecha_inicio = new Date();
+				           					           		String startDate = "2016-06-01";
+				           					           		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+				           					           		fecha_inicio = sdf1.parse(startDate);
+				           					           		axGA.setFecha_inicio(fecha_inicio);
+			   					           					
+				           					           		/*childrenAnex = new ArrayList<EvidenciaGA>();
+				           					           		for(int w = 0; w < avances.size(); w +=1){							//carga de anexos
+				           					           			for(int u = 0; u < actividad.size(); u+=1){
+					           					           			if(avances.get(w).getActividadId() == actividad.get(u).getId()){
+					           					           				for(int z = 0; z < eviden.size(); z +=1){
+					           					           					if(eviden.get(z).getAvanceId() == avances.get(w).getId()){
+					           					           						Evidencia evide = eviden.get(z);
+					           					           						EvidenciaGA anexos = new EvidenciaGA();
+					           					           						anexos.setDescripcion(evide.getDescripcion());
+					           					           						anexos.setUrl(evide.getUrl());
+					           					           						childrenAnex.add(anexos);
+					           					           					}
+					           					           				}
+					           					           			}
+				           					           			}
+				           					           		}
+				           					           		axGA.setAnexos(childrenAnex);*/
+			           					           			childrenAcc.add(axGA);
+			           									}
+			           								}
+			           							}
+			           						}
+		           						}
+		           						laGA.setAcciones(childrenAcc);
+		           						objectLa.add(laGA);
+		           					}
+		           				}
+	           				}
+	           			}
+           				ArAgGA.setLineaAccion(objectLa);
+           				objectAreas.add(ArAgGA);
+           			}
+           		}
+        		catch (SQLException e) {e.printStackTrace();} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+        		JsonElement json = new Gson().toJsonTree(objectAreas);
         		out.println(json.toString());
         	}
 ////////////Privot programado        	
@@ -623,7 +831,7 @@ public class ajaxSelects extends HttpServlet {
         	}   
         	if (action.equals("getHito")){
         		List objetos=null; 
-           		try {objetos = SqlSelects.selectHito();}
+           		try {objetos = SqlSelects.selectHito(conditionHitoGA);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -636,7 +844,7 @@ public class ajaxSelects extends HttpServlet {
         		if (distrito!=null) condition += " and dist_id ='"+distrito+"'";
         		if (catalogoAccionId!=null) condition += " and id_accion_catalogo ='"+catalogoAccionId+"'";
         		if (accionId!=null) condition += " and id ='"+accionId+"'";
-           		try {objetos = SqlSelects.selectAccion(condition);}
+           		try {objetos = SqlSelects.selectAccion(condition, "");}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -656,7 +864,7 @@ public class ajaxSelects extends HttpServlet {
         		condition = " where true ";        		        		        		
         		if (accionId!=null) condition += " and accion_id ='"+accionId+"'";
         		if (catalogoAccion!=null) condition += " and accion ='"+catalogoAccion+"'";        		
-           		try {objetos = SqlSelects.selectAccion(condition);}
+           		try {objetos = SqlSelects.selectAccion(condition, "");}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -673,7 +881,7 @@ public class ajaxSelects extends HttpServlet {
         		List objetos=null; 
         		condition = " where true ";
         		if (catalogoAccionId!=null) condition += " and id ='"+catalogoAccionId+"'";
-           		try {objetos = SqlSelects.selectAccionCatalogo(condition);}
+           		try {objetos = SqlSelects.selectAccionCatalogo(condition, "");}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -813,7 +1021,7 @@ public class ajaxSelects extends HttpServlet {
 //        		condition += " and ins_id IN (select id from institucion "+condition2+") ";
 //        		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
         		if (institucionId!=null) condition += " and ins_linea_accion_base.institucion_id='"+institucionId+"'";
-                if (institucionIdConcat!="") condition += " and ins_linea_accion_base.institucion_id in("+institucionIdConcat+")";
+                if (institucionIdConcat!="" && institucionIdConcat!=null) condition += " and ins_linea_accion_base.institucion_id in("+institucionIdConcat+")";
                 if (departamentoId!=null) condition += " and ins_linea_accion_base.depto_id='"+departamentoId+"'";
                 if (distritoId!=null) condition += " and ins_linea_accion_base.dist_id='"+distritoId+"'";
                 if (periodoId!=null) condition += " and periodo ='"+periodoId+"'";
@@ -1691,5 +1899,6 @@ public class ajaxSelects extends HttpServlet {
         
     }
 }
+
 
 
