@@ -5267,7 +5267,7 @@ function renderProgramacion(insLineaAccionId,lineaAccionId,institucionId,periodo
 							'											<tr><td><div class="form-group"><label for="departamentoActividad">Departamento</label><input type="text" class="form-control" id="departamentoActividad" value="'+nombreDepartamento+'" disabled /></div></td><td><div class="form-group"><label for="distritoActividad">Distrito</label><input type="text" id="distritoActividad" value="'+nombreDistrito+'" class="form-control" disabled> </div></td></tr>'+
 							'											<tr><td><label for="accionProgramacion">Accion</label><input type="text" id="accionProgramacion" value="'+accionCatalogo[0].nombre+'" class="form-control" disabled /></td><td><label for="unidadMedidaProgramacion">U. Medida</label><input type="text" id="unidadMedidaProgramacion" class="form-control" value="'+nombreUnidadMedida+'" disabled /></td></tr>'+
 							'											<tr><td><label for="cronogramaProgramacion">Cronograma</label><input type="text" id="cronogramaProgramacion" value="'+cronogramas[0].nombre+'" class="form-control" disabled /><input type="hidden" id="cronogramaIdProgramacion" value="'+cronogramas[0].id+'" /></td><td><label for="tipoCronogramaProgramacion">Tipo Cronograma</label><input type="text" id="tipoCronogramaProgramacion" class="form-control" value="'+nombreHitoTipo+'" disabled /></td></tr>'+														
-							'											<tr><td><label for="cantidadProgramacion">Cantidad</label><input type="number" id="cantidadProgramacion" value="" class="form-control" placeholder="Ingres Cantidad" required /></td><td><label for="fechaEntregaProgramacion">Fecha Entrega</label><input type="date" id="fechaEntregaProgramacion" class="form-control" required/></td></tr>'+
+							'											<tr><td><label for="cantidadProgramacion">Cantidad</label><input type="number" id="cantidadProgramacion" value="" step="any" class="form-control" placeholder="Ingres Cantidad" required /></td><td><label for="fechaEntregaProgramacion">Fecha Entrega</label><input type="date" id="fechaEntregaProgramacion" class="form-control" required/></td></tr>'+
 							'											<input type="hidden" id="versionProgramacion" value="3" /><input type="hidden" id="actividadIdProgramacion" value="'+cronogramaId+'" />'+		
 							'			      							</form>	'+												
 							'										</tbody>'+
@@ -8866,7 +8866,7 @@ $("body").on("click", ".consultaEditarHito",function(event){
 						'					<table class="table table-hover">'+
 						'						<tbody>'+
 						'			      			<form class="form-horizontal" role="form">'+
-						'							<tr><td><label for="cantidadHito">Cantidad</label><input type="number" id="cantidadHito" class="form-control" value='+programacionWebService[0].cantidad+' required/></td><td><label for="fechaHito">Fecha Entrega</label><input type="date" id="fechaHito" class="form-control" value='+programacionWebService[0].fechaEntrega+' required/></td></tr>'+																		
+						'							<tr><td><label for="cantidadHito">Cantidad</label><input type="number" id="cantidadHito" step="any" class="form-control" value='+programacionWebService[0].cantidad+' required/></td><td><label for="fechaHito">Fecha Entrega</label><input type="date" id="fechaHito" class="form-control" value='+programacionWebService[0].fechaEntrega+' required/></td></tr>'+																		
 						'							<input type="hidden" id="programacionIdHito" value="'+programacionWebService[0].id+'"/>'+		
 						'			      			</form>	'+				
 						'						</tbody>'+
@@ -8875,7 +8875,7 @@ $("body").on("click", ".consultaEditarHito",function(event){
 						
 						'		    </div>'+
 						'			<div class="modal-footer">'+
-						' 				<button type="submit" class="btn btn-success btn-sm editarHito" id="botonGuardarHito" parametros='+programacionWebService[0].id+'>Guardar Cambios</button>'+ 
+						' 				<button type="button" class="btn btn-success btn-sm editarHito" id="botonGuardarHito" parametros='+programacionWebService[0].id+'>Guardar Cambios</button>'+ 
 						' 				<button type="button" class="btn btn-success btn-sm agregarProgramacion" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'" >Cerrar</button>'+						
 						'			</div>'+
 						'		</div>'+ 
