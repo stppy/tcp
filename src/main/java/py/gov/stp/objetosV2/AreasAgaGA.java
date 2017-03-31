@@ -20,5 +20,11 @@ public class AreasAgaGA {
 	public void setLineaAccion(List<LineaAccionGA> children) {
 		this.children = children;
 	}
+	public String getColour() {
+		return colour;
+	}
+	public void setColour(String colour) {
+		this.colour = colour;
+	}
 	
 }
