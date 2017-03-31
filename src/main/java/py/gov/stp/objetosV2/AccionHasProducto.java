@@ -23,6 +23,7 @@ public class AccionHasProducto {
 	protected Date fechaInsercion;
 	protected Date fechaActualizacion;	
     protected String usuarioResponsable;
+    protected String prodConcat;
 	protected boolean borrado;
 	
 	
@@ -145,6 +146,12 @@ public class AccionHasProducto {
 	}
 	public void setUsuarioResponsable(String usuarioResponsable) {
 		this.usuarioResponsable = usuarioResponsable;
+	}	
+	public String getProdConcat() {
+		return prodConcat;
+	}
+	public void setProdConcat(String prodConcat) {
+		this.prodConcat = prodConcat;
 	}
 	public boolean isBorrado() {
 		return borrado;

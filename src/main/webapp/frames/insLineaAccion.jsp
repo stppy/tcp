@@ -4270,14 +4270,13 @@ $("body").on("click", ".borrarAccion",function(event){
 		  	async:false       
 		}).responseText;
 		unidadMedida = JSON.parse(unidadMedida);
-		
-		   
+				   
 		var optionUnidadMedida;
 		for(var u = 0; u < unidadMedida.length; u++)
 		{
 			optionUnidadMedida+='<option value="'+unidadMedida[u].id+'" parametro="'+unidadMedida[u].id+'">'+unidadMedida[u].descripcion+'</option>';
-		}
-
+		}				
+		
 		var hitoTipo = $.ajax({
 			url:'/tablero/ajaxSelects2?action=getHitoTipo',
 		  	type:'get',
@@ -4295,6 +4294,47 @@ $("body").on("click", ".borrarAccion",function(event){
 		
 		optionAcumulable+='<option selected value="TRUE" parametro="TRUE">Si</option>';
 		optionAcumulable+='<option value="FALSE" parametro="FALSE">No</option>';
+		
+		var productos = $.ajax({
+			url:'/tablero/ajaxSelects2?action=getProductos',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		productos = JSON.parse(productos);
+		
+		var productoNombre = '';
+		var productosAccion = $.ajax({
+			url:'/tablero/ajaxSelects2?action=getAccionHasProducto&accionId='+accionId+'&nivel='+institucion[0].nivelId+'&entidad='+institucion[0].entidadId,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		productosAccion = JSON.parse(productosAccion);		
+		
+		var optionProductosAccion;
+		optionProductosAccion = '<option value="">Ningún producto seleccionado</option>';
+		for(var u = 0; u < productosAccion.length; u++)
+		{
+			productoNombre = '';
+			for(var i = 0; i < productos.length; i++)
+			{
+				if (productosAccion[u].sprProductoId == productos[i].id){
+					productoNombre = productos[i].nombre;
+				}
+			}
+			
+			optionProductosAccion+='<option value="'+
+										productosAccion[u].nivel+'-'+
+										productosAccion[u].entidad+'-'+
+										productosAccion[u].tipoPrograma+'-'+
+										productosAccion[u].programa+'-'+
+										productosAccion[u].subPrograma+'-'+
+										productosAccion[u].proyecto+'-'+
+										productosAccion[u].sprProductoId+'">'+
+											productosAccion[u].sprProductoId + ' - ' + productoNombre +
+								   '</option>';
+		}
 		
 		var actividades = $.ajax({
 			url:'/tablero/ajaxSelects2?action=getCronograma&accionId='+accionId,
@@ -4352,8 +4392,8 @@ $("body").on("click", ".borrarAccion",function(event){
 			if(accion[0].distritoId == distritos[e].id && accion[0].departamentoId == distritos[e].departamentoId){
 				nombreDistrito = distritos[e].descripcion;
 			}
-		}
-				
+		}						
+		
 		
 		var cuerpoActividad = "";
 		
@@ -4429,13 +4469,14 @@ $("body").on("click", ".borrarAccion",function(event){
 		
 		'									<div class="table-responsive">'+
 		'										<table class="table table-hover">'+
-		'											<tbody>'+
+		'											<tbody id="formularioAgregarActividad">'+
 		'												<tr><td><div class="form-group"><label for="departamentoActividad">Departamento</label><input type="text" class="form-control" id="departamentoActividad" value="'+nombreDepartamento+'" disabled /></div></td><td><div class="form-group"><label for="distritoActividad">Distrito</label><input type="text" id="distritoActividad" value="'+nombreDistrito+'" class="form-control" disabled> </div></td></tr>'+
 		'												<tr><td><div class="form-group"><label for="nombreActividad">Cronograma</label><input type="text" class="form-control" id="nombreActividad" value="" placeholder="Ingrese Nombre del Cronograma" required><input type="hidden" class="form-control" id="insLineaAccionId" value="'+insLineaAccionId+'"></div></td><td><div class="form-group"><label for="descripcionActividad">Descripción</label><input type="text" id="descripcionActividad" value="" class="form-control"> </div></td></tr>'+
 		'												<tr><td><div class="form-group"><label for="unidadMedidaIdActividad">Unidad de Medida</label><select id="unidadMedidaIdActividad" class="form-control" placeholder="Ingrese Unidad Medida Id">'+optionUnidadMedida+'</div></td><td><div class="form-group"><label for="hitoTipoIdActividad">Tipo de Cronograma</label>'+
 		'												<select id="hitoTipoIdActividad" class="form-control" placeholder="Ingrese Tipo de Cronograma">'+optionTipoHito+'</select></div></td></tr>'+
 		'												<tr><td><div class="form-group"><label for="proporcionActividad">Proporción</label><input type="number" class="form-control" id="proporcionActividad" value="1" required /></div></div></td><td><div class="form-group"><label for="pesoActividad">Peso</label><input type="number" class="form-control" id="pesoActividad" value="1" required/></div></td></tr>'+
-		'												<tr><td><div class="form-group"><label for="acumulableActividad">Acumulable</label><select id="acumulableActividad" class="form-control" placeholder="Ingrese Tipo Acumulable">'+optionAcumulable+'</select></div></td></tr>'+
+		'												<tr><td><div class="form-group"><label for="acumulableActividad">Acumulable</label><select id="acumulableActividad" class="form-control" placeholder="Ingrese Tipo Acumulable">'+optionAcumulable+'</select></div></td>'+
+		'													<td><div class="form-group"><label for="productosActividad">Producto relacionado</label><select id="productosActividad" class="form-control" placeholder="Ingrese el Producto al cual se vincula la actividad">'+optionProductosAccion+'</select></div></td></tr>'+
 		'											</tbody>'+							           
 		'										</table>'+
 		'									</div>'+
@@ -4534,6 +4575,57 @@ $("body").on("click", ".borrarAccion",function(event){
 	                }
 	                    }
 	                ]});
+		
+		/* function Combo(){
+
+		    this.productoConcatFocus = function(){
+			if ( $("#listaProductos").length ) {
+				$("#listaProductos").remove();
+				$('#productosActividad').val('');				
+			}
+			
+			var url="";
+								
+		   	var listaDatalist=document.getElementsByTagName('datalist');
+		      
+		   	var datosProductos = $.ajax({
+				url:'/tablero/ajaxSelects2?action=getProductosPresupuestoPND',
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+			}).responseText;
+			datosProductos = JSON.parse(datosProductos);	 */		
+			   
+			/* var optionProductos;
+			for(var u = 0; u < productos.length; u++)
+			{
+				optionProductos += '<option value="'+productos[u].producto_concat+'" >' + productos[u].producto_nombre + ' - ' + productos[u].producto_concat + '</option>';
+			} */		   	 
+		        
+				
+		        /* if(listaDatalist.length === 0 )
+		        {
+			        var datalistProductos = document.createElement('datalist');
+			        datalistProductos.setAttribute('id','listaProductos');
+			        datalistProductos.setAttribute('size','7'); 
+			        var ubicacionDatalistProductos = document.getElementById('formularioCronograma');
+			        ubicacionDatalistProductos.appendChild(datalistProductos);
+			
+			        for(var i = 0; i < datosProductos.length ; i++) 
+			        {    
+			        	var option = document.createElement('option');
+			          	option.setAttribute('value',datosProductos[i].producto_concat);
+			          	option.setAttribute('label',datosProductos[i].producto_nombre);
+			          	datalistProductos.appendChild(option);      
+			      	} 
+		        }
+			
+		    } 		    
+		    
+		}//fin combo 
+		
+		  var eje1 = new Combo();
+		  document.getElementById('productosActividad').addEventListener('focus',eje1.productoConcatFocus,false);*/ 			
 				
 	});
 	
@@ -4882,7 +4974,8 @@ $("body").on("click", ".guardarActividad",function(event){
 	    var accion_id = document.getElementById("accionIdActividad").value;
 	    var unidad_medida_id = document.getElementById("unidadMedidaIdActividad").value;
 	    var hito_tipo_id = document.getElementById("hitoTipoIdActividad").value;
-	   var acumulable = document.getElementById("acumulableActividad").value;
+	    var acumulable = document.getElementById("acumulableActividad").value;
+	    var productoConcat = document.getElementById("productosActividad").value;
 
 
 		var objeto = new Object();
@@ -4896,6 +4989,7 @@ $("body").on("click", ".guardarActividad",function(event){
 		objeto.unidad_medida_id = unidad_medida_id;
 		objeto.hito_tipo_id = hito_tipo_id;
 		objeto.acumulable = acumulable;
+		objeto.prodConcat = productoConcat; 
 
 		
 	  	var info = JSON.stringify(objeto);
