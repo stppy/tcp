@@ -814,13 +814,13 @@ public class SqlInserts {
 	} catch (SQLException e) {e.printStackTrace(); return false;}
 	
 }	
-////////////////////////////////////////////////////
+//================insert de avances==============//
 	public static boolean insertAvance(Avance avance, String usuarioResponsable) throws ParseException{
 	try {
 		Connection conn=ConnectionConfiguration.conectar();
 	   	
-		String query = " insert into avance (justificacion,cantidad,fecha_entrega,actividad_id,version, usuario_responsable)"
-	+ " values (?, ?, ?, ?, ?, ?)";
+		String query = " insert into avance (departamento_id, distrito_avance, justificacion,cantidad,fecha_entrega,actividad_id,version, usuario_responsable)"
+	+ " values (?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		PreparedStatement insert = conn.prepareStatement(query);
 		
@@ -829,13 +829,14 @@ public class SqlInserts {
 		java.util.Date date1 = sdf.parse(inicio);
 		java.sql.Date sqlStart = new java.sql.Date(date1.getTime());
 		
-		insert.setString (1, avance.getJustificacion());
-		insert.setDouble(2, avance.getCantidad());
-		insert.setDate (3, sqlStart); 
-		//insert.setInt (4, avance.getCantidadBeneficiarios());
-		insert.setInt (4, avance.getActividadId());
-		insert.setInt (5, avance.getVersion());
-		insert.setString (6, usuarioResponsable);
+		insert.setInt (1, avance.getDepartamentoId());
+		insert.setInt (2, avance.getDistritoAvance());
+		insert.setString (3, avance.getJustificacion());
+		insert.setDouble(4, avance.getCantidad());
+		insert.setDate (5, sqlStart); 
+		insert.setInt (6, avance.getActividadId());
+		insert.setInt (7, avance.getVersion());
+		insert.setString (8, usuarioResponsable);
 		
 		insert.execute();
 		   
