@@ -1400,6 +1400,7 @@ public static boolean borradoHito(Hito objeto, String usuarioResponsable){
 			if(objeto.getPeso()!=0)      			query+= ", peso= ?";
 			if(objeto.getUnidad_medida_id()!=0)   	query+= ", unidad_medida_id= ?";
 			if(objeto.getHito_tipo_id()!=0)         query+= ", hito_tipo_id= ?";
+			if(objeto.getProdConcat() != null)      query+= ", prod_concat= ?";
 													query+= ", acumulable= ?";
 													query += ", usuario_responsable = ? ";
 
@@ -1414,6 +1415,7 @@ public static boolean borradoHito(Hito objeto, String usuarioResponsable){
 			if (objeto.getPeso()!=0)      			{    cantCampos++;update.setDouble (cantCampos, objeto.getPeso());}
 			if (objeto.getUnidad_medida_id()!=0)  	{    cantCampos++;update.setInt (cantCampos, objeto.getUnidad_medida_id());}
 			if (objeto.getHito_tipo_id()!=0)        {    cantCampos++;update.setInt (cantCampos, objeto.getHito_tipo_id());}
+			if (objeto.getProdConcat()!=null)       {    cantCampos++;update.setString (cantCampos, objeto.getProdConcat());}
 														 cantCampos++;update.setBoolean (cantCampos, objeto.isAcumulable());
 
 				cantCampos++;
