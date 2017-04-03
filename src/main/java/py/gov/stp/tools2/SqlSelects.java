@@ -182,7 +182,8 @@ public class SqlSelects {
 				objeto.setAccion_id(rs.getInt("accion_id"));
 				objeto.setHito_tipo_id(rs.getInt("hito_tipo_id"));
 				objeto.setUnidad_medida_id(rs.getInt("unidad_medida_id"));
-				objeto.setAcumulable(rs.getBoolean("acumulable"));				
+				objeto.setAcumulable(rs.getBoolean("acumulable"));
+				objeto.setProdConcat(rs.getString("prod_concat"));
 
 				objetos.add(objeto);
 			}
@@ -615,6 +616,8 @@ public class SqlSelects {
 				Avance objeto = new Avance();
 		
 				objeto.setId(rs.getInt("id"));
+				objeto.setDepartamentoId(rs.getInt("departamento_id"));
+				objeto.setDistritoAvance(rs.getInt("distrito_avance"));
 				objeto.setJustificacion(rs.getString("justificacion"));
 				objeto.setCantidad(rs.getDouble("cantidad"));
 				objeto.setFechaEntrega(rs.getString("fecha_entrega"));
@@ -1523,10 +1526,50 @@ public class SqlSelects {
 		}
 		return objetos; 
 		}	
-	
+	public static List<Producto> selectAllProductosSPR(String condition) throws SQLException{
+   	 Connection conect=ConnectionConfiguration.conectarSpr();
+		 String query = " select * from producto "+condition;
+		 query += " order by nombre ASC";
+		 Statement statement = null;
+		 ResultSet rs=null;
+		 List<Producto> productos = new ArrayList<Producto>();
+
+		try {
+			statement = conect.createStatement();
+			rs=statement.executeQuery(query);
+			while(rs.next()){
+				Producto producto = new Producto();
+				producto.setId(rs.getInt("id"));
+				producto.setClase(rs.getString("clase"));
+				producto.setNombre(rs.getString("nombre"));			
+				producto.setUnidad_medida_id(rs.getInt("unidad_medida_id"));
+				productos.add(producto);
+			}
+		}
+		catch (SQLException e) {e.printStackTrace();}
+		finally{
+			if (statement != null) {statement.close();}
+			if (conect != null) {conect.close();}
+		}
+		return productos;
+   }
 	public static List<AccionHasProducto> selectAccionHasProducto(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select * from accion_has_producto"+condition;
+//		Connection conect=ConnectionConfiguration.conectarSpr();
+		String query = " select * "+/* , ur.id as spr_unidad_responsable_id "+*/					    
+					   " from accion_has_producto " +
+					   " 	     " + condition;
+//					   " join proyecto py " +
+//					   " 		ON py.id = ahp.srp_proyecto_id "+
+//					   " 		and py.subprograma_id = ahp.spr_subprograma_id "+   
+//					   " 		and py.subprograma_programa_id = ahp.spr_programa_id "+  
+//					   " 		and py.subprograma_programa_tipo_presupuesto_id = ahp.spr_tiprograma_id "+   
+//					   " 		and py.subprograma_programa_entidad_id = ahp.spr_entidad_id "+
+//					   " 		and py.subprograma_programa_entidad_nivel_id = ahp.spr_nivel_id "+  
+//					   " JOIN unidad_responsable ur   "+
+//					   " 		ON ur.id = py.unidad_responsable_id "+  
+//					   " 		and ur.entidad_id = py.subprograma_programa_entidad_id "+  
+//					   " 		and ur.entidad_nivel_id = py.subprograma_programa_entidad_nivel_id " + condition;
 
 		Statement statement = null;
 		ResultSet rs=null;
@@ -1541,13 +1584,13 @@ public class SqlSelects {
 				objeto.setId(rs.getInt("id"));
 				objeto.setProporcion(rs.getInt("proporcion"));
 				objeto.setAccionId(rs.getInt("accion_id"));
-				objeto.setSprProductoId(rs.getInt("spr_producto_id"));
+				objeto.setSprProductoId(rs.getInt("spr_producto_id"));				
 				objeto.setVersion(rs.getInt("version"));
 				objeto.setBorrado(rs.getBoolean("borrado"));
 				objeto.setProyecto(rs.getInt("srp_proyecto_id"));
 				objeto.setSubPrograma(rs.getInt("spr_subprograma_id"));
 				objeto.setPrograma(rs.getInt("spr_programa_id"));
-				objeto.setTipoPrograma(rs.getInt("spr_tiprograma_id"));
+				objeto.setTipoPrograma(rs.getInt("spr_tiprograma_id"));				
 				objeto.setEntidad(rs.getInt("spr_entidad_id"));
 				objeto.setNivel(rs.getInt("spr_nivel_id"));
 				objeto.setAnho(rs.getInt("spr_anho"));
@@ -2173,6 +2216,51 @@ public class SqlSelects {
 			}
 			return objetos; 
 	  }
+	public static String selectAllProductosPresupuestoPND(String condition)  throws SQLException{
+		Connection conect=ConnectionConfiguration.conectarSpr();			
+		
+		String query =  "	select array_to_json(array_agg(row_to_json(t))) as resultado from( "+
+						"		select pp.id as producto_id, p.nombre as producto_nombre, "+
+						" 			   concat(pp.proyecto_subprograma_programa_entidad_nivel_id, '-', pp.proyecto_subprograma_programa_entidad_id, " +
+						"			   '-', pp.proyecto_subprograma_programa_tipo_presupuesto_id, '-', pp.proyecto_subprograma_programa_id, '-', " +
+						" 			   pp.proyecto_subprograma_id, '-', pp.proyecto_id, '-', pp.producto_id) as producto_concat " +
+						"		from producto_presupusto pp " + 
+						"		join proyecto py " +
+						"			ON py.id = pp.proyecto_id " +
+						"			and py.subprograma_id = pp.proyecto_subprograma_id " +
+						"			and py.subprograma_programa_id = pp.proyecto_subprograma_programa_id " +
+						"			and py.subprograma_programa_tipo_presupuesto_id = pp.proyecto_subprograma_programa_tipo_presupuesto_id " + 
+						"			and py.subprograma_programa_entidad_id = pp.proyecto_subprograma_programa_entidad_id " +
+						" 			and py.subprograma_programa_entidad_nivel_id = pp.proyecto_subprograma_programa_entidad_nivel_id " +
+						" 		JOIN producto p ON pp.id = p.id "+
+						"		JOIN unidad_responsable ur " +
+						"			ON ur.id = py.unidad_responsable_id " +
+						"			and ur.entidad_id = py.subprograma_programa_entidad_id " +
+						"			and ur.entidad_nivel_id = py.subprograma_programa_entidad_nivel_id " + condition +
+						"		group by pp.id, p.nombre, producto_concat " +
+						"		order by pp.id, p.nombre, producto_concat " +
+						"	)t ";
+				
+				
+		Statement statement = null;
+   		ResultSet rs=null;
+   		
+   		String objetos = "";
+
+    		try {
+    			statement = conect.createStatement();
+    			rs=statement.executeQuery(query);
+    			while(rs.next()){
+    				objetos+=rs.getString("resultado");
+    			}
+    		}
+   		catch (SQLException e) {e.printStackTrace();}
+   		finally{
+   			if (statement != null) {statement.close();}
+   			if (conect != null) {conect.close();}
+   		}
+   		return objetos;
+	}
 	public static List<ProgramacionPorMes> selectProgramacionPorMes(String condition) throws SQLException{
 	   	 Connection conect=ConnectionConfiguration.conectar();
 			 String query = " SELECT actividad_id, to_char(fecha_entrega, 'YYYY-MM') as mes, sum(cantidad) as cantidad FROM programacion where not borrado "+condition+" group by  actividad_id, mes order by actividad_id, mes";

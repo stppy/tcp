@@ -4270,14 +4270,13 @@ $("body").on("click", ".borrarAccion",function(event){
 		  	async:false       
 		}).responseText;
 		unidadMedida = JSON.parse(unidadMedida);
-		
-		   
+				   
 		var optionUnidadMedida;
 		for(var u = 0; u < unidadMedida.length; u++)
 		{
 			optionUnidadMedida+='<option value="'+unidadMedida[u].id+'" parametro="'+unidadMedida[u].id+'">'+unidadMedida[u].descripcion+'</option>';
-		}
-
+		}				
+		
 		var hitoTipo = $.ajax({
 			url:'/tablero/ajaxSelects2?action=getHitoTipo',
 		  	type:'get',
@@ -4295,6 +4294,47 @@ $("body").on("click", ".borrarAccion",function(event){
 		
 		optionAcumulable+='<option selected value="TRUE" parametro="TRUE">Si</option>';
 		optionAcumulable+='<option value="FALSE" parametro="FALSE">No</option>';
+		
+		var productos = $.ajax({
+			url:'/tablero/ajaxSelects2?action=getProductos',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		productos = JSON.parse(productos);
+		
+		var productoNombre = '';
+		var productosAccion = $.ajax({
+			url:'/tablero/ajaxSelects2?action=getAccionHasProducto&accionId='+accionId+'&nivel='+institucion[0].nivelId+'&entidad='+institucion[0].entidadId,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		productosAccion = JSON.parse(productosAccion);		
+		
+		var optionProductosAccion;
+		optionProductosAccion = '<option value="">Ningún producto seleccionado</option>';
+		for(var u = 0; u < productosAccion.length; u++)
+		{
+			productoNombre = '';
+			for(var i = 0; i < productos.length; i++)
+			{
+				if (productosAccion[u].sprProductoId == productos[i].id){
+					productoNombre = productos[i].nombre;
+				}
+			}
+			
+			optionProductosAccion+='<option value="'+
+										productosAccion[u].nivel+'-'+
+										productosAccion[u].entidad+'-'+
+										productosAccion[u].tipoPrograma+'-'+
+										productosAccion[u].programa+'-'+
+										productosAccion[u].subPrograma+'-'+
+										productosAccion[u].proyecto+'-'+
+										productosAccion[u].sprProductoId+'">'+
+											productosAccion[u].sprProductoId + ' - ' + productoNombre +
+								   '</option>';
+		}
 		
 		var actividades = $.ajax({
 			url:'/tablero/ajaxSelects2?action=getCronograma&accionId='+accionId,
@@ -4352,8 +4392,8 @@ $("body").on("click", ".borrarAccion",function(event){
 			if(accion[0].distritoId == distritos[e].id && accion[0].departamentoId == distritos[e].departamentoId){
 				nombreDistrito = distritos[e].descripcion;
 			}
-		}
-				
+		}						
+		
 		
 		var cuerpoActividad = "";
 		
@@ -4383,13 +4423,13 @@ $("body").on("click", ".borrarAccion",function(event){
 				if(actividades[u].borrado == false)
 				{
 					<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-						cuerpoActividad+='<tr><td>'+actividades[u].nombre+'</td><td>'+actividades[u].descripcion+'</td><td>'+nombreUnidadMedida+'</td><td>'+nombreHitoTipo+'</td><td>'+actividades[u].proporcion+'</td><td>'+actividades[u].peso+'</td><td>'+acumulable(actividades[u].acumulable)+'</td><td><button type="button" class="btn btn-default btn-sm editarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+' data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm agregarProgramacion" data-toggle="tooltip" data-placement="top" title="Agregar Hito" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-time" ></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
+						cuerpoActividad+='<tr><td>'+actividades[u].nombre+'</td><td>'+actividades[u].descripcion+'</td><td>'+nombreUnidadMedida+'</td><td>'+nombreHitoTipo+'</td><td>'+actividades[u].proporcion+'</td><td>'+actividades[u].peso+'</td><td>'+acumulable(actividades[u].acumulable)+'</td><td>'+prodConcatVal(actividades[u].prodConcat)+'</td><td><button type="button" class="btn btn-default btn-sm editarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+' data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm agregarProgramacion" data-toggle="tooltip" data-placement="top" title="Agregar Hito" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-time" ></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
 					<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-						cuerpoActividad+='<tr><td>'+actividades[u].nombre+'</td><td>'+actividades[u].descripcion+'</td><td>'+nombreUnidadMedida+'</td><td>'+nombreHitoTipo+'</td><td>'+actividades[u].proporcion+'</td><td>'+actividades[u].peso+'</td><td>'+acumulable(actividades[u].acumulable)+'</td><td><button type="button" class="btn btn-default btn-sm agregarProgramacion" data-toggle="tooltip" data-placement="top" title="Agregar Hito" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-time" ></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
+						cuerpoActividad+='<tr><td>'+actividades[u].nombre+'</td><td>'+actividades[u].descripcion+'</td><td>'+nombreUnidadMedida+'</td><td>'+nombreHitoTipo+'</td><td>'+actividades[u].proporcion+'</td><td>'+actividades[u].peso+'</td><td>'+acumulable(actividades[u].acumulable)+'</td><td>'+prodConcatVal(actividades[u].prodConcat)+'</td><td><button type="button" class="btn btn-default btn-sm agregarProgramacion" data-toggle="tooltip" data-placement="top" title="Agregar Hito" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-time" ></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
 					<%}%>
 				}else{
 					<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
-						cuerpoActividad+='<tr><td><del>'+actividades[u].nombre+'</del></td><td><del>'+actividades[u].descripcion+'</del></td><td><del>'+nombreUnidadMedida+'</del></td><td><del>'+nombreHitoTipo+'</del></td><td><del>'+actividades[u].proporcion+'</del></td><td><del>'+actividades[u].peso+'</del></td><td><del>'+acumulable(actividades[u].acumulable)+'</del></td><td><button type="button" class="btn btn-default btn-sm editarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+' data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm agregarProgramacion" data-toggle="tooltip" data-placement="top" title="Agregar Hito" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-time" ></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
+						cuerpoActividad+='<tr><td><del>'+actividades[u].nombre+'</del></td><td><del>'+actividades[u].descripcion+'</del></td><td><del>'+nombreUnidadMedida+'</del></td><td><del>'+nombreHitoTipo+'</del></td><td><del>'+actividades[u].proporcion+'</del></td><td><del>'+actividades[u].peso+'</del></td><td><del>'+acumulable(actividades[u].acumulable)+'</del></td><td><del>'+prodConcatVal(actividades[u].prodConcat)+'</del></td><td><button type="button" class="btn btn-default btn-sm editarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+' data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm agregarProgramacion" data-toggle="tooltip" data-placement="top" title="Agregar Hito" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-time" ></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
 					<%}%>		
 				}	
 			}	
@@ -4429,13 +4469,14 @@ $("body").on("click", ".borrarAccion",function(event){
 		
 		'									<div class="table-responsive">'+
 		'										<table class="table table-hover">'+
-		'											<tbody>'+
+		'											<tbody id="formularioAgregarActividad">'+
 		'												<tr><td><div class="form-group"><label for="departamentoActividad">Departamento</label><input type="text" class="form-control" id="departamentoActividad" value="'+nombreDepartamento+'" disabled /></div></td><td><div class="form-group"><label for="distritoActividad">Distrito</label><input type="text" id="distritoActividad" value="'+nombreDistrito+'" class="form-control" disabled> </div></td></tr>'+
 		'												<tr><td><div class="form-group"><label for="nombreActividad">Cronograma</label><input type="text" class="form-control" id="nombreActividad" value="" placeholder="Ingrese Nombre del Cronograma" required><input type="hidden" class="form-control" id="insLineaAccionId" value="'+insLineaAccionId+'"></div></td><td><div class="form-group"><label for="descripcionActividad">Descripción</label><input type="text" id="descripcionActividad" value="" class="form-control"> </div></td></tr>'+
 		'												<tr><td><div class="form-group"><label for="unidadMedidaIdActividad">Unidad de Medida</label><select id="unidadMedidaIdActividad" class="form-control" placeholder="Ingrese Unidad Medida Id">'+optionUnidadMedida+'</div></td><td><div class="form-group"><label for="hitoTipoIdActividad">Tipo de Cronograma</label>'+
 		'												<select id="hitoTipoIdActividad" class="form-control" placeholder="Ingrese Tipo de Cronograma">'+optionTipoHito+'</select></div></td></tr>'+
 		'												<tr><td><div class="form-group"><label for="proporcionActividad">Proporción</label><input type="number" class="form-control" id="proporcionActividad" value="1" required /></div></div></td><td><div class="form-group"><label for="pesoActividad">Peso</label><input type="number" class="form-control" id="pesoActividad" value="1" required/></div></td></tr>'+
-		'												<tr><td><div class="form-group"><label for="acumulableActividad">Acumulable</label><select id="acumulableActividad" class="form-control" placeholder="Ingrese Tipo Acumulable">'+optionAcumulable+'</select></div></td></tr>'+
+		'												<tr><td><div class="form-group"><label for="acumulableActividad">Acumulable</label><select id="acumulableActividad" class="form-control" placeholder="Ingrese Tipo Acumulable">'+optionAcumulable+'</select></div></td>'+
+		'													<td><div class="form-group"><label for="productosActividad">Producto relacionado</label><select id="productosActividad" class="form-control" placeholder="Ingrese el Producto al cual se vincula la actividad">'+optionProductosAccion+'</select></div></td></tr>'+
 		'											</tbody>'+							           
 		'										</table>'+
 		'									</div>'+
@@ -4490,7 +4531,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		var tablaCronograma ='			<div class="table-responsive">'+
 		'	                				<table class="table table-hover table-bordered" id="dataTablesActividades">'+
 		'	                					<thead>'+
-		'	                						<tr class="active"><th class="text-center">Nombre</th><th class="text-center">Descripción</th><th class="text-center">Unidad Medida</th><th class="text-center">Tipo Cronograma</th><th class="text-center">Proporción</th><th class="text-center">Peso</th><th class="text-center" data-toggle="tooltip" data-placement="top" title="Acumulable">Acu</th><th class="text-center">Administrar Cronograma</th></tr>'+
+		'	                						<tr class="active"><th class="text-center">Nombre</th><th class="text-center">Descripción</th><th class="text-center">Unidad Medida</th><th class="text-center">Tipo Cronograma</th><th class="text-center">Proporción</th><th class="text-center">Peso</th><th class="text-center" data-toggle="tooltip" data-placement="top" title="Acumulable">Acu</th><th class="text-center" data-toggle="tooltip" data-placement="top" title="Producto Concat">Producto Concat</th><th class="text-center">Administrar Cronograma</th></tr>'+
 		'	                					</thead>'+
 		'	                						<tbody id="tablaActividades">'+
 		'	                						</tbody>'+
@@ -4534,6 +4575,57 @@ $("body").on("click", ".borrarAccion",function(event){
 	                }
 	                    }
 	                ]});
+		
+		/* function Combo(){
+
+		    this.productoConcatFocus = function(){
+			if ( $("#listaProductos").length ) {
+				$("#listaProductos").remove();
+				$('#productosActividad').val('');				
+			}
+			
+			var url="";
+								
+		   	var listaDatalist=document.getElementsByTagName('datalist');
+		      
+		   	var datosProductos = $.ajax({
+				url:'/tablero/ajaxSelects2?action=getProductosPresupuestoPND',
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+			}).responseText;
+			datosProductos = JSON.parse(datosProductos);	 */		
+			   
+			/* var optionProductos;
+			for(var u = 0; u < productos.length; u++)
+			{
+				optionProductos += '<option value="'+productos[u].producto_concat+'" >' + productos[u].producto_nombre + ' - ' + productos[u].producto_concat + '</option>';
+			} */		   	 
+		        
+				
+		        /* if(listaDatalist.length === 0 )
+		        {
+			        var datalistProductos = document.createElement('datalist');
+			        datalistProductos.setAttribute('id','listaProductos');
+			        datalistProductos.setAttribute('size','7'); 
+			        var ubicacionDatalistProductos = document.getElementById('formularioCronograma');
+			        ubicacionDatalistProductos.appendChild(datalistProductos);
+			
+			        for(var i = 0; i < datosProductos.length ; i++) 
+			        {    
+			        	var option = document.createElement('option');
+			          	option.setAttribute('value',datosProductos[i].producto_concat);
+			          	option.setAttribute('label',datosProductos[i].producto_nombre);
+			          	datalistProductos.appendChild(option);      
+			      	} 
+		        }
+			
+		    } 		    
+		    
+		}//fin combo 
+		
+		  var eje1 = new Combo();
+		  document.getElementById('productosActividad').addEventListener('focus',eje1.productoConcatFocus,false);*/ 			
 				
 	});
 	
@@ -4545,7 +4637,16 @@ $("body").on("click", ".borrarAccion",function(event){
 		}else{
 			return acu = "No";
 		}
-	}	
+	}
+	
+	function prodConcatVal(dato){		
+		var pcc="";
+		if(dato != undefined){
+			return pcc = dato;
+		}else{
+			return pcc = "";
+		}
+	}
 	
 $("body").on("click", ".editarCronograma", function(event){
 	var parametros = $(this).attr("parametros");
@@ -4567,7 +4668,7 @@ $("body").on("click", ".editarCronograma", function(event){
 		$("#modalActividad").remove();
 	}
 
-	
+	//Obtención de los datos de la actividad a ser editada para rellenar los campos en el formulario.
 	var actividades = $.ajax({
 		url:'/tablero/ajaxSelects2?action=getCronograma&cronogramaId='+cronogramaId,
 	  	type:'get',
@@ -4576,7 +4677,63 @@ $("body").on("click", ".editarCronograma", function(event){
 	}).responseText;
 	actividades = JSON.parse(actividades);
 	
+	//Sección de carga de productos en el combobox. 
+	var productos = $.ajax({
+		url:'/tablero/ajaxSelects2?action=getProductos',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	productos = JSON.parse(productos);
 	
+	var institucion = $.ajax({
+		url:'/tablero/ajaxSelects2?action=getInstitucion&institucionId='+institucionId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	institucion = JSON.parse(institucion);
+	
+	var productoNombre = '';
+	var productosAccion = $.ajax({
+		url:'/tablero/ajaxSelects2?action=getAccionHasProducto&accionId='+accionId+'&nivel='+institucion[0].nivelId+'&entidad='+institucion[0].entidadId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	productosAccion = JSON.parse(productosAccion);		
+	
+	var optionProductosAccion;
+	optionProductosAccion = '<option value="">Ningún producto seleccionado</option>';
+	for(var u = 0; u < productosAccion.length; u++)
+	{
+		productoNombre = '';
+		for(var i = 0; i < productos.length; i++)
+		{
+			if (productosAccion[u].sprProductoId == productos[i].id){
+				productoNombre = productos[i].nombre;
+			}
+		}
+		
+		var valor = productosAccion[u].nivel+'-'+
+					productosAccion[u].entidad+'-'+
+					productosAccion[u].tipoPrograma+'-'+
+					productosAccion[u].programa+'-'+
+					productosAccion[u].subPrograma+'-'+
+					productosAccion[u].proyecto+'-'+
+					productosAccion[u].sprProductoId; 
+		
+		optionProductosAccion+='<option value="'+valor+'"';
+									
+		if (valor == actividades[0].prodConcat) 
+			optionProductosAccion+= ' selected >';								
+		else 
+			optionProductosAccion+= ' >';
+		
+		optionProductosAccion += productosAccion[u].sprProductoId + ' - ' + productoNombre + '</option>';
+	}	
+	
+	//Continuación con la carga de datos en los formularios de la actividad a editar.
 	var unidadMedida = $.ajax({
 		url:'/tablero/ajaxSelects2?action=getUnidadMedida',
 	  	type:'get',
@@ -4634,7 +4791,8 @@ $("body").on("click", ".editarCronograma", function(event){
 						'												<tr><td><label for="nombreCronograma">Nombre</label><input type="text" id="nombreCronograma" value="'+actividades[0].nombre+'" class="form-control" required /></td><td><label for="descripcionCronograma">Descripcion</label><input type="text" id="descripcionCronograma" class="form-control" value="'+actividades[0].descripcion+'"  /></td></tr>'+
 						'												<tr><td><div class="form-group"><label for="unidadMedidaIdCronograma">Unidad de Medida</label><select id="selectorUnidadMedidaCronograma" class="form-control">'+optionUnidadMedida+'</select></div></td><td><div class="form-group"><label for="hitoTipoIdCronograma">Tipo Cronograma</label><select id="selectorHitoTipoIdCronograma" class="form-control">"'+optionTipoHito+'"</select></div></td></tr>'+
 						'												<tr><td><label for="proporcionCronograma">Proporción</label><input type="number" id="proporcionCronograma" value='+actividades[0].proporcion+' class="form-control" required /></td><td><label for="pesoCronograma">Peso</label><input type="number" id="pesoCronograma" class="form-control" value='+actividades[0].peso+' required /></td></tr>'+
-						'												<tr><td><div class="form-group"><label for="acumulableCronograma">Acumulable</label><select id="acumulableCronograma" class="form-control" placeholder="Ingrese Tipo Acumulable">'+optionAcumulable+'</select></div></td><td></td></tr>'+
+						'												<tr><td><div class="form-group"><label for="acumulableCronograma">Acumulable</label><select id="acumulableCronograma" class="form-control" placeholder="Ingrese Tipo Acumulable">'+optionAcumulable+'</select></div></td>'+
+						'													<td><div class="form-group"><label for="productosActividad">Producto relacionado</label><select id="productosActividad" class="form-control" placeholder="Ingrese el Producto al cual se vincula la actividad">'+optionProductosAccion+'</select></div></td></tr>'+						
 						
 						'			      							</form>	'+												
 						'										</tbody>'+
@@ -4812,6 +4970,7 @@ $("body").on("click", ".actualizarCronograma", function(event){
     var proporcionCronograma = $("#proporcionCronograma").val();
     var pesoCronograma = $("#pesoCronograma").val();
     var acumulable = $("#acumulableCronograma").val();
+    var productoConcat = document.getElementById("productosActividad").value;
 
     
     //aca vacio el formulario de edición de cronograma
@@ -4833,6 +4992,7 @@ $("body").on("click", ".actualizarCronograma", function(event){
     datos.proporcion = proporcionCronograma;
     datos.peso = pesoCronograma;
     datos.acumulable = acumulable;
+    datos.prodConcat = productoConcat; 
 
     
   	var info = JSON.stringify(datos);
@@ -4882,7 +5042,8 @@ $("body").on("click", ".guardarActividad",function(event){
 	    var accion_id = document.getElementById("accionIdActividad").value;
 	    var unidad_medida_id = document.getElementById("unidadMedidaIdActividad").value;
 	    var hito_tipo_id = document.getElementById("hitoTipoIdActividad").value;
-	   var acumulable = document.getElementById("acumulableActividad").value;
+	    var acumulable = document.getElementById("acumulableActividad").value;
+	    var productoConcat = document.getElementById("productosActividad").value;
 
 
 		var objeto = new Object();
@@ -4896,6 +5057,7 @@ $("body").on("click", ".guardarActividad",function(event){
 		objeto.unidad_medida_id = unidad_medida_id;
 		objeto.hito_tipo_id = hito_tipo_id;
 		objeto.acumulable = acumulable;
+		objeto.prodConcat = productoConcat; 
 
 		
 	  	var info = JSON.stringify(objeto);
@@ -4994,13 +5156,13 @@ function actualizarTablaActividades(accion_id,insLineaAccionId,lineaAccionId,ins
 			if(actividades[u].borrado == false)
 			{
 				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-					cuerpoActividad+='<tr><td>'+actividades[u].nombre+'</td><td>'+actividades[u].descripcion+'</td><td>'+nombreUnidadMedida+'</td><td>'+nombreHitoTipo+'</td><td>'+actividades[u].proporcion+'</td><td>'+actividades[u].peso+'</td><td>'+acumulable(actividades[u].acumulable)+'</td><td><button type="button" class="btn btn-default btn-sm editarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+' data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm agregarProgramacion" data-toggle="tooltip" data-placement="top" title="Agregar Hito" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-time" ></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
+					cuerpoActividad+='<tr><td>'+actividades[u].nombre+'</td><td>'+actividades[u].descripcion+'</td><td>'+nombreUnidadMedida+'</td><td>'+nombreHitoTipo+'</td><td>'+actividades[u].proporcion+'</td><td>'+actividades[u].peso+'</td><td>'+acumulable(actividades[u].acumulable)+'</td><td>'+prodConcatVal(actividades[u].prodConcat)+'</td><td><button type="button" class="btn btn-default btn-sm editarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+' data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm agregarProgramacion" data-toggle="tooltip" data-placement="top" title="Agregar Hito" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-time" ></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
 				<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-					cuerpoActividad+='<tr><td>'+actividades[u].nombre+'</td><td>'+actividades[u].descripcion+'</td><td>'+nombreUnidadMedida+'</td><td>'+nombreHitoTipo+'</td><td>'+actividades[u].proporcion+'</td><td>'+actividades[u].peso+'</td><td>'+acumulable(actividades[u].acumulable)+'</td><td><button type="button" class="btn btn-default btn-sm agregarProgramacion" data-toggle="tooltip" data-placement="top" title="Agregar Hito" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-time" ></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
+					cuerpoActividad+='<tr><td>'+actividades[u].nombre+'</td><td>'+actividades[u].descripcion+'</td><td>'+nombreUnidadMedida+'</td><td>'+nombreHitoTipo+'</td><td>'+actividades[u].proporcion+'</td><td>'+actividades[u].peso+'</td><td>'+acumulable(actividades[u].acumulable)+'</td><td>'+prodConcatVal(actividades[u].prodConcat)+'</td><td><button type="button" class="btn btn-default btn-sm agregarProgramacion" data-toggle="tooltip" data-placement="top" title="Agregar Hito" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-time" ></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
 				<%}%>			
 			}else{
 				<% if (attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("0")){%>
-					cuerpoActividad+='<tr><td><del>'+actividades[u].nombre+'</del></td><td><del>'+actividades[u].descripcion+'</del></td><td><del>'+nombreUnidadMedida+'</del></td><td><del>'+nombreHitoTipo+'</del></td><td><del>'+actividades[u].proporcion+'</del></td><td><del>'+actividades[u].peso+'</del></td><td><del>'+acumulable(actividades[u].acumulable)+'</del></td><td><button type="button" class="btn btn-default btn-sm editarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+' data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Hito"><span class="glyphicon glyphicon-time agregarProgramacion" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
+					cuerpoActividad+='<tr><td><del>'+actividades[u].nombre+'</del></td><td><del>'+actividades[u].descripcion+'</del></td><td><del>'+nombreUnidadMedida+'</del></td><td><del>'+nombreHitoTipo+'</del></td><td><del>'+actividades[u].proporcion+'</del></td><td><del>'+actividades[u].peso+'</del></td><td><del>'+acumulable(actividades[u].acumulable)+'</del></td><td><del>'+prodConcatVal(actividades[u].prodConcat)+'</del></td><td><button type="button" class="btn btn-default btn-sm editarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+' data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Hito"><span class="glyphicon glyphicon-time agregarProgramacion" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
 				<% }%>
 			}	
 		}	
@@ -5010,7 +5172,7 @@ function actualizarTablaActividades(accion_id,insLineaAccionId,lineaAccionId,ins
 	var tablaCronograma ='			<div class="table-responsive">'+
 	'	                				<table class="table table-hover table-bordered" id="dataTablesActividades">'+
 	'	                					<thead>'+
-	'	                						<tr class="active"><th class="text-center">Nombre</th><th class="text-center">Descripción</th><th class="text-center">Unidad Medida</th><th class="text-center">Tipo Cronograma</th><th class="text-center">Proporción</th><th class="text-center">Peso</th><th class="text-center" data-toggle="tooltip" data-placement="top" title="Acumulable">Acu</th><th class="text-center">Administrar Cronograma</th></tr>'+
+	'	                						<tr class="active"><th class="text-center">Nombre</th><th class="text-center">Descripción</th><th class="text-center">Unidad Medida</th><th class="text-center">Tipo Cronograma</th><th class="text-center">Proporción</th><th class="text-center">Peso</th><th class="text-center" data-toggle="tooltip" data-placement="top" title="Acumulable">Acu</th><th class="text-center" data-toggle="tooltip" data-placement="top" title="Producto">Producto Concat</th><th class="text-center">Administrar Cronograma</th></tr>'+
 	'	                					</thead>'+
 	'	                						<tbody id="tablaActividades">'+
 	'	                						</tbody>'+
@@ -5026,6 +5188,7 @@ function actualizarTablaActividades(accion_id,insLineaAccionId,lineaAccionId,ins
 	$("#hitoTipoIdActividad").val('');
 	//$("#proporcionActividad").val('');
 	//$("#pesoActividad").val('');
+	$("#productosActividad").val('');
 	$("#dataTablesActividades").DataTable({
 		dom: 'Bfrtip',
         buttons: [
@@ -5518,8 +5681,18 @@ $("body").on("click", ".guardarProgramacion",function(event){
         	}
 	 });
 	}
-});	
- 
+});
+
+var distAvance = "";
+
+var distritos = $.ajax({
+	url:'/tablero/ajaxSelects?action=getDistrito',
+  	type:'get',
+  	dataType:'json',
+  	async:false       
+}).responseText;
+distritos = JSON.parse(distritos);
+
 function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId, accionId, actividadId){
 	
 	if ( $("#modalVincularProductos").length )
@@ -5641,21 +5814,17 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
     }).responseText;
 	departamentos = JSON.parse(departamentos);
 	
-	var distritos = $.ajax({
-    	url:'/tablero/ajaxSelects?action=getDistrito',
-      	type:'get',
-      	dataType:'json',
-      	async:false       
-    }).responseText;
-	distritos = JSON.parse(distritos);
-	
 	var nombreDepartamento = "";
 	var nombreDistrito = "";
+	var optionDistritoAvance;
+	var optionDepartamentoAvance;
+	
 	
 	for(var d = 0; d < departamentos.length; d++)
 	{
 		if(accion[0].departamentoId == departamentos[d].idDepartamento){
 			nombreDepartamento = departamentos[d].nombreDepartamento;
+			optionDepartamentoAvance+='<option value="'+departamentos[d].idDepartamento+'" >'+departamentos[d].nombreDepartamento+'</option>';
 		}
 	}
 	
@@ -5665,8 +5834,11 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
 		if(accion[0].distritoId == distritos[e].id && accion[0].departamentoId == distritos[e].departamentoId){
 			nombreDistrito = distritos[e].descripcion;
 		}
+		if(accion[0].departamentoId == distritos[e].departamentoId){			
+			optionDistritoAvance+='<option value="'+distritos[e].id+'" >'+distritos[e].descripcion+'</option>';
+		}
 	}
-
+	
 	var nombreUnidadMedidaHitoProgramado="";
 	for(var g = 0; g < unidadMedida.length; g++ )
 	{
@@ -5712,19 +5884,26 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
 	var cuerpoAvance = " ";
 	for(var d = 0; d < webServicesAvance.length; d++)
 	{
+		for(var e = 0; e < distritos.length; e++)
+		{
+			if(webServicesAvance[d].departamentoId == distritos[e].departamentoId && webServicesAvance[d].distritoAvance == distritos[e].id){			
+				distAvance = distritos[e].descripcion;
+			}
+		}
+		
 		if(onoff==true && webServicesAvance[d].borrado == true){
 			// pasa a la siguiente fila en el for ++	
 		}else{
 			if(webServicesAvance[d].borrado == true)
 			{
 				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
-					cuerpoAvance += '<tr><td><del>'+webServicesAvance[d].justificacion+'</del></td><td><del>'+numeroConComa(webServicesAvance[d].cantidad)+'</del></td><td><del>'+webServicesAvance[d].fechaEntrega+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm agregarModalAdministrador" data-toggle="tooltip" data-placement="top" title="Detallar Avance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+webServicesAvance[d].id+'><span class="fa fa-gear"></span></button></td></tr>';
+					cuerpoAvance += '<tr><td><del>'+distAvance+'</del></td><td><del>'+webServicesAvance[d].justificacion+'</del></td><td><del>'+numeroConComa(webServicesAvance[d].cantidad)+'</del></td><td><del>'+webServicesAvance[d].fechaEntrega+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm agregarModalAdministrador" data-toggle="tooltip" data-placement="top" title="Detallar Avance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+webServicesAvance[d].id+'><span class="fa fa-gear"></span></button></td></tr>';
 				<%}%>
 			}else{
 				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-					cuerpoAvance += '<tr><td>'+webServicesAvance[d].justificacion+'</td><td>'+numeroConComa(webServicesAvance[d].cantidad)+'</td><td>'+webServicesAvance[d].fechaEntrega+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm agregarModalAdministrador" data-toggle="tooltip" data-placement="top" title="Detallar Avance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+webServicesAvance[d].id+'><span class="fa fa-gear"></span></button></td></tr>';
+					cuerpoAvance += '<tr><td>'+distAvance+'</td><td>'+webServicesAvance[d].justificacion+'</td><td>'+numeroConComa(webServicesAvance[d].cantidad)+'</td><td>'+webServicesAvance[d].fechaEntrega+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm agregarModalAdministrador" data-toggle="tooltip" data-placement="top" title="Detallar Avance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+webServicesAvance[d].id+'><span class="fa fa-gear"></span></button></td></tr>';
 				<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-					cuerpoAvance += '<tr><td>'+webServicesAvance[d].justificacion+'</td><td>'+numeroConComa(webServicesAvance[d].cantidad)+'</td><td>'+webServicesAvance[d].fechaEntrega+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm agregarModalAdministrador" data-toggle="tooltip" data-placement="top" title="Detallar Avance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+webServicesAvance[d].id+'><span class="fa fa-gear"></span></button></td></tr>';
+					cuerpoAvance += '<tr><td>'+distAvance+'</td><td>'+webServicesAvance[d].justificacion+'</td><td>'+numeroConComa(webServicesAvance[d].cantidad)+'</td><td>'+webServicesAvance[d].fechaEntrega+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm agregarModalAdministrador" data-toggle="tooltip" data-placement="top" title="Detallar Avance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+webServicesAvance[d].id+'><span class="fa fa-gear"></span></button></td></tr>';
 				<%}%>
 			}
 		}	
@@ -5761,7 +5940,8 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
 							'									<table class="table table-hover">'+
 							'										<tbody>'+
 							'			      							<form class="form-horizontal" role="form">'+
-							'											<tr><td><div class="form-group"><label for="departamentoActividad">Departamento</label><input type="text" class="form-control" id="departamentoActividad" value="'+nombreDepartamento+'" disabled /></div></td><td><div class="form-group"><label for="distritoActividad">Distrito</label><input type="text" id="distritoActividad" value="'+nombreDistrito+'" class="form-control" disabled> </div></td></tr>'+
+							'											<tr><td><div class="form-group"><label for="departamentoActividad">Departamento</label><input type="hidden" class="form-control" id="departamentoActividad" value="'+nombreDepartamento+'" disabled /><select class="form-control" id="departamentoAvance" disabled>'+optionDepartamentoAvance+'</select></div></td>'+
+							'												<td><div class="form-group"><label for="distritoActividad">Distrito</label><input type="hidden" id="distritoActividad" value="'+nombreDistrito+'" class="form-control" disabled><select class="form-control" id="distritoAvance">'+optionDistritoAvance+'</select></div></td></tr>'+
 							'											<tr><td><label for="justificacionAvance">Justificación</label><input type="text" id="justificacionAvance" value="" class="form-control" placeholder="Ingrese Justificación" required/></td>'+
 							'												<td><label for="cantidadAvance">Cantidad</label><input type="number" id="cantidadAvance" class="form-control" value="" placeholder="Ingrese Cantidad" required/></td>'+
 							'											</tr>'+
@@ -5826,8 +6006,8 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
 	
 	var tablaListaAvance ='<div class="table-responsive">'+
 		'							<table class="table table-hover table-bordered" id="dataTablesListaAvance">'+
-		'								<thead><tr class="active"><th>Justificación</th><th>cantidad</th><th>Fecha Entrega</th><th>Administrar</th></tr></thead>'+
-		'								<tfoot><tr><th></th><th></th><th></th><th></th></tr></tfoot>'+
+		'								<thead><tr class="active"><th>Distrito</th><th>Justificación</th><th>cantidad</th><th>Fecha Entrega</th><th>Administrar</th></tr></thead>'+
+		'								<tfoot><tr><th></th><th></th><th></th><th></th><th></th></tr></tfoot>'+
 		'								<tbody id="listaAvances">'+
 		'								</tbody>'+
 		'							</table>'+
@@ -6037,7 +6217,8 @@ $("body").on("click", ".guardarAvance",function(event){
 		var justificacion = $("#justificacionAvance").val();
 		var cantidad = $("#cantidadAvance").val();
 		var fechaEntrega = $("#fechaEntregaAvance").val();
-		//var cantidadBeneficiarios = $("#cantidadBeneficiariosAvance").val();
+		var distritoAvance = $("#distritoAvance option:selected").val();
+		var departamentoId = $("#departamentoAvance option:selected").val();
 		var version = $("#versionAvance").val();
 	
 	
@@ -6052,7 +6233,8 @@ $("body").on("click", ".guardarAvance",function(event){
 		objeto.justificacion = justificacion;
 		objeto.cantidad = cantidad;
 		objeto.fechaEntrega = fechaEntrega;
-		//objeto.cantidadBeneficiarios = cantidadBeneficiarios;
+		objeto.distritoAvance = distritoAvance;
+		objeto.departamentoId = departamentoId;
 		objeto.actividadId = actividadId;
 		objeto.version = version;
 	
@@ -6087,23 +6269,6 @@ $("body").on("click", ".guardarAvance",function(event){
 					$("#tableAvance").html(tableAvance);
 					
 					renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId, accionId, actividadId);
-	        		
-	        		/* var webServicesAvance = $.ajax({
-	        			url:'/tablero/ajaxSelects2?action=getAvance&actividadId='+actividadId,
-	        		  	type:'get',
-	        		  	dataType:'json',
-	        		  	async:false       
-	        		}).responseText;
-	        		webServicesAvance = JSON.parse(webServicesAvance);
-	        		
-	        		var cuerpoAvance = "";
-	        		for(var d = 0; d < webServicesAvance.length; d++)
-	        		{
-	        			cuerpoAvance += '<tr><td>'+webServicesAvance[d].justificacion+'</td><td>'+numeroConComa(webServicesAvance[d].cantidad)+'</td><td>'+webServicesAvance[d].fechaEntrega+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm agregarModalAdministrador" data-toggle="tooltip" data-placement="top" title="Administrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+webServicesAvance[d].id+'><span class="fa fa-gear"></span></button></td></tr>';
-	        		}
-	        		
-	        		$("#listaAvances").html("");
-	        		$("#listaAvances").html(cuerpoAvance); */
 	        		
 	        	}else{
 	        		alert("ERROR");        		
@@ -6172,6 +6337,13 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 		}).responseText;
 		webServicesAvance = JSON.parse(webServicesAvance); 
 		
+		for(var e = 0; e < distritos.length; e++)
+		{
+			if(webServicesAvance[0].departamentoId == distritos[e].departamentoId && webServicesAvance[0].distritoAvance == distritos[e].id){			
+				distAvance = distritos[e].descripcion;
+			}
+		}
+		
 		var tableAvance="";
 		tableAvance=
 			'						<div class="box box-warning box-solid">'+
@@ -6198,13 +6370,13 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 			if(webServicesAvance[0].borrado == true)
 			{
 				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
-				tableAvance +=	'													<tr><td><del>'+webServicesAvance[0].justificacion+'</del></td><td><del>'+numeroConComa(webServicesAvance[0].cantidad)+'</del></td><td><del>'+webServicesAvance[0].fechaEntrega+'</del></td></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaBorrarAvance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' data-toggle="tooltip" data-placement="top" title="Restaurar" ><span class="fa fa-recycle"></span></button></td></tr>';
+				tableAvance +=	'													<tr><td><del>'+distAvance+'</del></td><td><del>'+webServicesAvance[0].justificacion+'</del></td><td><del>'+numeroConComa(webServicesAvance[0].cantidad)+'</del></td><td><del>'+webServicesAvance[0].fechaEntrega+'</del></td></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaBorrarAvance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' data-toggle="tooltip" data-placement="top" title="Restaurar" ><span class="fa fa-recycle"></span></button></td></tr>';
 				<%}%>
 			}else{
 				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-				tableAvance +=	'													<tr><td>'+webServicesAvance[0].justificacion+'</td><td>'+numeroConComa(webServicesAvance[0].cantidad)+'</td><td>'+webServicesAvance[0].fechaEntrega+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarAvance" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarAvance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' data-toggle="tooltip" data-placement="top" title="Borrar" ><span class="fa fa-trash"></span></button></td></tr>';
+				tableAvance +=	'													<tr><td>'+distAvance+'</td><td>'+webServicesAvance[0].justificacion+'</td><td>'+numeroConComa(webServicesAvance[0].cantidad)+'</td><td>'+webServicesAvance[0].fechaEntrega+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarAvance" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarAvance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' data-toggle="tooltip" data-placement="top" title="Borrar" ><span class="fa fa-trash"></span></button></td></tr>';
 				<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-				tableAvance +=	'													<tr><td>'+webServicesAvance[0].justificacion+'</td><td>'+numeroConComa(webServicesAvance[0].cantidad)+'</td><td>'+webServicesAvance[0].fechaEntrega+'</td><td class="text-center"></td></tr>';
+				tableAvance +=	'													<tr><td>'+distAvance+'</td><td>'+webServicesAvance[0].justificacion+'</td><td>'+numeroConComa(webServicesAvance[0].cantidad)+'</td><td>'+webServicesAvance[0].fechaEntrega+'</td><td class="text-center"></td></tr>';
 				<%}%>
 			}
 			
@@ -6401,6 +6573,14 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 	}).responseText;
 	webServicesAvance = JSON.parse(webServicesAvance); 
 	
+
+	for(var e = 0; e < distritos.length; e++)
+	{
+		if(webServicesAvance[0].departamentoId == distritos[e].departamentoId && webServicesAvance[0].distritoAvance == distritos[e].id){			
+			distAvance = distritos[e].descripcion;
+		}
+	}
+	
 	/*var optionArchivoExistente="";
 	optionArchivoExistente += '<option value="" >Seleccione una Opción</option>';
 
@@ -6543,22 +6723,22 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 									'								<div class="table-responsive">'+
 									'									<table class="table table-hover table-bordered" id="dataTableAvance">'+
 									'										<thead>'+
-									'											<tr class="active"><th>Justificación</th><th>Cantidad</th><th>FechaEntrega</th><th class="text-center">Administrar</th></tr>'+
+									'											<tr class="active"><th>Distrito</th><th>Justificación</th><th>Cantidad</th><th>FechaEntrega</th><th class="text-center">Administrar</th></tr>'+
 									' 										</thead>'+
 									'										<tfoot>'+
-									'											<tr><th></th><th></th><th></th><th></th></tr>'+
+									'											<tr><th></th><th></th><th></th><th></th><th></th></tr>'+
 									' 										</tfoot>'+
 									'										<tbody>';
 																				if(webServicesAvance[0].borrado == true)
 																				{
 																					<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
-	contenidoModalAdministrador +=	'													<tr><td><del>'+webServicesAvance[0].justificacion+'</del></td><td><del>'+numeroConComa(webServicesAvance[0].cantidad)+'</del></td><td><del>'+webServicesAvance[0].fechaEntrega+'</del></td></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaBorrarAvance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' data-toggle="tooltip" data-placement="top" title="Restaurar" ><span class="fa fa-recycle"></span></button></td></tr>';
+	contenidoModalAdministrador +=	'													<tr><td><del>'+distAvance+'</del></td><td><del>'+webServicesAvance[0].justificacion+'</del></td><td><del>'+numeroConComa(webServicesAvance[0].cantidad)+'</del></td><td><del>'+webServicesAvance[0].fechaEntrega+'</del></td></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaBorrarAvance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' data-toggle="tooltip" data-placement="top" title="Restaurar" ><span class="fa fa-recycle"></span></button></td></tr>';
 																					<%}%>
 																				}else{
 																					<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-	contenidoModalAdministrador +=	'													<tr><td>'+webServicesAvance[0].justificacion+'</td><td>'+numeroConComa(webServicesAvance[0].cantidad)+'</td><td>'+webServicesAvance[0].fechaEntrega+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarAvance" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarAvance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' data-toggle="tooltip" data-placement="top" title="Borrar" ><span class="fa fa-trash"></span></button></td></tr>';
+	contenidoModalAdministrador +=	'													<tr><td>'+distAvance+'</td><td>'+webServicesAvance[0].justificacion+'</td><td>'+numeroConComa(webServicesAvance[0].cantidad)+'</td><td>'+webServicesAvance[0].fechaEntrega+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarAvance" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarAvance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' data-toggle="tooltip" data-placement="top" title="Borrar" ><span class="fa fa-trash"></span></button></td></tr>';
 																					<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-	contenidoModalAdministrador +=	'													<tr><td>'+webServicesAvance[0].justificacion+'</td><td>'+numeroConComa(webServicesAvance[0].cantidad)+'</td><td>'+webServicesAvance[0].fechaEntrega+'</td><td class="text-center"></td></tr>';
+	contenidoModalAdministrador +=	'													<tr><td>'+distAvance+'</td><td>'+webServicesAvance[0].justificacion+'</td><td>'+numeroConComa(webServicesAvance[0].cantidad)+'</td><td>'+webServicesAvance[0].fechaEntrega+'</td><td class="text-center"></td></tr>';
 																					<%}%>
 																				}
 																				
