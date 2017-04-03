@@ -1105,7 +1105,7 @@ public class SqlSelects {
 	
 	public static List<Distrito> selectDistritos(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select * from distrito "+condition;
+		String query = " select * from distrito "+condition+" and borrado is false";
 
 		Statement statement = null;
 		ResultSet rs=null;

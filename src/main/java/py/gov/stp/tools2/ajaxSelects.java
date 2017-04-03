@@ -74,6 +74,7 @@ public class ajaxSelects extends HttpServlet {
     	Integer producto = null;
     	Integer unidadJerarquica = null;
     	Integer anio = null;
+    	Integer anho = null;
     	Integer mes = null;
     	Integer pais = null;
     	Integer departamento = null;
@@ -161,6 +162,7 @@ public class ajaxSelects extends HttpServlet {
     	if (request.getParameter("unidadJerarquica")!=null) producto = Integer.parseInt(request.getParameter("unidadJerarquica"));
     	if (request.getParameter("pais")!=null) pais = Integer.parseInt(request.getParameter("pais")); else pais=1;
     	if (request.getParameter("anio")!=null) anio = Integer.parseInt(request.getParameter("anio")); else anio=0;
+    	if (request.getParameter("anho")!=null) anho = Integer.parseInt(request.getParameter("anho")); 
     	if (request.getParameter("mes")!=null) mes = Integer.parseInt(request.getParameter("mes")); else mes=0;
     	if (request.getParameter("departamento")!=null) departamento = Integer.parseInt(request.getParameter("departamento")); //else departamento=99;
     	if (request.getParameter("distrito")!=null) distrito = Integer.parseInt(request.getParameter("distrito")); //else distrito=99;
@@ -851,9 +853,22 @@ public class ajaxSelects extends HttpServlet {
         	}          
         	if (action.equals("getAccionHasProducto")){
         		List objetos=null;
-        		condition = " where true ";
+        		condition = " where true and not borrado ";
         		if (accionId!=null) condition += " and accion_id ='"+accionId+"'";
         		if (accionHasProductoId!=null) condition += " and id ='"+accionHasProductoId+"'";
+        		if (nivel != null) condition += " and spr_nivel_id ="+nivel;
+        		if (entidad!=null) condition += " and spr_entidad_id="+entidad;
+        		if (tipoPresupuesto!=null) condition += " and spr_tipo_presupuesto_id="+tipoPresupuesto;
+        		if (programa!=null) condition += " and spr_programa_id="+programa;
+        		if (subprograma!=null) condition += " and spr_subprograma_id="+subprograma;
+        		if (proyecto!=null) condition += " and srp_proyecto_id="+proyecto;
+        		if (producto!=null) condition += " and spr_producto_id="+producto;
+        		if (anho!=null) condition += " and spr_anho="+anho;
+        		if (version!=null) condition += " and spr_version="+version;
+//        		if (nivel!=null && entidad!=null && (nivel!=0 && entidad!=0)){
+//        			condition+=" and ur.entidad_nivel_id="+nivel+" and ur.entidad_id="+entidad;
+//	        		if (unidadResponsable!=null &&(unidadResponsable!= -1)) condition+=" and ur.id="+unidadResponsable+" ";
+//        		};
            		try {objetos = SqlSelects.selectAccionHasProducto(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
@@ -974,6 +989,39 @@ public class ajaxSelects extends HttpServlet {
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());        	
+        	}
+        	if (action.equals("getProductos")){
+        		List productos=null;
+        		if (producto!=null ) condition = " where id ="+producto.toString();
+				try {productos = SqlSelects.selectAllProductosSPR(condition);}
+				catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(productos );
+        		out.println(json.toString());          		
+          	}
+        	//usado para selector de filtros en reporte pnd -- Re-utilizado del spr 
+        	if (action.equals("getProductosPresupuestoPND")){
+        		String objetos=null;
+        		String condicion =" where true ";
+
+        		if (nivel != null) condicion += " and pp.proyecto_subprograma_programa_entidad_nivel_id ="+nivel;
+        		if (entidad!=null) condicion += " and pp.proyecto_subprograma_programa_entidad_id="+entidad;
+        		if (tipoPresupuesto!=null) condicion += " and pp.proyecto_subprograma_programa_tipo_presupuesto_id="+tipoPresupuesto;
+        		if (programa!=null) condicion += " and pp.proyecto_subprograma_programa_id="+programa;
+        		if (subprograma!=null) condicion += " and pp.proyecto_subprograma_id="+subprograma;
+        		if (proyecto!=null) condicion += " and pp.proyecto_id="+proyecto;
+        		if (producto!=null) condicion += " and pp.producto_id="+producto;
+        		if (anho!=null) condicion += " and pp.anho="+anho;
+        		if (version!=null) condicion += " and pp.version="+version;
+        		if (nivel!=null && entidad!=null && (nivel!=0 && entidad!=0)){
+        			condition+=" and ur.entidad_nivel_id="+nivel+" and ur.entidad_id="+entidad;
+	        		if (unidadResponsable!=null &&(unidadResponsable!= -1)) condicion+=" and ur.id="+unidadResponsable+" ";
+        		};
+        		if (borrado!=null) condicion += " and pp.borrado is "+ borrado;
+        		
+        		try {objetos = SqlSelects.selectAllProductosPresupuestoPND(condicion);}
+				catch (SQLException e) {e.printStackTrace();}        		
+        		
+        		out.println(objetos.toString());return;
         	}
         	if (action.equals("getProgramacionPorMes")){
         		List objetos=null;
