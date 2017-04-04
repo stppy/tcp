@@ -177,13 +177,14 @@ function renderAccion(/*estrategia, */lineasProgramadas, instituciones, periodo)
 	
 	var tablaInstituciones="";
 	var tempInstituciones="";
+	var cabeceraInstituciones="";
 	var tempInstLineas="";
 	var flagIns=0;
 	var clase="";
 	var clase2="";
 
 	
-	tempInstituciones = '<thead><tr>'+
+	cabeceraInstituciones = '<thead><tr>'+
   									'<th class="text-center" style="vertical-align: middle;">Institución</th>'+
 								  	'<th class="text-center" style="vertical-align: middle;">Programación (%)</th>'+
 								  	'<th class="text-center" style="vertical-align: middle;">Destinatarios (%)</th>'+
@@ -191,7 +192,10 @@ function renderAccion(/*estrategia, */lineasProgramadas, instituciones, periodo)
 								  	'<th class="text-center">Avance (%)</th>'+
 								  	'<th class="text-center">Evidencia</th>'+
 								  	'<th class="text-center">I.P.R</th>'+
-							    '</tr></thead><tbody>';
+							 '</tr></thead>'
+								  	
+	tablaInstituciones = cabeceraInstituciones + '<tbody>';
+	
     var valor1 = 0;
     var valor2 = 0;
     var valor3 = 0;
@@ -199,18 +203,18 @@ function renderAccion(/*estrategia, */lineasProgramadas, instituciones, periodo)
     var cont = 0;
 	for(var m=0; m<instituciones.length;m++){ 
 		for(var n=0; n<lineasProgramadas.length;n++){
-			for(var l = 0; l < usuarioEtiqueta.length; l++)
-			{
-				if(usuarioEtiqueta[l].etiqueta_id == 1)
-				{
-					for(var t = 0; t < insLineaAccionHasEtiqueta.length; t++)
-					{
-						if(insLineaAccionHasEtiqueta[t].ins_linea_accion_id == lineasProgramadas[n].insLineaAccionId && insLineaAccionHasEtiqueta[t].etiqueta_id == 1)
-						{
-							for(var d=0; d<usuarioLineaAccion.length;d++)
-							{
-								if(usuarioLineaAccion[d].lineaAccionId == lineasProgramadas[n].lineaAccionId)
-								{
+//			for(var l = 0; l < usuarioEtiqueta.length; l++)
+//			{
+//				if(usuarioEtiqueta[l].etiqueta_id == 1)
+//				{
+//					for(var t = 0; t < insLineaAccionHasEtiqueta.length; t++)
+//					{
+//						if(insLineaAccionHasEtiqueta[t].ins_linea_accion_id == lineasProgramadas[n].insLineaAccionId && insLineaAccionHasEtiqueta[t].etiqueta_id == 1)
+//						{
+//							for(var d=0; d<usuarioLineaAccion.length;d++)
+//							{
+//								if(usuarioLineaAccion[d].lineaAccionId == lineasProgramadas[n].lineaAccionId)
+//								{
 
 									if ( instituciones[m].id==lineasProgramadas[n].institucionId){
 										
@@ -261,12 +265,12 @@ function renderAccion(/*estrategia, */lineasProgramadas, instituciones, periodo)
 										
 									}
 
-								}
-							}
-						}
-					}
-				}
-			}
+//								}
+//							}
+//						}
+//					}
+//				}
+//			}
 		}
 
 		if (flagIns>0){
@@ -292,7 +296,7 @@ function getPeriodo(periodo){
 	
 	for(p = 0;p<periodo.length; p++){
 		if(periodo[p].id >= 2014){
-			if(periodo[p].id == 2016){
+			if(periodo[p].id == 2017){
 				optionPeriodo+='<option value="'+periodo[p].id+'" selected>'+periodo[p].nombre+'</option>';
 			}else{
 				optionPeriodo+='<option value="'+periodo[p].id+'" >'+periodo[p].nombre+'</option>';
