@@ -7475,7 +7475,7 @@ $("body").on("click", ".consultaEditarAvance",function(event){
 
 						'			      			<form class="form-horizontal">'+
 
-						'							<tr><td><label for="justificacionAvance">Justificación</label><input type="text" id="justificacionAvance" value="'+webServicesAvance[0].justificacion+'" class="form-control" required /></td><td><label for="cantidadAvance">Cantidad</label><input type="number" id="cantidadAvance" class="form-control" value='+webServicesAvance[0].cantidad+' required/></td></tr>'+
+						'							<tr><td><label for="justificacionAvance">Justificación</label><input type="text" id="justificacionAvance" value="'+webServicesAvance[0].justificacion+'" class="form-control" required /></td><td><label for="cantidadAvance">Cantidad</label><input type="number" id="cantidadAvance" step="any" class="form-control" value='+webServicesAvance[0].cantidad+' required/></td></tr>'+
 
 						'							<tr><td><label for="fechaEntregaAvance">Fecha Entrega</label><input type="date" id="fechaEntregaAvance" value='+webServicesAvance[0].fechaEntrega+' max="'+fechaActual+'" class="form-control" required /></td></tr>'+														
 
