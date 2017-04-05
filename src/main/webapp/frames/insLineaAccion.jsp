@@ -5834,7 +5834,11 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
 		if(accion[0].distritoId == distritos[e].id && accion[0].departamentoId == distritos[e].departamentoId){
 			nombreDistrito = distritos[e].descripcion;
 		}
-		if(accion[0].departamentoId == distritos[e].departamentoId){			
+		if(accion[0].departamentoId == distritos[e].departamentoId && nombreDistrito == distritos[e].descripcion){
+			optionDistritoAvance+='<option value="'+distritos[e].id+'" selected>'+distritos[e].descripcion+'</option>';	
+		}
+		if(accion[0].departamentoId == distritos[e].departamentoId && nombreDistrito != distritos[e].descripcion){	
+			
 			optionDistritoAvance+='<option value="'+distritos[e].id+'" >'+distritos[e].descripcion+'</option>';
 		}
 	}
