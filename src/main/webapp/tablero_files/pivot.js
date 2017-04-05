@@ -965,7 +965,7 @@
         aggregators: locales[locale].aggregators,
         renderers: locales[locale].renderers,
         hiddenAttributes: [],
-        menuLimit: 500,
+        menuLimit: 2000,
         cols: [],
         rows: [],
         vals: [],
