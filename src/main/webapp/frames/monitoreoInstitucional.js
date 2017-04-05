@@ -65,6 +65,93 @@ function lineaAccionInstitucion(a,b) {
 		return 1;
 	return 0;
 }
+
+function renderFlow(periodo){
+	//despliegue del flow de avances.
+	var avances = $.ajax({
+		url:'/tablero/ajaxSelects2?action=getPivotAvance&anho='+periodo,
+		type:'get',
+		dataType:'json',
+		async:false       
+	}).responseText;
+	avances = JSON.parse(avances);
+	
+	function compararAvancesPorFecha(a,b) {  
+	    if (a.avanceFecha > b.avanceFecha) return -1;
+	    if (a.avanceFecha < b.avanceFecha) return 1;
+	    return 0;
+	}
+	avances=avances.sort(compararAvancesPorFecha);
+	
+	var fechaAnterior=avances[0].avanceFecha;
+	var laAnterior=avances[0].lineaAccion;
+	var flowContent="";
+	flowContent+='<li class="time-label">'+
+	        '<span class="bg-red">'+
+	        avances[0].avanceFecha+
+	        '</span>'+
+	    '</li>';
+	    flowContent+='<li>'+
+	        '    <i class="fa fa-envelope bg-blue"></i>'+
+	        '    <div class="timeline-item">'+
+	        '        <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>'+
+	        '        <h3 class="timeline-header"><a href="#">'+avances[0].lineaAccion+'</a> </h3>'+
+	        '        <div class="timeline-body">'+
+	        avances[0].institucion+' ha realizado '+avances[0].accion+' alcanzando '+avances[0].avanceCantidad+' '+avances[0].cronoUnidadMedida+' en el distrito '+avances[0].distrito+' del departamento de '+avances[0].departamento;
+	
+	for (var i=1; i<avances.length;i++){
+		if (fechaAnterior>avances[i].avanceFecha){
+			fechaAnterior=avances[i].avanceFecha;
+			flowContent+='        </div>'+
+	                '        <div class="timeline-footer">'+
+	                '            <a class="btn btn-primary btn-xs">Ver evidencias</a>'+
+	                '        </div>'+
+	                '   </div>'+
+	                '</li>';
+	                flowContent+='<li name="'+avances[i].avanceFecha+'" class="time-label">'+
+	                   '<span class="bg-red">'+
+	                   avances[i].avanceFecha+
+	                   '</span>'+
+	               '</li>';
+	               flowContent+='<li>'+
+	                '    <i class="fa fa-envelope bg-blue"></i>'+
+	                '    <div class="timeline-item">'+
+	                '        <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>'+
+	                '        <h3 class="timeline-header"><a name="'+i+'" href="#">'+avances[i].lineaAccion+'</a> </h3>'+
+	                '        <div class="timeline-body">'+
+	                avances[i].institucion+' ha realizado '+avances[i].accion+' alcanzando '+avances[i].avanceCantidad+' '+avances[i].cronoUnidadMedida+' en el distrito '+avances[i].distrito+' del departamento de '+avances[i].departamento;
+			
+		}else{
+	    	if (avances[i].lineaAccion!=laAnterior){
+	    		laAnterior=avances[i].lineaAccion;
+	    		flowContent+='        </div>'+
+	                     '        <div class="timeline-footer">'+
+	                     '            <a class="btn btn-primary btn-xs">Ver evidencias</a>'+
+	                     '        </div>'+
+	                     '   </div>'+
+	                     '</li>';
+	    		flowContent+='<li>'+
+	                    '    <i class="fa fa-envelope bg-blue"></i>'+
+	                    '    <div class="timeline-item">'+
+	                    '        <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>'+
+	                    '        <h3 class="timeline-header"><a href="#">'+avances[i].lineaAccion+'</a> </h3>'+
+	                    '        <div class="timeline-body">'+
+	                    avances[i].institucion+' ha realizado '+avances[i].accion+' alcanzando '+avances[i].avanceCantidad+' '+avances[i].cronoUnidadMedida+' en el distrito '+avances[i].distrito+' del departamento de '+avances[i].departamento;
+	    		
+	    	}else{
+	    		flowContent+='<br>'+avances[i].institucion+' ha realizado '+avances[i].accion+' alcanzando '+avances[i].avanceCantidad+' '+avances[i].cronoUnidadMedida+' en el distrito '+avances[i].distrito+' del departamento de '+avances[i].departamento;
+	    	}    
+		}
+	}
+	flowContent+='        </div>'+
+	'        <div class="timeline-footer">'+
+	'            <a class="btn btn-primary btn-xs">Ver evidencias</a>'+
+	'        </div>'+
+	'   </div>'+
+	'</li>'
+	$("#flow").append(flowContent);
+
+}
 			
 function renderLineasEstrategicas(periodo){
 	var contenidoEnRow="";
@@ -122,32 +209,32 @@ function renderLineasEstrategicas(periodo){
 			   '</div>'+
 				  '<div class="row">'+
 					'<ul id="flow" class="timeline">'+
-						'<li class="time-label"><span class="bg-red">2017-05-31</span></li>'+
-						'<li><i class="fa fa-envelope bg-blue"></i>'+    
-							'<div class="timeline-item">'+
-							'<span class="time"><i class="fa fa-clock-o"></i> 12:05</span>'+
-								'<h3 class="timeline-header"><a href="#">Soluciones habitacionales</a></h3>'+        
-								'<div class="timeline-body">SENAVITAT ha realizado Construcción de viviendas con servicios básicos alcanzando 120 Viviendas en el distrito TAVAI del departamento de CAAZAPA<br>SENAVITAT ha realizado Construcción de viviendas con servicios básicos alcanzando 40 Viviendas en el distrito CARLOS ANTONIO LOPEZ del departamento de ITAPUA</div>'+
-								'<div class="timeline-footer"><a class="btn btn-primary btn-xs">Ver evidencias</a></div>'+   
-							'</div>'+
-						'</li>'+
-						'<li name="2017-04-05" class="time-label"><span class="bg-red">2017-04-05</span></li>'+
-						'<li><i class="fa fa-envelope bg-blue"></i>'+
-						    '<div class="timeline-item">'+
-						    	'<span class="time"><i class="fa fa-clock-o"></i> 12:05</span>'+
-						         '<h3 class="timeline-header"><a name="2" href="#">Planes de ordenamiento territorial</a></h3>'+
-						         '<div class="timeline-body">STP ha realizado Asistencia para elaboración de planes de ordenamiento territorial alcanzando 0 Planes en el distrito A DEFINIR del departamento de CENTRAL</div>'+
-						         '<div class="timeline-footer"><a class="btn btn-primary btn-xs">Ver evidencias</a></div>'+
-						    '</div>'+
-						'</li>'+
-						'<li><i class="fa fa-envelope bg-blue"></i>'+
-							'<div class="timeline-item">'+
-								'<span class="time"><i class="fa fa-clock-o"></i> 12:05</span>'+
-								'<h3 class="timeline-header"><a href="#">Planes de ordenamiento territorial</a></h3>'+
-								'<div class="timeline-body">STP ha realizado Asistencia para elaboración de planes de ordenamiento territorial alcanzando 3 Planes en el distrito CORONEL OVIEDO del departamento de CAAGUAZU<br>STP ha realizado Asistencia para elaboración de planes de ordenamiento territorial alcanzando 0 Planes en el distrito A DEFINIR del departamento de CENTRAL<br>STP ha realizado Asistencia para elaboración de planes de ordenamiento territorial alcanzando 1 Planes en el distrito A DEFINIR del departamento de CENTRAL</div>'+
-								'<div class="timeline-footer"><a class="btn btn-primary btn-xs">Ver evidencias</a></div>'+
-							'</div>'+
-						'</li>'+
+//						'<li class="time-label"><span class="bg-red">2017-05-31</span></li>'+
+//						'<li><i class="fa fa-envelope bg-blue"></i>'+    
+//							'<div class="timeline-item">'+
+//							'<span class="time"><i class="fa fa-clock-o"></i> 12:05</span>'+
+//								'<h3 class="timeline-header"><a href="#">Soluciones habitacionales</a></h3>'+        
+//								'<div class="timeline-body">SENAVITAT ha realizado Construcción de viviendas con servicios básicos alcanzando 120 Viviendas en el distrito TAVAI del departamento de CAAZAPA<br>SENAVITAT ha realizado Construcción de viviendas con servicios básicos alcanzando 40 Viviendas en el distrito CARLOS ANTONIO LOPEZ del departamento de ITAPUA</div>'+
+//								'<div class="timeline-footer"><a class="btn btn-primary btn-xs">Ver evidencias</a></div>'+   
+//							'</div>'+
+//						'</li>'+
+//						'<li name="2017-04-05" class="time-label"><span class="bg-red">2017-04-05</span></li>'+
+//						'<li><i class="fa fa-envelope bg-blue"></i>'+
+//						    '<div class="timeline-item">'+
+//						    	'<span class="time"><i class="fa fa-clock-o"></i> 12:05</span>'+
+//						         '<h3 class="timeline-header"><a name="2" href="#">Planes de ordenamiento territorial</a></h3>'+
+//						         '<div class="timeline-body">STP ha realizado Asistencia para elaboración de planes de ordenamiento territorial alcanzando 0 Planes en el distrito A DEFINIR del departamento de CENTRAL</div>'+
+//						         '<div class="timeline-footer"><a class="btn btn-primary btn-xs">Ver evidencias</a></div>'+
+//						    '</div>'+
+//						'</li>'+
+//						'<li><i class="fa fa-envelope bg-blue"></i>'+
+//							'<div class="timeline-item">'+
+//								'<span class="time"><i class="fa fa-clock-o"></i> 12:05</span>'+
+//								'<h3 class="timeline-header"><a href="#">Planes de ordenamiento territorial</a></h3>'+
+//								'<div class="timeline-body">STP ha realizado Asistencia para elaboración de planes de ordenamiento territorial alcanzando 3 Planes en el distrito CORONEL OVIEDO del departamento de CAAGUAZU<br>STP ha realizado Asistencia para elaboración de planes de ordenamiento territorial alcanzando 0 Planes en el distrito A DEFINIR del departamento de CENTRAL<br>STP ha realizado Asistencia para elaboración de planes de ordenamiento territorial alcanzando 1 Planes en el distrito A DEFINIR del departamento de CENTRAL</div>'+
+//								'<div class="timeline-footer"><a class="btn btn-primary btn-xs">Ver evidencias</a></div>'+
+//							'</div>'+
+//						'</li>'+
 					'</ul>'+
 				'</div><!-- /.row -->';
 		if (lineasDeEstrategia.length>0){

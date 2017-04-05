@@ -69,13 +69,18 @@
 			var periodoActual = 2017;
 			
 			renderLineasEstrategicas(periodoActual); 
+			renderFlow(periodoActual);
 			getPeriodo();
+			
+			
+			
 			
 		});
 		
 		$("body").on("change", "#periodoSeleccion",function(event){	
 		   	periodoSeleccionado = $("#periodoSeleccion option:selected").val();
-		   	renderLineasEstrategicas(periodoSeleccionado); 
+		   	renderLineasEstrategicas(periodoSeleccionado);
+		   	renderFlow(periodoSeleccionado);
 		});
 		</script>
 	
@@ -148,7 +153,7 @@
 				</div><!-- /.row -->
 				<div class="row">
 					<ul id="flow" class="timeline">
-						<li class="time-label"><span class="bg-red">2017-05-31</span></li>
+						<!-- <li class="time-label"><span class="bg-red">2017-05-31</span></li>
 						<li><i class="fa fa-envelope bg-blue"></i>    
 							<div class="timeline-item"
 								><span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
@@ -173,7 +178,7 @@
 								<div class="timeline-body">STP ha realizado Asistencia para elaboración de planes de ordenamiento territorial alcanzando 3 Planes en el distrito CORONEL OVIEDO del departamento de CAAGUAZU<br>STP ha realizado Asistencia para elaboración de planes de ordenamiento territorial alcanzando 0 Planes en el distrito A DEFINIR del departamento de CENTRAL<br>STP ha realizado Asistencia para elaboración de planes de ordenamiento territorial alcanzando 1 Planes en el distrito A DEFINIR del departamento de CENTRAL</div>
 								<div class="timeline-footer"><a class="btn btn-primary btn-xs">Ver evidencias</a></div>
 							</div>
-						</li>
+						</li> -->
 					</ul>
 				</div><!-- /.row -->
 			</section><!-- /.content -->
