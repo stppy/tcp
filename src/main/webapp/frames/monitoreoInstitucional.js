@@ -46,7 +46,25 @@ function lineaAccionOrden(a,b) {
 	if (a.lineaAccionOrden > b.lineaAccionOrden)
 		return 1;
 	return 0;
-}											
+}		
+
+function mostrarMas(){ 
+	$(".dimHeader").show();
+	$(".mostrarMas").hide();
+}
+
+function mostrarMenos(){ 
+	$(".dimHeader").hide();
+	$(".mostrarMas").show();
+};
+
+function lineaAccionInstitucion(a,b) {             
+	if (a.institucionId < b.institucionId)
+		return -1;
+	if (a.institucionId > b.institucionId)
+		return 1;
+	return 0;
+}
 			
 function renderLineasEstrategicas(periodo){
 	var contenidoEnRow="";
@@ -68,7 +86,7 @@ function renderLineasEstrategicas(periodo){
 	  	async:false       
 	}).responseText;
 	lineasProgramadas = JSON.parse(lineasProgramadas);
-	//lineasProgramadas=lineasProgramadas.sort(lineaAccionOrden);
+	lineasProgramadas=lineasProgramadas.sort(lineaAccionInstitucion);
 	
 	var instituciones = $.ajax({
 		url:'/tablero/ajaxSelects2?action=getInstitucion',
@@ -102,33 +120,36 @@ function renderLineasEstrategicas(periodo){
 			   '</div>'+
 			   '</div>'+
 			   '</div>'+
-			   
-			   '<div class="row">'+
-				'<div class="col-md-12">'+
-		          '<div class="box">'+
-		            '<div class="box-header with-border">'+
-		              '<h3 class="box-title">Información Adicional</h3>'+
-		              '<div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
-		              '</div>'+
-		            '</div>'+
-		            '<div class="box-body" >'+
-		            	'<div class="table-responsive">'+
-		          			'<table class="table table-striped table-bordered table-hover">'+
-		          				'<tbody>'+
-		          					'<tr><td>Programación</td><td>...</td></tr>'+
-		          					'<tr><td>Destinatarios</td><td>...</td></tr>'+
-		          					'<tr><td>Inversión</td><td>....</td></tr>'+
-		          					'<tr><td>Avance</td><td>....</td></tr>'+
-		          					'<tr><td>Evidencia</td><td>....</td></tr>'+
-		          					'<tr><td>I.P.R</td><td>....</td></tr>'+
-
-		          				'</tbody>'+
-		          			'</table>'+
-		  				'</div>'+
-		            '</div>'+
-				   '</div>'+
-				   '</div>'+
-				   '</div>';
+				  '<div class="row">'+
+					'<ul id="flow" class="timeline">'+
+						'<li class="time-label"><span class="bg-red">2017-05-31</span></li>'+
+						'<li><i class="fa fa-envelope bg-blue"></i>'+    
+							'<div class="timeline-item">'+
+							'<span class="time"><i class="fa fa-clock-o"></i> 12:05</span>'+
+								'<h3 class="timeline-header"><a href="#">Soluciones habitacionales</a></h3>'+        
+								'<div class="timeline-body">SENAVITAT ha realizado Construcción de viviendas con servicios básicos alcanzando 120 Viviendas en el distrito TAVAI del departamento de CAAZAPA<br>SENAVITAT ha realizado Construcción de viviendas con servicios básicos alcanzando 40 Viviendas en el distrito CARLOS ANTONIO LOPEZ del departamento de ITAPUA</div>'+
+								'<div class="timeline-footer"><a class="btn btn-primary btn-xs">Ver evidencias</a></div>'+   
+							'</div>'+
+						'</li>'+
+						'<li name="2017-04-05" class="time-label"><span class="bg-red">2017-04-05</span></li>'+
+						'<li><i class="fa fa-envelope bg-blue"></i>'+
+						    '<div class="timeline-item">'+
+						    	'<span class="time"><i class="fa fa-clock-o"></i> 12:05</span>'+
+						         '<h3 class="timeline-header"><a name="2" href="#">Planes de ordenamiento territorial</a></h3>'+
+						         '<div class="timeline-body">STP ha realizado Asistencia para elaboración de planes de ordenamiento territorial alcanzando 0 Planes en el distrito A DEFINIR del departamento de CENTRAL</div>'+
+						         '<div class="timeline-footer"><a class="btn btn-primary btn-xs">Ver evidencias</a></div>'+
+						    '</div>'+
+						'</li>'+
+						'<li><i class="fa fa-envelope bg-blue"></i>'+
+							'<div class="timeline-item">'+
+								'<span class="time"><i class="fa fa-clock-o"></i> 12:05</span>'+
+								'<h3 class="timeline-header"><a href="#">Planes de ordenamiento territorial</a></h3>'+
+								'<div class="timeline-body">STP ha realizado Asistencia para elaboración de planes de ordenamiento territorial alcanzando 3 Planes en el distrito CORONEL OVIEDO del departamento de CAAGUAZU<br>STP ha realizado Asistencia para elaboración de planes de ordenamiento territorial alcanzando 0 Planes en el distrito A DEFINIR del departamento de CENTRAL<br>STP ha realizado Asistencia para elaboración de planes de ordenamiento territorial alcanzando 1 Planes en el distrito A DEFINIR del departamento de CENTRAL</div>'+
+								'<div class="timeline-footer"><a class="btn btn-primary btn-xs">Ver evidencias</a></div>'+
+							'</div>'+
+						'</li>'+
+					'</ul>'+
+				'</div><!-- /.row -->';
 		if (lineasDeEstrategia.length>0){
 			contenidoEnRow+=contenidoEnRowTemp;
 			contenidoEnRowTemp=""; 
@@ -184,14 +205,14 @@ function renderAccion(/*estrategia, */lineasProgramadas, instituciones, periodo)
 	var clase2="";
 
 	
-	cabeceraInstituciones = '<thead><tr>'+
-  									'<th class="text-center" style="vertical-align: middle;">Institución</th>'+
-								  	'<th class="text-center" style="vertical-align: middle;">Programación (%)</th>'+
-								  	'<th class="text-center" style="vertical-align: middle;">Destinatarios (%)</th>'+
-								   	'<th class="text-center">Inversión (%)</th>'+
-								  	'<th class="text-center">Avance (%)</th>'+
-								  	'<th class="text-center">Evidencia</th>'+
-								  	'<th class="text-center">I.P.R</th>'+
+	cabeceraInstituciones = '<thead><tr>'+									
+  									'<th class="text-center cabeceraInstitucion" style="vertical-align: middle;">Institución</th>'+
+  									'<th class="text-center cabeceraPromedio">I.P.R <button class="fa fa-arrow-right mostrarMas" onclick="mostrarMas()"></button></th>'+
+								  	'<th class="text-center dimHeader cabeceraProgramacion" style="vertical-align: middle; display:none;">Programación (%)</th>'+
+								  	'<th class="text-center dimHeader cabeceraDestinatario" style="vertical-align: middle; display:none;">Destinatarios (%)</th>'+
+								   	'<th class="text-center dimHeader cabeceraInversion" style="display:none;">Inversión (%)</th>'+
+								  	'<th class="text-center dimHeader cabeceraAvance" style="display:none;">Avance (%) <button class="fa fa-arrow-left dimHeader" onclick="mostrarMenos()" style="display:none;"></button></th>'+
+//								  	'<th class="text-center ">Evidencia</th>'+								  	
 							 '</tr></thead>'
 								  	
 	tablaInstituciones = cabeceraInstituciones + '<tbody>';
@@ -200,6 +221,7 @@ function renderAccion(/*estrategia, */lineasProgramadas, instituciones, periodo)
     var valor2 = 0;
     var valor3 = 0;
     var valor4 = 0;
+    var promedio = 0;
     var cont = 0;
 	for(var m=0; m<instituciones.length;m++){ 
 		for(var n=0; n<lineasProgramadas.length;n++){
@@ -220,7 +242,7 @@ function renderAccion(/*estrategia, */lineasProgramadas, instituciones, periodo)
 										
 										cont = cont + 1;
 										if (flagIns == 0){
-											tempInstituciones += '<tr><td><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td>';
+											tempInstituciones += '<tr><td class="cabeceraInstitucion" ><strong data-toggle="tooltip" data-placement="top" title="'+instituciones[m].nombre+'">'+lineasProgramadas[n].institucionSigla+'</strong></td>';
 											flagIns++;						  
 										}
 										var desempProgAnho=validarNumero(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100));
@@ -234,33 +256,36 @@ function renderAccion(/*estrategia, */lineasProgramadas, instituciones, periodo)
 										if (n == lineasProgramadas.length -1){
 											institucionId = lineasProgramadas[n].institucionId;
 
+											promedio = numeroConComa(((valor1/cont + (valor2/cont)*100 + (valor3/cont)*100 + valor4/cont) / 4 ).toFixed(2));
 											valor1 = numeroConComa((valor1 / cont).toFixed(2));
 											valor2 = numeroConComa(((valor2 / cont)*100).toFixed(2));
 											valor3 = numeroConComa(((valor3 / cont)*100).toFixed(2));
-											valor4 = numeroConComa((valor4 / cont).toFixed(2));
+											valor4 = numeroConComa((valor4 / cont).toFixed(2));																						
 											
 											var colorProgramacion = color(valor1,lineasProgramadas[n].meta);
 											var colorAvance = color(valor2,lineasProgramadas[n].meta);
 											var colorDestinatarios = color(valor3,lineasProgramadas[n].meta);
 											var colorInversion = color(valor4,lineasProgramadas[n].meta);
+											var colorPromedio = color(promedio,lineasProgramadas[n].meta);
 
-											tempInstituciones += '<td class='+colorProgramacion+'>'+valor1+'</td><td class='+colorAvance+'>'+valor2+'</td><td class='+colorDestinatarios+'>'+valor3+'</td><td class='+colorInversion+'>'+valor4+'</td><td></td><td></td></tr>';
-											valor1=0, valor2=0, valor3=0, valor4=0, cont = 0;
+											tempInstituciones += '<td class="'+colorPromedio+' cabeceraPromedio">'+promedio+'</td><td class="'+colorProgramacion+' dimHeader" style="display:none;">'+valor1+'</td><td class="'+colorAvance+' dimHeader" style="display:none;">'+valor2+'</td><td class="'+colorDestinatarios+' dimHeader" style="display:none;">'+valor3+'</td><td class="'+colorInversion+' dimHeader" style="display:none;">'+valor4+'</td></tr>';
+											valor1=0, valor2=0, valor3=0, valor4=0, promedio=0, cont = 0;
 
 										}else if(lineasProgramadas[n+1].institucionId != instituciones[m].id){
+											promedio = numeroConComa(((valor1/cont + (valor2/cont)*100 + (valor3/cont)*100 + valor4/cont) / 4 ).toFixed(2));
 											valor1 = numeroConComa((valor1 / cont).toFixed(2));
 											valor2 = numeroConComa(((valor2 / cont)*100).toFixed(2));
 											valor3 = numeroConComa(((valor3 / cont)*100).toFixed(2));
-											valor4 = numeroConComa((valor4 / cont).toFixed(2));
+											valor4 = numeroConComa((valor4 / cont).toFixed(2));																						
 											
 											var colorProgramacion = color(valor1,lineasProgramadas[n].meta);
 											var colorAvance = color(valor2,lineasProgramadas[n].meta);
 											var colorDestinatarios = color(valor3,lineasProgramadas[n].meta);
 											var colorInversion = color(valor4,lineasProgramadas[n].meta);
+											var colorPromedio = color(promedio,lineasProgramadas[n].meta);
 
-
-											tempInstituciones += '<td class='+colorProgramacion+'>'+valor1+'</td><td class='+colorAvance+'>'+valor2+'</td><td class='+colorDestinatarios+'>'+valor3+'</td><td class='+colorInversion+'>'+valor4+'</td><td></td><td></td></tr>';
-											valor1=0, valor2=0, valor3=0, valor4=0, cont = 0;
+											tempInstituciones += '<td class="'+colorPromedio+' cabeceraPromedio">'+promedio+'</td><td class="'+colorProgramacion+' dimHeader" style="display:none;">'+valor1+'</td><td class="'+colorAvance+' dimHeader" style="display:none;">'+valor2+'</td><td class="'+colorDestinatarios+' dimHeader" style="display:none;">'+valor3+'</td><td class="'+colorInversion+' dimHeader" style="display:none;">'+valor4+'</td></tr>';
+											valor1=0, valor2=0, valor3=0, valor4=0, promedio=0, cont = 0;
 										}
 										
 									}
@@ -276,7 +301,8 @@ function renderAccion(/*estrategia, */lineasProgramadas, instituciones, periodo)
 		if (flagIns>0){
 			tablaInstituciones+=tempInstituciones;
 		}
-		tempInstituciones="";flagIns=0;
+		tempInstituciones="";
+		flagIns=0;
 	}
 	tablaInstituciones+="</tbody>";
 	return tablaInstituciones;
