@@ -66,16 +66,21 @@
 			$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
 			var i=parseInt(0);
 						
-			var periodoActual = 2016;
+			var periodoActual = 2017;
 			
 			renderLineasEstrategicas(periodoActual); 
+			renderFlow(periodoActual);
 			getPeriodo();
+			
+			
+			
 			
 		});
 		
 		$("body").on("change", "#periodoSeleccion",function(event){	
 		   	periodoSeleccionado = $("#periodoSeleccion option:selected").val();
-		   	renderLineasEstrategicas(periodoSeleccionado); 
+		   	renderLineasEstrategicas(periodoSeleccionado);
+		   	renderFlow(periodoSeleccionado);
 		});
 		</script>
 	
@@ -145,6 +150,36 @@
 				            </div>
 						</div>
 					</div><!--</div>-->
+				</div><!-- /.row -->
+				<div class="row">
+					<ul id="flow" class="timeline">
+						<!-- <li class="time-label"><span class="bg-red">2017-05-31</span></li>
+						<li><i class="fa fa-envelope bg-blue"></i>    
+							<div class="timeline-item"
+								><span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
+								<h3 class="timeline-header"><a href="#">Soluciones habitacionales</a></h3>        
+								<div class="timeline-body">SENAVITAT ha realizado Construcción de viviendas con servicios básicos alcanzando 120 Viviendas en el distrito TAVAI del departamento de CAAZAPA<br>SENAVITAT ha realizado Construcción de viviendas con servicios básicos alcanzando 40 Viviendas en el distrito CARLOS ANTONIO LOPEZ del departamento de ITAPUA</div>
+								<div class="timeline-footer"><a class="btn btn-primary btn-xs">Ver evidencias</a></div>   
+							</div>
+						</li>
+						<li name="2017-04-05" class="time-label"><span class="bg-red">2017-04-05</span></li>
+						<li><i class="fa fa-envelope bg-blue"></i>
+						    <div class="timeline-item">
+						    	<span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
+						         <h3 class="timeline-header"><a name="2" href="#">Planes de ordenamiento territorial</a></h3>
+						         <div class="timeline-body">STP ha realizado Asistencia para elaboración de planes de ordenamiento territorial alcanzando 0 Planes en el distrito A DEFINIR del departamento de CENTRAL</div>
+						         <div class="timeline-footer"><a class="btn btn-primary btn-xs">Ver evidencias</a></div>
+						    </div>
+						</li>
+						<li><i class="fa fa-envelope bg-blue"></i>
+							<div class="timeline-item">
+								<span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
+								<h3 class="timeline-header"><a href="#">Planes de ordenamiento territorial</a></h3>
+								<div class="timeline-body">STP ha realizado Asistencia para elaboración de planes de ordenamiento territorial alcanzando 3 Planes en el distrito CORONEL OVIEDO del departamento de CAAGUAZU<br>STP ha realizado Asistencia para elaboración de planes de ordenamiento territorial alcanzando 0 Planes en el distrito A DEFINIR del departamento de CENTRAL<br>STP ha realizado Asistencia para elaboración de planes de ordenamiento territorial alcanzando 1 Planes en el distrito A DEFINIR del departamento de CENTRAL</div>
+								<div class="timeline-footer"><a class="btn btn-primary btn-xs">Ver evidencias</a></div>
+							</div>
+						</li> -->
+					</ul>
 				</div><!-- /.row -->
 			</section><!-- /.content -->
 		</div><!-- /.content-wrapper -->
