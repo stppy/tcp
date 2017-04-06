@@ -35,12 +35,12 @@
 			<%}%>
 			<li class="treeview">
 				<a href="#">
-    				<i class="fa fa-tasks"></i> <span>Plan de Acción</span> <i class="fa fa-angle-left pull-right"></i>
+    				<i class="fa fa-tasks"></i> <span>Monitoreo de planes</span> <i class="fa fa-angle-left pull-right"></i>
     			</a>
     			
     			<ul class="treeview-menu" style="display: none;">
     			<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>                        
-    				<li class=""><a href="/tablero/contenedorInsLineaAccion.jsp"><i class="fa fa-wrench"></i>Elaboración de Plan de Acción</a></li>
+    				<li class=""><a href="/tablero/contenedorInsLineaAccion.jsp"><i class="fa fa-wrench"></i>Carga y actualización</a></li>
     			<%}%>
          			<li class=""><a href="/tablero/reporte.jsp"><i class="fa fa-file" id="linkReportePa"></i>Reporte de Plan de Acción</a></li>
          			<li class=""><a href="/tablero/pivotPresupuesto.jsp"><i class="fa fa-signal" id="linkPivotPresupuesto"></i>Análisis de Productos</a></li>
@@ -50,7 +50,7 @@
 					<li class=""><a href="/tablero/pivotBeneficiarioAvance.jsp"><i class="fa fa-male" id="linkPivotBeneficiariosAvances"></i>Análisis de Beneficiarios de Avances</a></li>
 					<li class=""><a href="/tablero/pivotEvidenciaAvance.jsp"><i class="fa fa-area-chart" id="linkPivotEvidenciasAvances"></i>Análisis de Evidencias de Avances</a></li>
 					<li class=""><a href="/tablero/pivotAvance.jsp"><i class="fa fa-line-chart" id="linkPivotAvances"></i>Análisis de Avances</a></li>
-					<li class=""><a href="/tablero/pivotPlanAccionAvances.jsp"><i class="fa fa-line-chart" id="linkPivotPlanAccionAvances"></i>Análisis de Avances del Plan de Acción</a></li>
+					<li class=""><a href="/tablero/pivotPlanAccionAvances.jsp"><i class="fa fa-line-chart" id="linkPivotPlanAccionAvances"></i>Análisis de programación y avances</a></li>
 					<li class=""><a href="/tablero/resumenLineaAccion.jsp"><i class="fa fa-dashboard" id="linkResumenLineaAccion"></i>Tablero de Control</a></li>
 					<li class=""><a href="/tablero/descargarDocumentos.jsp"><i class="fa fa-cloud-download" id="linkDescargasConstancias"></i>Descargar Constancias</a></li>
 					<li class=""><a href="/tablero/geografico4.jsp"><i class="fa fa-map-marker" id="geografico4"></i>Geográfico</a></li>
