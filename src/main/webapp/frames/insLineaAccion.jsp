@@ -6057,24 +6057,24 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
             };
  
          // total general para todas las paginas de la columna
-            total1 = api
-                .column( 1 )
+            total2 = api
+                .column( 2 )
                 .data()
                 .reduce( function (a, b) {
                     return intVal(a) + intVal(b);
                 }, 0 );
  
          // total por pagina segun número de columna
-            pageTotal1 = api
-                .column( 1, { page: 'current'} )
+            pageTotal2 = api
+                .column( 2, { page: 'current'} )
                 .data()
                 .reduce( function (a, b) {
                     return intVal(a) + intVal(b);
                 }, 0 );
          
          // se muestran los valores de los totales en el footer del table
-            $( api.column( 1 ).footer() ).html(
-            		'Total Pág. '+ numeroConComa(pageTotal1) +' (Total Gral. '+ numeroConComa(total1) +')'
+            $( api.column( 2 ).footer() ).html(
+            		'Total Pág. '+ numeroConComa(pageTotal2) +' (Total Gral. '+ numeroConComa(total2) +')'
             );	         
         },
         dom: 'Bfrtip',
