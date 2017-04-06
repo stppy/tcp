@@ -68,9 +68,66 @@
 						
 			var periodoActual = 2017;
 			
-			renderLineasEstrategicas(periodoActual); 
-			renderFlow(periodoActual);
-			getPeriodo();
+			
+			var periodo = $.ajax({
+				url:'/tablero/ajaxSelects2?action=getPeriodo',
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+			}).responseText;
+			periodo = JSON.parse(periodo);
+			
+
+			var optionPeriodo;
+			var optionEtiqueta;
+
+			
+			for(p = 0;p<periodo.length; p++){
+				if(periodo[p].id >= 2014){
+					if(periodo[p].id == 2017){
+						optionPeriodo+='<option value="'+periodo[p].id+'" selected>'+periodo[p].nombre+'</option>';
+					}else{
+						optionPeriodo+='<option value="'+periodo[p].id+'" >'+periodo[p].nombre+'</option>';
+					}
+				}
+			}
+			
+			if(usuarioEtiqueta.length > 0){
+				for(var d = 0; d<usuarioEtiqueta.length; d++){
+					for(var e = 0; e<etiqueta.length; e++){
+						if(usuarioEtiqueta[d].borrado != true && usuarioEtiqueta[d].etiqueta_id == etiqueta[e].id && d==0){
+							optionEtiqueta+='<option value="'+etiqueta[e].id+'" selected>'+etiqueta[e].nombre+'</option>';
+						}else if(usuarioEtiqueta[d].borrado != true && usuarioEtiqueta[d].etiqueta_id == etiqueta[e].id){
+							optionEtiqueta+='<option value="'+etiqueta[e].id+'">'+etiqueta[e].nombre+'</option>';
+						}
+					}
+				}
+			}
+
+			var periodoCuerpo= '<div class="col-sm-4">'+
+									'<label for="periodoSeleccion">Periodo</label>'+
+									'<select id="periodoSeleccion" class="form-control">'+optionPeriodo+'</select>'+
+								'</div>'+
+								'<div class="col-sm-6">'+
+									'<label for="etiquetaSeleccion">Etiqueta</label>'+
+									'<select id="etiquetaSeleccion" class="form-control">'+optionEtiqueta+'</select>'+
+								'</div>'+
+								'<div class="col-sm-2">'+
+									'<div class="checkbox">'+
+										//'<label> <input type="checkbox" id="chkMostrarOcultar" checked>Ocultar Registros Borrados</label>'+
+									'</div>'+
+								'</div>';
+								
+			$('#mostrarOcultarPeriodo').html(periodoCuerpo);
+
+								
+		 	var periodoSeleccionado = $("#periodoSeleccion option:selected").val();
+		 	var etiquetaSeleccionado = $("#etiquetaSeleccion option:selected").val();
+			
+			
+			renderLineasEstrategicas(periodoSeleccionado,etiquetaSeleccionado); 
+			renderFlow(periodoSeleccionado,etiquetaSeleccionado);
+			//getPeriodo();
 			
 			
 			
@@ -78,9 +135,19 @@
 		});
 		
 		$("body").on("change", "#periodoSeleccion",function(event){	
-		   	periodoSeleccionado = $("#periodoSeleccion option:selected").val();
-		   	renderLineasEstrategicas(periodoSeleccionado);
+		 	var periodoSeleccionado = $("#periodoSeleccion option:selected").val();
+		 	var etiquetaSeleccionado = $("#etiquetaSeleccion option:selected").val();
+		   	renderLineasEstrategicas(periodoSeleccionado,etiquetaSeleccionado);
 		   	renderFlow(periodoSeleccionado);
+		});
+		
+		$("body").on("change", "#etiquetaSeleccion",function(event){	
+		 	var periodoSeleccionado = $("#periodoSeleccion option:selected").val();
+		 	var etiquetaSeleccionado = $("#etiquetaSeleccion option:selected").val();
+
+		   	renderLineasEstrategicas(periodoSeleccionado,etiquetaSeleccionado);
+		   	renderFlow(periodoSeleccionado);
+		   
 		});
 		</script>
 	
