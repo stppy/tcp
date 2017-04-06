@@ -24,7 +24,7 @@
 		<script type="text/javascript" src="tablero_files/gchart_renderers.js"></script>
 		<script type="text/javascript" src="tablero_files/d3_renderers.js"></script>
 		<script type="text/javascript" src="tablero_files/jquery.js"></script>
-		<script type="text/javascript" src="frames/monitoreoInstitucional.js"></script>
+		<!-- <script type="text/javascript" src="frames/monitoreoInstitucional.js"></script> -->
 		<style>
 			* {font-family: Verdana;}
 			.node {
@@ -303,10 +303,12 @@
 	
 	    <!-- AdminLTE for demo purposes -->
 	    <script src="dist/js/demo.js" type="text/javascript"></script>
+	    
+	    <%@ include file="/frames/monitoreoInstitucional_js.jsp" %>
+	    
        <%  } else { %>
 			<p>Favor Iniciar Sesion</p>
 		<%  } %>
-		<a href="#" data-toggle="tooltip" title="Some tooltip text!">Hover over me</a>
 				
 </body>
 </html>

@@ -255,7 +255,20 @@ public class ajaxSelects extends HttpServlet {
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());        	        	        	
-        	}    
+        	}
+        	if (action.equals("getEvidenciaAvanceLineaAccion")){
+        		List objetos=null;
+        		condition = " ";
+        		if (avanceId!=null) condition += " and avance_id ='"+avanceId+"'"; 
+        		if (idEvidencia!=null) condition += " and id ='"+idEvidencia+"'";
+        		if (lineaAccionId!=null) condition += " and linea_accion.id ='"+lineaAccionId+"'";
+        		if (anho!=null) condition += " and ins_linea_accion.periodo_id ="+anho+" and to_char(avance.fecha_entrega,'YYYY') = '"+anho+"'";
+        		if (mes!=null) condition += " and to_char(avance.fecha_entrega,'MM') = '"+mes+"'";
+           		try {objetos = SqlSelects.selectEvidenciaAvanceLineaAccion(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());        	        	        	
+        	}        	
         	if (action.equals("getTipoDocumento")){
         		List objetos=null;
         		String condicion = " where true ";
