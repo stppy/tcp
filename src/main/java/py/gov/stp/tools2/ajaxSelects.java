@@ -75,7 +75,7 @@ public class ajaxSelects extends HttpServlet {
     	Integer unidadJerarquica = null;
     	Integer anio = null;
     	Integer anho = null;
-    	Integer mes = null;
+    	String  mes = null;
     	Integer pais = null;
     	Integer departamento = null;
     	Integer distrito = null;
@@ -163,7 +163,7 @@ public class ajaxSelects extends HttpServlet {
     	if (request.getParameter("pais")!=null) pais = Integer.parseInt(request.getParameter("pais")); else pais=1;
     	if (request.getParameter("anio")!=null) anio = Integer.parseInt(request.getParameter("anio")); else anio=0;
     	if (request.getParameter("anho")!=null) anho = Integer.parseInt(request.getParameter("anho")); 
-    	if (request.getParameter("mes")!=null) mes = Integer.parseInt(request.getParameter("mes")); else mes=0;
+    	if (request.getParameter("mes")!=null) mes = request.getParameter("mes");
     	if (request.getParameter("departamento")!=null) departamento = Integer.parseInt(request.getParameter("departamento")); //else departamento=99;
     	if (request.getParameter("distrito")!=null) distrito = Integer.parseInt(request.getParameter("distrito")); //else distrito=99;
     	if (request.getParameter("objetivo")!=null) objetivo = Integer.parseInt(request.getParameter("objetivo")); else objetivo=0;
@@ -708,7 +708,8 @@ public class ajaxSelects extends HttpServlet {
         		List objetos=null; 
         		condition = " where true ";
         		String condition2=" where true ";
-        		if (anho!=null) condition += " and periodo ="+anho;
+        		if (anho!=null) condition += " and periodo ="+anho+" and to_char(avance_fecha,'YYYY') = '"+anho+"'";
+        		if (mes!=null) condition += " and to_char(avance_fecha,'MM') = '"+mes+"'";
         		if (!userRoleId.equals("0") && !userRoleId.equals("1")){ 
         			condition2 += " and entidad_id="+userEntidadId+" and nivel_id="+userNivelId;
 	        		if ( !userUnrId.equals("0") ){

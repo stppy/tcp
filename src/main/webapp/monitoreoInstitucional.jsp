@@ -72,15 +72,23 @@
 			renderFlow(periodoActual);
 			getPeriodo();
 			
-			
-			
-			
 		});
 		
 		$("body").on("change", "#periodoSeleccion",function(event){	
 		   	periodoSeleccionado = $("#periodoSeleccion option:selected").val();
 		   	renderLineasEstrategicas(periodoSeleccionado);
 		   	renderFlow(periodoSeleccionado);
+		});
+		
+		$("body").on("click", ".modalEvidencias",function(event){			
+			var parametros = $(this).attr("parametros");
+		    var idParsed = parametros.split("-");                                                            
+			
+			//Las siguentes variables se utiliza en esta funcion para redibujar el modal anterior
+			var lineaAccionId = idParsed[0];
+			var periodo = idParsed[1];
+			
+			renderModalEvidencias(lineaAccionId, periodo);
 		});
 		</script>
 	
