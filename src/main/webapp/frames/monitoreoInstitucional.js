@@ -104,7 +104,7 @@ function renderFlow(periodo){
 			fechaAnterior=avances[i].avanceFecha;
 			flowContent+='        </div>'+
 	                '        <div class="timeline-footer">'+
-	                '            <a class="btn btn-primary btn-xs modalEvidencias" parametros="'+avances[i].ilaId+'-'+avances[i].Periodo+'" >Ver evidencias</a>'+
+	                '            <a class="btn btn-primary btn-xs modalEvidencias" parametros="'+avances[0].laId+'-'+avances[0].Periodo+'" >Ver evidencias</a>'+
 	                '        </div>'+
 	                '   </div>'+
 	                '</li>';
@@ -126,7 +126,7 @@ function renderFlow(periodo){
 	    		laAnterior=avances[i].lineaAccion;
 	    		flowContent+='        </div>'+
 	                     '        <div class="timeline-footer">'+
-	                     '            <a class="btn btn-primary btn-xs modalEvidencias" parametros="'+avances[i].ilaId+'-'+avances[i].Periodo+'">Ver evidencias</a>'+
+	                     '            <a class="btn btn-primary btn-xs modalEvidencias" parametros="'+avances[0].laId+'-'+avances[0].Periodo+'">Ver evidencias</a>'+
 	                     '        </div>'+
 	                     '   </div>'+
 	                     '</li>';
@@ -153,7 +153,7 @@ function renderFlow(periodo){
 
 }
 
-function renderModalEvidencias(pivotAvances, lineaAccionId, fecha_entrega) {
+function renderModalEvidencias(lineaAccionId, periodo) {
 		
 //	var webServicesEvidencia = $.ajax({
 //		url:'/tablero/ajaxSelects2?action=getEvidencia&lineaAccionId='+lineaAccionId+'&periodo='+periodo,
