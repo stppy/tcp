@@ -513,7 +513,7 @@ tbody {
 				    	} 
 					}
 					
-					var periodoActual = 2016;
+					var periodoActual = 2017;
 					var depto_id =  null;
 					var dist_id = null;
 
@@ -1638,7 +1638,7 @@ if(deptoId!=null && distId!=null){
           			'<thead><tr>'+
           		  	'<th rowspan="3" class="text-center" style="vertical-align: middle;">Línea de Acción</th>'+
           		  	'<th rowspan="3" class="text-center" style="vertical-align: middle;">Unidad de Medida</th>'+
-          		  	'<th colspan="5" class="text-center">Plan de Acción 2016</th>'+
+          		  	'<th colspan="5" class="text-center">Plan de Acción 2017</th>'+
           		  	'<th colspan="5" class="text-center">Ejecución a la Fecha</th></tr>'+
           		'<tr><th colspan="3" class="text-center">Meta</th>'+
           		  	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Destinatarios</th>'+
@@ -1722,7 +1722,7 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
   tablaInstituciones = '<thead><tr>'+
 	'<th rowspan="3" class="text-center" style="vertical-align: middle;">Línea de Acción</th>'+
 	'<th rowspan="3" class="text-center" style="vertical-align: middle;">Unidad de Medida</th>'+
-	'<th colspan="5" class="text-center">Plan de Acción 2016</th>'+
+	'<th colspan="5" class="text-center">Plan de Acción 2017</th>'+
 	'<th colspan="5" class="text-center">Ejecución a la Fecha</th></tr>'+
 '<tr><th  class="text-center">Meta</th>'+
 	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Destinatarios</th>'+
@@ -2096,7 +2096,7 @@ function renderNivelDistrital(lineasProgramadas, deptoId, distId){
       			'<thead><tr>'+
       		  	'<th rowspan="3" class="text-center" style="vertical-align: middle;">Línea de Acción</th>'+
       		  	'<th rowspan="3" class="text-center" style="vertical-align: middle;">Unidad de Medida</th>'+
-      		  	'<th colspan="3" class="text-center">Plan de Acción 2016</th>'+
+      		  	'<th colspan="3" class="text-center">Plan de Acción 2017</th>'+
       		  	'<th colspan="5" class="text-center">Ejecución a la Fecha</th></tr>'+
       		'<tr><th class="text-center">Meta</th>'+
       		  	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Destinatarios</th>'+
@@ -2300,7 +2300,7 @@ function getPeriodo(periodo){
 	
 	for(p = 0;p<periodo.length; p++){
 		if((periodo[p].id >= 2014) && (periodo[p].id <= 2018)){
-			if(periodo[p].id == 2016){
+			if(periodo[p].id == 2017){
 				optionPeriodo+='<option value="'+periodo[p].id+'" selected>'+periodo[p].nombre+'</option>';
 			}else{
 				optionPeriodo+='<option value="'+periodo[p].id+'" >'+periodo[p].nombre+'</option>';
