@@ -104,7 +104,7 @@ function renderFlow(periodo){
 			fechaAnterior=avances[i].avanceFecha;
 			flowContent+='        </div>'+
 	                '        <div class="timeline-footer">'+
-	                '            <a class="btn btn-primary btn-xs">Ver evidencias</a>'+
+	                '            <a class="btn btn-primary btn-xs modalEvidencias" parametros="'+avances[0].laId+'-'+avances[0].Periodo+'" >Ver evidencias</a>'+
 	                '        </div>'+
 	                '   </div>'+
 	                '</li>';
@@ -126,7 +126,7 @@ function renderFlow(periodo){
 	    		laAnterior=avances[i].lineaAccion;
 	    		flowContent+='        </div>'+
 	                     '        <div class="timeline-footer">'+
-	                     '            <a class="btn btn-primary btn-xs">Ver evidencias</a>'+
+	                     '            <a class="btn btn-primary btn-xs modalEvidencias" parametros="'+avances[0].laId+'-'+avances[0].Periodo+'">Ver evidencias</a>'+
 	                     '        </div>'+
 	                     '   </div>'+
 	                     '</li>';
@@ -145,12 +145,149 @@ function renderFlow(periodo){
 	}
 	flowContent+='        </div>'+
 	'        <div class="timeline-footer">'+
-	'            <a class="btn btn-primary btn-xs">Ver evidencias</a>'+
+	'            <a class="btn btn-primary btn-xs modalEvidencias" parametros="'+avances[0].laId+'-'+avances[0].Periodo+'">Ver evidencias</a>'+
 	'        </div>'+
 	'   </div>'+
 	'</li>'
 	$("#flow").append(flowContent);
 
+}
+
+function renderModalEvidencias(lineaAccionId, periodo) {
+		
+	var webServicesEvidencia = $.ajax({
+		url:'/tablero/ajaxSelects2?action=getEvidencia&lineaAccionId='+lineaAccionId+'&periodo='+periodo,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false
+	}).responseText;
+	webServicesEvidencia = JSON.parse(webServicesEvidencia);
+	
+	var cuerpoEvidencia = "";
+	
+	for(var d = 0; d < pivotAvance.length; d++)
+	{
+		if(onoff==true && webServicesEvidencia[d].borrado == true){
+			// pasa a la siguiente fila en el for ++
+		}else{
+			var donwloadName=""; 
+			var downloadTarget='target="_blank"';
+			var botones="";
+			
+			if (webServicesEvidencia[d].urlDocumento) {
+				webServicesEvidencia[d].url='http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+webServicesEvidencia[d].urlDocumento;
+				donwloadName='Download="'+webServicesEvidencia[d].nombre+'"';
+				downloadTarget="";
+			}
+			
+			<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
+				botones='<button type="button" class="btn btn-default btn-sm consultaEditarEvidencia" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+parametros+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+parametros+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-trash"></span></button>';
+			<%}%>
+			
+			<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
+				if(webServicesEvidencia[d].borrado == true)
+				{
+					cuerpoEvidencia +='<tr><td data-toggle="tooltip" data-placement="top" title="'+webServicesEvidencia[d].descripcion+'" ><del><a href="'+webServicesEvidencia[d].url+'" target="_blank">'+webServicesEvidencia[d].nombre+'</a></del></td>'+
+										'<td class="text-center"><button type="button" class="btn btn-default btn-sm consultaBorrarEvidencia" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+parametros+'-'+webServicesEvidencia[d].id+' ><span class="fa fa-recycle"></span></button></td></tr>';	        				
+				}
+			<%}%>
+			if(webServicesEvidencia[d].borrado == false){
+				cuerpoEvidencia += '<tr>'+
+						'<td data-toggle="tooltip" data-placement="top" title="'+webServicesEvidencia[d].descripcion+'" >'+
+							'<a href="'+webServicesEvidencia[d].url+'" '+downloadTarget+'" '+donwloadName+'>'+webServicesEvidencia[d].nombre+'</a>'+
+						'</td>'+
+				    	'<td class="text-center">'+botones+'</td></tr>';	
+			}	
+		}
+	}
+
+	var contenidoModalEvidencias =  
+	'<div class="modal fade" id="modalEvidencias" tabindex="-1" aria-labelledby="myLargeModalLabel">'+
+	'	<div class="modal-dialog modal-lg" style="width:90%">'+
+	'		<div class="modal-content" >'+
+	'			<div class="modal-header">'+		        
+	'		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+	'		        <h4 class="modal-title">Evidencias </h4>'+ /*(+lineaAccion[0].nombre+' - '+webServicesAvance[0].fechaEntrega+')  de '+lineaAccion[0].nombre+' ('+institucion[0].sigla+') año '+insLineaAccion[0].periodoId+'</h4>' */ 
+	'			</div>'+
+	'		    <div class="modal-body">'+
+		
+	'		      				<div class="row">'+ 	
+	'								<div class="col-md-12" id="tableEvidencia">'+
+	'									<div class="box box-default box-solid">'+
+	'		                				<div class="box-header with-border">'+
+	'		                  					<h3 class="box-title">Lista Evidencia</h3>'+
+	'	                  						<div class="box-tools pull-right">'+
+	'				                    			<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+	'		                    					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>'+
+	'		                  					</div>'+
+	'              							</div>'+
+	'              						<div class="box-body" id="cuerpoTablaEvidencia">'+	
+	'										<div class="table-responsive">'+
+	'											<table class="table table-hover table-bordered" id="dataTableEvidencia">'+
+	'												<thead>'+
+	'													<tr class="active"><th>Nombre</th><th class="text-center">Administrar</th></tr>'+
+	'												</thead>'+
+	'												<tfoot>'+
+	'													<tr><th></th><th></th></tr>'+
+	'												</tfoot>'+
+	'												<tbody  id="listaEvidencia">'+
+	
+	'												</tbody>'+
+	'											</table>'+
+	'				      					</div>'+
+	
+	'				      				</div>'+
+	'				      			</div>'+
+	'			      			</div>'+		
+	
+	'  			</div>'+
+	'		</div>'+
+	'	</div>'+
+	'</div>';
+
+	$("body").append(contenidoModalEvidencias);
+	$('#modalEvidencias').modal('show');
+	$('#dataTableEvidencia').DataTable({ 
+        dom: 'Bfrtip',
+        buttons: [
+                  {
+                      extend: 'copy',
+                      exportOptions: {
+                  columns: [ 0 ]
+              }
+                  },
+                  {
+                      extend: 'csv',
+                      exportOptions: {
+                  columns: [ 0 ]
+              }
+                  },
+                  { 
+                      extend: 'excel',
+                      exportOptions: {
+                  columns: [ 0 ]
+              }
+                  },
+                  {
+                      extend: 'pdf',
+                      exportOptions: {
+                  columns: [ 0 ]
+              }
+                  },
+                  {
+                      extend: 'print',
+                      exportOptions: {
+                  columns: [ 0 ]
+              }
+                  }
+              ]
+	});
+}
+
+function renderCuerpoEvidencia(parametros){
+	
+	
+	return cuerpoEvidencia;
 }
 			
 function renderLineasEstrategicas(periodo){
