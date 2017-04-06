@@ -66,7 +66,7 @@ function lineaAccionInstitucion(a,b) {
 	return 0;
 }
 
-function renderFlow(periodo){
+function renderFlow(periodo,etiquetaSeleccionado){
 	//despliegue del flow de avances.
 	var avances = $.ajax({
 		url:'/tablero/ajaxSelects2?action=getPivotAvance&anho='+periodo,
@@ -290,7 +290,7 @@ function renderCuerpoEvidencia(parametros){
 	return cuerpoEvidencia;
 }
 			
-function renderLineasEstrategicas(periodo){
+function renderLineasEstrategicas(periodo,etiquetaSeleccionado){
 	var contenidoEnRow="";
 	var contenidoEnRowTemp="";				
 	
@@ -323,7 +323,7 @@ function renderLineasEstrategicas(periodo){
 	
 	//for(var l=0; l<lineasEstrategicas.length;l++){
 		var lineasDeEstrategia="";
-		lineasDeEstrategia=renderAccion(/*lineasEstrategicas[l].id,*/ lineasProgramadas, instituciones, periodo)
+		lineasDeEstrategia=renderAccion(/*lineasEstrategicas[l].id,*/ lineasProgramadas, instituciones, periodo,etiquetaSeleccionado)
 		contenidoEnRowTemp='<div class="row">'+
 			'<div class="col-md-12">'+
 	          '<div class="box" height="1000px">'+
@@ -399,7 +399,15 @@ var usuarioEtiqueta = $.ajax({
 }).responseText;
 usuarioEtiqueta = JSON.parse(usuarioEtiqueta);
 
-function renderAccion(/*estrategia, */lineasProgramadas, instituciones, periodo){
+var etiqueta = $.ajax({
+	url:'/tablero/ajaxSelects2?action=getEtiqueta',
+  	type:'get',
+  	dataType:'json',
+  	async:false       
+}).responseText;
+etiqueta = JSON.parse(etiqueta);
+
+function renderAccion(/*estrategia, */lineasProgramadas, instituciones, periodo, etiquetaSeleccionado){
 			
 	var todasLasLineasAccion="";
 	for(var f = 0; f < lineasProgramadas.length; f++)
@@ -449,14 +457,14 @@ function renderAccion(/*estrategia, */lineasProgramadas, instituciones, periodo)
     var cont = 0;
 	for(var m=0; m<instituciones.length;m++){ 
 		for(var n=0; n<lineasProgramadas.length;n++){
-//			for(var l = 0; l < usuarioEtiqueta.length; l++)
-//			{
-//				if(usuarioEtiqueta[l].etiqueta_id == 1)
-//				{
-//					for(var t = 0; t < insLineaAccionHasEtiqueta.length; t++)
-//					{
-//						if(insLineaAccionHasEtiqueta[t].ins_linea_accion_id == lineasProgramadas[n].insLineaAccionId && insLineaAccionHasEtiqueta[t].etiqueta_id == 1)
-//						{
+			for(var l = 0; l < usuarioEtiqueta.length; l++)
+			{
+				if(usuarioEtiqueta[l].etiqueta_id == etiquetaSeleccionado && usuarioEtiqueta[l].borrado != true)
+				{
+					for(var t = 0; t < insLineaAccionHasEtiqueta.length; t++)
+					{
+						if(insLineaAccionHasEtiqueta[t].ins_linea_accion_id == lineasProgramadas[n].insLineaAccionId && insLineaAccionHasEtiqueta[t].etiqueta_id == etiquetaSeleccionado && insLineaAccionHasEtiqueta[t].borrado != true)
+						{
 //							for(var d=0; d<usuarioLineaAccion.length;d++)
 //							{
 //								if(usuarioLineaAccion[d].lineaAccionId == lineasProgramadas[n].lineaAccionId)
@@ -516,10 +524,10 @@ function renderAccion(/*estrategia, */lineasProgramadas, instituciones, periodo)
 
 //								}
 //							}
-//						}
-//					}
-//				}
-//			}
+						}
+					}
+				}
+			}
 		}
 
 		if (flagIns>0){
@@ -541,8 +549,11 @@ function getPeriodo(periodo){
 	  	async:false       
 	}).responseText;
 	periodo = JSON.parse(periodo);
+	
 
 	var optionPeriodo;
+	var optionEtiqueta;
+
 	
 	for(p = 0;p<periodo.length; p++){
 		if(periodo[p].id >= 2014){
@@ -554,17 +565,44 @@ function getPeriodo(periodo){
 		}
 	}
 	
-	var periodoCuerpo = '<div class="col-sm-4">'+
-							'<label for="periodoSeleccion" style="padding-top:6px;">Periodo: </label>'+
-							'<select id="periodoSeleccion" class="form-control" style="width:50% !important; display: inline-block; margin-left: 8px;">'+optionPeriodo+'</select>'+
+	if(usuarioEtiqueta.length > 0){
+		for(var d = 0; d<usuarioEtiqueta.length; d++){
+			for(var e = 0; e<etiqueta.length; e++){
+				if(usuarioEtiqueta[d].borrado != true && usuarioEtiqueta[d].etiqueta_id == etiqueta[e].id && d==0){
+					optionEtiqueta+='<option value="'+etiqueta[e].id+'" selected>'+etiqueta[e].nombre+'</option>';
+				}else if(usuarioEtiqueta[d].borrado != true && usuarioEtiqueta[d].etiqueta_id == etiqueta[e].id){
+					optionEtiqueta+='<option value="'+etiqueta[e].id+'">'+etiqueta[e].nombre+'</option>';
+				}
+			}
+		}
+	}
+
+	var periodoCuerpo= '<div class="col-sm-4">'+
+							'<label for="periodoSeleccion">Periodo</label>'+
+							'<select id="periodoSeleccion" class="form-control">'+optionPeriodo+'</select>'+
 						'</div>'+
-						'<div class="col-sm-4">'+
+						'<div class="col-sm-6">'+
+							'<label for="etiquetaSeleccion">Etiqueta</label>'+
+							'<select id="etiquetaSeleccion" class="form-control">'+optionEtiqueta+'</select>'+
 						'</div>'+
-						'<div class="col-sm-4">'+
-							/* '<div class="checkbox">'+
-								'<label> <input type="checkbox" id="chkMostrarOcultar">Ocultar Registros Borrados</label>'+
-							'</div>'+ */
+						'<div class="col-sm-2">'+
+							'<div class="checkbox">'+
+								//'<label> <input type="checkbox" id="chkMostrarOcultar" checked>Ocultar Registros Borrados</label>'+
+							'</div>'+
 						'</div>';
+						
+	
+//	var periodoCuerpo = '<div class="col-sm-4">'+
+//							'<label for="periodoSeleccion" style="padding-top:6px;">Periodo: </label>'+
+//							'<select id="periodoSeleccion" class="form-control" style="width:50% !important; display: inline-block; margin-left: 8px;">'+optionPeriodo+'</select>'+
+//						'</div>'+
+//						'<div class="col-sm-4">'+
+//						'</div>'+
+//						'<div class="col-sm-4">'+
+//							/* '<div class="checkbox">'+
+//								'<label> <input type="checkbox" id="chkMostrarOcultar">Ocultar Registros Borrados</label>'+
+//							'</div>'+ */
+//						'</div>';
 						
 	$('#mostrarOcultarPeriodo').html(periodoCuerpo);
 	
