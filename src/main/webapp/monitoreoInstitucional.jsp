@@ -92,14 +92,16 @@
 				}
 			}
 			
+			var band = 0;
 			if(usuarioEtiqueta.length > 0){
 				for(var d = 0; d<usuarioEtiqueta.length; d++){
 					for(var e = 0; e<etiqueta.length; e++){
-						if(usuarioEtiqueta[d].borrado != true && usuarioEtiqueta[d].etiqueta_id == etiqueta[e].id && d==0){
+						if(usuarioEtiqueta[d].borrado != true && usuarioEtiqueta[d].etiqueta_id == etiqueta[e].id && band==0){
 							optionEtiqueta+='<option value="'+etiqueta[e].id+'" selected>'+etiqueta[e].nombre+'</option>';
 						}else if(usuarioEtiqueta[d].borrado != true && usuarioEtiqueta[d].etiqueta_id == etiqueta[e].id){
 							optionEtiqueta+='<option value="'+etiqueta[e].id+'">'+etiqueta[e].nombre+'</option>';
 						}
+						band = 1;
 					}
 				}
 			}
@@ -138,15 +140,15 @@
 		 	var periodoSeleccionado = $("#periodoSeleccion option:selected").val();
 		 	var etiquetaSeleccionado = $("#etiquetaSeleccion option:selected").val();
 		   	renderLineasEstrategicas(periodoSeleccionado,etiquetaSeleccionado);
-		   	renderFlow(periodoSeleccionado);
+		   	renderFlow(periodoSeleccionado,etiquetaSeleccionado);
 		});
 		
 		$("body").on("change", "#etiquetaSeleccion",function(event){	
 		 	var periodoSeleccionado = $("#periodoSeleccion option:selected").val();
-		 	var etiquetaSeleccionado = $("#etiquetaSeleccion option:selected").val();
+		    var etiquetaSeleccionado = $("#etiquetaSeleccion option:selected").val();
 
 		   	renderLineasEstrategicas(periodoSeleccionado,etiquetaSeleccionado);
-		   	renderFlow(periodoSeleccionado);
+		   	renderFlow(periodoSeleccionado,etiquetaSeleccionado);
 		   
 		});
 		</script>

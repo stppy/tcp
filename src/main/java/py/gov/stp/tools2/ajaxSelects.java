@@ -709,6 +709,8 @@ public class ajaxSelects extends HttpServlet {
         		condition = " where true ";
         		String condition2=" where true ";
         		if (anho!=null) condition += " and periodo ="+anho;
+        		if (etiquetaId!=null) condition += " and ins_linea_accion_has_etiqueta.etiqueta_id = "+etiquetaId;
+
         		if (!userRoleId.equals("0") && !userRoleId.equals("1")){ 
         			condition2 += " and entidad_id="+userEntidadId+" and nivel_id="+userNivelId;
 	        		if ( !userUnrId.equals("0") ){
