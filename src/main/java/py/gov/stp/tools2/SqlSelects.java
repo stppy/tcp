@@ -1062,7 +1062,7 @@ public class SqlSelects {
 	
 	public static List<LineaAccionDestinatario> selectLineaAccionDestinatarios(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select * from linea_accion_destinatarios "+condition;
+		String query = " select * from linea_accion_destinatarios_1 "+condition;
 
 		Statement statement = null;
 		ResultSet rs=null;
