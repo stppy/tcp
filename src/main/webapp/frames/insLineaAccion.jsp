@@ -3637,7 +3637,7 @@ $("body").on("click", ".borrarAccion",function(event){
 				    	$.ajax({
 
 
-						url:'ajaxSelects?accion=getAsignacionPresiVersion&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto+'&anho=2017',
+						url:'http://sprtest.stp.gov.py/ajaxSelects?accion=getAsignacionPresiVersion&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto+'&anho=2017',
 				          	type:'get',
 				          	crossDomain: 'true',
 				          	dataType:'jsonp',
