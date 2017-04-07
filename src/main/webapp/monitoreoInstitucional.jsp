@@ -179,9 +179,31 @@
 			</header>
 		    <!-- Left side column. contains the logo and sidebar -->
 		    <%-- <%if (attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("0")){%> --%>
-			<aside class="main-sidebar">
+			<aside class="main-sidebar collapse">
 				<%@ include file="/frames/main-sidebar.jsp"%>
 			</aside>
+			
+			<script type="text/javascript">
+				$(document).ready(function(){
+					var screenSizes = $.AdminLTE.options.screenSizes;
+					 
+				    $("#sideBar").click(function(){
+				    	//Enable sidebar push menu
+						if ($(window).width() > (screenSizes.sm - 1)) {
+							$("body").toggleClass('sidebar-collapse');
+						} else {
+							//Handle sidebar push menu for small screens
+							if ($("body").hasClass('sidebar-open')) {
+								$("aside").addClass('collapse');
+							} else {
+								if($("aside").hasClass('collapse')){
+									$("aside").removeClass('collapse');
+								}
+							}
+						}
+				    });
+				});
+			</script>
 			<%-- 	   <% } %>  --%> 
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
