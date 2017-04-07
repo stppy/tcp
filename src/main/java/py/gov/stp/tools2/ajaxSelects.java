@@ -124,6 +124,7 @@ public class ajaxSelects extends HttpServlet {
     	String institucion=null;
     	String catalogoAccion = null;
     	String usuario=null;
+    	String avanceFecha = null;
     	String condition = "";
     	String conditionIdLAGA = "";
 		String conditionAccGA = "";
@@ -215,6 +216,7 @@ public class ajaxSelects extends HttpServlet {
       	if (request.getParameter("tipo")!=null) tipo = Integer.parseInt(request.getParameter("tipo"));
       	if (request.getParameter("version")!=null) version= Integer.parseInt(request.getParameter("version"));
       	if (request.getParameter("tabla")!=null) tabla=request.getParameter("tabla");
+      	if (request.getParameter("avanceFecha")!=null) avanceFecha=request.getParameter("avanceFecha");
 
 
       	
@@ -264,11 +266,22 @@ public class ajaxSelects extends HttpServlet {
         		if (lineaAccionId!=null) condition += " and linea_accion.id ='"+lineaAccionId+"'";
         		if (anho!=null) condition += " and ins_linea_accion.periodo_id ="+anho+" and to_char(avance.fecha_entrega,'YYYY') = '"+anho+"'";
         		if (mes!=null) condition += " and to_char(avance.fecha_entrega,'MM') = '"+mes+"'";
+        		if (avanceFecha!=null) condition += " and avance.fecha_entrega = '"+avanceFecha+"'";
            		try {objetos = SqlSelects.selectEvidenciaAvanceLineaAccion(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());        	        	        	
-        	}        	
+        	}  
+        	if (action.equals("getTotalEvidenciasPorLineaAccion")){//utilizado en monitoreoInstitucional.jsp
+        		String objetos=null;
+        		condition = " ";
+        		if (lineaAccionId!=null) condition += " and linea_accion.id ='"+lineaAccionId+"'";
+        		if (avanceFecha!=null) condition += " and avance.fecha_entrega = '"+avanceFecha+"'";
+        		try {objetos = SqlSelects.selectTotalEvidenciasLineaAccion(condition);}
+				catch (SQLException e) {e.printStackTrace();}        		
+        		
+        		out.println(objetos.toString());return;   	        	        	
+        	}
         	if (action.equals("getTipoDocumento")){
         		List objetos=null;
         		String condicion = " where true ";
