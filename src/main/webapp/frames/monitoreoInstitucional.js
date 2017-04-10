@@ -1,4 +1,3 @@
-
 function numeroConComa(x) {
 	if (isNaN(x)){
 		return 0;
@@ -66,91 +65,263 @@ function lineaAccionInstitucion(a,b) {
 	return 0;
 }
 
-function renderFlow(periodo,etiquetaSeleccionado){
-	//despliegue del flow de avances.
+function renderFlow(periodo,etiquetaSeleccionado){		
 	var avances = $.ajax({
-		url:'/tablero/ajaxSelects2?action=getPivotAvance&anho='+periodo+'&etiquetaId='+etiquetaSeleccionado,
+		url:'/tablero/ajaxSelects2?action=getPivotAvance&anho='+periodo+'&etiquetaId='+etiquetaSeleccionado+'&mes=03',
 		type:'get',
 		dataType:'json',
 		async:false       
 	}).responseText;
 	avances = JSON.parse(avances);
 	
-	function compararAvancesPorFecha(a,b) {  
+	/* function compararAvancesPorFecha(a,b) {  
 	    if (a.avanceFecha > b.avanceFecha) return -1;
 	    if (a.avanceFecha < b.avanceFecha) return 1;
 	    return 0;
-	}
-	avances=avances.sort(compararAvancesPorFecha);
+	} */
+	//avances=avances.sort(compararAvancesPorFecha);
 	
+	//obtención de los costos del avance.
+	var avanceCosto = $.ajax({
+		url:'/tablero/ajaxSelects2?action=getAvanceCosto',//&avanceId '+avances[0].avanceId
+		type:'get',
+		dataType:'json',
+		async:false       
+	}).responseText;
+	avanceCosto = JSON.parse(avanceCosto);
+	
+	var totalEvidencias = $.ajax({
+		url:'/tablero/ajaxSelects2?action=getTotalEvidenciasPorLineaAccion',
+		type:'get',
+		dataType:'json',
+		async:false       
+	}).responseText;
+	totalEvidencias = JSON.parse(totalEvidencias);		
+	
+	var avanceCostoTotal = parseFloat('0'); 
+	for (var c=0; c<avanceCosto.length;c++){
+		if (avanceCosto[c].avanceId == avances[0].avanceId){
+			avanceCostoTotal += parseFloat(avanceCosto[c].monto);	
+		}				
+	}
+	
+	var totalEvidenciaLineaAccion = 0;
+	for (var c=0; c<totalEvidencias.length;c++){
+		if (totalEvidencias[c].linea_accion_id == avances[0].laId && totalEvidencias[c].avance_fecha == avances[0].avanceFecha){
+			totalEvidenciaLineaAccion = parseFloat(totalEvidencias[c].total);	
+		}				
+	}
+	
+	//despliegue del flow de avances.
 	var fechaAnterior=avances[0].avanceFecha;
 	var laAnterior=avances[0].lineaAccion;
 	var flowContent="";
 	flowContent+='<li class="time-label">'+
-	        '<span class="bg-red">'+
-	        avances[0].avanceFecha+
-	        '</span>'+
-	    '</li>';
+					'<span class="bg-red">'+
+						avances[0].avanceFecha+
+       				'</span>'+
+	    		 '</li>';
 	    flowContent+='<li>'+
 	        '    <i class="fa fa-envelope bg-blue"></i>'+
 	        '    <div class="timeline-item">'+
-	        '        <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>'+
+	        //'        <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>'+
 	        '        <h3 class="timeline-header"><a href="#">'+avances[0].lineaAccion+'</a> </h3>'+
 	        '        <div class="timeline-body">'+
-	        avances[0].institucion+' ha realizado '+avances[0].accion+' alcanzando '+avances[0].avanceCantidad+' '+avances[0].cronoUnidadMedida+' en el distrito '+avances[0].distrito+' del departamento de '+avances[0].departamento;
+	        avances[0].institucion+' ha realizado '+avances[0].accion+' alcanzando '+avances[0].avanceCantidad+' '+avances[0].cronoUnidadMedida+' en el distrito '+avances[0].distrito+' del departamento de '+avances[0].departamento+ ' con una inversión de Gs. '+numeroConComa(avanceCostoTotal);
 	
-	for (var i=1; i<avances.length;i++){
+	for (var i=1; i<avances.length;i++){						
+		
+		var avanceCostoTotal = parseFloat('0'); 
+		for (var c=0; c<avanceCosto.length;c++){
+			if (avanceCosto[c].avanceId == avances[i].avanceId){
+				avanceCostoTotal += parseFloat(avanceCosto[c].monto);	
+			}				
+		}
+
+		var totalEvidenciaLineaAccion = 0;
+		for (var c=0; c<totalEvidencias.length;c++){
+			if (totalEvidencias[c].linea_accion_id == avances[i-1].laId  && totalEvidencias[c].avance_fecha == avances[i-1].avanceFecha){
+				totalEvidenciaLineaAccion = parseFloat(totalEvidencias[c].total);	
+			}				
+		}
+		
 		if (fechaAnterior>avances[i].avanceFecha){
 			fechaAnterior=avances[i].avanceFecha;
 			flowContent+='        </div>'+
 	                '        <div class="timeline-footer">'+
-	                '            <a class="btn btn-primary btn-xs">Ver evidencias</a>'+
+	                '            <a class="btn btn-primary btn-xs modalEvidencias" parametros="'+avances[i-1].laId+'-'+avances[i-1].avanceFecha+'" >'+
+	                '				<span class="badge bg-olive" style="font-size:13px;">'+totalEvidenciaLineaAccion+'</span>'+
+	                '				<strong>Ver evidencias</strong>'+
+	                '			 </a>'+
 	                '        </div>'+
 	                '   </div>'+
 	                '</li>';
 	                flowContent+='<li name="'+avances[i].avanceFecha+'" class="time-label">'+
 	                   '<span class="bg-red">'+
-	                   avances[i].avanceFecha+
+	                   		avances[i].avanceFecha+
 	                   '</span>'+
 	               '</li>';
 	               flowContent+='<li>'+
 	                '    <i class="fa fa-envelope bg-blue"></i>'+
 	                '    <div class="timeline-item">'+
-	                '        <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>'+
+	                //'        <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>'+
 	                '        <h3 class="timeline-header"><a name="'+i+'" href="#">'+avances[i].lineaAccion+'</a> </h3>'+
 	                '        <div class="timeline-body">'+
-	                avances[i].institucion+' ha realizado '+avances[i].accion+' alcanzando '+avances[i].avanceCantidad+' '+avances[i].cronoUnidadMedida+' en el distrito '+avances[i].distrito+' del departamento de '+avances[i].departamento;
+	                avances[i].institucion+' ha realizado '+avances[i].accion+' alcanzando '+avances[i].avanceCantidad+' '+avances[i].cronoUnidadMedida+' en el distrito '+avances[i].distrito+' del departamento de '+avances[i].departamento+ ' con una inversión de Gs. '+numeroConComa(avanceCostoTotal);
 			
 		}else{
 	    	if (avances[i].lineaAccion!=laAnterior){
 	    		laAnterior=avances[i].lineaAccion;
 	    		flowContent+='        </div>'+
 	                     '        <div class="timeline-footer">'+
-	                     '            <a class="btn btn-primary btn-xs">Ver evidencias</a>'+
+	                     '            <a class="btn btn-primary btn-xs modalEvidencias" parametros="'+avances[i-1].laId+'-'+avances[i-1].avanceFecha+'">'+
+	                     '			  		<span class="badge bg-olive" style="font-size:13px;">'+totalEvidenciaLineaAccion+'</span>'+
+	                     '					<strong>Ver evidencias</strong>'+
+	                     '			  </a>'+
 	                     '        </div>'+
 	                     '   </div>'+
 	                     '</li>';
 	    		flowContent+='<li>'+
 	                    '    <i class="fa fa-envelope bg-blue"></i>'+
 	                    '    <div class="timeline-item">'+
-	                    '        <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>'+
+	                    //'        <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>'+
 	                    '        <h3 class="timeline-header"><a href="#">'+avances[i].lineaAccion+'</a> </h3>'+
 	                    '        <div class="timeline-body">'+
-	                    avances[i].institucion+' ha realizado '+avances[i].accion+' alcanzando '+avances[i].avanceCantidad+' '+avances[i].cronoUnidadMedida+' en el distrito '+avances[i].distrito+' del departamento de '+avances[i].departamento;
+	                    avances[i].institucion+' ha realizado '+avances[i].accion+' alcanzando '+avances[i].avanceCantidad+' '+avances[i].cronoUnidadMedida+' en el distrito '+avances[i].distrito+' del departamento de '+avances[i].departamento+ ' con una inversión de Gs. '+numeroConComa(avanceCostoTotal);
 	    		
 	    	}else{
-	    		flowContent+='<br>'+avances[i].institucion+' ha realizado '+avances[i].accion+' alcanzando '+avances[i].avanceCantidad+' '+avances[i].cronoUnidadMedida+' en el distrito '+avances[i].distrito+' del departamento de '+avances[i].departamento;
+	    		
+	    		flowContent+='<br>'+avances[i].institucion+' ha realizado '+avances[i].accion+' alcanzando '+avances[i].avanceCantidad+' '+avances[i].cronoUnidadMedida+' en el distrito '+avances[i].distrito+' del departamento de '+avances[i].departamento+ ' con una inversión de Gs. '+numeroConComa(avanceCostoTotal);
 	    	}    
 		}
 	}
 	flowContent+='        </div>'+
 	'        <div class="timeline-footer">'+
-	'            <a class="btn btn-primary btn-xs">Ver evidencias</a>'+
+	'            <a class="btn btn-primary btn-xs modalEvidencias" parametros="'+avances[avances.length-1].ilaId+'-'+avances[avances.length-1].avanceFecha+'">Ver evidencias</a>'+
 	'        </div>'+
 	'   </div>'+
 	'</li>'
 	$("#flow").append(flowContent);
 
+}
+
+function renderModalEvidencias(lineaAccionId, avanceFecha) {
+	if ( $("#modalEvidencias").length )
+	{
+		$("#modalEvidencias").remove();
+	}	
+	
+	var webServicesEvidencia = $.ajax({
+		url:'/tablero/ajaxSelects2?action=getEvidenciaAvanceLineaAccion&lineaAccionId='+lineaAccionId+'&avanceFecha='+avanceFecha,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false
+	}).responseText;
+	webServicesEvidencia = JSON.parse(webServicesEvidencia);
+	
+	var cuerpoEvidencia = "";
+	
+	for(var d = 0; d < webServicesEvidencia.length; d++)
+	{			
+		var donwloadName=""; 
+		var downloadTarget='target="_blank"';
+		var botones="";
+		
+		if (webServicesEvidencia[d].urlDocumento) {
+			webServicesEvidencia[d].url='http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+webServicesEvidencia[d].urlDocumento;
+			donwloadName='Download="'+webServicesEvidencia[d].nombre+'"';
+			downloadTarget="";
+		}
+
+		if(webServicesEvidencia[d].borrado == false){
+			cuerpoEvidencia += '<tr>'+
+					'<td data-toggle="tooltip" data-placement="top" title="'+webServicesEvidencia[d].descripcion+'" >'+
+						'<a href="'+webServicesEvidencia[d].url+'" '+downloadTarget+'" '+donwloadName+'>'+webServicesEvidencia[d].nombre+'</a>'+
+					'</td>';	
+		}	
+	}
+
+	var contenidoModalEvidencias =  
+	'<div class="modal fade" id="modalEvidencias" tabindex="-1" aria-labelledby="myLargeModalLabel">'+
+	'	<div class="modal-dialog modal-lg" style="width:90%">'+
+	'		<div class="modal-content" >'+
+	'			<div class="modal-header">'+		        
+	'		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+	'		        <h4 class="modal-title">Evidencias </h4>'+ /*(+lineaAccion[0].nombre+' - '+webServicesAvance[0].fechaEntrega+')  de '+lineaAccion[0].nombre+' ('+institucion[0].sigla+') año '+insLineaAccion[0].periodoId+'</h4>' */ 
+	'			</div>'+
+	'		    <div class="modal-body">'+
+		
+	'		      				<div class="row">'+ 	
+	'								<div class="col-md-12" id="tableEvidencia">'+
+	'									<div class="box box-default box-solid">'+
+	'		                				<div class="box-header with-border">'+
+	'		                  					<h3 class="box-title">Lista Evidencia</h3>'+
+	'	                  						<div class="box-tools pull-right">'+
+	'				                    			<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+	'		                    					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>'+
+	'		                  					</div>'+
+	'              							</div>'+
+	'              						<div class="box-body" id="cuerpoTablaEvidencia">'+	
+	'										<div class="table-responsive">'+
+	'											<table class="table table-hover table-bordered" id="dataTableEvidencia">'+
+	'												<thead>'+
+	'													<tr class="active"><th>Nombre Evidencia</th><!--th class="text-center">Administrar</th--></tr>'+
+	'												</thead>'+
+	'												<tfoot>'+
+	'													<tr><th></th><!--th></th--></tr>'+
+	'												</tfoot>'+
+	'												<tbody  id="listaEvidencia">'+
+															cuerpoEvidencia+
+	'												</tbody>'+
+	'											</table>'+
+	'				      					</div>'+
+	
+	'				      				</div>'+
+	'				      			</div>'+
+	'			      			</div>'+		
+	
+	'  			</div>'+
+	'		</div>'+
+	'	</div>'+
+	'</div>';
+
+	$("body").append(contenidoModalEvidencias);
+	$('#modalEvidencias').modal('show');
+	/* $('#dataTableEvidencia').DataTable({ 
+        dom: 'Bfrtip',
+        buttons: [
+                  {
+                      extend: 'copy',
+                      exportOptions: {
+                  columns: [ 0 ]
+              }
+                  },
+                  {
+                      extend: 'csv',
+                      exportOptions: {
+                  columns: [ 0 ]
+              }
+                  },
+                  { 
+                      extend: 'excel',
+                      exportOptions: {
+                  columns: [ 0 ]
+              }
+                  },
+                  {
+                      extend: 'pdf',
+                      exportOptions: {
+                  columns: [ 0 ]
+              }
+                  },
+                  {
+                      extend: 'print',
+                      exportOptions: {
+                  columns: [ 0 ]
+              }
+                  }
+              ]
+	}); */
 }
 			
 function renderLineasEstrategicas(periodo,etiquetaSeleccionado){
@@ -475,4 +646,3 @@ function getPeriodo(periodo){
 	$('#mostrarOcultarPeriodo').html(periodoCuerpo);
 	
 }	
-	

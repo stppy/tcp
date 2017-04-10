@@ -75,7 +75,7 @@ public class ajaxSelects extends HttpServlet {
     	Integer unidadJerarquica = null;
     	Integer anio = null;
     	Integer anho = null;
-    	Integer mes = null;
+    	String  mes = null;
     	Integer pais = null;
     	Integer departamento = null;
     	Integer distrito = null;
@@ -124,6 +124,7 @@ public class ajaxSelects extends HttpServlet {
     	String institucion=null;
     	String catalogoAccion = null;
     	String usuario=null;
+    	String avanceFecha = null;
     	String condition = "";
     	String conditionIdLAGA = "";
 		String conditionAccGA = "";
@@ -163,7 +164,7 @@ public class ajaxSelects extends HttpServlet {
     	if (request.getParameter("pais")!=null) pais = Integer.parseInt(request.getParameter("pais")); else pais=1;
     	if (request.getParameter("anio")!=null) anio = Integer.parseInt(request.getParameter("anio")); else anio=0;
     	if (request.getParameter("anho")!=null) anho = Integer.parseInt(request.getParameter("anho")); 
-    	if (request.getParameter("mes")!=null) mes = Integer.parseInt(request.getParameter("mes")); else mes=0;
+    	if (request.getParameter("mes")!=null) mes = request.getParameter("mes");
     	if (request.getParameter("departamento")!=null) departamento = Integer.parseInt(request.getParameter("departamento")); //else departamento=99;
     	if (request.getParameter("distrito")!=null) distrito = Integer.parseInt(request.getParameter("distrito")); //else distrito=99;
     	if (request.getParameter("objetivo")!=null) objetivo = Integer.parseInt(request.getParameter("objetivo")); else objetivo=0;
@@ -215,6 +216,7 @@ public class ajaxSelects extends HttpServlet {
       	if (request.getParameter("tipo")!=null) tipo = Integer.parseInt(request.getParameter("tipo"));
       	if (request.getParameter("version")!=null) version= Integer.parseInt(request.getParameter("version"));
       	if (request.getParameter("tabla")!=null) tabla=request.getParameter("tabla");
+      	if (request.getParameter("avanceFecha")!=null) avanceFecha=request.getParameter("avanceFecha");
 
 
       	
@@ -255,7 +257,31 @@ public class ajaxSelects extends HttpServlet {
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());        	        	        	
-        	}    
+        	}
+        	if (action.equals("getEvidenciaAvanceLineaAccion")){
+        		List objetos=null;
+        		condition = " ";
+        		if (avanceId!=null) condition += " and avance_id ='"+avanceId+"'"; 
+        		if (idEvidencia!=null) condition += " and id ='"+idEvidencia+"'";
+        		if (lineaAccionId!=null) condition += " and linea_accion.id ='"+lineaAccionId+"'";
+        		if (anho!=null) condition += " and ins_linea_accion.periodo_id ="+anho+" and to_char(avance.fecha_entrega,'YYYY') = '"+anho+"'";
+        		if (mes!=null) condition += " and to_char(avance.fecha_entrega,'MM') = '"+mes+"'";
+        		if (avanceFecha!=null) condition += " and avance.fecha_entrega = '"+avanceFecha+"'";
+           		try {objetos = SqlSelects.selectEvidenciaAvanceLineaAccion(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());        	        	        	
+        	}  
+        	if (action.equals("getTotalEvidenciasPorLineaAccion")){//utilizado en monitoreoInstitucional.jsp
+        		String objetos=null;
+        		condition = " ";
+        		if (lineaAccionId!=null) condition += " and linea_accion.id ='"+lineaAccionId+"'";
+        		if (avanceFecha!=null) condition += " and avance.fecha_entrega = '"+avanceFecha+"'";
+        		try {objetos = SqlSelects.selectTotalEvidenciasLineaAccion(condition);}
+				catch (SQLException e) {e.printStackTrace();}        		
+        		
+        		out.println(objetos.toString());return;   	        	        	
+        	}
         	if (action.equals("getTipoDocumento")){
         		List objetos=null;
         		String condicion = " where true ";
@@ -708,9 +734,9 @@ public class ajaxSelects extends HttpServlet {
         		List objetos=null; 
         		condition = " where true ";
         		String condition2=" where true ";
-        		if (anho!=null) condition += " and periodo ="+anho;
         		if (etiquetaId!=null) condition += " and ins_linea_accion_has_etiqueta.etiqueta_id = "+etiquetaId;
-
+        		if (anho!=null) condition += " and periodo ="+anho+" and to_char(avance_fecha,'YYYY') = '"+anho+"'";
+        		if (mes!=null) condition += " and to_char(avance_fecha,'MM') = '"+mes+"'";
         		if (!userRoleId.equals("0") && !userRoleId.equals("1")){ 
         			condition2 += " and entidad_id="+userEntidadId+" and nivel_id="+userNivelId;
 	        		if ( !userUnrId.equals("0") ){
