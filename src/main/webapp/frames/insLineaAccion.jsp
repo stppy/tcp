@@ -5496,6 +5496,7 @@ function renderProgramacion(insLineaAccionId,lineaAccionId,institucionId,periodo
 	}
 	//$("#dataTablesProgramacionHito1").DataTable();
 	$('#dataTablesProgramacionHito1').dataTable({
+		"order": [[ 1, "asc" ]],
         "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;
  
