@@ -129,9 +129,6 @@
 			renderFlow(periodoSeleccionado,etiquetaSeleccionado);
 			//getPeriodo();
 			
-			
-			
-			
 		});
 		
 		$("body").on("change", "#periodoSeleccion",function(event){	
@@ -139,6 +136,18 @@
 		 	var etiquetaSeleccionado = $("#etiquetaSeleccion option:selected").val();
 		   	renderLineasEstrategicas(periodoSeleccionado,etiquetaSeleccionado);
 		   	renderFlow(periodoSeleccionado);
+		});
+		
+		$("body").on("click", ".modalEvidencias",function(event){			
+			var parametros = $(this).attr("parametros");
+		    var idParsed = parametros.split("-");                                                            
+			
+			//Las siguentes variables se utiliza en esta funcion para redibujar el modal anterior
+			var lineaAccionId = idParsed[0];
+			//var periodo = idParsed[1];
+			var avanceFecha = idParsed[1] + '-' + idParsed[2] + '-' + idParsed[3];
+			
+			renderModalEvidencias(lineaAccionId, avanceFecha);			
 		});
 		
 		$("body").on("change", "#etiquetaSeleccion",function(event){	
@@ -179,9 +188,31 @@
 			</header>
 		    <!-- Left side column. contains the logo and sidebar -->
 		    <%-- <%if (attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("0")){%> --%>
-			<aside class="main-sidebar">
+			<aside class="main-sidebar collapse">
 				<%@ include file="/frames/main-sidebar.jsp"%>
 			</aside>
+			
+			<script type="text/javascript">
+				$(document).ready(function(){
+					var screenSizes = $.AdminLTE.options.screenSizes;
+					 
+				    $("#sideBar").click(function(){
+				    	//Enable sidebar push menu
+						if ($(window).width() > (screenSizes.sm - 1)) {
+							$("body").toggleClass('sidebar-collapse');
+						} else {
+							//Handle sidebar push menu for small screens
+							if ($("body").hasClass('sidebar-open')) {
+								$("aside").addClass('collapse');
+							} else {
+								if($("aside").hasClass('collapse')){
+									$("aside").removeClass('collapse');
+								}
+							}
+						}
+				    });
+				});
+			</script>
 			<%-- 	   <% } %>  --%> 
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
@@ -295,10 +326,10 @@
 	
 	    <!-- AdminLTE for demo purposes -->
 	    <script src="dist/js/demo.js" type="text/javascript"></script>
+	        
        <%  } else { %>
 			<p>Favor Iniciar Sesion</p>
 		<%  } %>
-		<a href="#" data-toggle="tooltip" title="Some tooltip text!">Hover over me</a>
 				
 </body>
 </html>
