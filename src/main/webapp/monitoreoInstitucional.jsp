@@ -129,9 +129,6 @@
 			renderFlow(periodoSeleccionado,etiquetaSeleccionado);
 			//getPeriodo();
 			
-			
-			
-			
 		});
 		
 		$("body").on("change", "#periodoSeleccion",function(event){	
@@ -139,6 +136,18 @@
 		 	var etiquetaSeleccionado = $("#etiquetaSeleccion option:selected").val();
 		   	renderLineasEstrategicas(periodoSeleccionado,etiquetaSeleccionado);
 		   	renderFlow(periodoSeleccionado);
+		});
+		
+		$("body").on("click", ".modalEvidencias",function(event){			
+			var parametros = $(this).attr("parametros");
+		    var idParsed = parametros.split("-");                                                            
+			
+			//Las siguentes variables se utiliza en esta funcion para redibujar el modal anterior
+			var lineaAccionId = idParsed[0];
+			//var periodo = idParsed[1];
+			var avanceFecha = idParsed[1] + '-' + idParsed[2] + '-' + idParsed[3];
+			
+			renderModalEvidencias(lineaAccionId, avanceFecha);			
 		});
 		
 		$("body").on("change", "#etiquetaSeleccion",function(event){	
@@ -317,10 +326,10 @@
 	
 	    <!-- AdminLTE for demo purposes -->
 	    <script src="dist/js/demo.js" type="text/javascript"></script>
+	        
        <%  } else { %>
 			<p>Favor Iniciar Sesion</p>
 		<%  } %>
-		<a href="#" data-toggle="tooltip" title="Some tooltip text!">Hover over me</a>
 				
 </body>
 </html>

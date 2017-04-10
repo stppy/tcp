@@ -1722,6 +1722,103 @@ public class SqlSelects {
 			}
 			return objetos; 
 	  }
+	public static List<Evidencia> selectEvidenciaAvanceLineaAccion(String condition) throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+			 String query = " SELECT linea_accion.id AS linea_accion_id, linea_accion.nombre AS linea_accion_nombre, avance.fecha_entrega as avance_fecha, "+
+			 		 		"		 ins_linea_accion.periodo_id AS periodo, evidencia.* "+
+			 		 		" FROM evidencia "+
+					 		" JOIN avance ON avance.id = evidencia.avance_id "+
+					 		" JOIN actividad ON actividad.id = avance.actividad_id"+
+					 		" JOIN accion ON accion.id = actividad.accion_id"+
+					 		" JOIN accion_catalogo ON accion.id_accion_catalogo = accion_catalogo.id"+
+					 		" JOIN ins_linea_accion ON accion.ins_linea_accion_id = ins_linea_accion.id"+
+					 		" JOIN linea_accion ON linea_accion.id = ins_linea_accion.linea_accion_id"+
+					 		" WHERE NOT linea_accion.borrado "+ 
+					 		" 	AND NOT ins_linea_accion.borrado  "+
+					 		" 	AND NOT accion_catalogo.borrado "+ 
+					 		" 	AND NOT accion.borrado  "+
+					 		" 	AND NOT actividad.borrado  "+
+					 		" 	AND NOT avance.borrado  "+
+					 		"	AND NOT evidencia.borrado "+condition+
+					 		" ORDER BY linea_accion.id, ins_linea_accion.id, evidencia.id, avance.fecha_entrega ";
+			 
+			 Statement statement = null;
+			 ResultSet rs=null;
+			 List<Evidencia> objetos = new ArrayList<Evidencia>();
+
+			try {
+				statement = conect.createStatement();
+				rs=statement.executeQuery(query);
+				while(rs.next()){
+					Evidencia objeto = new Evidencia();
+					objeto.setId(rs.getInt("id"));
+					objeto.setNombre(rs.getString("nombre"));
+					objeto.setDescripcion(rs.getString("descripcion"));
+					objeto.setLineaAccionId(rs.getInt("linea_accion_id"));
+					objeto.setLineaAccionNombre(rs.getString("linea_accion_nombre"));					
+					objeto.setUrl(rs.getString("url"));
+					objeto.setWsId(rs.getInt("ws_id"));
+					objeto.setVersion(rs.getInt("version"));
+					objeto.setBorrado(rs.getBoolean("borrado"));
+					objeto.setAvanceId(rs.getInt("avance_id"));
+					objeto.setAvanceFecha(rs.getString("avance_fecha"));
+					objeto.setLatitud(rs.getDouble("latitud"));
+					objeto.setLongitud(rs.getDouble("longitud"));					
+					// se envia solo el nombre del archivo de url_documento
+					objeto.setUrlDocumento(getFileName(rs.getString("url_documento")));
+					
+					objetos.add(objeto);
+				}
+			}
+			catch (SQLException e) {e.printStackTrace();}
+			finally{
+				if (statement != null) {statement.close();}
+				if (conect != null) {conect.close();}
+			}
+			return objetos; 
+	  }
+	public static String selectTotalEvidenciasLineaAccion(String condition) throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+			String query =	"	select array_to_json(array_agg(row_to_json(t))) as resultado from( "+						
+					 				" SELECT linea_accion.id as linea_accion_id, avance.fecha_entrega as avance_fecha, count(*) AS total "+
+					 		 		" FROM evidencia "+
+							 		" JOIN avance ON avance.id = evidencia.avance_id "+
+							 		" JOIN actividad ON actividad.id = avance.actividad_id"+
+							 		" JOIN accion ON accion.id = actividad.accion_id"+
+							 		" JOIN accion_catalogo ON accion.id_accion_catalogo = accion_catalogo.id"+
+							 		" JOIN ins_linea_accion ON accion.ins_linea_accion_id = ins_linea_accion.id"+
+							 		" JOIN linea_accion ON linea_accion.id = ins_linea_accion.linea_accion_id"+
+							 		" WHERE NOT linea_accion.borrado "+ 
+							 		" 	AND NOT ins_linea_accion.borrado  "+
+							 		" 	AND NOT accion_catalogo.borrado "+ 
+							 		" 	AND NOT accion.borrado  "+
+							 		" 	AND NOT actividad.borrado  "+
+							 		" 	AND NOT avance.borrado  "+
+							 		"	AND NOT evidencia.borrado "+condition+
+							 		" GROUP BY linea_accion.id, avance.fecha_entrega "+
+							 		" ORDER BY linea_accion.id, avance.fecha_entrega "+
+					 		"	)t ";
+					 							 	
+			 
+			Statement statement = null;
+	   		ResultSet rs=null;
+	   		
+	   		String objetos = "";
+
+	    		try {
+	    			statement = conect.createStatement();
+	    			rs=statement.executeQuery(query);
+	    			while(rs.next()){
+	    				objetos+=rs.getString("resultado");
+	    			}
+	    		}
+	   		catch (SQLException e) {e.printStackTrace();}
+	   		finally{
+	   			if (statement != null) {statement.close();}
+	   			if (conect != null) {conect.close();}
+	   		}
+	   		return objetos;
+	  }
 	public static String getFileName (String fullPath){
 		String fileName = null;
 		if (fullPath != null){
