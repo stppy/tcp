@@ -67,7 +67,7 @@ function lineaAccionInstitucion(a,b) {
 
 function renderFlow(periodo,etiquetaSeleccionado){		
 	var avances = $.ajax({
-		url:'/tablero/ajaxSelects2?action=getPivotAvance&anho='+periodo+'&mes=03',
+		url:'/tablero/ajaxSelects2?action=getPivotAvance&anho='+periodo+'&etiquetaId='+etiquetaSeleccionado+'&mes=03',
 		type:'get',
 		dataType:'json',
 		async:false       
@@ -338,7 +338,7 @@ function renderLineasEstrategicas(periodo,etiquetaSeleccionado){
 //	lineasEstrategicas=lineasEstrategicas.sort(orden);
 		
 	var lineasProgramadas = $.ajax({
-		url: 'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacion&periodoId='+periodo,
+		url: 'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacion&periodoId='+periodo+'&etiquetaId='+etiquetaSeleccionado,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -479,7 +479,7 @@ function renderAccion(/*estrategia, */lineasProgramadas, instituciones, periodo,
 								   	'<th class="text-center dimHeader cabeceraInversion" style="display:none;">Inversión (%)</th>'+
 								  	'<th class="text-center dimHeader cabeceraAvance" style="display:none;">Avance (%) <button class="fa fa-arrow-left dimHeader" onclick="mostrarMenos()" style="display:none;"></button></th>'+
 //								  	'<th class="text-center ">Evidencia</th>'+								  	
-							 '</tr></thead>'
+							 '</tr></thead>';
 								  	
 	tablaInstituciones = cabeceraInstituciones + '<tbody>';
 	
@@ -507,10 +507,7 @@ function renderAccion(/*estrategia, */lineasProgramadas, instituciones, periodo,
 									if ( instituciones[m].id==lineasProgramadas[n].institucionId){
 										
 										cont = cont + 1;
-										if (flagIns == 0){
-											tempInstituciones += '<tr><td class="cabeceraInstitucion" ><strong data-toggle="tooltip" data-placement="top" title="'+instituciones[m].nombre+'">'+lineasProgramadas[n].institucionSigla+'</strong></td>';
-											flagIns++;						  
-										}
+										
 										var desempProgAnho=validarNumero(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100));
 										var desempEjeHoy=validarNumero(((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100).toFixed(2));
 						  									
@@ -533,7 +530,10 @@ function renderAccion(/*estrategia, */lineasProgramadas, instituciones, periodo,
 											var colorDestinatarios = color(valor3,lineasProgramadas[n].meta);
 											var colorInversion = color(valor4,lineasProgramadas[n].meta);
 											var colorPromedio = color(promedio,lineasProgramadas[n].meta);
-
+											if (flagIns == 0){
+												tempInstituciones += '<tr><td class="cabeceraInstitucion" ><strong data-toggle="tooltip" data-placement="top" title="'+instituciones[m].nombre+'">'+lineasProgramadas[n].institucionSigla+'</strong></td>';
+												flagIns++;						  
+											}
 											tempInstituciones += '<td class="'+colorPromedio+' cabeceraPromedio">'+promedio+'</td><td class="'+colorProgramacion+' dimHeader" style="display:none;">'+valor1+'</td><td class="'+colorAvance+' dimHeader" style="display:none;">'+valor2+'</td><td class="'+colorDestinatarios+' dimHeader" style="display:none;">'+valor3+'</td><td class="'+colorInversion+' dimHeader" style="display:none;">'+valor4+'</td></tr>';
 											valor1=0, valor2=0, valor3=0, valor4=0, promedio=0, cont = 0;
 
@@ -549,7 +549,12 @@ function renderAccion(/*estrategia, */lineasProgramadas, instituciones, periodo,
 											var colorDestinatarios = color(valor3,lineasProgramadas[n].meta);
 											var colorInversion = color(valor4,lineasProgramadas[n].meta);
 											var colorPromedio = color(promedio,lineasProgramadas[n].meta);
-
+											
+											if (flagIns == 0){
+												tempInstituciones += '<tr><td class="cabeceraInstitucion" ><strong data-toggle="tooltip" data-placement="top" title="'+instituciones[m].nombre+'">'+lineasProgramadas[n].institucionSigla+'</strong></td>';
+												flagIns++;						  
+											}
+											
 											tempInstituciones += '<td class="'+colorPromedio+' cabeceraPromedio">'+promedio+'</td><td class="'+colorProgramacion+' dimHeader" style="display:none;">'+valor1+'</td><td class="'+colorAvance+' dimHeader" style="display:none;">'+valor2+'</td><td class="'+colorDestinatarios+' dimHeader" style="display:none;">'+valor3+'</td><td class="'+colorInversion+' dimHeader" style="display:none;">'+valor4+'</td></tr>';
 											valor1=0, valor2=0, valor3=0, valor4=0, promedio=0, cont = 0;
 										}
