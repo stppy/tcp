@@ -6313,7 +6313,7 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 		'													<tr class="active"><th>Producto</th><th>ObjetoGasto</th><th>Monto</th><th class="text-center">Administrar</th></tr>'+
 		'												</thead>'+
 		'												<tfoot>'+
-		'													<tr><th></th><th></th><th></th><th></th>></tr>'+
+		'													<tr><th></th><th></th><th></th><th></th></tr>'+
 		'												</tfoot>'+
 		'												<tbody id="listaCosto">'+
 		'												</tbody>'+
@@ -7112,7 +7112,7 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
  
          // total general para todas las paginas de la columna
             total2 = api
-                .column( 2 )
+                .column( 3 )
                 .data()
                 .reduce( function (a, b) {
                     return intVal(a) + intVal(b);
@@ -7120,14 +7120,14 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
  
          // total por pagina segun número de columna
             pageTotal2 = api
-                .column( 2, { page: 'current'} )
+                .column( 3, { page: 'current'} )
                 .data()
                 .reduce( function (a, b) {
                     return intVal(a) + intVal(b);
                 }, 0 );
          
          // se muestran los valores de los totales en el footer del table
-            $( api.column( 2 ).footer() ).html(
+            $( api.column( 3 ).footer() ).html(
             		'Total Pág. '+ numeroConComa(pageTotal2) +' (Total Gral. '+ numeroConComa(total2) +')'
             );	         
         },
