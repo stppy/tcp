@@ -6313,7 +6313,7 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 		'													<tr class="active"><th>Producto</th><th>ObjetoGasto</th><th>Monto</th><th class="text-center">Administrar</th></tr>'+
 		'												</thead>'+
 		'												<tfoot>'+
-		'													<tr><th></th><th></th><th></th><th></th><th></th></tr>'+
+		'													<tr><th></th><th></th><th></th><th></th>></tr>'+
 		'												</tfoot>'+
 		'												<tbody id="listaCosto">'+
 		'												</tbody>'+
