@@ -113,6 +113,7 @@ public class ajaxSelects extends HttpServlet {
     	Integer destinatarioId = null;
     	Integer accionHasProductoId = null;
     	Integer productoObjetoGastoId = null;
+    	Integer objetoGastoId = null;    	
     	Integer trimestreId = null;
     	Integer idAvanceCualitativo = null;
     	Integer rolId = null;
@@ -201,6 +202,7 @@ public class ajaxSelects extends HttpServlet {
       	if (request.getParameter("destinatarioId")!=null) destinatarioId=Integer.parseInt(request.getParameter("destinatarioId"));
       	if (request.getParameter("accionHasProductoId")!=null) accionHasProductoId=Integer.parseInt(request.getParameter("accionHasProductoId"));
       	if (request.getParameter("productoObjetoGastoId")!=null) productoObjetoGastoId=Integer.parseInt(request.getParameter("productoObjetoGastoId"));
+      	if (request.getParameter("objetoGastoId")!=null) objetoGastoId=Integer.parseInt(request.getParameter("objetoGastoId"));
       	if (request.getParameter("trimestreId")!=null) trimestreId=Integer.parseInt(request.getParameter("trimestreId"));      	
       	if (request.getParameter("idAvanceCualitativo")!=null) idAvanceCualitativo=Integer.parseInt(request.getParameter("idAvanceCualitativo")); 
       	if (request.getParameter("borrado")!=null) borrado=Boolean.parseBoolean(request.getParameter("borrado")); 
@@ -734,6 +736,7 @@ public class ajaxSelects extends HttpServlet {
         		List objetos=null; 
         		condition = " where true ";
         		String condition2=" where true ";
+        		if (etiquetaId!=null) condition += " and ins_linea_accion_has_etiqueta.etiqueta_id = "+etiquetaId;
         		if (anho!=null) condition += " and periodo ="+anho+" and to_char(avance_fecha,'YYYY') = '"+anho+"'";
         		if (mes!=null) condition += " and to_char(avance_fecha,'MM') = '"+mes+"'";
         		if (!userRoleId.equals("0") && !userRoleId.equals("1")){ 
@@ -1968,6 +1971,14 @@ public class ajaxSelects extends HttpServlet {
         		catch (SQLException e) {e.printStackTrace();}
         		//JsonElement json = new Gson().toJsonTree(objetos );
         		//out.println(json.toString()); 
+           		out.println(objetos);return;
+        	}
+        	if (action.equals("getObjetoGasto")){
+        		String objetos=null;
+        		condition = " where true";
+                if (objetoGastoId!=null) condition += " and id = "+objetoGastoId;
+           		try {objetos = SqlSelects.selectObjetoGasto(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
            		out.println(objetos);return;
         	}
        }

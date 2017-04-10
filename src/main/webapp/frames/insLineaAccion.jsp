@@ -4476,7 +4476,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		'												<tr><td><div class="form-group"><label for="nombreActividad">Cronograma</label><input type="text" class="form-control" id="nombreActividad" value="" placeholder="Ingrese Nombre del Cronograma" required><input type="hidden" class="form-control" id="insLineaAccionId" value="'+insLineaAccionId+'"></div></td><td><div class="form-group"><label for="descripcionActividad">Descripción</label><input type="text" id="descripcionActividad" value="" class="form-control"> </div></td></tr>'+
 		'												<tr><td><div class="form-group"><label for="unidadMedidaIdActividad">Unidad de Medida</label><select id="unidadMedidaIdActividad" class="form-control" placeholder="Ingrese Unidad Medida Id">'+optionUnidadMedida+'</div></td><td><div class="form-group"><label for="hitoTipoIdActividad">Tipo de Cronograma</label>'+
 		'												<select id="hitoTipoIdActividad" class="form-control" placeholder="Ingrese Tipo de Cronograma">'+optionTipoHito+'</select></div></td></tr>'+
-		'												<tr><td><div class="form-group"><label for="proporcionActividad">Proporción</label><input type="number" class="form-control" id="proporcionActividad" value="1" required /></div></div></td><td><div class="form-group"><label for="pesoActividad">Peso</label><input type="number" class="form-control" id="pesoActividad" value="1" required/></div></td></tr>'+
+		'												<tr><td><div class="form-group"><label for="proporcionActividad">Proporción</label><input type="number" class="form-control" id="proporcionActividad" value="1" step="0.01" required /></div></div></td><td><div class="form-group"><label for="pesoActividad">Peso</label><input type="number" class="form-control" id="pesoActividad" value="1" step="0.01" required/></div></td></tr>'+
 		'												<tr><td><div class="form-group"><label for="acumulableActividad">Acumulable</label><select id="acumulableActividad" class="form-control" placeholder="Ingrese Tipo Acumulable">'+optionAcumulable+'</select></div></td>'+
 		'													<td><div class="form-group"><label for="productosActividad">Producto relacionado</label><select id="productosActividad" class="form-control" placeholder="Ingrese el Producto al cual se vincula la actividad">'+optionProductosAccion+'</select></div></td></tr>'+
 		'											</tbody>'+							           
@@ -4792,7 +4792,7 @@ $("body").on("click", ".editarCronograma", function(event){
 						'			      							<form class="form-horizontal" role="form">'+
 						'												<tr><td><label for="nombreCronograma">Nombre</label><input type="text" id="nombreCronograma" value="'+actividades[0].nombre+'" class="form-control" required /></td><td><label for="descripcionCronograma">Descripcion</label><input type="text" id="descripcionCronograma" class="form-control" value="'+actividades[0].descripcion+'"  /></td></tr>'+
 						'												<tr><td><div class="form-group"><label for="unidadMedidaIdCronograma">Unidad de Medida</label><select id="selectorUnidadMedidaCronograma" class="form-control">'+optionUnidadMedida+'</select></div></td><td><div class="form-group"><label for="hitoTipoIdCronograma">Tipo Cronograma</label><select id="selectorHitoTipoIdCronograma" class="form-control">"'+optionTipoHito+'"</select></div></td></tr>'+
-						'												<tr><td><label for="proporcionCronograma">Proporción</label><input type="number" id="proporcionCronograma" value='+actividades[0].proporcion+' class="form-control" required /></td><td><label for="pesoCronograma">Peso</label><input type="number" id="pesoCronograma" class="form-control" value='+actividades[0].peso+' required /></td></tr>'+
+						'												<tr><td><label for="proporcionCronograma">Proporción</label><input type="number" id="proporcionCronograma" value='+actividades[0].proporcion+' step="0.01" class="form-control" required /></td><td><label for="pesoCronograma">Peso</label><input type="number" id="pesoCronograma" class="form-control" value='+actividades[0].peso+' step="0.01" required /></td></tr>'+
 						'												<tr><td><div class="form-group"><label for="acumulableCronograma">Acumulable</label><select id="acumulableCronograma" class="form-control" placeholder="Ingrese Tipo Acumulable">'+optionAcumulable+'</select></div></td>'+
 						'													<td><div class="form-group"><label for="productosActividad">Producto relacionado</label><select id="productosActividad" class="form-control" placeholder="Ingrese el Producto al cual se vincula la actividad">'+optionProductosAccion+'</select></div></td></tr>'+						
 						
@@ -5498,6 +5498,7 @@ function renderProgramacion(insLineaAccionId,lineaAccionId,institucionId,periodo
 	}
 	//$("#dataTablesProgramacionHito1").DataTable();
 	$('#dataTablesProgramacionHito1').dataTable({
+		"order": [[ 1, "asc" ]],
         "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;
  
@@ -6409,7 +6410,7 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 		tableBeneficiario=
 		'									<div class="box box-default box-solid">'+
 		'		                				<div class="box-header with-border">'+
-		'		                  					<h3 class="box-title">Lista Beneficiarios</h3>'+
+		'		                  					<h3 class="box-title">Lista Destinatarios</h3>'+
 		'	                  						<div class="box-tools pull-right">'+
 		'				                    			<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
 		'		                    					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>'+
@@ -6607,25 +6608,38 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 	}).responseText;
 	webServicesAvanceCosto = JSON.parse(webServicesAvanceCosto);
 	
+	var webServicesObjetoGasto = $.ajax({
+		url:'/tablero/ajaxSelects2?action=getObjetoGasto',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	webServicesObjetoGasto = JSON.parse(webServicesObjetoGasto);
+	
 	var cuerpoAvanceCosto = "";
 	for(var d = 0; d < webServicesAvanceCosto.length; d++)
 	{
-		if(onoff==true && webServicesAvanceCosto[d].borrado == true){
-			// pasa a la siguiente fila en el for ++
-		}else{
-			if(webServicesAvanceCosto[d].borrado == true)
-			{
-				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
-					cuerpoAvanceCosto += '<tr><td><del>'+webServicesAvanceCosto[d].productoConcat+'</del></td><td><del>'+webServicesAvanceCosto[d].objetoGasto+'</del></td><td><del>'+numeroConComa(webServicesAvanceCosto[d].monto)+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaBorrarCosto" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-recycle"></span></button></td></tr>';
-				<%}%>	
-			}else{
-				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-					cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].productoConcat+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td>'+numeroConComa(webServicesAvanceCosto[d].monto)+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarCosto" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCosto" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
-				<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-					cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].productoConcat+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td>'+numeroConComa(webServicesAvanceCosto[d].monto)+'</td><td class="text-center"></td></tr>';
-				<%}%>
-			}	
-		}	
+		for(var g = 0; g < webServicesObjetoGasto.length; g++)
+		{
+			if(webServicesObjetoGasto[g].id == webServicesAvanceCosto[d].objetoGasto){
+				if(onoff==true && webServicesAvanceCosto[d].borrado == true){
+					// pasa a la siguiente fila en el for ++
+				}else{
+					if(webServicesAvanceCosto[d].borrado == true)
+					{
+						<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
+							cuerpoAvanceCosto += '<tr><td><del>'+webServicesAvanceCosto[d].productoConcat+'</del></td><td><del>'+webServicesAvanceCosto[d].objetoGasto+'</del></td><td><del>'+webServicesObjetoGasto[g].descripcion+'</del></td><td><del>'+numeroConComa(webServicesAvanceCosto[d].monto)+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaBorrarCosto" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-recycle"></span></button></td></tr>';
+						<%}%>	
+					}else{
+						<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
+							cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].productoConcat+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td>'+webServicesObjetoGasto[g].descripcion+'</td><td>'+numeroConComa(webServicesAvanceCosto[d].monto)+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarCosto" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCosto" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+						<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
+							cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].productoConcat+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td>'+webServicesObjetoGasto[g].descripcion+'</td><td>'+numeroConComa(webServicesAvanceCosto[d].monto)+'</td><td class="text-center"></td></tr>';
+						<%}%>
+					}	
+				}	
+			}
+		}
 	}
 		
 	var webServicesBeneficiarioTipo = $.ajax({
@@ -6760,7 +6774,7 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 									'		      		<div class="col-md-6">'+
 									'						<div class="box box-warning box-solid">'+
 									'		                	<div class="box-header with-border">'+
-									'	                  			<h3 class="box-title">Beneficiarios</h3>'+
+									'	                  			<h3 class="box-title">Destinatarios</h3>'+
 									'	                  			<div class="box-tools pull-right">'+
 									'				                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>'+
 									'		                    		</button>'+
@@ -6776,7 +6790,7 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 									'		      					<form role="form" id="formularioBeneficiarios">'+
 									'									<div class="box box-default box-solid">'+
 									'		                				<div class="box-header with-border">'+
-									'		                  					<h3 class="box-title">Agregar Beneficiarios</h3>'+
+									'		                  					<h3 class="box-title">Agregar Destinatarios</h3>'+
 									'	                  						<div class="box-tools pull-right">'+
 									'				                    			<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
 									'		                    					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>'+
@@ -6798,7 +6812,7 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 									
 									'				      				 </div>'+//fin box body
 									'									 <div class="modal-footer">'+ 
-									'					        			<button type="submit" class="btn btn-success btn-sm guardarBeneficiario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' >Guardar Beneficiario</button>'+ 
+									'					        			<button type="submit" class="btn btn-success btn-sm guardarBeneficiario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' >Guardar Destinatario</button>'+ 
 									'									 </div>'+									
 									'				      			 	</div>'+
 									'				      			 	</form'+
@@ -6810,7 +6824,7 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 									'		      					<div class="col-md-12" id="tableBeneficiario">'+
 									'									<div class="box box-default box-solid">'+
 									'		                				<div class="box-header with-border">'+
-									'		                  					<h3 class="box-title">Lista Beneficiarios</h3>'+
+									'		                  					<h3 class="box-title">Lista Destinatarios</h3>'+
 									'	                  						<div class="box-tools pull-right">'+
 									'				                    			<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
 									'		                    					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>'+
@@ -6910,10 +6924,10 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 									'										<div class="table-responsive">'+
 									'											<table class="table table-hover table-bordered" id="dataTableAvanceCosto">'+
 									'												<thead>'+
-									'													<tr class="active"><th>Producto</th><th>ObjetoGasto</th><th>Monto</th><th class="text-center">Administrar</th></tr>'+
+									'													<tr class="active"><th>Producto</th><th>ObjetoGasto</th><th>Descripción</th><th>Monto</th><th class="text-center">Administrar</th></tr>'+
 									'												</thead>'+
 									'												<tfoot>'+
-									'													<tr><th></th><th></th><th></th><th></th></tr>'+
+									'													<tr><th></th><th></th><th></th><th></th><th></th></tr>'+
 									'												</tfoot>'+
 									'												<tbody id="listaCosto">'+
 									'												</tbody>'+
@@ -7101,7 +7115,7 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
  
          // total general para todas las paginas de la columna
             total2 = api
-                .column( 2 )
+                .column( 3 )
                 .data()
                 .reduce( function (a, b) {
                     return intVal(a) + intVal(b);
@@ -7109,14 +7123,14 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
  
          // total por pagina segun número de columna
             pageTotal2 = api
-                .column( 2, { page: 'current'} )
+                .column( 3, { page: 'current'} )
                 .data()
                 .reduce( function (a, b) {
                     return intVal(a) + intVal(b);
                 }, 0 );
          
          // se muestran los valores de los totales en el footer del table
-            $( api.column( 2 ).footer() ).html(
+            $( api.column( 3 ).footer() ).html(
             		'Total Pág. '+ numeroConComa(pageTotal2) +' (Total Gral. '+ numeroConComa(total2) +')'
             );	         
         },
@@ -8669,7 +8683,7 @@ $("body").on("click", ".consultaBorrarBeneficiario",function(event){
 						'		<div class="modal-content" >'+
 						'			<div class="modal-header">'+
 						'		        <button type="button" class="close agregarModalAdministrador"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
-						'		        <h4 class="modal-title" >Borrar - Restaurar Beneficiario</h4>'+
+						'		        <h4 class="modal-title" >Borrar - Restaurar Destinatario</h4>'+
 						'			</div>'+
 						'		    <div class="modal-body">'+
 						'			<div id="mensajeBorradoBeneficiario"></div>'+
@@ -8686,13 +8700,13 @@ $("body").on("click", ".consultaBorrarBeneficiario",function(event){
 			$("#mensajeBorradoBeneficiario").html("");
 			$("#mensajeBorradoBeneficiario").append('<h3 class="text-center">Ud. esta seguro que desea RESTABLACER este registro</h3>');
 			$("#agregarBotonBorradoBeneficiario").html("");
-			$("#agregarBotonBorradoBeneficiario").append('<button type="button" class="btn btn-success btn-sm borrarBeneficiario" id="botonRestaurarBeneficiario" parametros='+webServicesBeneficiario[0].id+'-r>Restaurar Beneficiario</button>');
+			$("#agregarBotonBorradoBeneficiario").append('<button type="button" class="btn btn-success btn-sm borrarBeneficiario" id="botonRestaurarBeneficiario" parametros='+webServicesBeneficiario[0].id+'-r>Restaurar Destinatario</button>');
 			$("#agregarBotonBorradoBeneficiario").append('<button type="button" class="btn btn-success btn-sm agregarModalAdministrador"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'>Cerrar</button>');
 		}else{
 			$("#mensajeBorradoBeneficiario").html("");
 			$("#mensajeBorradoBeneficiario").append('<h3 class="text-center">Ud. esta seguro que desea BORRAR este registro</h3');
 			$("#agregarBotonBorradoBeneficiario").html("");
-			$("#agregarBotonBorradoBeneficiario").append('<button type="button" class="btn btn-danger btn-sm borrarBeneficiario" id="botonBorradoBeneficiario" parametros='+webServicesBeneficiario[0].id+'-b>Borrar Beneficiario</button>');
+			$("#agregarBotonBorradoBeneficiario").append('<button type="button" class="btn btn-danger btn-sm borrarBeneficiario" id="botonBorradoBeneficiario" parametros='+webServicesBeneficiario[0].id+'-b>Borrar Destinatario</button>');
 			$("#agregarBotonBorradoBeneficiario").append('<button type="button" class="btn btn-success btn-sm agregarModalAdministrador"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'>Cerrar</button>');
 		}
 		
@@ -8813,7 +8827,7 @@ $("body").on("click", ".consultaEditarBeneficiario",function(event){
 						'		<div class="modal-content" >'+
 						'			<div class="modal-header">'+
 						'		        <button type="button" class="close agregarModalAdministrador"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
-						'		        <h4 class="modal-title" >Editar Beneficiario</h4>'+
+						'		        <h4 class="modal-title" >Editar Destinatario</h4>'+
 						'			</div>'+
 						'		    <div class="modal-body" id="cuerpoModalEditarBeneficiario">'+
 										
@@ -8990,7 +9004,7 @@ $("body").on("click", ".consultaBorrarInsLineaAccion",function(event){
 $("body").on("change", "#proporcionActividad",function(event){
 	var proporcion = parseFloat($("#proporcionActividad").val());
 	
-		if(proporcion < 0 || proporcion > 1){
+		if(proporcion < 0.0 || proporcion > 1.0){
 			$("#proporcionActividad").val("");
 			$('#proporcionActividad').prop('title', 'La Proporción debe estar comprendido entre 0 y 1');
 			alert("La Proporción debe estar comprendido entre 0 y 1");
@@ -9001,7 +9015,7 @@ $("body").on("change", "#proporcionActividad",function(event){
 $("body").on("change", "#pesoActividad",function(event){
 	var peso = parseFloat($("#pesoActividad").val());
 		
-		if(peso < 0 || peso > 1){
+		if(peso < 0.0 || peso > 1.0){
 			$("#pesoActividad").val("");
 			$('#pesoActividad').prop('title', 'El Peso debe estar comprendido entre 0 y 1');
 			alert("El valor del Peso debe estar comprendido entre 0 y 1");
@@ -9458,7 +9472,7 @@ function renderAccionDestinatario(insLineaAccionId,lineaAccionId,institucionId,p
 						
 						'				      				 </div>'+//fin box body
 						'									 <div class="modal-footer">'+ 
-						'					        			<button type="submit" class="btn btn-success btn-sm guardarAccionBeneficiario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'>Guardar Beneficiario</button>'+ 
+						'					        			<button type="submit" class="btn btn-success btn-sm guardarAccionBeneficiario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'>Guardar Destinatario</button>'+ 
 						'									 </div>'+									
 						'				      			 	</div>'+
 						'				      			 	</form'+

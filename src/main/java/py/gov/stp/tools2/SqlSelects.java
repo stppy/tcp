@@ -534,7 +534,12 @@ public class SqlSelects {
 	
 	public static List<LineasAccionAvances> selectPivotAvance(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select * from avances "+condition;
+//		String query = " select * from avances "+condition;
+		
+		
+		String query =    "SELECT *,ins_linea_accion_has_etiqueta.ins_linea_accion_id,ins_linea_accion_has_etiqueta.etiqueta_id AS ins_etiqueta "+
+			    " FROM avances"+
+			     " JOIN ins_linea_accion_has_etiqueta ON ins_linea_accion_has_etiqueta.ins_linea_accion_id =  ila_id "+condition;
 
 		Statement statement = null;
 		ResultSet rs=null;
@@ -3523,6 +3528,35 @@ public class SqlSelects {
 	public static String selectPresupuestoAsignado(String condition) throws SQLException{
 	   	 Connection conect=ConnectionConfiguration.conectar();
 	   	 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from(select sum(asignacion_financiera)as AsignacionUsada from accion_has_producto "+condition+" and borrado=false)t";
+
+
+		Statement statement = null;
+		ResultSet rs = null;
+		 String objetos = "";
+
+		try {
+			statement = conect.createStatement();
+			rs = statement.executeQuery(query);
+			while(rs.next()){
+
+				objetos+=rs.getString("resultado");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				statement.close();
+			}
+			if (conect != null) {
+				conect.close();
+			}
+		}
+		return objetos;
+	  }
+	public static String selectObjetoGasto(String condition) throws SQLException{
+	   	 Connection conect=ConnectionConfiguration.conectar();
+	   	 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from(select * from grupo_subgrupo_objeto_gasto "+condition+")t";
 
 
 		Statement statement = null;
