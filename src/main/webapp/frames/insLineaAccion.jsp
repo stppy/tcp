@@ -6407,7 +6407,7 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 		tableBeneficiario=
 		'									<div class="box box-default box-solid">'+
 		'		                				<div class="box-header with-border">'+
-		'		                  					<h3 class="box-title">Lista Beneficiarios</h3>'+
+		'		                  					<h3 class="box-title">Lista Destinatarios</h3>'+
 		'	                  						<div class="box-tools pull-right">'+
 		'				                    			<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
 		'		                    					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>'+
@@ -6771,7 +6771,7 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 									'		      		<div class="col-md-6">'+
 									'						<div class="box box-warning box-solid">'+
 									'		                	<div class="box-header with-border">'+
-									'	                  			<h3 class="box-title">Beneficiarios</h3>'+
+									'	                  			<h3 class="box-title">Destinatarios</h3>'+
 									'	                  			<div class="box-tools pull-right">'+
 									'				                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>'+
 									'		                    		</button>'+
@@ -6787,7 +6787,7 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 									'		      					<form role="form" id="formularioBeneficiarios">'+
 									'									<div class="box box-default box-solid">'+
 									'		                				<div class="box-header with-border">'+
-									'		                  					<h3 class="box-title">Agregar Beneficiarios</h3>'+
+									'		                  					<h3 class="box-title">Agregar Destinatarios</h3>'+
 									'	                  						<div class="box-tools pull-right">'+
 									'				                    			<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
 									'		                    					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>'+
@@ -6809,7 +6809,7 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 									
 									'				      				 </div>'+//fin box body
 									'									 <div class="modal-footer">'+ 
-									'					        			<button type="submit" class="btn btn-success btn-sm guardarBeneficiario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' >Guardar Beneficiario</button>'+ 
+									'					        			<button type="submit" class="btn btn-success btn-sm guardarBeneficiario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' >Guardar Destinatario</button>'+ 
 									'									 </div>'+									
 									'				      			 	</div>'+
 									'				      			 	</form'+
@@ -6821,7 +6821,7 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 									'		      					<div class="col-md-12" id="tableBeneficiario">'+
 									'									<div class="box box-default box-solid">'+
 									'		                				<div class="box-header with-border">'+
-									'		                  					<h3 class="box-title">Lista Beneficiarios</h3>'+
+									'		                  					<h3 class="box-title">Lista Destinatarios</h3>'+
 									'	                  						<div class="box-tools pull-right">'+
 									'				                    			<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
 									'		                    					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>'+
@@ -8680,7 +8680,7 @@ $("body").on("click", ".consultaBorrarBeneficiario",function(event){
 						'		<div class="modal-content" >'+
 						'			<div class="modal-header">'+
 						'		        <button type="button" class="close agregarModalAdministrador"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
-						'		        <h4 class="modal-title" >Borrar - Restaurar Beneficiario</h4>'+
+						'		        <h4 class="modal-title" >Borrar - Restaurar Destinatario</h4>'+
 						'			</div>'+
 						'		    <div class="modal-body">'+
 						'			<div id="mensajeBorradoBeneficiario"></div>'+
@@ -8697,13 +8697,13 @@ $("body").on("click", ".consultaBorrarBeneficiario",function(event){
 			$("#mensajeBorradoBeneficiario").html("");
 			$("#mensajeBorradoBeneficiario").append('<h3 class="text-center">Ud. esta seguro que desea RESTABLACER este registro</h3>');
 			$("#agregarBotonBorradoBeneficiario").html("");
-			$("#agregarBotonBorradoBeneficiario").append('<button type="button" class="btn btn-success btn-sm borrarBeneficiario" id="botonRestaurarBeneficiario" parametros='+webServicesBeneficiario[0].id+'-r>Restaurar Beneficiario</button>');
+			$("#agregarBotonBorradoBeneficiario").append('<button type="button" class="btn btn-success btn-sm borrarBeneficiario" id="botonRestaurarBeneficiario" parametros='+webServicesBeneficiario[0].id+'-r>Restaurar Destinatario</button>');
 			$("#agregarBotonBorradoBeneficiario").append('<button type="button" class="btn btn-success btn-sm agregarModalAdministrador"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'>Cerrar</button>');
 		}else{
 			$("#mensajeBorradoBeneficiario").html("");
 			$("#mensajeBorradoBeneficiario").append('<h3 class="text-center">Ud. esta seguro que desea BORRAR este registro</h3');
 			$("#agregarBotonBorradoBeneficiario").html("");
-			$("#agregarBotonBorradoBeneficiario").append('<button type="button" class="btn btn-danger btn-sm borrarBeneficiario" id="botonBorradoBeneficiario" parametros='+webServicesBeneficiario[0].id+'-b>Borrar Beneficiario</button>');
+			$("#agregarBotonBorradoBeneficiario").append('<button type="button" class="btn btn-danger btn-sm borrarBeneficiario" id="botonBorradoBeneficiario" parametros='+webServicesBeneficiario[0].id+'-b>Borrar Destinatario</button>');
 			$("#agregarBotonBorradoBeneficiario").append('<button type="button" class="btn btn-success btn-sm agregarModalAdministrador"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'>Cerrar</button>');
 		}
 		
@@ -8824,7 +8824,7 @@ $("body").on("click", ".consultaEditarBeneficiario",function(event){
 						'		<div class="modal-content" >'+
 						'			<div class="modal-header">'+
 						'		        <button type="button" class="close agregarModalAdministrador"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
-						'		        <h4 class="modal-title" >Editar Beneficiario</h4>'+
+						'		        <h4 class="modal-title" >Editar Destinatario</h4>'+
 						'			</div>'+
 						'		    <div class="modal-body" id="cuerpoModalEditarBeneficiario">'+
 										
@@ -9469,7 +9469,7 @@ function renderAccionDestinatario(insLineaAccionId,lineaAccionId,institucionId,p
 						
 						'				      				 </div>'+//fin box body
 						'									 <div class="modal-footer">'+ 
-						'					        			<button type="submit" class="btn btn-success btn-sm guardarAccionBeneficiario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'>Guardar Beneficiario</button>'+ 
+						'					        			<button type="submit" class="btn btn-success btn-sm guardarAccionBeneficiario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'>Guardar Destinatario</button>'+ 
 						'									 </div>'+									
 						'				      			 	</div>'+
 						'				      			 	</form'+
