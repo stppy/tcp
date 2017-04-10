@@ -4474,7 +4474,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		'												<tr><td><div class="form-group"><label for="nombreActividad">Cronograma</label><input type="text" class="form-control" id="nombreActividad" value="" placeholder="Ingrese Nombre del Cronograma" required><input type="hidden" class="form-control" id="insLineaAccionId" value="'+insLineaAccionId+'"></div></td><td><div class="form-group"><label for="descripcionActividad">Descripción</label><input type="text" id="descripcionActividad" value="" class="form-control"> </div></td></tr>'+
 		'												<tr><td><div class="form-group"><label for="unidadMedidaIdActividad">Unidad de Medida</label><select id="unidadMedidaIdActividad" class="form-control" placeholder="Ingrese Unidad Medida Id">'+optionUnidadMedida+'</div></td><td><div class="form-group"><label for="hitoTipoIdActividad">Tipo de Cronograma</label>'+
 		'												<select id="hitoTipoIdActividad" class="form-control" placeholder="Ingrese Tipo de Cronograma">'+optionTipoHito+'</select></div></td></tr>'+
-		'												<tr><td><div class="form-group"><label for="proporcionActividad">Proporción</label><input type="number" class="form-control" id="proporcionActividad" value="1" required /></div></div></td><td><div class="form-group"><label for="pesoActividad">Peso</label><input type="number" class="form-control" id="pesoActividad" value="1" required/></div></td></tr>'+
+		'												<tr><td><div class="form-group"><label for="proporcionActividad">Proporción</label><input type="number" class="form-control" id="proporcionActividad" value="1" step="0.01" required /></div></div></td><td><div class="form-group"><label for="pesoActividad">Peso</label><input type="number" class="form-control" id="pesoActividad" value="1" step="0.01" required/></div></td></tr>'+
 		'												<tr><td><div class="form-group"><label for="acumulableActividad">Acumulable</label><select id="acumulableActividad" class="form-control" placeholder="Ingrese Tipo Acumulable">'+optionAcumulable+'</select></div></td>'+
 		'													<td><div class="form-group"><label for="productosActividad">Producto relacionado</label><select id="productosActividad" class="form-control" placeholder="Ingrese el Producto al cual se vincula la actividad">'+optionProductosAccion+'</select></div></td></tr>'+
 		'											</tbody>'+							           
@@ -4790,7 +4790,7 @@ $("body").on("click", ".editarCronograma", function(event){
 						'			      							<form class="form-horizontal" role="form">'+
 						'												<tr><td><label for="nombreCronograma">Nombre</label><input type="text" id="nombreCronograma" value="'+actividades[0].nombre+'" class="form-control" required /></td><td><label for="descripcionCronograma">Descripcion</label><input type="text" id="descripcionCronograma" class="form-control" value="'+actividades[0].descripcion+'"  /></td></tr>'+
 						'												<tr><td><div class="form-group"><label for="unidadMedidaIdCronograma">Unidad de Medida</label><select id="selectorUnidadMedidaCronograma" class="form-control">'+optionUnidadMedida+'</select></div></td><td><div class="form-group"><label for="hitoTipoIdCronograma">Tipo Cronograma</label><select id="selectorHitoTipoIdCronograma" class="form-control">"'+optionTipoHito+'"</select></div></td></tr>'+
-						'												<tr><td><label for="proporcionCronograma">Proporción</label><input type="number" id="proporcionCronograma" value='+actividades[0].proporcion+' class="form-control" required /></td><td><label for="pesoCronograma">Peso</label><input type="number" id="pesoCronograma" class="form-control" value='+actividades[0].peso+' required /></td></tr>'+
+						'												<tr><td><label for="proporcionCronograma">Proporción</label><input type="number" id="proporcionCronograma" value='+actividades[0].proporcion+' step="0.01" class="form-control" required /></td><td><label for="pesoCronograma">Peso</label><input type="number" id="pesoCronograma" class="form-control" value='+actividades[0].peso+' step="0.01" required /></td></tr>'+
 						'												<tr><td><div class="form-group"><label for="acumulableCronograma">Acumulable</label><select id="acumulableCronograma" class="form-control" placeholder="Ingrese Tipo Acumulable">'+optionAcumulable+'</select></div></td>'+
 						'													<td><div class="form-group"><label for="productosActividad">Producto relacionado</label><select id="productosActividad" class="form-control" placeholder="Ingrese el Producto al cual se vincula la actividad">'+optionProductosAccion+'</select></div></td></tr>'+						
 						
@@ -8988,7 +8988,7 @@ $("body").on("click", ".consultaBorrarInsLineaAccion",function(event){
 $("body").on("change", "#proporcionActividad",function(event){
 	var proporcion = parseFloat($("#proporcionActividad").val());
 	
-		if(proporcion < 0 || proporcion > 1){
+		if(proporcion < 0.0 || proporcion > 1.0){
 			$("#proporcionActividad").val("");
 			$('#proporcionActividad').prop('title', 'La Proporción debe estar comprendido entre 0 y 1');
 			alert("La Proporción debe estar comprendido entre 0 y 1");
@@ -8999,7 +8999,7 @@ $("body").on("change", "#proporcionActividad",function(event){
 $("body").on("change", "#pesoActividad",function(event){
 	var peso = parseFloat($("#pesoActividad").val());
 		
-		if(peso < 0 || peso > 1){
+		if(peso < 0.0 || peso > 1.0){
 			$("#pesoActividad").val("");
 			$('#pesoActividad').prop('title', 'El Peso debe estar comprendido entre 0 y 1');
 			alert("El valor del Peso debe estar comprendido entre 0 y 1");
