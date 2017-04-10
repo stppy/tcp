@@ -6313,7 +6313,7 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 		'													<tr class="active"><th>Producto</th><th>ObjetoGasto</th><th>Monto</th><th class="text-center">Administrar</th></tr>'+
 		'												</thead>'+
 		'												<tfoot>'+
-		'													<tr><th></th><th></th><th></th><th></th></tr>'+
+		'													<tr><th></th><th></th><th></th><th></th><th></th></tr>'+
 		'												</tfoot>'+
 		'												<tbody id="listaCosto">'+
 		'												</tbody>'+
@@ -6605,25 +6605,38 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 	}).responseText;
 	webServicesAvanceCosto = JSON.parse(webServicesAvanceCosto);
 	
+	var webServicesObjetoGasto = $.ajax({
+		url:'/tablero/ajaxSelects2?action=getObjetoGasto',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	webServicesObjetoGasto = JSON.parse(webServicesObjetoGasto);
+	
 	var cuerpoAvanceCosto = "";
 	for(var d = 0; d < webServicesAvanceCosto.length; d++)
 	{
-		if(onoff==true && webServicesAvanceCosto[d].borrado == true){
-			// pasa a la siguiente fila en el for ++
-		}else{
-			if(webServicesAvanceCosto[d].borrado == true)
-			{
-				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
-					cuerpoAvanceCosto += '<tr><td><del>'+webServicesAvanceCosto[d].productoConcat+'</del></td><td><del>'+webServicesAvanceCosto[d].objetoGasto+'</del></td><td><del>'+numeroConComa(webServicesAvanceCosto[d].monto)+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaBorrarCosto" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-recycle"></span></button></td></tr>';
-				<%}%>	
-			}else{
-				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-					cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].productoConcat+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td>'+numeroConComa(webServicesAvanceCosto[d].monto)+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarCosto" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCosto" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
-				<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-					cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].productoConcat+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td>'+numeroConComa(webServicesAvanceCosto[d].monto)+'</td><td class="text-center"></td></tr>';
-				<%}%>
-			}	
-		}	
+		for(var g = 0; g < webServicesObjetoGasto.length; g++)
+		{
+			if(webServicesObjetoGasto[g].id == webServicesAvanceCosto[d].objetoGasto){
+				if(onoff==true && webServicesAvanceCosto[d].borrado == true){
+					// pasa a la siguiente fila en el for ++
+				}else{
+					if(webServicesAvanceCosto[d].borrado == true)
+					{
+						<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
+							cuerpoAvanceCosto += '<tr><td><del>'+webServicesAvanceCosto[d].productoConcat+'</del></td><td><del>'+webServicesAvanceCosto[d].objetoGasto+'</del></td><td><del>'+webServicesObjetoGasto[g].descripcion+'</del></td><td><del>'+numeroConComa(webServicesAvanceCosto[d].monto)+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaBorrarCosto" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-recycle"></span></button></td></tr>';
+						<%}%>	
+					}else{
+						<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
+							cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].productoConcat+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td>'+webServicesObjetoGasto[g].descripcion+'</td><td>'+numeroConComa(webServicesAvanceCosto[d].monto)+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarCosto" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCosto" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+						<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
+							cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].productoConcat+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td>'+webServicesObjetoGasto[g].descripcion+'</td><td>'+numeroConComa(webServicesAvanceCosto[d].monto)+'</td><td class="text-center"></td></tr>';
+						<%}%>
+					}	
+				}	
+			}
+		}
 	}
 		
 	var webServicesBeneficiarioTipo = $.ajax({
@@ -6908,10 +6921,10 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 									'										<div class="table-responsive">'+
 									'											<table class="table table-hover table-bordered" id="dataTableAvanceCosto">'+
 									'												<thead>'+
-									'													<tr class="active"><th>Producto</th><th>ObjetoGasto</th><th>Monto</th><th class="text-center">Administrar</th></tr>'+
+									'													<tr class="active"><th>Producto</th><th>ObjetoGasto</th><th>Descripción</th><th>Monto</th><th class="text-center">Administrar</th></tr>'+
 									'												</thead>'+
 									'												<tfoot>'+
-									'													<tr><th></th><th></th><th></th><th></th></tr>'+
+									'													<tr><th></th><th></th><th></th><th></th><th></th></tr>'+
 									'												</tfoot>'+
 									'												<tbody id="listaCosto">'+
 									'												</tbody>'+
