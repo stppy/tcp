@@ -537,9 +537,8 @@ public class SqlSelects {
 //		String query = " select * from avances "+condition;
 		
 		
-		String query =    "SELECT *,ins_linea_accion_has_etiqueta.ins_linea_accion_id,ins_linea_accion_has_etiqueta.etiqueta_id AS ins_etiqueta "+
-			    " FROM avances"+
-			     " JOIN ins_linea_accion_has_etiqueta ON ins_linea_accion_has_etiqueta.ins_linea_accion_id =  ila_id "+condition;
+		String query =    "SELECT * "+
+			    " FROM avances"+condition;
 
 		Statement statement = null;
 		ResultSet rs=null;
@@ -592,7 +591,8 @@ public class SqlSelects {
 		objeto.setAvanceFecha(rs.getString("avance_fecha"));
 		objeto.setAvanceCantidad(rs.getInt("avance_cant"));
 		objeto.setAvanceJustificacion(rs.getString("avance_just"));
-		
+		objeto.setDistritoAvance(rs.getInt("distrito_avance"));
+		objeto.setDepartamentoIdAvance(rs.getInt("departamento_avance"));
 	
 		objetos.add(objeto);
 		}
