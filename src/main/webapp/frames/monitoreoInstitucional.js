@@ -67,7 +67,7 @@ function lineaAccionInstitucion(a,b) {
 
 function renderFlow(periodo,etiquetaSeleccionado){		
 	var avances = $.ajax({
-		url:'/tablero/ajaxSelects2?action=getPivotAvance&anho='+periodo+'&etiquetaId='+etiquetaSeleccionado+'&mes=03',
+		url:'/tablero/ajaxSelects2?action=getMonitoreoAvance&anho='+periodo+'&etiquetaId='+etiquetaSeleccionado+'&mes=03',
 		type:'get',
 		dataType:'json',
 		async:false       
