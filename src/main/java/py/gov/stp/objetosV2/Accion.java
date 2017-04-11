@@ -4,7 +4,7 @@ import java.sql.Date;
 public class Accion {
 	protected int id;
 	protected double costo;
-	protected int peso;
+	protected double peso;
 	protected String fechaInicio;
 	protected String fechaFin;
 	protected int version;
@@ -45,14 +45,13 @@ public class Accion {
 	}
 
 
-
-	public int getPeso() {
+	public double getPeso() {
 		return peso;
 	}
 
 
 
-	public void setPeso(int peso) {
+	public void setPeso(double peso) {
 		this.peso = peso;
 	}
 
