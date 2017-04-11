@@ -1981,6 +1981,27 @@ public class ajaxSelects extends HttpServlet {
         		catch (SQLException e) {e.printStackTrace();}
            		out.println(objetos);return;
         	}
+        	//Avances Monitoreo Institucional segun etiqueta seleccionado
+        	if (action.equals("getMonitoreoAvance")){
+        		List objetos=null; 
+        		condition = " where true ";
+        		String condition2=" where true ";
+        		if (etiquetaId!=null) condition += " and ins_linea_accion_has_etiqueta.etiqueta_id = "+etiquetaId;
+        		if (anho!=null) condition += " and periodo ="+anho+" and to_char(avance_fecha,'YYYY') = '"+anho+"'";
+        		if (mes!=null) condition += " and to_char(avance_fecha,'MM') = '"+mes+"'";
+        		if (!userRoleId.equals("0") && !userRoleId.equals("1")){ 
+        			condition2 += " and entidad_id="+userEntidadId+" and nivel_id="+userNivelId;
+	        		if ( !userUnrId.equals("0") ){
+	        			condition2+= " and unidad_responsable_id="+userUnrId;
+	        		}
+        		};
+        		condition += " and ins_id IN (select id from institucion "+condition2+") ";
+        		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
+        		try {objetos = SqlSelects.selectMonitoreoAvance(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());
+        		}
        }
        out.close();
         
