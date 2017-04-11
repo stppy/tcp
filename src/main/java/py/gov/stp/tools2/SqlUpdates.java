@@ -546,7 +546,7 @@ public static boolean borradoHito(Hito objeto, String usuarioResponsable){
 			int cantCampos =0;
 			update = conect.prepareStatement(query);
 			if (objeto.getCosto() != 0)  				{    cantCampos++;update.setDouble (cantCampos, objeto.getCosto());}
-			if (objeto.getPeso() != 0)	   				{    cantCampos++;update.setInt (cantCampos, objeto.getPeso());}
+			if (objeto.getPeso() != 0)	   				{    cantCampos++;update.setDouble (cantCampos, objeto.getPeso());}
 			if (objeto.getFechaInicio() != null)		{    cantCampos++;update.setDate (cantCampos, sqlStartDate);}
 			if (objeto.getFechaFin() != null)	    	{    cantCampos++;update.setDate (cantCampos, sqlEndDate);}
 			if (objeto.getVersion() != 0)	    		{    cantCampos++;update.setInt (cantCampos, objeto.getVersion());}

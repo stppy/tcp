@@ -293,7 +293,7 @@ public class SqlInserts {
 		
 		
 		insert.setDouble (1, accion.getCosto());
-		insert.setInt (2, accion.getPeso());
+		insert.setDouble(2, accion.getPeso());
 		//insert.setDate (3, sqlStartDate);
 		//insert.setDate (4, sqlEndDate);
 		insert.setInt(3, accion.getVersion());
