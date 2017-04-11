@@ -55,6 +55,8 @@ public class LineasAccionAvances {
 	protected String avanceDestinatario;
 	protected String avanceEvidencias;
 	protected String avanceCantidadString;	
+	protected int distritoAvance;
+	protected int departamentoIdAvance;
 	
 	public int getInsId() {
 		return insId;
@@ -356,4 +358,18 @@ public class LineasAccionAvances {
 	public void setAvanceCantidadString(String avanceCantidadString) {
 		this.avanceCantidadString = avanceCantidadString;
 	}
+	public int getDistritoAvance() {
+		return distritoAvance;
+	}
+	public void setDistritoAvance(int distritoAvance) {
+		this.distritoAvance = distritoAvance;
+	}
+	public int getDepartamentoIdAvance() {
+		return departamentoIdAvance;
+	}
+	public void setDepartamentoIdAvance(int departamentoIdAvance) {
+		this.departamentoIdAvance = departamentoIdAvance;
+	}
+	
+	
 }
