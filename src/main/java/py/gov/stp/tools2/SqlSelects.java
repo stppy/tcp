@@ -3586,9 +3586,10 @@ public class SqlSelects {
 	public static List<LineasAccionAvances> selectMonitoreoAvance(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
 		
-		String query =    "SELECT *,ins_linea_accion_has_etiqueta.ins_linea_accion_id,ins_linea_accion_has_etiqueta.etiqueta_id AS ins_etiqueta "+
-			    " FROM avances"+
-			     " JOIN ins_linea_accion_has_etiqueta ON ins_linea_accion_has_etiqueta.ins_linea_accion_id =  ila_id "+condition;
+		String query =    " SELECT *,ins_linea_accion_has_etiqueta.ins_linea_accion_id,ins_linea_accion_has_etiqueta.etiqueta_id AS ins_etiqueta "+
+						  " FROM avances"+
+						  " JOIN ins_linea_accion_has_etiqueta ON ins_linea_accion_has_etiqueta.ins_linea_accion_id =  ila_id "+condition+
+						  " ORDER BY ins_id, la_id, avance_fecha DESC, avance_cant DESC ";
 
 		Statement statement = null;
 		ResultSet rs=null;
