@@ -5823,14 +5823,14 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
 	
 	for(var d = 0; d < departamentos.length; d++)
 	{
-		if(accion[0].departamentoId == departamentos[d].idDepartamento){
+		//if(accion[0].departamentoId == departamentos[d].idDepartamento){
 			nombreDepartamento = departamentos[d].nombreDepartamento;
 			optionDepartamentoAvance+='<option value="'+departamentos[d].idDepartamento+'" >'+departamentos[d].nombreDepartamento+'</option>';
-		}
+		//}
 	}
 	
 
-	for(var e = 0; e < distritos.length; e++)
+	/* for(var e = 0; e < distritos.length; e++)
 	{
 		if(accion[0].distritoId == distritos[e].id && accion[0].departamentoId == distritos[e].departamentoId){
 			nombreDistrito = distritos[e].descripcion;
@@ -5842,7 +5842,7 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
 			
 			optionDistritoAvance+='<option value="'+distritos[e].id+'" >'+distritos[e].descripcion+'</option>';
 		}
-	}
+	} */
 	
 	var nombreUnidadMedidaHitoProgramado="";
 	for(var g = 0; g < unidadMedida.length; g++ )
@@ -5945,7 +5945,7 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
 							'									<table class="table table-hover">'+
 							'										<tbody>'+
 							'			      							<form class="form-horizontal" role="form">'+
-							'											<tr><td><div class="form-group"><label for="departamentoActividad">Departamento</label><input type="hidden" class="form-control" id="departamentoActividad" value="'+nombreDepartamento+'" disabled /><select class="form-control" id="departamentoAvance" disabled>'+optionDepartamentoAvance+'</select></div></td>'+
+							'											<tr><td><div class="form-group"><label for="departamentoActividad">Departamento</label><input type="hidden" class="form-control" id="departamentoActividad" value="'+nombreDepartamento+'" disabled /><select class="form-control" id="departamentoAvance" >'+optionDepartamentoAvance+'</select></div></td>'+
 							'												<td><div class="form-group"><label for="distritoActividad">Distrito</label><input type="hidden" id="distritoActividad" value="'+nombreDistrito+'" class="form-control" disabled><select class="form-control" id="distritoAvance">'+optionDistritoAvance+'</select></div></td></tr>'+
 							'											<tr><td><label for="justificacionAvance">Justificación</label><input type="text" id="justificacionAvance" value="" class="form-control" placeholder="Ingrese Justificación" required/></td>'+
 							'												<td><label for="cantidadAvance">Cantidad</label><input type="number" id="cantidadAvance" step="any" class="form-control" value="" placeholder="Ingrese Cantidad" required/></td>'+
@@ -7412,6 +7412,31 @@ $("body").on("change", "#beneficiarioTipo",function(event){
 		
 		$("#grupoBeneficiario").html("");
 		$("#grupoBeneficiario").append(optionBeneficiarioGrupo);
+	}
+});
+
+$("body").on("change", "#departamentoAvance",function(event){
+	//var departamentoId = $(this).attr("parametro");
+		
+	var departamentoAvanceId = $("#departamentoAvance option:selected").val();
+	
+	if(departamentoAvanceId !== undefined){
+		var webServiceDistritos = $.ajax({
+			url:'/tablero/ajaxSelects?action=getDistrito&departamento='+departamentoAvanceId,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		webServiceDistritos = JSON.parse(webServiceDistritos);
+		
+		var optionDistritos="";
+		
+		for(var o = 0; o < webServiceDistritos.length; o++){
+			optionDistritos+='<option value="'+webServiceDistritos[o].id+'" >'+webServiceDistritos[o].descripcion+'</option>';
+		}
+		
+		$("#distritoAvance").html("");
+		$("#distritoAvance").append(optionDistritos);
 	}
 });
 
