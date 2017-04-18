@@ -459,7 +459,7 @@ public class ajaxSelects extends HttpServlet {
         	if (action.equals("getDistrito")){
         		List objetos=null;
         		condition = "where true ";
-        		if (departamento!=99) condition += " and departamentoid ='"+departamento+"'";
+        		if (departamento!=99) condition += " and departamento_id ='"+departamento+"'";
         		try {objetos = SqlSelects.selectDistritos(condition);}
         		
         		catch (SQLException e) {e.printStackTrace();}
