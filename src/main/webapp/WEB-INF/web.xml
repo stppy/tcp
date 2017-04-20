@@ -92,7 +92,7 @@
 	</filter-mapping>
 
 	<welcome-file-list>
-		<welcome-file>geografico4.jsp</welcome-file>
+		<welcome-file>contenedorInsLineaAccion.jsp</welcome-file>
 	</welcome-file-list>
 
 	<servlet>
