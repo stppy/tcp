@@ -87,7 +87,7 @@ if (user != null && user.getName()!= "parce@nandeparaguay.org") { %>
 			}).responseText;
 			usuarioEtiqueta = JSON.parse(usuarioEtiqueta);
 			
-function renderInsLineaAccion(PeriodoActual, etiquetaSeleccionado){
+function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSeleccionado){
 	
 	var insLineaAccion = $.ajax({
 		url:'/tablero/ajaxSelects2?action=getInsLineaAccion',
@@ -767,6 +767,16 @@ function renderInsLineaAccion(PeriodoActual, etiquetaSeleccionado){
 			}).responseText;
 			periodo = JSON.parse(periodo);
 			
+			var periodoActual = '2017';
+					
+			var version = $.ajax({
+				url:'/tablero/ajaxSelects2?action=getVersion&anho='+periodoActual,
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+			}).responseText;
+			version = JSON.parse(version);
+			
 			var etiqueta = $.ajax({
 				url:'/tablero/ajaxSelects2?action=getEtiqueta',
 			  	type:'get',
@@ -776,12 +786,13 @@ function renderInsLineaAccion(PeriodoActual, etiquetaSeleccionado){
 			etiqueta = JSON.parse(etiqueta);
 			
 			var optionPeriodo;
+			var optionVersion;
 			var optionEtiqueta;
 
 			for(p = 0;p<periodo.length; p++)
 			{
 				if(periodo[p].id >= 2014){
-					if(periodo[p].id == 2017)
+					if(periodo[p].id == periodoActual)
 					{
 						optionPeriodo+='<option value="'+periodo[p].id+'" selected>'+periodo[p].nombre+'</option>';
 					}else{
@@ -789,6 +800,16 @@ function renderInsLineaAccion(PeriodoActual, etiquetaSeleccionado){
 					}
 				}
 			}	
+			
+			for(v = 0;v<version.length; v++)
+			{
+				if(version[v].id == 50)
+				{
+					optionVersion+='<option value="'+version[v].nro+'" selected>'+version[v].nro+'</option>';
+				}else{
+					optionVersion+='<option value="'+version[v].nro+'" >'+version[v].nro+'</option>';
+				}					
+			}
 			
 			if(usuarioEtiqueta.length > 0){
 				for(var d = 0; d<usuarioEtiqueta.length; d++){
@@ -802,11 +823,16 @@ function renderInsLineaAccion(PeriodoActual, etiquetaSeleccionado){
 				}
 			}
 		
-			var ocultarBorrado= '<div class="col-sm-4">'+
-									'<label for="periodoSeleccion">Periodo</label>'+
+			/* var periodoVersion = '<div class="col-sm-4">'+
+								 	'<label for="periodoSeleccion">Periodo</label>'+
 									'<select id="periodoSeleccion" class="form-control">'+optionPeriodo+'</select>'+
-								'</div>'+
-								'<div class="col-sm-6">'+
+								 '</div>'+
+								 '<div class="col-sm-4">'+
+								 	'<label for="periodoSeleccion">Periodo</label>'+
+									'<select id="periodoSeleccion" class="form-control">'+optionPeriodo+'</select>'+
+								 '</div>'; */
+			
+			var ocultarBorrado= '<div class="col-sm-6">'+
 									'<label for="etiquetaSeleccion">Etiqueta</label>'+
 									'<select id="etiquetaSeleccion" class="form-control">'+optionEtiqueta+'</select>'+
 								'</div>'+
@@ -817,21 +843,25 @@ function renderInsLineaAccion(PeriodoActual, etiquetaSeleccionado){
 								'</div>';
 								
 			$('#mostrarOcultarBorrado').append(ocultarBorrado);
+			$('#periodoSeleccion').append(optionPeriodo);
+			$('#versionSeleccion').append(optionVersion);
 		<!-- /*%}%*/ -->
 	 
 	 	periodoSeleccionado = $("#periodoSeleccion option:selected").val();
+	 	var versionSeleccionado = $("#versionSeleccion option:selected").val();
 	 	var etiquetaSeleccionado = $("#etiquetaSeleccion option:selected").val();
 	 
  		onoff=false;
 		function OcultarRegistrosBorrados(){
 		 	var periodoSeleccionado = $("#periodoSeleccion option:selected").val();
+		 	var versionSeleccionado = $("#versionSeleccion option:selected").val();
 		 	var etiquetaSeleccionado = $("#etiquetaSeleccion option:selected").val();
 			if($("#chkMostrarOcultar").is(':checked')){
 				onoff=true;						
 			}else{
 				onoff=false;			
 			}	
-			renderInsLineaAccion(periodoSeleccionado,etiquetaSeleccionado);
+			renderInsLineaAccion(periodoSeleccionado,versionSeleccionado,etiquetaSeleccionado);
 			//$("tr > td > del").closest("tr").toggle(onoff);
 		}
 
@@ -858,7 +888,7 @@ function renderInsLineaAccion(PeriodoActual, etiquetaSeleccionado){
 		//$("#botonImprimirAvanceInstitucional").attr('parametros', usuarios[0].nivel_id+"-"+usuarios[0].entidad_id+"-"+usuarios[0].unidadResponsable);
 		
 				
-		renderInsLineaAccion(periodoSeleccionado,etiquetaSeleccionado);	
+		renderInsLineaAccion(periodoSeleccionado,versionSeleccionado,etiquetaSeleccionado);	
 	   	OcultarRegistrosBorrados();
 
 		
@@ -868,17 +898,28 @@ function renderInsLineaAccion(PeriodoActual, etiquetaSeleccionado){
 		
 		$("body").on("change", "#periodoSeleccion",function(event){	
 		   	periodoSeleccionado = $("#periodoSeleccion option:selected").val();
+		   	var versionSeleccionado = $("#versionSeleccion option:selected").val();
 		 	var etiquetaSeleccionado = $("#etiquetaSeleccion option:selected").val();
 
-		   	renderInsLineaAccion(periodoSeleccionado,etiquetaSeleccionado);
+		   	renderInsLineaAccion(periodoSeleccionado, versionSeleccionado, etiquetaSeleccionado);
+		   
+		});
+		
+		$("body").on("change", "#versionSeleccion",function(event){	
+			periodoSeleccionado = $("#periodoSeleccion option:selected").val();
+			var versionSeleccionado = $("#versionSeleccion option:selected").val();
+		 	var etiquetaSeleccionado = $("#etiquetaSeleccion option:selected").val();
+
+		   	renderInsLineaAccion(periodoSeleccionado, versionSeleccionado, etiquetaSeleccionado);
 		   
 		});
 		
 		$("body").on("change", "#etiquetaSeleccion",function(event){	
 		   	periodoSeleccionado = $("#periodoSeleccion option:selected").val();
+		   	var versionSeleccionado = $("#versionSeleccion option:selected").val();
 		 	var etiquetaSeleccionado = $("#etiquetaSeleccion option:selected").val();
 
-		   	renderInsLineaAccion(periodoSeleccionado,etiquetaSeleccionado);
+		   	renderInsLineaAccion(periodoSeleccionado, versionSeleccionado, etiquetaSeleccionado);
 		   
 		});
 				

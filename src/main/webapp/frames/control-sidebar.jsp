@@ -15,22 +15,15 @@
             <form method="post">
               <h3 class="control-sidebar-heading">Configuraciones</h3>
               <div class="form-group">
-                <label class="control-sidebar-subheading">
-                  Año
-                  <select class="form-control pull-right" />
-	                  <option>2016</option>
-                  </select>
-                  <p class="help-block">Seleccione el año a ser considerado por el sistema en las secciones de Plan Operativo Institucional y Plan de Acción </p>
-                </label>
+                <label class="control-sidebar-subheading">Periodo</label>                  
+                  <!-- >label for="periodoSeleccion">Periodo</label-->
+				<select id="periodoSeleccion" class="form-control"></select>
+                <p class="help-block">Seleccione el año a ser considerado por el sistema en las secciones de Plan Operativo Institucional y Plan de Acción </p>
               </div><!-- /.form-group -->
               <div class="form-group">
-                <label class="control-sidebar-subheading">
-                  Version
-                  <select class="form-control pull-right" />
-    	              <option>50</option>
-                  </select>
+                <label class="control-sidebar-subheading">Version</label>
+                  <select id="versionSeleccion" class="form-control pull-right"></select>
                   <p class="help-block">Seleccione la version a ser considerado por el sistema en las secciones de Plan Operativo Institucional.</p>
-                </label>
               </div><!-- /.form-group -->
 
             </form>

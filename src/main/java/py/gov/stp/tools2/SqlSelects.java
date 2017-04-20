@@ -1354,6 +1354,36 @@ public class SqlSelects {
 		return objetos; 
 		}	
 	
+	public static List<Version> selectVersion(String condition) throws SQLException{
+		Connection conect=ConnectionConfiguration.conectarSpr();
+		String query = " select * from version "+condition;
+
+		Statement statement = null;
+		ResultSet rs=null;
+		List<Version> objetos = new ArrayList<Version>();
+
+		try {
+			statement = conect.createStatement();
+			rs=statement.executeQuery(query);
+			while(rs.next()){
+				Version objeto = new Version();
+		
+				objeto.setNro(rs.getInt("nro"));
+				objeto.setAnho(rs.getInt("anho"));
+				objeto.setDescripcion(rs.getString("descripcion"));
+				objeto.setBorrado(rs.getBoolean("borrado"));
+
+				objetos.add(objeto);
+			}
+		}
+		catch (SQLException e) {e.printStackTrace();}
+		finally{
+			if (statement != null) {statement.close();}
+			if (conect != null) {conect.close();}
+		}
+		return objetos; 
+		}		
+	
 	public static List<HitoTipo> selectHitoTipo() throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
 		String query = " select * from hito_tipo order by id";
