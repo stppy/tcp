@@ -1016,14 +1016,72 @@ function renderInsLineaAccion(PeriodoActual, etiquetaSeleccionado){
         <strong>Copyright &copy; 2015 <a href="http://www.stp.gov.py">STP</a>.</strong> All rights reserved.
       </footer>
 
-      <!-- Control Sidebar -->
+       <!-- Control Sidebar -->
       <aside class="control-sidebar control-sidebar-light">
-		<!-- include file="/frames/control-sidebar.jsp"  -->
+		 <%@ include file="/frames/control-sidebar.jsp"  %>
       </aside><!-- /.control-sidebar -->
       <!-- Add the sidebar's background. This div must be placed
            immediately after the control sidebar -->
       <div class='control-sidebar-bg'></div>
-
+      
+      
+      <script type="text/javascript">
+			$(document).ready(function(){
+				$("#sideBar2").click(function(){
+					//Update options
+					var o = $.AdminLTE.options.controlSidebarOptions;
+					//Get the sidebar
+					var sidebar = $(o.selector);
+					
+					//If the sidebar is not open
+					if (!sidebar.hasClass('control-sidebar-open') && !$('body').hasClass('control-sidebar-open')) {
+						//Open the sidebar
+						open(sidebar, o.slide);
+					} else {
+						close(sidebar, o.slide);
+					}
+					
+					   //If the body has a boxed layout, fix the sidebar bg position
+					   var bg = $(".control-sidebar-bg");
+					   fix(bg);
+					   
+					   //Open the control sidebar
+					function open (sidebar, slide) {
+					    //Slide over content
+					    if (slide)
+					      sidebar.addClass('control-sidebar-open');
+					    //Push the content by adding the open class to the body instead 
+					    //of the sidebar itself
+					    else
+					      $('body').addClass('control-sidebar-open');
+					}  
+					//Close the control sidebar
+					function close (sidebar, slide) {
+					    if (slide)
+					      sidebar.removeClass('control-sidebar-open');
+					    else
+					      $('body').removeClass('control-sidebar-open');
+					}
+					 
+					function fix (sidebar) {
+						var _this = this;
+					    if ($("body").hasClass('layout-boxed')) {
+					       sidebar.css('position', 'absolute');
+					       sidebar.height($(".wrapper").height());
+					       $(window).resize(function () {
+					         fix(sidebar);
+					       });
+					    } else {
+					       sidebar.css({
+					         'position': 'fixed',
+					         'height': 'auto'
+					       });
+					     }
+					   }
+				});
+			});
+		</script>
+	
     </div><!-- ./wrapper -->
 
     <!-- jQuery 2.1.3 -->
