@@ -17,8 +17,9 @@
               <div class="form-group">
                 <label class="control-sidebar-subheading">
                   Año
-                  <select class="form-control pull-right" />
+                  <select class="form-control pull-right" id="anhoGlobal"/>
 	                  <option>2016</option>
+	                  <option>2017</option>
                   </select>
                   <p class="help-block">Seleccione el año a ser considerado por el sistema en las secciones de Plan Operativo Institucional y Plan de Acción </p>
                 </label>
@@ -26,7 +27,8 @@
               <div class="form-group">
                 <label class="control-sidebar-subheading">
                   Version
-                  <select class="form-control pull-right" />
+                  <select class="form-control pull-right" id="versionGlobal"/>
+    	              <option>2</option>
     	              <option>50</option>
                   </select>
                   <p class="help-block">Seleccione la version a ser considerado por el sistema en las secciones de Plan Operativo Institucional.</p>

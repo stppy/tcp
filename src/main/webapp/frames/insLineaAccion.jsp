@@ -7356,8 +7356,8 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 $("body").on("change", "#productoObjetoGasto",function(event){
 	//var departamentoId = $(this).attr("parametro");
 	var productoObjetoGastoId = $("#productoObjetoGasto option:selected").val();
-	//var anho=$("#productoObjetoGasto option:selected").val();
-	//var version=$("#productoObjetoGasto option:selected").val();
+	var anho=$("#periodoSeleccion option:selected").val();
+	var version=$("#versionSeleccion option:selected").val();
 	var optionObjetoGastoCosto="";
 	if (productoObjetoGastoId != undefined){
 		var webServicesDatosProducto = $.ajax({
@@ -7373,7 +7373,7 @@ $("body").on("change", "#productoObjetoGasto",function(event){
 		webServicesDatosProducto = JSON.parse(webServicesDatosProducto);
 				
     	$.ajax({
-	    	url:'http://spr.stp.gov.py/ajaxSelects?accion=getAsignacionPresiVersion&anho=2016&nivel='+webServicesDatosProducto[0].nivelId+'&entidad='+webServicesDatosProducto[0].entidadId+'&versionReporte=2',
+	    	url:'http://spr.stp.gov.py/ajaxSelects?accion=getAsignacionPresiVersion&anho='+anho+'&nivel='+webServicesDatosProducto[0].nivelId+'&entidad='+webServicesDatosProducto[0].entidadId+'&versionReporte='+version,
           	type:'get',
 			crossDomain: 'true',
 			dataType:'jsonp',
