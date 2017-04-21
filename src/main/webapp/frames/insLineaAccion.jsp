@@ -7356,6 +7356,9 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 $("body").on("change", "#productoObjetoGasto",function(event){
 	//var departamentoId = $(this).attr("parametro");
 	var productoObjetoGastoId = $("#productoObjetoGasto option:selected").val();
+	var anho=$("#periodoSeleccion option:selected").val();
+	var version=$("#versionSeleccion option:selected").val();
+	var optionObjetoGastoCosto="";
 	if (productoObjetoGastoId != undefined){
 		var webServicesDatosProducto = $.ajax({
 			url:'/tablero/ajaxSelects2?action=getProductoObjetoGasto&productoObjetoGastoId='+productoObjetoGastoId,
@@ -7368,8 +7371,35 @@ $("body").on("change", "#productoObjetoGasto",function(event){
 	        }
 		}).responseText;
 		webServicesDatosProducto = JSON.parse(webServicesDatosProducto);
+				
+    	$.ajax({
+	    	url:'http://spr.stp.gov.py/ajaxSelects?accion=getAsignacionPresiVersion&anho='+anho+'&nivel='+webServicesDatosProducto[0].nivelId+'&entidad='+webServicesDatosProducto[0].entidadId+'&versionReporte='+version,
+          	type:'get',
+			crossDomain: 'true',
+			dataType:'jsonp',
+			jsonp: 'callback',
+			jsonpCallback: 'jsonpCallbackAsignacionPresi',
+			async:false,
+			success: function( data, textStatus, jqXHR) {
+				jsonpCallbackAsignacionPresi(data);
+			}    
+		});
+		    	
+	   	function jsonpCallbackAsignacionPresi(data) {
+			datos = data;			
+			for(var z = 0; z < datos.length; z++)
+			{
+				if (webServicesDatosProducto[0].nivelId == datos[z].nivel && webServicesDatosProducto[0].entidadId == datos[z].entidad 
+						&& webServicesDatosProducto[0].programaId == datos[z].programa && webServicesDatosProducto[0].subprogramaId == datos[z].subPrograma 
+						&& webServicesDatosProducto[0].proyectoId == datos[z].proyecto && webServicesDatosProducto[0].productoId == datos[z].producto){
+					optionObjetoGastoCosto+='<option value="'+datos[z].objetoGasto+'" >'+datos[z].objetoGasto+'</option>';
+    			}			
+			//$("#totalFinanciero-formulario").val(numeroConComa(totalFinanciero));			
+    		}	
+    		$("#objetoGastoCosto").html("");
+    		$("#objetoGastoCosto").append(optionObjetoGastoCosto);
 		
-		var webServicesObjetoGastoCosto = $.ajax({
+		/* var webServicesObjetoGastoCosto = $.ajax({
 			url:'/tablero/ajaxSelects?action=getObjetoGastoCosto&nivel='+webServicesDatosProducto[0].nivelId+'&entidad='+webServicesDatosProducto[0].entidadId+'&tiprograma='+webServicesDatosProducto[0].tiprogramaId+'&programa='+webServicesDatosProducto[0].programaId+'&subprograma='+webServicesDatosProducto[0].subprogramaId+'&proyecto='+webServicesDatosProducto[0].proyectoId+'&producto='+webServicesDatosProducto[0].productoId+'&anho=2017',
 		  	type:'get',
 		  	dataType:'json',
@@ -7381,14 +7411,15 @@ $("body").on("change", "#productoObjetoGasto",function(event){
 		
 		for(var o = 0; o < webServicesObjetoGastoCosto.producto.length; o++){
 			optionObjetoGastoCosto+='<option value="'+webServicesObjetoGastoCosto.producto[o].codigoObjetoGasto+'" >'+webServicesObjetoGastoCosto.producto[o].codigoObjetoGasto+'</option>';
-		}
+		} */
 		
-		$("#objetoGastoCosto").html("");
-		$("#objetoGastoCosto").append(optionObjetoGastoCosto);
+		//$("#objetoGastoCosto").html("");
+		//$("#objetoGastoCosto").append(optionObjetoGastoCosto);
+		}
 	}
 	
-	$("#objetoGastoCosto").html("");
-	$("#objetoGastoCosto").append(optionObjetoGastoCosto);
+	//$("#objetoGastoCosto").html("");
+	//$("#objetoGastoCosto").append(optionObjetoGastoCosto);
 	
 });
 

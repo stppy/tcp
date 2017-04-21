@@ -192,10 +192,10 @@
 			for(var i = 0; i < lineasAccion.length; i++){
 				for(var l = 0; l < usuarioLineaAccion.length; l++){
 					if(usuarioLineaAccion[l].lineaAccionId == lineasAccion[i].id && usuarioLineaAccion[l].borrado != true && lineasAccion[i].borrado != true){
-						usuarioLineas += '<tr><td><input type="checkbox" class="cmbEditarUsuarioLinea" id='+usuarioLineaAccion[l].borrado+'-'+usuarioLineaAccion[l].id+'-e-'+usuarioId+' checked="true"><a> '+lineasAccion[i].nombre+'</a></td></tr> ';
+						usuarioLineas += '<tr><td><input type="checkbox" class="cmbEditarUsuarioLinea" id='+usuarioLineaAccion[l].borrado+'-'+usuarioLineaAccion[l].id+'-e-'+usuarioId+' checked="true"><a> '+lineasAccion[i].nombre+'</a></td><td>'+lineasAccion[i].descripcion+'</td></tr> ';
 						lineasSeleccionada.push(lineasAccion[i].id);
 					}else if(usuarioLineaAccion[l].lineaAccionId == lineasAccion[i].id && usuarioLineaAccion[l].borrado != false && lineasAccion[i].borrado != true){
-						usuarioLineas += '<tr><td><input type="checkbox" class="cmbEditarUsuarioLinea" id='+usuarioLineaAccion[l].borrado+'-'+usuarioLineaAccion[l].id+'-e-'+usuarioId+' ><a> '+lineasAccion[i].nombre+'</a></td></tr> ';
+						usuarioLineas += '<tr><td><input type="checkbox" class="cmbEditarUsuarioLinea" id='+usuarioLineaAccion[l].borrado+'-'+usuarioLineaAccion[l].id+'-e-'+usuarioId+' ><a> '+lineasAccion[i].nombre+'</a></td><td>'+lineasAccion[i].descripcion+'</td></tr> ';
 						lineasSeleccionada.push(lineasAccion[i].id);
 					}
 				}
@@ -204,7 +204,7 @@
 			
 		for(var h = 0; h < lineasAccion.length; h++){
 			if (lineasSeleccionada.indexOf(lineasAccion[h].id)<0 && lineasAccion[h].borrado != true ){
-				usuarioLineas += '<tr><td><input type="checkbox" class="cmbEditarUsuarioLinea" id='+lineasAccion[h].id+'-'+usuarioId+'-n><a> '+lineasAccion[h].nombre+'</a></td></tr> ';
+				usuarioLineas += '<tr><td><input type="checkbox" class="cmbEditarUsuarioLinea" id='+lineasAccion[h].id+'-'+usuarioId+'-n><a> '+lineasAccion[h].nombre+'</a></td><td>'+lineasAccion[h].descripcion+'</td></tr> ';
 				lineasSeleccionada.push(lineasAccion[h].id);
 			}
 		}
@@ -229,7 +229,7 @@
 		'									<div class="table-responsive">'+
 		'										<table class="table table-hover" id="dataTablesUsuarioLineas">'+
 		'						                	<thead>'+
-		'												<tr class="active"><th>Catalogo Linea de Acción</th></tr>'+
+		'												<tr class="active"><th>Catalogo Linea de Acción</th><th>Descripción</th></tr>'+
 		'						                	</thead>'+
 		'											<tbody>'+
 														usuarioLineas
