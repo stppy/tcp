@@ -97,6 +97,7 @@ public class ajaxSelects extends HttpServlet {
     	Integer insLineaAccionId = null;
     	Integer institucionId = null;
     	Integer periodoId = null;
+    	Integer versionId = null;
     	Integer beneficiarioTipoId = null;
     	Integer beneficiarioGrupoId = null;
     	Integer departamentoId = null;// nueva columna
@@ -184,6 +185,7 @@ public class ajaxSelects extends HttpServlet {
       	if (request.getParameter("accion_id")!=null) accion_id=Integer.parseInt(request.getParameter("accion_id")); else accion_id=0;
       	if (request.getParameter("accionId")!=null) accionId=Integer.parseInt(request.getParameter("accionId"));
       	if (request.getParameter("periodoId")!=null) periodoId=Integer.parseInt(request.getParameter("periodoId"));
+      	if (request.getParameter("versionId")!=null) versionId=Integer.parseInt(request.getParameter("versionId"));
       	if (request.getParameter("institucionId")!=null) institucionId=Integer.parseInt(request.getParameter("institucionId"));
       	if (request.getParameter("insLineaAccionId")!=null) insLineaAccionId=Integer.parseInt(request.getParameter("insLineaAccionId"));
       	if (request.getParameter("linea_accion_id")!=null) linea_accion_id=Integer.parseInt(request.getParameter("linea_accion_id")); else linea_accion_id=0;
@@ -851,6 +853,16 @@ public class ajaxSelects extends HttpServlet {
         		condition = " where true ";
         		if (periodoId!=null) condition += " and id ='"+periodoId+"'"; 
            		try {objetos = SqlSelects.selectPeriodo(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());
+        	}  
+        	if (action.equals("getVersion")){
+        		List objetos=null; 
+        		condition = " where true ";
+        		if (anho!=null) condition += " and anho ="+anho; 
+        		if (versionId!=null) condition += " and nro ='"+versionId+"'"; 
+           		try {objetos = SqlSelects.selectVersion(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
