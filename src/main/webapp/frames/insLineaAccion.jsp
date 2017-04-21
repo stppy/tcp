@@ -2871,6 +2871,9 @@ $("body").on("click", ".borrarAccion",function(event){
 		
 		
 		function Combo(){
+		
+			anho=$("#periodoSeleccion option:selected").val();
+			version=$("#versionSeleccion option:selected").val();
 			
 			var usuarios = $.ajax({
 				url:'/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
@@ -3635,7 +3638,7 @@ $("body").on("click", ".borrarAccion",function(event){
 			    		$("#unidadMedida-formulario").val(mostrarUnidadMedida);
 			    		
 				    	$.ajax({
-				         	url:'/ajaxSelects?accion=getAsignacionPresiVersion&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto+'&anho=2017&versionReporte=50',
+				         	url:'/ajaxSelects?accion=getAsignacionPresiVersion&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto+'&anho='+anho+'&versionReporte='+version,
 				          	type:'get',
 				          	crossDomain: 'true',
 				          	dataType:'jsonp',
