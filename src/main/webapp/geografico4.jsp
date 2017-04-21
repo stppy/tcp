@@ -1258,7 +1258,7 @@ var $tabla=$("#lineasPorEntidad");
 
       <!-- Control Sidebar -->
       <aside class="control-sidebar control-sidebar-light">
-		<!-- include file="/frames/control-sidebar.jsp"  -->
+		<%@ include file="/frames/control-sidebar.jsp"  %>
       </aside><!-- /.control-sidebar -->
       <!-- Add the sidebar's background. This div must be placed
            immediately after the control sidebar -->
