@@ -2317,16 +2317,18 @@ function getPeriodo(periodo){
 		}
 	}
 	
-	var periodoCuerpo = '<div class="col-sm-4">'+
+	/* var periodoCuerpo = '<div class="col-sm-4">'+
 							'<label for="periodoSeleccion" style="padding-top:6px;">Periodo: </label>'+
 							'<select id="periodoSeleccion" class="form-control" style="width:50% !important; display: inline-block; margin-left: 8px;">'+optionPeriodo+'</select>'+
 						'</div>'+
 						'<div class="col-sm-4">'+
 						'</div>'+
 						'<div class="col-sm-4">'+
-						'</div>';
+						'</div>'; */
 						
-	$('#mostrarOcultarPeriodo').html(periodoCuerpo);
+	//$('#mostrarOcultarPeriodo').html(periodoCuerpo);
+    
+	$('#periodoSeleccion').html(optionPeriodo);
 	
 }	
 
