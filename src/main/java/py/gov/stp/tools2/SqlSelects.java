@@ -1356,7 +1356,7 @@ public class SqlSelects {
 	
 	public static List<Version> selectVersion(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectarSpr();
-		String query = " select * from version "+condition;
+		String query = " select * from version "+condition + " order by nro desc ";
 
 		Statement statement = null;
 		ResultSet rs=null;
