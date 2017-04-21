@@ -15,7 +15,7 @@
 			var url="";
 			
 			if (rol_jsp == 0){
-				url = 'http://spr.stp.gov.py/ajaxSelects?accion=getUsuarios&mayorIgual='+rol_jsp;				
+				url = 'http://sprtest.stp.gov.py/ajaxSelects?accion=getUsuarios&mayorIgual='+rol_jsp;				
 			} else if(usr_unr_id == 0){
 				url = 'http://spr.stp.gov.py/ajaxSelects?accion=getUsuarios&mayorIgual='+rol_jsp+'&nivelId='+usr_nivel_id+'&entidadId='+usr_entidad_id;			
 			} else {
