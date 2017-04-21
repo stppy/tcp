@@ -897,7 +897,31 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
 		});		
 		
 		$("body").on("change", "#periodoSeleccion",function(event){	
-		   	periodoSeleccionado = $("#periodoSeleccion option:selected").val();
+		   	
+			periodoSeleccionado = $("#periodoSeleccion option:selected").val();
+		   	
+		   	var version = $.ajax({
+				url:'/tablero/ajaxSelects2?action=getVersion&anho='+periodoSeleccionado,
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+			}).responseText;
+			version = JSON.parse(version);
+		   	
+			var optionVersion = "";
+			if (version.length > 0) {
+				for(v = 0;v<version.length; v++)
+				{
+					if(version[v].id == 50)
+					{
+						optionVersion+='<option value="'+version[v].nro+'" selected>'+version[v].nro+'</option>';
+					}else{
+						optionVersion+='<option value="'+version[v].nro+'" >'+version[v].nro+'</option>';
+					}					
+				}
+			}
+			$('#versionSeleccion').html(optionVersion);
+			
 		   	var versionSeleccionado = $("#versionSeleccion option:selected").val();
 		 	var etiquetaSeleccionado = $("#etiquetaSeleccion option:selected").val();
 
