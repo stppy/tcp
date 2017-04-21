@@ -1555,7 +1555,7 @@ if(deptoId!=null && distId!=null){
 									{*/
 										if( (instituciones[m].id==lineasProgramadas[n].institucionId && lineasProgramadas[n].cantidadAnho != 0 && lineasProgramadas[n].cantidadAvance != 0) || ( instituciones[m].id==lineasProgramadas[n].institucionId && lineasProgramadas[n].cantidadAnho != 0 && lineasProgramadas[n].cantidadAvance == 0) || ( instituciones[m].id==lineasProgramadas[n].institucionId && lineasProgramadas[n].cantidadAnho == 0 && lineasProgramadas[n].cantidadAvance != 0) ){	
 											if (flagIns == 0){					  
-												tempInstituciones += '<tr><td colspan="12"><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td></tr>';
+												tempInstituciones += '<tr><td colspan="12"><strong>'+lineasProgramadas[n].institucionSigla+' - '+instituciones[m].nombre+'</strong></td></tr>';
 												flagIns++;						  
 											}
 								  			clase="";
@@ -2007,7 +2007,7 @@ function renderNivelDistrital(lineasProgramadas, deptoId, distId){
 										
 											  if (flagIns == 0){
 												  
-												  tempInstituciones += '<tr><td colspan="12"><strong>'+lineasProgramadas[n].institucionSigla+'</strong></td></tr>';
+												  tempInstituciones += '<tr><td colspan="12"><strong>'+lineasProgramadas[n].institucionSigla+' - '+instituciones[m].nombre+'</strong></td></tr>';
 													flagIns++;						  
 											  }
 											  clase="";
