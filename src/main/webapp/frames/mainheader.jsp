@@ -60,15 +60,15 @@
                   </li>
                 </ul>
               </li>
-              <!-- Control Sidebar Toggle Button 
+              <!-- Control Sidebar Toggle Button -->
               <li>
-                <a href="#" data-toggle="control-sidebar"><i class="fa fa-outdent"></i></a>
-              </li>-->
+                <a href="#"  id="sideBar2" data-toggle="control-sidebar"><i class="fa fa-outdent"></i></a>
+              </li>
             </ul>
           </div>
-          <div class="navbar-custom-menu">
+         <div class="navbar-custom-menu">
           	<div style="padding-top:5px">.</div>
-          	<!-- <input id="ex12c" type="text"/> -->
-           </div>
+          <!-- 	<input id="ex12c" type="text"/> -->
+           </div> 
 
         </nav>
