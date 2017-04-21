@@ -2768,7 +2768,7 @@ $(document).ready(function(){
 																registroFechaFin = elRegistro[m].accion_fecha_fin.split("-");
 															//var registroFechaTerminacion = elRegistro[m].programacion_fecha_terminacion.split("-");
 															
-															cuerpoModal+='<tr><td><a href="#" class="modalHitoAvances" parametros="'+institucion_id+'-'+linea_accion_id+'-'+idDepartamento+'-'+idDistrito+'-'+elRegistro[m].accion_id+'" >'+elRegistro[m].accion_catalogo_nombre+'</td>';
+															cuerpoModal+='<tr><td><!--a href="#" class="modalHitoAvances" parametros="'+institucion_id+'-'+linea_accion_id+'-'+idDepartamento+'-'+idDistrito+'-'+elRegistro[m].accion_id+'" -->'+elRegistro[m].accion_catalogo_nombre+'</td>';
 															//if (idDepartamento != "") 
 																cuerpoModal += '<td>'+elRegistro[m].accion_depto_nombre+'</td>';
 															//if (idDistrito != "")
