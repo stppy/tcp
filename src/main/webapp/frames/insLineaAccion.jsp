@@ -2383,8 +2383,8 @@ $("body").on("click", ".borrarAccion",function(event){
 	    var subPrograma = document.getElementById('subPrograma-formulario').value;
 	    var proyecto = document.getElementById('proyecto-formulario').value; 
 	    var producto = document.getElementById('producto-formulario').value; 
-	    var anho = document.getElementById('anhoProducto-formulario').value; 
-	    var version = document.getElementById('versionProducto-formulario').value; 
+	    var anho = document.getElementById('periodoSeleccion').value; 
+	    var version = document.getElementById('versionSeleccion').value; 
 	    var totalFisico = document.getElementById('totalFisico-formulario').value; 
 	    var unidadMedida = document.getElementById('unidadMedida-formulario').value; 
 	    var clase = document.getElementById('clase-formulario').value; 
