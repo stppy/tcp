@@ -7376,7 +7376,7 @@ $("body").on("change", "#productoObjetoGasto",function(event){
 		webServicesDatosProducto = JSON.parse(webServicesDatosProducto);
 				
     	$.ajax({
-	    	url:'http://spr.stp.gov.py/ajaxSelects?accion=getAsignacionPresiVersion&anho='+anho+'&nivel='+webServicesDatosProducto[0].nivelId+'&entidad='+webServicesDatosProducto[0].entidadId+'&versionReporte='+version,
+	    	url:'http://sprtest.stp.gov.py/ajaxSelects?accion=getAsignacionPresiVersion&anho='+anho+'&nivel='+webServicesDatosProducto[0].nivelId+'&entidad='+webServicesDatosProducto[0].entidadId+'&versionReporte='+version,
           	type:'get',
 			crossDomain: 'true',
 			dataType:'jsonp',
