@@ -2383,8 +2383,8 @@ $("body").on("click", ".borrarAccion",function(event){
 	    var subPrograma = document.getElementById('subPrograma-formulario').value;
 	    var proyecto = document.getElementById('proyecto-formulario').value; 
 	    var producto = document.getElementById('producto-formulario').value; 
-	    var anho = document.getElementById('anhoProducto-formulario').value; 
-	    var version = document.getElementById('versionProducto-formulario').value; 
+	    var anho = document.getElementById('periodoSeleccion').value; 
+	    var version = document.getElementById('versionSeleccion').value; 
 	    var totalFisico = document.getElementById('totalFisico-formulario').value; 
 	    var unidadMedida = document.getElementById('unidadMedida-formulario').value; 
 	    var clase = document.getElementById('clase-formulario').value; 
@@ -2871,6 +2871,9 @@ $("body").on("click", ".borrarAccion",function(event){
 		
 		
 		function Combo(){
+		
+			anho=$("#periodoSeleccion option:selected").val();
+			version=$("#versionSeleccion option:selected").val();
 			
 			var usuarios = $.ajax({
 				url:'/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
@@ -3635,7 +3638,7 @@ $("body").on("click", ".borrarAccion",function(event){
 			    		$("#unidadMedida-formulario").val(mostrarUnidadMedida);
 			    		
 				    	$.ajax({
-				         	url:'http://spr.stp.gov.py/ajaxSelects?accion=getAsignacionPresiVersion&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto+'&anho=2017&versionReporte=50',
+				         	url:'http://spr.stp.gov.py/ajaxSelects?accion=getAsignacionPresiVersion&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto+'&anho='+anho+'&versionReporte='+version,
 				          	type:'get',
 				          	crossDomain: 'true',
 				          	dataType:'jsonp',
