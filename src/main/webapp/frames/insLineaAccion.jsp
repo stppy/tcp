@@ -5829,14 +5829,18 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
 	
 	for(var d = 0; d < departamentos.length; d++)
 	{
-		//if(accion[0].departamentoId == departamentos[d].idDepartamento){
+		if(accion[0].departamentoId == departamentos[d].idDepartamento){
+			nombreDepartamento = departamentos[d].nombreDepartamento;
+			optionDepartamentoAvance+='<option value="'+departamentos[d].idDepartamento+'" selected >'+departamentos[d].nombreDepartamento+'</option>';
+		}
+		else {			
 			nombreDepartamento = departamentos[d].nombreDepartamento;
 			optionDepartamentoAvance+='<option value="'+departamentos[d].idDepartamento+'" >'+departamentos[d].nombreDepartamento+'</option>';
-		//}
+		}
 	}
 	
 
-	/* for(var e = 0; e < distritos.length; e++)
+	for(var e = 0; e < distritos.length; e++)
 	{
 		if(accion[0].distritoId == distritos[e].id && accion[0].departamentoId == distritos[e].departamentoId){
 			nombreDistrito = distritos[e].descripcion;
@@ -5848,7 +5852,7 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
 			
 			optionDistritoAvance+='<option value="'+distritos[e].id+'" >'+distritos[e].descripcion+'</option>';
 		}
-	} */
+	}
 	
 	var nombreUnidadMedidaHitoProgramado="";
 	for(var g = 0; g < unidadMedida.length; g++ )
