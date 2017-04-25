@@ -5891,10 +5891,19 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
 		}
 	}
 	
-		
+	var deptoId = "";	
 	var cuerpoAvance = " ";
 	for(var d = 0; d < webServicesAvance.length; d++)
 	{
+		deptoId = "";
+		distAvance = "";
+		for(var a = 0; a < departamentos.length; a++)
+		{
+			if(webServicesAvance[d].departamentoId == departamentos[a].departamentoId){
+				deptoId = departamentos[a].nombreDepartamento;				
+			}
+		}
+		
 		for(var e = 0; e < distritos.length; e++)
 		{
 			if(webServicesAvance[d].departamentoId == distritos[e].departamentoId && webServicesAvance[d].distritoAvance == distritos[e].id){			
@@ -6017,8 +6026,8 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
 	
 	var tablaListaAvance ='<div class="table-responsive">'+
 		'							<table class="table table-hover table-bordered" id="dataTablesListaAvance">'+
-		'								<thead><tr class="active"><th>Distrito</th><th>Justificación</th><th>cantidad</th><th>Fecha Entrega</th><th>Administrar</th></tr></thead>'+
-		'								<tfoot><tr><th></th><th></th><th></th><th></th><th></th></tr></tfoot>'+
+		'								<thead><tr class="active"><th>Departamento</th><th>Distrito</th><th>Justificación</th><th>cantidad</th><th>Fecha Entrega</th><th>Administrar</th></tr></thead>'+
+		'								<tfoot><tr><th></th><th></th><th></th><th></th><th></th><th></th></tr></tfoot>'+
 		'								<tbody id="listaAvances">'+
 		'								</tbody>'+
 		'							</table>'+
@@ -7508,21 +7517,51 @@ $("body").on("click", ".consultaEditarAvance",function(event){
   	if ( $("#modalAdministrador").length )
    	{
 		$("#modalAdministrador").remove();
-   	}	
+   	}
   	
-   	var webServicesAvance = $.ajax({
-
+  	var webServicesAvance = $.ajax({
    		url:'/tablero/ajaxSelects2?action=getAvance&avanceId='+avanceId,
-
    	  	type:'get',
-
    	  	dataType:'json',
-
    	  	async:false       
-
    	}).responseText;
-
    	webServicesAvance = JSON.parse(webServicesAvance); 
+  	
+  	var departamentos = $.ajax({
+    	url:'/tablero/ajaxSelects?action=getDepartamento',
+      	type:'get',
+      	dataType:'json',
+      	async:false       
+    }).responseText;
+	departamentos = JSON.parse(departamentos);
+	
+	var optionDepartamentos = "";
+  	for(var d = 0; d < departamentos.length; d++)
+	{
+		if(webServicesAvance[0].departamentoId == departamentos[d].idDepartamento){
+			nombreDepartamento = departamentos[d].nombreDepartamento;
+			optionDepartamentos+='<option value="'+departamentos[d].idDepartamento+'" selected >'+departamentos[d].nombreDepartamento+'</option>';
+		}else {
+			optionDepartamentos+='<option value="'+departamentos[d].idDepartamento+'" >'+departamentos[d].nombreDepartamento+'</option>';	
+		}
+	}  	
+  	
+  	var distritos = $.ajax({
+    	url:'/tablero/ajaxSelects?action=getDistrito&departamento='+webServicesAvance[0].departamentoId,
+      	type:'get',
+      	dataType:'json',
+      	async:false       
+    }).responseText;
+	distritos = JSON.parse(distritos);
+	
+	var optionDistritos="";
+	for(k = 0;k<distritos.length; k++){
+		if(webServicesAvance[0].distritoAvance == distritos[k].id){
+			optionDistritos+='<option value="'+distritos[k].id+'" selected >'+distritos[k].descripcion+'</option>';
+		} else {
+			optionDistritos+='<option value="'+distritos[k].id+'">'+distritos[k].descripcion+'</option>';
+		}
+	}   	
 
    	var contenido = "";
 
@@ -7551,6 +7590,10 @@ $("body").on("click", ".consultaEditarAvance",function(event){
 
 						'			      			<form class="form-horizontal">'+
 
+						'							<tr><td><label for="departamentoAvance">Departamento</label><select class="form-control" id="departamentoAvance" >'+optionDepartamentos+'</select></div></td>'+
+
+						'								<td><label for="distritoAvance">Distrito</label><select class="form-control" id="distritoAvance">'+optionDistritos+'</select></div></td></tr>'+
+						
 						'							<tr><td><label for="justificacionAvance">Justificación</label><input type="text" id="justificacionAvance" value="'+webServicesAvance[0].justificacion+'" class="form-control" required /></td><td><label for="cantidadAvance">Cantidad</label><input type="number" id="cantidadAvance" step="any" class="form-control" value='+webServicesAvance[0].cantidad+' required/></td></tr>'+
 
 						'							<tr><td><label for="fechaEntregaAvance">Fecha Entrega</label><input type="date" id="fechaEntregaAvance" value='+webServicesAvance[0].fechaEntrega+' max="'+fechaActual+'" class="form-control" required /></td></tr>'+														
@@ -7602,12 +7645,16 @@ $("body").on("click", ".editarAvance",function(event){
 		var cantidad = $("#cantidadAvance").val();
 		var fechaEntrega = $("#fechaEntregaAvance").val();
 		//var cantidadBeneficiarios = $("#cantidadBeneficiariosAvance").val();
-	
+		var distritoAvance = $("#distritoAvance option:selected").val();
+		var departamentoId = $("#departamentoAvance option:selected").val();					
+		
 	
 		//Vaciar los inputs
 		$("#justificacionAvance").val("");
 		$("#cantidadAvance").val("");
 		$("#fechaEntregaAvance").val("");
+		$("#distritoAvance").val("");
+		$("#departamentoAvance").val("");
 		//$("#cantidadBeneficiariosAvance").val("");
 	    
 	   	var webServicesAvance = $.ajax({
@@ -7625,6 +7672,8 @@ $("body").on("click", ".editarAvance",function(event){
 		objeto.fechaEntrega = fechaEntrega;
 		//objeto.cantidadBeneficiarios = cantidadBeneficiarios;
 		objeto.actividadId = webServicesAvance[0].actividadId;
+		objeto.distritoAvance = distritoAvance;
+		objeto.departamentoId = departamentoId;
 		objeto.version = webServicesAvance[0].version;//No obtenemos este valor del formulario sino del webservices entonces si por ahi agregamos la funcionalidad de que el usuario cambien la version debemos de obtener este dato del formulario y ya no del webservice
 		objeto.id = avanceId;
 	
