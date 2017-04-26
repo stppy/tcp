@@ -7398,6 +7398,7 @@ $("body").on("change", "#productoObjetoGasto",function(event){
 	var anho=$("#periodoSeleccion option:selected").val();
 	var version=$("#versionSeleccion option:selected").val();
 	var optionObjetoGastoCosto="";
+	var objetoGasto=[];
 	if (productoObjetoGastoId != undefined){
 		var webServicesDatosProducto = $.ajax({
 			url:'/tablero/ajaxSelects2?action=getProductoObjetoGasto&productoObjetoGastoId='+productoObjetoGastoId,
@@ -7430,11 +7431,21 @@ $("body").on("change", "#productoObjetoGasto",function(event){
 			{
 				if (webServicesDatosProducto[0].nivelId == datos[z].nivel && webServicesDatosProducto[0].entidadId == datos[z].entidad 
 						&& webServicesDatosProducto[0].programaId == datos[z].programa && webServicesDatosProducto[0].subprogramaId == datos[z].subPrograma 
-						&& webServicesDatosProducto[0].proyectoId == datos[z].proyecto && webServicesDatosProducto[0].productoId == datos[z].producto){
-					optionObjetoGastoCosto+='<option value="'+datos[z].objetoGasto+'" >'+datos[z].objetoGasto+'</option>';
+						&& webServicesDatosProducto[0].proyectoId == datos[z].proyecto && webServicesDatosProducto[0].productoId == datos[z].producto){					
+					objetoGasto.push(datos[z].objetoGasto);
     			}			
 			//$("#totalFinanciero-formulario").val(numeroConComa(totalFinanciero));			
     		}	
+			
+			var uniqueOG = [];
+		    $.each(objetoGasto, function(i, el){
+		        if($.inArray(el, uniqueOG) === -1) uniqueOG.push(el);
+		    });
+		    
+		    for(var x = 0; x < uniqueOG.length; x++){
+		    	optionObjetoGastoCosto+='<option value="'+uniqueOG[x]+'" >'+uniqueOG[x]+'</option>';
+		    }
+		    
     		$("#objetoGastoCosto").html("");
     		$("#objetoGastoCosto").append(optionObjetoGastoCosto);
 		
