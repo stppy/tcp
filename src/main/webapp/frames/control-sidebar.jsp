@@ -16,15 +16,26 @@
               <h3 class="control-sidebar-heading">Configuraciones</h3>
               <div class="form-group">
                 <label class="control-sidebar-subheading">Periodo</label>                  
-                  <!-- >label for="periodoSeleccion">Periodo</label-->
+                <!-- >label for="periodoSeleccion">Periodo</label-->
 				<select id="periodoSeleccion" class="form-control"></select>
                 <p class="help-block">Seleccione el año a ser considerado por el sistema en las secciones de Plan Operativo Institucional y Plan de Acción </p>
               </div><!-- /.form-group -->
               <div class="form-group">
-                <label class="control-sidebar-subheading">Version</label>
+                  <label class="control-sidebar-subheading">Version</label>
                   <select id="versionSeleccion" class="form-control pull-right"></select>
                   <p class="help-block">Seleccione la version a ser considerado por el sistema en las secciones de Plan Operativo Institucional.</p>
               </div><!-- /.form-group -->
+              <div class="form-group">
+			  		<label class="control-sidebar-subheading">Etiqueta</label>
+			  		<!-- <label for="etiquetaSeleccion">Etiqueta</label> -->
+					<select id="etiquetaSeleccion" class="form-control"></select>
+					<p class="help-block">Seleccione la etiqueta a ser considerado por el sistema.</p>
+			  </div><!-- /.form-group -->
+			  <div class="form-group">
+			  		<div class="checkbox">
+						<label> <input type="checkbox" id="chkMostrarOcultar" checked>Ocultar Registros Borrados</label>
+					</div>
+			  </div><!-- /.form-group -->
 
             </form>
           </div><!-- /.tab-pane -->
