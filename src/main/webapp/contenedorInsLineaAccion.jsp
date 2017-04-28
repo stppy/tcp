@@ -832,19 +832,16 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
 									'<select id="periodoSeleccion" class="form-control">'+optionPeriodo+'</select>'+
 								 '</div>'; */
 			
-			var ocultarBorrado= '<div class="col-sm-6">'+
-									'<label for="etiquetaSeleccion">Etiqueta</label>'+
-									'<select id="etiquetaSeleccion" class="form-control">'+optionEtiqueta+'</select>'+
-								'</div>'+
-								'<div class="col-sm-2">'+
+			/* var ocultarBorrado= '<div class="col-sm-2">'+
 									'<div class="checkbox">'+
 										'<label> <input type="checkbox" id="chkMostrarOcultar" checked>Ocultar Registros Borrados</label>'+
 									'</div>'+
-								'</div>';
+								'</div>'; */
 								
-			$('#mostrarOcultarBorrado').append(ocultarBorrado);
+			//$('#mostrarOcultarBorrado').append(ocultarBorrado);
 			$('#periodoSeleccion').append(optionPeriodo);
 			$('#versionSeleccion').append(optionVersion);
+			$('#etiquetaSeleccion').append(optionEtiqueta);
 		<!-- /*%}%*/ -->
 	 
 	 	periodoSeleccionado = $("#periodoSeleccion option:selected").val();
