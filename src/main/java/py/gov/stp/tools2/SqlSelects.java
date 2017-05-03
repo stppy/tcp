@@ -516,7 +516,8 @@ public class SqlSelects {
 				objeto.setAvanceDestinatario(rs.getString("avance_destinatarios"));
 				objeto.setAvanceEvidencias(rs.getString("avance_evidencias"));
 				objeto.setDistritoAvance(rs.getString("distrito_avance"));
-				objeto.setDepartamentoAvance(rs.getString("departamento_avance"));
+				objeto.setDepartamentoAvance(rs.getString("departamento_avance"));				
+				objeto.setCronoTipoId(rs.getInt("crono_tipo_id"));
 				
 				objetos.add(objeto);
 			}
