@@ -5502,8 +5502,7 @@ function renderProgramacion(insLineaAccionId,lineaAccionId,institucionId,periodo
 	}
 	$('#fechaEntregaProgramacion').datepicker({ 
 		language: "es",
-		format: 'yyyy-mm-dd',
-		startDate: '-1d'});
+		format: 'yyyy-mm-dd'});
 	//$("#dataTablesProgramacionHito1").DataTable();
 	$('#dataTablesProgramacionHito1').dataTable({
 		"order": [[ 1, "asc" ]],
@@ -5973,7 +5972,7 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
 							'											<tr><td><label for="justificacionAvance">Justificación</label><input type="text" id="justificacionAvance" value="" class="form-control" placeholder="Ingrese Justificación" required/></td>'+
 							'												<td><label for="cantidadAvance">Cantidad</label><input type="number" id="cantidadAvance" step="any" class="form-control" value="" placeholder="Ingrese Cantidad" required/></td>'+
 							'											</tr>'+
-							'											<tr><td><label for="fechaEntregaAvance">Fecha Entrega</label><input  id="fechaEntregaAvance" value="'+fechaActual+'" max="'+fechaActual+'" class="form-control" required/></td></tr>'+														
+							'											<tr><td><label for="fechaEntregaAvance">Fecha Entrega</label><input  id="fechaEntregaAvance" value="'+fechaActual+'" class="form-control" required/></td></tr>'+														
 							'											<input type="hidden" id="versionAvance" value="3" />'+		
 							'			      							</form>	'+												
 							'										</tbody>'+
@@ -6060,7 +6059,7 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
 	$('#fechaEntregaAvance').datepicker({  
 		language: "es",
 		format: 'yyyy-mm-dd',
-		startDate: '-1d'});
+		endDate: "0d"});
 	//$("#dataTablesListaAvance").DataTable();
 	$("#dataTablesListaAvance").dataTable({
         "footerCallback": function ( row, data, start, end, display ) {
@@ -7642,7 +7641,7 @@ $("body").on("click", ".consultaEditarAvance",function(event){
 						
 						'							<tr><td><label for="justificacionAvance">Justificación</label><input type="text" id="justificacionAvance" value="'+webServicesAvance[0].justificacion+'" class="form-control" required /></td><td><label for="cantidadAvance">Cantidad</label><input type="number" id="cantidadAvance" step="any" class="form-control" value='+webServicesAvance[0].cantidad+' required/></td></tr>'+
 
-						'							<tr><td><label for="fechaEntregaAvance">Fecha Entrega</label><input  id="fechaEntregaAvance" value='+webServicesAvance[0].fechaEntrega+' max="'+fechaActual+'" class="form-control" required /></td></tr>'+														
+						'							<tr><td><label for="fechaEntregaAvance">Fecha Entrega</label><input  id="fechaEntregaAvance" value='+webServicesAvance[0].fechaEntrega+' class="form-control" required /></td></tr>'+														
 
 						'							<input type="hidden" id="versionAvance" value="3" /><input type="hidden" id="actividadIdAvance" value='+avanceId+' />'+		
 
@@ -7678,8 +7677,7 @@ $("body").on("click", ".consultaEditarAvance",function(event){
    	$('#fechaEntregaAvance').datepicker({  
 		language: "es",
 		format: 'yyyy-mm-dd',
-		startDate: '-1d' });
-
+		endDate: "0d"});
  });
  
 $("body").on("click", ".editarAvance",function(event){	
@@ -9246,8 +9244,7 @@ $("body").on("click", ".consultaEditarHito",function(event){
 	$('#modalEditarHito').modal('show');
 	$('#fechaHito').datepicker({  
 		language: "es",
-		format: 'yyyy-mm-dd',
-		startDate: '-1d'});
+		format: 'yyyy-mm-dd'});
 
 });
 $("body").on("click", ".editarHito",function(event){
