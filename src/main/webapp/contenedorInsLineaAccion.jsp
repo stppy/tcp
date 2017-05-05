@@ -17,6 +17,9 @@
 	<link href="bootstrap/css/bootstrapslider.css" rel="stylesheet">	
 	<script src="plugins/jquery-bootstrap-modal-steps.js"></script>	
 	
+	<!-- bootstrap datepicker css  -->
+	<link href="plugins/datepicker/datepicker3.css" rel="stylesheet">
+	
 	<!-- jQuery 2.1.3  -->
     <!-- >script src="plugins/jQuery/jQuery-2.1.3.min.js"></script-->
     
@@ -757,7 +760,7 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
 
 <%if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
  $(document).ready(function(){	
- 			
+	 		
 		 <!-- /*%if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){% */ -->
 			var periodo = $.ajax({
 				url:'/tablero/ajaxSelects2?action=getPeriodo',
@@ -1175,7 +1178,8 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
     <!-- daterangepicker -->
     <script src="plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
     <!-- datepicker -->
-    <script src="plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
+    <script src="plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>    
+    <script src="plugins/datepicker/locales/bootstrap-datepicker.es.js" charset="UTF-8"></script>
     <!-- SlimScroll 1.3.0 -->
     <script src="plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
     <!-- ChartJS 1.0.1 -->
