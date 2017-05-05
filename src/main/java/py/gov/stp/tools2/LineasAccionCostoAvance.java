@@ -1,5 +1,9 @@
 package py.gov.stp.tools2;
 
+/**
+ * 	@author DGTIC-STP
+ *  @email  dgtic@stp.gov.py 
+ */
 public class LineasAccionCostoAvance {
 	protected int insId;
 	protected String institucion;

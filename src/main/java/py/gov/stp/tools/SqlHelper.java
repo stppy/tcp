@@ -14,6 +14,10 @@ import java.util.logging.Logger;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
+/**
+ * 	@author DGTIC-STP
+ *  @email  dgtic@stp.gov.py 
+ */
 public class SqlHelper {
 	public static Connection conectar(){
 		 Connection con = null;
