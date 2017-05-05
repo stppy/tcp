@@ -22,7 +22,7 @@ public class ConnectionConfiguration {
     //public static final String USERNAME = "root";
     public static final String USERNAME = "postgres";
     //public static final String PASSWORD = "cybiraconsulting";
-    public static final String PASSWORD = "t3R3R3.ol";
+    public static final String PASSWORD = "postgres";
     
     public static Connection getConnection() {
     /*    Connection connection = null;
@@ -41,9 +41,9 @@ public class ConnectionConfiguration {
 	        catch (ClassNotFoundException e) {e.printStackTrace();}
 	        String url = "";
 	        String user = "postgres";
-	        String password = "t3R3R3.ol";
+	        String password = "postgres";
 
-	        try {con = DriverManager.getConnection("jdbc:postgresql://pg01.stp.gov.py/tablero2015v3?useUnicode=true&characterEncoding=UTF-8&user=postgres&password=t3R3R3.ol");}
+	        try {con = DriverManager.getConnection("jdbc:postgresql://pg01.stp.gov.py/tablero2015v3?useUnicode=true&characterEncoding=UTF-8&user=postgres&password=postgres");}
 	        catch (SQLException ex) {
 	            Logger lgr = Logger.getLogger(SqlHelper.class.getName());
 	            lgr.log(Level.SEVERE, ex.getMessage(), ex);
@@ -58,9 +58,9 @@ public class ConnectionConfiguration {
 	        catch (ClassNotFoundException e) {e.printStackTrace();}
 	        String url = "";
 	        String user = "postgres";
-	        String password = "t3R3R3.ol";
+	        String password = "postgres";
 
-	        try {con = DriverManager.getConnection("jdbc:postgresql://pg01.stp.gov.py/tablero2015v3?useUnicode=true&characterEncoding=UTF-8&user=postgres&password=t3R3R3.ol");}
+	        try {con = DriverManager.getConnection("jdbc:postgresql://pg01.stp.gov.py/tablero2015v3?useUnicode=true&characterEncoding=UTF-8&user=postgres&password=postgres");}
 	        catch (SQLException ex) {
 	            Logger lgr = Logger.getLogger(SqlHelper.class.getName());
 	            lgr.log(Level.SEVERE, ex.getMessage(), ex);
@@ -94,10 +94,10 @@ public class ConnectionConfiguration {
 	        String url = "";
 	        //String user = "root";
 	        String user = "postgres";
-	        String password = "t3R3R3.ol";
+	        String password = "postgres";
 
-	        //try {con = DriverManager.getConnection("jdbc:mysql://mysql01.stp.gov.py/spr?useUnicode=true&characterEncoding=UTF-8", "root", "t3R3R3.ol");}
-	        try {con = DriverManager.getConnection("jdbc:postgresql://pg01.stp.gov.py/spr?useUnicode=true&characterEncoding=UTF-8", "postgres", "t3R3R3.ol");}
+	        //try {con = DriverManager.getConnection("jdbc:mysql://mysql01.stp.gov.py/spr?useUnicode=true&characterEncoding=UTF-8", "root", "postgres");}
+	        try {con = DriverManager.getConnection("jdbc:postgresql://pg01.stp.gov.py/spr?useUnicode=true&characterEncoding=UTF-8", "postgres", "postgres");}
 	        catch (SQLException ex) {
 	            Logger lgr = Logger.getLogger(SqlHelper.class.getName());
 	            lgr.log(Level.SEVERE, ex.getMessage(), ex);
@@ -112,9 +112,9 @@ public class ConnectionConfiguration {
 	        catch (ClassNotFoundException e) {e.printStackTrace();}
 	        String url = "";
 	        String user = "root";
-	        String password = "t3R3R3.ol";
+	        String password = "postgres";
 
-	        try {con = DriverManager.getConnection("jdbc:mysql://mysql01.stp.gov.py/tablero2015?useUnicode=true&characterEncoding=UTF-8", "root", "t3R3R3.ol");}
+	        try {con = DriverManager.getConnection("jdbc:mysql://mysql01.stp.gov.py/tablero2015?useUnicode=true&characterEncoding=UTF-8", "root", "postgres");}
 	        catch (SQLException ex) {
 	            Logger lgr = Logger.getLogger(SqlHelper.class.getName());
 	            lgr.log(Level.SEVERE, ex.getMessage(), ex);

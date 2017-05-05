@@ -33,9 +33,9 @@ public class SqlSelects {
 	        catch (ClassNotFoundException e) {e.printStackTrace();}
 	        String url = "";
 	        String user = "root";
-	        String password = "t3R3R3.ol";
+	        String password = "postgres";
 
-	        try {con = DriverManager.getConnection("jdbc:mysql://mysql01.stp.gov.py/spr", "root", "t3R3R3.ol");}
+	        try {con = DriverManager.getConnection("jdbc:mysql://mysql01.stp.gov.py/spr", "root", "postgres");}
 	        catch (SQLException ex) {
 	            Logger lgr = Logger.getLogger(SqlHelper.class.getName());
 	            lgr.log(Level.SEVERE, ex.getMessage(), ex);
