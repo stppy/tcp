@@ -20,7 +20,10 @@ import objetos.MetasDistEntLinea;
 import py.gov.stp.objetosV2.AccionHasProducto;
 import py.gov.stp.objetosV2.ProductoObjetoGasto;
 
-
+/**
+ * 	@author DGTIC-STP
+ *  @email  dgtic@stp.gov.py 
+ */
 public class SqlSelects {
 	/*public static Connection ConnectionConfiguration.conectar(){
 		 Connection con = null;

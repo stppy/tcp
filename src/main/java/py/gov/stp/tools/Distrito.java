@@ -1,5 +1,9 @@
 package py.gov.stp.tools;
 
+/**
+ * 	@author DGTIC-STP
+ *  @email  dgtic@stp.gov.py 
+ */
 public class Distrito {
 	protected int departamentoId;
 	protected int id;

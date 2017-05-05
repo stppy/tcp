@@ -11,6 +11,10 @@ import java.util.logging.Logger;
 import py.gov.stp.tools.SqlHelper;
 import py.gov.stp.tools2.*;
 
+/**
+ * 	@author DGTIC-STP
+ *  @email  dgtic@stp.gov.py 
+ */
 public class ConnectionConfiguration {
 	
     //public static final String URL = "jdbc:mysql01://pg01.stp.goy.py:3306/spr?useUnicode=true&characterEncoding=UTF-8";
