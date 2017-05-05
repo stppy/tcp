@@ -2,7 +2,10 @@ package py.gov.stp.objetosV2;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-
+/**
+@author          DGTIC - STP
+@email			 dgtic@stp.gov.py
+*/
 public class ResumenLineaAccion {
 
 	protected int 	  	  institucionId;
