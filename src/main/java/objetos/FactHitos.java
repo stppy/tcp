@@ -1,7 +1,10 @@
 package objetos;
 
 import java.sql.Date;
-
+/**
+@author          DGTIC - STP
+@email			 dgtic@stp.gov.py
+*/
 public class FactHitos {
 	
 	protected int linea_estrategica_id;
