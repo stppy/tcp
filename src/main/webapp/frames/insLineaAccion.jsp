@@ -5502,7 +5502,9 @@ function renderProgramacion(insLineaAccionId,lineaAccionId,institucionId,periodo
 	}
 	$('#fechaEntregaProgramacion').datepicker({ 
 		language: "es",
-		format: 'yyyy-mm-dd'});
+		format: 'yyyy-mm-dd',
+		todayBtn: "linked",
+	    todayHighlight: true});
 	//$("#dataTablesProgramacionHito1").DataTable();
 	$('#dataTablesProgramacionHito1').dataTable({
 		"order": [[ 1, "asc" ]],
@@ -6059,7 +6061,9 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
 	$('#fechaEntregaAvance').datepicker({  
 		language: "es",
 		format: 'yyyy-mm-dd',
-		endDate: "0d"});
+		endDate: "0d",
+		todayBtn: "linked",
+	    todayHighlight: true});
 	//$("#dataTablesListaAvance").DataTable();
 	$("#dataTablesListaAvance").dataTable({
         "footerCallback": function ( row, data, start, end, display ) {
@@ -7677,7 +7681,9 @@ $("body").on("click", ".consultaEditarAvance",function(event){
    	$('#fechaEntregaAvance').datepicker({  
 		language: "es",
 		format: 'yyyy-mm-dd',
-		endDate: "0d"});
+		endDate: "0d",
+		todayBtn: "linked",
+	    todayHighlight: true});
  });
  
 $("body").on("click", ".editarAvance",function(event){	
@@ -9244,7 +9250,9 @@ $("body").on("click", ".consultaEditarHito",function(event){
 	$('#modalEditarHito').modal('show');
 	$('#fechaHito').datepicker({  
 		language: "es",
-		format: 'yyyy-mm-dd'});
+		format: 'yyyy-mm-dd',
+		todayBtn: "linked",
+	    todayHighlight: true});
 
 });
 $("body").on("click", ".editarHito",function(event){
