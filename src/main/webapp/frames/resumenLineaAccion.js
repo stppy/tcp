@@ -5,7 +5,8 @@ function numeroConComa(x) {
 	}else if ( x == "Infinity"){
 		return "-"
 	}else{
-		return x.toString().replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+		//return x.toString().replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+		return x.toString().replace(".", ",").replace(/(\d)(?:(?=\d+(?=[^\d.]))(?=(?:[0-9]{3})+\b)|(?=\d+(?=\.))(?=(?:[0-9]{3})+(?=\.)))/g, "$1.");
 	}
 }
 

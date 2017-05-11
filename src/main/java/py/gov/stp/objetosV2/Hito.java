@@ -1,6 +1,9 @@
 package py.gov.stp.objetosV2;
 import java.sql.Date;
-
+/**
+@author          DGTIC - STP
+@email			 dgtic@stp.gov.py
+*/
 public class Hito {
 	protected int id;
 	protected String nombre;

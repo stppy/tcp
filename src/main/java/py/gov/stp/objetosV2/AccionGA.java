@@ -3,7 +3,10 @@ package py.gov.stp.objetosV2;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+/**
+@author          DGTIC - STP
+@email			 dgtic@stp.gov.py
+*/
 public class AccionGA {
 	protected String colour = "#4d9900";
 	protected String name;
