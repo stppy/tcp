@@ -3560,7 +3560,9 @@ public class SqlSelects {
 	  }
 	public static String selectPresupuestoAsignado(String condition) throws SQLException{
 	   	 Connection conect=ConnectionConfiguration.conectar();
-	   	 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from(select sum(asignacion_financiera)as AsignacionUsada from accion_has_producto "+condition+" and borrado=false)t";
+	   	 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from "
+	   	 		+ "(select sum(asignacion_financiera) as AsignacionUsada from accion_has_producto ahp join accion a "
+	   	 		+ " on a.id=ahp.accion_id "+condition+" and ahp.borrado=false and a.borrado=false)t";
 
 
 		Statement statement = null;
