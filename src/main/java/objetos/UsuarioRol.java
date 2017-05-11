@@ -1,5 +1,8 @@
 package objetos;
-
+/**
+@author          DGTIC - STP
+@email			 dgtic@stp.gov.py
+*/
 public class UsuarioRol {
 	protected int usuario_id;
 	protected int rol_id;

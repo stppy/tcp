@@ -1,5 +1,8 @@
 package py.gov.stp.objetosV2;
-
+/**
+@author          DGTIC - STP
+@email			 dgtic@stp.gov.py
+*/
 public class ProgramacionPorMes {
 	protected int actividadId;
 	protected String mes;
