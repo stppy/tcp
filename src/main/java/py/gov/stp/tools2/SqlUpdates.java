@@ -834,7 +834,12 @@ public static boolean borradoHito(Hito objeto, String usuarioResponsable){
 		 String query = "update evidencia set borrado='"+objeto.isBorrado()+"'";
 		 		query += ", usuario_responsable='" + usuarioResponsable + "'";
 		 
-		 query+=" where id ="+objeto.getId(); 	
+		 if(objeto.getId()==0 && objeto.getAvanceId()!=0){
+			 query+=" where avance_id ="+objeto.getId();
+		 }else{
+			 query+=" where id ="+objeto.getId();
+		 }
+		  	
 		 try {
 			statement=conect.createStatement();
 			statement.execute(query);
@@ -1073,7 +1078,12 @@ public static boolean borradoHito(Hito objeto, String usuarioResponsable){
 			 String query = "update beneficiario set borrado='"+objeto.isBorrado()+"'";
 			 		query += ", usuario_responsable='" + usuarioResponsable + "'";
 			 
-			 query+=" where id ="+objeto.getId(); 
+			if(objeto.getAvanceId()!=0 && objeto.getId()==0){
+				query+=" where avance_id ="+objeto.getAvanceId();	
+			}else{
+				query+=" where id ="+objeto.getId();
+			}
+			 
 			 try {
 				statement=conect.createStatement();
 				statement.execute(query);
@@ -1487,7 +1497,12 @@ public static boolean borradoHito(Hito objeto, String usuarioResponsable){
 		 String query = "update avance_costo set borrado='"+objeto.isBorrado()+"'";
 		 		query += ", usuario_responsable='" + usuarioResponsable + "'";
 		 
-		 query+=" where id ="+objeto.getId(); 	
+		 if(objeto.getId()==0 && objeto.getAvanceId()!=0){
+			 query+=" where avance_id ="+objeto.getAvanceId();
+		 }else{
+			 query+=" where id ="+objeto.getId();
+		 }
+		 
 		 try {
 			statement=conect.createStatement();
 			statement.execute(query);
@@ -1551,8 +1566,22 @@ public static boolean borradoHito(Hito objeto, String usuarioResponsable){
 		 
 		 query+=" where id ="+objeto.getId(); 	
 		 try {
-			statement=conect.createStatement();
-			statement.execute(query);
+			statement=conect.createStatement();		
+			
+			if(statement.execute(query)){
+				Beneficiario bnf= new Beneficiario();
+				bnf.setAvanceId(objeto.getId());				
+				borradoBeneficiario(bnf, usuarioResponsable);
+				
+				AvanceCosto ac=new AvanceCosto();
+				ac.setAvanceId(objeto.getId());
+				borradoAvanceCosto(ac, usuarioResponsable);
+				
+				Evidencia ev=new Evidencia();
+				ev.setAvanceId(objeto.getId());
+				borradoEvidencia(ev, usuarioResponsable);
+			}
+			
 		    conect.close();
 		    return true;
 		 }catch (SQLException e) {e.printStackTrace(); return false;}
