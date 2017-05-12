@@ -2873,9 +2873,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		function Combo(){
 		
 			anho=$("#periodoSeleccion option:selected").val();
-			//version=$("#versionSeleccion option:selected").val(); DG: poner version 51 Tarea #21205
-			version=51;
-
+			version=$("#versionSeleccion option:selected").val();
 			
 			var usuarios = $.ajax({
 				url:'/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
@@ -7409,8 +7407,7 @@ $("body").on("change", "#productoObjetoGasto",function(event){
 	//var departamentoId = $(this).attr("parametro");
 	var productoObjetoGastoId = $("#productoObjetoGasto option:selected").val();
 	var anho=$("#periodoSeleccion option:selected").val();
-	//var version=$("#versionSeleccion option:selected").val(); dg: poner version 51 fijo Tarea #21205
-	var version=51;
+	var version=$("#versionSeleccion option:selected").val();
 	var optionObjetoGastoCosto="";
 	var objetoGasto=[];
 	if (productoObjetoGastoId != undefined){
