@@ -7410,7 +7410,7 @@ $("body").on("change", "#productoObjetoGasto",function(event){
 	var productoObjetoGastoId = $("#productoObjetoGasto option:selected").val();
 	var anho=$("#periodoSeleccion option:selected").val();
 	//var version=$("#versionSeleccion option:selected").val(); pedido de rafa poner version 51 fijo Tarea #21205
-	var version=50;
+	var version=51;
 	var optionObjetoGastoCosto="";
 	var objetoGasto=[];
 	if (productoObjetoGastoId != undefined){
