@@ -9,7 +9,9 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -834,8 +836,8 @@ public static boolean borradoHito(Hito objeto, String usuarioResponsable){
 		 String query = "update evidencia set borrado='"+objeto.isBorrado()+"'";
 		 		query += ", usuario_responsable='" + usuarioResponsable + "'";
 		 
-		 if(objeto.getId()==0 && objeto.getAvanceId()!=0){
-			 query+=" where avance_id ="+objeto.getId();
+		if(objeto.getAvanceId()!=0 && objeto.getId()==0){
+			 query+=" where avance_id ="+objeto.getAvanceId();
 		 }else{
 			 query+=" where id ="+objeto.getId();
 		 }
@@ -1442,6 +1444,8 @@ public static boolean borradoHito(Hito objeto, String usuarioResponsable){
 	public static boolean borradoCronograma(Cronograma objeto, String usuarioResponsable){
 	  	 Connection conect=ConnectionConfiguration.conectar();
 	  	 Statement statement = null;
+	  	 List<Avance> avances = new ArrayList<Avance>();
+	  	 
 	  	 objeto.changeBorrado();
 	  	 
 		 String query = "update actividad set borrado='"+objeto.isBorrado()+"'";
@@ -1450,7 +1454,22 @@ public static boolean borradoHito(Hito objeto, String usuarioResponsable){
 		 query+=" where id ="+objeto.getId(); 	
 		 try {
 			statement=conect.createStatement();
+			
 			statement.execute(query);
+			
+			objeto.changeBorrado();
+						
+			String condicion= " where actividad_id="+objeto.getId();
+			avances=SqlSelects.selectAvance(condicion);
+			
+			for(int x=0;x<avances.size();x++) {
+				Avance av=new Avance();
+				//av.setActividadId(objeto.getId());
+				av.setActividadId(avances.get(x).getActividadId());
+				av.setBorrado(objeto.isBorrado());
+				borradoAvance(av, usuarioResponsable);
+			}
+			
 		    conect.close();
 		    return true;
 		 }catch (SQLException e) {e.printStackTrace(); return false;}
@@ -1559,29 +1578,39 @@ public static boolean borradoHito(Hito objeto, String usuarioResponsable){
 	public static boolean borradoAvance(Avance objeto, String usuarioResponsable){
 	  	 Connection conect=ConnectionConfiguration.conectar();
 	  	 Statement statement = null;
-	  	  objeto.changeBorrado();
+	  	 objeto.changeBorrado();
 	  	 
 		 String query = "update avance set borrado='"+objeto.isBorrado()+"'";
-		 		query += ", usuario_responsable='" + usuarioResponsable + "'";
+		 		query += ", usuario_responsable='" + usuarioResponsable + "'"; 	
 		 
-		 query+=" where id ="+objeto.getId(); 	
+		 if(objeto.getActividadId()!=0 && objeto.getId()==0){
+			 query+=" where actividad_id ="+objeto.getActividadId();
+		 }else{
+			 query+=" where id ="+objeto.getId();
+		 }
+		 
 		 try {
 			statement=conect.createStatement();		
 			
-			if(statement.execute(query)){
-				Beneficiario bnf= new Beneficiario();
-				bnf.setAvanceId(objeto.getId());				
-				borradoBeneficiario(bnf, usuarioResponsable);
-				
-				AvanceCosto ac=new AvanceCosto();
-				ac.setAvanceId(objeto.getId());
-				borradoAvanceCosto(ac, usuarioResponsable);
-				
-				Evidencia ev=new Evidencia();
-				ev.setAvanceId(objeto.getId());
-				borradoEvidencia(ev, usuarioResponsable);
-			}
+			statement.execute(query);
 			
+			objeto.changeBorrado();
+			
+			Beneficiario bnf= new Beneficiario();
+			bnf.setAvanceId(objeto.getId());
+			bnf.setBorrado(objeto.isBorrado());			
+			borradoBeneficiario(bnf, usuarioResponsable);
+			
+			AvanceCosto ac=new AvanceCosto();
+			ac.setAvanceId(objeto.getId());
+			ac.setBorrado(objeto.isBorrado());
+			borradoAvanceCosto(ac, usuarioResponsable);
+				
+			Evidencia ev=new Evidencia();
+			ev.setAvanceId(objeto.getId());
+			ev.setBorrado(objeto.isBorrado());
+			borradoEvidencia(ev, usuarioResponsable);
+						
 		    conect.close();
 		    return true;
 		 }catch (SQLException e) {e.printStackTrace(); return false;}
