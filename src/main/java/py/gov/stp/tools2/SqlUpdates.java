@@ -275,6 +275,9 @@ public class SqlUpdates {
 	public static boolean borradoInsLineaAccion(InsLineaAccion objeto, String usuarioResponsable){
 	  	 Connection conect=ConnectionConfiguration.conectar();
 	  	 Statement statement = null;
+	  	 List<Accion> accs = new ArrayList<Accion>();
+	  	 List<AvanceCualitativo> acus = new ArrayList<AvanceCualitativo>();
+	  	 String condicion="";
 		  	objeto.changeBorrado();
 	  	 
 			 String query = "update ins_linea_accion set borrado='"+objeto.isBorrado()+"'";
@@ -284,6 +287,29 @@ public class SqlUpdates {
 			 try {
 				statement=conect.createStatement();
 				statement.execute(query);
+				
+				objeto.changeBorrado();
+				
+				condicion=" where ins_linea_accion_id="+objeto.getId();
+				
+				accs=SqlSelects.selectAccion(condicion,"");			
+				
+				for(int x=0;x<accs.size();x++) {
+					Accion ac= new Accion();
+					ac.setId(accs.get(x).getId());
+					ac.setBorrado(objeto.isBorrado());			
+					borradoAccion(ac, usuarioResponsable);
+				}
+				
+				acus=SqlSelects.selectAvanceCualitativo(condicion);			
+				
+				for(int x=0;x<acus.size();x++) {
+					AvanceCualitativo acu= new AvanceCualitativo();
+					acu.setId(acus.get(x).getId());
+					acu.setBorrado(objeto.isBorrado());			
+					borradoAvanceCualitativo(acu, usuarioResponsable);
+				}
+				
 			    conect.close();
 			    return true;
 			} catch (SQLException e) {e.printStackTrace(); return false;}
@@ -605,6 +631,10 @@ public static boolean borradoHito(Hito objeto, String usuarioResponsable){
 	public static boolean borradoAccion(Accion objeto, String usuarioResponsable){
 	  	 Connection conect=ConnectionConfiguration.conectar();
 	  	 Statement statement = null;
+	  	 List<AccionDestinatario> ads = new ArrayList<AccionDestinatario>();
+	  	 List<AccionHasProducto> ahps = new ArrayList<AccionHasProducto>();
+	  	 List<Cronograma> cros = new ArrayList<Cronograma>();
+	  	 String condicion="";
 	  	 objeto.changeBorrado();
 	  	 
 		 String query = "update accion set borrado='"+objeto.isBorrado()+"'";
@@ -614,6 +644,40 @@ public static boolean borradoHito(Hito objeto, String usuarioResponsable){
 		 try {
 			statement=conect.createStatement();
 			statement.execute(query);
+			
+			objeto.changeBorrado();
+			
+			condicion=" where accion_id="+objeto.getId();
+			
+			ads=SqlSelects.selectAccionDestinatario(condicion);			
+			
+			for(int x=0;x<ads.size();x++) {
+				AccionDestinatario ad= new AccionDestinatario();
+				ad.setId(ads.get(x).getId());
+				ad.setBorrado(objeto.isBorrado());			
+				borradoAccionDestinatario(ad, usuarioResponsable);
+			}
+			
+			ahps=SqlSelects.selectAccionHasProducto(condicion);			
+			
+			for(int x=0;x<ahps.size();x++) {
+				AccionHasProducto ahp= new AccionHasProducto();
+				ahp.setId(ahps.get(x).getId());
+				ahp.setBorrado(objeto.isBorrado());			
+				borradoAccionHasProducto(ahp, usuarioResponsable);
+			}
+			
+			cros=SqlSelects.selectCronograma(condicion);			
+			
+			for(int x=0;x<cros.size();x++) {
+				Cronograma cro= new Cronograma();
+				cro.setId(cros.get(x).getId());
+				cro.setBorrado(objeto.isBorrado());			
+				borradoCronograma(cro, usuarioResponsable);
+			}
+			
+			
+			
 		    conect.close();
 		    return true;
 		 }catch (SQLException e) {e.printStackTrace(); return false;}
