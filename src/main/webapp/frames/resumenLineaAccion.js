@@ -207,8 +207,8 @@ function renderAccion(estrategia, lineasProgramadas, instituciones, periodo){
 										tempInstLineas += '<tr>'+
 										'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #3c8dbc;">'+lineasProgramadas[n].lineaAccionNombre+'</span></td>'+
 										'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
-										'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
-										'<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>'+
+										'<td>'+numeroConComa((lineasProgramadas[n].meta).toFixed(2))+'</td>'+
+										'<td>'+numeroConComa((lineasProgramadas[n].cantidadAnho).toFixed(2))+'</td>'+
 										'<td class="'+clase+'">'+desempProgAnho+'</td>';
 										if(lineasProgramadas[n].cantDest==0){
 											tempInstLineas += '<td> - </td>';
@@ -216,8 +216,8 @@ function renderAccion(estrategia, lineasProgramadas, instituciones, periodo){
 											tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>';
 										}
 										tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
-										'<td>'+numeroConComa(lineasProgramadas[n].cantidadHoy)+'</td>'+
-										'<td>'+numeroConComa(lineasProgramadas[n].cantidadAvance)+'</td>';
+										'<td>'+numeroConComa((lineasProgramadas[n].cantidadHoy).toFixed(2))+'</td>'+
+										'<td>'+numeroConComa((lineasProgramadas[n].cantidadAvance).toFixed(2))+'</td>';
 						
 										var desempEjeHoy=numeroConComa(((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100).toFixed(2));
 										if(lineasProgramadas[n].cantidadAvance==0 && lineasProgramadas[n].cantidadHoy==0) desempEjeHoy="-";
@@ -240,7 +240,7 @@ function renderAccion(estrategia, lineasProgramadas, instituciones, periodo){
 										if(lineasProgramadas[n].cantDestinatarioReal==0){
 											tempInstLineas += '<td> - </td>';
 										}else{
-											tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDestinatarioReal)+'</td>';
+											if(lineasProgramadas[n].cantDestinatarioReal > 0){ tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].cantDestinatarioReal).toFixed(2))+'</td>'; }else{ tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDestinatarioReal)+'</td>';}
 										}
 										tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].costoAc/1000000).toFixed(2))+'</td>'+
 										'</tr>';
