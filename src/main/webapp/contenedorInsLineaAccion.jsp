@@ -848,8 +848,8 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
 		<!-- /*%}%*/ -->
 	 
 	 	periodoSeleccionado = $("#periodoSeleccion option:selected").val();
-	 	var versionSeleccionado = $("#versionSeleccion option:selected").val();
-	 	var etiquetaSeleccionado = $("#etiquetaSeleccion option:selected").val();
+	 	versionSeleccionado = $("#versionSeleccion option:selected").val();
+	 	etiquetaSeleccionado = $("#etiquetaSeleccion option:selected").val();
 	 
  		onoff=false;
 		function OcultarRegistrosBorrados(){
