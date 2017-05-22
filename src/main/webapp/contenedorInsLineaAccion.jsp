@@ -944,6 +944,34 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
 		 	var etiquetaSeleccionado = $("#etiquetaSeleccion option:selected").val();
 
 		   	renderInsLineaAccion(periodoSeleccionado, versionSeleccionado, etiquetaSeleccionado);
+		   	
+		   	var objeto = new Object();			
+			objeto.correo = '<%=user.getName()%>';
+			objeto.ultimaEtiquetaId = etiquetaSeleccionado;
+			
+			var info = JSON.stringify(objeto);		  	
+		    $.ajax({
+		        url: "http://spr.stp.gov.py/ajaxUpdate?accion=actUltEtiqueta",
+		        type: 'POST',
+		        dataType: 'json',
+		        data: info,
+		        contentType: 'application/json',
+		        mimeType: 'application/json',
+		        success: function (data) {
+		        	//actualizarTablaAcciones(insLineaAccionId);
+		        	//$('.cuerpoEdicionAccion').html('');
+		            //$(".cuerpoEdicionAccion").html('<h3 class="text-center">La Acción ha sido modificada</h3>');
+		            alert("exito");
+		        	},
+
+		        error: function(data,status,er) {
+		        	//actualizarTablaAcciones(insLineaAccionId);
+		        	//$('.cuerpoEdicionAccion').html('');
+		            //$(".cuerpoEdicionAccion").html('<h3 class="text-center">Error al actualizar registro. La Acción no ha sido modificada</h3>');
+		        	alert("error");
+		        	}
+			 });
+		   	
 		   
 		});
 				
