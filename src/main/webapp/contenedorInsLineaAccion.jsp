@@ -842,14 +842,29 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
 								'</div>'; */
 								
 			//$('#mostrarOcultarBorrado').append(ocultarBorrado);
+								
+			var usuarios = $.ajax({
+				url:'http://spr.stp.gov.py/ajaxSelects?accion=getUsuarios&usuario=<%=user.getName()%>',
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+				}).responseText;
+			usuarios = JSON.parse(usuarios);
+			usuarios = usuarios.usuarios;								
+			
+			
 			$('#periodoSeleccion').append(optionPeriodo);
 			$('#versionSeleccion').append(optionVersion);
-			$('#etiquetaSeleccion').append(optionEtiqueta);
+			$('#etiquetaSeleccion').append(optionEtiqueta);						
+			$('#etiquetaSeleccion option[value="'+usuarios[0].ultimaEtiquetaId+'"').prop('selected', true);
+			
 		<!-- /*%}%*/ -->
 	 
 	 	periodoSeleccionado = $("#periodoSeleccion option:selected").val();
 	 	versionSeleccionado = $("#versionSeleccion option:selected").val();
 	 	etiquetaSeleccionado = $("#etiquetaSeleccion option:selected").val();
+	 	
+	 	
 	 
  		onoff=false;
 		function OcultarRegistrosBorrados(){
@@ -871,16 +886,7 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
 		
 		usr_nivel_id="<%=attributes.get("nivel_id") %>";
 		usr_entidad_id="<%=attributes.get("entidad_id") %>";
-		usr_unr_id="<%=attributes.get("unr_id") %>";
-		
-		var usuarios = $.ajax({
-			url:'/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
-		  	type:'get',
-		  	dataType:'json',
-		  	async:false       
-		}).responseText;
-		usuarios = JSON.parse(usuarios);
-		usuarios = usuarios.usuarios;
+		usr_unr_id="<%=attributes.get("unr_id") %>";		
 		
 		//$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
 		//$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
@@ -958,17 +964,11 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
 		        contentType: 'application/json',
 		        mimeType: 'application/json',
 		        success: function (data) {
-		        	//actualizarTablaAcciones(insLineaAccionId);
-		        	//$('.cuerpoEdicionAccion').html('');
-		            //$(".cuerpoEdicionAccion").html('<h3 class="text-center">La Acción ha sido modificada</h3>');
-		            alert("exito");
+		        	
 		        	},
 
 		        error: function(data,status,er) {
-		        	//actualizarTablaAcciones(insLineaAccionId);
-		        	//$('.cuerpoEdicionAccion').html('');
-		            //$(".cuerpoEdicionAccion").html('<h3 class="text-center">Error al actualizar registro. La Acción no ha sido modificada</h3>');
-		        	alert("error");
+		        	
 		        	}
 			 });
 		   	
