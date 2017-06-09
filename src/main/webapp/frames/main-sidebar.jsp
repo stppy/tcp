@@ -29,7 +29,17 @@
 		   			<ul class="treeview-menu" style="display: none;">
 		   				<li class=""><a href="/entidad.jsp"><i class="fa fa-home" id="linkEntidad"></i>Perfil Institucional</a></li>
 		        		<li class=""><a href="/programacion.jsp"><i class="fa fa-sitemap" id="linkEstructuraProgramatica"></i>Estructura Programática</a></li>
-		        		<li class=""><a href="/producto.jsp"><i class="fa fa-edit" id="linkProgramacionProducto"></i>Programación de Productos</a></li>         			
+		        		<li class=""><a href="/producto.jsp"><i class="fa fa-edit" id="linkProgramacionProducto"></i>Programación de Productos</a></li>
+	        			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1")){%>
+							<li class=""><a href="/pivotPerfilInstitucional.jsp"><i class="fa fa-university" id="linkPivotPerfilInstitucional"></i>Análisis de Perfil Institucional POI</a></li>
+							<!-- <li class=""><a href="/pivotEstructuraProgramatica.jsp"><i class="fa fa-table" id="linkPivotEstructuraProgramatica"></i>Análisis de Estructura Programática POI</a></li> -->
+							<li class=""><a href="/pivotMetasProductos.jsp"><i class="fa fa-table" id="linkPivotMetasProductos"></i>Análisis de Metas de Productos POI</a></li>
+							<li class=""><a href="/pivotCadenaValor.jsp"><i class="fa fa-link" id="linkPivotCadenaValor"></i>Análisis de Cadena de Valor POI</a></li>
+							<li class=""><a href="/pivotIndicadores.jsp"><i class="fa fa-info-circle" id="linkPivotIndicadores"></i>Análisis de Indicadores POI</a></li>
+							<li class=""><a href="/pivotDestinatariosProductos.jsp"><i class="fa fa-male" id="linkPivotDestinatariosProductos"></i>Análisis de Destinatarios de Productos POI</a></li>	
+							<!--<li class=""><a href="/pivotAnalisisProductoFisico.jsp"><i class="fa fa-line-chart" id="linkpivotAnalisisProductoFisico"></i>Análisis de Metas Físicas de Productos (Hacienda)</a></li>-->								<li class=""><a href="/pivotAnalisisProductoFinanciero.jsp"><i class="fa fa-line-chart" id="linkpivotAnalisisProductoFinanciero"></i>Análisis Financiero de Producto (Hacienda)</a></li>
+							<li class=""><a href="/pivotProducto.jsp"><i class="fa fa-line-chart" id="linkpivotAnalisisProductoFinanciero"></i>Análisis de Metas Físicas de Productos (Hacienda)</a></li>
+		   				<%}%>         			
 		   			</ul>
 				</li>
 			<%}%>
@@ -67,8 +77,8 @@
 
  			<li class="header">MÁS INFO</li>
             	<li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Documentación</span></a></li>
-            	<li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Diccionario de Datos</span></a></li>
-            	<li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Preguntas Frecuentes</span></a></li>
+<!--           	<li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Diccionario de Datos</span></a></li>
+            	<li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Preguntas Frecuentes</span></a></li> --> 
             	<li><a href="/documentacion.jsp"><i class="fa fa-circle-o text-green"></i> <span>Acerca de Tablero de Control</span></a></li>
 				<li><a href="https://nube.stp.gov.py/index.php/s/a6JRumfONc48ynV" target="_blank"><i class="fa fa-user" id="linkFichaSocial"></i><span>Ficha Social</span></a></li>
 				<li><a href="/reporte_pnd.jsp"><i class="fa fa-circle-o text-green"></i> <span>Reporte PND</span></a></li>
@@ -77,7 +87,7 @@
             	<li><a href="/indicadores.jsp"><i class="glyphicon glyphicon-info-sign text-red"></i> <span>Indicadores</span></a></li>
             	<li><a href="/objetivo.jsp"><i class="glyphicon glyphicon-flag text-yellow"></i> <span>Objetivos</span></a></li>
             	<li><a href="#"><i class="glyphicon glyphicon-flag text-green"></i> <span>Objetivos Sugeridos</span></a></li>
-            	<li><a href="/tablero/usuarios.jsp"><i class="glyphicon glyphicon-user text-aqua"></i> <span>Usuarios</span></a></li>
+            	<li><a href="/usuarios.jsp"><i class="glyphicon glyphicon-user text-aqua"></i> <span>Usuarios</span></a></li>
            	<%}%>
             <!-- 
 	            <li class="treeview"><a href=".#" id="programarPlan"><i class="fa fa-files-o"></i><span>Programar Plan de Accion</span></a></li>
