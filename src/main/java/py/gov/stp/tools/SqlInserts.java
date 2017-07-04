@@ -37,6 +37,10 @@ import py.gov.stp.tools.ConnectionConfiguration;
 //import py.gov.stp.mh.tools.Proyecto;
 //import py.gov.stp.mh.tools.SqlSelects;
 
+/**
+ * 	@author DGTIC-STP
+ *  @email  dgtic@stp.gov.py 
+ */
 public class SqlInserts {
 	
 //	private static final String UnidadJerarquica = null;

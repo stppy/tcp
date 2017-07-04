@@ -27,7 +27,10 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-
+/**
+ * 	@author DGTIC-STP
+ *  @email  dgtic@stp.gov.py 
+ */
 public class SqlSelects {
 
 	public static List<TipoAccion> selectTipoAccion() throws SQLException{

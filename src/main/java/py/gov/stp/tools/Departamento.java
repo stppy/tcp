@@ -4,6 +4,10 @@ public class Departamento {
 protected int idDepartamento;
 protected String nombreDepartamento;
 
+/**
+ * 	@author DGTIC-STP
+ *  @email  dgtic@stp.gov.py 
+ */
 public int getIdDepartamento() {
 	return idDepartamento;
 }
