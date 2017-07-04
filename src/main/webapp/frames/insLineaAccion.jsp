@@ -433,7 +433,7 @@ function renderEvidencia(avanceId, parametros){
 	        		        	
 	        		        	}
 	        			 });
-		        		renderInsLineaAccion(periodoSeleccionado);	        				        													
+	        		    renderInsLineaAccion(periodoSeleccionado,versionSeleccionado,etiquetaSeleccionado);	        				        													
 						
 		        	}else{
 		
@@ -764,7 +764,7 @@ function renderEvidencia(avanceId, parametros){
 		        	{
 		            	//$("#cuerpoModalUsuario").html("<h3 class='text-center'>ETIQUETA GUARDADO EXITOSAMENTE!!</h3>");
 		        		//renderUsuarios();	
-		        		renderInsLineaAccion(periodoId);
+		        		renderInsLineaAccion(periodoSeleccionado,versionSeleccionado,etiquetaSeleccionado);
 		        	}else{
 
 		            	//$("#cuerpoModalUsuario").html("<h3 class='text-center'>ERROR!! al intentar guardar este usuario y etiqueta, probablemente ya existe un usuario con esta Etiqueta.</h3>");
@@ -849,7 +849,7 @@ function renderEvidencia(avanceId, parametros){
 		        	if(data.success == true){
 		        		
 		        	    //Inserta en la tabla usuario_linea_accion-----------------------------------------------------------------------------------------------------------------------------------------------------
-		        	   	renderInsLineaAccion(periodoId);
+		        	   	renderInsLineaAccion(periodoSeleccionado,versionSeleccionado,etiquetaSeleccionado);
 
 		        		var usuarioLineaAccion = new Object();
 	        			
@@ -973,7 +973,7 @@ function renderEvidencia(avanceId, parametros){
 		        		$("#cuerpoActualizarInsLineaAccion").append('<h3 class="text-center">La Línea de Acción se ha modificado con Exito</h3>');
 		        		
 		        		
-		        		renderInsLineaAccion(periodoSeleccionado);
+		        		renderInsLineaAccion(periodoSeleccionado,versionSeleccionado,etiquetaSeleccionado);
 		        		
 		        		
 		        	}else{
@@ -996,10 +996,11 @@ function renderEvidencia(avanceId, parametros){
 	
 	$("body").on("click", ".iconoBorradoInsLineaAccion",function(event){
 		
-				$("#botonRestaurarInsLineaAccion").remove();
-				$("#botonBorradoInsLineaAccion").remove();
-				
-				
+		$("#botonRestaurarInsLineaAccion").remove();
+		$("#botonBorradoInsLineaAccion").remove();
+		$("#mensajeBorradoInsLineaAccion").html("");
+		$("#mensajeBorradoInsLineaAccion").append('<h3><center>Aguarde un momento mientras se procesa su pedido. Esto puede tardar varios minutos</center></h3>');
+		
 				var objeto = new Object();
 				var accion = "borradoInsLineaAccion";
 				var parametrosBorradoInsLineaAccion = $(this).attr("parametrosBorradoInsLineaAccion");
@@ -1064,8 +1065,7 @@ function renderEvidencia(avanceId, parametros){
 				    		unidadMedida = JSON.parse(unidadMedida);
 
 				    		
-				    		renderInsLineaAccion(periodoSeleccionado);
-				    		
+				    		renderInsLineaAccion(periodoSeleccionado,versionSeleccionado,etiquetaSeleccionado);
 				    						    		
 				    		$("#mensajeBorradoInsLineaAccion").html("");
 				    		$("#mensajeBorradoInsLineaAccion").append('<h3><center>Cambio exitoso!!</center></h3>');
@@ -4435,7 +4435,7 @@ $("body").on("click", ".borrarAccion",function(event){
 					<%}%>
 				}else{
 					<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
-						cuerpoActividad+='<tr><td><del>'+actividades[u].nombre+'</del></td><td><del>'+actividades[u].descripcion+'</del></td><td><del>'+nombreUnidadMedida+'</del></td><td><del>'+nombreHitoTipo+'</del></td><td><del>'+actividades[u].proporcion+'</del></td><td><del>'+actividades[u].peso+'</del></td><td><del>'+acumulable(actividades[u].acumulable)+'</del></td><td><del>'+prodConcatVal(actividades[u].prodConcat)+'</del></td><td><button type="button" class="btn btn-default btn-sm editarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+' data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm agregarProgramacion" data-toggle="tooltip" data-placement="top" title="Agregar Hito" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-time" ></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
+						cuerpoActividad+='<tr><td><del>'+actividades[u].nombre+'</del></td><td><del>'+actividades[u].descripcion+'</del></td><td><del>'+nombreUnidadMedida+'</del></td><td><del>'+nombreHitoTipo+'</del></td><td><del>'+actividades[u].proporcion+'</del></td><td><del>'+actividades[u].peso+'</del></td><td><del>'+acumulable(actividades[u].acumulable)+'</del></td><td><del>'+prodConcatVal(actividades[u].prodConcat)+'</del></td><td><button type="button" class="btn btn-default btn-sm editarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+' data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+'><span class="fa fa-recycle" </span></button><button type="button" class="btn btn-default btn-sm agregarProgramacion" data-toggle="tooltip" data-placement="top" title="Agregar Hito" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-time" ></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
 					<%}%>		
 				}	
 			}	
@@ -5502,7 +5502,9 @@ function renderProgramacion(insLineaAccionId,lineaAccionId,institucionId,periodo
 	}
 	$('#fechaEntregaProgramacion').datepicker({ 
 		language: "es",
-		format: 'yyyy-mm-dd'});
+		format: 'yyyy-mm-dd',
+		todayBtn: "linked",
+	    todayHighlight: true});
 	//$("#dataTablesProgramacionHito1").DataTable();
 	$('#dataTablesProgramacionHito1').dataTable({
 		"order": [[ 1, "asc" ]],
@@ -6059,7 +6061,9 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
 	$('#fechaEntregaAvance').datepicker({  
 		language: "es",
 		format: 'yyyy-mm-dd',
-		endDate: "0d"});
+		endDate: "0d",
+		todayBtn: "linked",
+	    todayHighlight: true});
 	//$("#dataTablesListaAvance").DataTable();
 	$("#dataTablesListaAvance").dataTable({
         "footerCallback": function ( row, data, start, end, display ) {
@@ -7677,7 +7681,9 @@ $("body").on("click", ".consultaEditarAvance",function(event){
    	$('#fechaEntregaAvance').datepicker({  
 		language: "es",
 		format: 'yyyy-mm-dd',
-		endDate: "0d"});
+		endDate: "0d",
+		todayBtn: "linked",
+	    todayHighlight: true});
  });
  
 $("body").on("click", ".editarAvance",function(event){	
@@ -9244,7 +9250,9 @@ $("body").on("click", ".consultaEditarHito",function(event){
 	$('#modalEditarHito').modal('show');
 	$('#fechaHito').datepicker({  
 		language: "es",
-		format: 'yyyy-mm-dd'});
+		format: 'yyyy-mm-dd',
+		todayBtn: "linked",
+	    todayHighlight: true});
 
 });
 $("body").on("click", ".editarHito",function(event){

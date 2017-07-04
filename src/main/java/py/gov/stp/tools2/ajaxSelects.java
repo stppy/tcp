@@ -512,11 +512,11 @@ public class ajaxSelects extends HttpServlet {
         		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
         		if (periodoId!=null) condition += " and periodo_id ='"+periodoId+"'";
         		
-        			conditionIdLAGA += " WHERE id BETWEEN 235 AND 245 AND borrado = false"; 					//para linea de accion de gobierno abierto
-        			conditionAccGA += " WHERE id BETWEEN 7424 AND 7477 AND borrado = false"; 				//para accion de gobierno abierto
-        			conditionAccCat += " WHERE borrado = false"; 											//para accion catalogo de gobierno abierto
-        			conditionActGA += " WHERE accion_id BETWEEN 7424 AND 7477 AND borrado = false"; 		//para actividad de gobierno abierto
-        			conditionHitoGA += " WHERE ins_linea_accion_id BETWEEN 235 AND 245 AND borrado = false"; //para hito de gobierno abierto
+        			conditionIdLAGA += " WHERE id BETWEEN 235 AND 245 AND borrado = false"; 				//TODO: verificar condicionante
+        			conditionAccGA += " WHERE id BETWEEN 7424 AND 7477 AND borrado = false"; 				//TODO: verificar condicionante
+        			conditionAccCat += " WHERE borrado = false"; 											
+        			conditionActGA += " WHERE accion_id BETWEEN 7424 AND 7477 AND borrado = false"; 		//TODO: verificar condicionante
+        			conditionHitoGA += " WHERE ins_linea_accion_id BETWEEN 235 AND 245 AND borrado = false";//TODO: verificar condicionante
         			conditionLaHasAreasAga += "WHERE peso = 1 ";
            		try {
            			areasAgaCat = SqlSelects.selectAreasAgaCat();
@@ -536,14 +536,14 @@ public class ajaxSelects extends HttpServlet {
            			eviden = SqlSelects.selectEvidencia(condition);
            			
            			
-           			for(int c = 0; c < areasAgaCat.size(); c += 1){ //
+           			for(int c = 0; c < areasAgaCat.size(); c += 1){												// recorrido de cada area
            				objectLa = new ArrayList<LineaAccionGA>();
            				AreasAga aaCat = areasAgaCat.get(c);
            				AreasAgaGA ArAgGA = new AreasAgaGA();
            				ArAgGA.setNombre(aaCat.getNombre());
            				ArAgGA.setColour(colores[c]);
-           				for(int b = 0; b < laHasAreasAga.size(); b += 1){
-           					if(laHasAreasAga.get(b).getAreasAgaId() == areasAgaCat.get(c).getId()){ // para cada area
+           				for(int b = 0; b < laHasAreasAga.size(); b += 1){										//recorrido de cada linea accion has area
+           					if(laHasAreasAga.get(b).getAreasAgaId() == areasAgaCat.get(c).getId()){
 		           				for(int e = 0; e < children.size(); e += 1) {
 		           					if(laHasAreasAga.get(b).getLineaAccionId() == children.get(e).getId() && 
 		           					   laHasAreasAga.get(b).getAreasAgaId() ==  areasAgaCat.get(c).getId()){
@@ -608,6 +608,7 @@ public class ajaxSelects extends HttpServlet {
 				           									}
 			   					           					axGA.setResponsables(childrenRes);	
 				           					           		
+			   					           					//TODO: necesita revision del codigo para fijar la fecha proevida por la base de datos
 			   					           					Date fecha_fin = new Date();
 				           					           		for(int x = 0; x < hito.size(); x +=1){								//se cargan las fechas fin
 				           										if(hito.get(x).getAccionId() == axion.get(i).getId()){
@@ -620,11 +621,16 @@ public class ajaxSelects extends HttpServlet {
 				           					           		axGA.setFecha_fin(fecha_fin);
 				           					           		
 				           					           		Date fecha_inicio = new Date();
-				           					           		String startDate = "2016-06-01";
+				           					           		String startDate = "2016-06-01"; 	//TODO: establecer una fecha acorde al plan
 				           					           		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
 				           					           		fecha_inicio = sdf1.parse(startDate);
 				           					           		axGA.setFecha_inicio(fecha_inicio);
-			   					           					
+
+				           					           		//TODO: desarrollar estado
+				           					           		
+				           					           		//TODO: desarrollar fuente de verificacion
+				           					           		
+				           					           		//TODO: verificar anexos
 				           					           		/*childrenAnex = new ArrayList<EvidenciaGA>();
 				           					           		for(int w = 0; w < avances.size(); w +=1){							//carga de anexos
 				           					           			for(int u = 0; u < actividad.size(); u+=1){

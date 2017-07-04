@@ -5,6 +5,7 @@ import java.sql.Date;
 @author          DGTIC - STP
 @email			 dgtic@stp.gov.py
 */
+
 public class AccionCatalogo {
 	protected int id;
 	protected String nombre;

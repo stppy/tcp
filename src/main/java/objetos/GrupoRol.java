@@ -3,6 +3,7 @@ package objetos;
 @author          DGTIC - STP
 @email			 dgtic@stp.gov.py
 */
+
 public class GrupoRol {
 	protected int grupo_id;
 	protected int role_id;

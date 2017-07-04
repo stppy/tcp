@@ -267,7 +267,8 @@ tbody {
 						if (isNaN(x) || x == "Infinity"){
 							return 0;
 						}else{
-							return x.toString().replace(".00","").replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+							//return x.toString().replace(".00","").replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+							return x.toString().replace(".", ",").replace(/(\d)(?:(?=\d+(?=[^\d.]))(?=(?:[0-9]{3})+\b)|(?=\d+(?=\.))(?=(?:[0-9]{3})+(?=\.)))/g, "$1.");
 						}
 					}
 					
@@ -1578,7 +1579,7 @@ if(deptoId!=null && distId!=null){
 											'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+'-'+distId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
 											'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
 											'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
-											'<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>'+
+											'<td>'+numeroConComa((lineasProgramadas[n].cantidadAnho).toFixed(2))+'</td>'+
 											'<td class="'+clase+'">'+desempProgAnho+'</td>';
 											if(lineasProgramadas[n].cantDest==0){
 												tempInstLineas += '<td> - </td>';
@@ -1586,8 +1587,8 @@ if(deptoId!=null && distId!=null){
 												tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>';
 											}
 											tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
-											'<td>'+numeroConComa(lineasProgramadas[n].cantidadHoy)+'</td>'+
-											'<td>'+numeroConComa(lineasProgramadas[n].cantidadAvance)+'</td>';
+											'<td>'+numeroConComa((lineasProgramadas[n].cantidadHoy).toFixed(2))+'</td>'+
+											'<td>'+numeroConComa((lineasProgramadas[n].cantidadAvance).toFixed(2))+'</td>';
 																						  
 											var desempEjeHoy=numeroConComa(((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100).toFixed(2));
 											if(lineasProgramadas[n].cantidadAvance==0 && lineasProgramadas[n].cantidadHoy==0) desempEjeHoy="-";
@@ -1823,7 +1824,7 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 												'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
 												'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
 												//'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
-												'<td>'+numeroConComa(totalProgramado)+'</td>'+
+												'<td>'+numeroConComa((totalProgramado).toFixed(2))+'</td>'+
 												//'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
 												'<td>'+numeroConComa(totalDestinatario)+'</td>'+
 												'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
@@ -1889,7 +1890,7 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 												'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+'-'+distId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
 												'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
 												//'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
-												'<td>'+numeroConComa(totalProgramado)+'</td>'+
+												'<td>'+numeroConComa((totalProgramado).toFixed(2))+'</td>'+
 												//'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
 												'<td>'+numeroConComa(totalDestinatario)+'</td>'+
 												'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
@@ -2030,7 +2031,7 @@ function renderNivelDistrital(lineasProgramadas, deptoId, distId){
 											  '<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+'-'+distId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
 											  '<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
 											 // '<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
-											  '<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>';
+											  '<td>'+numeroConComa((lineasProgramadas[n].cantidadAnho).toFixed(2))+'</td>';
 											  //'<td class="'+clase+'">'+desempProgAnho+'</td>';
 											  if(lineasProgramadas[n].cantDest==0){
 												  tempInstLineas += '<td> - </td>';
@@ -2039,8 +2040,8 @@ function renderNivelDistrital(lineasProgramadas, deptoId, distId){
 											  }
 
 											  tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
-											  '<td>'+numeroConComa(lineasProgramadas[n].cantidadHoy)+'</td>'+
-											  '<td>'+numeroConComa(lineasProgramadas[n].cantidadAvance)+'</td>';
+											  '<td>'+numeroConComa((lineasProgramadas[n].cantidadHoy).toFixed(2))+'</td>'+
+											  '<td>'+numeroConComa((lineasProgramadas[n].cantidadAvance).toFixed(2))+'</td>';
 											  
 											  
 											  var desempEjeHoy = numeroConComa(((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100).toFixed(2));

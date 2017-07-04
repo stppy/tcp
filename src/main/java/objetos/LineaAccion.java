@@ -3,6 +3,7 @@ package objetos;
 @author          DGTIC - STP
 @email			 dgtic@stp.gov.py
 */
+
 public class LineaAccion {
 	protected int institucion_id;
 	protected String institucion;

@@ -3,6 +3,7 @@ package objetos;
 @author          DGTIC - STP
 @email			 dgtic@stp.gov.py
 */
+
 public class Generica {
 	protected int clave;
 	protected double valor;
