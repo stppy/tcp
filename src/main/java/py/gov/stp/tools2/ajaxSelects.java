@@ -481,7 +481,8 @@ public class ajaxSelects extends HttpServlet {
         		List<Accion> axion = null; 
         		List<AccionCatalogo> accionCatalogo = null;
         		List<Actividad> actividad = null;
-        		List<Institucion> institu = null;
+        		List<InstitucionGA> institu = null;
+        		List<Institucion> siglaInsti = null;
         		List<Hito> hito = null;
         		List<Avance> avances = null;
         		List<Evidencia> eviden = null;
@@ -507,13 +508,13 @@ public class ajaxSelects extends HttpServlet {
         		if (!userUnrId.equals("0")){ condition2 += " and unidad_responsable_id="+userUnrId;} ;
         		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
         		if (periodoId!=null) condition += " and periodo_id ='"+periodoId+"'";
-        		
-        			conditionIdLAGA += " WHERE id BETWEEN 235 AND 245 AND borrado = false"; 				//TODO: verificar condicionante
-        			conditionAccGA += " WHERE id BETWEEN 7424 AND 7477 AND borrado = false"; 				//TODO: verificar condicionante
-        			conditionAccCat += " WHERE borrado = false"; 											
-        			conditionActGA += " WHERE accion_id BETWEEN 7424 AND 7477 AND borrado = false"; 		//TODO: verificar condicionante
-        			conditionHitoGA += " WHERE ins_linea_accion_id BETWEEN 235 AND 245 AND borrado = false";//TODO: verificar condicionante
-        			conditionLaHasAreasAga += "WHERE peso = 1 ";
+        		 				
+	        		conditionIdLAGA += " WHERE id = 236 OR id BETWEEN 238 AND 245 OR id = 1004 AND borrado is false ORDER BY orden"; //TODO: verificar condicionante
+	    			conditionAccGA += " WHERE id BETWEEN 28950 AND 29011 AND borrado = false"; 				//TODO: verificar condicionante
+	    			conditionAccCat += " WHERE borrado = false"; 											
+	    			conditionActGA += " WHERE accion_id BETWEEN 28950 AND 29011 AND borrado = false"; 		//TODO: verificar condicionante
+	    			conditionHitoGA += " WHERE ins_linea_accion_id 236 OR ins_linea_accion_id BETWEEN 238 AND 245 OR ins_linea_accion_id = 1004 AND borrado is false";//TODO: verificar condicionante
+	    			conditionLaHasAreasAga += "WHERE peso = 1 ";
            		try {
            			areasAgaCat = SqlSelects.selectAreasAgaCat();
            			laHasAreasAga = SqlSelects.selectLaHasAreasAga(conditionLaHasAreasAga);
@@ -526,7 +527,8 @@ public class ajaxSelects extends HttpServlet {
            			axion = SqlSelects.selectAccion(condition, conditionAccGA);
            			accionCatalogo = SqlSelects.selectAccionCatalogo(condition, conditionAccCat);
            			actividad = SqlSelects.selectActividad(conditionActGA);
-           			institu = SqlSelects.selectInstitucion(condition);
+           			siglaInsti = SqlSelects.selectInstitucion(condition);
+           			institu = SqlSelects.selectInstitucionGA(condition);
            			hito = SqlSelects.selectHito(conditionHitoGA);
            			avances = SqlSelects.selectAvance(condition);
            			eviden = SqlSelects.selectEvidencia(condition);
@@ -597,9 +599,13 @@ public class ajaxSelects extends HttpServlet {
 			           										
 			           										childrenRes = new ArrayList<Object>();
 			   					           					for(int y = 0; y < institu.size(); y +=1){							//se cargan las instituciones responsables
-				           										if(institu.get(y).getId() == insLineaAccion.get(a).getInstitucionId()){
-				           											Institucion insti = institu.get(y);
-				           											childrenRes.add(insti.getNombre());
+				           										if(institu.get(y).getAccionId() == axion.get(i).getId()){
+				           											//InstitucionGA responsable = institu.get(y);
+				           											for(int s = 0; s < siglaInsti.size(); s +=1){				           												
+				           												if(institu.get(y).getInstitucionId() == siglaInsti.get(s).getId()){
+				           													childrenRes.add(siglaInsti.get(s).getSigla());
+				           												}
+				           											}
 				           										}
 				           									}
 			   					           					axGA.setResponsables(childrenRes);	
