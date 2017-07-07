@@ -1268,6 +1268,36 @@ public class SqlSelects {
 		return objetos; 
 		}
 	
+	public static List<InstitucionGA> selectInstitucionGA(String condition) throws SQLException{
+		Connection conect=ConnectionConfiguration.conectar();
+		String query = " select * from accion_has_responsable "+condition;
+
+		Statement statement = null;
+		ResultSet rs=null;
+		List<InstitucionGA> objetos = new ArrayList<InstitucionGA>();
+
+		try {
+			statement = conect.createStatement();
+			rs=statement.executeQuery(query);
+			while(rs.next()){
+				InstitucionGA objeto = new InstitucionGA();
+		
+				objeto.setAccionId(rs.getInt("accion_id"));
+				objeto.setInstitucionId(rs.getInt("institucion_id"));
+				objeto.setVersion(rs.getInt("version"));
+				objeto.setBorrado(rs.getBoolean("borrado"));
+
+				objetos.add(objeto);
+			}
+		}
+		catch (SQLException e) {e.printStackTrace();}
+		finally{
+			if (statement != null) {statement.close();}
+			if (conect != null) {conect.close();}
+		}
+		return objetos; 
+		}
+	
 	public static List<Departamento> selectDepartamento(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
 		String query = " select * from departamento "+condition; // where paisid = 'PY' ORDER BY id ASC";
