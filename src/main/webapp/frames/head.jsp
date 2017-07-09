@@ -30,4 +30,3 @@
     <![endif]-->
     <script src="frames/main.js"></script>
     <link href="frames/main.css" rel="stylesheet" type="text/css" />
-    <script src="plugins/vue.js"></script>
