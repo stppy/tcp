@@ -26,7 +26,7 @@
 		<script type="text/javascript" src="tablero_files/jquery.js"></script>
 		<script type="text/javascript" src="frames/resumenLineaAccion.js"></script>
 		<style>
-			* {font-family: Verdana;}
+			/** {font-family: Verdana;}*/
 			.node {
 			  border: solid 1px white;
 			  font: 10px sans-serif;
