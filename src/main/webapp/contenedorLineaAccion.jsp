@@ -56,11 +56,6 @@
 			width: 300px;
 		}
     </style>
-    
-    
-
-
-
 </head>
 <body class="skin-blue sidebar-mini sidebar-collapse">
 
@@ -72,7 +67,7 @@ if (user != null) { %>
 	
 $(document).ready(function(){
 	var entidadCas = "";
-	entidadCas ="<%=attributes.get("entidad") %>";
+	entidadCas ="<%=attributes.get('entidad') %>";
 	var usuarios = $.ajax({
 		url:'/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
 	  	type:'get',
