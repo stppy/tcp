@@ -5416,10 +5416,6 @@ var distritos = $.ajax({
 distritos = JSON.parse(distritos);
 
 function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId, accionId, actividadId){
-	
-	if ( $("#modalAvanceCronograma").length){
-		$("#modalAvanceCronograma").remove();
-	}
 			
   var f = new Date();
   if( (f.getMonth() +1) < 10 ){
@@ -5649,26 +5645,26 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
 							'               			</div>'+//fin box-heder
 							'               			<div class="box-body">'+
 							
-							'								<div class="table-responsive">'+
-							'									<table class="table table-hover">'+
-							'										<tbody>'+
-							'			      							<form class="form-horizontal" role="form">'+
-							'											<tr><td><div class="form-group"><label for="departamentoActividad">Departamento</label><input type="hidden" class="form-control" id="departamentoActividad" value="'+nombreDepartamento+'" disabled /><select class="form-control" id="departamentoAvance" >'+optionDepartamentoAvance+'</select></div></td>'+
-							'												<td><div class="form-group"><label for="distritoActividad">Distrito</label><input type="hidden" id="distritoActividad" value="'+nombreDistrito+'" class="form-control" disabled><select class="form-control" id="distritoAvance">'+optionDistritoAvance+'</select></div></td></tr>'+
-							'											<tr><td><label for="justificacionAvance">Justificaci&oacute;n</label><input type="text" id="justificacionAvance" value="" class="form-control" placeholder="Ingrese Justificaci&oacute;n" required/></td>'+
-							'												<td><label for="cantidadAvance">Cantidad</label><input type="number" id="cantidadAvance" step="any" class="form-control" value="" placeholder="Ingrese Cantidad" required/></td>'+
-							'											</tr>'+
-							'											<tr><td><label for="fechaEntregaAvance">Fecha Entrega</label><input  id="fechaEntregaAvance" value="'+fechaActual+'" class="form-control" required/></td></tr>'+														
-							'											<input type="hidden" id="versionAvance" value="3" />'+		
-							'			      							</form>	'+												
-							'										</tbody>'+
-							'									</table>'+
-							'				      			</div>'+							
+                      '								<div class="table-responsive">'+
+                      '									<table class="table table-hover">'+
+                      '										<tbody>'+
+                      '			      							<form class="form-horizontal" role="form">'+
+                      '											<tr><td><div class="form-group"><label for="departamentoActividad">Departamento</label><input type="hidden" class="form-control" id="departamentoActividad" value="'+nombreDepartamento+'" disabled /><select class="form-control" id="departamentoAvance" >'+optionDepartamentoAvance+'</select></div></td>'+
+                      '												<td><div class="form-group"><label for="distritoActividad">Distrito</label><input type="hidden" id="distritoActividad" value="'+nombreDistrito+'" class="form-control" disabled><select class="form-control" id="distritoAvance">'+optionDistritoAvance+'</select></div></td></tr>'+
+                      '											<tr><td><label for="justificacionAvance">Justificaci&oacute;n</label><input type="text" id="justificacionAvance" value="" class="form-control" placeholder="Ingrese Justificaci&oacute;n" required/></td>'+
+                      '												<td><label for="cantidadAvance">Cantidad</label><input type="number" id="cantidadAvance" step="any" class="form-control" value="" placeholder="Ingrese Cantidad" required/></td>'+
+                      '											</tr>'+
+                      '											<tr><td><label for="fechaEntregaAvance">Fecha Entrega</label><input  id="fechaEntregaAvance" value="'+fechaActual+'" class="form-control" required/></td></tr>'+														
+                      '											<input type="hidden" id="versionAvance" value="3" />'+		
+                      '			      							</form>	'+												
+                      '										</tbody>'+
+                      '									</table>'+
+                      '				      			</div>'+							
 							
 							'               			</div>'+//fin box-body
-							'							<div class="modal-footer">'+ 
-							'					        	<button type="submit" class="btn btn-success guardarAvance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'>Guardar Avance</button>'+ 
-							'							</div>'+
+                      '							<div class="modal-footer">'+ 
+                      '					        	<button type="submit" class="btn btn-success guardarAvance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'>Guardar Avance</button>'+ 
+                      '							</div>'+
 							'                		</div>'+	
 							'                	</div>'+
 							'                 </form>'+
@@ -5676,63 +5672,58 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
 											
 							<% }%>
 							
-							'		      	<div class="row">'+ 
-							
-							'		      		<div class="col-md-6">'+
-							'						<div class="box box-warning">'+
-							'		                	<div class="box-header with-border">'+
+							'		      <div class="row">'+ 
+							'		      		<div class="col-lg-12">'+
+							'						    <div class="box box-warning">'+
+							'		                <div class="box-header with-border">'+
 							'		                  		<h3 class="box-title">Hitos Programados</h3>'+
 							'	                  			<div class="box-tools pull-right">'+
 							'		                  		</div>'+
-							'               			</div>'+//fin box-heder
-							'               			<div class="box-body" id="tablaListaProgramacionHito2">'+	 
+							'               		</div>'+//fin box-heder
+							'               		<div class="box-body" id="tablaListaProgramacionHito2">'+	 
 															
                                       '<div class="table-responsive">'+
                         '								<table class="table table-hover table-bordered" id="dataTablesProgramacionHito2">'+
                         '									<thead><tr class="active"><th>Cantidad</th><th>FechaEntrega</th><th>Unidad Medida</th></tr></thead>'+
                         '									<tfoot><tr><th></th><th></th><th></th></tr></tfoot>'+
                         '									<tbody id="listaActividades">'+
-                        cuerpoActividades +
+                                            cuerpoActividades +
                         '									</tbody>'+
                         '								</table>'+
                         '							</div>';
+							'               		</div>'+//fin box-body
+							'               </div>'+	
+							'             </div>'+
 
-							'               			</div>'+//fin box-body
-							'                		</div>'+	
-							'                	</div>'+
-							
-							'		      		<div class="col-md-6" id="tableAvance">'+
-							'						<div class="box box-warning">'+
+              // begin datatable
+							'		        <div class="col-lg-12" id="tableAvanceCronograma">'+
+							'						  <div class="box box-warning">'+
 							'		                	<div class="box-header with-border">'+
 							'		                  		<h3 class="box-title">Lista de Avance</h3>'+
 							'	                  			<div class="box-tools pull-right">'+
 							'		                  		</div>'+
 							'               			</div>'+//fin box-heder
-							'               			<div class="box-body" id="tablaListaAvanceBox">'+
+							'               			<div class="box-body" id="tablaListaAvanceBoxCronograma">'+
 															
                                       '<div class="table-responsive">'+
-                            '							<table class="table table-hover table-bordered" id="dataTablesListaAvance">'+
+                            '							<table class="table table-hover table-bordered" id="dataTablesListaAvanceCronograma">'+
                             '								<thead><tr class="active"><th>Departamento</th><th>Distrito</th><th>Justificaci&oacute;n</th><th>cantidad</th><th>Fecha Entrega</th><th>Administrar</th></tr></thead>'+
                             '								<tfoot><tr><th></th><th></th><th></th><th></th><th></th><th></th></tr></tfoot>'+
-                            '								<tbody id="listaAvances">'+
-                                            cuerpoAvance +
+                            '								<tbody id="listaAvancesCronograma">'+
+                                              cuerpoAvance +
                             '								</tbody>'+
                             '							</table>'+
                             '						</div>';
 
 							'               			</div>'+//fin box-body
-							'                		</div>'+	
-							'                	</div>'+
-							'                </div>'+
-							
-
-							'		    </div>'+
-							'			<div class="modal-footer">'+
-							'				<button type="button" class="btn btn-success agregarActividad" data-dismiss="modal" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'">Cerrar</button>'+
-					      	'			</div>'+														
+							'              </div>'+	
+              // end datatable
+              '         </div>' + // end row
+							            
+							'		    </div>'+													
 							'		</div>'+ 
-							'	</div>'+
-							'</div>';					  
+							'	</div>';
+							//'</div>';					  
 
   renderInTab('stp-tabs-modalAvanceCronograma', modalAvance, 'Avance', '#stp-tabs-cronogramas');
 
@@ -5743,7 +5734,7 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
 		todayBtn: "linked",
 	    todayHighlight: true});
 
-	$("#dataTablesListaAvance").dataTable({
+  $('#dataTablesListaAvanceCronograma').dataTable({
         "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;
  
@@ -5817,8 +5808,10 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
               }
                   }
               ]
-	});
-	//$("#dataTablesProgramacionHito2").DataTable();
+  });
+
+
+
 	$('#dataTablesProgramacionHito2').dataTable({
         "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;
@@ -5893,7 +5886,7 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
               }
                   }
               ]
-});
+  });
 }
 $("body").on("click", ".agregarAvance",function(event){
 	
@@ -6050,13 +6043,6 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 		}).responseText;
 		webServicesAvance = JSON.parse(webServicesAvance); 
 		
-	/* 	var deptoAvance = "";		
-		for(var a = 0; a < departamentos.length; a++)
-		{
-			if(webServicesAvance[d].departamentoId == departamentos[a].idDepartamento){
-				deptoAvance = departamentos[a].nombreDepartamento;				
-			}
-		} */
 		
 		for(var e = 0; e < distritos.length; e++)
 		{
@@ -6184,42 +6170,6 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 	
 	}	
 		
-	if ( $("#modalAvance").length )
-	{
-		$("#modalAvance").remove();
-	}
-	if ( $("#modalBorrarAccion").length )
-	{
-		$("#modalBorrarAccion").remove();
-	}	
-	if ( $("#modalEditarCosto").length )
-	{
-		$("#modalEditarCosto").remove();
-	}	
-	if ( $("#modalConsultaBorrarAvance").length )
-	{
-		$("#modalConsultaBorrarAvance").remove();
-	}	
-	if ( $("#modalBorrarEvidencia").length )
-	{
-		$("#modalBorrarEvidencia").remove();
-	}	
-	if ( $("#modalBorrarAvance").length )
-	{
-		$("#modalBorrarAvance").remove();
-	}
-	if ( $("#modalEditarEvidencia").length )
-	{
-		$("#modalEditarEvidencia").remove();
-	}	
-	if ( $("#modalBorrarBeneficiario").length )
-	{
-		$("#modalBorrarBeneficiario").remove();
-	}
-	if ( $("#modalEditarBeneficiario").length )
-	{
-		$("#modalEditarBeneficiario").remove();
-	}	
 	
 	var insLineaAccion = $.ajax({
 		url:'/tablero/ajaxSelects2?action=getInsLineaAccion&insLineaAccionId='+insLineaAccionId,
