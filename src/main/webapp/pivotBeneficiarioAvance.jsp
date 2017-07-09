@@ -17,18 +17,15 @@
 
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
         <title>Pivot Table - Beneficiarios de Avances</title>
-        <link rel="stylesheet" type="text/css" href="tablero_files/pivot.css">
-        <script type="text/javascript" src="tablero_files/d3.js"></script>
-        <script type="text/javascript" src="tablero_files/jsapi"></script>
-        <script type="text/javascript" src="tablero_files/jquery-1.js"></script>
-        <script type="text/javascript" src="tablero_files/jquery-ui-1.js"></script>
-        <script type="text/javascript" src="tablero_files/pivot.js"></script>
-        <script type="text/javascript" src="tablero_files/gchart_renderers.js"></script>
-        <script type="text/javascript" src="tablero_files/d3_renderers.js"></script>
-        <script type="text/javascript" src="tablero_files/jquery.js"></script>
-        <script type="text/javascript" src="tablero_files/export_renderers.js"></script>        
+        <<link rel="stylesheet" type="text/css" href="tablero_files/pivot.css">
+		<link type="text/css" rel="stylesheet" href="tablero_files/orgchart.css">
+	    <link type="text/css" rel="stylesheet" href="tablero_files/annotatedtimeline.css">
+	    <link type="text/css" rel="stylesheet" href="tablero_files/imagesparkline.css">
+	    <link type="text/css" rel="stylesheet" href="tablero_files/tooltip.css">
+		<link type="text/css" rel="stylesheet" href="tablero_files/dynamic.css">
+
         <style>
-            * {font-family: Verdana;}
+            /** {font-family: Verdana;}*/
             .node {
               border: solid 1px white;
               font: 10px sans-serif;
@@ -38,10 +35,16 @@
               text-indent: 2px;
             }
         </style>
-    <link type="text/css" rel="stylesheet" href="tablero_files/orgchart.css">
-    <link type="text/css" rel="stylesheet" href="tablero_files/annotatedtimeline.css">
-    <link type="text/css" rel="stylesheet" href="tablero_files/imagesparkline.css">
-    <link type="text/css" rel="stylesheet" href="tablero_files/tooltip.css">
+		
+	    <script type="text/javascript" src="tablero_files/d3.js"></script>
+		<script type="text/javascript" src="tablero_files/jsapi"></script>
+		<script type="text/javascript" src="tablero_files/jquery-1.js"></script>
+		<script type="text/javascript" src="tablero_files/jquery-ui-1.js"></script>
+		<script type="text/javascript" src="tablero_files/pivot.js"></script>
+		<script type="text/javascript" src="tablero_files/gchart_renderers.js"></script>
+		<script type="text/javascript" src="tablero_files/d3_renderers.js"></script>
+		<script type="text/javascript" src="tablero_files/jquery.js"></script>
+		<script type="text/javascript" src="tablero_files/export_renderers.js"></script>
 </head>
 <body class="skin-blue sidebar-mini">
 <% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%>
