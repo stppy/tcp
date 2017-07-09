@@ -5697,27 +5697,46 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
 
               // begin datatable
 							'		        <div class="col-lg-12" id="tableAvanceCronograma">'+
-							'						  <div class="box box-warning">'+
-							'		                	<div class="box-header with-border">'+
-							'		                  		<h3 class="box-title">Lista de Avance</h3>'+
-							'	                  			<div class="box-tools pull-right">'+
-							'		                  		</div>'+
-							'               			</div>'+//fin box-heder
-							'               			<div class="box-body" id="tablaListaAvanceBoxCronograma">'+
-															
-                                      '<div class="table-responsive">'+
-                            '							<table class="table table-hover table-bordered" id="dataTablesListaAvanceCronograma">'+
-                            '								<thead><tr class="active"><th>Departamento</th><th>Distrito</th><th>Justificaci&oacute;n</th><th>cantidad</th><th>Fecha Entrega</th><th>Administrar</th></tr></thead>'+
-                            '								<tfoot><tr><th></th><th></th><th></th><th></th><th></th><th></th></tr></tfoot>'+
-                            '								<tbody id="listaAvancesCronograma">'+
-                                              cuerpoAvance +
-                            '								</tbody>'+
-                            '							</table>'+
-                            '						</div>' +
 
-							'               			</div>'+//fin box-body
-							'              </div>'+	
-              // end datatable
+                          // inicio tabs
+                          '  <div id="stp-tabs-avances" class="tab-pane">'+
+                          '    <ul class="nav nav-tabs" role="tablist">'+
+                          '      <li role="presentation" class="active"><a href="#stp-tabs-avances-listado" aria-controls="stp-tabs-avances-listado" role="tab" data-toggle="tab">Listado</a></li>'+
+                          '    </ul>'+
+
+                          '    <div class="tab-content">'+
+                          '      <div role="tabpanel" class="tab-pane active" id="stp-tabs-avances-listado">'+
+                          '        <div class="box box-tab"> '+
+
+                      '						  <div class="box box-warning">'+
+                      '		                	<div class="box-header with-border">'+
+                      '		                  		<h3 class="box-title">Lista de Avance</h3>'+
+                      '	                  			<div class="box-tools pull-right">'+
+                      '		                  		</div>'+
+                      '               			</div>'+//fin box-heder
+                      '               			<div class="box-body" id="tablaListaAvanceBoxCronograma">'+
+                                      
+                                              '<div class="table-responsive">'+
+                                    '							<table class="table table-hover table-bordered" id="dataTablesListaAvanceCronograma">'+
+                                    '								<thead><tr class="active"><th>Departamento</th><th>Distrito</th><th>Justificaci&oacute;n</th><th>cantidad</th><th>Fecha Entrega</th><th>Administrar</th></tr></thead>'+
+                                    '								<tfoot><tr><th></th><th></th><th></th><th></th><th></th><th></th></tr></tfoot>'+
+                                    '								<tbody id="listaAvancesCronograma">'+
+                                                      cuerpoAvance +
+                                    '								</tbody>'+
+                                    '							</table>'+
+                                    '						</div>' +
+
+                      '               			</div>'+//fin box-body
+                      '              </div>'+	
+                      // end datatable
+                          '	          </div>' +
+                          '          </div> '+
+                          '        </div>'+
+                          '      </div>'+
+                          '    </div>'+
+                          '  </div>'+
+                          // fin tabs  
+
               '         </div>' + // end row
 							            
 							'		    </div>'+													
@@ -5726,6 +5745,15 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
 							//'</div>';					  
 
   renderInTab('stp-tabs-modalAvanceCronograma', modalAvance, 'Avance', '#stp-tabs-cronogramas');
+
+  $('#stp-tabs-avances a[href="#stp-tabs-modalAvanceCronograma"]').detach();
+  $('#stp-tabs-avances a[href="#stp-tabs-avances-listado"]').click();
+
+  // para eliminar las pestañas cuando se hace click en Listado
+  $('#stp-tabs-avances a[href="#stp-tabs-avances-listado"]').click(function() {
+    $('#stp-tabs-avances-administrador').detach();
+    $('#stp-tabs ul[role=tablist] a[href="#stp-tabs-avances-administrador"]').detach();
+  });
 
 	$('#fechaEntregaAvance').datepicker({  
 		language: "es",
@@ -5990,11 +6018,6 @@ $("body").on("click", ".guardarAvance",function(event){
 });	
 
 function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,periodoId,accionId,actividadId,avanceId){
-	
-	
-	if ($("#modalAdministrador").length){
-		$("#modalAdministrador").remove();
-	}
 		
 	if ( $("#tableCosto").length )
 	{
@@ -6265,17 +6288,7 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 		if(webServicesAvance[0].departamentoId == distritos[e].departamentoId && webServicesAvance[0].distritoAvance == distritos[e].id){			
 			distAvance = distritos[e].descripcion;
 		}
-	}
-	
-	/*var optionArchivoExistente="";
-	optionArchivoExistente += '<option value="" >Seleccione una Opci&oacute;n</option>';
-
-
-	for(var p = 0; p < webServicesEvidencia.length; p++){
-		optionArchivoExistente += '<option value="'+webServicesEvidencia[p].urlDocumento+'" >'+webServicesEvidencia[p].urlDocumento+'</option>';
-	}
-	*/
-	
+  }
 	var parametrosEvidencia=insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId;
 	var cuerpoEvidencia = renderEvidencia(avanceId,parametrosEvidencia);
 	
@@ -6394,15 +6407,10 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 		optionProductoObjetoGasto+='<option value="'+webServicesProductoObjetoGasto[z].id+'" >'+webServicesProductoObjetoGasto[z].productoConcat+'</option>';
 	}
 	
-	var contenidoModalAdministrador = "";
-
-	contenidoModalAdministrador +=  '<div class="modal fade" id="modalAdministrador" tabindex="-1" aria-labelledby="myLargeModalLabel">'+
-									'	<div class="modal-dialog modal-lg" style="width:90%">'+
+	var contenidoModalAdministrador =  '<div class="box box-tab" id="modalAdministrador" tabindex="-1" aria-labelledby="myLargeModalLabel">'+
+    							' <h4 class="modal-title">Avance ('+actividades[0].nombre+' - '+nombreUnidadMedida+' / '+webServicesAvance[0].fechaEntrega+')  de '+lineaAccion[0].nombre+' ('+institucion[0].sigla+') a�o '+insLineaAccion[0].periodoId+'</h4>'+ 
+									'	<div style="padding-top: 10px;">'+
 									'		<div class="modal-content" >'+
-									'			<div class="modal-header">'+
-									'		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="agregarAvance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'>&times;</span></button>'+
-									'		        <h4 class="modal-title">Avance ('+actividades[0].nombre+' - '+nombreUnidadMedida+' / '+webServicesAvance[0].fechaEntrega+')  de '+lineaAccion[0].nombre+' ('+institucion[0].sigla+') a�o '+insLineaAccion[0].periodoId+'</h4>'+ 
-									'			</div>'+
 									'		    <div class="modal-body">'+
 									
 									'		      	<div class="row">'+ 
@@ -6519,6 +6527,7 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 									'													<tr><th></th><th></th><th></th><th></th><th></th></tr>'+
 									'												</tfoot>'+
 									'												<tbody id="listaBeneficiario">'+
+                                            cuerpoBeneficiario +
 									'												</tbody>'+
 									'											</table>'+
 									'				      					</div>'+
@@ -6609,6 +6618,7 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 									'													<tr><th></th><th></th><th></th><th></th><th></th></tr>'+
 									'												</tfoot>'+
 									'												<tbody id="listaCosto">'+
+                                              cuerpoAvanceCosto +
 									'												</tbody>'+
 									'											</table>'+
 									'				      					</div>'+
@@ -6701,7 +6711,7 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 									'													<tr><th></th><th></th></tr>'+
 									'												</tfoot>'+
 									'												<tbody  id="listaEvidencia">'+
-									
+                                              cuerpoEvidencia +
 									'												</tbody>'+
 									'											</table>'+
 									'				      					</div>'+
@@ -6725,17 +6735,11 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 									'	</div>'+
 									'</div>';					  
 
-	$("body").append(contenidoModalAdministrador);
-	$("#listaEvidencia").html("");
-	$("#listaEvidencia").html(cuerpoEvidencia);
-	$("#listaCosto").html("");
-	$("#listaCosto").html(cuerpoAvanceCosto);
-	$("#listaBeneficiario").html("");
-	$("#listaBeneficiario").html(cuerpoBeneficiario);
-	$("#modalAdministrador").modal('show');	
-	$("#beneficiarioTipo").change();
+  renderInTab('stp-tabs-avances-administrador', contenidoModalAdministrador, 'Administrar', '#stp-tabs-avances');
+
+  $("#beneficiarioTipo").change();
 	$("#productoObjetoGasto").change();
-	//$("#dataTableEvidencia").DataTable();
+	
 	$('#dataTableEvidencia').dataTable({ 
         dom: 'Bfrtip',
         buttons: [
