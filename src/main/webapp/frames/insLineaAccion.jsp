@@ -9,7 +9,6 @@
     var newTab = '<div role="tabpanel" class="tab-pane" id="'  + id + '">';
     newTab += contenido + '</div>';
     $(tabId + ' .tab-content').append(newTab);
-    console.log($(tabId + ' .tab-content'));
     var tabHeader = '<li role="presentation"><a href="#' + id +  '" aria-controls="' + id + '" role="tab" data-toggle="tab">' + tabTitle +'</a></li>';
     $(tabId + ' ul[role=tablist]').append(tabHeader);
     $(tabId + ' ul[role=tablist] a[href="#' + id  + '"]').click();
