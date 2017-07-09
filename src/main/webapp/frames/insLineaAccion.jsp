@@ -5690,7 +5690,7 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
                                             cuerpoActividades +
                         '									</tbody>'+
                         '								</table>'+
-                        '							</div>';
+                        '							</div>' +
 							'               		</div>'+//fin box-body
 							'               </div>'+	
 							'             </div>'+
@@ -5713,7 +5713,7 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
                                               cuerpoAvance +
                             '								</tbody>'+
                             '							</table>'+
-                            '						</div>';
+                            '						</div>' +
 
 							'               			</div>'+//fin box-body
 							'              </div>'+	
