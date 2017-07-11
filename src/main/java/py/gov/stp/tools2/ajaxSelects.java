@@ -786,7 +786,7 @@ public class ajaxSelects extends HttpServlet {
         	}
 ////////////Pivot Plan de Acción        	
         	if (action.equals("getPivotPlanDeAccion")){
-        		List objetos=null;
+        		String objetos="";
         		condition = " where true ";
 //        		String condition2=" where true ";
 //        		if (!userRoleId.equals("0") && !userRoleId.equals("1")){ 
@@ -799,8 +799,8 @@ public class ajaxSelects extends HttpServlet {
 //        		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
         		try {objetos = SqlSelects.selectPivotPlanAccionAvances(condition);}
         		catch (SQLException e) {e.printStackTrace();}
-        		JsonElement json = new Gson().toJsonTree(objetos );
-        		out.println(json.toString());
+        		//JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(objetos.toString());
         		}
 ////////////Pivot Presupuesto   
         	if (action.equals("getPivotLineaAccionPresupuesto")){
