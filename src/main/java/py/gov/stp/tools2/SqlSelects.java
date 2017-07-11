@@ -1106,6 +1106,8 @@ public class SqlSelects {
 				objeto.setGrupoDestNombre(rs.getString("grupo_dest_nombre"));
 				objeto.setCantDest(rs.getString("cant_dest"));
 				objeto.setDescDest(rs.getString("desc_dest"));
+				objeto.setEtiquetaId(rs.getInt("etiqueta_id"));
+				objeto.setEtiquetaNombre(rs.getString("etiqueta_nombre"));
 				
 				objetos.add(objeto);
 			}
@@ -1178,6 +1180,8 @@ public class SqlSelects {
 				objeto.setSprAño(rs.getString("spr_anho"));
 				objeto.setSprVersion(rs.getString("spr_version"));
 				objeto.setProductoConcat(rs.getString("producto_concat"));
+				objeto.setEtiquetaId(rs.getInt("etiqueta_id"));
+				objeto.setEtiquetaNombre(rs.getString("etiqueta_nombre"));
 
 				objetos.add(objeto);
 			}
