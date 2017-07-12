@@ -747,7 +747,7 @@ public class ajaxSelects extends HttpServlet {
         		}
 ////////////Pivot Avance        	
         	if (action.equals("getPivotAvance")){
-        		List objetos=null; 
+        		String objetos=""; 
         		condition = " where true ";
         		String condition2=" where true ";
         		if (etiquetaId!=null) condition += " and ins_linea_accion_has_etiqueta.etiqueta_id = "+etiquetaId;
@@ -763,8 +763,8 @@ public class ajaxSelects extends HttpServlet {
         		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
         		try {objetos = SqlSelects.selectPivotAvance(condition);}
         		catch (SQLException e) {e.printStackTrace();}
-        		JsonElement json = new Gson().toJsonTree(objetos );
-        		out.println(json.toString());
+        		//JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(objetos.toString());
         		}
 ////////////Pivot Destinatarios 
         	if (action.equals("getLineaAccionDestinatarios")){
