@@ -663,7 +663,7 @@ public class ajaxSelects extends HttpServlet {
         	}
 ////////////Privot programado        	
         	if (action.equals("getPivotLineasProgramadas")){
-        		List objetos=null; 
+        		String objetos=""; 
         		condition = " where true ";
         		String condition2=" where true ";
         		if (!userRoleId.equals("0") && !userRoleId.equals("1")){ 
@@ -676,8 +676,7 @@ public class ajaxSelects extends HttpServlet {
         		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
            		try {objetos = SqlSelects.selectPivotLineasProgramadas(condition);}
         		catch (SQLException e) {e.printStackTrace();}
-        		JsonElement json = new Gson().toJsonTree(objetos );
-        		out.println(json.toString());
+        		out.println(objetos.toString());
         	}
 ////////////Pivot Costo Avance
         	if (action.equals("getPivotCostoAvance")){

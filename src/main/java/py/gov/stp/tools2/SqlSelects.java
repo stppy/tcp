@@ -994,74 +994,29 @@ public class SqlSelects {
 		}
 		
 	
-	public static List<LineasProgramadas> selectPivotLineasProgramadas(String condition) throws SQLException{
+	public static String selectPivotLineasProgramadas(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select * from linea_accion_programado2 "+condition;
+		String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from(select * from linea_accion_programado2 "+condition+")t ";
 
 		Statement statement = null;
-		ResultSet rs=null;
-		List<LineasProgramadas> objetos = new ArrayList<LineasProgramadas>();
+   		ResultSet rs=null;
+   		
+   		String objetos = "";
 
-		try {
-			statement = conect.createStatement();
-			rs=statement.executeQuery(query);
-			while(rs.next()){
-				LineasProgramadas objeto = new LineasProgramadas();
-		
-				objeto.setInsId(rs.getInt("ins_id"));
-				objeto.setInstitucion(rs.getString("institucion"));
-				objeto.setInsOrden(rs.getInt("ins_orden"));
-				objeto.setLaId(rs.getInt("la_id"));
-				objeto.setLaOrden(rs.getInt("la_orden"));
-				objeto.setLineaAccion(rs.getString("la_nombre"));
-				objeto.setLaTipoId(rs.getInt("la_tipo_id"));
-				objeto.setLaEstId(rs.getInt("la_estrategia_id"));
-				objeto.setLaUmId(rs.getInt("la_um_id"));
-				objeto.setLaUnidadMedida(rs.getString("la_um_descp"));
-				objeto.setIlaId(rs.getInt("ila_id"));
-				objeto.setPeriodo(rs.getInt("periodo"));
-				objeto.setLaMeta(rs.getDouble("ila_meta"));
-				objeto.setAccionId(rs.getInt("accion_id"));
-				objeto.setAccionPeso(rs.getInt("accion_peso"));
-				objeto.setAccionFechaIni(rs.getString("accion_fecha_ini")); 
-				objeto.setAccionFechaFin(rs.getString("accion_fecha_fin"));
-				objeto.setAccMeta1(rs.getDouble("m1"));
-				objeto.setAccMeta2(rs.getDouble("m2"));
-				objeto.setAccMeta3(rs.getDouble("m3")); 
-				objeto.setAccMeta4(rs.getDouble("m4")); 
-				objeto.setDeptoId(rs.getInt("depto_id"));
-				objeto.setDepartamento(rs.getString("depto_nombre"));
-				objeto.setDistId(rs.getInt("dist_id"));
-				objeto.setDistrito(rs.getString("dist_nombre")); 
-				objeto.setAcatId(rs.getInt("id_accion_catalogo"));
-				objeto.setAccion(rs.getString("ac_nombre"));
-				objeto.setAcatUmId(rs.getInt("ac_um_id"));
-				objeto.setAccionUnidadMedida(rs.getString("ac_um_descp"));
-				objeto.setCronoId(rs.getInt("crono_id"));
-				objeto.setCronograma(rs.getString("crono_nombre")); 
-				objeto.setCronoDescripcion(rs.getString("crono_descp")); 
-				objeto.setCronoProporcion(rs.getDouble("crono_prop")); 
-				objeto.setCronoPeso(rs.getDouble("crono_peso")); 
-				objeto.setCronoUmId(rs.getInt("crono_um_id"));
-				objeto.setCronoUnidadMedida(rs.getString("crono_um_descp"));
-				objeto.setCronoTipoId(rs.getInt("crono_tipo_id"));
-				objeto.setAcumula(rs.getBoolean("acumula"));
-				objeto.setCronoTipoNombre(rs.getString("crono_tipo_nombre"));
-				objeto.setProgId(rs.getInt("prog_id"));
-				objeto.setFechaEntrega(rs.getString("fecha_entrega"));
-				objeto.setCantidadProg(rs.getDouble("cant_prog"));
-				
-				
-				objetos.add(objeto);
-			}
-		}
-		catch (SQLException e) {e.printStackTrace();}
-		finally{
-			if (statement != null) {statement.close();}
-			if (conect != null) {conect.close();}
-		}
-		return objetos; 
-		}
+    		try {
+    			statement = conect.createStatement();
+    			rs=statement.executeQuery(query);
+    			while(rs.next()){
+    				objetos+=rs.getString("resultado");
+    			}
+    		}
+   		catch (SQLException e) {e.printStackTrace();}
+   		finally{
+   			if (statement != null) {statement.close();}
+   			if (conect != null) {conect.close();}
+   		}
+   		return objetos;
+	}
 	
 	public static List<LineaAccionDestinatario> selectLineaAccionDestinatarios(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
