@@ -49,6 +49,20 @@ public class LineaAccionPresupuesto {
 	protected String sprAño;
 	protected String sprVersion;
 	protected String productoConcat;
+	protected int etiquetaId;
+	protected String etiquetaNombre;
+	public int getEtiquetaId() {
+		return etiquetaId;
+	}
+	public void setEtiquetaId(int etiquetaId) {
+		this.etiquetaId = etiquetaId;
+	}
+	public String getEtiquetaNombre() {
+		return etiquetaNombre;
+	}
+	public void setEtiquetaNombre(String etiquetaNombre) {
+		this.etiquetaNombre = etiquetaNombre;
+	}
 	public int getInsId() {
 		return insId;
 	}
