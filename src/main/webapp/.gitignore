@@ -6,4 +6,4 @@
 TODO
 *.zip
 test.html
-/target/*
+/target/
