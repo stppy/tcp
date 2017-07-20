@@ -692,7 +692,7 @@ public class ajaxSelects extends HttpServlet {
         	}
 ////////////Pivot Costo Avance
         	if (action.equals("getPivotCostoAvance")){
-        		String objetos=""; 
+        		String objetos="";
         		condition = " where true ";
         		String condition2=" where true ";
         		if (!userRoleId.equals("0") && !userRoleId.equals("1")){ 
@@ -701,6 +701,9 @@ public class ajaxSelects extends HttpServlet {
 	        			condition2+= " and unidad_responsable_id="+userUnrId;
 	        		}
         		};
+        		if(etiquetaId!=null){
+        			condition += " and etiqueta_id="+etiquetaId;
+        		}
         		condition += " and ins_id IN (select id from institucion "+condition2+") ";
         		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
         		try {objetos = SqlSelects.selectPivotCostoAvance(condition);}
@@ -741,7 +744,7 @@ public class ajaxSelects extends HttpServlet {
         		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
         		try {objetos = SqlSelects.selectPivotEvidenciaAvance(condition);}
         		catch (SQLException e) {e.printStackTrace();}
-        		//JsonElement json = new Gson().toJsonTree(objetos );
+        		//JsonElement json = new Gson().toJsonTree(objetos );        		
         		out.println(objetos.toString());
         		}
 ////////////Pivot Avance        	

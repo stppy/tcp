@@ -257,7 +257,7 @@ public class SqlSelects {
 
 	
 	public static String selectPivotBeneficiarioAvance(String condition) throws SQLException{
-Connection conect=ConnectionConfiguration.conectar();
+		Connection conect=ConnectionConfiguration.conectar();
 		
 		String query = "select array_to_json(array_agg(row_to_json(t))) as resultado from(select * from avances "+condition+")t";
 
