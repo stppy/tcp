@@ -2227,17 +2227,17 @@ Connection conect=ConnectionConfiguration.conectar();
 	
 	public static List<LineaAccionProgramacion> selectResumenLineasAccionProgramacion(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select ins_linea_accion_base.institucion_sigla,"
+		String query = " select ins_linea_accion_base2.institucion_sigla,"
 
-						+"ins_linea_accion_base.institucion_id,"
-						+"ins_linea_accion_base.linea_accion_id,"
+						+"ins_linea_accion_base2.institucion_id,"
+						+"ins_linea_accion_base2.linea_accion_id,"
 						
-						+ "		ins_linea_accion_base.linea_estrategia as tipo_estrategia_id,"
-						+ "		ins_linea_accion_base.linea_accion_nombre,"
-						+ "		ins_linea_accion_base.linea_um_nombre,"
-						+ "		ins_linea_accion_base.periodo,"
-						+ "		ins_linea_accion_base.meta as meta_comprometida,"
-						+ "		ins_linea_accion_base.ins_linea_accion_id,"
+						+ "		ins_linea_accion_base2.linea_estrategia as tipo_estrategia_id,"
+						+ "		ins_linea_accion_base2.linea_accion_nombre,"
+						+ "		ins_linea_accion_base2.linea_um_nombre,"
+						+ "		ins_linea_accion_base2.periodo,"
+						+ "		ins_linea_accion_base2.meta as meta_comprometida,"
+						+ "		ins_linea_accion_base2.ins_linea_accion_id,"
 
 						+ "		ins_linea_accion_programacion_anho.cantidad_anho as programado_anho,"
 						+ "		ins_linea_accion_programacion_hoy.cantidad_hoy as programado_hoy,"
@@ -2246,21 +2246,21 @@ Connection conect=ConnectionConfiguration.conectar();
 						+ "		ins_linea_accion_avance.cantidad as avance_real,"
 						+ "		ins_linea_accion_destinatario_real.beneficiarios_real as destinatarios_real,"
 						+ "		ins_linea_accion_costo.costo as inversion_real"
-						+ " from ins_linea_accion_base"
+						+ " from ins_linea_accion_base2"
 						+ " left join ins_linea_accion_avance on "
-						+ "			 ins_linea_accion_avance.ins_linea_accion_id=ins_linea_accion_base.ins_linea_accion_id"
+						+ "			 ins_linea_accion_avance.ins_linea_accion_id=ins_linea_accion_base2.ins_linea_accion_id"
 						+ " left join ins_linea_accion_destinatarios_corregido on "
-						+ "			 ins_linea_accion_destinatarios_corregido.ila_id=ins_linea_accion_base.ins_linea_accion_id"
+						+ "			 ins_linea_accion_destinatarios_corregido.ila_id=ins_linea_accion_base2.ins_linea_accion_id"
 						+ " left join ins_linea_accion_programacion_hoy on "
-						+ "			 ins_linea_accion_programacion_hoy.ins_linea_accion_id =ins_linea_accion_base.ins_linea_accion_id"
+						+ "			 ins_linea_accion_programacion_hoy.ins_linea_accion_id =ins_linea_accion_base2.ins_linea_accion_id"
 						+ " left join ins_linea_accion_programacion_anho on "
-						+ "			 ins_linea_accion_programacion_anho.ins_linea_accion_id = ins_linea_accion_base.ins_linea_accion_id"
+						+ "			 ins_linea_accion_programacion_anho.ins_linea_accion_id = ins_linea_accion_base2.ins_linea_accion_id"
 						+ " left join ins_linea_accion_costo on "
-						+ "			 ins_linea_accion_costo.ins_linea_accion_id=ins_linea_accion_base.ins_linea_accion_id"
+						+ "			 ins_linea_accion_costo.ins_linea_accion_id=ins_linea_accion_base2.ins_linea_accion_id"
 						+ " left join ins_linea_accion_costo_estimado on "
-						+ "			 ins_linea_accion_costo_estimado.ins_linea_accion_id=ins_linea_accion_base.ins_linea_accion_id"
+						+ "			 ins_linea_accion_costo_estimado.ins_linea_accion_id=ins_linea_accion_base2.ins_linea_accion_id"
 						+ " left join ins_linea_accion_destinatario_real on "
-						+ "			 ins_linea_accion_destinatario_real.ins_linea_accion_id=ins_linea_accion_base.ins_linea_accion_id"
+						+ "			 ins_linea_accion_destinatario_real.ins_linea_accion_id=ins_linea_accion_base2.ins_linea_accion_id"
 						+ "  "+condition+" order by institucion_orden, la_orden ";
 
 		Statement statement = null;
@@ -2594,15 +2594,15 @@ Connection conect=ConnectionConfiguration.conectar();
 //				+ " 	ins_linea_accion_programacion_hoy_dd.ins_linea_accion_id =ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_programacion_hoy_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_programacion_hoy_dd.dist_id=ins_linea_accion_base_dd.dist_id"
 //				+ " where periodo=2016 " + condition;
 		
-		+ "ins_linea_accion_base.institucion_sigla,"
-		+ "ins_linea_accion_base.institucion_id,"								
+		+ "ins_linea_accion_base2.institucion_sigla,"
+		+ "ins_linea_accion_base2.institucion_id,"								
 		+ "ins_linea_accion_programacion_hoy.cantidad_hoy as programado_hoy,"
 		+ "ins_linea_accion_avance.cantidad as avance_real"				
-		+ " from ins_linea_accion_base"
+		+ " from ins_linea_accion_base2"
 		+ " left join ins_linea_accion_avance on"
-		+ " 	ins_linea_accion_avance.ins_linea_accion_id=ins_linea_accion_base.ins_linea_accion_id"				
+		+ " 	ins_linea_accion_avance.ins_linea_accion_id=ins_linea_accion_base2.ins_linea_accion_id"				
 		+ " left join ins_linea_accion_programacion_hoy on "
-		+ " 	ins_linea_accion_programacion_hoy.ins_linea_accion_id =ins_linea_accion_base.ins_linea_accion_id"
+		+ " 	ins_linea_accion_programacion_hoy.ins_linea_accion_id =ins_linea_accion_base2.ins_linea_accion_id"
 		//+ " where periodo=2016 " + condition;
 		+ " " + condition;
 

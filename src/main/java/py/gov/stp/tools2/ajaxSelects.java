@@ -1122,11 +1122,13 @@ public class ajaxSelects extends HttpServlet {
 //        		};
 //        		condition += " and ins_id IN (select id from institucion "+condition2+") ";
 //        		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
-        		if (institucionId!=null) condition += " and ins_linea_accion_base.institucion_id='"+institucionId+"'";
-                if (institucionIdConcat!="" && institucionIdConcat!=null) condition += " and ins_linea_accion_base.institucion_id in("+institucionIdConcat+")";
-                if (departamentoId!=null) condition += " and ins_linea_accion_base.depto_id='"+departamentoId+"'";
-                if (distritoId!=null) condition += " and ins_linea_accion_base.dist_id='"+distritoId+"'";
+        		if (institucionId!=null) condition += " and ins_linea_accion_base2.institucion_id='"+institucionId+"'";
+                if (institucionIdConcat!="" && institucionIdConcat!=null) condition += " and ins_linea_accion_base2.institucion_id in("+institucionIdConcat+")";
+                if (departamentoId!=null) condition += " and ins_linea_accion_base2.depto_id='"+departamentoId+"'";
+                if (distritoId!=null) condition += " and ins_linea_accion_base2.dist_id='"+distritoId+"'";
                 if (periodoId!=null) condition += " and periodo ='"+periodoId+"'";
+                if (etiquetaId!=null && etiquetaId!=0) condition += " and etiqueta_id = "+etiquetaId;
+
            		try {objetos = SqlSelects.selectResumenLineasAccionProgramacion(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
@@ -1690,7 +1692,7 @@ public class ajaxSelects extends HttpServlet {
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
-                condition += " AND ins_linea_accion_base.institucion_id in(";
+                condition += " AND ins_linea_accion_base2.institucion_id in(";
 				for (int s = 0; s < instituciones.size(); s += 1) {
 					if(instituciones.size() == s+1)
 					{
@@ -1706,6 +1708,8 @@ public class ajaxSelects extends HttpServlet {
 	                	double acum, promedio;
 	                	int cont;
 	    	            if (periodoId!=null) condition += " and periodo ='"+periodoId+"'";
+	    	            if (etiquetaId!=null && etiquetaId != 0) condition += " and etiqueta_id ='"+etiquetaId+"'";
+
 	                	objetos = SqlSelects.selectResumenLineasAccionProgramacionInstDptoDistrito(condition);
 	                	
 	                	for(int j = 0; j < instituciones.size(); j+= 1){
