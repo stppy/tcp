@@ -281,15 +281,15 @@ tbody {
 				    }).responseText;
 					entidades=JSON.parse(entidades); */
 					
-					
-  					var lineaAccionDepartamento = $.ajax({
+					//Esta peticion se vuelve a hacer mas abajo pero a otra tabla esta peticion ya no se utiliza mas 
+/*   					var lineaAccionDepartamento = $.ajax({
 				    	url:'/tablero/ajaxSelects?action=getLineasAccionDepartamento',
 				      	type:'get',
 				      	dataType:'json',
 				      	crossDomain:true,
 				      	async:false       
 				    }).responseText;
-					lineaAccionDepartamento=JSON.parse(lineaAccionDepartamento);
+					lineaAccionDepartamento=JSON.parse(lineaAccionDepartamento); */
 					
 					var departamento = $.ajax({
 				    	url:'/tablero/ajaxSelects?action=getDepartamento',
