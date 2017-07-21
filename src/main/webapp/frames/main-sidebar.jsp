@@ -39,6 +39,7 @@
 							<li class=""><a href="/pivotDestinatariosProductos.jsp"><i class="fa fa-male" id="linkPivotDestinatariosProductos"></i>Análisis de Destinatarios de Productos POI</a></li>	
 							<!--<li class=""><a href="/pivotAnalisisProductoFisico.jsp"><i class="fa fa-line-chart" id="linkpivotAnalisisProductoFisico"></i>Análisis de Metas Físicas de Productos (Hacienda)</a></li>-->								<li class=""><a href="/pivotAnalisisProductoFinanciero.jsp"><i class="fa fa-line-chart" id="linkpivotAnalisisProductoFinanciero"></i>Análisis Financiero de Producto (Hacienda)</a></li>
 							<li class=""><a href="/pivotProducto.jsp"><i class="fa fa-line-chart" id="linkpivotAnalisisProductoFinanciero"></i>Análisis de Metas Físicas de Productos (Hacienda)</a></li>
+							<li class=""><a href="/pivotEntidades.jsp"><i class="fa fa-line-chart" id="linkPivotEntidades"></i>Todas las Entidades (Hacienda)</a></li>
 		   				<%}%>         			
 		   			</ul>
 				</li>
