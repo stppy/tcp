@@ -450,11 +450,25 @@ public class ajaxSelects extends HttpServlet {
         		List objetos=null; 
         		condition = " where true ";
         		if (lineaAccionId!=null) condition += " and id ='"+lineaAccionId+"'";
+        		if (borrado!=null) condition += " and borrado is "+ borrado;
            		try {objetos = SqlSelects.selectLineaAccion(condition, "");}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
         	}  
+        	/* se obtienen las lineas de acción restantes que pueden ser asignadas a una institución */
+        	if (action.equals("getLineasAccionRestantes")){
+        		List objetos=null; 
+        		condition = "";        		
+        		if (institucionId!=null) condition += " and ila.institucion_id ='"+institucionId+"'";
+        		if (periodoId!=null) condition += " and ila.periodo_id ='"+periodoId+"'";
+        		if (versionId!=null) condition += " and ila.version ='"+versionId+"'";        		
+        		
+           		try {objetos = SqlSelects.selectLineasAccionesRestantes(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());
+        	}
         	if (action.equals("getInsLineaAccion")){
         		List objetos=null; 
         		condition = " where true ";
@@ -467,7 +481,7 @@ public class ajaxSelects extends HttpServlet {
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
-        	}
+        	}        	
 /*===========GOBIERNO ABIERTO==============*/        	
         	if (action.equals("getGobiernoAbierto")){
         		List<AreasAga> areasAgaCat= null;

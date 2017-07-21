@@ -62,23 +62,18 @@ function renderEvidencia(avanceId, parametros){
 	<%}%>;	
 	
 	$("body").on("click", ".nuevaInsLineaAccion",function(event){		
+		if ( $("#insLineaAccion").length )
+		{
+			$("#insLineaAccion").remove();
+		}
+		if ( $("#modalAccion").length )
+		{
+			$("#modalAccion").remove();
+		}
 		event.stopPropagation();
 		event.preventDefault();
 		var todasLasEtiquetas = "";
-
 		
-		var lineaAccion = $.ajax({
-			url:'/tablero/ajaxSelects2?action=getLineaAccion',
-		  	type:'get',
-		  	dataType:'json',
-		  	async:false       
-		}).responseText;
-		lineaAccion = JSON.parse(lineaAccion);
-		var optionLineaAccion;
-
-		for(i = 0;i<lineaAccion.length; i++){
-			optionLineaAccion+='<option value="'+lineaAccion[i].id+'" >'+lineaAccion[i].nombre+'</option>';
-		}
 
 		var institucion = $.ajax({
 			url:'/tablero/ajaxSelects2?action=getInstitucion',
@@ -100,25 +95,53 @@ function renderEvidencia(avanceId, parametros){
 		  	async:false       
 		}).responseText;
 		periodo = JSON.parse(periodo);
-		var optionPeriodo;
+		var optionPeriodo;		
+		
+		var anho=$("#periodoSeleccion option:selected").val();
+		var version=$("#versionSeleccion option:selected").val();
 
 		for(p = 0;p<periodo.length; p++)
 		{
-			if(periodo[p].id == 2017)
+			if(periodo[p].id == anho)
 			{
 				optionPeriodo+='<option value="'+periodo[p].id+'" selected>'+periodo[p].nombre+'</option>';
 			}else{
 				optionPeriodo+='<option value="'+periodo[p].id+'" >'+periodo[p].nombre+'</option>';
 			}
 		}
-		if ( $("#insLineaAccion").length )
-		{
-			$("#insLineaAccion").remove();
+		
+		var versionInsLineaAccion = $.ajax({
+			url:'/tablero/ajaxSelects2?action=getVersion&anho='+anho,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		versionInsLineaAccion = JSON.parse(versionInsLineaAccion);
+	   	
+		var optionVersion = "";
+		if (versionInsLineaAccion.length > 0) {
+			for(v = 0;v<versionInsLineaAccion.length; v++)
+			{
+				if(versionInsLineaAccion[v].id == version)
+				{
+					optionVersion+='<option value="'+versionInsLineaAccion[v].nro+'" selected>'+versionInsLineaAccion[v].nro+'</option>';
+				}else{
+					optionVersion+='<option value="'+versionInsLineaAccion[v].nro+'" >'+versionInsLineaAccion[v].nro+'</option>';
+				}					
+			}
 		}
-		if ( $("#modalAccion").length )
-		{
-			$("#modalAccion").remove();
-		}
+		var lineaAccion = $.ajax({
+			url:'/tablero/ajaxSelects2?action=getLineaAccion&borrado=false',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		lineaAccion = JSON.parse(lineaAccion);
+		var optionLineaAccion;
+
+		for(i = 0;i<lineaAccion.length; i++){
+			optionLineaAccion+='<option value="'+lineaAccion[i].id+'" >'+lineaAccion[i].nombre+'</option>';
+		}		
 		
 		var unidadMedida = $.ajax({
 			url:'/tablero/ajaxSelects2?action=getUnidadMedida',
@@ -158,30 +181,30 @@ function renderEvidencia(avanceId, parametros){
 									    
 							'				<form role="form" id="formularioInsLineaAccion">'+
 							'					<div class="form-group">'+
-							'						<label for="nombreLineaAccion">Nombre Linea Acción</label>'+
-							'						<input type="hidden" id="idInsLineaAccion" value="">'+					
-							'						<select name="lineaAccion" id="nombreLineaAccionInsLineaAccion" class="form-control">'+optionLineaAccion+'</select>'+
-							'					</div>'+
-							'					<div class="form-group">'+
-							'						<label for="unidadMedida">U. Medida</label>'+
-							'						<input type="text" id="unidadMedidaInsLineaAccion" class="form-control" placeholder="U. Medida" disabled>'+
-							'					</div>'+				
-							'					<div class="form-group">'+
-							'						<label for="nombreInstitucion">Nombre Institución</label>'+
+							'						<label for="nombreInstitucionInsLineaAccion">Nombre Institución</label>'+
 							'						<select name="institucion" id="nombreInstitucionInsLineaAccion" class="form-control">'+optionInstitucion+'</select>'+
 							'					</div>'+
 							'					<div class="form-group">'+
 							'						<label for="periodo">Periodo</label>'+
 							'						<select id="periodoInsLineaAccion" class="form-control">'+optionPeriodo+'</select>'+
+							'					</div>'+	
+							'					<div class="form-group">'+
+							'						<label for="version">Versión</label>'+
+							'						<select id="versionInsLineaAccion" class="form-control">'+optionVersion+'</select>'+							
+							'					</div>'+
+							'					<div class="form-group">'+
+							'						<label for="nombreLineaAccionInsLineaAccion">Nombre Linea Acción</label>'+
+							'						<input type="hidden" id="idInsLineaAccion" value="">'+					
+							'						<select name="lineaAccion" id="nombreLineaAccionInsLineaAccion" class="form-control">'+optionLineaAccion+'</select>'+
+							'					</div>'+			
+							'					<div class="form-group">'+
+							'						<label for="unidadMedida">U. Medida</label>'+
+							'						<input type="text" id="unidadMedidaInsLineaAccion" class="form-control" placeholder="U. Medida" disabled>'+
 							'					</div>'+
 							'					<div class="form-group">'+
 							'						<label for="meta">Meta</label>'+
 							'						<input type="number" id="metaInsLineaAccion" class="form-control" name="meta" placeholder="Ingrese Meta" required >'+
-							'					</div>'+
-							'					<div class="form-group">'+
-							'						<label for="version">Versión</label>'+
-							'						<input type="number" id="versionInsLineaAccion" class="form-control" name="version" placeholder="Ingrese Versión" required>'+
-							'					</div>'+
+							'					</div>'+								
 							'					<div class="form-group">'+
 							'						<label for="version">Etiquetas </label>'+
 													todasLasEtiquetas
@@ -194,11 +217,59 @@ function renderEvidencia(avanceId, parametros){
 							'</div>';
 							
 			$("#programacion").append(contenido);			
-			$("#unidadMedidaInsLineaAccion")
+			$("#unidadMedidaInsLineaAccion");
 			$("#insLineaAccion").find("#formularioInsLineaAccion").append('<div class="form-group" id="guardarInsLineaAccionBoton"><button type="submit" class="btn btn-success" id="guardarInsLineaAccion" >Guardar</button></div>');
 			$('#insLineaAccion').modal('show');
 			
 
+	});
+	
+	$("body").on("change", "#nombreInstitucionInsLineaAccion",function(event){	
+	   	
+		var institucionSeleccionada = $("#nombreInstitucionInsLineaAccion option:selected").val();
+		var periodoSeleccionado = $("#periodoInsLineaAccion option:selected").val();
+		var versionSeleccionado = $("#versionInsLineaAccion option:selected").val();		
+		
+	   	var lineasAccionRestantes = $.ajax({
+			url:'/tablero/ajaxSelects2?action=getLineasAccionRestantes&institucionId='+institucionSeleccionada+'&periodoId='+periodoSeleccionado+'&versionId='+versionSeleccionado,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+	   	lineasAccionRestantes = JSON.parse(lineasAccionRestantes);
+	   	
+		var optionLineasAccionRestantes = "";
+		if (lineasAccionRestantes.length > 0) {
+			for(v = 0;v<lineasAccionRestantes.length; v++)
+			{				
+				optionLineasAccionRestantes+='<option value="'+lineasAccionRestantes[v].id+'" >'+lineasAccionRestantes[v].nombre+'</option>';		
+			}
+		}
+		$('#nombreLineaAccionInsLineaAccion').html(optionLineasAccionRestantes);
+	   
+	});
+	
+	$("body").on("change", "#periodoInsLineaAccion",function(event){	
+	   	
+		var periodoSeleccionado = $("#periodoInsLineaAccion option:selected").val();
+	   	
+	   	var version = $.ajax({
+			url:'/tablero/ajaxSelects2?action=getVersion&anho='+periodoSeleccionado,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		version = JSON.parse(version);
+	   	
+		var optionVersion = "";
+		if (version.length > 0) {
+			for(v = 0;v<version.length; v++)
+			{
+				optionVersion+='<option value="'+version[v].nro+'" >'+version[v].nro+'</option>';
+			}
+		}
+		$('#versionInsLineaAccion').html(optionVersion);
+	   
 	});
 	
 	function validarFormulario(formId, fechaAccion, fechaAccionEdit) {	    

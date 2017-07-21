@@ -775,8 +775,48 @@ public class SqlSelects {
 			if (conect != null) {conect.close();}
 		}
 		return objetos; 
+	} 
+	public static List<LineaAccion> selectLineasAccionesRestantes(String condition) throws SQLException{
+		Connection conect=ConnectionConfiguration.conectar();
+		String query = " SELECT la.* "
+					 + " FROM linea_accion la "
+					 + " WHERE NOT borrado AND la.id NOT IN "
+					 + " 					(SELECT DISTINCT ila.linea_accion_id "
+					 + "					 FROM ins_linea_accion ila "
+				     + " 					 WHERE true " + condition + " ) "
+					 + " ORDER BY la.nombre ";
+
+		Statement statement = null;
+		ResultSet rs=null;
+		List<LineaAccion> objetos = new ArrayList<LineaAccion>();
+
+		try {
+			statement = conect.createStatement();
+			rs=statement.executeQuery(query);
+			while(rs.next()){
+				LineaAccion objeto = new LineaAccion();
+		
+				objeto.setId(rs.getInt("id"));
+				objeto.setNombre(rs.getString("nombre"));
+				objeto.setDescripcion(rs.getString("descripcion"));
+				objeto.setOrden(rs.getInt("orden"));
+				objeto.setPeso(rs.getInt("peso"));
+				objeto.setAcumular(rs.getBoolean("acumular"));
+				objeto.setTipoAccionId(rs.getInt("tipo_accion_id"));
+				objeto.setEstrategiaId(rs.getInt("estrategia_id"));
+				objeto.setUnidadMedidaId(rs.getInt("unidad_medida_id"));
+				objeto.setBorrado(rs.getBoolean("borrado"));
+
+				objetos.add(objeto);
+			}
+		}
+		catch (SQLException e) {e.printStackTrace();}
+		finally{
+			if (statement != null) {statement.close();}
+			if (conect != null) {conect.close();}
+		}
+		return objetos; 
 		} 
-	
 	public static List<AreasAga> selectAreasAgaCat() throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
 		String query = " select * from areas_aga ";
