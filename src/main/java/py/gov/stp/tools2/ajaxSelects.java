@@ -1679,6 +1679,7 @@ public class ajaxSelects extends HttpServlet {
         	if (action.equals("getResumenLineasAccionProgramacionDesempenoInstitucional")){
                 List<LineaAccionProgramacion> objetos=null;
                 List<Institucion> instituciones= null ;
+
                 ArrayList<Object> desempenhoDpto= new ArrayList<Object>();
                 condition = " where true";
                 
@@ -1731,7 +1732,7 @@ public class ajaxSelects extends HttpServlet {
 										acum += 0;
 									} else {
 										acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
-										cont+=1;
+										cont+=1; 
 									}
     							}
 							}
@@ -1739,8 +1740,21 @@ public class ajaxSelects extends HttpServlet {
 							if(cont != 0){
 								promedio = acum / cont;
 							}
-							desempenhoDpto.add(promedio);
-	
+			                Institucion result = new Institucion() ;
+
+							result.setId(instituciones.get(j).getId());
+							result.setPromedio(promedio);
+							result.setNombre(instituciones.get(j).getNombre());
+							result.setSigla(instituciones.get(j).getSigla());
+
+							
+//							desempenhoDpto.add(instituciones.get(j).getId());	
+//							desempenhoDpto.add(promedio);	
+//							desempenhoDpto.add(instituciones.get(j).getNombre());
+//							desempenhoDpto.add(instituciones.get(j).getSigla());
+							
+							desempenhoDpto.add(result);							
+
     					}
               	
 					}catch (SQLException e) {e.printStackTrace();}

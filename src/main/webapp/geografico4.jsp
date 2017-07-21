@@ -706,7 +706,7 @@ tbody {
 							var desPaisInstAux=JSON.parse(desPaisInstjson);
 							
 							var desPaisInst= [];
-							for(var i=0;i<instituciones.length;i++){		
+/* 							for(var i=0;i<instituciones.length;i++){		
 
 								var objeto = new Object(); 
 								if(desPaisInstAux[i] == 0){
@@ -714,6 +714,18 @@ tbody {
 								}
 								objeto.institucionId = instituciones[i].id;
 								objeto.promedio = desPaisInstAux[i];
+								desPaisInst.push(objeto);
+							} */
+			 				for(var i=0;i<desPaisInstAux.length;i++){		
+
+								var objeto = new Object(); 
+								if(desPaisInstAux[i] == 0){
+									promedio = 0/0;
+								}
+								objeto.institucionId = desPaisInstAux[i].id;
+								objeto.promedio = desPaisInstAux[i].promedio;
+								objeto.institucion = desPaisInstAux[i].nombre;
+								objeto.institucionSigla = desPaisInstAux[i].sigla;
 								desPaisInst.push(objeto);
 							}
 							
@@ -747,21 +759,28 @@ tbody {
 									  return 0;
 									});
 
-							for (var i = 0; i< ordenInstitucionPais.length;i++){
+/* 							for (var i = 0; i< ordenInstitucionPais.length;i++){
 								
 								for (var c = 0 ; c<desPaisInst.length;c++){
 									if(desPaisInst[c].institucionId==ordenInstitucionPais[i].id)
 									{
 										despTotInst=desPaisInst[c].promedio;
 										color=getColorDesemp2(despTotInst);
-										if (/*despTotInst !=0 &&*/ ordenInstitucionPais[i].id != 47981) $("#tablaInstituciones").append('<tr><td><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+ordenInstitucionPais[i].id+' checked="true"></td><td class="col-md-3"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+ordenInstitucionPais[i].id+' data-toggle="tooltip" data-placement="top" title="'+ordenInstitucionPais[i].nombre.toUpperCase()+'"> '+ordenInstitucionPais[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotInst).toFixed(2)+'%</p></div></div></td></tr>');
+										if ( ordenInstitucionPais[i].id != 47981) $("#tablaInstituciones").append('<tr><td><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+ordenInstitucionPais[i].id+' checked="true"></td><td class="col-md-3"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+ordenInstitucionPais[i].id+' data-toggle="tooltip" data-placement="top" title="'+ordenInstitucionPais[i].nombre.toUpperCase()+'"> '+ordenInstitucionPais[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotInst).toFixed(2)+'%</p></div></div></td></tr>');
 									}
 								}
-								
-							//	color=getColorDesemp2(despTotInst);
-							//	if (/*despTotInst !=0 &&*/ ordenInstitucionPais[i].id != 47981) $("#tablaInstituciones").append('<tr><td><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+ordenInstitucionPais[i].id+' checked="true"></td><td class="col-md-3"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+ordenInstitucionPais[i].id+'  > '+ordenInstitucionPais[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotInst).toFixed(2)+'%</p></div></div></td></tr>');
-
+							} */
+							
+							for (var l = 0; l< ordenInstitucionPais.length;l++){
+								for (var i = 0; i< desPaisInst.length;i++){
+									if(desPaisInst[i].institucionId==ordenInstitucionPais[l].id){
+										despTotInst=desPaisInst[i].promedio;
+										color=getColorDesemp2(despTotInst);
+										if (despTotInst !=0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+desPaisInst[i].institucionId+' checked="true"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+desPaisInst[i].institucionId+' data-toggle="tooltip" data-placement="top" title="'+desPaisInst[i].institucion+'"> '+desPaisInst[i].institucionSigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotInst).toFixed(2)+'%</p></div></div></td></tr>');
+									}
+								}
 							}
+							
 						}
 					}//fin funcion "renderEntidades"
 					
@@ -2241,7 +2260,7 @@ $("body").on("change", "#periodoSeleccion",function(event){
 
 	        	//obtenemos todas las instituciones en el back end y su desempeño institucional a nivel país
 				var desPaisInstjson = $.ajax({
-						url:'/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionDesempenoInstitucional&periodoId='+periodoSeleccionado,
+						url:'/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionDesempenoInstitucional&periodoId='+periodoSeleccionado+'&etiquetaId='+etiquetaSeleccionado,
 			      	type:'get',
 			      	dataType:'json',
 			      	crossDomain:true,
@@ -2250,16 +2269,20 @@ $("body").on("change", "#periodoSeleccion",function(event){
 				var desPaisInstAux=JSON.parse(desPaisInstjson);
 				
 				var desPaisInst= [];
-				for(var i=0;i<instituciones.length;i++){		
+
+ 				for(var i=0;i<desPaisInstAux.length;i++){		
 
 					var objeto = new Object(); 
 					if(desPaisInstAux[i] == 0){
 						promedio = 0/0;
 					}
-					objeto.institucionId = instituciones[i].id;
-					objeto.promedio = desPaisInstAux[i];
+					objeto.institucionId = desPaisInstAux[i].id;
+					objeto.promedio = desPaisInstAux[i].promedio;
+					objeto.institucion = desPaisInstAux[i].nombre;
+					objeto.institucionSigla = desPaisInstAux[i].sigla;
 					desPaisInst.push(objeto);
 				}
+ 				
 				$("#tablaInstituciones").html("");
 				$("#cabeceraInstituciones").html("");
 				$("#cabeceraInstituciones").append('<div class="row">'+
@@ -2280,16 +2303,11 @@ $("body").on("change", "#periodoSeleccion",function(event){
 			  					    					'</table>'+
 													'</div>'+
 												'</div>');
-				for (var i = 0; i< instituciones.length;i++){
-					
-					for (var c = 0 ; c<desPaisInst.length;c++){
-						if(desPaisInst[c].institucionId==instituciones[i].id)
-							despTotInst=desPaisInst[i].promedio;
-					}
-					
-					color=getColorDesemp2(despTotInst);
-					if (despTotInst !=0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+instituciones[i].id+' checked="true"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+instituciones[i].id+' data-toggle="tooltip" data-placement="top" title="'+instituciones[i].nombre.toUpperCase()+'"> '+instituciones[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotInst).toFixed(2)+'%</p></div></div></td></tr>');
 
+				for (var i = 0; i< desPaisInst.length;i++){
+					despTotInst=desPaisInst[i].promedio;
+					color=getColorDesemp2(despTotInst);
+					if (despTotInst !=0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+desPaisInst[i].institucionId+' checked="true"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+desPaisInst[i].institucionId+' data-toggle="tooltip" data-placement="top" title="'+desPaisInst[i].institucion+'"> '+desPaisInst[i].institucionSigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotInst).toFixed(2)+'%</p></div></div></td></tr>');
 				}
 					var a = renderTableroLineaAccion(institucion_idConcat,null,null,periodoSeleccionado,etiquetaSeleccionado);
 					$("#cuerpoTableroLineaAccion").html("");
@@ -2417,16 +2435,20 @@ $("body").on("change", "#etiquetaSeleccion",function(event){
 				var desPaisInstAux=JSON.parse(desPaisInstjson);
 				
 				var desPaisInst= [];
-				for(var i=0;i<instituciones.length;i++){		
+								
+ 				for(var i=0;i<desPaisInstAux.length;i++){		
 
 					var objeto = new Object(); 
 					if(desPaisInstAux[i] == 0){
 						promedio = 0/0;
 					}
-					objeto.institucionId = instituciones[i].id;
-					objeto.promedio = desPaisInstAux[i];
+					objeto.institucionId = desPaisInstAux[i].id;
+					objeto.promedio = desPaisInstAux[i].promedio;
+					objeto.institucion = desPaisInstAux[i].nombre;
+					objeto.institucionSigla = desPaisInstAux[i].sigla;
 					desPaisInst.push(objeto);
 				}
+ 				
 				$("#tablaInstituciones").html("");
 				$("#cabeceraInstituciones").html("");
 				$("#cabeceraInstituciones").append('<div class="row">'+
@@ -2447,20 +2469,16 @@ $("body").on("change", "#etiquetaSeleccion",function(event){
 			  					    					'</table>'+
 													'</div>'+
 												'</div>');
-				for (var i = 0; i< instituciones.length;i++){
-					
-					for (var c = 0 ; c<desPaisInst.length;c++){
-						if(desPaisInst[c].institucionId==instituciones[i].id)
-							despTotInst=desPaisInst[i].promedio;
-					}
-					
-					color=getColorDesemp2(despTotInst);
-					if (despTotInst !=0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+instituciones[i].id+' checked="true"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+instituciones[i].id+' data-toggle="tooltip" data-placement="top" title="'+instituciones[i].nombre.toUpperCase()+'"> '+instituciones[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotInst).toFixed(2)+'%</p></div></div></td></tr>');
 
-				}
-					var a = renderTableroLineaAccion(institucion_idConcat,null,null,periodoSeleccionado,etiquetaSeleccionado);
-					$("#cuerpoTableroLineaAccion").html("");
-					$("#cuerpoTableroLineaAccion").html(a);
+				for (var i = 0; i< desPaisInst.length;i++){
+					despTotInst=desPaisInst[i].promedio;
+					color=getColorDesemp2(despTotInst);
+					if (despTotInst !=0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+desPaisInst[i].institucionId+' checked="true"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+desPaisInst[i].institucionId+' data-toggle="tooltip" data-placement="top" title="'+desPaisInst[i].institucion+'"> '+desPaisInst[i].institucionSigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotInst).toFixed(2)+'%</p></div></div></td></tr>');
+				}	
+				
+				var a = renderTableroLineaAccion(institucion_idConcat,null,null,periodoSeleccionado,etiquetaSeleccionado);
+				$("#cuerpoTableroLineaAccion").html("");
+				$("#cuerpoTableroLineaAccion").html(a);
 			
 			}			
 		}	
