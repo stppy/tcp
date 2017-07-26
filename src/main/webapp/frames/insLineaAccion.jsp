@@ -111,7 +111,7 @@ function renderEvidencia(avanceId, parametros){
 		}
 		
 		var versionInsLineaAccion = $.ajax({
-			url:'/tablero/ajaxSelects2?action=getVersion&anho='+anho,
+			url:'/tablero/ajaxSelects2?action=getVersionInsLineaAccion&anho='+anho,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -121,16 +121,11 @@ function renderEvidencia(avanceId, parametros){
 		var optionVersion = "";
 		if (versionInsLineaAccion.length > 0) {
 			for(v = 0;v<versionInsLineaAccion.length; v++)
-			{
-				if(versionInsLineaAccion[v].id == version)
-				{
-					optionVersion+='<option value="'+versionInsLineaAccion[v].nro+'" selected>'+versionInsLineaAccion[v].nro+'</option>';
-				}else{
-					optionVersion+='<option value="'+versionInsLineaAccion[v].nro+'" >'+versionInsLineaAccion[v].nro+'</option>';
-				}					
+			{								
+				optionVersion+='<option value="'+versionInsLineaAccion[v].nro+'" >'+versionInsLineaAccion[v].nro+'</option>';		
 			}
 		}
-		var lineaAccion = $.ajax({
+		/* var lineaAccion = $.ajax({
 			url:'/tablero/ajaxSelects2?action=getLineaAccion&borrado=false',
 		  	type:'get',
 		  	dataType:'json',
@@ -141,7 +136,7 @@ function renderEvidencia(avanceId, parametros){
 
 		for(i = 0;i<lineaAccion.length; i++){
 			optionLineaAccion+='<option value="'+lineaAccion[i].id+'" >'+lineaAccion[i].nombre+'</option>';
-		}		
+		}		 */
 		
 		var unidadMedida = $.ajax({
 			url:'/tablero/ajaxSelects2?action=getUnidadMedida',
@@ -165,7 +160,7 @@ function renderEvidencia(avanceId, parametros){
 		etiquetas = JSON.parse(etiquetas);
 		
  		for(var l = 0; l < etiquetas.length; l++){
- 			todasLasEtiquetas += ' <input type="checkbox" class="cmbEtiqueta" id=cmbEtiqueta-'+etiquetas[l].id+'> '+ etiquetas[l].nombre;
+ 			todasLasEtiquetas += ' <input type="checkbox" class="cmbEtiqueta" id=cmbEtiqueta-'+etiquetas[l].id+'> '+ etiquetas[l].nombre + '</input></br>';
 		}
 		
 		var contenido = "";
@@ -190,12 +185,12 @@ function renderEvidencia(avanceId, parametros){
 							'					</div>'+	
 							'					<div class="form-group">'+
 							'						<label for="version">Versión</label>'+
-							'						<select id="versionInsLineaAccion" class="form-control">'+optionVersion+'</select>'+							
+							'						<input type="text" id="versionInsLineaAccion" list="listaf1c2" class="form-control"></input>'+							
 							'					</div>'+
 							'					<div class="form-group">'+
-							'						<label for="nombreLineaAccionInsLineaAccion">Nombre Linea Acción</label>'+
+							'						<label for="nombreLineaAccionInsLineaAccion">Lineas de Acción disponibles (cantidad:<span id="cantLAdisp"></span>)</label>'+
 							'						<input type="hidden" id="idInsLineaAccion" value="">'+					
-							'						<select name="lineaAccion" id="nombreLineaAccionInsLineaAccion" class="form-control">'+optionLineaAccion+'</select>'+
+							'						<select name="lineaAccion" id="nombreLineaAccionInsLineaAccion" class="form-control"></select>'+
 							'					</div>'+			
 							'					<div class="form-group">'+
 							'						<label for="unidadMedida">U. Medida</label>'+
@@ -206,7 +201,7 @@ function renderEvidencia(avanceId, parametros){
 							'						<input type="number" id="metaInsLineaAccion" class="form-control" name="meta" placeholder="Ingrese Meta" required >'+
 							'					</div>'+								
 							'					<div class="form-group">'+
-							'						<label for="version">Etiquetas </label>'+
+							'						<label for="version">Etiquetas </label></br>'+
 													todasLasEtiquetas
 							'					</div>'+			
 							'				</form>'+			  
@@ -221,14 +216,58 @@ function renderEvidencia(avanceId, parametros){
 			$("#insLineaAccion").find("#formularioInsLineaAccion").append('<div class="form-group" id="guardarInsLineaAccionBoton"><button type="submit" class="btn btn-success" id="guardarInsLineaAccion" >Guardar</button></div>');
 			$('#insLineaAccion').modal('show');
 			
+			function Combo(){
+				  this.versionILAFocus = function(){
+					
+				  var anho = $("#periodoInsLineaAccion option:selected").val(); 				 	
+					
+				  //var listaDatalist=document.getElementsByTagName('datalist');
+					
+				  var datosVersionILA = $.ajax({
+						url:'/tablero/ajaxSelects2?action=getVersionInsLineaAccion&anho='+anho,
+					  	type:'get',
+					  	dataType:'json',
+					  	async:false       
+					}).responseText;				  
+					datosVersionILA = JSON.parse(datosVersionILA);
+					
+					if ( $("#listaf1c2").length ) {
+						$("#listaf1c2").remove();
+						$('#versionInsLineaAccion').val('');
+					}
+						
+			        //if(listaDatalist.length === 0 )
+			        //{
+				        var datalistVersionILA = document.createElement('datalist');
+				        datalistVersionILA.setAttribute('id','listaf1c2');
+				        datalistVersionILA.setAttribute('size','5'); 
+				        var ubicacionDatalistVersionILA = document.getElementById('formularioInsLineaAccion');
+				        ubicacionDatalistVersionILA.appendChild(datalistVersionILA);
+				
+				        for(var i = 0; i < datosVersionILA.length ; i++) 
+				        {    
+				        	var option = document.createElement('option');
+				          	option.setAttribute('value',datosVersionILA[i].nro);
+				          	option.setAttribute('label',datosVersionILA[i].nro);
+				          	datalistVersionILA.appendChild(option);      
+				      	} 
+			        //}
+			    } 
 
+			    
+			}
+			
+			var eje1 = new Combo();
+			document.getElementById('versionInsLineaAccion').addEventListener('focus',eje1.versionILAFocus,false);
+			document.getElementById('versionInsLineaAccion').addEventListener('change',eje1.versionILA,false);
+			
 	});
 	
 	$("body").on("change", "#nombreInstitucionInsLineaAccion",function(event){	
 	   	
 		var institucionSeleccionada = $("#nombreInstitucionInsLineaAccion option:selected").val();
 		var periodoSeleccionado = $("#periodoInsLineaAccion option:selected").val();
-		var versionSeleccionado = $("#versionInsLineaAccion option:selected").val();		
+		var versionSeleccionado = $("#versionInsLineaAccion").val();		
 		
 	   	var lineasAccionRestantes = $.ajax({
 			url:'/tablero/ajaxSelects2?action=getLineasAccionRestantes&institucionId='+institucionSeleccionada+'&periodoId='+periodoSeleccionado+'&versionId='+versionSeleccionado,
@@ -246,15 +285,25 @@ function renderEvidencia(avanceId, parametros){
 			}
 		}
 		$('#nombreLineaAccionInsLineaAccion').html(optionLineasAccionRestantes);
+		var lineaAccion = $.ajax({
+			url:'/tablero/ajaxSelects2?action=getLineaAccion&borrado=false',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		lineaAccion = JSON.parse(lineaAccion);
+		var optionLineaAccion;
+
+		$('#cantLAdisp').html(' '+lineasAccionRestantes.length+ ' de '+ lineaAccion.length );
 	   
 	});
 	
 	$("body").on("change", "#periodoInsLineaAccion",function(event){	
 	   	
-		var periodoSeleccionado = $("#periodoInsLineaAccion option:selected").val();
+		/* var periodoSeleccionado = $("#periodoInsLineaAccion option:selected").val();
 	   	
 	   	var version = $.ajax({
-			url:'/tablero/ajaxSelects2?action=getVersion&anho='+periodoSeleccionado,
+			url:'/tablero/ajaxSelects2?action=getVersionInsLineaAccion&anho='+periodoSeleccionado,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -269,6 +318,66 @@ function renderEvidencia(avanceId, parametros){
 			}
 		}
 		$('#versionInsLineaAccion').html(optionVersion);
+								
+		  var datosVersionILA = $.ajax({
+				url:'/tablero/ajaxSelects2?action=getVersionInsLineaAccion&anho='+periodoSeleccionado,
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+			}).responseText;				  
+			datosVersionILA = JSON.parse(datosVersionILA);
+			
+	        {
+		        var datalistVersionILA = document.createElement('datalist');
+		        datalistVersionILA.setAttribute('id','listaf1c2');
+		        datalistVersionILA.setAttribute('size','5'); 
+		        var ubicacionDatalistVersionILA = document.getElementById('formularioInsLineaAccion');
+		        ubicacionDatalistVersionILA.appendChild(datalistVersionILA);
+		
+		        for(var i = 0; i < datosVersionILA.length ; i++) 
+		        {    
+		        	var option = document.createElement('option');
+		          	option.setAttribute('value',datosVersionILA[i].nro);
+		          	option.setAttribute('label',datosVersionILA[i].nro);
+		          	datalistVersionILA.appendChild(option);      
+		      	} 
+	        } */
+	   
+	});
+	
+	$("body").on("change", "#versionInsLineaAccion",function(event){	
+	   	
+		var institucionSeleccionada = $("#nombreInstitucionInsLineaAccion option:selected").val();
+		var periodoSeleccionado = $("#periodoInsLineaAccion option:selected").val();
+		var versionSeleccionado = $("#versionInsLineaAccion").val();		
+		
+	   	var lineasAccionRestantes = $.ajax({
+			url:'/tablero/ajaxSelects2?action=getLineasAccionRestantes&institucionId='+institucionSeleccionada+'&periodoId='+periodoSeleccionado+'&versionId='+versionSeleccionado,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+	   	lineasAccionRestantes = JSON.parse(lineasAccionRestantes);
+	   	
+		var optionLineasAccionRestantes = "";
+		if (lineasAccionRestantes.length > 0) {
+			for(v = 0;v<lineasAccionRestantes.length; v++)
+			{				
+				optionLineasAccionRestantes+='<option value="'+lineasAccionRestantes[v].id+'" >'+lineasAccionRestantes[v].nombre+'</option>';		
+			}
+		}
+		$('#nombreLineaAccionInsLineaAccion').html(optionLineasAccionRestantes);
+		
+		var lineaAccion = $.ajax({
+			url:'/tablero/ajaxSelects2?action=getLineaAccion&borrado=false',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		lineaAccion = JSON.parse(lineaAccion);
+		var optionLineaAccion;
+
+		$('#cantLAdisp').html(' '+lineasAccionRestantes.length+ ' de '+ lineaAccion.length );
 	   
 	});
 	
@@ -649,7 +758,7 @@ function renderEvidencia(avanceId, parametros){
 									    
 							'				<form role="form" id="formularioInsLineaAccion">'+
 							'					<div class="form-group">'+
-							'						<label for="nombreLineaAccion">Nombre Linea Acción</label>'+
+							'						<label for="nombreLineaAccion">Lineas de Acción disponibles (cantidad:<span id="cantLAdisp"></span>)</label>'+
 							'						<input type="hidden" id="idInsLineaAccion" value="">'+					
 							'						<select name="lineaAccion" id="nombreLineaAccionInsLineaAccion" class="form-control">'+optionLineaAccion+'</select>'+
 							'					</div>'+

@@ -880,6 +880,16 @@ public class ajaxSelects extends HttpServlet {
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
+        	} 
+        	if (action.equals("getVersionInsLineaAccion")){
+        		List objetos=null; 
+        		condition = " where true and not borrado ";
+        		if (anho!=null) condition += " and periodo_id ="+anho; 
+        		if (versionId!=null) condition += " and version ='"+versionId+"'"; 
+           		try {objetos = SqlSelects.selectVersionInsLineaAccion(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());
         	}  
         	if (action.equals("getHitoTipo")){
         		List objetos=null; 

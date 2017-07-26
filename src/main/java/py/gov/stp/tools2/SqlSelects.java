@@ -1431,6 +1431,36 @@ public class SqlSelects {
 		return objetos; 
 		}		
 	
+	public static List<VersionInsLinAcc> selectVersionInsLineaAccion(String condition) throws SQLException{
+		Connection conect=ConnectionConfiguration.conectar();
+		String query = " select distinct version as nro, periodo_id "
+					 + " from ins_linea_accion " + condition
+					 + " order by periodo_id, nro " ;
+
+		Statement statement = null;
+		ResultSet rs=null;
+		List<VersionInsLinAcc> objetos = new ArrayList<VersionInsLinAcc>();
+
+		try {
+			statement = conect.createStatement();
+			rs=statement.executeQuery(query);
+			while(rs.next()){
+				VersionInsLinAcc objeto = new VersionInsLinAcc();
+		
+				objeto.setNro(rs.getInt("nro"));
+				objeto.setAnho(rs.getInt("periodo_id"));
+
+				objetos.add(objeto);
+			}
+		}
+		catch (SQLException e) {e.printStackTrace();}
+		finally{
+			if (statement != null) {statement.close();}
+			if (conect != null) {conect.close();}
+		}
+		return objetos; 
+	}
+	
 	public static List<HitoTipo> selectHitoTipo() throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
 		String query = " select * from hito_tipo order by id";
