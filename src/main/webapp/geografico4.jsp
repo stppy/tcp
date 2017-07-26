@@ -522,17 +522,19 @@ tbody {
 					    	}
 				    	} 
 					}
-					
 					var periodoActual = 2017;
 					var depto_id =  null;
 					var dist_id = null;
 
 					function renderEntidades(e){
-								
+						
 						var array=[];var tipoInstituciones="";
 						$("#tablaInstituciones").html("");
 						//$("#cuerpoTableroLineaAccion").html("");
 						$("#nombreInstitucionTabla").html("");
+					   	periodoSeleccionado = $("#periodoSeleccion option:selected").val();
+					   	etiquetaSeleccionado = $("#etiquetaSeleccion option:selected").val();
+						
 						if (typeof e != 'undefined'){
 							if (e.target.feature.properties.hasOwnProperty("distrito")){
 								tipoInstituciones="distrito";
@@ -577,7 +579,7 @@ tbody {
 								
 								//Obtenemos desempeño de las instituciones
  								var lineaAccionDepartamento = $.ajax({
-							    	url:'/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionDesempenoInstitucionalDepto&departamentoId='+e.target.feature.properties.dpto+'&distritoId='+e.target.feature.properties.distrito,
+							    	url:'/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionDesempenoInstitucionalDepto&departamentoId='+e.target.feature.properties.dpto+'&distritoId='+e.target.feature.properties.distrito+'&periodoId='+periodoSeleccionado+'&etiquetaId='+etiquetaSeleccionado,
 							      	type:'get',
 							      	dataType:'json',
 							      	crossDomain:true,
@@ -585,23 +587,39 @@ tbody {
 							    }).responseText;
 								lineaAccionDepartamento=JSON.parse(lineaAccionDepartamento);
 								
-								var desDistInst= [];//Obtenemos el desempeño de las instituciones a nivel distrital
-								for(var i=0;i<institucionesDistrital.length;i++){		
+								var desDepartInst= [];//Obtenemos el desempeño de las instituciones a nivel departamental
+
+								//Obtenemos todos los datos de institucion, promedio, institucion sigla y nombre
+				 				for(var i=0;i<lineaAccionDepartamento.length;i++){		
 
 									var objeto = new Object(); 
-									objeto.institucionId = institucionesDistrital[i].id;
-									objeto.promedio = lineaAccionDepartamento[i];
-									desDistInst.push(objeto);
+									if(lineaAccionDepartamento[i] == 0){
+										promedio = 0/0;
+									}
+									objeto.institucionId = lineaAccionDepartamento[i].id;
+									objeto.promedio = lineaAccionDepartamento[i].promedio;
+									objeto.institucion = lineaAccionDepartamento[i].nombre;
+									objeto.institucionSigla = lineaAccionDepartamento[i].sigla;
+									desDepartInst.push(objeto);
 								}
 								
-								for (var l = 0; l< instituciones.length;l++){
-
-									for (var c = 0 ; c<desDistInst.length;c++){
-										if(desDistInst[c].institucionId==instituciones[l].id)
-										{
-											despTotDeptoInst=desDistInst[c].promedio;
+								ordenInstitucionPais = instituciones;
+								ordenInstitucionPais = ordenInstitucionPais.sort(
+									function orden(a,b) {             
+									  if (a.orden < b.orden)
+										    return -1;
+										  if (a.orden > b.orden)
+										    return 1;
+										  return 0;
+										});
+								
+								
+								for (var l = 0; l< ordenInstitucionPais.length;l++){
+									for (var i = 0; i< desDepartInst.length;i++){
+										if(desDepartInst[i].institucionId==ordenInstitucionPais[l].id){
+											despTotDeptoInst=desDepartInst[i].promedio;
 											color=getColorDesemp2(despTotDeptoInst);
-											if (/*despTotInst !=0 &&*/ instituciones[l].id != 47981) $("#tablaInstituciones").append('<tr><td><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+instituciones[l].id+' checked="true"></td><td class="col-md-3"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+instituciones[l].id+' data-toggle="tooltip" data-placement="top" title="'+instituciones[l].nombre.toUpperCase()+'"> '+instituciones[l].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotDeptoInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotDeptoInst).toFixed(2)+'%</p></div></div></td></tr>');
+											if (despTotDeptoInst !=0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+desDepartInst[i].institucionId+' checked="true"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+desDepartInst[i].institucionId+' data-toggle="tooltip" data-placement="top" title="'+desDepartInst[i].institucion+'"> '+desDepartInst[i].institucionSigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotDeptoInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotDeptoInst).toFixed(2)+'%</p></div></div></td></tr>');
 										}
 									}
 								}
@@ -610,10 +628,9 @@ tbody {
 								
 								
 								var todasInstituciones=getInstitucionesSeleccionadas();
-								var a=renderTableroLineaAccion(todasInstituciones,e.target.feature.properties.dpto,e.target.feature.properties.distrito,periodoActual,null);
+								var a=renderTableroLineaAccion(todasInstituciones,e.target.feature.properties.dpto,e.target.feature.properties.distrito,periodoSeleccionado,etiquetaSeleccionado);
 								depto_id = e.target.feature.properties.dpto;
 								dist_id = e.target.feature.properties.distrito;
-								getPeriodo();
 								$("#cuerpoTableroLineaAccion").html("");
 								$("#cuerpoTableroLineaAccion").html(a);
 							}else{
@@ -641,9 +658,11 @@ tbody {
 																	'</div>');
 								$("#cuerpoTableroLineaAccion").html("");
 								$("#nombreInstitucionTabla").html("");
-								var color="";var depemDeptoInst;var countDeptoInst;var despTotDeptoInst;
+								var color="";var depemDeptoInst;var countDeptoInst;var despTotDeptoInst;var ordenInstitucionPais = [];
+								var periodoSeleccionado = $("#periodoSeleccion option:selected").val();
+
  								var lineaAccionDepartamento = $.ajax({
-							    	url:'/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionDesempenoInstitucionalDepto&departamentoId='+e.target.feature.properties.dpto,
+							    	url:'/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionDesempenoInstitucionalDepto&departamentoId='+e.target.feature.properties.dpto+'&periodoId='+periodoSeleccionado+'&etiquetaId='+etiquetaSeleccionado,
 							      	type:'get',
 							      	dataType:'json',
 							      	crossDomain:true,
@@ -651,53 +670,57 @@ tbody {
 							    }).responseText;
 								lineaAccionDepartamento=JSON.parse(lineaAccionDepartamento);
 								
-								//Volvi a llamar a instituciones por que la otra llamada ya viene ordenado por orden y yo necesito las instituciones sin orden para asignarle su desempeño
-								var institucionesDepartamental = $.ajax({
-							    	url:'/tablero/ajaxSelects2?action=getInstitucion',
-							      	type:'get',
-							      	dataType:'json',
-							      	crossDomain:true,
-							      	async:false       
-							    }).responseText;
-								institucionesDepartamental=JSON.parse(institucionesDepartamental);
 								
 								var desDepartInst= [];//Obtenemos el desempeño de las instituciones a nivel departamental
-								for(var i=0;i<institucionesDepartamental.length;i++){		
+
+								//Obtenemos todos los datos de institucion, promedio, institucion sigla y nombre
+				 				for(var i=0;i<lineaAccionDepartamento.length;i++){		
 
 									var objeto = new Object(); 
-									objeto.institucionId = institucionesDepartamental[i].id;
-									objeto.promedio = lineaAccionDepartamento[i];
+									if(lineaAccionDepartamento[i] == 0){
+										promedio = 0/0;
+									}
+									objeto.institucionId = lineaAccionDepartamento[i].id;
+									objeto.promedio = lineaAccionDepartamento[i].promedio;
+									objeto.institucion = lineaAccionDepartamento[i].nombre;
+									objeto.institucionSigla = lineaAccionDepartamento[i].sigla;
 									desDepartInst.push(objeto);
 								}
 								
-								for (var i = 0; i< instituciones.length;i++){
-									
-									//color=getColorDesemp2(lineaAccionDepartamento[i]);
-									//if (/*lineaAccionDepartamento[i] !=0 &&*/ instituciones[i].id != 47981) $("#tablaInstituciones").append('<tr><td><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+instituciones[i].id+' depto_id='+e.target.feature.properties.dpto+' dist_id='+e.target.feature.properties.distrito+' checked="true"></td><td class="col-md-3"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+instituciones[i].id+' depto_id='+e.target.feature.properties.dpto+' > '+instituciones[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(lineaAccionDepartamento[i]).toFixed(0)+'%"><p class="text-left">'+parseFloat(lineaAccionDepartamento[i]).toFixed(2)+'%</p></div></div></td></tr>');
-									
-									for (var c = 0 ; c<desDepartInst.length;c++){
-										if(desDepartInst[c].institucionId==instituciones[i].id)
-										{
-											despTotDeptoInst=desDepartInst[c].promedio;
+								ordenInstitucionPais = instituciones;
+								ordenInstitucionPais = ordenInstitucionPais.sort(
+									function orden(a,b) {             
+									  if (a.orden < b.orden)
+										    return -1;
+										  if (a.orden > b.orden)
+										    return 1;
+										  return 0;
+										});
+								
+								
+								for (var l = 0; l< ordenInstitucionPais.length;l++){
+									for (var i = 0; i< desDepartInst.length;i++){
+										if(desDepartInst[i].institucionId==ordenInstitucionPais[l].id){
+											despTotDeptoInst=desDepartInst[i].promedio;
 											color=getColorDesemp2(despTotDeptoInst);
-											if (/*despTotInst !=0 &&*/ instituciones[i].id != 47981) $("#tablaInstituciones").append('<tr><td><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+instituciones[i].id+' checked="true"></td><td class="col-md-3"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+instituciones[i].id+' data-toggle="tooltip" data-placement="top" title="'+instituciones[i].nombre.toUpperCase()+'"> '+instituciones[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotDeptoInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotDeptoInst).toFixed(2)+'%</p></div></div></td></tr>');
+											if (despTotDeptoInst !=0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+desDepartInst[i].institucionId+' checked="true"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+desDepartInst[i].institucionId+' data-toggle="tooltip" data-placement="top" title="'+desDepartInst[i].institucion+'"> '+desDepartInst[i].institucionSigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotDeptoInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotDeptoInst).toFixed(2)+'%</p></div></div></td></tr>');
 										}
 									}
 								}
+								
 								var todasInstituciones=getInstitucionesSeleccionadas();
-								var a=renderTableroLineaAccion(todasInstituciones,e.target.feature.properties.dpto,null,periodoActual,null);
+								var a=renderTableroLineaAccion(todasInstituciones,e.target.feature.properties.dpto,null,periodoSeleccionado,etiquetaSeleccionado);
 								dist_id = null;
 								depto_id = e.target.feature.properties.dpto;
-								getPeriodo();
+								//getPeriodo();
 								$("#cuerpoTableroLineaAccion").html("");
 								$("#cuerpoTableroLineaAccion").html(a);
 							}
 						}else{ //d
 							var color="";var depemInst;var countInst;var despTotInst; var ordenInstitucionPais = [];
-							var periodoSeleccionado = $("#periodoSeleccion option:selected").val();
 				        	//obtenemos todas las instituciones en el back end y su desempeño institucional a nivel país
 							var desPaisInstjson = $.ajax({
-		 						url:'/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionDesempenoInstitucional&periodoId='+periodoActual,
+		 						url:'/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionDesempenoInstitucional&periodoId='+periodoSeleccionado,
 						      	type:'get',
 						      	dataType:'json',
 						      	crossDomain:true,
@@ -706,16 +729,7 @@ tbody {
 							var desPaisInstAux=JSON.parse(desPaisInstjson);
 							
 							var desPaisInst= [];
-/* 							for(var i=0;i<instituciones.length;i++){		
 
-								var objeto = new Object(); 
-								if(desPaisInstAux[i] == 0){
-									promedio = 0/0;
-								}
-								objeto.institucionId = instituciones[i].id;
-								objeto.promedio = desPaisInstAux[i];
-								desPaisInst.push(objeto);
-							} */
 			 				for(var i=0;i<desPaisInstAux.length;i++){		
 
 								var objeto = new Object(); 
@@ -758,18 +772,6 @@ tbody {
 									    return 1;
 									  return 0;
 									});
-
-/* 							for (var i = 0; i< ordenInstitucionPais.length;i++){
-								
-								for (var c = 0 ; c<desPaisInst.length;c++){
-									if(desPaisInst[c].institucionId==ordenInstitucionPais[i].id)
-									{
-										despTotInst=desPaisInst[c].promedio;
-										color=getColorDesemp2(despTotInst);
-										if ( ordenInstitucionPais[i].id != 47981) $("#tablaInstituciones").append('<tr><td><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+ordenInstitucionPais[i].id+' checked="true"></td><td class="col-md-3"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+ordenInstitucionPais[i].id+' data-toggle="tooltip" data-placement="top" title="'+ordenInstitucionPais[i].nombre.toUpperCase()+'"> '+ordenInstitucionPais[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotInst).toFixed(2)+'%</p></div></div></td></tr>');
-									}
-								}
-							} */
 							
 							for (var l = 0; l< ordenInstitucionPais.length;l++){
 								for (var i = 0; i< desPaisInst.length;i++){
@@ -2050,20 +2052,35 @@ function renderNivelDistrital(lineasProgramadas, deptoId, distId){
 											  
 											  tempInstLineas += '<tr>'+
 											  '<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+n+'-'+lineasProgramadas[n].institucionId+'-'+lineasProgramadas[n].lineaAccionId+'-'+deptoId+'-'+distId+' href="#">'+lineasProgramadas[n].lineaAccionNombre+'</a></td>'+
-											  '<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
+											  '<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>';
 											 // '<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
-											  '<td>'+numeroConComa((lineasProgramadas[n].cantidadAnho).toFixed(2))+'</td>';
+											  if(lineasProgramadas[n].cantidadAnho==0 || lineasProgramadas[n].cantidadAnho== null ){
+												  tempInstLineas += '<td> - </td>';
+											  }else{
+												  tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].cantidadAnho).toFixed(2))+'</td>';
+											  }
+											  
 											  //'<td class="'+clase+'">'+desempProgAnho+'</td>';
-											  if(lineasProgramadas[n].cantDest==0){
+											  if(lineasProgramadas[n].cantDest==0 || lineasProgramadas[n].cantDest== null ){
 												  tempInstLineas += '<td> - </td>';
 											  }else{
 												  tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>';
 											  }
 
-											  tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
-											  '<td>'+numeroConComa((lineasProgramadas[n].cantidadHoy).toFixed(2))+'</td>'+
-											  '<td>'+numeroConComa((lineasProgramadas[n].cantidadAvance).toFixed(2))+'</td>';
-											  
+											  tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>';
+											  //'<td>'+numeroConComa((lineasProgramadas[n].cantidadHoy).toFixed(2))+'</td>'+
+											  if(lineasProgramadas[n].cantidadHoy==0 || lineasProgramadas[n].cantidadHoy== null ){
+												  tempInstLineas += '<td> - </td>';
+											  }else{
+												  tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].cantidadHoy).toFixed(2))+'</td>';
+											  }
+											  //'<td>'+numeroConComa((lineasProgramadas[n].cantidadAvance).toFixed(2))+'</td>';
+											  if(lineasProgramadas[n].cantidadAvance==0 || lineasProgramadas[n].cantidadAvance== null ){
+												  tempInstLineas += '<td> - </td>';
+											  }else{
+												  tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].cantidadAvance).toFixed(2))+'</td>';
+											  }
+								  
 											  
 											  var desempEjeHoy = numeroConComa(((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100).toFixed(2));
 											  
@@ -2223,7 +2240,7 @@ $("body").on("change", "#periodoSeleccion",function(event){
 							  					    					  '<input type="checkbox" onclick="checkAll(this)" class="cmbInstitucion" id="cmbInstitucion-a" checked="true" data-toggle="tooltip" data-placement="top" title="Marcar / Desmarcar todas">'+
 							  										   '</th>'+                      
 							  					                       '<th class="col-md-3">Institución</th>'+
-							  					                       '<th class="col-md-10">Desempeño</th>'+
+							  					                       '<th class="col-md-10">Desempeñoo</th>'+
 							  					                    '</tr>'+
 						  					                    '</tbody>'+				  					              		
 					  					    				'</table>'+
@@ -2233,7 +2250,7 @@ $("body").on("change", "#periodoSeleccion",function(event){
 				$("#nombreInstitucionTabla").html("");
 				var color="";var depemDeptoInst;var countDeptoInst;var despTotDeptoInst;
 					var lineaAccionDepartamento = $.ajax({
-			    	url:'/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionDesempenoInstitucionalDepto&departamentoId='+depto_id+'&periodoId='+periodoSeleccionado,
+			    	url:'/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionDesempenoInstitucionalDepto&departamentoId='+depto_id+'&periodoId='+periodoSeleccionado+'&etiquetaId='+etiquetaSeleccionado,
 			      	type:'get',
 			      	dataType:'json',
 			      	crossDomain:true,
@@ -2241,15 +2258,45 @@ $("body").on("change", "#periodoSeleccion",function(event){
 			    }).responseText;
 				lineaAccionDepartamento=JSON.parse(lineaAccionDepartamento);
 				
+				var desDepartInst= [];//Obtenemos el desempeño de las instituciones a nivel departamental
 
-				for (var i = 0; i< instituciones.length;i++){
-					
-					color=getColorDesemp2(lineaAccionDepartamento[i]);
-					if (lineaAccionDepartamento[i] !=0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+instituciones[i].id+' depto_id='+depto_id+' dist_id='+dist_id+' checked="true"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+instituciones[i].id+' depto_id='+depto_id+' data-toggle="tooltip" data-placement="top" title="'+instituciones[i].nombre.toUpperCase()+'"> '+instituciones[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(lineaAccionDepartamento[i]).toFixed(0)+'%"><p class="text-left">'+parseFloat(lineaAccionDepartamento[i]).toFixed(2)+'%</p></div></div></td></tr>');
-					
+				//Obtenemos todos los datos de institucion, promedio, institucion sigla y nombre
+ 				for(var i=0;i<lineaAccionDepartamento.length;i++){		
+
+					var objeto = new Object(); 
+					if(lineaAccionDepartamento[i] == 0){
+						promedio = 0/0;
+					}
+					objeto.institucionId = lineaAccionDepartamento[i].id;
+					objeto.promedio = lineaAccionDepartamento[i].promedio;
+					objeto.institucion = lineaAccionDepartamento[i].nombre;
+					objeto.institucionSigla = lineaAccionDepartamento[i].sigla;
+					desDepartInst.push(objeto);
 				}
+				
+				ordenInstitucionPais = instituciones;
+				ordenInstitucionPais = ordenInstitucionPais.sort(
+					function orden(a,b) {             
+					  if (a.orden < b.orden)
+						    return -1;
+						  if (a.orden > b.orden)
+						    return 1;
+						  return 0;
+						});
+				
+				
+				for (var l = 0; l< ordenInstitucionPais.length;l++){
+					for (var i = 0; i< desDepartInst.length;i++){
+						if(desDepartInst[i].institucionId==ordenInstitucionPais[l].id){
+							despTotDeptoInst=desDepartInst[i].promedio;
+							color=getColorDesemp2(despTotDeptoInst);
+							if (despTotDeptoInst !=0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+desDepartInst[i].institucionId+' checked="true"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+desDepartInst[i].institucionId+' data-toggle="tooltip" data-placement="top" title="'+desDepartInst[i].institucion+'"> '+desDepartInst[i].institucionSigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotDeptoInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotDeptoInst).toFixed(2)+'%</p></div></div></td></tr>');
+						}
+					}
+				}
+
 				var todasInstituciones=getInstitucionesSeleccionadas();
-				var a = renderTableroLineaAccion(todasInstituciones,depto_id,null,periodoSeleccionado,null);
+				var a = renderTableroLineaAccion(todasInstituciones,depto_id,null,periodoSeleccionado,etiquetaSeleccionado);
 				$("#cuerpoTableroLineaAccion").html("");
 				$("#cuerpoTableroLineaAccion").html(a);
 			}else{
@@ -2369,7 +2416,7 @@ $("body").on("change", "#etiquetaSeleccion",function(event){
 				}
 			}
 			var institucion_idConcat=getInstitucionesSeleccionadas();
-			var a = renderTableroLineaAccion(institucion_idConcat,depto_id,dist_id,periodoSeleccionado,null);
+			var a = renderTableroLineaAccion(institucion_idConcat,depto_id,dist_id,periodoSeleccionado,etiquetaSeleccionado);
 			$("#cuerpoTableroLineaAccion").html("");
 			$("#cuerpoTableroLineaAccion").html(a);
 		}else{
@@ -2399,7 +2446,7 @@ $("body").on("change", "#etiquetaSeleccion",function(event){
 				$("#nombreInstitucionTabla").html("");
 				var color="";var depemDeptoInst;var countDeptoInst;var despTotDeptoInst;
 					var lineaAccionDepartamento = $.ajax({
-			    	url:'/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionDesempenoInstitucionalDepto&departamentoId='+depto_id+'&periodoId='+periodoSeleccionado,
+			    	url:'/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionDesempenoInstitucionalDepto&departamentoId='+depto_id+'&periodoId='+periodoSeleccionado+'&etiquetaId='+etiquetaSeleccionado,
 			      	type:'get',
 			      	dataType:'json',
 			      	crossDomain:true,
@@ -2408,14 +2455,45 @@ $("body").on("change", "#etiquetaSeleccion",function(event){
 				lineaAccionDepartamento=JSON.parse(lineaAccionDepartamento);
 				
 
-				for (var i = 0; i< instituciones.length;i++){
-					
-					color=getColorDesemp2(lineaAccionDepartamento[i]);
-					if (lineaAccionDepartamento[i] !=0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+instituciones[i].id+' depto_id='+depto_id+' dist_id='+dist_id+' checked="true"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+instituciones[i].id+' depto_id='+depto_id+' data-toggle="tooltip" data-placement="top" title="'+instituciones[i].nombre.toUpperCase()+'"> '+instituciones[i].sigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(lineaAccionDepartamento[i]).toFixed(0)+'%"><p class="text-left">'+parseFloat(lineaAccionDepartamento[i]).toFixed(2)+'%</p></div></div></td></tr>');
-					
+				var desDepartInst= [];//Obtenemos el desempeño de las instituciones a nivel departamental
+
+				//Obtenemos todos los datos de institucion, promedio, institucion sigla y nombre
+ 				for(var i=0;i<lineaAccionDepartamento.length;i++){		
+
+					var objeto = new Object(); 
+					if(lineaAccionDepartamento[i] == 0){
+						promedio = 0/0;
+					}
+					objeto.institucionId = lineaAccionDepartamento[i].id;
+					objeto.promedio = lineaAccionDepartamento[i].promedio;
+					objeto.institucion = lineaAccionDepartamento[i].nombre;
+					objeto.institucionSigla = lineaAccionDepartamento[i].sigla;
+					desDepartInst.push(objeto);
 				}
+				
+				ordenInstitucionPais = instituciones;
+				ordenInstitucionPais = ordenInstitucionPais.sort(
+					function orden(a,b) {             
+					  if (a.orden < b.orden)
+						    return -1;
+						  if (a.orden > b.orden)
+						    return 1;
+						  return 0;
+						});
+				
+				
+				for (var l = 0; l< ordenInstitucionPais.length;l++){
+					for (var i = 0; i< desDepartInst.length;i++){
+						if(desDepartInst[i].institucionId==ordenInstitucionPais[l].id){
+							despTotDeptoInst=desDepartInst[i].promedio;
+							color=getColorDesemp2(despTotDeptoInst);
+							if (despTotDeptoInst !=0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+desDepartInst[i].institucionId+' checked="true"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+desDepartInst[i].institucionId+' data-toggle="tooltip" data-placement="top" title="'+desDepartInst[i].institucion+'"> '+desDepartInst[i].institucionSigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotDeptoInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotDeptoInst).toFixed(2)+'%</p></div></div></td></tr>');
+						}
+					}
+				}
+				
 				var todasInstituciones=getInstitucionesSeleccionadas();
-				var a = renderTableroLineaAccion(todasInstituciones,depto_id,null,periodoSeleccionado,null);
+				var a = renderTableroLineaAccion(todasInstituciones,depto_id,null,periodoSeleccionado,etiquetaSeleccionado);
 				$("#cuerpoTableroLineaAccion").html("");
 				$("#cuerpoTableroLineaAccion").html(a);
 			}else{
@@ -2620,6 +2698,50 @@ $(document).ready(function(){
 		value: [ 70, 90 ]
 	});
 
+	var periodo = $.ajax({
+		url:'/tablero/ajaxSelects2?action=getPeriodo',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	periodo = JSON.parse(periodo);
+	
+	var etiqueta = $.ajax({
+		url:'/tablero/ajaxSelects2?action=getEtiqueta',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	etiqueta = JSON.parse(etiqueta);
+
+	var optionPeriodo;
+	var optionEtiqueta;
+
+	for(p = 0;p<periodo.length; p++){
+		if((periodo[p].id >= 2014) && (periodo[p].id <= 2018)){
+			if(periodo[p].id == 2017){
+				optionPeriodo+='<option value="'+periodo[p].id+'" selected>'+periodo[p].nombre+'</option>';
+			}else{
+				optionPeriodo+='<option value="'+periodo[p].id+'" >'+periodo[p].nombre+'</option>';
+			}
+		}
+	}
+	
+	optionEtiqueta+='<option value="0" selected>Todos</option>';
+
+	if(usuarioEtiqueta.length > 0){
+		for(var d = 0; d<usuarioEtiqueta.length; d++){
+			for(var e = 0; e<etiqueta.length; e++){
+				 if(usuarioEtiqueta[d].borrado != true && usuarioEtiqueta[d].etiqueta_id == etiqueta[e].id){
+					optionEtiqueta+='<option value="'+etiqueta[e].id+'">'+etiqueta[e].nombre+'</option>';
+				}
+			}
+		}
+	}
+    
+	$('#periodoSeleccion').html(optionPeriodo);
+	$('#etiquetaSeleccion').append(optionEtiqueta);					
+	
 
 	$("body").on("change", "#ex12c",function(event){
 		var rangoDeColor= $("#ex12c").attr("value");
@@ -3137,7 +3259,7 @@ $(document).ready(function(){
 	 
 	var todasInstituciones=getInstitucionesSeleccionadas();
 	var a=renderTableroLineaAccion(todasInstituciones,null,null,periodoActual,null);
-	getPeriodo();
+	//getPeriodo();
 	$("#cuerpoTableroLineaAccion").html('');
 	$("#cuerpoTableroLineaAccion").html(a);
 

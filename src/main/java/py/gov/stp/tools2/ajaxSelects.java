@@ -1864,10 +1864,11 @@ public class ajaxSelects extends HttpServlet {
 
                 condition = " where true"; 
         		if (periodoId!=null) condition += " AND periodo ='"+periodoId+"'";
-        		if (departamentoId!=null) condition += " AND ins_linea_accion_base_dd.depto_id = '"+departamentoId+"'";
-	            if (distritoId!=null) condition += " and ins_linea_accion_base_dd.dist_id='"+distritoId+"'";
+	            if (etiquetaId!=null && etiquetaId != 0) condition += " and etiqueta_id ='"+etiquetaId+"'";
+        		if (departamentoId!=null) condition += " AND ins_linea_accion_base_dd2.depto_id = '"+departamentoId+"'";
+	            if (distritoId!=null) condition += " and ins_linea_accion_base_dd2.dist_id='"+distritoId+"'";
 
-				condition += " AND ins_linea_accion_base_dd.institucion_id in(";
+				condition += " AND ins_linea_accion_base_dd2.institucion_id in(";
 
 				for (int s = 0; s < instituciones.size(); s += 1) {
 					if(instituciones.size() == s+1){
@@ -1907,7 +1908,14 @@ public class ajaxSelects extends HttpServlet {
 							if(cont != 0){
 								promedio = acum / cont;
 							}
-							desempenhoDpto.add(promedio);
+							
+			                Institucion result = new Institucion() ;
+
+							result.setId(instituciones.get(j).getId());
+							result.setPromedio(promedio);
+							result.setNombre(instituciones.get(j).getNombre());
+							result.setSigla(instituciones.get(j).getSigla());
+							desempenhoDpto.add(result);
 	                	}
 
 						                	
@@ -1920,10 +1928,11 @@ public class ajaxSelects extends HttpServlet {
         	if (action.equals("getLineaAccionDepartamentalDistrital")){
         		String objetos=null;
         		condition = " where true";
-                if (institucionIdConcat!="") condition += " and ins_linea_accion_base_dd.institucion_id in("+institucionIdConcat+")";
-	            if (departamentoId!=null) condition += " and ins_linea_accion_base_dd.depto_id='"+departamentoId+"'";
-	            if (distritoId!=null) condition += " and ins_linea_accion_base_dd.dist_id='"+distritoId+"'";
+                if (institucionIdConcat!="") condition += " and ins_linea_accion_base_dd2.institucion_id in("+institucionIdConcat+")";
+	            if (departamentoId!=null) condition += " and ins_linea_accion_base_dd2.depto_id='"+departamentoId+"'";
+	            if (distritoId!=null) condition += " and ins_linea_accion_base_dd2.dist_id='"+distritoId+"'";
 	            if (periodoId!=null) condition += " and periodo='"+periodoId+"'";
+                if (etiquetaId!=null && etiquetaId!=0) condition += " and etiqueta_id = "+etiquetaId;
            		try {objetos = SqlSelects.selectResumenLineasAccionProgramacionDepartamentalDistrital(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		//JsonElement json = new Gson().toJsonTree(objetos );
