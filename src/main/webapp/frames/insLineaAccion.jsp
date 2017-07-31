@@ -777,10 +777,10 @@ function renderEvidencia(avanceId, parametros){
 							'						<label for="version">Versión</label>'+
 							'						<input type="number" id="versionInsLineaAccion" class="form-control" name="version" placeholder="Ingrese Versión" required>'+
 							'					</div>'+
-							'					<div class="form-group">'+
+/* 							'					<div class="form-group">'+
 							'					<label for="etiquetaUsuario">Etiqueta Instancia Linea Acción</label></br>'+
 													etiquetasUsuario
-							'					</div>'+
+							'					</div>'+ */
 
 							'				</form>'+			  
 							
