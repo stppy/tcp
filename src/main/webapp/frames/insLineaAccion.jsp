@@ -151,7 +151,7 @@ function renderEvidencia(avanceId, parametros){
 			optionUnidadMedida+='<option value="'+unidadMedida[u].id+'" parametro="'+unidadMedida[u].id+'">'+unidadMedida[u].descripcion+'</option>';
 		}
 		
-		var etiquetas = $.ajax({
+		/* var etiquetas = $.ajax({
 			url:'/tablero/ajaxSelects2?action=getEtiqueta',
 			type:'get',
 		  	dataType:'json',
@@ -161,7 +161,7 @@ function renderEvidencia(avanceId, parametros){
 		
  		for(var l = 0; l < etiquetas.length; l++){
  			todasLasEtiquetas += ' <input type="checkbox" class="cmbEtiqueta" id=cmbEtiqueta-'+etiquetas[l].id+'> '+ etiquetas[l].nombre + '</input></br>';
-		}
+		} */
 		
 		var contenido = "";
 
@@ -201,9 +201,9 @@ function renderEvidencia(avanceId, parametros){
 							'						<input type="number" id="metaInsLineaAccion" class="form-control" name="meta" placeholder="Ingrese Meta" required >'+
 							'					</div>'+								
 							'					<div class="form-group">'+
-							'						<label for="version">Etiquetas </label></br>'+
+/* 							'						<label for="version">Etiquetas </label></br>'+
 													todasLasEtiquetas
-							'					</div>'+			
+							'					</div>'+		 */	
 							'				</form>'+			  
 							
 							'		    </div>'+
