@@ -1729,6 +1729,7 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 	var institucionId;
 	var totalDestinatario;
 	var totalProgramado;
+	var inversionEstimada;
 
 	
 /* 	  tempInstituciones = '<thead><tr>'+
@@ -1774,7 +1775,7 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 		institucionId=lineasProgramadas[0].institucionId;
 		cont=0, contEjecucion=0, destinatarios=0; inversion=0; 
 		acum=0, acumEjecucionPrevista=0, acumEjecucionLograda=0;
-		promedio=0, totalDestinatario=0, totalProgramado=0;
+		promedio=0, totalDestinatario=0, totalProgramado=0, inversionEstimada=0;
 		
 		tempInstituciones += '<tr><td colspan="12"><strong>'+lineasProgramadas[0].institucionSigla+'</strong></td></tr>';
 		
@@ -1813,6 +1814,7 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 									
 									if (lineasProgramadas[n].cantDest!=null) totalDestinatario = totalDestinatario + lineasProgramadas[n].cantDest;
 									if (lineasProgramadas[n].cantidadAnho!=null) totalProgramado = totalProgramado + lineasProgramadas[n].cantidadAnho;
+									if (lineasProgramadas[n].inversionEstimada!=null) inversionEstimada = inversionEstimada + lineasProgramadas[n].inversionEstimada;
 
 									
 									if (n == lineasProgramadas.length -1){
@@ -1847,7 +1849,8 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 												'<td>'+numeroConComa((totalProgramado).toFixed(2))+'</td>'+
 												//'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
 												'<td>'+numeroConComa(totalDestinatario)+'</td>'+
-												'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
+												//'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
+												'<td>'+numeroConComa((inversionEstimada/1000000).toFixed(2))+'</td>'+
 												'<td>'+numeroConComa((acumEjecucionPrevista).toFixed(2))+'</td>'+
 												'<td>'+numeroConComa((acumEjecucionLograda).toFixed(2))+'</td>';
 												
@@ -1913,7 +1916,8 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 												'<td>'+numeroConComa((totalProgramado).toFixed(2))+'</td>'+
 												//'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
 												'<td>'+numeroConComa(totalDestinatario)+'</td>'+
-												'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
+												//'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
+												'<td>'+numeroConComa((inversionEstimada/1000000).toFixed(2))+'</td>'+												
 												'<td>'+numeroConComa((acumEjecucionPrevista).toFixed(2))+'</td>'+
 												'<td>'+numeroConComa((acumEjecucionLograda).toFixed(2))+'</td>';
 												
@@ -1946,6 +1950,7 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 										promedio=0,destinatarios=0; inversion=0;
 										totalDestinatario=0;
 										totalProgramado=0;
+										inversionEstimada=0;
 										//institucionId = lineasProgramadas[n+1].institucionId;
 										linea_accion_id = lineasProgramadas[n+1].lineaAccionId;
 										//tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n+1].institucionSigla+'</strong></td></tr>';
