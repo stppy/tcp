@@ -134,6 +134,8 @@ public class ajaxSelects extends HttpServlet {
 		String conditionActGA = "";
 		String conditionHitoGA = "";
 		String conditionLaHasAreasAga ="";
+		String conditionAv = "";
+		String conditionPro = "";
     	String mision = "";
     	String nombre = "";
     	String vision = "";
@@ -468,7 +470,7 @@ public class ajaxSelects extends HttpServlet {
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
         	}
-/*===========GOBIERNO ABIERTO==============*/        	
+        	/*===========GOBIERNO ABIERTO==============*/        	
         	if (action.equals("getGobiernoAbierto")){
         		List<AreasAga> areasAgaCat= null;
         		List<LaHasAreasAga> laHasAreasAga= null;
@@ -484,6 +486,7 @@ public class ajaxSelects extends HttpServlet {
         		List<InstitucionGA> institu = null;
         		List<Institucion> siglaInsti = null;
         		List<Hito> hito = null;
+        		List<Programacion> programacion = null;
         		List<Avance> avances = null;
         		List<Evidencia> eviden = null;
         		
@@ -495,6 +498,11 @@ public class ajaxSelects extends HttpServlet {
                 ArrayList<PndGA> childrenPnd = new ArrayList<PndGA>();
                 ArrayList<OdsGA> childrenOds = new ArrayList<OdsGA>();
                 
+                String chilEstado[] = new String[4];
+                chilEstado[0]="finalizado";
+                chilEstado[1]="enejecucion";
+                chilEstado[2]="noiniciado";
+                chilEstado[3]="atrasado";
                 String colores[] = new String[4] ;
                 colores[0]="#556270";
                 colores[1]="#4ECDC4";
@@ -513,8 +521,11 @@ public class ajaxSelects extends HttpServlet {
 	    			conditionAccGA += " WHERE id BETWEEN 28950 AND 29011 AND borrado = false"; 				//TODO: verificar condicionante
 	    			conditionAccCat += " WHERE borrado = false"; 											
 	    			conditionActGA += " WHERE accion_id BETWEEN 28950 AND 29011 AND borrado = false"; 		//TODO: verificar condicionante
-	    			conditionHitoGA += " WHERE ins_linea_accion_id 236 OR ins_linea_accion_id BETWEEN 238 AND 245 OR ins_linea_accion_id = 1004 AND borrado is false";//TODO: verificar condicionante
+	    			conditionHitoGA += " WHERE accion_id BETWEEN 28950 AND 29011 AND borrado = false";		//TODO: verificar condicionante
 	    			conditionLaHasAreasAga += "WHERE peso = 1 ";
+	    			conditionAv += " WHERE actividad_id BETWEEN 80522 AND 80656 AND borrado = false";
+	    			conditionPro += " WHERE actividad_id BETWEEN 80522 AND 80656 AND borrado = false";
+	    			
            		try {
            			areasAgaCat = SqlSelects.selectAreasAgaCat();
            			laHasAreasAga = SqlSelects.selectLaHasAreasAga(conditionLaHasAreasAga);
@@ -530,7 +541,8 @@ public class ajaxSelects extends HttpServlet {
            			siglaInsti = SqlSelects.selectInstitucion(condition);
            			institu = SqlSelects.selectInstitucionGA(condition);
            			hito = SqlSelects.selectHito(conditionHitoGA);
-           			avances = SqlSelects.selectAvance(condition);
+           			avances = SqlSelects.selectAvance("", conditionAv);
+           			programacion = SqlSelects.selectProgramacion("", conditionPro);
            			eviden = SqlSelects.selectEvidencia(condition);
            			
            			
@@ -610,25 +622,113 @@ public class ajaxSelects extends HttpServlet {
 				           									}
 			   					           					axGA.setResponsables(childrenRes);	
 				           					           		
+			   					           					Date fecha_inicio = new Date();
+			   					           					String startDate = "2016-06-01"; 	//TODO: establecer una fecha acorde al plan
+			   					           					SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+			   					           					fecha_inicio = dateformat.parse(startDate);
+			   					           					axGA.setFecha_inicio(fecha_inicio);
+				           					           		
 			   					           					//TODO: necesita revision del codigo para fijar la fecha proevida por la base de datos
 			   					           					Date fecha_fin = new Date();
-				           					           		for(int x = 0; x < hito.size(); x +=1){								//se cargan las fechas fin
-				           										if(hito.get(x).getAccionId() == axion.get(i).getId()){
-				           											Hito fechas = hito.get(x);
-				           											String fechaFin =  fechas.getFechaEntrega().toString();
-						           					           		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-						           					           		fecha_fin = sdf1.parse(fechaFin);
+			   					           					if(!hito.isEmpty()){
+			   					           						for(int x = 0; x < hito.size(); x +=1){								//se cargan las fechas fin
+			   					           							if(hito.get(x).getAccionId() == axion.get(i).getId()){
+			   					           								Hito fechas = hito.get(x);
+			   					           								fecha_fin =  dateformat.parse(fechas.getFechaEntrega().toString());
+			   					           							}
+			   					           						}
+			   					           						axGA.setFecha_fin(fecha_fin);
+			   					           					}else{
+			   					           						axGA.setFecha_fin(fecha_fin);
+			   					           					}
+
+				           					           		Calendar cal = Calendar.getInstance();
+				           					           		String fecha = dateformat.format(cal.getTime());
+				           					           		Date fechaActual = dateformat.parse(fecha);
+				           					           		axGA.setFecha(fechaActual);
+				           					           		
+			   					           					for(int k = 0; k < actividad.size(); k +=1){							//recorremos las actividades para verificar con cada accion
+				           										if(actividad.get(k).getAccionId() == axion.get(i).getId()){
+				           											for(int l = 0; l < programacion.size(); l +=1){	
+				           												if (actividad.get(k).getId() == programacion.get(l).getActividad()){				           													
+				           													Date dateProgramacion = dateformat.parse(programacion.get(l).getFechaEntrega());
+				           													int compProgActual = dateProgramacion.compareTo(fechaActual); //comparamos las fechas de la programacion con la fecha actual
+				           													
+				           													if(compProgActual > 0){									//preguntamos si la programacion esta vencida
+				           														if(!avances.isEmpty()){
+				           															for(int m = 0; m < avances.size(); m +=1){
+				           																Date dateAvance = dateformat.parse(avances.get(m).getFechaEntrega());				           															
+				           																if(actividad.get(k).getId() == avances.get(m).getActividadId()){
+				           																	int compProgAvance = dateProgramacion.compareTo(dateAvance);
+				           																	if (compProgAvance > 0){				//consultamos si la fecha programada es posterior a la fecha de avance
+				           																		if(avances.get(m).getCantidad() == programacion.get(l).getCantidad()){	//comparamos la cantidad programada y de avance
+				           																			axGA.setEstado(chilEstado[0]);	//... vencido pero finalizado
+				           																		}else{
+				           																			if (avances.get(m).getCantidad() != programacion.get(l).getCantidad()){
+				           																				axGA.setEstado(chilEstado[3]);	//...esta atrasado
+				           																			}
+				           																		}
+				           																	}else{
+				           																		if(compProgAvance <= 0){
+				           																			if(avances.get(m).getCantidad() == programacion.get(l).getCantidad()){	//comparamos la cantidad programada y de avance
+				           																				axGA.setEstado(chilEstado[0]);	//... vencido pero finalizado
+				           																			}else{
+				           																				if (avances.get(m).getCantidad() != programacion.get(l).getCantidad()){
+				           																					axGA.setEstado(chilEstado[3]);	//...esta atrasado
+				           																				}
+				           																			}
+				           																		}
+				           																	}
+				           																}else{
+				           																	axGA.setEstado(chilEstado[3]);	//...esta atrasado
+				           																}
+				           															}
+				           														}else{
+				           															if(avances.isEmpty()){						//si la programacion vencida no tiene avances...
+				           																axGA.setEstado(chilEstado[3]);					//...esta atrasado
+				           															}
+				           														}
+				           													}else{
+				           														if(compProgActual <= 0){							//verificamos que la programacion no este vencida
+				           															if(!avances.isEmpty()){									
+				           																for(int m = 0; m < avances.size(); m +=1){
+				           																	Date dateAvance = dateformat.parse(avances.get(m).getFechaEntrega());				           															
+				           																	if(actividad.get(k).getId() == avances.get(m).getActividadId()){
+				           																		int compProgAvance = dateProgramacion.compareTo(dateAvance);
+				           																		if (compProgAvance > 0){				//consultamos si la fecha programada es posterior a la fecha de avance
+				           																			if(avances.get(m).getCantidad() != null || !avances.get(m).getCantidad().isNaN()){	//consultamos si la cantidad de avance esta declarada...
+				           																				axGA.setEstado(chilEstado[1]);	//... en ejecucion
+				           																			}else{
+				           																				if (avances.get(m).getCantidad() == null || avances.get(m).getCantidad().isNaN()){
+				           																					axGA.setEstado(chilEstado[2]);	//...no esta iniciado
+				           																				}
+				           																			}
+				           																		}else{
+				           																			if(compProgAvance <= 0){
+				           																				if(avances.get(m).getCantidad() != null || !avances.get(m).getCantidad().isNaN()){	//consultamos si la cantidad de avance esta declarada...
+				           																					axGA.setEstado(chilEstado[1]);	//... en ejecucion
+				           																				}else{
+				           																					if (avances.get(m).getCantidad() == null || avances.get(m).getCantidad().isNaN()){
+				           																						axGA.setEstado(chilEstado[2]);	//...no esta iniciado
+				           																					}
+				           																				}
+				           																			}
+				           																		}
+				           																	}else{
+				           																		axGA.setEstado(chilEstado[2]);	//...no esta iniciado
+				           																	}
+				           																}
+				           															}else{
+				           																if(avances.isEmpty()){						//si la programacion NO vencida no cuenta con avances...
+				           																	axGA.setEstado(chilEstado[2]);					//...no esta iniciado
+				           																}
+				           															}
+				           														}
+				           													}
+				           												}
+				           											}
 				           										}
 				           									}
-				           					           		axGA.setFecha_fin(fecha_fin);
-				           					           		
-				           					           		Date fecha_inicio = new Date();
-				           					           		String startDate = "2016-06-01"; 	//TODO: establecer una fecha acorde al plan
-				           					           		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-				           					           		fecha_inicio = sdf1.parse(startDate);
-				           					           		axGA.setFecha_inicio(fecha_inicio);
-
-				           					           		//TODO: desarrollar estado
 				           					           		
 				           					           		//TODO: desarrollar fuente de verificacion
 				           					           		
@@ -996,7 +1096,7 @@ public class ajaxSelects extends HttpServlet {
         		if (programacionId!=null) condition += " and id ='"+programacionId+"'";
         		if (actividadId!=null) condition += " and actividad_id ='"+actividadId+"'";
 
-           		try {objetos = SqlSelects.selectProgramacion(condition);}
+           		try {objetos = SqlSelects.selectProgramacion(condition, "");}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -1006,7 +1106,7 @@ public class ajaxSelects extends HttpServlet {
         		condition = " where true ";
         		if (actividadId!=null) condition += " and actividad_id ='"+actividadId+"'";
         		if (avanceId!=null) condition += " and id ='"+avanceId+"'";
-           		try {objetos = SqlSelects.selectAvance(condition);}
+           		try {objetos = SqlSelects.selectAvance(condition, "");}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
