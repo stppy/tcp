@@ -300,6 +300,14 @@ tbody {
 				    }).responseText;
 					departamento=JSON.parse(departamento);
 					
+					var distritos = $.ajax({
+				    	url:'/tablero/ajaxSelects?action=getDistrito',
+				      	type:'get',
+				      	dataType:'json',
+				      	async:false       
+				    }).responseText;
+					distritos = JSON.parse(distritos);
+					
 					var instituciones = $.ajax({
 				    	url:'/tablero/ajaxSelects2?action=getInstitucion',
 				      	type:'get',
@@ -1849,7 +1857,6 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 												'<td>'+numeroConComa((totalProgramado).toFixed(2))+'</td>'+
 												//'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
 												'<td>'+numeroConComa(totalDestinatario)+'</td>'+
-												//'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
 												'<td>'+numeroConComa((inversionEstimada/1000000).toFixed(2))+'</td>'+
 												'<td>'+numeroConComa((acumEjecucionPrevista).toFixed(2))+'</td>'+
 												'<td>'+numeroConComa((acumEjecucionLograda).toFixed(2))+'</td>';
@@ -1916,7 +1923,6 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 												'<td>'+numeroConComa((totalProgramado).toFixed(2))+'</td>'+
 												//'<td class="'+clase+'">'+numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2))+'</td>'+
 												'<td>'+numeroConComa(totalDestinatario)+'</td>'+
-												//'<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
 												'<td>'+numeroConComa((inversionEstimada/1000000).toFixed(2))+'</td>'+												
 												'<td>'+numeroConComa((acumEjecucionPrevista).toFixed(2))+'</td>'+
 												'<td>'+numeroConComa((acumEjecucionLograda).toFixed(2))+'</td>';
@@ -2176,6 +2182,7 @@ return contenidoEnRowTemp;
 $("body").on("change", "#periodoSeleccion",function(event){	
    	periodoSeleccionado = $("#periodoSeleccion option:selected").val();
    	etiquetaSeleccionado = $("#etiquetaSeleccion option:selected").val();
+   	var nombreDepto;
    	
 	//var institucion_idConcat=getInstitucionesSeleccionadas();
 	var nombreInstituciones="";	
@@ -2183,14 +2190,13 @@ $("body").on("change", "#periodoSeleccion",function(event){
 
 		if((depto_id !==null) && (dist_id !==null)){
 		
+			nombreDepto = obtenerNombre(depto_id,dist_id);
 			tipoInstituciones="distrito";
 			$("#tablaInstituciones").html("");
 			$("#cabeceraInstituciones").html("");
-			$("#cabeceraInstituciones").append('<div class="row">'+
+ 			$("#cabeceraInstituciones").append('<div class="row">'+
 													'<div class="col-md-12">'+
-														'<h4>'+
-															'<i class="fa fa-building-o"></i> Instituciones en: '+ 															
-				  										'</h4>'+
+														'<h4><i class="fa fa-building-o"></i> Instituciones en: '+nombreDepto+'</h4>'+
 				  										'<table class="table table-condensed" style="margin-bottom: 0px;">'+
 					  					                    '<tbody>'+
 						  					                    '<tr>'+
@@ -2204,6 +2210,7 @@ $("body").on("change", "#periodoSeleccion",function(event){
 				  					    				'</table>'+
 			  										'</div>'+
 		  										'</div>');
+		
 			var color="";
 			var lineaAccionDepartamento = $.ajax({
 		    	url:'/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionDesempenoInstitucionalDepto&departamentoId='+depto_id+'&distritoId='+dist_id+'&periodoId='+periodoSeleccionado+'&etiquetaId='+etiquetaSeleccionado,
@@ -2259,13 +2266,12 @@ $("body").on("change", "#periodoSeleccion",function(event){
 		}else{
 			if(depto_id !==null && dist_id == null){
 				
+				nombreDepto = obtenerNombre(depto_id,null);
 				$("#tablaInstituciones").html("");
 				$("#cabeceraInstituciones").html("");				
 				$("#cabeceraInstituciones").append('<div class="row">'+
 														'<div class="col-md-12">'+
-															'<h4>'+
-																'<i class="fa fa-building-o"></i> Instituciones en: '+																
-															'</h4>'+
+															'<h4><i class="fa fa-building-o"></i> Instituciones en: '+nombreDepto+'</h4>'+
 															'<table class="table table-condensed" style="margin-bottom: 0px;">'+
 						  					                    '<tbody>'+
 							  					                    '<tr>'+
@@ -2420,6 +2426,7 @@ $("body").on("change", "#periodoSeleccion",function(event){
 $("body").on("change", "#etiquetaSeleccion",function(event){	
    	periodoSeleccionado = $("#periodoSeleccion option:selected").val();
    	etiquetaSeleccionado = $("#etiquetaSeleccion option:selected").val();
+   	var nombreDepto;
    	
 	//var institucion_idConcat=getInstitucionesSeleccionadas();
 	var nombreInstituciones="";	
@@ -2427,14 +2434,13 @@ $("body").on("change", "#etiquetaSeleccion",function(event){
 
 		if((depto_id !==null) && (dist_id !==null)){
 			
+			nombreDepto = obtenerNombre(depto_id,dist_id);
 			tipoInstituciones="distrito";
 			$("#tablaInstituciones").html("");
 			$("#cabeceraInstituciones").html("");
 			$("#cabeceraInstituciones").append('<div class="row">'+
 													'<div class="col-md-12">'+
-														'<h4>'+
-															'<i class="fa fa-building-o"></i> Instituciones en: '+ 															
-				  										'</h4>'+
+														'<h4><i class="fa fa-building-o"></i> Instituciones en: '+nombreDepto+'</h4>'+
 				  										'<table class="table table-condensed" style="margin-bottom: 0px;">'+
 					  					                    '<tbody>'+
 						  					                    '<tr>'+
@@ -2502,13 +2508,12 @@ $("body").on("change", "#etiquetaSeleccion",function(event){
 		}else{
 			if(depto_id !==null && dist_id == null){
 				
+				nombreDepto = obtenerNombre(depto_id,null);
 				$("#tablaInstituciones").html("");
 				$("#cabeceraInstituciones").html("");				
 				$("#cabeceraInstituciones").append('<div class="row">'+
 														'<div class="col-md-12">'+
-															'<h4>'+
-																'<i class="fa fa-building-o"></i> Instituciones en: '+																
-															'</h4>'+
+															'<h4><i class="fa fa-building-o"></i> Instituciones en: '+nombreDepto+'</h4>'+
 															'<table class="table table-condensed" style="margin-bottom: 0px;">'+
 						  					                    '<tbody>'+
 							  					                    '<tr>'+
@@ -2659,6 +2664,33 @@ $("body").on("change", "#etiquetaSeleccion",function(event){
 	event.stopPropagation();
 	
  });
+ 
+ function obtenerNombre(idDepto,idDistrito){
+	 var nombre;
+	 
+	 if(idDistrito != null){
+		 
+		 for(var x = 0; x <departamento.length; x++){
+			 if(departamento[x].idDepartamento == idDepto){
+				 nombre = departamento[x].nombreDepartamento;
+			 }
+		 }
+		 nombre += " - ";
+		 for(var d = 0; d < distritos.length; d++){
+			 if(distritos[d].departamentoId == idDepto && distritos[d].id == idDistrito){
+				 nombre += distritos[d].descripcion;
+			 }
+		 }
+	 }else{
+		 for(var x = 0; x <departamento.length; x++){
+			 if(departamento[x].idDepartamento == idDepto){
+				 nombre = departamento[x].nombreDepartamento;
+			 }
+		 }
+	 }
+
+	 return nombre;
+ }
 
 function getPeriodo(periodo){
 
