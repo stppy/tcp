@@ -674,7 +674,7 @@ function renderEvidencia(avanceId, parametros){
 		}
 
 
-		var institucion = $.ajax({
+		/* var institucion = $.ajax({
 			url:'/tablero/ajaxSelects2?action=getInstitucion',
 		  	type:'get',
 		  	dataType:'json',
@@ -685,7 +685,7 @@ function renderEvidencia(avanceId, parametros){
 
 		for(m = 0;m<institucion.length; m++){
 			optionInstitucion+='<option value="'+institucion[m].id+'" >'+institucion[m].nombre+'</option>';
-		}
+		} */
 
 		var periodo = $.ajax({
 			url:'/tablero/ajaxSelects2?action=getPeriodo',
@@ -757,25 +757,25 @@ function renderEvidencia(avanceId, parametros){
 									    
 							'				<form role="form" id="formularioInsLineaAccion">'+
 							'					<div class="form-group">'+
-							'						<label for="nombreLineaAccion">Lineas de Acción disponibles (cantidad:<span id="cantLAdisp"></span>)</label>'+
-							'						<input type="hidden" id="idInsLineaAccion" value="">'+					
-							'						<select name="lineaAccion" id="nombreLineaAccionInsLineaAccion" class="form-control">'+optionLineaAccion+'</select>'+
-							'					</div>'+
-							'					<div class="form-group">'+
 							'						<label for="nombreInstitucion">Nombre Institución</label>'+
-							'						<select name="institucion" id="nombreInstitucionInsLineaAccion" class="form-control">'+optionInstitucion+'</select>'+
-							'					</div>'+
+							'						<input type="text" name="institucion" id="nombreInstitucionInsLineaAccion" list="listaf1c1" class="form-control"></input>'+
+							'					</div>'+							
 							'					<div class="form-group">'+
 							'						<label for="periodo">Periodo</label>'+
 							'						<select id="periodoInsLineaAccion" class="form-control">'+optionPeriodo+'</select>'+
 							'					</div>'+
 							'					<div class="form-group">'+
-							'						<label for="meta">Meta</label>'+
-							'						<input type="number" id="metaInsLineaAccion" class="form-control" name="meta" placeholder="Ingrese Meta" required>'+
+							'						<label for="version">Versión</label>'+
+							'						<input type="text" type="number" id="versionInsLineaAccion" list="listaf1c2" class="form-control" name="version" placeholder="Ingrese Versión" required></input>'+
 							'					</div>'+
 							'					<div class="form-group">'+
-							'						<label for="version">Versión</label>'+
-							'						<input type="number" id="versionInsLineaAccion" class="form-control" name="version" placeholder="Ingrese Versión" required>'+
+							'						<label for="nombreLineaAccion">Lineas de Acción disponibles (cantidad:<span id="cantLAdisp"></span>)</label>'+
+							'						<input type="hidden" id="idInsLineaAccion" value="">'+					
+							'						<input type="text" name="lineaAccion" id="nombreLineaAccionInsLineaAccion" list="listaf1c3" class="form-control"></input>'+
+							'					</div>'+
+							'					<div class="form-group">'+
+							'						<label for="meta">Meta</label>'+
+							'						<input type="number" id="metaInsLineaAccion" class="form-control" name="meta" placeholder="Ingrese Meta" required>'+
 							'					</div>'+
 /* 							'					<div class="form-group">'+
 							'					<label for="etiquetaUsuario">Etiqueta Instancia Linea Acción</label></br>'+
@@ -796,7 +796,137 @@ function renderEvidencia(avanceId, parametros){
 		$("#insLineaAccion").find("#formularioInsLineaAccion").append('<div class="form-group" id="actualizarInsLineaAccionBoton"><button type="submit" class="btn btn-success" id="actualizarInsLineaAccion">Actualizar</button></div>');
 		$("#idInsLineaAccion").val(id);
 		
-		var lineaAccion = $.ajax({
+		/*************************************************************/
+		
+		function Combo(){
+			  this.versionILAFocus = function(){
+				
+			  var anho = $("#periodoInsLineaAccion option:selected").val(); 				 	
+				
+			  //var listaDatalist=document.getElementsByTagName('datalist');
+				
+			    var datosVersionILA = $.ajax({
+					url:'/tablero/ajaxSelects2?action=getVersionInsLineaAccion&anho='+anho,
+				  	type:'get',
+				  	dataType:'json',
+				  	async:false       
+				}).responseText;				  
+				datosVersionILA = JSON.parse(datosVersionILA);
+				
+				if ( $("#listaf1c2").length ) {
+					$("#listaf1c2").remove();
+					//$('#versionInsLineaAccion').val('');
+				} 
+					
+		        //if(listaDatalist.length === 0 )
+		        //{
+			        var datalistVersionILA = document.createElement('datalist');
+			        datalistVersionILA.setAttribute('id','listaf1c2');
+			        datalistVersionILA.setAttribute('size','5'); 
+			        var ubicacionDatalistVersionILA = document.getElementById('formularioInsLineaAccion');
+			        ubicacionDatalistVersionILA.appendChild(datalistVersionILA);
+			
+			        for(var i = 0; i < datosVersionILA.length ; i++) 
+			        {    
+			        	var option = document.createElement('option');
+			          	option.setAttribute('value',datosVersionILA[i].nro);
+			          	option.setAttribute('label',datosVersionILA[i].nro);
+			          	datalistVersionILA.appendChild(option);      
+			      	} 
+		        //}			        			        
+			  } 
+			  
+			// Autocompletado del Nombre de la Institución.
+	        this.institucionFocus = function(){
+	        	
+				var datosInstitucion = $.ajax({
+					url:'/tablero/ajaxSelects2?action=getInstitucion',
+				  	type:'get',
+				  	dataType:'json',
+				  	async:false       
+				}).responseText;			        
+		        datosInstitucion = JSON.parse(datosInstitucion);
+				
+		        if ( $("#listaf1c1").length ) {
+					$("#listaf1c1").remove();
+					//$('#nombreInstitucionInsLineaAccion').val('');
+					$("#listaf1c2").remove();
+					$('#periodoInsLineaAccion').val('');
+				}
+		        
+		        var datalistInstitucion = document.createElement('datalist');
+		        datalistInstitucion.setAttribute('id','listaf1c1');
+		        datalistInstitucion.setAttribute('size','5'); 
+		        var ubicacionDatalistInstitucion = document.getElementById('formularioInsLineaAccion');
+		        ubicacionDatalistInstitucion.appendChild(datalistInstitucion);
+		
+		        for(var i = 0; i < datosInstitucion.length ; i++) 
+		        {    
+		        	var option = document.createElement('option');
+		          	option.setAttribute('value',datosInstitucion[i].id);
+		          	option.setAttribute('label',datosInstitucion[i].nombre);
+		          	datalistInstitucion.appendChild(option);      
+		      	}
+			}			        
+			
+	     	// Autocompletado del Nombre de la Institución.
+	        this.nombreLAFocus = function(){
+	        	
+	        	var institucionSeleccionada = $("#nombreInstitucionInsLineaAccion").val();
+				var periodoSeleccionado = $("#periodoInsLineaAccion option:selected").val();
+				var versionSeleccionado = $("#versionInsLineaAccion").val();
+	     		
+				var datosLA = $.ajax({
+					url:'/tablero/ajaxSelects2?action=getLineasAccionRestantes&institucionId='+institucionSeleccionada+'&periodoId='+periodoSeleccionado+'&versionId='+versionSeleccionado,
+				  	type:'get',
+				  	dataType:'json',
+				  	async:false       
+				}).responseText;		        
+		        datosLA = JSON.parse(datosLA);
+				
+		        if ( $("#listaf1c3").length ) {
+					$("#listaf1c3").remove();
+					//$('#nombreLineaAccionInsLineaAccion').val('');
+					$('#cantLAdisp').html('cantidad:');
+				}
+		        
+		        var datalistNombreLA = document.createElement('datalist');
+		        datalistNombreLA.setAttribute('id','listaf1c3');
+		        datalistNombreLA.setAttribute('size','5'); 
+		        var ubicacionDatalistNombreLA = document.getElementById('formularioInsLineaAccion');
+		        ubicacionDatalistNombreLA.appendChild(datalistNombreLA);
+		
+		        for(var i = 0; i < datosLA.length ; i++) 
+		        {    
+		        	var option = document.createElement('option');
+		          	option.setAttribute('value',datosLA[i].id);
+		          	option.setAttribute('label',datosLA[i].nombre);
+		          	datalistNombreLA.appendChild(option);      
+		      	}
+		        
+		        var lineaAccion = $.ajax({
+					url:'/tablero/ajaxSelects2?action=getLineaAccion&borrado=false',
+				  	type:'get',
+				  	dataType:'json',
+				  	async:false       
+				}).responseText;
+				lineaAccion = JSON.parse(lineaAccion);
+				var optionLineaAccion;
+
+				$('#cantLAdisp').html(' '+lineasAccionRestantes.length+ ' de '+ lineaAccion.length );
+			}
+		    
+		}
+		
+		var eje1 = new Combo();
+		document.getElementById('versionInsLineaAccion').addEventListener('focus',eje1.versionILAFocus,false);
+		//document.getElementById('versionInsLineaAccion').addEventListener('change',eje1.versionILA,false);
+		document.getElementById('nombreInstitucionInsLineaAccion').addEventListener('focus',eje1.institucionFocus,false);
+		document.getElementById('nombreLineaAccionInsLineaAccion').addEventListener('focus',eje1.nombreLAFocus,false);
+		
+		/************************************************************************/
+		
+		/* var lineaAccion = $.ajax({
 			url:'/tablero/ajaxSelects2?action=getLineaAccion',
 		  	type:'get',
 		  	dataType:'json',
@@ -807,12 +937,12 @@ function renderEvidencia(avanceId, parametros){
 		for(i = 0;i<lineaAccion.length; i++)
 		{
 			if(lineaAccion[i].id == lineaAccionId)
-			{
-				$('#nombreLineaAccionInsLineaAccion > option[value="'+lineaAccion[i].id+'"]').attr('selected', 'selected');
-			}
-		}
+			{ */
+				$('#nombreLineaAccionInsLineaAccion').val(lineaAccionId);
+			/* }
+		} */
 		
-		var institucion = $.ajax({
+		/* var institucion = $.ajax({
 			url:'/tablero/ajaxSelects2?action=getInstitucion',
 		  	type:'get',
 		  	dataType:'json',
@@ -822,10 +952,10 @@ function renderEvidencia(avanceId, parametros){
 
 		for(m = 0;m<institucion.length; m++){
 			if(institucion[m].id == institucionId)
-			{
-				$('#nombreInstitucionInsLineaAccion > option[value="'+institucion[m].id+'"]').attr('selected', 'selected');
-			}
-		}	
+			{ */
+				$('#nombreInstitucionInsLineaAccion').val(institucionId);
+			/* }
+		}	 */
 
 		var periodo = $.ajax({
 			url:'/tablero/ajaxSelects2?action=getPeriodo',
@@ -843,9 +973,9 @@ function renderEvidencia(avanceId, parametros){
 				$('#periodoInsLineaAccion > option[value="'+periodo[p].id+'"]').attr('selected', 'selected');
 			}
 		}
-		
+				
+		$("#versionInsLineaAccion").val(parseInt(version));
 		$("#metaInsLineaAccion").val(meta);
-		$("#versionInsLineaAccion").val(version);
 		
 	});
 	
