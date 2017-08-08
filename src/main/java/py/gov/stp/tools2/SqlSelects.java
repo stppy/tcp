@@ -521,8 +521,48 @@ public class SqlSelects {
 			if (conect != null) {conect.close();}
 		}
 		return objetos; 
+	} 
+	public static List<LineaAccion> selectLineasAccionesRestantes(String condition) throws SQLException{
+		Connection conect=ConnectionConfiguration.conectar();
+		String query = " SELECT la.* "
+					 + " FROM linea_accion la "
+					 + " WHERE NOT borrado AND la.id NOT IN "
+					 + " 					(SELECT DISTINCT ila.linea_accion_id "
+					 + "					 FROM ins_linea_accion ila "
+				     + " 					 WHERE true " + condition + " ) "
+					 + " ORDER BY la.nombre ";
+
+		Statement statement = null;
+		ResultSet rs=null;
+		List<LineaAccion> objetos = new ArrayList<LineaAccion>();
+
+		try {
+			statement = conect.createStatement();
+			rs=statement.executeQuery(query);
+			while(rs.next()){
+				LineaAccion objeto = new LineaAccion();
+		
+				objeto.setId(rs.getInt("id"));
+				objeto.setNombre(rs.getString("nombre"));
+				objeto.setDescripcion(rs.getString("descripcion"));
+				objeto.setOrden(rs.getInt("orden"));
+				objeto.setPeso(rs.getInt("peso"));
+				objeto.setAcumular(rs.getBoolean("acumular"));
+				objeto.setTipoAccionId(rs.getInt("tipo_accion_id"));
+				objeto.setEstrategiaId(rs.getInt("estrategia_id"));
+				objeto.setUnidadMedidaId(rs.getInt("unidad_medida_id"));
+				objeto.setBorrado(rs.getBoolean("borrado"));
+
+				objetos.add(objeto);
+			}
+		}
+		catch (SQLException e) {e.printStackTrace();}
+		finally{
+			if (statement != null) {statement.close();}
+			if (conect != null) {conect.close();}
+		}
+		return objetos; 
 		} 
-	
 	public static List<AreasAga> selectAreasAgaCat() throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
 		String query = " select * from areas_aga ";
@@ -1121,6 +1161,36 @@ public class SqlSelects {
 		}
 		return objetos; 
 		}		
+	
+	public static List<VersionInsLinAcc> selectVersionInsLineaAccion(String condition) throws SQLException{
+		Connection conect=ConnectionConfiguration.conectar();
+		String query = " select distinct version as nro, periodo_id "
+					 + " from ins_linea_accion " + condition
+					 + " order by periodo_id, nro " ;
+
+		Statement statement = null;
+		ResultSet rs=null;
+		List<VersionInsLinAcc> objetos = new ArrayList<VersionInsLinAcc>();
+
+		try {
+			statement = conect.createStatement();
+			rs=statement.executeQuery(query);
+			while(rs.next()){
+				VersionInsLinAcc objeto = new VersionInsLinAcc();
+		
+				objeto.setNro(rs.getInt("nro"));
+				objeto.setAnho(rs.getInt("periodo_id"));
+
+				objetos.add(objeto);
+			}
+		}
+		catch (SQLException e) {e.printStackTrace();}
+		finally{
+			if (statement != null) {statement.close();}
+			if (conect != null) {conect.close();}
+		}
+		return objetos; 
+	}
 	
 	public static List<HitoTipo> selectHitoTipo() throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
@@ -3086,6 +3156,27 @@ public class SqlSelects {
 	public static List<LineaAccionProgramacion> selectResumenLineasAccionProgramacionInstitucionDepto(
 			String condition) throws SQLException {
 		Connection conect = ConnectionConfiguration.conectar();
+//		String query = "select "
+//				+ "ins_linea_accion_base_dd.institucion_sigla,"
+//                + "ins_linea_accion_base_dd.institucion_id,"
+//                + "ins_linea_accion_base_dd.depto_id as depto_id,"
+//                + "ins_linea_accion_base_dd.dist_id as dist_id,"
+//				+ "ins_linea_accion_base_dd.periodo,"
+//                + "ins_linea_accion_programacion_hoy_dd.cantidad_hoy as programado_hoy,"
+//                + "ins_linea_accion_avance_dd.cantidad as avance_real,"
+//                + "ins_linea_accion_destinatario_real_dd.beneficiarios_real as destinatarios_real,"
+//                + "ins_linea_accion_costo_dd.costo as inversion_real"
+//                 + " from ins_linea_accion_base_dd"
+//                 + " left join ins_linea_accion_avance_dd on"
+//                 + " ins_linea_accion_avance_dd.ins_linea_accion_id=ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_avance_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_avance_dd.dist_id=ins_linea_accion_base_dd.dist_id"
+//                 + " left join ins_linea_accion_programacion_hoy_dd on "
+//                 + " ins_linea_accion_programacion_hoy_dd.ins_linea_accion_id =ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_programacion_hoy_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_programacion_hoy_dd.dist_id=ins_linea_accion_base_dd.dist_id"
+//                 + " left join ins_linea_accion_costo_dd on "
+//                 + " ins_linea_accion_costo_dd.ins_linea_accion_id=ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_costo_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_costo_dd.dist_id=ins_linea_accion_base_dd.dist_id"
+//                 + " left join ins_linea_accion_destinatario_real_dd on "
+//                 + " ins_linea_accion_destinatario_real_dd.ins_linea_accion_id=ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_destinatario_real_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_destinatario_real_dd.dist_id=ins_linea_accion_base_dd.dist_id"
+//                 + " "+ condition;
+
 		String query = "select "
 				+ "ins_linea_accion_base_dd.institucion_sigla,"
                 + "ins_linea_accion_base_dd.institucion_id,"
@@ -3105,9 +3196,7 @@ public class SqlSelects {
                  + " ins_linea_accion_costo_dd.ins_linea_accion_id=ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_costo_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_costo_dd.dist_id=ins_linea_accion_base_dd.dist_id"
                  + " left join ins_linea_accion_destinatario_real_dd on "
                  + " ins_linea_accion_destinatario_real_dd.ins_linea_accion_id=ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_destinatario_real_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_destinatario_real_dd.dist_id=ins_linea_accion_base_dd.dist_id"
-                 //+ " where periodo=2016"+ condition; para obtener el periodo
                  + " "+ condition;
-
 
 		Statement statement = null;
 		ResultSet rs = null;
