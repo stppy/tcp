@@ -3948,12 +3948,7 @@ $("body").on("click", ".borrarAccion",function(event){
 			    		
 				    	$.ajax({
 
-
-
-
-
 				         	url:'/ajaxSelects?accion=getAsignacionPresiVersion&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto+'&anho='+anho+'&versionReporte='+version,
-
 				          	type:'get',
 				          	crossDomain: 'true',
 				          	dataType:'jsonp',
@@ -4001,8 +3996,12 @@ $("body").on("click", ".borrarAccion",function(event){
 					if( datosProductos.productos[0].clase === "N" )
 					{
 				    	$.ajax({
+<<<<<<< HEAD
 				         	 url:'/ajaxSelects?accion=getProductoTipoN&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto+'&anho='+anho,
 
+=======
+				         	 url:'http://sprtest.stp.gov.py/ajaxSelects?accion=getProductoTipoN&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto+'&anho='+anho,
+>>>>>>> bb146b1900e139c7f1893f14c42ab79ea084eff5
 				          	type:'get',
 				          	crossDomain: 'true',
 				          	dataType:'jsonp',
@@ -7740,7 +7739,7 @@ $("body").on("change", "#productoObjetoGasto",function(event){
 		webServicesDatosProducto = JSON.parse(webServicesDatosProducto);
 				
     	$.ajax({
-	    	url:'http://spr.stp.gov.py/ajaxSelects?accion=getAsignacionPresiVersion&anho='+anho+'&nivel='+webServicesDatosProducto[0].nivelId+'&entidad='+webServicesDatosProducto[0].entidadId+'&versionReporte='+version,
+	    	url:'http://sprtest.stp.gov.py/ajaxSelects?accion=getAsignacionPresiVersion&anho='+anho+'&nivel='+webServicesDatosProducto[0].nivelId+'&entidad='+webServicesDatosProducto[0].entidadId+'&versionReporte='+version,
           	type:'get',
 			crossDomain: 'true',
 			dataType:'jsonp',

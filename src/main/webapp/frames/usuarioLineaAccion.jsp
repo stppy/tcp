@@ -15,11 +15,11 @@
 			var url="";
 			
 			if (rol_jsp == 0){
-				url = 'http://spr.stp.gov.py/ajaxSelects?accion=getUsuarios&mayorIgual='+rol_jsp;				
+				url = 'http://sprtest.stp.gov.py/ajaxSelects?accion=getUsuarios&mayorIgual='+rol_jsp;				
 			} else if(usr_unr_id == 0){
-				url = 'http://spr.stp.gov.py/ajaxSelects?accion=getUsuarios&mayorIgual='+rol_jsp+'&nivelId='+usr_nivel_id+'&entidadId='+usr_entidad_id;			
+				url = 'http://sprtest.stp.gov.py/ajaxSelects?accion=getUsuarios&mayorIgual='+rol_jsp+'&nivelId='+usr_nivel_id+'&entidadId='+usr_entidad_id;			
 			} else {
-				url = 'http://spr.stp.gov.py/ajaxSelects?accion=getUsuarios&mayorIgual='+rol_jsp+'&nivelId='+usr_nivel_id+'&entidadId='+usr_entidad_id+'&unidadResponsableId='+usr_unr_id;
+				url = 'http://sprtest.stp.gov.py/ajaxSelects?accion=getUsuarios&mayorIgual='+rol_jsp+'&nivelId='+usr_nivel_id+'&entidadId='+usr_entidad_id+'&unidadResponsableId='+usr_unr_id;
 			}
 			
 			var usuarios = $.ajax({
@@ -32,7 +32,7 @@
 			usuarios = usuarios.usuarios;
 			
 			var roles = $.ajax({
-				url:'http://spr.stp.gov.py/ajaxSelects?accion=getRol',
+				url:'http://sprtest.stp.gov.py/ajaxSelects?accion=getRol',
 			  	type:'get',
 			  	dataType:'json',
 			  	async:false       
@@ -152,7 +152,7 @@
 	    var usuarioId = idParsed[0];		
 			
 		var usuarioSelec = $.ajax({
-			url:'http://spr.stp.gov.py/ajaxSelects?accion=getUsuarios&usuarioId='+usuarioId,
+			url:'http://sprtest.stp.gov.py/ajaxSelects?accion=getUsuarios&usuarioId='+usuarioId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -161,7 +161,7 @@
 		usuarioSelec = usuarioSelec.usuarios;
 		
 		var lineasAccion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+			url:'http://sprtest.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
 			type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -169,7 +169,7 @@
 		lineasAccion = JSON.parse(lineasAccion);
 		
 		var usuarioLineaAccion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUsuarioLineaAccion&usuario='+usuarioSelec[0].correo,
+			url:'http://sprtest.stp.gov.py/tablero/ajaxSelects2?action=getUsuarioLineaAccion&usuario='+usuarioSelec[0].correo,
 			type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -178,7 +178,7 @@
 	    
 	    
 		var roles = $.ajax({
-			url:'http://spr.stp.gov.py/ajaxSelects?accion=getRol',
+			url:'http://sprtest.stp.gov.py/ajaxSelects?accion=getRol',
 			type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -273,7 +273,7 @@
 			var usuarioId = idEtiqueta[1];
 
 			var usuarioSelec = $.ajax({
-				url:'http://spr.stp.gov.py/ajaxSelects?accion=getUsuarios&usuarioId='+usuarioId,
+				url:'http://sprtest.stp.gov.py/ajaxSelects?accion=getUsuarios&usuarioId='+usuarioId,
 			  	type:'get',
 			  	dataType:'json',
 			  	async:false       
@@ -282,7 +282,7 @@
 			usuarioSelec = usuarioSelec.usuarios;
 			
 			var lineaAccion = $.ajax({
-				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId'+lineaAccionId,
+				url:'http://sprtest.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId'+lineaAccionId,
 			  	type:'get',
 			  	dataType:'json',
 			  	async:false       
@@ -335,7 +335,7 @@
 			
    		  	var info2 = JSON.stringify(objeto);
    		    $.ajax({
-   		        url: "http://spr.stp.gov.py/tablero/ajaxInserts2?accion=insUsuarioLineaAccion",
+   		        url: "http://sprtest.stp.gov.py/tablero/ajaxInserts2?accion=insUsuarioLineaAccion",
    		        type: 'POST',
    		        dataType: 'json',
    		        data: info2,
@@ -407,7 +407,7 @@
 
 		  	var info = JSON.stringify(objeto);
 		    $.ajax({
-		        url: "http://spr.stp.gov.py/tablero/ajaxUpdate2?accion=borradoUsuarioLineaAccion",
+		        url: "http://sprtest.stp.gov.py/tablero/ajaxUpdate2?accion=borradoUsuarioLineaAccion",
 		        type: 'POST',
 		        dataType: 'json',
 		        data: info,
