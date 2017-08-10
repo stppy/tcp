@@ -1,8 +1,13 @@
 package py.gov.stp.objetosV2;
 import java.sql.Date;
-
+/**
+@author          DGTIC - STP
+@email			 dgtic@stp.gov.py
+*/
 public class Avance {
 	protected int id;
+	protected int departamentoId;
+	protected int distritoAvance;
 	protected String justificacion;
 	protected Double cantidad;
 	protected String fechaEntrega;
@@ -22,6 +27,26 @@ public class Avance {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+
+	public int getDepartamentoId() {
+		return departamentoId;
+	}
+
+
+	public void setDepartamentoId(int departamentoId) {
+		this.departamentoId = departamentoId;
+	}
+
+
+	public int getDistritoAvance() {
+		return distritoAvance;
+	}
+
+
+	public void setDistritoAvance(int distritoAvance) {
+		this.distritoAvance = distritoAvance;
 	}
 
 

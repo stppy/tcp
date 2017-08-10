@@ -1,4 +1,8 @@
 package objetos;
+/**
+@author          DGTIC - STP
+@email			 dgtic@stp.gov.py
+*/
 
 import java.sql.Date;
 

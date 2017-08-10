@@ -1,6 +1,9 @@
 package py.gov.stp.objetosV2;
 import java.sql.Date;
-
+/**
+@author          DGTIC - STP
+@email			 dgtic@stp.gov.py
+*/
 public class Cronograma {
 	protected int id;
 	protected String nombre;
@@ -16,6 +19,7 @@ public class Cronograma {
 	protected Date fechaInsercion;
 	protected Date fechaActualizacion;	
     protected String usuarioResponsable;
+    protected String prodConcat;
     	
 	
 	public int getId() { 
@@ -161,6 +165,15 @@ public class Cronograma {
 	public void setUsuarioResponsable(String usuarioResponsable) {
 		this.usuarioResponsable = usuarioResponsable;
 	}
-	
+
+
+	public String getProdConcat() {
+		return prodConcat;
+	}
+
+
+	public void setProdConcat(String prodConcat) {
+		this.prodConcat = prodConcat;
+	}
 	
 }

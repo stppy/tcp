@@ -150,6 +150,24 @@ textarea { text-transform: uppercase; }
 	            </div>
 	            <div class="box-body" style="overflow: auto; display: block;" >
 	            
+	            	<div class="container">
+						<div class="row">
+							<div class="col-md-12">
+								<h5>Seleccione la etiqueta que desea filtrar</h5>								
+							</div>
+							<div class="col-md-8">
+								<!-- <label for="selectorEtiqueta">Seleccione la etiqueta </label> -->
+								<select class="form-control" id="selectorEtiqueta"> 												
+								</select> 
+							</div>																	
+							<div class="col-md-4">
+								<button type="button" class="btn btn-box btn-primary" id="generarPivot"><p align="center">Generar Pivot</p></button>											 
+							</div>
+						</div><!-- fin row de selectores -->
+					</div><!-- fin container de selectores -->
+	            
+	            </div>
+	            
 	          <table class="table table-striped table-bordered table-hover">
 	            	<tr>	  					
 	  					<td>
@@ -159,34 +177,67 @@ textarea { text-transform: uppercase; }
 		<script src="tablero_files/formatendefaultenuientableenorgchartenmotionchartengaugeenann.js" type="text/javascript"></script>
 		<script type="text/javascript">
 		$( document ).ready(function() {
-            google.load("visualization", "1", {packages:["corechart", "charteditor"]});
-            $(function(){
-            	$.noConflict();
-                var derivers = $.pivotUtilities.derivers;
-                var renderers = $.extend($.pivotUtilities.renderers, 
-                        $.pivotUtilities.export_renderers);
-
+			
+			$("#output").html("");
+			inicializar=true;
+			
+			var etiqueta = $.ajax({
+				url:'/tablero/ajaxSelects2?action=getEtiqueta',
+				type:'get',
+				dataType:'json',
+				async:false       
+			}).responseText;
+			etiqueta = JSON.parse(etiqueta);
+			
+			optionEtiqueta="";
+			for(var a = 0; a < etiqueta.length; a++){				
+				optionEtiqueta+='<option value="'+etiqueta[a].id+'" >'+etiqueta[a].nombre+'</option>';				
+			}
+			$("#selectorEtiqueta").html(optionEtiqueta);
+			
+			$("body").on("click", "#generarPivot",function(event){
+				$("#output").html("");
+				var etiqueta = $("#selectorEtiqueta option:selected").val();
+													
+				iniciarPivot(etiqueta, inicializar);				
+			});
+			
+			var derivers; var renderers;
+			function iniciarPivot(etiqueta, inicio){
 				
-                $.getJSON("/tablero/ajaxSelects2?action=getPivotCostoAvance", function(mps) {
-                	$("#output").pivotUI(mps, {
-                        renderers: $.extend(
-                            $.pivotUtilities.renderers, 
-                            $.pivotUtilities.gchart_renderers, 
-                            $.pivotUtilities.d3_renderers
-                            ),
-                            rendererName: "TSV Export"/*,
-                        derivedAttributes: {
-                            "Age Bin": derivers.bin("Age", 10),
-                            "Gender Imbalance": function(mp) {
-                                return mp["Gender"] == "Male" ? 1 : -1;
-                            }
-                        },
-                        cols: ["Age Bin"], rows: ["Gender"],
-                        rendererName: "Area Chart"
-						*/
-                    });
-                });
-             });
+				  google.load("visualization", "1", {packages:["corechart", "charteditor"]});
+		            $(function(){
+		            	
+		            	if (inicio==true){
+		            		$.noConflict();
+			                 derivers = $.pivotUtilities.derivers;
+			                 renderers = $.extend($.pivotUtilities.renderers, 
+				                        $.pivotUtilities.export_renderers);
+			                 inicializar=false;
+		            	}
+
+						
+		                $.getJSON("/tablero/ajaxSelects2?action=getPivotCostoAvance&etiquetaId="+etiqueta, function(mps) {
+		                	$("#output").pivotUI(mps, {
+		                        renderers: $.extend(
+		                            $.pivotUtilities.renderers, 
+		                            $.pivotUtilities.gchart_renderers, 
+		                            $.pivotUtilities.d3_renderers
+		                            ),
+		                            rendererName: "TSV Export"/*,
+		                        derivedAttributes: {
+		                            "Age Bin": derivers.bin("Age", 10),
+		                            "Gender Imbalance": function(mp) {
+		                                return mp["Gender"] == "Male" ? 1 : -1;
+		                            }
+		                        },
+		                        cols: ["Age Bin"], rows: ["Gender"],
+		                        rendererName: "Area Chart"
+								*/
+		                    });
+		                });
+		             });	
+			}
 		});
         </script>
 
@@ -292,7 +343,7 @@ textarea { text-transform: uppercase; }
 
       <!-- Control Sidebar -->
       <aside class="control-sidebar control-sidebar-light">
-		<!-- include file="/frames/control-sidebar.jsp"  -->
+		<%@ include file="/frames/control-sidebar.jsp"  %>
       </aside><!-- /.control-sidebar -->
       <!-- Add the sidebar's background. This div must be placed
            immediately after the control sidebar -->

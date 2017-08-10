@@ -5,7 +5,8 @@ function numeroConComa(x) {
 	}else if ( x == "Infinity"){
 		return "-"
 	}else{
-		return x.toString().replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+		//return x.toString().replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+		return x.toString().replace(".", ",").replace(/(\d)(?:(?=\d+(?=[^\d.]))(?=(?:[0-9]{3})+\b)|(?=\d+(?=\.))(?=(?:[0-9]{3})+(?=\.)))/g, "$1.");
 	}
 }
 
@@ -206,8 +207,8 @@ function renderAccion(estrategia, lineasProgramadas, instituciones, periodo){
 										tempInstLineas += '<tr>'+
 										'<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #3c8dbc;">'+lineasProgramadas[n].lineaAccionNombre+'</span></td>'+
 										'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
-										'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
-										'<td>'+numeroConComa(lineasProgramadas[n].cantidadAnho)+'</td>'+
+										'<td>'+numeroConComa((lineasProgramadas[n].meta).toFixed(2))+'</td>'+
+										'<td>'+numeroConComa((lineasProgramadas[n].cantidadAnho).toFixed(2))+'</td>'+
 										'<td class="'+clase+'">'+desempProgAnho+'</td>';
 										if(lineasProgramadas[n].cantDest==0){
 											tempInstLineas += '<td> - </td>';
@@ -215,8 +216,8 @@ function renderAccion(estrategia, lineasProgramadas, instituciones, periodo){
 											tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDest)+'</td>';
 										}
 										tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].inversionEstimada/1000000).toFixed(2))+'</td>'+
-										'<td>'+numeroConComa(lineasProgramadas[n].cantidadHoy)+'</td>'+
-										'<td>'+numeroConComa(lineasProgramadas[n].cantidadAvance)+'</td>';
+										'<td>'+numeroConComa((lineasProgramadas[n].cantidadHoy).toFixed(2))+'</td>'+
+										'<td>'+numeroConComa((lineasProgramadas[n].cantidadAvance).toFixed(2))+'</td>';
 						
 										var desempEjeHoy=numeroConComa(((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100).toFixed(2));
 										if(lineasProgramadas[n].cantidadAvance==0 && lineasProgramadas[n].cantidadHoy==0) desempEjeHoy="-";
@@ -239,7 +240,7 @@ function renderAccion(estrategia, lineasProgramadas, instituciones, periodo){
 										if(lineasProgramadas[n].cantDestinatarioReal==0){
 											tempInstLineas += '<td> - </td>';
 										}else{
-											tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDestinatarioReal)+'</td>';
+											if(lineasProgramadas[n].cantDestinatarioReal > 0){ tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].cantDestinatarioReal).toFixed(2))+'</td>'; }else{ tempInstLineas += '<td>'+numeroConComa(lineasProgramadas[n].cantDestinatarioReal)+'</td>';}
 										}
 										tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].costoAc/1000000).toFixed(2))+'</td>'+
 										'</tr>';
@@ -283,19 +284,19 @@ function getPeriodo(periodo){
 		}
 	}
 	
-	var periodoCuerpo = '<div class="col-sm-4">'+
-							'<label for="periodoSeleccion" style="padding-top:6px;">Periodo: </label>'+
-							'<select id="periodoSeleccion" class="form-control" style="width:50% !important; display: inline-block; margin-left: 8px;">'+optionPeriodo+'</select>'+
-						'</div>'+
-						'<div class="col-sm-4">'+
-						'</div>'+
-						'<div class="col-sm-4">'+
-							/* '<div class="checkbox">'+
-								'<label> <input type="checkbox" id="chkMostrarOcultar">Ocultar Registros Borrados</label>'+
-							'</div>'+ */
-						'</div>';
+//	var periodoCuerpo = '<div class="col-sm-4">'+
+//							'<label for="periodoSeleccion" style="padding-top:6px;">Periodo: </label>'+
+//							'<select id="periodoSeleccion" class="form-control" style="width:50% !important; display: inline-block; margin-left: 8px;">'+optionPeriodo+'</select>'+
+//						'</div>'+
+//						'<div class="col-sm-4">'+
+//						'</div>'+
+//						'<div class="col-sm-4">'+
+//							/* '<div class="checkbox">'+
+//								'<label> <input type="checkbox" id="chkMostrarOcultar">Ocultar Registros Borrados</label>'+
+//							'</div>'+ */
+//						'</div>';
 						
-	$('#mostrarOcultarPeriodo').html(periodoCuerpo);
+	$('#periodoSeleccion').html(optionPeriodo);
 	
 	/*$("body").on("click", ".guardarRangoFechas",function(event){
 	

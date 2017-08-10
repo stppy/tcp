@@ -1,22 +1,28 @@
 package py.gov.stp.objetosV2;
 
 import java.sql.Date;
-
+/**
+@author          DGTIC - STP
+@email			 dgtic@stp.gov.py
+*/
 public class Evidencia {
 	protected int id;
 	protected String nombre;
 	protected String descripcion;
+	protected int lineaAccionId; 
+	protected String lineaAccionNombre;
 	protected String url;
 	protected int wsId;	
 	protected int version;
 	protected boolean borrado;
 	protected int avanceId;
+	protected String avanceFecha;
 	protected String urlDocumento;
 	protected Double latitud;
 	protected Double longitud;
 	protected Date fechaInsercion;
 	protected Date fechaActualizacion;	
-    protected String usuarioResponsable;
+    protected String usuarioResponsable; 
 	
 		
 	public int getId() {
@@ -36,6 +42,18 @@ public class Evidencia {
 	}
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+	}
+	public int getLineaAccionId() {
+		return lineaAccionId;
+	}
+	public void setLineaAccionId(int lineaAccionId) {
+		this.lineaAccionId = lineaAccionId;
+	}
+	public String getLineaAccionNombre() {
+		return lineaAccionNombre;
+	}
+	public void setLineaAccionNombre(String lineaAccionNombre) {
+		this.lineaAccionNombre = lineaAccionNombre;
 	}
 	public String getUrl() {
 		return url;
@@ -66,6 +84,12 @@ public class Evidencia {
 	}
 	public void setAvanceId(int avanceId) {
 		this.avanceId = avanceId;
+	}	
+	public String getAvanceFecha() {
+		return avanceFecha;
+	}
+	public void setAvanceFecha(String avanceFecha) {
+		this.avanceFecha = avanceFecha;
 	}
 	public void changeBorrado(){
 		this.borrado=!borrado;

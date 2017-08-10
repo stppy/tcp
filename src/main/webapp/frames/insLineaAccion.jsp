@@ -62,25 +62,20 @@ function renderEvidencia(avanceId, parametros){
 	<%}%>;	
 	
 	$("body").on("click", ".nuevaInsLineaAccion",function(event){		
+		if ( $("#insLineaAccion").length )
+		{
+			$("#insLineaAccion").remove();
+		}
+		if ( $("#modalAccion").length )
+		{
+			$("#modalAccion").remove();
+		}
 		event.stopPropagation();
 		event.preventDefault();
 		var todasLasEtiquetas = "";
-
 		
-		var lineaAccion = $.ajax({
-			url:'/tablero/ajaxSelects2?action=getLineaAccion',
-		  	type:'get',
-		  	dataType:'json',
-		  	async:false       
-		}).responseText;
-		lineaAccion = JSON.parse(lineaAccion);
-		var optionLineaAccion;
 
-		for(i = 0;i<lineaAccion.length; i++){
-			optionLineaAccion+='<option value="'+lineaAccion[i].id+'" >'+lineaAccion[i].nombre+'</option>';
-		}
-
-		var institucion = $.ajax({
+		/* var institucion = $.ajax({
 			url:'/tablero/ajaxSelects2?action=getInstitucion',
 		  	type:'get',
 		  	dataType:'json',
@@ -91,7 +86,7 @@ function renderEvidencia(avanceId, parametros){
 
 		for(m = 0;m<institucion.length; m++){
 			optionInstitucion+='<option value="'+institucion[m].id+'" >'+institucion[m].nombre+'</option>';
-		}
+		} */
 
 		var periodo = $.ajax({
 			url:'/tablero/ajaxSelects2?action=getPeriodo',
@@ -100,25 +95,48 @@ function renderEvidencia(avanceId, parametros){
 		  	async:false       
 		}).responseText;
 		periodo = JSON.parse(periodo);
-		var optionPeriodo;
+		var optionPeriodo;		
+		
+		var anho=$("#periodoSeleccion option:selected").val();
+		var version=$("#versionSeleccion option:selected").val();
 
 		for(p = 0;p<periodo.length; p++)
 		{
-			if(periodo[p].id == 2017)
+			if(periodo[p].id == anho)
 			{
 				optionPeriodo+='<option value="'+periodo[p].id+'" selected>'+periodo[p].nombre+'</option>';
 			}else{
 				optionPeriodo+='<option value="'+periodo[p].id+'" >'+periodo[p].nombre+'</option>';
 			}
 		}
-		if ( $("#insLineaAccion").length )
-		{
-			$("#insLineaAccion").remove();
+		
+		var versionInsLineaAccion = $.ajax({
+			url:'/tablero/ajaxSelects2?action=getVersionInsLineaAccion&anho='+anho,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		versionInsLineaAccion = JSON.parse(versionInsLineaAccion);
+	   	
+		var optionVersion = "";
+		if (versionInsLineaAccion.length > 0) {
+			for(v = 0;v<versionInsLineaAccion.length; v++)
+			{								
+				optionVersion+='<option value="'+versionInsLineaAccion[v].nro+'" >'+versionInsLineaAccion[v].nro+'</option>';		
+			}
 		}
-		if ( $("#modalAccion").length )
-		{
-			$("#modalAccion").remove();
-		}
+		/* var lineaAccion = $.ajax({
+			url:'/tablero/ajaxSelects2?action=getLineaAccion&borrado=false',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		lineaAccion = JSON.parse(lineaAccion);
+		var optionLineaAccion;
+
+		for(i = 0;i<lineaAccion.length; i++){
+			optionLineaAccion+='<option value="'+lineaAccion[i].id+'" >'+lineaAccion[i].nombre+'</option>';
+		}		 */
 		
 		var unidadMedida = $.ajax({
 			url:'/tablero/ajaxSelects2?action=getUnidadMedida',
@@ -133,7 +151,7 @@ function renderEvidencia(avanceId, parametros){
 			optionUnidadMedida+='<option value="'+unidadMedida[u].id+'" parametro="'+unidadMedida[u].id+'">'+unidadMedida[u].descripcion+'</option>';
 		}
 		
-		var etiquetas = $.ajax({
+		/* var etiquetas = $.ajax({
 			url:'/tablero/ajaxSelects2?action=getEtiqueta',
 			type:'get',
 		  	dataType:'json',
@@ -142,8 +160,8 @@ function renderEvidencia(avanceId, parametros){
 		etiquetas = JSON.parse(etiquetas);
 		
  		for(var l = 0; l < etiquetas.length; l++){
- 			todasLasEtiquetas += ' <input type="checkbox" class="cmbEtiqueta" id=cmbEtiqueta-'+etiquetas[l].id+'> '+ etiquetas[l].nombre;
-		}
+ 			todasLasEtiquetas += ' <input type="checkbox" class="cmbEtiqueta" id=cmbEtiqueta-'+etiquetas[l].id+'> '+ etiquetas[l].nombre + '</input></br>';
+		} */
 		
 		var contenido = "";
 
@@ -158,34 +176,34 @@ function renderEvidencia(avanceId, parametros){
 									    
 							'				<form role="form" id="formularioInsLineaAccion">'+
 							'					<div class="form-group">'+
-							'						<label for="nombreLineaAccion">Nombre Linea Acción</label>'+
-							'						<input type="hidden" id="idInsLineaAccion" value="">'+					
-							'						<select name="lineaAccion" id="nombreLineaAccionInsLineaAccion" class="form-control">'+optionLineaAccion+'</select>'+
-							'					</div>'+
-							'					<div class="form-group">'+
-							'						<label for="unidadMedida">U. Medida</label>'+
-							'						<input type="text" id="unidadMedidaInsLineaAccion" class="form-control" placeholder="U. Medida" disabled>'+
-							'					</div>'+				
-							'					<div class="form-group">'+
-							'						<label for="nombreInstitucion">Nombre Institución</label>'+
-							'						<select name="institucion" id="nombreInstitucionInsLineaAccion" class="form-control">'+optionInstitucion+'</select>'+
+							'						<label for="nombreInstitucionInsLineaAccion">Nombre Institución</label>'+
+							'						<input type="text" name="institucion" id="nombreInstitucionInsLineaAccion" list="listaf1c1" class="form-control"></input>'+
 							'					</div>'+
 							'					<div class="form-group">'+
 							'						<label for="periodo">Periodo</label>'+
 							'						<select id="periodoInsLineaAccion" class="form-control">'+optionPeriodo+'</select>'+
+							'					</div>'+	
+							'					<div class="form-group">'+
+							'						<label for="version">Versión</label>'+
+							'						<input type="text" id="versionInsLineaAccion" list="listaf1c2" class="form-control"></input>'+							
+							'					</div>'+
+							'					<div class="form-group">'+
+							'						<label for="nombreLineaAccionInsLineaAccion">Lineas de Acción disponibles (cantidad:<span id="cantLAdisp"></span>)</label>'+
+							'						<input type="hidden" id="idInsLineaAccion" value="">'+					
+							'						<input type="text" name="lineaAccion" id="nombreLineaAccionInsLineaAccion" list="listaf1c3" class="form-control"></input>'+
+							'					</div>'+			
+							'					<div class="form-group">'+
+							'						<label for="unidadMedida">U. Medida</label>'+
+							'						<input type="text" id="unidadMedidaInsLineaAccion" class="form-control" placeholder="U. Medida" disabled>'+
 							'					</div>'+
 							'					<div class="form-group">'+
 							'						<label for="meta">Meta</label>'+
 							'						<input type="number" id="metaInsLineaAccion" class="form-control" name="meta" placeholder="Ingrese Meta" required >'+
-							'					</div>'+
+							'					</div>'+								
 							'					<div class="form-group">'+
-							'						<label for="version">Versión</label>'+
-							'						<input type="number" id="versionInsLineaAccion" class="form-control" name="version" placeholder="Ingrese Versión" required>'+
-							'					</div>'+
-							'					<div class="form-group">'+
-							'						<label for="version">Etiquetas </label>'+
+/* 							'						<label for="version">Etiquetas </label></br>'+
 													todasLasEtiquetas
-							'					</div>'+			
+							'					</div>'+		 */	
 							'				</form>'+			  
 							
 							'		    </div>'+
@@ -194,11 +212,172 @@ function renderEvidencia(avanceId, parametros){
 							'</div>';
 							
 			$("#programacion").append(contenido);			
-			$("#unidadMedidaInsLineaAccion")
+			$("#unidadMedidaInsLineaAccion");
 			$("#insLineaAccion").find("#formularioInsLineaAccion").append('<div class="form-group" id="guardarInsLineaAccionBoton"><button type="submit" class="btn btn-success" id="guardarInsLineaAccion" >Guardar</button></div>');
 			$('#insLineaAccion').modal('show');
 			
+			function Combo(){
+				  this.versionILAFocus = function(){
+					
+				  var anho = $("#periodoInsLineaAccion option:selected").val(); 				 	
+					
+				  //var listaDatalist=document.getElementsByTagName('datalist');
+					
+				    var datosVersionILA = $.ajax({
+						url:'/tablero/ajaxSelects2?action=getVersionInsLineaAccion&anho='+anho,
+					  	type:'get',
+					  	dataType:'json',
+					  	async:false       
+					}).responseText;				  
+					datosVersionILA = JSON.parse(datosVersionILA);
+					
+					if ( $("#listaf1c2").length ) {
+						$("#listaf1c2").remove();
+						$('#versionInsLineaAccion').val('');
+					}
+						
+			        //if(listaDatalist.length === 0 )
+			        //{
+				        var datalistVersionILA = document.createElement('datalist');
+				        datalistVersionILA.setAttribute('id','listaf1c2');
+				        datalistVersionILA.setAttribute('size','5'); 
+				        var ubicacionDatalistVersionILA = document.getElementById('formularioInsLineaAccion');
+				        ubicacionDatalistVersionILA.appendChild(datalistVersionILA);
+				
+				        for(var i = 0; i < datosVersionILA.length ; i++) 
+				        {    
+				        	var option = document.createElement('option');
+				          	option.setAttribute('value',datosVersionILA[i].nro);
+				          	option.setAttribute('label',datosVersionILA[i].nro);
+				          	datalistVersionILA.appendChild(option);      
+				      	} 
+			        //}			        			        
+				  } 
+				  
+				// Autocompletado del Nombre de la Institución.
+		        this.institucionFocus = function(){
+		        	
+					var datosInstitucion = $.ajax({
+						url:'/tablero/ajaxSelects2?action=getInstitucion',
+					  	type:'get',
+					  	dataType:'json',
+					  	async:false       
+					}).responseText;			        
+			        datosInstitucion = JSON.parse(datosInstitucion);
+					
+			        if ( $("#listaf1c1").length ) {
+						$("#listaf1c1").remove();
+						$('#nombreInstitucionInsLineaAccion').val('');
+						$("#listaf1c2").remove();
+						$('#periodoInsLineaAccion').val('');
+					}
+			        
+			        var datalistInstitucion = document.createElement('datalist');
+			        datalistInstitucion.setAttribute('id','listaf1c1');
+			        datalistInstitucion.setAttribute('size','5'); 
+			        var ubicacionDatalistInstitucion = document.getElementById('formularioInsLineaAccion');
+			        ubicacionDatalistInstitucion.appendChild(datalistInstitucion);
+			
+			        for(var i = 0; i < datosInstitucion.length ; i++) 
+			        {    
+			        	var option = document.createElement('option');
+			          	option.setAttribute('value',datosInstitucion[i].id);
+			          	option.setAttribute('label',datosInstitucion[i].nombre);
+			          	datalistInstitucion.appendChild(option);      
+			      	}
+				}			        
+				
+		     	// Autocompletado del Nombre de la Institución.
+		        this.nombreLAFocus = function(){
+		        	
+		        	var institucionSeleccionada = $("#nombreInstitucionInsLineaAccion").val();
+					var periodoSeleccionado = $("#periodoInsLineaAccion option:selected").val();
+					var versionSeleccionado = $("#versionInsLineaAccion").val();
+		     		
+					var datosLA = $.ajax({
+						url:'/tablero/ajaxSelects2?action=getLineasAccionRestantes&institucionId='+institucionSeleccionada+'&periodoId='+periodoSeleccionado+'&versionId='+versionSeleccionado,
+					  	type:'get',
+					  	dataType:'json',
+					  	async:false       
+					}).responseText;		        
+			        datosLA = JSON.parse(datosLA);
+					
+			        if ( $("#listaf1c3").length ) {
+						$("#listaf1c3").remove();
+						$('#nombreLineaAccionInsLineaAccion').val('');
+						$('#cantLAdisp').html('cantidad:');
+					}
+			        
+			        var datalistNombreLA = document.createElement('datalist');
+			        datalistNombreLA.setAttribute('id','listaf1c3');
+			        datalistNombreLA.setAttribute('size','5'); 
+			        var ubicacionDatalistNombreLA = document.getElementById('formularioInsLineaAccion');
+			        ubicacionDatalistNombreLA.appendChild(datalistNombreLA);
+			
+			        for(var i = 0; i < datosLA.length ; i++) 
+			        {    
+			        	var option = document.createElement('option');
+			          	option.setAttribute('value',datosLA[i].id);
+			          	option.setAttribute('label',datosLA[i].nombre);
+			          	datalistNombreLA.appendChild(option);      
+			      	}
+			        
+			        var lineaAccion = $.ajax({
+						url:'/tablero/ajaxSelects2?action=getLineaAccion&borrado=false',
+					  	type:'get',
+					  	dataType:'json',
+					  	async:false       
+					}).responseText;
+					lineaAccion = JSON.parse(lineaAccion);
+					var optionLineaAccion;
 
+					$('#cantLAdisp').html(' '+lineasAccionRestantes.length+ ' de '+ lineaAccion.length );
+				}
+			    
+			}
+			
+			var eje1 = new Combo();
+			document.getElementById('versionInsLineaAccion').addEventListener('focus',eje1.versionILAFocus,false);
+			//document.getElementById('versionInsLineaAccion').addEventListener('change',eje1.versionILA,false);
+			document.getElementById('nombreInstitucionInsLineaAccion').addEventListener('focus',eje1.institucionFocus,false);
+			document.getElementById('nombreLineaAccionInsLineaAccion').addEventListener('focus',eje1.nombreLAFocus,false);
+			
+	});
+	
+	$("body").on("change", "#versionInsLineaAccion",function(event){	
+	   	
+		var institucionSeleccionada = $("#nombreInstitucionInsLineaAccion").val();
+		var periodoSeleccionado = $("#periodoInsLineaAccion option:selected").val();
+		var versionSeleccionado = $("#versionInsLineaAccion").val();		
+		
+	   	var lineasAccionRestantes = $.ajax({
+			url:'/tablero/ajaxSelects2?action=getLineasAccionRestantes&institucionId='+institucionSeleccionada+'&periodoId='+periodoSeleccionado+'&versionId='+versionSeleccionado,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+	   	lineasAccionRestantes = JSON.parse(lineasAccionRestantes);
+	   	
+		var optionLineasAccionRestantes = "";
+		if (lineasAccionRestantes.length > 0) {
+			for(v = 0;v<lineasAccionRestantes.length; v++)
+			{				
+				optionLineasAccionRestantes+='<option value="'+lineasAccionRestantes[v].id+'" >'+lineasAccionRestantes[v].nombre+'</option>';		
+			}
+		}
+		$('#nombreLineaAccionInsLineaAccion').html(optionLineasAccionRestantes);
+		
+		var lineaAccion = $.ajax({
+			url:'/tablero/ajaxSelects2?action=getLineaAccion&borrado=false',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		lineaAccion = JSON.parse(lineaAccion);
+		var optionLineaAccion;
+
+		$('#cantLAdisp').html(' '+lineasAccionRestantes.length+ ' de '+ lineaAccion.length );
+	   
 	});
 	
 	function validarFormulario(formId, fechaAccion, fechaAccionEdit) {	    
@@ -433,7 +612,7 @@ function renderEvidencia(avanceId, parametros){
 	        		        	
 	        		        	}
 	        			 });
-		        		renderInsLineaAccion(periodoSeleccionado);	        				        													
+	        		    renderInsLineaAccion(periodoSeleccionado,versionSeleccionado,etiquetaSeleccionado);	        				        													
 						
 		        	}else{
 		
@@ -495,7 +674,7 @@ function renderEvidencia(avanceId, parametros){
 		}
 
 
-		var institucion = $.ajax({
+		/* var institucion = $.ajax({
 			url:'/tablero/ajaxSelects2?action=getInstitucion',
 		  	type:'get',
 		  	dataType:'json',
@@ -506,7 +685,7 @@ function renderEvidencia(avanceId, parametros){
 
 		for(m = 0;m<institucion.length; m++){
 			optionInstitucion+='<option value="'+institucion[m].id+'" >'+institucion[m].nombre+'</option>';
-		}
+		} */
 
 		var periodo = $.ajax({
 			url:'/tablero/ajaxSelects2?action=getPeriodo',
@@ -578,30 +757,30 @@ function renderEvidencia(avanceId, parametros){
 									    
 							'				<form role="form" id="formularioInsLineaAccion">'+
 							'					<div class="form-group">'+
-							'						<label for="nombreLineaAccion">Nombre Linea Acción</label>'+
-							'						<input type="hidden" id="idInsLineaAccion" value="">'+					
-							'						<select name="lineaAccion" id="nombreLineaAccionInsLineaAccion" class="form-control">'+optionLineaAccion+'</select>'+
-							'					</div>'+
-							'					<div class="form-group">'+
 							'						<label for="nombreInstitucion">Nombre Institución</label>'+
-							'						<select name="institucion" id="nombreInstitucionInsLineaAccion" class="form-control">'+optionInstitucion+'</select>'+
-							'					</div>'+
+							'						<input type="text" name="institucion" id="nombreInstitucionInsLineaAccion" list="listaf1c1" class="form-control"></input>'+
+							'					</div>'+							
 							'					<div class="form-group">'+
 							'						<label for="periodo">Periodo</label>'+
 							'						<select id="periodoInsLineaAccion" class="form-control">'+optionPeriodo+'</select>'+
 							'					</div>'+
 							'					<div class="form-group">'+
+							'						<label for="version">Versión</label>'+
+							'						<input type="text" type="number" id="versionInsLineaAccion" list="listaf1c2" class="form-control" name="version" placeholder="Ingrese Versión" required></input>'+
+							'					</div>'+
+							'					<div class="form-group">'+
+							'						<label for="nombreLineaAccion">Lineas de Acción disponibles (cantidad:<span id="cantLAdisp"></span>)</label>'+
+							'						<input type="hidden" id="idInsLineaAccion" value="">'+					
+							'						<input type="text" name="lineaAccion" id="nombreLineaAccionInsLineaAccion" list="listaf1c3" class="form-control"></input>'+
+							'					</div>'+
+							'					<div class="form-group">'+
 							'						<label for="meta">Meta</label>'+
 							'						<input type="number" id="metaInsLineaAccion" class="form-control" name="meta" placeholder="Ingrese Meta" required>'+
 							'					</div>'+
-							'					<div class="form-group">'+
-							'						<label for="version">Versión</label>'+
-							'						<input type="number" id="versionInsLineaAccion" class="form-control" name="version" placeholder="Ingrese Versión" required>'+
-							'					</div>'+
-							'					<div class="form-group">'+
+/* 							'					<div class="form-group">'+
 							'					<label for="etiquetaUsuario">Etiqueta Instancia Linea Acción</label></br>'+
 													etiquetasUsuario
-							'					</div>'+
+							'					</div>'+ */
 
 							'				</form>'+			  
 							
@@ -617,7 +796,137 @@ function renderEvidencia(avanceId, parametros){
 		$("#insLineaAccion").find("#formularioInsLineaAccion").append('<div class="form-group" id="actualizarInsLineaAccionBoton"><button type="submit" class="btn btn-success" id="actualizarInsLineaAccion">Actualizar</button></div>');
 		$("#idInsLineaAccion").val(id);
 		
-		var lineaAccion = $.ajax({
+		/*************************************************************/
+		
+		function Combo(){
+			  this.versionILAFocus = function(){
+				
+			  var anho = $("#periodoInsLineaAccion option:selected").val(); 				 	
+				
+			  //var listaDatalist=document.getElementsByTagName('datalist');
+				
+			    var datosVersionILA = $.ajax({
+					url:'/tablero/ajaxSelects2?action=getVersionInsLineaAccion&anho='+anho,
+				  	type:'get',
+				  	dataType:'json',
+				  	async:false       
+				}).responseText;				  
+				datosVersionILA = JSON.parse(datosVersionILA);
+				
+				if ( $("#listaf1c2").length ) {
+					$("#listaf1c2").remove();
+					//$('#versionInsLineaAccion').val('');
+				} 
+					
+		        //if(listaDatalist.length === 0 )
+		        //{
+			        var datalistVersionILA = document.createElement('datalist');
+			        datalistVersionILA.setAttribute('id','listaf1c2');
+			        datalistVersionILA.setAttribute('size','5'); 
+			        var ubicacionDatalistVersionILA = document.getElementById('formularioInsLineaAccion');
+			        ubicacionDatalistVersionILA.appendChild(datalistVersionILA);
+			
+			        for(var i = 0; i < datosVersionILA.length ; i++) 
+			        {    
+			        	var option = document.createElement('option');
+			          	option.setAttribute('value',datosVersionILA[i].nro);
+			          	option.setAttribute('label',datosVersionILA[i].nro);
+			          	datalistVersionILA.appendChild(option);      
+			      	} 
+		        //}			        			        
+			  } 
+			  
+			// Autocompletado del Nombre de la Institución.
+	        this.institucionFocus = function(){
+	        	
+				var datosInstitucion = $.ajax({
+					url:'/tablero/ajaxSelects2?action=getInstitucion',
+				  	type:'get',
+				  	dataType:'json',
+				  	async:false       
+				}).responseText;			        
+		        datosInstitucion = JSON.parse(datosInstitucion);
+				
+		        if ( $("#listaf1c1").length ) {
+					$("#listaf1c1").remove();
+					//$('#nombreInstitucionInsLineaAccion').val('');
+					$("#listaf1c2").remove();
+					$('#periodoInsLineaAccion').val('');
+				}
+		        
+		        var datalistInstitucion = document.createElement('datalist');
+		        datalistInstitucion.setAttribute('id','listaf1c1');
+		        datalistInstitucion.setAttribute('size','5'); 
+		        var ubicacionDatalistInstitucion = document.getElementById('formularioInsLineaAccion');
+		        ubicacionDatalistInstitucion.appendChild(datalistInstitucion);
+		
+		        for(var i = 0; i < datosInstitucion.length ; i++) 
+		        {    
+		        	var option = document.createElement('option');
+		          	option.setAttribute('value',datosInstitucion[i].id);
+		          	option.setAttribute('label',datosInstitucion[i].nombre);
+		          	datalistInstitucion.appendChild(option);      
+		      	}
+			}			        
+			
+	     	// Autocompletado del Nombre de la Institución.
+	        this.nombreLAFocus = function(){
+	        	
+	        	var institucionSeleccionada = $("#nombreInstitucionInsLineaAccion").val();
+				var periodoSeleccionado = $("#periodoInsLineaAccion option:selected").val();
+				var versionSeleccionado = $("#versionInsLineaAccion").val();
+	     		
+				var datosLA = $.ajax({
+					url:'/tablero/ajaxSelects2?action=getLineasAccionRestantes&institucionId='+institucionSeleccionada+'&periodoId='+periodoSeleccionado+'&versionId='+versionSeleccionado,
+				  	type:'get',
+				  	dataType:'json',
+				  	async:false       
+				}).responseText;		        
+		        datosLA = JSON.parse(datosLA);
+				
+		        if ( $("#listaf1c3").length ) {
+					$("#listaf1c3").remove();
+					//$('#nombreLineaAccionInsLineaAccion').val('');
+					$('#cantLAdisp').html('cantidad:');
+				}
+		        
+		        var datalistNombreLA = document.createElement('datalist');
+		        datalistNombreLA.setAttribute('id','listaf1c3');
+		        datalistNombreLA.setAttribute('size','5'); 
+		        var ubicacionDatalistNombreLA = document.getElementById('formularioInsLineaAccion');
+		        ubicacionDatalistNombreLA.appendChild(datalistNombreLA);
+		
+		        for(var i = 0; i < datosLA.length ; i++) 
+		        {    
+		        	var option = document.createElement('option');
+		          	option.setAttribute('value',datosLA[i].id);
+		          	option.setAttribute('label',datosLA[i].nombre);
+		          	datalistNombreLA.appendChild(option);      
+		      	}
+		        
+		        var lineaAccion = $.ajax({
+					url:'/tablero/ajaxSelects2?action=getLineaAccion&borrado=false',
+				  	type:'get',
+				  	dataType:'json',
+				  	async:false       
+				}).responseText;
+				lineaAccion = JSON.parse(lineaAccion);
+				var optionLineaAccion;
+
+				$('#cantLAdisp').html(' '+lineasAccionRestantes.length+ ' de '+ lineaAccion.length );
+			}
+		    
+		}
+		
+		var eje1 = new Combo();
+		document.getElementById('versionInsLineaAccion').addEventListener('focus',eje1.versionILAFocus,false);
+		//document.getElementById('versionInsLineaAccion').addEventListener('change',eje1.versionILA,false);
+		document.getElementById('nombreInstitucionInsLineaAccion').addEventListener('focus',eje1.institucionFocus,false);
+		document.getElementById('nombreLineaAccionInsLineaAccion').addEventListener('focus',eje1.nombreLAFocus,false);
+		
+		/************************************************************************/
+		
+		/* var lineaAccion = $.ajax({
 			url:'/tablero/ajaxSelects2?action=getLineaAccion',
 		  	type:'get',
 		  	dataType:'json',
@@ -628,12 +937,12 @@ function renderEvidencia(avanceId, parametros){
 		for(i = 0;i<lineaAccion.length; i++)
 		{
 			if(lineaAccion[i].id == lineaAccionId)
-			{
-				$('#nombreLineaAccionInsLineaAccion > option[value="'+lineaAccion[i].id+'"]').attr('selected', 'selected');
-			}
-		}
+			{ */
+				$('#nombreLineaAccionInsLineaAccion').val(lineaAccionId);
+			/* }
+		} */
 		
-		var institucion = $.ajax({
+		/* var institucion = $.ajax({
 			url:'/tablero/ajaxSelects2?action=getInstitucion',
 		  	type:'get',
 		  	dataType:'json',
@@ -643,10 +952,10 @@ function renderEvidencia(avanceId, parametros){
 
 		for(m = 0;m<institucion.length; m++){
 			if(institucion[m].id == institucionId)
-			{
-				$('#nombreInstitucionInsLineaAccion > option[value="'+institucion[m].id+'"]').attr('selected', 'selected');
-			}
-		}	
+			{ */
+				$('#nombreInstitucionInsLineaAccion').val(institucionId);
+			/* }
+		}	 */
 
 		var periodo = $.ajax({
 			url:'/tablero/ajaxSelects2?action=getPeriodo',
@@ -664,9 +973,9 @@ function renderEvidencia(avanceId, parametros){
 				$('#periodoInsLineaAccion > option[value="'+periodo[p].id+'"]').attr('selected', 'selected');
 			}
 		}
-		
+				
+		$("#versionInsLineaAccion").val(parseInt(version));
 		$("#metaInsLineaAccion").val(meta);
-		$("#versionInsLineaAccion").val(version);
 		
 	});
 	
@@ -764,7 +1073,7 @@ function renderEvidencia(avanceId, parametros){
 		        	{
 		            	//$("#cuerpoModalUsuario").html("<h3 class='text-center'>ETIQUETA GUARDADO EXITOSAMENTE!!</h3>");
 		        		//renderUsuarios();	
-		        		renderInsLineaAccion(periodoId);
+		        		renderInsLineaAccion(periodoSeleccionado,versionSeleccionado,etiquetaSeleccionado);
 		        	}else{
 
 		            	//$("#cuerpoModalUsuario").html("<h3 class='text-center'>ERROR!! al intentar guardar este usuario y etiqueta, probablemente ya existe un usuario con esta Etiqueta.</h3>");
@@ -849,7 +1158,7 @@ function renderEvidencia(avanceId, parametros){
 		        	if(data.success == true){
 		        		
 		        	    //Inserta en la tabla usuario_linea_accion-----------------------------------------------------------------------------------------------------------------------------------------------------
-		        	   	renderInsLineaAccion(periodoId);
+		        	   	renderInsLineaAccion(periodoSeleccionado,versionSeleccionado,etiquetaSeleccionado);
 
 		        		var usuarioLineaAccion = new Object();
 	        			
@@ -973,7 +1282,7 @@ function renderEvidencia(avanceId, parametros){
 		        		$("#cuerpoActualizarInsLineaAccion").append('<h3 class="text-center">La Línea de Acción se ha modificado con Exito</h3>');
 		        		
 		        		
-		        		renderInsLineaAccion(periodoSeleccionado);
+		        		renderInsLineaAccion(periodoSeleccionado,versionSeleccionado,etiquetaSeleccionado);
 		        		
 		        		
 		        	}else{
@@ -996,10 +1305,11 @@ function renderEvidencia(avanceId, parametros){
 	
 	$("body").on("click", ".iconoBorradoInsLineaAccion",function(event){
 		
-				$("#botonRestaurarInsLineaAccion").remove();
-				$("#botonBorradoInsLineaAccion").remove();
-				
-				
+		$("#botonRestaurarInsLineaAccion").remove();
+		$("#botonBorradoInsLineaAccion").remove();
+		$("#mensajeBorradoInsLineaAccion").html("");
+		$("#mensajeBorradoInsLineaAccion").append('<h3><center>Aguarde un momento mientras se procesa su pedido. Esto puede tardar varios minutos</center></h3>');
+		
 				var objeto = new Object();
 				var accion = "borradoInsLineaAccion";
 				var parametrosBorradoInsLineaAccion = $(this).attr("parametrosBorradoInsLineaAccion");
@@ -1064,8 +1374,7 @@ function renderEvidencia(avanceId, parametros){
 				    		unidadMedida = JSON.parse(unidadMedida);
 
 				    		
-				    		renderInsLineaAccion(periodoSeleccionado);
-				    		
+				    		renderInsLineaAccion(periodoSeleccionado,versionSeleccionado,etiquetaSeleccionado);
 				    						    		
 				    		$("#mensajeBorradoInsLineaAccion").html("");
 				    		$("#mensajeBorradoInsLineaAccion").append('<h3><center>Cambio exitoso!!</center></h3>');
@@ -2383,8 +2692,8 @@ $("body").on("click", ".borrarAccion",function(event){
 	    var subPrograma = document.getElementById('subPrograma-formulario').value;
 	    var proyecto = document.getElementById('proyecto-formulario').value; 
 	    var producto = document.getElementById('producto-formulario').value; 
-	    var anho = document.getElementById('anhoProducto-formulario').value; 
-	    var version = document.getElementById('versionProducto-formulario').value; 
+	    var anho = document.getElementById('periodoSeleccion').value; 
+	    var version = document.getElementById('versionSeleccion').value; 
 	    var totalFisico = document.getElementById('totalFisico-formulario').value; 
 	    var unidadMedida = document.getElementById('unidadMedida-formulario').value; 
 	    var clase = document.getElementById('clase-formulario').value; 
@@ -2871,6 +3180,9 @@ $("body").on("click", ".borrarAccion",function(event){
 		
 		
 		function Combo(){
+		
+			anho=$("#periodoSeleccion option:selected").val();
+			version=$("#versionSeleccion option:selected").val();
 			
 			var usuarios = $.ajax({
 				url:'/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
@@ -3637,7 +3949,11 @@ $("body").on("click", ".borrarAccion",function(event){
 				    	$.ajax({
 
 
-						url:'ajaxSelects?accion=getAsignacionPresiVersion&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto+'&anho=2017',
+
+
+
+				         	url:'/ajaxSelects?accion=getAsignacionPresiVersion&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto+'&anho='+anho+'&versionReporte='+version,
+
 				          	type:'get',
 				          	crossDomain: 'true',
 				          	dataType:'jsonp',
@@ -3654,7 +3970,10 @@ $("body").on("click", ".borrarAccion",function(event){
 							totalFinanciero = 0;
 			        		for(var z = 0; z < datos.length; z++)
 			        		{
-			        			totalFinanciero += ( parseFloat(datos[z].planificado1) + parseFloat(datos[z].planificado2) + parseFloat(datos[z].planificado3) + parseFloat(datos[z].planificado4) + parseFloat(datos[z].planificado5) + parseFloat(datos[z].planificado6) + parseFloat(datos[z].planificado7) + parseFloat(datos[z].planificado8) + parseFloat(datos[z].planificado9) + parseFloat(datos[z].planificado10) + parseFloat(datos[z].planificado11) + parseFloat(datos[z].planificado12) );
+			        			if (linkTipoPrograma == datos[z].tipo && linkPrograma == datos[z].programa && linkSubPrograma == datos[z].subPrograma && linkProyecto == datos[z].proyecto && linkProducto == datos[z].producto )
+			        			{	
+			        				totalFinanciero += ( parseFloat(datos[z].planificado1) + parseFloat(datos[z].planificado2) + parseFloat(datos[z].planificado3) + parseFloat(datos[z].planificado4) + parseFloat(datos[z].planificado5) + parseFloat(datos[z].planificado6) + parseFloat(datos[z].planificado7) + parseFloat(datos[z].planificado8) + parseFloat(datos[z].planificado9) + parseFloat(datos[z].planificado10) + parseFloat(datos[z].planificado11) + parseFloat(datos[z].planificado12) );
+			        			}	
 			        		}
 				    		//$("#totalFinanciero-formulario").val(numeroConComa(totalFinanciero));
 				    		$("#totalFinanciero-formulario").val(totalFinanciero);
@@ -3682,7 +4001,8 @@ $("body").on("click", ".borrarAccion",function(event){
 					if( datosProductos.productos[0].clase === "N" )
 					{
 				    	$.ajax({
-				         	 url:'/ajaxSelects?accion=getProductoTipoN&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto,
+				         	 url:'/ajaxSelects?accion=getProductoTipoN&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto+'&anho='+anho,
+
 				          	type:'get',
 				          	crossDomain: 'true',
 				          	dataType:'jsonp',
@@ -4272,14 +4592,13 @@ $("body").on("click", ".borrarAccion",function(event){
 		  	async:false       
 		}).responseText;
 		unidadMedida = JSON.parse(unidadMedida);
-		
-		   
+				   
 		var optionUnidadMedida;
 		for(var u = 0; u < unidadMedida.length; u++)
 		{
 			optionUnidadMedida+='<option value="'+unidadMedida[u].id+'" parametro="'+unidadMedida[u].id+'">'+unidadMedida[u].descripcion+'</option>';
-		}
-
+		}				
+		
 		var hitoTipo = $.ajax({
 			url:'/tablero/ajaxSelects2?action=getHitoTipo',
 		  	type:'get',
@@ -4297,6 +4616,47 @@ $("body").on("click", ".borrarAccion",function(event){
 		
 		optionAcumulable+='<option selected value="TRUE" parametro="TRUE">Si</option>';
 		optionAcumulable+='<option value="FALSE" parametro="FALSE">No</option>';
+		
+		var productos = $.ajax({
+			url:'/tablero/ajaxSelects2?action=getProductos',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		productos = JSON.parse(productos);
+		
+		var productoNombre = '';
+		var productosAccion = $.ajax({
+			url:'/tablero/ajaxSelects2?action=getAccionHasProducto&accionId='+accionId+'&nivel='+institucion[0].nivelId+'&entidad='+institucion[0].entidadId,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		productosAccion = JSON.parse(productosAccion);		
+		
+		var optionProductosAccion;
+		optionProductosAccion = '<option value="">Ningún producto seleccionado</option>';
+		for(var u = 0; u < productosAccion.length; u++)
+		{
+			productoNombre = '';
+			for(var i = 0; i < productos.length; i++)
+			{
+				if (productosAccion[u].sprProductoId == productos[i].id){
+					productoNombre = productos[i].nombre;
+				}
+			}
+			
+			optionProductosAccion+='<option value="'+
+										productosAccion[u].nivel+'-'+
+										productosAccion[u].entidad+'-'+
+										productosAccion[u].tipoPrograma+'-'+
+										productosAccion[u].programa+'-'+
+										productosAccion[u].subPrograma+'-'+
+										productosAccion[u].proyecto+'-'+
+										productosAccion[u].sprProductoId+'">'+
+											productosAccion[u].sprProductoId + ' - ' + productoNombre +
+								   '</option>';
+		}
 		
 		var actividades = $.ajax({
 			url:'/tablero/ajaxSelects2?action=getCronograma&accionId='+accionId,
@@ -4354,8 +4714,8 @@ $("body").on("click", ".borrarAccion",function(event){
 			if(accion[0].distritoId == distritos[e].id && accion[0].departamentoId == distritos[e].departamentoId){
 				nombreDistrito = distritos[e].descripcion;
 			}
-		}
-				
+		}						
+		
 		
 		var cuerpoActividad = "";
 		
@@ -4385,13 +4745,13 @@ $("body").on("click", ".borrarAccion",function(event){
 				if(actividades[u].borrado == false)
 				{
 					<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-						cuerpoActividad+='<tr><td>'+actividades[u].nombre+'</td><td>'+actividades[u].descripcion+'</td><td>'+nombreUnidadMedida+'</td><td>'+nombreHitoTipo+'</td><td>'+actividades[u].proporcion+'</td><td>'+actividades[u].peso+'</td><td>'+acumulable(actividades[u].acumulable)+'</td><td><button type="button" class="btn btn-default btn-sm editarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+' data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm agregarProgramacion" data-toggle="tooltip" data-placement="top" title="Agregar Hito" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-time" ></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
+						cuerpoActividad+='<tr><td>'+actividades[u].nombre+'</td><td>'+actividades[u].descripcion+'</td><td>'+nombreUnidadMedida+'</td><td>'+nombreHitoTipo+'</td><td>'+actividades[u].proporcion+'</td><td>'+actividades[u].peso+'</td><td>'+acumulable(actividades[u].acumulable)+'</td><td>'+prodConcatVal(actividades[u].prodConcat)+'</td><td><button type="button" class="btn btn-default btn-sm editarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+' data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm agregarProgramacion" data-toggle="tooltip" data-placement="top" title="Agregar Hito" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-time" ></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
 					<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-						cuerpoActividad+='<tr><td>'+actividades[u].nombre+'</td><td>'+actividades[u].descripcion+'</td><td>'+nombreUnidadMedida+'</td><td>'+nombreHitoTipo+'</td><td>'+actividades[u].proporcion+'</td><td>'+actividades[u].peso+'</td><td>'+acumulable(actividades[u].acumulable)+'</td><td><button type="button" class="btn btn-default btn-sm agregarProgramacion" data-toggle="tooltip" data-placement="top" title="Agregar Hito" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-time" ></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
+						cuerpoActividad+='<tr><td>'+actividades[u].nombre+'</td><td>'+actividades[u].descripcion+'</td><td>'+nombreUnidadMedida+'</td><td>'+nombreHitoTipo+'</td><td>'+actividades[u].proporcion+'</td><td>'+actividades[u].peso+'</td><td>'+acumulable(actividades[u].acumulable)+'</td><td>'+prodConcatVal(actividades[u].prodConcat)+'</td><td><button type="button" class="btn btn-default btn-sm agregarProgramacion" data-toggle="tooltip" data-placement="top" title="Agregar Hito" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-time" ></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
 					<%}%>
 				}else{
 					<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
-						cuerpoActividad+='<tr><td><del>'+actividades[u].nombre+'</del></td><td><del>'+actividades[u].descripcion+'</del></td><td><del>'+nombreUnidadMedida+'</del></td><td><del>'+nombreHitoTipo+'</del></td><td><del>'+actividades[u].proporcion+'</del></td><td><del>'+actividades[u].peso+'</del></td><td><del>'+acumulable(actividades[u].acumulable)+'</del></td><td><button type="button" class="btn btn-default btn-sm editarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+' data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm agregarProgramacion" data-toggle="tooltip" data-placement="top" title="Agregar Hito" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-time" ></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
+						cuerpoActividad+='<tr><td><del>'+actividades[u].nombre+'</del></td><td><del>'+actividades[u].descripcion+'</del></td><td><del>'+nombreUnidadMedida+'</del></td><td><del>'+nombreHitoTipo+'</del></td><td><del>'+actividades[u].proporcion+'</del></td><td><del>'+actividades[u].peso+'</del></td><td><del>'+acumulable(actividades[u].acumulable)+'</del></td><td><del>'+prodConcatVal(actividades[u].prodConcat)+'</del></td><td><button type="button" class="btn btn-default btn-sm editarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+' data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+'><span class="fa fa-recycle" </span></button><button type="button" class="btn btn-default btn-sm agregarProgramacion" data-toggle="tooltip" data-placement="top" title="Agregar Hito" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-time" ></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
 					<%}%>		
 				}	
 			}	
@@ -4431,13 +4791,14 @@ $("body").on("click", ".borrarAccion",function(event){
 		
 		'									<div class="table-responsive">'+
 		'										<table class="table table-hover">'+
-		'											<tbody>'+
+		'											<tbody id="formularioAgregarActividad">'+
 		'												<tr><td><div class="form-group"><label for="departamentoActividad">Departamento</label><input type="text" class="form-control" id="departamentoActividad" value="'+nombreDepartamento+'" disabled /></div></td><td><div class="form-group"><label for="distritoActividad">Distrito</label><input type="text" id="distritoActividad" value="'+nombreDistrito+'" class="form-control" disabled> </div></td></tr>'+
 		'												<tr><td><div class="form-group"><label for="nombreActividad">Cronograma</label><input type="text" class="form-control" id="nombreActividad" value="" placeholder="Ingrese Nombre del Cronograma" required><input type="hidden" class="form-control" id="insLineaAccionId" value="'+insLineaAccionId+'"></div></td><td><div class="form-group"><label for="descripcionActividad">Descripción</label><input type="text" id="descripcionActividad" value="" class="form-control"> </div></td></tr>'+
 		'												<tr><td><div class="form-group"><label for="unidadMedidaIdActividad">Unidad de Medida</label><select id="unidadMedidaIdActividad" class="form-control" placeholder="Ingrese Unidad Medida Id">'+optionUnidadMedida+'</div></td><td><div class="form-group"><label for="hitoTipoIdActividad">Tipo de Cronograma</label>'+
 		'												<select id="hitoTipoIdActividad" class="form-control" placeholder="Ingrese Tipo de Cronograma">'+optionTipoHito+'</select></div></td></tr>'+
-		'												<tr><td><div class="form-group"><label for="proporcionActividad">Proporción</label><input type="number" class="form-control" id="proporcionActividad" value="1" required /></div></div></td><td><div class="form-group"><label for="pesoActividad">Peso</label><input type="number" class="form-control" id="pesoActividad" value="1" required/></div></td></tr>'+
-		'												<tr><td><div class="form-group"><label for="acumulableActividad">Acumulable</label><select id="acumulableActividad" class="form-control" placeholder="Ingrese Tipo Acumulable">'+optionAcumulable+'</select></div></td></tr>'+
+		'												<tr><td><div class="form-group"><label for="proporcionActividad">Proporción</label><input type="number" class="form-control" id="proporcionActividad" value="1" step="0.01" required /></div></div></td><td><div class="form-group"><label for="pesoActividad">Peso</label><input type="number" class="form-control" id="pesoActividad" value="1" step="0.01" required/></div></td></tr>'+
+		'												<tr><td><div class="form-group"><label for="acumulableActividad">Acumulable</label><select id="acumulableActividad" class="form-control" placeholder="Ingrese Tipo Acumulable">'+optionAcumulable+'</select></div></td>'+
+		'													<td><div class="form-group"><label for="productosActividad">Producto relacionado</label><select id="productosActividad" class="form-control" placeholder="Ingrese el Producto al cual se vincula la actividad">'+optionProductosAccion+'</select></div></td></tr>'+
 		'											</tbody>'+							           
 		'										</table>'+
 		'									</div>'+
@@ -4492,7 +4853,7 @@ $("body").on("click", ".borrarAccion",function(event){
 		var tablaCronograma ='			<div class="table-responsive">'+
 		'	                				<table class="table table-hover table-bordered" id="dataTablesActividades">'+
 		'	                					<thead>'+
-		'	                						<tr class="active"><th class="text-center">Nombre</th><th class="text-center">Descripción</th><th class="text-center">Unidad Medida</th><th class="text-center">Tipo Cronograma</th><th class="text-center">Proporción</th><th class="text-center">Peso</th><th class="text-center" data-toggle="tooltip" data-placement="top" title="Acumulable">Acu</th><th class="text-center">Administrar Cronograma</th></tr>'+
+		'	                						<tr class="active"><th class="text-center">Nombre</th><th class="text-center">Descripción</th><th class="text-center">Unidad Medida</th><th class="text-center">Tipo Cronograma</th><th class="text-center">Proporción</th><th class="text-center">Peso</th><th class="text-center" data-toggle="tooltip" data-placement="top" title="Acumulable">Acu</th><th class="text-center" data-toggle="tooltip" data-placement="top" title="Producto Concat">Producto Concat</th><th class="text-center">Administrar Cronograma</th></tr>'+
 		'	                					</thead>'+
 		'	                						<tbody id="tablaActividades">'+
 		'	                						</tbody>'+
@@ -4536,6 +4897,57 @@ $("body").on("click", ".borrarAccion",function(event){
 	                }
 	                    }
 	                ]});
+		
+		/* function Combo(){
+
+		    this.productoConcatFocus = function(){
+			if ( $("#listaProductos").length ) {
+				$("#listaProductos").remove();
+				$('#productosActividad').val('');				
+			}
+			
+			var url="";
+								
+		   	var listaDatalist=document.getElementsByTagName('datalist');
+		      
+		   	var datosProductos = $.ajax({
+				url:'/tablero/ajaxSelects2?action=getProductosPresupuestoPND',
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+			}).responseText;
+			datosProductos = JSON.parse(datosProductos);	 */		
+			   
+			/* var optionProductos;
+			for(var u = 0; u < productos.length; u++)
+			{
+				optionProductos += '<option value="'+productos[u].producto_concat+'" >' + productos[u].producto_nombre + ' - ' + productos[u].producto_concat + '</option>';
+			} */		   	 
+		        
+				
+		        /* if(listaDatalist.length === 0 )
+		        {
+			        var datalistProductos = document.createElement('datalist');
+			        datalistProductos.setAttribute('id','listaProductos');
+			        datalistProductos.setAttribute('size','7'); 
+			        var ubicacionDatalistProductos = document.getElementById('formularioCronograma');
+			        ubicacionDatalistProductos.appendChild(datalistProductos);
+			
+			        for(var i = 0; i < datosProductos.length ; i++) 
+			        {    
+			        	var option = document.createElement('option');
+			          	option.setAttribute('value',datosProductos[i].producto_concat);
+			          	option.setAttribute('label',datosProductos[i].producto_nombre);
+			          	datalistProductos.appendChild(option);      
+			      	} 
+		        }
+			
+		    } 		    
+		    
+		}//fin combo 
+		
+		  var eje1 = new Combo();
+		  document.getElementById('productosActividad').addEventListener('focus',eje1.productoConcatFocus,false);*/ 			
 				
 	});
 	
@@ -4547,7 +4959,16 @@ $("body").on("click", ".borrarAccion",function(event){
 		}else{
 			return acu = "No";
 		}
-	}	
+	}
+	
+	function prodConcatVal(dato){		
+		var pcc="";
+		if(dato != undefined){
+			return pcc = dato;
+		}else{
+			return pcc = "";
+		}
+	}
 	
 $("body").on("click", ".editarCronograma", function(event){
 	var parametros = $(this).attr("parametros");
@@ -4569,7 +4990,7 @@ $("body").on("click", ".editarCronograma", function(event){
 		$("#modalActividad").remove();
 	}
 
-	
+	//Obtención de los datos de la actividad a ser editada para rellenar los campos en el formulario.
 	var actividades = $.ajax({
 		url:'/tablero/ajaxSelects2?action=getCronograma&cronogramaId='+cronogramaId,
 	  	type:'get',
@@ -4578,7 +4999,63 @@ $("body").on("click", ".editarCronograma", function(event){
 	}).responseText;
 	actividades = JSON.parse(actividades);
 	
+	//Sección de carga de productos en el combobox. 
+	var productos = $.ajax({
+		url:'/tablero/ajaxSelects2?action=getProductos',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	productos = JSON.parse(productos);
 	
+	var institucion = $.ajax({
+		url:'/tablero/ajaxSelects2?action=getInstitucion&institucionId='+institucionId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	institucion = JSON.parse(institucion);
+	
+	var productoNombre = '';
+	var productosAccion = $.ajax({
+		url:'/tablero/ajaxSelects2?action=getAccionHasProducto&accionId='+accionId+'&nivel='+institucion[0].nivelId+'&entidad='+institucion[0].entidadId,
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	productosAccion = JSON.parse(productosAccion);		
+	
+	var optionProductosAccion;
+	optionProductosAccion = '<option value="">Ningún producto seleccionado</option>';
+	for(var u = 0; u < productosAccion.length; u++)
+	{
+		productoNombre = '';
+		for(var i = 0; i < productos.length; i++)
+		{
+			if (productosAccion[u].sprProductoId == productos[i].id){
+				productoNombre = productos[i].nombre;
+			}
+		}
+		
+		var valor = productosAccion[u].nivel+'-'+
+					productosAccion[u].entidad+'-'+
+					productosAccion[u].tipoPrograma+'-'+
+					productosAccion[u].programa+'-'+
+					productosAccion[u].subPrograma+'-'+
+					productosAccion[u].proyecto+'-'+
+					productosAccion[u].sprProductoId; 
+		
+		optionProductosAccion+='<option value="'+valor+'"';
+									
+		if (valor == actividades[0].prodConcat) 
+			optionProductosAccion+= ' selected >';								
+		else 
+			optionProductosAccion+= ' >';
+		
+		optionProductosAccion += productosAccion[u].sprProductoId + ' - ' + productoNombre + '</option>';
+	}	
+	
+	//Continuación con la carga de datos en los formularios de la actividad a editar.
 	var unidadMedida = $.ajax({
 		url:'/tablero/ajaxSelects2?action=getUnidadMedida',
 	  	type:'get',
@@ -4635,8 +5112,9 @@ $("body").on("click", ".editarCronograma", function(event){
 						'			      							<form class="form-horizontal" role="form">'+
 						'												<tr><td><label for="nombreCronograma">Nombre</label><input type="text" id="nombreCronograma" value="'+actividades[0].nombre+'" class="form-control" required /></td><td><label for="descripcionCronograma">Descripcion</label><input type="text" id="descripcionCronograma" class="form-control" value="'+actividades[0].descripcion+'"  /></td></tr>'+
 						'												<tr><td><div class="form-group"><label for="unidadMedidaIdCronograma">Unidad de Medida</label><select id="selectorUnidadMedidaCronograma" class="form-control">'+optionUnidadMedida+'</select></div></td><td><div class="form-group"><label for="hitoTipoIdCronograma">Tipo Cronograma</label><select id="selectorHitoTipoIdCronograma" class="form-control">"'+optionTipoHito+'"</select></div></td></tr>'+
-						'												<tr><td><label for="proporcionCronograma">Proporción</label><input type="number" id="proporcionCronograma" value='+actividades[0].proporcion+' class="form-control" required /></td><td><label for="pesoCronograma">Peso</label><input type="number" id="pesoCronograma" class="form-control" value='+actividades[0].peso+' required /></td></tr>'+
-						'												<tr><td><div class="form-group"><label for="acumulableCronograma">Acumulable</label><select id="acumulableCronograma" class="form-control" placeholder="Ingrese Tipo Acumulable">'+optionAcumulable+'</select></div></td><td></td></tr>'+
+						'												<tr><td><label for="proporcionCronograma">Proporción</label><input type="number" id="proporcionCronograma" value='+actividades[0].proporcion+' step="0.01" class="form-control" required /></td><td><label for="pesoCronograma">Peso</label><input type="number" id="pesoCronograma" class="form-control" value='+actividades[0].peso+' step="0.01" required /></td></tr>'+
+						'												<tr><td><div class="form-group"><label for="acumulableCronograma">Acumulable</label><select id="acumulableCronograma" class="form-control" placeholder="Ingrese Tipo Acumulable">'+optionAcumulable+'</select></div></td>'+
+						'													<td><div class="form-group"><label for="productosActividad">Producto relacionado</label><select id="productosActividad" class="form-control" placeholder="Ingrese el Producto al cual se vincula la actividad">'+optionProductosAccion+'</select></div></td></tr>'+						
 						
 						'			      							</form>	'+												
 						'										</tbody>'+
@@ -4814,6 +5292,7 @@ $("body").on("click", ".actualizarCronograma", function(event){
     var proporcionCronograma = $("#proporcionCronograma").val();
     var pesoCronograma = $("#pesoCronograma").val();
     var acumulable = $("#acumulableCronograma").val();
+    var productoConcat = document.getElementById("productosActividad").value;
 
     
     //aca vacio el formulario de edición de cronograma
@@ -4835,6 +5314,7 @@ $("body").on("click", ".actualizarCronograma", function(event){
     datos.proporcion = proporcionCronograma;
     datos.peso = pesoCronograma;
     datos.acumulable = acumulable;
+    datos.prodConcat = productoConcat; 
 
     
   	var info = JSON.stringify(datos);
@@ -4884,7 +5364,8 @@ $("body").on("click", ".guardarActividad",function(event){
 	    var accion_id = document.getElementById("accionIdActividad").value;
 	    var unidad_medida_id = document.getElementById("unidadMedidaIdActividad").value;
 	    var hito_tipo_id = document.getElementById("hitoTipoIdActividad").value;
-	   var acumulable = document.getElementById("acumulableActividad").value;
+	    var acumulable = document.getElementById("acumulableActividad").value;
+	    var productoConcat = document.getElementById("productosActividad").value;
 
 
 		var objeto = new Object();
@@ -4898,6 +5379,7 @@ $("body").on("click", ".guardarActividad",function(event){
 		objeto.unidad_medida_id = unidad_medida_id;
 		objeto.hito_tipo_id = hito_tipo_id;
 		objeto.acumulable = acumulable;
+		objeto.prodConcat = productoConcat; 
 
 		
 	  	var info = JSON.stringify(objeto);
@@ -4996,13 +5478,13 @@ function actualizarTablaActividades(accion_id,insLineaAccionId,lineaAccionId,ins
 			if(actividades[u].borrado == false)
 			{
 				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-					cuerpoActividad+='<tr><td>'+actividades[u].nombre+'</td><td>'+actividades[u].descripcion+'</td><td>'+nombreUnidadMedida+'</td><td>'+nombreHitoTipo+'</td><td>'+actividades[u].proporcion+'</td><td>'+actividades[u].peso+'</td><td>'+acumulable(actividades[u].acumulable)+'</td><td><button type="button" class="btn btn-default btn-sm editarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+' data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm agregarProgramacion" data-toggle="tooltip" data-placement="top" title="Agregar Hito" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-time" ></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
+					cuerpoActividad+='<tr><td>'+actividades[u].nombre+'</td><td>'+actividades[u].descripcion+'</td><td>'+nombreUnidadMedida+'</td><td>'+nombreHitoTipo+'</td><td>'+actividades[u].proporcion+'</td><td>'+actividades[u].peso+'</td><td>'+acumulable(actividades[u].acumulable)+'</td><td>'+prodConcatVal(actividades[u].prodConcat)+'</td><td><button type="button" class="btn btn-default btn-sm editarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+' data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm agregarProgramacion" data-toggle="tooltip" data-placement="top" title="Agregar Hito" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-time" ></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
 				<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-					cuerpoActividad+='<tr><td>'+actividades[u].nombre+'</td><td>'+actividades[u].descripcion+'</td><td>'+nombreUnidadMedida+'</td><td>'+nombreHitoTipo+'</td><td>'+actividades[u].proporcion+'</td><td>'+actividades[u].peso+'</td><td>'+acumulable(actividades[u].acumulable)+'</td><td><button type="button" class="btn btn-default btn-sm agregarProgramacion" data-toggle="tooltip" data-placement="top" title="Agregar Hito" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-time" ></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
+					cuerpoActividad+='<tr><td>'+actividades[u].nombre+'</td><td>'+actividades[u].descripcion+'</td><td>'+nombreUnidadMedida+'</td><td>'+nombreHitoTipo+'</td><td>'+actividades[u].proporcion+'</td><td>'+actividades[u].peso+'</td><td>'+acumulable(actividades[u].acumulable)+'</td><td>'+prodConcatVal(actividades[u].prodConcat)+'</td><td><button type="button" class="btn btn-default btn-sm agregarProgramacion" data-toggle="tooltip" data-placement="top" title="Agregar Hito" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-time" ></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
 				<%}%>			
 			}else{
 				<% if (attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("0")){%>
-					cuerpoActividad+='<tr><td><del>'+actividades[u].nombre+'</del></td><td><del>'+actividades[u].descripcion+'</del></td><td><del>'+nombreUnidadMedida+'</del></td><td><del>'+nombreHitoTipo+'</del></td><td><del>'+actividades[u].proporcion+'</del></td><td><del>'+actividades[u].peso+'</del></td><td><del>'+acumulable(actividades[u].acumulable)+'</del></td><td><button type="button" class="btn btn-default btn-sm editarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+' data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Hito"><span class="glyphicon glyphicon-time agregarProgramacion" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
+					cuerpoActividad+='<tr><td><del>'+actividades[u].nombre+'</del></td><td><del>'+actividades[u].descripcion+'</del></td><td><del>'+nombreUnidadMedida+'</del></td><td><del>'+nombreHitoTipo+'</del></td><td><del>'+actividades[u].proporcion+'</del></td><td><del>'+actividades[u].peso+'</del></td><td><del>'+acumulable(actividades[u].acumulable)+'</del></td><td><del>'+prodConcatVal(actividades[u].prodConcat)+'</del></td><td><button type="button" class="btn btn-default btn-sm editarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+' data-toggle="tooltip" data-placement="top" title="Editar Cronograma"><span class="glyphicon glyphicon-pencil" ></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCronograma" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accion[0].id+'-'+accion[0].accionCatalogoId+'-'+actividades[u].id+'><span class="glyphicon glyphicon-trash" </span></button><button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="Agregar Hito"><span class="glyphicon glyphicon-time agregarProgramacion" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'></span></button><button type="button" class="btn btn-default btn-sm agregarAvance" data-toggle="tooltip" data-placement="top" title="Declarar Avance" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividades[u].id+'"><span class="fa fa-line-chart"></span></button></td></tr>';
 				<% }%>
 			}	
 		}	
@@ -5012,7 +5494,7 @@ function actualizarTablaActividades(accion_id,insLineaAccionId,lineaAccionId,ins
 	var tablaCronograma ='			<div class="table-responsive">'+
 	'	                				<table class="table table-hover table-bordered" id="dataTablesActividades">'+
 	'	                					<thead>'+
-	'	                						<tr class="active"><th class="text-center">Nombre</th><th class="text-center">Descripción</th><th class="text-center">Unidad Medida</th><th class="text-center">Tipo Cronograma</th><th class="text-center">Proporción</th><th class="text-center">Peso</th><th class="text-center" data-toggle="tooltip" data-placement="top" title="Acumulable">Acu</th><th class="text-center">Administrar Cronograma</th></tr>'+
+	'	                						<tr class="active"><th class="text-center">Nombre</th><th class="text-center">Descripción</th><th class="text-center">Unidad Medida</th><th class="text-center">Tipo Cronograma</th><th class="text-center">Proporción</th><th class="text-center">Peso</th><th class="text-center" data-toggle="tooltip" data-placement="top" title="Acumulable">Acu</th><th class="text-center" data-toggle="tooltip" data-placement="top" title="Producto">Producto Concat</th><th class="text-center">Administrar Cronograma</th></tr>'+
 	'	                					</thead>'+
 	'	                						<tbody id="tablaActividades">'+
 	'	                						</tbody>'+
@@ -5028,6 +5510,7 @@ function actualizarTablaActividades(accion_id,insLineaAccionId,lineaAccionId,ins
 	$("#hitoTipoIdActividad").val('');
 	//$("#proporcionActividad").val('');
 	//$("#pesoActividad").val('');
+	$("#productosActividad").val('');
 	$("#dataTablesActividades").DataTable({
 		dom: 'Bfrtip',
         buttons: [
@@ -5269,7 +5752,7 @@ function renderProgramacion(insLineaAccionId,lineaAccionId,institucionId,periodo
 							'											<tr><td><div class="form-group"><label for="departamentoActividad">Departamento</label><input type="text" class="form-control" id="departamentoActividad" value="'+nombreDepartamento+'" disabled /></div></td><td><div class="form-group"><label for="distritoActividad">Distrito</label><input type="text" id="distritoActividad" value="'+nombreDistrito+'" class="form-control" disabled> </div></td></tr>'+
 							'											<tr><td><label for="accionProgramacion">Accion</label><input type="text" id="accionProgramacion" value="'+accionCatalogo[0].nombre+'" class="form-control" disabled /></td><td><label for="unidadMedidaProgramacion">U. Medida</label><input type="text" id="unidadMedidaProgramacion" class="form-control" value="'+nombreUnidadMedida+'" disabled /></td></tr>'+
 							'											<tr><td><label for="cronogramaProgramacion">Cronograma</label><input type="text" id="cronogramaProgramacion" value="'+cronogramas[0].nombre+'" class="form-control" disabled /><input type="hidden" id="cronogramaIdProgramacion" value="'+cronogramas[0].id+'" /></td><td><label for="tipoCronogramaProgramacion">Tipo Cronograma</label><input type="text" id="tipoCronogramaProgramacion" class="form-control" value="'+nombreHitoTipo+'" disabled /></td></tr>'+														
-							'											<tr><td><label for="cantidadProgramacion">Cantidad</label><input type="number" id="cantidadProgramacion" value="" class="form-control" placeholder="Ingres Cantidad" required /></td><td><label for="fechaEntregaProgramacion">Fecha Entrega</label><input type="date" id="fechaEntregaProgramacion" class="form-control" required/></td></tr>'+
+							'											<tr><td><label for="cantidadProgramacion">Cantidad</label><input type="number" id="cantidadProgramacion" value="" step="any" class="form-control" placeholder="Ingres Cantidad" required /></td><td><label for="fechaEntregaProgramacion">Fecha Entrega</label><input  id="fechaEntregaProgramacion" class="form-control" required/></td></tr>'+
 							'											<input type="hidden" id="versionProgramacion" value="3" /><input type="hidden" id="actividadIdProgramacion" value="'+cronogramaId+'" />'+		
 							'			      							</form>	'+												
 							'										</tbody>'+
@@ -5333,8 +5816,14 @@ function renderProgramacion(insLineaAccionId,lineaAccionId,institucionId,periodo
 	if ( $("#dataTablesProgramacionHito1").length ){
 		$('#dataTablesProgramacionHito1').DataTable().destroy();	
 	}
+	$('#fechaEntregaProgramacion').datepicker({ 
+		language: "es",
+		format: 'yyyy-mm-dd',
+		todayBtn: "linked",
+	    todayHighlight: true});
 	//$("#dataTablesProgramacionHito1").DataTable();
 	$('#dataTablesProgramacionHito1').dataTable({
+		"order": [[ 1, "asc" ]],
         "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api(), data;
  
@@ -5520,8 +6009,18 @@ $("body").on("click", ".guardarProgramacion",function(event){
         	}
 	 });
 	}
-});	
- 
+});
+
+var distAvance = "";
+
+var distritos = $.ajax({
+	url:'/tablero/ajaxSelects?action=getDistrito',
+  	type:'get',
+  	dataType:'json',
+  	async:false       
+}).responseText;
+distritos = JSON.parse(distritos);
+
 function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId, accionId, actividadId){
 	
 	if ( $("#modalVincularProductos").length )
@@ -5643,21 +6142,21 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
     }).responseText;
 	departamentos = JSON.parse(departamentos);
 	
-	var distritos = $.ajax({
-    	url:'/tablero/ajaxSelects?action=getDistrito',
-      	type:'get',
-      	dataType:'json',
-      	async:false       
-    }).responseText;
-	distritos = JSON.parse(distritos);
-	
 	var nombreDepartamento = "";
 	var nombreDistrito = "";
+	var optionDistritoAvance;
+	var optionDepartamentoAvance;
+	
 	
 	for(var d = 0; d < departamentos.length; d++)
 	{
 		if(accion[0].departamentoId == departamentos[d].idDepartamento){
 			nombreDepartamento = departamentos[d].nombreDepartamento;
+			optionDepartamentoAvance+='<option value="'+departamentos[d].idDepartamento+'" selected >'+departamentos[d].nombreDepartamento+'</option>';
+		}
+		else {			
+			nombreDepartamento = departamentos[d].nombreDepartamento;
+			optionDepartamentoAvance+='<option value="'+departamentos[d].idDepartamento+'" >'+departamentos[d].nombreDepartamento+'</option>';
 		}
 	}
 	
@@ -5667,8 +6166,15 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
 		if(accion[0].distritoId == distritos[e].id && accion[0].departamentoId == distritos[e].departamentoId){
 			nombreDistrito = distritos[e].descripcion;
 		}
+		if(accion[0].departamentoId == distritos[e].departamentoId && nombreDistrito == distritos[e].descripcion){
+			optionDistritoAvance+='<option value="'+distritos[e].id+'" selected>'+distritos[e].descripcion+'</option>';	
+		}
+		if(accion[0].departamentoId == distritos[e].departamentoId && nombreDistrito != distritos[e].descripcion){	
+			
+			optionDistritoAvance+='<option value="'+distritos[e].id+'" >'+distritos[e].descripcion+'</option>';
+		}
 	}
-
+	
 	var nombreUnidadMedidaHitoProgramado="";
 	for(var g = 0; g < unidadMedida.length; g++ )
 	{
@@ -5710,23 +6216,39 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
 		}
 	}
 	
-		
+	var deptoAvance = "";	
 	var cuerpoAvance = " ";
 	for(var d = 0; d < webServicesAvance.length; d++)
 	{
+		deptoAvance = "";
+		distAvance = "";
+		for(var a = 0; a < departamentos.length; a++)
+		{
+			if(webServicesAvance[d].departamentoId == departamentos[a].idDepartamento){
+				deptoAvance = departamentos[a].nombreDepartamento;				
+			}
+		}
+		
+		for(var e = 0; e < distritos.length; e++)
+		{
+			if(webServicesAvance[d].departamentoId == distritos[e].departamentoId && webServicesAvance[d].distritoAvance == distritos[e].id){			
+				distAvance = distritos[e].descripcion;
+			}
+		}
+		
 		if(onoff==true && webServicesAvance[d].borrado == true){
 			// pasa a la siguiente fila en el for ++	
 		}else{
 			if(webServicesAvance[d].borrado == true)
 			{
 				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
-					cuerpoAvance += '<tr><td><del>'+webServicesAvance[d].justificacion+'</del></td><td><del>'+numeroConComa(webServicesAvance[d].cantidad)+'</del></td><td><del>'+webServicesAvance[d].fechaEntrega+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm agregarModalAdministrador" data-toggle="tooltip" data-placement="top" title="Detallar Avance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+webServicesAvance[d].id+'><span class="fa fa-gear"></span></button></td></tr>';
+					cuerpoAvance += '<tr><td><del>'+deptoAvance+'</del></td><td><del>'+distAvance+'</del></td><td><del>'+webServicesAvance[d].justificacion+'</del></td><td><del>'+numeroConComa(webServicesAvance[d].cantidad)+'</del></td><td><del>'+webServicesAvance[d].fechaEntrega+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm agregarModalAdministrador" data-toggle="tooltip" data-placement="top" title="Detallar Avance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+webServicesAvance[d].id+'><span class="fa fa-gear"></span></button></td></tr>';
 				<%}%>
 			}else{
 				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-					cuerpoAvance += '<tr><td>'+webServicesAvance[d].justificacion+'</td><td>'+numeroConComa(webServicesAvance[d].cantidad)+'</td><td>'+webServicesAvance[d].fechaEntrega+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm agregarModalAdministrador" data-toggle="tooltip" data-placement="top" title="Detallar Avance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+webServicesAvance[d].id+'><span class="fa fa-gear"></span></button></td></tr>';
+					cuerpoAvance += '<tr><td>'+deptoAvance+'</td><td>'+distAvance+'</td><td>'+webServicesAvance[d].justificacion+'</td><td>'+numeroConComa(webServicesAvance[d].cantidad)+'</td><td>'+webServicesAvance[d].fechaEntrega+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm agregarModalAdministrador" data-toggle="tooltip" data-placement="top" title="Detallar Avance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+webServicesAvance[d].id+'><span class="fa fa-gear"></span></button></td></tr>';
 				<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-					cuerpoAvance += '<tr><td>'+webServicesAvance[d].justificacion+'</td><td>'+numeroConComa(webServicesAvance[d].cantidad)+'</td><td>'+webServicesAvance[d].fechaEntrega+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm agregarModalAdministrador" data-toggle="tooltip" data-placement="top" title="Detallar Avance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+webServicesAvance[d].id+'><span class="fa fa-gear"></span></button></td></tr>';
+					cuerpoAvance += '<tr><td>'+deptoAvance+'</td><td>'+distAvance+'</td><td>'+webServicesAvance[d].justificacion+'</td><td>'+numeroConComa(webServicesAvance[d].cantidad)+'</td><td>'+webServicesAvance[d].fechaEntrega+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm agregarModalAdministrador" data-toggle="tooltip" data-placement="top" title="Detallar Avance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+webServicesAvance[d].id+'><span class="fa fa-gear"></span></button></td></tr>';
 				<%}%>
 			}
 		}	
@@ -5763,11 +6285,12 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
 							'									<table class="table table-hover">'+
 							'										<tbody>'+
 							'			      							<form class="form-horizontal" role="form">'+
-							'											<tr><td><div class="form-group"><label for="departamentoActividad">Departamento</label><input type="text" class="form-control" id="departamentoActividad" value="'+nombreDepartamento+'" disabled /></div></td><td><div class="form-group"><label for="distritoActividad">Distrito</label><input type="text" id="distritoActividad" value="'+nombreDistrito+'" class="form-control" disabled> </div></td></tr>'+
+							'											<tr><td><div class="form-group"><label for="departamentoActividad">Departamento</label><input type="hidden" class="form-control" id="departamentoActividad" value="'+nombreDepartamento+'" disabled /><select class="form-control" id="departamentoAvance" >'+optionDepartamentoAvance+'</select></div></td>'+
+							'												<td><div class="form-group"><label for="distritoActividad">Distrito</label><input type="hidden" id="distritoActividad" value="'+nombreDistrito+'" class="form-control" disabled><select class="form-control" id="distritoAvance">'+optionDistritoAvance+'</select></div></td></tr>'+
 							'											<tr><td><label for="justificacionAvance">Justificación</label><input type="text" id="justificacionAvance" value="" class="form-control" placeholder="Ingrese Justificación" required/></td>'+
-							'												<td><label for="cantidadAvance">Cantidad</label><input type="number" id="cantidadAvance" class="form-control" value="" placeholder="Ingrese Cantidad" required/></td>'+
+							'												<td><label for="cantidadAvance">Cantidad</label><input type="number" id="cantidadAvance" step="any" class="form-control" value="" placeholder="Ingrese Cantidad" required/></td>'+
 							'											</tr>'+
-							'											<tr><td><label for="fechaEntregaAvance">Fecha Entrega</label><input type="date" id="fechaEntregaAvance" value="'+fechaActual+'" max="'+fechaActual+'" class="form-control" required/></td></tr>'+														
+							'											<tr><td><label for="fechaEntregaAvance">Fecha Entrega</label><input  id="fechaEntregaAvance" value="'+fechaActual+'" class="form-control" required/></td></tr>'+														
 							'											<input type="hidden" id="versionAvance" value="3" />'+		
 							'			      							</form>	'+												
 							'										</tbody>'+
@@ -5828,8 +6351,8 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
 	
 	var tablaListaAvance ='<div class="table-responsive">'+
 		'							<table class="table table-hover table-bordered" id="dataTablesListaAvance">'+
-		'								<thead><tr class="active"><th>Justificación</th><th>cantidad</th><th>Fecha Entrega</th><th>Administrar</th></tr></thead>'+
-		'								<tfoot><tr><th></th><th></th><th></th><th></th></tr></tfoot>'+
+		'								<thead><tr class="active"><th>Departamento</th><th>Distrito</th><th>Justificación</th><th>cantidad</th><th>Fecha Entrega</th><th>Administrar</th></tr></thead>'+
+		'								<tfoot><tr><th></th><th></th><th></th><th></th><th></th><th></th></tr></tfoot>'+
 		'								<tbody id="listaAvances">'+
 		'								</tbody>'+
 		'							</table>'+
@@ -5851,6 +6374,12 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
 	$("#tablaListaProgramacionHito2").append(tablaProgramacionHito2);
 	$("#listaActividades").append(cuerpoActividades);
 	$("#modalAvance").modal('show');
+	$('#fechaEntregaAvance').datepicker({  
+		language: "es",
+		format: 'yyyy-mm-dd',
+		endDate: "0d",
+		todayBtn: "linked",
+	    todayHighlight: true});
 	//$("#dataTablesListaAvance").DataTable();
 	$("#dataTablesListaAvance").dataTable({
         "footerCallback": function ( row, data, start, end, display ) {
@@ -5873,24 +6402,24 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
             };
  
          // total general para todas las paginas de la columna
-            total1 = api
-                .column( 1 )
+            total2 = api
+                .column( 3 )
                 .data()
                 .reduce( function (a, b) {
                     return intVal(a) + intVal(b);
                 }, 0 );
  
          // total por pagina segun número de columna
-            pageTotal1 = api
-                .column( 1, { page: 'current'} )
+            pageTotal2 = api
+                .column( 3, { page: 'current'} )
                 .data()
                 .reduce( function (a, b) {
                     return intVal(a) + intVal(b);
                 }, 0 );
          
          // se muestran los valores de los totales en el footer del table
-            $( api.column( 1 ).footer() ).html(
-            		'Total Pág. '+ numeroConComa(pageTotal1) +' (Total Gral. '+ numeroConComa(total1) +')'
+            $( api.column( 3 ).footer() ).html(
+            		'Total Pág. '+ numeroConComa(pageTotal2) +' (Total Gral. '+ numeroConComa(total2) +')'
             );	         
         },
         dom: 'Bfrtip',
@@ -6039,7 +6568,8 @@ $("body").on("click", ".guardarAvance",function(event){
 		var justificacion = $("#justificacionAvance").val();
 		var cantidad = $("#cantidadAvance").val();
 		var fechaEntrega = $("#fechaEntregaAvance").val();
-		//var cantidadBeneficiarios = $("#cantidadBeneficiariosAvance").val();
+		var distritoAvance = $("#distritoAvance option:selected").val();
+		var departamentoId = $("#departamentoAvance option:selected").val();
 		var version = $("#versionAvance").val();
 	
 	
@@ -6054,7 +6584,8 @@ $("body").on("click", ".guardarAvance",function(event){
 		objeto.justificacion = justificacion;
 		objeto.cantidad = cantidad;
 		objeto.fechaEntrega = fechaEntrega;
-		//objeto.cantidadBeneficiarios = cantidadBeneficiarios;
+		objeto.distritoAvance = distritoAvance;
+		objeto.departamentoId = departamentoId;
 		objeto.actividadId = actividadId;
 		objeto.version = version;
 	
@@ -6089,23 +6620,6 @@ $("body").on("click", ".guardarAvance",function(event){
 					$("#tableAvance").html(tableAvance);
 					
 					renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId, accionId, actividadId);
-	        		
-	        		/* var webServicesAvance = $.ajax({
-	        			url:'/tablero/ajaxSelects2?action=getAvance&actividadId='+actividadId,
-	        		  	type:'get',
-	        		  	dataType:'json',
-	        		  	async:false       
-	        		}).responseText;
-	        		webServicesAvance = JSON.parse(webServicesAvance);
-	        		
-	        		var cuerpoAvance = "";
-	        		for(var d = 0; d < webServicesAvance.length; d++)
-	        		{
-	        			cuerpoAvance += '<tr><td>'+webServicesAvance[d].justificacion+'</td><td>'+numeroConComa(webServicesAvance[d].cantidad)+'</td><td>'+webServicesAvance[d].fechaEntrega+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm agregarModalAdministrador" data-toggle="tooltip" data-placement="top" title="Administrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+webServicesAvance[d].id+'><span class="fa fa-gear"></span></button></td></tr>';
-	        		}
-	        		
-	        		$("#listaAvances").html("");
-	        		$("#listaAvances").html(cuerpoAvance); */
 	        		
 	        	}else{
 	        		alert("ERROR");        		
@@ -6174,6 +6688,21 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 		}).responseText;
 		webServicesAvance = JSON.parse(webServicesAvance); 
 		
+	/* 	var deptoAvance = "";		
+		for(var a = 0; a < departamentos.length; a++)
+		{
+			if(webServicesAvance[d].departamentoId == departamentos[a].idDepartamento){
+				deptoAvance = departamentos[a].nombreDepartamento;				
+			}
+		} */
+		
+		for(var e = 0; e < distritos.length; e++)
+		{
+			if(webServicesAvance[0].departamentoId == distritos[e].departamentoId && webServicesAvance[0].distritoAvance == distritos[e].id){			
+				distAvance = distritos[e].descripcion;
+			}
+		}		
+		
 		var tableAvance="";
 		tableAvance=
 			'						<div class="box box-warning box-solid">'+
@@ -6200,17 +6729,17 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 			if(webServicesAvance[0].borrado == true)
 			{
 				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
-				tableAvance +=	'													<tr><td><del>'+webServicesAvance[0].justificacion+'</del></td><td><del>'+numeroConComa(webServicesAvance[0].cantidad)+'</del></td><td><del>'+webServicesAvance[0].fechaEntrega+'</del></td></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaBorrarAvance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' data-toggle="tooltip" data-placement="top" title="Restaurar" ><span class="fa fa-recycle"></span></button></td></tr>';
+				tableAvance +=	'<tr><td><del>'+distAvance+'</del></td><td><del>'+webServicesAvance[0].justificacion+'</del></td><td><del>'+numeroConComa(webServicesAvance[0].cantidad)+'</del></td><td><del>'+webServicesAvance[0].fechaEntrega+'</del></td></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaBorrarAvance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' data-toggle="tooltip" data-placement="top" title="Restaurar" ><span class="fa fa-recycle"></span></button></td></tr>';
 				<%}%>
 			}else{
 				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-				tableAvance +=	'													<tr><td>'+webServicesAvance[0].justificacion+'</td><td>'+numeroConComa(webServicesAvance[0].cantidad)+'</td><td>'+webServicesAvance[0].fechaEntrega+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarAvance" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarAvance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' data-toggle="tooltip" data-placement="top" title="Borrar" ><span class="fa fa-trash"></span></button></td></tr>';
+				tableAvance +=	'<tr><td>'+distAvance+'</td><td>'+webServicesAvance[0].justificacion+'</td><td>'+numeroConComa(webServicesAvance[0].cantidad)+'</td><td>'+webServicesAvance[0].fechaEntrega+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarAvance" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarAvance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' data-toggle="tooltip" data-placement="top" title="Borrar" ><span class="fa fa-trash"></span></button></td></tr>';
 				<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-				tableAvance +=	'													<tr><td>'+webServicesAvance[0].justificacion+'</td><td>'+numeroConComa(webServicesAvance[0].cantidad)+'</td><td>'+webServicesAvance[0].fechaEntrega+'</td><td class="text-center"></td></tr>';
+				tableAvance +=	'<tr><td>'+distAvance+'</td><td>'+webServicesAvance[0].justificacion+'</td><td>'+numeroConComa(webServicesAvance[0].cantidad)+'</td><td>'+webServicesAvance[0].fechaEntrega+'</td><td class="text-center"></td></tr>';
 				<%}%>
 			}
 			
-			tableAvance +=	'										</tbody>'+
+			tableAvance +=	'						</tbody>'+
 			'									</table>'+
 			'				      			</div>'+							
 			
@@ -6233,7 +6762,7 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 		tableBeneficiario=
 		'									<div class="box box-default box-solid">'+
 		'		                				<div class="box-header with-border">'+
-		'		                  					<h3 class="box-title">Lista Beneficiarios</h3>'+
+		'		                  					<h3 class="box-title">Lista Destinatarios</h3>'+
 		'	                  						<div class="box-tools pull-right">'+
 		'				                    			<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
 		'		                    					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>'+
@@ -6394,6 +6923,14 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 			nombreUnidadMedida = unidadMedida[u].descripcion;
 		}
 	}
+	
+	var departamentos = $.ajax({
+    	url:'/tablero/ajaxSelects?action=getDepartamento',
+      	type:'get',
+      	dataType:'json',
+      	async:false       
+    }).responseText;
+	departamentos = JSON.parse(departamentos);
 
 	var webServicesAvance = $.ajax({
 		url:'/tablero/ajaxSelects2?action=getAvance&avanceId='+avanceId,
@@ -6402,6 +6939,21 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 	  	async:false       
 	}).responseText;
 	webServicesAvance = JSON.parse(webServicesAvance); 
+	
+	var deptoAvance = "";		
+	for(var a = 0; a < departamentos.length; a++)
+	{
+		if(webServicesAvance[0].departamentoId == departamentos[a].idDepartamento){
+			deptoAvance = departamentos[a].nombreDepartamento;				
+		}
+	}
+	
+	for(var e = 0; e < distritos.length; e++)
+	{
+		if(webServicesAvance[0].departamentoId == distritos[e].departamentoId && webServicesAvance[0].distritoAvance == distritos[e].id){			
+			distAvance = distritos[e].descripcion;
+		}
+	}
 	
 	/*var optionArchivoExistente="";
 	optionArchivoExistente += '<option value="" >Seleccione una Opción</option>';
@@ -6423,25 +6975,38 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 	}).responseText;
 	webServicesAvanceCosto = JSON.parse(webServicesAvanceCosto);
 	
+	var webServicesObjetoGasto = $.ajax({
+		url:'/tablero/ajaxSelects2?action=getObjetoGasto',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	webServicesObjetoGasto = JSON.parse(webServicesObjetoGasto);
+	
 	var cuerpoAvanceCosto = "";
 	for(var d = 0; d < webServicesAvanceCosto.length; d++)
 	{
-		if(onoff==true && webServicesAvanceCosto[d].borrado == true){
-			// pasa a la siguiente fila en el for ++
-		}else{
-			if(webServicesAvanceCosto[d].borrado == true)
-			{
-				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
-					cuerpoAvanceCosto += '<tr><td><del>'+webServicesAvanceCosto[d].productoConcat+'</del></td><td><del>'+webServicesAvanceCosto[d].objetoGasto+'</del></td><td><del>'+numeroConComa(webServicesAvanceCosto[d].monto)+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaBorrarCosto" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-recycle"></span></button></td></tr>';
-				<%}%>	
-			}else{
-				<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-					cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].productoConcat+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td>'+numeroConComa(webServicesAvanceCosto[d].monto)+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarCosto" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCosto" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
-				<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-					cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].productoConcat+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td>'+numeroConComa(webServicesAvanceCosto[d].monto)+'</td><td class="text-center"></td></tr>';
-				<%}%>
-			}	
-		}	
+		for(var g = 0; g < webServicesObjetoGasto.length; g++)
+		{
+			if(webServicesObjetoGasto[g].id == webServicesAvanceCosto[d].objetoGasto){
+				if(onoff==true && webServicesAvanceCosto[d].borrado == true){
+					// pasa a la siguiente fila en el for ++
+				}else{
+					if(webServicesAvanceCosto[d].borrado == true)
+					{
+						<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
+							cuerpoAvanceCosto += '<tr><td><del>'+webServicesAvanceCosto[d].productoConcat+'</del></td><td><del>'+webServicesAvanceCosto[d].objetoGasto+'</del></td><td><del>'+webServicesObjetoGasto[g].descripcion+'</del></td><td><del>'+numeroConComa(webServicesAvanceCosto[d].monto)+'</del></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaBorrarCosto" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-recycle"></span></button></td></tr>';
+						<%}%>	
+					}else{
+						<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
+							cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].productoConcat+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td>'+webServicesObjetoGasto[g].descripcion+'</td><td>'+numeroConComa(webServicesAvanceCosto[d].monto)+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarCosto" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarCosto" data-toggle="tooltip" data-placement="top" title="Borrar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'-'+webServicesAvanceCosto[d].id+' ><span class="fa fa-trash"></span></button></td></tr>';
+						<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
+							cuerpoAvanceCosto += '<tr><td>'+webServicesAvanceCosto[d].productoConcat+'</td><td>'+webServicesAvanceCosto[d].objetoGasto+'</td><td>'+webServicesObjetoGasto[g].descripcion+'</td><td>'+numeroConComa(webServicesAvanceCosto[d].monto)+'</td><td class="text-center"></td></tr>';
+						<%}%>
+					}	
+				}	
+			}
+		}
 	}
 		
 	var webServicesBeneficiarioTipo = $.ajax({
@@ -6545,22 +7110,22 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 									'								<div class="table-responsive">'+
 									'									<table class="table table-hover table-bordered" id="dataTableAvance">'+
 									'										<thead>'+
-									'											<tr class="active"><th>Justificación</th><th>Cantidad</th><th>FechaEntrega</th><th class="text-center">Administrar</th></tr>'+
+									'											<tr class="active"><th>Departamento</th><th>Distrito</th><th>Justificación</th><th>Cantidad</th><th>FechaEntrega</th><th class="text-center">Administrar</th></tr>'+
 									' 										</thead>'+
 									'										<tfoot>'+
-									'											<tr><th></th><th></th><th></th><th></th></tr>'+
+									'											<tr><th></th><th></th><th></th><th></th><th></th><th></th></tr>'+
 									' 										</tfoot>'+
 									'										<tbody>';
 																				if(webServicesAvance[0].borrado == true)
 																				{
 																					<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
-	contenidoModalAdministrador +=	'													<tr><td><del>'+webServicesAvance[0].justificacion+'</del></td><td><del>'+numeroConComa(webServicesAvance[0].cantidad)+'</del></td><td><del>'+webServicesAvance[0].fechaEntrega+'</del></td></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaBorrarAvance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' data-toggle="tooltip" data-placement="top" title="Restaurar" ><span class="fa fa-recycle"></span></button></td></tr>';
+	contenidoModalAdministrador +=	'													<tr><td><del>'+deptoAvance+'</del></td><td><del>'+distAvance+'</del></td><td><del>'+webServicesAvance[0].justificacion+'</del></td><td><del>'+numeroConComa(webServicesAvance[0].cantidad)+'</del></td><td><del>'+webServicesAvance[0].fechaEntrega+'</del></td></td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaBorrarAvance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' data-toggle="tooltip" data-placement="top" title="Restaurar" ><span class="fa fa-recycle"></span></button></td></tr>';
 																					<%}%>
 																				}else{
 																					<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-	contenidoModalAdministrador +=	'													<tr><td>'+webServicesAvance[0].justificacion+'</td><td>'+numeroConComa(webServicesAvance[0].cantidad)+'</td><td>'+webServicesAvance[0].fechaEntrega+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarAvance" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarAvance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' data-toggle="tooltip" data-placement="top" title="Borrar" ><span class="fa fa-trash"></span></button></td></tr>';
+	contenidoModalAdministrador +=	'													<tr><td>'+deptoAvance+'</td><td>'+distAvance+'</td><td>'+webServicesAvance[0].justificacion+'</td><td>'+numeroConComa(webServicesAvance[0].cantidad)+'</td><td>'+webServicesAvance[0].fechaEntrega+'</td><td class="text-center"><button type="button" class="btn btn-default btn-sm consultaEditarAvance" data-toggle="tooltip" data-placement="top" title="Editar" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' ><span class="fa fa-pencil"></span></button><button type="button" class="btn btn-default btn-sm consultaBorrarAvance" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' data-toggle="tooltip" data-placement="top" title="Borrar" ><span class="fa fa-trash"></span></button></td></tr>';
 																					<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-	contenidoModalAdministrador +=	'													<tr><td>'+webServicesAvance[0].justificacion+'</td><td>'+numeroConComa(webServicesAvance[0].cantidad)+'</td><td>'+webServicesAvance[0].fechaEntrega+'</td><td class="text-center"></td></tr>';
+	contenidoModalAdministrador +=	'													<tr><td>'+deptoAvance+'</td><td>'+distAvance+'</td><td>'+webServicesAvance[0].justificacion+'</td><td>'+numeroConComa(webServicesAvance[0].cantidad)+'</td><td>'+webServicesAvance[0].fechaEntrega+'</td><td class="text-center"></td></tr>';
 																					<%}%>
 																				}
 																				
@@ -6576,7 +7141,7 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 									'		      		<div class="col-md-6">'+
 									'						<div class="box box-warning box-solid">'+
 									'		                	<div class="box-header with-border">'+
-									'	                  			<h3 class="box-title">Beneficiarios</h3>'+
+									'	                  			<h3 class="box-title">Destinatarios</h3>'+
 									'	                  			<div class="box-tools pull-right">'+
 									'				                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>'+
 									'		                    		</button>'+
@@ -6592,7 +7157,7 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 									'		      					<form role="form" id="formularioBeneficiarios">'+
 									'									<div class="box box-default box-solid">'+
 									'		                				<div class="box-header with-border">'+
-									'		                  					<h3 class="box-title">Agregar Beneficiarios</h3>'+
+									'		                  					<h3 class="box-title">Agregar Destinatarios</h3>'+
 									'	                  						<div class="box-tools pull-right">'+
 									'				                    			<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
 									'		                    					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>'+
@@ -6614,7 +7179,7 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 									
 									'				      				 </div>'+//fin box body
 									'									 <div class="modal-footer">'+ 
-									'					        			<button type="submit" class="btn btn-success btn-sm guardarBeneficiario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' >Guardar Beneficiario</button>'+ 
+									'					        			<button type="submit" class="btn btn-success btn-sm guardarBeneficiario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' >Guardar Destinatario</button>'+ 
 									'									 </div>'+									
 									'				      			 	</div>'+
 									'				      			 	</form'+
@@ -6626,7 +7191,7 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 									'		      					<div class="col-md-12" id="tableBeneficiario">'+
 									'									<div class="box box-default box-solid">'+
 									'		                				<div class="box-header with-border">'+
-									'		                  					<h3 class="box-title">Lista Beneficiarios</h3>'+
+									'		                  					<h3 class="box-title">Lista Destinatarios</h3>'+
 									'	                  						<div class="box-tools pull-right">'+
 									'				                    			<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
 									'		                    					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>'+
@@ -6726,10 +7291,10 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
 									'										<div class="table-responsive">'+
 									'											<table class="table table-hover table-bordered" id="dataTableAvanceCosto">'+
 									'												<thead>'+
-									'													<tr class="active"><th>Producto</th><th>ObjetoGasto</th><th>Monto</th><th class="text-center">Administrar</th></tr>'+
+									'													<tr class="active"><th>Producto</th><th>ObjetoGasto</th><th>Descripción</th><th>Monto</th><th class="text-center">Administrar</th></tr>'+
 									'												</thead>'+
 									'												<tfoot>'+
-									'													<tr><th></th><th></th><th></th><th></th></tr>'+
+									'													<tr><th></th><th></th><th></th><th></th><th></th></tr>'+
 									'												</tfoot>'+
 									'												<tbody id="listaCosto">'+
 									'												</tbody>'+
@@ -6917,7 +7482,7 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
  
          // total general para todas las paginas de la columna
             total2 = api
-                .column( 2 )
+                .column( 3 )
                 .data()
                 .reduce( function (a, b) {
                     return intVal(a) + intVal(b);
@@ -6925,14 +7490,14 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
  
          // total por pagina segun número de columna
             pageTotal2 = api
-                .column( 2, { page: 'current'} )
+                .column( 3, { page: 'current'} )
                 .data()
                 .reduce( function (a, b) {
                     return intVal(a) + intVal(b);
                 }, 0 );
          
          // se muestran los valores de los totales en el footer del table
-            $( api.column( 2 ).footer() ).html(
+            $( api.column( 3 ).footer() ).html(
             		'Total Pág. '+ numeroConComa(pageTotal2) +' (Total Gral. '+ numeroConComa(total2) +')'
             );	         
         },
@@ -7070,7 +7635,7 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
  
          // total general para todas las paginas de la columna
             total1 = api
-                .column( 1 )
+                .column( 3 )
                 .data()
                 .reduce( function (a, b) {
                     return intVal(a) + intVal(b);
@@ -7078,14 +7643,14 @@ function renderAdministrarAvance(insLineaAccionId,lineaAccionId,institucionId,pe
  
          // total por pagina segun número de columna
             pageTotal1 = api
-                .column( 1, { page: 'current'} )
+                .column( 3, { page: 'current'} )
                 .data()
                 .reduce( function (a, b) {
                     return intVal(a) + intVal(b);
                 }, 0 );
          
          // se muestran los valores de los totales en el footer del table
-            $( api.column( 1 ).footer() ).html(
+            $( api.column( 3 ).footer() ).html(
             		'Total Pág. '+ numeroConComa(pageTotal1) +' (Total Gral. '+ numeroConComa(total1) +')'
             );	         
         },
@@ -7157,6 +7722,10 @@ $("body").on("click", ".agregarModalAdministrador",function(event){
 $("body").on("change", "#productoObjetoGasto",function(event){
 	//var departamentoId = $(this).attr("parametro");
 	var productoObjetoGastoId = $("#productoObjetoGasto option:selected").val();
+	var anho=$("#periodoSeleccion option:selected").val();
+	var version=$("#versionSeleccion option:selected").val();
+	var optionObjetoGastoCosto="";
+	var objetoGasto=[];
 	if (productoObjetoGastoId != undefined){
 		var webServicesDatosProducto = $.ajax({
 			url:'/tablero/ajaxSelects2?action=getProductoObjetoGasto&productoObjetoGastoId='+productoObjetoGastoId,
@@ -7169,8 +7738,45 @@ $("body").on("change", "#productoObjetoGasto",function(event){
 	        }
 		}).responseText;
 		webServicesDatosProducto = JSON.parse(webServicesDatosProducto);
+				
+    	$.ajax({
+	    	url:'http://spr.stp.gov.py/ajaxSelects?accion=getAsignacionPresiVersion&anho='+anho+'&nivel='+webServicesDatosProducto[0].nivelId+'&entidad='+webServicesDatosProducto[0].entidadId+'&versionReporte='+version,
+          	type:'get',
+			crossDomain: 'true',
+			dataType:'jsonp',
+			jsonp: 'callback',
+			jsonpCallback: 'jsonpCallbackAsignacionPresi',
+			async:false,
+			success: function( data, textStatus, jqXHR) {
+				jsonpCallbackAsignacionPresi(data);
+			}    
+		});
+		    	
+	   	function jsonpCallbackAsignacionPresi(data) {
+			datos = data;			
+			for(var z = 0; z < datos.length; z++)
+			{
+				if (webServicesDatosProducto[0].nivelId == datos[z].nivel && webServicesDatosProducto[0].entidadId == datos[z].entidad 
+						&& webServicesDatosProducto[0].programaId == datos[z].programa && webServicesDatosProducto[0].subprogramaId == datos[z].subPrograma 
+						&& webServicesDatosProducto[0].proyectoId == datos[z].proyecto && webServicesDatosProducto[0].productoId == datos[z].producto){					
+					objetoGasto.push(datos[z].objetoGasto);
+    			}			
+			//$("#totalFinanciero-formulario").val(numeroConComa(totalFinanciero));			
+    		}	
+			
+			var uniqueOG = [];
+		    $.each(objetoGasto, function(i, el){
+		        if($.inArray(el, uniqueOG) === -1) uniqueOG.push(el);
+		    });
+		    
+		    for(var x = 0; x < uniqueOG.length; x++){
+		    	optionObjetoGastoCosto+='<option value="'+uniqueOG[x]+'" >'+uniqueOG[x]+'</option>';
+		    }
+		    
+    		$("#objetoGastoCosto").html("");
+    		$("#objetoGastoCosto").append(optionObjetoGastoCosto);
 		
-		var webServicesObjetoGastoCosto = $.ajax({
+		/* var webServicesObjetoGastoCosto = $.ajax({
 			url:'/tablero/ajaxSelects?action=getObjetoGastoCosto&nivel='+webServicesDatosProducto[0].nivelId+'&entidad='+webServicesDatosProducto[0].entidadId+'&tiprograma='+webServicesDatosProducto[0].tiprogramaId+'&programa='+webServicesDatosProducto[0].programaId+'&subprograma='+webServicesDatosProducto[0].subprogramaId+'&proyecto='+webServicesDatosProducto[0].proyectoId+'&producto='+webServicesDatosProducto[0].productoId+'&anho=2017',
 		  	type:'get',
 		  	dataType:'json',
@@ -7182,14 +7788,15 @@ $("body").on("change", "#productoObjetoGasto",function(event){
 		
 		for(var o = 0; o < webServicesObjetoGastoCosto.producto.length; o++){
 			optionObjetoGastoCosto+='<option value="'+webServicesObjetoGastoCosto.producto[o].codigoObjetoGasto+'" >'+webServicesObjetoGastoCosto.producto[o].codigoObjetoGasto+'</option>';
-		}
+		} */
 		
-		$("#objetoGastoCosto").html("");
-		$("#objetoGastoCosto").append(optionObjetoGastoCosto);
+		//$("#objetoGastoCosto").html("");
+		//$("#objetoGastoCosto").append(optionObjetoGastoCosto);
+		}
 	}
 	
-	$("#objetoGastoCosto").html("");
-	$("#objetoGastoCosto").append(optionObjetoGastoCosto);
+	//$("#objetoGastoCosto").html("");
+	//$("#objetoGastoCosto").append(optionObjetoGastoCosto);
 	
 });
 
@@ -7216,6 +7823,31 @@ $("body").on("change", "#beneficiarioTipo",function(event){
 		
 		$("#grupoBeneficiario").html("");
 		$("#grupoBeneficiario").append(optionBeneficiarioGrupo);
+	}
+});
+
+$("body").on("change", "#departamentoAvance",function(event){
+	//var departamentoId = $(this).attr("parametro");
+		
+	var departamentoAvanceId = $("#departamentoAvance option:selected").val();
+	
+	if(departamentoAvanceId !== undefined){
+		var webServiceDistritos = $.ajax({
+			url:'/tablero/ajaxSelects?action=getDistrito&departamento='+departamentoAvanceId,
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		webServiceDistritos = JSON.parse(webServiceDistritos);
+		
+		var optionDistritos="";
+		
+		for(var o = 0; o < webServiceDistritos.length; o++){
+			optionDistritos+='<option value="'+webServiceDistritos[o].id+'" >'+webServiceDistritos[o].descripcion+'</option>';
+		}
+		
+		$("#distritoAvance").html("");
+		$("#distritoAvance").append(optionDistritos);
 	}
 });
 
@@ -7250,21 +7882,51 @@ $("body").on("click", ".consultaEditarAvance",function(event){
   	if ( $("#modalAdministrador").length )
    	{
 		$("#modalAdministrador").remove();
-   	}	
+   	}
   	
-   	var webServicesAvance = $.ajax({
-
+  	var webServicesAvance = $.ajax({
    		url:'/tablero/ajaxSelects2?action=getAvance&avanceId='+avanceId,
-
    	  	type:'get',
-
    	  	dataType:'json',
-
    	  	async:false       
-
    	}).responseText;
-
    	webServicesAvance = JSON.parse(webServicesAvance); 
+  	
+  	var departamentos = $.ajax({
+    	url:'/tablero/ajaxSelects?action=getDepartamento',
+      	type:'get',
+      	dataType:'json',
+      	async:false       
+    }).responseText;
+	departamentos = JSON.parse(departamentos);
+	
+	var optionDepartamentos = "";
+  	for(var d = 0; d < departamentos.length; d++)
+	{
+		if(webServicesAvance[0].departamentoId == departamentos[d].idDepartamento){
+			nombreDepartamento = departamentos[d].nombreDepartamento;
+			optionDepartamentos+='<option value="'+departamentos[d].idDepartamento+'" selected >'+departamentos[d].nombreDepartamento+'</option>';
+		}else {
+			optionDepartamentos+='<option value="'+departamentos[d].idDepartamento+'" >'+departamentos[d].nombreDepartamento+'</option>';	
+		}
+	}  	
+  	
+  	var distritos = $.ajax({
+    	url:'/tablero/ajaxSelects?action=getDistrito&departamento='+webServicesAvance[0].departamentoId,
+      	type:'get',
+      	dataType:'json',
+      	async:false       
+    }).responseText;
+	distritos = JSON.parse(distritos);
+	
+	var optionDistritos="";
+	for(k = 0;k<distritos.length; k++){
+		if(webServicesAvance[0].distritoAvance == distritos[k].id){
+			optionDistritos+='<option value="'+distritos[k].id+'" selected >'+distritos[k].descripcion+'</option>';
+		} else {
+			optionDistritos+='<option value="'+distritos[k].id+'">'+distritos[k].descripcion+'</option>';
+		}
+	}   	
 
    	var contenido = "";
 
@@ -7293,9 +7955,13 @@ $("body").on("click", ".consultaEditarAvance",function(event){
 
 						'			      			<form class="form-horizontal">'+
 
-						'							<tr><td><label for="justificacionAvance">Justificación</label><input type="text" id="justificacionAvance" value="'+webServicesAvance[0].justificacion+'" class="form-control" required /></td><td><label for="cantidadAvance">Cantidad</label><input type="number" id="cantidadAvance" class="form-control" value='+webServicesAvance[0].cantidad+' required/></td></tr>'+
+						'							<tr><td><label for="departamentoAvance">Departamento</label><select class="form-control" id="departamentoAvance" >'+optionDepartamentos+'</select></div></td>'+
 
-						'							<tr><td><label for="fechaEntregaAvance">Fecha Entrega</label><input type="date" id="fechaEntregaAvance" value='+webServicesAvance[0].fechaEntrega+' max="'+fechaActual+'" class="form-control" required /></td></tr>'+														
+						'								<td><label for="distritoAvance">Distrito</label><select class="form-control" id="distritoAvance">'+optionDistritos+'</select></div></td></tr>'+
+						
+						'							<tr><td><label for="justificacionAvance">Justificación</label><input type="text" id="justificacionAvance" value="'+webServicesAvance[0].justificacion+'" class="form-control" required /></td><td><label for="cantidadAvance">Cantidad</label><input type="number" id="cantidadAvance" step="any" class="form-control" value='+webServicesAvance[0].cantidad+' required/></td></tr>'+
+
+						'							<tr><td><label for="fechaEntregaAvance">Fecha Entrega</label><input  id="fechaEntregaAvance" value='+webServicesAvance[0].fechaEntrega+' class="form-control" required /></td></tr>'+														
 
 						'							<input type="hidden" id="versionAvance" value="3" /><input type="hidden" id="actividadIdAvance" value='+avanceId+' />'+		
 
@@ -7328,7 +7994,12 @@ $("body").on("click", ".consultaEditarAvance",function(event){
    	$("body").append(contenido);
 
    	$('#modalEditarCosto').modal('show');
-
+   	$('#fechaEntregaAvance').datepicker({  
+		language: "es",
+		format: 'yyyy-mm-dd',
+		endDate: "0d",
+		todayBtn: "linked",
+	    todayHighlight: true});
  });
  
 $("body").on("click", ".editarAvance",function(event){	
@@ -7344,12 +8015,16 @@ $("body").on("click", ".editarAvance",function(event){
 		var cantidad = $("#cantidadAvance").val();
 		var fechaEntrega = $("#fechaEntregaAvance").val();
 		//var cantidadBeneficiarios = $("#cantidadBeneficiariosAvance").val();
-	
+		var distritoAvance = $("#distritoAvance option:selected").val();
+		var departamentoId = $("#departamentoAvance option:selected").val();					
+		
 	
 		//Vaciar los inputs
 		$("#justificacionAvance").val("");
 		$("#cantidadAvance").val("");
 		$("#fechaEntregaAvance").val("");
+		$("#distritoAvance").val("");
+		$("#departamentoAvance").val("");
 		//$("#cantidadBeneficiariosAvance").val("");
 	    
 	   	var webServicesAvance = $.ajax({
@@ -7367,6 +8042,8 @@ $("body").on("click", ".editarAvance",function(event){
 		objeto.fechaEntrega = fechaEntrega;
 		//objeto.cantidadBeneficiarios = cantidadBeneficiarios;
 		objeto.actividadId = webServicesAvance[0].actividadId;
+		objeto.distritoAvance = distritoAvance;
+		objeto.departamentoId = departamentoId;
 		objeto.version = webServicesAvance[0].version;//No obtenemos este valor del formulario sino del webservices entonces si por ahi agregamos la funcionalidad de que el usuario cambien la version debemos de obtener este dato del formulario y ya no del webservice
 		objeto.id = avanceId;
 	
@@ -8485,7 +9162,7 @@ $("body").on("click", ".consultaBorrarBeneficiario",function(event){
 						'		<div class="modal-content" >'+
 						'			<div class="modal-header">'+
 						'		        <button type="button" class="close agregarModalAdministrador"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
-						'		        <h4 class="modal-title" >Borrar - Restaurar Beneficiario</h4>'+
+						'		        <h4 class="modal-title" >Borrar - Restaurar Destinatario</h4>'+
 						'			</div>'+
 						'		    <div class="modal-body">'+
 						'			<div id="mensajeBorradoBeneficiario"></div>'+
@@ -8502,13 +9179,13 @@ $("body").on("click", ".consultaBorrarBeneficiario",function(event){
 			$("#mensajeBorradoBeneficiario").html("");
 			$("#mensajeBorradoBeneficiario").append('<h3 class="text-center">Ud. esta seguro que desea RESTABLACER este registro</h3>');
 			$("#agregarBotonBorradoBeneficiario").html("");
-			$("#agregarBotonBorradoBeneficiario").append('<button type="button" class="btn btn-success btn-sm borrarBeneficiario" id="botonRestaurarBeneficiario" parametros='+webServicesBeneficiario[0].id+'-r>Restaurar Beneficiario</button>');
+			$("#agregarBotonBorradoBeneficiario").append('<button type="button" class="btn btn-success btn-sm borrarBeneficiario" id="botonRestaurarBeneficiario" parametros='+webServicesBeneficiario[0].id+'-r>Restaurar Destinatario</button>');
 			$("#agregarBotonBorradoBeneficiario").append('<button type="button" class="btn btn-success btn-sm agregarModalAdministrador"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'>Cerrar</button>');
 		}else{
 			$("#mensajeBorradoBeneficiario").html("");
 			$("#mensajeBorradoBeneficiario").append('<h3 class="text-center">Ud. esta seguro que desea BORRAR este registro</h3');
 			$("#agregarBotonBorradoBeneficiario").html("");
-			$("#agregarBotonBorradoBeneficiario").append('<button type="button" class="btn btn-danger btn-sm borrarBeneficiario" id="botonBorradoBeneficiario" parametros='+webServicesBeneficiario[0].id+'-b>Borrar Beneficiario</button>');
+			$("#agregarBotonBorradoBeneficiario").append('<button type="button" class="btn btn-danger btn-sm borrarBeneficiario" id="botonBorradoBeneficiario" parametros='+webServicesBeneficiario[0].id+'-b>Borrar Destinatario</button>');
 			$("#agregarBotonBorradoBeneficiario").append('<button type="button" class="btn btn-success btn-sm agregarModalAdministrador"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+'>Cerrar</button>');
 		}
 		
@@ -8629,7 +9306,7 @@ $("body").on("click", ".consultaEditarBeneficiario",function(event){
 						'		<div class="modal-content" >'+
 						'			<div class="modal-header">'+
 						'		        <button type="button" class="close agregarModalAdministrador"  parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId+' aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
-						'		        <h4 class="modal-title" >Editar Beneficiario</h4>'+
+						'		        <h4 class="modal-title" >Editar Destinatario</h4>'+
 						'			</div>'+
 						'		    <div class="modal-body" id="cuerpoModalEditarBeneficiario">'+
 										
@@ -8806,7 +9483,7 @@ $("body").on("click", ".consultaBorrarInsLineaAccion",function(event){
 $("body").on("change", "#proporcionActividad",function(event){
 	var proporcion = parseFloat($("#proporcionActividad").val());
 	
-		if(proporcion < 0 || proporcion > 1){
+		if(proporcion < 0.0 || proporcion > 1.0){
 			$("#proporcionActividad").val("");
 			$('#proporcionActividad').prop('title', 'La Proporción debe estar comprendido entre 0 y 1');
 			alert("La Proporción debe estar comprendido entre 0 y 1");
@@ -8817,7 +9494,7 @@ $("body").on("change", "#proporcionActividad",function(event){
 $("body").on("change", "#pesoActividad",function(event){
 	var peso = parseFloat($("#pesoActividad").val());
 		
-		if(peso < 0 || peso > 1){
+		if(peso < 0.0 || peso > 1.0){
 			$("#pesoActividad").val("");
 			$('#pesoActividad').prop('title', 'El Peso debe estar comprendido entre 0 y 1');
 			alert("El valor del Peso debe estar comprendido entre 0 y 1");
@@ -8868,7 +9545,7 @@ $("body").on("click", ".consultaEditarHito",function(event){
 						'					<table class="table table-hover">'+
 						'						<tbody>'+
 						'			      			<form class="form-horizontal" role="form">'+
-						'							<tr><td><label for="cantidadHito">Cantidad</label><input type="number" id="cantidadHito" class="form-control" value='+programacionWebService[0].cantidad+' required/></td><td><label for="fechaHito">Fecha Entrega</label><input type="date" id="fechaHito" class="form-control" value='+programacionWebService[0].fechaEntrega+' required/></td></tr>'+																		
+						'							<tr><td><label for="cantidadHito">Cantidad</label><input type="number" id="cantidadHito" step="any" class="form-control" value='+programacionWebService[0].cantidad+' required/></td><td><label for="fechaHito">Fecha Entrega</label><input  id="fechaHito" class="form-control" value='+programacionWebService[0].fechaEntrega+' required/></td></tr>'+																		
 						'							<input type="hidden" id="programacionIdHito" value="'+programacionWebService[0].id+'"/>'+		
 						'			      			</form>	'+				
 						'						</tbody>'+
@@ -8877,7 +9554,7 @@ $("body").on("click", ".consultaEditarHito",function(event){
 						
 						'		    </div>'+
 						'			<div class="modal-footer">'+
-						' 				<button type="submit" class="btn btn-success btn-sm editarHito" id="botonGuardarHito" parametros='+programacionWebService[0].id+'>Guardar Cambios</button>'+ 
+						' 				<button type="button" class="btn btn-success btn-sm editarHito" id="botonGuardarHito" parametros='+programacionWebService[0].id+'>Guardar Cambios</button>'+ 
 						' 				<button type="button" class="btn btn-success btn-sm agregarProgramacion" parametros="'+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+cronogramaId+'" >Cerrar</button>'+						
 						'			</div>'+
 						'		</div>'+ 
@@ -8887,6 +9564,11 @@ $("body").on("click", ".consultaEditarHito",function(event){
 						
 	$("body").append(contenido);
 	$('#modalEditarHito').modal('show');
+	$('#fechaHito').datepicker({  
+		language: "es",
+		format: 'yyyy-mm-dd',
+		todayBtn: "linked",
+	    todayHighlight: true});
 
 });
 $("body").on("click", ".editarHito",function(event){
@@ -9274,7 +9956,7 @@ function renderAccionDestinatario(insLineaAccionId,lineaAccionId,institucionId,p
 						
 						'				      				 </div>'+//fin box body
 						'									 <div class="modal-footer">'+ 
-						'					        			<button type="submit" class="btn btn-success btn-sm guardarAccionBeneficiario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'>Guardar Beneficiario</button>'+ 
+						'					        			<button type="submit" class="btn btn-success btn-sm guardarAccionBeneficiario" parametros='+insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+accionCatalogoId+'>Guardar Destinatario</button>'+ 
 						'									 </div>'+									
 						'				      			 	</div>'+
 						'				      			 	</form'+

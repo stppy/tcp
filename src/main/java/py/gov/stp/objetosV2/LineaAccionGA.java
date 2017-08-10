@@ -2,7 +2,10 @@ package py.gov.stp.objetosV2;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+@author          DGTIC - STP
+@email			 dgtic@stp.gov.py
+*/
 public class LineaAccionGA {
 	protected String colour = "#ffcc00";
 	protected String name;

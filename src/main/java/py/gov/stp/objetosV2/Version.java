@@ -4,47 +4,32 @@ import java.sql.Date;
 @author          DGTIC - STP
 @email			 dgtic@stp.gov.py
 */
-public class Programacion {
-	protected int id;
-	protected double cantidad;
-	protected String fechaEntrega;
-	protected int actividad;
-	protected int version;
+public class Version {
+	protected Integer nro;
+	protected Integer anho;
+	protected String descripcion;
 	protected Date fechaInsercion;
 	protected Date fechaActualizacion;	
     protected String usuarioResponsable;
-	protected boolean borrado;
-	
-	
-	public int getId() {
-		return id;
+    protected boolean borrado=false;
+		
+	public Integer getNro() {
+		return nro;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setNro(Integer nro) {
+		this.nro = nro;
 	}
-	public double getCantidad() {
-		return cantidad;
+	public Integer getAnho() {
+		return anho;
 	}
-	public void setCantidad(double cantidad) {
-		this.cantidad = cantidad;
+	public void setAnho(Integer anho) {
+		this.anho = anho;
 	}
-	public String getFechaEntrega() {
-		return fechaEntrega;
+	public String getDescripcion() {
+		return descripcion;
 	}
-	public void setFechaEntrega(String fechaEntrega) {
-		this.fechaEntrega = fechaEntrega;
-	}
-	public int getActividad() {
-		return actividad;
-	}
-	public void setActividad(int actividad) {
-		this.actividad = actividad;
-	}
-	public int getVersion() {
-		return version;
-	}
-	public void setVersion(int version) {
-		this.version = version;
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 	public boolean isBorrado() {
 		return borrado;
@@ -53,7 +38,7 @@ public class Programacion {
 		this.borrado = borrado;
 	}
 	public void changeBorrado(){
-		this.borrado=!borrado;
+		this.borrado=!borrado;	
 	}
 	public Date getFechaInsercion() {
 		return fechaInsercion;
@@ -73,6 +58,5 @@ public class Programacion {
 	public void setUsuarioResponsable(String usuarioResponsable) {
 		this.usuarioResponsable = usuarioResponsable;
 	}
-	
 	
 }

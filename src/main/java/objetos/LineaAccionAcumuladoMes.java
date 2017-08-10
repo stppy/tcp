@@ -1,4 +1,8 @@
 package objetos;
+/**
+@author          DGTIC - STP
+@email			 dgtic@stp.gov.py
+*/
 
 public class LineaAccionAcumuladoMes {
 	protected int linea_accion_id;

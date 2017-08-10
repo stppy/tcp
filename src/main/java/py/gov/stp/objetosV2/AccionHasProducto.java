@@ -1,7 +1,10 @@
 package py.gov.stp.objetosV2;
 
 import java.sql.Date;
-
+/**
+@author          DGTIC - STP
+@email			 dgtic@stp.gov.py
+*/
 public class AccionHasProducto {
 	protected int id;
 	protected int proporcion;
@@ -23,6 +26,7 @@ public class AccionHasProducto {
 	protected Date fechaInsercion;
 	protected Date fechaActualizacion;	
     protected String usuarioResponsable;
+    protected String prodConcat;
 	protected boolean borrado;
 	
 	
@@ -145,6 +149,12 @@ public class AccionHasProducto {
 	}
 	public void setUsuarioResponsable(String usuarioResponsable) {
 		this.usuarioResponsable = usuarioResponsable;
+	}	
+	public String getProdConcat() {
+		return prodConcat;
+	}
+	public void setProdConcat(String prodConcat) {
+		this.prodConcat = prodConcat;
 	}
 	public boolean isBorrado() {
 		return borrado;

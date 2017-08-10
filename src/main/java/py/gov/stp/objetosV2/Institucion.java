@@ -1,7 +1,10 @@
 package py.gov.stp.objetosV2;
 
 import java.sql.Date;
-
+/**
+@author          DGTIC - STP
+@email			 dgtic@stp.gov.py
+*/
 public class Institucion {
 	protected int id;
 	protected String nombre;
@@ -16,7 +19,14 @@ public class Institucion {
 	protected Date fechaActualizacion;	
     protected String usuarioResponsable;
 	protected boolean borrado=false;
+	protected double promedio;
 	
+	public double getPromedio() {
+		return promedio;
+	}
+	public void setPromedio(double promedio) {
+		this.promedio = promedio;
+	}
 	public int getId() {
 		return id;
 	}

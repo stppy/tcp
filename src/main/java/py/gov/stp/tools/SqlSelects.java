@@ -437,6 +437,31 @@ public class SqlSelects {
 		}
 		return objetos;
 	}
+	public static String selectAccionesAvances2(String condition) throws SQLException{
+   	 Connection conect=ConnectionConfiguration.conectar();    	 
+		 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from( "+
+				"	select * from linea_accion_acciones2 "+ condition +")t";
+		//ins_lin_acc_ava
+		 Statement statement = null;
+		 ResultSet rs=null;
+		 String objetos = "";
+
+		try {
+			statement = conect.createStatement();
+			rs=statement.executeQuery(query);
+			while(rs.next()){
+				//ObjetivoEstrategia objeto = new ObjetivoEstrategia();
+
+				objetos+=rs.getString("resultado");
+			}
+		}
+		catch (SQLException e) {e.printStackTrace();}
+		finally{
+			if (statement != null) {statement.close();}
+			if (conect != null) {conect.close();}
+		}
+		return objetos;
+	}
 	public static String selectAccionesAvancesDepto(String condition) throws SQLException{
    	 Connection conect=ConnectionConfiguration.conectar();    	 
 		 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from( "+
@@ -1105,7 +1130,7 @@ public class SqlSelects {
 	
 	public static List<Distrito> selectDistritos(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select * from distrito "+condition;
+		String query = " select * from distrito "+condition+" and borrado is false";
 
 		Statement statement = null;
 		ResultSet rs=null;

@@ -24,7 +24,7 @@
 		<script type="text/javascript" src="tablero_files/gchart_renderers.js"></script>
 		<script type="text/javascript" src="tablero_files/d3_renderers.js"></script>
 		<script type="text/javascript" src="tablero_files/jquery.js"></script>
-		<script type="text/javascript" src="frames/resumenLineaAccion.js"></script>
+		<script type="text/javascript" src="frames/lineasProgramacionAvance.js"></script>
 		<style>
 			* {font-family: Verdana;}
 			.node {
@@ -41,6 +41,10 @@
 		<link type="text/css" rel="stylesheet" href="tablero_files/imagesparkline.css">
 		<link type="text/css" rel="stylesheet" href="tablero_files/tooltip.css">
 		<!--  <script src="jquery-1.11.2.min" type="text/javascript"></script> -->
+		<link href="bootstrap/css/bootstrapslider.css" rel="stylesheet">
+		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<link href="plugins/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
+	    <link href="plugins/datatables/css/buttons.dataTables.min.css" rel="stylesheet"> 
 	</head>
 	<body class="skin-blue sidebar-mini">
 		<% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%>
@@ -70,16 +74,24 @@
 			var i=parseInt(0);
 						
 			var periodoActual = 2017;
-			
-			renderLineasEstrategicas(periodoActual); 
 			getPeriodo();
+			ObtenerInstitucion();
+			//renderLineas(periodoActual); 
 			
+			$("body").on("click", "#generarDatos",function(event){	
+			   	var periodoSeleccionado = $("#periodoSeleccion option:selected").val();
+			   	var institucionSeleccionado = $("#selectorDeInstitucion option:selected").val();
+
+			   	
+				var condicion="";
+				if(periodoSeleccionado!=null)condicion = "&periodoId="+periodoSeleccionado;
+				if(institucionSeleccionado!=null)condicion += "&institucion_id="+institucionSeleccionado;
+
+			   	renderLineas(condicion); 
+			});
+						
 		});
 
-		$("body").on("change", "#periodoSeleccion",function(event){	
-		   	periodoSeleccionado = $("#periodoSeleccion option:selected").val();
-		   	renderLineasEstrategicas(periodoSeleccionado); 
-		});
 		</script>
 
 	<!-- Piwik -->
@@ -130,25 +142,37 @@
 			</section>
 	
 	<!-- Main content -->
-			<section class="content" id="programacion">
+			<section class="content">
 				<div class="row">
 					<div class="col-md-12">
 						<div class="box" height="1000px">
 							<div class="box-header with-border" height="1000px">
-								<h3 class="box-title" id="tituloTipoPrograma">
+								<h3 class="box-title">
 									Lineas de Accion Por institucion
 								</h3> 
 								<div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
 								</div>
 				            </div>
-							<div class="box-body" >
-								<table class="table table-striped table-bordered table-hover" id ="tablaLineasPorInstitucion">
-				
-								</table>
+							<div class="box-body">
+								<div class="row">
+									<div class="col-md-3">
+										<select class="form-control" id="selectorDeInstitucion">
+											<option value='0' selected>Institución</option>
+										</select> 
+									</div>									
+									<div class="col-md-3">
+										<div class="col-md-3">
+											<button type="button" class="btn btn-box btn-primary" id="generarDatos"><p align="center">Visualizar Datos</p></button>
+										</div> 
+									</div>										
+								</div><!-- fin row de selectores -->
 				            </div>
 						</div>
-					</div><!--</div>-->
-				</div><!-- /.row -->
+					</div>
+				</div>
+			</section><!-- /.content -->	
+			<section class="content" id="programacion">
+
 			</section><!-- /.content -->
 		</div><!-- /.content-wrapper -->
 	
@@ -173,6 +197,17 @@
 	    <script src="plugins/jQuery/jQuery-2.1.3.min.js"></script>
 	    <!-- Bootstrap 3.3.2 JS -->
 	    <script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+	    <!-- DATA TABES SCRIPT -->    
+	    <script src="plugins/datatables/jquery.dataTables.js" type="text/javascript"></script>
+	    <!-- <script src="plugins/datatables/Plugins/api/sum().js"></script> -->
+		<script src="plugins/datatables/dataTables.buttons.min.js" type="text/javascript"></script>
+		<script src="plugins/datatables/buttons.flash.min.js" type="text/javascript"></script>
+		<script src="plugins/datatables/jszip.min.js" type="text/javascript"></script>
+		<script src="plugins/datatables/pdfmake.min.js" type="text/javascript"></script>
+		<script src="plugins/datatables/vfs_fonts.js" type="text/javascript"></script>
+		<script src="plugins/datatables/buttons.html5.min.js" type="text/javascript"></script>
+		<script src="plugins/datatables/buttons.print.min.js" type="text/javascript"></script>
+	    <script src="plugins/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
 	    <!-- FastClick -->
 	    <script src='plugins/fastclick/fastclick.min.js'></script>
 	    <!-- AdminLTE App -->
@@ -201,9 +236,9 @@
 		<%  } %>
 		<a href="#" data-toggle="tooltip" title="Some tooltip text!">Hover over me</a>
 				
+				
 		<%  } else { %>
-    		<script type="text/javascript">window.location = "http://sprtest.stp.gov.py/";</script>
+    		<script type="text/javascript">window.location = "http://spr.stp.gov.py/";</script>
 		<% } %> 
-
 </body>
 </html>

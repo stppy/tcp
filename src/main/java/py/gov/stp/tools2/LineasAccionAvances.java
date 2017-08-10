@@ -45,7 +45,7 @@ public class LineasAccionAvances {
 	protected String avanceFecha;
 	protected double avanceCantidad;
 	protected String avanceJustificacion;
-	
+	protected String etiquetaNombre;
 	protected double contribucion;
 	protected double influencia;
 	protected Date fecha;
@@ -55,6 +55,8 @@ public class LineasAccionAvances {
 	protected String avanceDestinatario;
 	protected String avanceEvidencias;
 	protected String avanceCantidadString;	
+	protected String distritoAvance;
+	protected String departamentoAvance;
 	
 	public int getInsId() {
 		return insId;
@@ -356,4 +358,22 @@ public class LineasAccionAvances {
 	public void setAvanceCantidadString(String avanceCantidadString) {
 		this.avanceCantidadString = avanceCantidadString;
 	}
+	public String getDistritoAvance() {
+		return distritoAvance;
+	}
+	public void setDistritoAvance(String distritoAvance) {
+		this.distritoAvance = distritoAvance;
+	}
+	public String getDepartamentoAvance() {
+		return departamentoAvance;
+	}
+	public void setDepartamentoAvance(String departamentoAvance) {
+		this.departamentoAvance = departamentoAvance;
+	}
+	public String getEtiquetaNombre() {
+		return etiquetaNombre;
+	}
+	public void setEtiquetaNombre(String etiquetaNombre) {
+		this.etiquetaNombre = etiquetaNombre;
+	}	
 }
