@@ -79,7 +79,7 @@ function obtenerLineasProgramacionAvance(condition){
 	var contenidoLineas="";
 	
 	var lineasProgramacionAvance = $.ajax({
-		url: '/tablero/ajaxSelects?action=getAccionesAvances2'+condition,
+		url: '/tablero/ajaxSelects?action=getAccionesAvancesMensual'+condition,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       

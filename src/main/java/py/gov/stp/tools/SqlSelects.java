@@ -437,10 +437,10 @@ public class SqlSelects {
 		}
 		return objetos;
 	}
-	public static String selectAccionesAvances2(String condition) throws SQLException{
+	public static String selectAccionesAvancesMensual(String condition) throws SQLException{
    	 Connection conect=ConnectionConfiguration.conectar();    	 
 		 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from( "+
-				"	select * from linea_accion_acciones2 "+ condition +")t";
+				"	select * from linea_accion_acciones_mensual "+ condition +")t";
 		//ins_lin_acc_ava
 		 Statement statement = null;
 		 ResultSet rs=null;
