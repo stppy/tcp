@@ -142,36 +142,34 @@
 			</section>
 	
 	<!-- Main content -->
+	
 			<section class="content">
+			
+			
+			
+			<div class="box box-primary">
+            <div class="box-header ui-sortable-handle" style="cursor: move;">
+              <h3 class="box-title">Seleccione una Institución</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
 				<div class="row">
-					<div class="col-md-12">
-						<div class="box" height="1000px">
-							<div class="box-header with-border" height="1000px">
-								<h3 class="box-title">
-									Lineas de Accion Por institucion
-								</h3> 
-								<div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-								</div>
-				            </div>
-							<div class="box-body">
-								<div class="row">
-									<div class="col-md-3">
-										<select class="form-control" id="selectorDeInstitucion">
-											<option value='0' selected>Institución</option>
-										</select> 
-									</div>									
-									<div class="col-md-3">
-										<div class="col-md-3">
-											<button type="button" class="btn btn-box btn-primary" id="generarDatos"><p align="center">Visualizar Datos</p></button>
-										</div> 
-									</div>										
-								</div><!-- fin row de selectores -->
-				            </div>
-						</div>
-					</div>
-				</div>
-			</section><!-- /.content -->	
-			<section class="content" id="programacion">
+					<div class="col-md-6">
+						<select class="form-control" id="selectorDeInstitucion">
+							<option value='0' selected>Institución</option>
+						</select> 
+					</div>									
+					<div class="col-md-6">
+					</div>										
+				</div><!-- fin row de selectores -->
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer clearfix no-border">
+				<button type="button" class="btn btn-box btn-primary" id="generarDatos"><p align="center">Visualizar Datos</p></button>
+            </div>
+          </div>
+			
+			<div id="programacion"></div>
 
 			</section><!-- /.content -->
 		</div><!-- /.content-wrapper -->
