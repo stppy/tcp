@@ -237,7 +237,7 @@ public class ajaxSelects extends HttpServlet {
 				catch (SQLException e) {e.printStackTrace();}				
         		out.println(objetos);return;
         	}
-        	if (action.equals("getAccionesAvances2")){
+        	if (action.equals("getAccionesAvancesMensual")){
         		String objetos=null;
         		condition = " where true ";
         		if (institucion!="") condition += " and institucion_sigla ='"+institucion+"'";
@@ -249,7 +249,7 @@ public class ajaxSelects extends HttpServlet {
         		if (departamentoId!=null) condition += " and accion_departamento_id ='"+departamentoId+"'";
         		if (periodoId!=null) condition += " and periodo_id ='"+periodoId+"'";
         		        		
-				try {objetos = SqlSelects.selectAccionesAvances2(condition);}
+				try {objetos = SqlSelects.selectAccionesAvancesMensual(condition);}
 				catch (SQLException e) {e.printStackTrace();}				
         		out.println(objetos);return;
         	}
