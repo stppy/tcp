@@ -3996,12 +3996,7 @@ $("body").on("click", ".borrarAccion",function(event){
 					if( datosProductos.productos[0].clase === "N" )
 					{
 				    	$.ajax({
-<<<<<<< HEAD
-				         	 url:'/ajaxSelects?accion=getProductoTipoN&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto+'&anho='+anho,
-
-=======
-				         	 url:'http://sprtest.stp.gov.py/ajaxSelects?accion=getProductoTipoN&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto+'&anho='+anho,
->>>>>>> bb146b1900e139c7f1893f14c42ab79ea084eff5
+				         	url:'/ajaxSelects?accion=getProductoTipoN&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto+'&anho='+anho,
 				          	type:'get',
 				          	crossDomain: 'true',
 				          	dataType:'jsonp',
