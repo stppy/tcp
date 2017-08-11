@@ -24,7 +24,7 @@
 	
 	<link href="bootstrap/css/bootstrapslider.css" rel="stylesheet">
 	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	    <link href="plugins/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
+	<link href="plugins/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="plugins/datatables/css/buttons.dataTables.min.css" rel="stylesheet">       
 	
 
@@ -1262,7 +1262,6 @@ var $tabla=$("#lineasPorEntidad");
 	<script src="plugins/datatables/vfs_fonts.js" type="text/javascript"></script>
 	<script src="plugins/datatables/buttons.html5.min.js" type="text/javascript"></script>
 	<script src="plugins/datatables/buttons.print.min.js" type="text/javascript"></script>
-	
     <script src="plugins/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
     <!-- FastClick -->
     <script src='plugins/fastclick/fastclick.min.js'></script>
@@ -1553,7 +1552,7 @@ if(deptoId!=null && distId!=null){
 												flagIns++;						  
 											}
 								  			clase="";
-											var desempProgAnho=numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2));
+											var desempProgAnho=parseFloat(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100));
 											if (lineasProgramadas[n].cantidadAnho==0 && lineasProgramadas[n].meta ==0) desempProgAnho="-";
 											if (desempProgAnho!="-"){
 												if (parseInt(desempProgAnho)>=90 && lineasProgramadas[n].meta != 0){
@@ -1573,7 +1572,7 @@ if(deptoId!=null && distId!=null){
 											'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
 											'<td>'+numeroConComa(lineasProgramadas[n].meta)+'</td>'+
 											'<td>'+numeroConComa((lineasProgramadas[n].cantidadAnho).toFixed(2))+'</td>'+
-											'<td class="'+clase+'">'+desempProgAnho+'</td>';
+											'<td class="'+clase+'">'+numeroConComa(desempProgAnho.toFixed(2))+'</td>';
 											if(lineasProgramadas[n].cantDest==0){
 												tempInstLineas += '<td> - </td>';
 											}else{
@@ -2597,8 +2596,8 @@ $("body").on("change", "#etiquetaSeleccion",function(event){
 								  "pageLength": 150,
 								  ordering: false
 					}
-			);			
-			
+			);	
+						
 			var institucion_idConcat=getInstitucionesSeleccionadas();
 			var a = renderTableroLineaAccion(institucion_idConcat,depto_id,dist_id,periodoSeleccionado,etiquetaSeleccionado);
 			$("#cuerpoTableroLineaAccion").html("");
