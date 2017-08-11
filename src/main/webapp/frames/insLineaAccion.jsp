@@ -6280,7 +6280,7 @@ function renderAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId,
 							'			      							<form class="form-horizontal" role="form">'+
 							'											<tr><td><div class="form-group"><label for="departamentoActividad">Departamento</label><input type="hidden" class="form-control" id="departamentoActividad" value="'+nombreDepartamento+'" disabled /><select class="form-control" id="departamentoAvance" >'+optionDepartamentoAvance+'</select></div></td>'+
 							'												<td><div class="form-group"><label for="distritoActividad">Distrito</label><input type="hidden" id="distritoActividad" value="'+nombreDistrito+'" class="form-control" disabled><select class="form-control" id="distritoAvance">'+optionDistritoAvance+'</select></div></td></tr>'+
-							'											<tr><td><label for="justificacionAvance">Justificación</label><input type="text" id="justificacionAvance" value="" class="form-control" placeholder="Ingrese Justificación" required/></td>'+
+							'											<tr><td><label for="justificacionAvance">Justificación</label><textarea maxlength="1000" class="form-control" rows="3" id="justificacionAvance" value="" placeholder="Ingrese Justificación" required></textarea></td>'+
 							'												<td><label for="cantidadAvance">Cantidad</label><input type="number" id="cantidadAvance" step="any" class="form-control" value="" placeholder="Ingrese Cantidad" required/></td>'+
 							'											</tr>'+
 							'											<tr><td><label for="fechaEntregaAvance">Fecha Entrega</label><input  id="fechaEntregaAvance" value="'+fechaActual+'" class="form-control" required/></td></tr>'+														
@@ -7952,7 +7952,7 @@ $("body").on("click", ".consultaEditarAvance",function(event){
 
 						'								<td><label for="distritoAvance">Distrito</label><select class="form-control" id="distritoAvance">'+optionDistritos+'</select></div></td></tr>'+
 						
-						'							<tr><td><label for="justificacionAvance">Justificación</label><input type="text" id="justificacionAvance" value="'+webServicesAvance[0].justificacion+'" class="form-control" required /></td><td><label for="cantidadAvance">Cantidad</label><input type="number" id="cantidadAvance" step="any" class="form-control" value='+webServicesAvance[0].cantidad+' required/></td></tr>'+
+						'							<tr><td><label for="justificacionAvance">Justificación</label><textarea maxlength="1000" class="form-control" rows="3" id="justificacionAvance" placeholder="Ingrese Justificación" required>'+webServicesAvance[0].justificacion+'</textarea></td><td><label for="cantidadAvance">Cantidad</label><input type="number" id="cantidadAvance" step="any" class="form-control" value='+webServicesAvance[0].cantidad+' required/></td></tr>'+
 
 						'							<tr><td><label for="fechaEntregaAvance">Fecha Entrega</label><input  id="fechaEntregaAvance" value='+webServicesAvance[0].fechaEntrega+' class="form-control" required /></td></tr>'+														
 
