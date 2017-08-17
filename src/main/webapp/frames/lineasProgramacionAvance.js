@@ -31,31 +31,51 @@ function renderLineas(condition){
             	'<div class="table-responsive">'+
           			'<table class="table table-striped table-bordered table-hover"  id="tablaLineasProgramacionAvance">'+
           				'<thead>'+
-		          			'<tr><th class="text-center">Línea de Acción Id</th>'+
-		          			  	'<th class="text-center">Linea Acción Nombre</th>'+
-		          			  	'<th class="text-center">Linea Acción U. Medida Id</th>'+
-		          			  	'<th class="text-center">Linea Acción U. Medida</th>'+
-		          			  	'<th class="text-center">Acción Id</th>'+
-		          			  	'<th class="text-center">Acción Nombre</th>'+
-		          			  	'<th class="text-center">Acción Depto Id</th>'+
-		          			  	'<th class="text-center">Acción Depto Nombre</th>'+
-		          			  	'<th class="text-center">Acción Distrito Id</th>'+
-		          			  	'<th class="text-center">Acción Distrito Nombre</th>'+
-		          			  	'<th class="text-center">AcciónFechaInicio</th>'+
-		          			  	'<th class="text-center">AcciónFechaFin</th>'+
-		          			  	'<th class="text-center">InstituciónId</th>'+
-		          			  	'<th class="text-center">Institución</th>'+
-		          			  	'<th class="text-center">CantidadProgramado</th>'+
-		          			  	'<th class="text-center">CantidadEjecutado</th>'+
-		          			  	'<th class="text-center">AcciónUnidadMedida</th>'+
-		          			  	'<th class="text-center">PeriodoId</th>'+
-		          			  	'<th class="text-center">ActividadNombre</th>'+
-		          			  	'<th class="text-center">ActividadAcumulable</th>'+
-		          			  	'<th class="text-center">HitoTipoId</th>'+
-		          			  	'<th class="text-center">HitoTipoNombre</th>'+
-		          			  	'<th class="text-center">ActividadUnidadMedidaId</th>'+
-		          			  	'<th class="text-center">EtiquetaId</th>'+
-		          			  	'<th class="text-center">EtiquetaNombre</th>'+
+		          			'<tr><th class="text-center">Periodo</th>'+
+		          			  	'<th class="text-center">InstitucionId</th>'+
+		          			  	'<th class="text-center">InstitucionNombre</th>'+
+		          			  	'<th class="text-center">InstitucionSigla</th>'+
+		          			  	'<th class="text-center">InsLineaAccionId</th>'+
+		          			  	'<th class="text-center">LineaAccionId</th>'+
+		          			  	'<th class="text-center">LineaAccionNombre</th>'+
+		          			  	'<th class="text-center">LineaAccionUnidadId</th>'+
+		          			  	'<th class="text-center">LineaAccionUnidad</th>'+
+		          			  	'<th class="text-center">AccionId</th>'+
+		          			  	'<th class="text-center">AccionNombre</th>'+
+		          			  	'<th class="text-center">AccionUnidadId</th>'+
+		          			  	'<th class="text-center">AccionUnidad</th>'+
+		          			  	'<th class="text-center">AccionPeso</th>'+
+		          			  	'<th class="text-center">AccionDepartamentoId</th>'+
+		          			  	'<th class="text-center">AccionDepartamento</th>'+
+		          			  	'<th class="text-center">AccionDistritoId</th>'+
+		          			  	'<th class="text-center">AccionDistrito</th>'+
+		          			  	'<th class="text-center">CronogramaId</th>'+
+		          			  	'<th class="text-center">Cronograma</th>'+
+		          			  	'<th class="text-center">CronogramaUnidadId</th>'+
+		          			  	'<th class="text-center">CronogramaUnidad</th>'+
+		          			  	'<th class="text-center">CronogramaPeso</th>'+
+		          			  	'<th class="text-center">CronogramaProporcion</th>'+
+		          			  	'<th class="text-center">CronogramaTipo</th>'+
+		          			  	'<th class="text-center">CronogramaAcumulable</th>'+
+		          			  	'<th class="text-center">CronogramaProducto</th>'+
+		          			  	'<th class="text-center">FechaEntrega</th>'+
+		          			  	'<th class="text-center">Mes</th>'+
+		          			  	'<th class="text-center">ProgramacionId</th>'+
+		          			  	'<th class="text-center">ProgramacionCantidad</th>'+
+		          			  	'<th class="text-center">ProgramacionUsuario</th>'+
+		          			  	'<th class="text-center">ProgramacionActualizacion</th>'+
+		          			  	'<th class="text-center">AvanceId</th>'+
+		          			  	'<th class="text-center">AvanceDepartamento</th>'+
+		          			  	'<th class="text-center">AvanceDistrito</th>'+
+		          			  	'<th class="text-center">AvanceCantidad</th>'+
+		          			  	'<th class="text-center">AvanceJustificacion</th>'+
+		          			  	'<th class="text-center">AvanceUsuario</th>'+
+		          			  	'<th class="text-center">AvanceActualizacion</th>'+
+		          			  	'<th class="text-center">AvanceCostos</th>'+
+		          			  	'<th class="text-center">AvanceDestinatarios</th>'+
+		          			  	'<th class="text-center">EvidenciaUrlWeb</th>'+
+		          			  	'<th class="text-center">EvidenciaUrlDoc</th>'+
+		          			  	'<th class="text-center">Etiqueta</th>'+
 		          			'</tr>'+
 		          		'</thead>'+
 		          		'<tbody id="cuerpoTabla">'+
@@ -87,7 +107,7 @@ function obtenerLineasProgramacionAvance(condition){
 	lineasProgramacionAvance = JSON.parse(lineasProgramacionAvance);
 	
 	for(var x = 0; x < lineasProgramacionAvance.length; x++){
-		contenidoLineas += "<tr><td>"+lineasProgramacionAvance[x].linea_accion_id+"</td><td>"+lineasProgramacionAvance[x].linea_accion_nombre+"</td><td>"+lineasProgramacionAvance[x].linea_accion_um+"</td><td>"+lineasProgramacionAvance[x].unidad_medida_linea_accion+"</td><td>"+lineasProgramacionAvance[x].accion_id+"</td><td>"+lineasProgramacionAvance[x].accion_catalogo_nombre+"</td><td>"+lineasProgramacionAvance[x].accion_departamento_id+"</td><td>"+lineasProgramacionAvance[x].accion_depto_nombre+"</td><td>"+lineasProgramacionAvance[x].accion_distrito_id+"</td><td>"+lineasProgramacionAvance[x].accion_dist_nombre+"</td><td>"+lineasProgramacionAvance[x].accion_fecha_inicio+"</td><td>"+lineasProgramacionAvance[x].accion_fecha_fin+"</td><td>"+lineasProgramacionAvance[x].institucion_id+"</td><td>"+lineasProgramacionAvance[x].institucion+"</td><td>"+lineasProgramacionAvance[x].cantidad_programado+"</td><td>"+lineasProgramacionAvance[x].cantidad_ejecutado+"</td><td>"+lineasProgramacionAvance[x].accion_unidad_medida+"</td><td>"+lineasProgramacionAvance[x].periodo_id+"</td><td>"+lineasProgramacionAvance[x].actividad_nombre+"</td><td>"+lineasProgramacionAvance[x].actividad_acumulable+"</td><td>"+lineasProgramacionAvance[x].hito_tipo_id+"</td><td>"+lineasProgramacionAvance[x].hito_tipo_nombre+"</td><td>"+lineasProgramacionAvance[x].actividad_unidad_medida_id+"</td><td>"+lineasProgramacionAvance[x].etiqueta_id+"</td><td>"+lineasProgramacionAvance[x].etiqueta_nombre+"</td></tr>";              	
+		contenidoLineas += "<tr><td>"+lineasProgramacionAvance[x].periodo+"</td><td>"+lineasProgramacionAvance[x].institucion_id+"</td><td>"+lineasProgramacionAvance[x].institucion_nombre+"</td><td>"+lineasProgramacionAvance[x].institucion_sigla+"</td><td>"+lineasProgramacionAvance[x].ins_linea_accion_id+"</td><td>"+lineasProgramacionAvance[x].linea_accion_id+"</td><td>"+lineasProgramacionAvance[x].linea_accion_nombre+"</td><td>"+lineasProgramacionAvance[x].linea_accion_unidad_id+"</td><td>"+lineasProgramacionAvance[x].linea_accion_unidad+"</td><td>"+lineasProgramacionAvance[x].accion_id+"</td><td>"+lineasProgramacionAvance[x].accion_nombre+"</td><td>"+lineasProgramacionAvance[x].accion_unidad_id+"</td><td>"+lineasProgramacionAvance[x].accion_unidad+"</td><td>"+lineasProgramacionAvance[x].accion_peso+"</td><td>"+lineasProgramacionAvance[x].accion_departamento_id+"</td><td>"+lineasProgramacionAvance[x].accion_departamento+"</td><td>"+lineasProgramacionAvance[x].accion_distrito_id+"</td><td>"+lineasProgramacionAvance[x]. accion_distrito+"</td><td>"+lineasProgramacionAvance[x].cronograma_id+"</td><td>"+lineasProgramacionAvance[x].cronograma+"</td><td>"+lineasProgramacionAvance[x].cronograma_unidad_id+"</td><td>"+lineasProgramacionAvance[x].cronograma_unidad+"</td><td>"+lineasProgramacionAvance[x].cronograma_peso+"</td><td>"+lineasProgramacionAvance[x].cronograma_proporcion+"</td><td>"+lineasProgramacionAvance[x].cronograma_tipo+"</td><td>"+lineasProgramacionAvance[x].cronograma_acumulable+"</td><td>"+lineasProgramacionAvance[x].cronograma_producto+"</td><td>"+lineasProgramacionAvance[x].fecha_entrega+"</td><td>"+lineasProgramacionAvance[x].mes+"</td><td>"+lineasProgramacionAvance[x].programacion_id+"</td><td>"+lineasProgramacionAvance[x].programacion_cantidad+"</td><td>"+lineasProgramacionAvance[x].programacion_usuario+"</td><td>"+lineasProgramacionAvance[x].programacion_actualizacion+"</td><td>"+lineasProgramacionAvance[x].avance_id+"</td><td>"+lineasProgramacionAvance[x].avance_departamento+"</td><td>"+lineasProgramacionAvance[x].avance_distrito+"</td><td>"+lineasProgramacionAvance[x].avance_cantidad+"</td><td>"+lineasProgramacionAvance[x].avance_justificacion+"</td><td>"+lineasProgramacionAvance[x].avance_usuario+"</td><td>"+lineasProgramacionAvance[x].avance_actualizacion+"</td><td>"+lineasProgramacionAvance[x].avance_costos+"</td><td>"+lineasProgramacionAvance[x].avance_destinatarios+"</td><td>"+lineasProgramacionAvance[x].evidencia_url_web+"</td><td>"+lineasProgramacionAvance[x].evidencia_url_doc+"</td><td>"+lineasProgramacionAvance[x].etiqueta+"</td></tr>";              	
 	}
 	
 	$("#cuerpoTabla").append(contenidoLineas);
