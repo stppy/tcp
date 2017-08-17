@@ -165,8 +165,26 @@ function getPeriodo(periodo){
 	  	async:false       
 	}).responseText;
 	periodo = JSON.parse(periodo);
+	
+	var etiqueta = $.ajax({
+		url:'/tablero/ajaxSelects2?action=getEtiqueta',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	etiqueta = JSON.parse(etiqueta);
+	
+	var usuarioEtiqueta = $.ajax({
+		url:'/tablero/ajaxSelects2?action=getUsuarioEtiqueta',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	usuarioEtiqueta = JSON.parse(usuarioEtiqueta);
 
 	var optionPeriodo;
+	var optionEtiqueta;
+
 	
 	for(p = 0;p<periodo.length; p++){
 		if(periodo[p].id >= 2014){
@@ -178,8 +196,21 @@ function getPeriodo(periodo){
 		}
 	}
 	
+	optionEtiqueta+='<option value="0" selected>Todos</option>';
+
+	if(usuarioEtiqueta.length > 0){
+		for(var d = 0; d<usuarioEtiqueta.length; d++){
+			for(var e = 0; e<etiqueta.length; e++){
+				 if(usuarioEtiqueta[d].borrado != true && usuarioEtiqueta[d].etiqueta_id == etiqueta[e].id){
+					optionEtiqueta+='<option value="'+etiqueta[e].id+'">'+etiqueta[e].nombre+'</option>';
+				}
+			}
+		}
+	}	
 						
 	$('#periodoSeleccion').html(optionPeriodo);
+	$('#etiquetaSeleccion').append(optionEtiqueta);						
+
 }
 
 function ObtenerInstitucion(){

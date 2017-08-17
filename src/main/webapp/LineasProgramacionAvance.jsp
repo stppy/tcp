@@ -67,7 +67,7 @@
 			}).responseText;
 			usuarios = JSON.parse(usuarios);
 			usuarios = usuarios.usuarios;
-			
+						
 			$(".skin-blue.sidebar-mini").addClass("sidebar-collapse");
 			$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
 			$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
@@ -76,16 +76,19 @@
 			var periodoActual = 2017;
 			getPeriodo();
 			ObtenerInstitucion();
-			//renderLineas(periodoActual); 
 			
 			$("body").on("click", "#generarDatos",function(event){	
 			   	var periodoSeleccionado = $("#periodoSeleccion option:selected").val();
 			   	var institucionSeleccionado = $("#selectorDeInstitucion option:selected").val();
+			   	var etiquetaSeleccionado = $("#etiquetaSeleccion option:selected").val();
+
 
 			   	
 				var condicion="";
 				if(periodoSeleccionado!=null)condicion = "&periodoId="+periodoSeleccionado;
 				if(institucionSeleccionado!=null)condicion += "&institucion_id="+institucionSeleccionado;
+				if(etiquetaSeleccionado!=null)condicion += "&etiquetaId="+etiquetaSeleccionado;
+
 
 			   	renderLineas(condicion); 
 			});

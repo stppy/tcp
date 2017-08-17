@@ -71,6 +71,8 @@ public class ajaxSelects extends HttpServlet {
     	Integer usuarioId = null;
     	Integer anho = null;
     	Integer periodoId = null; 
+    	Integer etiquetaId = null;
+
 
     	
     	String institucion=null;
@@ -130,6 +132,8 @@ public class ajaxSelects extends HttpServlet {
       	if (request.getParameter("anho")!=null) anho=Integer.parseInt(request.getParameter("anho"));
       	if (request.getParameter("periodoId")!=null) periodoId=Integer.parseInt(request.getParameter("periodoId"));
       	if (request.getParameter("catalogoAccion")!=null) catalogoAccion = request.getParameter("catalogoAccion");
+      	if (request.getParameter("etiquetaId")!=null) etiquetaId=Integer.parseInt(request.getParameter("etiquetaId"));
+
 
 
     	
@@ -248,6 +252,8 @@ public class ajaxSelects extends HttpServlet {
         		if (distritoId!=null) condition += " and accion_distrito_id ='"+distritoId+"'";
         		if (departamentoId!=null) condition += " and accion_departamento_id ='"+departamentoId+"'";
         		if (periodoId!=null) condition += " AND periodo ='"+periodoId+"'";
+                if (etiquetaId!=null && etiquetaId!=0) condition += " AND etiqueta_id = "+etiquetaId;
+
         		        		
 				try {objetos = SqlSelects.selectAccionesAvancesMensual(condition);}
 				catch (SQLException e) {e.printStackTrace();}				
