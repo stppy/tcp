@@ -196,7 +196,7 @@ public class SqlSelects {
 		return objetos; 
 		}
 	
-	public static List<Programacion> selectProgramacion(String condition) throws SQLException{
+	public static List<Programacion> selectProgramacion(String condition, String conditionPro) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
 		String query = " select * from programacion "+condition;
 
@@ -355,7 +355,7 @@ public class SqlSelects {
 		}
 
 	
-	public static List<Avance> selectAvance(String condition) throws SQLException{
+	public static List<Avance> selectAvance(String condition, String conditionAv) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
 		String query = " select * from avance "+condition;
 
@@ -456,7 +456,7 @@ public class SqlSelects {
 	
 	public static List<LineaAccion> selectLineaAccion(String condition, String conditionIdLAGA) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select * from linea_accion " +condition+ " " +conditionIdLAGA+ " ORDER BY nombre";
+		String query = " select * from linea_accion " +condition+ " " +conditionIdLAGA;
 
 		Statement statement = null;
 		ResultSet rs=null;
@@ -1322,7 +1322,7 @@ public class SqlSelects {
 				objeto.setHitoTipoId(rs.getInt("hito_tipo_id"));
 				objeto.setNombre(rs.getString("nombre"));
 				objeto.setDescripcion(rs.getString("descripcion"));
-				objeto.setProporcion(rs.getDouble("porporcion"));
+				objeto.setProporcion(rs.getDouble("proporcion"));
 				objeto.setPeso(rs.getDouble("peso"));
 				objeto.setBorrado(rs.getBoolean("borrado"));
 				objeto.setAcumulable(rs.getBoolean("acumulable"));
