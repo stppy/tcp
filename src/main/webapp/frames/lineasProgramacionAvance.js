@@ -117,34 +117,19 @@ function obtenerLineasProgramacionAvance(condition){
 				        dom: 'Bfrtip',
 				        buttons: [
 				                    {
-				                        extend: 'copy',
-				                        exportOptions: {
-				                    columns: [ 0, 1 ]
-				                }
+				                        extend: 'copy'
 				                    },
 				                    {
-				                        extend: 'csv',
-				                        exportOptions: {
-				                    columns: [ 0, 1 ]
-				                }
+				                        extend: 'csv'
 				                    },
 				                    {
-				                        extend: 'excel',
-				                        exportOptions: {
-				                    columns: [ 0, 1 ]
-				                }
+				                        extend: 'excel'
 				                    },
 				                    {
-				                        extend: 'pdf',
-				                        exportOptions: {
-				                    columns: [ 0, 1]
-				                }
+				                        extend: 'pdf'
 				                    },
 				                    {
-				                        extend: 'print',
-				                        exportOptions: {
-				                    columns: [ 0, 1 ]
-				                }
+				                        extend: 'print'
 				                    }
 				                ],
 				        "search": {
