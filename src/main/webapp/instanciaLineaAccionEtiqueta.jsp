@@ -691,7 +691,7 @@ function renderInsLineaAccion(PeriodoActual){
 		
 	});
 <%}else{%>
-	window.location = "http://spr.stp.gov.py/tablero/geografico4.jsp";
+	window.location = "/tablero/geografico4.jsp";
 <%}%>
 	var onoff=null;
 	function OcultarRegistrosBorrados(){
@@ -847,7 +847,7 @@ function renderInsLineaAccion(PeriodoActual){
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js" type="text/javascript"></script>
         <%  } else { %>
-        	<script type="text/javascript">window.location = "http://spr.stp.gov.py/tablero/geografico4.jsp";</script>
+        	<script type="text/javascript">window.location = "/tablero/geografico4.jsp";</script>
 				<!-- <p>Favor Iniciar Sesion</p> -->
 			<% } %> 
 

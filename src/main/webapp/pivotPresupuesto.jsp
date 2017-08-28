@@ -68,7 +68,7 @@ if (user != null) { %>
 		$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
 			var i=parseInt(0);
 			/* var datosNiveles = $.ajax({
-		        url:'http://spr.stp.gov.py/ajaxSelects?accion=getNiveles&nivel='+usuarios[0].nivel_id,
+		        url:'/ajaxSelects?accion=getNiveles&nivel='+usuarios[0].nivel_id,
 		        type:'get',
 		        dataType:'json',
 		        async:false       
@@ -77,7 +77,7 @@ if (user != null) { %>
 		      datosNiveles.niveles;
 		      
 		     var datosEntidad = $.ajax({
-		          url:'http://spr.stp.gov.py/ajaxSelects?accion=getEntidad&nivel='+usuarios[0].nivel_id+'&entidad='+usuarios[0].entidad_id,
+		          url:'/ajaxSelects?accion=getEntidad&nivel='+usuarios[0].nivel_id+'&entidad='+usuarios[0].entidad_id,
 		          type:'get',
 		          dataType:'json',
 		          async:false       

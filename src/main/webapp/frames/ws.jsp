@@ -230,6 +230,6 @@ $("body").on("click", "#iconoBorradoWs",function(event){
 	    	$("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intente de nuevo</p>');
 	    }
 	});
-		window.location.href = "http://spr.stp.gov.py/tablero/contenedorWs.jsp";
+		window.location.href = "/tablero/contenedorWs.jsp";
 });	
 	</script>	

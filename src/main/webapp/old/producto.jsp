@@ -100,7 +100,7 @@
     $( "#listarProgramacion" ).on( "click", function(event) {
       if ($("#listaProgramacion").children().length <= 0 && $(this).attr("class")!="entidad"){
       var datos = $.ajax({
-          url:'http://spr.stp.gov.py/ajaxHelper?accion=getEntidades&nivel=12',
+          url:'/ajaxHelper?accion=getEntidades&nivel=12',
           type:'get',
           dataType:'json',
           async:false       
@@ -121,7 +121,7 @@
       var datos;
       $("#programacion").html(" ");
       var tiposPrograma = $.ajax({
-          url:'http://spr.stp.gov.py/ajaxHelper?accion=getTipoPrograma',
+          url:'/ajaxHelper?accion=getTipoPrograma',
           type:'get',
           dataType:'json',
           async:false       
@@ -139,7 +139,7 @@
       var idTipoPrograma = $(this).parent().parent().parent().parent().attr("id");
       var datos;
       var programas = $.ajax({
-          url:'http://spr.stp.gov.py/ajaxHelper?accion=getProgramas&nivel=12&entidad='+idEntidad+'&tipoPresupuesto='+idTipoPrograma,
+          url:'/ajaxHelper?accion=getProgramas&nivel=12&entidad='+idEntidad+'&tipoPresupuesto='+idTipoPrograma,
           type:'get',
           dataType:'json',
           async:false       
@@ -159,7 +159,7 @@
       var idTipoPrograma = $(this).parent().parent().parent().parent().attr("tipoprograma");
       var datos;
       var subprogramas = $.ajax({
-          url:'http://spr.stp.gov.py/ajaxHelper?accion=getSubprogramas&nivel=12&entidad='+idEntidad+'&tipoPresupuesto='+idTipoPrograma+'&programa='+idPrograma,
+          url:'/ajaxHelper?accion=getSubprogramas&nivel=12&entidad='+idEntidad+'&tipoPresupuesto='+idTipoPrograma+'&programa='+idPrograma,
           type:'get',
           dataType:'json',
           async:false       
@@ -179,7 +179,7 @@
       var idTipoPrograma = $(this).parent().parent().parent().parent().attr("tipoprograma");
       var datos;
       var proyectos = $.ajax({
-          url:'http://spr.stp.gov.py/ajaxHelper?accion=getProyectos&nivel=12&entidad='+idEntidad+'&tipoPresupuesto='+idTipoPrograma+'&programa='+idPrograma+'&subprograma='+idSubprograma,
+          url:'/ajaxHelper?accion=getProyectos&nivel=12&entidad='+idEntidad+'&tipoPresupuesto='+idTipoPrograma+'&programa='+idPrograma+'&subprograma='+idSubprograma,
           type:'get',
           dataType:'json',
           async:false       
@@ -215,7 +215,7 @@
         $(this).children().children().html(" ");
         if ($(this).children().length <= 1 ){
           var subprogramas = $.ajax({
-              url:'http://spr.stp.gov.py/ajaxHelper?accion=getSubprogramas&nivel=12&entidad='+idEntidad+'&tipoPresupuesto='+idTipoPrograma+'&programa='+idPrograma,
+              url:'/ajaxHelper?accion=getSubprogramas&nivel=12&entidad='+idEntidad+'&tipoPresupuesto='+idTipoPrograma+'&programa='+idPrograma,
               type:'get',
               dataType:'json',
               async:false       
@@ -519,7 +519,7 @@
       var rutaNivel = document.getElementById('nivel').value;
 
       var datosNiveles = $.ajax({
-          url:'http://spr.stp.gov.py/ajaxHelper?accion=getNiveles',
+          url:'/ajaxHelper?accion=getNiveles',
           type:'get',
           dataType:'json',
           async:false       
@@ -557,7 +557,7 @@
       this.rutaEntidad2 = document.getElementById('entidad').value;
 
       this.datosEntidades = $.ajax({
-          url:'http://spr.stp.gov.py/ajaxHelper?accion=getEntidadesPorNivel&nivel='+this.linkEntidad,
+          url:'/ajaxHelper?accion=getEntidadesPorNivel&nivel='+this.linkEntidad,
           type:'get',
           dataType:'json',
           async:false       
@@ -596,7 +596,7 @@
       this.linkEntidad = document.getElementById("entidad").value;
 
       this.datosProgramas = $.ajax({
-          url:'http://spr.stp.gov.py/ajaxHelper?accion=getProgramas&anio=2015&nivel='+this.linkNivel+'&entidad='+this.linkEntidad+'&tipoPresupuesto=3&programa='+this.rutaPrograma,
+          url:'/ajaxHelper?accion=getProgramas&anio=2015&nivel='+this.linkNivel+'&entidad='+this.linkEntidad+'&tipoPresupuesto=3&programa='+this.rutaPrograma,
           type:'get',
           dataType:'json',
           async:false       
@@ -635,7 +635,7 @@
       this.linkEntidad = document.getElementById("entidad").value;
 
       this.datosSubProgramas = $.ajax({
-          url:'http://spr.stp.gov.py/ajaxHelper?accion=getSubprogramas&anio=2015&nivel='+this.linkNivel+'&entidad='+this.linkEntidad+'&tipoPresupuesto=1&programa='+this.rutaProgramas,
+          url:'/ajaxHelper?accion=getSubprogramas&anio=2015&nivel='+this.linkNivel+'&entidad='+this.linkEntidad+'&tipoPresupuesto=1&programa='+this.rutaProgramas,
           type:'get',
           dataType:'json',
           async:false       
@@ -680,7 +680,7 @@
       
 
       this.datosProyectos = $.ajax({
-          url:'http://spr.stp.gov.py/ajaxHelper?accion=getProyectos&anio=2015&nivel='+this.linkNivel+'&entidad='+this.linkEntidad+'&tipoPresupuesto=3&programa='+this.linkPrograma+'&subprograma='+this.codigoSubprograma,
+          url:'/ajaxHelper?accion=getProyectos&anio=2015&nivel='+this.linkNivel+'&entidad='+this.linkEntidad+'&tipoPresupuesto=3&programa='+this.linkPrograma+'&subprograma='+this.codigoSubprograma,
           type:'get',
           dataType:'json',
           async:false       
@@ -722,7 +722,7 @@
 
 
       this.datosProductos = $.ajax({
-          url:'http://spr.stp.gov.py/ajaxHelper?accion=todosLosProductosPorAnio',
+          url:'/ajaxHelper?accion=todosLosProductosPorAnio',
           type:'get',
           dataType:'json',
           async:false       
@@ -768,7 +768,7 @@
 
 
       var datosProductos = $.ajax({
-          url:'http://spr.stp.gov.py/ajaxHelper?accion=todosLosProductosPorAnio',
+          url:'/ajaxHelper?accion=todosLosProductosPorAnio',
           type:'get',
           dataType:'json',
           async:false       

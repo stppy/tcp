@@ -69,7 +69,7 @@
 			var rutaNivel = document.getElementById('nivel').value;
 
 			var datosNiveles = $.ajax({
-    			url:'http://spr.stp.gov.py/ajaxHelper?accion=getNiveles',
+    			url:'/ajaxHelper?accion=getNiveles',
     			type:'get',
     			dataType:'json',
     			async:false    		
@@ -107,7 +107,7 @@
 			this.rutaEntidad2 = document.getElementById('entidad').value;
 
 			this.datosEntidades = $.ajax({
-    			url:'http://spr.stp.gov.py/ajaxHelper?accion=getEntidadesPorNivel&nivel='+this.linkEntidad,
+    			url:'/ajaxHelper?accion=getEntidadesPorNivel&nivel='+this.linkEntidad,
     			type:'get',
     			dataType:'json',
     			async:false    		
@@ -146,7 +146,7 @@
 			this.linkEntidad = document.getElementById("entidad").value;
 
 			this.datosProgramas = $.ajax({
-    			url:'http://spr.stp.gov.py/ajaxHelper?accion=getProgramas&anio=2015&nivel='+this.linkNivel+'&entidad='+this.linkEntidad+'&tipoPresupuesto=3&programa='+this.rutaPrograma,
+    			url:'/ajaxHelper?accion=getProgramas&anio=2015&nivel='+this.linkNivel+'&entidad='+this.linkEntidad+'&tipoPresupuesto=3&programa='+this.rutaPrograma,
     			type:'get',
     			dataType:'json',
     			async:false    		
@@ -185,7 +185,7 @@
 			this.linkEntidad = document.getElementById("entidad").value;
 
 			this.datosSubProgramas = $.ajax({
-    			url:'http://spr.stp.gov.py/ajaxHelper?accion=getSubprogramas&anio=2015&nivel='+this.linkNivel+'&entidad='+this.linkEntidad+'&tipoPresupuesto=1&programa='+this.rutaProgramas,
+    			url:'/ajaxHelper?accion=getSubprogramas&anio=2015&nivel='+this.linkNivel+'&entidad='+this.linkEntidad+'&tipoPresupuesto=1&programa='+this.rutaProgramas,
     			type:'get',
     			dataType:'json',
     			async:false    		
@@ -230,7 +230,7 @@
 			
 
 			this.datosProyectos = $.ajax({
-    			url:'http://spr.stp.gov.py/ajaxHelper?accion=getProyectos&anio=2015&nivel='+this.linkNivel+'&entidad='+this.linkEntidad+'&tipoPresupuesto=3&programa='+this.linkPrograma+'&subprograma='+this.codigoSubprograma,
+    			url:'/ajaxHelper?accion=getProyectos&anio=2015&nivel='+this.linkNivel+'&entidad='+this.linkEntidad+'&tipoPresupuesto=3&programa='+this.linkPrograma+'&subprograma='+this.codigoSubprograma,
     			type:'get',
     			dataType:'json',
     			async:false    		
@@ -272,7 +272,7 @@
 
 
 			this.datosProductos = $.ajax({
-    			url:'http://spr.stp.gov.py/ajaxHelper?accion=todosLosProductosPorAnio',
+    			url:'/ajaxHelper?accion=todosLosProductosPorAnio',
     			type:'get',
     			dataType:'json',
     			async:false    		

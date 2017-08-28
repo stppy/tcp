@@ -1007,7 +1007,7 @@ var $tabla=$("#lineasPorEntidad");
         				
         			   	  var listaDatalist=document.getElementsByTagName('datalist');
         			      var datosNiveles = $.ajax({
-        			          url:'http://spr.stp.gov.py/ajaxSelects?accion=getNiveles',
+        			          url:'/ajaxSelects?accion=getNiveles',
         			          type:'get',
         			          	crossDomain: 'true',
         			          	dataType:'jsonp',	
@@ -1039,7 +1039,7 @@ var $tabla=$("#lineasPorEntidad");
         			    	//var rutaNivel = document.getElementById('nivel-formulario').value;
         			    	var rutaNivel = 12;
         			    	var datosNiveles = $.ajax({
-        			        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getNiveles',
+        			        	url:'/ajaxSelects?accion=getNiveles',
         			          	type:'get',
         			          	crossDomain: 'true',
         			          	dataType:'jsonp',		          	
@@ -1066,7 +1066,7 @@ var $tabla=$("#lineasPorEntidad");
         			      	//var linkEntidad = document.getElementById('nivel-formulario').value;
         			    	var linkEntidad = 12;
         			    	var datosEntidades = $.ajax({
-        			         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getEntidades&nivel='+linkEntidad,
+        			         	 url:'/ajaxSelects?accion=getEntidades&nivel='+linkEntidad,
         			          	type:'get',
         			          	crossDomain: 'true',
         			          	dataType:'jsonp',
@@ -1088,7 +1088,7 @@ var $tabla=$("#lineasPorEntidad");
         			      	
 
         			      	var datosEntidades = $.ajax({
-        			        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getEntidades&nivel='+linkEntidad,
+        			        	url:'/ajaxSelects?accion=getEntidades&nivel='+linkEntidad,
         			          	type:'get',
         			          	dataType:'json',
         			          	async:false       
@@ -1133,7 +1133,7 @@ var $tabla=$("#lineasPorEntidad");
         					}
         					
         				    $.ajax({
-        				        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getNiveles',
+        				        	url:'/ajaxSelects?accion=getNiveles',
         				          	type:'get',
         				          	crossDomain: 'true',
         				          	dataType:'jsonp',
@@ -1175,7 +1175,7 @@ var $tabla=$("#lineasPorEntidad");
 
         						      	var datosEntidades =[];
         						      		$.ajax({
-        						        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getEntidades&nivel='+linkEntidad,
+        						        	url:'/ajaxSelects?accion=getEntidades&nivel='+linkEntidad,
         						          	type:'get',
         						          	crossDomain: 'true',
         						          	dataType:'jsonp',
@@ -1213,7 +1213,7 @@ var $tabla=$("#lineasPorEntidad");
         							    	
         							      	var datosTipoPrograma = [];
         							      		$.ajax({
-        							        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getTiposPrograma',
+        							        	url:'/ajaxSelects?accion=getTiposPrograma',
         							          	type:'get',
         							          	crossDomain: 'true',
         							          	dataType:'jsonp',
@@ -1262,7 +1262,7 @@ var $tabla=$("#lineasPorEntidad");
         			      	var datosTipoPrograma = [];
         			      	
         			      	$.ajax({
-        			        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getTiposPrograma',
+        			        	url:'/ajaxSelects?accion=getTiposPrograma',
         			          	type:'get',
         			          	crossDomain: 'true',
         			          	dataType:'jsonp',
@@ -1325,7 +1325,7 @@ var $tabla=$("#lineasPorEntidad");
         					}
         			    	
         			    	$.ajax({
-        			        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getProgramas&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipoPresupuesto='+linkTipoPrograma,
+        			        	url:'/ajaxSelects?accion=getProgramas&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipoPresupuesto='+linkTipoPrograma,
         			          	type:'get',
         			          	crossDomain: 'true',
         			          	dataType:'jsonp',
@@ -1369,7 +1369,7 @@ var $tabla=$("#lineasPorEntidad");
         			    	var datosProgramas =  [];
         			    	
         			    	$.ajax({
-        			        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getProgramas&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipoPresupuesto='+linkTipoPrograma,
+        			        	url:'/ajaxSelects?accion=getProgramas&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipoPresupuesto='+linkTipoPrograma,
         			          	type:'get',
         			          	crossDomain: 'true',
         			          	dataType:'jsonp',
@@ -1429,7 +1429,7 @@ var $tabla=$("#lineasPorEntidad");
         					}
         			    	
         			    	$.ajax({
-        			        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getSubprogramas&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipoPresupuesto='+linkTipoPrograma+'&programa='+linkPrograma,
+        			        	url:'/ajaxSelects?accion=getSubprogramas&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipoPresupuesto='+linkTipoPrograma+'&programa='+linkPrograma,
         			          	type:'get',
         			          	crossDomain: 'true',
         			          	dataType:'jsonp',
@@ -1473,7 +1473,7 @@ var $tabla=$("#lineasPorEntidad");
         			    	var datosSubProgramas = [];
         			    	
         			    	$.ajax({
-        			        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getSubprogramas&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipoPresupuesto='+linkTipoPrograma+'&programa='+linkPrograma,
+        			        	url:'/ajaxSelects?accion=getSubprogramas&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipoPresupuesto='+linkTipoPrograma+'&programa='+linkPrograma,
         			          	type:'get',
         			          	crossDomain: 'true',
         			          	dataType:'jsonp',
@@ -1531,7 +1531,7 @@ var $tabla=$("#lineasPorEntidad");
         					}
         			    	
         			    	$.ajax({
-        			         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getProyectos&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipoPresupuesto='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma,
+        			         	 url:'/ajaxSelects?accion=getProyectos&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipoPresupuesto='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma,
         			          	type:'get',
         			          	crossDomain: 'true',
         			          	dataType:'jsonp',
@@ -1574,7 +1574,7 @@ var $tabla=$("#lineasPorEntidad");
 
         			    	var datosProyectos = [];
         			    	$.ajax({
-        			          url:'http://spr.stp.gov.py/ajaxSelects?accion=getProyectos&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipoPresupuesto='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma,
+        			          url:'/ajaxSelects?accion=getProyectos&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipoPresupuesto='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma,
         			          type:'get',
         			          	crossDomain: 'true',
         			          	dataType:'jsonp',
@@ -1635,7 +1635,7 @@ var $tabla=$("#lineasPorEntidad");
         						
         					}
         			    	$.ajax({
-        			         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductosPresupuesto&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto,
+        			         	 url:'/ajaxSelects?accion=getProductosPresupuesto&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto,
         			          	type:'get',
         			          	crossDomain: 'true',
         			          	dataType:'jsonp',
@@ -1662,7 +1662,7 @@ var $tabla=$("#lineasPorEntidad");
         				          {       
 
         						    	$.ajax({
-        						         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductos&producto='+datosProductos.producto[i].producto_id,
+        						         	 url:'/ajaxSelects?accion=getProductos&producto='+datosProductos.producto[i].producto_id,
         						          	type:'get',
         						          	crossDomain: 'true',
         						          	dataType:'jsonp',
@@ -1710,7 +1710,7 @@ var $tabla=$("#lineasPorEntidad");
         				    var totalFinanciero;  
         				    
         			    	$.ajax({
-        			         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductos&producto='+linkProducto,
+        			         	 url:'/ajaxSelects?accion=getProductos&producto='+linkProducto,
         			          	type:'get',
         			          	crossDomain: 'true',
         			          	dataType:'jsonp',
@@ -1728,7 +1728,7 @@ var $tabla=$("#lineasPorEntidad");
         						datosProductos = data;
         			    		
         				    	$.ajax({
-        				         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductoUnidadMedida&unidadMedidaId='+datosProductos.productos[0].codUnidadMedida,
+        				         	 url:'/ajaxSelects?accion=getProductoUnidadMedida&unidadMedidaId='+datosProductos.productos[0].codUnidadMedida,
         				          	type:'get',
         				          	crossDomain: 'true',
         				          	dataType:'jsonp',
@@ -1749,7 +1749,7 @@ var $tabla=$("#lineasPorEntidad");
         				    		$("#unidadMedida-formulario").val(mostrarUnidadMedida);
         				    		
         					    	$.ajax({
-        					         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getAsignacionPresiVersion&nivel=12&entidad=1&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subPrograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto+'&anho=2016',
+        					         	 url:'/ajaxSelects?accion=getAsignacionPresiVersion&nivel=12&entidad=1&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subPrograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto+'&anho=2016',
         					          	type:'get',
         					          	crossDomain: 'true',
         					          	dataType:'jsonp',
@@ -1794,7 +1794,7 @@ var $tabla=$("#lineasPorEntidad");
         						if( datosProductos.productos[0].clase === "N" )
         						{
         					    	$.ajax({
-        					         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductoTipoN&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto,
+        					         	 url:'/ajaxSelects?accion=getProductoTipoN&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto,
         					          	type:'get',
         					          	crossDomain: 'true',
         					          	dataType:'jsonp',
@@ -1821,7 +1821,7 @@ var $tabla=$("#lineasPorEntidad");
         	 					if( datosProductos.productos[0].clase === "C" )
         						{
         					    	$.ajax({
-        					         	 url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductoTipoN&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto,
+        					         	 url:'/ajaxSelects?accion=getProductoTipoN&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto,
         					          	type:'get',
         					          	crossDomain: 'true',
         					          	dataType:'jsonp',

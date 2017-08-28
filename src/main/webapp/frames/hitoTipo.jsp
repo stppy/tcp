@@ -165,6 +165,6 @@ $("body").on("click", "#iconoBorradoHitoTipo",function(event){
 	    	$("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intente de nuevo</p>');
 	    }
 	});
-		window.location.href = "http://spr.stp.gov.py/tablero/contenedorHitoTipo.jsp";
+		window.location.href = "/tablero/contenedorHitoTipo.jsp";
 });	
 </script>

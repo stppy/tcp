@@ -165,6 +165,6 @@ $("body").on("click", "#iconoBorradoEtiqueta",function(event){
 	    	$("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intente de nuevo</p>');
 	    }
 	});
-		window.location.href = "http://spr.stp.gov.py/tablero/contenedorEtiqueta.jsp";
+		window.location.href = "/tablero/contenedorEtiqueta.jsp";
 });	
 </script>

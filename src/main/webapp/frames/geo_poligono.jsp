@@ -191,7 +191,7 @@ $("body").on("click", "#iconoBorradoGeoPoligono",function(event){
 	    	$("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intente de nuevo</p>');
 	    }
 	});
-		window.location.href = "http://spr.stp.gov.py/tablero/contenedorGeoPoligono.jsp";
+		window.location.href = "/tablero/contenedorGeoPoligono.jsp";
 });
 	</script>	
 

@@ -210,6 +210,6 @@ $("body").on("click", "#iconoBorradoAccion",function(event){
 	    	$("#tituloModalUsuario").append('<p class="text-danger">Error de conexion intente de nuevo</p>');
 	    }
 	});
-		window.location.href = "http://spr.stp.gov.py/tablero/contenedorAccion.jsp";
+		window.location.href = "/tablero/contenedorAccion.jsp";
 });	
 	</script>	
