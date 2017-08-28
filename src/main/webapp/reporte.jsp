@@ -446,8 +446,8 @@ if (user != null) { %>
 
  		/*
  		
- 		http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito
- 		http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito&departamento=0
+ 		/tablero/ajaxSelects?action=getDistrito
+ 		/tablero/ajaxSelects?action=getDistrito&departamento=0
  		
  		
 */
