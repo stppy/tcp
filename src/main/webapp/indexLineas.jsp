@@ -681,7 +681,7 @@ var $tabla=$("#lineasPorEntidad");
         			var urlFactHitos="";
         			var optionDepartamentos = "";
         			var optionDistritos = "";
-        			urlFactHitos+='http://spr.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015';
+        			urlFactHitos+='/tablero/ajaxSelects?action=getFactHitos2015';
         			if (typeof institucionId != "undefined"){ urlFactHitos+='&institucion_id='+institucionId;}else{institucionId=0;}
         			if (typeof lineaAccionId != "undefined"){ urlFactHitos+='&linea_accion_id='+lineaAccionId;}else{lineaAccionId=0;}
         			if (typeof idDepartamento != "undefined"){ urlFactHitos+='&departamento='+idDepartamento;}else{idDepartamento=1;}

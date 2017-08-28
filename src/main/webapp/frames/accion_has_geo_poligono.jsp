@@ -53,7 +53,7 @@ $("body").on("click", "#guardarAccionHasGeoPoligono",function(event){
 		
 			 
 		$.ajax({
-		        url: "http://spr.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
+		        url: "/tablero/ajaxInserts2?accion="+accion,
 		        type: 'POST',
 		        dataType: 'json',
 		        data: JSON.stringify(objeto),
@@ -99,7 +99,7 @@ $("body").on("click", "#actualizarAccionHasGeoPoligono",function(event){
 	objeto.proporcion = proporcion;	
 
 	$.ajax({
-	        url: "http://spr.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
+	        url: "/tablero/ajaxUpdate2?accion="+accion,
 	        type: 'POST',
 	        dataType: 'json',
 	        data: JSON.stringify(objeto),
@@ -147,7 +147,7 @@ $("body").on("click", "#iconoBorradoAccionHasGeoPoligono",function(event){
 
 
 	$.ajax({
-	    url: "http://spr.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
+	    url: "/tablero/ajaxUpdate2?accion="+accion,
 	    type: 'POST',
 	    dataType: 'json',
 	    data: JSON.stringify(objeto),

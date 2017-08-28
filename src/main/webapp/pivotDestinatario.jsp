@@ -167,7 +167,7 @@ textarea { text-transform: uppercase; }
                         $.pivotUtilities.export_renderers);
 
 				
-                $.getJSON("http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccionDestinatarios", function(mps) {
+                $.getJSON("/tablero/ajaxSelects2?action=getLineaAccionDestinatarios", function(mps) {
                 	$("#output").pivotUI(mps, {
                         renderers: $.extend(
                             $.pivotUtilities.renderers, 

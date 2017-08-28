@@ -217,7 +217,7 @@ textarea { text-transform: uppercase; }
 		            	}
 
 						
-		                $.getJSON("http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPivotCostoAvance&etiquetaId="+etiqueta, function(mps) {
+		                $.getJSON("/tablero/ajaxSelects2?action=getPivotCostoAvance&etiquetaId="+etiqueta, function(mps) {
 		                	$("#output").pivotUI(mps, {
 		                        renderers: $.extend(
 		                            $.pivotUtilities.renderers, 

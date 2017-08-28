@@ -34,7 +34,7 @@ var clave= $("#claveBeneficiarioDetalleClave").val();
 objeto.clave=clave;
 
 $.ajax({
-url: "http://spr.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
+url: "/tablero/ajaxInserts2?accion="+accion,
 type: 'POST',
 dataType: 'json',
 data: JSON.stringify(objeto),
@@ -77,7 +77,7 @@ $("body").on("click", "#actualizarBeneficiarioDetalleClave",function(event)
 			objeto.clave = clave;
 
 			$.ajax({
-				url: "http://spr.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
+				url: "/tablero/ajaxUpdate2?accion="+accion,
 				type: 'POST',
 				dataType: 'json',
 				data: JSON.stringify(objeto),

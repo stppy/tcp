@@ -165,7 +165,7 @@ textarea { text-transform: uppercase; }
                 var renderers = $.extend($.pivotUtilities.renderers, 
                         $.pivotUtilities.export_renderers);
 				
-                $.getJSON("http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPivotLineasProgramadas", function(mps) {
+                $.getJSON("/tablero/ajaxSelects2?action=getPivotLineasProgramadas", function(mps) {
                 	$("#output").pivotUI(mps, {
                         renderers: $.extend(
                             $.pivotUtilities.renderers, 

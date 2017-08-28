@@ -493,7 +493,7 @@ function renderEvidencia(avanceId, parametros){
 	    
 	   				 
 		$.ajax({
-		        url: "http://spr.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
+		        url: "/tablero/ajaxInserts2?accion="+accion,
 		        type: 'POST',
 		        dataType: 'json',
 		        data: JSON.stringify(datos),
@@ -563,7 +563,7 @@ function renderEvidencia(avanceId, parametros){
 		        	    	
 		        		  	var info2 = JSON.stringify(objeto);
 		        		    $.ajax({
-		        		        url: "http://spr.stp.gov.py/tablero/ajaxInserts2?accion=insLineaAccionHasEtiqueta",
+		        		        url: "/tablero/ajaxInserts2?accion=insLineaAccionHasEtiqueta",
 		        		        type: 'POST',
 		        		        dataType: 'json',
 		        		        data: info2,
@@ -593,7 +593,7 @@ function renderEvidencia(avanceId, parametros){
 	        	    	
 	        		  	var info2 = JSON.stringify(usuarioLineaAccion);
 	        		    $.ajax({
-	        		        url: "http://spr.stp.gov.py/tablero/ajaxInserts2?accion=insUsuarioLineaAccion",
+	        		        url: "/tablero/ajaxInserts2?accion=insUsuarioLineaAccion",
 	        		        type: 'POST',
 	        		        dataType: 'json',
 	        		        data: info2,
@@ -1062,7 +1062,7 @@ function renderEvidencia(avanceId, parametros){
 			
 		  	var info = JSON.stringify(objeto);
 		    $.ajax({
-		        url: "http://spr.stp.gov.py/tablero/ajaxInserts2?accion=insLineaAccionHasEtiqueta",
+		        url: "/tablero/ajaxInserts2?accion=insLineaAccionHasEtiqueta",
 		        type: 'POST',
 		        dataType: 'json',
 		        data: info,
@@ -1147,7 +1147,7 @@ function renderEvidencia(avanceId, parametros){
 
 		  	var info = JSON.stringify(objeto);
 		    $.ajax({
-		        url: "http://spr.stp.gov.py/tablero/ajaxUpdate2?accion=borradoInstanciaEtiqueta",
+		        url: "/tablero/ajaxUpdate2?accion=borradoInstanciaEtiqueta",
 		        type: 'POST',
 		        dataType: 'json',
 		        data: info,
@@ -1167,7 +1167,7 @@ function renderEvidencia(avanceId, parametros){
 	        	    	
 	        		  	var info2 = JSON.stringify(usuarioLineaAccion);
 	        		    $.ajax({
-	        		        url: "http://spr.stp.gov.py/tablero/ajaxInserts2?accion=insUsuarioLineaAccion",
+	        		        url: "/tablero/ajaxInserts2?accion=insUsuarioLineaAccion",
 	        		        type: 'POST',
 	        		        dataType: 'json',
 	        		        data: info2,
@@ -1222,7 +1222,7 @@ function renderEvidencia(avanceId, parametros){
 		
 
 		$.ajax({
-		        url: "http://spr.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
+		        url: "/tablero/ajaxUpdate2?accion="+accion,
 		        type: 'POST',
 		        dataType: 'json',
 		        data: JSON.stringify(objeto),
@@ -1323,7 +1323,7 @@ function renderEvidencia(avanceId, parametros){
 				objeto.borrado=borrado;
 				
 				$.ajax({
-					url: "http://spr.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
+					url: "/tablero/ajaxUpdate2?accion="+accion,
 					type: 'POST',
 					dataType: 'json',
 					data: JSON.stringify(objeto),

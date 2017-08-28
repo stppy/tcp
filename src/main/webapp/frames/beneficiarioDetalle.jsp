@@ -51,7 +51,7 @@ $("body").on("click", "#guardarBeneficiarioDetalle",function(event){
 		
 			 
 		$.ajax({
-		        url: "http://spr.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
+		        url: "/tablero/ajaxInserts2?accion="+accion,
 		        type: 'POST',
 		        dataType: 'json',
 		        data: JSON.stringify(objeto),
@@ -96,7 +96,7 @@ $("body").on("click", "#actualizarBeneficiarioDetalle",function(event){
 	objeto.beneficiarioDetalleClavesId=beneficiarioDetalleClavesId;
 	objeto.beneficiarioId=beneficiarioId;
 	$.ajax({
-		url: "http://spr.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
+		url: "/tablero/ajaxUpdate2?accion="+accion,
 		type: 'POST',
 		dataType: 'json',
 		data: JSON.stringify(objeto),
@@ -139,7 +139,7 @@ $("body").on("click", "#iconoBorradoBeneficiarioDetalle",function(event){
 	objeto.borrado = borrado;
 
 	$.ajax({
-	    url: "http://spr.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
+	    url: "/tablero/ajaxUpdate2?accion="+accion,
 	    type: 'POST',
 	    dataType: 'json',
 	    data: JSON.stringify(objeto),

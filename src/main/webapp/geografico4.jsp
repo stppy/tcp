@@ -3267,15 +3267,15 @@ $(document).ready(function(){
 		
 		var periodoSeleccionado = $("#periodoSeleccion option:selected").val();
 		
-			urlAccionesAvances+='http://spr.stp.gov.py/tablero/ajaxSelects?action=getAccionesAvances';
+			urlAccionesAvances+='/tablero/ajaxSelects?action=getAccionesAvances';
 		
 			/*Esta parte realiza la función de agrupar a nivel pais, departamento o distrital.
 			if (idDepartamento == "" && idDistrito == ""){
-				urlAccionesAvances+='http://spr.stp.gov.py/tablero/ajaxSelects?action=getAccionesAvances';
+				urlAccionesAvances+='/tablero/ajaxSelects?action=getAccionesAvances';
 			}  else if (idDepartamento != "" && idDistrito == ""){
-				urlAccionesAvances+='http://spr.stp.gov.py/tablero/ajaxSelects?action=getAccionesAvancesDepto';
+				urlAccionesAvances+='/tablero/ajaxSelects?action=getAccionesAvancesDepto';
 			} else {
-				urlAccionesAvances+='http://spr.stp.gov.py/tablero/ajaxSelects?action=getAccionesAvancesDistrito';
+				urlAccionesAvances+='/tablero/ajaxSelects?action=getAccionesAvancesDistrito';
 			} */
 		
 			if (typeof institucion_id != "undefined") urlAccionesAvances+='&institucion_id='+institucion_id;
@@ -3736,14 +3736,14 @@ $(document).ready(function(){
 		var optionDepartamentos = "";
 		var optionDistritos = "";
 		
-		urlHitosAvances+='http://spr.stp.gov.py/tablero/ajaxSelects?action=getHitosAvances';
+		urlHitosAvances+='/tablero/ajaxSelects?action=getHitosAvances';
 		
 		/*if (idDepartamento == "" && idDistrito == ""){
-			urlHitosAvances+='http://spr.stp.gov.py/tablero/ajaxSelects?action=getHitosAvances';
+			urlHitosAvances+='/tablero/ajaxSelects?action=getHitosAvances';
 		} else if (idDepartamento != "" && idDistrito == ""){
-			urlHitosAvances+='http://spr.stp.gov.py/tablero/ajaxSelects?action=getHitosAvancesDepto';
+			urlHitosAvances+='/tablero/ajaxSelects?action=getHitosAvancesDepto';
 		} else {
-			urlHitosAvances+='http://spr.stp.gov.py/tablero/ajaxSelects?action=getHitosAvancesDistrito';
+			urlHitosAvances+='/tablero/ajaxSelects?action=getHitosAvancesDistrito';
 		}*/
 				
 		if (typeof institucionId != "undefined"){ urlHitosAvances+='&institucion_id='+institucionId;}

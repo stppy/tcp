@@ -98,7 +98,7 @@ $("body").on("click", "#guardarWs",function(event){
 		objeto.wsTipoId=wsTipoId;				
 
 		$.ajax({
-		        url: "http://spr.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
+		        url: "/tablero/ajaxInserts2?accion="+accion,
 		        type: 'POST',
 		        dataType: 'json',
 		        data: JSON.stringify(objeto),
@@ -157,7 +157,7 @@ $("body").on("click", "#actualizarWs",function(event){
 	objeto.wsTipoId=wsTipoId;
 
 	$.ajax({
-	        url: "http://spr.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
+	        url: "/tablero/ajaxUpdate2?accion="+accion,
 	        type: 'POST',
 	        dataType: 'json',
 	        data: JSON.stringify(objeto),
@@ -200,7 +200,7 @@ $("body").on("click", "#iconoBorradoWs",function(event){
 	objeto.borrado = borrado;
 
 	$.ajax({
-	    url: "http://spr.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
+	    url: "/tablero/ajaxUpdate2?accion="+accion,
 	    type: 'POST',
 	    dataType: 'json',
 	    data: JSON.stringify(objeto),

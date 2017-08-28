@@ -1018,7 +1018,7 @@ $(document).ready(function(){
 		var footerModal="<br><br><br>";
 		var urlFactHitos="";
 		var primerModal="";
-		urlFactHitos+='http://spr.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015Accion';
+		urlFactHitos+='/tablero/ajaxSelects?action=getFactHitos2015Accion';
 		if (typeof institucion_id != "undefined") urlFactHitos+='&institucion_id='+institucion_id;
 		if (typeof linea_accion_id != "undefined") urlFactHitos+='&linea_accion_id='+linea_accion_id;
 		if (typeof idDepartamento != "undefined") urlFactHitos+='&departamento='+idDepartamento;
@@ -1398,7 +1398,7 @@ $(document).ready(function(){
 		var idDistrito= idParsed[8];
 		var modalHito = "";
 		var urlFactHitos="";
-		urlFactHitos+='http://spr.stp.gov.py/tablero/ajaxSelects?action=getFactHitos2015';
+		urlFactHitos+='/tablero/ajaxSelects?action=getFactHitos2015';
 		if (typeof institucionId != "undefined"){ urlFactHitos+='&institucion_id='+institucionId;}
 		if (typeof lineaAccionId != "undefined"){ urlFactHitos+='&linea_accion_id='+lineaAccionId;}
 		if (typeof idDepartamento != "undefined"){ urlFactHitos+='&departamento='+idDepartamento;}

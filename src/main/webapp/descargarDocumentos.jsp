@@ -92,7 +92,7 @@ if (user != null) { %>
 			for(var l = 1; l <= 3; l++){
 				
 				var webServicesTipoDocumento = $.ajax({
-					url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getTipoDocumento&tipo='+l,
+					url:'/tablero/ajaxSelects2?action=getTipoDocumento&tipo='+l,
 				  	type:'get',
 				  	dataType:'json',
 				  	async:false       
@@ -110,7 +110,7 @@ if (user != null) { %>
 								        '			<div class="box-body">';
 								        
 										var webServiceDocumento = $.ajax({
-									    	url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getDocumento&tipo='+webServicesTipoDocumento[0].id,
+									    	url:'/tablero/ajaxSelects2?action=getDocumento&tipo='+webServicesTipoDocumento[0].id,
 									      	type:'get',
 									      	dataType:'json',
 									      	async:false       

@@ -161,7 +161,7 @@
 		usuarioSelec = usuarioSelec.usuarios;
 		
 		var lineasAccion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+			url:'/tablero/ajaxSelects2?action=getLineaAccion',
 			type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -169,7 +169,7 @@
 		lineasAccion = JSON.parse(lineasAccion);
 		
 		var usuarioLineaAccion = $.ajax({
-			url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUsuarioLineaAccion&usuario='+usuarioSelec[0].correo,
+			url:'/tablero/ajaxSelects2?action=getUsuarioLineaAccion&usuario='+usuarioSelec[0].correo,
 			type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -282,7 +282,7 @@
 			usuarioSelec = usuarioSelec.usuarios;
 			
 			var lineaAccion = $.ajax({
-				url:'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId'+lineaAccionId,
+				url:'/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId'+lineaAccionId,
 			  	type:'get',
 			  	dataType:'json',
 			  	async:false       
@@ -335,7 +335,7 @@
 			
    		  	var info2 = JSON.stringify(objeto);
    		    $.ajax({
-   		        url: "http://spr.stp.gov.py/tablero/ajaxInserts2?accion=insUsuarioLineaAccion",
+   		        url: "/tablero/ajaxInserts2?accion=insUsuarioLineaAccion",
    		        type: 'POST',
    		        dataType: 'json',
    		        data: info2,
@@ -407,7 +407,7 @@
 
 		  	var info = JSON.stringify(objeto);
 		    $.ajax({
-		        url: "http://spr.stp.gov.py/tablero/ajaxUpdate2?accion=borradoUsuarioLineaAccion",
+		        url: "/tablero/ajaxUpdate2?accion=borradoUsuarioLineaAccion",
 		        type: 'POST',
 		        dataType: 'json',
 		        data: info,

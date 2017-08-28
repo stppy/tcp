@@ -50,7 +50,7 @@
 			
 				 
 			$.ajax({
-			        url: "http://spr.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
+			        url: "/tablero/ajaxInserts2?accion="+accion,
 			        type: 'POST',
 			        dataType: 'json',
 			        data: JSON.stringify(objeto),
@@ -95,7 +95,7 @@
 		objeto.etiquetaId = etiquetaId;
 		objeto.proporcion = proporcion;
 		$.ajax({
-			url: "http://spr.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
+			url: "/tablero/ajaxUpdate2?accion="+accion,
 			type: 'POST',
 			dataType: 'json',
 			data: JSON.stringify(objeto),
@@ -139,7 +139,7 @@
 				objeto.borrado=borrado;
 				
 				$.ajax({
-					url: "http://spr.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
+					url: "/tablero/ajaxUpdate2?accion="+accion,
 					type: 'POST',
 					dataType: 'json',
 					data: JSON.stringify(objeto),

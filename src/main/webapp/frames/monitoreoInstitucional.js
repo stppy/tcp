@@ -338,7 +338,7 @@ function renderLineasEstrategicas(periodo,etiquetaSeleccionado){
 //	lineasEstrategicas=lineasEstrategicas.sort(orden);
 		
 	var lineasProgramadas = $.ajax({
-		url: 'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacion&periodoId='+periodo+'&etiquetaId='+etiquetaSeleccionado,
+		url: '/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacion&periodoId='+periodo+'&etiquetaId='+etiquetaSeleccionado,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       

@@ -45,7 +45,7 @@ todojunto.descripcion=descripcion;
 
 
 $.ajax({
-url: "http://spr.stp.gov.py/tablero/ajaxInserts2?accion="+accion,
+url: "/tablero/ajaxInserts2?accion="+accion,
 type: 'POST',
 dataType: 'json',
 data: JSON.stringify(todojunto),
@@ -89,7 +89,7 @@ $("body").on("click", "#actualizarGeoPoligonoTipo",function(event){
 	objeto.descripcion = descripcion;				
 
 	$.ajax({
-	        url: "http://spr.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
+	        url: "/tablero/ajaxUpdate2?accion="+accion,
 	        type: 'POST',
 	        dataType: 'json',
 	        data: JSON.stringify(objeto),
@@ -132,7 +132,7 @@ $("body").on("click", "#iconoBorradoGeoPoligonoTipo",function(event){
 	objeto.borrado=borrado;
 	
 	$.ajax({
-		url: "http://spr.stp.gov.py/tablero/ajaxUpdate2?accion="+accion,
+		url: "/tablero/ajaxUpdate2?accion="+accion,
 		type: 'POST',
 		dataType: 'json',
 		data: JSON.stringify(objeto),
