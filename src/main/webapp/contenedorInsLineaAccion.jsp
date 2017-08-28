@@ -844,7 +844,7 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
 			//$('#mostrarOcultarBorrado').append(ocultarBorrado);
 								
 			var usuarios = $.ajax({
-				url:'http://spr.stp.gov.py/ajaxSelects?accion=getUsuarios&usuario=<%=user.getName()%>',
+				url:'/ajaxSelects?accion=getUsuarios&usuario=<%=user.getName()%>',
 			  	type:'get',
 			  	dataType:'json',
 			  	async:false       

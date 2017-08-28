@@ -3947,7 +3947,6 @@ $("body").on("click", ".borrarAccion",function(event){
 			    		$("#unidadMedida-formulario").val(mostrarUnidadMedida);
 			    		
 				    	$.ajax({
-
 				         	url:'/ajaxSelects?accion=getAsignacionPresiVersion&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto+'&anho='+anho+'&versionReporte='+version,
 				          	type:'get',
 				          	crossDomain: 'true',
@@ -3996,7 +3995,7 @@ $("body").on("click", ".borrarAccion",function(event){
 					if( datosProductos.productos[0].clase === "N" )
 					{
 				    	$.ajax({
-				         	url:'/ajaxSelects?accion=getProductoTipoN&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto+'&anho='+anho,
+				         	 url:'/ajaxSelects?accion=getProductoTipoN&nivel='+linkNivel+'&entidad='+linkEntidad+'&tipo='+linkTipoPrograma+'&programa='+linkPrograma+'&subprograma='+linkSubPrograma+'&proyecto='+linkProyecto+'&producto='+linkProducto+'&anho='+anho,
 				          	type:'get',
 				          	crossDomain: 'true',
 				          	dataType:'jsonp',
@@ -7734,7 +7733,7 @@ $("body").on("change", "#productoObjetoGasto",function(event){
 		webServicesDatosProducto = JSON.parse(webServicesDatosProducto);
 				
     	$.ajax({
-	    	url:'http://sprtest.stp.gov.py/ajaxSelects?accion=getAsignacionPresiVersion&anho='+anho+'&nivel='+webServicesDatosProducto[0].nivelId+'&entidad='+webServicesDatosProducto[0].entidadId+'&versionReporte='+version,
+	    	url:'/ajaxSelects?accion=getAsignacionPresiVersion&anho='+anho+'&nivel='+webServicesDatosProducto[0].nivelId+'&entidad='+webServicesDatosProducto[0].entidadId+'&versionReporte='+version,
           	type:'get',
 			crossDomain: 'true',
 			dataType:'jsonp',

@@ -92,7 +92,7 @@ if (user != null) { %>
 			for(var l = 1; l <= 3; l++){
 				
 				var webServicesTipoDocumento = $.ajax({
-					url:'/ajaxSelects?accion=getTipoDocumento&tipo='+l,
+					url:'/tablero/ajaxSelects2?action=getTipoDocumento&tipo='+l,
 				  	type:'get',
 				  	dataType:'json',
 				  	async:false       
@@ -110,8 +110,8 @@ if (user != null) { %>
 								        '			<div class="box-body">';
 								        
 										var webServiceDocumento = $.ajax({
-									    	url:'/ajaxSelects?accion=getDocumento&tipo='+webServicesTipoDocumento[0].id,
-											type:'get',
+									    	url:'/tablero/ajaxSelects2?action=getDocumento&tipo='+webServicesTipoDocumento[0].id,
+									      	type:'get',
 									      	dataType:'json',
 									      	async:false       
 									    }).responseText;

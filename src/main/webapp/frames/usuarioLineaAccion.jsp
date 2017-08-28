@@ -15,11 +15,11 @@
 			var url="";
 			
 			if (rol_jsp == 0){
-				url = 'http://sprtest.stp.gov.py/ajaxSelects?accion=getUsuarios&mayorIgual='+rol_jsp;				
+				url = '/ajaxSelects?accion=getUsuarios&mayorIgual='+rol_jsp;				
 			} else if(usr_unr_id == 0){
-				url = 'http://sprtest.stp.gov.py/ajaxSelects?accion=getUsuarios&mayorIgual='+rol_jsp+'&nivelId='+usr_nivel_id+'&entidadId='+usr_entidad_id;			
+				url = '/ajaxSelects?accion=getUsuarios&mayorIgual='+rol_jsp+'&nivelId='+usr_nivel_id+'&entidadId='+usr_entidad_id;			
 			} else {
-				url = 'http://sprtest.stp.gov.py/ajaxSelects?accion=getUsuarios&mayorIgual='+rol_jsp+'&nivelId='+usr_nivel_id+'&entidadId='+usr_entidad_id+'&unidadResponsableId='+usr_unr_id;
+				url = '/ajaxSelects?accion=getUsuarios&mayorIgual='+rol_jsp+'&nivelId='+usr_nivel_id+'&entidadId='+usr_entidad_id+'&unidadResponsableId='+usr_unr_id;
 			}
 			
 			var usuarios = $.ajax({
@@ -32,7 +32,7 @@
 			usuarios = usuarios.usuarios;
 			
 			var roles = $.ajax({
-				url:'http://sprtest.stp.gov.py/ajaxSelects?accion=getRol',
+				url:'/ajaxSelects?accion=getRol',
 			  	type:'get',
 			  	dataType:'json',
 			  	async:false       
@@ -55,7 +55,7 @@
 						<%if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") ){%>
 							cuerpoTabla += '<tr><td><del>'+usuarios[q].entidad+'</del></td>';
 							if(usuarios[q].url){
-								cuerpoTabla += '<td><del><a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+usuarios[q].url+'" Download="Nota_usuario_'+usuarios[q].nombre+'" >'+usuarios[q].nombre+'</a></del></td><td><del>'+usuarios[q].correo+'</del></td><td><del>'+rolId+'</del></td>';
+								cuerpoTabla += '<td><del><a href="/tablero/DownloadServlet?urlDocumento='+usuarios[q].url+'" Download="Nota_usuario_'+usuarios[q].nombre+'" >'+usuarios[q].nombre+'</a></del></td><td><del>'+usuarios[q].correo+'</del></td><td><del>'+rolId+'</del></td>';
 							}else{
 								cuerpoTabla += '<td><del>'+usuarios[q].nombre+'</del></td><td><del>'+usuarios[q].correo+'</del></td><td><del>'+rolId+'</del></td>';
 							}
@@ -70,7 +70,7 @@
 						<%if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id").toString().equals("2")){%>
 							cuerpoTabla += '<tr><td>'+usuarios[q].entidad+'</td>';						
 								if (usuarios[q].url) {
-									cuerpoTabla += '<td><a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+usuarios[q].url+'" Download="Nota_usuario_'+usuarios[q].nombre+'" >'+usuarios[q].nombre+'</a></td><td>'+usuarios[q].correo+'</td><td>'+rolId+'</td>';
+									cuerpoTabla += '<td><a href="/tablero/DownloadServlet?urlDocumento='+usuarios[q].url+'" Download="Nota_usuario_'+usuarios[q].nombre+'" >'+usuarios[q].nombre+'</a></td><td>'+usuarios[q].correo+'</td><td>'+rolId+'</td>';
 								} else {
 									cuerpoTabla += '<td>'+ usuarios[q].nombre+'</td><td>'+usuarios[q].correo+'</td><td>'+rolId+'</td>';	
 								}
@@ -83,7 +83,7 @@
 						<%} if (attributes.get("role_id").toString().equals("3")){%>
 							cuerpoTabla += '<tr><td>'+usuarios[q].entidad+'</td>';
 							if (usuarios[q].url) {
-								cuerpoTabla += '<td><a href="http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+usuarios[q].url+'" Download="Nota_usuario_'+usuarios[q].nombre+'" >'+usuarios[q].nombre+'</a></td><td>'+usuarios[q].correo+'</td><td>'+rolId+'</td><td class="text-center"></td></tr>';
+								cuerpoTabla += '<td><a href="/tablero/DownloadServlet?urlDocumento='+usuarios[q].url+'" Download="Nota_usuario_'+usuarios[q].nombre+'" >'+usuarios[q].nombre+'</a></td><td>'+usuarios[q].correo+'</td><td>'+rolId+'</td><td class="text-center"></td></tr>';
 							}else{
 								cuerpoTabla += '<td>'+usuarios[q].nombre+'</td><td>'+usuarios[q].correo+'</td><td>'+rolId+'</td><td class="text-center"></td></tr>';
 							}
@@ -152,7 +152,7 @@
 	    var usuarioId = idParsed[0];		
 			
 		var usuarioSelec = $.ajax({
-			url:'http://sprtest.stp.gov.py/ajaxSelects?accion=getUsuarios&usuarioId='+usuarioId,
+			url:'/ajaxSelects?accion=getUsuarios&usuarioId='+usuarioId,
 		  	type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -161,7 +161,7 @@
 		usuarioSelec = usuarioSelec.usuarios;
 		
 		var lineasAccion = $.ajax({
-			url:'http://sprtest.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion',
+			url:'/tablero/ajaxSelects2?action=getLineaAccion',
 			type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -169,7 +169,7 @@
 		lineasAccion = JSON.parse(lineasAccion);
 		
 		var usuarioLineaAccion = $.ajax({
-			url:'http://sprtest.stp.gov.py/tablero/ajaxSelects2?action=getUsuarioLineaAccion&usuario='+usuarioSelec[0].correo,
+			url:'/tablero/ajaxSelects2?action=getUsuarioLineaAccion&usuario='+usuarioSelec[0].correo,
 			type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -178,7 +178,7 @@
 	    
 	    
 		var roles = $.ajax({
-			url:'http://sprtest.stp.gov.py/ajaxSelects?accion=getRol',
+			url:'/ajaxSelects?accion=getRol',
 			type:'get',
 		  	dataType:'json',
 		  	async:false       
@@ -273,7 +273,7 @@
 			var usuarioId = idEtiqueta[1];
 
 			var usuarioSelec = $.ajax({
-				url:'http://sprtest.stp.gov.py/ajaxSelects?accion=getUsuarios&usuarioId='+usuarioId,
+				url:'/ajaxSelects?accion=getUsuarios&usuarioId='+usuarioId,
 			  	type:'get',
 			  	dataType:'json',
 			  	async:false       
@@ -282,7 +282,7 @@
 			usuarioSelec = usuarioSelec.usuarios;
 			
 			var lineaAccion = $.ajax({
-				url:'http://sprtest.stp.gov.py/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId'+lineaAccionId,
+				url:'/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId'+lineaAccionId,
 			  	type:'get',
 			  	dataType:'json',
 			  	async:false       
@@ -335,7 +335,7 @@
 			
    		  	var info2 = JSON.stringify(objeto);
    		    $.ajax({
-   		        url: "http://sprtest.stp.gov.py/tablero/ajaxInserts2?accion=insUsuarioLineaAccion",
+   		        url: "/tablero/ajaxInserts2?accion=insUsuarioLineaAccion",
    		        type: 'POST',
    		        dataType: 'json',
    		        data: info2,
@@ -407,7 +407,7 @@
 
 		  	var info = JSON.stringify(objeto);
 		    $.ajax({
-		        url: "http://sprtest.stp.gov.py/tablero/ajaxUpdate2?accion=borradoUsuarioLineaAccion",
+		        url: "/tablero/ajaxUpdate2?accion=borradoUsuarioLineaAccion",
 		        type: 'POST',
 		        dataType: 'json',
 		        data: info,
