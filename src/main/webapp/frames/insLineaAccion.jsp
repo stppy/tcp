@@ -350,7 +350,7 @@ function renderEvidencia(avanceId, parametros){
 		var periodoSeleccionado = $("#periodoInsLineaAccion option:selected").val();
 		var versionSeleccionado = $("#versionInsLineaAccion").val();		
 		
-	   	var lineasAccionRestantes = $.ajax({
+	   	lineasAccionRestantes = $.ajax({
 			url:'/tablero/ajaxSelects2?action=getLineasAccionRestantes&institucionId='+institucionSeleccionada+'&periodoId='+periodoSeleccionado+'&versionId='+versionSeleccionado,
 		  	type:'get',
 		  	dataType:'json',
@@ -367,7 +367,7 @@ function renderEvidencia(avanceId, parametros){
 		}
 		$('#nombreLineaAccionInsLineaAccion').html(optionLineasAccionRestantes);
 		
-		var lineaAccion = $.ajax({
+		lineaAccion = $.ajax({
 			url:'/tablero/ajaxSelects2?action=getLineaAccion&borrado=false',
 		  	type:'get',
 		  	dataType:'json',
