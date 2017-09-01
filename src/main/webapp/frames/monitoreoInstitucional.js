@@ -228,7 +228,7 @@ function renderModalEvidencias(lineaAccionId, avanceFecha) {
 		var botones="";
 		
 		if (webServicesEvidencia[d].urlDocumento) {
-			webServicesEvidencia[d].url='http://spr.stp.gov.py/tablero/DownloadServlet?urlDocumento='+webServicesEvidencia[d].urlDocumento;
+			webServicesEvidencia[d].url='/tablero/DownloadServlet?urlDocumento='+webServicesEvidencia[d].urlDocumento;
 			donwloadName='Download="'+webServicesEvidencia[d].nombre+'"';
 			downloadTarget="";
 		}

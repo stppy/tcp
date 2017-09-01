@@ -957,7 +957,7 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
 			
 			var info = JSON.stringify(objeto);		  	
 		    $.ajax({
-		        url: "http://spr.stp.gov.py/ajaxUpdate?accion=actUltEtiqueta",
+		        url: "/ajaxUpdate?accion=actUltEtiqueta",
 		        type: 'POST',
 		        dataType: 'json',
 		        data: info,
