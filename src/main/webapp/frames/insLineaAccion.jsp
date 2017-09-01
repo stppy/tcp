@@ -418,7 +418,7 @@ function renderEvidencia(avanceId, parametros){
 		
 	$("body").on("change", "#nombreLineaAccionInsLineaAccion",function(event){
 		//var departamentoId = $(this).attr("parametro");
-		var catalogoLineaAccionId = $("#nombreLineaAccionInsLineaAccion option:selected").val();
+		var catalogoLineaAccionId = $("#nombreLineaAccionInsLineaAccion").val();
     	
 		var catalogoLineaAccion = $.ajax({
 	    	url:'/tablero/ajaxSelects2?action=getLineaAccion&lineaAccionId='+catalogoLineaAccionId,
@@ -475,8 +475,8 @@ function renderEvidencia(avanceId, parametros){
 		$("#guardarInsLineaAccionBoton").remove();
 		$("#insLineaAccion").find("#formularioInsLineaAccion").append('<div class="form-group" id="guardarInsLineaAccionBoton"><button type="submit" class="btn btn-success" id="guardarInsLineaAccion">Guardar</button></div>');
 		var accion = "insInsLineaAccion";
-		var lineaAccionId = $("#nombreLineaAccionInsLineaAccion option:selected").val();
-		var institucionId = $("#nombreInstitucionInsLineaAccion option:selected").val();
+		var lineaAccionId = $("#nombreLineaAccionInsLineaAccion").val();
+		var institucionId = $("#nombreInstitucionInsLineaAccion").val();
 		var periodoId = $("#periodoInsLineaAccion option:selected").val();
 	    var meta = document.getElementById('metaInsLineaAccion').value; 
 	    var version = document.getElementById('versionInsLineaAccion').value; 
