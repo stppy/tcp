@@ -245,7 +245,7 @@ public class ajaxSelects extends HttpServlet {
         		String objetos=null;
         		condition = " where true ";
         		if (institucion!="") condition += " and institucion_sigla ='"+institucion+"'";
-        		if (institucion_id!=0) condition += " AND institucion_id ='"+institucion_id+"'";
+        		if (institucion_id!=0 && institucion_id != 0) condition += " AND institucion_id ='"+institucion_id+"'";
         		if (linea_accion_id!=0) condition += " and linea_accion_id ='"+linea_accion_id+"'";
         		if (accion!="") condition += " and accion ='"+accion+"'";
         		if (accion_id!=0) condition += " and accion_id ='"+accion_id+"'";        		

@@ -86,8 +86,8 @@
 			   	
 				var condicion="";
 				if(periodoSeleccionado!=null)condicion = "&periodoId="+periodoSeleccionado;
-				if(institucionSeleccionado!=null)condicion += "&institucion_id="+institucionSeleccionado;
-				if(etiquetaSeleccionado!=null)condicion += "&etiquetaId="+etiquetaSeleccionado;
+				if(institucionSeleccionado!=null && institucionSeleccionado!=0)condicion += "&institucion_id="+institucionSeleccionado;
+				if(etiquetaSeleccionado!=null && etiquetaSeleccionado!=0)condicion += "&etiquetaId="+etiquetaSeleccionado;
 
 
 			   	renderLineas(condicion); 
@@ -159,7 +159,7 @@
 				<div class="row">
 					<div class="col-md-6">
 						<select class="form-control" id="selectorDeInstitucion">
-							<option value='0' selected>Institución</option>
+							<option value='0' selected>Todos</option>
 						</select> 
 					</div>									
 					<div class="col-md-6">
