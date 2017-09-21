@@ -728,6 +728,7 @@
 
           if (data.success == true) {
             toastr.success('Ud a modificado el estado de la etiqueta ' + nombreEtiqueta + ' exitosamente!!', 'OK');
+            // Este código no entiendo qué hace, porque igual funciona la deselección de la línea de acción.
             //var usuarioLineaAccion = new Object();
             //usuarioLineaAccion.lineaAccionId = lineaAccionId;
             // var info2 = JSON.stringify(usuarioLineaAccion);
@@ -860,7 +861,9 @@
     $("#botonRestaurarInsLineaAccion").remove();
     $("#botonBorradoInsLineaAccion").remove();
     $("#mensajeBorradoInsLineaAccion").html("");
-    $("#mensajeBorradoInsLineaAccion").append('<h3><center>Aguarde un momento mientras se procesa su pedido. Esto puede tardar varios minutos</center></h3>');
+    
+    toastr.info('Aguarde un momento mientras se procesa su pedido. Esto puede tardar varios minutos', 'Procesando...');
+
 
     var objeto = new Object();
     var accion = "borradoInsLineaAccion";
@@ -923,18 +926,12 @@
           }).responseText;
           unidadMedida = JSON.parse(unidadMedida);
 
-
-          renderInsLineaAccion(periodoSeleccionado, versionSeleccionado, etiquetaSeleccionado);
-
-          $("#mensajeBorradoInsLineaAccion").html("");
-          $("#mensajeBorradoInsLineaAccion").append('<h3><center>Cambio exitoso!!</center></h3>');
-
-
-
+          toastr.success('Cambio exitoso!!', 'OK');
+          $("#modalConsultaBorrarInsLineaAccion").remove();
         }
       },
       error: function (data, status, er) {
-
+        toastr.error('No se pudo realizar la acción', 'Error');
       }
     });
   });
@@ -8457,7 +8454,7 @@ document.getElementById('productosActividad').addEventListener('focus',eje1.prod
     if (proporcion < 0.0 || proporcion > 1.0) {
       $("#proporcionActividad").val("");
       $('#proporcionActividad').prop('title', 'La Proporci&oacute;n debe estar comprendido entre 0 y 1');
-      alert("La Proporci&oacute;n debe estar comprendido entre 0 y 1");
+      toastr.warning('La Proporci&oacute;n debe estar comprendido entre 0 y 1', 'AVISO');
     }
 
   });
@@ -8468,7 +8465,7 @@ document.getElementById('productosActividad').addEventListener('focus',eje1.prod
     if (peso < 0.0 || peso > 1.0) {
       $("#pesoActividad").val("");
       $('#pesoActividad').prop('title', 'El Peso debe estar comprendido entre 0 y 1');
-      alert("El valor del Peso debe estar comprendido entre 0 y 1");
+      toastr.warning('El valor del Peso debe estar comprendido entre 0 y 1', 'AVISO');
     }
 
   });
