@@ -30,3 +30,7 @@
     <![endif]-->
     <script src="frames/main.js"></script>
     <link href="frames/main.css" rel="stylesheet" type="text/css" />
+
+
+    <link href="plugins/toastr/toastr.min.css" rel="stylesheet" type="text/css" />
+    <script src="plugins/toastr/toastr.min.js" type="text/javascript"></script>
