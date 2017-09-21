@@ -1982,29 +1982,11 @@
   });
 
   function modalError(mensaje) {
-    if ($("#modalMensajeError").length) {
-      $("#modalMensajeError").remove();
-    }
-    var ModalError = '    <div id="modalMensajeError" class="modal fade">' +
-      '        <div class="modal-dialog">' +
-      '            <div class="modal-content">' +
-      '                 <div class="modal-body alert-danger">' +
-      '                        <div class="alert-danger">' +
-      '                        <h3 class="text-center">' + mensaje + '</h3>' +
-      '                    </div>' +
-      '                </div>' +
-      '            </div> ' +
-      '        </div>' +
-      '    </div>';
-    $("body").append(ModalError);
-    $('#modalMensajeError').on('show.bs.modal', function () {
-      var myModal = $(this);
-      clearTimeout(myModal.data('hideInterval'));
-      myModal.data('hideInterval', setTimeout(function () {
-        myModal.modal('hide');
-      }, 1800));
-    }).modal('show')
-    //$('#modalMensajeError').modal('show');
+    toastr.error(mensaje, 'Error');
+  }
+
+  function modalSuccess(mensaje) {
+    toastr.success(mensaje, 'OK');
   }
 
   $("body").on("click", ".guardarComboProducto", function (event) {
@@ -2043,17 +2025,6 @@
     var totaFinancieroInputado = parseInt($("#total-formulario").val());
     var productoIngresado = parseInt($("#producto-formulario").val());
     var sumatoriaAsignacion = 0;
-
-		/*$('#TablaAccionHasProductos  > tr').each(function() {
-			var asignacion=$(this).find("td").eq(12).html();
-			var prod=parseInt($(this).find("td").eq(6).text());
-			if(asignacion.search("del")<0){
-				asignacion=asignacion.replace(/[\."<\/*del>""Gs\."]/g, '');
-				if(prod==productoIngresado){
-					sumatoriaAsignacion+=parseInt(asignacion);	
-				}
-			}		
-		});*/
 
     if (PresupuestoAsignado[0].asignacionusada == null) {
       sumatoriaAsignacion = 0;
@@ -2126,11 +2097,11 @@
           }
         });
       } else {
-        modalError("El monto ingresado supera la Asignaci&oacute;n Financiera, vuelva a intentarlo");
+        toastr.error('El monto ingresado supera la Asignaci&oacute;n Financiera, vuelva a intentarlo', 'Error');
         $("#total-formulario").val("");
       }
     } else {
-      modalError("Valor ingresado incorrecto. Solo se permiten valores num�ricos enteros");
+      toastr.error('Valor ingresado incorrecto. Solo se permiten valores num&eacute;ricos enteros', 'Error');
       $("#total-formulario").val("");
       $("#producto-formulario").val("");
       $("#proyecto-formulario").val("");
@@ -3262,6 +3233,11 @@
 
 
   });
+
+  $('body').on('click', '.cerrarModalVincularProducto', function (event) {
+    $('#modalBorrarVinculacionProducto').remove();
+  });
+
   $("body").on("click", ".consultaBorrarVinculacionProducto", function (event) {
     var parametros = $(this).attr("parametros");
     var idParsed = parametros.split("-");
@@ -3273,11 +3249,6 @@
     var periodoId = idParsed[3];
     var accionId = idParsed[4];
     var accionHasProductoId = idParsed[5];
-
-
-    if ($("#modalVincularProductos").length) {
-      $("#modalVincularProductos").remove();
-    }
 
     var WebServiceVinculacionProducto = $.ajax({
       url: '/tablero/ajaxSelects2?action=getAccionHasProducto&accionHasProductoId=' + accionHasProductoId,
@@ -3293,7 +3264,7 @@
       '	<div class="modal-dialog modal-lg">' +
       '		<div class="modal-content" >' +
       '			<div class="modal-header">' +
-      '		        <button type="button" class="close modalVincularProducto"  parametros=' + insLineaAccionId + '-' + lineaAccionId + '-' + institucionId + '-' + periodoId + '-' + accionId + ' ><span aria-hidden="true">&times;</span></button>' +
+      '		        <button type="button" class="close cerrarModalVincularProducto"  parametros=' + insLineaAccionId + '-' + lineaAccionId + '-' + institucionId + '-' + periodoId + '-' + accionId + ' ><span aria-hidden="true">&times;</span></button>' +
       '		        <h4 class="modal-title" >Borrar - Restaurar Vinculaci&oacute;n Producto</h4>' +
       '			</div>' +
       '		    <div class="modal-body">' +
@@ -3312,13 +3283,13 @@
       $("#mensajeBorradoVinculacionProducto").append('<h3 class="text-center">Ud. esta seguro que desea RESTABLACER este registro</h3>');
       $("#agregarBotonBorradoVinculacionProducto").html("");
       $("#agregarBotonBorradoVinculacionProducto").append('<button type="button" class="btn btn-success btn-sm borrarVinculacionProducto" id="botonRestaurarVinculacionProducto" parametros=' + accionHasProductoId + '-r>Restaurar V. Producto</button>');
-      $("#agregarBotonBorradoVinculacionProducto").append('<button type="button" class="btn btn-success btn-sm modalVincularProducto" parametros=' + insLineaAccionId + '-' + lineaAccionId + '-' + institucionId + '-' + periodoId + '-' + accionId + '>Cerrar</button>');
+      $("#agregarBotonBorradoVinculacionProducto").append('<button type="button" class="btn btn-success btn-sm cerrarModalVincularProducto" parametros=' + insLineaAccionId + '-' + lineaAccionId + '-' + institucionId + '-' + periodoId + '-' + accionId + '>Cerrar</button>');
     } else {
       $("#mensajeBorradoVinculacionProducto").html("");
       $("#mensajeBorradoVinculacionProducto").append('<h3 class="text-center">Ud. esta seguro que desea BORRAR este registro</h3');
       $("#agregarBotonBorradoVinculacionProducto").html("");
       $("#agregarBotonBorradoVinculacionProducto").append('<button type="button" class="btn btn-danger btn-sm borrarVinculacionProducto" id="botonBorradoVinculacionProducto" parametros=' + accionHasProductoId + '-b>Borrar V. Producto</button>');
-      $("#agregarBotonBorradoVinculacionProducto").append('<button type="button" class="btn btn-success btn-sm modalVincularProducto" parametros=' + insLineaAccionId + '-' + lineaAccionId + '-' + institucionId + '-' + periodoId + '-' + accionId + '>Cerrar</button>')
+      $("#agregarBotonBorradoVinculacionProducto").append('<button type="button" class="btn btn-success btn-sm cerrarModalVincularProducto" parametros=' + insLineaAccionId + '-' + lineaAccionId + '-' + institucionId + '-' + periodoId + '-' + accionId + '>Cerrar</button>')
     }
 
     $('#modalBorrarVinculacionProducto').modal('show');
@@ -3326,6 +3297,7 @@
   });
 
   $("body").on("click", ".borrarVinculacionProducto", function (event) {
+    
     var parametros = $(this).attr("parametros");
     var idParsed = parametros.split("-");
     var accionHasProductoId = idParsed[0];
@@ -3357,17 +3329,19 @@
         if (estado == "b") {
           $("#botonBorradoVinculacionProducto").remove();
           $("#mensajeBorradoVinculacionProducto").html("");
-          $("#mensajeBorradoVinculacionProducto").html("<h3 class='text-center'>BORRADO EXITOSAMENTE!!</h3>");
+          $('#modalBorrarVinculacionProducto').remove();
+          modalSuccess('Borrado correctamente!');
         } else {
           $("#botonRestaurarVinculacionProducto").remove();
           $("#mensajeBorradoVinculacionProducto").html("");
-          $("#mensajeBorradoVinculacionProducto").html("<h3 class='text-center'>RESTAURADO EXITOSAMENTE!!</h3>");
+          $('#modalBorrarVinculacionProducto').remove();
+          modalSuccess('Restaurado correctamente!');
         }
 
       },
 
       error: function (data, status, er) {
-
+        modalError('Error al borrar vinculaci&oacute;n con producto');
       }
     });
 
@@ -3389,8 +3363,6 @@
 
       var costo = document.getElementById("costoAccion").value;
       var peso = document.getElementById("pesoAccion").value;
-      //var fechaInicio = document.getElementById("fechaInicioAccion").value;
-      //var fechaFin = document.getElementById("fechaFinAccion").value;
       var version = document.getElementById("versionAccion").value;
       var meta1 = document.getElementById("primerTrimestre-formulario").value;
       var meta2 = document.getElementById("segundoTrimestre-formulario").value;
@@ -3426,12 +3398,12 @@
         contentType: 'application/json',
         mimeType: 'application/json',
         success: function (data) {
-          renderAcciones(insLineaAccionId, lineaAccionId, institucionId, periodoId);
-          //actualizarTablaAcciones(insLineaAccionId,lineaAccionId,institucionId,periodoId);
+          // TODO: ver cómo refrescar el datatable con el valor agregado.
+          // renderAcciones(insLineaAccionId, lineaAccionId, institucionId, periodoId);
+          toastr.success('Acci&oacute;n guardada correctamente', 'OK');
         },
-        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
         error: function (data, status, er) {
-          //actualizarTablaAcciones(insLineaAccionId,lineaAccionId,institucionId,periodoId);
+          toastr.error('Error al guardar la acción', 'Error');
         }
       });
 
