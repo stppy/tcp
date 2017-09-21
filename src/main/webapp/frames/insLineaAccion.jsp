@@ -4507,10 +4507,11 @@ document.getElementById('productosActividad').addEventListener('focus',eje1.prod
         mimeType: 'application/json',
         success: function (data) {
           actualizarTablaActividades(accion_id, insLineaAccionId, lineaAccionId, institucionId, periodoId);
+          modalSuccess('Cronograma guardado correctamente');
         },
-        //error: function(data,status,er) {alert("error: "+data+" status: "+status+" er:"+er);}
         error: function (data, status, er) {
-          actualizarTablaActividades(accion_id, insLineaAccionId, lineaAccionId, institucionId, periodoId);
+          console.log(data, status, er);
+          modalError('Error al guardar el cronograma');
         }
       });
     }
