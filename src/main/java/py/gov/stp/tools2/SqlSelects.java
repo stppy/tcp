@@ -354,6 +354,36 @@ public class SqlSelects {
 		return objetos; 
 		}
 
+	public static String selectPivotFicha(String condition) throws SQLException{
+		Connection conect=ConnectionConfiguration.conectar();
+		
+		String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from("+
+					" select dp.id as dpto_cod, dp.nombre as departamento, d.id as dist_cod, d.nombre as distrito, l.barloc_cod, l.nombre as localidad, a.nombre as area,"+
+					" p.manzana, p.direccion, p.nro_casa, p.coordenada_x, p.coordenada_y, p.nombre, p.apellido, p.edad, s.nombre, pa.nombre, p.jefe, p.ano, p.mes, p.dia,"+
+					" p.cedula, p.telefono, ep.nombre as estado_pobreza, p.anho_ficha"+
+					" from persona p join localidad l on l.id=p.localidad_id join distrito d on d.id=l.distrito_id join departamento dp on dp.id=d.departamento_id"+ 
+					" join sexo s on s.id=p.sexo_id join parentesco pa on pa.id=p.parentesco_id join area a on a.id=l.area_id join estado_pobreza ep on ep.id=p.estado_pobreza_id"+
+					" limit 10)t";
+
+		Statement statement = null;
+		ResultSet rs=null;		
+		String objetos = "";
+
+		try {
+ 			statement = conect.createStatement();
+ 			rs=statement.executeQuery(query);
+ 			while(rs.next()){
+ 				objetos+=rs.getString("resultado");
+ 			}
+ 		}
+		catch (SQLException e) {e.printStackTrace();}
+		finally{
+			if (statement != null) {statement.close();}
+			if (conect != null) {conect.close();}
+		}
+		return objetos; 
+	}
+	
 	
 	public static List<Avance> selectAvance(String condition, String conditionAv) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
