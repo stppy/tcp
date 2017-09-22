@@ -355,7 +355,7 @@ public class SqlSelects {
 		}
 
 	public static String selectPivotFicha(String condition) throws SQLException{
-		Connection conect=ConnectionConfiguration.conectar();
+		Connection conect=ConnectionConfiguration.conectarFichaSocial();
 		
 		String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from("+
 					" select dp.id as dpto_cod, dp.nombre as departamento, d.id as dist_cod, d.nombre as distrito, l.barloc_cod, l.nombre as localidad, a.nombre as area,"+
@@ -384,6 +384,34 @@ public class SqlSelects {
 		return objetos; 
 	}
 	
+	public static String selectPivotFichaHogarDpto(String condition) throws SQLException{
+		Connection conect=ConnectionConfiguration.conectarFichaSocial();
+		
+		String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from("+
+					" select dp.nombre as departamento, count(CASE WHEN a.id=1 THEN 1 END) as rural, count(CASE WHEN a.id=6 THEN 1 END) as urbana,"+ 
+					" (select count(CASE WHEN a.id=1 THEN 1 END) as rural)+(select count(CASE WHEN a.id=6 THEN 1 END) as urbana) as Total"+
+					" from persona p join localidad l on l.id=p.localidad_id join distrito d on d.id=l.distrito_id join departamento dp on dp.id=d.departamento_id"+ 
+					" join sexo s on s.id=p.sexo_id join parentesco pa on pa.id=p.parentesco_id join area a on a.id=l.area_id join estado_pobreza ep on ep.id=p.estado_pobreza_id"+
+					" group by dp.nombre order by 1)t";
+
+		Statement statement = null;
+		ResultSet rs=null;		
+		String objetos = "";
+
+		try {
+ 			statement = conect.createStatement();
+ 			rs=statement.executeQuery(query);
+ 			while(rs.next()){
+ 				objetos+=rs.getString("resultado");
+ 			}
+ 		}
+		catch (SQLException e) {e.printStackTrace();}
+		finally{
+			if (statement != null) {statement.close();}
+			if (conect != null) {conect.close();}
+		}
+		return objetos; 
+	}
 	
 	public static List<Avance> selectAvance(String condition, String conditionAv) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();

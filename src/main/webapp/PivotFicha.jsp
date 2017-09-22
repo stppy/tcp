@@ -144,7 +144,7 @@ textarea { text-transform: uppercase; }
 	          <div class="box" height="1000px">
 	            <div class="box-header with-border" height="1000px">
 	              <h3 class="box-title" id="tituloTipoPrograma">
-	                Avance
+	                Población Ficha Social
 	              </h3> 
 	              <div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
 	              </div>
@@ -159,6 +159,22 @@ textarea { text-transform: uppercase; }
 		<link href="tablero_files/uientableencharteditoren.css" type="text/css" rel="stylesheet">
 		<script src="tablero_files/formatendefaultenuientableenorgchartenmotionchartengaugeenann.js" type="text/javascript"></script>
 		<script type="text/javascript">
+		
+		var cuerpoResumenDpto="";
+		var resumenDpto = $.ajax({
+			url:'/tablero/ajaxSelects2?action=getPivotFichaHogarDpto',
+		  	type:'get',
+		  	dataType:'json',
+		  	async:false       
+		}).responseText;
+		resumenDpto = JSON.parse(resumenDpto);
+		
+		for(var e = 0; e < resumenDpto.length; e++)
+		{
+			cuerpoResumenDpto +="<tr><td class='text-center'>"+resumenDpto[e].departamento+"</td><td class='text-center'>"+resumenDpto[e].urbana+"</td><td class='text-center'>"+resumenDpto[e].rural+"</td><td class='text-center'>"+resumenDpto[e].total+"</td></tr>";
+		}
+		$('#dataTablesResumenDptoBody').append(cuerpoResumenDpto);
+		
 		$( document ).ready(function() {
             google.load("visualization", "1", {packages:["corechart", "charteditor"]});
             $(function(){
@@ -273,6 +289,48 @@ textarea { text-transform: uppercase; }
 			   </div>
 			   </div>
 			<!--</div>-->
+        
+          
+          </div><!-- /.row -->
+
+				<div class="row">
+					<div class="col-md-12">
+						<div class="box" height="1000px">
+							<div class="box-header with-border" height="1000px">
+								<h3 class="box-title" id="tituloTipoPrograma">Resúmen</h3>
+								<div class="box-tools pull-right" height="1000px">
+									<button class="btn btn-box-tool" data-widget="collapse">
+										<i class="fa fa-minus"></i>
+									</button>
+								</div>
+							</div>
+							<div class="box-body" style="overflow: auto; display: block;">
+								<table class="table table-hover table-bordered"
+									id="dataTablesResumenDpto">
+									<thead>
+										<tr class="active">
+											<th>Departamento</th>
+											<th>Zona Urbana</th>
+											<th>Zona Rural</th>
+											<th>Total</th>
+										</tr>
+									</thead>
+									<tfoot>
+										<tr>
+											<th>Total</th>
+											<th></th>
+											<th></th>
+											<th></th>
+										</tr>
+									</tfoot>
+									<tbody id="dataTablesResumenDptoBody">
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--</div>-->
         
           
           </div><!-- /.row -->
