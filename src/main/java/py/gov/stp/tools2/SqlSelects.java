@@ -412,6 +412,34 @@ public class SqlSelects {
 		}
 		return objetos; 
 	}
+	public static String selectPivotFichaEstadoPobreza(String condition) throws SQLException{
+		Connection conect=ConnectionConfiguration.conectarFichaSocial();
+		
+		String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from("+					
+				" select ep.nombre as estado_pobreza, count(CASE WHEN s.id=1 THEN 1 END) as hombre, count(CASE WHEN s.id=2 THEN 1 END) as mujer,"+
+				" (select count(CASE WHEN s.id=1 THEN 1 END) as hombre)+(select count(CASE WHEN s.id=2 THEN 1 END) as mujer) as Total"+
+				" from persona p join estado_pobreza ep on p.estado_pobreza_id=ep.id join sexo s on s.id=p.sexo_id"+
+				" group by ep.nombre order by 1	"+		
+			")t";
+
+		Statement statement = null;
+		ResultSet rs=null;		
+		String objetos = "";
+
+		try {
+ 			statement = conect.createStatement();
+ 			rs=statement.executeQuery(query);
+ 			while(rs.next()){
+ 				objetos+=rs.getString("resultado");
+ 			}
+ 		}
+		catch (SQLException e) {e.printStackTrace();}
+		finally{
+			if (statement != null) {statement.close();}
+			if (conect != null) {conect.close();}
+		}
+		return objetos; 
+	}
 	
 	public static List<Avance> selectAvance(String condition, String conditionAv) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();

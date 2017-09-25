@@ -160,20 +160,7 @@ textarea { text-transform: uppercase; }
 		<script src="tablero_files/formatendefaultenuientableenorgchartenmotionchartengaugeenann.js" type="text/javascript"></script>
 		<script type="text/javascript">
 		
-		var cuerpoResumenDpto="";
-		var resumenDpto = $.ajax({
-			url:'/tablero/ajaxSelects2?action=getPivotFichaHogarDpto',
-		  	type:'get',
-		  	dataType:'json',
-		  	async:false       
-		}).responseText;
-		resumenDpto = JSON.parse(resumenDpto);
 		
-		for(var e = 0; e < resumenDpto.length; e++)
-		{
-			cuerpoResumenDpto +="<tr><td class='text-center'>"+resumenDpto[e].departamento+"</td><td class='text-center'>"+resumenDpto[e].urbana+"</td><td class='text-center'>"+resumenDpto[e].rural+"</td><td class='text-center'>"+resumenDpto[e].total+"</td></tr>";
-		}
-		$('#dataTablesResumenDptoBody').append(cuerpoResumenDpto);
 		
 		$( document ).ready(function() {
             google.load("visualization", "1", {packages:["corechart", "charteditor"]});
@@ -293,48 +280,141 @@ textarea { text-transform: uppercase; }
           
           </div><!-- /.row -->
 
-				<div class="row">
-					<div class="col-md-12">
-						<div class="box" height="1000px">
-							<div class="box-header with-border" height="1000px">
-								<h3 class="box-title" id="tituloTipoPrograma">Resúmen</h3>
-								<div class="box-tools pull-right" height="1000px">
-									<button class="btn btn-box-tool" data-widget="collapse">
-										<i class="fa fa-minus"></i>
-									</button>
-								</div>
-							</div>
-							<div class="box-body" style="overflow: auto; display: block;">
-								<table class="table table-hover table-bordered"
-									id="dataTablesResumenDpto">
-									<thead>
-										<tr class="active">
-											<th>Departamento</th>
-											<th>Zona Urbana</th>
-											<th>Zona Rural</th>
-											<th>Total</th>
-										</tr>
-									</thead>
-									<tfoot>
-										<tr>
-											<th>Total</th>
-											<th></th>
-											<th></th>
-											<th></th>
-										</tr>
-									</tfoot>
-									<tbody id="dataTablesResumenDptoBody">
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
+				<div class="row" id="contenedorResumenDptoBody">				
+				</div>
+				<div class="row" id="contenedorResumenEstadoPobreza">				
 				</div>
 				<!--</div>-->
         
           
           </div><!-- /.row -->
    
+   <script type="text/javascript">
+   
+   function numeroConComa(x) {
+		return x.toString().replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+	}
+   
+   	var resumenDpto = $.ajax({
+		url:'/tablero/ajaxSelects2?action=getPivotFichaHogarDpto',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	resumenDpto = JSON.parse(resumenDpto);
+	
+	var bodyresumenDpto= '<div class="col-md-12">'+
+							'<div class="box" height="1000px">'+
+								'<div class="box-header with-border" height="1000px">'+
+									'<h3 class="box-title" id="tituloTipoPrograma">Resúmen</h3>'+
+									'<div class="box-tools pull-right" height="1000px">'+
+										'<button class="btn btn-box-tool" data-widget="collapse">'+
+											'<i class="fa fa-minus"></i>'+
+										'</button>'+
+									'</div>'+
+								'</div>'+
+								'<div class="box-body" style="overflow: auto; display: block;">'+
+									'<table class="table table-hover table-bordered" id="dataTablesResumenDpto">'+
+										'<thead>'+
+											'<tr class="active">'+
+												'<th class="text-center">Departamento</th>'+
+												'<th class="text-center">Zona Urbana</th>'+
+												'<th class="text-center">Zona Rural</th>'+
+												'<th class="text-center">Total</th>'+
+											'</tr>'+
+										'</thead>'+
+										'<tfoot>'+
+											'<tr>'+
+												'<th class="text-center">Total</th>'+
+												'<th class="text-center"></th>'+
+												'<th class="text-center"></th>'+
+												'<th class="text-center"></th>'+
+											'</tr>'+
+										'</tfoot>'+
+										'<tbody id="dataTablesResumenDptoBody">'+
+										'</tbody>'+
+									'</table>'+
+								'</div>'+
+							'</div>'+
+						'</div>';
+						
+	$('#contenedorResumenDptoBody').append(bodyresumenDpto);
+		
+	var cuerpoResumenDpto="";	
+	var sumaUrbana=0;
+	var sumaRural=0;
+	for(var e = 0; e < resumenDpto.length; e++)
+	{
+		cuerpoResumenDpto +="<tr><td class='text-center'>"+resumenDpto[e].departamento+"</td><td class='text-center'>"+numeroConComa(resumenDpto[e].urbana)+"</td><td class='text-center'>"+numeroConComa(resumenDpto[e].rural)+"</td><td class='text-center'>"+numeroConComa(resumenDpto[e].total)+"</td></tr>";
+		sumaUrbana+=resumenDpto[e].urbana;
+		sumaRural+=resumenDpto[e].rural;
+	}
+	$('#dataTablesResumenDptoBody').append(cuerpoResumenDpto);
+ 	$('#dataTablesResumenDpto > tfoot > tr > th').eq(1).text(numeroConComa(sumaUrbana));
+	$('#dataTablesResumenDpto > tfoot > tr > th').eq(2).text(numeroConComa(sumaRural));
+	$('#dataTablesResumenDpto > tfoot > tr > th').eq(3).text(numeroConComa(sumaRural+sumaUrbana));
+	
+	var cuerpoResumenEstadoPobreza="";
+	var resumenEstadoPobreza = $.ajax({
+		url:'/tablero/ajaxSelects2?action=getPivotFichaEstadoPobreza',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	resumenEstadoPobreza = JSON.parse(resumenEstadoPobreza);
+	
+	var bodyresumenEstado= '<div class="col-md-12">'+
+							'<div class="box" height="1000px">'+
+								'<div class="box-header with-border" height="1000px">'+
+									'<h3 class="box-title" id="tituloTipoPrograma">Resúmen</h3>'+
+									'<div class="box-tools pull-right" height="1000px">'+
+										'<button class="btn btn-box-tool" data-widget="collapse">'+
+											'<i class="fa fa-minus"></i>'+
+										'</button>'+
+									'</div>'+
+								'</div>'+
+								'<div class="box-body" style="overflow: auto; display: block;">'+
+									'<table class="table table-hover table-bordered" id="dataTablesResumenEstadoPobreza">'+
+										'<thead>'+
+											'<tr class="active">'+
+												'<th class="text-center">Estado de Pobreza</th>'+
+												'<th class="text-center">Hombre</th>'+
+												'<th class="text-center">Mujer</th>'+
+												'<th class="text-center">Total</th>'+
+											'</tr>'+
+										'</thead>'+
+										'<tfoot>'+
+											'<tr>'+
+												'<th class="text-center">Total</th>'+
+												'<th class="text-center"></th>'+
+												'<th class="text-center"></th>'+
+												'<th class="text-center"></th>'+
+											'</tr>'+
+										'</tfoot>'+
+										'<tbody id="dataTablesResumenEstadoPobreza">'+
+										'</tbody>'+
+									'</table>'+
+								'</div>'+
+							'</div>'+
+						'</div>';
+						
+	$('#contenedorResumenEstadoPobreza').append(bodyresumenEstado);
+		
+	var cuerpoResumenEstadoPobreza="";
+	var sumaHombre=0;
+	var sumaMujer=0;
+	for(var e = 0; e < resumenEstadoPobreza.length; e++)
+	{
+		cuerpoResumenEstadoPobreza +="<tr><td class='text-center'>"+resumenEstadoPobreza[e].estado_pobreza+"</td><td class='text-center'>"+numeroConComa(resumenEstadoPobreza[e].hombre)+"</td><td class='text-center'>"+numeroConComa(resumenEstadoPobreza[e].mujer)+"</td><td class='text-center'>"+numeroConComa(resumenEstadoPobreza[e].total)+"</td></tr>";
+		sumaHombre+=resumenEstadoPobreza[e].hombre;
+		sumaMujer+=resumenEstadoPobreza[e].mujer;
+	}
+	$('#dataTablesResumenEstadoPobreza').append(cuerpoResumenEstadoPobreza);
+ 	$('#dataTablesResumenEstadoPobreza > tfoot > tr > th').eq(1).text(numeroConComa(sumaHombre));
+	$('#dataTablesResumenEstadoPobreza > tfoot > tr > th').eq(2).text(numeroConComa(sumaMujer));
+	$('#dataTablesResumenEstadoPobreza > tfoot > tr > th').eq(3).text(numeroConComa(sumaHombre+sumaMujer));	
+   
+   </script>
           
                
           
