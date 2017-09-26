@@ -74,7 +74,7 @@
 			var i=parseInt(0);
 						
 			var periodoActual = 2017;
-			getPeriodo();
+			getPeriodo(periodoActual);
 			ObtenerInstitucion();
 			
 			$("body").on("click", "#generarDatos",function(event){	
@@ -82,16 +82,43 @@
 			   	var institucionSeleccionado = $("#selectorDeInstitucion option:selected").val();
 			   	var etiquetaSeleccionado = $("#etiquetaSeleccion option:selected").val();
 
-
-			   	
-				var condicion="";
-				if(periodoSeleccionado!=null)condicion = "&periodoId="+periodoSeleccionado;
-				if(institucionSeleccionado!=null && institucionSeleccionado!=0)condicion += "&institucion_id="+institucionSeleccionado;
-				if(etiquetaSeleccionado!=null && etiquetaSeleccionado!=0)condicion += "&etiquetaId="+etiquetaSeleccionado;
-
-
-			   	renderLineas(condicion); 
+			   	renderLineas(periodoSeleccionado, etiquetaSeleccionado, institucionSeleccionado); 
 			});
+			
+			/* $("body").on("click", "#chkMostrarOcultar",function(event){			
+				//OcultarRegistrosBorrados();
+			});		 */
+									
+			<%-- $("body").on("change", "#etiquetaSeleccion",function(event){	
+				var periodoSeleccionado = $("#periodoSeleccion option:selected").val();
+			 	var etiquetaSeleccionado = $("#etiquetaSeleccion option:selected").val();
+			 	var institucionSeleccionado = $("#selectorDeInstitucion option:selected").val();
+
+			 	renderLineas(periodoSeleccionado, etiquetaSeleccionado, institucionSeleccionado); 
+			   	
+			   	var objeto = new Object();			
+				objeto.correo = '<%=user.getName()%>';
+				objeto.ultimaEtiquetaId = etiquetaSeleccionado;
+				
+				var info = JSON.stringify(objeto);		  	
+			    $.ajax({
+			        url: "/ajaxUpdate?accion=actUltEtiqueta",
+			        type: 'POST',
+			        dataType: 'json',
+			        data: info,
+			        contentType: 'application/json',
+			        mimeType: 'application/json',
+			        success: function (data) {
+			        	
+			        	},
+
+			        error: function(data,status,er) {
+			        	
+			        	}
+				 });
+			   	
+			   
+			}); --%>
 						
 		});
 
@@ -235,7 +262,7 @@
        <%  } else { %>
 			<p>Favor Iniciar Sesion</p>
 		<%  } %>
-		<a href="#" data-toggle="tooltip" title="Some tooltip text!">Hover over me</a>
+		<!-- a href="#" data-toggle="tooltip" title="Some tooltip text!">Hover over me</a-->
 				
 				
 		<%  } else { %>
