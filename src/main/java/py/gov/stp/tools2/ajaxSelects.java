@@ -883,6 +883,42 @@ public class ajaxSelects extends HttpServlet {
         		//JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(objetos.toString());
         		}
+        	if (action.equals("getPivotFicha")){
+        		String objetos=""; 
+        		condition = " where true ";        		        		
+        		//if (anho!=null) condition += " and periodo ="+anho+" and to_char(avance_fecha,'YYYY') = '"+anho+"'";
+        		try {objetos = SqlSelects.selectPivotFicha(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		//JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(objetos.toString());
+        		}
+        	if (action.equals("getPivotFichaHogarDpto")){
+        		String objetos=""; 
+        		condition = " where true ";        		        		
+        		//if (anho!=null) condition += " and periodo ="+anho+" and to_char(avance_fecha,'YYYY') = '"+anho+"'";
+        		try {objetos = SqlSelects.selectPivotFichaHogarDpto(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		//JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(objetos.toString());
+        		}
+        	if (action.equals("getPivotFichaEstadoPobreza")){
+        		String objetos=""; 
+        		condition = " where true ";        		        		
+        		//if (anho!=null) condition += " and periodo ="+anho+" and to_char(avance_fecha,'YYYY') = '"+anho+"'";
+        		try {objetos = SqlSelects.selectPivotFichaEstadoPobreza(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		//JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(objetos.toString());
+        		}
+        	if (action.equals("getPivotFichaSexoEdad")){
+        		String objetos=""; 
+        		condition = " where true ";        		        		
+        		//if (anho!=null) condition += " and periodo ="+anho+" and to_char(avance_fecha,'YYYY') = '"+anho+"'";
+        		try {objetos = SqlSelects.selectPivotFichaEstadoPobreza(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		//JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(objetos.toString());
+        		}
 ////////////Pivot Destinatarios 
         	if (action.equals("getLineaAccionDestinatarios")){
         		List objetos=null; 
