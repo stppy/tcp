@@ -12,11 +12,12 @@
   	<!--  ISO-8859-1 -->
   	<%@ include file="/frames/head.jsp" %>
 	<!--   <script src="frames/entidad.js" type="text/javascript"></script> -->
+	<script src="plugins/jQuery/jQuery-2.1.3.min.js"></script>
 
 
 
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-        <title>Pivot Table - Avance</title>
+        <title>Pivot Table - Ficha Social</title>
         <link rel="stylesheet" type="text/css" href="tablero_files/pivot.css">
         <script type="text/javascript" src="tablero_files/d3.js"></script>
         <script type="text/javascript" src="tablero_files/jsapi"></script>
@@ -43,6 +44,8 @@
     <link type="text/css" rel="stylesheet" href="tablero_files/annotatedtimeline.css">
     <link type="text/css" rel="stylesheet" href="tablero_files/imagesparkline.css">
     <link type="text/css" rel="stylesheet" href="tablero_files/tooltip.css">
+    <link href="plugins/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="plugins/datatables/css/buttons.dataTables.min.css" rel="stylesheet">
 </head>
 <body class="skin-blue sidebar-mini">
 <% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%>
@@ -280,28 +283,27 @@ textarea { text-transform: uppercase; }
           
           </div><!-- /.row -->
 
-				<div class="row" id="contenedorResumenDptoBody">				
+				<div class="row" id="contenedorTablePivot">				
 				</div>
-				<div class="row" id="contenedorResumenEstadoPobreza">				
-				</div>
+				
 				<!--</div>-->
         
           
           </div><!-- /.row -->
    
    <script type="text/javascript">
-   
-   function numeroConComa(x) {
+   /*
+    function numeroConComa(x) {
 		return x.toString().replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 	}
-   
-   	var resumenDpto = $.ajax({
-		url:'/tablero/ajaxSelects2?action=getPivotFichaHogarDpto',
+    
+   	var tablePivotFicha = $.ajax({
+		url:'/tablero/ajaxSelects2?action=getPivotFicha',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
 	}).responseText;
-	resumenDpto = JSON.parse(resumenDpto);
+   	tablePivotFicha = JSON.parse(tablePivotFicha);
 	
 	var bodyresumenDpto= '<div class="col-md-12">'+
 							'<div class="box" height="1000px">'+
@@ -314,45 +316,112 @@ textarea { text-transform: uppercase; }
 									'</div>'+
 								'</div>'+
 								'<div class="box-body" style="overflow: auto; display: block;">'+
-									'<table class="table table-hover table-bordered" id="dataTablesResumenDpto">'+
+									'<table class="table table-hover table-bordered" id="dataTablesPivotFicha">'+
 										'<thead>'+
 											'<tr class="active">'+
+												'<th class="text-center">Dpto. Cod</th>'+
 												'<th class="text-center">Departamento</th>'+
-												'<th class="text-center">Zona Urbana</th>'+
-												'<th class="text-center">Zona Rural</th>'+
-												'<th class="text-center">Total</th>'+
+												'<th class="text-center">Dist. Cod</th>'+
+												'<th class="text-center">Distrito</th>'+
+												'<th class="text-center">Barloc_Cod</th>'+
+												'<th class="text-center">Localidad</th>'+
+												'<th class="text-center">Area</th>'+
+												'<th class="text-center">Manzana</th>'+
+												'<th class="text-center">Dirección</th>'+												
+												'<th class="text-center">Nro. Casa</th>'+
+												'<th class="text-center">Coordenada x</th>'+
+												'<th class="text-center">Coordenada y</th>'+
+												'<th class="text-center">Nombres</th>'+
+												'<th class="text-center">Apellidos</th>'+
+												'<th class="text-center">Edad</th>'+
+												'<th class="text-center">Sexo</th>'+
+												'<th class="text-center">Parentesco</th>'+
+												'<th class="text-center">Jefe</th>'+
+												'<th class="text-center">Año</th>'+
+												'<th class="text-center">Mes</th>'+
+												'<th class="text-center">Día</th>'+
+												'<th class="text-center">Cédula</th>'+
+												'<th class="text-center">Teléfono</th>'+
+												'<th class="text-center">Estado Pobreza</th>'+
+												'<th class="text-center">Año Ficha</th>'+
 											'</tr>'+
-										'</thead>'+
-										'<tfoot>'+
-											'<tr>'+
-												'<th class="text-center">Total</th>'+
-												'<th class="text-center"></th>'+
-												'<th class="text-center"></th>'+
-												'<th class="text-center"></th>'+
-											'</tr>'+
-										'</tfoot>'+
-										'<tbody id="dataTablesResumenDptoBody">'+
+										'</thead>'+										
+										'<tbody id="cuerpoFicha">'+
 										'</tbody>'+
 									'</table>'+
 								'</div>'+
 							'</div>'+
 						'</div>';
 						
-	$('#contenedorResumenDptoBody').append(bodyresumenDpto);
+	$('#contenedorTablePivot').append(bodyresumenDpto);
+	
+	var bodyFicha="";
+	for(var e = 0; e < tablePivotFicha.length; e++)
+	{
+		bodyFicha +="<tr>"+
+		"<td class='text-center'>"+tablePivotFicha[e].dpto_cod+"</td>"+
+		"<td class='text-center'>"+tablePivotFicha[e].departamento+"</td>"+
+		"<td class='text-center'>"+tablePivotFicha[e].dist_cod+"</td>"+
+		"<td class='text-center'>"+tablePivotFicha[e].distrito+"</td>"+
+		"<td class='text-center'>"+tablePivotFicha[e].barloc_cod+"</td>"+
+		"<td class='text-center'>"+tablePivotFicha[e].localidad+"</td>"+
+		"<td class='text-center'>"+tablePivotFicha[e].area+"</td>"+
+		"<td class='text-center'>"+tablePivotFicha[e].manzana+"</td>"+
+		"<td class='text-center'>"+tablePivotFicha[e].direccion+"</td>"+		
+		"<td class='text-center'>"+tablePivotFicha[e].nro_casa+"</td>"+
+		"<td class='text-center'>"+tablePivotFicha[e].coordenada_x+"</td>"+
+		"<td class='text-center'>"+tablePivotFicha[e].coordenada_y+"</td>"+
+		"<td class='text-center'>"+tablePivotFicha[e].nombre+"</td>"+
+		"<td class='text-center'>"+tablePivotFicha[e].apellido+"</td>"+
+		"<td class='text-center'>"+tablePivotFicha[e].sexo+"</td>"+
+		"<td class='text-center'>"+tablePivotFicha[e].parentesco+"</td>"+
+		"<td class='text-center'>"+tablePivotFicha[e].jefe+"</td>"+
+		"<td class='text-center'>"+tablePivotFicha[e].ano+"</td>"+
+		"<td class='text-center'>"+tablePivotFicha[e].mes+"</td>"+
+		"<td class='text-center'>"+tablePivotFicha[e].dia+"</td>"+
+		"<td class='text-center'>"+tablePivotFicha[e].cedula+"</td>"+
+		"<td class='text-center'>"+tablePivotFicha[e].telefono+"</td>"+
+		"<td class='text-center'>"+tablePivotFicha[e].estado_pobreza+"</td>"+
+		"<td class='text-center'>"+tablePivotFicha[e].anho_ficha+"</td></tr>";		
+		
+	}
+	$('#cuerpoFicha').append(bodyFicha);
+	$('#dataTablesPivotFicha').DataTable();
 		
 	var cuerpoResumenDpto="";	
 	var sumaUrbana=0;
 	var sumaRural=0;
-	for(var e = 0; e < resumenDpto.length; e++)
-	{
-		cuerpoResumenDpto +="<tr><td class='text-center'>"+resumenDpto[e].departamento+"</td><td class='text-center'>"+numeroConComa(resumenDpto[e].urbana)+"</td><td class='text-center'>"+numeroConComa(resumenDpto[e].rural)+"</td><td class='text-center'>"+numeroConComa(resumenDpto[e].total)+"</td></tr>";
-		sumaUrbana+=resumenDpto[e].urbana;
-		sumaRural+=resumenDpto[e].rural;
+	var sumaSemiUrbana=0;
+	for(var d = 1; d < 16; d++){
+		cuerpoResumenDpto="<tr><td class='text-center'>"+resumenDpto[d].departamento+"</td>";
+		for(var e = 0; e < resumenDpto.length; e++){
+			if(resumenDpto[e].departamento_id==d){
+				if(resumenDpto[e].area=="Rural"){
+					if(resumenDpto[e].total>0){
+						cuerpoResumenDpto +="<td class='text-center'>"+numeroConComa(resumenDpto[e].total)+"</td>";
+					}else{
+						cuerpoResumenDpto +="<td class='text-center'>0</td>";	
+					}						
+					sumaRural+=resumenDpto[e].total;
+				}else{
+					if(resumenDpto[e].area=="Urbana"){
+						if(resumenDpto[e].total>0){
+							cuerpoResumenDpto +="<td class='text-center'>"+numeroConComa(resumenDpto[e].total)+"</td>";
+						}else{
+							cuerpoResumenDpto +="<td class='text-center'>0</td>";	
+						}						
+						sumaUrbana+=resumenDpto[e].total;
+					}
+				}
+			}			
+		} 
+		$('#dataTablesResumenDptoBody').append(cuerpoResumenDpto);
+		cuerpoResumenDpto="";
+		//$('#dataTablesResumenDptoBody').append("<tr><td class='text-center'>"+resumenDpto[d].nombre+"</td>"+cuerpoResumenDpto+"</tr>");
+	 	$('#dataTablesResumenDpto > tfoot > tr > th').eq(1).text(numeroConComa(sumaUrbana));
+		$('#dataTablesResumenDpto > tfoot > tr > th').eq(2).text(numeroConComa(sumaRural));
+		$('#dataTablesResumenDpto > tfoot > tr > th').eq(3).text(numeroConComa(sumaRural+sumaUrbana));
 	}
-	$('#dataTablesResumenDptoBody').append(cuerpoResumenDpto);
- 	$('#dataTablesResumenDpto > tfoot > tr > th').eq(1).text(numeroConComa(sumaUrbana));
-	$('#dataTablesResumenDpto > tfoot > tr > th').eq(2).text(numeroConComa(sumaRural));
-	$('#dataTablesResumenDpto > tfoot > tr > th').eq(3).text(numeroConComa(sumaRural+sumaUrbana));
 	
 	var cuerpoResumenEstadoPobreza="";
 	var resumenEstadoPobreza = $.ajax({
@@ -413,7 +482,7 @@ textarea { text-transform: uppercase; }
  	$('#dataTablesResumenEstadoPobreza > tfoot > tr > th').eq(1).text(numeroConComa(sumaHombre));
 	$('#dataTablesResumenEstadoPobreza > tfoot > tr > th').eq(2).text(numeroConComa(sumaMujer));
 	$('#dataTablesResumenEstadoPobreza > tfoot > tr > th').eq(3).text(numeroConComa(sumaHombre+sumaMujer));	
-   
+ */   
    </script>
           
                
@@ -459,6 +528,18 @@ textarea { text-transform: uppercase; }
     <script src="plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
     <!-- ChartJS 1.0.1 -->
     <script src="plugins/chartjs/Chart.min.js" type="text/javascript"></script>
+    
+    <script src="plugins/datatables/jquery.dataTables.js" type="text/javascript"></script>   
+        
+	<script src="plugins/datatables/dataTables.buttons.min.js" type="text/javascript"></script>
+	<script src="plugins/datatables/buttons.flash.min.js" type="text/javascript"></script>
+	<script src="plugins/datatables/jszip.min.js" type="text/javascript"></script>
+	<script src="plugins/datatables/pdfmake.min.js" type="text/javascript"></script>
+	<script src="plugins/datatables/vfs_fonts.js" type="text/javascript"></script>
+	<script src="plugins/datatables/buttons.html5.min.js" type="text/javascript"></script>
+	<script src="plugins/datatables/buttons.print.min.js" type="text/javascript"></script>
+	
+    <script src="plugins/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
 
     <!-- AdminLTE dashboard demo (This is only for demo purposes) 
     <script src="dist/js/pages/dashboard2.js" type="text/javascript"></script>-->
