@@ -162,9 +162,7 @@ textarea { text-transform: uppercase; }
 		<link href="tablero_files/uientableencharteditoren.css" type="text/css" rel="stylesheet">
 		<script src="tablero_files/formatendefaultenuientableenorgchartenmotionchartengaugeenann.js" type="text/javascript"></script>
 		<script type="text/javascript">
-		
-		
-		
+				
 		$( document ).ready(function() {
             google.load("visualization", "1", {packages:["corechart", "charteditor"]});
             $(function(){
@@ -292,12 +290,8 @@ textarea { text-transform: uppercase; }
           </div><!-- /.row -->
    
    <script type="text/javascript">
-   /*
-    function numeroConComa(x) {
-		return x.toString().replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-	}
-    
-   	var tablePivotFicha = $.ajax({
+       
+   	/* var tablePivotFicha = $.ajax({
 		url:'/tablero/ajaxSelects2?action=getPivotFicha',
 	  	type:'get',
 	  	dataType:'json',
@@ -385,104 +379,9 @@ textarea { text-transform: uppercase; }
 		"<td class='text-center'>"+tablePivotFicha[e].anho_ficha+"</td></tr>";		
 		
 	}
-	$('#cuerpoFicha').append(bodyFicha);
-	$('#dataTablesPivotFicha').DataTable();
-		
-	var cuerpoResumenDpto="";	
-	var sumaUrbana=0;
-	var sumaRural=0;
-	var sumaSemiUrbana=0;
-	for(var d = 1; d < 16; d++){
-		cuerpoResumenDpto="<tr><td class='text-center'>"+resumenDpto[d].departamento+"</td>";
-		for(var e = 0; e < resumenDpto.length; e++){
-			if(resumenDpto[e].departamento_id==d){
-				if(resumenDpto[e].area=="Rural"){
-					if(resumenDpto[e].total>0){
-						cuerpoResumenDpto +="<td class='text-center'>"+numeroConComa(resumenDpto[e].total)+"</td>";
-					}else{
-						cuerpoResumenDpto +="<td class='text-center'>0</td>";	
-					}						
-					sumaRural+=resumenDpto[e].total;
-				}else{
-					if(resumenDpto[e].area=="Urbana"){
-						if(resumenDpto[e].total>0){
-							cuerpoResumenDpto +="<td class='text-center'>"+numeroConComa(resumenDpto[e].total)+"</td>";
-						}else{
-							cuerpoResumenDpto +="<td class='text-center'>0</td>";	
-						}						
-						sumaUrbana+=resumenDpto[e].total;
-					}
-				}
-			}			
-		} 
-		$('#dataTablesResumenDptoBody').append(cuerpoResumenDpto);
-		cuerpoResumenDpto="";
-		//$('#dataTablesResumenDptoBody').append("<tr><td class='text-center'>"+resumenDpto[d].nombre+"</td>"+cuerpoResumenDpto+"</tr>");
-	 	$('#dataTablesResumenDpto > tfoot > tr > th').eq(1).text(numeroConComa(sumaUrbana));
-		$('#dataTablesResumenDpto > tfoot > tr > th').eq(2).text(numeroConComa(sumaRural));
-		$('#dataTablesResumenDpto > tfoot > tr > th').eq(3).text(numeroConComa(sumaRural+sumaUrbana));
-	}
-	
-	var cuerpoResumenEstadoPobreza="";
-	var resumenEstadoPobreza = $.ajax({
-		url:'/tablero/ajaxSelects2?action=getPivotFichaEstadoPobreza',
-	  	type:'get',
-	  	dataType:'json',
-	  	async:false       
-	}).responseText;
-	resumenEstadoPobreza = JSON.parse(resumenEstadoPobreza);
-	
-	var bodyresumenEstado= '<div class="col-md-12">'+
-							'<div class="box" height="1000px">'+
-								'<div class="box-header with-border" height="1000px">'+
-									'<h3 class="box-title" id="tituloTipoPrograma">Resúmen</h3>'+
-									'<div class="box-tools pull-right" height="1000px">'+
-										'<button class="btn btn-box-tool" data-widget="collapse">'+
-											'<i class="fa fa-minus"></i>'+
-										'</button>'+
-									'</div>'+
-								'</div>'+
-								'<div class="box-body" style="overflow: auto; display: block;">'+
-									'<table class="table table-hover table-bordered" id="dataTablesResumenEstadoPobreza">'+
-										'<thead>'+
-											'<tr class="active">'+
-												'<th class="text-center">Estado de Pobreza</th>'+
-												'<th class="text-center">Hombre</th>'+
-												'<th class="text-center">Mujer</th>'+
-												'<th class="text-center">Total</th>'+
-											'</tr>'+
-										'</thead>'+
-										'<tfoot>'+
-											'<tr>'+
-												'<th class="text-center">Total</th>'+
-												'<th class="text-center"></th>'+
-												'<th class="text-center"></th>'+
-												'<th class="text-center"></th>'+
-											'</tr>'+
-										'</tfoot>'+
-										'<tbody id="dataTablesResumenEstadoPobreza">'+
-										'</tbody>'+
-									'</table>'+
-								'</div>'+
-							'</div>'+
-						'</div>';
-						
-	$('#contenedorResumenEstadoPobreza').append(bodyresumenEstado);
-		
-	var cuerpoResumenEstadoPobreza="";
-	var sumaHombre=0;
-	var sumaMujer=0;
-	for(var e = 0; e < resumenEstadoPobreza.length; e++)
-	{
-		cuerpoResumenEstadoPobreza +="<tr><td class='text-center'>"+resumenEstadoPobreza[e].estado_pobreza+"</td><td class='text-center'>"+numeroConComa(resumenEstadoPobreza[e].hombre)+"</td><td class='text-center'>"+numeroConComa(resumenEstadoPobreza[e].mujer)+"</td><td class='text-center'>"+numeroConComa(resumenEstadoPobreza[e].total)+"</td></tr>";
-		sumaHombre+=resumenEstadoPobreza[e].hombre;
-		sumaMujer+=resumenEstadoPobreza[e].mujer;
-	}
-	$('#dataTablesResumenEstadoPobreza').append(cuerpoResumenEstadoPobreza);
- 	$('#dataTablesResumenEstadoPobreza > tfoot > tr > th').eq(1).text(numeroConComa(sumaHombre));
-	$('#dataTablesResumenEstadoPobreza > tfoot > tr > th').eq(2).text(numeroConComa(sumaMujer));
-	$('#dataTablesResumenEstadoPobreza > tfoot > tr > th').eq(3).text(numeroConComa(sumaHombre+sumaMujer));	
- */   
+	$('#cuerpoFicha').append(bodyFicha); */
+	//$('#dataTablesPivotFicha').DataTable();
+  
    </script>
           
                
