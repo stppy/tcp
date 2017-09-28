@@ -12,10 +12,15 @@ function numeroConComa(x) {
 
 
 			
-function renderLineas(condition){
+function renderLineas(periodoSeleccionado, etiquetaSeleccionado, institucionSeleccionado){
 	var contenidoEnRow="";
 	var contenidoEnRowTemp="";				
 	$('#tablaLineasProgramacionAvance').dataTable().fnDestroy();
+	
+	var condicion="";
+	if(periodoSeleccionado!=null)condicion = "&periodoId="+periodoSeleccionado;
+	if(institucionSeleccionado!=null && institucionSeleccionado!=0)condicion += "&institucion_id="+institucionSeleccionado;
+	if(etiquetaSeleccionado!=null && etiquetaSeleccionado!=0)condicion += "&etiquetaId="+etiquetaSeleccionado;
 
 	
 	contenidoEnRowTemp='<div class="row">'+
@@ -91,7 +96,7 @@ function renderLineas(condition){
 		contenidoEnRowTemp=""; 
 
 	$("#programacion").html(contenidoEnRow);
-	obtenerLineasProgramacionAvance(condition);
+	obtenerLineasProgramacionAvance(condicion);
 }
 
 function obtenerLineasProgramacionAvance(condition){
@@ -107,7 +112,51 @@ function obtenerLineasProgramacionAvance(condition){
 	lineasProgramacionAvance = JSON.parse(lineasProgramacionAvance);
 	
 	for(var x = 0; x < lineasProgramacionAvance.length; x++){
-		contenidoLineas += "<tr><td>"+lineasProgramacionAvance[x].periodo+"</td><td>"+lineasProgramacionAvance[x].institucion_id+"</td><td>"+lineasProgramacionAvance[x].institucion_nombre+"</td><td>"+lineasProgramacionAvance[x].institucion_sigla+"</td><td>"+lineasProgramacionAvance[x].instancia_linea_accion_id+"</td><td>"+lineasProgramacionAvance[x].linea_accion_id+"</td><td>"+lineasProgramacionAvance[x].linea_accion_nombre+"</td><td>"+lineasProgramacionAvance[x].linea_accion_unidad_id+"</td><td>"+lineasProgramacionAvance[x].linea_accion_unidad_nombre+"</td><td>"+lineasProgramacionAvance[x].accion_id+"</td><td>"+lineasProgramacionAvance[x].accion_nombre+"</td><td>"+lineasProgramacionAvance[x].accion_unidad_id+"</td><td>"+lineasProgramacionAvance[x].accion_unidad_nombre+"</td><td>"+lineasProgramacionAvance[x].accion_peso+"</td><td>"+lineasProgramacionAvance[x].accion_departamento_id+"</td><td>"+lineasProgramacionAvance[x].accion_departamento_nombre+"</td><td>"+lineasProgramacionAvance[x].accion_distrito_id+"</td><td>"+lineasProgramacionAvance[x].accion_distrito_nombre+"</td><td>"+lineasProgramacionAvance[x].cronograma_id+"</td><td>"+lineasProgramacionAvance[x].cronograma_nombre+"</td><td>"+lineasProgramacionAvance[x].cronograma_unidad_id+"</td><td>"+lineasProgramacionAvance[x].cronograma_unidad_nombre+"</td><td>"+lineasProgramacionAvance[x].cronograma_peso+"</td><td>"+lineasProgramacionAvance[x].cronograma_proporcion+"</td><td>"+lineasProgramacionAvance[x].cronograma_tipo_nombre+"</td><td>"+lineasProgramacionAvance[x].cronograma_acumulable+"</td><td>"+lineasProgramacionAvance[x].cronograma_producto_nombre+"</td><td>"+lineasProgramacionAvance[x].fecha_entrega+"</td><td>"+lineasProgramacionAvance[x].mes_entrega+"</td><td>"+lineasProgramacionAvance[x].programacion_id+"</td><td>"+lineasProgramacionAvance[x].programacion_cantidad+"</td><td>"+lineasProgramacionAvance[x].programacion_usuario+"</td><td>"+lineasProgramacionAvance[x].programacion_actualizacion+"</td><td>"+lineasProgramacionAvance[x].avance_id+"</td><td>"+lineasProgramacionAvance[x].avance_departamento_nombre+"</td><td>"+lineasProgramacionAvance[x].avance_distrito+"</td><td>"+lineasProgramacionAvance[x].avance_cantidad+"</td><td>"+lineasProgramacionAvance[x].avance_justificacion+"</td><td>"+lineasProgramacionAvance[x].avance_usuario+"</td><td>"+lineasProgramacionAvance[x].avance_actualizacion+"</td><td>"+lineasProgramacionAvance[x].avance_inversion+"</td><td>"+lineasProgramacionAvance[x].avance_destinatarios+"</td><td>"+lineasProgramacionAvance[x].evidencia_web+"</td><td>"+lineasProgramacionAvance[x].evidencia_doc+"</td><td>"+lineasProgramacionAvance[x].etiqueta+"</td></tr>";              	
+		contenidoLineas += "<tr><td>"+lineasProgramacionAvance[x].periodo+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].institucion_id+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].institucion_nombre+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].institucion_sigla+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].instancia_linea_accion_id+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].catalogo_linea_accion_id+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].linea_accion_nombre+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].linea_accion_unidad_id+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].linea_accion_unidad_nombre+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].catalogo_accion_id+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].accion_nombre+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].accion_unidad_id+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].accion_unidad_nombre+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].accion_peso+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].accion_departamento_id+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].accion_departamento_nombre+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].accion_distrito_id+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].accion_distrito_nombre+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].cronograma_id+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].cronograma_nombre+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].cronograma_unidad_id+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].cronograma_unidad_nombre+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].cronograma_peso+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].cronograma_proporcion+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].cronograma_tipo_nombre+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].cronograma_acumulable+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].cronograma_producto_nombre+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].fecha_entrega+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].mes_entrega+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].programacion_id+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].programacion_cantidad+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].programacion_usuario+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].programacion_actualizacion+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].avance_id+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].avance_departamento_nombre+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].avance_distrito+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].avance_cantidad+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].avance_justificacion+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].avance_usuario+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].avance_actualizacion+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].avance_inversion+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].avance_destinatarios+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].evidencia_web+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].evidencia_doc+"</td>" +
+						       "<td>"+lineasProgramacionAvance[x].etiqueta+"</td></tr>";              	
 	}
 	
 	$("#cuerpoTabla").append(contenidoLineas);
@@ -141,7 +190,7 @@ function obtenerLineasProgramacionAvance(condition){
 	);	
 }
 
-function getPeriodo(periodo){
+function getPeriodo(periodoActual){
 
 	var periodo = $.ajax({
 		url:'/tablero/ajaxSelects2?action=getPeriodo',
@@ -168,6 +217,7 @@ function getPeriodo(periodo){
 	usuarioEtiqueta = JSON.parse(usuarioEtiqueta);
 
 	var optionPeriodo;
+	var optionVersion;
 	var optionEtiqueta;
 
 	
@@ -180,7 +230,7 @@ function getPeriodo(periodo){
 			}
 		}
 	}
-	
+		
 	optionEtiqueta+='<option value="0" selected>Todos</option>';
 
 	if(usuarioEtiqueta.length > 0){
