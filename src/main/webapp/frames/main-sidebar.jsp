@@ -61,7 +61,7 @@
 					<li class=""><a href="/tablero/pivotBeneficiarioAvance.jsp"><i class="fa fa-male" id="linkPivotBeneficiariosAvances"></i>Análisis de Beneficiarios de Avances</a></li>
 					<li class=""><a href="/tablero/pivotEvidenciaAvance.jsp"><i class="fa fa-area-chart" id="linkPivotEvidenciasAvances"></i>Análisis de Evidencias de Avances</a></li>
 					<li class=""><a href="/tablero/pivotAvance.jsp"><i class="fa fa-line-chart" id="linkPivotAvances"></i>Análisis de Avances</a></li>
-					<li class=""><a href="/tablero/pivotPlanAccionAvances.jsp"><i class="fa fa-line-chart" id="linkPivotPlanAccionAvances"></i>Análisis de Programación y Avances</a></li>
+					<li class=""><a href="/tablero/LineasProgramacionAvance.jsp"><i class="fa fa-line-chart" id="linkPivotPlanAccionAvances"></i>Análisis de Programación y Avances</a></li>
 					<li class=""><a href="/tablero/resumenLineaAccion.jsp"><i class="fa fa-dashboard" id="linkResumenLineaAccion"></i>Tablero de Control</a></li>
 					<li class=""><a href="/tablero/descargarDocumentos.jsp"><i class="fa fa-cloud-download" id="linkDescargasConstancias"></i>Descargar Constancias</a></li>
 					<li class=""><a href="/tablero/geografico4.jsp"><i class="fa fa-map-marker" id="geografico4"></i>Geográfico</a></li>
