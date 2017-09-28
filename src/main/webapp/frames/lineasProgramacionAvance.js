@@ -161,7 +161,14 @@ function obtenerLineasProgramacionAvance(condition){
 	
 	$("#cuerpoTabla").append(contenidoLineas);
 	
-	$("#tablaLineasProgramacionAvance").DataTable(
+	
+	
+	$('#tablaLineasProgramacionAvance thead th').each( function () {
+	        var title = $(this).text();
+	        $(this).append( '<input type="text" placeholder="'+title+'" class="column-filter form-control input-sm input-search" />' );
+	    } );
+	
+	var table = $("#tablaLineasProgramacionAvance").DataTable(
 			{
 				        dom: 'Bfrtip',
 				        buttons: [
@@ -187,7 +194,16 @@ function obtenerLineasProgramacionAvance(condition){
 //						  "pageLength": 150,
 //						  ordering: false
 			}
-	);	
+	);
+	
+	table.columns().eq( 0 ).each( function ( colIdx ) {
+        $( 'input', table.column( colIdx ).header() ).on( 'keyup change', function () {
+            table
+                .column( colIdx )
+                .search( this.value )
+                .draw();
+        } );
+    } );
 }
 
 function getPeriodo(periodoActual){
