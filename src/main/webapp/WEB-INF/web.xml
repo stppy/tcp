@@ -49,16 +49,20 @@
 			<param-name>service</param-name>
 			<param-value>http://spr.stp.gov.py/tablero/</param-value>
 		</init-param>
-		<init-param>
+		<!-- <init-param>
 			<param-name>ignorePattern</param-name>
 			<param-value>ajaxSelects2?action=getGobiernoAbierto</param-value>
+		</init-param> -->
+		<init-param>
+			<param-name>ignorePattern</param-name>
+			<param-value>http://spr.stp.gov.py/tablero/public/</param-value>
 		</init-param>
 		<init-param>
 			<param-name>ignoreUrlPatternType</param-name>
 			<param-value>CONTAINS</param-value>
 		</init-param>
 	</filter>
-	<filter-mapping>
+	<filter-mapping> 
 		<filter-name>CAS Authentication Filter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
@@ -127,6 +131,18 @@
     <servlet-name>ajaxSelects2</servlet-name>
     <servlet-class>py.gov.stp.tools2.ajaxSelects</servlet-class>
   </servlet>
+   <servlet>
+    <description>ajaxSelects3</description>
+    <display-name>ajaxSelects3</display-name>
+    <servlet-name>ajaxSelects3</servlet-name>
+    <servlet-class>py.gov.stp.tools3.ajaxSelects</servlet-class>
+  </servlet>
+  <servlet>
+    <description>ajaxSelects4</description>
+    <display-name>ajaxSelects4</display-name>
+    <servlet-name>ajaxSelects4</servlet-name>
+    <servlet-class>py.gov.stp.tools4.ajaxSelects</servlet-class>
+  </servlet>
   <servlet>
     <description>ajaxUpdate</description>
     <display-name>ajaxUpdate</display-name>
@@ -164,6 +180,14 @@
   <servlet-mapping>
     <servlet-name>ajaxSelects2</servlet-name>
     <url-pattern>/ajaxSelects2</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ajaxSelects3</servlet-name>
+    <url-pattern>/public/ajaxSelects3</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ajaxSelects4</servlet-name>
+    <url-pattern>/public/ajaxSelects4</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>ajaxUpdate</servlet-name>
