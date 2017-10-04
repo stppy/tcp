@@ -1211,7 +1211,7 @@ public class SqlSelects {
 	
 	public static List<Periodo> selectPeriodo(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select * from periodo "+condition;
+		String query = " select * from periodo "+condition + "  and not borrado ";
 
 		Statement statement = null;
 		ResultSet rs=null;
