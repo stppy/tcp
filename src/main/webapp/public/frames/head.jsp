@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
-    <title>spr | STP</title>
+    <title>SPR - STP</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 3.3.2 -->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -23,4 +23,4 @@
     <link href="dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
     <script src="dist/libs/jquery/1.11.2/jquery.min.js"></script>    
     <script src="frames/main.js"></script>
-	 <link href="frames/main.css" rel="stylesheet" type="text/css" />
+	<link href="frames/main.css" rel="stylesheet" type="text/css" />

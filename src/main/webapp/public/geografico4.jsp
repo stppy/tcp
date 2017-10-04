@@ -1,28 +1,29 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page contentType="text/html; charset=UTF-8"%> 
-
 
 <!DOCTYPE html>
 <html>
   <head>
-  	<!--  ISO-8859-1 -->
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0">
   	<script src="plugins/jQuery/jQuery-2.1.3.min.js"></script>
-  	<%@ include file="frames/head.jsp" %> 		
-        
-	<script type="text/javascript" src="dist/canvasjs/canvasjs.min.js" ></script>
+  	<%@ include file="frames/head.jsp" %> 		        	
 	
 	<link href="bootstrap/css/bootstrapslider.css" rel="stylesheet">
-	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	<link href="plugins/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
-    <link href="plugins/datatables/css/buttons.dataTables.min.css" rel="stylesheet">       	
-
-<script>
-var datosGeo=[];
-</script>
-
+	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">      
 	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="bootstrap/css/bootstrapslider.css" rel="stylesheet">
+	<link href="plugins/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="plugins/datatables/css/buttons.dataTables.min.css" rel="stylesheet"> 		
+	<link href="plugins/mapa/leaflet.css" rel="stylesheet" />
+	
+	<script src="bootstrap/js/bootstrap-slider.js" type="text/javascript" ></script>
+	<script src="dist/canvasjs/canvasjs.min.js" type="text/javascript"></script>
+	<script src="dist/leaflet-image.js" type="text/javascript"></script>	
+	<script src="plugins/mapa/deptos2012.geojson" type="text/javascript"></script>					
+	<script src="plugins/mapa/leaflet.js" type="text/javascript"></script>
+	<script src="mapa/leaflet.ajax.js" type="text/javascript"></script>
+	<script src="mapa/spin.js" type="text/javascript"></script>
+	<script src="mapa/leaflet.spin.js" type="text/javascript"></script>
 	
     <style type="text/css">
 		/* Example 1 custom styles */
@@ -124,13 +125,7 @@ var datosGeo=[];
     		height: 100%;
     		overflow-y: auto;
 		}
-
-    </style>
-        
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-	<link rel="stylesheet" href="plugins/mapa/leaflet.css" />
-<script src='dist/leaflet-image.js'></script>
+    </style>        	
 
 </head>
 <body class="skin-blue sidebar-mini sidebar-collapse">
@@ -142,27 +137,16 @@ var datosGeo=[];
       </header>
       <!-- Left side column. contains the logo and sidebar -->
       <aside class="main-sidebar">
-  			 <%-- <%@ include file="frames/main-sidebar.jsp" %> --%>
+      	  <%@ include file="frames/main-sidebar.jsp" %>
       </aside>
 
       <!-- Content Wrapper. Contains page content -->
-      <div class="content-wrapper">
-
-        <!-- Content Header (Page header) -->
-        <section class="content-header">          
-        	
-        	<div class="row">        	
-				<div class="col-md-12" id="mostrarOcultarPeriodo">
-				</div>					
-			</div>
-         
-        </section>
+      <div class="content-wrapper">     
 
         <!-- Main content -->
         <section class="content" id="programacion">
 	          
-	          <div class="row">          
-                
+	          <div class="row">                          
                 <div class="col-md-6">
 			    	<div class="box collapsed-box" >
 			    		<div class="box-header with-border">
@@ -172,602 +156,97 @@ var datosGeo=[];
 			        			<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
 			        		</div>
 			        	</div>
-			        	<div class="box-body" style="overflow: auto; display: block;">
-                                                           
-                  	<div id="map" style="width: 800x; height: 600px"></div>
-
-					<script src="plugins/mapa/deptos2012.geojson" type="text/javascript"></script>					
-					<script src="plugins/mapa/leaflet.js"></script>
-					<script src="mapa/leaflet.ajax.js" type="text/javascript"></script>
-					<script src="mapa/spin.js"></script>
-					<script src="mapa/leaflet.spin.js"></script>
+			        	<div class="box-body" style="overflow: auto; display: block;">                                                           
+                  			<div id="map" style="width: 800x; height: 600px"></div>						
 					
-					<script>
-					
-					var totalDesempenhoDeptoDis=[];
-					var pocentajeColor1 = parseInt(70);
-					var pocentajeColor2 = parseInt(90);
-					
-					var distLayer;
-					
-					var entidadCas = "";
-					entidadCas ="";
-					
-					/* var usuarios = $.ajax({						 
-						url:"/tablero/public/ajaxSelects?action=getUsuarios&usuario",											
-					  	type:'get',
-					  	dataType:'json',
-					  	async:false       
-					}).responseText;
-					usuarios = JSON.parse(usuarios);
-					usuarios = usuarios.usuarios;
-					$("#nombreUsuario").append(usuarios[0].correo+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+")");
-					$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
- */
-					var i=parseInt(0);
-								
-					function numeroConComa(x) {
-						if (isNaN(x) || x == "Infinity"){
-							return 0;
-						}else{							
-							return x.toString().replace(".", ",").replace(/(\d)(?:(?=\d+(?=[^\d.]))(?=(?:[0-9]{3})+\b)|(?=\d+(?=\.))(?=(?:[0-9]{3})+(?=\.)))/g, "$1.");
-						}
-					}
-										
-					var departamento = $.ajax({
-				    	url:"/tablero/public/ajaxSelects3?action=getDepartamento",
-				      	type:'get',
-				      	dataType:'json',
-				      	crossDomain:true,
-				      	async:false       
-				    }).responseText;
-					departamento=JSON.parse(departamento);
-					
-					var distritos = $.ajax({
-				    	url:'/tablero/public/ajaxSelects3?action=getDistrito',
-				      	type:'get',
-				      	dataType:'json',
-				      	async:false       
-				    }).responseText;
-					distritos = JSON.parse(distritos);
-					
-					var instituciones = $.ajax({
-				    	url:'/tablero/public/ajaxSelects4?action=getInstitucion',
-				      	type:'get',
-				      	dataType:'json',
-				      	crossDomain:true,
-				      	async:false       
-				    }).responseText;
-					instituciones=JSON.parse(instituciones);
-											
- 					var desPaisDeptojson = $.ajax({
- 						url:'/tablero/public/ajaxSelects4?action=getResumenLineasAccionProgramacionInstDptoDist',
-				      	type:'get',
-				      	dataType:'json',
-				      	crossDomain:true,
-				      	async:false       
-				    }).responseText;
-					var desPaisDepto=JSON.parse(desPaisDeptojson);
-															
-					var desPaisDistjson = $.ajax({
-				    	url:'/tablero/public/ajaxSelects4?action=getResumenLineasAccionProgramacionInstDptoDist3',
-				      	type:'get',
-				      	dataType:'json',
-				      	crossDomain:true,
-				      	async:false       
-				    }).responseText;
-					var desPaisDist=JSON.parse(desPaisDistjson);
-									    
-				    /*nuevo ajax select en vez de dist4*/
-				   var desPaisDistInstjson = $.ajax({
-				    	url:'/tablero/public/ajaxSelects4?action=getResumenLineasAccionProgramacionDptoDistInst',
-				      	type:'get',
-				      	dataType:'json',
-				      	crossDomain:true,
-				      	async:false       
-				    }).responseText;
-					var desPaisDistInst=JSON.parse(desPaisDistInstjson);
-					
-					//var totalLineaPais=[];
-					var y=0;
-					/*for (var z=0; z<elPais.length;z++){
-						if (elPais[z].anho=="2015")
-						{
-							totalLineaPais[y] = new Object();
-							totalLineaPais[y].institucion_id=elPais[z].institucion_id;
-							totalLineaPais[y].linea_accion_id=elPais[z].linea_accion_id;
-							totalLineaPais[y].anho="2015";
-							totalLineaPais[y].suma_programada_anho_pais= elPais[z].suma_programada_anho;
-							totalLineaPais[y].accion_departamento_id= elPais[z].suma_programada_anho;
-							y++;
-						}
-					}*/
-					y=0;
-
-					var sumporAClass="";
-					var porAejeClass="";
-					var porHejeClass="";
-					var porHejeClassRow="";
-												
-					function getColorDesemp2(val){
-						if (parseFloat(val).toFixed(0)>=pocentajeColor2){
-							return "green";
-						}else{
-							if (parseFloat(val).toFixed(0)>=pocentajeColor1){
-								return  color="yellow";
-							}else{
-								return  color="red";
-							}
-						}
-					}
-					
-					function setColorBarras(pocentajeColor1, pocentajeColor2){
+						<script>						
+						var totalDesempenhoDeptoDis=[];
+						var pocentajeColor1 = parseInt(70);
+						var pocentajeColor2 = parseInt(90);
 						
-						$("div.progress-bar").each(function(){
-							var varlor = parseInt($(this).find('p').html());
-							if (varlor >= pocentajeColor2){
-								$(this).attr("class", "progress-bar bg-green-active color-palette");
-							}else{
-								if (varlor >= pocentajeColor1){
-									$(this).attr("class", "progress-bar bg-yellow-active color-palette");
-								}else{
-									$(this).attr("class", "progress-bar bg-red-active color-palette");
-								}
-							}
-						});
-
-					}
-					
-					function getInstitucionesSeleccionadas(){						
-						var institucionSelected="";
-						//$("input[type=checkbox]:checked").each(function(){							
-						$(".cmbInstitucion:checked").each(function(){
-							var idInstitucion=$(this).attr('id').split("-");
-						    //checkSeleccionado.push(idInstitucion[1]);
-						    if (idInstitucion[1]!='a'){
-						    	institucionSelected+=idInstitucion[1]+",";	
-						    }
-						     
-						})
-						institucionSelected=institucionSelected.substring(0,institucionSelected.length - 1);
-						return institucionSelected;
-					}
-					
-					function checkAll(bx) {
-						//alert('checkeado');
-						var cbs = document.getElementsByTagName('input');
-						for(var i=0; i < cbs.length; i++) {
-						    if(cbs[i].type == 'checkbox') {
-						      cbs[i].checked = bx.checked;
-						    }
-					  	}
+						var distLayer;
 						
-						if(bx.checked == false) {
-				    		$("#cuerpoTableroLineaAccion").html("");
-				    	}else{
-				    		if(bx.checked == true) {
-				    			/* var aux=getInstitucionesSeleccionadas();
-				    			renderTableroLineaAccion(aux,null,null) */
-				    			
-					    	}
-				    	} 
-					}
-					var periodoActual = 2017;
-					var depto_id =  null;
-					var dist_id = null;
-
-					function renderEntidades(e){
+						var entidadCas = "";
+						entidadCas ="";
 						
-						var array=[];var tipoInstituciones="";
-						$("#tablaInstituciones").html("");
-						//$("#cuerpoTableroLineaAccion").html("");
-						$("#nombreInstitucionTabla").html("");
-					   	periodoSeleccionado = $("#periodoSeleccion option:selected").val();
-					   	etiquetaSeleccionado = $("#etiquetaSeleccion option:selected").val();
-						
-						if (typeof e != 'undefined'){
-							if (e.target.feature.properties.hasOwnProperty("distrito")){
-								$('#dataTableInstituciones').dataTable().fnDestroy();
-								tipoInstituciones="distrito";
-								$("#cabeceraInstituciones").html("");
-								$("#cabeceraInstituciones").append('<i class="fa fa-building-o"></i> Instituciones en: '+e.target.feature.properties.dpto_desc+' - '+e.target.feature.properties.dist_desc);
-								var color="";
-								$("#tablaInstituciones").html("");
-						
-								//Obtenemos desempeño de las instituciones
- 								var lineaAccionDepartamento = $.ajax({
-							    	url:'/tablero/public/ajaxSelects4?action=getResumenLineasAccionProgramacionDesempenoInstitucionalDepto&departamentoId='+e.target.feature.properties.dpto+'&distritoId='+e.target.feature.properties.distrito+'&periodoId='+periodoSeleccionado+'&etiquetaId='+etiquetaSeleccionado,
-							      	type:'get',
-							      	dataType:'json',
-							      	crossDomain:true,
-							      	async:false       
-							    }).responseText;
-								lineaAccionDepartamento=JSON.parse(lineaAccionDepartamento);
-								
-								var desDepartInst= [];//Obtenemos el desempeño de las instituciones a nivel departamental
-
-								//Obtenemos todos los datos de institucion, promedio, institucion sigla y nombre
-				 				for(var i=0;i<lineaAccionDepartamento.length;i++){		
-
-									var objeto = new Object(); 
-									if(lineaAccionDepartamento[i] == 0){
-										promedio = 0/0;
-									}
-									objeto.institucionId = lineaAccionDepartamento[i].id;
-									objeto.promedio = lineaAccionDepartamento[i].promedio;
-									objeto.institucion = lineaAccionDepartamento[i].nombre;
-									objeto.institucionSigla = lineaAccionDepartamento[i].sigla;
-									desDepartInst.push(objeto);
-								}
-								
-								ordenInstitucionPais = instituciones;
-								ordenInstitucionPais = ordenInstitucionPais.sort(
-									function orden(a,b) {             
-									  if (a.orden < b.orden)
-										    return -1;
-										  if (a.orden > b.orden)
-										    return 1;
-										  return 0;
-										});
-								
-								
-								for (var l = 0; l< ordenInstitucionPais.length;l++){
-									for (var i = 0; i< desDepartInst.length;i++){
-										if(desDepartInst[i].institucionId==ordenInstitucionPais[l].id){
-											despTotDeptoInst=desDepartInst[i].promedio;
-											color=getColorDesemp2(despTotDeptoInst);
-											if (despTotDeptoInst !=0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+desDepartInst[i].institucionId+' checked="true"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+desDepartInst[i].institucionId+' data-toggle="tooltip" data-placement="top" title="'+desDepartInst[i].institucion+'"> '+desDepartInst[i].institucionSigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotDeptoInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotDeptoInst).toFixed(2)+'%</p></div></div></td></tr>');
-										}
-									}
-								}
-								
-								$("#dataTableInstituciones").DataTable(
-										{
-											        dom: 'Bfrtip',
-											        buttons: [
-											                    {
-											                        extend: 'copy',
-											                        exportOptions: {
-											                    columns: [ 0, 1]
-											                }
-											                    },
-											                    {
-											                        extend: 'csv',
-											                        exportOptions: {
-											                    columns: [ 0, 1]
-											                }
-											                    },
-											                    {
-											                        extend: 'excel',
-											                        exportOptions: {
-											                    columns: [ 0, 1]
-											                }
-											                    },
-											                    {
-											                        extend: 'pdf',
-											                        exportOptions: {
-											                    columns: [ 0, 1]
-											                }
-											                    },
-											                    {
-											                        extend: 'print',
-											                        exportOptions: {
-											                    columns: [ 0, 1]
-											                }
-											                    }
-											                ],
-											        "search": {
-											            "regex": true
-													},
-													  "pageLength": 150,
-													  ordering: false
-										}
-								);
-								
-								var todasInstituciones=getInstitucionesSeleccionadas();
-								var a=renderTableroLineaAccion(todasInstituciones,e.target.feature.properties.dpto,e.target.feature.properties.distrito,periodoSeleccionado,etiquetaSeleccionado);
-								depto_id = e.target.feature.properties.dpto;
-								dist_id = e.target.feature.properties.distrito;
-								$("#cuerpoTableroLineaAccion").html("");
-								$("#cuerpoTableroLineaAccion").html(a);
-							}else{
-								$('#dataTableInstituciones').dataTable().fnDestroy();
-								tipoInstituciones="departamento"; 
-								array=lineaAccionDepartamento;
-								$("#cabeceraInstituciones").html("");
-								$("#cabeceraInstituciones").append('<i class="fa fa-building-o"></i> Instituciones en: '+e.target.feature.properties.dpto_desc);
-								$("#cuerpoTableroLineaAccion").html("");
-								$("#nombreInstitucionTabla").html("");
-								$("#tablaInstituciones").html("");
-								var color="";var depemDeptoInst;var countDeptoInst;var despTotDeptoInst;var ordenInstitucionPais = [];
-								var periodoSeleccionado = $("#periodoSeleccion option:selected").val();
-
- 								var lineaAccionDepartamento = $.ajax({
-							    	url:'/tablero/public/ajaxSelects4?action=getResumenLineasAccionProgramacionDesempenoInstitucionalDepto&departamentoId='+e.target.feature.properties.dpto+'&periodoId='+periodoSeleccionado+'&etiquetaId='+etiquetaSeleccionado,
-							      	type:'get',
-							      	dataType:'json',
-							      	crossDomain:true,
-							      	async:false       
-							    }).responseText;
-								lineaAccionDepartamento=JSON.parse(lineaAccionDepartamento);
-								
-								
-								var desDepartInst= [];//Obtenemos el desempeño de las instituciones a nivel departamental
-
-								//Obtenemos todos los datos de institucion, promedio, institucion sigla y nombre
-				 				for(var i=0;i<lineaAccionDepartamento.length;i++){		
-
-									var objeto = new Object(); 
-									if(lineaAccionDepartamento[i] == 0){
-										promedio = 0/0;
-									}
-									objeto.institucionId = lineaAccionDepartamento[i].id;
-									objeto.promedio = lineaAccionDepartamento[i].promedio;
-									objeto.institucion = lineaAccionDepartamento[i].nombre;
-									objeto.institucionSigla = lineaAccionDepartamento[i].sigla;
-									desDepartInst.push(objeto);
-								}
-								
-								ordenInstitucionPais = instituciones;
-								ordenInstitucionPais = ordenInstitucionPais.sort(
-									function orden(a,b) {             
-									  if (a.orden < b.orden)
-										    return -1;
-										  if (a.orden > b.orden)
-										    return 1;
-										  return 0;
-										});
-								
-								for (var l = 0; l< ordenInstitucionPais.length;l++){
-									for (var i = 0; i< desDepartInst.length;i++){
-										if(desDepartInst[i].institucionId==ordenInstitucionPais[l].id){
-											despTotDeptoInst=desDepartInst[i].promedio;
-											color=getColorDesemp2(despTotDeptoInst);
-											if (despTotDeptoInst !=0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+desDepartInst[i].institucionId+' checked="true"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+desDepartInst[i].institucionId+' data-toggle="tooltip" data-placement="top" title="'+desDepartInst[i].institucion+'"> '+desDepartInst[i].institucionSigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotDeptoInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotDeptoInst).toFixed(2)+'%</p></div></div></td></tr>');
-										}
-									}
-								}
-								$("#dataTableInstituciones").DataTable(
-										{
-											        dom: 'Bfrtip',
-											        buttons: [
-											                    {
-											                        extend: 'copy',
-											                        exportOptions: {
-											                    columns: [ 0, 1]
-											                }
-											                    },
-											                    {
-											                        extend: 'csv',
-											                        exportOptions: {
-											                    columns: [ 0, 1]
-											                }
-											                    },
-											                    {
-											                        extend: 'excel',
-											                        exportOptions: {
-											                    columns: [ 0, 1]
-											                }
-											                    },
-											                    {
-											                        extend: 'pdf',
-											                        exportOptions: {
-											                    columns: [ 0, 1]
-											                }
-											                    },
-											                    {
-											                        extend: 'print',
-											                        exportOptions: {
-											                    columns: [ 0, 1]
-											                }
-											                    }
-											                ],
-											        "search": {
-											            "regex": true
-													},
-													  "pageLength": 150,
-													  ordering: false
-										}
-										);
-								var todasInstituciones=getInstitucionesSeleccionadas();
-								var a=renderTableroLineaAccion(todasInstituciones,e.target.feature.properties.dpto,null,periodoSeleccionado,etiquetaSeleccionado);
-								dist_id = null;
-								depto_id = e.target.feature.properties.dpto;
-								//getPeriodo();
-								$("#cuerpoTableroLineaAccion").html("");
-								$("#cuerpoTableroLineaAccion").html(a);
-							}
-						}else{ //d
-							var color="";var depemInst;var countInst;var despTotInst; var ordenInstitucionPais = [];
-				        	//obtenemos todas las instituciones en el back end y su desempeño institucional a nivel país
-							var desPaisInstjson = $.ajax({
-		 						url:'/tablero/public/ajaxSelects4?action=getResumenLineasAccionProgramacionDesempenoInstitucional&periodoId='+periodoSeleccionado,
-						      	type:'get',
-						      	dataType:'json',
-						      	crossDomain:true,
-						      	async:false       
-						    }).responseText;
-							var desPaisInstAux=JSON.parse(desPaisInstjson);
-							
-							var desPaisInst= [];
-
-			 				for(var i=0;i<desPaisInstAux.length;i++){		
-
-								var objeto = new Object(); 
-								if(desPaisInstAux[i] == 0){
-									promedio = 0/0;
-								}
-								objeto.institucionId = desPaisInstAux[i].id;
-								objeto.promedio = desPaisInstAux[i].promedio;
-								objeto.institucion = desPaisInstAux[i].nombre;
-								objeto.institucionSigla = desPaisInstAux[i].sigla;
-								desPaisInst.push(objeto);
-							}
-							
-							$("#cabeceraInstituciones").html("");
-							
-							ordenInstitucionPais = instituciones;
-							ordenInstitucionPais = ordenInstitucionPais.sort(
-								function orden(a,b) {             
-								  if (a.orden < b.orden)
-									    return -1;
-									  if (a.orden > b.orden)
-									    return 1;
-									  return 0;
-									});
-							
-							for (var l = 0; l< ordenInstitucionPais.length;l++){
-								for (var i = 0; i< desPaisInst.length;i++){
-									if(desPaisInst[i].institucionId==ordenInstitucionPais[l].id){
-										despTotInst=desPaisInst[i].promedio;
-										color=getColorDesemp2(despTotInst);
-										if (despTotInst !=0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+desPaisInst[i].institucionId+' checked="true"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+desPaisInst[i].institucionId+' data-toggle="tooltip" data-placement="top" title="'+desPaisInst[i].institucion+'"> '+desPaisInst[i].institucionSigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotInst).toFixed(2)+'%</p></div></div></td></tr>');
-									}
-								}
-							}
-							
-							$("#dataTableInstituciones").DataTable(
-									{
-										        dom: 'Bfrtip',
-										        buttons: [
-										                    {
-										                        extend: 'copy',
-										                        exportOptions: {
-										                    columns: [ 0, 1 ]
-										                }
-										                    },
-										                    {
-										                        extend: 'csv',
-										                        exportOptions: {
-										                    columns: [ 0, 1 ]
-										                }
-										                    },
-										                    {
-										                        extend: 'excel',
-										                        exportOptions: {
-										                    columns: [ 0, 1 ]
-										                }
-										                    },
-										                    {
-										                        extend: 'pdf',
-										                        exportOptions: {
-										                    columns: [ 0, 1]
-										                }
-										                    },
-										                    {
-										                        extend: 'print',
-										                        exportOptions: {
-										                    columns: [ 0, 1 ]
-										                }
-										                    }
-										                ],
-										        "search": {
-										            "regex": true
-												},
-												  "pageLength": 200,
-												  ordering: false
-									}
-							);
-							
-						}
-					}//fin funcion "renderEntidades"
-					
-					function renderLineaAccion(depto_id, institucion_id, dist_id)
-					{
-						var iteracionDepto=0;
-						var porcentajeAnhoAcumuladoDepto=0;
-						var porcentajeHoyEjeAcumuladoDepto=0;
-						datosGeo=[];
-						var porcentajeAnhoAcumuladoDeptoTotal=0;
-						var porcentajeHoyEjeAcumuladoDeptoTotal=0;
-
-						$("#cuerpoTabla").html("");
-						var lineasDeAccion= [];
-						
-						if (dist_id=="" && depto_id != ""){
-							var metasDistEntLineajson = $.ajax({
-						    	url:'/tablero/public/ajaxSelects3?action=getMetasDistEntLinea&departamento='+depto_id+'&institucion_id='+institucion_id,
-						      	type:'get',
-						      	dataType:'json',
-						      	crossDomain:true,
-						      	async:false       
-						    }).responseText;
-							var metasDistEntLinea=JSON.parse(metasDistEntLineajson);
-							var desemp=0.0;
-							var color="";
-							var porHejeClassRow="";
-							var acumuladorPlanificacionAnho=0.0;
-							var acumuladorPlanificacion=0.0;
-							var acumuladorEjecucion=0.0;
-							var acumuladorInversion=0.0;
-							var desempenho=0.0;
-							var lineasDeAccion=[];
-							
-							for(var l=0;l<metasDistEntLinea.length;l++){
-							
-								if (lineasDeAccion.indexOf(metasDistEntLinea[l].lineaAccionId)<0){
-									lineasDeAccion.push(metasDistEntLinea[l].lineaAccionId);
-									acumuladorPlanificacionAnho=0.0;
-									acumuladorPlanificacion=0.0;
-									acumuladorEjecucion=0.0;
-									acumuladorInversion=0.0;
+						var i=parseInt(0);
 									
-									for(var k=0;k<metasDistEntLinea.length;k++){
-										if(metasDistEntLinea[l].lineaAccionId==metasDistEntLinea[k].lineaAccionId){
-											acumuladorPlanificacionAnho += parseFloat(metasDistEntLinea[k].sumProgAnho);
-											acumuladorPlanificacion += parseFloat(metasDistEntLinea[k].cantidadProgHoy);
-											acumuladorEjecucion += parseFloat(metasDistEntLinea[k].cantidadEjecHoy);
-											acumuladorInversion += parseFloat(metasDistEntLinea[k].costoProgHoy);													
-										}
-									}
-									desempenho = parseFloat((acumuladorEjecucion/acumuladorPlanificacion)*100);
-									color= getColorDesemp2(desempenho)
-									$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+l+'-'+metasDistEntLinea[l].institucionId+'-'+metasDistEntLinea[l].lineaAccionId+'-'+metasDistEntLinea[l].accionDepartamentoId+'> '+metasDistEntLinea[l].institucion+'- '+metasDistEntLinea[l].lineaAccion+'</a></td><td>'+metasDistEntLinea[l].accionUnidadMedida+'</td><td >'+numeroConComa(parseFloat(acumuladorPlanificacionAnho).toFixed(2))+'</td><td class="cell-bordered2">'+numeroConComa(parseFloat(acumuladorPlanificacion).toFixed(2))+'</td><td >'+numeroConComa(parseFloat(acumuladorEjecucion).toFixed(2))+'</td><td >'+numeroConComa(parseFloat(desempenho).toFixed(2))+'</td><td>'+numeroConComa((acumuladorInversion/1000000).toFixed(0)))+'</td></tr>';
-								}
-								
-		
+						function numeroConComa(x) {
+							if (isNaN(x) || x == "Infinity"){
+								return 0;
+							}else{							
+								return x.toString().replace(".", ",").replace(/(\d)(?:(?=\d+(?=[^\d.]))(?=(?:[0-9]{3})+\b)|(?=\d+(?=\.))(?=(?:[0-9]{3})+(?=\.)))/g, "$1.");
 							}
-						}else{
-							var metasDistEntLineajson = $.ajax({
-						    	url:'/tablero/public/ajaxSelects3?action=getMetasDistEntLinea&departamento='+depto_id+'&distrito='+dist_id+'&institucion_id='+institucion_id,
-						      	type:'get',
-						      	dataType:'json',
-						      	crossDomain:true,
-						      	async:false       
-						    }).responseText;
-							var metasDistEntLinea=JSON.parse(metasDistEntLineajson);
-							var desemp=0.0;
-							var color="";
-							var porHejeClassRow="";
-							for(var j=0;j<metasDistEntLinea.length;j++){
-								
-								desemp = parseFloat((metasDistEntLinea[j].cantidadEjecHoy/metasDistEntLinea[j].cantidadProgHoy)*100);
-								color= getColorDesemp2(desemp)
-								$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+metasDistEntLinea[j].institucionId+'-'+metasDistEntLinea[j].lineaAccionId+'-'+metasDistEntLinea[j].accionDepartamentoId+'-'+metasDistEntLinea[j].accionDistritoId+'> '+metasDistEntLinea[j].institucion+'- '+metasDistEntLinea[j].lineaAccion+'</a></td><td>'+metasDistEntLinea[j].accionUnidadMedida+'</td><td >'+numeroConComa(metasDistEntLinea[j].sumProgAnho)+'</td><td class="cell-bordered2">'+numeroConComa(metasDistEntLinea[j].cantidadProgHoy)+'</td><td >'+numeroConComa(metasDistEntLinea[j].cantidadEjecHoy)+'</td><td >'+numeroConComa(parseFloat(desemp).toFixed(2))+'</td><td>'+numeroConComa((metasDistEntLinea[j].costoEjecHoy/1000000).toFixed(0))+'</td></tr>');	
-							}
-	
-							
-							
 						}
-					}//fin renderLineaAccion
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-						function getColor(d) {
-						  
-						  return d >= pocentajeColor2  ? '#008d4c' :
-						           d >= pocentajeColor1  ? '#db8b0b' :
-						                      '#d33724';
-						 
-						}
+											
+						var departamento = $.ajax({
+					    	url:"/tablero/public/ajaxSelects3?action=getDepartamento",
+					      	type:'get',
+					      	dataType:'json',
+					      	crossDomain:true,
+					      	async:false       
+					    }).responseText;
+						departamento=JSON.parse(departamento);
 						
-
-						function getColorDesemp2(val) {
-							if (parseFloat(val).toFixed(0) >= pocentajeColor2) {
+						var distritos = $.ajax({
+					    	url:'/tablero/public/ajaxSelects3?action=getDistrito',
+					      	type:'get',
+					      	dataType:'json',
+					      	async:false       
+					    }).responseText;
+						distritos = JSON.parse(distritos);
+						
+						var instituciones = $.ajax({
+					    	url:'/tablero/public/ajaxSelects4?action=getInstitucion',
+					      	type:'get',
+					      	dataType:'json',
+					      	crossDomain:true,
+					      	async:false       
+					    }).responseText;
+						instituciones=JSON.parse(instituciones);
+												
+	 					var desPaisDeptojson = $.ajax({
+	 						url:'/tablero/public/ajaxSelects4?action=getResumenLineasAccionProgramacionInstDptoDist',
+					      	type:'get',
+					      	dataType:'json',
+					      	crossDomain:true,
+					      	async:false       
+					    }).responseText;
+						var desPaisDepto=JSON.parse(desPaisDeptojson);
+																
+						var desPaisDistjson = $.ajax({
+					    	url:'/tablero/public/ajaxSelects4?action=getResumenLineasAccionProgramacionInstDptoDist3',
+					      	type:'get',
+					      	dataType:'json',
+					      	crossDomain:true,
+					      	async:false       
+					    }).responseText;
+						var desPaisDist=JSON.parse(desPaisDistjson);
+										    
+					    /*nuevo ajax select en vez de dist4*/
+					   var desPaisDistInstjson = $.ajax({
+					    	url:'/tablero/public/ajaxSelects4?action=getResumenLineasAccionProgramacionDptoDistInst',
+					      	type:'get',
+					      	dataType:'json',
+					      	crossDomain:true,
+					      	async:false       
+					    }).responseText;
+						var desPaisDistInst=JSON.parse(desPaisDistInstjson);
+												
+						
+						var sumporAClass="";
+						var porAejeClass="";
+						var porHejeClass="";
+						var porHejeClassRow="";
+													
+						function getColorDesemp2(val){
+							if (parseFloat(val).toFixed(0)>=pocentajeColor2){
 								return "green";
-							} else {
-								if (parseFloat(val).toFixed(0) >= pocentajeColor1) {
-									return color = "yellow";
-								} else {
-									return color = "red";
+							}else{
+								if (parseFloat(val).toFixed(0)>=pocentajeColor1){
+									return  color="yellow";
+								}else{
+									return  color="red";
 								}
 							}
 						}
@@ -786,383 +265,833 @@ var datosGeo=[];
 									}
 								}
 							});
-
+	
 						}
 						
-						function highlightFeature(e) {
-						    var layer = e.target;
-
-						    layer.setStyle({
-						        weight: 4,
-						        color: '#666',
-						        dashArray: '',
-						        fillOpacity: 0.7
-						    });
-
-						    if (!L.Browser.ie && !L.Browser.opera) {
-						        layer.bringToFront();
-						    }
-						    info.update(layer.feature.properties);
+						function getInstitucionesSeleccionadas(){						
+							var institucionSelected="";
+							//$("input[type=checkbox]:checked").each(function(){							
+							$(".cmbInstitucion:checked").each(function(){
+								var idInstitucion=$(this).attr('id').split("-");
+							    //checkSeleccionado.push(idInstitucion[1]);
+							    if (idInstitucion[1]!='a'){
+							    	institucionSelected+=idInstitucion[1]+",";	
+							    }
+							     
+							})
+							institucionSelected=institucionSelected.substring(0,institucionSelected.length - 1);
+							return institucionSelected;
 						}
-						function highlightFeature2(e) {
-						    var layer = e.target;
+						
+						function checkAll(bx) {
+							var cbs = document.getElementsByTagName('input');
+							for(var i=0; i < cbs.length; i++) {
+							    if(cbs[i].type == 'checkbox') {
+							      cbs[i].checked = bx.checked;
+							    }
+						  	}
 							
-						    layer.setStyle({
-						        weight: 5,
-						        fillOpacity: 1,
-						        dashArray: '1'
-						    });
-
-						    if (!L.Browser.ie && !L.Browser.opera) {
-						        layer.bringToFront();
-						    }
-						    info2.update(layer.feature.properties);
+							if(bx.checked == false) {
+					    		$("#cuerpoTableroLineaAccion").html("");
+					    	}else{
+					    		if(bx.checked == true) {
+					    			/* var aux=getInstitucionesSeleccionadas();
+					    			renderTableroLineaAccion(aux,null,null) */
+					    			
+						    	}
+					    	} 
 						}
-
-						function compareGenerico(a,b) {       
-							  if (a.clave < b.clave)
-							    return -1;
-							  if (a.clave > b.clave)
-							    return 1;
-							  return 0;
-						}
-						
-						function getClave2(array, clave1, clave2) {
-							var val;
-							for (val of array){
-								if (val.clave1==clave1 && val.clave2==clave2)
-									return val.valor;
+						var periodoActual = 2017;
+						var depto_id =  null;
+						var dist_id = null;
+	
+						function renderEntidades(e){
+							
+							var array=[];var tipoInstituciones="";
+							$("#tablaInstituciones").html("");
+							//$("#cuerpoTableroLineaAccion").html("");
+							$("#nombreInstitucionTabla").html("");
+						   	periodoSeleccionado = $("#periodoSeleccion option:selected").val();
+						   	etiquetaSeleccionado = $("#etiquetaSeleccion option:selected").val();
+							
+							if (typeof e != 'undefined'){
+								if (e.target.feature.properties.hasOwnProperty("distrito")){
+									$('#dataTableInstituciones').dataTable().fnDestroy();
+									tipoInstituciones="distrito";
+									$("#cabeceraInstituciones").html("");
+									$("#cabeceraInstituciones").append('<i class="fa fa-building-o"></i> Desempeño Institucional en: '+e.target.feature.properties.dpto_desc+' - '+e.target.feature.properties.dist_desc);
+									var color="";
+									$("#tablaInstituciones").html("");
+							
+									//Obtenemos desempeño de las instituciones
+	 								var lineaAccionDepartamento = $.ajax({
+								    	url:'/tablero/public/ajaxSelects4?action=getResumenLineasAccionProgramacionDesempenoInstitucionalDepto&departamentoId='+e.target.feature.properties.dpto+'&distritoId='+e.target.feature.properties.distrito+'&periodoId='+periodoSeleccionado+'&etiquetaId='+etiquetaSeleccionado,
+								      	type:'get',
+								      	dataType:'json',
+								      	crossDomain:true,
+								      	async:false       
+								    }).responseText;
+									lineaAccionDepartamento=JSON.parse(lineaAccionDepartamento);
+									
+									var desDepartInst= [];//Obtenemos el desempeño de las instituciones a nivel departamental
+	
+									//Obtenemos todos los datos de institucion, promedio, institucion sigla y nombre
+					 				for(var i=0;i<lineaAccionDepartamento.length;i++){		
+	
+										var objeto = new Object(); 
+										if(lineaAccionDepartamento[i] == 0){
+											promedio = 0/0;
+										}
+										objeto.institucionId = lineaAccionDepartamento[i].id;
+										objeto.promedio = lineaAccionDepartamento[i].promedio;
+										objeto.institucion = lineaAccionDepartamento[i].nombre;
+										objeto.institucionSigla = lineaAccionDepartamento[i].sigla;
+										desDepartInst.push(objeto);
+									}
+									
+									ordenInstitucionPais = instituciones;
+									ordenInstitucionPais = ordenInstitucionPais.sort(
+										function orden(a,b) {             
+										  if (a.orden < b.orden)
+											    return -1;
+											  if (a.orden > b.orden)
+											    return 1;
+											  return 0;
+										});
+									
+									
+									for (var l = 0; l< ordenInstitucionPais.length;l++){
+										for (var i = 0; i< desDepartInst.length;i++){
+											if(desDepartInst[i].institucionId==ordenInstitucionPais[l].id){
+												despTotDeptoInst=desDepartInst[i].promedio;
+												color=getColorDesemp2(despTotDeptoInst);
+												if (despTotDeptoInst !=0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+desDepartInst[i].institucionId+' checked="true"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+desDepartInst[i].institucionId+' data-toggle="tooltip" data-placement="top" title="'+desDepartInst[i].institucion+'"> '+desDepartInst[i].institucionSigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotDeptoInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotDeptoInst).toFixed(2)+'%</p></div></div></td></tr>');
+											}
+										}
+									}
+									
+									$("#dataTableInstituciones").DataTable(
+										{
+									        dom: 'Bfrtip',
+									        buttons: [
+									                    {
+									                        extend: 'copy',
+									                        exportOptions: {
+									                    columns: [ 0, 1]
+									                }
+									                    },
+									                    {
+									                        extend: 'csv',
+									                        exportOptions: {
+									                    columns: [ 0, 1]
+									                }
+									                    },
+									                    {
+									                        extend: 'excel',
+									                        exportOptions: {
+									                    columns: [ 0, 1]
+									                }
+									                    },
+									                    {
+									                        extend: 'pdf',
+									                        exportOptions: {
+									                    columns: [ 0, 1]
+									                }
+									                    },
+									                    {
+									                        extend: 'print',
+									                        exportOptions: {
+									                    columns: [ 0, 1]
+									                }
+									                    }
+									                ],
+									        "search": {
+									            "regex": true
+											},
+											  "pageLength": 150,
+											  ordering: false
+										}
+									);
+									
+									var todasInstituciones=getInstitucionesSeleccionadas();
+									var a=renderTableroLineaAccion(todasInstituciones,e.target.feature.properties.dpto,e.target.feature.properties.distrito,periodoSeleccionado,etiquetaSeleccionado);
+									depto_id = e.target.feature.properties.dpto;
+									dist_id = e.target.feature.properties.distrito;
+									$("#cuerpoTableroLineaAccion").html("");
+									$("#cuerpoTableroLineaAccion").html(a);
+								}else{
+									$('#dataTableInstituciones').dataTable().fnDestroy();
+									tipoInstituciones="departamento"; 
+									array=lineaAccionDepartamento;
+									$("#cabeceraInstituciones").html("");
+									$("#cabeceraInstituciones").append('<i class="fa fa-building-o"></i> Desempeño Institucional en: '+e.target.feature.properties.dpto_desc);
+									$("#cuerpoTableroLineaAccion").html("");
+									$("#nombreInstitucionTabla").html("");
+									$("#tablaInstituciones").html("");
+									var color="";var depemDeptoInst;var countDeptoInst;var despTotDeptoInst;var ordenInstitucionPais = [];
+									var periodoSeleccionado = $("#periodoSeleccion option:selected").val();
+	
+	 								var lineaAccionDepartamento = $.ajax({
+								    	url:'/tablero/public/ajaxSelects4?action=getResumenLineasAccionProgramacionDesempenoInstitucionalDepto&departamentoId='+e.target.feature.properties.dpto+'&periodoId='+periodoSeleccionado+'&etiquetaId='+etiquetaSeleccionado,
+								      	type:'get',
+								      	dataType:'json',
+								      	crossDomain:true,
+								      	async:false       
+								    }).responseText;
+									lineaAccionDepartamento=JSON.parse(lineaAccionDepartamento);
+									
+									
+									var desDepartInst= [];//Obtenemos el desempeño de las instituciones a nivel departamental
+	
+									//Obtenemos todos los datos de institucion, promedio, institucion sigla y nombre
+					 				for(var i=0;i<lineaAccionDepartamento.length;i++){		
+	
+										var objeto = new Object(); 
+										if(lineaAccionDepartamento[i] == 0){
+											promedio = 0/0;
+										}
+										objeto.institucionId = lineaAccionDepartamento[i].id;
+										objeto.promedio = lineaAccionDepartamento[i].promedio;
+										objeto.institucion = lineaAccionDepartamento[i].nombre;
+										objeto.institucionSigla = lineaAccionDepartamento[i].sigla;
+										desDepartInst.push(objeto);
+									}
+									
+									ordenInstitucionPais = instituciones;
+									ordenInstitucionPais = ordenInstitucionPais.sort(
+										function orden(a,b) {             
+										  if (a.orden < b.orden)
+											    return -1;
+											  if (a.orden > b.orden)
+											    return 1;
+											  return 0;
+											});
+									
+									for (var l = 0; l< ordenInstitucionPais.length;l++){
+										for (var i = 0; i< desDepartInst.length;i++){
+											if(desDepartInst[i].institucionId==ordenInstitucionPais[l].id){
+												despTotDeptoInst=desDepartInst[i].promedio;
+												color=getColorDesemp2(despTotDeptoInst);
+												if (despTotDeptoInst !=0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+desDepartInst[i].institucionId+' checked="true"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+desDepartInst[i].institucionId+' data-toggle="tooltip" data-placement="top" title="'+desDepartInst[i].institucion+'"> '+desDepartInst[i].institucionSigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotDeptoInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotDeptoInst).toFixed(2)+'%</p></div></div></td></tr>');
+											}
+										}
+									}
+									$("#dataTableInstituciones").DataTable(
+										{
+									        dom: 'Bfrtip',
+									        buttons: [
+									                    {
+									                        extend: 'copy',
+									                        exportOptions: {
+									                    columns: [ 0, 1]
+									                }
+									                    },
+									                    {
+									                        extend: 'csv',
+									                        exportOptions: {
+									                    columns: [ 0, 1]
+									                }
+									                    },
+									                    {
+									                        extend: 'excel',
+									                        exportOptions: {
+									                    columns: [ 0, 1]
+									                }
+									                    },
+									                    {
+									                        extend: 'pdf',
+									                        exportOptions: {
+									                    columns: [ 0, 1]
+									                }
+									                    },
+									                    {
+									                        extend: 'print',
+									                        exportOptions: {
+									                    columns: [ 0, 1]
+									                }
+									                    }
+									                ],
+									        "search": {
+									            "regex": true
+											},
+											  "pageLength": 150,
+											  ordering: false
+										}
+									);
+									var todasInstituciones=getInstitucionesSeleccionadas();
+									var a=renderTableroLineaAccion(todasInstituciones,e.target.feature.properties.dpto,null,periodoSeleccionado,etiquetaSeleccionado);
+									dist_id = null;
+									depto_id = e.target.feature.properties.dpto;
+									//getPeriodo();
+									$("#cuerpoTableroLineaAccion").html("");
+									$("#cuerpoTableroLineaAccion").html(a);
+								}
+							}else{ //d
+								var color="";var depemInst;var countInst;var despTotInst; var ordenInstitucionPais = [];
+					        	//obtenemos todas las instituciones en el back end y su desempeño institucional a nivel país
+								var desPaisInstjson = $.ajax({
+			 						url:'/tablero/public/ajaxSelects4?action=getResumenLineasAccionProgramacionDesempenoInstitucional&periodoId='+periodoSeleccionado,
+							      	type:'get',
+							      	dataType:'json',
+							      	crossDomain:true,
+							      	async:false       
+							    }).responseText;
+								var desPaisInstAux=JSON.parse(desPaisInstjson);
+								
+								var desPaisInst= [];
+	
+				 				for(var i=0;i<desPaisInstAux.length;i++){		
+	
+									var objeto = new Object(); 
+									if(desPaisInstAux[i] == 0){
+										promedio = 0/0;
+									}
+									objeto.institucionId = desPaisInstAux[i].id;
+									objeto.promedio = desPaisInstAux[i].promedio;
+									objeto.institucion = desPaisInstAux[i].nombre;
+									objeto.institucionSigla = desPaisInstAux[i].sigla;
+									desPaisInst.push(objeto);
+								}
+								
+								$("#cabeceraInstituciones").html("Desempeño Institucional");
+								
+								ordenInstitucionPais = instituciones;
+								ordenInstitucionPais = ordenInstitucionPais.sort(
+									function orden(a,b) {             
+									  if (a.orden < b.orden)
+										    return -1;
+										  if (a.orden > b.orden)
+										    return 1;
+										  return 0;
+										});
+								
+								for (var l = 0; l< ordenInstitucionPais.length;l++){
+									for (var i = 0; i< desPaisInst.length;i++){
+										if(desPaisInst[i].institucionId==ordenInstitucionPais[l].id){
+											despTotInst=desPaisInst[i].promedio;
+											color=getColorDesemp2(despTotInst);
+											if (despTotInst !=0) $("#tablaInstituciones").append('<tr><td class="col-md-3"><input type="checkbox" class="cmbInstitucion" id=cmbInstitucion-'+desPaisInst[i].institucionId+' checked="true"><a tipo="filtroPorEntidad" class="linkInstitucion" institucion_id='+desPaisInst[i].institucionId+' data-toggle="tooltip" data-placement="top" title="'+desPaisInst[i].institucion+'"> '+desPaisInst[i].institucionSigla+'</a></td><td class="col-md-9"><div class="progress progress-xs"> <div class="progress-bar bg-'+color+'-active color-palette" style="width: '+parseFloat(despTotInst).toFixed(0)+'%"><p class="text-left">'+parseFloat(despTotInst).toFixed(2)+'%</p></div></div></td></tr>');
+										}
+									}
+								}
+								
+								$("#dataTableInstituciones").DataTable(
+										{
+											        dom: 'Bfrtip',
+											        buttons: [
+											                    {
+											                        extend: 'copy',
+											                        exportOptions: {
+											                    columns: [ 0, 1 ]
+											                }
+											                    },
+											                    {
+											                        extend: 'csv',
+											                        exportOptions: {
+											                    columns: [ 0, 1 ]
+											                }
+											                    },
+											                    {
+											                        extend: 'excel',
+											                        exportOptions: {
+											                    columns: [ 0, 1 ]
+											                }
+											                    },
+											                    {
+											                        extend: 'pdf',
+											                        exportOptions: {
+											                    columns: [ 0, 1]
+											                }
+											                    },
+											                    {
+											                        extend: 'print',
+											                        exportOptions: {
+											                    columns: [ 0, 1 ]
+											                }
+											                    }
+											                ],
+											        "search": {
+											            "regex": true
+													},
+													  "pageLength": 200,
+													  ordering: false
+										}
+								);
+								
 							}
-						}
+						}//fin funcion "renderEntidades"
 						
-						desPaisDepto=desPaisDepto.sort(compareGenerico);
-						
-						//se define una funcion de estilo para la capa de GEOJSON para cada departamento
-						function style(feature) {
-							return {
-								 fillColor: getColor(desPaisDepto[parseInt(feature.properties.dpto)]),
-						        weight: 2,
-						        //opacity: 0.6,
-						        color: 'white',
-						        dashArray: '2',
-						        fillOpacity: 0.6
-						    };						    
-						}
-						//se define una funcion de estilo para la capa de GEOJSON para cada distrito 
-						function style2(feature) {
-							return {
-								fillColor: getColor(getClave2(desPaisDist,parseInt(feature.properties.dpto), parseInt(feature.properties.distrito))),
-								//fillColor: getColor(getClave2(totalDesempenhoDeptoDis,parseInt(feature.properties.dpto), parseInt(feature.properties.distrito))),
-						        weight: 2,
-						        //opacity: 0.6,
-						        color: 'white',
-						        dashArray: '2',
-						        fillOpacity: 1
-						    };						    
-						}
-						function highlightFeatureMouseHover(e) {
-							var layer = e.target;
+						function renderLineaAccion(depto_id, institucion_id, dist_id)
+						{
+							var iteracionDepto=0;
+							var porcentajeAnhoAcumuladoDepto=0;
+							var porcentajeHoyEjeAcumuladoDepto=0;
+							var porcentajeAnhoAcumuladoDeptoTotal=0;
+							var porcentajeHoyEjeAcumuladoDeptoTotal=0;
+	
+							$("#cuerpoTabla").html("");
+							var lineasDeAccion= [];
 							
-							if (typeof distLayer == "undefined") {//Highlight mouseHover por departamentos			
+							if (dist_id=="" && depto_id != ""){
+								var metasDistEntLineajson = $.ajax({
+							    	url:'/tablero/public/ajaxSelects3?action=getMetasDistEntLinea&departamento='+depto_id+'&institucion_id='+institucion_id,
+							      	type:'get',
+							      	dataType:'json',
+							      	crossDomain:true,
+							      	async:false       
+							    }).responseText;
+								var metasDistEntLinea=JSON.parse(metasDistEntLineajson);
+								var desemp=0.0;
+								var color="";
+								var porHejeClassRow="";
+								var acumuladorPlanificacionAnho=0.0;
+								var acumuladorPlanificacion=0.0;
+								var acumuladorEjecucion=0.0;
+								var acumuladorInversion=0.0;
+								var desempenho=0.0;
+								var lineasDeAccion=[];
+								
+								for(var l=0;l<metasDistEntLinea.length;l++){
+								
+									if (lineasDeAccion.indexOf(metasDistEntLinea[l].lineaAccionId)<0){
+										lineasDeAccion.push(metasDistEntLinea[l].lineaAccionId);
+										acumuladorPlanificacionAnho=0.0;
+										acumuladorPlanificacion=0.0;
+										acumuladorEjecucion=0.0;
+										acumuladorInversion=0.0;
+										
+										for(var k=0;k<metasDistEntLinea.length;k++){
+											if(metasDistEntLinea[l].lineaAccionId==metasDistEntLinea[k].lineaAccionId){
+												acumuladorPlanificacionAnho += parseFloat(metasDistEntLinea[k].sumProgAnho);
+												acumuladorPlanificacion += parseFloat(metasDistEntLinea[k].cantidadProgHoy);
+												acumuladorEjecucion += parseFloat(metasDistEntLinea[k].cantidadEjecHoy);
+												acumuladorInversion += parseFloat(metasDistEntLinea[k].costoProgHoy);													
+											}
+										}
+										desempenho = parseFloat((acumuladorEjecucion/acumuladorPlanificacion)*100);
+										color= getColorDesemp2(desempenho)
+										$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+l+'-'+metasDistEntLinea[l].institucionId+'-'+metasDistEntLinea[l].lineaAccionId+'-'+metasDistEntLinea[l].accionDepartamentoId+'> '+metasDistEntLinea[l].institucion+'- '+metasDistEntLinea[l].lineaAccion+'</a></td><td>'+metasDistEntLinea[l].accionUnidadMedida+'</td><td >'+numeroConComa(parseFloat(acumuladorPlanificacionAnho).toFixed(2))+'</td><td class="cell-bordered2">'+numeroConComa(parseFloat(acumuladorPlanificacion).toFixed(2))+'</td><td >'+numeroConComa(parseFloat(acumuladorEjecucion).toFixed(2))+'</td><td >'+numeroConComa(parseFloat(desempenho).toFixed(2))+'</td><td>'+numeroConComa((acumuladorInversion/1000000).toFixed(0)))+'</td></tr>';
+									}
+									
+			
+								}
+							}else{
+								var metasDistEntLineajson = $.ajax({
+							    	url:'/tablero/public/ajaxSelects3?action=getMetasDistEntLinea&departamento='+depto_id+'&distrito='+dist_id+'&institucion_id='+institucion_id,
+							      	type:'get',
+							      	dataType:'json',
+							      	crossDomain:true,
+							      	async:false       
+							    }).responseText;
+								var metasDistEntLinea=JSON.parse(metasDistEntLineajson);
+								var desemp=0.0;
+								var color="";
+								var porHejeClassRow="";
+								for(var j=0;j<metasDistEntLinea.length;j++){
+									
+									desemp = parseFloat((metasDistEntLinea[j].cantidadEjecHoy/metasDistEntLinea[j].cantidadProgHoy)*100);
+									color= getColorDesemp2(desemp)
+									$("#cuerpoTabla").append('<tr class="'+porHejeClassRow+'"><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" data-toggle="modal" data-target="#myModal" class="registro" codigoRegistro='+j+'-'+metasDistEntLinea[j].institucionId+'-'+metasDistEntLinea[j].lineaAccionId+'-'+metasDistEntLinea[j].accionDepartamentoId+'-'+metasDistEntLinea[j].accionDistritoId+'> '+metasDistEntLinea[j].institucion+'- '+metasDistEntLinea[j].lineaAccion+'</a></td><td>'+metasDistEntLinea[j].accionUnidadMedida+'</td><td >'+numeroConComa(metasDistEntLinea[j].sumProgAnho)+'</td><td class="cell-bordered2">'+numeroConComa(metasDistEntLinea[j].cantidadProgHoy)+'</td><td >'+numeroConComa(metasDistEntLinea[j].cantidadEjecHoy)+'</td><td >'+numeroConComa(parseFloat(desemp).toFixed(2))+'</td><td>'+numeroConComa((metasDistEntLinea[j].costoEjecHoy/1000000).toFixed(0))+'</td></tr>');	
+								}
+		
+								
+								
+							}
+						}//fin renderLineaAccion
+							////////////////////////////////////////////////////////////////////////////////////////////////////////////
+						
+							function getColor(d) {
+							  
+							  return d >= pocentajeColor2  ? '#008d4c' :
+							           d >= pocentajeColor1  ? '#db8b0b' :
+							                      '#d33724';
+							 
+							}
+							
+	
+							function getColorDesemp2(val) {
+								if (parseFloat(val).toFixed(0) >= pocentajeColor2) {
+									return "green";
+								} else {
+									if (parseFloat(val).toFixed(0) >= pocentajeColor1) {
+										return color = "yellow";
+									} else {
+										return color = "red";
+									}
+								}
+							}
+							
+							function setColorBarras(pocentajeColor1, pocentajeColor2){
+								
+								$("div.progress-bar").each(function(){
+									var varlor = parseInt($(this).find('p').html());
+									if (varlor >= pocentajeColor2){
+										$(this).attr("class", "progress-bar bg-green-active color-palette");
+									}else{
+										if (varlor >= pocentajeColor1){
+											$(this).attr("class", "progress-bar bg-yellow-active color-palette");
+										}else{
+											$(this).attr("class", "progress-bar bg-red-active color-palette");
+										}
+									}
+								});
+	
+							}
+							
+							function highlightFeature(e) {
+							    var layer = e.target;
+	
+							    layer.setStyle({
+							        weight: 4,
+							        color: '#666',
+							        dashArray: '',
+							        fillOpacity: 0.7
+							    });
+	
+							    if (!L.Browser.ie && !L.Browser.opera) {
+							        layer.bringToFront();
+							    }
+							    info.update(layer.feature.properties);
+							}
+							function highlightFeature2(e) {
+							    var layer = e.target;
+								
+							    layer.setStyle({
+							        weight: 5,
+							        fillOpacity: 1,
+							        dashArray: '1'
+							    });
+	
+							    if (!L.Browser.ie && !L.Browser.opera) {
+							        layer.bringToFront();
+							    }
+							    info2.update(layer.feature.properties);
+							}
+	
+							function compareGenerico(a,b) {       
+								  if (a.clave < b.clave)
+								    return -1;
+								  if (a.clave > b.clave)
+								    return 1;
+								  return 0;
+							}
+							
+							function getClave2(array, clave1, clave2) {
+								var val;
+								for (val of array){
+									if (val.clave1==clave1 && val.clave2==clave2)
+										return val.valor;
+								}
+							}
+							
+							desPaisDepto=desPaisDepto.sort(compareGenerico);
+							
+							//se define una funcion de estilo para la capa de GEOJSON para cada departamento
+							function style(feature) {
+								return {
+									 fillColor: getColor(desPaisDepto[parseInt(feature.properties.dpto)]),
+							        weight: 2,
+							        //opacity: 0.6,
+							        color: 'white',
+							        dashArray: '2',
+							        fillOpacity: 0.6
+							    };						    
+							}
+							//se define una funcion de estilo para la capa de GEOJSON para cada distrito 
+							function style2(feature) {
+								return {
+									fillColor: getColor(getClave2(desPaisDist,parseInt(feature.properties.dpto), parseInt(feature.properties.distrito))),
+									//fillColor: getColor(getClave2(totalDesempenhoDeptoDis,parseInt(feature.properties.dpto), parseInt(feature.properties.distrito))),
+							        weight: 2,
+							        //opacity: 0.6,
+							        color: 'white',
+							        dashArray: '2',
+							        fillOpacity: 1
+							    };						    
+							}
+							function highlightFeatureMouseHover(e) {
+								var layer = e.target;
+								
+								if (typeof distLayer == "undefined") {//Highlight mouseHover por departamentos			
+								    layer.setStyle({
+								        weight: 5,
+								        color: '#333',
+								        dashArray: '2',
+								        fillOpacity: 1
+								    });
+							
+								    if (!L.Browser.ie && !L.Browser.opera) {
+								        layer.bringToFront();
+								    }
+								    
+								    info.update(layer.feature.properties);
+								}		
+							}
+							
+							function resetHighlightMouseHover(e) {
+							    if (typeof distLayer == "undefined"){//reset por departamento
+									depto.resetStyle(e.target);
+									//depto.eachLayer(function(l){depto.resetStyle(l);});
+									info.update()
+							    } 
+							    
+							}
+							
+							function highlightFeatureMouseHover2(e) {
+								var layer = e.target;
+								if (typeof distLayer != "undefined") { //Highlight mouseHover por distritos						
 							    layer.setStyle({
 							        weight: 5,
 							        color: '#333',
 							        dashArray: '2',
 							        fillOpacity: 1
 							    });
-						
+	
 							    if (!L.Browser.ie && !L.Browser.opera) {
 							        layer.bringToFront();
 							    }
 							    
-							    info.update(layer.feature.properties);
-							}		
-						}
-						
-						function resetHighlightMouseHover(e) {
-						    if (typeof distLayer == "undefined"){//reset por departamento
-								depto.resetStyle(e.target);
-								//depto.eachLayer(function(l){depto.resetStyle(l);});
-								info.update()
-						    } 
-						    
-						}
-						
-						function highlightFeatureMouseHover2(e) {
-							var layer = e.target;
-							if (typeof distLayer != "undefined") { //Highlight mouseHover por distritos						
-						    layer.setStyle({
-						        weight: 5,
-						        color: '#333',
-						        dashArray: '2',
-						        fillOpacity: 1
-						    });
-
-						    if (!L.Browser.ie && !L.Browser.opera) {
-						        layer.bringToFront();
-						    }
-						    
-						    info2.update(layer.feature.properties);	
+							    info2.update(layer.feature.properties);	
+								}
 							}
-						}
-						
-						function resetHighlightMouseHover2(e) {
-							//if (typeof distLayer != "undefined"){//reset por departamento
-								//depto.resetStyle(e.target);
-						    	distLayer.eachLayer(function(l2){distLayer.resetStyle(l2);});
-							    info2.update();
-							//}
-						} 
-						
-						function onEachFeature(feature, layer) {
-							layer.on({				
-								mouseover: highlightFeatureMouseHover,
-						        mouseout: resetHighlightMouseHover,
-						        click: renderEntidad
-							});
-						}
-						
-						function onEachFeature2(feature, layer) {
-							layer.on({				
-								mouseover: highlightFeatureMouseHover2,
-						        mouseout: resetHighlightMouseHover2,
-						        click: renderEntidad
-							});
-						}
-
-						
-						var map = L.map('map',{							
-							maxZoom: 10,
-							minZoom: 6,
-							zoomControl: false,
-							attributionControl: false
-						}).setView([-23.2, -58], 6);
-						
-						var depto = new L.geoJson(deptoGeojson,{style:style,onEachFeature: onEachFeature});
-						depto.addTo(map);
-						
-////////////////////////////////////////////
-
-	//Despliega un Div con Información sobre el Departamento.
-	var info = L.control({position: 'bottomright'});
-	info.onAdd = function (map) {
-	    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
-	    this.update();
-	    return this._div;
-	};
-	//metodo que usamos para actualizar el control basado en el feature
-	info.update = function (props) {	
-		//si existe el objeto props y l es encontrada se despliega su nombre en el div, de lo contrario el texto.
-	    this._div.innerHTML = '<h4>Departamento: </h4>' + (props ?
-	       	 '<b>' + props.dpto_desc + '</b><br />' : 'Apunte sobre un Departamento.');
-	};
-	info.addTo(map);
-	
-	//Despliega un Div con Información sobre el Distrito
-  	var info2 = L.control({position: 'bottomright'});
-	function desplegarInfoDistrito() {	
-		
-		info2.onAdd = function (map) {
-		    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
-		    this.update();
-		    return this._div;
-		};
-		//metodo que usamos para actualizar el control basado en el feature
-		info2.update = function (props) {	
-			//si existe el objeto props y l es encontrada se despliega su nombre en el div, de lo contrario el texto.
-		    this._div.innerHTML = '<h4>Distrito: </h4>' + (props ?
-		        '<b>' + props.dist_desc + '</b><br />' : 'Apunte sobre un Distrito.'); //dist_desc
-		};
-		info2.addTo(map);
-	
-	}
-		
-	//leyenda del mapa  
-	var legend = L.control({position: 'bottomleft'});
-	
-	//creación de la leyenda
-	legend.onAdd = function (map) {
-	    this._div = L.DomUtil.create('div', 'info legend');// crea un div con la class "info legend"
-	    
-	    var grades = [0, pocentajeColor1, pocentajeColor2], labels = [];
-	    
-	    this._div.innerHTML = '<h4>Rango: </h4>'
-
-	    //bucle de creacion de porcentaje y generacion de una etiqueta con un cuadrado de color para cada intervalo
-		for (var i = 0; i < grades.length; i++) {
-	        this._div.innerHTML +=
-	        	'<p><i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-	            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '%' + '</p>' : '%' + '+' + '</p>');
-		}
-		this.update()
-		return this._div;
-	};
-	
-	//actualizador de leyenda
-	legend.update = function (){
-		var grades = [0, pocentajeColor1, pocentajeColor2], labels = [];
-		
-		this._div.innerHTML = '<h4>Rango: </h4>'
-	
-	    //bucle de creacion de porcentaje y generacion de una etiqueta con un cuadrado de color para cada intervalo
-	    for (var i = 0; i < grades.length; i++) {
-	        this._div.innerHTML +=
-	            '<p><i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-	            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '%' + '</p>' : '%' + '+' + '</p>');
-	    }
-	}
-	
-	legend.addTo(map);
-	
-	//Texto de atribución
-	L.control.attribution({prefix: false}).addTo(map);
-	
-	//Posición del Zoom
-	L.control.zoom({position: 'topright', zoomInTitle: 'Acercar', zoomOutTitle: 'Alejar'}).addTo(map);
-			
-/////////////////////////////////////////////
-						function renderEntidad(e){
-							$("#cuerpoTabla").html("");
 							
-							depto.eachLayer(function(l){depto.resetStyle(l);});
-							if (typeof distLayer !== "undefined"){
-								if (e.target.feature.properties.hasOwnProperty("distrito")){
-									renderEntidades(e);
-									distLayer.eachLayer(function(l2){distLayer.resetStyle(l2);});
-									//highlightFeature2(e);
+							function resetHighlightMouseHover2(e) {
+								//if (typeof distLayer != "undefined"){//reset por departamento
+									//depto.resetStyle(e.target);
+							    	distLayer.eachLayer(function(l2){distLayer.resetStyle(l2);});
+								    info2.update();
+								//}
+							} 
+							
+							function onEachFeature(feature, layer) {
+								layer.on({				
+									mouseover: highlightFeatureMouseHover,
+							        mouseout: resetHighlightMouseHover,
+							        click: renderEntidad
+								});
+							}
+							
+							function onEachFeature2(feature, layer) {
+								layer.on({				
+									mouseover: highlightFeatureMouseHover2,
+							        mouseout: resetHighlightMouseHover2,
+							        click: renderEntidad
+								});
+							}
+	
+							
+							var map = L.map('map',{							
+								maxZoom: 10,
+								minZoom: 6,
+								zoomControl: false,
+								attributionControl: false
+							}).setView([-23.2, -58], 6);
+							
+							var depto = new L.geoJson(deptoGeojson,{style:style,onEachFeature: onEachFeature});
+							depto.addTo(map);
+							
+							////////////////////////////////////////////
+	
+							//Despliega un Div con Información sobre el Departamento.
+							var info = L.control({position: 'bottomright'});
+							info.onAdd = function (map) {
+							    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+							    this.update();
+							    return this._div;
+							};
+							//metodo que usamos para actualizar el control basado en el feature
+							info.update = function (props) {	
+								//si existe el objeto props y l es encontrada se despliega su nombre en el div, de lo contrario el texto.
+							    this._div.innerHTML = '<h4>Departamento: </h4>' + (props ?
+							       	 '<b>' + props.dpto_desc + '</b><br />' : 'Apunte sobre un Departamento.');
+							};
+							info.addTo(map);
+							
+							//Despliega un Div con Información sobre el Distrito
+						  	var info2 = L.control({position: 'bottomright'});
+							function desplegarInfoDistrito() {	
 								
+								info2.onAdd = function (map) {
+								    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+								    this.update();
+								    return this._div;
+								};
+								//metodo que usamos para actualizar el control basado en el feature
+								info2.update = function (props) {	
+									//si existe el objeto props y l es encontrada se despliega su nombre en el div, de lo contrario el texto.
+								    this._div.innerHTML = '<h4>Distrito: </h4>' + (props ?
+								        '<b>' + props.dist_desc + '</b><br />' : 'Apunte sobre un Distrito.'); //dist_desc
+								};
+								info2.addTo(map);
+							
+							}
+								
+							//leyenda del mapa  
+							var legend = L.control({position: 'bottomleft'});
+							
+							//creación de la leyenda
+							legend.onAdd = function (map) {
+							    this._div = L.DomUtil.create('div', 'info legend');// crea un div con la class "info legend"
+							    
+							    var grades = [0, pocentajeColor1, pocentajeColor2], labels = [];
+							    
+							    this._div.innerHTML = '<h4>Rango: </h4>'
+						
+							    //bucle de creacion de porcentaje y generacion de una etiqueta con un cuadrado de color para cada intervalo
+								for (var i = 0; i < grades.length; i++) {
+							        this._div.innerHTML +=
+							        	'<p><i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+							            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '%' + '</p>' : '%' + '+' + '</p>');
+								}
+								this.update()
+								return this._div;
+							};
+							
+							//actualizador de leyenda
+							legend.update = function (){
+								var grades = [0, pocentajeColor1, pocentajeColor2], labels = [];
+								
+								this._div.innerHTML = '<h4>Rango: </h4>'
+							
+							    //bucle de creacion de porcentaje y generacion de una etiqueta con un cuadrado de color para cada intervalo
+							    for (var i = 0; i < grades.length; i++) {
+							        this._div.innerHTML +=
+							            '<p><i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+							            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '%' + '</p>' : '%' + '+' + '</p>');
+							    }
+							}
+							
+							legend.addTo(map);
+							
+							//Texto de atribución
+							L.control.attribution({prefix: false}).addTo(map);
+							
+							//Posición del Zoom
+							L.control.zoom({position: 'topright', zoomInTitle: 'Acercar', zoomOutTitle: 'Alejar'}).addTo(map);
+				
+							/////////////////////////////////////////////
+							
+							function renderEntidad(e){
+								$("#cuerpoTabla").html("");
+								
+								depto.eachLayer(function(l){depto.resetStyle(l);});
+								if (typeof distLayer !== "undefined"){
+									if (e.target.feature.properties.hasOwnProperty("distrito")){
+										renderEntidades(e);
+										distLayer.eachLayer(function(l2){distLayer.resetStyle(l2);});
+										//highlightFeature2(e);
+									
+									}else{
+										map.removeLayer(distLayer);
+										highlightFeature(e);
+										renderEntidades(e);
+										map.fitBounds(e.target.getBounds());
+										e.target.feature.properties.dpto
+										distLayer = new L.GeoJSON.AJAX("mapa/"+e.target.feature.properties.dpto+".geojson",{style:style2,onEachFeature: onEachFeature2});
+										distLayer.addTo(map);
+										
+									}
 								}else{
-									map.removeLayer(distLayer);
 									highlightFeature(e);
 									renderEntidades(e);
 									map.fitBounds(e.target.getBounds());
 									e.target.feature.properties.dpto
 									distLayer = new L.GeoJSON.AJAX("mapa/"+e.target.feature.properties.dpto+".geojson",{style:style2,onEachFeature: onEachFeature2});
 									distLayer.addTo(map);
-									
+									desplegarInfoDistrito();
+									/* var distritos = new L.geoJson(dist0Geojson,{style:style2,onEachFeature: onEachFeature2});
+									distritos.addTo(map);*/
 								}
-							}else{
-								highlightFeature(e);
-								renderEntidades(e);
-								map.fitBounds(e.target.getBounds());
-								e.target.feature.properties.dpto
-								distLayer = new L.GeoJSON.AJAX("mapa/"+e.target.feature.properties.dpto+".geojson",{style:style2,onEachFeature: onEachFeature2});
-								distLayer.addTo(map);
-								desplegarInfoDistrito();
-								/* var distritos = new L.geoJson(dist0Geojson,{style:style2,onEachFeature: onEachFeature2});
-								distritos.addTo(map);*/
+	
 							}
-
-						}
-						/*function onEachFeature(feature, layer) {
-						layer.on({*/
-								click: renderEntidad
-							/*});
-						}*/
-							//funcion para el slider que cambia los parametros de colores
-							$(document).ready(function(){
-
-								$("#ex12c").slider({
-									id: "slider12c",
-									min: 0,
-									max: 100,
-									range: true,
-									value: [ 70, 90 ]
+							/*function onEachFeature(feature, layer) {
+							layer.on({*/
+									click: renderEntidad
+								/*});
+							}*/
+								//funcion para el slider que cambia los parametros de colores
+								$(document).ready(function(){
+	
+									$("#ex12c").slider({
+										id: "slider12c",
+										min: 0,
+										max: 100,
+										range: true,
+										value: [ 70, 90 ]
+									});
+	
+	
+									$("body").on("change", "#ex12c",function(event){
+										var rangoDeColor= $("#ex12c").attr("value");
+										var splitDeRango=rangoDeColor.split(",");
+										pocentajeColor1 = parseInt(splitDeRango[0]);
+										pocentajeColor2 = parseInt(splitDeRango[1]); 
+										if (typeof distLayer !== "undefined"){
+											distLayer.eachLayer(function(l2){distLayer.resetStyle(l2);});
+										}
+										setColorBarras(pocentajeColor1, pocentajeColor2);
+										legend.update();
+										depto.eachLayer(function(l){depto.resetStyle(l);});
+	
+									});
 								});
-
-
-								$("body").on("change", "#ex12c",function(event){
-									var rangoDeColor= $("#ex12c").attr("value");
-									var splitDeRango=rangoDeColor.split(",");
-									pocentajeColor1 = parseInt(splitDeRango[0]);
-									pocentajeColor2 = parseInt(splitDeRango[1]); 
-									if (typeof distLayer !== "undefined"){
-										distLayer.eachLayer(function(l2){distLayer.resetStyle(l2);});
-									}
-									setColorBarras(pocentajeColor1, pocentajeColor2);
-									legend.update();
-									depto.eachLayer(function(l){depto.resetStyle(l);});
-
-								});
-							});
-
-					</script>
-                  
-                  
+	
+						</script>
+                                    
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
             </div><!-- /.col -->
-
-
             
-				<div class="col-md-6">
-			    	<div class="box collapsed-box" >
-			    		<div class="box-header with-border">
-			      			<h4 id="cabeceraInstituciones"></h4>
-			        		<div class="box-tools pull-right">
-			        			<button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-			        			<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-			        		</div>
-			        	</div>
-			        	<div class="box-body" style="height:600px; overflow: auto; display: block;">
-							<div class="table-responsive">
-								<table class="table table-condensed table-hover" style="margin-bottom: 0px;" id="dataTableInstituciones">
-		            				<thead>
-			        					<tr><th class="col-md-3"><input type="checkbox" onclick="checkAll(this)" class="cmbInstitucion" id="cmbInstitucion-a" checked="true" data-toggle="tooltip" data-placement="top" title="Marcar / Desmarcar todas">Institución</th><th class="col-md-9">Desempeño</th></tr>
-		            				</thead>		
-		            				<tbody id="tablaInstituciones">
-		            				</tbody>		            		            
-	    						</table>
-	    					</div>	    			
-			        	</div>
-			        	<div class="box-footer" style="height:auto; overflow: auto; display: none;">
-			        	</div>
-					</div>
+			<div class="col-md-6">
+		    	<div class="box collapsed-box" >
+		    		<div class="box-header with-border">
+		      			<h4 id="cabeceraInstituciones">Desempeño Institucional</h4>
+		        		<div class="box-tools pull-right">
+		        			<button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+		        			<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+		        		</div>
+		        	</div>
+		        	<div class="box-body" style="height:600px; overflow: auto; display: block;">
+						<div class="table-responsive">
+							<table class="table table-condensed table-hover" style="margin-bottom: 0px;" id="dataTableInstituciones">
+	            				<thead>
+		        					<tr><th class="col-md-3"><input type="checkbox" onclick="checkAll(this)" class="cmbInstitucion" id="cmbInstitucion-a" checked="true" data-toggle="tooltip" data-placement="top" title="Marcar / Desmarcar todas">Institución</th><th class="col-md-9">Desempeño</th></tr>
+	            				</thead>		
+	            				<tbody id="tablaInstituciones">
+	            				</tbody>		            		            
+    						</table>
+    					</div>	    			
+		        	</div>
+		        	<div class="box-footer" style="height:auto; overflow: auto; display: none;">
+		        	</div>
 				</div>
-            
-            
-            
-            
-          </div>
+			</div>
+                                            
+         </div>	          
 	          
-	          
-	          <div class="row">
-	         <div class="col-md-12">
+	      <div class="row">
+	        <div class="col-md-12">
 	          <div class="box" height="1000px">
 	            <div class="box-header with-border" height="1000px">
 	              <h2 class="box-title text-center" id="tituloTipoPrograma">
 	                Tablero de Control Presidencial - STP 	
-	              </h2>
-	              <!-- div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-	              </div-->
+	              </h2>	              
 	            </div>
 	            <div class="box-body table-responsive" style="scroll-x:hidden;scroll-y:auto;" id="cuerpoTableroLineaAccion">
             
-
-
 	            </div>
 			   </div>
 			</div>
           </div><!-- /.row -->
-          
-<script>
-var $tabla=$("#lineasPorEntidad");
-/* $tabla.floatThead({
-	scrollContainer: function($tabla){
-		return $tabla.closest('wrapper');
-	}
-})*/
-</script>
-             
-          
+                                 
     </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
 
       <footer class="main-footer">
         <div class="pull-right hidden-xs">
-          <b>Version</b> 2.0
+          <span>Todos los derechos reservados.</span>
         </div>
-        <strong>Copyright &copy; 2015 <a href="http://www.stp.gov.py">STP</a>.</strong> All rights reserved.
+        <strong>2017 - <a href="http://www.stp.gov.py">Secretaría Técnica de Planificación del desarrollo económico y social</a>.</strong> <br/>        	    
       </footer>
 
       <!-- Control Sidebar -->
@@ -1180,9 +1109,7 @@ var $tabla=$("#lineasPorEntidad");
     <!-- Bootstrap 3.3.2 JS -->
     <script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
      <!-- DATA TABES SCRIPT -->    
-    <script src="plugins/datatables/jquery.dataTables.js" type="text/javascript"></script>
-    <!-- <script src="plugins/datatables/Plugins/api/sum().js"></script> -->
-        
+    <script src="plugins/datatables/jquery.dataTables.js" type="text/javascript"></script>            
 	<script src="plugins/datatables/dataTables.buttons.min.js" type="text/javascript"></script>
 	<script src="plugins/datatables/buttons.flash.min.js" type="text/javascript"></script>
 	<script src="plugins/datatables/jszip.min.js" type="text/javascript"></script>
@@ -1191,32 +1118,14 @@ var $tabla=$("#lineasPorEntidad");
 	<script src="plugins/datatables/buttons.html5.min.js" type="text/javascript"></script>
 	<script src="plugins/datatables/buttons.print.min.js" type="text/javascript"></script>
     <script src="plugins/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
-    <!-- FastClick -->
-    <script src='plugins/fastclick/fastclick.min.js'></script>
     <!-- AdminLTE App -->
-    <script src="dist/js/app.min.js" type="text/javascript"></script>
-    <!-- Sparkline -->
-    <script src="plugins/sparkline/jquery.sparkline.min.js" type="text/javascript"></script>
-    <!-- jvectormap -->
-    <script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js" type="text/javascript"></script>
-    <script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js" type="text/javascript"></script>
+    <script src="dist/js/app.min.js" type="text/javascript"></script>    
     <!-- daterangepicker -->
     <script src="plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
     <!-- datepicker -->
-    <script src="plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
-    <!-- SlimScroll 1.3.0 -->
-    <script src="plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src="plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>    
     <!-- ChartJS 1.0.1 -->
-    <script src="plugins/chartjs/Chart.min.js" type="text/javascript"></script>
-    
-    
-    <!-- AdminLTE dashboard demo (This is only for demo purposes) 
-    <script src="dist/js/pages/dashboard2.js" type="text/javascript"></script>-->
-    
-    <!-- Librerias para la rutina de cambio de contraseña -->
-    <script src="dist/js/jquerymd5.js" type="text/javascript"></script>    	
-    <%@ include file="/frames/pass.jsp" %>
-    
+    <script src="plugins/chartjs/Chart.min.js" type="text/javascript"></script>    
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js" type="text/javascript"></script>
      
@@ -1235,54 +1144,24 @@ var $tabla=$("#lineasPorEntidad");
   })();
 </script>
 <noscript><p><img src="//infra.stp.gov.py/monitoreoweb/piwik.php?idsite=9" style="border:0;" alt="" /></p></noscript>
-<!-- End Piwik Code 
-
-<script type="text/javascript" src="bootstrap/js/jquery.min.js"></script>--> 
+<!-- End Piwik Code -->
+ 
 <script type="text/javascript" src="bootstrap/js/bootstrap-slider.js"></script>
-
 <script>
-
 $("body").on("click", "#cierreEtiquetaDepartamento",function(event){
 	var distrito;
 	if($("#cierreEtiquetaDistrito").attr("value")!= ""){
-		alert ("existe un distrito");
-		
-		
+		alert ("existe un distrito");			
 	}else{
-		alert("puede cerrar");
-		
-	}
-	
+		alert("puede cerrar");		
+	}	
 });
 
-
 $("body").on("click", "#cierreEtiquetaDistrito",function(event){
-	
-
 	var idDepartamento = $(this).attr("parametroDepartamento");
 	renderEntidades(idDepartamento);
 	
 });
-/* 
-var nombreInstituciones = "";
-for(var x = 0; x < instituciones.length; x++){
-	nombreInstituciones += instituciones[x].sigla;
-}
-$("#nombreInstitucionTabla").html(nombreInstituciones);
-
-var a = "";
-var todasInstituciones="";
-for(var t = 0; t < instituciones.length; t++){
-	//a += renderTableroLineaAccion(instituciones[t].id);
-	 todasInstituciones += instituciones[t].id+",";
-}
-todasInstituciones=todasInstituciones.substring(0,todasInstituciones.length - 1);
- 
-var todasInstituciones=getInstitucionesSeleccionadas();
-var a=renderTableroLineaAccion(todasInstituciones,null,null);
-$("#cuerpoTableroLineaAccion").html(a); */
-
-//aca tiene que estar el codigo
 
 function numeroConComa(x) {
 	if (isNaN(x)){
@@ -1335,7 +1214,6 @@ function renderTableroLineaAccion(institucionIdConcat,deptoId,distId,periodo,eti
 	if(periodo!=null)condicion+= "&periodoId="+periodo;
 	if(etiqueta!=null)condicion+= "&etiquetaId="+etiqueta;
 
-
 	if(deptoId!=null && distId!=null){
 		var lineasProgramadas = $.ajax({
 			url:'/tablero/public/ajaxSelects4?action=getLineaAccionDepartamentalDistrital'+condicion,
@@ -1345,7 +1223,6 @@ function renderTableroLineaAccion(institucionIdConcat,deptoId,distId,periodo,eti
 		}).responseText;
 		lineasProgramadas = JSON.parse(lineasProgramadas);
 		if(lineasProgramadas != null){
-			//lineasProgramadas=lineasProgramadas.sort(lineaAccionOrden);
 			contenidoEnRowTemp = renderNivelDistrital(lineasProgramadas, deptoId, distId);
 			return contenidoEnRowTemp;
 		}
@@ -1358,20 +1235,12 @@ function renderTableroLineaAccion(institucionIdConcat,deptoId,distId,periodo,eti
 		  	async:false       
 		}).responseText;
 		lineasProgramadas = JSON.parse(lineasProgramadas);
-		//lineasProgramadas=lineasProgramadas.sort(lineaAccionOrden);
 		
 		tablaInstituciones = renderNivelDepartamento(lineasProgramadas, deptoId, distId);
 		  
 		 contenidoEnRowTemp='<div class="row">'+
 	     '<div class="col-md-12">'+
 	      '<div class="box" height="1000px">'+
-	        /* '<div class="box-header with-border" height="1000px">'+
-	          '<h3 class="box-title" id="tituloTipoPrograma">'+
-	          //lineasEstrategicas[l].nombre+
-	          '</h3> '+
-	          '<div class="box-tools pull-right" height="1000px"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
-	          '</div>'+
-	        '</div>'+ */
 	        '<div class="box-body" >'+
 	        	'<div class="table-responsive">'+
 	      			'<table class="table table-striped table-bordered table-hover tablaLineasPorInstitucion">'+
@@ -1532,25 +1401,25 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 	var totalProgramado;
 	var inversionEstimada;
 
-  tablaInstituciones = '<thead><tr>'+
-	'<th rowspan="3" class="text-center" style="vertical-align: middle;">Línea de Acción</th>'+
-	'<th rowspan="3" class="text-center" style="vertical-align: middle;">Unidad de Medida</th>'+
-	'<th colspan="5" class="text-center">Plan de Acción 2017</th>'+
-	'<th colspan="5" class="text-center">Ejecución a la Fecha</th></tr>'+
-'<tr><th  class="text-center">Meta</th>'+
-	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Destinatarios</th>'+
-	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Inversión (en millones G.)</th>'+
-	'<th colspan="3" class="text-center">Meta</th>'+
-	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Destinatarios</th>'+
-	'<th rowspan="2" class="text-center" style="vertical-align: middle;">Inversión (en millones G.)</th></tr>'+
-'<tr>'+
-	'<th class="text-center">Programada</th>'+
-	//'<th class="text-center">%</th>'+
-	'<th class="text-center">Prevista</th>'+
-	'<th class="text-center">Lograda</th>'+
-	'<th class="text-center">%</th>'+
-'</tr></thead><tbody>';
-//lineasProgramadas = lineasProgramadas.sort(orden);-----------------------------
+  	tablaInstituciones = '<thead><tr>'+
+		'<th rowspan="3" class="text-center" style="vertical-align: middle;">Línea de Acción</th>'+
+		'<th rowspan="3" class="text-center" style="vertical-align: middle;">Unidad de Medida</th>'+
+		'<th colspan="5" class="text-center">Plan de Acción 2017</th>'+
+		'<th colspan="5" class="text-center">Ejecución a la Fecha</th></tr>'+
+	'<tr><th  class="text-center">Meta</th>'+
+		'<th rowspan="2" class="text-center" style="vertical-align: middle;">Destinatarios</th>'+
+		'<th rowspan="2" class="text-center" style="vertical-align: middle;">Inversión (en millones G.)</th>'+
+		'<th colspan="3" class="text-center">Meta</th>'+
+		'<th rowspan="2" class="text-center" style="vertical-align: middle;">Destinatarios</th>'+
+		'<th rowspan="2" class="text-center" style="vertical-align: middle;">Inversión (en millones G.)</th></tr>'+
+	'<tr>'+
+		'<th class="text-center">Programada</th>'+
+		//'<th class="text-center">%</th>'+
+		'<th class="text-center">Prevista</th>'+
+		'<th class="text-center">Lograda</th>'+
+		'<th class="text-center">%</th>'+
+	'</tr></thead><tbody>';
+	//lineasProgramadas = lineasProgramadas.sort(orden);-----------------------------
 
 	if(lineasProgramadas.length > 0){
 		linea_accion_id=lineasProgramadas[0].lineaAccionId;
@@ -1873,7 +1742,7 @@ $("body").on("change", "#periodoSeleccion",function(event){
 			tipoInstituciones="distrito";
 			$("#tablaInstituciones").html("");
 			$("#cabeceraInstituciones").html("");
- 			$("#cabeceraInstituciones").append('<i class="fa fa-building-o"></i> Instituciones en: '+nombreDepto);
+ 			$("#cabeceraInstituciones").append('<i class="fa fa-building-o"></i> Desempeño Institucional en: '+nombreDepto);
 			$("#tablaInstituciones").html("");
 
 			var color="";
@@ -1978,7 +1847,7 @@ $("body").on("change", "#periodoSeleccion",function(event){
 				nombreDepto = obtenerNombre(depto_id,null);
 				$("#tablaInstituciones").html("");
 				$("#cabeceraInstituciones").html("");				
-				$("#cabeceraInstituciones").append('<i class="fa fa-building-o"></i> Instituciones en: '+nombreDepto);
+				$("#cabeceraInstituciones").append('<i class="fa fa-building-o"></i> Desempeño Institucional en: '+nombreDepto);
 				$("#cuerpoTableroLineaAccion").html("");
 				$("#nombreInstitucionTabla").html("");
 				$("#tablaInstituciones").html("");
@@ -2202,7 +2071,7 @@ $("body").on("change", "#etiquetaSeleccion",function(event){
 			tipoInstituciones="distrito";
 			$("#tablaInstituciones").html("");
 			$("#cabeceraInstituciones").html("");
- 			$("#cabeceraInstituciones").append('<i class="fa fa-building-o"></i> Instituciones en: '+nombreDepto);
+ 			$("#cabeceraInstituciones").append('<i class="fa fa-building-o"></i> Desempeño Institucional en: '+nombreDepto);
 
 			var color="";
 			var lineaAccionDepartamento = $.ajax({
@@ -2305,7 +2174,7 @@ $("body").on("change", "#etiquetaSeleccion",function(event){
 				nombreDepto = obtenerNombre(depto_id,null);
 				$("#tablaInstituciones").html("");
 				$("#cabeceraInstituciones").html("");				
-				$("#cabeceraInstituciones").append('<i class="fa fa-building-o"></i> Instituciones en: '+nombreDepto);
+				$("#cabeceraInstituciones").append('<i class="fa fa-building-o"></i> Desempeño Institucional en: '+nombreDepto);
 				$("#cuerpoTableroLineaAccion").html("");
 				$("#nombreInstitucionTabla").html("");
 				var color="";var depemDeptoInst;var countDeptoInst;var despTotDeptoInst;
@@ -2434,7 +2303,7 @@ $("body").on("change", "#etiquetaSeleccion",function(event){
 				}
  				
 				$("#tablaInstituciones").html("");
-				$("#cabeceraInstituciones").html("");
+				$("#cabeceraInstituciones").html("Desempeño Institucional");
 
 				ordenInstitucionPais = instituciones;
 				ordenInstitucionPais = ordenInstitucionPais.sort(
@@ -2715,6 +2584,7 @@ $(document).ready(function(){
 		$("#rango-fecha").slider({});
 		$("#rango-fecha-ejecucion").slider({});
 			
+
 		for(var i = 0;i<lineaAccionAcumuladoMesDepto.length; i++)
 		{				
 			cantidadTotalProgramada += lineaAccionAcumuladoMesDepto[i].cantidad_programada;
@@ -2741,6 +2611,7 @@ $(document).ready(function(){
  					ejecutadaNoAcumulable.push({ x: new Date( lineaAccionAcumuladoMesDepto[i].mes), y: lineaAccionAcumuladoMesDepto[i].max_cant_ejec_no_acum});	 				 					 				
 			}	
 		}
+		
 		
 		//Despliega o no las lineas de programacion y ejecucion no acumulables en los datos del chart
 		if (!mostrarOcultarNoAcumulables){
@@ -2818,33 +2689,33 @@ $(document).ready(function(){
 
 		//dibuja el chart
 		var chart = new CanvasJS.Chart("chartContainer",
-				{
-					zoomEnabled: true,
-					exportEnabled: true,
-					exportFileName: lineaAccionAcumuladoMesDepto[0].institucion+" - "+lineaAccionAcumuladoMesDepto[0].linea_accion+" ("+lineaAccionAcumuladoMesDepto[0].accion_unidad_medida+")",
-					toolTip: {
-				        shared: true  //disable here. 
-				    }, 
-					title: {
-						text: "Evolución Mensual" +" ("+lineaAccionAcumuladoMesDepto[0].accion_unidad_medida+")" 
-					},
-                       	animationEnabled: true,
-                       	width: 800,
-					axisX:{      
-						valueFormatString: "YYYY-MM",
-						interval: 1,
-						intervalType: "month",
-						labelAngle: -50,
-						labelFontColor: "rgb(0,75,141)",
-					},
-					axisY: {
-						title: "",
-						interlacedColor: "#F0FFFF",
-						tickColor: "azure",
-						titleFontColor: "rgb(0,75,141)"
-					},
-					data: data
-				});
+					{
+						zoomEnabled: true,
+						exportEnabled: true,
+						exportFileName: lineaAccionAcumuladoMesDepto[0].institucion+" - "+lineaAccionAcumuladoMesDepto[0].linea_accion+" ("+lineaAccionAcumuladoMesDepto[0].accion_unidad_medida+")",
+						toolTip: {
+					        shared: true  //disable here. 
+					    }, 
+						title: {
+							text: "Evolución Mensual" +" ("+lineaAccionAcumuladoMesDepto[0].accion_unidad_medida+")" 
+						},
+		                      	animationEnabled: true,
+		                      	width: 800,
+						axisX:{      
+							valueFormatString: "YYYY-MM",
+							interval: 1,
+							intervalType: "month",
+							labelAngle: -50,
+							labelFontColor: "rgb(0,75,141)",
+						},
+						axisY: {
+							title: "",
+							interlacedColor: "#F0FFFF",
+							tickColor: "azure",
+							titleFontColor: "rgb(0,75,141)"
+						},
+						data: data
+					});
 				
 		chart.render();
 	 }
@@ -2972,35 +2843,45 @@ $(document).ready(function(){
 		'	                				<table class="table table-hover table-bordered" id="dataTablesAccionesAvances">'+
 		'	                					<thead>'+
 		'	                						<tr class="active"><th>Acción</th>';													
-														cuerpoModal += '<th>Departamento</th>';												
-														cuerpoModal += '<th>Distrito</th>';
+													   cuerpoModal += '<th>Departamento</th>';												
+													   cuerpoModal += '<th>Distrito</th>';
 														
-		cuerpoModal +='							<th>Cantidad Programado</th><th>Cantidad Ejecutado</th><th>U. Medida</th><!--th>Inversión Estimada (Millones de G.)</th--><th>Fecha Inicio</th><th>Fecha Fin</th><!--th>% Programado</th><th>% Ejecutado</th--><th>Editar</th><th>Borrar</th></tr>'+
+		cuerpoModal +='							<th>Cantidad Programado</th><th>Cantidad Ejecutado</th><th>U. Medida</th><!--th>Inversión Estimada (Millones de G.)</th--><th>Fecha Inicio</th><th>Fecha Fin</th><!--th>% Programado</th><th>% Ejecutado</th--></tr>'+
 		'	                					</thead>'+
 		'	                					<tbody id="tablaAccionesAvances">';
 												if (elRegistro != null){
 													tituloModal='<h3><center>'+elRegistro[0].institucion+'&nbsp;&nbsp;-&nbsp;&nbsp;'+elRegistro[0].linea_accion_nombre+'</center></h3>';
 													for(var m=0; m<elRegistro.length;m++)
 													{															
-															var registroFechaInicio = "";
-															var registroFechaFin = "";
-															
-															if (elRegistro[m].accion_fecha_inicio != null) 
-																registroFechaInicio = elRegistro[m].accion_fecha_inicio.split("-"); 
-															if (elRegistro[m].accion_fecha_fin != null)
-																registroFechaFin = elRegistro[m].accion_fecha_fin.split("-");															
-															
-															cuerpoModal+='<tr><td><!--a href="#" class="modalHitoAvances" parametros="'+institucion_id+'-'+linea_accion_id+'-'+idDepartamento+'-'+idDistrito+'-'+elRegistro[m].accion_id+'" -->'+elRegistro[m].accion_catalogo_nombre+'</td>';
-															//if (idDepartamento != "") 
-																cuerpoModal += '<td>'+elRegistro[m].accion_depto_nombre+'</td>';
-															//if (idDistrito != "")
-																cuerpoModal += '<td>'+elRegistro[m].accion_dist_nombre+'</td>';
-															cuerpoModal += '<td>'+elRegistro[m].cantidad_programado+'</td><td>'+elRegistro[m].cantidad_ejecutado+'</td><td>'+elRegistro[m].accion_unidad_medida+'</td><!--td>numeroConComa((elRegistro[m].accion_costo*elRegistro[m].hito_porcentaje_ejecutado/100000000).toFixed(0))</td--><td>'+registroFechaInicio[2]+'-'+registroFechaInicio[1]+'-'+registroFechaInicio[0]+'</td><td>'+registroFechaFin[2]+'-'+registroFechaFin[1]+'-'+registroFechaFin[0]+'</td><!--td>elRegistro[m].hito_porcentaje_programado</td--><!--td>elRegistro[m].hito_porcentaje_ejecutado</td--><td><span class="glyphicon glyphicon-pencil"></span></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';																														
+														var registroFechaInicio = "";
+														var registroFechaFin = "";
+														
+														if (elRegistro[m].accion_fecha_inicio != null){ 
+															registroFechaInicio = elRegistro[m].accion_fecha_inicio.split("-");
+															registroFechaInicio = registroFechaInicio[2]+'-'+registroFechaInicio[1]+'-'+registroFechaInicio[0];
+														}
+														
+														if (elRegistro[m].accion_fecha_fin != null){
+															registroFechaFin = elRegistro[m].accion_fecha_fin.split("-");
+														    registroFechaFin = registroFechaFin[2]+'-'+registroFechaFin[1]+'-'+registroFechaFin[0];
+														}
+														
+														cuerpoModal += '<tr><td><!--a href="#" class="modalHitoAvances" parametros="'+institucion_id+'-'+linea_accion_id+'-'+idDepartamento+'-'+idDistrito+'-'+elRegistro[m].accion_id+'" -->'+elRegistro[m].accion_catalogo_nombre+'</td>';
+														cuerpoModal += '<td>'+elRegistro[m].accion_depto_nombre+'</td>';															
+														cuerpoModal += '<td>'+elRegistro[m].accion_dist_nombre+'</td>';
+														cuerpoModal += '<td>'+elRegistro[m].cantidad_programado+'</td>'+
+																	   '<td>'+elRegistro[m].cantidad_ejecutado+'</td>'+
+																	   '<td>'+elRegistro[m].accion_unidad_medida+'</td>'+
+																	   '<!--td>numeroConComa((elRegistro[m].accion_costo*elRegistro[m].hito_porcentaje_ejecutado/100000000).toFixed(0))</td-->'+
+																	   '<td>'+registroFechaInicio+'</td>'+
+																	   '<td>'+registroFechaFin+'</td>'+
+																	   '<!--td>elRegistro[m].hito_porcentaje_programado</td-->'+
+																	   '<!--td>elRegistro[m].hito_porcentaje_ejecutado</td-->';																														
 													}
 												}
-		cuerpoModal += '	             		</tbody>'+
-		'	                				</table>'+
-		'	                			</div>';
+		cuerpoModal += '             		</tbody>'+
+		'	               				</table>'+
+		'	               			</div>';
 								 		
 		$('#myModal').find(".modal-title").html("");			
 		$('#myModal').find("#tab_1-1").html(""); 
@@ -3053,42 +2934,7 @@ $(document).ready(function(){
 		lineaAccionAcumuladoMesDepto=lineaAccionAcumuladoMesDepto.sort(compare);
 		
 		dibujarLineaAccionAcumuladoMesDepto(lineaAccionAcumuladoMesDepto, vectorMin, vectorMax, vectorMinEjecucion, vectorMaxEjecucion);
-		
-		$(function () {
-		       
-		        $('#example1').dataTable({
-		          "bPaginate": false,
-		          "bLengthChange": false,
-		          "bFilter": true,
-		          "bSort": true,
-		          "bInfo": true,
-		          "bAutoWidth": false,
-		          "language":{
-		        	    "sProcessing":     "Procesando...",
-		        	    "sLengthMenu":     "Mostrar _MENU_ registros",
-		        	    "sZeroRecords":    "No se encontraron resultados",
-		        	    "sEmptyTable":     "Ningún dato disponible en esta tabla",
-		        	    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-		        	    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-		        	    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-		        	    "sInfoPostFix":    "",
-		        	    "sSearch":         "Buscar:",
-		        	    "sUrl":            "",
-		        	    "sInfoThousands":  ",",
-		        	    "sLoadingRecords": "Cargando...",
-		        	    "oPaginate": {
-		        	        "sFirst":    "Primero",
-		        	        "sLast":     "Último",
-		        	        "sNext":     "Siguiente",
-		        	        "sPrevious": "Anterior"
-		        	    },
-		        	    "oAria": {
-		        	        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-		        	        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-		        	    }
-		        	}
-		        });
-		      });
+				
 	});
 	
 	
@@ -3193,15 +3039,14 @@ $(document).ready(function(){
 							if (typeof anho1==="undefined") {var anho1= new Object(); anho1.cantidad_ejecutada_hoy="";};
 							if (typeof anho2==="undefined") {var anho2= new Object(); anho2.cantidad_ejecutada_hoy="";anho2.suma_programada_anho="";anho2.suma_programada_hoy="";};
 							if (anho2.suma_programada_anho>0){// tenia suma_programada_anho --------------------------------------------------
-								
-								
-								//     anho2.linea_accion_meta = anho2.suma_programada_anho  * 100 / totalLineaPais[y].suma_programada_anho_pais
+																
+								// anho2.linea_accion_meta = anho2.suma_programada_anho  * 100 / totalLineaPais[y].suma_programada_anho_pais
 								for(var l=0; l<totalLineaPais.length;l++)
 								{
-										if(totalLineaPais[l].institucion_id == anho2.institucion_id && totalLineaPais[l].linea_accion_id == anho2.linea_accion_id && totalLineaPais[l].anho == anho2.anho)
-										{
-											anho2.linea_accion_meta = parseFloat((anho2.suma_programada_anho / totalLineaPais[l].suma_programada_anho_pais)*anho2.linea_accion_meta).toFixed(2);
-										}
+									if(totalLineaPais[l].institucion_id == anho2.institucion_id && totalLineaPais[l].linea_accion_id == anho2.linea_accion_id && totalLineaPais[l].anho == anho2.anho)
+									{
+										anho2.linea_accion_meta = parseFloat((anho2.suma_programada_anho / totalLineaPais[l].suma_programada_anho_pais)*anho2.linea_accion_meta).toFixed(2);
+									}
 								}
 																
 								//var porcentajeAnho = (anho2.suma_programada_hoy*100)/anho2.suma_programada_anho;
@@ -3259,8 +3104,7 @@ $(document).ready(function(){
 	      	async:false       
 	    }).responseText;		
 		accionHasProducto=JSON.parse(accionHasProducto);
-		
-		
+				
 		$("#TablaAccionHasProductos").html("");
 	    var departamentoId = document.getElementById('selectorDepartamento').value;
 		var fila ="";
@@ -3272,6 +3116,7 @@ $(document).ready(function(){
 		$("#TablaAccionHasProductos").append(fila);
 		
 	}
+	
 	//Falta pregunta si existe el modal y borrar si existe
 	$("body").on("click", ".modalHitoAvances",function(event){
 		
@@ -3342,7 +3187,7 @@ $(document).ready(function(){
 	
 		var totalCantidadProgramada=0;
 	
-		modalHito +=	'<div class="modal fade" id="myModal2" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">'+
+		modalHito += '<div class="modal fade" id="myModal2" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">'+
 						'<div class="modal-dialog modal-lg" style="width:90%;" >'+
 						    '<div class="modal-content" >'+
 						      '<div class="modal-header">'+
@@ -3377,8 +3222,7 @@ $(document).ready(function(){
 									'</div>'+
 							     '</div>'+	
 							     							   					      
-							      	'<div class="row">'+ 
-
+							     '<div class="row">'+ 
 							      	'<div class="col-md-12">'+
 									'<div class="box box-danger">'+
 					                	'<div class="box-header with-border">'+
@@ -3520,13 +3364,11 @@ $(document).ready(function(){
 						  '</div>'+
 					    '</div>'+
 					 '</div>'+
-					'</div>'+
-					
+					'</div>'+					
 					               	
            	'</div>'+//fin modal-content
          '</div>'+//fin modal-dialog
          '</div>';//fon myModal2
-
          
 		$("body").append(modalHito);         		
 		
@@ -3536,7 +3378,6 @@ $(document).ready(function(){
 		}
 				
 		if (idDepartamento != ""){			
-			//var departamentoId = $("#selectorDepartamento option:selected").val();
 			var distritos = $.ajax({
 		    	url:'/tablero/public/ajaxSelects3?action=getDistrito&departamento='+idDepartamento,
 		      	type:'get',
@@ -3823,13 +3664,7 @@ $(document).ready(function(){
 			          		
 					      	}
 			          		
-			          		
-			          		
-			          		
-			          		
- 			    	 } 
-		    	   
-		    	
+ 			    	 } 	    	
 		    	   
 		    }
 		    this.tipoPrograma = function(){
@@ -4215,42 +4050,39 @@ $(document).ready(function(){
 
 			    function jsonpCallbackProducto(data) {
 			    	datosProductos = data;
-			    	
-			    	
+			    				    	
 			        var datalistProductos = document.createElement('datalist');
 			        datalistProductos.setAttribute('id','listaf7c2'); 
 			        var ubicacionDatalistProductos = document.getElementById('formulario');
 			        ubicacionDatalistProductos.appendChild(datalistProductos);
 			        
- 			          for(var i = 0; i < datosProductos.producto.length ; i++) 
-			          {       
+ 			        for(var i = 0; i < datosProductos.producto.length ; i++) 
+			        {       
 
-					    	$.ajax({
-					         	 url:'/public/ajaxSelects?accion=getProductos&producto='+datosProductos.producto[i].producto_id,
-					          	type:'get',
-					          	crossDomain: 'true',
-					          	dataType:'jsonp',
-				                jsonp: 'callback',
-				                jsonpCallback: 'jsonpCallbackProductoDetalle',
-					          	async:false,
-					          	success: function( data, textStatus, jqXHR) {
-					          		if(data.success){
-					          			jsonpCallbackProductoDetalle(data)
-					          		}
-					          	}    
-					        });
-			          } 
+				    	$.ajax({
+				         	 url:'/public/ajaxSelects?accion=getProductos&producto='+datosProductos.producto[i].producto_id,
+				          	type:'get',
+				          	crossDomain: 'true',
+				          	dataType:'jsonp',
+			                jsonp: 'callback',
+			                jsonpCallback: 'jsonpCallbackProductoDetalle',
+				          	async:false,
+				          	success: function( data, textStatus, jqXHR) {
+				          		if(data.success){
+				          			jsonpCallbackProductoDetalle(data)
+				          		}
+				          	}    
+				        });
+			        } 
 					    	
-			        	  function jsonpCallbackProductoDetalle(data) {
-						    	datosProductosDetalle = data;						    						    	
-   
-							          var option = document.createElement('option');
-							          option.setAttribute('value', datosProductosDetalle.productos[0].codigoCatalogo);
-							          option.setAttribute('label', datosProductosDetalle.productos[0].nombreCatalogo);
-							          datalistProductos.appendChild(option);      
-						    }
-			        	  
-			      	  
+		        	function jsonpCallbackProductoDetalle(data) {
+					    	datosProductosDetalle = data;						    						    	
+  
+						          var option = document.createElement('option');
+						          option.setAttribute('value', datosProductosDetalle.productos[0].codigoCatalogo);
+						          option.setAttribute('label', datosProductosDetalle.productos[0].nombreCatalogo);
+						          datalistProductos.appendChild(option);      
+					}			        	  			      	  
 			    	
 			    }//fin primer callback
 		    }
@@ -4337,7 +4169,6 @@ $(document).ready(function(){
 				    		$("#totalFinanciero-formulario").val(totalFinanciero);
 				    		$("#anhoProducto-formulario").val(datos[0].anho);
 				    		$("#versionProducto-formulario").val(datos[0].version);
-
 
 				    	}
 			    	}
@@ -4437,37 +4268,37 @@ $(document).ready(function(){
 });
 
 
-//Modal para desplegar Destinatarios
-$("body").on("click", ".verificarDestinatarios",function(event){
-	event.stopPropagation();
-	event.preventDefault();
+	//Modal para desplegar Destinatarios
+	$("body").on("click", ".verificarDestinatarios",function(event){
+		event.stopPropagation();
+		event.preventDefault();
+		
+		if ( $("#modalDestinatarios").length ) {
+			$("#modalDestinatarios").remove();
+		}
+		
+		var parametros = $(this).attr("parametros");
+	    var idParsed = parametros.split("-"); 
+	    var nivel=idParsed[0];
+	    var entidad=idParsed[1];
+	    var tipoPrograma=idParsed[2];
+	    var programa=idParsed[3];
+	    var subPrograma=idParsed[4];
+	    var proyecto=idParsed[5];
+	    var producto=idParsed[6]
+		var institucionId=idParsed[7];
+		var lineaAccionId=idParsed[8];
+		var idDepartamento= idParsed[9];
+		var idDistrito= idParsed[10];
+		var accionId = idParsed[11];	
 	
-	if ( $("#modalDestinatarios").length ) {
-		$("#modalDestinatarios").remove();
-	}
-	
-	var parametros = $(this).attr("parametros");
-    var idParsed = parametros.split("-"); 
-    var nivel=idParsed[0];
-    var entidad=idParsed[1];
-    var tipoPrograma=idParsed[2];
-    var programa=idParsed[3];
-    var subPrograma=idParsed[4];
-    var proyecto=idParsed[5];
-    var producto=idParsed[6]
-	var institucionId=idParsed[7];
-	var lineaAccionId=idParsed[8];
-	var idDepartamento= idParsed[9];
-	var idDistrito= idParsed[10];
-	var accionId = idParsed[11];	
-
-    var linkDepartamentoId = document.getElementById('selectorDepartamento').value;
-    var nombreDepartamento = $("#selectorDepartamento option:selected").text();
-    
-	var modalVerificarDestinatarios = "";
-	var cuerpoTablaDestinatario="";
-	var tabla='#tabla-destinatarios-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto;
-	
+	    var linkDepartamentoId = document.getElementById('selectorDepartamento').value;
+	    var nombreDepartamento = $("#selectorDepartamento option:selected").text();
+	    
+		var modalVerificarDestinatarios = "";
+		var cuerpoTablaDestinatario="";
+		var tabla='#tabla-destinatarios-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto;
+		
 	     $(tabla).html("");	      
 	     var datosProductoPresupuestoDestinatario =[];
       	 $.ajax({
@@ -4487,118 +4318,107 @@ $("body").on("click", ".verificarDestinatarios",function(event){
 
       	function jsonpCallbackProductoPresupuestoDestinatarios(data) {
       		datosProductoPresupuestoDestinatario= data;
-      		
-      		
+      		      		
 	      	var datosDepartamentos =[];
       		$.ajax({
-        	url:'/public/ajaxSelects?accion=getDepartamentos',
-          	type:'get',
-          	crossDomain: 'true',
-          	dataType:'jsonp',
-            jsonp: 'callback',
-            jsonpCallback: 'jsonpCallbackDepartamento',
-          	async:false,
-          	success: function( data, textStatus, jqXHR) {
-          		if(data.success){
-          			jsonpCallbackDepartamento(data);
-          		}
-          	}
-        });
+	        	url:'/public/ajaxSelects?accion=getDepartamentos',
+	          	type:'get',
+	          	crossDomain: 'true',
+	          	dataType:'jsonp',
+	            jsonp: 'callback',
+	            jsonpCallback: 'jsonpCallbackDepartamento',
+	          	async:false,
+	          	success: function( data, textStatus, jqXHR) {
+	          		if(data.success){
+	          			jsonpCallbackDepartamento(data);
+	          		}
+	          	}
+        	});
+	
+	      	function jsonpCallbackDepartamento(data) {
+	      		datosDepartamentos= data;      		      		
+	      		
+	      		var modalVerificarDestinatarios="";
+	      		modalVerificarDestinatarios+='<div class="modal fade" id="modalDestinatarios" data-backdrop="static" data-keyboard="false">'+
+		 		  '<div class="modal-dialog modal-lg" >'+
+		 		    '<div class="modal-content">'+
+		 		      '<div class="modal-header">'+
+			          '<button type="button" class="btn btn-default modalHitoAvances" data-dismiss="modal" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'" aria-label="Close"><span aria-hidden="true">&times;</button>'+ 
+		 		      '</div>'+
+		 		      '<div class="modal-body">'; 
+		 		    modalVerificarDestinatarios+=
+		 		        '<div class="box" height="1000px" style="overflow-y: initial !important;overflow-x: initial !important">'+
+		 		         '<div class="box-header with-border" height="1000px">'+
+		 		          '<h3 class="box-title" id="tituloTipoPrograma">'+
+		 		           '<strong>Destinatarios</strong>'+
+		 		            '</h3>'+
+		 		              '</div>'+ 		           
+		 		            
+		 		            '<div class="box-body scroll-x pre-scrollable">'+
+		 		              '<ul  class="col-md-12">'+
+		 		              '<form id="form-guardar-destinatario-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'">'+
+		                       '<table class="table table-striped table-bordered  table-hover">'+
+		 	                     ' 	<tr>'+
+		                       '<th>Destinatario</th>';
+		 		    				 for (var iDep=0;iDep<20;iDep++){
+		 		    					modalVerificarDestinatarios+= '<th>'+datosDepartamentos.departamentos[iDep].abrevDepartamento+'</th>';
+		 		    				 }
+		 		    						 		    				
+		 		    				modalVerificarDestinatarios+='	</tr>'+
+		 	                      '<tbody class="table-body-producto-destinatario" id="tabla-destinatarios-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'">'+
+		 	                      '</tbody>'+
+		 	                      '</table>'+
+		 	                      '<br>'+
+		 		                    '<div class="box-footer">'+
+							          '<button type="button" class="btn btn-default modalHitoAvances" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'">Cerrar</button>'+ 
+		 		                    '</div>'+
+		 						'</form>'+
+		 					'</ul>'+
+		 				'</div>'+
+		 			'</div>'+
+		 		'</div>';
+	 		
+			$("body").append(modalVerificarDestinatarios);			    				
+			    				
+			var cuerpoTablaDestinatario="";
+			var destinatarioGrupo= new Array(); //tiene los meses
+			var destinatarioDepto = new Array(); //tiene los departamentos
 
-      	function jsonpCallbackDepartamento(data) {
-      		datosDepartamentos= data;      		      		
-      		
-      		 var modalVerificarDestinatarios="";
-      		modalVerificarDestinatarios+='<div class="modal fade" id="modalDestinatarios" data-backdrop="static" data-keyboard="false">'+
- 		  '<div class="modal-dialog modal-lg" >'+
- 		    '<div class="modal-content">'+
- 		      '<div class="modal-header">'+
-	          '<button type="button" class="btn btn-default modalHitoAvances" data-dismiss="modal" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'" aria-label="Close"><span aria-hidden="true">&times;</button>'+ 
- 		      '</div>'+
- 		      '<div class="modal-body">'; 
- 		    modalVerificarDestinatarios+=
- 		        '<div class="box" height="1000px" style="overflow-y: initial !important;overflow-x: initial !important">'+
- 		         '<div class="box-header with-border" height="1000px">'+
- 		          '<h3 class="box-title" id="tituloTipoPrograma">'+
- 		           '<strong>Destinatarios</strong>'+
- 		            '</h3>'+
- 		              '</div>'+ 		           
- 		            
- 		            '<div class="box-body scroll-x pre-scrollable">'+
- 		              '<ul  class="col-md-12">'+
- 		              '<form id="form-guardar-destinatario-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'">'+
-                       '<table class="table table-striped table-bordered  table-hover">'+
- 	                     ' 	<tr>'+
-                       '<th>Destinatario</th>';
- 		    				 for (var iDep=0;iDep<20;iDep++){
- 		    					modalVerificarDestinatarios+= '<th>'+datosDepartamentos.departamentos[iDep].abrevDepartamento+'</th>';
- 		    				 }
- 		    				
- 		    				
- 		    				modalVerificarDestinatarios+='	</tr>'+
- 	                      '<tbody class="table-body-producto-destinatario" id="tabla-destinatarios-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'">'+
- 	                      '</tbody>'+
- 	                      '</table>'+
- 	                      '<br>'+
- 		                    '<div class="box-footer">'+
-					          '<button type="button" class="btn btn-default modalHitoAvances" parametros="'+institucionId+'-'+lineaAccionId+'-'+idDepartamento+'-'+idDistrito+'-'+accionId+'">Cerrar</button>'+ 
- 		                    '</div>'+
- 						'</form>'+
- 					'</ul>'+
- 				'</div>'+
- 				 '</div>'+
- 		'</div>';
- 		
-		    				$("body").append(modalVerificarDestinatarios);
-		    				
-		    				
-		    			  	  var cuerpoTablaDestinatario="";
-		    			  	  var destinatarioGrupo= new Array(); //tiene los meses
-		    			  	  var destinatarioDepto = new Array(); //tiene los departamentos
-		    			  	  //var fmr = $(formulario);
-		    			  	  for (var iDest=0;iDest<datosProductoPresupuestoDestinatario.producto.length;iDest++){
-		    			  		  cuerpoTablaDestinatario+="<tr><td>"+datosProductoPresupuestoDestinatario.producto[iDest].nombreCatalogo+"</td>";
-		    			  		  detalleMes=new Array();
-		    				    	  if (datosProductoPresupuestoDestinatario.producto.length>0){  
-		    				    		  for (var iDepto=0;iDepto<18;iDepto++){
-		    				    			  if(datosProductoPresupuestoDestinatario.producto[iDest].departamento == iDepto){
-			    				    		  	cuerpoTablaDestinatario+='<td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+producto+'-'+iDest+'-'+iDepto+'" id="dest-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'-'+iDest+'-'+iDepto+'" value="'+datosProductoPresupuestoDestinatario.producto[iDest].cantidad+'"></td>';
-		    				    			  }else{
-				    				    		cuerpoTablaDestinatario+='<td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+producto+'-'+iDest+'-'+iDepto+'" id="dest-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'-'+iDest+'-'+iDepto+'" value=""></td>';		 
-		    				    			  }
-		    				    		  }
-		    				    		  	if (datosProductoPresupuestoDestinatario.producto[iDest].departamento == 88){
-			    				    		  	cuerpoTablaDestinatario+='<td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+producto+'-'+iDest+'-'+iDepto+'" id="dest-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'-'+iDest+'-'+iDepto+'" value="'+datosProductoPresupuestoDestinatario.producto[iDest].cantidad+'"></td><td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+producto+'-'+iDest+'-'+iDepto+'" id="dest-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'-'+iDest+'-'+iDepto+'" value=""></td>';			    				    		  		
-		    				    		  	}
-		    				    		  	if (datosProductoPresupuestoDestinatario.producto[iDest].departamento == 99){
-			    				    		  	cuerpoTablaDestinatario+='<td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+producto+'-'+iDest+'-'+iDepto+'" id="dest-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'-'+iDest+'-'+iDepto+'" value=""></td><td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+producto+'-'+iDest+'-'+iDepto+'" id="dest-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'-'+iDest+'-'+iDepto+'" value="'+datosProductoPresupuestoDestinatario.producto[iDest].cantidad+'"></td>';			    				    		  		
-		    				    		  	
-	    				    			  	}
-		    				    		  	if (datosProductoPresupuestoDestinatario.producto[iDest].departamento != 88 && datosProductoPresupuestoDestinatario.producto[iDest].departamento != 99){
-			    				    		  	cuerpoTablaDestinatario+='<td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+producto+'-'+iDest+'-'+iDepto+'" id="dest-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'-'+iDest+'-'+iDepto+'" value=""></td><td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+producto+'-'+iDest+'-'+iDepto+'" id="dest-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'-'+iDest+'-'+iDepto+'" value=""></td>';			    				    		  			  
-	    				    			  	}
-		    				    		 
-		    				    	  }else{
-		    				    		  for (var iDepto=0;iDepto<20;iDepto++){
-		    				    			  cuerpoTablaDestinatario+='<td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+producto+'-'+iDest+'-'+iDepto+'" id="dest-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'-'+iDest+'-'+iDepto+'" value=""></td>';
-		    				    			  
-		    				    		  }
-
-		    				    	  }
-		    			  		  cuerpoTablaDestinatario+='<input type="hidden" name="catalogo_destinatario[]" value="'+datosProductoPresupuestoDestinatario.producto[iDest].id+'">'
-		    			  		  cuerpoTablaDestinatario+='</tr>';
-		    			  		  
-		    			  	  }
-		    			  	  $(tabla).append(cuerpoTablaDestinatario);				
-		    						    						    				
-		    				$('#modalDestinatarios').modal('show');
-      		
-        	}//fin callback departamentos
-      }// fin callback productoPresupuestoDestinatario
-     
-});
- 
+   			for (var iDest=0;iDest<datosProductoPresupuestoDestinatario.producto.length;iDest++){
+   				cuerpoTablaDestinatario+="<tr><td>"+datosProductoPresupuestoDestinatario.producto[iDest].nombreCatalogo+"</td>";
+   			  	detalleMes=new Array();
+   					if (datosProductoPresupuestoDestinatario.producto.length>0){  
+   				    	for (var iDepto=0;iDepto<18;iDepto++){
+   				    		if(datosProductoPresupuestoDestinatario.producto[iDest].departamento == iDepto){
+    				    		cuerpoTablaDestinatario+='<td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+producto+'-'+iDest+'-'+iDepto+'" id="dest-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'-'+iDest+'-'+iDepto+'" value="'+datosProductoPresupuestoDestinatario.producto[iDest].cantidad+'"></td>';
+   				    		}else{
+	    				    	cuerpoTablaDestinatario+='<td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+producto+'-'+iDest+'-'+iDepto+'" id="dest-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'-'+iDest+'-'+iDepto+'" value=""></td>';		 
+   				    		}
+   				    	}
+   				    	if (datosProductoPresupuestoDestinatario.producto[iDest].departamento == 88){
+    				      	cuerpoTablaDestinatario+='<td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+producto+'-'+iDest+'-'+iDepto+'" id="dest-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'-'+iDest+'-'+iDepto+'" value="'+datosProductoPresupuestoDestinatario.producto[iDest].cantidad+'"></td><td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+producto+'-'+iDest+'-'+iDepto+'" id="dest-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'-'+iDest+'-'+iDepto+'" value=""></td>';			    				    		  		
+   				    	}
+   				    	if (datosProductoPresupuestoDestinatario.producto[iDest].departamento == 99){
+    				      	cuerpoTablaDestinatario+='<td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+producto+'-'+iDest+'-'+iDepto+'" id="dest-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'-'+iDest+'-'+iDepto+'" value=""></td><td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+producto+'-'+iDest+'-'+iDepto+'" id="dest-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'-'+iDest+'-'+iDepto+'" value="'+datosProductoPresupuestoDestinatario.producto[iDest].cantidad+'"></td>';			    				    		  		   				    	
+  				    	}
+   				    	if (datosProductoPresupuestoDestinatario.producto[iDest].departamento != 88 && datosProductoPresupuestoDestinatario.producto[iDest].departamento != 99){
+    				      	cuerpoTablaDestinatario+='<td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+producto+'-'+iDest+'-'+iDepto+'" id="dest-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'-'+iDest+'-'+iDepto+'" value=""></td><td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+producto+'-'+iDest+'-'+iDepto+'" id="dest-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'-'+iDest+'-'+iDepto+'" value=""></td>';			    				    		  			  
+  				    	}   				    		
+   				    }else{
+   				    	for (var iDepto=0;iDepto<20;iDepto++){
+   				    		cuerpoTablaDestinatario+='<td><input type="text" class= "destinatario-dest-dept" size="5px" name="destinatarios-'+producto+'-'+iDest+'-'+iDepto+'" id="dest-'+nivel+'-'+entidad+'-'+tipoPrograma+'-'+programa+'-'+subPrograma+'-'+proyecto+'-'+producto+'-'+iDest+'-'+iDepto+'" value=""></td>';	  
+   				    	}
+   				    }
+   			  		cuerpoTablaDestinatario+='<input type="hidden" name="catalogo_destinatario[]" value="'+datosProductoPresupuestoDestinatario.producto[iDest].id+'">'
+   			  		cuerpoTablaDestinatario+='</tr>';   			  		  
+			}
+   			$(tabla).append(cuerpoTablaDestinatario);				
+   						    						    				
+   			$('#modalDestinatarios').modal('show');
+	      		
+	    	}//fin callback departamentos
+		}// fin callback productoPresupuestoDestinatario	     
+	}); 
 	</script>    
-	<script type="text/javascript" src="bootstrap/js/bootstrap-slider.js"></script>
   </body>
 </html>
