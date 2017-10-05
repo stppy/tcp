@@ -9,7 +9,7 @@
 	   				<i class="fa fa-list-alt"></i> <span>Plan Operativo Institucional</span> <i class="fa fa-angle-left pull-right"></i>	   					
 	   			</a>
 	   			<ul class="treeview-menu" style="display: none;">
-	   				<li><a href="/public/reporte_pnd.jsp"><i class="fa fa-circle-o text-green"></i> <span>Reporte PND</span></a></li>         			
+	   				<li><a href="/public/reporte_pnd.jsp"><i class="fa fa-bar-chart-o"></i> <span>Reporte PND</span></a></li>         			
 	   			</ul>
 			</li>
 			<li class="treeview">

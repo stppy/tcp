@@ -1243,7 +1243,7 @@ function renderTableroLineaAccion(institucionIdConcat,deptoId,distId,periodo,eti
 	      '<div class="box" height="1000px">'+
 	        '<div class="box-body" >'+
 	        	'<div class="table-responsive">'+
-	      			'<table class="table table-striped table-bordered table-hover tablaLineasPorInstitucion">'+
+	      			'<table class="table table-striped table-bordered table-hover" id="tablaLineasPorInstitucion" >'+
 	      				tablaInstituciones+
 						'</tbody></table>'+
 					'</div>'+
@@ -1352,7 +1352,7 @@ function renderTableroLineaAccion(institucionIdConcat,deptoId,distId,periodo,eti
 	            '</div>'+ */
 	            '<div class="box-body" >'+
 	            	'<div class="table-responsive">'+
-	          			'<table class="table table-striped table-bordered table-hover tablaLineasPorInstitucion">'+
+	          			'<table class="table table-striped table-bordered table-hover" id="tablaLineasPorInstitucion" >'+
 	          			'<thead><tr>'+
 	          		  	'<th rowspan="3" class="text-center" style="vertical-align: middle;">Línea de Acción</th>'+
 	          		  	'<th rowspan="3" class="text-center" style="vertical-align: middle;">Unidad de Medida</th>'+
@@ -1697,7 +1697,7 @@ function renderNivelDistrital(lineasProgramadas, deptoId, distId){
       '<div class="box" height="1000px">'+
         '<div class="box-body" >'+
         	'<div class="table-responsive">'+
-      			'<table class="table table-striped table-bordered table-hover tablaLineasPorInstitucion">'+
+      			'<table class="table table-striped table-bordered table-hover" id="tablaLineasPorInstitucion" >'+
       			'<thead><tr>'+
       		  	'<th rowspan="3" class="text-center" style="vertical-align: middle;">Línea de Acción</th>'+
       		  	'<th rowspan="3" class="text-center" style="vertical-align: middle;">Unidad de Medida</th>'+
