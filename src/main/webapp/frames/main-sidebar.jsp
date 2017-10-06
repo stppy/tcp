@@ -39,6 +39,7 @@
 							<li class=""><a href="/pivotDestinatariosProductos.jsp"><i class="fa fa-male" id="linkPivotDestinatariosProductos"></i>Análisis de Destinatarios de Productos POI</a></li>	
 							<!--<li class=""><a href="/pivotAnalisisProductoFisico.jsp"><i class="fa fa-line-chart" id="linkpivotAnalisisProductoFisico"></i>Análisis de Metas Físicas de Productos (Hacienda)</a></li>-->								<li class=""><a href="/pivotAnalisisProductoFinanciero.jsp"><i class="fa fa-line-chart" id="linkpivotAnalisisProductoFinanciero"></i>Análisis Financiero de Producto (Hacienda)</a></li>
 							<li class=""><a href="/pivotProducto.jsp"><i class="fa fa-line-chart" id="linkpivotAnalisisProductoFinanciero"></i>Análisis de Metas Físicas de Productos (Hacienda)</a></li>
+							<li class=""><a href="/pivotEntidades.jsp"><i class="fa fa-line-chart" id="linkPivotEntidades"></i>Todas las Entidades (Hacienda)</a></li>
 		   				<%}%>         			
 		   			</ul>
 				</li>
@@ -60,7 +61,7 @@
 					<li class=""><a href="/tablero/pivotBeneficiarioAvance.jsp"><i class="fa fa-male" id="linkPivotBeneficiariosAvances"></i>Análisis de Beneficiarios de Avances</a></li>
 					<li class=""><a href="/tablero/pivotEvidenciaAvance.jsp"><i class="fa fa-area-chart" id="linkPivotEvidenciasAvances"></i>Análisis de Evidencias de Avances</a></li>
 					<li class=""><a href="/tablero/pivotAvance.jsp"><i class="fa fa-line-chart" id="linkPivotAvances"></i>Análisis de Avances</a></li>
-					<li class=""><a href="/tablero/pivotPlanAccionAvances.jsp"><i class="fa fa-line-chart" id="linkPivotPlanAccionAvances"></i>Análisis de Programación y Avances</a></li>
+					<li class=""><a href="/tablero/LineasProgramacionAvance.jsp"><i class="fa fa-line-chart" id="linkPivotPlanAccionAvances"></i>Análisis de Programación y Avances</a></li>
 					<li class=""><a href="/tablero/resumenLineaAccion.jsp"><i class="fa fa-dashboard" id="linkResumenLineaAccion"></i>Tablero de Control</a></li>
 					<li class=""><a href="/tablero/descargarDocumentos.jsp"><i class="fa fa-cloud-download" id="linkDescargasConstancias"></i>Descargar Constancias</a></li>
 					<li class=""><a href="/tablero/geografico4.jsp"><i class="fa fa-map-marker" id="geografico4"></i>Geográfico</a></li>
@@ -68,7 +69,7 @@
     			</ul>
    			</li>
     			<!-- <li class="treeview">
-    				<a href="http://spr.stp.gov.py/tablero/geografico4.jsp">
+    				<a href="/tablero/geografico4.jsp">
     					<i class="fa fa-globe"></i> <span>Geográfico</span> <i class="fa fa-angle-left pull-right"></i>
     				</a>
     			</li> -->
@@ -81,7 +82,8 @@
             	<li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Preguntas Frecuentes</span></a></li> --> 
             	<li><a href="/documentacion.jsp"><i class="fa fa-circle-o text-green"></i> <span>Acerca de Tablero de Control</span></a></li>
 				<li><a href="https://nube.stp.gov.py/index.php/s/a6JRumfONc48ynV" target="_blank"><i class="fa fa-user" id="linkFichaSocial"></i><span>Ficha Social</span></a></li>
-				<li><a href="/reporte_pnd.jsp"><i class="fa fa-circle-o text-green"></i> <span>Reporte PND</span></a></li>
+				<li><a href="/tablero/PivotFicha.jsp"><i class="fa fa-user" id="linkPivotFichaSocial"></i><span>Pivot Ficha Social</span></a></li>
+				<li><a href="/reporte_pnd.jsp"><i class="fa fa-bar-chart-o"></i> <span>Reporte PND</span></a></li>
             <% if (attributes.get("role_id_tablero").toString().equals("0")  && user.getName()!="parce@nandeparaguay.org"){%>	 
            	 <li class="header">ADMINISTRAR</li>
             	<li><a href="/indicadores.jsp"><i class="glyphicon glyphicon-info-sign text-red"></i> <span>Indicadores</span></a></li>

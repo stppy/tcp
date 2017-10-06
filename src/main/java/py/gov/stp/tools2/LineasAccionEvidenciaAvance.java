@@ -53,6 +53,7 @@ public class LineasAccionEvidenciaAvance {
 	protected String evidDesc;
 	protected String evidUrl;
 	protected String evidDoc;
+	protected String etiquetaNombre;
 	public int getInsId() {
 		return insId;
 	}
@@ -329,5 +330,11 @@ public class LineasAccionEvidenciaAvance {
 	public void setEvidDoc(String evidDoc) {
 		this.evidDoc = evidDoc;
 	}*/
+	public String getEtiquetaNombre() {
+		return etiquetaNombre;
+	}
+	public void setEtiquetaNombre(String etiquetaNombre) {
+		this.etiquetaNombre = etiquetaNombre;
+	}
 	
 }

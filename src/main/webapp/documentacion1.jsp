@@ -76,7 +76,7 @@ textarea { text-transform: uppercase; }
 			<div class="row">
 				<label class="control-label col-sm-2" for="urlws">URL:</label>
 				<div class="col-sm-10">
-					<input type="url" class="form-control" id="urlws" placeholder="Ingrese la URL del webservice" value="http://spr.stp.gov.py/tablero/ajaxSelects2?action=getUnidadMedida">
+					<input type="url" class="form-control" id="urlws" placeholder="Ingrese la URL del webservice" value="/tablero/ajaxSelects2?action=getUnidadMedida">
 				</div>
 			</div>
 			<div class="row">

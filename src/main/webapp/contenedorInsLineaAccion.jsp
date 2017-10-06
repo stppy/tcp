@@ -844,7 +844,7 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
 			//$('#mostrarOcultarBorrado').append(ocultarBorrado);
 								
 			var usuarios = $.ajax({
-				url:'http://spr.stp.gov.py/ajaxSelects?accion=getUsuarios&usuario=<%=user.getName()%>',
+				url:'/ajaxSelects?accion=getUsuarios&usuario=<%=user.getName()%>',
 			  	type:'get',
 			  	dataType:'json',
 			  	async:false       
@@ -957,7 +957,7 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
 			
 			var info = JSON.stringify(objeto);		  	
 		    $.ajax({
-		        url: "http://spr.stp.gov.py/ajaxUpdate?accion=actUltEtiqueta",
+		        url: "/ajaxUpdate?accion=actUltEtiqueta",
 		        type: 'POST',
 		        dataType: 'json',
 		        data: info,
@@ -981,7 +981,7 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
 					
 	});
 <%}else{%>
-	window.location = "http://spr.stp.gov.py/tablero/geografico4.jsp";
+	window.location = "/tablero/geografico4.jsp";
 <%}%>
 	var onoff=null;
 /* 	function OcultarRegistrosBorrados(){
@@ -1043,7 +1043,7 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
 								<button id="botonImprimirAvanceInstitucional" type="button" class="btn btn-primary imprimirAvanceCualitativoInstitucion" >
 									<span class="glyphicon glyphicon-download-alt"></span> Descargar Avances
 								</button>															
-								<!-- <a href="http://spr.stp.gov.py/tablero/descargasConstancias.jsp">									
+								<!-- <a href="/tablero/descargasConstancias.jsp">									
 									<button type="button" class="btn btn-primary">
 										<span class="glyphicon glyphicon-download-alt"></span> Descargar Constancias
 									</button>
@@ -1225,7 +1225,7 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js" type="text/javascript"></script>
         <%  } else { %>
-        	<script type="text/javascript">window.location = "http://spr.stp.gov.py/tablero/geografico4.jsp";</script>
+        	<script type="text/javascript">window.location = "/tablero/geografico4.jsp";</script>
 				<!-- <p>Favor Iniciar Sesion</p> -->
 			<% } %> 
 
@@ -1262,7 +1262,7 @@ usuariosSpr = JSON.parse(usuariosSpr);
 usuariosSpr = usuariosSpr.usuarios;
 </script>
 		<%  } else { %>
-            <script type="text/javascript">window.location = "http://spr.stp.gov.py";</script>
-        <%  } %> 
+            <script type="text/javascript">window.location = "";</script>
+        <% } %> 
   </body>
 </html>

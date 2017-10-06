@@ -40,7 +40,7 @@ function renderLineasEstrategicas(periodo){
 	lineasEstrategicas=lineasEstrategicas.sort(orden);
 		
 	var lineasProgramadas = $.ajax({
-		url: 'http://spr.stp.gov.py/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacion&periodoId='+periodo,
+		url: '/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacion&periodoId='+periodo,
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       
@@ -192,7 +192,9 @@ function renderAccion(estrategia, lineasProgramadas, instituciones, periodo){
 											flagIns++;						  
 										}
 										clase="";
-										var desempProgAnho=numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2));
+										//var desempProgAnho=numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2));
+										var desempProgAnho=parseFloat(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100));
+
 										if (lineasProgramadas[n].cantidadAnho==0 && lineasProgramadas[n].meta ==0) desempProgAnho="-";
 										if (desempProgAnho!="-"){
 											if (parseInt(desempProgAnho)>=90 && lineasProgramadas[n].meta != 0){
@@ -209,7 +211,7 @@ function renderAccion(estrategia, lineasProgramadas, instituciones, periodo){
 										'<td>'+lineasProgramadas[n].lineaAccionUnidadMedidaNombre+'</td>'+
 										'<td>'+numeroConComa((lineasProgramadas[n].meta).toFixed(2))+'</td>'+
 										'<td>'+numeroConComa((lineasProgramadas[n].cantidadAnho).toFixed(2))+'</td>'+
-										'<td class="'+clase+'">'+desempProgAnho+'</td>';
+										'<td class="'+clase+'">'+numeroConComa(desempProgAnho.toFixed(2))+'</td>';
 										if(lineasProgramadas[n].cantDest==0){
 											tempInstLineas += '<td> - </td>';
 										}else{
@@ -325,6 +327,6 @@ function getPeriodo(periodo){
 	        	}
 		 });*/
 	//});	
-	//window.open('http://spr.stp.gov.py/','_blank');
+	//window.open('/','_blank');
 }	
 	

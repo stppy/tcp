@@ -86,7 +86,7 @@
 	<script type="text/javascript">
 	  var _paq = _paq || [];
 	  _paq.push(['trackPageView']);
-	  _paq.push(['enableLinkTracking']);
+	  _paq.push(['enableLinkTracking']); 
 	  (function() {
 	    var u="//infra.stp.gov.py/monitoreoweb/";
 	    _paq.push(['setTrackerUrl', u+'piwik.php']);
@@ -201,9 +201,9 @@
 		<%  } %>
 		<a href="#" data-toggle="tooltip" title="Some tooltip text!">Hover over me</a>
 				
-				
 		<%  } else { %>
-    		<script type="text/javascript">window.location = "http://spr.stp.gov.py/";</script>
+    		<script type="text/javascript">window.location = "http://sprtest.stp.gov.py/";</script>
 		<% } %> 
+
 </body>
 </html>
