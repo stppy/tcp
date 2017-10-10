@@ -1071,7 +1071,7 @@ public class ajaxSelects extends HttpServlet {
         	}          
         	if (action.equals("getAccionHasProducto")){
         		List objetos=null;
-        		condition = " where true and not borrado ";
+        		condition = " where true  ";
         		if (accionId!=null) condition += " and accion_id ='"+accionId+"'";
         		if (accionHasProductoId!=null) condition += " and id ='"+accionHasProductoId+"'";
         		if (nivel != null) condition += " and spr_nivel_id ="+nivel;
