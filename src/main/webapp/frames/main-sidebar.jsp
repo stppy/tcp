@@ -21,7 +21,7 @@
 		<ul class="sidebar-menu">
             <li class="header">Tablero</li>
             
-            <% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2") || attributes.get("role_id_tablero").toString().equals("3")){%>                        
+            <% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2") || attributes.get("role_id_tablero").toString().equals("3") || attributes.get("role_id_tablero").toString().equals("4")){%>                        
 		    	<li class="treeview">
 					<a href="#">
 		   				<i class="fa fa-list-alt"></i> <span>Plan Operativo Institucional</span> <i class="fa fa-angle-left pull-right"></i>
