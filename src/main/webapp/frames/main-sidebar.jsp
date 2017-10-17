@@ -24,7 +24,7 @@
             <% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2") || attributes.get("role_id_tablero").toString().equals("3")){%>                        
 		    	<li class="treeview">
 					<a href="#">
-		   				<i class="fa fa-list-alt"></i> <span>Plan Operativo Institucional</span> <i class="fa fa-angle-left pull-right"></i>
+		   				<i class="fa fa-list-alt text-blue"></i> <span>Plan Operativo Institucional</span> <i class="fa fa-angle-left pull-right"></i>
 		   			</a>
 		   			<ul class="treeview-menu" style="display: none;">
 		   				<li class=""><a href="/entidad.jsp"><i class="fa fa-home" id="linkEntidad"></i>Perfil Institucional</a></li>
@@ -46,7 +46,7 @@
 			<%}%>
 			<li class="treeview">
 				<a href="#">
-    				<i class="fa fa-tasks"></i> <span>Monitoreo de planes</span> <i class="fa fa-angle-left pull-right"></i>
+    				<i class="fa fa-tasks text-green"></i> <span>Monitoreo de planes</span> <i class="fa fa-angle-left pull-right"></i>
     			</a>
     			
     			<ul class="treeview-menu" style="display: none;">
@@ -77,13 +77,13 @@
  			<li class="treeview"><a href="#"><i class="fa fa-desktop"></i> <span>Reporte Ciudadano</span> <i class="fa fa-angle-left pull-right"></i></a></li>  		
 
  			<li class="header">MÁS INFO</li>
-            	<li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Documentación</span></a></li>
+            	<!-- li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Documentación</span></a></li-->
 <!--           	<li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Diccionario de Datos</span></a></li>
-            	<li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Preguntas Frecuentes</span></a></li> --> 
-            	<li><a href="/documentacion.jsp"><i class="fa fa-circle-o text-green"></i> <span>Acerca de Tablero de Control</span></a></li>
-				<li><a href="https://nube.stp.gov.py/index.php/s/a6JRumfONc48ynV" target="_blank"><i class="fa fa-user" id="linkFichaSocial"></i><span>Ficha Social</span></a></li>
-				<li><a href="/tablero/PivotFicha.jsp"><i class="fa fa-user" id="linkPivotFichaSocial"></i><span>Pivot Ficha Social</span></a></li>
-				<li><a href="/reporte_pnd.jsp"><i class="fa fa-bar-chart-o"></i> <span>Reporte PND</span></a></li>
+            	<li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Preguntas Frecuentes</span></a></li> -->             	
+				<li><a href="/reporte_pnd.jsp"><i class="fa fa-bar-chart-o text-blue"></i> <span>Reporte PND</span></a></li>			
+				<li><a href="https://nube.stp.gov.py/index.php/s/a6JRumfONc48ynV" target="_blank"><i class="fa fa-user text-red" id="linkFichaSocial"></i><span>Ficha Social</span></a></li>
+				<li><a href="/tablero/PivotFicha.jsp"><i class="fa fa-user text-yellow" id="linkPivotFichaSocial"></i><span>Pivot Ficha Social</span></a></li>
+				<li><a href="/documentacion.jsp"><i class="fa fa-file-text-o"></i> <span>Acerca de Tablero de Control</span></a></li>								
             <% if (attributes.get("role_id_tablero").toString().equals("0")  && user.getName()!="parce@nandeparaguay.org"){%>	 
            	 <li class="header">ADMINISTRAR</li>
             	<li><a href="/indicadores.jsp"><i class="glyphicon glyphicon-info-sign text-red"></i> <span>Indicadores</span></a></li>
