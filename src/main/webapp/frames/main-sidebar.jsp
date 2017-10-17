@@ -77,19 +77,19 @@
  			<li class="treeview"><a href="#"><i class="fa fa-desktop"></i> <span>Reporte Ciudadano</span> <i class="fa fa-angle-left pull-right"></i></a></li>  		
 
  			<li class="header">MÁS INFO</li>
-            	<li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Documentación</span></a></li>
+            	<li><a href="#"><i class="fa fa-circle-o"></i> <span>Documentación</span></a></li>
 <!--           	<li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Diccionario de Datos</span></a></li>
             	<li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Preguntas Frecuentes</span></a></li> --> 
-            	<li><a href="/documentacion.jsp"><i class="fa fa-circle-o text-green"></i> <span>Acerca de Tablero de Control</span></a></li>
+            	<li><a href="/documentacion.jsp"><i class="fa fa-circle-o"></i> <span>Acerca de Tablero de Control</span></a></li>
 				<li><a href="https://nube.stp.gov.py/index.php/s/a6JRumfONc48ynV" target="_blank"><i class="fa fa-user" id="linkFichaSocial"></i><span>Ficha Social</span></a></li>
 				<li><a href="/tablero/PivotFicha.jsp"><i class="fa fa-user" id="linkPivotFichaSocial"></i><span>Pivot Ficha Social</span></a></li>
 				<li><a href="/reporte_pnd.jsp"><i class="fa fa-bar-chart-o"></i> <span>Reporte PND</span></a></li>
             <% if (attributes.get("role_id_tablero").toString().equals("0")  && user.getName()!="parce@nandeparaguay.org"){%>	 
            	 <li class="header">ADMINISTRAR</li>
-            	<li><a href="/indicadores.jsp"><i class="glyphicon glyphicon-info-sign text-red"></i> <span>Indicadores</span></a></li>
-            	<li><a href="/objetivo.jsp"><i class="glyphicon glyphicon-flag text-yellow"></i> <span>Objetivos</span></a></li>
-            	<li><a href="#"><i class="glyphicon glyphicon-flag text-green"></i> <span>Objetivos Sugeridos</span></a></li>
-            	<li><a href="/usuarios.jsp"><i class="glyphicon glyphicon-user text-aqua"></i> <span>Usuarios</span></a></li>
+            	<li><a href="/indicadores.jsp"><i class="glyphicon glyphicon-info-sign"></i> <span>Indicadores</span></a></li>
+            	<li><a href="/objetivo.jsp"><i class="glyphicon glyphicon-flag"></i> <span>Objetivos</span></a></li>
+            	<li><a href="#"><i class="glyphicon glyphicon-flag"></i> <span>Objetivos Sugeridos</span></a></li>
+            	<li><a href="/usuarios.jsp"><i class="glyphicon glyphicon-user"></i> <span>Usuarios</span></a></li>
            	<%}%>
             <!-- 
 	            <li class="treeview"><a href=".#" id="programarPlan"><i class="fa fa-files-o"></i><span>Programar Plan de Accion</span></a></li>
