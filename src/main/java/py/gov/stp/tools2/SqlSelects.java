@@ -1211,7 +1211,7 @@ public class SqlSelects {
 	
 	public static List<Periodo> selectPeriodo(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
-		String query = " select * from periodo "+condition;
+		String query = " select * from periodo "+condition + "  and not borrado ";
 
 		Statement statement = null;
 		ResultSet rs=null;
@@ -2722,7 +2722,7 @@ public class SqlSelects {
 				+ " ins_linea_accion_costo_dd.ins_linea_accion_id=ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_costo_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_costo_dd.dist_id=ins_linea_accion_base_dd.dist_id"
 				+ " left join ins_linea_accion_destinatario_real_dd on "
 				+ " ins_linea_accion_destinatario_real_dd.ins_linea_accion_id=ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_destinatario_real_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_destinatario_real_dd.dist_id=ins_linea_accion_base_dd.dist_id"
-				+ " where periodo=2016 " + condition;
+				+ " where periodo=2017 " + condition;
 		Statement statement = null;
 		ResultSet rs = null;
 		List<LineaAccionProgramacion> objetos = new ArrayList<LineaAccionProgramacion>();
@@ -2849,7 +2849,7 @@ public class SqlSelects {
 				+ " ins_linea_accion_costo_estimado_dd.ins_linea_accion_id=ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_costo_estimado_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_costo_estimado_dd.dist_id=ins_linea_accion_base_dd.dist_id"
 				+ " left join ins_linea_accion_destinatario_real_dd on "
 				+ " ins_linea_accion_destinatario_real_dd.ins_linea_accion_id=ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_destinatario_real_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_destinatario_real_dd.dist_id=ins_linea_accion_base_dd.dist_id"
-				+ " where periodo=2016 " + condition+ " order by depto_id, dist_id";
+				+ " where true " + condition+ " order by depto_id, dist_id";
 		Statement statement = null;
 		ResultSet rs = null;
 		List<LineaAccionProgramacion> objetos = new ArrayList<LineaAccionProgramacion>();

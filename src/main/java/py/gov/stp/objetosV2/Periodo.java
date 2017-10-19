@@ -13,8 +13,9 @@ public class Periodo {
 	protected Date fechaInsercion;
 	protected Date fechaActualizacion;	
     protected String usuarioResponsable;
-    protected boolean borrado=false;
+    protected boolean borrado;
 	
+    
 	public int getId() {
 		return id;
 	}
@@ -44,7 +45,7 @@ public class Periodo {
 	}
 	public void setFechaFin(Date fechaFin) {
 		this.fechaFin = fechaFin;
-	}
+	}	
 	public boolean isBorrado() {
 		return borrado;
 	}
