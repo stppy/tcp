@@ -241,7 +241,9 @@ tbody {
 				
 					<script>
 
-					
+					var periodoActual = 2017;
+					var depto_id =  null;
+					var dist_id = null;
 					var totalDesempenhoDeptoDis=[];
 					var pocentajeColor1 = parseInt(70);
 					var pocentajeColor2 = parseInt(90);
@@ -311,7 +313,7 @@ tbody {
 					var desPaisDepto=JSON.parse(desPaisDeptojson);
 															
 					var desPaisDistjson = $.ajax({
-				    	url:'/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist3',
+				    	url:'/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist3&periodoId=2017',
 				      	type:'get',
 				      	dataType:'json',
 				      	crossDomain:true,
@@ -413,9 +415,6 @@ tbody {
 					    	}
 				    	} 
 					}
-					var periodoActual = 2017;
-					var depto_id =  null;
-					var dist_id = null;
 
 					function renderEntidades(e){
 						
@@ -444,6 +443,16 @@ tbody {
 							      	async:false       
 							    }).responseText;
 								lineaAccionDepartamento=JSON.parse(lineaAccionDepartamento);
+								
+								//Obtenemos el desempeño del distrito por año seleccionado
+								desPaisDistjson = $.ajax({
+							    	url:'/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist3&periodoId='+periodoSeleccionado,
+							      	type:'get',
+							      	dataType:'json',
+							      	crossDomain:true,
+							      	async:false       
+							    }).responseText;
+								desPaisDist=JSON.parse(desPaisDistjson);
 								
 								var desDepartInst= [];//Obtenemos el desempeño de las instituciones a nivel departamental
 
@@ -552,6 +561,15 @@ tbody {
 							    }).responseText;
 								lineaAccionDepartamento=JSON.parse(lineaAccionDepartamento);
 								
+								//Obtenemos el desempeño del distrito por año seleccionado
+								desPaisDistjson = $.ajax({
+							    	url:'/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist3&periodoId='+periodoSeleccionado,
+							      	type:'get',
+							      	dataType:'json',
+							      	crossDomain:true,
+							      	async:false       
+							    }).responseText;
+								desPaisDist=JSON.parse(desPaisDistjson);
 								
 								var desDepartInst= [];//Obtenemos el desempeño de las instituciones a nivel departamental
 

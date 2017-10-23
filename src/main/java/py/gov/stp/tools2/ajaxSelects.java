@@ -1071,7 +1071,7 @@ public class ajaxSelects extends HttpServlet {
         	}          
         	if (action.equals("getAccionHasProducto")){
         		List objetos=null;
-        		condition = " where true and not borrado ";
+        		condition = " where true  ";
         		if (accionId!=null) condition += " and accion_id ='"+accionId+"'";
         		if (accionHasProductoId!=null) condition += " and id ='"+accionHasProductoId+"'";
         		if (nivel != null) condition += " and spr_nivel_id ="+nivel;
@@ -1384,6 +1384,8 @@ public class ajaxSelects extends HttpServlet {
         		ArrayList<DesempDistrito> desempenhoDist= new  ArrayList<DesempDistrito>();              		
 	            if (departamentoId!=null) condition += " and ins_linea_accion_base_dd.depto_id='"+departamentoId+"'";
 	            if (distritoId!=null) condition += " and ins_linea_accion_base_dd.dist_id='"+distritoId+"'";
+        		if (periodoId!=null) condition += " and periodo = '"+periodoId+"'";        		
+
                 try {                	
                 	double acum=0, promedio=0;
                 	int cont=0;
