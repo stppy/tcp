@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.jasig.cas.client.authentication.AttributePrincipal;
 
 import py.gov.stp.objetosV2.*;
@@ -404,7 +405,8 @@ public class ajaxSelects extends HttpServlet {
         		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
         		if (periodoId!=null) condition += " and periodo_id ='"+periodoId+"'";
         		 				
-	        		conditionIdLAGA += " WHERE id = 236 OR id BETWEEN 238 AND 245 OR id = 1004 AND borrado is false ORDER BY orden"; //TODO: verificar condicionante
+	        		//conditionIdLAGA += " WHERE id = 236 OR id BETWEEN 238 AND 245 OR id = 1004 AND borrado is false ORDER BY orden"; //TODO: verificar condicionante
+	        		conditionIdLAGA += " WHERE id BETWEEN 236 AND 245 AND borrado is false ORDER BY orden"; //TODO: verificar condicionante
 	    			conditionAccGA += " WHERE id BETWEEN 28950 AND 29011 AND borrado = false"; 				//TODO: verificar condicionante
 	    			conditionAccCat += " WHERE borrado = false"; 											
 	    			conditionActGA += " WHERE accion_id BETWEEN 28950 AND 29011 AND borrado = false"; 		//TODO: verificar condicionante
@@ -659,7 +661,7 @@ public class ajaxSelects extends HttpServlet {
 				}
         		JsonElement json = new Gson().toJsonTree(objectAreas);
         		out.println(json.toString());
-        	}        	
+        	} 	
         	if (action.equals("getLineasProgramadas")){
         		List objetos=null; 
 
