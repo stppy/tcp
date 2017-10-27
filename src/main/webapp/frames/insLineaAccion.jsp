@@ -136,7 +136,7 @@ function renderEvidencia(avanceId, parametros){
 
 		for(i = 0;i<lineaAccion.length; i++){
 			optionLineaAccion+='<option value="'+lineaAccion[i].id+'" >'+lineaAccion[i].nombre+'</option>';
-		}		 */
+		} */
 		
 		var unidadMedida = $.ajax({
 			url:'/tablero/ajaxSelects2?action=getUnidadMedida',
@@ -175,42 +175,75 @@ function renderEvidencia(avanceId, parametros){
 							'		    <div class="modal-body" id="cuerpoModalInsLineaAccion" >'+
 									    
 							'				<form role="form" id="formularioInsLineaAccion">'+
-							'					<div class="form-group">'+
-							'						<label for="nombreInstitucionInsLineaAccion">Nombre Institución</label>'+
-							'						<input type="text" name="institucion" id="nombreInstitucionInsLineaAccion" list="listaf1c1" class="form-control"></input>'+
+							'					<div class="col-md-12">'+							
+							'						<div class="table-responsive">'+
+							'							<table class="table table-hover">'+
+							'							<tbody id="cuerpoformularioInsLineaAccion">'+
+							'								<tr><td colspan="2" >'+						
+							'										<div class="form-group">'+
+							'											<label for="nombreInstitucionInsLineaAccion">Nombre Institución</label>'+
+							'											<input type="text" name="institucion" id="nombreInstitucionInsLineaAccion" list="listaf1c1" class="form-control"></input>'+
+							'										</div>'+
+							'								</tr></td>'+
+							'								<tr><td>'+
+							'										<div class="form-group">'+
+							'											<label for="periodo">Periodo</label>'+
+							'											<select id="periodoInsLineaAccion" class="form-control">'+optionPeriodo+'</select>'+
+							'										</div>'+
+							'									</td>'+
+							'									<td>'+
+							'										<div class="form-group">'+
+							'											<label for="version">Versión</label>'+
+							'											<input type="text" id="versionInsLineaAccion" list="listaf1c2" class="form-control"></input>'+							
+							'										</div>'+
+							'								</tr></td>'+
+							'								<tr><td>'+
+							'										<div class="form-group">'+
+							'											<label for="idInsLineaAccion">Id Linea Acción</label>'+
+							'											<input type="text" id="idInsLineaAccion" class="form-control" placeholder="Id Linea Acción" disabled="">'+
+							'										</div>'+
+							'									</td>'+	
+							'									<td>'+
+							'										<div class="form-group">'+
+							'											<label for="nombreLineaAccionInsLineaAccion">Lineas de Acción disponibles (cantidad:<span id="cantLAdisp"></span>)</label>'+												
+							'											<select name="lineaAccion" id="nombreLineaAccionInsLineaAccion" class="form-control"></select>'+							
+							'										</div>'+
+							'								</tr></td>'+
+							'								<tr><td colspan="2" >'+
+							'										<div class="form-group">'+
+							'											<label for="descripcionInsLineaAccion">Descripción Linea Acción</label>'+
+							'											<input type="text" id="descripcionInsLineaAccion" value="" disabled>'+
+							'										</div>'+
+							'								</tr></td>'+
+							'								<tr><td>'+
+							'										<div class="form-group">'+
+							'											<label for="unidadMedida">U. Medida</label>'+
+							'											<input type="text" id="unidadMedidaInsLineaAccion" class="form-control" placeholder="U. Medida" disabled>'+
+							'										</div>'+
+							'									</td>'+
+							'									<td>'+
+							'										<div class="form-group">'+
+							'											<label for="meta">Meta</label>'+
+							'											<input type="number" id="metaInsLineaAccion" class="form-control" name="meta" placeholder="Ingrese Meta" required >'+
+							'										</div>'+
+							'								</tr></td>'+
+							/*'								<tr><td>'+
+																	<div class="form-group">'+
+ 							'											<label for="version">Etiquetas </label></br>'+
+																		todasLasEtiquetas
+							'										</div>'+		 
+							'								</tr></td>'+*/
+							'							</tbody>'+
+							'							</table>'+
+							'						</div>'+
 							'					</div>'+
-							'					<div class="form-group">'+
-							'						<label for="periodo">Periodo</label>'+
-							'						<select id="periodoInsLineaAccion" class="form-control">'+optionPeriodo+'</select>'+
-							'					</div>'+	
-							'					<div class="form-group">'+
-							'						<label for="version">Versión</label>'+
-							'						<input type="text" id="versionInsLineaAccion" list="listaf1c2" class="form-control"></input>'+							
-							'					</div>'+
-							'					<div class="form-group">'+
-							'						<label for="nombreLineaAccionInsLineaAccion">Lineas de Acción disponibles (cantidad:<span id="cantLAdisp"></span>)</label>'+
-							'						<input type="hidden" id="idInsLineaAccion" value="">'+					
-							'						<input type="text" name="lineaAccion" id="nombreLineaAccionInsLineaAccion" list="listaf1c3" class="form-control"></input>'+
-							'					</div>'+			
-							'					<div class="form-group">'+
-							'						<label for="unidadMedida">U. Medida</label>'+
-							'						<input type="text" id="unidadMedidaInsLineaAccion" class="form-control" placeholder="U. Medida" disabled>'+
-							'					</div>'+
-							'					<div class="form-group">'+
-							'						<label for="meta">Meta</label>'+
-							'						<input type="number" id="metaInsLineaAccion" class="form-control" name="meta" placeholder="Ingrese Meta" required >'+
-							'					</div>'+								
-							'					<div class="form-group">'+
-/* 							'						<label for="version">Etiquetas </label></br>'+
-													todasLasEtiquetas
-							'					</div>'+		 */	
 							'				</form>'+			  
 							
 							'		    </div>'+
 							'		</div>'+ 
 							'	</div>'+
 							'</div>';
-							
+								 												
 			$("#programacion").append(contenido);			
 			$("#unidadMedidaInsLineaAccion");
 			$("#insLineaAccion").find("#formularioInsLineaAccion").append('<div class="form-group" id="guardarInsLineaAccionBoton"><button type="submit" class="btn btn-success" id="guardarInsLineaAccion" >Guardar</button></div>');
@@ -288,7 +321,7 @@ function renderEvidencia(avanceId, parametros){
 				}			        
 				
 		     	// Autocompletado del Nombre de la Institución.
-		        this.nombreLAFocus = function(){
+		        /* this.nombreLAFocus = function(){
 		        	
 		        	var institucionSeleccionada = $("#nombreInstitucionInsLineaAccion").val();
 					var periodoSeleccionado = $("#periodoInsLineaAccion option:selected").val();
@@ -332,7 +365,7 @@ function renderEvidencia(avanceId, parametros){
 					var optionLineaAccion;
 
 					$('#cantLAdisp').html(' '+lineasAccionRestantes.length+ ' de '+ lineaAccion.length );
-				}
+				} */
 			    
 			}
 			
@@ -340,7 +373,7 @@ function renderEvidencia(avanceId, parametros){
 			document.getElementById('versionInsLineaAccion').addEventListener('focus',eje1.versionILAFocus,false);
 			//document.getElementById('versionInsLineaAccion').addEventListener('change',eje1.versionILA,false);
 			document.getElementById('nombreInstitucionInsLineaAccion').addEventListener('focus',eje1.institucionFocus,false);
-			document.getElementById('nombreLineaAccionInsLineaAccion').addEventListener('focus',eje1.nombreLAFocus,false);
+			//document.getElementById('nombreLineaAccionInsLineaAccion').addEventListener('focus',eje1.nombreLAFocus,false);
 			
 	});
 	
@@ -362,7 +395,7 @@ function renderEvidencia(avanceId, parametros){
 		if (lineasAccionRestantes.length > 0) {
 			for(v = 0;v<lineasAccionRestantes.length; v++)
 			{				
-				optionLineasAccionRestantes+='<option value="'+lineasAccionRestantes[v].id+'" >'+lineasAccionRestantes[v].nombre+'</option>';		
+				optionLineasAccionRestantes+='<option value="'+lineasAccionRestantes[v].id+'" > '+lineasAccionRestantes[v].nombre+'</option>';		
 			}
 		}
 		$('#nombreLineaAccionInsLineaAccion').html(optionLineasAccionRestantes);

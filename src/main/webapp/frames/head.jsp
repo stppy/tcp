@@ -21,7 +21,7 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link href="dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
-    <script src="/dist/libs/jquery/1.11.2/jquery.min.js"></script>    
+    <script src="dist/libs/jquery/1.11.2/jquery.min.js"></script>    
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>

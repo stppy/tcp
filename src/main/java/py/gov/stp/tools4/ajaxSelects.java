@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.jasig.cas.client.authentication.AttributePrincipal;
 
 import py.gov.stp.objetosV2.*;
-import py.gov.stp.tools2.SqlSelects;
+import py.gov.stp.tools2.SqlSelects4;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -227,28 +227,28 @@ public class ajaxSelects extends HttpServlet {
         if (action!=null && action!=""){
         	if (action.equals("getLineaEstrategica")){
         		List objetos=null; 
-           		try {objetos = SqlSelects.selectLineaEstrategica();}
+           		try {objetos = SqlSelects4.selectLineaEstrategica();}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
         		}              	  
         	if (action.equals("getAccionHasEtiqueta")){
         		List objetos=null;
-           		try {objetos = SqlSelects.selectAccionHasEtiqueta();}
+           		try {objetos = SqlSelects4.selectAccionHasEtiqueta();}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());        		
         	}
         	if (action.equals("getEtiqueta")){
         		List objetos=null;
-           		try {objetos = SqlSelects.selectEtiqueta();}
+           		try {objetos = SqlSelects4.selectEtiqueta();}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());        	
         	}
         	if (action.equals("getHitoHasBeneficiario")){
         		List objetos=null;
-           		try {objetos = SqlSelects.selectHitoHasBeneficiario();}
+           		try {objetos = SqlSelects4.selectHitoHasBeneficiario();}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());        	
@@ -259,7 +259,7 @@ public class ajaxSelects extends HttpServlet {
         		if (avanceId!=null) condition += " and avance_id ='"+avanceId+"'";
         		if (beneficiarioId!=null) condition += " and id ='"+beneficiarioId+"'";
 
-           		try {objetos = SqlSelects.selectBeneficiario(condition);}
+           		try {objetos = SqlSelects4.selectBeneficiario(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());        	
@@ -268,7 +268,7 @@ public class ajaxSelects extends HttpServlet {
         		List objetos=null;
         		condition = " where true";
         		if (beneficiarioTipoId!=null) condition += " and id ='"+beneficiarioTipoId+"'";
-           		try {objetos = SqlSelects.selectBeneficiarioTipo(condition);}
+           		try {objetos = SqlSelects4.selectBeneficiarioTipo(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());        	        	        	
@@ -279,56 +279,56 @@ public class ajaxSelects extends HttpServlet {
         		if (beneficiarioTipoId!=null) condition += " and tipo_beneficiario_grupo_id ='"+beneficiarioTipoId+"'";
         		if (beneficiarioGrupoId!=null) condition += " and id ='"+beneficiarioGrupoId+"'";
 
-           		try {objetos = SqlSelects.selectBeneficiarioGrupo(condition);}
+           		try {objetos = SqlSelects4.selectBeneficiarioGrupo(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());        	        	
         	}        	
         	if (action.equals("getBeneficiarioDetalle")){
         		List objetos=null;
-           		try {objetos = SqlSelects.selectBeneficiarioDetalle();}
+           		try {objetos = SqlSelects4.selectBeneficiarioDetalle();}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());        	        	
         	}
         	if (action.equals("getBeneficiarioDetalleClave")){
         		List objetos=null;
-           		try {objetos = SqlSelects.selectBeneficiarioDetalleClave();}
+           		try {objetos = SqlSelects4.selectBeneficiarioDetalleClave();}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());        	
         	}
         	if (action.equals("getGeoPoligono")){
         		List objetos=null;
-           		try {objetos = SqlSelects.selectGeoPoligono();}
+           		try {objetos = SqlSelects4.selectGeoPoligono();}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());        	        	
         	}
         	if (action.equals("getGeoPoligonoTipo")){
         		List objetos=null;
-           		try {objetos = SqlSelects.selectGeoPoligonoTipo();}
+           		try {objetos = SqlSelects4.selectGeoPoligonoTipo();}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());        	        	
         	}
         	if (action.equals("getAccionHasGeoPoligono")){
         		List objetos=null;
-           		try {objetos = SqlSelects.selectAccionHasGeoPoligono();}
+           		try {objetos = SqlSelects4.selectAccionHasGeoPoligono();}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());        	
         	}         	
         	if (action.equals("getTipoAccion")){
         		List objetos=null; 
-           		try {objetos = SqlSelects.selectTipoAccion();}
+           		try {objetos = SqlSelects4.selectTipoAccion();}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
         		} 
         	if (action.equals("getUnidadMedida")){
         		List objetos=null; 
-           		try {objetos = SqlSelects.selectUnidadMedida();}
+           		try {objetos = SqlSelects4.selectUnidadMedida();}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -339,7 +339,7 @@ public class ajaxSelects extends HttpServlet {
         		condition = " where true ";
         		if (lineaAccionId!=null) condition += " and id ='"+lineaAccionId+"'";
         		if (borrado!=null) condition += " and borrado is "+ borrado;
-           		try {objetos = SqlSelects.selectLineaAccion(condition, "");}
+           		try {objetos = SqlSelects4.selectLineaAccion(condition, "");}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -352,7 +352,7 @@ public class ajaxSelects extends HttpServlet {
         		condition += " and institucion_id IN (select id from institucion "+condition2+") ";
         		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
         		if (periodoId!=null) condition += " and periodo_id ='"+periodoId+"'";        		
-           		try {objetos = SqlSelects.selectInsLineaAccion(condition);}
+           		try {objetos = SqlSelects4.selectInsLineaAccion(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -414,23 +414,23 @@ public class ajaxSelects extends HttpServlet {
 	    			conditionPro += " WHERE actividad_id BETWEEN 80522 AND 80656 AND borrado = false";
 	    			
            		try {
-           			areasAgaCat = SqlSelects.selectAreasAgaCat();
-           			laHasAreasAga = SqlSelects.selectLaHasAreasAga(conditionLaHasAreasAga);
-           			insLineaAccion = SqlSelects.selectInsLineaAccion(condition);
-           			children = SqlSelects.selectLineaAccion(condition, conditionIdLAGA);
-           			laHasPnd = SqlSelects.selectLaHasPND();
-           			pnd = SqlSelects.selectPND();
-           			laHasOds = SqlSelects.selectLaHasODS();
-           			ods = SqlSelects.selectODS();
-           			axion = SqlSelects.selectAccion(condition, conditionAccGA);
-           			accionCatalogo = SqlSelects.selectAccionCatalogo(condition, conditionAccCat);
-           			actividad = SqlSelects.selectActividad(conditionActGA);
-           			siglaInsti = SqlSelects.selectInstitucion(condition);
-           			institu = SqlSelects.selectInstitucionGA(condition);
-           			hito = SqlSelects.selectHito(conditionHitoGA);
-           			avances = SqlSelects.selectAvance("", conditionAv);
-           			programacion = SqlSelects.selectProgramacion("", conditionPro);
-           			eviden = SqlSelects.selectEvidencia(condition);
+           			areasAgaCat = SqlSelects4.selectAreasAgaCat();
+           			laHasAreasAga = SqlSelects4.selectLaHasAreasAga(conditionLaHasAreasAga);
+           			insLineaAccion = SqlSelects4.selectInsLineaAccion(condition);
+           			children = SqlSelects4.selectLineaAccion(condition, conditionIdLAGA);
+           			laHasPnd = SqlSelects4.selectLaHasPND();
+           			pnd = SqlSelects4.selectPND();
+           			laHasOds = SqlSelects4.selectLaHasODS();
+           			ods = SqlSelects4.selectODS();
+           			axion = SqlSelects4.selectAccion(condition, conditionAccGA);
+           			accionCatalogo = SqlSelects4.selectAccionCatalogo(condition, conditionAccCat);
+           			actividad = SqlSelects4.selectActividad(conditionActGA);
+           			siglaInsti = SqlSelects4.selectInstitucion(condition);
+           			institu = SqlSelects4.selectInstitucionGA(condition);
+           			hito = SqlSelects4.selectHito(conditionHitoGA);
+           			avances = SqlSelects4.selectAvance("", conditionAv);
+           			programacion = SqlSelects4.selectProgramacion("", conditionPro);
+           			eviden = SqlSelects4.selectEvidencia(condition);
            			
            			
            			for(int c = 0; c < areasAgaCat.size(); c += 1){												// recorrido de cada area
@@ -675,7 +675,7 @@ public class ajaxSelects extends HttpServlet {
         		};
         		condition += " and ins_id IN (select id from institucion "+condition2+") ";
         		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
-           		try {objetos = SqlSelects.selectLineasProgramadas(condition);}
+           		try {objetos = SqlSelects4.selectLineasProgramadas(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -694,7 +694,7 @@ public class ajaxSelects extends HttpServlet {
         		};
         		
         		if (institucionId!=null) condition += " and id ='"+institucionId+"'";
-           		try {objetos = SqlSelects.selectInstitucion(condition+condition2);}
+           		try {objetos = SqlSelects4.selectInstitucion(condition+condition2);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -703,7 +703,7 @@ public class ajaxSelects extends HttpServlet {
         		List objetos=null; 
         		condition = " where true ";
         		if (periodoId!=null) condition += " and id ='"+periodoId+"'"; 
-           		try {objetos = SqlSelects.selectPeriodo(condition);}
+           		try {objetos = SqlSelects4.selectPeriodo(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -713,7 +713,7 @@ public class ajaxSelects extends HttpServlet {
         		condition = " where true ";
         		if (anho!=null) condition += " and anho ="+anho; 
         		if (versionId!=null) condition += " and nro ='"+versionId+"'"; 
-           		try {objetos = SqlSelects.selectVersion(condition);}
+           		try {objetos = SqlSelects4.selectVersion(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -723,21 +723,21 @@ public class ajaxSelects extends HttpServlet {
         		condition = " where true and not borrado ";
         		if (anho!=null) condition += " and periodo_id ="+anho; 
         		if (versionId!=null) condition += " and version ='"+versionId+"'"; 
-           		try {objetos = SqlSelects.selectVersionInsLineaAccion(condition);}
+           		try {objetos = SqlSelects4.selectVersionInsLineaAccion(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
         	}  
         	if (action.equals("getHitoTipo")){
         		List objetos=null; 
-           		try {objetos = SqlSelects.selectHitoTipo();}
+           		try {objetos = SqlSelects4.selectHitoTipo();}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
         	}   
         	if (action.equals("getHito")){
         		List objetos=null; 
-           		try {objetos = SqlSelects.selectHito(conditionHitoGA);}
+           		try {objetos = SqlSelects4.selectHito(conditionHitoGA);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -751,7 +751,7 @@ public class ajaxSelects extends HttpServlet {
         		if (catalogoAccionId!=null) condition += " and id_accion_catalogo ='"+catalogoAccionId+"'";
         		if (accionId!=null) condition += " and id ='"+accionId+"'";
            		
-        		try {objetos = SqlSelects.selectAccion(condition, "");}
+        		try {objetos = SqlSelects4.selectAccion(condition, "");}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -771,7 +771,7 @@ public class ajaxSelects extends HttpServlet {
         		if (anho!=null) condition += " and spr_anho="+anho;
         		if (version!=null) condition += " and spr_version="+version;
 
-        		try {objetos = SqlSelects.selectAccionHasProducto(condition);}
+        		try {objetos = SqlSelects4.selectAccionHasProducto(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -781,14 +781,14 @@ public class ajaxSelects extends HttpServlet {
         		condition = " where true ";        		        		        		
         		if (accionId!=null) condition += " and accion_id ='"+accionId+"'";
         		if (catalogoAccion!=null) condition += " and accion ='"+catalogoAccion+"'";        		
-           		try {objetos = SqlSelects.selectAccion(condition, "");}
+           		try {objetos = SqlSelects4.selectAccion(condition, "");}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
         	}
         	if (action.equals("getSprProducto")){
         		List objetos=null; 
-           		try {objetos = SqlSelects.selectSprProducto();}
+           		try {objetos = SqlSelects4.selectSprProducto();}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -797,7 +797,7 @@ public class ajaxSelects extends HttpServlet {
         		List objetos=null; 
         		condition = " where true ";
         		if (catalogoAccionId!=null) condition += " and id ='"+catalogoAccionId+"'";
-           		try {objetos = SqlSelects.selectAccionCatalogo(condition, "");}
+           		try {objetos = SqlSelects4.selectAccionCatalogo(condition, "");}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -806,7 +806,7 @@ public class ajaxSelects extends HttpServlet {
         		List objetos=null; 
         		condition = " where true ";
         		if (catalogoAccionId!=null) condition += " and id ='"+catalogoAccionId+"'";
-           		try {objetos = SqlSelects.selectAccionCatalogoUM(condition);}
+           		try {objetos = SqlSelects4.selectAccionCatalogoUM(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -815,7 +815,7 @@ public class ajaxSelects extends HttpServlet {
         		List objetos=null; 
         		condition = " where true";
         		if (insLineaAccionId!=null) condition += " and a.ins_linea_accion_id ='"+insLineaAccionId+"'";        		
-           		try {objetos = SqlSelects.selectAccionCatalogoPorLineaAccion(condition);}
+           		try {objetos = SqlSelects4.selectAccionCatalogoPorLineaAccion(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -825,7 +825,7 @@ public class ajaxSelects extends HttpServlet {
         		condition = " where true ";
         		if (cronogramaId!=null) condition += " and id ='"+cronogramaId+"'";
         		if (accionId!=null) condition += " and accion_id ='"+accionId+"'";
-           		try {objetos = SqlSelects.selectCronograma(condition);}
+           		try {objetos = SqlSelects4.selectCronograma(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -836,7 +836,7 @@ public class ajaxSelects extends HttpServlet {
         		if (programacionId!=null) condition += " and id ='"+programacionId+"'";
         		if (actividadId!=null) condition += " and actividad_id ='"+actividadId+"'";
 
-           		try {objetos = SqlSelects.selectProgramacion(condition, "");}
+           		try {objetos = SqlSelects4.selectProgramacion(condition, "");}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -846,7 +846,7 @@ public class ajaxSelects extends HttpServlet {
         		condition = " where true ";
         		if (actividadId!=null) condition += " and actividad_id ='"+actividadId+"'";
         		if (avanceId!=null) condition += " and id ='"+avanceId+"'";
-           		try {objetos = SqlSelects.selectAvance(condition, "");}
+           		try {objetos = SqlSelects4.selectAvance(condition, "");}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -859,7 +859,7 @@ public class ajaxSelects extends HttpServlet {
         		if (beneficiarioGrupoId!=null) condition += " and beneficiario_grupo_id ='"+beneficiarioGrupoId+"'";
         		if (destinatarioId!=null) condition += " and id ='"+destinatarioId+"'";
 
-           		try {objetos = SqlSelects.selectAccionDestinatario(condition);}
+           		try {objetos = SqlSelects4.selectAccionDestinatario(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -870,7 +870,7 @@ public class ajaxSelects extends HttpServlet {
         		condition = " where true";
         		if (accionId!=null) condition += " and accion_id ='"+accionId+"'";
         		if (productoObjetoGastoId!=null) condition += " and id ='"+productoObjetoGastoId+"'";
-           		try {objetos = SqlSelects.selectProductoObjetoGasto(condition);}
+           		try {objetos = SqlSelects4.selectProductoObjetoGasto(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());        	
@@ -878,7 +878,7 @@ public class ajaxSelects extends HttpServlet {
         	if (action.equals("getProductos")){
         		List productos=null;
         		if (producto!=null ) condition = " where id ="+producto.toString();
-				try {productos = SqlSelects.selectAllProductosSPR(condition);}
+				try {productos = SqlSelects4.selectAllProductosSPR(condition);}
 				catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(productos );
         		out.println(json.toString());          		
@@ -903,7 +903,7 @@ public class ajaxSelects extends HttpServlet {
         		};
         		if (borrado!=null) condicion += " and pp.borrado is "+ borrado;
         		
-        		try {objetos = SqlSelects.selectAllProductosPresupuestoPND(condicion);}
+        		try {objetos = SqlSelects4.selectAllProductosPresupuestoPND(condicion);}
 				catch (SQLException e) {e.printStackTrace();}        		
         		
         		out.println(objetos.toString());return;
@@ -911,7 +911,7 @@ public class ajaxSelects extends HttpServlet {
         	if (action.equals("getProgramacionPorMes")){
         		List objetos=null;
         		if (actividadId!=null) condition += " and actividad_id ='"+actividadId+"'";
-           		try {objetos = SqlSelects.selectProgramacionPorMes(condition);}
+           		try {objetos = SqlSelects4.selectProgramacionPorMes(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());        	
@@ -920,7 +920,7 @@ public class ajaxSelects extends HttpServlet {
         		List objetos=null;
         		condition = " where true";
         		if (trimestreId!=null) condition += " and id ='"+trimestreId+"'";
-           		try {objetos = SqlSelects.selectTrimestre(condition);}
+           		try {objetos = SqlSelects4.selectTrimestre(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());        	
@@ -936,7 +936,7 @@ public class ajaxSelects extends HttpServlet {
                 if (periodoId!=null) condition += " and periodo ='"+periodoId+"'";
                 if (etiquetaId!=null && etiquetaId!=0) condition += " and etiqueta_id = "+etiquetaId;
 
-           		try {objetos = SqlSelects.selectResumenLineasAccionProgramacion(condition);}
+           		try {objetos = SqlSelects4.selectResumenLineasAccionProgramacion(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -948,7 +948,7 @@ public class ajaxSelects extends HttpServlet {
         		if (institucionIdConcat!=null) condition += " and ins_linea_accion_base_dd.institucion_id in("+institucionIdConcat+")";
         		if (departamento!=null) condition += " and ins_linea_accion_base_dd.depto_id ='"+departamento+"'";
         		if (distritoId!=null) condition += " and ins_linea_accion_base_dd.dist_id='"+distritoId+"'";
-           		try {objetos = SqlSelects.selectResumenLineasAccionProgramacionDepto(condition);}
+           		try {objetos = SqlSelects4.selectResumenLineasAccionProgramacionDepto(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -957,7 +957,7 @@ public class ajaxSelects extends HttpServlet {
         		List objetos=null; 
         		if (institucionId!=null) condition += " and ins_linea_accion_base.institucion_id ='"+institucionId+"'";
         		if (departamentoId!=null) condition += " and ins_linea_accion_base_dd.depto_id='"+departamentoId+"'";
-           		try {objetos = SqlSelects.selectResumenLineasAccionProgramacionInstitucion(condition);}
+           		try {objetos = SqlSelects4.selectResumenLineasAccionProgramacionInstitucion(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -971,7 +971,7 @@ public class ajaxSelects extends HttpServlet {
                 try {                	
                 	double acum=0, promedio=0;
                 	int cont=0;
-                	objetos = SqlSelects.selectResumenLineasAccionProgramacionInstDptoDist(condition);
+                	objetos = SqlSelects4.selectResumenLineasAccionProgramacionInstDptoDist(condition);
                 
                 	if(institucionId==null && departamentoId==null && distritoId==null){
                 		for (int x = 0; x < 18; x += 1) {
@@ -1030,7 +1030,7 @@ public class ajaxSelects extends HttpServlet {
                 try {                	
                 	double acum=0, promedio=0;
                 	int cont=0;
-                	objetos = SqlSelects.selectResumenLineasAccionProgramacionInstDptoDist3(condition);
+                	objetos = SqlSelects4.selectResumenLineasAccionProgramacionInstDptoDist3(condition);
                                 	             	
         			acum=0; promedio=0; cont=0; 
         			int distritoAct = 0;
@@ -1151,7 +1151,7 @@ public class ajaxSelects extends HttpServlet {
                 try {                	
                 	double acum=0, promedio=0;
                 	int cont=0;
-                	objetos = SqlSelects.selectResumenLineasAccionProgramacionInstDptoDist4(condition);
+                	objetos = SqlSelects4.selectResumenLineasAccionProgramacionInstDptoDist4(condition);
                                 	             	
         			acum=0; promedio=0; cont=0; 
         			int distritoAct = 0;
@@ -1306,7 +1306,7 @@ public class ajaxSelects extends HttpServlet {
                 try {                	
                 	double acum=0, promedio=0;
                 	int cont=0;
-                	objetos = SqlSelects.selectResumenLineasAccionProgramacionDptoDistInst (condition);
+                	objetos = SqlSelects4.selectResumenLineasAccionProgramacionDptoDistInst (condition);
                                 	             	
         			acum=0; promedio=0; cont=0; 
         			int distritoAct = 0;
@@ -1453,7 +1453,7 @@ public class ajaxSelects extends HttpServlet {
                 if (institucionIdConcat!=null) condition += " and ins_linea_accion_base_dd.institucion_id in("+institucionIdConcat+")";
                 if (departamentoId!=null) condition += " and ins_linea_accion_base_dd.depto_id='"+departamentoId+"'";
                 if (distritoId!=null) condition += " and ins_linea_accion_base_dd.dist_id='"+distritoId+"'";
-           		try {objetos = SqlSelects.selectResumenLineasAccionProgramacionInstDptoDist2(condition);}
+           		try {objetos = SqlSelects4.selectResumenLineasAccionProgramacionInstDptoDist2(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -1475,7 +1475,7 @@ public class ajaxSelects extends HttpServlet {
         		};
                 
                 try {
-					instituciones = SqlSelects.selectInstitucion(condition+condition2);
+					instituciones = SqlSelects4.selectInstitucion(condition+condition2);
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
@@ -1497,7 +1497,7 @@ public class ajaxSelects extends HttpServlet {
 	    	            if (periodoId!=null) condition += " and periodo ='"+periodoId+"'";
 	    	            if (etiquetaId!=null && etiquetaId != 0) condition += " and etiqueta_id ='"+etiquetaId+"'";
 
-	                	objetos = SqlSelects.selectResumenLineasAccionProgramacionInstDptoDistrito(condition);
+	                	objetos = SqlSelects4.selectResumenLineasAccionProgramacionInstDptoDistrito(condition);
 	                	
 	                	for(int j = 0; j < instituciones.size(); j+= 1){
 		                	acum=0;
@@ -1557,7 +1557,7 @@ public class ajaxSelects extends HttpServlet {
         		};
                 
                 try {
-					instituciones = SqlSelects.selectInstitucion(condition+condition2);
+					instituciones = SqlSelects4.selectInstitucion(condition+condition2);
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
@@ -1583,7 +1583,7 @@ public class ajaxSelects extends HttpServlet {
 
 	                	double acum, promedio;
 	                	int cont;
-	                	objetos = SqlSelects.selectResumenLineasAccionProgramacionInstitucionDepto(condition);
+	                	objetos = SqlSelects4.selectResumenLineasAccionProgramacionInstitucionDepto(condition);
 	                	
 	                	for(int j = 0; j < instituciones.size(); j+= 1){
 		                	acum=0;
@@ -1633,7 +1633,7 @@ public class ajaxSelects extends HttpServlet {
 	            if (distritoId!=null) condition += " and ins_linea_accion_base_dd.dist_id='"+distritoId+"'";
 	            if (periodoId!=null) condition += " and periodo='"+periodoId+"'";
                 if (etiquetaId!=null && etiquetaId!=0) condition += " and etiqueta_id = "+etiquetaId;
-           		try {objetos = SqlSelects.selectResumenLineasAccionProgramacionDepartamentalDistrital(condition);}
+           		try {objetos = SqlSelects4.selectResumenLineasAccionProgramacionDepartamentalDistrital(condition);}
         		catch (SQLException e) {e.printStackTrace();}
            		out.println(objetos);return;
         	}
@@ -1645,7 +1645,7 @@ public class ajaxSelects extends HttpServlet {
         		}else{
         			condition += " and usuario_correo ='"+userCorreo+"'";
         		}
-        		try {objetos = SqlSelects.selectUsuarioLineaAccion(condition);}
+        		try {objetos = SqlSelects4.selectUsuarioLineaAccion(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		out.println(objetos);return;        	
         	}
@@ -1655,7 +1655,7 @@ public class ajaxSelects extends HttpServlet {
         		if (insLineaAccionIdConcat!="") condition += " and ins_linea_accion_id in("+insLineaAccionIdConcat+")";
         		if (insLineaAccionId!=null) condition += " and ins_linea_accion_id ='"+insLineaAccionId+"'";
         		if (etiquetaId!=null) condition += " and etiqueta_id ='"+etiquetaId+"'";
-           		try {objetos = SqlSelects.selectInsLineaAccionHasEtiqueta(condition);}
+           		try {objetos = SqlSelects4.selectInsLineaAccionHasEtiqueta(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		out.println(objetos);return;        	
         	}        	
@@ -1668,7 +1668,7 @@ public class ajaxSelects extends HttpServlet {
         		}else{
         			condition += " and usuario_correo ='"+userCorreo+"'";
         		}
-           		try {objetos = SqlSelects.selectUsuarioEtiqueta(condition);}
+           		try {objetos = SqlSelects4.selectUsuarioEtiqueta(condition);}
         		catch (SQLException e) {e.printStackTrace();}     	
            		
         		if(callback != null) {
@@ -1690,7 +1690,7 @@ public class ajaxSelects extends HttpServlet {
                 if (producto!=null) condition += " and spr_producto_id ="+producto;
                 if (anio!=null) condition += " and spr_anho ="+anio;
                 if (version!=null) condition += " and spr_version ="+version;                
-           		try {objetos = SqlSelects.selectPresupuestoAsignado(condition);}
+           		try {objetos = SqlSelects4.selectPresupuestoAsignado(condition);}
         		catch (SQLException e) {e.printStackTrace();}
            		out.println(objetos);return;
         	}
@@ -1698,7 +1698,7 @@ public class ajaxSelects extends HttpServlet {
         		String objetos=null;
         		condition = " where true";
                 if (objetoGastoId!=null) condition += " and id = "+objetoGastoId;
-           		try {objetos = SqlSelects.selectObjetoGasto(condition);}
+           		try {objetos = SqlSelects4.selectObjetoGasto(condition);}
         		catch (SQLException e) {e.printStackTrace();}
            		out.println(objetos);return;
         	}        	        	
