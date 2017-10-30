@@ -24,7 +24,7 @@
             <% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2") || attributes.get("role_id_tablero").toString().equals("3")){%>                        
 		    	<li class="treeview">
 					<a href="#">
-		   				<i class="fa fa-list-alt text-blue"></i> <span>Plan Operativo Institucional</span> <i class="fa fa-angle-left pull-right"></i>
+		   				<i class="fa fa-list-alt"></i> <span>Plan Operativo Institucional</span> <i class="fa fa-angle-left pull-right"></i>
 		   			</a>
 		   			<ul class="treeview-menu" style="display: none;">
 		   				<li class=""><a href="/entidad.jsp"><i class="fa fa-home" id="linkEntidad"></i>Perfil Institucional</a></li>
@@ -46,7 +46,7 @@
 			<%}%>
 			<li class="treeview">
 				<a href="#">
-    				<i class="fa fa-tasks text-green"></i> <span>Monitoreo de planes</span> <i class="fa fa-angle-left pull-right"></i>
+    				<i class="fa fa-tasks"></i> <span>Monitoreo de planes</span> <i class="fa fa-angle-left pull-right"></i>
     			</a>
     			
     			<ul class="treeview-menu" style="display: none;">

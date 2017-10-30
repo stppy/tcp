@@ -446,7 +446,7 @@ tbody {
 								
 								//Obtenemos el desempeño del distrito por año seleccionado
 								desPaisDistjson = $.ajax({
-							    	url:'/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist3&periodoId='+periodoSeleccionado,
+							    	url:'/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist3&periodoId='+periodoSeleccionado+'&etiquetaId='+etiquetaSeleccionado,
 							      	type:'get',
 							      	dataType:'json',
 							      	crossDomain:true,
@@ -563,7 +563,7 @@ tbody {
 								
 								//Obtenemos el desempeño del distrito por año seleccionado
 								desPaisDistjson = $.ajax({
-							    	url:'/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist3&periodoId='+periodoSeleccionado,
+							    	url:'/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist3&periodoId='+periodoSeleccionado+'&etiquetaId='+etiquetaSeleccionado,
 							      	type:'get',
 							      	dataType:'json',
 							      	crossDomain:true,
@@ -927,8 +927,9 @@ tbody {
 						        fillOpacity: 0.6
 						    };						    
 						}
+						
 						//se define una funcion de estilo para la capa de GEOJSON para cada distrito 
-						function style2(feature) {
+						function style2(feature) {	
 							return {
 								fillColor: getColor(getClave2(desPaisDist,parseInt(feature.properties.dpto), parseInt(feature.properties.distrito))),
 								//fillColor: getColor(getClave2(totalDesempenhoDeptoDis,parseInt(feature.properties.dpto), parseInt(feature.properties.distrito))),
@@ -1198,10 +1199,6 @@ tbody {
 			        	</div>
 					</div>
 				</div>
-            
-            
-            
-            
           </div>
 	          
 	          
@@ -2062,10 +2059,9 @@ function renderNivelDistrital(lineasProgramadas, deptoId, distId){
 												  tempInstLineas += '<td>'+numeroConComa((lineasProgramadas[n].cantidadAvance).toFixed(2))+'</td>';
 											  }
 								  
-											  
 											  var desempEjeHoy = numeroConComa(((lineasProgramadas[n].cantidadAvance/lineasProgramadas[n].cantidadHoy)*100).toFixed(2));
 											  
-											  if(lineasProgramadas[n].cantidadAvance==0 && lineasProgramadas[n].cantidadHoy==0){ 
+											  if((lineasProgramadas[n].cantidadAvance==0 && lineasProgramadas[n].cantidadHoy==0) || (lineasProgramadas[n].cantidadAvance==null && lineasProgramadas[n].cantidadHoy==null)){ 
 												  desempEjeHoy = "-";
 											  }
 											  
@@ -2180,6 +2176,18 @@ $("body").on("change", "#periodoSeleccion",function(event){
 		    }).responseText;
 			lineaAccionDepartamento=JSON.parse(lineaAccionDepartamento);
 			
+			//Obtenemos el desempeño del distrito por año seleccionado
+			desPaisDistjson = $.ajax({
+		    	url:'/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist3&periodoId='+periodoSeleccionado+'&etiquetaId='+etiquetaSeleccionado,
+		      	type:'get',
+		      	dataType:'json',
+		      	crossDomain:true,
+		      	async:false       
+		    }).responseText;
+			desPaisDist=JSON.parse(desPaisDistjson);
+			
+			distLayer.eachLayer(function(l2){distLayer.resetStyle(l2);});
+			
 			var desDepartInst= [];//Obtenemos el desempeño de las instituciones a nivel departamental
 
 			//Obtenemos todos los datos de institucion, promedio, institucion sigla y nombre
@@ -2285,6 +2293,20 @@ $("body").on("change", "#periodoSeleccion",function(event){
 			      	async:false       
 			    }).responseText;
 				lineaAccionDepartamento=JSON.parse(lineaAccionDepartamento);
+				
+				//Obtenemos el desempeño del distrito por año seleccionado
+				desPaisDistjson = $.ajax({
+			    	url:'/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist3&periodoId='+periodoSeleccionado+'&etiquetaId='+etiquetaSeleccionado,
+			      	type:'get',
+			      	dataType:'json',
+			      	crossDomain:true,
+			      	async:false       
+			    }).responseText;
+				desPaisDist=JSON.parse(desPaisDistjson);
+				
+				map.removeLayer(distLayer);
+				distLayer = new L.GeoJSON.AJAX("mapa/"+depto_id+".geojson",{style:style2,onEachFeature: onEachFeature2});
+				distLayer.addTo(map);
 				
 				var desDepartInst= [];//Obtenemos el desempeño de las instituciones a nivel departamental
 
@@ -2527,6 +2549,19 @@ $("body").on("change", "#etiquetaSeleccion",function(event){
 		    }).responseText;
 			lineaAccionDepartamento=JSON.parse(lineaAccionDepartamento);
 			
+			//Obtenemos el desempeño del distrito por año seleccionado
+			desPaisDistjson = $.ajax({
+		    	url:'/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist3&periodoId='+periodoSeleccionado+'&etiquetaId='+etiquetaSeleccionado,
+		      	type:'get',
+		      	dataType:'json',
+		      	crossDomain:true,
+		      	async:false       
+		    }).responseText;
+			desPaisDist=JSON.parse(desPaisDistjson);
+			
+			distLayer.eachLayer(function(l2){distLayer.resetStyle(l2);});
+
+			
 			var desDepartInst= [];//Obtenemos el desempeño de las instituciones a nivel departamental
 
 			//Obtenemos todos los datos de institucion, promedio, institucion sigla y nombre
@@ -2631,6 +2666,20 @@ $("body").on("change", "#etiquetaSeleccion",function(event){
 			    }).responseText;
 				lineaAccionDepartamento=JSON.parse(lineaAccionDepartamento);
 				
+				//Obtenemos el desempeño del distrito por año seleccionado
+				desPaisDistjson = $.ajax({
+			    	url:'/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist3&periodoId='+periodoSeleccionado+'&etiquetaId='+etiquetaSeleccionado,
+			      	type:'get',
+			      	dataType:'json',
+			      	crossDomain:true,
+			      	async:false       
+			    }).responseText;
+				desPaisDist=JSON.parse(desPaisDistjson);
+				
+				map.removeLayer(distLayer);
+				distLayer = new L.GeoJSON.AJAX("mapa/"+depto_id+".geojson",{style:style2,onEachFeature: onEachFeature2});
+				distLayer.addTo(map);
+				
 
 				var desDepartInst= [];//Obtenemos el desempeño de las instituciones a nivel departamental
 
@@ -2732,6 +2781,20 @@ $("body").on("change", "#etiquetaSeleccion",function(event){
 			    }).responseText;
 				var desPaisInstAux=JSON.parse(desPaisInstjson);
 				
+				//Obtenemos el desempeño del distrito por año seleccionado
+				desPaisDistjson = $.ajax({
+			    	url:'/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist3&periodoId='+periodoSeleccionado+'&etiquetaId='+etiquetaSeleccionado,
+			      	type:'get',
+			      	dataType:'json',
+			      	crossDomain:true,
+			      	async:false       
+			    }).responseText;
+				desPaisDist=JSON.parse(desPaisDistjson);
+				
+				map.removeLayer(depto);
+				var depto = new L.geoJson(deptoGeojson,{style:style,onEachFeature: onEachFeature});
+				depto.addTo(map);
+												
 				var desPaisInst= [];
 								
  				for(var i=0;i<desPaisInstAux.length;i++){		

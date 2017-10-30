@@ -1336,13 +1336,10 @@ public class ajaxSelects extends HttpServlet {
                 			acum=0; promedio=0; cont=0;
     						for (int i = 0; i < objetos.size(); i += 1) {
     							if(x == objetos.get(i).getDepartamentoId()){
-    								if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && objetos.get(i).getCantidadAvance() > 0) {	
-										acum += 100;
-										cont+=1;
-									} else if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+    								if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
 										acum += 0;
 										cont+=1;
-									} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+									} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null || objetos.get(i).getCantidadAvance() > 0)) {
 										acum += 0;
 									} else {
 										acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
@@ -1357,13 +1354,10 @@ public class ajaxSelects extends HttpServlet {
     					}//fin deparmento
                 	}else{
 						for (int i = 0; i < objetos.size(); i += 1) {
-							if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && objetos.get(i).getCantidadAvance() > 0) {	
-								acum += 100;
-								cont+=1;
-							} else if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+							if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
 								acum += 0;
 								cont+=1;
-							} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+							} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null || objetos.get(i).getCantidadAvance() > 0)) {
 								acum += 0;
 							} else {
 								acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
@@ -1385,7 +1379,8 @@ public class ajaxSelects extends HttpServlet {
         		ArrayList<DesempDistrito> desempenhoDist= new  ArrayList<DesempDistrito>();              		
 	            if (departamentoId!=null) condition += " and ins_linea_accion_base_dd.depto_id='"+departamentoId+"'";
 	            if (distritoId!=null) condition += " and ins_linea_accion_base_dd.dist_id='"+distritoId+"'";
-        		if (periodoId!=null) condition += " and periodo = '"+periodoId+"'";        		
+        		if (periodoId!=null) condition += " and periodo = '"+periodoId+"'"; 
+        		if (etiquetaId!=null && etiquetaId != 0) condition += " and ins_linea_accion_base_dd.etiqueta_id = '"+etiquetaId+"'";        		
 
                 try {                	
                 	double acum=0, promedio=0;
@@ -1408,13 +1403,10 @@ public class ajaxSelects extends HttpServlet {
     							if (distritoAct == objetos.get(i).getDistritoId()){//realiza el corte por distrito.
     								/*si el valor del distrito no cambia se realiza el proceso de obtención del desempeño 
     								y acumulación para el distrito actual.*/
-    								if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && objetos.get(i).getCantidadAvance() > 0) {	
-										acum += 100;
-										cont+=1;
-									} else if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+    								if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
 										acum += 0;
 										cont+=1;
-									} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+									} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null || objetos.get(i).getCantidadAvance() > 0)) {
 										acum += 0;
 									} else {
 										acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
@@ -1452,13 +1444,10 @@ public class ajaxSelects extends HttpServlet {
 		    						cont=0;
 		    						
 		    						//realiza el proceso de obtención del desempeño para el distrito que realizo el corte.				    					
-		    						if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && objetos.get(i).getCantidadAvance() > 0) {	
-										acum += 100;
-										cont+=1;
-									} else if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+		    						if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
 										acum += 0;
 										cont+=1;
-									} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+									} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null || objetos.get(i).getCantidadAvance() > 0)) {
 										acum += 0;
 									} else {
 										acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
@@ -1534,13 +1523,10 @@ public class ajaxSelects extends HttpServlet {
 	    								
 	    								/*si el valor del distrito no cambia se realiza el proceso de obtención del desempeño 
 	    								y acumulación para el distrito actual.*/
-										if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && objetos.get(i).getCantidadAvance() > 0) {	
-											acum += 100;
-											cont++;
-										} else if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+	    								if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
 											acum += 0;
 											cont++;
-										} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+										} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null || objetos.get(i).getCantidadAvance() > 0)) {
 											acum += 0;
 										} else {
 											acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
@@ -1580,13 +1566,10 @@ public class ajaxSelects extends HttpServlet {
 			    						cont=0;
 			    						
 			    						//realiza el proceso de obtención del desempeño para el distrito que realizo el corte.				    					
-			    						if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && objetos.get(i).getCantidadAvance() > 0) {	
-											acum += 100;
-											cont++;
-										} else if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+			    						if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
 											acum += 0;
 											cont++;
-										} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+										} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null || objetos.get(i).getCantidadAvance() > 0)) {
 											acum += 0;
 										} else {
 											acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
@@ -1689,13 +1672,10 @@ public class ajaxSelects extends HttpServlet {
 	    								
 	    								/*si el valor del distrito no cambia se realiza el proceso de obtención del desempeño 
 	    								y acumulación para el distrito actual.*/
-										if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && objetos.get(i).getCantidadAvance() > 0) {	
-											acum += 100;
-											cont++;
-										} else if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+	    								if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
 											acum += 0;
 											cont++;
-										} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+										} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null || objetos.get(i).getCantidadAvance() > 0)) {
 											acum += 0;
 										} else {
 											acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
@@ -1735,13 +1715,10 @@ public class ajaxSelects extends HttpServlet {
 			    						cont=0;
 			    						
 			    						//realiza el proceso de obtención del desempeño para el distrito que realizo el corte.				    					
-			    						if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && objetos.get(i).getCantidadAvance() > 0) {	
-											acum += 100;
-											cont++;
-										} else if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+			    						if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
 											acum += 0;
 											cont++;
-										} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+										} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null || objetos.get(i).getCantidadAvance() > 0)) {
 											acum += 0;
 										} else {
 											acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
@@ -1886,13 +1863,10 @@ public class ajaxSelects extends HttpServlet {
 		                	cont=0;
 							for (int i = 0; i < objetos.size(); i += 1) {
     							if(instituciones.get(j).getId() == objetos.get(i).getInstitucionId()){
-									if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && objetos.get(i).getCantidadAvance() > 0) {	
-										acum += 100;
-										cont+=1;
-									} else if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+    								if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
 										acum += 0;
 										cont+=1;
-									} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+									} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null || objetos.get(i).getCantidadAvance() > 0)) {
 										acum += 0;
 									} else {
 										acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
@@ -2055,13 +2029,10 @@ public class ajaxSelects extends HttpServlet {
 		                	cont=0;
 							for (int i = 0; i < objetos.size(); i += 1) {
     							if(instituciones.get(j).getId() == objetos.get(i).getInstitucionId()){
-									if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && objetos.get(i).getCantidadAvance() > 0) {	
-										acum += 100;
-										cont+=1;
-									} else if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+    								if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
 										acum += 0;
 										cont+=1;
-									} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+									} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null || objetos.get(i).getCantidadAvance() > 0)) {
 										acum += 0;
 									} else {
 										acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
