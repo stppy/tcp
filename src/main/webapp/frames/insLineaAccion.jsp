@@ -199,20 +199,20 @@ function renderEvidencia(avanceId, parametros){
 							'								</tr></td>'+
 							'								<tr><td>'+
 							'										<div class="form-group">'+
-							'											<label for="idInsLineaAccion">Id Linea Acción</label>'+
+							'											<label for="idInsLineaAccion">Id</label>'+
 							'											<input type="text" id="idInsLineaAccion" class="form-control" placeholder="Id Linea Acción" disabled="">'+
 							'										</div>'+
 							'									</td>'+	
 							'									<td>'+
 							'										<div class="form-group">'+
 							'											<label for="nombreLineaAccionInsLineaAccion">Lineas de Acción disponibles (cantidad:<span id="cantLAdisp"></span>)</label>'+												
-							'											<select name="lineaAccion" id="nombreLineaAccionInsLineaAccion" class="form-control"></select>'+							
+							'											<select name="lineaAccion" id="nombreLineaAccionInsLineaAccion" class="form-control" size="5"></select>'+							
 							'										</div>'+
 							'								</tr></td>'+
 							'								<tr><td colspan="2" >'+
 							'										<div class="form-group">'+
 							'											<label for="descripcionInsLineaAccion">Descripción Linea Acción</label>'+
-							'											<input type="text" id="descripcionInsLineaAccion" value="" disabled>'+
+							'											<input type="text" id="descripcionInsLineaAccion" class="form-control" value="" disabled>'+
 							'										</div>'+
 							'								</tr></td>'+
 							'								<tr><td>'+
@@ -482,9 +482,10 @@ function renderEvidencia(avanceId, parametros){
 			}
 			
 		}
-		
+				
 		$("#unidadMedidaInsLineaAccion").val(nombreUnidadMedida);
-		
+		$("#idInsLineaAccion").val(catalogoLineaAccion[0].id);
+		$("#descripcionInsLineaAccion").val(catalogoLineaAccion[0].descripcion);
 	});
 	
 	function getEtiquetaSeleccionadas(){						
