@@ -532,7 +532,8 @@ public class ajaxSelects extends HttpServlet {
         		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
         		if (periodoId!=null) condition += " and periodo_id ='"+periodoId+"'";
         		 				
-	        		conditionIdLAGA += " WHERE id = 236 OR id BETWEEN 238 AND 245 OR id = 1004 AND borrado is false ORDER BY orden"; //TODO: verificar condicionante
+	        		//conditionIdLAGA += " WHERE id = 236 OR id BETWEEN 238 AND 245 OR id = 1004 AND borrado is false ORDER BY orden"; //TODO: verificar condicionante
+	        		conditionIdLAGA += " WHERE id BETWEEN 236 AND 245 AND borrado is false ORDER BY orden"; //TODO: verificar condicionante
 	    			conditionAccGA += " WHERE id BETWEEN 28950 AND 29011 AND borrado = false"; 				//TODO: verificar condicionante
 	    			conditionAccCat += " WHERE borrado = false"; 											
 	    			conditionActGA += " WHERE accion_id BETWEEN 28950 AND 29011 AND borrado = false"; 		//TODO: verificar condicionante
@@ -1071,7 +1072,7 @@ public class ajaxSelects extends HttpServlet {
         	}          
         	if (action.equals("getAccionHasProducto")){
         		List objetos=null;
-        		condition = " where true and not borrado ";
+        		condition = " where true  ";
         		if (accionId!=null) condition += " and accion_id ='"+accionId+"'";
         		if (accionHasProductoId!=null) condition += " and id ='"+accionHasProductoId+"'";
         		if (nivel != null) condition += " and spr_nivel_id ="+nivel;
