@@ -2791,7 +2791,7 @@ $("body").on("change", "#etiquetaSeleccion",function(event){
 			    }).responseText;
 				desPaisDist=JSON.parse(desPaisDistjson);
 				
-				map.removeLayer(depto);
+				//map.removeLayer(depto);
 				var depto = new L.geoJson(deptoGeojson,{style:style,onEachFeature: onEachFeature});
 				depto.addTo(map);
 												
