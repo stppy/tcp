@@ -1640,6 +1640,14 @@ function renderEvidencia(avanceId, parametros){
 			}).responseText;
 			accion = JSON.parse(accion);
 			
+			var accionesAvances = $.ajax({
+				url:'/tablero/ajaxSelects?action=getAccionesAvances&institucionId'+institucionId+'&linea_accion_id'+lineaAccionId+'&periodoId'+periodoId,
+			  	type:'get',
+			  	dataType:'json',
+			  	async:false       
+			}).responseText;
+			accionesAvances = JSON.parse(accionesAvances);
+			
 			var cuerpoAccion = "";
 			renderAccion();		
 			
@@ -1695,15 +1703,28 @@ function renderEvidencia(avanceId, parametros){
 							}	
 						}
 								
+						var cantidadProgramdo = "";
+						var cantidadEjecutado = "";
+
+						for(var e = 0; e < accionesAvances.length; e++){
+							if(accion[a].departamentoId == accionesAvances[e].accion_departamento_id && accion[a].distritoId == accionesAvances[e].accion_distrito_id &&  accion[a].id == accionesAvances[e].accion_id){
+								cantidadProgramdo = accionesAvances[e].cantidad_programado;
+								cantidadEjecutado = accionesAvances[e].cantidad_ejecutado;
+
+							}	
+						}
+						
+						
+						
 						if(accion[a].borrado == true){
 							<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") ){%>
-								cuerpoAccion +="<tr><td class='text-center'><del>"+nombreAccionCatalogo+"</del></td><td class='text-center'><del>"+nombreDepartamento+"</del></td><td class='text-center'><del>"+nombreDistrito+"</del></td><td class='text-center' style='display:none;'><del>"+accion[a].fechaInicio+"</del></td><td class='text-center' style='display:none;'><del>"+accion[a].fechaFin+"</del></td><td class='text-center'><del>"+nombreUnidadMedidaAccion+"</del></td><td class='text-center' style='display:none;'><del>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</del></td><td class='text-center' style='display:none;'><del>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</del></td><td class='text-center' style='display:none;'><del>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</del></td><td class='text-center' style='display:none;'><del>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</del></td><td class='text-center' style='display:none;'><del>"+numeroConComa(parseFloat(suMetas).toFixed(2))+"</del></td><td class='text-center'><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Restaurar Acción'><span class='fa fa-recycle'></span></button></td></tr>";
+								cuerpoAccion +="<tr><td class='text-center'><del>"+nombreAccionCatalogo+"</del></td><td class='text-center'><del>"+nombreDepartamento+"</del></td><td class='text-center'><del>"+nombreDistrito+"</del></td><td class='text-center'><del>"+nombreUnidadMedidaAccion+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(cantidadProgramdo).toFixed(2))+"</del></td><td class='text-center'><del>"+numeroConComa(parseFloat(cantidadEjecutado).toFixed(2))+"</del></td><td class='text-center'><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Restaurar Acción'><span class='fa fa-recycle'></span></button></td></tr>";
 							<%}%>
 						}else{
 							<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2")){%>
-								cuerpoAccion +="<tr><td class='text-center'>"+nombreAccionCatalogo+"</td><td class='text-center'>"+nombreDepartamento+"</td><td class='text-center'>"+nombreDistrito+"</td><td class='text-center' style='display:none;'>"+accion[a].fechaInicio+"</td><td class='text-center' style='display:none;'>"+accion[a].fechaFin+"</td><td class='text-center'>"+nombreUnidadMedidaAccion+"</td><td class='text-center' style='display:none;'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center' style='display:none;'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center' style='display:none;'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center' style='display:none;'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center' style='display:none;'>"+numeroConComa(parseFloat(suMetas).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm modalVincularProducto' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos Presupuestarios' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"><span>Gs</span></button><button type='button' class='btn btn-default btn-sm agregarActividad' title='Agregar Cronograma' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" ><span class='glyphicon glyphicon-time'></span></button><button type='button' class='btn btn-default btn-sm editarAccion' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button><button type='button' class='btn btn-default btn-sm modalDestinatario'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Agregar Destinatario'><span class='glyphicon glyphicon-user'></span></button></td></tr>";
+								cuerpoAccion +="<tr><td class='text-center'>"+nombreAccionCatalogo+"</td><td class='text-center'>"+nombreDepartamento+"</td><td class='text-center'>"+nombreDistrito+"</td><td class='text-center'>"+nombreUnidadMedidaAccion+"</td><td class='text-center'>"+numeroConComa(parseFloat(cantidadProgramdo).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(cantidadEjecutado).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm modalVincularProducto' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos Presupuestarios' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"><span>Gs</span></button><button type='button' class='btn btn-default btn-sm agregarActividad' title='Agregar Cronograma' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" ><span class='glyphicon glyphicon-time'></span></button><button type='button' class='btn btn-default btn-sm editarAccion' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Editar Acción'><span class='glyphicon glyphicon-pencil'></span></button><button type='button' class='btn btn-default btn-sm consultaBorrarAccion'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Borrar Acción'><span class='glyphicon glyphicon-trash'></span></button><button type='button' class='btn btn-default btn-sm modalDestinatario'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Agregar Destinatario'><span class='glyphicon glyphicon-user'></span></button></td></tr>";
 							<%} if (attributes.get("role_id_tablero").toString().equals("3")){%>
-								cuerpoAccion +="<tr><td class='text-center'>"+nombreAccionCatalogo+"</td><td class='text-center'>"+nombreDepartamento+"</td><td class='text-center'>"+nombreDistrito+"</td><td class='text-center' style='display:none;'>"+accion[a].fechaInicio+"</td><td class='text-center' style='display:none;'>"+accion[a].fechaFin+"</td><td class='text-center'>"+nombreUnidadMedidaAccion+"</td><td class='text-center' style='display:none;'>"+numeroConComa(parseFloat(accion[a].meta1).toFixed(2))+"</td><td class='text-center' style='display:none;'>"+numeroConComa(parseFloat(accion[a].meta2).toFixed(2))+"</td><td class='text-center' style='display:none;'>"+numeroConComa(parseFloat(accion[a].meta3).toFixed(2))+"</td><td class='text-center' style='display:none;'>"+numeroConComa(parseFloat(accion[a].meta4).toFixed(2))+"</td><td class='text-center' style='display:none;'>"+numeroConComa(parseFloat(suMetas).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm modalVincularProducto' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos Presupuestarios' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"><span>Gs</span></button><button type='button' class='btn btn-default btn-sm agregarActividad' title='Agregar Cronograma' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" ><span class='glyphicon glyphicon-time'></span></button><button type='button' class='btn btn-default btn-sm modalDestinatario'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Agregar Destinatario'><span class='glyphicon glyphicon-user'></span></button></td></tr>";
+								cuerpoAccion +="<tr><td class='text-center'>"+nombreAccionCatalogo+"</td><td class='text-center'>"+nombreDepartamento+"</td><td class='text-center'>"+nombreDistrito+"</td><td class='text-center'>"+nombreUnidadMedidaAccion+"</td><td class='text-center'>"+numeroConComa(parseFloat(cantidadProgramdo).toFixed(2))+"</td><td class='text-center'>"+numeroConComa(parseFloat(cantidadEjecutado).toFixed(2))+"</td><td class='text-center'><button type='button' class='btn btn-default btn-sm modalVincularProducto' data-toggle='tooltip' data-placement='top' title='Vincular Acción a Productos Presupuestarios' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"><span>Gs</span></button><button type='button' class='btn btn-default btn-sm agregarActividad' title='Agregar Cronograma' parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" ><span class='glyphicon glyphicon-time'></span></button><button type='button' class='btn btn-default btn-sm modalDestinatario'  parametros="+insLineaAccionId+"-"+lineaAccionId+"-"+institucionId+"-"+periodoId+"-"+accion[a].id+"-"+accion[a].accionCatalogoId+" data-toggle='tooltip' data-placement='top' title='Agregar Destinatario'><span class='glyphicon glyphicon-user'></span></button></td></tr>";
 							<%}%>
 						}
 					}
@@ -1823,14 +1844,16 @@ function renderEvidencia(avanceId, parametros){
 			var tablaAccion ='     			<div class="table-responsive">'+
 			'	                				<table class="table table-hover table-bordered" id="dataTablesAcciones">'+
 			'	                					<thead>'+
-			'	                						<tr class="active"><th rowspan="2" class="text-center">Acción</th><th rowspan="2" class="text-center">Depto</th><th rowspan="2" class="text-center">Distrito</th><th rowspan="2" class="text-center" style="display:none;">Fecha Inicio</th><th rowspan="2" class="text-center" style="display:none;">Fecha Fin</th><th rowspan="2" class="text-center">Unidad Medida</th><th colspan="4" class="text-center" style="display:none;">Metas</th><th rowspan="2" class="text-center" style="display:none;">Total Metas</th><th rowspan="2" class="text-center" style="min-width:130px">Administrar Acción</th></tr>'+
-			'	                						<tr class="active" style="display:none;"><th class="text-center" style="display:none;">1er Trimestre</th><th class="text-center" style="display:none;">2do Trimestre</th><th class="text-center" style="display:none;">3er Trimestre</th><th class="text-center" style="display:none;">4to Trimestre</th></tr>'+
+			'	                						<tr class="active">'+
+			'											<th  class="text-center">Acción</th>'+
+			'											<th  class="text-center">Depto</th>'+
+			'											<th  class="text-center">Distrito</th>'+
+			'											<th  class="text-center">Unidad Medida</th>'+
+			'											<th  class="text-center">CantidadProgramado</th>'+
+			'											<th  class="text-center">CantidadEjecutado</th>'+
+			'											<th  class="text-center" style="min-width:130px">Administrar Acción</th>'+
+			'</tr>'+
 			'	                					</thead>'+
-			'										<tfoot>'+
-			'								 			<tr>'+
-			'								 				<th></th><th></th><th></th><th style="display:none;"></th><th style="display:none;"></th><th></th><th style="display:none;"></th><th style="display:none;"></th><th style="display:none;"></th><th style="display:none;"></th><th style="display:none;"></th><th></th>'+
-			'								 			</tr>'+
-			'								    	</tfoot>'+
 			'	                						<tbody id="tablaAccionesPrecargadas">'+
 			'	                						</tbody>'+
 			'	                				</table>'+
