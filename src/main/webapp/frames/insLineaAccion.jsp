@@ -197,14 +197,9 @@ function renderEvidencia(avanceId, parametros){
 							'											<input type="text" id="versionInsLineaAccion" list="listaf1c2" class="form-control"></input>'+							
 							'										</div>'+
 							'								</tr></td>'+
-							'								<tr><td>'+
+							'								<tr><td colspan="2" >'+
 							'										<div class="form-group">'+
-							'											<label for="idInsLineaAccion">Id</label>'+
-							'											<input type="text" id="idInsLineaAccion" class="form-control" placeholder="Id Linea Acción" disabled="">'+
-							'										</div>'+
-							'									</td>'+	
-							'									<td>'+
-							'										<div class="form-group">'+
+							'											<input type="hidden" id="idInsLineaAccion" value="">'+
 							'											<label for="nombreLineaAccionInsLineaAccion">Lineas de Acción disponibles (cantidad:<span id="cantLAdisp"></span>)</label>'+												
 							'											<select name="lineaAccion" id="nombreLineaAccionInsLineaAccion" class="form-control" size="5"></select>'+							
 							'										</div>'+
@@ -483,8 +478,7 @@ function renderEvidencia(avanceId, parametros){
 			
 		}
 				
-		$("#unidadMedidaInsLineaAccion").val(nombreUnidadMedida);
-		$("#idInsLineaAccion").val(catalogoLineaAccion[0].id);
+		$("#unidadMedidaInsLineaAccion").val(nombreUnidadMedida);		
 		$("#descripcionInsLineaAccion").val(catalogoLineaAccion[0].descripcion);
 	});
 	
@@ -701,10 +695,13 @@ function renderEvidencia(avanceId, parametros){
 		  	async:false       
 		}).responseText;
 		lineaAccion = JSON.parse(lineaAccion);
-		var optionLineaAccion;
+		var optionLineaAccion = "";
 
 		for(i = 0;i<lineaAccion.length; i++){
-			optionLineaAccion+='<option value="'+lineaAccion[i].id+'" >'+lineaAccion[i].nombre+'</option>';
+ 			/* if (lineaAccion[i].id == lineaAccionId) 
+				optionLineaAccion+='<option value="'+lineaAccion[i].id+'" selected>'+lineaAccion[i].nombre+'</option>';
+			else  */
+				optionLineaAccion+='<option value="'+lineaAccion[i].id+'" >'+lineaAccion[i].nombre+'</option>';
 		}
 
 
@@ -790,33 +787,64 @@ function renderEvidencia(avanceId, parametros){
 							'		    <div class="modal-body" id="cuerpoActualizarInsLineaAccion" >'+
 									    
 							'				<form role="form" id="formularioInsLineaAccion">'+
-							'					<div class="form-group">'+
-							'						<label for="nombreInstitucion">Nombre Institución</label>'+
-							'						<input type="text" name="institucion" id="nombreInstitucionInsLineaAccion" list="listaf1c1" class="form-control"></input>'+
-							'					</div>'+							
-							'					<div class="form-group">'+
-							'						<label for="periodo">Periodo</label>'+
-							'						<select id="periodoInsLineaAccion" class="form-control">'+optionPeriodo+'</select>'+
+							'					<div class="col-md-12">'+							
+							'						<div class="table-responsive">'+
+							'							<table class="table table-hover">'+
+							'							<tbody id="cuerpoformularioInsLineaAccion">'+
+							'								<tr><td colspan="2" >'+						
+							'										<div class="form-group">'+
+							'											<label for="nombreInstitucionInsLineaAccion">Nombre Institución</label>'+
+							'											<input type="text" name="institucion" id="nombreInstitucionInsLineaAccion" list="listaf1c1" class="form-control"></input>'+
+							'										</div>'+
+							'								</tr></td>'+
+							'								<tr><td>'+
+							'										<div class="form-group">'+
+							'											<label for="periodo">Periodo</label>'+
+							'											<select id="periodoInsLineaAccion" class="form-control">'+optionPeriodo+'</select>'+
+							'										</div>'+
+							'									</td>'+
+							'									<td>'+
+							'										<div class="form-group">'+
+							'											<label for="version">Versión</label>'+
+							'											<input type="text" id="versionInsLineaAccion" list="listaf1c2" class="form-control"></input>'+							
+							'										</div>'+
+							'								</tr></td>'+
+							'								<tr><td colspan="2" >'+
+							'										<div class="form-group">'+
+							'											<input type="hidden" id="idInsLineaAccion" value="">'+					
+							'											<label for="nombreLineaAccionInsLineaAccion">Lineas de Acción disponibles (cantidad:<span id="cantLAdisp"></span>)</label>'+												
+							'											<select name="lineaAccion" id="nombreLineaAccionInsLineaAccion" class="form-control" size="5">'+optionLineaAccion+'</select>'+							
+							'										</div>'+
+							'								</tr></td>'+
+							'								<tr><td colspan="2" >'+
+							'										<div class="form-group">'+
+							'											<label for="descripcionInsLineaAccion">Descripción Linea Acción</label>'+
+							'											<input type="text" id="descripcionInsLineaAccion" class="form-control" value="" disabled>'+
+							'										</div>'+
+							'								</tr></td>'+
+							'								<tr><td>'+
+							'										<div class="form-group">'+
+							'											<label for="unidadMedida">U. Medida</label>'+
+							'											<input type="text" id="unidadMedidaInsLineaAccion" class="form-control" placeholder="U. Medida" disabled>'+
+							'										</div>'+
+							'									</td>'+
+							'									<td>'+
+							'										<div class="form-group">'+
+							'											<label for="meta">Meta</label>'+
+							'											<input type="number" id="metaInsLineaAccion" class="form-control" name="meta" placeholder="Ingrese Meta" required >'+
+							'										</div>'+
+							'								</tr></td>'+
+							/*'								<tr><td>'+
+																	<div class="form-group">'+
+ 							'											<label for="version">Etiquetas </label></br>'+
+																		todasLasEtiquetas
+							'										</div>'+		 
+							'								</tr></td>'+*/
+							'							</tbody>'+
+							'							</table>'+
+							'						</div>'+
 							'					</div>'+
-							'					<div class="form-group">'+
-							'						<label for="version">Versión</label>'+
-							'						<input type="text" type="number" id="versionInsLineaAccion" list="listaf1c2" class="form-control" name="version" placeholder="Ingrese Versión" required></input>'+
-							'					</div>'+
-							'					<div class="form-group">'+
-							'						<label for="nombreLineaAccion">Lineas de Acción disponibles (cantidad:<span id="cantLAdisp"></span>)</label>'+
-							'						<input type="hidden" id="idInsLineaAccion" value="">'+					
-							'						<input type="text" name="lineaAccion" id="nombreLineaAccionInsLineaAccion" list="listaf1c3" class="form-control"></input>'+
-							'					</div>'+
-							'					<div class="form-group">'+
-							'						<label for="meta">Meta</label>'+
-							'						<input type="number" id="metaInsLineaAccion" class="form-control" name="meta" placeholder="Ingrese Meta" required>'+
-							'					</div>'+
-/* 							'					<div class="form-group">'+
-							'					<label for="etiquetaUsuario">Etiqueta Instancia Linea Acción</label></br>'+
-													etiquetasUsuario
-							'					</div>'+ */
-
-							'				</form>'+			  
+							'				</form>'+				  
 							
 							'		    </div>'+
 							'		</div>'+ 
@@ -829,6 +857,9 @@ function renderEvidencia(avanceId, parametros){
 		$('#insLineaAccion').modal('show');
 		$("#insLineaAccion").find("#formularioInsLineaAccion").append('<div class="form-group" id="actualizarInsLineaAccionBoton"><button type="submit" class="btn btn-success" id="actualizarInsLineaAccion">Actualizar</button></div>');
 		$("#idInsLineaAccion").val(id);
+		$('#nombreLineaAccionInsLineaAccion').val(lineaAccionId);
+		//$('#nombreLineaAccionInsLineaAccion').find(":selected").change();
+		
 		
 		/*************************************************************/
 		
@@ -904,7 +935,7 @@ function renderEvidencia(avanceId, parametros){
 			}			        
 			
 	     	// Autocompletado del Nombre de la Institución.
-	        this.nombreLAFocus = function(){
+	        /*this.nombreLAFocus = function(){
 	        	
 	        	var institucionSeleccionada = $("#nombreInstitucionInsLineaAccion").val();
 				var periodoSeleccionado = $("#periodoInsLineaAccion option:selected").val();
@@ -948,7 +979,7 @@ function renderEvidencia(avanceId, parametros){
 				var optionLineaAccion;
 
 				$('#cantLAdisp').html(' '+lineasAccionRestantes.length+ ' de '+ lineaAccion.length );
-			}
+			}*/
 		    
 		}
 		
@@ -956,7 +987,7 @@ function renderEvidencia(avanceId, parametros){
 		document.getElementById('versionInsLineaAccion').addEventListener('focus',eje1.versionILAFocus,false);
 		//document.getElementById('versionInsLineaAccion').addEventListener('change',eje1.versionILA,false);
 		document.getElementById('nombreInstitucionInsLineaAccion').addEventListener('focus',eje1.institucionFocus,false);
-		document.getElementById('nombreLineaAccionInsLineaAccion').addEventListener('focus',eje1.nombreLAFocus,false);
+		//document.getElementById('nombreLineaAccionInsLineaAccion').addEventListener('focus',eje1.nombreLAFocus,false);
 		
 		/************************************************************************/
 		
@@ -10862,7 +10893,10 @@ $("body").on("click", ".avanceCualitativo",function(event){
 	//$('#tablaAccionesPrecargadas').append(cuerpoAccion);
 	$('#modalAvanceCualitativo').modal('show');	
 	//$('#dataTablesAvanceCualitativo').DataTable();
-	
+	$('#gestionesRealizadasAvanceCualitativo').wysihtml5();
+	$('#logrosAlcanzadosAvanceCualitativo').wysihtml5();
+	$('#leccionesAprendidasAvanceCualitativo').wysihtml5();
+	$('#objetivosAvanceCualitativo').wysihtml5();
 });
 
 $("body").on("click", ".guardarAvanceCualitatitvo",function(event){
@@ -11203,6 +11237,11 @@ $("body").on("click", ".consultaEditarAvanceCualitativo",function(event){
 	$("#programacion").append(contenido);
 	$('#modalEditarAvanceCualitativo').modal('show');
 	
+	$('#gestionesRealizadasAvanceCualitativo').wysihtml5();
+	$('#logrosAlcanzadosAvanceCualitativo').wysihtml5();
+	$('#leccionesAprendidasAvanceCualitativo').wysihtml5();
+	$('#objetivosAvanceCualitativo').wysihtml5();
+	
 });
 
 $("body").on("click", ".editarAvanceCualitativo",function(event){
@@ -11247,11 +11286,13 @@ $("body").on("click", ".editarAvanceCualitativo",function(event){
         	{
         		$("#botonGuardarAvanceCualitativo").remove();
             	$("#cuerpoModalAvanceCualitativo").html("");
-            	$("#cuerpoModalAvanceCualitativo").html("<h3 class='text-center'>Ud ha actualizado exitosamente!!</h3>");        		
+            	$("#cuerpoModalAvanceCualitativo").html("<h3 class='text-center'>Ud ha actualizado exitosamente!!</h3>");    
+            	$('.avanceCualitativo').focus();            	
         	}else{
         		$("#botonGuardarAvanceCualitativo").remove();
             	$("#cuerpoModalAvanceCualitativo").html("");
             	$("#cuerpoModalAvanceCualitativo").html("<h3 class='text-center'>ERROR!!</h3>");  
+            	$('.avanceCualitativo').focus();
         	}
         	
         	},

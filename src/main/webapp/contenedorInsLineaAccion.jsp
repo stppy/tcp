@@ -20,6 +20,9 @@
 	<!-- bootstrap datepicker css  -->
 	<link href="plugins/datepicker/datepicker3.css" rel="stylesheet">
 	
+	<!-- bootstrap wysihtml5 css  -->
+	<link href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css">
+	
 	<!-- jQuery 2.1.3  -->
     <!-- >script src="plugins/jQuery/jQuery-2.1.3.min.js"></script-->
     
@@ -65,11 +68,16 @@
 		#R, #G, #B {
 			width: 300px;
 		}
+		
+		/* Ajusta el tamaño del select y limita la longitud del texto a desplegar
+		 poniendole ... cuando supera la longitud máxima */
+		select option {
+		  	white-space: nowrap;
+		  	overflow: hidden;
+		  	text-overflow: ellipsis;
+		  	max-width: 785px;
+		}
     </style>
-    
-    
-
-
 
 </head>
 <body class="skin-blue sidebar-mini sidebar-collapse">
@@ -1181,6 +1189,8 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
     <!-- script src="plugins/jQuery/jQuery-2.1.3.min.js"></script-->        
 	<!-- Bootstrap 3.3.2 JS -->
     <script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <!-- bootstrap wysihtml5 js  -->
+	<script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" type="text/javascript"></script>
     <!-- DATA TABES SCRIPT -->    
     <script src="plugins/datatables/jquery.dataTables.js" type="text/javascript"></script>
     <!-- <script src="plugins/datatables/Plugins/api/sum().js"></script> -->
