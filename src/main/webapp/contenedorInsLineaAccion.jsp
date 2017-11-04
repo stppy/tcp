@@ -9,7 +9,8 @@
 <!DOCTYPE html>
 <html>
   <head>
- 	 <%@ include file="/frames/head.jsp" %>	 
+ 	 <%@ include file="/frames/head.jsp" %>
+  <meta charset="UTF-8">
 	<script type="text/javascript" src="dist/canvasjs/canvasjs.min.js" ></script>
 	<script src="/dist/js/jspdf.min.js"></script>
 	
@@ -66,11 +67,6 @@
 			width: 300px;
 		}
     </style>
-    
-    
-
-
-
 </head>
 <body class="skin-blue sidebar-mini sidebar-collapse">
 
@@ -80,13 +76,11 @@ if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("
 if (user != null && user.getName()!= "parce@nandeparaguay.org") { %>
 	<%@ include file="/frames/perfil.jsp" %>
 <script>
-//periodoSeleccionado=new Date().getFullYear();
-//periodoSeleccionado = $("#periodoSeleccion option:selected").val();
 			var usuarioEtiqueta = $.ajax({
 				url:'/tablero/ajaxSelects2?action=getUsuarioEtiqueta',
 			  	type:'get',
 			  	dataType:'json',
-			  	async:false       
+			  	async:false
 			}).responseText;
 			usuarioEtiqueta = JSON.parse(usuarioEtiqueta);
 			
@@ -157,14 +151,6 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
 	}).responseText;
 	insLineaAccionHasEtiqueta = JSON.parse(insLineaAccionHasEtiqueta);
 	
-/* 	var usuarioEtiqueta = $.ajax({
-		url:'/tablero/ajaxSelects2?action=getUsuarioEtiqueta',
-	  	type:'get',
-	  	dataType:'json',
-	  	async:false       
-	}).responseText;
-	usuarioEtiqueta = JSON.parse(usuarioEtiqueta); */
-	
 
 	var tablaInsLineaAccion="";
 	var cuerpoTablaInsLineaAccion="";
@@ -197,8 +183,7 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
 		 	for(var l = 0; l < usuarioEtiqueta.length; l++)
 			{
 				if(usuarioEtiqueta[l].etiqueta_id == etiquetaSeleccionado && usuarioEtiqueta[l].borrado != true)
-		 		//if(usuarioEtiqueta[l].etiqueta_id == 1)
-				{
+  				{
 					for(var t = 0; t < insLineaAccionHasEtiqueta.length; t++)
 					{
 						if(insLineaAccionHasEtiqueta[t].ins_linea_accion_id == insLineaAccion[w].id && insLineaAccionHasEtiqueta[t].etiqueta_id == etiquetaSeleccionado && insLineaAccionHasEtiqueta[t].borrado != true)
@@ -543,51 +528,48 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
 	$('#cuerpoInsLineaAccion').append(tablaInsLineaAccion);
 	$('#tablaCuerpoInsLineaAccionPrecargados').append(cuerpoTablaInsLineaAccion);
 		
-	$('#dataTableInsLineaAccion').DataTable(
-	{
-	        dom: 'Bfrtip',
-	        buttons: [
-	                    {
-	                        extend: 'copy',
-	                        exportOptions: {
-	                    columns: [ 0, 1, 2, 3, 4 ]
-	                }
-	                    },
-	                    {
-	                        extend: 'csv',
-	                        exportOptions: {
-	                    columns: [ 0, 1, 2, 3, 4 ]
-	                }
-	                    },
-	                    {
-	                        extend: 'excel',
-	                        exportOptions: {
-	                    columns: [ 0, 1, 2, 3, 4 ]
-	                }
-	                    },
-	                    {
-	                        extend: 'pdf',
-	                        exportOptions: {
-	                    columns: [ 0, 1, 2, 3, 4 ]
-	                }
-	                    },
-	                    {
-	                        extend: 'print',
-	                        exportOptions: {
-	                    columns: [ 0, 1, 2, 3, 4 ]
-	                }
-	                    }
-	                ],
-	        "footerCallback": function ( row, data, start, end, display ) {
-	        	var api = this.api(), data;
-	        	SumarizarColumnas(row, data, start, end, display, api, 1, null );
-	        },
-	        "search": {
-	            "regex": true
-			}
-	}
-	
-	);
+	$('#dataTableInsLineaAccion').DataTable({
+    dom: 'Bfrtip',
+    buttons: [
+                {
+                    extend: 'copy',
+                    exportOptions: {
+                columns: [ 0, 1, 2, 3, 4 ]
+            }
+                },
+                {
+                    extend: 'csv',
+                    exportOptions: {
+                columns: [ 0, 1, 2, 3, 4 ]
+            }
+                },
+                {
+                    extend: 'excel',
+                    exportOptions: {
+                columns: [ 0, 1, 2, 3, 4 ]
+            }
+                },
+                {
+                    extend: 'pdf',
+                    exportOptions: {
+                columns: [ 0, 1, 2, 3, 4 ]
+            }
+                },
+                {
+                    extend: 'print',
+                    exportOptions: {
+                columns: [ 0, 1, 2, 3, 4 ]
+            }
+                }
+            ],
+    "footerCallback": function ( row, data, start, end, display ) {
+      var api = this.api(), data;
+      SumarizarColumnas(row, data, start, end, display, api, 1, null );
+    },
+    "search": {
+        "regex": true
+    }
+  });
 		
 	function SumarizarColumnas( row, data, start, end, display, api, cantColumnas, Indices ){
 		//var api = this.api(), data;
@@ -753,8 +735,7 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
 		        "search": {
 		            "regex": true
 				}	
-	}
-	);
+	});
 	
 	}
 
@@ -825,23 +806,6 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
 					}
 				}
 			}
-		
-			/* var periodoVersion = '<div class="col-sm-4">'+
-								 	'<label for="periodoSeleccion">Periodo</label>'+
-									'<select id="periodoSeleccion" class="form-control">'+optionPeriodo+'</select>'+
-								 '</div>'+
-								 '<div class="col-sm-4">'+
-								 	'<label for="periodoSeleccion">Periodo</label>'+
-									'<select id="periodoSeleccion" class="form-control">'+optionPeriodo+'</select>'+
-								 '</div>'; */
-			
-			/* var ocultarBorrado= '<div class="col-sm-2">'+
-									'<div class="checkbox">'+
-										'<label> <input type="checkbox" id="chkMostrarOcultar" checked>Ocultar Registros Borrados</label>'+
-									'</div>'+
-								'</div>'; */
-								
-			//$('#mostrarOcultarBorrado').append(ocultarBorrado);
 								
 			var usuarios = $.ajax({
 				url:'http://spr.stp.gov.py/ajaxSelects?accion=getUsuarios&usuario=<%=user.getName()%>',
@@ -857,8 +821,6 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
 			$('#versionSeleccion').append(optionVersion);
 			$('#etiquetaSeleccion').append(optionEtiqueta);						
 			$('#etiquetaSeleccion option[value="'+usuarios[0].ultimaEtiquetaId+'"').prop('selected', true);
-			
-		<!-- /*%}%*/ -->
 	 
 	 	periodoSeleccionado = $("#periodoSeleccion option:selected").val();
 	 	versionSeleccionado = $("#versionSeleccion option:selected").val();
@@ -895,7 +857,7 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
 		
 				
 		renderInsLineaAccion(periodoSeleccionado,versionSeleccionado,etiquetaSeleccionado);	
-	   	OcultarRegistrosBorrados();
+	  OcultarRegistrosBorrados();
 
 		
 		$("body").on("click", "#chkMostrarOcultar",function(event){			
@@ -973,30 +935,14 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
 			 });
 		   	
 		   
-		});
-				
-		/* $('.pagination').on('click',function(){
-			OcultarRegistrosBorrados();
-			}); */
-					
+		});		
 	});
 <%}else{%>
 	window.location = "http://spr.stp.gov.py/tablero/geografico4.jsp";
 <%}%>
-	var onoff=null;
-/* 	function OcultarRegistrosBorrados(){
-		
-		if($("#chkMostrarOcultar").is(':checked')){
-			onoff=false;						
-		}else{
-			onoff=true;			
-		}
-		$("tr > td > del").closest("tr").toggle(onoff);
-	} */
-	
+	var onoff=null;	
 	function ProcesarCambioPeriodo(){
-		
-		//periodoSeleccionado
+	
 	}
 </script>
 	
@@ -1024,33 +970,42 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
 	         <!-- row periodo actual -->
 	    	<div class="row">
 	        	<div class="col-md-12">
-	         		<div class="box" > 
-	            		<div class="box-header with-border">
-	              			<h2 class="box-title text-center">Líneas de Acción del Periodo Selecionado</h2>
-	              			<div class="box-tools pull-right"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button></div>
-	            		</div>
-	            		<div class="box-body" id="cuerpoInsLineaAccion" style="height:auto; overflow: auto; display: block;">
-	            			
-	            		</div>
-	             		<div class="box-footer" style="height:auto; overflow: auto; display: block;">
-	             			<div class="col-md-6" align="left">
-		             			<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
-		             				<button type="submit" class="btn btn-primary nuevaInsLineaAccion">Agregar Línea de Acción</button>
-		             			<%}%>
-	             			</div>
-	             			<!-- link para acceder a la pagina de descarga de los avances y constancias -->
-							<div class="col-md-6" align="right">								
-								<button id="botonImprimirAvanceInstitucional" type="button" class="btn btn-primary imprimirAvanceCualitativoInstitucion" >
-									<span class="glyphicon glyphicon-download-alt"></span> Descargar Avances
-								</button>															
-								<!-- <a href="http://spr.stp.gov.py/tablero/descargasConstancias.jsp">									
-									<button type="button" class="btn btn-primary">
-										<span class="glyphicon glyphicon-download-alt"></span> Descargar Constancias
-									</button>
-								</a> -->
-							</div><!--fin div de link de avances y constancias -->
-	             		</div>
-			   		</div>
+
+              <!-- hackathon -->
+              <div id="stp-tabs">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                  <li role="presentation" class="active"><a href="#stp-tabs-listado" aria-controls="stp-tabs-listado" role="tab" data-toggle="tab">Listado</a></li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                  <div role="tabpanel" class="tab-pane active" id="stp-tabs-listado">
+                    <div class="box"> 
+                          <div class="box-header with-border">
+                              <h2 class="box-title text-center">Líneas de Acción del Periodo Selecionado</h2>
+                              <div class="box-tools pull-right"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button></div>
+                          </div>
+                          <div class="box-body" id="cuerpoInsLineaAccion" style="height:auto; overflow: auto; display: block;">   
+                          </div>
+                          <div class="box-footer" style="height:auto; overflow: auto; display: block;">
+                            <div class="col-md-6" align="left">
+                              <% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
+                                <button type="submit" class="btn btn-primary nuevaInsLineaAccion">Agregar Línea de Acción</button>
+                              <%}%>
+                            </div>
+                            <!-- link para acceder a la pagina de descarga de los avances y constancias -->
+                          <div class="col-md-6" align="right">								
+                          <button id="botonImprimirAvanceInstitucional" type="button" class="btn btn-primary imprimirAvanceCualitativoInstitucion" >
+                            <span class="glyphicon glyphicon-download-alt"></span> Descargar Avances
+                          </button>															
+                          </div><!--fin div de link de avances y constancias -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- end hackathon -->
 				</div>
           	</div><!-- /.row -->
 			
@@ -1120,6 +1075,18 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
       
       <script type="text/javascript">
 			$(document).ready(function(){
+        // Este es el handler para el click en la pestaña "Listado"
+        $('#stp-tabs ul[role=tablist] a[href="#stp-tabs-listado"]').click(function() {
+          $('#stp-tabs-registrarLineaAccion').detach();
+          $('#stp-tabs ul[role=tablist] a[href="#stp-tabs-registrarLineaAccion"]').detach();
+          $('#stp-tabs-acciones').detach();
+          $('#stp-tabs ul[role=tablist] a[href="#stp-tabs-acciones"]').detach();
+          $('#stp-tabs-vincularProductos').detach();
+          $('#stp-tabs ul[role=tablist] a[href="#stp-tabs-vincularProductos"]').detach();
+          $('#stp-tabs-avanceCualitativo').detach();
+          $('#stp-tabs ul[role=tablist] a[href="#stp-tabs-avanceCualitativo"]').detach();
+        });
+
 				$("#sideBar2").click(function(){
 					//Update options
 					var o = $.AdminLTE.options.controlSidebarOptions;
@@ -1213,10 +1180,7 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
     <!-- ChartJS 1.0.1 -->
     <script src="plugins/chartjs/Chart.min.js" type="text/javascript"></script>
      <!-- AdminLTE App -->
-    <script src="dist/js/app.min.js" type="text/javascript"></script>       
-    
-    
-
+    <script src="dist/js/app.min.js" type="text/javascript"></script>
 
     <!-- Librerias para la rutina de cambio de contraseña -->
     <script src="dist/js/jquerymd5.js" type="text/javascript"></script>    	
