@@ -55,7 +55,7 @@
 		</init-param> -->
 		<init-param>
 			<param-name>ignorePattern</param-name>
-			<param-value>http://spr.stp.gov.py/tablero/public/</param-value>
+			<param-value>/tablero/public/</param-value>
 		</init-param>
 		<init-param>
 			<param-name>ignoreUrlPatternType</param-name>
