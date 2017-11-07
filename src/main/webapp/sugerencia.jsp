@@ -113,27 +113,30 @@ if (user != null && user.getName()!= "parce@nandeparaguay.org") { %>
 		        	objeto.subject = "Tarea nueva";
 		        	objeto.priority_id = 3;
 		        	objeto.description = descripcion;
+		        	objeto.tracker_id = 22;
+		        	objeto.status_id = 1;
+		        			        	
+		        	issues.issue = objeto;
 		        	
-		        	
-		        	issues.issues = objeto;
-		        	
+		          	var info = JSON.stringify(issues);
 
-		            createIssue(issues);
+		            createIssue(info);
 		        });
 		 
-		        var createIssue = function (issues) {
+		        var createIssue = function (info) {
 		            $.ajax({
-		                url: "https://redmine.stp.gov.py/issues.json?key=a07888bdc60c529428c80661952ea3d4b40d21b6",
+		                url: "https://redmine.stp.gov.py/issues.json",
 		                type: 'POST',
 		              	crossDomain: 'true',
 		              	dataType:'jsonp',
-		                data: JSON.stringify(issues),
-		                headers: {
-		                    'Accept': 'application/json',
-		                    'Content-Type': 'application/json'
-		                },
+		                //data: JSON.stringify(issues),
+		                data: info,
+ 		                headers: {
+		                    'Content-Type': 'application/json',
+		                    'key': 'a07888bdc60c529428c80661952ea3d4b40d21b6'		                    
+		                }, 
 		                success: function (data) {
-		                    alert(data[0].description);
+		                    alert(data);
 		                },
 		                error: function () {
 		                    alert('Failed!');
