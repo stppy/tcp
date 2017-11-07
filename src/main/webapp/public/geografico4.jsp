@@ -2955,14 +2955,27 @@ $(document).ready(function(){
 														cuerpoModal += '<tr><td><!--a href="#" class="modalHitoAvances" parametros="'+institucion_id+'-'+linea_accion_id+'-'+idDepartamento+'-'+idDistrito+'-'+elRegistro[m].accion_id+'" -->'+elRegistro[m].accion_catalogo_nombre+'</td>';
 														cuerpoModal += '<td>'+elRegistro[m].accion_depto_nombre+'</td>';															
 														cuerpoModal += '<td>'+elRegistro[m].accion_dist_nombre+'</td>';
-														cuerpoModal += '<td>'+elRegistro[m].cantidad_programado+'</td>'+
-																	   '<td>'+elRegistro[m].cantidad_ejecutado+'</td>'+
-																	   '<td>'+elRegistro[m].accion_unidad_medida+'</td>'+
-																	   '<!--td>numeroConComa((elRegistro[m].accion_costo*elRegistro[m].hito_porcentaje_ejecutado/100000000).toFixed(0))</td-->'+
-																	   '<td>'+registroFechaInicio+'</td>'+
-																	   '<td>'+registroFechaFin+'</td>'+
-																	   '<!--td>elRegistro[m].hito_porcentaje_programado</td-->'+
-																	   '<!--td>elRegistro[m].hito_porcentaje_ejecutado</td-->';																														
+														
+														if(registroFechaInicio.length > 0 && registroFechaFin.length > 0){								
+														
+															cuerpoModal += '<td>'+elRegistro[m].cantidad_programado+'</td>'+
+																		   '<td>'+elRegistro[m].cantidad_ejecutado+'</td>'+
+																		   '<td>'+elRegistro[m].accion_unidad_medida+'</td>'+
+																		   '<!--td>numeroConComa((elRegistro[m].accion_costo*elRegistro[m].hito_porcentaje_ejecutado/100000000).toFixed(0))</td-->'+
+																		   '<td>'+registroFechaInicio+'</td>'+
+																		   '<td>'+registroFechaFin+'</td>'+
+																		   '<!--td>elRegistro[m].hito_porcentaje_programado</td-->'+
+																		   '<!--td>elRegistro[m].hito_porcentaje_ejecutado</td-->';	
+														}else{
+															cuerpoModal += '<td>'+elRegistro[m].cantidad_programado+'</td>'+
+															   '<td>'+elRegistro[m].cantidad_ejecutado+'</td>'+
+															   '<td>'+elRegistro[m].accion_unidad_medida+'</td>'+
+															   '<!--td>numeroConComa((elRegistro[m].accion_costo*elRegistro[m].hito_porcentaje_ejecutado/100000000).toFixed(0))</td-->'+
+															   '<td></td>'+
+															   '<td></td>'+
+															   '<!--td>elRegistro[m].hito_porcentaje_programado</td-->'+
+															   '<!--td>elRegistro[m].hito_porcentaje_ejecutado</td-->';	
+														}
 													}
 												}
 		cuerpoModal += '             		</tbody>'+
