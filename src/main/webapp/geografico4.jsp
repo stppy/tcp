@@ -3438,7 +3438,11 @@ $(document).ready(function(){
 																cuerpoModal += '<td>'+elRegistro[m].accion_depto_nombre+'</td>';
 															//if (idDistrito != "")
 																cuerpoModal += '<td>'+elRegistro[m].accion_dist_nombre+'</td>';
-															cuerpoModal += '<td>'+elRegistro[m].cantidad_programado+'</td><td>'+elRegistro[m].cantidad_ejecutado+'</td><td>'+elRegistro[m].accion_unidad_medida+'</td><!--td>numeroConComa((elRegistro[m].accion_costo*elRegistro[m].hito_porcentaje_ejecutado/100000000).toFixed(0))</td--><td>'+registroFechaInicio[2]+'-'+registroFechaInicio[1]+'-'+registroFechaInicio[0]+'</td><td>'+registroFechaFin[2]+'-'+registroFechaFin[1]+'-'+registroFechaFin[0]+'</td><!--td>elRegistro[m].hito_porcentaje_programado</td--><!--td>elRegistro[m].hito_porcentaje_ejecutado</td--><td><span class="glyphicon glyphicon-pencil"></span></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';																														
+															if(registroFechaInicio.length > 0 && registroFechaFin.length > 0){
+																cuerpoModal += '<td>'+elRegistro[m].cantidad_programado+'</td><td>'+elRegistro[m].cantidad_ejecutado+'</td><td>'+elRegistro[m].accion_unidad_medida+'</td><!--td>numeroConComa((elRegistro[m].accion_costo*elRegistro[m].hito_porcentaje_ejecutado/100000000).toFixed(0))</td--><td>'+registroFechaInicio[2]+'-'+registroFechaInicio[1]+'-'+registroFechaInicio[0]+'</td><td>'+registroFechaFin[2]+'-'+registroFechaFin[1]+'-'+registroFechaFin[0]+'</td><!--td>elRegistro[m].hito_porcentaje_programado</td--><!--td>elRegistro[m].hito_porcentaje_ejecutado</td--><td><span class="glyphicon glyphicon-pencil"></span></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';																														
+															}else{
+																cuerpoModal += '<td>'+elRegistro[m].cantidad_programado+'</td><td>'+elRegistro[m].cantidad_ejecutado+'</td><td>'+elRegistro[m].accion_unidad_medida+'</td><!--td>numeroConComa((elRegistro[m].accion_costo*elRegistro[m].hito_porcentaje_ejecutado/100000000).toFixed(0))</td--><td></td><td></td><!--td>elRegistro[m].hito_porcentaje_programado</td--><!--td>elRegistro[m].hito_porcentaje_ejecutado</td--><td><span class="glyphicon glyphicon-pencil"></span></td><td><span class="glyphicon glyphicon-trash"></span></td></tr>';																														
+															}
 													}
 												}
 		cuerpoModal += '	             		</tbody>'+
