@@ -106,9 +106,11 @@ if (user != null && user.getName()!= "parce@nandeparaguay.org") { %>
 		$("body").on("click", ".crear",function(event){
 		            var descripcion = $("#descripcion").val();
 		            
-		        	var objeto = new Object();
-		        	var issues = new Object();
+		        	var llave = new Object();
 		        	
+		        	llave.key = "a07888bdc60c529428c80661952ea3d4b40d21b6";
+		        	
+		        	var objeto = new Object();        	
 		        	objeto.project_id =  280;
 		        	objeto.subject = "Tarea nueva";
 		        	objeto.priority_id = 3;
@@ -116,31 +118,26 @@ if (user != null && user.getName()!= "parce@nandeparaguay.org") { %>
 		        	objeto.tracker_id = 22;
 		        	objeto.status_id = 1;
 		        			        	
-		        	issues.issue = objeto;
+		        	llave.issue = objeto;
 		        	
-		          	var info = JSON.stringify(issues);
+		          	var info = JSON.stringify(llave);
 
 		            createIssue(info);
 		        });
 		 
 		        var createIssue = function (info) {
 		            $.ajax({
-		                url: "https://redmine.stp.gov.py/issues.json",
+		                url: "/rmClient/issues.json",
 		                type: 'POST',
-		              	crossDomain: 'true',
-		              	dataType:'jsonp',
-		                //data: JSON.stringify(issues),
+		                contentType: 'application/json; charset=utf-8',
+		              	dataType:'json',
 		                data: info,
- 		                headers: {
-		                    'Content-Type': 'application/json',
-		                    'key': 'a07888bdc60c529428c80661952ea3d4b40d21b6'		                    
-		                }, 
 		                success: function (data) {
-		                    alert(data);
+		                    alert('Exitoso!');
 		                },
 		                error: function () {
 		                    alert('Failed!');
-		                },
+		                }
 		            });
 		        };
 
@@ -185,7 +182,7 @@ if (user != null && user.getName()!= "parce@nandeparaguay.org") { %>
 	            			<form role="form">
 				              <div class="box-body">
 				              	<div class="form-group">
-				                  <label>Textarea</label>
+				                  <label>Descripción</label>
 				                  <textarea class="form-control" rows="3" id="descripcion" placeholder="Por favor describa su sugerencia o inconveniente al utilizar el sistema"></textarea>
 				                </div>
 				                <div class="form-group">
@@ -193,7 +190,7 @@ if (user != null && user.getName()!= "parce@nandeparaguay.org") { %>
 				                  <input type="text" class="form-control" id="usuario" value="<%=user.getName()%>">
 				                </div>
 				                <div class="form-group">
-				                  <label for="exampleInputPassword1">Password</label>
+				                  <label for="exampleInputPassword1">Fecha</label>
 				                  <input type="date" class="form-control" id="fecha">
 				                </div>
 		
