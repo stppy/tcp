@@ -91,6 +91,7 @@
             	<li><a href="#"><i class="glyphicon glyphicon-flag"></i> <span>Objetivos Sugeridos</span></a></li>
             	<li><a href="/usuarios.jsp"><i class="glyphicon glyphicon-user"></i> <span>Usuarios</span></a></li>
            	<%}%>
+           		<li><a href="#" class="formualarioSugerencia"><i class="fa fa-envelope text-red" aria-hidden="true"></i><span>Sugerencia</span></a></li>
             <!-- 
 	            <li class="treeview"><a href=".#" id="programarPlan"><i class="fa fa-files-o"></i><span>Programar Plan de Accion</span></a></li>
 	            <li class="treeview"><a href="#" id="vistaGeografica"><i class="fa fa-edit"></i> <span>Resumen</span></a></li>

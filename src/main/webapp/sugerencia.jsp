@@ -131,6 +131,7 @@ if (user != null && user.getName()!= "parce@nandeparaguay.org") { %>
 		                type: 'POST',
 		                contentType: 'application/json; charset=utf-8',
 		              	dataType:'json',
+		                async: false, 
 		                data: info,
 		                success: function (data) {
 		                    alert('Exitoso!');

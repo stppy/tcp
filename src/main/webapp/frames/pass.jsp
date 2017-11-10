@@ -24,8 +24,38 @@
 					</form>
 				</div>
 		    </div>
-
+	  </div>
+	</div>
 	
+	<!-- MODAL FORMULARIO DE RECEPCIÓN DE SUGERENCIA -->
+	<div id="form_sugerencia" class="modal fade" role="dialog">
+		<div class="modal-dialog modal-lg">
+		    <!-- Modal content-->
+			<div class="modal-content">	
+	    		<div class="modal-header">
+		        	<h4 class="modal-title" id="tituloFormulario">Formulario de Reporte de Sugerencias e Incidencias del Sistema </h4>
+		      	</div>					      
+				<div class="modal-body" id="cuerpoFormulario">
+
+				    <form role="form">
+		              <div class="box-body">
+		              	<div class="form-group">
+		                  <label>Descripción</label>
+		                  <textarea class="form-control" rows="3" id="descripcion" placeholder="Por favor describa su sugerencia o inconveniente al utilizar el sistema"></textarea>
+		                </div>
+		                  <input type="hidden" class="form-control" id="usuario" value="<%=user.getName()%>">
+		                  <input type="hidden" class="form-control" id="fecha">
+		                  <input type="hidden" class="form-control" id="url">	
+		              </div>
+		              <!-- /.box-body -->
+		
+		              <div class="box-footer">
+		                <button type="submit" class="btn btn-primary crear" >Enviar Sugerencia</button>
+		              </div>
+		            </form>
+
+				</div>
+		    </div>
 	  </div>
 	</div>
 	
@@ -98,7 +128,124 @@
 		$("#tituloModalUsuario").html('');
 		$("#pass-viejo-form").val("");
 		$("#pass-nuevo-form").val("");
-		$("#pass-nuevo1-form").val("");		
-		
+		$("#pass-nuevo1-form").val("");			
 	});
+	
+	$("body").on("click", ".crear",function(event){
+	    var descripcion = $("#descripcion").val();
+	    var url = $("#url").val();
+	    descripcion += ' ||<%=user.getName()%>||'+url;
+
+	    var arr = [];
+		var llave = new Object();
+		
+		llave.key = "a07888bdc60c529428c80661952ea3d4b40d21b6";
+		
+		var objeto = new Object();        	
+		objeto.project_id =  280;
+		objeto.subject = "Tarea nueva";
+		objeto.priority_id = 3;
+		objeto.description = descripcion;
+		objeto.tracker_id = 22;
+		objeto.status_id = 1;
+		objeto.URL = url;
+
+				        	
+		llave.issue = objeto;
+		
+		var objeto2 = new Object();
+		var objeto3 = new Object();
+
+		objeto2.value = url;
+		objeto2.id = 113;
+		
+		objeto3.value = "rodrigo";
+		objeto3.id = 114;
+		
+		arr.push(objeto2);
+		arr.push(objeto3);
+
+
+		llave.custom_fields = arr;
+	
+	  	var info = JSON.stringify(llave);
+	
+	    $.ajax({
+	        url: "/rmClient/issues.json",
+	        type: 'POST',
+	        contentType: 'application/json; charset=utf-8',
+	      	dataType:'json',
+	        async: false, 
+	        data: info,
+	        success: function (data) {
+				$("#cuerpoFormulario").empty();
+				$("#tituloFormulario").empty();
+				$("#cuerpoFormulario").append('<div class="callout callout-success text-center"><h4>La solicitud ha sido enviada con exito</h4></div>');
+	        },
+	        error: function () {
+	            alert('Failed!');
+	        }
+	    });
+        event.preventDefault();    
+
+	});
+	 	        
+	$("body").on("click", ".formualarioSugerencia",function(event){
+	    
+		if ( $("#form_sugerencia").length )
+		{
+			$("#form_sugerencia").remove();
+		}
+	    
+	    var modalSugerencia = 	'<div id="form_sugerencia" class="modal fade" role="dialog">'+
+								'	<div class="modal-dialog modal-lg">'+
+								    <!-- Modal content-->
+								'	<div class="modal-content">'+	
+							    '		<div class="modal-header">'+
+								'        	<h4 class="modal-title" id="tituloFormulario">Formulario de Reporte de Sugerencias e Incidencias del Sistema </h4>'+
+								'      	</div>'+					      
+								'		<div class="modal-body" id="cuerpoFormulario">'+
+							    
+								'		    <form role="form">'+
+								'              <div class="box-body">'+
+								'              	<div class="form-group">'+
+								'                  <label>Descripción</label>'+
+								'                  <textarea class="form-control" rows="3" id="descripcion" placeholder="Por favor describa su sugerencia o inconveniente al utilizar el sistema"></textarea>'+
+								'                </div>'+
+								'                  <input type="hidden" class="form-control" id="usuario" value="<%=user.getName()%>">'+
+								'                  <input type="hidden" class="form-control" id="fecha">'+
+								'                  <input type="hidden" class="form-control" id="url">	'+
+								'              </div>'+
+								              <!-- /.box-body -->
+								'              <div class="box-footer">'+
+								'                <button type="submit" class="btn btn-primary crear" >Enviar Sugerencia</button>'+
+								'              </div>'+
+								'            </form>'+
+								
+								'			</div>'+
+								'	    </div>'+
+								' </div>'+
+								'</div>';
+
+		$("body").append(modalSugerencia);
+		$("#form_sugerencia").modal('show');		
+
+		var strDate;
+		var d = new Date();
+		
+		if(d.getDate() < 10 ){
+			strDate = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + "0"+d.getDate();
+		}else{
+			 strDate = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
+		}
+		
+        var pathname = window.location;
+
+		$("#fecha").val(strDate);
+		$("#url").val(pathname);
+		$("#tituloFormulario").html('');
+		$("#tituloFormulario").append('Formulario de Reporte de Sugerencias e Incidencias del Sistema');
+
+	});
+	        
 	</script>
