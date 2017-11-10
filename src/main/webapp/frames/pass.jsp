@@ -26,39 +26,7 @@
 		    </div>
 	  </div>
 	</div>
-	
-	<!-- MODAL FORMULARIO DE RECEPCIÓN DE SUGERENCIA -->
-	<div id="form_sugerencia" class="modal fade" role="dialog">
-		<div class="modal-dialog modal-lg">
-		    <!-- Modal content-->
-			<div class="modal-content">	
-	    		<div class="modal-header">
-		        	<h4 class="modal-title" id="tituloFormulario">Formulario de Reporte de Sugerencias e Incidencias del Sistema </h4>
-		      	</div>					      
-				<div class="modal-body" id="cuerpoFormulario">
-
-				    <form role="form">
-		              <div class="box-body">
-		              	<div class="form-group">
-		                  <label>Descripción</label>
-		                  <textarea class="form-control" rows="3" id="descripcion" placeholder="Por favor describa su sugerencia o inconveniente al utilizar el sistema"></textarea>
-		                </div>
-		                  <input type="hidden" class="form-control" id="usuario" value="<%=user.getName()%>">
-		                  <input type="hidden" class="form-control" id="fecha">
-		                  <input type="hidden" class="form-control" id="url">	
-		              </div>
-		              <!-- /.box-body -->
 		
-		              <div class="box-footer">
-		                <button type="submit" class="btn btn-primary crear" >Enviar Sugerencia</button>
-		              </div>
-		            </form>
-
-				</div>
-		    </div>
-	  </div>
-	</div>
-	
 	<script>
 	$("body").on("click", "#password_modal_save",function(event){		
 			var todojunto = new Object();
