@@ -1641,7 +1641,7 @@ function renderEvidencia(avanceId, parametros){
 			accion = JSON.parse(accion);
 			
 			var accionesAvances = $.ajax({
-				url:'/tablero/ajaxSelects?action=getAccionesAvances&institucionId'+institucionId+'&linea_accion_id'+lineaAccionId+'&periodoId'+periodoId,
+				url:'/tablero/ajaxSelects?action=getAccionesAvances&institucion_id='+institucionId+'&linea_accion_id='+lineaAccionId+'&periodoId='+periodoId,
 			  	type:'get',
 			  	dataType:'json',
 			  	async:false       

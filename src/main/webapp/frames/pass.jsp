@@ -100,6 +100,7 @@
 	});
 	
 	$("body").on("click", ".crear",function(event){
+	    var tema = $("#tema").val();
 	    var descripcion = $("#descripcion").val();
 	    var url = $("#url").val();
 	    descripcion += ' ||<%=user.getName()%>||'+url;
@@ -111,7 +112,7 @@
 		
 		var objeto = new Object();        	
 		objeto.project_id =  280;
-		objeto.subject = "Tarea nueva";
+		objeto.subject = tema;
 		objeto.priority_id = 3;
 		objeto.description = descripcion;
 		objeto.tracker_id = 22;
@@ -176,6 +177,10 @@
 							    
 								'		    <form role="form">'+
 								'              <div class="box-body">'+
+								'              	<div class="form-group">'+
+								'                  <label>Tema</label>'+
+								'                  	<input type="text" class="form-control" id="tema" placeholder="Describa el tema">'+
+								'                </div>'+								
 								'              	<div class="form-group">'+
 								'                  <label>Descripción</label>'+
 								'                  <textarea class="form-control" rows="3" id="descripcion" placeholder="Por favor describa su sugerencia o inconveniente al utilizar el sistema"></textarea>'+
