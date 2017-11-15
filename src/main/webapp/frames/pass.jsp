@@ -103,8 +103,6 @@
 	    var tema = $("#tema").val();
 	    var descripcion = $("#descripcion").val();
 	    var url = $("#url").val();
-	    descripcion += ' ||<%=user.getName()%>||'+url;
-
 	    var arr = [];
 		var llave = new Object();
 		
@@ -113,32 +111,30 @@
 		var objeto = new Object();        	
 		objeto.project_id =  280;
 		objeto.subject = tema;
-		objeto.priority_id = 3;
+		objeto.priority_id = 4;
 		objeto.description = descripcion;
 		objeto.tracker_id = 22;
 		objeto.status_id = 1;
 		objeto.URL = url;
-
-				        	
-		llave.issue = objeto;
-		
+				        			
 		var objeto2 = new Object();
 		var objeto3 = new Object();
 
 		objeto2.value = url;
 		objeto2.id = 113;
 		
-		objeto3.value = "rodrigo";
+		objeto3.value = '<%=user.getName()%>';
 		objeto3.id = 114;
 		
 		arr.push(objeto2);
 		arr.push(objeto3);
 
-
-		llave.custom_fields = arr;
+		objeto.custom_fields = arr;
+		
+		llave.issue = objeto;
 	
 	  	var info = JSON.stringify(llave);
-	
+	  	
 	    $.ajax({
 	        url: "/rmClient/issues.json",
 	        type: 'POST',
