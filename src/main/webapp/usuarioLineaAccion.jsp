@@ -88,7 +88,7 @@ if (user != null) { %>
 	<%@ include file="/frames/perfil.jsp" %>
 	
 <script>
-<%if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1")){%>
+<%if (attributes.get("role_id").toString().equals("0")){%>
  	$(document).ready(function(){
  			
  		<%@ include file="/frames/usuarioLineaAccion.jsp" %>

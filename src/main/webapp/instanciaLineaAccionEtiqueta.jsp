@@ -70,8 +70,9 @@
 
 <% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%> 
 <% Map attributes = user.getAttributes(); 
-if (user != null && user.getName()!= "parce@nandeparaguay.org") { %>
+if (user != null && user.getName()!= "parce@nandeparaguay.org" && attributes.get("role_id").toString().equals("0")) { %>
 	<%@ include file="/frames/perfil.jsp" %>
+		
 <script>
 periodoSeleccionado=new Date().getFullYear();
 function renderInsLineaAccion(PeriodoActual){
