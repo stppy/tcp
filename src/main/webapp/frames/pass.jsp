@@ -165,12 +165,21 @@
 	    var modalSugerencia = 	'<div id="form_sugerencia" class="modal fade" role="dialog">'+
 								'	<div class="modal-dialog modal-lg">'+
 								    <!-- Modal content-->
-								'	<div class="modal-content">'+	
+								'	<div class="modal-content">'+
 							    '		<div class="modal-header">'+
 								'        	<h4 class="modal-title" id="tituloFormulario">Formulario de Reporte de Sugerencias e Incidencias del Sistema </h4>'+
-								'      	</div>'+					      
-								'		<div class="modal-body" id="cuerpoFormulario">'+
-							    
+								'			<div class="nav-tabs-custom">'+
+					        	'				<ul class="nav nav-tabs pull-right">'+
+					            '					<li class="active"><a href="#tab_1-1" data-toggle="tab"  title="Enviar Sugerencia"><i class="fa fa-envelope text-red"></i> Enviar Sugerencia</a></li>'+
+					            '    				<li><a href="#tab_3-2" data-toggle="tab" title="Sugerencias enviadas"><i class="glyphicon glyphicon-list"></i> Sugerencias Enviadas</a></li>'+
+				                '				</ul>'+
+								'      	</div>'+	
+								'	<div class="modal-body" id="cuerpoFormulario">'+
+
+						
+				                '<div class="tab-content">'+
+				                '	<div class="tab-pane active" id="tab_1-1">'+
+				                
 								'		    <form role="form">'+
 								'              <div class="box-body">'+
 								'              	<div class="form-group">'+
@@ -190,6 +199,16 @@
 								'                <button type="submit" class="btn btn-primary crear" >Enviar Sugerencia</button>'+
 								'              </div>'+
 								'            </form>'+
+				                
+				                '</div>'+
+				                '  	<div class="tab-pane" id="tab_2-2"></div>'+
+				                '  	<div class="tab-pane" id="tab_3-2"></div>'+
+				                '   	<div class="tab-pane" id="tab_4-2"><p>Datos no disponibles</p></div>'+
+				                '   	<div class="tab-pane" id="tab_5-2"><p>Datos no disponibles</p></div>'+                          
+				                '</div>'+
+				        		'</div>'+
+								
+
 								
 								'			</div>'+
 								'	    </div>'+
