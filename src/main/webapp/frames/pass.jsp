@@ -144,17 +144,17 @@
 	        data: info,
 	        success: function (data) {
 				$("#cuerpoFormulario").empty();
-				$("#tituloFormulario").empty();
+				//$("#tituloFormulario").empty();
 				$("#cuerpoFormulario").append('<div class="callout callout-success text-center"><h4>La solicitud ha sido enviada con exito</h4></div>');
 	        },
 	        error: function () {
 	            alert('Failed!');
 	        }
 	    });
-        event.preventDefault();    
+        event.preventDefault();         
 
-	});
-	 	        
+	});		 	 	
+	
 	$("body").on("click", ".formualarioSugerencia",function(event){
 	    
 		if ( $("#form_sugerencia").length )
@@ -168,10 +168,10 @@
 								'	<div class="modal-content">'+
 							    '		<div class="modal-header">'+
 								'        	<h4 class="modal-title" id="tituloFormulario">Formulario de Reporte de Sugerencias e Incidencias del Sistema </h4>'+
-								'			<div class="nav-tabs-custom">'+
+								'			<div class="nav-tabs-custom" style="margin-bottom:0px">'+
 					        	'				<ul class="nav nav-tabs pull-right">'+
 					            '					<li class="active"><a href="#tab_1-1" data-toggle="tab"  title="Enviar Sugerencia"><i class="fa fa-envelope text-red"></i> Enviar Sugerencia</a></li>'+
-					            '    				<li><a href="#tab_3-2" data-toggle="tab" title="Sugerencias enviadas"><i class="glyphicon glyphicon-list"></i> Sugerencias Enviadas</a></li>'+
+					            '    				<li><a href="#tab_2-2" data-toggle="tab" title="Sugerencias enviadas"><i class="glyphicon glyphicon-list"></i> Sugerencias Enviadas</a></li>'+
 				                '				</ul>'+
 								'      	</div>'+	
 								'	<div class="modal-body" id="cuerpoFormulario">'+
@@ -200,12 +200,30 @@
 								'              </div>'+
 								'            </form>'+
 				                
-				                '</div>'+
-				                '  	<div class="tab-pane" id="tab_2-2"></div>'+
+				                '	</div>'+
+				                '  	<div class="tab-pane" id="tab_2-2">'+
+				                
+				                '		<div class="table-responsive mailbox-messages">'+
+				                '    		<table id="tabla_sugerencias" class="table table-hover table-striped">'+
+						                '      <thead>'+
+								        '        <tr>'+
+								        '           <th>Asunto</th>'+
+								        '           <th>Estado</th>'+
+								        '           <th>Fecha de envío</th>'+
+								        '           <th>Fecha de Ult. act.</th>'+
+								        '        </tr>'+
+						              	'	   </thead>'+
+						                '      <tbody id="cuerpo_tabla_sugerencias">'+
+						                       
+						                '      </tbody>'+
+				                '    		</table><!-- /.table -->'+
+				                '  		</div><!-- /.mail-box-messages -->'+
+				                
+				                '	</div>'+
 				                '  	<div class="tab-pane" id="tab_3-2"></div>'+
 				                '   	<div class="tab-pane" id="tab_4-2"><p>Datos no disponibles</p></div>'+
 				                '   	<div class="tab-pane" id="tab_5-2"><p>Datos no disponibles</p></div>'+                          
-				                '</div>'+
+				                '	</div>'+
 				        		'</div>'+
 								
 
@@ -233,7 +251,45 @@
 		$("#url").val(pathname);
 		$("#tituloFormulario").html('');
 		$("#tituloFormulario").append('Formulario de Reporte de Sugerencias e Incidencias del Sistema');
-
+		
 	});
+	
+	$("body").on("click", "#tab_2-2",function(event){
+		
+		var issues = $.ajax({
+    		url:'/rmClient/issues.json',
+    	  	type:'get',
+    	  	dataType:'json',
+    	  	async:false
+    	}).responseText;
+    	issues = JSON.parse(issues);
+    	issues = issues.issues;
+    	
+    	var cuerpoTabla = "";
+		if (issues.length > 0) {
+			for(v = 0;v<issues.length; v++)
+			{								
+				var d1 = new Date(issues[v].created_on);
+				var d2 = new Date(issues[v].updated_on);
+				var fechaCreacion = d1.getDate() + '-' + d1.getMonth() + '-' + d1.getFullYear();  
+				var fechaActualizacion = d2.getDate() + '-' + d2.getMonth() + '-' + d2.getFullYear();
+					
+				cuerpoTabla+='<tr><td class="mailbox-subject"><a href="#"><b>'+issues[v].subject+'</b></a></td>'+
+								 '<td class="mailbox-status">'+issues[v].status.name+'</td>'+
+								 '<td class="mailbox-date-created">'+ fechaCreacion +'</td>'+
+								 '<td class="mailbox-date-created">'+ fechaActualizacion +'</td>'+
+							 '</tr>';				
+			}
+		};
+		
+		$('#cuerpo_tabla_sugerencias').html(cuerpoTabla);
+        
+        $('#tabla_sugerencias').DataTable(
+       		{
+       			"lengthMenu": [[15, 25, 50, -1], [15, 25, 50, "Todos"]]       		 	
+       		} 
+        );
+        
+	}
 	        
 	</script>
