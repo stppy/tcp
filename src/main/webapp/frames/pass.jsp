@@ -171,7 +171,7 @@
 								'			<div class="nav-tabs-custom" style="margin-bottom:0px">'+
 					        	'				<ul class="nav nav-tabs pull-right">'+
 					            '					<li class="active"><a href="#tab_1-1" data-toggle="tab"  title="Enviar Sugerencia"><i class="fa fa-envelope text-red"></i> Enviar Sugerencia</a></li>'+
-					            '    				<li><a href="#tab_2-2" data-toggle="tab" title="Sugerencias enviadas"><i class="glyphicon glyphicon-list"></i> Sugerencias Enviadas</a></li>'+
+					            '    				<li class="sugerenciasEnviadas"><a href="#tab_2-2" data-toggle="tab" title="Sugerencias enviadas"><i class="glyphicon glyphicon-list"></i> Sugerencias Enviadas</a></li>'+
 				                '				</ul>'+
 								'      	</div>'+	
 								'	<div class="modal-body" id="cuerpoFormulario">'+
@@ -203,21 +203,7 @@
 				                '	</div>'+
 				                '  	<div class="tab-pane" id="tab_2-2">'+
 				                
-				                '		<div class="table-responsive mailbox-messages">'+
-				                '    		<table id="tabla_sugerencias" class="table table-hover table-striped">'+
-						                '      <thead>'+
-								        '        <tr>'+
-								        '           <th>Asunto</th>'+
-								        '           <th>Estado</th>'+
-								        '           <th>Fecha de envío</th>'+
-								        '           <th>Fecha de Ult. act.</th>'+
-								        '        </tr>'+
-						              	'	   </thead>'+
-						                '      <tbody id="cuerpo_tabla_sugerencias">'+
-						                       
-						                '      </tbody>'+
-				                '    		</table><!-- /.table -->'+
-				                '  		</div><!-- /.mail-box-messages -->'+
+
 				                
 				                '	</div>'+
 				                '  	<div class="tab-pane" id="tab_3-2"></div>'+
@@ -254,8 +240,9 @@
 		
 	});
 	
-	$("body").on("click", "#tab_2-2",function(event){
-		
+	$("body").on("click", ".sugerenciasEnviadas",function(event){
+		$('#tabla_sugerencias').dataTable().fnDestroy();
+
 		var issues = $.ajax({
     		url:'/rmClient/issues.json',
     	  	type:'get',
@@ -267,22 +254,40 @@
     	
     	var cuerpoTabla = "";
 		if (issues.length > 0) {
+			
+			cuerpoTabla +=  '		<div class="table-responsive">'+
+				            '    		<table id="tabla_sugerencias" class="table table-hover table-striped">'+
+				            '      			<thead>'+
+					        '        			<tr>'+
+					        '           			<th>Asunto</th>'+
+					        '           			<th>Estado</th>'+
+					        '           			<th>Fecha de envío</th>'+
+					        '           			<th>Fecha de Ult. act.</th>'+
+					        '        			</tr>'+
+				          	'	   			</thead>'+
+				            '      			<tbody>';
+            
 			for(v = 0;v<issues.length; v++)
 			{								
 				var d1 = new Date(issues[v].created_on);
 				var d2 = new Date(issues[v].updated_on);
 				var fechaCreacion = d1.getDate() + '-' + d1.getMonth() + '-' + d1.getFullYear();  
 				var fechaActualizacion = d2.getDate() + '-' + d2.getMonth() + '-' + d2.getFullYear();
-					
-				cuerpoTabla+='<tr><td class="mailbox-subject"><a href="#"><b>'+issues[v].subject+'</b></a></td>'+
-								 '<td class="mailbox-status">'+issues[v].status.name+'</td>'+
-								 '<td class="mailbox-date-created">'+ fechaCreacion +'</td>'+
-								 '<td class="mailbox-date-created">'+ fechaActualizacion +'</td>'+
-							 '</tr>';				
+
+				cuerpoTabla += 	'					<tr>'+
+				                '						<td class="mailbox-subject"><a href="#"><b>'+issues[v].subject+'</b></a></td>'+
+								'						<td class="mailbox-status">'+issues[v].status.name+'</td>'+
+								'						<td class="mailbox-date-created">'+ fechaCreacion +'</td>'+
+								'						<td class="mailbox-date-created">'+ fechaActualizacion +'</td>'+
+													 '</tr>';				                       
 			}
+			
+			cuerpoTabla += 		'      			</tbody>'+
+					            '    		</table><!-- /.table -->'+
+					            '  		</div>';
 		};
 		
-		$('#cuerpo_tabla_sugerencias').html(cuerpoTabla);
+		$('#tab_2-2').html(cuerpoTabla);
         
         $('#tabla_sugerencias').DataTable(
        		{
@@ -290,6 +295,6 @@
        		} 
         );
         
-	}
+	});
 	        
 	</script>
