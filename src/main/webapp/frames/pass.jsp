@@ -253,7 +253,41 @@
     	issues = issues.issues;
     	
     	var cuerpoTabla = "";
+    	var cuerpoContent;
 		if (issues.length > 0) {
+						
+            cuerpoContent = '<div class="tab-content">'+
+            '	<div class="tab-pane active" id="tab_1-1">'+
+            
+			'		    <form role="form">'+
+			'              <div class="box-body">'+
+			'              	<div class="form-group">'+
+			'                  <label>Tema</label>'+
+			'                  	<input type="text" class="form-control" id="tema" placeholder="Describa el tema">'+
+			'                </div>'+								
+			'              	<div class="form-group">'+
+			'                  <label>Descripción</label>'+
+			'                  <textarea class="form-control" rows="3" id="descripcion" placeholder="Por favor describa su sugerencia o inconveniente al utilizar el sistema"></textarea>'+
+			'                </div>'+
+			'                  <input type="hidden" class="form-control" id="usuario" value="<%=user.getName()%>">'+
+			'                  <input type="hidden" class="form-control" id="fecha">'+
+			'                  <input type="hidden" class="form-control" id="url">	'+
+			'              </div>'+
+			              <!-- /.box-body -->
+			'              <div class="box-footer">'+
+			'                <button type="submit" class="btn btn-primary crear" >Enviar Sugerencia</button>'+
+			'              </div>'+
+			'            </form>'+
+            
+            '	</div>'+
+            '  	<div class="tab-pane" id="tab_2-2">'+
+                        
+            '	</div>'+
+            '  	<div class="tab-pane" id="tab_3-2"></div>'+
+            '   	<div class="tab-pane" id="tab_4-2"><p>Datos no disponibles</p></div>'+
+            '   	<div class="tab-pane" id="tab_5-2"><p>Datos no disponibles</p></div>'+                          
+            '	</div>'+
+    		'</div>';
 			
 			cuerpoTabla +=  '		<div class="table-responsive">'+
 				            '    		<table id="tabla_sugerencias" class="table table-hover table-striped">'+
@@ -287,6 +321,7 @@
 					            '  		</div>';
 		};
 		
+		$('#cuerpoFormulario').html(cuerpoContent);
 		$('#tab_2-2').html(cuerpoTabla);
         
         $('#tabla_sugerencias').DataTable(

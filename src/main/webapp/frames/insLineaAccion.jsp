@@ -1849,7 +1849,7 @@ function renderEvidencia(avanceId, parametros){
 			'											<th  class="text-center">Depto</th>'+
 			'											<th  class="text-center">Distrito</th>'+
 			'											<th  class="text-center">Unidad Medida</th>'+
-			'											<th  class="text-center">Programación</th>'+
+			'											<th  class="text-center">Programación a la fecha</th>'+
 			'											<th  class="text-center">Avance</th>'+
 			'											<th  class="text-center" style="min-width:130px">Administrar Acción</th>'+
 			'</tr>'+
