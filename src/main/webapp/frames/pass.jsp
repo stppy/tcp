@@ -302,18 +302,20 @@
 				            '      			<tbody>';
             
 			for(v = 0;v<issues.length; v++)
-			{								
-				var d1 = new Date(issues[v].created_on);
-				var d2 = new Date(issues[v].updated_on);
-				var fechaCreacion = d1.getDate() + '-' + d1.getMonth() + '-' + d1.getFullYear();  
-				var fechaActualizacion = d2.getDate() + '-' + d2.getMonth() + '-' + d2.getFullYear();
-
-				cuerpoTabla += 	'					<tr>'+
-				                '						<td class="mailbox-subject"><a href="#"><b>'+issues[v].subject+'</b></a></td>'+
-								'						<td class="mailbox-status">'+issues[v].status.name+'</td>'+
-								'						<td class="mailbox-date-created">'+ fechaCreacion +'</td>'+
-								'						<td class="mailbox-date-created">'+ fechaActualizacion +'</td>'+
-													 '</tr>';				                       
+			{
+				if(issues[v].custom_fields[1].value == '<%=user.getName()%>'){
+					var d1 = new Date(issues[v].created_on);
+					var d2 = new Date(issues[v].updated_on);
+					var fechaCreacion = d1.getDate() + '-' + d1.getMonth() + '-' + d1.getFullYear();  
+					var fechaActualizacion = d2.getDate() + '-' + d2.getMonth() + '-' + d2.getFullYear();
+	
+					cuerpoTabla += 	'					<tr>'+
+					                '						<td class="mailbox-subject"><a href="#"><b>'+issues[v].subject+'</b></a></td>'+
+									'						<td class="mailbox-status">'+issues[v].status.name+'</td>'+
+									'						<td class="mailbox-date-created">'+ fechaCreacion +'</td>'+
+									'						<td class="mailbox-date-created">'+ fechaActualizacion +'</td>'+
+														 '</tr>';
+				}
 			}
 			
 			cuerpoTabla += 		'      			</tbody>'+
