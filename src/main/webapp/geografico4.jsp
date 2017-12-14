@@ -26,7 +26,6 @@
 	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="plugins/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="plugins/datatables/css/buttons.dataTables.min.css" rel="stylesheet">       
-	
 
 <script>
 var datosGeo=[];

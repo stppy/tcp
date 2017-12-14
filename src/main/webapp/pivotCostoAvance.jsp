@@ -167,7 +167,7 @@ textarea { text-transform: uppercase; }
 					</div><!-- fin container de selectores -->
 	            
 	            </div>
-	            
+
 	          <table class="table table-striped table-bordered table-hover">
 	            	<tr>	  					
 	  					<td>

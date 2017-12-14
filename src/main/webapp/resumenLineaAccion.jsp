@@ -195,7 +195,6 @@
 	    <script src="dist/js/pages/dashboard2.js" type="text/javascript"></script>-->
 	
 	    <%@ include file="/frames/pass.jsp" %>
-	
 	    <!-- AdminLTE for demo purposes -->
 	    <script src="dist/js/demo.js" type="text/javascript"></script>
        <%  } else { %>
@@ -204,7 +203,7 @@
 		<a href="#" data-toggle="tooltip" title="Some tooltip text!">Hover over me</a>
 				
 		<%  } else { %>
-    		<script type="text/javascript">window.location = "http://spr.stp.gov.py/";</script>
+    		<script type="text/javascript">window.location = "http://sprtest.stp.gov.py/";</script>
 		<% } %> 
 
 </body>

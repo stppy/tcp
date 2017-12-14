@@ -517,7 +517,7 @@ tbody {
 
 						function getClave2(array, clave1, clave2) {
 							var val;
-							for (val of array){
+							for (val 0 array){
 								if (val.clave1==clave1 && val.clave2==clave2)
 									return val.valor;
 							}
