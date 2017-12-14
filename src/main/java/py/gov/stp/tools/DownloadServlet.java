@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * implementación Servlet de la clase DownloadServlet
+ * 	@author DGTIC-STP
+ *  @email  dgtic@stp.gov.py 
  */
 public class DownloadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

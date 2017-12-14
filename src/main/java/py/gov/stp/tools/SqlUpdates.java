@@ -13,7 +13,10 @@ import java.util.logging.Logger;
 
 import py.gov.stp.tools.*;
 
-
+/**
+ * 	@author DGTIC-STP
+ *  @email  dgtic@stp.gov.py 
+ */
 public class SqlUpdates {
 //	
 //	/*public static void updateEntidad(int id, int nivel,  String descripcion, String abrev, String sigla, String baseLegal, String mision, String vision, String politica, String objetivo, String diagnostico){

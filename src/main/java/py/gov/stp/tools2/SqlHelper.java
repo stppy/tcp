@@ -14,6 +14,10 @@ import java.util.logging.Logger;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
+/**
+ * 	@author DGTIC-STP
+ *  @email  dgtic@stp.gov.py 
+ */
 public class SqlHelper {
 	public static Connection conectar(){
 		 Connection con = null;
@@ -24,7 +28,6 @@ public class SqlHelper {
 	        String url = "";
 	        String user = "root";
 	        String password = "t3R3R3.ol";
-
 	        try {con = DriverManager.getConnection("jdbc:postgres://pg02.stp.gov.py/stp_crm2", "bpm", "cybiraconsulting2");}
 	        catch (SQLException ex) {
 	            Logger lgr = Logger.getLogger(SqlHelper.class.getName());

@@ -24,9 +24,10 @@
 					</form>
 				</div>
 		    </div>
+	
 	  </div>
 	</div>
-		
+	
 	<script>
 	$("body").on("click", "#password_modal_save",function(event){		
 			var todojunto = new Object();
@@ -333,5 +334,4 @@
         );
         
 	});
-	        
-	</script>
+</script>

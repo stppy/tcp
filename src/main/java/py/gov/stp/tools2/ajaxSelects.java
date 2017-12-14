@@ -33,10 +33,14 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+
+/**
+ * 	@author DGTIC-STP
+ *  @email  dgtic@stp.gov.py 
+ */
 public class ajaxSelects extends HttpServlet {
  
     private static final long serialVersionUID = 1L;
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	doPost(request,response);
     }
@@ -483,9 +487,9 @@ public class ajaxSelects extends HttpServlet {
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
-
         	}
         	/*===========GOBIERNO ABIERTO==============*/        	
+
         	if (action.equals("getGobiernoAbierto")){
         		List<AreasAga> areasAgaCat= null;
         		List<LaHasAreasAga> laHasAreasAga= null;
@@ -530,8 +534,7 @@ public class ajaxSelects extends HttpServlet {
         		String condition2 = " where entidad_id="+userEntidadId+" and nivel_id="+userNivelId ;
         		if (!userUnrId.equals("0")){ condition2 += " and unidad_responsable_id="+userUnrId;} ;
         		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
-        		if (periodoId!=null) condition += " and periodo_id ='"+periodoId+"'";
-        		 				
+        		if (periodoId!=null) condition += " and periodo_id ='"+periodoId+"'";   		 				
 	        		//conditionIdLAGA += " WHERE id = 236 OR id BETWEEN 238 AND 245 OR id = 1004 AND borrado is false ORDER BY orden"; //TODO: verificar condicionante
 	        		conditionIdLAGA += " WHERE id BETWEEN 236 AND 245 AND borrado is false ORDER BY orden"; //TODO: verificar condicionante
 	    			conditionAccGA += " WHERE id BETWEEN 28950 AND 29011 AND borrado = false"; 				//TODO: verificar condicionante
@@ -541,7 +544,6 @@ public class ajaxSelects extends HttpServlet {
 	    			conditionLaHasAreasAga += "WHERE peso = 1 ";
 	    			conditionAv += " WHERE actividad_id BETWEEN 80522 AND 80656 AND borrado = false";
 	    			conditionPro += " WHERE actividad_id BETWEEN 80522 AND 80656 AND borrado = false";
-	    			
            		try {
            			areasAgaCat = SqlSelects.selectAreasAgaCat();
            			laHasAreasAga = SqlSelects.selectLaHasAreasAga(conditionLaHasAreasAga);
@@ -1157,7 +1159,6 @@ public class ajaxSelects extends HttpServlet {
         		condition = " where true ";
         		if (programacionId!=null) condition += " and id ='"+programacionId+"'";
         		if (actividadId!=null) condition += " and actividad_id ='"+actividadId+"'";
-
            		try {objetos = SqlSelects.selectProgramacion(condition, "");}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
@@ -1293,7 +1294,6 @@ public class ajaxSelects extends HttpServlet {
                 if (distritoId!=null) condition += " and ins_linea_accion_base.dist_id='"+distritoId+"'";
                 if (periodoId!=null) condition += " and periodo ='"+periodoId+"'";
                 if (etiquetaId!=null && etiquetaId!=0) condition += " and etiqueta_id = "+etiquetaId;
-
            		try {objetos = SqlSelects.selectResumenLineasAccionProgramacion(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
@@ -1381,7 +1381,6 @@ public class ajaxSelects extends HttpServlet {
 	            if (distritoId!=null) condition += " and ins_linea_accion_base_dd.dist_id='"+distritoId+"'";
         		if (periodoId!=null) condition += " and periodo = '"+periodoId+"'"; 
         		if (etiquetaId!=null && etiquetaId != 0) condition += " and ins_linea_accion_base_dd.etiqueta_id = '"+etiquetaId+"'";        		
-
                 try {                	
                 	double acum=0, promedio=0;
                 	int cont=0;
@@ -1820,7 +1819,6 @@ public class ajaxSelects extends HttpServlet {
         	if (action.equals("getResumenLineasAccionProgramacionDesempenoInstitucional")){
                 List<LineaAccionProgramacion> objetos=null;
                 List<Institucion> instituciones= null ;
-
                 ArrayList<Object> desempenhoDpto= new ArrayList<Object>();
                 condition = " where true";
                 
@@ -1854,7 +1852,6 @@ public class ajaxSelects extends HttpServlet {
 	                	int cont;
 	    	            if (periodoId!=null) condition += " and periodo ='"+periodoId+"'";
 	    	            if (etiquetaId!=null && etiquetaId != 0) condition += " and etiqueta_id ='"+etiquetaId+"'";
-
 	                	objetos = SqlSelects.selectResumenLineasAccionProgramacionInstDptoDistrito(condition);
 	                	
 	                	for(int j = 0; j < instituciones.size(); j+= 1){
@@ -2043,7 +2040,7 @@ public class ajaxSelects extends HttpServlet {
 							if(cont != 0){
 								promedio = acum / cont;
 							}
-							
+						
 			                Institucion result = new Institucion() ;
 
 							result.setId(instituciones.get(j).getId());

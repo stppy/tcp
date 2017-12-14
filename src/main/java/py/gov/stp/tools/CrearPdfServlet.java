@@ -28,6 +28,8 @@ import py.gov.stp.tools2.SqlSelects;
 /**
  *
  * @author Alcides Benitez
+ * 	@author DGTIC-STP
+ *  @email  dgtic@stp.gov.py 
  */
 public class CrearPdfServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

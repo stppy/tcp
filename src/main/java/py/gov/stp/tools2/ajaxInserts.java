@@ -31,6 +31,10 @@ import py.gov.stp.objetosV2.*;
 import py.gov.stp.tools.SqlSelects;
 import py.gov.stp.tools2.*;
 
+/**
+ * 	@author DGTIC-STP
+ *  @email  dgtic@stp.gov.py 
+ */
 public class ajaxInserts  extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;

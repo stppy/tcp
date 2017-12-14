@@ -1,0 +1,38 @@
+ #output .pvtAxisContainer, #output .pvtVals { border-color: #CCC; }
+ #output .pvtRendererArea { padding: 10px; }
+ #output .pvtAxisContainer li span.pvtAttr {
+    background-color: #87bedd;
+    border-color: #3c8dbc;
+    color: white;
+    font-size: 13px;                                                                                                                                                                                                                                                                                                                               
+    padding: 3px 10px;
+    box-shadow: 1px 1px 5px #afafaf;
+ }
+ #output .pvtTriangle { color: #3c8dbc; }
+ #output table.pvtTable tr th, #output table.pvtTable tr th {
+    font-size: 12px;
+    padding: 6px 15px;
+    background-color: #d0e6f2;
+ }
+ #output table.pvtTable tr td {
+    font-size: 12px;
+    padding: 6px 15px;
+    color: #3c3c3c;
+ }/*
+ #output .pvtFilterBox {
+    margin-left: -39rem;
+    margin-top: -23rem;
+ }*/
+ #output .pvtFilterBox button {
+     min-width: 100px;
+     margin: 10px 3px;
+ }
+ #output .pvtSearch { padding: 3px 5px; }
+ #output .pvtCheckContainer {
+     overflow: auto;
+     max-height: 150px;
+}
+ #output .pvtFilterBox input[type=checkbox] {
+     margin-right: 10px;
+     vertical-align: sub;
+ }

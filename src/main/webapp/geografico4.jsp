@@ -26,7 +26,6 @@
 	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="plugins/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="plugins/datatables/css/buttons.dataTables.min.css" rel="stylesheet">       
-	
 
 <script>
 var datosGeo=[];
@@ -213,9 +212,6 @@ tbody {
 	          <!-- Info row de buscador de productos -->
 	          
 	          <div class="row">
-
-                
-                
                 <div class="col-md-6">
 			    	<div class="box collapsed-box" >
 			    		<div class="box-header with-border">
@@ -276,7 +272,7 @@ tbody {
 							return x.toString().replace(".", ",").replace(/(\d)(?:(?=\d+(?=[^\d.]))(?=(?:[0-9]{3})+\b)|(?=\d+(?=\.))(?=(?:[0-9]{3})+(?=\.)))/g, "$1.");
 						}
 					}
-										
+									
 					var departamento = $.ajax({
 				    	url:'/tablero/ajaxSelects?action=getDepartamento',
 				      	type:'get',
@@ -302,8 +298,8 @@ tbody {
 				      	async:false       
 				    }).responseText;
 					instituciones=JSON.parse(instituciones);
-											
- 					var desPaisDeptojson = $.ajax({
+
+					var desPaisDeptojson = $.ajax({
  						url:'/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionInstDptoDist',
 				      	type:'get',
 				      	dataType:'json',
@@ -320,7 +316,7 @@ tbody {
 				      	async:false       
 				    }).responseText;
 					var desPaisDist=JSON.parse(desPaisDistjson);
-									    
+
 				    /*nuevo ajax select en vez de dist4*/
 				   var desPaisDistInstjson = $.ajax({
 				    	url:'/tablero/ajaxSelects2?action=getResumenLineasAccionProgramacionDptoDistInst',
@@ -351,7 +347,7 @@ tbody {
 					var porAejeClass="";
 					var porHejeClass="";
 					var porHejeClassRow="";
-												
+
 					function getColorDesemp2(val){
 						if (parseFloat(val).toFixed(0)>=pocentajeColor2){
 							return "green";
@@ -653,6 +649,7 @@ tbody {
 								dist_id = null;
 								depto_id = e.target.feature.properties.dpto;
 								//getPeriodo();
+
 								$("#cuerpoTableroLineaAccion").html("");
 								$("#cuerpoTableroLineaAccion").html(a);
 							}
@@ -680,6 +677,7 @@ tbody {
 								objeto.promedio = desPaisInstAux[i].promedio;
 								objeto.institucion = desPaisInstAux[i].nombre;
 								objeto.institucionSigla = desPaisInstAux[i].sigla;
+
 								desPaisInst.push(objeto);
 							}
 							
@@ -746,8 +744,7 @@ tbody {
 												  "pageLength": 200,
 												  ordering: false
 									}
-							);
-							
+							);		
 						}
 					}//fin funcion "renderEntidades"
 					
@@ -1173,7 +1170,6 @@ tbody {
               </div><!-- /.box -->
             </div><!-- /.col -->
 
-
             
 				<div class="col-md-6">
 			    	<div class="box collapsed-box" >
@@ -1220,7 +1216,7 @@ tbody {
 			   </div>
 			</div>
           </div><!-- /.row -->
-          
+
 <script>
 var $tabla=$("#lineasPorEntidad");
 /* $tabla.floatThead({
@@ -1454,7 +1450,6 @@ if(deptoId!=null)condicion+= "&departamentoId="+deptoId;
 if(distId!=null)condicion+= "&distritoId="+distId;
 if(periodo!=null)condicion+= "&periodoId="+periodo;
 if(etiqueta!=null)condicion+= "&etiquetaId="+etiqueta;
-
 
 
 if(deptoId!=null && distId!=null){
@@ -1927,6 +1922,7 @@ function renderNivelDepartamento(lineasProgramadas, deptoId, distId){
 										totalDestinatario=0;
 										totalProgramado=0;
 										inversionEstimada=0;
+
 										//institucionId = lineasProgramadas[n+1].institucionId;
 										linea_accion_id = lineasProgramadas[n+1].lineaAccionId;
 										//tempInstLineas += '<tr><td colspan="12"><strong>'+lineasProgramadas[n+1].institucionSigla+'</strong></td></tr>';
@@ -2152,7 +2148,6 @@ $("body").on("change", "#periodoSeleccion",function(event){
    	periodoSeleccionado = $("#periodoSeleccion option:selected").val();
    	etiquetaSeleccionado = $("#etiquetaSeleccion option:selected").val();
    	var nombreDepto;
-   	
 	//var institucion_idConcat=getInstitucionesSeleccionadas();
 	var nombreInstituciones="";	
 	var institucion_idConcat=getInstitucionesSeleccionadas();
@@ -2412,7 +2407,6 @@ $("body").on("change", "#periodoSeleccion",function(event){
 				var desPaisInst= [];
 
  				for(var i=0;i<desPaisInstAux.length;i++){		
-
 					var objeto = new Object(); 
 					if(desPaisInstAux[i] == 0){
 						promedio = 0/0;
@@ -2880,8 +2874,7 @@ $("body").on("change", "#etiquetaSeleccion",function(event){
 				var todasInstituciones=getInstitucionesSeleccionadas();
 				var a = renderTableroLineaAccion(todasInstituciones,null,null,periodoSeleccionado,etiquetaSeleccionado);
 				$("#cuerpoTableroLineaAccion").html("");
-				$("#cuerpoTableroLineaAccion").html(a);
-			
+				$("#cuerpoTableroLineaAccion").html(a);	
 			}			
 		}	
 	
@@ -3066,7 +3059,6 @@ $(document).ready(function(){
     
 	$('#periodoSeleccion').html(optionPeriodo);
 	$('#etiquetaSeleccion').append(optionEtiqueta);					
-	
 
 	$("body").on("change", "#ex12c",function(event){
 		var rangoDeColor= $("#ex12c").attr("value");

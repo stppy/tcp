@@ -72,7 +72,6 @@
 <% Map attributes = user.getAttributes(); 
 if (user != null && user.getName()!= "parce@nandeparaguay.org" && attributes.get("role_id").toString().equals("0")) { %>
 	<%@ include file="/frames/perfil.jsp" %>
-		
 <script>
 periodoSeleccionado=new Date().getFullYear();
 function renderInsLineaAccion(PeriodoActual){
@@ -848,7 +847,11 @@ function renderInsLineaAccion(PeriodoActual){
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js" type="text/javascript"></script>
         <%  } else { %>
+<<<<<<< HEAD
         	<script type="text/javascript">window.location = "/tablero/geografico4.jsp";</script>
+=======
+        	<script type="text/javascript">window.location = "http://spr.stp.gov.py/tablero/geografico4.jsp";</script>
+>>>>>>> mejoras/master
 				<!-- <p>Favor Iniciar Sesion</p> -->
 			<% } %> 
 
@@ -876,7 +879,11 @@ var entidadCasSpr = "";
 entidadCasSpr ="<%=attributes.get("entidad") %>";
 usuarioRolCasSpr="<%=attributes.get("role_id_tablero") %>";
 var usuariosSpr = $.ajax({
+<<<<<<< HEAD
 	url:'/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
+=======
+	url:'http://spr.stp.gov.py/tablero/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
+>>>>>>> mejoras/master
   	type:'get',
   	dataType:'json',
   	async:false       

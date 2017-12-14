@@ -20,7 +20,10 @@ import objetos.MetasDistEntLinea;
 import py.gov.stp.objetosV2.AccionHasProducto;
 import py.gov.stp.objetosV2.ProductoObjetoGasto;
 
-
+/**
+ * 	@author DGTIC-STP
+ *  @email  dgtic@stp.gov.py 
+ */
 public class SqlSelects {
 	/*public static Connection ConnectionConfiguration.conectar(){
 		 Connection con = null;
@@ -31,8 +34,8 @@ public class SqlSelects {
 	        String url = "";
 	        String user = "root";
 	        String password = "t3R3R3.ol";
-
 	        try {con = DriverManager.getConnection("jdbc:mysql://mysql01.stp.gov.py/spr", "root", "t3R3R3.ol");}
+
 	        catch (SQLException ex) {
 	            Logger lgr = Logger.getLogger(SqlHelper.class.getName());
 	            lgr.log(Level.SEVERE, ex.getMessage(), ex);

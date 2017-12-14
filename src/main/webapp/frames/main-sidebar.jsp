@@ -30,7 +30,7 @@
 		   				<li class=""><a href="/entidad.jsp"><i class="fa fa-home" id="linkEntidad"></i>Perfil Institucional</a></li>
 		        		<li class=""><a href="/programacion.jsp"><i class="fa fa-sitemap" id="linkEstructuraProgramatica"></i>Estructura Programática</a></li>
 		        		<li class=""><a href="/producto.jsp"><i class="fa fa-edit" id="linkProgramacionProducto"></i>Programación de Productos</a></li>
-	        			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1") || attributes.get("role_id_tablero").toString().equals("2") || attributes.get("role_id_tablero").toString().equals("3") || attributes.get("role_id_tablero").toString().equals("4")){%>
+	        			<% if (attributes.get("role_id").toString().equals("0") || attributes.get("role_id").toString().equals("1")){%>
 							<li class=""><a href="/pivotPerfilInstitucional.jsp"><i class="fa fa-university" id="linkPivotPerfilInstitucional"></i>Análisis de Perfil Institucional POI</a></li>
 							<!-- <li class=""><a href="/pivotEstructuraProgramatica.jsp"><i class="fa fa-table" id="linkPivotEstructuraProgramatica"></i>Análisis de Estructura Programática POI</a></li> -->
 							<li class=""><a href="/pivotMetasProductos.jsp"><i class="fa fa-table" id="linkPivotMetasProductos"></i>Análisis de Metas de Productos POI</a></li>

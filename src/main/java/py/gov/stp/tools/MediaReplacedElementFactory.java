@@ -22,6 +22,8 @@ import com.lowagie.text.Image;
  * Replaced element para reemplazar elementos con 
  * <tt>&lt;div class="media" data-src="image.png" /></tt> con contenido
  * multimedia real.
+ * @author DGTIC-STP
+ * @email  dgtic@stp.gov.py 
  */
 public class MediaReplacedElementFactory implements ReplacedElementFactory {
     private final ReplacedElementFactory superFactory;

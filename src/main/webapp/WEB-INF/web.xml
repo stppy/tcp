@@ -182,7 +182,7 @@
     <url-pattern>/ajaxSelects2</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-    <servlet-name>ajaxSelects3</servlet-name>
+  <servlet-name>ajaxSelects3</servlet-name>
     <url-pattern>/public/ajaxSelects3</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
@@ -190,7 +190,7 @@
     <url-pattern>/public/ajaxSelects4</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-    <servlet-name>ajaxUpdate</servlet-name>
+  <servlet-name>ajaxUpdate</servlet-name>
     <url-pattern>/ajaxUpdate</url-pattern>
   </servlet-mapping>
   <servlet-mapping>

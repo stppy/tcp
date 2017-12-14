@@ -15,6 +15,8 @@ import javax.servlet.http.Part;
 
 /**
  * Servlet implementation class UploadServlet
+ * @author DGTIC-STP
+ * @email  dgtic@stp.gov.py 
  */
 @MultipartConfig(maxFileSize=1024*1024*15,      // 15MB
 				 maxRequestSize=1024*1024*50)   // 50MB		

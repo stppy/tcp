@@ -1,5 +1,9 @@
 package py.gov.stp.tools;
 
+/**
+ * 	@author DGTIC-STP
+ *  @email  dgtic@stp.gov.py 
+ */
 public class LineaAccionAcumuladoMesDepartamento {
 	protected int linea_accion_id;
 	protected String linea_accion;

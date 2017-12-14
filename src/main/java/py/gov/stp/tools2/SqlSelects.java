@@ -27,7 +27,10 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-
+/**
+ * 	@author DGTIC-STP
+ *  @email  dgtic@stp.gov.py 
+ */
 public class SqlSelects {
 
 	public static List<TipoAccion> selectTipoAccion() throws SQLException{
@@ -888,7 +891,6 @@ public class SqlSelects {
 		return objetos; 
 		}
 		
-	
 	public static String selectPivotLineasProgramadas(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
 		String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from(select * from linea_accion_programado2 "+condition+")t ";
@@ -1151,8 +1153,8 @@ public class SqlSelects {
 		}
 		return objetos; 
 		}
-	
-	public static List<Departamento> selectDepartamento(String condition) throws SQLException{
+
+public static List<Departamento> selectDepartamento(String condition) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
 		String query = " select * from departamento "+condition; // where paisid = 'PY' ORDER BY id ASC";
 
@@ -1300,8 +1302,8 @@ public class SqlSelects {
 		}
 		return objetos; 
 	}
-	
-	public static List<HitoTipo> selectHitoTipo() throws SQLException{
+
+public static List<HitoTipo> selectHitoTipo() throws SQLException{
 		Connection conect=ConnectionConfiguration.conectar();
 		String query = " select * from hito_tipo order by id";
 
@@ -2723,6 +2725,7 @@ public class SqlSelects {
 				+ " left join ins_linea_accion_destinatario_real_dd on "
 				+ " ins_linea_accion_destinatario_real_dd.ins_linea_accion_id=ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_destinatario_real_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_destinatario_real_dd.dist_id=ins_linea_accion_base_dd.dist_id"
 				+ " where periodo=2017 " + condition;
+
 		Statement statement = null;
 		ResultSet rs = null;
 		List<LineaAccionProgramacion> objetos = new ArrayList<LineaAccionProgramacion>();
@@ -2850,6 +2853,7 @@ public class SqlSelects {
 				+ " left join ins_linea_accion_destinatario_real_dd on "
 				+ " ins_linea_accion_destinatario_real_dd.ins_linea_accion_id=ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_destinatario_real_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_destinatario_real_dd.dist_id=ins_linea_accion_base_dd.dist_id"
 				+ " where true " + condition+ " order by depto_id, dist_id";
+
 		Statement statement = null;
 		ResultSet rs = null;
 		List<LineaAccionProgramacion> objetos = new ArrayList<LineaAccionProgramacion>();
@@ -3286,7 +3290,7 @@ public class SqlSelects {
 //                 + " ins_linea_accion_destinatario_real_dd.ins_linea_accion_id=ins_linea_accion_base_dd.ins_linea_accion_id and ins_linea_accion_destinatario_real_dd.depto_id=ins_linea_accion_base_dd.depto_id and ins_linea_accion_destinatario_real_dd.dist_id=ins_linea_accion_base_dd.dist_id"
 //                 + " "+ condition;
 
-		String query = "select "
+String query = "select "
 				+ "ins_linea_accion_base_dd.institucion_sigla,"
                 + "ins_linea_accion_base_dd.institucion_id,"
                 + "ins_linea_accion_base_dd.depto_id as depto_id,"

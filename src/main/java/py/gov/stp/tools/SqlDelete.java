@@ -11,7 +11,10 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
+/**
+ * 	@author DGTIC-STP
+ *  @email  dgtic@stp.gov.py 
+ */
 public class SqlDelete {
 	
 //

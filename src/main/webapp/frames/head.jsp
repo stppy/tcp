@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page contentType="text/html; charset=UTF-8"%>
-<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+  <%@ page contentType="text/html; charset=UTF-8"%>
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
     <title>spr | STP</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 3.3.2 -->
@@ -21,7 +21,7 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link href="dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
-    <script src="dist/libs/jquery/1.11.2/jquery.min.js"></script>    
+    <script src="/dist/libs/jquery/1.11.2/jquery.min.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -29,4 +29,8 @@
         <script src="//spr.stp.gov.pydist/js/respond.min.js"></script>
     <![endif]-->
     <script src="frames/main.js"></script>
-	 <link href="frames/main.css" rel="stylesheet" type="text/css" />
+    <link href="frames/main.css" rel="stylesheet" type="text/css" />
+
+
+    <link href="plugins/toastr/toastr.min.css" rel="stylesheet" type="text/css" />
+    <script src="plugins/toastr/toastr.min.js" type="text/javascript"></script>

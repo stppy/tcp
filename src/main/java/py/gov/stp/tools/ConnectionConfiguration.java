@@ -8,6 +8,11 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * 	@author DGTIC-STP
+ *  @email  dgtic@stp.gov.py 
+ */
+
 public class ConnectionConfiguration {
     public static final String URL = "jdbc:postgres://mysql01.stp.goy.py:3306/spr?useUnicode=true&characterEncoding=UTF-8";
     public static final String USERNAME = "bpm";

@@ -9,7 +9,8 @@
 <!DOCTYPE html>
 <html>
   <head>
- 	 <%@ include file="/frames/head.jsp" %>	 
+ 	 <%@ include file="/frames/head.jsp" %>
+  <meta charset="UTF-8">
 	<script type="text/javascript" src="dist/canvasjs/canvasjs.min.js" ></script>
 	<script src="/dist/js/jspdf.min.js"></script>
 	
@@ -22,7 +23,6 @@
 	
 	<!-- bootstrap wysihtml5 css  -->
 	<link href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css">
-	
 	<!-- jQuery 2.1.3  -->
     <!-- >script src="plugins/jQuery/jQuery-2.1.3.min.js"></script-->
     
@@ -68,7 +68,6 @@
 		#R, #G, #B {
 			width: 300px;
 		}
-		
 		/* Ajusta el tamaño del select y limita la longitud del texto a desplegar
 		 poniendole ... cuando supera la longitud máxima */
 		select option {
@@ -173,7 +172,6 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
 	}).responseText;
 	usuarioEtiqueta = JSON.parse(usuarioEtiqueta); */
 	
-
 	var tablaInsLineaAccion="";
 	var cuerpoTablaInsLineaAccion="";
 	$("#cuerpoInsLineaAccion").html("");
@@ -978,8 +976,7 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
 		        error: function(data,status,er) {
 		        	
 		        	}
-			 });
-		   	
+			 });	
 		   
 		});
 				
@@ -1032,33 +1029,42 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
 	         <!-- row periodo actual -->
 	    	<div class="row">
 	        	<div class="col-md-12">
-	         		<div class="box" > 
-	            		<div class="box-header with-border">
-	              			<h2 class="box-title text-center">Líneas de Acción del Periodo Selecionado</h2>
-	              			<div class="box-tools pull-right"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button></div>
-	            		</div>
-	            		<div class="box-body" id="cuerpoInsLineaAccion" style="height:auto; overflow: auto; display: block;">
-	            			
-	            		</div>
-	             		<div class="box-footer" style="height:auto; overflow: auto; display: block;">
-	             			<div class="col-md-6" align="left">
-		             			<% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
-		             				<button type="submit" class="btn btn-primary nuevaInsLineaAccion">Agregar Línea de Acción</button>
-		             			<%}%>
-	             			</div>
-	             			<!-- link para acceder a la pagina de descarga de los avances y constancias -->
-							<div class="col-md-6" align="right">								
-								<button id="botonImprimirAvanceInstitucional" type="button" class="btn btn-primary imprimirAvanceCualitativoInstitucion" >
-									<span class="glyphicon glyphicon-download-alt"></span> Descargar Avances
-								</button>															
-								<!-- <a href="/tablero/descargasConstancias.jsp">									
-									<button type="button" class="btn btn-primary">
-										<span class="glyphicon glyphicon-download-alt"></span> Descargar Constancias
-									</button>
-								</a> -->
-							</div><!--fin div de link de avances y constancias -->
-	             		</div>
-			   		</div>
+
+              <!-- hackathon -->
+              <div id="stp-tabs">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                  <li role="presentation" class="active"><a href="#stp-tabs-listado" aria-controls="stp-tabs-listado" role="tab" data-toggle="tab">Listado</a></li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                  <div role="tabpanel" class="tab-pane active" id="stp-tabs-listado">
+                    <div class="box"> 
+                          <div class="box-header with-border">
+                              <h2 class="box-title text-center">Líneas de Acción del Periodo Selecionado</h2>
+                              <div class="box-tools pull-right"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button></div>
+                          </div>
+                          <div class="box-body" id="cuerpoInsLineaAccion" style="height:auto; overflow: auto; display: block;">   
+                          </div>
+                          <div class="box-footer" style="height:auto; overflow: auto; display: block;">
+                            <div class="col-md-6" align="left">
+                              <% if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("role_id_tablero").toString().equals("1")){%>
+                                <button type="submit" class="btn btn-primary nuevaInsLineaAccion">Agregar Línea de Acción</button>
+                              <%}%>
+                            </div>
+                            <!-- link para acceder a la pagina de descarga de los avances y constancias -->
+                          <div class="col-md-6" align="right">								
+                          <button id="botonImprimirAvanceInstitucional" type="button" class="btn btn-primary imprimirAvanceCualitativoInstitucion" >
+                            <span class="glyphicon glyphicon-download-alt"></span> Descargar Avances
+                          </button>															
+                          </div><!--fin div de link de avances y constancias -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- end hackathon -->
 				</div>
           	</div><!-- /.row -->
 			
@@ -1128,6 +1134,18 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
       
       <script type="text/javascript">
 			$(document).ready(function(){
+        // Este es el handler para el click en la pestaña "Listado"
+        $('#stp-tabs ul[role=tablist] a[href="#stp-tabs-listado"]').click(function() {
+          $('#stp-tabs-registrarLineaAccion').detach();
+          $('#stp-tabs ul[role=tablist] a[href="#stp-tabs-registrarLineaAccion"]').detach();
+          $('#stp-tabs-acciones').detach();
+          $('#stp-tabs ul[role=tablist] a[href="#stp-tabs-acciones"]').detach();
+          $('#stp-tabs-vincularProductos').detach();
+          $('#stp-tabs ul[role=tablist] a[href="#stp-tabs-vincularProductos"]').detach();
+          $('#stp-tabs-avanceCualitativo').detach();
+          $('#stp-tabs ul[role=tablist] a[href="#stp-tabs-avanceCualitativo"]').detach();
+        });
+
 				$("#sideBar2").click(function(){
 					//Update options
 					var o = $.AdminLTE.options.controlSidebarOptions;
@@ -1224,10 +1242,6 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
     <script src="plugins/chartjs/Chart.min.js" type="text/javascript"></script>
      <!-- AdminLTE App -->
     <script src="dist/js/app.min.js" type="text/javascript"></script>       
-    
-    
-
-
     <!-- Librerias para la rutina de cambio de contraseña -->
     <script src="dist/js/jquerymd5.js" type="text/javascript"></script>    	
     <%@ include file="/frames/pass.jsp" %>

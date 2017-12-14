@@ -192,9 +192,7 @@ function renderAccion(estrategia, lineasProgramadas, instituciones, periodo){
 											flagIns++;						  
 										}
 										clase="";
-										//var desempProgAnho=numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2));
-										var desempProgAnho=parseFloat(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100));
-
+										var desempProgAnho=numeroConComa(((lineasProgramadas[n].cantidadAnho/lineasProgramadas[n].meta)*100).toFixed(2));
 										if (lineasProgramadas[n].cantidadAnho==0 && lineasProgramadas[n].meta ==0) desempProgAnho="-";
 										if (desempProgAnho!="-"){
 											if (parseInt(desempProgAnho)>=90 && lineasProgramadas[n].meta != 0){

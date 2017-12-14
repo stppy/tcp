@@ -17,7 +17,10 @@ import py.gov.stp.tools.SqlSelects;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-
+/**
+ * 	@author DGTIC-STP
+ *  @email  dgtic@stp.gov.py 
+ */
 public class ajaxSelects extends HttpServlet {
  
     private static final long serialVersionUID = 1L;
@@ -71,10 +74,7 @@ public class ajaxSelects extends HttpServlet {
     	Integer usuarioId = null;
     	Integer anho = null;
     	Integer periodoId = null; 
-    	Integer etiquetaId = null;
-
-
-    	
+    	Integer etiquetaId = null; 	
     	String institucion=null;
     	String usuario=null;
     	String catalogoAccion=null;
@@ -133,9 +133,6 @@ public class ajaxSelects extends HttpServlet {
       	if (request.getParameter("periodoId")!=null) periodoId=Integer.parseInt(request.getParameter("periodoId"));
       	if (request.getParameter("catalogoAccion")!=null) catalogoAccion = request.getParameter("catalogoAccion");
       	if (request.getParameter("etiquetaId")!=null) etiquetaId=Integer.parseInt(request.getParameter("etiquetaId"));
-
-
-
     	
         PrintWriter out = response.getWriter();
         response.setContentType("text/html");
@@ -259,6 +256,7 @@ public class ajaxSelects extends HttpServlet {
 				catch (SQLException e) {e.printStackTrace();}				
         		out.println(objetos);return;
         	}
+
 //        	if (action.equals("getAccionesAvancesDepto")){
 //        		String objetos=null;
 //        		condition = " where true ";
