@@ -168,7 +168,6 @@ textarea { text-transform: uppercase; }
 
 				
                 $.getJSON("/tablero/ajaxSelects2?action=getLineaAccionDestinatarios", function(mps) {
-
                 	$("#output").pivotUI(mps, {
                         renderers: $.extend(
                             $.pivotUtilities.renderers, 

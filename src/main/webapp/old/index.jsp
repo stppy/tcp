@@ -218,7 +218,7 @@
 			  $(this).children().children().html(" ");
 			  if ($(this).children().length <= 1 ){
 				  var subprogramas = $.ajax({
-			    	    url:'/ajaxHelper?accion=getSubprogramas&nivel=12&entidad='+idEntidad+'&tipoPresupuesto='+idTipoPrograma+'&programa='+idPrograma,
+			    		url:'/ajaxHelper?accion=getSubprogramas&nivel=12&entidad='+idEntidad+'&tipoPresupuesto='+idTipoPrograma+'&programa='+idPrograma,
 			    		type:'get',
 			    		dataType:'json',
 			    		async:false    		

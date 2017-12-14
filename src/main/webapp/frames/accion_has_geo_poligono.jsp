@@ -53,7 +53,6 @@ $("body").on("click", "#guardarAccionHasGeoPoligono",function(event){
 		
 			 
 		$.ajax({
-
 		        url: "/tablero/ajaxInserts2?accion="+accion,
 		        type: 'POST',
 		        dataType: 'json',
