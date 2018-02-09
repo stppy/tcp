@@ -32,7 +32,6 @@ import py.gov.stp.tools2.SqlSelects;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-
 /**
  * 	@author DGTIC-STP
  *  @email  dgtic@stp.gov.py 
@@ -40,7 +39,6 @@ import com.google.gson.JsonObject;
 public class ajaxSelects extends HttpServlet {
  
     private static final long serialVersionUID = 1L;
-    
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	doPost(request,response);
     }
@@ -138,6 +136,8 @@ public class ajaxSelects extends HttpServlet {
 		String conditionActGA = "";
 		String conditionHitoGA = "";
 		String conditionLaHasAreasAga ="";
+		String conditionAv = "";
+		String conditionPro = "";
     	String mision = "";
     	String nombre = "";
     	String vision = "";
@@ -454,11 +454,25 @@ public class ajaxSelects extends HttpServlet {
         		List objetos=null; 
         		condition = " where true ";
         		if (lineaAccionId!=null) condition += " and id ='"+lineaAccionId+"'";
+        		if (borrado!=null) condition += " and borrado is "+ borrado;
            		try {objetos = SqlSelects.selectLineaAccion(condition, "");}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
         	}  
+        	/* se obtienen las lineas de acción restantes que pueden ser asignadas a una institución */
+        	if (action.equals("getLineasAccionRestantes")){
+        		List objetos=null; 
+        		condition = "";        		
+        		if (institucionId!=null) condition += " and ila.institucion_id ='"+institucionId+"'";
+        		if (periodoId!=null) condition += " and ila.periodo_id ='"+periodoId+"'";
+        		if (versionId!=null) condition += " and ila.version ='"+versionId+"'";        		
+        		
+           		try {objetos = SqlSelects.selectLineasAccionesRestantes(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());
+        	}
         	if (action.equals("getInsLineaAccion")){
         		List objetos=null; 
         		condition = " where true ";
@@ -472,7 +486,8 @@ public class ajaxSelects extends HttpServlet {
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
         	}
-/*===========GOBIERNO ABIERTO==============*/        	
+        	/*===========GOBIERNO ABIERTO==============*/        	
+
         	if (action.equals("getGobiernoAbierto")){
         		List<AreasAga> areasAgaCat= null;
         		List<LaHasAreasAga> laHasAreasAga= null;
@@ -485,8 +500,10 @@ public class ajaxSelects extends HttpServlet {
         		List<Accion> axion = null; 
         		List<AccionCatalogo> accionCatalogo = null;
         		List<Actividad> actividad = null;
-        		List<Institucion> institu = null;
+        		List<InstitucionGA> institu = null;
+        		List<Institucion> siglaInsti = null;
         		List<Hito> hito = null;
+        		List<Programacion> programacion = null;
         		List<Avance> avances = null;
         		List<Evidencia> eviden = null;
         		
@@ -498,6 +515,11 @@ public class ajaxSelects extends HttpServlet {
                 ArrayList<PndGA> childrenPnd = new ArrayList<PndGA>();
                 ArrayList<OdsGA> childrenOds = new ArrayList<OdsGA>();
                 
+                String chilEstado[] = new String[4];
+                chilEstado[0]="finalizado";
+                chilEstado[1]="enejecucion";
+                chilEstado[2]="noiniciado";
+                chilEstado[3]="atrasado";
                 String colores[] = new String[4] ;
                 colores[0]="#556270";
                 colores[1]="#4ECDC4";
@@ -510,14 +532,16 @@ public class ajaxSelects extends HttpServlet {
         		String condition2 = " where entidad_id="+userEntidadId+" and nivel_id="+userNivelId ;
         		if (!userUnrId.equals("0")){ condition2 += " and unidad_responsable_id="+userUnrId;} ;
         		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
-        		if (periodoId!=null) condition += " and periodo_id ='"+periodoId+"'";
-        		
-        			conditionIdLAGA += " WHERE id BETWEEN 235 AND 245 AND borrado = false"; 				//TODO: verificar condicionante
-        			conditionAccGA += " WHERE id BETWEEN 7424 AND 7477 AND borrado = false"; 				//TODO: verificar condicionante
-        			conditionAccCat += " WHERE borrado = false"; 											
-        			conditionActGA += " WHERE accion_id BETWEEN 7424 AND 7477 AND borrado = false"; 		//TODO: verificar condicionante
-        			conditionHitoGA += " WHERE ins_linea_accion_id BETWEEN 235 AND 245 AND borrado = false";//TODO: verificar condicionante
-        			conditionLaHasAreasAga += "WHERE peso = 1 ";
+        		if (periodoId!=null) condition += " and periodo_id ='"+periodoId+"'";   		 				
+	        		//conditionIdLAGA += " WHERE id = 236 OR id BETWEEN 238 AND 245 OR id = 1004 AND borrado is false ORDER BY orden"; //TODO: verificar condicionante
+	        		conditionIdLAGA += " WHERE id BETWEEN 236 AND 245 AND borrado is false ORDER BY orden"; //TODO: verificar condicionante
+	    			conditionAccGA += " WHERE id BETWEEN 28950 AND 29011 AND borrado = false"; 				//TODO: verificar condicionante
+	    			conditionAccCat += " WHERE borrado = false"; 											
+	    			conditionActGA += " WHERE accion_id BETWEEN 28950 AND 29011 AND borrado = false"; 		//TODO: verificar condicionante
+	    			conditionHitoGA += " WHERE accion_id BETWEEN 28950 AND 29011 AND borrado = false";		//TODO: verificar condicionante
+	    			conditionLaHasAreasAga += "WHERE peso = 1 ";
+	    			conditionAv += " WHERE actividad_id BETWEEN 80522 AND 80656 AND borrado = false";
+	    			conditionPro += " WHERE actividad_id BETWEEN 80522 AND 80656 AND borrado = false";
            		try {
            			areasAgaCat = SqlSelects.selectAreasAgaCat();
            			laHasAreasAga = SqlSelects.selectLaHasAreasAga(conditionLaHasAreasAga);
@@ -530,9 +554,11 @@ public class ajaxSelects extends HttpServlet {
            			axion = SqlSelects.selectAccion(condition, conditionAccGA);
            			accionCatalogo = SqlSelects.selectAccionCatalogo(condition, conditionAccCat);
            			actividad = SqlSelects.selectActividad(conditionActGA);
-           			institu = SqlSelects.selectInstitucion(condition);
+           			siglaInsti = SqlSelects.selectInstitucion(condition);
+           			institu = SqlSelects.selectInstitucionGA(condition);
            			hito = SqlSelects.selectHito(conditionHitoGA);
-           			avances = SqlSelects.selectAvance(condition);
+           			avances = SqlSelects.selectAvance("", conditionAv);
+           			programacion = SqlSelects.selectProgramacion("", conditionPro);
            			eviden = SqlSelects.selectEvidencia(condition);
            			
            			
@@ -601,32 +627,124 @@ public class ajaxSelects extends HttpServlet {
 			           										
 			           										childrenRes = new ArrayList<Object>();
 			   					           					for(int y = 0; y < institu.size(); y +=1){							//se cargan las instituciones responsables
-				           										if(institu.get(y).getId() == insLineaAccion.get(a).getInstitucionId()){
-				           											Institucion insti = institu.get(y);
-				           											childrenRes.add(insti.getNombre());
+				           										if(institu.get(y).getAccionId() == axion.get(i).getId()){
+				           											//InstitucionGA responsable = institu.get(y);
+				           											for(int s = 0; s < siglaInsti.size(); s +=1){				           												
+				           												if(institu.get(y).getInstitucionId() == siglaInsti.get(s).getId()){
+				           													childrenRes.add(siglaInsti.get(s).getSigla());
+				           												}
+				           											}
 				           										}
 				           									}
 			   					           					axGA.setResponsables(childrenRes);	
 				           					           		
+			   					           					Date fecha_inicio = new Date();
+			   					           					String startDate = "2016-06-01"; 	//TODO: establecer una fecha acorde al plan
+			   					           					SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+			   					           					fecha_inicio = dateformat.parse(startDate);
+			   					           					axGA.setFecha_inicio(fecha_inicio);
+				           					           		
 			   					           					//TODO: necesita revision del codigo para fijar la fecha proevida por la base de datos
 			   					           					Date fecha_fin = new Date();
-				           					           		for(int x = 0; x < hito.size(); x +=1){								//se cargan las fechas fin
-				           										if(hito.get(x).getAccionId() == axion.get(i).getId()){
-				           											Hito fechas = hito.get(x);
-				           											String fechaFin =  fechas.getFechaEntrega().toString();
-						           					           		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-						           					           		fecha_fin = sdf1.parse(fechaFin);
+			   					           					if(!hito.isEmpty()){
+			   					           						for(int x = 0; x < hito.size(); x +=1){								//se cargan las fechas fin
+			   					           							if(hito.get(x).getAccionId() == axion.get(i).getId()){
+			   					           								Hito fechas = hito.get(x);
+			   					           								fecha_fin =  dateformat.parse(fechas.getFechaEntrega().toString());
+			   					           							}
+			   					           						}
+			   					           						axGA.setFecha_fin(fecha_fin);
+			   					           					}else{
+			   					           						axGA.setFecha_fin(fecha_fin);
+			   					           					}
+
+				           					           		Calendar cal = Calendar.getInstance();
+				           					           		String fecha = dateformat.format(cal.getTime());
+				           					           		Date fechaActual = dateformat.parse(fecha);
+				           					           		axGA.setFecha(fechaActual);
+				           					           		
+			   					           					for(int k = 0; k < actividad.size(); k +=1){							//recorremos las actividades para verificar con cada accion
+				           										if(actividad.get(k).getAccionId() == axion.get(i).getId()){
+				           											for(int l = 0; l < programacion.size(); l +=1){	
+				           												if (actividad.get(k).getId() == programacion.get(l).getActividad()){				           													
+				           													Date dateProgramacion = dateformat.parse(programacion.get(l).getFechaEntrega());
+				           													int compProgActual = dateProgramacion.compareTo(fechaActual); //comparamos las fechas de la programacion con la fecha actual
+				           													
+				           													if(compProgActual > 0){									//preguntamos si la programacion esta vencida
+				           														if(!avances.isEmpty()){
+				           															for(int m = 0; m < avances.size(); m +=1){
+				           																Date dateAvance = dateformat.parse(avances.get(m).getFechaEntrega());				           															
+				           																if(actividad.get(k).getId() == avances.get(m).getActividadId()){
+				           																	int compProgAvance = dateProgramacion.compareTo(dateAvance);
+				           																	if (compProgAvance > 0){				//consultamos si la fecha programada es posterior a la fecha de avance
+				           																		if(avances.get(m).getCantidad() == programacion.get(l).getCantidad()){	//comparamos la cantidad programada y de avance
+				           																			axGA.setEstado(chilEstado[0]);	//... vencido pero finalizado
+				           																		}else{
+				           																			if (avances.get(m).getCantidad() != programacion.get(l).getCantidad()){
+				           																				axGA.setEstado(chilEstado[3]);	//...esta atrasado
+				           																			}
+				           																		}
+				           																	}else{
+				           																		if(compProgAvance <= 0){
+				           																			if(avances.get(m).getCantidad() == programacion.get(l).getCantidad()){	//comparamos la cantidad programada y de avance
+				           																				axGA.setEstado(chilEstado[0]);	//... vencido pero finalizado
+				           																			}else{
+				           																				if (avances.get(m).getCantidad() != programacion.get(l).getCantidad()){
+				           																					axGA.setEstado(chilEstado[3]);	//...esta atrasado
+				           																				}
+				           																			}
+				           																		}
+				           																	}
+				           																}else{
+				           																	axGA.setEstado(chilEstado[3]);	//...esta atrasado
+				           																}
+				           															}
+				           														}else{
+				           															if(avances.isEmpty()){						//si la programacion vencida no tiene avances...
+				           																axGA.setEstado(chilEstado[3]);					//...esta atrasado
+				           															}
+				           														}
+				           													}else{
+				           														if(compProgActual <= 0){							//verificamos que la programacion no este vencida
+				           															if(!avances.isEmpty()){									
+				           																for(int m = 0; m < avances.size(); m +=1){
+				           																	Date dateAvance = dateformat.parse(avances.get(m).getFechaEntrega());				           															
+				           																	if(actividad.get(k).getId() == avances.get(m).getActividadId()){
+				           																		int compProgAvance = dateProgramacion.compareTo(dateAvance);
+				           																		if (compProgAvance > 0){				//consultamos si la fecha programada es posterior a la fecha de avance
+				           																			if(avances.get(m).getCantidad() != null || !avances.get(m).getCantidad().isNaN()){	//consultamos si la cantidad de avance esta declarada...
+				           																				axGA.setEstado(chilEstado[1]);	//... en ejecucion
+				           																			}else{
+				           																				if (avances.get(m).getCantidad() == null || avances.get(m).getCantidad().isNaN()){
+				           																					axGA.setEstado(chilEstado[2]);	//...no esta iniciado
+				           																				}
+				           																			}
+				           																		}else{
+				           																			if(compProgAvance <= 0){
+				           																				if(avances.get(m).getCantidad() != null || !avances.get(m).getCantidad().isNaN()){	//consultamos si la cantidad de avance esta declarada...
+				           																					axGA.setEstado(chilEstado[1]);	//... en ejecucion
+				           																				}else{
+				           																					if (avances.get(m).getCantidad() == null || avances.get(m).getCantidad().isNaN()){
+				           																						axGA.setEstado(chilEstado[2]);	//...no esta iniciado
+				           																					}
+				           																				}
+				           																			}
+				           																		}
+				           																	}else{
+				           																		axGA.setEstado(chilEstado[2]);	//...no esta iniciado
+				           																	}
+				           																}
+				           															}else{
+				           																if(avances.isEmpty()){						//si la programacion NO vencida no cuenta con avances...
+				           																	axGA.setEstado(chilEstado[2]);					//...no esta iniciado
+				           																}
+				           															}
+				           														}
+				           													}
+				           												}
+				           											}
 				           										}
 				           									}
-				           					           		axGA.setFecha_fin(fecha_fin);
-				           					           		
-				           					           		Date fecha_inicio = new Date();
-				           					           		String startDate = "2016-06-01"; 	//TODO: establecer una fecha acorde al plan
-				           					           		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-				           					           		fecha_inicio = sdf1.parse(startDate);
-				           					           		axGA.setFecha_inicio(fecha_inicio);
-
-				           					           		//TODO: desarrollar estado
 				           					           		
 				           					           		//TODO: desarrollar fuente de verificacion
 				           					           		
@@ -673,7 +791,7 @@ public class ajaxSelects extends HttpServlet {
         	}
 ////////////Privot programado        	
         	if (action.equals("getPivotLineasProgramadas")){
-        		List objetos=null; 
+        		String objetos=""; 
         		condition = " where true ";
         		String condition2=" where true ";
         		if (!userRoleId.equals("0") && !userRoleId.equals("1")){ 
@@ -686,12 +804,11 @@ public class ajaxSelects extends HttpServlet {
         		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
            		try {objetos = SqlSelects.selectPivotLineasProgramadas(condition);}
         		catch (SQLException e) {e.printStackTrace();}
-        		JsonElement json = new Gson().toJsonTree(objetos );
-        		out.println(json.toString());
+        		out.println(objetos.toString());
         	}
 ////////////Pivot Costo Avance
         	if (action.equals("getPivotCostoAvance")){
-        		List objetos=null; 
+        		String objetos="";
         		condition = " where true ";
         		String condition2=" where true ";
         		if (!userRoleId.equals("0") && !userRoleId.equals("1")){ 
@@ -700,16 +817,19 @@ public class ajaxSelects extends HttpServlet {
 	        			condition2+= " and unidad_responsable_id="+userUnrId;
 	        		}
         		};
+        		if(etiquetaId!=null){
+        			condition += " and etiqueta_id="+etiquetaId;
+        		}
         		condition += " and ins_id IN (select id from institucion "+condition2+") ";
         		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
         		try {objetos = SqlSelects.selectPivotCostoAvance(condition);}
         		catch (SQLException e) {e.printStackTrace();}
-        		JsonElement json = new Gson().toJsonTree(objetos );
-        		out.println(json.toString());
+        		//JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(objetos.toString());
         		}
 /////////////Pivot Beneficiario Avance
         	if (action.equals("getPivotBeneficiarioAvance")){
-        		List objetos=null; 
+        		String objetos=""; 
         		condition = " where true ";
         		String condition2=" where true ";
         		if (!userRoleId.equals("0") && !userRoleId.equals("1")){ 
@@ -722,12 +842,12 @@ public class ajaxSelects extends HttpServlet {
         		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
         		try {objetos = SqlSelects.selectPivotBeneficiarioAvance(condition);}
         		catch (SQLException e) {e.printStackTrace();}
-        		JsonElement json = new Gson().toJsonTree(objetos );
-        		out.println(json.toString());
+        		//JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(objetos.toString());
         		}
 ////////////Pivot Evidencia Avance        	
         	if (action.equals("getPivotEvidenciaAvance")){
-        		List objetos=null; 
+        		String objetos=null; 
         		condition = " where true ";
         		String condition2=" where true ";
         		if (!userRoleId.equals("0") && !userRoleId.equals("1")){ 
@@ -740,12 +860,12 @@ public class ajaxSelects extends HttpServlet {
         		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
         		try {objetos = SqlSelects.selectPivotEvidenciaAvance(condition);}
         		catch (SQLException e) {e.printStackTrace();}
-        		JsonElement json = new Gson().toJsonTree(objetos );
-        		out.println(json.toString());
+        		//JsonElement json = new Gson().toJsonTree(objetos );        		
+        		out.println(objetos.toString());
         		}
 ////////////Pivot Avance        	
         	if (action.equals("getPivotAvance")){
-        		List objetos=null; 
+        		String objetos=""; 
         		condition = " where true ";
         		String condition2=" where true ";
         		if (etiquetaId!=null) condition += " and ins_linea_accion_has_etiqueta.etiqueta_id = "+etiquetaId;
@@ -761,8 +881,44 @@ public class ajaxSelects extends HttpServlet {
         		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
         		try {objetos = SqlSelects.selectPivotAvance(condition);}
         		catch (SQLException e) {e.printStackTrace();}
-        		JsonElement json = new Gson().toJsonTree(objetos );
-        		out.println(json.toString());
+        		//JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(objetos.toString());
+        		}
+        	if (action.equals("getPivotFicha")){
+        		String objetos=""; 
+        		condition = " where true ";        		        		
+        		//if (anho!=null) condition += " and periodo ="+anho+" and to_char(avance_fecha,'YYYY') = '"+anho+"'";
+        		try {objetos = SqlSelects.selectPivotFicha(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		//JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(objetos.toString());
+        		}
+        	if (action.equals("getPivotFichaHogarDpto")){
+        		String objetos=""; 
+        		condition = " where true ";        		        		
+        		//if (anho!=null) condition += " and periodo ="+anho+" and to_char(avance_fecha,'YYYY') = '"+anho+"'";
+        		try {objetos = SqlSelects.selectPivotFichaHogarDpto(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		//JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(objetos.toString());
+        		}
+        	if (action.equals("getPivotFichaEstadoPobreza")){
+        		String objetos=""; 
+        		condition = " where true ";        		        		
+        		//if (anho!=null) condition += " and periodo ="+anho+" and to_char(avance_fecha,'YYYY') = '"+anho+"'";
+        		try {objetos = SqlSelects.selectPivotFichaEstadoPobreza(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		//JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(objetos.toString());
+        		}
+        	if (action.equals("getPivotFichaSexoEdad")){
+        		String objetos=""; 
+        		condition = " where true ";        		        		
+        		//if (anho!=null) condition += " and periodo ="+anho+" and to_char(avance_fecha,'YYYY') = '"+anho+"'";
+        		try {objetos = SqlSelects.selectPivotFichaEstadoPobreza(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		//JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(objetos.toString());
         		}
 ////////////Pivot Destinatarios 
         	if (action.equals("getLineaAccionDestinatarios")){
@@ -784,7 +940,7 @@ public class ajaxSelects extends HttpServlet {
         	}
 ////////////Pivot Plan de Acción        	
         	if (action.equals("getPivotPlanDeAccion")){
-        		List objetos=null;
+        		String objetos="";
         		condition = " where true ";
 //        		String condition2=" where true ";
 //        		if (!userRoleId.equals("0") && !userRoleId.equals("1")){ 
@@ -797,8 +953,8 @@ public class ajaxSelects extends HttpServlet {
 //        		if (insLineaAccionId!=null) condition += " and id ='"+insLineaAccionId+"'";
         		try {objetos = SqlSelects.selectPivotPlanAccionAvances(condition);}
         		catch (SQLException e) {e.printStackTrace();}
-        		JsonElement json = new Gson().toJsonTree(objetos );
-        		out.println(json.toString());
+        		//JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(objetos.toString());
         		}
 ////////////Pivot Presupuesto   
         	if (action.equals("getPivotLineaAccionPresupuesto")){
@@ -845,7 +1001,7 @@ public class ajaxSelects extends HttpServlet {
         		condition = " where true ";
         		if (unidadResponsable!=null) condition += " and unidad_responsable_id ='"+unidadResponsable+"'";
         		String condition2="";
-        		if (!userRoleId.equals("0") && !userRoleId.equals("1") && !userRoleId.equals("2")){ 
+        		if (!userRoleId.equals("0") && !userRoleId.equals("1") && !userRoleId.equals("2") && !userRoleId.equals("")){ 
         			condition2 += " and entidad_id="+userEntidadId+" and nivel_id="+userNivelId;
         			if ( !userUnrId.equals("0") ){
         				condition2+= " and unidad_responsable_id="+userUnrId;
@@ -873,6 +1029,16 @@ public class ajaxSelects extends HttpServlet {
         		if (anho!=null) condition += " and anho ="+anho; 
         		if (versionId!=null) condition += " and nro ='"+versionId+"'"; 
            		try {objetos = SqlSelects.selectVersion(condition);}
+        		catch (SQLException e) {e.printStackTrace();}
+        		JsonElement json = new Gson().toJsonTree(objetos );
+        		out.println(json.toString());
+        	} 
+        	if (action.equals("getVersionInsLineaAccion")){
+        		List objetos=null; 
+        		condition = " where true and not borrado ";
+        		if (anho!=null) condition += " and periodo_id ="+anho; 
+        		if (versionId!=null) condition += " and version ='"+versionId+"'"; 
+           		try {objetos = SqlSelects.selectVersionInsLineaAccion(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -906,7 +1072,7 @@ public class ajaxSelects extends HttpServlet {
         	}          
         	if (action.equals("getAccionHasProducto")){
         		List objetos=null;
-        		condition = " where true and not borrado ";
+        		condition = " where true  ";
         		if (accionId!=null) condition += " and accion_id ='"+accionId+"'";
         		if (accionHasProductoId!=null) condition += " and id ='"+accionHasProductoId+"'";
         		if (nivel != null) condition += " and spr_nivel_id ="+nivel;
@@ -991,8 +1157,7 @@ public class ajaxSelects extends HttpServlet {
         		condition = " where true ";
         		if (programacionId!=null) condition += " and id ='"+programacionId+"'";
         		if (actividadId!=null) condition += " and actividad_id ='"+actividadId+"'";
-
-           		try {objetos = SqlSelects.selectProgramacion(condition);}
+           		try {objetos = SqlSelects.selectProgramacion(condition, "");}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -1002,7 +1167,7 @@ public class ajaxSelects extends HttpServlet {
         		condition = " where true ";
         		if (actividadId!=null) condition += " and actividad_id ='"+actividadId+"'";
         		if (avanceId!=null) condition += " and id ='"+avanceId+"'";
-           		try {objetos = SqlSelects.selectAvance(condition);}
+           		try {objetos = SqlSelects.selectAvance(condition, "");}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
         		out.println(json.toString());
@@ -1126,6 +1291,7 @@ public class ajaxSelects extends HttpServlet {
                 if (departamentoId!=null) condition += " and ins_linea_accion_base.depto_id='"+departamentoId+"'";
                 if (distritoId!=null) condition += " and ins_linea_accion_base.dist_id='"+distritoId+"'";
                 if (periodoId!=null) condition += " and periodo ='"+periodoId+"'";
+                if (etiquetaId!=null && etiquetaId!=0) condition += " and etiqueta_id = "+etiquetaId;
            		try {objetos = SqlSelects.selectResumenLineasAccionProgramacion(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		JsonElement json = new Gson().toJsonTree(objetos );
@@ -1168,13 +1334,10 @@ public class ajaxSelects extends HttpServlet {
                 			acum=0; promedio=0; cont=0;
     						for (int i = 0; i < objetos.size(); i += 1) {
     							if(x == objetos.get(i).getDepartamentoId()){
-    								if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && objetos.get(i).getCantidadAvance() > 0) {	
-										acum += 100;
-										cont+=1;
-									} else if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+    								if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
 										acum += 0;
 										cont+=1;
-									} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+									} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null || objetos.get(i).getCantidadAvance() > 0)) {
 										acum += 0;
 									} else {
 										acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
@@ -1189,13 +1352,10 @@ public class ajaxSelects extends HttpServlet {
     					}//fin deparmento
                 	}else{
 						for (int i = 0; i < objetos.size(); i += 1) {
-							if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && objetos.get(i).getCantidadAvance() > 0) {	
-								acum += 100;
-								cont+=1;
-							} else if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+							if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
 								acum += 0;
 								cont+=1;
-							} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+							} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null || objetos.get(i).getCantidadAvance() > 0)) {
 								acum += 0;
 							} else {
 								acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
@@ -1217,6 +1377,8 @@ public class ajaxSelects extends HttpServlet {
         		ArrayList<DesempDistrito> desempenhoDist= new  ArrayList<DesempDistrito>();              		
 	            if (departamentoId!=null) condition += " and ins_linea_accion_base_dd.depto_id='"+departamentoId+"'";
 	            if (distritoId!=null) condition += " and ins_linea_accion_base_dd.dist_id='"+distritoId+"'";
+        		if (periodoId!=null) condition += " and periodo = '"+periodoId+"'"; 
+        		if (etiquetaId!=null && etiquetaId != 0) condition += " and ins_linea_accion_base_dd.etiqueta_id = '"+etiquetaId+"'";        		
                 try {                	
                 	double acum=0, promedio=0;
                 	int cont=0;
@@ -1238,13 +1400,10 @@ public class ajaxSelects extends HttpServlet {
     							if (distritoAct == objetos.get(i).getDistritoId()){//realiza el corte por distrito.
     								/*si el valor del distrito no cambia se realiza el proceso de obtención del desempeño 
     								y acumulación para el distrito actual.*/
-    								if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && objetos.get(i).getCantidadAvance() > 0) {	
-										acum += 100;
-										cont+=1;
-									} else if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+    								if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
 										acum += 0;
 										cont+=1;
-									} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+									} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null || objetos.get(i).getCantidadAvance() > 0)) {
 										acum += 0;
 									} else {
 										acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
@@ -1282,13 +1441,10 @@ public class ajaxSelects extends HttpServlet {
 		    						cont=0;
 		    						
 		    						//realiza el proceso de obtención del desempeño para el distrito que realizo el corte.				    					
-		    						if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && objetos.get(i).getCantidadAvance() > 0) {	
-										acum += 100;
-										cont+=1;
-									} else if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+		    						if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
 										acum += 0;
 										cont+=1;
-									} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+									} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null || objetos.get(i).getCantidadAvance() > 0)) {
 										acum += 0;
 									} else {
 										acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
@@ -1364,13 +1520,10 @@ public class ajaxSelects extends HttpServlet {
 	    								
 	    								/*si el valor del distrito no cambia se realiza el proceso de obtención del desempeño 
 	    								y acumulación para el distrito actual.*/
-										if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && objetos.get(i).getCantidadAvance() > 0) {	
-											acum += 100;
-											cont++;
-										} else if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+	    								if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
 											acum += 0;
 											cont++;
-										} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+										} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null || objetos.get(i).getCantidadAvance() > 0)) {
 											acum += 0;
 										} else {
 											acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
@@ -1410,13 +1563,10 @@ public class ajaxSelects extends HttpServlet {
 			    						cont=0;
 			    						
 			    						//realiza el proceso de obtención del desempeño para el distrito que realizo el corte.				    					
-			    						if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && objetos.get(i).getCantidadAvance() > 0) {	
-											acum += 100;
-											cont++;
-										} else if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+			    						if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
 											acum += 0;
 											cont++;
-										} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+										} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null || objetos.get(i).getCantidadAvance() > 0)) {
 											acum += 0;
 										} else {
 											acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
@@ -1519,13 +1669,10 @@ public class ajaxSelects extends HttpServlet {
 	    								
 	    								/*si el valor del distrito no cambia se realiza el proceso de obtención del desempeño 
 	    								y acumulación para el distrito actual.*/
-										if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && objetos.get(i).getCantidadAvance() > 0) {	
-											acum += 100;
-											cont++;
-										} else if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+	    								if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
 											acum += 0;
 											cont++;
-										} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+										} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null || objetos.get(i).getCantidadAvance() > 0)) {
 											acum += 0;
 										} else {
 											acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
@@ -1565,13 +1712,10 @@ public class ajaxSelects extends HttpServlet {
 			    						cont=0;
 			    						
 			    						//realiza el proceso de obtención del desempeño para el distrito que realizo el corte.				    					
-			    						if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && objetos.get(i).getCantidadAvance() > 0) {	
-											acum += 100;
-											cont++;
-										} else if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+			    						if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
 											acum += 0;
 											cont++;
-										} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+										} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null || objetos.get(i).getCantidadAvance() > 0)) {
 											acum += 0;
 										} else {
 											acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
@@ -1705,6 +1849,7 @@ public class ajaxSelects extends HttpServlet {
 	                	double acum, promedio;
 	                	int cont;
 	    	            if (periodoId!=null) condition += " and periodo ='"+periodoId+"'";
+	    	            if (etiquetaId!=null && etiquetaId != 0) condition += " and etiqueta_id ='"+etiquetaId+"'";
 	                	objetos = SqlSelects.selectResumenLineasAccionProgramacionInstDptoDistrito(condition);
 	                	
 	                	for(int j = 0; j < instituciones.size(); j+= 1){
@@ -1713,17 +1858,14 @@ public class ajaxSelects extends HttpServlet {
 		                	cont=0;
 							for (int i = 0; i < objetos.size(); i += 1) {
     							if(instituciones.get(j).getId() == objetos.get(i).getInstitucionId()){
-									if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && objetos.get(i).getCantidadAvance() > 0) {	
-										acum += 100;
-										cont+=1;
-									} else if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+    								if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
 										acum += 0;
 										cont+=1;
-									} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+									} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null || objetos.get(i).getCantidadAvance() > 0)) {
 										acum += 0;
 									} else {
 										acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
-										cont+=1;
+										cont+=1; 
 									}
     							}
 							}
@@ -1731,8 +1873,21 @@ public class ajaxSelects extends HttpServlet {
 							if(cont != 0){
 								promedio = acum / cont;
 							}
-							desempenhoDpto.add(promedio);
-	
+			                Institucion result = new Institucion() ;
+
+							result.setId(instituciones.get(j).getId());
+							result.setPromedio(promedio);
+							result.setNombre(instituciones.get(j).getNombre());
+							result.setSigla(instituciones.get(j).getSigla());
+
+							
+//							desempenhoDpto.add(instituciones.get(j).getId());	
+//							desempenhoDpto.add(promedio);	
+//							desempenhoDpto.add(instituciones.get(j).getNombre());
+//							desempenhoDpto.add(instituciones.get(j).getSigla());
+							
+							desempenhoDpto.add(result);							
+
     					}
               	
 					}catch (SQLException e) {e.printStackTrace();}
@@ -1842,6 +1997,7 @@ public class ajaxSelects extends HttpServlet {
 
                 condition = " where true"; 
         		if (periodoId!=null) condition += " AND periodo ='"+periodoId+"'";
+	            if (etiquetaId!=null && etiquetaId != 0) condition += " and etiqueta_id ='"+etiquetaId+"'";
         		if (departamentoId!=null) condition += " AND ins_linea_accion_base_dd.depto_id = '"+departamentoId+"'";
 	            if (distritoId!=null) condition += " and ins_linea_accion_base_dd.dist_id='"+distritoId+"'";
 
@@ -1868,13 +2024,10 @@ public class ajaxSelects extends HttpServlet {
 		                	cont=0;
 							for (int i = 0; i < objetos.size(); i += 1) {
     							if(instituciones.get(j).getId() == objetos.get(i).getInstitucionId()){
-									if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && objetos.get(i).getCantidadAvance() > 0) {	
-										acum += 100;
-										cont+=1;
-									} else if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+    								if (objetos.get(i).getCantidadHoy() > 0 && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
 										acum += 0;
 										cont+=1;
-									} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null)) {
+									} else if ((objetos.get(i).getCantidadHoy() == 0 || objetos.get(i).getCantidadHoy() == null) && (objetos.get(i).getCantidadAvance() == 0 || objetos.get(i).getCantidadAvance() == null || objetos.get(i).getCantidadAvance() > 0)) {
 										acum += 0;
 									} else {
 										acum += objetos.get(i).getCantidadAvance() / objetos.get(i).getCantidadHoy() * 100;
@@ -1885,7 +2038,14 @@ public class ajaxSelects extends HttpServlet {
 							if(cont != 0){
 								promedio = acum / cont;
 							}
-							desempenhoDpto.add(promedio);
+						
+			                Institucion result = new Institucion() ;
+
+							result.setId(instituciones.get(j).getId());
+							result.setPromedio(promedio);
+							result.setNombre(instituciones.get(j).getNombre());
+							result.setSigla(instituciones.get(j).getSigla());
+							desempenhoDpto.add(result);
 	                	}
 
 						                	
@@ -1902,6 +2062,7 @@ public class ajaxSelects extends HttpServlet {
 	            if (departamentoId!=null) condition += " and ins_linea_accion_base_dd.depto_id='"+departamentoId+"'";
 	            if (distritoId!=null) condition += " and ins_linea_accion_base_dd.dist_id='"+distritoId+"'";
 	            if (periodoId!=null) condition += " and periodo='"+periodoId+"'";
+                if (etiquetaId!=null && etiquetaId!=0) condition += " and etiqueta_id = "+etiquetaId;
            		try {objetos = SqlSelects.selectResumenLineasAccionProgramacionDepartamentalDistrital(condition);}
         		catch (SQLException e) {e.printStackTrace();}
         		//JsonElement json = new Gson().toJsonTree(objetos );

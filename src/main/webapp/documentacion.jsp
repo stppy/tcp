@@ -96,7 +96,7 @@ textarea { text-transform: uppercase; }
 	  				</tr>
 					<tr>
 	            		<td>
-	  						<a href="http://spr.stp.gov.py/tablero/descargas/exp_8199_16_pcia_rca_metas_de_gobierno.pdf" target="_blank">RESOLUCION 8199/2016 DE LA PRESIDENCIA DE LA REPUBLICA - MINISTERIO DE HACIENDA</a>
+	  						<a href="/tablero/descargas/exp_8199_16_pcia_rca_metas_de_gobierno.pdf" target="_blank">RESOLUCION 8199/2016 DE LA PRESIDENCIA DE LA REPUBLICA - MINISTERIO DE HACIENDA</a>
 	  					</td>
 	  					
 	  					<td>

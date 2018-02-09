@@ -24,7 +24,6 @@
 					</form>
 				</div>
 		    </div>
-
 	
 	  </div>
 	</div>
@@ -58,7 +57,7 @@
 				todojunto.correoUsuario=obtenerUsuario[0].correo;
 				 
 				$.ajax({
-				        url: "http://spr.stp.gov.py/tablero/ajaxUpdate?accion="+accion,
+				        url: "/tablero/ajaxUpdate?accion="+accion,
 				        type: 'POST',
 				        dataType: 'json',
 				        data: JSON.stringify(todojunto),
@@ -98,7 +97,241 @@
 		$("#tituloModalUsuario").html('');
 		$("#pass-viejo-form").val("");
 		$("#pass-nuevo-form").val("");
-		$("#pass-nuevo1-form").val("");		
+		$("#pass-nuevo1-form").val("");			
+	});
+	
+	$("body").on("click", ".crear",function(event){
+	    var tema = $("#tema").val();
+	    var descripcion = $("#descripcion").val();
+	    var url = $("#url").val();
+	    var arr = [];
+		var llave = new Object();
+		
+		llave.key = "a07888bdc60c529428c80661952ea3d4b40d21b6";
+		
+		var objeto = new Object();        	
+		objeto.project_id =  280;
+		objeto.subject = tema;
+		objeto.priority_id = 4;
+		objeto.description = descripcion;
+		objeto.tracker_id = 22;
+		objeto.status_id = 1;
+		objeto.URL = url;
+				        			
+		var objeto2 = new Object();
+		var objeto3 = new Object();
+
+		objeto2.value = url;
+		objeto2.id = 113;
+		
+		objeto3.value = '<%=user.getName()%>';
+		objeto3.id = 114;
+		
+		arr.push(objeto2);
+		arr.push(objeto3);
+
+		objeto.custom_fields = arr;
+		
+		llave.issue = objeto;
+	
+	  	var info = JSON.stringify(llave);
+	  	
+	    $.ajax({
+	        url: "/rmClient/issues.json",
+	        type: 'POST',
+	        contentType: 'application/json; charset=utf-8',
+	      	dataType:'json',
+	        async: false, 
+	        data: info,
+	        success: function (data) {
+				$("#cuerpoFormulario").empty();
+				//$("#tituloFormulario").empty();
+				$("#cuerpoFormulario").append('<div class="callout callout-success text-center"><h4>La solicitud ha sido enviada con exito</h4></div>');
+	        },
+	        error: function () {
+	            alert('Failed!');
+	        }
+	    });
+        event.preventDefault();         
+
+	});		 	 	
+	
+	$("body").on("click", ".formualarioSugerencia",function(event){
+	    
+		if ( $("#form_sugerencia").length )
+		{
+			$("#form_sugerencia").remove();
+		}
+	    
+	    var modalSugerencia = 	'<div id="form_sugerencia" class="modal fade" role="dialog">'+
+								'	<div class="modal-dialog modal-lg">'+
+								    <!-- Modal content-->
+								'	<div class="modal-content">'+
+							    '		<div class="modal-header">'+
+								'        	<h4 class="modal-title" id="tituloFormulario">Formulario de Reporte de Sugerencias e Incidencias del Sistema </h4>'+
+								'			<div class="nav-tabs-custom" style="margin-bottom:0px">'+
+					        	'				<ul class="nav nav-tabs pull-right">'+
+					            '					<li class="active"><a href="#tab_1-1" data-toggle="tab"  title="Enviar Sugerencia"><i class="fa fa-envelope text-red"></i> Enviar Sugerencia</a></li>'+
+					            '    				<li class="sugerenciasEnviadas"><a href="#tab_2-2" data-toggle="tab" title="Sugerencias enviadas"><i class="glyphicon glyphicon-list"></i> Sugerencias Enviadas</a></li>'+
+				                '				</ul>'+
+								'      	</div>'+	
+								'	<div class="modal-body" id="cuerpoFormulario">'+
+
+						
+				                '<div class="tab-content">'+
+				                '	<div class="tab-pane active" id="tab_1-1">'+
+				                
+								'		    <form role="form">'+
+								'              <div class="box-body">'+
+								'              	<div class="form-group">'+
+								'                  <label>Tema</label>'+
+								'                  	<input type="text" class="form-control" id="tema" placeholder="Describa el tema">'+
+								'                </div>'+								
+								'              	<div class="form-group">'+
+								'                  <label>Descripción</label>'+
+								'                  <textarea class="form-control" rows="3" id="descripcion" placeholder="Por favor describa su sugerencia o inconveniente al utilizar el sistema"></textarea>'+
+								'                </div>'+
+								'                  <input type="hidden" class="form-control" id="usuario" value="<%=user.getName()%>">'+
+								'                  <input type="hidden" class="form-control" id="fecha">'+
+								'                  <input type="hidden" class="form-control" id="url">	'+
+								'              </div>'+
+								              <!-- /.box-body -->
+								'              <div class="box-footer">'+
+								'                <button type="submit" class="btn btn-primary crear" >Enviar Sugerencia</button>'+
+								'              </div>'+
+								'            </form>'+
+				                
+				                '	</div>'+
+				                '  	<div class="tab-pane" id="tab_2-2">'+
+				                
+
+				                
+				                '	</div>'+
+				                '  	<div class="tab-pane" id="tab_3-2"></div>'+
+				                '   	<div class="tab-pane" id="tab_4-2"><p>Datos no disponibles</p></div>'+
+				                '   	<div class="tab-pane" id="tab_5-2"><p>Datos no disponibles</p></div>'+                          
+				                '	</div>'+
+				        		'</div>'+
+								
+
+								
+								'			</div>'+
+								'	    </div>'+
+								' </div>'+
+								'</div>';
+
+		$("body").append(modalSugerencia);
+		$("#form_sugerencia").modal('show');		
+
+		var strDate;
+		var d = new Date();
+		
+		if(d.getDate() < 10 ){
+			strDate = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + "0"+d.getDate();
+		}else{
+			 strDate = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
+		}
+		
+        var pathname = window.location;
+
+		$("#fecha").val(strDate);
+		$("#url").val(pathname);
+		$("#tituloFormulario").html('');
+		$("#tituloFormulario").append('Formulario de Reporte de Sugerencias e Incidencias del Sistema');
 		
 	});
-	</script>
+	
+	$("body").on("click", ".sugerenciasEnviadas",function(event){
+		$('#tabla_sugerencias').dataTable().fnDestroy();
+
+		var issues = $.ajax({
+    		url:'/rmClient/issues.json',
+    	  	type:'get',
+    	  	dataType:'json',
+    	  	async:false
+    	}).responseText;
+    	issues = JSON.parse(issues);
+    	issues = issues.issues;
+    	
+    	var cuerpoTabla = "";
+    	var cuerpoContent;
+		if (issues.length > 0) {
+						
+            cuerpoContent = '<div class="tab-content">'+
+            '	<div class="tab-pane active" id="tab_1-1">'+
+            
+			'		    <form role="form">'+
+			'              <div class="box-body">'+
+			'              	<div class="form-group">'+
+			'                  <label>Tema</label>'+
+			'                  	<input type="text" class="form-control" id="tema" placeholder="Describa el tema">'+
+			'                </div>'+								
+			'              	<div class="form-group">'+
+			'                  <label>Descripción</label>'+
+			'                  <textarea class="form-control" rows="3" id="descripcion" placeholder="Por favor describa su sugerencia o inconveniente al utilizar el sistema"></textarea>'+
+			'                </div>'+
+			'                  <input type="hidden" class="form-control" id="usuario" value="<%=user.getName()%>">'+
+			'                  <input type="hidden" class="form-control" id="fecha">'+
+			'                  <input type="hidden" class="form-control" id="url">	'+
+			'              </div>'+
+			              <!-- /.box-body -->
+			'              <div class="box-footer">'+
+			'                <button type="submit" class="btn btn-primary crear" >Enviar Sugerencia</button>'+
+			'              </div>'+
+			'            </form>'+
+            
+            '	</div>'+
+            '  	<div class="tab-pane" id="tab_2-2">'+
+                        
+            '	</div>'+
+            '  	<div class="tab-pane" id="tab_3-2"></div>'+
+            '   	<div class="tab-pane" id="tab_4-2"><p>Datos no disponibles</p></div>'+
+            '   	<div class="tab-pane" id="tab_5-2"><p>Datos no disponibles</p></div>'+                          
+            '	</div>'+
+    		'</div>';
+			
+			cuerpoTabla +=  '		<div class="table-responsive">'+
+				            '    		<table id="tabla_sugerencias" class="table table-hover table-striped">'+
+				            '      			<thead>'+
+					        '        			<tr>'+
+					        '           			<th>Asunto</th>'+
+					        '           			<th>Estado</th>'+
+					        '           			<th>Fecha de envío</th>'+
+					        '           			<th>Fecha de Ult. act.</th>'+
+					        '        			</tr>'+
+				          	'	   			</thead>'+
+				            '      			<tbody>';
+            
+			for(v = 0;v<issues.length; v++)
+			{
+				if(issues[v].custom_fields[1].value == '<%=user.getName()%>'){
+					var d1 = new Date(issues[v].created_on);
+					var d2 = new Date(issues[v].updated_on);
+					var fechaCreacion = d1.getDate() + '-' + d1.getMonth() + '-' + d1.getFullYear();  
+					var fechaActualizacion = d2.getDate() + '-' + d2.getMonth() + '-' + d2.getFullYear();
+	
+					cuerpoTabla += 	'					<tr>'+
+					                '						<td class="mailbox-subject"><a href="#"><b>'+issues[v].subject+'</b></a></td>'+
+									'						<td class="mailbox-status">'+issues[v].status.name+'</td>'+
+									'						<td class="mailbox-date-created">'+ fechaCreacion +'</td>'+
+									'						<td class="mailbox-date-created">'+ fechaActualizacion +'</td>'+
+														 '</tr>';
+				}
+			}
+			
+			cuerpoTabla += 		'      			</tbody>'+
+					            '    		</table><!-- /.table -->'+
+					            '  		</div>';
+		};
+		
+		$('#cuerpoFormulario').html(cuerpoContent);
+		$('#tab_2-2').html(cuerpoTabla);
+        
+        $('#tabla_sugerencias').DataTable(
+       		{
+       			"lengthMenu": [[15, 25, 50, -1], [15, 25, 50, "Todos"]]       		 	
+       		} 
+        );
+        
+	});
+</script>

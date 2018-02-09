@@ -59,8 +59,7 @@ public class LineasAccionCostoAvance {
 	protected int avCostoOG;
 	protected double avCostoMonto;
 	//protected int avanceCostoVersion;
-	
-	
+		
 	public int getInsId() {
 		return insId;
 	}

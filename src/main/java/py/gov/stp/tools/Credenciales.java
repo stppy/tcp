@@ -4,6 +4,7 @@ package py.gov.stp.tools;
  * 	@author DGTIC-STP
  *  @email  dgtic@stp.gov.py 
  */
+
 public class Credenciales {
 	
 	protected String contrasenaVieja;

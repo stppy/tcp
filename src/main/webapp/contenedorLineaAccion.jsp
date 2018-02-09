@@ -56,11 +56,6 @@
 			width: 300px;
 		}
     </style>
-    
-    
-
-
-
 </head>
 <body class="skin-blue sidebar-mini sidebar-collapse">
 

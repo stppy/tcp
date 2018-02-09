@@ -49,7 +49,7 @@ public class LineasAccionAvances {
 	protected String avanceFecha;
 	protected double avanceCantidad;
 	protected String avanceJustificacion;
-	
+	protected String etiquetaNombre;
 	protected double contribucion;
 	protected double influencia;
 	protected Date fecha;
@@ -374,5 +374,10 @@ public class LineasAccionAvances {
 	public void setDepartamentoAvance(String departamentoAvance) {
 		this.departamentoAvance = departamentoAvance;
 	}
-	
+	public String getEtiquetaNombre() {
+		return etiquetaNombre;
+	}
+	public void setEtiquetaNombre(String etiquetaNombre) {
+		this.etiquetaNombre = etiquetaNombre;
+	}	
 }

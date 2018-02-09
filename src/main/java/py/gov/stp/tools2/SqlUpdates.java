@@ -1513,6 +1513,8 @@ public static boolean borradoHito(Hito objeto, String usuarioResponsable){
 		 
 		 query+=" where id ="+objeto.getId(); 	
 		 try {
+			 String conditionAv = null;
+ 			 String conditionPro = null;
 			statement=conect.createStatement();
 			
 			statement.execute(query);
@@ -1520,8 +1522,8 @@ public static boolean borradoHito(Hito objeto, String usuarioResponsable){
 			objeto.changeBorrado();
 						
 			condicion= " where actividad_id="+objeto.getId();
-			avances=SqlSelects.selectAvance(condicion);
-			
+			avances=SqlSelects.selectAvance(condicion, conditionAv);
+	
 			for(int x=0;x<avances.size();x++) {
 				Avance av=new Avance();				
 				av.setId(avances.get(x).getId());
@@ -1529,7 +1531,7 @@ public static boolean borradoHito(Hito objeto, String usuarioResponsable){
 				borradoAvance(av, usuarioResponsable);
 			}
 			
-			programaciones=SqlSelects.selectProgramacion(condicion);
+			programaciones=SqlSelects.selectProgramacion(condicion, conditionPro);
 			
 			for(int x=0;x<programaciones.size();x++) {
 				Programacion pg=new Programacion();				

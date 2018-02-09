@@ -85,7 +85,7 @@
 <% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%>
 <% Map attributes = user.getAttributes(); 
 if (user != null) { %>
-<iframe height="0" width="0" style="visibility:hidden;display:none" src="http://spr.stp.gov.py/documentacion.jsp"></iframe>
+<iframe height="0" width="0" style="visibility:hidden;display:none" src="/documentacion.jsp"></iframe>
 <script>
 
 	var entidadCasSpr = "";
@@ -210,7 +210,7 @@ if (user != null) { %>
 		hitoTipo = JSON.parse(hitoTipo);
 		
 		var catalogoProducto=$.ajax({
-	        	url:'http://spr.stp.gov.py/ajaxSelects?accion=getProductos',
+	        	url:'/ajaxSelects?accion=getProductos',
 	          	type:'get',
 	          	dataType:'json',
 	          	async:false,
@@ -446,8 +446,8 @@ if (user != null) { %>
 
  		/*
  		
- 		http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito
- 		http://spr.stp.gov.py/tablero/ajaxSelects?action=getDistrito&departamento=0
+ 		/tablero/ajaxSelects?action=getDistrito
+ 		/tablero/ajaxSelects?action=getDistrito&departamento=0
  		
  		
 */
@@ -456,15 +456,15 @@ if (user != null) { %>
 		
 	});
 <%//}else{%>
-	//window.location = "http://spr.stp.gov.py/tablero/resumenLineaAccion.jsp";
+	//window.location = "/tablero/resumenLineaAccion.jsp";
 <%//}%>
 </script>
 		
  <div class="container">
 	<div id="encabezado" class="row">
 		<div class="col-md-12" style="padding-top:20px"> 
-			<div class="pull-left img-responsive col-md-4"><img src="http://spr.stp.gov.py/tablero/dist/img/logo_stp_nuevo_header.png"></div>
-			<div class="pull-right img-responsive col-md-4"><img src="http://spr.stp.gov.py/tablero/dist/img/logo_gob_nac_header.png"></div>
+			<div class="pull-left img-responsive col-md-4"><img src="/tablero/dist/img/logo_stp_nuevo_header.png"></div>
+			<div class="pull-right img-responsive col-md-4"><img src="/tablero/dist/img/logo_gob_nac_header.png"></div>
 	   	</div>
 	</div></br>
 	
@@ -541,7 +541,7 @@ if (user != null) { %>
 window.print();
 
 var usuariosSpr = $.ajax({
-		url:'http://spr.stp.gov.py/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
+		url:'/ajaxSelects?action=getUsuarios&usuario=<%=user.getName()%>',
 	  	type:'get',
 	  	dataType:'json',
 	  	async:false       

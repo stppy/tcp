@@ -28,7 +28,6 @@ import py.gov.stp.tools.SqlInserts;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-
 /**
  * 	@author DGTIC-STP
  *  @email  dgtic@stp.gov.py 
