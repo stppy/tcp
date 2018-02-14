@@ -341,116 +341,116 @@ public class SqlSelects4 {
 		return objetos; 
 		}
 
-	public static String selectPivotFicha(String condition) throws SQLException{
-		Connection conect=ConnectionConfiguration.conectarFichaSocial();
-		
-		String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from("+
-					" select * from poblacion)t";
-
-		Statement statement = null;
-		ResultSet rs=null;		
-		String objetos = "";
-
-		try {
- 			statement = conect.createStatement();
- 			rs=statement.executeQuery(query);
- 			while(rs.next()){
- 				objetos+=rs.getString("resultado");
- 			}
- 		}
-		catch (SQLException e) {e.printStackTrace();}
-		finally{
-			if (statement != null) {statement.close();}
-			if (conect != null) {conect.close();}
-		}
-		return objetos; 
-	}
-	
-	public static String selectPivotFichaHogarDpto(String condition) throws SQLException{
-		Connection conect=ConnectionConfiguration.conectarFichaSocial();
-		
-		String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from("+
-				" select localidad.departamento_id,departamento.nombre as departamento,area.id as area_id,area.nombre as area,count(*) as total from persona"+
-				" join localidad on localidad.id = persona.localidad_id "+
-				" join area on area.id = localidad.area_id"+
-				" join departamento on departamento.id = localidad.departamento_id"+
-				" group by localidad.departamento_id,departamento.nombre,area.id,area.nombre"+
-				" order by localidad.departamento_id,departamento.nombre,area.id,area.nombre)t";
-
-		Statement statement = null;
-		ResultSet rs=null;		
-		String objetos = "";
-
-		try {
- 			statement = conect.createStatement();
- 			rs=statement.executeQuery(query);
- 			while(rs.next()){
- 				objetos+=rs.getString("resultado");
- 			}
- 		}
-		catch (SQLException e) {e.printStackTrace();}
-		finally{
-			if (statement != null) {statement.close();}
-			if (conect != null) {conect.close();}
-		}
-		return objetos; 
-	}
-	public static String selectPivotFichaEstadoPobreza(String condition) throws SQLException{
-		Connection conect=ConnectionConfiguration.conectarFichaSocial();
-		
-		String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from("+					
-				" select ep.nombre as estado_pobreza, count(CASE WHEN s.id=1 THEN 1 END) as hombre, count(CASE WHEN s.id=2 THEN 1 END) as mujer,"+
-				" (select count(CASE WHEN s.id=1 THEN 1 END) as hombre)+(select count(CASE WHEN s.id=2 THEN 1 END) as mujer) as Total"+
-				" from persona p join estado_pobreza ep on p.estado_pobreza_id=ep.id join sexo s on s.id=p.sexo_id"+
-				" group by ep.nombre order by 1	"+		
-			")t";
-
-		Statement statement = null;
-		ResultSet rs=null;		
-		String objetos = "";
-
-		try {
- 			statement = conect.createStatement();
- 			rs=statement.executeQuery(query);
- 			while(rs.next()){
- 				objetos+=rs.getString("resultado");
- 			}
- 		}
-		catch (SQLException e) {e.printStackTrace();}
-		finally{
-			if (statement != null) {statement.close();}
-			if (conect != null) {conect.close();}
-		}
-		return objetos; 
-	}
-	public static String selectPivotPivotFichaSexoEdad(String condition) throws SQLException{
-		Connection conect=ConnectionConfiguration.conectarFichaSocial();
-		
-		String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from("+					
-				" select ep.nombre as estado_pobreza, count(CASE WHEN s.id=1 THEN 1 END) as hombre, count(CASE WHEN s.id=2 THEN 1 END) as mujer,"+
-				" (select count(CASE WHEN s.id=1 THEN 1 END) as hombre)+(select count(CASE WHEN s.id=2 THEN 1 END) as mujer) as Total"+
-				" from persona p join estado_pobreza ep on p.estado_pobreza_id=ep.id join sexo s on s.id=p.sexo_id"+
-				" group by ep.nombre order by 1	"+		
-			")t";
-
-		Statement statement = null;
-		ResultSet rs=null;		
-		String objetos = "";
-
-		try {
- 			statement = conect.createStatement();
- 			rs=statement.executeQuery(query);
- 			while(rs.next()){
- 				objetos+=rs.getString("resultado");
- 			}
- 		}
-		catch (SQLException e) {e.printStackTrace();}
-		finally{
-			if (statement != null) {statement.close();}
-			if (conect != null) {conect.close();}
-		}
-		return objetos; 
-	}
+//	public static String selectPivotFicha(String condition) throws SQLException{
+//		Connection conect=ConnectionConfiguration.conectarFichaSocial();
+//		
+//		String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from("+
+//					" select * from poblacion)t";
+//
+//		Statement statement = null;
+//		ResultSet rs=null;		
+//		String objetos = "";
+//
+//		try {
+// 			statement = conect.createStatement();
+// 			rs=statement.executeQuery(query);
+// 			while(rs.next()){
+// 				objetos+=rs.getString("resultado");
+// 			}
+// 		}
+//		catch (SQLException e) {e.printStackTrace();}
+//		finally{
+//			if (statement != null) {statement.close();}
+//			if (conect != null) {conect.close();}
+//		}
+//		return objetos; 
+//	}
+//	
+//	public static String selectPivotFichaHogarDpto(String condition) throws SQLException{
+//		Connection conect=ConnectionConfiguration.conectarFichaSocial();
+//		
+//		String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from("+
+//				" select localidad.departamento_id,departamento.nombre as departamento,area.id as area_id,area.nombre as area,count(*) as total from persona"+
+//				" join localidad on localidad.id = persona.localidad_id "+
+//				" join area on area.id = localidad.area_id"+
+//				" join departamento on departamento.id = localidad.departamento_id"+
+//				" group by localidad.departamento_id,departamento.nombre,area.id,area.nombre"+
+//				" order by localidad.departamento_id,departamento.nombre,area.id,area.nombre)t";
+//
+//		Statement statement = null;
+//		ResultSet rs=null;		
+//		String objetos = "";
+//
+//		try {
+// 			statement = conect.createStatement();
+// 			rs=statement.executeQuery(query);
+// 			while(rs.next()){
+// 				objetos+=rs.getString("resultado");
+// 			}
+// 		}
+//		catch (SQLException e) {e.printStackTrace();}
+//		finally{
+//			if (statement != null) {statement.close();}
+//			if (conect != null) {conect.close();}
+//		}
+//		return objetos; 
+//	}
+//	public static String selectPivotFichaEstadoPobreza(String condition) throws SQLException{
+//		Connection conect=ConnectionConfiguration.conectarFichaSocial();
+//		
+//		String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from("+					
+//				" select ep.nombre as estado_pobreza, count(CASE WHEN s.id=1 THEN 1 END) as hombre, count(CASE WHEN s.id=2 THEN 1 END) as mujer,"+
+//				" (select count(CASE WHEN s.id=1 THEN 1 END) as hombre)+(select count(CASE WHEN s.id=2 THEN 1 END) as mujer) as Total"+
+//				" from persona p join estado_pobreza ep on p.estado_pobreza_id=ep.id join sexo s on s.id=p.sexo_id"+
+//				" group by ep.nombre order by 1	"+		
+//			")t";
+//
+//		Statement statement = null;
+//		ResultSet rs=null;		
+//		String objetos = "";
+//
+//		try {
+// 			statement = conect.createStatement();
+// 			rs=statement.executeQuery(query);
+// 			while(rs.next()){
+// 				objetos+=rs.getString("resultado");
+// 			}
+// 		}
+//		catch (SQLException e) {e.printStackTrace();}
+//		finally{
+//			if (statement != null) {statement.close();}
+//			if (conect != null) {conect.close();}
+//		}
+//		return objetos; 
+//	}
+//	public static String selectPivotPivotFichaSexoEdad(String condition) throws SQLException{
+//		Connection conect=ConnectionConfiguration.conectarFichaSocial();
+//		
+//		String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from("+					
+//				" select ep.nombre as estado_pobreza, count(CASE WHEN s.id=1 THEN 1 END) as hombre, count(CASE WHEN s.id=2 THEN 1 END) as mujer,"+
+//				" (select count(CASE WHEN s.id=1 THEN 1 END) as hombre)+(select count(CASE WHEN s.id=2 THEN 1 END) as mujer) as Total"+
+//				" from persona p join estado_pobreza ep on p.estado_pobreza_id=ep.id join sexo s on s.id=p.sexo_id"+
+//				" group by ep.nombre order by 1	"+		
+//			")t";
+//
+//		Statement statement = null;
+//		ResultSet rs=null;		
+//		String objetos = "";
+//
+//		try {
+// 			statement = conect.createStatement();
+// 			rs=statement.executeQuery(query);
+// 			while(rs.next()){
+// 				objetos+=rs.getString("resultado");
+// 			}
+// 		}
+//		catch (SQLException e) {e.printStackTrace();}
+//		finally{
+//			if (statement != null) {statement.close();}
+//			if (conect != null) {conect.close();}
+//		}
+//		return objetos; 
+//	}
 	public static List<Avance> selectAvance(String condition, String conditionAv) throws SQLException{
 		Connection conect=ConnectionConfiguration.conectarConsulta();
 		String query = " select * from avance "+condition;
