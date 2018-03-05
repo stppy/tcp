@@ -18,14 +18,18 @@
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
         <title>Pivot Table - Avance</title>
         <link rel="stylesheet" type="text/css" href="tablero_files/pivot.css">
-		<link type="text/css" rel="stylesheet" href="tablero_files/orgchart.css">
-	    <link type="text/css" rel="stylesheet" href="tablero_files/annotatedtimeline.css">
-	    <link type="text/css" rel="stylesheet" href="tablero_files/imagesparkline.css">
-	    <link type="text/css" rel="stylesheet" href="tablero_files/tooltip.css">
-		<link type="text/css" rel="stylesheet" href="tablero_files/dynamic.css">
-
+        <script type="text/javascript" src="tablero_files/d3.js"></script>
+        <script type="text/javascript" src="tablero_files/jsapi"></script>
+        <script type="text/javascript" src="tablero_files/jquery-1.js"></script>
+        <script type="text/javascript" src="tablero_files/jquery-ui-1.js"></script>
+        <script type="text/javascript" src="tablero_files/pivot.js"></script>
+        <script type="text/javascript" src="tablero_files/gchart_renderers.js"></script>
+        <script type="text/javascript" src="tablero_files/d3_renderers.js"></script>
+        <script type="text/javascript" src="tablero_files/export_renderers.js"></script>
+        <script type="text/javascript" src="tablero_files/jquery.js"></script>
+        <script type="text/javascript" src="tablero_files/export_renders.js"></script>        
         <style>
-            /** {font-family: Verdana;}*/
+            * {font-family: Verdana;}
             .node {
               border: solid 1px white;
               font: 10px sans-serif;
@@ -35,16 +39,10 @@
               text-indent: 2px;
             }
         </style>
-		
-	    <script type="text/javascript" src="tablero_files/d3.js"></script>
-		<script type="text/javascript" src="tablero_files/jsapi"></script>
-		<script type="text/javascript" src="tablero_files/jquery-1.js"></script>
-		<script type="text/javascript" src="tablero_files/jquery-ui-1.js"></script>
-		<script type="text/javascript" src="tablero_files/pivot.js"></script>
-		<script type="text/javascript" src="tablero_files/gchart_renderers.js"></script>
-		<script type="text/javascript" src="tablero_files/d3_renderers.js"></script>
-		<script type="text/javascript" src="tablero_files/jquery.js"></script>
-		<script type="text/javascript" src="tablero_files/export_renderers.js"></script>
+    <link type="text/css" rel="stylesheet" href="tablero_files/orgchart.css">
+    <link type="text/css" rel="stylesheet" href="tablero_files/annotatedtimeline.css">
+    <link type="text/css" rel="stylesheet" href="tablero_files/imagesparkline.css">
+    <link type="text/css" rel="stylesheet" href="tablero_files/tooltip.css">
 </head>
 <body class="skin-blue sidebar-mini">
 <% AttributePrincipal user = (AttributePrincipal) request.getUserPrincipal();%>
@@ -69,7 +67,7 @@ $( document ).ready(function() {
 	$("#PerfilUsuario").append(usuarios[0].nombre+" ("+usuarios[0].nivel_id+", "+usuarios[0].entidad_id+", "+entidadCas+")");
 		var i=parseInt(0);
 		/* var datosNiveles = $.ajax({
-	        url:'http://spr.stp.gov.py/ajaxSelects?accion=getNiveles&nivel='+usuarios[0].nivel_id,
+	        url:'/ajaxSelects?accion=getNiveles&nivel='+usuarios[0].nivel_id,
 	        type:'get',
 	        dataType:'json',
 	        async:false       
@@ -78,7 +76,7 @@ $( document ).ready(function() {
 	      datosNiveles.niveles;
 	      
 	     var datosEntidad = $.ajax({
-	          url:'http://spr.stp.gov.py/ajaxSelects?accion=getEntidad&nivel='+usuarios[0].nivel_id+'&entidad='+usuarios[0].entidad_id,
+	          url:'/ajaxSelects?accion=getEntidad&nivel='+usuarios[0].nivel_id+'&entidad='+usuarios[0].entidad_id,
 	          type:'get',
 	          dataType:'json',
 	          async:false       
@@ -168,7 +166,7 @@ textarea { text-transform: uppercase; }
                 var renderers = $.extend($.pivotUtilities.renderers, 
                         $.pivotUtilities.export_renderers);
 				
-                $.getJSON("http://spr.stp.gov.py/tablero/ajaxSelects2?action=getPivotAvance", function(mps) {
+                $.getJSON("/tablero/ajaxSelects2?action=getPivotAvance", function(mps) {
                 	$("#output").pivotUI(mps, {
                         renderers: $.extend(
                             $.pivotUtilities.renderers, 

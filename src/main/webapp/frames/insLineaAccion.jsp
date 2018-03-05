@@ -316,7 +316,7 @@
 
 
       $.ajax({
-        url: "http://spr.stp.gov.py/tablero/ajaxInserts2?accion=" + accion,
+        url: "/tablero/ajaxInserts2?accion=" + accion,
         type: 'POST',
         dataType: 'json',
         data: JSON.stringify(datos),
@@ -384,7 +384,7 @@
 
               var info2 = JSON.stringify(objeto);
               $.ajax({
-                url: "http://spr.stp.gov.py/tablero/ajaxInserts2?accion=insLineaAccionHasEtiqueta",
+                url: "/tablero/ajaxInserts2?accion=insLineaAccionHasEtiqueta",
                 type: 'POST',
                 dataType: 'json',
                 data: info2,
@@ -413,7 +413,7 @@
 
             var info2 = JSON.stringify(usuarioLineaAccion);
             $.ajax({
-              url: "http://spr.stp.gov.py/tablero/ajaxInserts2?accion=insUsuarioLineaAccion",
+              url: "/tablero/ajaxInserts2?accion=insUsuarioLineaAccion",
               type: 'POST',
               dataType: 'json',
               data: info2,
@@ -679,7 +679,7 @@
 
       var info = JSON.stringify(objeto);
       $.ajax({
-        url: "http://spr.stp.gov.py/tablero/ajaxInserts2?accion=insLineaAccionHasEtiqueta",
+        url: "/tablero/ajaxInserts2?accion=insLineaAccionHasEtiqueta",
         type: 'POST',
         dataType: 'json',
         data: info,
@@ -725,7 +725,6 @@
         contentType: 'application/json',
         mimeType: 'application/json',
         success: function (data) {
-
           if (data.success == true) {
             toastr.success('Ud a modificado el estado de la etiqueta ' + nombreEtiqueta + ' exitosamente!!', 'OK');
             // Este cÃ³digo no entiendo quÃ© hace, porque igual funciona la deselecciÃ³n de la lÃ­nea de acciÃ³n.
@@ -3572,7 +3571,7 @@
 	                    return intVal(a) + intVal(b);
 	                }, 0 );
 	 
-	         // total por pagina segun nï¿½mero de columna
+	         // total por pagina segun número de columna
 	            pageTotal6 = api
 	                .column( 6, { page: 'current'} )
 	                .data()
@@ -3587,7 +3586,7 @@
 	                    return intVal(a) + intVal(b);
 	                }, 0 );
 	 
-	         // total por pagina segun nï¿½mero de columna
+	         // total por pagina segun número de columna
 	            pageTotal7 = api
 	                .column( 7, { page: 'current'} )
 	                .data()
@@ -3603,7 +3602,7 @@
 	                    return intVal(a) + intVal(b);
 	                }, 0 );
 	 
-	         // total por pagina segun nï¿½mero de columna
+	         // total por pagina segun número de columna
 	            pageTotal8 = api
 	                .column( 8, { page: 'current'} )
 	                .data()
@@ -3619,7 +3618,7 @@
 	                    return intVal(a) + intVal(b);
 	                }, 0 );
 	 
-	         // total por pagina segun nï¿½mero de columna
+	         // total por pagina segun número de columna
 	            pageTotal9 = api
 	                .column( 9, { page: 'current'} )
 	                .data()
@@ -3635,7 +3634,7 @@
 	                    return intVal(a) + intVal(b);
 	                }, 0 );
 	 
-	         // total por pagina segun nï¿½mero de columna
+	         // total por pagina segun número de columna
 	            pageTotal10 = api
 	                .column( 10, { page: 'current'} )
 	                .data()
@@ -7492,7 +7491,6 @@ document.getElementById('productosActividad').addEventListener('focus',eje1.prod
         contentType: 'application/json',
         mimeType: 'application/json',
         success: function (data) {
-
           $("#cuerpoModalEditarAvanceCosto").html("");
           $("#cuerpoModalEditarAvanceCosto").html("<h3 class='text-center'>Ud. ha modificado exitosamente!!</h3>");
           $("#botonGuardarAvanceCosto").remove();
@@ -7596,7 +7594,7 @@ document.getElementById('productosActividad').addEventListener('focus',eje1.prod
         mimeType: 'application/json',
         success: function (data) {
           if (data.success == true) {
-            renderAdministrarAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId, accionId, actividadId, avanceId);
+            	renderAdministrarAvance(insLineaAccionId, lineaAccionId, institucionId, periodoId, accionId, actividadId, avanceId);
         		/* var parametrosEvidencia=insLineaAccionId+'-'+lineaAccionId+'-'+institucionId+'-'+periodoId+'-'+accionId+'-'+actividadId+'-'+avanceId;
         		var cuerpoEvidencia=renderEvidencia(avanceId, parametrosEvidencia);
         		
@@ -7618,7 +7616,6 @@ document.getElementById('productosActividad').addEventListener('focus',eje1.prod
         		$("#listaEvidencia").html("");
         		$("#listaEvidencia").html(cuerpoEvidencia);
         		$("#dataTableEvidencia").DataTable(); */
-
           } else {
 
           }
@@ -8893,10 +8890,7 @@ document.getElementById('productosActividad').addEventListener('focus',eje1.prod
       '				      			 	</div>' +
       '				      			 	</form' +
       '				      			</div>' +							
-
 						<% }%>		
-
-
       '		      					<div class="col-md-12" id="tableListaDestinatario">' +
       '									<div class="box box-default box-solid">' +
       '		                				<div class="box-header with-border">' +

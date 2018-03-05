@@ -48,7 +48,8 @@ public class LineasProgramadas {
 	protected int progId; 
 	protected String fechaEntrega;
 	protected double cantidadProg;
-	
+	protected int etiquetaId;
+	protected String etiquetaNombre;
 	
 	public int getInsId() {
 		return insId;
@@ -302,10 +303,17 @@ public class LineasProgramadas {
 	public void setCantidadProg(double cantidadProg) {
 		this.cantidadProg = cantidadProg;
 	}
-	
-	
-	
-	
-	
+	public int getEtiquetaId() {
+		return etiquetaId;
+	}
+	public void setEtiquetaId(int etiquetaId) {
+		this.etiquetaId = etiquetaId;
+	}
+	public String getEtiquetaNombre() {
+		return etiquetaNombre;
+	}
+	public void setEtiquetaNombre(String etiquetaNombre) {
+		this.etiquetaNombre = etiquetaNombre;
+	}
 	
 }

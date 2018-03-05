@@ -27,11 +27,15 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-
 /**
  * 	@author DGTIC-STP
  *  @email  dgtic@stp.gov.py 
  */
+/**
+ * 	@author DGTIC-STP
+ *  @email  dgtic@stp.gov.py 
+ */
+
 public class ajaxUpdate extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;

@@ -40,8 +40,22 @@ public class LineaAccionDestinatario {
 	public String 	descDest;
 	public int 		hitoTipoId;
 	public String 	nombreHitoTipo;
+	public int 		etiquetaId;
+	public String	etiquetaNombre;
 	
 	
+	public int getEtiquetaId() {
+		return etiquetaId;
+	}
+	public void setEtiquetaId(int etiquetaId) {
+		this.etiquetaId = etiquetaId;
+	}
+	public String getEtiquetaNombre() {
+		return etiquetaNombre;
+	}
+	public void setEtiquetaNombre(String etiquetaNombre) {
+		this.etiquetaNombre = etiquetaNombre;
+	}
 	public int getInsId() {
 		return insId;
 	}

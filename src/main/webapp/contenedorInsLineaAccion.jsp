@@ -21,6 +21,8 @@
 	<!-- bootstrap datepicker css  -->
 	<link href="plugins/datepicker/datepicker3.css" rel="stylesheet">
 	
+	<!-- bootstrap wysihtml5 css  -->
+	<link href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css">
 	<!-- jQuery 2.1.3  -->
     <!-- >script src="plugins/jQuery/jQuery-2.1.3.min.js"></script-->
     
@@ -66,7 +68,16 @@
 		#R, #G, #B {
 			width: 300px;
 		}
+		/* Ajusta el tamaño del select y limita la longitud del texto a desplegar
+		 poniendole ... cuando supera la longitud máxima */
+		select option {
+		  	white-space: nowrap;
+		  	overflow: hidden;
+		  	text-overflow: ellipsis;
+		  	max-width: 785px;
+		}
     </style>
+
 </head>
 <body class="skin-blue sidebar-mini sidebar-collapse">
 
@@ -76,11 +87,13 @@ if (attributes.get("role_id_tablero").toString().equals("0") || attributes.get("
 if (user != null && user.getName()!= "parce@nandeparaguay.org") { %>
 	<%@ include file="/frames/perfil.jsp" %>
 <script>
+//periodoSeleccionado=new Date().getFullYear();
+//periodoSeleccionado = $("#periodoSeleccion option:selected").val();
 			var usuarioEtiqueta = $.ajax({
 				url:'/tablero/ajaxSelects2?action=getUsuarioEtiqueta',
 			  	type:'get',
 			  	dataType:'json',
-			  	async:false
+			  	async:false       
 			}).responseText;
 			usuarioEtiqueta = JSON.parse(usuarioEtiqueta);
 			
@@ -151,7 +164,14 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
 	}).responseText;
 	insLineaAccionHasEtiqueta = JSON.parse(insLineaAccionHasEtiqueta);
 	
-
+/* 	var usuarioEtiqueta = $.ajax({
+		url:'/tablero/ajaxSelects2?action=getUsuarioEtiqueta',
+	  	type:'get',
+	  	dataType:'json',
+	  	async:false       
+	}).responseText;
+	usuarioEtiqueta = JSON.parse(usuarioEtiqueta); */
+	
 	var tablaInsLineaAccion="";
 	var cuerpoTablaInsLineaAccion="";
 	$("#cuerpoInsLineaAccion").html("");
@@ -183,7 +203,8 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
 		 	for(var l = 0; l < usuarioEtiqueta.length; l++)
 			{
 				if(usuarioEtiqueta[l].etiqueta_id == etiquetaSeleccionado && usuarioEtiqueta[l].borrado != true)
-  				{
+		 		//if(usuarioEtiqueta[l].etiqueta_id == 1)
+				{
 					for(var t = 0; t < insLineaAccionHasEtiqueta.length; t++)
 					{
 						if(insLineaAccionHasEtiqueta[t].ins_linea_accion_id == insLineaAccion[w].id && insLineaAccionHasEtiqueta[t].etiqueta_id == etiquetaSeleccionado && insLineaAccionHasEtiqueta[t].borrado != true)
@@ -528,48 +549,51 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
 	$('#cuerpoInsLineaAccion').append(tablaInsLineaAccion);
 	$('#tablaCuerpoInsLineaAccionPrecargados').append(cuerpoTablaInsLineaAccion);
 		
-	$('#dataTableInsLineaAccion').DataTable({
-    dom: 'Bfrtip',
-    buttons: [
-                {
-                    extend: 'copy',
-                    exportOptions: {
-                columns: [ 0, 1, 2, 3, 4 ]
-            }
-                },
-                {
-                    extend: 'csv',
-                    exportOptions: {
-                columns: [ 0, 1, 2, 3, 4 ]
-            }
-                },
-                {
-                    extend: 'excel',
-                    exportOptions: {
-                columns: [ 0, 1, 2, 3, 4 ]
-            }
-                },
-                {
-                    extend: 'pdf',
-                    exportOptions: {
-                columns: [ 0, 1, 2, 3, 4 ]
-            }
-                },
-                {
-                    extend: 'print',
-                    exportOptions: {
-                columns: [ 0, 1, 2, 3, 4 ]
-            }
-                }
-            ],
-    "footerCallback": function ( row, data, start, end, display ) {
-      var api = this.api(), data;
-      SumarizarColumnas(row, data, start, end, display, api, 1, null );
-    },
-    "search": {
-        "regex": true
-    }
-  });
+	$('#dataTableInsLineaAccion').DataTable(
+	{
+	        dom: 'Bfrtip',
+	        buttons: [
+	                    {
+	                        extend: 'copy',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4 ]
+	                }
+	                    },
+	                    {
+	                        extend: 'csv',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4 ]
+	                }
+	                    },
+	                    {
+	                        extend: 'excel',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4 ]
+	                }
+	                    },
+	                    {
+	                        extend: 'pdf',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4 ]
+	                }
+	                    },
+	                    {
+	                        extend: 'print',
+	                        exportOptions: {
+	                    columns: [ 0, 1, 2, 3, 4 ]
+	                }
+	                    }
+	                ],
+	        "footerCallback": function ( row, data, start, end, display ) {
+	        	var api = this.api(), data;
+	        	SumarizarColumnas(row, data, start, end, display, api, 1, null );
+	        },
+	        "search": {
+	            "regex": true
+			}
+	}
+	
+	);
 		
 	function SumarizarColumnas( row, data, start, end, display, api, cantColumnas, Indices ){
 		//var api = this.api(), data;
@@ -735,7 +759,8 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
 		        "search": {
 		            "regex": true
 				}	
-	});
+	}
+	);
 	
 	}
 
@@ -806,9 +831,26 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
 					}
 				}
 			}
+		
+			/* var periodoVersion = '<div class="col-sm-4">'+
+								 	'<label for="periodoSeleccion">Periodo</label>'+
+									'<select id="periodoSeleccion" class="form-control">'+optionPeriodo+'</select>'+
+								 '</div>'+
+								 '<div class="col-sm-4">'+
+								 	'<label for="periodoSeleccion">Periodo</label>'+
+									'<select id="periodoSeleccion" class="form-control">'+optionPeriodo+'</select>'+
+								 '</div>'; */
+			
+			/* var ocultarBorrado= '<div class="col-sm-2">'+
+									'<div class="checkbox">'+
+										'<label> <input type="checkbox" id="chkMostrarOcultar" checked>Ocultar Registros Borrados</label>'+
+									'</div>'+
+								'</div>'; */
+								
+			//$('#mostrarOcultarBorrado').append(ocultarBorrado);
 								
 			var usuarios = $.ajax({
-				url:'http://spr.stp.gov.py/ajaxSelects?accion=getUsuarios&usuario=<%=user.getName()%>',
+				url:'/ajaxSelects?accion=getUsuarios&usuario=<%=user.getName()%>',
 			  	type:'get',
 			  	dataType:'json',
 			  	async:false       
@@ -821,6 +863,8 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
 			$('#versionSeleccion').append(optionVersion);
 			$('#etiquetaSeleccion').append(optionEtiqueta);						
 			$('#etiquetaSeleccion option[value="'+usuarios[0].ultimaEtiquetaId+'"').prop('selected', true);
+			
+		<!-- /*%}%*/ -->
 	 
 	 	periodoSeleccionado = $("#periodoSeleccion option:selected").val();
 	 	versionSeleccionado = $("#versionSeleccion option:selected").val();
@@ -857,7 +901,7 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
 		
 				
 		renderInsLineaAccion(periodoSeleccionado,versionSeleccionado,etiquetaSeleccionado);	
-	  OcultarRegistrosBorrados();
+	   	OcultarRegistrosBorrados();
 
 		
 		$("body").on("click", "#chkMostrarOcultar",function(event){			
@@ -919,7 +963,7 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
 			
 			var info = JSON.stringify(objeto);		  	
 		    $.ajax({
-		        url: "http://spr.stp.gov.py/ajaxUpdate?accion=actUltEtiqueta",
+		        url: "/ajaxUpdate?accion=actUltEtiqueta",
 		        type: 'POST',
 		        dataType: 'json',
 		        data: info,
@@ -932,17 +976,32 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
 		        error: function(data,status,er) {
 		        	
 		        	}
-			 });
-		   	
+			 });	
 		   
-		});		
+		});
+				
+		/* $('.pagination').on('click',function(){
+			OcultarRegistrosBorrados();
+			}); */
+					
 	});
 <%}else{%>
-	window.location = "http://spr.stp.gov.py/tablero/geografico4.jsp";
+	window.location = "/tablero/geografico4.jsp";
 <%}%>
-	var onoff=null;	
-	function ProcesarCambioPeriodo(){
+	var onoff=null;
+/* 	function OcultarRegistrosBorrados(){
+		
+		if($("#chkMostrarOcultar").is(':checked')){
+			onoff=false;						
+		}else{
+			onoff=true;			
+		}
+		$("tr > td > del").closest("tr").toggle(onoff);
+	} */
 	
+	function ProcesarCambioPeriodo(){
+		
+		//periodoSeleccionado
 	}
 </script>
 	
@@ -1148,6 +1207,8 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
     <!-- script src="plugins/jQuery/jQuery-2.1.3.min.js"></script-->        
 	<!-- Bootstrap 3.3.2 JS -->
     <script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <!-- bootstrap wysihtml5 js  -->
+	<script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" type="text/javascript"></script>
     <!-- DATA TABES SCRIPT -->    
     <script src="plugins/datatables/jquery.dataTables.js" type="text/javascript"></script>
     <!-- <script src="plugins/datatables/Plugins/api/sum().js"></script> -->
@@ -1180,8 +1241,7 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
     <!-- ChartJS 1.0.1 -->
     <script src="plugins/chartjs/Chart.min.js" type="text/javascript"></script>
      <!-- AdminLTE App -->
-    <script src="dist/js/app.min.js" type="text/javascript"></script>
-
+    <script src="dist/js/app.min.js" type="text/javascript"></script>       
     <!-- Librerias para la rutina de cambio de contraseña -->
     <script src="dist/js/jquerymd5.js" type="text/javascript"></script>    	
     <%@ include file="/frames/pass.jsp" %>
@@ -1189,7 +1249,7 @@ function renderInsLineaAccion(PeriodoActual, versionSeleccionado, etiquetaSelecc
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js" type="text/javascript"></script>
         <%  } else { %>
-        	<script type="text/javascript">window.location = "http://spr.stp.gov.py/tablero/geografico4.jsp";</script>
+        	<script type="text/javascript">window.location = "/tablero/geografico4.jsp";</script>
 				<!-- <p>Favor Iniciar Sesion</p> -->
 			<% } %> 
 
@@ -1226,7 +1286,7 @@ usuariosSpr = JSON.parse(usuariosSpr);
 usuariosSpr = usuariosSpr.usuarios;
 </script>
 		<%  } else { %>
-            <script type="text/javascript">window.location = "http://spr.stp.gov.py";</script>
-        <%  } %> 
+            <script type="text/javascript">window.location = "";</script>
+        <% } %> 
   </body>
 </html>

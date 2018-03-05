@@ -19,7 +19,14 @@ public class Institucion {
 	protected Date fechaActualizacion;	
     protected String usuarioResponsable;
 	protected boolean borrado=false;
+	protected double promedio;
 	
+	public double getPromedio() {
+		return promedio;
+	}
+	public void setPromedio(double promedio) {
+		this.promedio = promedio;
+	}
 	public int getId() {
 		return id;
 	}

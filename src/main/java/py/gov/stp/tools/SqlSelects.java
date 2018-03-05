@@ -172,69 +172,69 @@ public class SqlSelects {
  		}
  		return objetos;
    }
-	public static List<FactHitos> selectFactHitos2015Base(String condition) throws SQLException{
-   	 Connection conect=ConnectionConfiguration.conectarBase();
-		 String query = " select * from fact_hitos "+condition +" order by accion_departamento_id ASC, accion_distrito_id ASC, accion ASC, hito_fecha_entrega ASC ";
-		 
-		 Statement statement = null;
-		 ResultSet rs=null;
-		 List<FactHitos> objetos = new ArrayList<FactHitos>();
-
-		try {
-			statement = conect.createStatement();
-			rs=statement.executeQuery(query);
-			while(rs.next()){
-				FactHitos objeto = new FactHitos();
-
-				objeto.setLinea_estrategica_id(rs.getInt("linea_estrategica_id"));
-				objeto.setLinea_estrategica(rs.getString("linea_estrategica"));
-				objeto.setLinea_accion_tipo_id(rs.getInt("linea_accion_tipo_id"));
-				objeto.setLinea_accion_tipo(rs.getString("linea_accion_tipo"));
-				objeto.setLinea_accion_id(rs.getInt("linea_accion_id"));
-				objeto.setLinea_accion(rs.getString("linea_accion"));
-				objeto.setInstitucion_id(rs.getInt("institucion_id"));
-				objeto.setInstitucion(rs.getString("institucion"));
-				objeto.setAccion_id(rs.getInt("accion_id"));
-				objeto.setAccion(rs.getString("accion"));
-				objeto.setCantidad(rs.getDouble("accion_cantidad"));
-				objeto.setAccion_unidad_edida(rs.getString("accion_unidad_medida"));
-				objeto.setAccion_costo(rs.getDouble("accion_costo"));
-				objeto.setAccion_departamento_id(rs.getInt("accion_departamento_id"));
-				objeto.setAccion_departamento(rs.getString("accion_departamento"));
-				objeto.setAccion_distrito_id(rs.getInt("accion_distrito_id"));
-				objeto.setAccion_distrito(rs.getString("accion_distrito"));
-				objeto.setAccion_fecha_inicio(rs.getDate("accion_fecha_inicio"));
-				objeto.setAccion_fecha_entrega(rs.getDate("accion_fecha_entrega"));
-				objeto.setAccion_status_fin(rs.getString("accion_status_fin").toCharArray()[0]);
-				objeto.setAccion_avance_programado(rs.getDouble("accion_avance_programado"));
-				objeto.setAccion_avance_ejecutado(rs.getDouble("accion_avance_ejecutado"));
-				objeto.setAccion_cantidad_hito(rs.getDouble("accion_cantidad_hito"));
-				objeto.setHito_id(rs.getInt("hito_id"));
-				objeto.setHito(rs.getString("hito"));
-				objeto.setHito_fecha_entrega(rs.getDate("hito_fecha_entrega"));
-				objeto.setHito_porcentaje_programado(rs.getInt("hito_porcentaje_programado"));
-				objeto.setHito_porcentaje_ejecutado(rs.getInt("hito_porcentaje_ejecutado"));
-				objeto.setHito_cantidad_programado(rs.getDouble("hito_cantidad_programado"));
-				objeto.setHito_cantidad_ejecutado(rs.getDouble("hito_cantidad_ejecutado"));
-				objeto.setHito_costo_programado(rs.getDouble("hito_costo_programado"));
-				objeto.setHito_costo_ejecutado(rs.getDouble("hito_costo_ejecutado"));
-				objeto.setHito_comentario_aprob(rs.getString("hito_comentario_aprob"));
-				objeto.setHito_status(rs.getString("hito_status").toCharArray()[0]);
-				objeto.setHito_total_doc(rs.getInt("hito_total_doc"));
-
-
-				
-
-				objetos.add(objeto);
-			}
-		}
-		catch (SQLException e) {e.printStackTrace();}
-		finally{
-			if (statement != null) {statement.close();}
-			if (conect != null) {conect.close();}
-		}
-		return objetos;
-  }
+//	public static List<FactHitos> selectFactHitos2015Base(String condition) throws SQLException{
+//   	 Connection conect=ConnectionConfiguration.conectarBase();
+//		 String query = " select * from fact_hitos "+condition +" order by accion_departamento_id ASC, accion_distrito_id ASC, accion ASC, hito_fecha_entrega ASC ";
+//		 
+//		 Statement statement = null;
+//		 ResultSet rs=null;
+//		 List<FactHitos> objetos = new ArrayList<FactHitos>();
+//
+//		try {
+//			statement = conect.createStatement();
+//			rs=statement.executeQuery(query);
+//			while(rs.next()){
+//				FactHitos objeto = new FactHitos();
+//
+//				objeto.setLinea_estrategica_id(rs.getInt("linea_estrategica_id"));
+//				objeto.setLinea_estrategica(rs.getString("linea_estrategica"));
+//				objeto.setLinea_accion_tipo_id(rs.getInt("linea_accion_tipo_id"));
+//				objeto.setLinea_accion_tipo(rs.getString("linea_accion_tipo"));
+//				objeto.setLinea_accion_id(rs.getInt("linea_accion_id"));
+//				objeto.setLinea_accion(rs.getString("linea_accion"));
+//				objeto.setInstitucion_id(rs.getInt("institucion_id"));
+//				objeto.setInstitucion(rs.getString("institucion"));
+//				objeto.setAccion_id(rs.getInt("accion_id"));
+//				objeto.setAccion(rs.getString("accion"));
+//				objeto.setCantidad(rs.getDouble("accion_cantidad"));
+//				objeto.setAccion_unidad_edida(rs.getString("accion_unidad_medida"));
+//				objeto.setAccion_costo(rs.getDouble("accion_costo"));
+//				objeto.setAccion_departamento_id(rs.getInt("accion_departamento_id"));
+//				objeto.setAccion_departamento(rs.getString("accion_departamento"));
+//				objeto.setAccion_distrito_id(rs.getInt("accion_distrito_id"));
+//				objeto.setAccion_distrito(rs.getString("accion_distrito"));
+//				objeto.setAccion_fecha_inicio(rs.getDate("accion_fecha_inicio"));
+//				objeto.setAccion_fecha_entrega(rs.getDate("accion_fecha_entrega"));
+//				objeto.setAccion_status_fin(rs.getString("accion_status_fin").toCharArray()[0]);
+//				objeto.setAccion_avance_programado(rs.getDouble("accion_avance_programado"));
+//				objeto.setAccion_avance_ejecutado(rs.getDouble("accion_avance_ejecutado"));
+//				objeto.setAccion_cantidad_hito(rs.getDouble("accion_cantidad_hito"));
+//				objeto.setHito_id(rs.getInt("hito_id"));
+//				objeto.setHito(rs.getString("hito"));
+//				objeto.setHito_fecha_entrega(rs.getDate("hito_fecha_entrega"));
+//				objeto.setHito_porcentaje_programado(rs.getInt("hito_porcentaje_programado"));
+//				objeto.setHito_porcentaje_ejecutado(rs.getInt("hito_porcentaje_ejecutado"));
+//				objeto.setHito_cantidad_programado(rs.getDouble("hito_cantidad_programado"));
+//				objeto.setHito_cantidad_ejecutado(rs.getDouble("hito_cantidad_ejecutado"));
+//				objeto.setHito_costo_programado(rs.getDouble("hito_costo_programado"));
+//				objeto.setHito_costo_ejecutado(rs.getDouble("hito_costo_ejecutado"));
+//				objeto.setHito_comentario_aprob(rs.getString("hito_comentario_aprob"));
+//				objeto.setHito_status(rs.getString("hito_status").toCharArray()[0]);
+//				objeto.setHito_total_doc(rs.getInt("hito_total_doc"));
+//
+//
+//				
+//
+//				objetos.add(objeto);
+//			}
+//		}
+//		catch (SQLException e) {e.printStackTrace();}
+//		finally{
+//			if (statement != null) {statement.close();}
+//			if (conect != null) {conect.close();}
+//		}
+//		return objetos;
+//  }
 	public static List<FactHitos> selectFactHitos2015Accion(String condition) throws SQLException{
 	   	 Connection conect=ConnectionConfiguration.conectar();
 			 String query = " select * from fact_acciones_periodo "+condition ;
@@ -440,6 +440,31 @@ public class SqlSelects {
 		}
 		return objetos;
 	}
+	public static String selectAccionesAvancesMensual(String condition) throws SQLException{
+   	 Connection conect=ConnectionConfiguration.conectar();    	 
+		 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from( "+
+				"	select * from linea_accion_acciones_mensual "+ condition +")t";
+		//ins_lin_acc_ava
+		 Statement statement = null;
+		 ResultSet rs=null;
+		 String objetos = "";
+
+		try {
+			statement = conect.createStatement();
+			rs=statement.executeQuery(query);
+			while(rs.next()){
+				//ObjetivoEstrategia objeto = new ObjetivoEstrategia();
+
+				objetos+=rs.getString("resultado");
+			}
+		}
+		catch (SQLException e) {e.printStackTrace();}
+		finally{
+			if (statement != null) {statement.close();}
+			if (conect != null) {conect.close();}
+		}
+		return objetos;
+	}
 	public static String selectAccionesAvancesDepto(String condition) throws SQLException{
    	 Connection conect=ConnectionConfiguration.conectar();    	 
 		 String query = " select array_to_json(array_agg(row_to_json(t))) as resultado from( "+
@@ -534,69 +559,69 @@ public class SqlSelects {
 			}
 			return objetos;
 	}
-	public static List<FactHitos> selectFactHitosSnpp(String condition) throws SQLException{
-	   	 Connection conect=ConnectionConfiguration.conectarSnpp();
-			 String query = " select * from snpp "+condition;
-			 
-			 Statement statement = null;
-			 ResultSet rs=null;
-			 List<FactHitos> objetos = new ArrayList<FactHitos>();
-
-			try {
-				statement = conect.createStatement();
-				rs=statement.executeQuery(query);
-				while(rs.next()){
-					FactHitos objeto = new FactHitos();
-
-					// objeto.setLinea_estrategica_id(rs.getInt("linea_estrategica_id"));
-					objeto.setLinea_estrategica(rs.getString("linea_estrategica"));
-					// objeto.setLinea_accion_tipo_id(rs.getInt("linea_accion_tipo_id"));
-					objeto.setLinea_accion_tipo(rs.getString("linea_accion_tipo"));
-					objeto.setLinea_accion_id(rs.getInt("linea_accion_id"));
-					objeto.setLinea_accion(rs.getString("linea_accion"));
-					objeto.setInstitucion_id(rs.getInt("institucion_id"));
-					objeto.setInstitucion(rs.getString("institucion"));
-					objeto.setAccion_id(rs.getInt("accion_id"));
-					objeto.setAccion(rs.getString("accion"));
-					objeto.setCantidad(rs.getDouble("accion_cantidad"));
-					objeto.setAccion_unidad_edida(rs.getString("accion_unidad_medida"));
-					objeto.setAccion_costo(rs.getDouble("accion_costo"));
-					objeto.setAccion_departamento_id(rs.getInt("accion_departamento_id"));
-					objeto.setAccion_departamento(rs.getString("accion_departamento"));
-					objeto.setAccion_distrito_id(rs.getInt("accion_distrito_id"));
-					objeto.setAccion_distrito(rs.getString("accion_distrito"));
-					objeto.setAccion_fecha_inicio(rs.getDate("accion_fecha_inicio"));
-					objeto.setAccion_fecha_entrega(rs.getDate("accion_fecha_entrega"));
-					//objeto.setAccion_status_fin(rs.getString("accion_status_fin").toCharArray()[0]);
-					//objeto.setAccion_avance_programado(rs.getDouble("accion_avance_programado"));
-					//objeto.setAccion_avance_ejecutado(rs.getDouble("accion_avance_ejecutado"));
-					//objeto.setAccion_cantidad_hito(rs.getDouble("accion_cantidad_hito"));
-					//objeto.setHito_id(rs.getInt("hito_id"));
-					objeto.setHito(rs.getString("hito"));
-					objeto.setHito_fecha_entrega(rs.getDate("hito_fecha_entrega"));
-					objeto.setHito_porcentaje_programado(rs.getInt("hito_porcentaje_programado"));
-					objeto.setHito_porcentaje_ejecutado(rs.getInt("hito_porcentaje_ejecutado"));
-					objeto.setHito_cantidad_programado(rs.getDouble("hito_cantidad_programado"));
-					objeto.setHito_cantidad_ejecutado(rs.getDouble("hito_cantidad_ejecutado"));
-					objeto.setHito_costo_programado(rs.getDouble("hito_costo_programado"));
-					objeto.setHito_costo_ejecutado(rs.getDouble("hito_costo_ejecutado"));
-					//objeto.setHito_comentario_aprob(rs.getString("hito_comentario_aprob"));
-					//objeto.setHito_status(rs.getString("hito_status").toCharArray()[0]);
-					//objeto.setHito_total_doc(rs.getInt("hito_total_doc"));
-
-
-					
-
-					objetos.add(objeto);
-				}
-			}
-			catch (SQLException e) {e.printStackTrace();}
-			finally{
-				if (statement != null) {statement.close();}
-				if (conect != null) {conect.close();}
-			}
-			return objetos;
-	  }
+//	public static List<FactHitos> selectFactHitosSnpp(String condition) throws SQLException{
+//	   	 Connection conect=ConnectionConfiguration.conectarSnpp();
+//			 String query = " select * from snpp "+condition;
+//			 
+//			 Statement statement = null;
+//			 ResultSet rs=null;
+//			 List<FactHitos> objetos = new ArrayList<FactHitos>();
+//
+//			try {
+//				statement = conect.createStatement();
+//				rs=statement.executeQuery(query);
+//				while(rs.next()){
+//					FactHitos objeto = new FactHitos();
+//
+//					// objeto.setLinea_estrategica_id(rs.getInt("linea_estrategica_id"));
+//					objeto.setLinea_estrategica(rs.getString("linea_estrategica"));
+//					// objeto.setLinea_accion_tipo_id(rs.getInt("linea_accion_tipo_id"));
+//					objeto.setLinea_accion_tipo(rs.getString("linea_accion_tipo"));
+//					objeto.setLinea_accion_id(rs.getInt("linea_accion_id"));
+//					objeto.setLinea_accion(rs.getString("linea_accion"));
+//					objeto.setInstitucion_id(rs.getInt("institucion_id"));
+//					objeto.setInstitucion(rs.getString("institucion"));
+//					objeto.setAccion_id(rs.getInt("accion_id"));
+//					objeto.setAccion(rs.getString("accion"));
+//					objeto.setCantidad(rs.getDouble("accion_cantidad"));
+//					objeto.setAccion_unidad_edida(rs.getString("accion_unidad_medida"));
+//					objeto.setAccion_costo(rs.getDouble("accion_costo"));
+//					objeto.setAccion_departamento_id(rs.getInt("accion_departamento_id"));
+//					objeto.setAccion_departamento(rs.getString("accion_departamento"));
+//					objeto.setAccion_distrito_id(rs.getInt("accion_distrito_id"));
+//					objeto.setAccion_distrito(rs.getString("accion_distrito"));
+//					objeto.setAccion_fecha_inicio(rs.getDate("accion_fecha_inicio"));
+//					objeto.setAccion_fecha_entrega(rs.getDate("accion_fecha_entrega"));
+//					//objeto.setAccion_status_fin(rs.getString("accion_status_fin").toCharArray()[0]);
+//					//objeto.setAccion_avance_programado(rs.getDouble("accion_avance_programado"));
+//					//objeto.setAccion_avance_ejecutado(rs.getDouble("accion_avance_ejecutado"));
+//					//objeto.setAccion_cantidad_hito(rs.getDouble("accion_cantidad_hito"));
+//					//objeto.setHito_id(rs.getInt("hito_id"));
+//					objeto.setHito(rs.getString("hito"));
+//					objeto.setHito_fecha_entrega(rs.getDate("hito_fecha_entrega"));
+//					objeto.setHito_porcentaje_programado(rs.getInt("hito_porcentaje_programado"));
+//					objeto.setHito_porcentaje_ejecutado(rs.getInt("hito_porcentaje_ejecutado"));
+//					objeto.setHito_cantidad_programado(rs.getDouble("hito_cantidad_programado"));
+//					objeto.setHito_cantidad_ejecutado(rs.getDouble("hito_cantidad_ejecutado"));
+//					objeto.setHito_costo_programado(rs.getDouble("hito_costo_programado"));
+//					objeto.setHito_costo_ejecutado(rs.getDouble("hito_costo_ejecutado"));
+//					//objeto.setHito_comentario_aprob(rs.getString("hito_comentario_aprob"));
+//					//objeto.setHito_status(rs.getString("hito_status").toCharArray()[0]);
+//					//objeto.setHito_total_doc(rs.getInt("hito_total_doc"));
+//
+//
+//					
+//
+//					objetos.add(objeto);
+//				}
+//			}
+//			catch (SQLException e) {e.printStackTrace();}
+//			finally{
+//				if (statement != null) {statement.close();}
+//				if (conect != null) {conect.close();}
+//			}
+//			return objetos;
+//	  }
 	
 	public static List<Entidad> selectEntidad(String condition) throws SQLException{
    	 Connection conect=ConnectionConfiguration.conectar();
@@ -748,44 +773,44 @@ public class SqlSelects {
 			return objetos; 
 	  }
 	
-	public static List<LineaAccion> seletLineaAccionSnpp(String condition) throws SQLException{
-	   	 Connection conect=ConnectionConfiguration.conectarSnpp();
-			 String query = " select * from fact_entidad_linea_snppp "+condition;
-			 
-			 Statement statement = null;
-			 ResultSet rs=null;
-			 List<LineaAccion> objetos = new ArrayList<LineaAccion>();
-
-			try {
-				statement = conect.createStatement();
-				rs=statement.executeQuery(query);
-				while(rs.next()){
-					LineaAccion objeto = new LineaAccion();
-					objeto.setInstitucion_id(rs.getInt("institucion_id"));
-					objeto.setInstitucion(rs.getString("institucion"));
-					objeto.setLinea_accion_id(rs.getInt("linea_accion_id"));
-					objeto.setLinea_accion(rs.getString("linea_accion"));
-					objeto.setAccion_unidad_medida(rs.getString("accion_unidad_medida"));
-					objeto.setCantidad_ejecutada(rs.getDouble("sum"));
-					objeto.setAnho(rs.getInt("date_part"));
-					objeto.setSuma_programada_anho(rs.getDouble("sumprog"));
-					objeto.setSuma_programada_hoy(rs.getDouble("sumproghoy"));
-					objeto.setCosto_ejecutado(rs.getDouble("costo_ejecutado"));
-					objeto.setCosto_programado_anho(rs.getDouble("costo_programado_anho"));
-					objeto.setCosto_programado_hoy(rs.getDouble("costo_programado_hoy"));
-					objeto.setLinea_accion_meta(rs.getDouble("linea_accion_meta"));
-					objeto.setHito_cantidad_ejecutado_hoy(rs.getDouble("hito_cantidad_ejecutado_hoy"));
-					objetos.add(objeto);
-				}
-			}
-			catch (SQLException e) {
-				e.printStackTrace();}
-			finally{
-				if (statement != null) {statement.close();}
-				if (conect != null) {conect.close();}
-			}
-			return objetos; 
-	  }
+//	public static List<LineaAccion> seletLineaAccionSnpp(String condition) throws SQLException{
+//	   	 Connection conect=ConnectionConfiguration.conectarSnpp();
+//			 String query = " select * from fact_entidad_linea_snppp "+condition;
+//			 
+//			 Statement statement = null;
+//			 ResultSet rs=null;
+//			 List<LineaAccion> objetos = new ArrayList<LineaAccion>();
+//
+//			try {
+//				statement = conect.createStatement();
+//				rs=statement.executeQuery(query);
+//				while(rs.next()){
+//					LineaAccion objeto = new LineaAccion();
+//					objeto.setInstitucion_id(rs.getInt("institucion_id"));
+//					objeto.setInstitucion(rs.getString("institucion"));
+//					objeto.setLinea_accion_id(rs.getInt("linea_accion_id"));
+//					objeto.setLinea_accion(rs.getString("linea_accion"));
+//					objeto.setAccion_unidad_medida(rs.getString("accion_unidad_medida"));
+//					objeto.setCantidad_ejecutada(rs.getDouble("sum"));
+//					objeto.setAnho(rs.getInt("date_part"));
+//					objeto.setSuma_programada_anho(rs.getDouble("sumprog"));
+//					objeto.setSuma_programada_hoy(rs.getDouble("sumproghoy"));
+//					objeto.setCosto_ejecutado(rs.getDouble("costo_ejecutado"));
+//					objeto.setCosto_programado_anho(rs.getDouble("costo_programado_anho"));
+//					objeto.setCosto_programado_hoy(rs.getDouble("costo_programado_hoy"));
+//					objeto.setLinea_accion_meta(rs.getDouble("linea_accion_meta"));
+//					objeto.setHito_cantidad_ejecutado_hoy(rs.getDouble("hito_cantidad_ejecutado_hoy"));
+//					objetos.add(objeto);
+//				}
+//			}
+//			catch (SQLException e) {
+//				e.printStackTrace();}
+//			finally{
+//				if (statement != null) {statement.close();}
+//				if (conect != null) {conect.close();}
+//			}
+//			return objetos; 
+//	  }
 
 	public static List<LineaAccionDepartamento> selectLineaAccionDepartamento() throws SQLException{
 	   	 Connection conect=ConnectionConfiguration.conectar();

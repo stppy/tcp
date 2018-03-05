@@ -26,6 +26,7 @@ import py.gov.stp.objetosV2.Trimestre;
 import py.gov.stp.tools2.SqlSelects;
  
 /**
+ *
  * 	@author DGTIC-STP
  *  @email  dgtic@stp.gov.py 
  */

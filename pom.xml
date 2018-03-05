@@ -100,7 +100,7 @@
                <artifactId>maven-war-plugin</artifactId>
                <version>2.6</version>
            <configuration> 
-               <outputDirectory>${basedir}/../webapps</outputDirectory>
+           		<outputDirectory>${basedir}/../webapps</outputDirectory>
            </configuration>
        </plugin>
     </plugins>
